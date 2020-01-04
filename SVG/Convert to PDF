@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed -z 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependency inkscape
+_check_number_files $# 1
+
+ERROR_COUNT=0
+FILES_COUNT=0
+MIME_TYPES="svg"
+
+for arg; do
+    # Filter files with a specific mime type
+    if [ "$(_check_mime_type "$arg" "$MIME_TYPES")" == "0" ]; then
+        FILES_COUNT=$(($FILES_COUNT + 1))
+
+        # Run the main process
+        OUTPUT_FILE="$(_remove_extension "$arg").pdf"
+        STD_OUTPUT="$(inkscape -D -z --file="$arg" --export-pdf="$OUTPUT_FILE" 2>&1)"
+
+        # Check if output file is not a zero byte
+        if [ "$(stat --printf="%s" "$OUTPUT_FILE")" == "0" ]; then
+            ERROR_COUNT=$(($ERROR_COUNT + 1))
+
+            # Log the error in a file
+            _log_error "$arg" "$STD_OUTPUT"
+        fi
+    fi
+done
+
+_display_final_result "$FILES_COUNT" "$ERROR_COUNT" "$MIME_TYPES" ""

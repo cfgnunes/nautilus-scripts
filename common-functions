@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+
+IFS=$'\n'
+ERROR_LOG_FILE="errors.log"
+
+function _msg_error() {
+    MESSAGE="$1"
+
+    # Check if the script is running in a terminal
+    if env | grep -q '^TERM'; then
+        echo "$MESSAGE"
+    else # It not use gui notifications
+        if hash notify-send 2>/dev/null; then
+            notify-send -i error "$MESSAGE"
+        elif hash zenity 2>/dev/null; then
+            zenity --error --width=300 --text "$MESSAGE"
+        elif hash kdialog 2>/dev/null; then
+            kdialog --title "$MESSAGE" --passivepopup "This popup will disappear in 5 seconds" 5 &
+        elif hash xmessage 2>/dev/null; then
+            xmessage "$MESSAGE" -timeout 5
+        fi
+    fi
+}
+
+function _msg_info() {
+    MESSAGE="$1"
+
+    # Check if the script is running in a terminal
+    if env | grep -q '^TERM'; then
+        echo "$MESSAGE"
+    else # It not use gui notifications
+        if hash notify-send 2>/dev/null; then
+            notify-send "$MESSAGE"
+        elif hash zenity 2>/dev/null; then
+            zenity --info --width=300 --text "$MESSAGE"
+        elif hash kdialog 2>/dev/null; then
+            kdialog --title "$MESSAGE" --passivepopup "This popup will disappear in 5 seconds" 5 &
+        elif hash xmessage 2>/dev/null; then
+            xmessage "$MESSAGE" -timeout 5
+        fi
+    fi
+}
+
+function _check_dependency() {
+    LIST="$1"
+
+    for LIST; do
+        hash "$LIST" 2>/dev/null || {
+            _msg_error "Could not find the command '$LIST'. Please, install it."
+            exit 1
+        }
+    done
+}
+
+function _check_number_files() {
+    NUM_FILES="$1"
+    MIN_FILES="$2"
+    MAX_FILES="$3"
+
+    [ -z "$MIN_FILES" ] && return
+    [ -z "$NUM_FILES" ] && return
+
+    if (($NUM_FILES < $MIN_FILES)); then
+        _msg_error "$NUM_FILES input file was selected, but the minium is $MIN_FILES!"
+        exit 1
+    fi
+
+    [ -z "$MAX_FILES" ] && return
+
+    if (($NUM_FILES > $MAX_FILES)); then
+        _msg_error "$NUM_FILES input file was selected, but the maximum is $MAX_FILES!"
+        exit 1
+    fi
+}
+
+function _check_mime_type() {
+    FILE="$1"
+    MIME_CHECK="$2"
+    MIME_FILE=$(file --mime-type -b "$FILE")
+
+    if [[ "$MIME_FILE" == *"$MIME_CHECK"* ]]; then
+        echo "0" # Ok: Mime type is right
+    else
+        echo "1" # Error: Mime type is wrong
+    fi
+}
+
+function _remove_extension() {
+    FILENAME="$1"
+
+    echo "$FILENAME" | sed "s|\.[^.]*$||"
+}
+
+function _log_error() {
+    FILENAME="$1"
+    MESSAGE="$2"
+
+    {
+        echo "$(date "+%Y-%m-%d %H:%M:%S:") Error processing '$FILENAME'."
+        echo "$MESSAGE"
+        echo ""
+    } >>"$ERROR_LOG_FILE"
+}
+
+function _display_final_result() {
+    FILES_COUNT="$1"
+    ERROR_COUNT="$2"
+    MIME_TYPES="$3"
+    OUTPUT_DIR="$4"
+
+    # Check if there is at last one file with valid mime type
+    if (($FILES_COUNT == 0)); then
+        if [ -n "$MIME_TYPES" ]; then
+            _msg_error "There is no '$MIME_TYPES' in the selected files!"
+        else
+            _msg_error "There is no valid itens in the in the selected files!"
+        fi
+        exit 1
+    fi
+
+    # Check if there was some error
+    if (($ERROR_COUNT > 0)); then
+        _msg_error "Task finished with errors! See the '$ERROR_LOG_FILE' for details."
+        exit 1
+    fi
+
+    # If OUTPUT_DIR parameter is defined
+    if [ -n "$OUTPUT_DIR" ]; then
+        # Check if output directory still exists
+        if [ ! -d "$OUTPUT_DIR" ]; then
+            _msg_info "Task finished, but there is no output files!"
+            exit 0
+        fi
+        _msg_info "Task finished! The output files are in '$OUTPUT_DIR' directory."
+    else
+        _msg_info "Task finished!"
+    fi
+}

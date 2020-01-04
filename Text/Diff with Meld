@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed -z 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependency meld
+_check_number_files $# 2 3
+
+# Run the main process
+meld "$@"
