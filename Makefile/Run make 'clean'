@@ -17,7 +17,7 @@ for arg; do
         FILES_COUNT=$(($FILES_COUNT + 1))
 
         # Run the main process
-        STD_OUTPUT="$(make -f clean "$arg" 2>&1)"
+        STD_OUTPUT="$(make -f "$arg" clean 2>&1)"
         EXIT_CODE=$?
 
         # Check the return
