@@ -87,7 +87,7 @@ function _check_mime_type() {
 
 function _remove_extension() {
     FILENAME="$1"
-
+    # shellcheck disable=SC2001
     echo "$FILENAME" | sed "s|\.[^.]*$||"
 }
 
