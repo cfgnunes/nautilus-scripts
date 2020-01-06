@@ -11,5 +11,5 @@ _check_number_files $# 1
 # Run the main process
 RESULT=$(md5sum "$@")
 WIDTH_TEXT=$(echo "$RESULT" | wc -L)
-WIDTH_WINDOW=$(($WIDTH_TEXT * 8))
+WIDTH_WINDOW=$((WIDTH_TEXT * 8))
 zenity --info --width="$WIDTH_WINDOW" --title "Hash" --text "$RESULT"

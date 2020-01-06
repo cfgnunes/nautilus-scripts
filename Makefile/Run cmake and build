@@ -17,9 +17,9 @@ if [ "$(_check_mime_type "$@" $MIME_TYPES)" == "0" ]; then
     FILES_COUNT=1
 
     {
-        pushd "$PWD" || ERROR_COUNT=$(($ERROR_COUNT + 1))
+        pushd "$PWD" || ERROR_COUNT=$((ERROR_COUNT + 1))
         rm -rf "$OUTPUT_DIR" && mkdir "$OUTPUT_DIR"
-        cd "$OUTPUT_DIR" || ERROR_COUNT=$(($ERROR_COUNT + 1))
+        cd "$OUTPUT_DIR" || ERROR_COUNT=$((ERROR_COUNT + 1))
     } &>/dev/null
 
     if [ "$ERROR_COUNT" -eq 0 ]; then
@@ -29,7 +29,7 @@ if [ "$(_check_mime_type "$@" $MIME_TYPES)" == "0" ]; then
 
         # Check the return
         if [ "$EXIT_CODE" -ne 0 ]; then
-            ERROR_COUNT=$(($ERROR_COUNT + 1))
+            ERROR_COUNT=$((ERROR_COUNT + 1))
 
             # Log the error in a file
             _log_error "cmake .." "$STD_OUTPUT"
@@ -41,14 +41,14 @@ if [ "$(_check_mime_type "$@" $MIME_TYPES)" == "0" ]; then
 
         # Check the return
         if [ "$EXIT_CODE" -ne 0 ]; then
-            ERROR_COUNT=$(($ERROR_COUNT + 1))
+            ERROR_COUNT=$((ERROR_COUNT + 1))
 
             # Log the error in a file
             _log_error "cmake --build ." "$STD_OUTPUT"
         fi
 
         {
-            popd || ERROR_COUNT=$(($ERROR_COUNT + 1))
+            popd || ERROR_COUNT=$((ERROR_COUNT + 1))
         } &>/dev/null
     fi
 fi

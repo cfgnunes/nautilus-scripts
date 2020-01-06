@@ -15,7 +15,7 @@ MIME_TYPES="svg"
 for arg; do
     # Filter files with a specific mime type
     if [ "$(_check_mime_type "$arg" "$MIME_TYPES")" == "0" ]; then
-        FILES_COUNT=$(($FILES_COUNT + 1))
+        FILES_COUNT=$((FILES_COUNT + 1))
 
         # Run the main process
         OUTPUT_FILE="$(_remove_extension "$arg").pdf"
@@ -23,7 +23,7 @@ for arg; do
 
         # Check if output file is not a zero byte
         if [ "$(stat --printf="%s" "$OUTPUT_FILE")" == "0" ]; then
-            ERROR_COUNT=$(($ERROR_COUNT + 1))
+            ERROR_COUNT=$((ERROR_COUNT + 1))
 
             # Log the error in a file
             _log_error "$arg" "$STD_OUTPUT"

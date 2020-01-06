@@ -17,21 +17,21 @@ OUTPUT_FILE="output.pdf"
 for arg; do
     # Filter files with a specific mime type
     if [ "$(_check_mime_type "$arg" "$MIME_TYPES")" == "0" ]; then
-        FILES_COUNT=$(($FILES_COUNT + 1))
+        FILES_COUNT=$((FILES_COUNT + 1))
 
         INPUT_FILES+="$arg"
         INPUT_FILES+=$'\n'
     fi
 done
 
-if (($FILES_COUNT > 0)); then
+if ((FILES_COUNT > 0)); then
     # Run the main process
     STD_OUTPUT="$(pdfunite $INPUT_FILES $OUTPUT_FILE 2>&1)"
     EXIT_CODE=$?
 
     # Check the return
     if [ "$EXIT_CODE" -ne 0 ]; then
-        ERROR_COUNT=$(($ERROR_COUNT + 1))
+        ERROR_COUNT=$((ERROR_COUNT + 1))
 
         # Log the error in a file
         _log_error "$PDF_PARAMETER" "$STD_OUTPUT"
