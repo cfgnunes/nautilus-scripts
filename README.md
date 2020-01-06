@@ -7,7 +7,8 @@ There is a lot of nautilus scripts all over the web. But a lot of these scripts 
 - It is easy to copy and adapt the scripts for other purposes;
 - It has status notifications (dependency errors, supported mime-type);
 - It works in any file manager: no use of the variable \$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS or NEMO equivalent;
-- It has an direct usage, without an input box to ask parameters.
+- It has an direct usage, without an input box to ask parameters;
+- All shell scripts where checked by [shellcheck](https://github.com/koalaman/shellcheck).
 
 ## Getting Started
 
