@@ -3,7 +3,7 @@
 IFS=$'\n'
 ERROR_LOG_FILE="errors.log"
 
-function _msg_error() {
+_msg_error() {
     MESSAGE="$1"
 
     # Check if the script is running in a terminal
@@ -22,7 +22,7 @@ function _msg_error() {
     fi
 }
 
-function _msg_info() {
+_msg_info() {
     MESSAGE="$1"
 
     # Check if the script is running in a terminal
@@ -41,7 +41,7 @@ function _msg_info() {
     fi
 }
 
-function _check_dependency() {
+_check_dependency() {
     LIST="$1"
 
     for LIST; do
@@ -52,7 +52,7 @@ function _check_dependency() {
     done
 }
 
-function _check_number_files() {
+_check_number_files() {
     NUM_FILES="$1"
     MIN_FILES="$2"
     MAX_FILES="$3"
@@ -73,7 +73,7 @@ function _check_number_files() {
     fi
 }
 
-function _check_mime_type() {
+_check_mime_type() {
     FILE="$1"
     MIME_CHECK="$2"
     MIME_FILE=$(file --mime-type -b "$FILE")
@@ -85,13 +85,13 @@ function _check_mime_type() {
     fi
 }
 
-function _remove_extension() {
+_remove_extension() {
     FILENAME="$1"
     # shellcheck disable=SC2001
     echo "$FILENAME" | sed "s|\.[^.]*$||"
 }
 
-function _log_error() {
+_log_error() {
     FILENAME="$1"
     MESSAGE="$2"
 
@@ -102,7 +102,7 @@ function _log_error() {
     } >>"$ERROR_LOG_FILE"
 }
 
-function _display_final_result() {
+_display_final_result() {
     FILES_COUNT="$1"
     ERROR_COUNT="$2"
     MIME_TYPES="$3"
