@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed -z 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependency pdftoppm
+_check_number_files $# 1
+
+ERROR_COUNT=0
+FILES_COUNT=0
+MIME_TYPES="pdf"
+OUTPUT_DIR="output"
+
+# Create the output dir
+mkdir -p "$OUTPUT_DIR"
+
+for arg; do
+    # Filter files with a specific mime type
+    if [ "$(_check_mime_type "$arg" "$MIME_TYPES")" == "0" ]; then
+        FILES_COUNT=$((FILES_COUNT + 1))
+
+        # Run the main process
+        STD_OUTPUT="$(pdftoppm -jpeg "$arg" "$OUTPUT_DIR/$(_remove_extension "$arg")" 2>&1)"
+
+        # Check the return
+        if [[ "$STD_OUTPUT" == *"Error"* ]]; then
+            ERROR_COUNT=$((ERROR_COUNT + 1))
+
+            # Log the error in a file
+            _log_error "$arg" "$STD_OUTPUT"
+        fi
+    fi
+done
+
+# Try remove output dir if it is empty
+rmdir "$OUTPUT_DIR" &>/dev/null
+
+_display_final_result "$FILES_COUNT" "$ERROR_COUNT" "$MIME_TYPES" "$OUTPUT_DIR"
