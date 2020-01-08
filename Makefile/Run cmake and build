@@ -6,8 +6,8 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed -z 's|\(scripts\).*
 
 # Initial checks
 _check_dependency cmake
-INPUT_FILES=$(_check_files "$*" "text/x-c" "1" "1" "") || exit 1
-OUTPUT_DIR=$(_get_output_dir "build")
+_check_files "$*" "text/x-c" "1" "1" "" || exit 1
+OUTPUT_DIR=$(_get_output_dir)
 
 {
     pushd "$PWD" || ERROR_COUNT=$((ERROR_COUNT + 1))

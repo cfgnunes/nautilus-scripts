@@ -7,12 +7,13 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed -z 's|\(scripts\).*
 # Initial checks
 _check_dependency pdfunite
 INPUT_FILES=$(_check_files "$*" "pdf" "2" "" "") || exit 1
-OUTPUT_FILE="output.pdf"
+OUTPUT_DIR=$(_get_output_dir)
+
 ERROR_COUNT=0
 
 # Run the main process
 # shellcheck disable=SC2086
-STD_OUTPUT="$(pdfunite $INPUT_FILES $OUTPUT_FILE 2>&1)"
+STD_OUTPUT="$(pdfunite $INPUT_FILES "$OUTPUT_DIR/merged.pdf" 2>&1)"
 EXIT_CODE=$?
 
 # Check the return
@@ -23,4 +24,4 @@ if [ "$EXIT_CODE" -ne 0 ]; then
     _log_error "$PDF_PARAMETER" "$STD_OUTPUT"
 fi
 
-_display_result "$ERROR_COUNT" ""
+_display_result "$ERROR_COUNT" "$OUTPUT_DIR"
