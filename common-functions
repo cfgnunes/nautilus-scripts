@@ -61,12 +61,13 @@ _remove_extension() {
 _log_error() {
     FILENAME="$1"
     MESSAGE="$2"
+    OUTPUT_DIR="$3"
 
     {
         echo "$(date "+%Y-%m-%d %H:%M:%S:") Error processing '$FILENAME'."
         echo "$MESSAGE"
         echo ""
-    } >>"$ERROR_LOG_FILE"
+    } >>"$OUTPUT_DIR/$ERROR_LOG_FILE"
 }
 
 _display_result() {
@@ -96,9 +97,7 @@ _display_result() {
 }
 
 _get_output_dir() {
-    DIR_NAME="$1"
-
-    [ -z "$DIR_NAME" ] && DIR_NAME="output"
+    DIR_NAME="output"
     DIR_BASE="$PWD"
     DIR_SUFFIX=1
     OUTPUT_DIR="$DIR_BASE/$DIR_NAME"

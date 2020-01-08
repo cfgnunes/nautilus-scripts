@@ -19,7 +19,7 @@ for FILE in $INPUT_FILES; do
         ERROR_COUNT=$((ERROR_COUNT + 1))
 
         # Log the error in a file
-        _log_error "$FILE" "$STD_OUTPUT"
+        _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
     fi
 done
 
