@@ -11,10 +11,7 @@ _check_number_files $# 1
 ERROR_COUNT=0
 FILES_COUNT=0
 MIME_TYPES="pdf"
-OUTPUT_DIR="output"
-
-# Create the output dir
-mkdir -p "$OUTPUT_DIR"
+OUTPUT_DIR=$(_get_output_dir)
 
 for arg; do
     # Filter files with a specific mime type
@@ -34,8 +31,5 @@ for arg; do
         fi
     fi
 done
-
-# Try remove output dir if it is empty
-rmdir "$OUTPUT_DIR" &>/dev/null
 
 _display_final_result "$FILES_COUNT" "$ERROR_COUNT" "$MIME_TYPES" "$OUTPUT_DIR"

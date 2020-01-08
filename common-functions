@@ -126,19 +126,28 @@ _display_final_result() {
 
     # If OUTPUT_DIR parameter is defined
     if [ -n "$OUTPUT_DIR" ]; then
+        # Try remove output dir if it is empty
+        rmdir "$OUTPUT_DIR" &>/dev/null
+
         # Check if output directory still exists
         if [ ! -d "$OUTPUT_DIR" ]; then
             _msg_info "Task finished, but there is no output files!"
             exit 0
         fi
-        _msg_info "Task finished! The output is in the directory: '$OUTPUT_DIR'."
+        _msg_info "Task finished! The output is in: '$OUTPUT_DIR'."
     else
         _msg_info "Task finished!"
     fi
 }
 
 _get_output_dir() {
+    DIR_NAME="$1"
+
+    [ -z "$DIR_NAME" ] && DIR_NAME="output"
     DIR_BASE="$PWD"
+    DIR_SUFFIX=1
+    OUTPUT_DIR="$DIR_BASE/$DIR_NAME"
+
     [[ ! -w "$DIR_BASE" ]] && DIR_BASE="$HOME"
     [[ ! -w "$DIR_BASE" ]] && DIR_BASE="/tmp"
 
@@ -147,9 +156,6 @@ _get_output_dir() {
         exit 1
     fi
 
-    DIR_NAME="output"
-    DIR_SUFFIX=1
-    OUTPUT_DIR="$DIR_BASE/$DIR_NAME"
     while [ -d "$OUTPUT_DIR" ]; do
         DIR_SUFFIX=$((DIR_SUFFIX + 1))
         OUTPUT_DIR="$DIR_BASE/$DIR_NAME$DIR_SUFFIX"

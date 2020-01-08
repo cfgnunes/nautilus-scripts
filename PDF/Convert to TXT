@@ -11,6 +11,7 @@ _check_number_files $# 1
 ERROR_COUNT=0
 FILES_COUNT=0
 MIME_TYPES="pdf"
+OUTPUT_DIR=$(_get_output_dir)
 
 for arg; do
     # Filter files with a specific mime type
@@ -18,7 +19,7 @@ for arg; do
         FILES_COUNT=$((FILES_COUNT + 1))
 
         # Run the main process
-        STD_OUTPUT="$(pdftotext "$arg" 2>&1)"
+        STD_OUTPUT="$(pdftotext "$arg" "$OUTPUT_DIR/$(_remove_extension "$arg").txt" 2>&1)"
 
         # Check the return
         if [[ "$STD_OUTPUT" == *"Error"* ]]; then
@@ -30,4 +31,4 @@ for arg; do
     fi
 done
 
-_display_final_result "$FILES_COUNT" "$ERROR_COUNT" "$MIME_TYPES" ""
+_display_final_result "$FILES_COUNT" "$ERROR_COUNT" "$MIME_TYPES" "$OUTPUT_DIR"
