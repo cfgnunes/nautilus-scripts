@@ -8,7 +8,7 @@ _msg_error() {
 
     # Check if the script is running in a terminal
     if env | grep -q '^TERM'; then
-        echo "$MESSAGE"
+        echo >&2 "$MESSAGE"
     else # It not use gui notifications
         if hash notify-send 2>/dev/null; then
             notify-send -i error "$MESSAGE"
@@ -52,39 +52,6 @@ _check_dependency() {
     done
 }
 
-_check_number_files() {
-    NUM_FILES="$1"
-    MIN_FILES="$2"
-    MAX_FILES="$3"
-
-    [ -z "$MIN_FILES" ] && return
-    [ -z "$NUM_FILES" ] && return
-
-    if ((NUM_FILES < MIN_FILES)); then
-        _msg_error "$NUM_FILES input file was selected, but the minium is $MIN_FILES!"
-        exit 1
-    fi
-
-    [ -z "$MAX_FILES" ] && return
-
-    if ((NUM_FILES > MAX_FILES)); then
-        _msg_error "$NUM_FILES input file was selected, but the maximum is $MAX_FILES!"
-        exit 1
-    fi
-}
-
-_check_mime_type() {
-    FILE="$1"
-    MIME_CHECK="$2"
-    MIME_FILE=$(file --mime-type -b "$FILE")
-
-    if [[ "$MIME_FILE" == *"$MIME_CHECK"* ]]; then
-        echo "0" # Ok: Mime type is right
-    else
-        echo "1" # Error: Mime type is wrong
-    fi
-}
-
 _remove_extension() {
     FILENAME="$1"
     # shellcheck disable=SC2001
@@ -102,21 +69,9 @@ _log_error() {
     } >>"$ERROR_LOG_FILE"
 }
 
-_display_final_result() {
-    FILES_COUNT="$1"
-    ERROR_COUNT="$2"
-    MIME_TYPES="$3"
-    OUTPUT_DIR="$4"
-
-    # Check if there is at last one file with valid mime type
-    if ((FILES_COUNT == 0)); then
-        if [ -n "$MIME_TYPES" ]; then
-            _msg_error "There is no '$MIME_TYPES' in the selected files!"
-        else
-            _msg_error "There is no valid itens in the in the selected files!"
-        fi
-        exit 1
-    fi
+_display_result() {
+    ERROR_COUNT="$1"
+    OUTPUT_DIR="$2"
 
     # Check if there was some error
     if ((ERROR_COUNT > 0)); then
@@ -163,4 +118,63 @@ _get_output_dir() {
 
     mkdir "$OUTPUT_DIR"
     echo "$OUTPUT_DIR"
+}
+
+_check_files() {
+    INPUT_FILES="$1"
+    MIME_FILTER="$2"
+    MIN_FILES="$3"
+    MAX_FILES="$4"
+    INCLUDE_DIRECTORIES="$5"
+
+    OUTPUT_FILES=""
+    FILES_COUNT=0
+    for FILE in $INPUT_FILES; do
+        VALID_FILE=1
+
+        # Filter files by mime type
+        if [ -n "$MIME_FILTER" ]; then
+            MIME_FILE=$(file --mime-type -b "$FILE")
+            [[ "$MIME_FILE" != *"$MIME_FILTER"* ]] && VALID_FILE=0
+        fi
+
+        # Include directories
+        if [ -d "$FILE" ]; then
+            [ -z "$INCLUDE_DIRECTORIES" ] && VALID_FILE=0
+        fi
+
+        # Add the file in the list if it is valid
+        if ((VALID_FILE == 1)); then
+            FILES_COUNT=$((FILES_COUNT + 1))
+            OUTPUT_FILES+="$FILE"
+            OUTPUT_FILES+=$'\n'
+        fi
+    done
+
+    # Check if there is at last one file with valid mime type
+    if ((FILES_COUNT == 0)); then
+        if [ -n "$MIME_FILTER" ]; then
+            _msg_error "There is no '$MIME_FILTER' in the selected files!"
+        else
+            _msg_error "There is no valid itens in the in the selected files!"
+        fi
+        return 1
+    fi
+
+    if [ -n "$MIN_FILES" ]; then
+        if ((FILES_COUNT < MIN_FILES)); then
+            _msg_error "$FILES_COUNT file was selected, but the minium is $MIN_FILES!"
+            return 1
+        fi
+    fi
+
+    if [ -n "$MAX_FILES" ]; then
+        if ((FILES_COUNT > MAX_FILES)); then
+            _msg_error "$FILES_COUNT file was selected, but the maximum is $MAX_FILES!"
+            return 1
+        fi
+    fi
+
+    echo "$OUTPUT_FILES"
+    return 0
 }

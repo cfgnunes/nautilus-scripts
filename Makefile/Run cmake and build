@@ -6,50 +6,42 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed -z 's|\(scripts\).*
 
 # Initial checks
 _check_dependency cmake
-_check_number_files $# 1 1
-
-ERROR_COUNT=0
-FILES_COUNT=0
-MIME_TYPES="text/x-c"
+INPUT_FILES=$(_check_files "$*" "text/x-c" "1" "1" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir "build")
 
-if [ "$(_check_mime_type "$@" $MIME_TYPES)" == "0" ]; then
-    FILES_COUNT=1
+{
+    pushd "$PWD" || ERROR_COUNT=$((ERROR_COUNT + 1))
+    cd "$OUTPUT_DIR" || ERROR_COUNT=$((ERROR_COUNT + 1))
+} &>/dev/null
+
+if [ "$ERROR_COUNT" -eq 0 ]; then
+    # Run the first step
+    STD_OUTPUT="$(cmake .. 2>&1)"
+    EXIT_CODE=$?
+
+    # Check the return
+    if [ "$EXIT_CODE" -ne 0 ]; then
+        ERROR_COUNT=$((ERROR_COUNT + 1))
+
+        # Log the error in a file
+        _log_error "cmake .." "$STD_OUTPUT"
+    fi
+
+    # Run the second step
+    STD_OUTPUT="$(cmake --build . 2>&1)"
+    EXIT_CODE=$?
+
+    # Check the return
+    if [ "$EXIT_CODE" -ne 0 ]; then
+        ERROR_COUNT=$((ERROR_COUNT + 1))
+
+        # Log the error in a file
+        _log_error "cmake --build ." "$STD_OUTPUT"
+    fi
 
     {
-        pushd "$PWD" || ERROR_COUNT=$((ERROR_COUNT + 1))
-        cd "$OUTPUT_DIR" || ERROR_COUNT=$((ERROR_COUNT + 1))
+        popd || ERROR_COUNT=$((ERROR_COUNT + 1))
     } &>/dev/null
-
-    if [ "$ERROR_COUNT" -eq 0 ]; then
-        # Run the first step
-        STD_OUTPUT="$(cmake .. 2>&1)"
-        EXIT_CODE=$?
-
-        # Check the return
-        if [ "$EXIT_CODE" -ne 0 ]; then
-            ERROR_COUNT=$((ERROR_COUNT + 1))
-
-            # Log the error in a file
-            _log_error "cmake .." "$STD_OUTPUT"
-        fi
-
-        # Run the second step
-        STD_OUTPUT="$(cmake --build . 2>&1)"
-        EXIT_CODE=$?
-
-        # Check the return
-        if [ "$EXIT_CODE" -ne 0 ]; then
-            ERROR_COUNT=$((ERROR_COUNT + 1))
-
-            # Log the error in a file
-            _log_error "cmake --build ." "$STD_OUTPUT"
-        fi
-
-        {
-            popd || ERROR_COUNT=$((ERROR_COUNT + 1))
-        } &>/dev/null
-    fi
 fi
 
-_display_final_result "$FILES_COUNT" "$ERROR_COUNT" "$MIME_TYPES" "$OUTPUT_DIR"
+_display_result "$ERROR_COUNT" "$OUTPUT_DIR"
