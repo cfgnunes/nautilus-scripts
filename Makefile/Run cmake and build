@@ -11,14 +11,13 @@ _check_number_files $# 1 1
 ERROR_COUNT=0
 FILES_COUNT=0
 MIME_TYPES="text/x-c"
-OUTPUT_DIR="build"
+OUTPUT_DIR=$(_get_output_dir "build")
 
 if [ "$(_check_mime_type "$@" $MIME_TYPES)" == "0" ]; then
     FILES_COUNT=1
 
     {
         pushd "$PWD" || ERROR_COUNT=$((ERROR_COUNT + 1))
-        rm -rf "$OUTPUT_DIR" && mkdir "$OUTPUT_DIR"
         cd "$OUTPUT_DIR" || ERROR_COUNT=$((ERROR_COUNT + 1))
     } &>/dev/null
 
@@ -52,8 +51,5 @@ if [ "$(_check_mime_type "$@" $MIME_TYPES)" == "0" ]; then
         } &>/dev/null
     fi
 fi
-
-# Try remove output dir if it is empty
-rmdir "$OUTPUT_DIR" &>/dev/null
 
 _display_final_result "$FILES_COUNT" "$ERROR_COUNT" "$MIME_TYPES" "$OUTPUT_DIR"
