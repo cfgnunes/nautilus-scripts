@@ -6,36 +6,21 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed -z 's|\(scripts\).*
 
 # Initial checks
 _check_dependency pdfunite
-_check_number_files $# 1
-
-ERROR_COUNT=0
-FILES_COUNT=0
-MIME_TYPES="pdf"
-INPUT_FILES=""
+INPUT_FILES=$(_check_files "$*" "pdf" "2" "" "") || exit 1
 OUTPUT_FILE="output.pdf"
+ERROR_COUNT=0
 
-for arg; do
-    # Filter files with a specific mime type
-    if [ "$(_check_mime_type "$arg" "$MIME_TYPES")" == "0" ]; then
-        FILES_COUNT=$((FILES_COUNT + 1))
+# Run the main process
+# shellcheck disable=SC2086
+STD_OUTPUT="$(pdfunite $INPUT_FILES $OUTPUT_FILE 2>&1)"
+EXIT_CODE=$?
 
-        INPUT_FILES+="$arg"
-        INPUT_FILES+=$'\n'
-    fi
-done
+# Check the return
+if [ "$EXIT_CODE" -ne 0 ]; then
+    ERROR_COUNT=$((ERROR_COUNT + 1))
 
-if ((FILES_COUNT > 0)); then
-    # Run the main process
-    STD_OUTPUT="$(pdfunite $INPUT_FILES $OUTPUT_FILE 2>&1)"
-    EXIT_CODE=$?
-
-    # Check the return
-    if [ "$EXIT_CODE" -ne 0 ]; then
-        ERROR_COUNT=$((ERROR_COUNT + 1))
-
-        # Log the error in a file
-        _log_error "$PDF_PARAMETER" "$STD_OUTPUT"
-    fi
+    # Log the error in a file
+    _log_error "$PDF_PARAMETER" "$STD_OUTPUT"
 fi
 
-_display_final_result "$FILES_COUNT" "$ERROR_COUNT" "$MIME_TYPES" ""
+_display_result "$ERROR_COUNT" ""
