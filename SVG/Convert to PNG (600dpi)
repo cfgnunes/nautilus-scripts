@@ -12,8 +12,8 @@ OUTPUT_DIR=$(_get_output_dir)
 ERROR_COUNT=0
 for FILE in $INPUT_FILES; do
     # Run the main process
-    OUTPUT_FILE="$OUTPUT_DIR/$(_remove_extension "$FILE").pdf"
-    STD_OUTPUT="$(inkscape --without-gui --export-area-drawing --file="$FILE" --export-pdf="$OUTPUT_FILE" 2>&1)"
+    OUTPUT_FILE="$OUTPUT_DIR/$(_remove_extension "$FILE").png"
+    STD_OUTPUT="$(inkscape --without-gui --export-area-drawing --file="$FILE" --export-dpi=600 --export-png="$OUTPUT_FILE" 2>&1)"
 
     # Check if output file is not a zero byte
     if [ "$(stat --printf="%s" "$OUTPUT_FILE")" == "0" ]; then
