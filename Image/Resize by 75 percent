@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependency convert
+INPUT_FILES=$(_check_files "$*" "" "1" "" "") || exit 1
+OUTPUT_DIR=$(_get_output_dir)
+
+ERROR_COUNT=0
+for FILE in $INPUT_FILES; do
+    # Run the main process
+    STD_OUTPUT="$(convert -resize 75%x75% "$FILE" "$OUTPUT_DIR/$FILE" 2>&1)"
+    EXIT_CODE=$?
+
+    # Check the return
+    if [ "$EXIT_CODE" -ne 0 ]; then
+        ERROR_COUNT=$((ERROR_COUNT + 1))
+
+        # Log the error in a file
+        _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
+    fi
+done
+
+_display_result "$ERROR_COUNT" "$OUTPUT_DIR"
