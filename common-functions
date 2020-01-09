@@ -217,7 +217,7 @@ _check_files() {
     if [ "$DIRECTORY_FLAG" = "r" ]; then
         INPUT_FILES_NEW=""
         for FILE in $INPUT_FILES; do
-            INPUT_FILES_NEW+="$(find "$FILE" -type f)"
+            INPUT_FILES_NEW+="$(find -L "$FILE" -type f)"
             INPUT_FILES_NEW+=$'\n'
         done
         INPUT_FILES="$INPUT_FILES_NEW"
