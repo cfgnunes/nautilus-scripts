@@ -19,7 +19,7 @@ for arg; do
         FILES_COUNT=$((FILES_COUNT + 1))
 
         # Run the main process
-        STD_OUTPUT="$(detex "$arg" >"$OUTPUT_DIR/$(_remove_extension "$arg").txt")"
+        STD_OUTPUT="$(detex "$arg" | sed "s|^[ \t]*||;s|[ \t]*$||" | cat -s >"$OUTPUT_DIR/$(_remove_extension "$arg").txt")"
         EXIT_CODE=$?
 
         # Check the return
