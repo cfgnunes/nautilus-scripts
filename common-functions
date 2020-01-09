@@ -248,7 +248,7 @@ _check_files() {
 
         # Check the DIRECTORY_FLAG
         if [ -d "$FILE" ]; then
-            [ "$DIRECTORY_FLAG" = "d" ] && VALID_FILE=1 || VALID_FILE=0
+            [ -n "$DIRECTORY_FLAG" ] && VALID_FILE=1
         fi
 
         # Add the file in the list if it is valid
