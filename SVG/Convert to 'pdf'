@@ -11,7 +11,7 @@ OUTPUT_DIR=$(_get_output_dir)
 
 for FILE in $INPUT_FILES; do
     # Run the main process
-    OUTPUT_FILE="$OUTPUT_DIR/$(_remove_extension "$FILE").pdf"
+    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").pdf"
     STD_OUTPUT="$(inkscape --without-gui --export-area-drawing --file="$FILE" --export-pdf="$OUTPUT_FILE" 2>&1)"
 
     # Check if output file is not a zero byte

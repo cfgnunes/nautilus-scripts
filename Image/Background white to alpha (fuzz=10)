@@ -10,7 +10,7 @@ INPUT_FILES=$(_check_files "$*" "" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir)
 
 for FILE in $INPUT_FILES; do
-    OUTPUT_FILE="$OUTPUT_DIR/$(_remove_extension "$FILE").png"
+    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").png"
     STD_OUTPUT="$(convert -transparent white -fuzz 10% "$FILE" "$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
 

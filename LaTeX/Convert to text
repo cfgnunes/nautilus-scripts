@@ -11,7 +11,7 @@ OUTPUT_DIR=$(_get_output_dir)
 
 for FILE in $INPUT_FILES; do
     # Run the main process
-    OUTPUT_FILE="$OUTPUT_DIR/$(_remove_extension "$FILE").txt"
+    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").txt"
     STD_OUTPUT="$(detex "$FILE" | sed "s|^[ \t]*||;s|[ \t]*$||" | cat -s >"$OUTPUT_FILE")"
     EXIT_CODE=$?
 

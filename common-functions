@@ -42,20 +42,102 @@ _msg_info() {
 }
 
 _check_dependency() {
-    LIST="$1"
+    LIST_COMMANDS="$1"
 
-    for LIST; do
-        hash "$LIST" 2>/dev/null || {
-            _msg_error "Could not find the command '$LIST'. Please, install it."
-            exit 1
-        }
+    for COMMAND in $LIST_COMMANDS; do
+        if hash "$COMMAND" 2>/dev/null; then
+            continue
+        fi
+
+        PACKAGE_NAME=""
+        case "$COMMAND" in
+        "make")
+            PACKAGE_NAME="make"
+            ;;
+        "convert")
+            PACKAGE_NAME="imagemagick"
+            ;;
+        "gzip")
+            PACKAGE_NAME="gzip"
+            ;;
+        "tar")
+            PACKAGE_NAME="tar"
+            ;;
+        "sed")
+            PACKAGE_NAME="sed"
+            ;;
+        "file-roller")
+            PACKAGE_NAME="file-roller"
+            ;;
+        "file")
+            PACKAGE_NAME="file"
+            ;;
+        "gs")
+            PACKAGE_NAME="ghostscript"
+            ;;
+        "inkscape")
+            PACKAGE_NAME="inkscape"
+            ;;
+        "latexmk")
+            PACKAGE_NAME="latexmk"
+            ;;
+        "crc32")
+            PACKAGE_NAME="libarchive-zip-perl"
+            ;;
+        "mediainfo")
+            PACKAGE_NAME="mediainfo"
+            ;;
+        "meld")
+            PACKAGE_NAME="meld"
+            ;;
+        "7z")
+            PACKAGE_NAME="p7zip-full"
+            ;;
+        "qpdf")
+            PACKAGE_NAME="qpdf"
+            ;;
+        "zenity")
+            PACKAGE_NAME="zenity"
+            ;;
+        "zip")
+            PACKAGE_NAME="zip"
+            ;;
+        "detex")
+            PACKAGE_NAME="texlive-binaries"
+            ;;
+        "iconv")
+            PACKAGE_NAME="libc-bin"
+            ;;
+        "expand" | "md5sum" | "sha1sum" | "sha256sum" | "sha512sum" | "tr")
+            PACKAGE_NAME="coreutils"
+            ;;
+        "pdfimages" | "pdfseparate" | "pdftoppm" | "pdftotext" | "pdfunite")
+            PACKAGE_NAME="poppler-utils"
+            ;;
+        *)
+            PACKAGE_NAME=""
+            ;;
+        esac
+
+        if [ -n "$PACKAGE_NAME" ]; then
+            _msg_error "Error: You need to install the '$PACKAGE_NAME' package."
+        else
+            _msg_error "Error: The command '$COMMAND' was not found. Please, install it."
+        fi
+        exit 1
     done
 }
 
-_remove_extension() {
+_get_filename_without_extension() {
     FILENAME="$1"
     # shellcheck disable=SC2001
     echo "$FILENAME" | sed "s|\.[^.]*$||"
+}
+
+_get_filename_extension() {
+    FILENAME="$1"
+    # shellcheck disable=SC2001
+    echo "$FILENAME" | sed "s|[^.]*\.|.|" | grep "\."
 }
 
 _log_error() {
@@ -73,9 +155,14 @@ _log_error() {
 _display_result() {
     OUTPUT_DIR="$1"
 
+    OUTPUT_DIR_PRINT="$OUTPUT_DIR"
+    echo "$OUTPUT_DIR_PRINT" | grep -q "$PWD" && OUTPUT_DIR_PRINT="./${OUTPUT_DIR#$PWD/}"
+    # shellcheck disable=SC2088
+    echo "$OUTPUT_DIR_PRINT" | grep -q "$HOME" && OUTPUT_DIR_PRINT="~/${OUTPUT_DIR#$HOME/}"
+
     # Check if there was some error
     if [ -f "$OUTPUT_DIR/$ERROR_LOG_FILE" ]; then
-        _msg_error "Task finished with errors! See the '$OUTPUT_DIR/$ERROR_LOG_FILE' for details."
+        _msg_error "Task finished with errors! See the '$OUTPUT_DIR_PRINT/$ERROR_LOG_FILE' for details."
         exit 1
     fi
 
@@ -89,7 +176,7 @@ _display_result() {
             _msg_info "Task finished, but there is no output files!"
             exit 0
         fi
-        _msg_info "Task finished! The output is in: '$OUTPUT_DIR'."
+        _msg_info "Task finished! The output files is in '$OUTPUT_DIR_PRINT' directory."
     else
         _msg_info "Task finished!"
     fi
@@ -105,7 +192,7 @@ _get_output_dir() {
     OUTPUT_DIR="$DIR_BASE/$DIR_NAME"
 
     if [[ ! -w "$DIR_BASE" ]]; then
-        _msg_error "It was not possible to find directory with write permission."
+        _msg_error "Error: It was not possible to find directory with write permission."
         exit 1
     fi
 
@@ -173,23 +260,23 @@ _check_files() {
     # Check if there is at last one file with valid mime type
     if ((FILES_COUNT == 0)); then
         if [ -n "$MIME_LIST" ]; then
-            _msg_error "There is no '$MIME_LIST' in the selected files!"
+            _msg_error "Error: There is no '$MIME_LIST' in the selected files!"
         else
-            _msg_error "There is no valid itens in the in the selected files!"
+            _msg_error "Error: There is no valid itens in the in the selected files!"
         fi
         return 1
     fi
 
     if [ -n "$MIN_FILES" ]; then
         if ((FILES_COUNT < MIN_FILES)); then
-            _msg_error "$FILES_COUNT file was selected, but the minium is $MIN_FILES!"
+            _msg_error "Error: You selected $FILES_COUNT files, but the minium is $MIN_FILES!"
             return 1
         fi
     fi
 
     if [ -n "$MAX_FILES" ]; then
         if ((FILES_COUNT > MAX_FILES)); then
-            _msg_error "$FILES_COUNT file was selected, but the maximum is $MAX_FILES!"
+            _msg_error "Error: You selected $FILES_COUNT files, but the maximum is $MAX_FILES!"
             return 1
         fi
     fi

@@ -11,7 +11,7 @@ OUTPUT_DIR=$(_get_output_dir)
 
 for FILE in $INPUT_FILES; do
     # Run the main process
-    OUTPUT_FILE="$(_remove_extension "$FILE").bmp"
+    OUTPUT_FILE="$(_get_filename_without_extension "$FILE").bmp"
     STD_OUTPUT="$(convert "$FILE" "$OUTPUT_DIR/$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
 
