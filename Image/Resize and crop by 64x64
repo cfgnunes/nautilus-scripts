@@ -9,19 +9,16 @@ _check_dependency convert
 INPUT_FILES=$(_check_files "$*" "" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir)
 
-ERROR_COUNT=0
 for FILE in $INPUT_FILES; do
     # Run the main process
-    STD_OUTPUT="$(convert -resize "64x64^" -gravity center -crop 64x64+0+0 -strip "$FILE" "$OUTPUT_DIR/$FILE" 2>&1)"
+    OUTPUT_FILE="$OUTPUT_DIR/$FILE"
+    STD_OUTPUT="$(convert -resize "64x64^" -gravity center -crop 64x64+0+0 -strip "$FILE" "$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
 
-    # Check the return
+    # Check the return and log the error
     if [ "$EXIT_CODE" -ne 0 ]; then
-        ERROR_COUNT=$((ERROR_COUNT + 1))
-
-        # Log the error in a file
         _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
     fi
 done
 
-_display_result "$ERROR_COUNT" "$OUTPUT_DIR"
+_display_result "$OUTPUT_DIR"

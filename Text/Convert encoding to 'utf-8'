@@ -9,19 +9,16 @@ _check_dependency iconv
 INPUT_FILES=$(_check_files "$*" "text" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir)
 
-ERROR_COUNT=0
 for FILE in $INPUT_FILES; do
     # Run the main process
-    STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t UTF-8 -o "$OUTPUT_DIR/$FILE")"
+    OUTPUT_FILE="$OUTPUT_DIR/$FILE"
+    STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t UTF-8 -o "$OUTPUT_FILE")"
     EXIT_CODE=$?
 
-    # Check the return
+    # Check the return and log the error
     if [ "$EXIT_CODE" -ne 0 ]; then
-        ERROR_COUNT=$((ERROR_COUNT + 1))
-
-        # Log the error in a file
         _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
     fi
 done
 
-_display_result "$ERROR_COUNT" "$OUTPUT_DIR"
+_display_result "$OUTPUT_DIR"

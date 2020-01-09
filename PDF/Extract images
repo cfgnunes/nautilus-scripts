@@ -9,18 +9,15 @@ _check_dependency pdfimages
 INPUT_FILES=$(_check_files "$*" "pdf" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir)
 
-ERROR_COUNT=0
 for FILE in $INPUT_FILES; do
     # Run the main process
-    STD_OUTPUT="$(pdfimages -all "$FILE" "$OUTPUT_DIR/$(_remove_extension "$FILE")" 2>&1)"
+    OUTPUT_FILE="$OUTPUT_DIR/$(_remove_extension "$FILE")"
+    STD_OUTPUT="$(pdfimages -all "$FILE" "$OUTPUT_FILE" 2>&1)"
 
-    # Check the return
+    # Check the return and log the error
     if [[ "$STD_OUTPUT" == *"Error"* ]]; then
-        ERROR_COUNT=$((ERROR_COUNT + 1))
-
-        # Log the error in a file
         _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
     fi
 done
 
-_display_result "$ERROR_COUNT" "$OUTPUT_DIR"
+_display_result "$OUTPUT_DIR"

@@ -9,19 +9,15 @@ _check_dependency pdfunite
 INPUT_FILES=$(_check_files "$*" "pdf" "2" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir)
 
-ERROR_COUNT=0
-
 # Run the main process
+OUTPUT_FILE="$OUTPUT_DIR/merged.pdf"
 # shellcheck disable=SC2086
-STD_OUTPUT="$(pdfunite $INPUT_FILES "$OUTPUT_DIR/merged.pdf" 2>&1)"
+STD_OUTPUT="$(pdfunite $INPUT_FILES "$OUTPUT_FILE" 2>&1)"
 EXIT_CODE=$?
 
-# Check the return
+# Check the return and log the error
 if [ "$EXIT_CODE" -ne 0 ]; then
-    ERROR_COUNT=$((ERROR_COUNT + 1))
-
-    # Log the error in a file
     _log_error "$PDF_PARAMETER" "$STD_OUTPUT"
 fi
 
-_display_result "$ERROR_COUNT" "$OUTPUT_DIR"
+_display_result "$OUTPUT_DIR"

@@ -9,7 +9,6 @@ _check_dependency inkscape
 INPUT_FILES=$(_check_files "$*" "svg;gzip" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir)
 
-ERROR_COUNT=0
 for FILE in $INPUT_FILES; do
     # Run the main process
     OUTPUT_FILE="$OUTPUT_DIR/$(_remove_extension "$FILE").svg"
@@ -17,11 +16,8 @@ for FILE in $INPUT_FILES; do
 
     # Check if output file is not a zero byte
     if [ "$(stat --printf="%s" "$OUTPUT_FILE")" == "0" ]; then
-        ERROR_COUNT=$((ERROR_COUNT + 1))
-
-        # Log the error in a file
         _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
     fi
 done
 
-_display_result "$ERROR_COUNT" "$OUTPUT_DIR"
+_display_result "$OUTPUT_DIR"

@@ -9,20 +9,18 @@ _check_dependency sed
 INPUT_FILES=$(_check_files "$*" "" "1" "" "d") || exit 1
 OUTPUT_DIR="$PWD"
 
-ERROR_COUNT=0
 for FILE in $INPUT_FILES; do
     # shellcheck disable=SC2001
-    NEW_FILENAME=$(echo "$FILE" | sed "s|[\_ ][\_ ]*|-|g;s|[-][-]*|-|g")
-    NEW_FILENAME_TMP="$FILE.tmp"
+    OUTPUT_FILE=$(echo "$FILE" | sed "s|[\_ ][\_ ]*|-|g;s|[-][-]*|-|g")
+    TEMP_FILE="$FILE.tmp"
 
-    if [ -f "$NEW_FILENAME" ] | [ -f "$NEW_FILENAME_TMP" ]; then
-        ERROR_COUNT=$((ERROR_COUNT + 1))
+    if [ -f "$OUTPUT_FILE" ] | [ -f "$TEMP_FILE" ]; then
         _log_error "$FILE" "It was not possible to rename the file." "$OUTPUT_DIR"
         continue
     fi
 
     # Run the main process
-    mv "$FILE" "$NEW_FILENAME_TMP" && mv "$NEW_FILENAME_TMP" "$NEW_FILENAME"
+    mv "$FILE" "$TEMP_FILE" && mv "$TEMP_FILE" "$OUTPUT_FILE"
 done
 
-_display_result "$ERROR_COUNT" ""
+_display_result ""

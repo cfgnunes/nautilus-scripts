@@ -9,19 +9,15 @@ _check_dependency 7z
 INPUT_FILES=$(_check_files "$*" "" "1" "" "d") || exit 1
 OUTPUT_DIR="$PWD"
 
-ERROR_COUNT=0
-
 # Run the main process
+OUTPUT_FILE="$(pwd | sed "s#.*/##").7z"
 # shellcheck disable=SC2086
-STD_OUTPUT="$(7z a -mx9 "$(pwd | sed "s#.*/##").7z" $INPUT_FILES 2>&1)"
+STD_OUTPUT="$(7z a -mx9 "$OUTPUT_FILE" $INPUT_FILES 2>&1)"
 EXIT_CODE=$?
 
-# Check the return
+# Check the return and log the error
 if [ "$EXIT_CODE" -ne 0 ]; then
-    ERROR_COUNT=$((ERROR_COUNT + 1))
-
-    # Log the error in a file
     _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
 fi
 
-_display_result "$ERROR_COUNT" ""
+_display_result ""
