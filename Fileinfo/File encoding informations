@@ -10,7 +10,7 @@ INPUT_FILES=$(_check_files "$*" "" "1" "" "r") || exit 1
 
 # Run the main process
 # shellcheck disable=SC2086
-STD_OUTPUT=$(file $INPUT_FILES)
+STD_OUTPUT=$(file --mime-encoding $INPUT_FILES)
 WIDTH_TEXT=$(echo "$STD_OUTPUT" | wc -L)
 WIDTH_WINDOW=$((WIDTH_TEXT * 10))
-echo "$STD_OUTPUT" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "File information ('file' command)"
+echo "$STD_OUTPUT" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "File informations (encoding)"
