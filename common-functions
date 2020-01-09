@@ -100,10 +100,10 @@ _get_output_dir() {
     DIR_NAME="output"
     DIR_BASE="$PWD"
     DIR_SUFFIX=1
-    OUTPUT_DIR="$DIR_BASE/$DIR_NAME"
 
     [[ ! -w "$DIR_BASE" ]] && DIR_BASE="$HOME"
     [[ ! -w "$DIR_BASE" ]] && DIR_BASE="/tmp"
+    OUTPUT_DIR="$DIR_BASE/$DIR_NAME"
 
     if [[ ! -w "$DIR_BASE" ]]; then
         _msg_error "It was not possible to find directory with write permission."
