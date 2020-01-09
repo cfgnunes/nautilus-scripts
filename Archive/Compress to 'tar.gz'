@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed -z 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependency tar
+INPUT_FILES=$(_check_files "$*" "" "1" "" "d") || exit 1
+OUTPUT_DIR="$PWD"
+
+ERROR_COUNT=0
+
+# Run the main process
+# shellcheck disable=SC2086
+STD_OUTPUT="$(tar -czf "$(pwd | sed "s#.*/##").tar.gz" $INPUT_FILES 2>&1)"
+EXIT_CODE=$?
+
+# Check the return
+if [ "$EXIT_CODE" -ne 0 ]; then
+    ERROR_COUNT=$((ERROR_COUNT + 1))
+
+    # Log the error in a file
+    _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
+fi
+
+_display_result "$ERROR_COUNT" ""

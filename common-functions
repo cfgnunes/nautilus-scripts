@@ -181,6 +181,6 @@ _check_files() {
         fi
     fi
 
-    echo "$OUTPUT_FILES"
+    echo "$OUTPUT_FILES" | sort
     return 0
 }
