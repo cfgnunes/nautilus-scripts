@@ -11,7 +11,7 @@ OUTPUT_DIR=$(_get_output_dir)
 
 for FILE in $INPUT_FILES; do
     # Run the main process
-    OUTPUT_FILE="$OUTPUT_DIR/$(_remove_extension "$FILE").7z"
+    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").7z"
     STD_OUTPUT="$(7z a -mx9 "$OUTPUT_FILE" "$FILE" 2>&1)"
     EXIT_CODE=$?
 
