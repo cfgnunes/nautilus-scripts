@@ -13,7 +13,7 @@ ERROR_COUNT=0
 for FILE in $INPUT_FILES; do
     # Run the main process
     OUTPUT_FILE="$OUTPUT_DIR/$(_remove_extension "$FILE").svgz"
-    STD_OUTPUT="$(gzip "$FILE" -c >"$OUTPUT_FILE" 2>&1)"
+    STD_OUTPUT="$(gzip -9 "$FILE" -c >"$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
 
     # Check the return
