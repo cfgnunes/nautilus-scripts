@@ -121,7 +121,7 @@ _get_output_dir() {
 
 _check_files() {
     INPUT_FILES="$1"
-    MIME_FILTER="$2"
+    MIME_LIST="$2"
     MIN_FILES="$3"
     MAX_FILES="$4"
     INCLUDE_DIRECTORIES="$5"
@@ -129,17 +129,24 @@ _check_files() {
     OUTPUT_FILES=""
     FILES_COUNT=0
     for FILE in $INPUT_FILES; do
-        VALID_FILE=1
+        VALID_FILE=0
 
         # Filter files by mime type
-        if [ -n "$MIME_FILTER" ]; then
+        if [ -n "$MIME_LIST" ]; then
             MIME_FILE=$(file --mime-type -b "$FILE")
-            [[ "$MIME_FILE" != *"$MIME_FILTER"* ]] && VALID_FILE=0
+            IFS_OLD=$IFS
+            IFS=";"
+            for MIME in $MIME_LIST; do
+                [[ "$MIME_FILE" == *"$MIME"* ]] && VALID_FILE=1
+            done
+            IFS=$IFS_OLD
+        else
+            VALID_FILE=1
         fi
 
-        # Include directories
-        if [ -d "$FILE" ]; then
-            [ -z "$INCLUDE_DIRECTORIES" ] && VALID_FILE=0
+        # Exclude directories if INCLUDE_DIRECTORIES is empty
+        if [ -z "$INCLUDE_DIRECTORIES" ]; then
+            [ -d "$FILE" ] && VALID_FILE=0
         fi
 
         # Add the file in the list if it is valid
@@ -152,8 +159,8 @@ _check_files() {
 
     # Check if there is at last one file with valid mime type
     if ((FILES_COUNT == 0)); then
-        if [ -n "$MIME_FILTER" ]; then
-            _msg_error "There is no '$MIME_FILTER' in the selected files!"
+        if [ -n "$MIME_LIST" ]; then
+            _msg_error "There is no '$MIME_LIST' in the selected files!"
         else
             _msg_error "There is no valid itens in the in the selected files!"
         fi
