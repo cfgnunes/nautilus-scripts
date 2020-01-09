@@ -210,14 +210,19 @@ _check_files() {
     DIRECTORY_FLAG="$5"
     # DIRECTORY_FLAG values:
     #   'd' for include directories
-    #   'r' for expand files in directories recursively
+    #   'r' for expand directories recursively, but include only files
+    #   'R' for expand directories recursively
     #   otherwise exclude directories
 
     # Expand files in directories recursively
-    if [ "$DIRECTORY_FLAG" = "r" ]; then
+    if [ "$DIRECTORY_FLAG" = "r" ] || [ "$DIRECTORY_FLAG" = "R" ]; then
         INPUT_FILES_NEW=""
         for FILE in $INPUT_FILES; do
-            INPUT_FILES_NEW+="$(find -L "$FILE" -type f)"
+            if [ "$DIRECTORY_FLAG" = "r" ]; then
+                INPUT_FILES_NEW+="$(find -L "$FILE" -type f)"
+            else
+                INPUT_FILES_NEW+="$(find -L "$FILE")"
+            fi
             INPUT_FILES_NEW+=$'\n'
         done
         INPUT_FILES="$INPUT_FILES_NEW"
