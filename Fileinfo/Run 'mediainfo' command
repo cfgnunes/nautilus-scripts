@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependency mediainfo zenity
+INPUT_FILES=$(_check_files "$*" "" "1" "" "") || exit 1
+
+# Run the main process
+# shellcheck disable=SC2086
+RESULT=$(mediainfo $INPUT_FILES)
+WIDTH_TEXT=$(echo "$RESULT" | wc -L)
+WIDTH_WINDOW=$((WIDTH_TEXT * 10))
+echo "$RESULT" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "Fileinfo"
