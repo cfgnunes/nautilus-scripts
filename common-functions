@@ -81,9 +81,6 @@ _check_dependency() {
         "latexmk")
             PACKAGE_NAME="latexmk"
             ;;
-        "crc32")
-            PACKAGE_NAME="libarchive-zip-perl"
-            ;;
         "mediainfo")
             PACKAGE_NAME="mediainfo"
             ;;
