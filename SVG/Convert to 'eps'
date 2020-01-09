@@ -2,7 +2,7 @@
 
 # Source the file 'scripts/common-functions'
 # shellcheck disable=SC1090
-source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed -z 's|\(scripts\).*|\1/common-functions|')"
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
 
 # Initial checks
 _check_dependency inkscape
