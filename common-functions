@@ -105,7 +105,7 @@ _check_dependency() {
         "iconv")
             PACKAGE_NAME="libc-bin"
             ;;
-        "expand" | "md5sum" | "sha1sum" | "sha256sum" | "sha512sum" | "tr")
+        "chmod" | "expand" | "md5sum" | "sha1sum" | "sha256sum" | "sha512sum" | "stat" | "tr")
             PACKAGE_NAME="coreutils"
             ;;
         "pdfimages" | "pdfseparate" | "pdftoppm" | "pdftotext" | "pdfunite")
