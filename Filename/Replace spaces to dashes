@@ -11,8 +11,8 @@ OUTPUT_DIR="$PWD"
 
 ERROR_COUNT=0
 for FILE in $INPUT_FILES; do
-
-    NEW_FILENAME=$(echo "$FILE" | sed "s|[ ][ ]*|-|g")
+    # shellcheck disable=SC2001
+    NEW_FILENAME=$(echo "$FILE" | sed "s|[\_ ][\_ ]*|-|g;s|[-][-]*|-|g")
     NEW_FILENAME_TMP="$FILE.tmp"
 
     if [ -f "$NEW_FILENAME" ] | [ -f "$NEW_FILENAME_TMP" ]; then
