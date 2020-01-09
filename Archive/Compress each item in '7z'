@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed -z 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependency 7z
+INPUT_FILES=$(_check_files "$*" "" "1" "" "d") || exit 1
+OUTPUT_DIR=$(_get_output_dir)
+
+ERROR_COUNT=0
+for FILE in $INPUT_FILES; do
+    # Run the main process
+    OUTPUT_FILE="$OUTPUT_DIR/$(_remove_extension "$FILE").7z"
+    STD_OUTPUT="$(7z a -mx9 "$OUTPUT_FILE" "$FILE" 2>&1)"
+    EXIT_CODE=$?
+
+    # Check the return
+    if [ "$EXIT_CODE" -ne 0 ]; then
+        ERROR_COUNT=$((ERROR_COUNT + 1))
+
+        # Log the error in a file
+        _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
+    fi
+done
+
+_display_result "$ERROR_COUNT" "$OUTPUT_DIR"
