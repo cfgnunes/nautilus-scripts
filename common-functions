@@ -123,7 +123,21 @@ _check_files() {
     MIME_LIST="$2"
     MIN_FILES="$3"
     MAX_FILES="$4"
-    INCLUDE_DIRECTORIES="$5"
+    DIRECTORY_FLAG="$5"
+    # DIRECTORY_FLAG values:
+    #   'd' for include directories
+    #   'r' for expand files in directories recursively
+    #   otherwise exclude directories
+
+    # Expand files in directories recursively
+    if [ "$DIRECTORY_FLAG" = "r" ]; then
+        INPUT_FILES_NEW=""
+        for FILE in $INPUT_FILES; do
+            INPUT_FILES_NEW+="$(find "$FILE" -type f)"
+            INPUT_FILES_NEW+=$'\n'
+        done
+        INPUT_FILES="$INPUT_FILES_NEW"
+    fi
 
     OUTPUT_FILES=""
     FILES_COUNT=0
@@ -143,9 +157,9 @@ _check_files() {
             VALID_FILE=1
         fi
 
-        # Exclude directories if INCLUDE_DIRECTORIES is empty
-        if [ -z "$INCLUDE_DIRECTORIES" ]; then
-            [ -d "$FILE" ] && VALID_FILE=0
+        # Check the DIRECTORY_FLAG
+        if [ -d "$FILE" ]; then
+            [ "$DIRECTORY_FLAG" = "d" ] && VALID_FILE=1 || VALID_FILE=0
         fi
 
         # Add the file in the list if it is valid
