@@ -71,12 +71,11 @@ _log_error() {
 }
 
 _display_result() {
-    ERROR_COUNT="$1"
-    OUTPUT_DIR="$2"
+    OUTPUT_DIR="$1"
 
     # Check if there was some error
-    if ((ERROR_COUNT > 0)); then
-        _msg_error "Task finished with errors! See the '$ERROR_LOG_FILE' for details."
+    if [ -f "$OUTPUT_DIR/$ERROR_LOG_FILE" ]; then
+        _msg_error "Task finished with errors! See the '$OUTPUT_DIR/$ERROR_LOG_FILE' for details."
         exit 1
     fi
 
