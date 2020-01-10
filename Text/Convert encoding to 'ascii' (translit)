@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependency iconv
+INPUT_FILES=$(_check_files "$*" "text" "1" "" "") || exit 1
+OUTPUT_DIR=$(_get_output_dir)
+
+for FILE in $INPUT_FILES; do
+    # Skip 'ascii' files
+    if file -bi "$FILE" | grep -q -- "ascii"; then
+        continue
+    fi
+
+    # Run the main process
+    OUTPUT_FILE="$OUTPUT_DIR/$FILE"
+    STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t ascii//TRANSLIT -o "$OUTPUT_FILE")"
+    EXIT_CODE=$?
+
+    # Check the return and log the error
+    if [ "$EXIT_CODE" -ne 0 ]; then
+        _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
+    fi
+done
+
+_display_result "$OUTPUT_DIR"
