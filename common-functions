@@ -63,9 +63,6 @@ _check_dependency() {
         "tar")
             PACKAGE_NAME="tar"
             ;;
-        "sed")
-            PACKAGE_NAME="sed"
-            ;;
         "file-roller")
             PACKAGE_NAME="file-roller"
             ;;
@@ -104,9 +101,6 @@ _check_dependency() {
             ;;
         "iconv")
             PACKAGE_NAME="libc-bin"
-            ;;
-        "chmod" | "expand" | "md5sum" | "sha1sum" | "sha256sum" | "sha512sum" | "stat" | "tr")
-            PACKAGE_NAME="coreutils"
             ;;
         "pdfimages" | "pdfseparate" | "pdftoppm" | "pdftotext" | "pdfunite")
             PACKAGE_NAME="poppler-utils"
