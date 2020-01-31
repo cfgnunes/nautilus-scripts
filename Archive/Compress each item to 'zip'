@@ -12,7 +12,7 @@ OUTPUT_DIR=$(_get_output_dir)
 for FILE in $INPUT_FILES; do
     # Run the main process
     OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").zip"
-    STD_OUTPUT="$(zip -r "$OUTPUT_FILE" "$FILE" 2>&1)"
+    STD_OUTPUT="$(zip -9 -r "$OUTPUT_FILE" "$FILE" 2>&1)"
     EXIT_CODE=$?
 
     # Check the return and log the error
