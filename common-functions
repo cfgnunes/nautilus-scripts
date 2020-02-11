@@ -277,6 +277,6 @@ _check_files() {
         fi
     fi
 
-    echo "$OUTPUT_FILES" | sort
+    echo "$OUTPUT_FILES" | sed '/^$/d' | sort
     return 0
 }
