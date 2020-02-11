@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+INPUT_FILES=$(_check_files "$*" "" "1" "" "d") || exit 1
+OUTPUT_DIR="$PWD"
+
+_rename() {
+    FILE_SRC="$1"
+    FILE_DST="$2"
+    TEMP_FILE="$FILE_SRC.tmp"
+
+    if [ -f "$FILE_DST" ] | [ -f "$TEMP_FILE" ]; then
+        _log_error "$FILE_SRC" "It was not possible to rename the file." "$OUTPUT_DIR"
+    fi
+
+    # Run the main process
+    mv "$FILE_SRC" "$TEMP_FILE" && mv "$TEMP_FILE" "$FILE_DST"
+}
+
+for FILE in $INPUT_FILES; do
+    OUTPUT_FILE="${FILE^^}"
+    _rename "$FILE" "$OUTPUT_FILE"
+
+    if [ -d "$OUTPUT_FILE" ]; then
+        # Get the depth of the directory
+        DEPTH=$(find -L "$OUTPUT_FILE" -type d -printf "%d\n" | sort -n -r | head -1)
+
+        # Iterate over depths
+        for ((i = 1; i <= DEPTH + 1; i++)); do
+            echo "$i"
+            INPUT_FILES_DEPTH=$(find -L "$OUTPUT_FILE" -mindepth "$i" -maxdepth "$i")
+            # Rename files for current depth
+            for FILE_DEPTH in $INPUT_FILES_DEPTH; do
+                _rename "$FILE_DEPTH" "${FILE_DEPTH^^}"
+            done
+        done
+    fi
+done
+
+_display_result ""
