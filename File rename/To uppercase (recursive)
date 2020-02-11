@@ -15,6 +15,7 @@ _rename() {
 
     if [ -f "$FILE_DST" ] | [ -f "$TEMP_FILE" ]; then
         _log_error "$FILE_SRC" "It was not possible to rename the file." "$OUTPUT_DIR"
+        return
     fi
 
     # Run the main process
