@@ -13,7 +13,7 @@ _rename() {
     FILE_DST="$2"
     TEMP_FILE="$FILE_SRC.tmp"
 
-    if [ -f "$FILE_DST" ] | [ -f "$TEMP_FILE" ]; then
+    if [ -f "$FILE_DST" ] || [ -f "$TEMP_FILE" ]; then
         _log_error "$FILE_SRC" "It was not possible to rename the file." "$OUTPUT_DIR"
         return
     fi
@@ -27,4 +27,4 @@ for FILE in $INPUT_FILES; do
     _rename "$FILE" "$OUTPUT_FILE"
 done
 
-_display_result ""
+_display_result "$OUTPUT_DIR"

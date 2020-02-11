@@ -13,7 +13,7 @@ for FILE in $INPUT_FILES; do
     OUTPUT_FILE=$(echo "$FILE" | sed "s|[\_ ][\_ ]*|-|g;s|[-][-]*|-|g")
     TEMP_FILE="$FILE.tmp"
 
-    if [ -f "$OUTPUT_FILE" ] | [ -f "$TEMP_FILE" ]; then
+    if [ -f "$OUTPUT_FILE" ] || [ -f "$TEMP_FILE" ]; then
         _log_error "$FILE" "It was not possible to rename the file." "$OUTPUT_DIR"
         continue
     fi
@@ -22,4 +22,4 @@ for FILE in $INPUT_FILES; do
     mv "$FILE" "$TEMP_FILE" && mv "$TEMP_FILE" "$OUTPUT_FILE"
 done
 
-_display_result ""
+_display_result "$OUTPUT_DIR"

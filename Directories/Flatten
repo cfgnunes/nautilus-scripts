@@ -53,4 +53,4 @@ for DIRECTORY in $INPUT_FILES; do
     _flatten "$DIRECTORY"
 done
 
-_display_result ""
+_display_result "$OUTPUT_DIR"
