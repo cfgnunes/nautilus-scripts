@@ -20,4 +20,4 @@ if [ "$EXIT_CODE" -ne 0 ]; then
     _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
 fi
 
-_display_result ""
+_display_result "$OUTPUT_DIR"

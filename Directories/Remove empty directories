@@ -19,4 +19,4 @@ for DIRECTORY in $INPUT_FILES; do
     fi
 done
 
-_display_result ""
+_display_result "$OUTPUT_DIR"

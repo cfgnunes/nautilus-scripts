@@ -23,4 +23,4 @@ for FILE in $INPUT_FILES; do
     NUM_SEQUENCE=$((NUM_SEQUENCE + 1))
 done
 
-_display_result ""
+_display_result "$OUTPUT_DIR"
