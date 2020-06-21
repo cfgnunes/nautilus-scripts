@@ -10,7 +10,7 @@ INPUT_FILES=$(_check_files "$*" "text" "1" "" "r") || exit 1
 
 # Run the main process
 # shellcheck disable=SC2086
-STD_OUTPUT=$(file $INPUT_FILES | sed "s|:.*CRLF line.*|: CRLF (windows)|; s|:.*CR line.*|: CR (mac)|; s|:.*text.*|: LF (unix)|; s|\([^:]*\):[ ]*\(.*\)|\2: '\1'|" | grep "): " | sort)
+STD_OUTPUT=$(file $INPUT_FILES | sed "s|:.*CRLF, CR, LF line.*|: CRLF+CR+LF (windows)|;s|:.*CRLF, LF line.*|: CRLF+LF (windows)|;s|:.*CRLF, CR line.*|: CRLF+CR (windows)|;s|:.*CRLF line.*|: CRLF (windows)|;s|:.*CR line.*|: CR (mac)|;s|:.*CR, LF line.*|: CR+LF (mac)|;s|:.*text.*|: LF (unix)|;s|\([^:]*\):[ ]*\(.*\)|\2: '\1'|" | grep "): " | sort)
 WIDTH_TEXT=$(echo "$STD_OUTPUT" | wc -L)
 WIDTH_WINDOW=$((WIDTH_TEXT * 10))
 echo "$STD_OUTPUT" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "File informations (line ending)"
