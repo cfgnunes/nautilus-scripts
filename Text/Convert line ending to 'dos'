@@ -9,14 +9,9 @@ INPUT_FILES=$(_check_files "$*" "text" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir)
 
 for FILE in $INPUT_FILES; do
-    # Skip DOS/WINDOWS files
-    if file -b "$FILE" | grep -q "CRLF"; then
-        continue
-    fi
-
     # Run the main process
     OUTPUT_FILE="$OUTPUT_DIR/$FILE"
-    STD_OUTPUT="$(sed $'s/$/\r/' "$FILE" >"$OUTPUT_FILE")"
+    STD_OUTPUT="$(perl -pe 's/\r\n|\n|\r/\r\n/g' "$FILE" >"$OUTPUT_FILE")"
     EXIT_CODE=$?
 
     # Check the return and log the error
