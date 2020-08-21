@@ -5,18 +5,17 @@
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
 
 # Initial checks
-_check_dependency detex
-INPUT_FILES=$(_check_files "$*" "text/x-tex" "1" "" "") || exit 1
+_check_dependency pandoc
+INPUT_FILES=$(_check_files "$*" "text" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir)
 
 for FILE in $INPUT_FILES; do
     # Run the main process
-    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").txt"
-    STD_OUTPUT="$(detex "$FILE" | sed "s|^[ \t]*||;s|[ \t]*$||" | cat -s >"$OUTPUT_FILE")"
-    EXIT_CODE=$?
+    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").odt"
+    STD_OUTPUT="$(pandoc "$FILE" -s -o  "$OUTPUT_FILE" 2>&1)"
 
     # Check the return and log the error
-    if [ "$EXIT_CODE" -ne 0 ]; then
+    if [[ "$STD_OUTPUT" == *"Error"* ]]; then
         _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
     fi
 done

@@ -96,11 +96,11 @@ _check_dependency() {
         "zip")
             PACKAGE_NAME="zip"
             ;;
-        "detex")
-            PACKAGE_NAME="texlive-binaries"
-            ;;
         "iconv")
             PACKAGE_NAME="libc-bin"
+            ;;
+        "pandoc")
+            PACKAGE_NAME="pandoc"
             ;;
         "pdfimages" | "pdfseparate" | "pdftoppm" | "pdftotext" | "pdfunite")
             PACKAGE_NAME="poppler-utils"
