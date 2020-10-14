@@ -5,16 +5,16 @@
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
 
 # Initial checks
-INPUT_FILES=$(_check_files "$*" "" "1" "" "d") || exit 1
+INPUT_FILES=$(_check_files "$*" "" "1" "" "R") || exit 1
 OUTPUT_DIR="$PWD"
 
 for FILE in $INPUT_FILES; do
     # Run the main process
     STD_OUTPUT=""
     if [ -f "$FILE" ]; then
-        STD_OUTPUT="$(chmod --recursive 644 "$FILE" 2>&1)"
+        STD_OUTPUT="$(chmod 644 "$FILE" 2>&1)"
     elif [ -d "$FILE" ]; then
-        STD_OUTPUT="$(chmod --recursive 755 "$FILE" 2>&1)"
+        STD_OUTPUT="$(chmod 755 "$FILE" 2>&1)"
     fi
     EXIT_CODE=$?
 
