@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependency convert
+INPUT_FILES=$(_check_files "$*" "image" "1" "" "") || exit 1
+OUTPUT_DIR=$(_get_output_dir)
+
+for FILE in $INPUT_FILES; do
+    # Run the process (part 1)
+    OUTPUT_FILE="$(_get_filename_without_extension "$FILE")-2parts-h.pdf"
+    STD_OUTPUT_1="$(convert convert -crop 100%x50% +repage "$FILE" "$OUTPUT_DIR/tmp.jpg" 2>&1)"
+    EXIT_CODE_1=$?
+
+    # Check the return and log the error
+    if [ "$EXIT_CODE_1" -ne 0 ]; then
+        _log_error "$FILE" "$STD_OUTPUT_1" "$OUTPUT_DIR"
+    fi
+
+    # Run the process (part 2)
+    STD_OUTPUT_2="$(convert convert "$OUTPUT_DIR"/tmp-0.jpg "$OUTPUT_DIR"/tmp-1.jpg "$OUTPUT_DIR/$OUTPUT_FILE" 2>&1)"
+    EXIT_CODE_2=$?
+
+    # Check the return and log the error
+    if [ "$EXIT_CODE_2" -ne 0 ]; then
+        _log_error "$FILE" "$STD_OUTPUT_2" "$OUTPUT_DIR"
+    fi
+
+    rm -rf "$OUTPUT_DIR"/tmp*.jpg
+done
+
+_display_result "$OUTPUT_DIR"

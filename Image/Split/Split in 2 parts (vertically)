@@ -12,7 +12,7 @@ OUTPUT_DIR=$(_get_output_dir)
 for FILE in $INPUT_FILES; do
     # Run the main process
     OUTPUT_FILE="$OUTPUT_DIR/$FILE"
-    STD_OUTPUT="$(convert convert -crop 50%x100% "$FILE" "$OUTPUT_FILE" 2>&1)"
+    STD_OUTPUT="$(convert convert -crop 50%x100% +repage "$FILE" "$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
 
     # Check the return and log the error
