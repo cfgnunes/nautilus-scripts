@@ -11,7 +11,7 @@ OUTPUT_DIR="$PWD"
 for FILE in $INPUT_FILES; do
     # shellcheck disable=SC2001
     OUTPUT_FILE=$(echo "$FILE" | sed "s|[- ][- ]*|\_|g;s|[\_][\_]*|\_|g")
-    TEMP_FILE="$FILE.tmp"
+    TEMP_FILE=".$FILE.tmp"
 
     if [ -f "$OUTPUT_FILE" ] || [ -f "$TEMP_FILE" ]; then
         _log_error "$FILE" "It was not possible to rename the file." "$OUTPUT_DIR"

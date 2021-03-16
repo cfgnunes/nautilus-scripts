@@ -12,7 +12,7 @@ OUTPUT_DIR=$(_get_output_dir)
 for FILE in $INPUT_FILES; do
     # Run the process (part 1)
     OUTPUT_FILE="$(_get_filename_without_extension "$FILE")-4parts.pdf"
-    STD_OUTPUT_1="$(convert -crop 50%x50% +repage "$FILE" "$OUTPUT_DIR/tmp.jpg" 2>&1)"
+    STD_OUTPUT_1="$(convert -crop 50%x50% +repage "$FILE" "$OUTPUT_DIR/.tmp.jpg" 2>&1)"
     EXIT_CODE_1=$?
 
     # Check the return and log the error
@@ -21,7 +21,7 @@ for FILE in $INPUT_FILES; do
     fi
 
     # Run the process (part 2)
-    STD_OUTPUT_2="$(convert "$OUTPUT_DIR"/tmp-0.jpg "$OUTPUT_DIR"/tmp-1.jpg "$OUTPUT_DIR"/tmp-2.jpg "$OUTPUT_DIR"/tmp-3.jpg "$OUTPUT_DIR/$OUTPUT_FILE" 2>&1)"
+    STD_OUTPUT_2="$(convert "$OUTPUT_DIR"/.tmp-0.jpg "$OUTPUT_DIR"/.tmp-1.jpg "$OUTPUT_DIR"/.tmp-2.jpg "$OUTPUT_DIR"/.tmp-3.jpg "$OUTPUT_DIR/$OUTPUT_FILE" 2>&1)"
     EXIT_CODE_2=$?
 
     # Check the return and log the error
@@ -29,7 +29,7 @@ for FILE in $INPUT_FILES; do
         _log_error "$FILE" "$STD_OUTPUT_2" "$OUTPUT_DIR"
     fi
 
-    rm -rf "$OUTPUT_DIR"/tmp*.jpg
+    rm -rf "$OUTPUT_DIR"/.tmp*.jpg
 done
 
 _display_result "$OUTPUT_DIR"
