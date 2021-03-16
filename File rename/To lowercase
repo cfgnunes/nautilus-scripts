@@ -11,7 +11,7 @@ OUTPUT_DIR="$PWD"
 _rename() {
     FILE_SRC="$1"
     FILE_DST="$2"
-    TEMP_FILE="$FILE_SRC.tmp"
+    TEMP_FILE=".$FILE_SRC.tmp"
 
     if [ -f "$FILE_DST" ] || [ -f "$TEMP_FILE" ]; then
         _log_error "$FILE_SRC" "It was not possible to rename the file." "$OUTPUT_DIR"
