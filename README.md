@@ -1,7 +1,5 @@
 # Nautilus Scripts
 
-If you like this project, please consider making a donation to support the developer. [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2EDNU6LPSCH6S)
-
 There is a lot of nautilus scripts all over the web. But a lot of these scripts are not working very well. No check for errors and no check for dependencies. Some of them only work in nautilus, some others only in nemo. Some of them only work with files that not contained spaces, and so on. So I decided to write my own scripts, that has the following advantages:
 
 - It is easy to copy and adapt the scripts for other purposes;
