@@ -37,4 +37,4 @@ If you spot a bug, or want to improve the code, or even make the content better,
 
 ## Authors
 
-- Cristiano Nunes - _Developer_
+- Cristiano Nunes
