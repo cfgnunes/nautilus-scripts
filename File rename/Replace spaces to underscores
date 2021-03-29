@@ -8,18 +8,28 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 INPUT_FILES=$(_check_files "$*" "" "1" "" "d") || exit 1
 OUTPUT_DIR="$PWD"
 
-for FILE in $INPUT_FILES; do
-    # shellcheck disable=SC2001
-    OUTPUT_FILE=$(echo "$FILE" | sed "s|[- ][- ]*|\_|g;s|[\_][\_]*|\_|g")
-    TEMP_FILE=".$FILE.tmp"
+_rename() {
+    FILE_SRC="$1"
+    FILE_DST="$2"
+    TEMP_FILE=".$FILE_SRC.tmp"
 
-    if [ -f "$OUTPUT_FILE" ] || [ -f "$TEMP_FILE" ]; then
-        _log_error "$FILE" "It was not possible to rename the file." "$OUTPUT_DIR"
-        continue
+    if [ "$FILE_SRC" = "$FILE_DST" ]; then
+        return
+    fi
+
+    if [ -f "$FILE_DST" ] || [ -f "$TEMP_FILE" ]; then
+        _log_error "$FILE_SRC" "It was not possible to rename the file." "$OUTPUT_DIR"
+        return
     fi
 
     # Run the main process
-    mv "$FILE" "$TEMP_FILE" && mv "$TEMP_FILE" "$OUTPUT_FILE"
+    mv "$FILE_SRC" "$TEMP_FILE" && mv "$TEMP_FILE" "$FILE_DST"
+}
+
+for FILE in $INPUT_FILES; do
+    # shellcheck disable=SC2001
+    OUTPUT_FILE=$(echo "$FILE" | sed "s|[-\s][-\s]*|\_|g;s|\_\_*|\_|g")
+    _rename "$FILE" "$OUTPUT_FILE"
 done
 
 _display_result "$OUTPUT_DIR"
