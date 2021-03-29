@@ -6,7 +6,7 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 
 # Initial checks
 _check_dependency file zenity
-INPUT_FILES=$(_check_files "$*" "text" "1" "" "r") || exit 1
+INPUT_FILES=$(_get_files "$*" "text" "1" "" "r") || exit 1
 
 # Run the main process
 # shellcheck disable=SC2086

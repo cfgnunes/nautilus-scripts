@@ -199,7 +199,7 @@ _get_output_dir() {
     echo "$OUTPUT_DIR"
 }
 
-_check_files() {
+_get_files() {
     INPUT_FILES="$1"
     MIME_LIST="$2"
     MIN_FILES="$3"
