@@ -13,6 +13,10 @@ _rename() {
     FILE_DST="$2"
     TEMP_FILE=".$FILE_SRC.tmp"
 
+    if [ "$FILE_SRC" = "$FILE_DST" ]; then
+        return
+    fi
+
     if [ -f "$FILE_DST" ] || [ -f "$TEMP_FILE" ]; then
         _log_error "$FILE_SRC" "It was not possible to rename the file." "$OUTPUT_DIR"
         return
