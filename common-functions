@@ -200,16 +200,16 @@ _get_output_dir() {
 }
 
 _get_files() {
-    INPUT_FILES="$1"
-    MIME_LIST="$2"
-    MIN_FILES="$3"
-    MAX_FILES="$4"
+    INPUT_FILES="$1" # Input list
+    MIME_LIST="$2" # Filter bt MIME type
+    MIN_FILES="$3" # To check the minimum number of valid files
+    MAX_FILES="$4" # To check the maximum number of valid files
     DIRECTORY_FLAG="$5"
     # DIRECTORY_FLAG values:
-    #   'd' for include directories
-    #   'r' for expand directories recursively, but include only files
-    #   'R' for expand directories recursively
-    #   otherwise exclude directories
+    # 'd': Include directories.
+    # 'r': Expand directories recursively (include only files).
+    # 'R': Expand directories recursively (include files + subdirectories).
+    # other_value: Ignore directories.
 
     # Expand files in directories recursively
     if [ "$DIRECTORY_FLAG" = "r" ] || [ "$DIRECTORY_FLAG" = "R" ]; then
@@ -226,7 +226,7 @@ _get_files() {
     fi
 
     OUTPUT_FILES=""
-    FILES_COUNT=0
+    VALID_FILES_COUNT=0
     for FILE in $INPUT_FILES; do
         VALID_FILE=0
 
@@ -250,14 +250,14 @@ _get_files() {
 
         # Add the file in the list if it is valid
         if ((VALID_FILE == 1)); then
-            FILES_COUNT=$((FILES_COUNT + 1))
+            VALID_FILES_COUNT=$((VALID_FILES_COUNT + 1))
             OUTPUT_FILES+="$FILE"
             OUTPUT_FILES+=$'\n'
         fi
     done
 
     # Check if there is at last one file with valid mime type
-    if ((FILES_COUNT == 0)); then
+    if ((VALID_FILES_COUNT == 0)); then
         if [ -n "$MIME_LIST" ]; then
             _msg_error "Error: There is no '$MIME_LIST' in the selected files!"
         else
@@ -267,15 +267,15 @@ _get_files() {
     fi
 
     if [ -n "$MIN_FILES" ]; then
-        if ((FILES_COUNT < MIN_FILES)); then
-            _msg_error "Error: You selected $FILES_COUNT files, but the minium is $MIN_FILES!"
+        if ((VALID_FILES_COUNT < MIN_FILES)); then
+            _msg_error "Error: You selected $VALID_FILES_COUNT files, but the minium is $MIN_FILES!"
             return 1
         fi
     fi
 
     if [ -n "$MAX_FILES" ]; then
-        if ((FILES_COUNT > MAX_FILES)); then
-            _msg_error "Error: You selected $FILES_COUNT files, but the maximum is $MAX_FILES!"
+        if ((VALID_FILES_COUNT > MAX_FILES)); then
+            _msg_error "Error: You selected $VALID_FILES_COUNT files, but the maximum is $MAX_FILES!"
             return 1
         fi
     fi
