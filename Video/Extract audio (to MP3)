@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependency ffmpeg
+INPUT_FILES=$(_get_files "$*" "video" "1" "" "") || exit 1
+OUTPUT_DIR=$(_get_output_dir)
+
+for FILE in $INPUT_FILES; do
+    # Run the main process
+    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").mp3"
+    STD_OUTPUT="$(ffmpeg -threads 4 -y -i "$FILE" -vn -c:a libmp3lame -b:a 192k -ac 2 "$OUTPUT_FILE" 2>&1)"
+
+    # Check if output file is not a zero byte
+    if [ "$(stat --printf="%s" "$OUTPUT_FILE")" == "0" ]; then
+        _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
+    fi
+done
+
+_display_result "$OUTPUT_DIR"
