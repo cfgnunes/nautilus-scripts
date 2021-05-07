@@ -28,7 +28,7 @@ _rename() {
 
 for FILE in $INPUT_FILES; do
     # shellcheck disable=SC2001
-    OUTPUT_FILE=$(echo "$FILE" | sed "s|[-\_][-\_]*| |g;s|\s\s*| |g")
+    OUTPUT_FILE=$(echo "$FILE" | sed "s|[-\_][-\_]*| |g;s|  *| |g")
     _rename "$FILE" "$OUTPUT_FILE"
 done
 
