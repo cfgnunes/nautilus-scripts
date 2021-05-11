@@ -5,7 +5,7 @@
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
 
 # Initial checks
-_check_dependency convert
+_check_dependencies convert
 INPUT_FILES=$(_get_files "$*" "image" "2" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir)
 
