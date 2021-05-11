@@ -41,7 +41,7 @@ _msg_info() {
     fi
 }
 
-_check_dependency() {
+_check_dependencies() {
     LIST_COMMANDS="$1"
 
     for COMMAND in $LIST_COMMANDS; do
@@ -149,6 +149,7 @@ _log_error() {
 _display_result() {
     OUTPUT_DIR="$1"
 
+    # Print a simplified $OUTPUT_DIR to the user
     OUTPUT_DIR_PRINT="$OUTPUT_DIR"
     echo "$OUTPUT_DIR_PRINT" | grep -q "$PWD" && OUTPUT_DIR_PRINT="./${OUTPUT_DIR#$PWD/}"
     # shellcheck disable=SC2088
