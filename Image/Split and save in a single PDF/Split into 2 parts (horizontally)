@@ -15,19 +15,13 @@ for FILE in $INPUT_FILES; do
     STD_OUTPUT_1="$(convert -crop 100%x50% +repage "$FILE" "$OUTPUT_DIR/.tmp.jpg" 2>&1)"
     EXIT_CODE_1=$?
 
-    # Check the return and log the error
-    if [ "$EXIT_CODE_1" -ne 0 ]; then
-        _log_error "$FILE" "$STD_OUTPUT_1" "$OUTPUT_DIR"
-    fi
+    _check_successful_finish "$FILE" "$STD_OUTPUT_1" "$OUTPUT_DIR" "$EXIT_CODE_1" "$OUTPUT_FILE"
 
     # Run the process (part 2)
     STD_OUTPUT_2="$(convert "$OUTPUT_DIR"/.tmp-0.jpg "$OUTPUT_DIR"/.tmp-1.jpg "$OUTPUT_DIR/$OUTPUT_FILE" 2>&1)"
     EXIT_CODE_2=$?
 
-    # Check the return and log the error
-    if [ "$EXIT_CODE_2" -ne 0 ]; then
-        _log_error "$FILE" "$STD_OUTPUT_2" "$OUTPUT_DIR"
-    fi
+    _check_successful_finish "$FILE" "$STD_OUTPUT_2" "$OUTPUT_DIR" "$EXIT_CODE_2" "$OUTPUT_FILE"
 
     rm -rf "$OUTPUT_DIR"/.tmp*.jpg
 done
