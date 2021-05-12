@@ -4,7 +4,7 @@ IFS=$'\n'
 ERROR_LOG_FILE="errors.log"
 
 _msg_error() {
-    MESSAGE="$1"
+    local MESSAGE="$1"
 
     # Check if the script is running in a terminal
     if env | grep -q '^TERM'; then
@@ -23,12 +23,12 @@ _msg_error() {
 }
 
 _msg_info() {
-    MESSAGE="$1"
+    local MESSAGE="$1"
 
     # Check if the script is running in a terminal
     if env | grep -q '^TERM'; then
         echo "$MESSAGE"
-    else # It not use gui notifications
+    else # If not, use gui notifications
         if hash notify-send 2>/dev/null; then
             notify-send "$MESSAGE"
         elif hash zenity 2>/dev/null; then
@@ -42,14 +42,14 @@ _msg_info() {
 }
 
 _check_dependencies() {
-    LIST_COMMANDS="$1"
+    local LIST_COMMANDS="$1"
 
     for COMMAND in $LIST_COMMANDS; do
         if hash "$COMMAND" 2>/dev/null; then
             continue
         fi
 
-        PACKAGE_NAME=""
+        local PACKAGE_NAME=""
         case "$COMMAND" in
         "make")
             PACKAGE_NAME="make"
@@ -123,21 +123,21 @@ _check_dependencies() {
 }
 
 _get_filename_without_extension() {
-    FILENAME="$1"
+    local FILENAME="$1"
     # shellcheck disable=SC2001
     echo "$FILENAME" | sed "s|\.[^.]*$||"
 }
 
 _get_filename_extension() {
-    FILENAME="$1"
+    local FILENAME="$1"
     # shellcheck disable=SC2001
     echo "$FILENAME" | sed "s|[^.]*\.|.|" | grep "\."
 }
 
 _log_error() {
-    FILENAME="$1"
-    MESSAGE="$2"
-    OUTPUT_DIR="$3"
+    local FILENAME="$1"
+    local MESSAGE="$2"
+    local OUTPUT_DIR="$3"
 
     {
         echo "$(date "+%Y-%m-%d %H:%M:%S:") Error processing '$FILENAME'."
@@ -146,8 +146,20 @@ _log_error() {
     } >>"$OUTPUT_DIR/$ERROR_LOG_FILE"
 }
 
+_check_successful_finish() {
+    local FILENAME="$1"
+    local MESSAGE="$2"
+    local OUTPUT_DIR="$3"
+    local EXIT_CODE="$4"
+
+    # Check the return and log the error
+    if [ "$EXIT_CODE" -ne 0 ] || [[ "$STD_OUTPUT" == *"Error"* ]]; then
+        _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
+    fi
+}
+
 _display_result() {
-    OUTPUT_DIR="$1"
+    local OUTPUT_DIR="$1"
 
     # Print a simplified $OUTPUT_DIR to the user
     OUTPUT_DIR_PRINT="$OUTPUT_DIR"
@@ -178,8 +190,8 @@ _display_result() {
 }
 
 _get_output_dir() {
-    DIR_NAME="output"
-    DIR_BASE="$PWD"
+    local DIR_NAME="output"
+    local DIR_BASE="$PWD"
 
     # Check directories available to put the 'output' dir
     [[ ! -w "$DIR_BASE" ]] && DIR_BASE="$HOME"
@@ -192,7 +204,7 @@ _get_output_dir() {
     fi
 
     # If there is a 'ouput' directory, try to use 'output-1', 'output-2', ...
-    DIR_SUFFIX=1
+    local DIR_SUFFIX=1
     while [ -d "$OUTPUT_DIR" ]; do
         DIR_SUFFIX=$((DIR_SUFFIX + 1))
         OUTPUT_DIR="$DIR_BASE/$DIR_NAME$DIR_SUFFIX"
@@ -203,11 +215,11 @@ _get_output_dir() {
 }
 
 _get_files() {
-    INPUT_FILES="$1" # Input list
-    MIME_LIST="$2" # Filter bt MIME type
-    MIN_FILES="$3" # Minimum number of valid files
-    MAX_FILES="$4" # Maximum number of valid files
-    DIRECTORY_FLAG="$5"
+    local INPUT_FILES="$1" # Input list
+    local MIME_LIST="$2" # Filter bt MIME type
+    local MIN_FILES="$3" # Minimum number of valid files
+    local MAX_FILES="$4" # Maximum number of valid files
+    local DIRECTORY_FLAG="$5"
     # DIRECTORY_FLAG values:
     # 'd': Include directories.
     # 'r': Expand directories recursively (include only files).
@@ -216,7 +228,7 @@ _get_files() {
 
     # Expand files in directories recursively
     if [ "$DIRECTORY_FLAG" = "r" ] || [ "$DIRECTORY_FLAG" = "R" ]; then
-        INPUT_FILES_NEW=""
+        local INPUT_FILES_NEW=""
         for FILE in $INPUT_FILES; do
             if [ "$DIRECTORY_FLAG" = "r" ]; then
                 INPUT_FILES_NEW+="$(find -L "$FILE" -type f)"
@@ -228,8 +240,8 @@ _get_files() {
         INPUT_FILES="$INPUT_FILES_NEW"
     fi
 
-    OUTPUT_FILES=""
-    VALID_FILES_COUNT=0
+    local OUTPUT_FILES=""
+    local VALID_FILES_COUNT=0
     for FILE in $INPUT_FILES; do
         VALID_FILE=0
 

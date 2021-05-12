@@ -15,10 +15,7 @@ for FILE in $INPUT_FILES; do
     STD_OUTPUT="$(qpdf --stream-data=compress "$FILE" "$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
 
-    # Check the return and log the error
-    if [ "$EXIT_CODE" -ne 0 ]; then
-        _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
-    fi
+    _check_successful_finish "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE"
 done
 
 _display_result "$OUTPUT_DIR"
