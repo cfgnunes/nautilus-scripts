@@ -151,9 +151,15 @@ _check_successful_finish() {
     local MESSAGE="$2"
     local OUTPUT_DIR="$3"
     local EXIT_CODE="$4"
+    local OUTPUT_FILE="$5"
 
     # Check the return and log the error
     if [ "$EXIT_CODE" -ne 0 ] || [[ "$STD_OUTPUT" == *"Error"* ]]; then
+        _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
+    fi
+
+    # Check if output file is not a zero byte
+    if [ "$(stat --printf="%s" "$OUTPUT_FILE")" == "0" ]; then
         _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
     fi
 }

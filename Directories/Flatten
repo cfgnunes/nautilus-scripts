@@ -53,4 +53,6 @@ for DIRECTORY in $INPUT_FILES; do
     _flatten "$DIRECTORY"
 done
 
+# TODO: Implement the use of the function '_check_successful_finish'
+
 _display_result "$OUTPUT_DIR"
