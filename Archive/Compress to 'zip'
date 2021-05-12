@@ -15,9 +15,5 @@ OUTPUT_FILE="$(pwd | sed "s#.*/##").zip"
 STD_OUTPUT="$(zip -9 -r "$OUTPUT_FILE" $INPUT_FILES 2>&1)"
 EXIT_CODE=$?
 
-# Check the return and log the error
-if [ "$EXIT_CODE" -ne 0 ]; then
-    _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
-fi
-
+_check_successful_finish "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE"
 _display_result "$OUTPUT_DIR"
