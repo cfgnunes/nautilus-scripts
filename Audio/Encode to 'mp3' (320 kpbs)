@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependencies lame
+INPUT_FILES=$(_get_files "$*" "audio" "1" "" "") || exit 1
+OUTPUT_DIR=$(_get_output_dir)
+
+for FILE in $INPUT_FILES; do
+    # Run the main process
+    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").mp3"
+    STD_OUTPUT="$(lame -q 0 -b 320 "$FILE" "$OUTPUT_FILE" 2>&1)"
+    EXIT_CODE=$?
+
+    _check_successful_finish "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+done
+
+_display_result "$OUTPUT_DIR"

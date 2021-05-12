@@ -78,6 +78,9 @@ _check_dependencies() {
         "jpegoptim")
             PACKAGE_NAME="jpegoptim"
             ;;
+       "lame")
+            PACKAGE_NAME="lame"
+            ;;
         "latexmk")
             PACKAGE_NAME="latexmk"
             ;;
