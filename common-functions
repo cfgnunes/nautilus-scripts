@@ -180,17 +180,19 @@ _display_result() {
 _get_output_dir() {
     DIR_NAME="output"
     DIR_BASE="$PWD"
-    DIR_SUFFIX=1
 
+    # Check directories available to put the 'output' dir
     [[ ! -w "$DIR_BASE" ]] && DIR_BASE="$HOME"
     [[ ! -w "$DIR_BASE" ]] && DIR_BASE="/tmp"
     OUTPUT_DIR="$DIR_BASE/$DIR_NAME"
 
     if [[ ! -w "$DIR_BASE" ]]; then
-        _msg_error "Error: It was not possible to find directory with write permission."
+        _msg_error "Error: Could not find a directory with write permissions."
         exit 1
     fi
 
+    # If there is a 'ouput' directory, try to use 'output-1', 'output-2', ...
+    DIR_SUFFIX=1
     while [ -d "$OUTPUT_DIR" ]; do
         DIR_SUFFIX=$((DIR_SUFFIX + 1))
         OUTPUT_DIR="$DIR_BASE/$DIR_NAME$DIR_SUFFIX"
@@ -203,8 +205,8 @@ _get_output_dir() {
 _get_files() {
     INPUT_FILES="$1" # Input list
     MIME_LIST="$2" # Filter bt MIME type
-    MIN_FILES="$3" # To check the minimum number of valid files
-    MAX_FILES="$4" # To check the maximum number of valid files
+    MIN_FILES="$3" # Minimum number of valid files
+    MAX_FILES="$4" # Maximum number of valid files
     DIRECTORY_FLAG="$5"
     # DIRECTORY_FLAG values:
     # 'd': Include directories.
