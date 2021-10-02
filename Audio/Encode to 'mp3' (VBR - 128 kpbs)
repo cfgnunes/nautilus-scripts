@@ -12,7 +12,7 @@ OUTPUT_DIR=$(_get_output_dir)
 for FILE in $INPUT_FILES; do
     # Run the main process
     OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").mp3"
-    STD_OUTPUT="$(ffmpeg -threads 4 -y -i "$FILE" -vn -c:a libmp3lame -b:a 192k -ar 44100 -ac 2 "$OUTPUT_FILE" 2>&1)"
+    STD_OUTPUT="$(ffmpeg -threads 4 -y -i "$FILE" -vn -c:a libmp3lame -b:a 128k -ar 44100 -ac 2 "$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
 
     _check_successful_finish "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
