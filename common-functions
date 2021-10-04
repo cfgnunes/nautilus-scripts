@@ -51,9 +51,6 @@ _check_dependencies() {
 
         local PACKAGE_NAME=""
         case "$COMMAND" in
-        "make")
-            PACKAGE_NAME="make"
-            ;;
         "convert")
             PACKAGE_NAME="imagemagick"
             ;;
