@@ -10,7 +10,10 @@ OUTPUT_DIR="$PWD"
 
 for FILE in $INPUT_FILES; do
     OUTPUT_FILE="${FILE,,}"
-    _move_file "$FILE" "$OUTPUT_FILE"
+    STD_OUTPUT=$(_move_file "$FILE" "$OUTPUT_FILE" 2>&1)
+    EXIT_CODE=$?
+
+    _check_successful_finish "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 done
 
 _display_result "$OUTPUT_DIR"
