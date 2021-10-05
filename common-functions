@@ -321,6 +321,14 @@ _move_file() {
     local FILE_SRC="$1"
     local FILE_DST="$2"
 
+    # Avoid problems with 'mv' command without the path
+    if ! [[ "$FILE_SRC" == "/"* ]] && ! [[ "$FILE_SRC" == "./"* ]]; then
+        FILE_SRC="./$FILE_SRC"
+    fi
+    if ! [[ "$FILE_DST" == "/"* ]] && ! [[ "$FILE_DST" == "./"* ]]; then
+        FILE_DST="./$FILE_DST"
+    fi
+
     if [ "$FILE_SRC" = "$FILE_DST" ]; then
         return 0
     fi
@@ -330,17 +338,13 @@ _move_file() {
         return 1
     fi
 
-    # Avoid problems with 'mv' command without the path
-    if ! [[ "$FILE_SRC" == "/"* ]] && ! [[ "$FILE_SRC" == "./"* ]]; then
-        FILE_SRC="./$FILE_SRC"
-    fi
-    if ! [[ "$FILE_DST" == "/"* ]] && ! [[ "$FILE_DST" == "./"* ]]; then
-        FILE_DST="./$FILE_DST"
-    fi
-
     # Run the main process
     mv -n "$FILE_SRC" "$FILE_DST"
     local EXIT_CODE=$?
+
+    if [ "$EXIT_CODE" -eq 0 ]; then
+        echo "Moved '$FILE_SRC' to '$FILE_DST'."
+    fi
 
     return $EXIT_CODE
 }
