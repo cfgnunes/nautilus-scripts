@@ -8,27 +8,9 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 INPUT_FILES=$(_get_files "$*" "" "1" "" "d") || exit 1
 OUTPUT_DIR="$PWD"
 
-_rename() {
-    FILE_SRC="$1"
-    FILE_DST="$2"
-    TEMP_FILE=".$FILE_SRC.tmp"
-
-    if [ "$FILE_SRC" = "$FILE_DST" ]; then
-        return
-    fi
-
-    if [ -f "$FILE_DST" ] || [ -f "$TEMP_FILE" ]; then
-        _log_error "$FILE_SRC" "It was not possible to rename the file." "$OUTPUT_DIR"
-        return
-    fi
-
-    # Run the main process
-    mv "$FILE_SRC" "$TEMP_FILE" && mv "$TEMP_FILE" "$FILE_DST"
-}
-
 for FILE in $INPUT_FILES; do
     OUTPUT_FILE="${FILE,,}"
-    _rename "$FILE" "$OUTPUT_FILE"
+    _move_file "$FILE" "$OUTPUT_FILE"
 
     if [ -d "$OUTPUT_FILE" ]; then
         # Get the depth of the directory
@@ -39,7 +21,7 @@ for FILE in $INPUT_FILES; do
             INPUT_FILES_DEPTH=$(find -L "$OUTPUT_FILE" -mindepth "$i" -maxdepth "$i")
             # Rename files for current depth
             for FILE_DEPTH in $INPUT_FILES_DEPTH; do
-                _rename "$FILE_DEPTH" "${FILE_DEPTH,,}"
+                _move_file "$FILE_DEPTH" "${FILE_DEPTH,,}"
             done
         done
     fi
