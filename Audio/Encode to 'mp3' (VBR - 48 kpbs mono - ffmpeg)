@@ -15,7 +15,7 @@ for FILE in $INPUT_FILES; do
     STD_OUTPUT="$(ffmpeg -threads 4 -y -i "$FILE" -vn -c:a libmp3lame -b:a 48k -ar 44100 -ac 1 "$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
 
-    _check_successful_finish "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 done
 
 _display_result "$OUTPUT_DIR"

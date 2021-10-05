@@ -14,7 +14,7 @@ for FILE in $INPUT_FILES; do
     STD_OUTPUT="$(perl -pe 's/\r\n|\n|\r/\r\n/g' "$FILE" >"$OUTPUT_FILE")"
     EXIT_CODE=$?
 
-    _check_successful_finish "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 done
 
 _display_result "$OUTPUT_DIR"

@@ -20,7 +20,7 @@ for FILE in $INPUT_FILES; do
     STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t iso-8859-1 -o "$OUTPUT_FILE")"
     EXIT_CODE=$?
 
-    _check_successful_finish "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 done
 
 _display_result "$OUTPUT_DIR"

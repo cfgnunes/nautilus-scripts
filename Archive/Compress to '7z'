@@ -15,5 +15,5 @@ OUTPUT_FILE="$(pwd | sed "s#.*/##").7z"
 STD_OUTPUT="$(7z a -mx9 "$OUTPUT_FILE" $INPUT_FILES 2>&1)"
 EXIT_CODE=$?
 
-_check_successful_finish "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+_log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 _display_result "$OUTPUT_DIR"
