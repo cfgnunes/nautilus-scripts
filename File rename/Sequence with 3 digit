@@ -8,28 +8,10 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 INPUT_FILES=$(_get_files "$*" "" "1" "" "d") || exit 1
 OUTPUT_DIR="$PWD"
 
-_rename() {
-    FILE_SRC="$1"
-    FILE_DST="$2"
-    TEMP_FILE=".$FILE_SRC.tmp"
-
-    if [ "$FILE_SRC" = "$FILE_DST" ]; then
-        return
-    fi
-
-    if [ -f "$FILE_DST" ] || [ -f "$TEMP_FILE" ]; then
-        _log_error "$FILE_SRC" "It was not possible to rename the file." "$OUTPUT_DIR"
-        return
-    fi
-
-    # Run the main process
-    mv "$FILE_SRC" "$TEMP_FILE" && mv "$TEMP_FILE" "$FILE_DST"
-}
-
 NUM_SEQUENCE=1
 for FILE in $INPUT_FILES; do
     OUTPUT_FILE="$(printf "%03d" $NUM_SEQUENCE)$(_get_filename_extension "$FILE")"
-    _rename "$FILE" "$OUTPUT_FILE"
+    _move_file "$FILE" "$OUTPUT_FILE"
 
     NUM_SEQUENCE=$((NUM_SEQUENCE + 1))
 done

@@ -31,7 +31,7 @@ _flatten() {
             echo "mv \"$FILENAME\" \"$FULL_PATH_FILENAME\"" >>"$UNDO_SCRIPT"
 
             # Move all selected files to local folder
-            mv "$FULL_PATH_FILENAME" "$FILENAME"
+            _move_file "$FULL_PATH_FILENAME" "$FILENAME"
         done <"$TEMP_LIST_FILES"
 
         # Command to delete 'undo' file after the process

@@ -304,3 +304,20 @@ _get_files() {
     echo "$OUTPUT_FILES" | sed '/^$/d' | sort
     return 0
 }
+
+_move_file() {
+    FILE_SRC="$1"
+    FILE_DST="$2"
+
+    if [ "$FILE_SRC" = "$FILE_DST" ]; then
+        return
+    fi
+
+    if [ -f "$FILE_DST" ]; then
+        _log_error "$FILE_SRC" "It was not possible to move the file." "$OUTPUT_DIR"
+        return
+    fi
+
+    # Run the main process
+    mv "$FILE_SRC" "$FILE_DST"
+}
