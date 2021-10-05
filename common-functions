@@ -75,7 +75,7 @@ _check_dependencies() {
         "jpegoptim")
             PACKAGE_NAME="jpegoptim"
             ;;
-       "lame")
+        "lame")
             PACKAGE_NAME="lame"
             ;;
         "latexmk")
@@ -148,19 +148,19 @@ _log_error() {
 
 _check_successful_finish() {
     local FILENAME="$1"
-    local MESSAGE="$2"
+    local STD_OUTPUT="$2"
     local OUTPUT_DIR="$3"
     local EXIT_CODE="$4"
-    local OUTPUT_FILE="$5"
+    local OUTPUT_FILE="$5" # To check if outputfile is 'zero byte'
 
     # Check the return and log the error
     if [ "$EXIT_CODE" -ne 0 ] || [[ "$STD_OUTPUT" == *"Error"* ]]; then
-        _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
+        _log_error "$FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR"
     fi
 
     # Check if output file is not a zero byte
     if [ "$(stat --printf="%s" "$OUTPUT_FILE")" == "0" ]; then
-        _log_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR"
+        _log_error "$FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR"
     fi
 }
 
@@ -168,7 +168,7 @@ _display_result() {
     local OUTPUT_DIR="$1"
 
     # Print a simplified $OUTPUT_DIR to the user
-    OUTPUT_DIR_PRINT="$OUTPUT_DIR"
+    local OUTPUT_DIR_PRINT="$OUTPUT_DIR"
     echo "$OUTPUT_DIR_PRINT" | grep -q "$PWD" && OUTPUT_DIR_PRINT="./${OUTPUT_DIR#$PWD/}"
     # shellcheck disable=SC2088
     echo "$OUTPUT_DIR_PRINT" | grep -q "$HOME" && OUTPUT_DIR_PRINT="~/${OUTPUT_DIR#$HOME/}"
@@ -176,7 +176,7 @@ _display_result() {
     # Check if there was some error
     if [ -f "$OUTPUT_DIR/$ERROR_LOG_FILE" ]; then
         _msg_error "Task finished with errors! See the '$OUTPUT_DIR_PRINT/$ERROR_LOG_FILE' for details."
-        exit 1
+        return 1
     fi
 
     # If OUTPUT_DIR parameter is defined
@@ -185,11 +185,11 @@ _display_result() {
         rmdir "$OUTPUT_DIR" &>/dev/null
 
         # Check if output directory still exists
-        if [ ! -d "$OUTPUT_DIR" ]; then
+        if [ -d "$OUTPUT_DIR" ]; then
+            _msg_info "Task finished! The output files is in '$OUTPUT_DIR_PRINT' directory."
+        else
             _msg_info "Task finished, but there is no output files!"
-            exit 0
         fi
-        _msg_info "Task finished! The output files is in '$OUTPUT_DIR_PRINT' directory."
     else
         _msg_info "Task finished!"
     fi
@@ -202,7 +202,7 @@ _get_output_dir() {
     # Check directories available to put the 'output' dir
     [[ ! -w "$DIR_BASE" ]] && DIR_BASE="$HOME"
     [[ ! -w "$DIR_BASE" ]] && DIR_BASE="/tmp"
-    OUTPUT_DIR="$DIR_BASE/$DIR_NAME"
+    local OUTPUT_DIR="$DIR_BASE/$DIR_NAME"
 
     if [[ ! -w "$DIR_BASE" ]]; then
         _msg_error "Error: Could not find a directory with write permissions."
@@ -222,9 +222,9 @@ _get_output_dir() {
 
 _get_files() {
     local INPUT_FILES="$1" # Input list
-    local MIME_LIST="$2" # Filter bt MIME type
-    local MIN_FILES="$3" # Minimum number of valid files
-    local MAX_FILES="$4" # Maximum number of valid files
+    local MIME_LIST="$2"   # Filter bt MIME type
+    local MIN_FILES="$3"   # Minimum number of valid files
+    local MAX_FILES="$4"   # Maximum number of valid files
     local DIRECTORY_FLAG="$5"
     # DIRECTORY_FLAG values:
     # 'd': Include directories.
@@ -246,8 +246,11 @@ _get_files() {
         INPUT_FILES="$INPUT_FILES_NEW"
     fi
 
+    local FILE=""
     local OUTPUT_FILES=""
     local VALID_FILES_COUNT=0
+    local VALID_FILE=0
+
     for FILE in $INPUT_FILES; do
         VALID_FILE=0
 
@@ -284,40 +287,42 @@ _get_files() {
         else
             _msg_error "Error: There is no valid itens in the in the selected files!"
         fi
-        return 1
+        exit 1
     fi
 
     if [ -n "$MIN_FILES" ]; then
         if ((VALID_FILES_COUNT < MIN_FILES)); then
             _msg_error "Error: You selected $VALID_FILES_COUNT files, but the minium is $MIN_FILES!"
-            return 1
+            exit 1
         fi
     fi
 
     if [ -n "$MAX_FILES" ]; then
         if ((VALID_FILES_COUNT > MAX_FILES)); then
             _msg_error "Error: You selected $VALID_FILES_COUNT files, but the maximum is $MAX_FILES!"
-            return 1
+            exit 1
         fi
     fi
 
     echo "$OUTPUT_FILES" | sed '/^$/d' | sort
-    return 0
 }
 
 _move_file() {
-    FILE_SRC="$1"
-    FILE_DST="$2"
+    local FILE_SRC="$1"
+    local FILE_DST="$2"
 
     if [ "$FILE_SRC" = "$FILE_DST" ]; then
-        return
+        return 0
     fi
 
     if [ -f "$FILE_DST" ]; then
-        _log_error "$FILE_SRC" "It was not possible to move the file." "$OUTPUT_DIR"
-        return
+        echo "It was not possible to move '$FILE_SRC' because there is already a file with the same name in '$FILE_DST'."
+        return 1
     fi
 
     # Run the main process
-    mv "$FILE_SRC" "$FILE_DST"
+    mv -n "$FILE_SRC" "$FILE_DST"
+    local EXIT_CODE=$?
+
+    return $EXIT_CODE
 }
