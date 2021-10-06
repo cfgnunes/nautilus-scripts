@@ -329,10 +329,12 @@ _move_file() {
         FILE_DST="./$FILE_DST"
     fi
 
+    # Avoid move a file to the same name
     if [ "$FILE_SRC" = "$FILE_DST" ]; then
         return 0
     fi
 
+    # Avoid overwrite a file
     if [ -a "$FILE_DST" ]; then
         echo "It was not possible to move '$FILE_SRC' because there is already a file with the same name in '$FILE_DST'."
         return 1
@@ -342,7 +344,8 @@ _move_file() {
     mv -n "$FILE_SRC" "$FILE_DST"
     local EXIT_CODE=$?
 
-    if [ "$EXIT_CODE" -eq 0 ]; then
+    # Check if the file has moved
+    if [ "$EXIT_CODE" -eq 0 ] && ! [ -a "$FILE_SRC" ] && [ -a "$FILE_DST" ]; then
         echo "Moved '$FILE_SRC' to '$FILE_DST'."
     fi
 
