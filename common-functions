@@ -231,7 +231,7 @@ _get_output_dir() {
         OUTPUT_DIR="$DIR_BASE/$DIR_NAME$DIR_SUFFIX"
     done
 
-    mkdir "$OUTPUT_DIR"
+    mkdir -p "$OUTPUT_DIR"
     echo "$OUTPUT_DIR"
 
     return 0
