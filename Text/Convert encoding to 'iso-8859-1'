@@ -8,6 +8,7 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 _check_dependencies iconv || exit 1
 INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir) || exit 1
+TEMP_DIR=$(mktemp -d)
 
 for FILE in $INPUT_FILES; do
     # Skip 'iso-8859-1' and 'ascii' files
@@ -16,11 +17,20 @@ for FILE in $INPUT_FILES; do
     fi
 
     # Run the main process
-    OUTPUT_FILE="$OUTPUT_DIR/$FILE"
-    STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t iso-8859-1 -o "$OUTPUT_FILE")"
+    OUTPUT_FILE_TEMP="$TEMP_DIR/$FILE"
+    STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t iso-8859-1 -o "$OUTPUT_FILE_TEMP")"
     EXIT_CODE=$?
 
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    # Check if the file is different, then move it to the output dir
+    OUTPUT_FILE="$OUTPUT_DIR/$FILE"
+    if ! cmp --silent "$FILE" "$OUTPUT_FILE_TEMP"; then
+        _move_file "$OUTPUT_FILE_TEMP" "$OUTPUT_FILE"
+
+        _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    fi
 done
+
+# Remove temporary dir
+rm -rf "$TEMP_DIR"
 
 _display_result "$OUTPUT_DIR"
