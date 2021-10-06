@@ -43,13 +43,13 @@ _msg_info() {
 
 _check_dependencies() {
     local LIST_COMMANDS="$1"
+    local PACKAGE_NAME=""
 
     for COMMAND in $LIST_COMMANDS; do
         if hash "$COMMAND" 2>/dev/null; then
             continue
         fi
 
-        local PACKAGE_NAME=""
         case "$COMMAND" in
         "convert")
             PACKAGE_NAME="imagemagick"
@@ -124,12 +124,14 @@ _check_dependencies() {
 
 _get_filename_without_extension() {
     local FILENAME="$1"
+
     # shellcheck disable=SC2001
     echo "$FILENAME" | sed "s|\.[^.]*$||"
 }
 
 _get_filename_extension() {
     local FILENAME="$1"
+
     # shellcheck disable=SC2001
     echo "$FILENAME" | sed "s|[^.]*\.|.|" | grep "\."
 }
@@ -176,9 +178,9 @@ _log_result_error() {
 
 _display_result() {
     local OUTPUT_DIR="$1"
+    local OUTPUT_DIR_PRINT="$OUTPUT_DIR"
 
     # Print a simplified $OUTPUT_DIR to the user
-    local OUTPUT_DIR_PRINT="$OUTPUT_DIR"
     echo "$OUTPUT_DIR_PRINT" | grep -q "$PWD" && OUTPUT_DIR_PRINT="./${OUTPUT_DIR#$PWD/}"
     # shellcheck disable=SC2088
     echo "$OUTPUT_DIR_PRINT" | grep -q "$HOME" && OUTPUT_DIR_PRINT="~/${OUTPUT_DIR#$HOME/}"
@@ -208,11 +210,13 @@ _display_result() {
 _get_output_dir() {
     local DIR_NAME="output"
     local DIR_BASE="$PWD"
+    local OUTPUT_DIR=""
+    local DIR_SUFFIX=1
 
     # Check directories available to put the 'output' dir
     [[ ! -w "$DIR_BASE" ]] && DIR_BASE="$HOME"
     [[ ! -w "$DIR_BASE" ]] && DIR_BASE="/tmp"
-    local OUTPUT_DIR="$DIR_BASE/$DIR_NAME"
+    OUTPUT_DIR="$DIR_BASE/$DIR_NAME"
 
     if [[ ! -w "$DIR_BASE" ]]; then
         _msg_error "Error: Could not find a directory with write permissions."
@@ -220,7 +224,6 @@ _get_output_dir() {
     fi
 
     # If there is a 'ouput' directory, try to use 'output-1', 'output-2', ...
-    local DIR_SUFFIX=1
     while [ -d "$OUTPUT_DIR" ]; do
         DIR_SUFFIX=$((DIR_SUFFIX + 1))
         OUTPUT_DIR="$DIR_BASE/$DIR_NAME$DIR_SUFFIX"
@@ -242,9 +245,15 @@ _get_files() {
     # 'R': Expand directories recursively (include files + subdirectories).
     # other_value: Ignore directories.
 
+    local INPUT_FILES_NEW=""
+    local FILE=""
+    local OUTPUT_FILES=""
+    local VALID_FILES_COUNT=0
+    local VALID_FILE=0
+
     # Expand files in directories recursively
     if [ "$DIRECTORY_FLAG" = "r" ] || [ "$DIRECTORY_FLAG" = "R" ]; then
-        local INPUT_FILES_NEW=""
+        INPUT_FILES_NEW=""
         for FILE in $INPUT_FILES; do
             if [ "$DIRECTORY_FLAG" = "r" ]; then
                 INPUT_FILES_NEW+="$(find -L "$FILE" -type f)"
@@ -255,11 +264,6 @@ _get_files() {
         done
         INPUT_FILES="$INPUT_FILES_NEW"
     fi
-
-    local FILE=""
-    local OUTPUT_FILES=""
-    local VALID_FILES_COUNT=0
-    local VALID_FILE=0
 
     for FILE in $INPUT_FILES; do
         VALID_FILE=0
@@ -320,6 +324,7 @@ _get_files() {
 _move_file() {
     local FILE_SRC="$1"
     local FILE_DST="$2"
+    local EXIT_CODE=0
 
     # Avoid problems with 'mv' command without the path
     if ! [[ "$FILE_SRC" == "/"* ]] && ! [[ "$FILE_SRC" == "./"* ]]; then
@@ -342,7 +347,7 @@ _move_file() {
 
     # Run the main process
     mv -n "$FILE_SRC" "$FILE_DST"
-    local EXIT_CODE=$?
+    EXIT_CODE=$?
 
     # Check if the file has moved
     if [ "$EXIT_CODE" -eq 0 ] && ! [ -a "$FILE_SRC" ] && [ -a "$FILE_DST" ]; then

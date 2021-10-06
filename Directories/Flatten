@@ -9,10 +9,14 @@ INPUT_FILES=$(_get_files "$*" "directory" "1" "" "d") || exit 1
 OUTPUT_DIR="$PWD"
 
 _flatten() {
-    DIRECTORY="$1"
-    UNDO_SCRIPT="undo_flatten.sh"
-    TEMP_LIST_FILES=$(mktemp)
+    local DIRECTORY="$1"
+    local UNDO_SCRIPT="undo_flatten.sh"
+    local TEMP_LIST_FILES=""
+    local FILENAME=""
+    local STD_OUTPUT=""
+    local EXIT_CODE=0
 
+    TEMP_LIST_FILES=$(mktemp)
     (
         cd "$DIRECTORY" || true
 
