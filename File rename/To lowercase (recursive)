@@ -6,7 +6,7 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 
 # Initial checks
 INPUT_FILES=$(_get_files "$*" "" "1" "" "d") || exit 1
-OUTPUT_DIR="$PWD" || exit 1
+OUTPUT_DIR="$PWD"
 
 for FILE in $INPUT_FILES; do
     OUTPUT_FILE="${FILE,,}"
