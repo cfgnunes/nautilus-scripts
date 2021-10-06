@@ -6,7 +6,7 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 
 # Initial checks
 _check_dependencies meld
-INPUT_FILES=$(_get_files "$*" "text;application" "2" "3" "d")
+INPUT_FILES=$(_get_files "$*" "text;application" "2" "3" "d") || exit 1
 
 # Run the main process
 # shellcheck disable=SC2086
