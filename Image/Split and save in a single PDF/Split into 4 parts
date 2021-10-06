@@ -19,7 +19,7 @@ for FILE in $INPUT_FILES; do
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 
     # Run the process (part 2)
-    STD_OUTPUT="$(convert "$TEMP_DIR"/$FILE-0.jpg "$TEMP_DIR"/$FILE-1.jpg "$TEMP_DIR"/$FILE-2.jpg "$TEMP_DIR"/$FILE-3.jpg "$OUTPUT_DIR/$OUTPUT_FILE" 2>&1)"
+    STD_OUTPUT="$(convert "$TEMP_DIR/$FILE-0.jpg" "$TEMP_DIR/$FILE-1.jpg" "$TEMP_DIR/$FILE-2.jpg" "$TEMP_DIR/$FILE-3.jpg" "$OUTPUT_DIR/$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
 
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
