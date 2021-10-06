@@ -118,8 +118,10 @@ _check_dependencies() {
         else
             _msg_error "Error: The command '$COMMAND' was not found. Please, install it."
         fi
-        exit 1
+        return 1
     done
+
+    return 0
 }
 
 _get_filename_without_extension() {
@@ -170,7 +172,7 @@ _log_result_error() {
     fi
 
     # Check if output file is not a zero byte
-    if [ -s "$OUTPUT_FILE" ]; then
+    if [ "$(stat --printf="%s" "$OUTPUT_FILE")" == "0" ]; then
         _log_error "Zero byte file" "$FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR"
         return
     fi
@@ -220,7 +222,7 @@ _get_output_dir() {
 
     if [[ ! -w "$DIR_BASE" ]]; then
         _msg_error "Error: Could not find a directory with write permissions."
-        exit 1
+        return 1
     fi
 
     # If there is a 'ouput' directory, try to use 'output-1', 'output-2', ...
@@ -231,6 +233,8 @@ _get_output_dir() {
 
     mkdir "$OUTPUT_DIR"
     echo "$OUTPUT_DIR"
+
+    return 0
 }
 
 _get_files() {
@@ -301,24 +305,25 @@ _get_files() {
         else
             _msg_error "Error: There is no valid itens in the in the selected files!"
         fi
-        exit 1
+        return 1
     fi
 
     if [ -n "$MIN_FILES" ]; then
         if ((VALID_FILES_COUNT < MIN_FILES)); then
             _msg_error "Error: You selected $VALID_FILES_COUNT files, but the minium is $MIN_FILES!"
-            exit 1
+            return 1
         fi
     fi
 
     if [ -n "$MAX_FILES" ]; then
         if ((VALID_FILES_COUNT > MAX_FILES)); then
             _msg_error "Error: You selected $VALID_FILES_COUNT files, but the maximum is $MAX_FILES!"
-            exit 1
+            return 1
         fi
     fi
 
     echo "$OUTPUT_FILES" | sed '/^$/d' | sort
+    return 0
 }
 
 _move_file() {
