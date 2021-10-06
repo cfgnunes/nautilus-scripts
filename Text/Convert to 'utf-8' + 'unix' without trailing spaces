@@ -34,14 +34,14 @@ for FILE in $INPUT_FILES; do
 
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 
-    # Check if the file is different, then move it to the output dir
+    # Check if the file is different, then move it to the output directory
     OUTPUT_FILE="$OUTPUT_DIR/$FILE"
     if ! cmp --silent "$FILE" "$OUTPUT_FILE_TEMP3"; then
         _move_file "$OUTPUT_FILE_TEMP3" "$OUTPUT_FILE"
     fi
 done
 
-# Remove temporary dirs
+# Remove temporary directories
 rm -rf "$TEMP_DIR1"
 rm -rf "$TEMP_DIR2"
 rm -rf "$TEMP_DIR3"

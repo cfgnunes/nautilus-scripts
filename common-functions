@@ -9,7 +9,7 @@ _msg_error() {
     # Check if the script is running in a terminal
     if env | grep -q '^TERM'; then
         echo >&2 "$MESSAGE"
-    else # It not use gui notifications
+    else # It doesn't use GUI notifications
         if hash notify-send 2>/dev/null; then
             notify-send -i error "$MESSAGE"
         elif hash zenity 2>/dev/null; then
@@ -28,7 +28,7 @@ _msg_info() {
     # Check if the script is running in a terminal
     if env | grep -q '^TERM'; then
         echo "$MESSAGE"
-    else # If not, use gui notifications
+    else # If not, use GUI notifications
         if hash notify-send 2>/dev/null; then
             notify-send "$MESSAGE"
         elif hash zenity 2>/dev/null; then
@@ -163,7 +163,7 @@ _log_result_error() {
     local STD_OUTPUT="$2"
     local OUTPUT_DIR="$3"
     local EXIT_CODE="$4"
-    local OUTPUT_FILE="$5" # To check if outputfile is 'zero byte'
+    local OUTPUT_FILE="$5" # To check if output file has zero bytes
 
     # Check the 'EXIT_CODE' and log the error
     if [ "$EXIT_CODE" -ne 0 ]; then
@@ -201,7 +201,7 @@ _display_result() {
 
     # If OUTPUT_DIR parameter is defined
     if [ -n "$OUTPUT_DIR" ]; then
-        # Try remove output dir if it is empty
+        # Try to remove the output directory (if it is empty)
         rmdir "$OUTPUT_DIR" &>/dev/null
 
         # Check if output directory still exists
@@ -231,7 +231,7 @@ _get_output_dir() {
         return 1
     fi
 
-    # If there is a 'ouput' directory, try to use 'output-1', 'output-2', ...
+    # If there is a 'output' directory, try to use 'output-1', 'output-2', ...
     while [ -d "$OUTPUT_DIR" ]; do
         DIR_SUFFIX=$((DIR_SUFFIX + 1))
         OUTPUT_DIR="$DIR_BASE/$DIR_NAME$DIR_SUFFIX"
@@ -245,7 +245,7 @@ _get_output_dir() {
 
 _get_files() {
     local INPUT_FILES="$1" # Input list
-    local MIME_LIST="$2"   # Filter bt MIME type
+    local MIME_LIST="$2"   # Filter by MIME type
     local MIN_FILES="$3"   # Minimum number of valid files
     local MAX_FILES="$4"   # Maximum number of valid files
     local DIRECTORY_FLAG="$5"
@@ -253,7 +253,7 @@ _get_files() {
     # 'd': Include directories.
     # 'r': Expand directories recursively (include only files).
     # 'R': Expand directories recursively (include files + subdirectories).
-    # other_value: Ignore directories.
+    # other value: Ignore directories.
 
     local INPUT_FILES_NEW=""
     local FILE=""
