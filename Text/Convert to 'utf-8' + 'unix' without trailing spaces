@@ -8,43 +8,42 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 _check_dependencies iconv perl cmp || exit 1
 INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir) || exit 1
-TEMP_DIR=$(mktemp -d)
+TEMP_DIR1=$(mktemp -d)
+TEMP_DIR2=$(mktemp -d)
+TEMP_DIR3=$(mktemp -d)
 
 for FILE in $INPUT_FILES; do
     # Run the main process 'utf-8'
-    OUTPUT_FILE1="$TEMP_DIR/$(_get_temp_filename)"
-    STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t utf-8 -o "$OUTPUT_FILE1")"
+    OUTPUT_FILE_TEMP1="$TEMP_DIR1/$FILE"
+    STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t utf-8 -o "$OUTPUT_FILE_TEMP1")"
     EXIT_CODE=$?
 
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE1"
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE_TEMP1"
 
     # Run the main process 'unix'
-    OUTPUT_FILE2="$TEMP_DIR/$(_get_temp_filename)"
-    STD_OUTPUT="$(perl -pe 's/\r\n|\n|\r/\n/g' "$OUTPUT_FILE1" >"$OUTPUT_FILE2")"
+    OUTPUT_FILE_TEMP2="$TEMP_DIR2/$FILE"
+    STD_OUTPUT="$(perl -pe 's/\r\n|\n|\r/\n/g' "$OUTPUT_FILE_TEMP1" >"$OUTPUT_FILE_TEMP2")"
     EXIT_CODE=$?
 
-    _log_result_error "$OUTPUT_FILE1" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE2"
+    _log_result_error "$OUTPUT_FILE_TEMP1" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE_TEMP2"
 
     # Run the main process 'remove trailing'
-    OUTPUT_FILE3="$TEMP_DIR/$(_get_temp_filename)"
-    STD_OUTPUT="$(sed 's|[ \t]*$||' "$OUTPUT_FILE2" >"$OUTPUT_FILE3")"
+    OUTPUT_FILE_TEMP3="$TEMP_DIR3/$FILE"
+    STD_OUTPUT="$(sed 's|[ \t]*$||' "$OUTPUT_FILE_TEMP2" >"$OUTPUT_FILE_TEMP3")"
     EXIT_CODE=$?
 
-    _log_result_error "$OUTPUT_FILE2" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    _log_result_error "$OUTPUT_FILE_TEMP2" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 
     # Check if the file is different, then move it to the output dir
     OUTPUT_FILE="$OUTPUT_DIR/$FILE"
-    if ! cmp --silent "$FILE" "$OUTPUT_FILE3"; then
-        _move_file "$OUTPUT_FILE3" "$OUTPUT_FILE"
+    if ! cmp --silent "$FILE" "$OUTPUT_FILE_TEMP3"; then
+        _move_file "$OUTPUT_FILE_TEMP3" "$OUTPUT_FILE"
     fi
-
-    # Remove temporary files
-    rm -rf "$OUTPUT_FILE1"
-    rm -rf "$OUTPUT_FILE2"
-    rm -rf "$OUTPUT_FILE3"
 done
 
-# Remove temporary dir
-rm -rf "$TEMP_DIR"
+# Remove temporary dirs
+rm -rf "$TEMP_DIR1"
+rm -rf "$TEMP_DIR2"
+rm -rf "$TEMP_DIR3"
 
 _display_result "$OUTPUT_DIR"
