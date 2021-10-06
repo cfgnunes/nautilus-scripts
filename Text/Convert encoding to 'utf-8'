@@ -21,7 +21,7 @@ for FILE in $INPUT_FILES; do
     STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t utf-8 -o "$OUTPUT_FILE_TEMP")"
     EXIT_CODE=$?
 
-    # Check if the file is different, then move it to the output dir
+    # Check if the file is different, then move it to the output directory
     OUTPUT_FILE="$OUTPUT_DIR/$FILE"
     if ! cmp --silent "$FILE" "$OUTPUT_FILE_TEMP"; then
         _move_file "$OUTPUT_FILE_TEMP" "$OUTPUT_FILE"
