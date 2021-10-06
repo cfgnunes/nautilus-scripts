@@ -159,7 +159,7 @@ _check_successful_finish() {
     fi
 
     # Check if output file is not a zero byte
-    if [ "$(stat --printf="%s" "$OUTPUT_FILE")" == "0" ]; then
+    if [ -s "$OUTPUT_FILE" ]; then
         _log_error "$FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR"
     fi
 }
@@ -315,7 +315,7 @@ _move_file() {
         return 0
     fi
 
-    if [ -f "$FILE_DST" ]; then
+    if [ -a "$FILE_DST" ]; then
         echo "It was not possible to move '$FILE_SRC' because there is already a file with the same name in '$FILE_DST'."
         return 1
     fi
