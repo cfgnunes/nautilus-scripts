@@ -22,7 +22,7 @@ STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|:.*CR, LF line.*|: CR+LF (mac)|")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|:.*text.*|: LF (unix)|")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|\([^:]*\):[ ]*\(.*\)|\2: '\1'|")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | grep "(windows):\|(unix):\|(mac):")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sort)
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
 WIDTH_TEXT=$(echo "$STD_OUTPUT" | wc -L)
 WIDTH_WINDOW=$((WIDTH_TEXT * 10))
