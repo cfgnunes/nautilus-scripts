@@ -326,10 +326,20 @@ _get_files() {
     return 0
 }
 
+_get_temp_filename() {
+    echo "$(cat /dev/urandom | tr -cd 'a-f0-9' | head -c 8).tmp"
+}
+
 _move_file() {
     local FILE_SRC="$1"
     local FILE_DST="$2"
     local EXIT_CODE=0
+    local FILE_TEMP="$FILE_SRC"
+
+    # Use a temp filename to rename/move to fix problems with FAT filesystems
+    while [ -a "$FILE_TEMP" ]; do
+        FILE_TEMP="$(_get_temp_filename)"
+    done
 
     # Avoid problems with 'mv' command without the path
     if ! [[ "$FILE_SRC" == "/"* ]] && ! [[ "$FILE_SRC" == "./"* ]]; then
@@ -351,7 +361,7 @@ _move_file() {
     fi
 
     # Run the main process
-    mv -n "$FILE_SRC" "$FILE_DST"
+    mv -n "$FILE_SRC" "$FILE_TEMP" && mv -n "$FILE_TEMP" "$FILE_DST"
     EXIT_CODE=$?
 
     # Check if the file has moved
