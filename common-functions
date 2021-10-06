@@ -330,6 +330,14 @@ _move_file() {
         return 1
     fi
 
+    # Avoid problems with 'mv' command without the path
+    if ! [[ "$FILE_SRC" == "/"* ]] && ! [[ "$FILE_SRC" == "./"* ]]; then
+        FILE_SRC="./$FILE_SRC"
+    fi
+    if ! [[ "$FILE_DST" == "/"* ]] && ! [[ "$FILE_DST" == "./"* ]]; then
+        FILE_DST="./$FILE_DST"
+    fi
+
     # Run the main process
     mv -n "$FILE_SRC" "$FILE_DST"
     local EXIT_CODE=$?
