@@ -105,6 +105,9 @@ _check_dependencies() {
         "pandoc")
             PACKAGE_NAME="pandoc"
             ;;
+        "perl")
+            PACKAGE_NAME="perl-base"
+            ;;
         "pdfimages" | "pdfseparate" | "pdftoppm" | "pdftotext" | "pdfunite")
             PACKAGE_NAME="poppler-utils"
             ;;
