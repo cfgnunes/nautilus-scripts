@@ -51,6 +51,9 @@ _check_dependencies() {
         fi
 
         case "$COMMAND" in
+        "cmp")
+            PACKAGE_NAME="diffutils"
+            ;;
         "convert")
             PACKAGE_NAME="imagemagick"
             ;;
