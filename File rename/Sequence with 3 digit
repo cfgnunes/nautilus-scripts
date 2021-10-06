@@ -11,7 +11,10 @@ OUTPUT_DIR="$PWD"
 NUM_SEQUENCE=1
 for FILE in $INPUT_FILES; do
     OUTPUT_FILE="$(printf "%03d" $NUM_SEQUENCE)$(_get_filename_extension "$FILE")"
-    _move_file "$FILE" "$OUTPUT_FILE"
+    STD_OUTPUT=$(_move_file "$FILE" "$OUTPUT_FILE" 2>&1)
+    EXIT_CODE=$?
+
+    _check_successful_finish "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 
     NUM_SEQUENCE=$((NUM_SEQUENCE + 1))
 done

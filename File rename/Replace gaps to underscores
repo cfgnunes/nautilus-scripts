@@ -11,7 +11,10 @@ OUTPUT_DIR="$PWD"
 for FILE in $INPUT_FILES; do
     # shellcheck disable=SC2001
     OUTPUT_FILE=$(echo "$FILE" | sed "s|[- ][- ]*|\_|g;s|\_\_*|\_|g")
-    _move_file "$FILE" "$OUTPUT_FILE"
+    STD_OUTPUT=$(_move_file "$FILE" "$OUTPUT_FILE" 2>&1)
+    EXIT_CODE=$?
+
+    _check_successful_finish "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 done
 
 _display_result "$OUTPUT_DIR"
