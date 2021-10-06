@@ -18,7 +18,7 @@ for FILE in $INPUT_FILES; do
     fi
     EXIT_CODE=$?
 
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 done
 
 _display_result "$OUTPUT_DIR"
