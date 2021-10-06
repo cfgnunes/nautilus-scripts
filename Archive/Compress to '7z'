@@ -5,9 +5,9 @@
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
 
 # Initial checks
-_check_dependencies 7z
+_check_dependencies 7z || exit 1
 INPUT_FILES=$(_get_files "$*" "" "1" "" "d") || exit 1
-OUTPUT_DIR="$PWD"
+OUTPUT_DIR="$PWD" || exit 1
 
 # Run the main process
 OUTPUT_FILE="$(pwd | sed "s#.*/##").7z"
