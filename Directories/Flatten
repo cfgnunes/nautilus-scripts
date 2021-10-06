@@ -10,16 +10,17 @@ OUTPUT_DIR="$PWD"
 
 _flatten() {
     DIRECTORY="$1"
+    UNDO_SCRIPT="undo_flatten.sh"
+    TEMP_LIST_FILES=$(mktemp)
+
     (
         cd "$DIRECTORY" || true
-        UNDO_SCRIPT="undo.sh"
-        TEMP_LIST_FILES=$(mktemp)
-
-        # Make a list of files to move
-        find . -type f >"$TEMP_LIST_FILES"
 
         # Make 'undo' file
         echo "#!/usr/bin/env bash" >"$UNDO_SCRIPT"
+
+        # Make a list of files to move
+        find . -type f ! -name "$UNDO_SCRIPT" >"$TEMP_LIST_FILES"
 
         # Make a backup of directory tree
         find . -type d | grep "/" | xargs -I{} echo "mkdir -p \"{}\"" >>"$UNDO_SCRIPT"
@@ -27,11 +28,17 @@ _flatten() {
         while read -r FULL_PATH_FILENAME; do
             FILENAME=$(basename "$FULL_PATH_FILENAME")
 
-            # Print 'mv' command in Undo script
-            echo "mv \"$FILENAME\" \"$FULL_PATH_FILENAME\"" >>"$UNDO_SCRIPT"
-
             # Move all selected files to local folder
-            _move_file "$FULL_PATH_FILENAME" "$FILENAME"
+            STD_OUTPUT=$(_move_file "$FULL_PATH_FILENAME" "$FILENAME" 2>&1)
+            # shellcheck disable=SC2030
+            EXIT_CODE=$?
+
+            _check_successful_finish "$FULL_PATH_FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
+
+            if ((EXIT_CODE == 0)); then
+                # Print 'mv' command in Undo script
+                echo "mv \"$FILENAME\" \"$FULL_PATH_FILENAME\"" >>"$UNDO_SCRIPT"
+            fi
         done <"$TEMP_LIST_FILES"
 
         # Command to delete 'undo' file after the process
@@ -42,17 +49,15 @@ _flatten() {
 
         # Remove empty directories
         find . -type d -empty -delete
-
-        # Remove temporary file
-        rm -f "$TEMP_LIST_FILES"
     )
+
+    # Remove temporary file
+    rm -f "$TEMP_LIST_FILES"
 }
 
 for DIRECTORY in $INPUT_FILES; do
     # Run the main process
     _flatten "$DIRECTORY"
 done
-
-# TODO: Implement the use of the function '_check_successful_finish'
 
 _display_result "$OUTPUT_DIR"
