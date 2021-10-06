@@ -328,7 +328,7 @@ _get_files() {
         fi
     fi
 
-    echo "$OUTPUT_FILES" | sed '/^$/d' | sort
+    echo "$OUTPUT_FILES" | sed '/^$/d' | sort -V
     return 0
 }
 

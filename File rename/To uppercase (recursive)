@@ -17,7 +17,7 @@ for FILE in $INPUT_FILES; do
 
     if [ -d "$OUTPUT_FILE" ]; then
         # Get the depth of the directory
-        DEPTH=$(find -L "$OUTPUT_FILE" -type d -printf "%d\n" | sort -n -r | head -1)
+        DEPTH=$(find -L "$OUTPUT_FILE" -type d -printf "%d\n" | sort -V -n -r | head -1)
 
         # Iterate over depths
         for ((i = 1; i <= DEPTH + 1; i++)); do
