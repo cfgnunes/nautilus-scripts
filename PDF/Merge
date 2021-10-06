@@ -15,6 +15,6 @@ OUTPUT_FILE="$OUTPUT_DIR/merged.pdf"
 STD_OUTPUT="$(pdfunite $INPUT_FILES "$OUTPUT_FILE" 2>&1)"
 EXIT_CODE=$?
 
-_check_successful_finish "$INPUT_FILES" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+_log_result_error "$INPUT_FILES" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 
 _display_result "$OUTPUT_DIR"

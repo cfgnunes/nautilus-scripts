@@ -135,32 +135,42 @@ _get_filename_extension() {
 }
 
 _log_error() {
-    local FILENAME="$1"
-    local MESSAGE="$2"
-    local OUTPUT_DIR="$3"
+    local ERROR_TYPE="$1"
+    local FILENAME="$2"
+    local STD_OUTPUT="$3"
+    local OUTPUT_DIR="$4"
 
     {
-        echo "$(date "+%Y-%m-%d %H:%M:%S:") Error processing '$FILENAME'."
-        echo "$MESSAGE"
+        echo "[$(date "+%Y-%m-%d %H:%M:%S")] ERROR while processing '$FILENAME'."
+        echo -e "\tType: $ERROR_TYPE."
+        echo -e "\tStandard output: $STD_OUTPUT"
         echo ""
     } >>"$OUTPUT_DIR/$ERROR_LOG_FILE"
 }
 
-_check_successful_finish() {
+_log_result_error() {
     local FILENAME="$1"
     local STD_OUTPUT="$2"
     local OUTPUT_DIR="$3"
     local EXIT_CODE="$4"
     local OUTPUT_FILE="$5" # To check if outputfile is 'zero byte'
 
-    # Check the return and log the error
-    if [ "$EXIT_CODE" -ne 0 ] || [[ "$STD_OUTPUT" == *"Error"* ]]; then
-        _log_error "$FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR"
+    # Check the 'EXIT_CODE' and log the error
+    if [ "$EXIT_CODE" -ne 0 ]; then
+        _log_error "Exit code error" "$FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR"
+        return
+    fi
+
+    # Check if there is the word "Error" in stdout
+    if [[ "$STD_OUTPUT" == *"Error"* ]]; then
+        _log_error "Error in output message" "$FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR"
+        return
     fi
 
     # Check if output file is not a zero byte
     if [ -s "$OUTPUT_FILE" ]; then
-        _log_error "$FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR"
+        _log_error "Zero byte file" "$FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR"
+        return
     fi
 }
 

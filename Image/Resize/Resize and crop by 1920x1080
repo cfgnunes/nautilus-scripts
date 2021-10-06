@@ -15,7 +15,7 @@ for FILE in $INPUT_FILES; do
     STD_OUTPUT="$(convert -resize "1920x1080^" -gravity center -crop 1920x1080+0+0 -strip "$FILE" "$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
 
-    _check_successful_finish "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 done
 
 _display_result "$OUTPUT_DIR"
