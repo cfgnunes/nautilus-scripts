@@ -333,7 +333,7 @@ _get_files() {
 }
 
 _get_temp_filename() {
-    echo "$(cat /dev/urandom | tr -cd 'a-f0-9' | head -c 8).tmp"
+    echo "$(tr -cd 'a-z0-9' </dev/urandom | head -c 8).tmp"
 }
 
 _move_file() {
@@ -342,7 +342,8 @@ _move_file() {
     local EXIT_CODE=0
     local FILE_TEMP="$FILE_SRC"
 
-    # Use a temp filename to rename/move to fix problems with FAT filesystems
+    # Use a temp name to rename/move files in FAT file systems
+    # due to the case-insensitive file names
     while [ -a "$FILE_TEMP" ]; do
         FILE_TEMP="$(_get_temp_filename)"
     done

@@ -27,7 +27,7 @@ for FILE in $INPUT_FILES; do
                 STD_OUTPUT=$(_move_file "$FILE_DEPTH" "${FILE_DEPTH,,}" 2>&1)
                 EXIT_CODE=$?
 
-                 _log_result_error "$FILE_DEPTH" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
+                _log_result_error "$FILE_DEPTH" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
             done
         done
     fi
