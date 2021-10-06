@@ -5,6 +5,7 @@
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
 
 # Initial checks
+_check_dependencies cmp || exit 1
 INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir) || exit 1
 TEMP_DIR=$(mktemp -d)
