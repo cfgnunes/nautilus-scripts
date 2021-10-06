@@ -8,22 +8,24 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 _check_dependencies convert || exit 1
 INPUT_FILES=$(_get_files "$*" "image" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir) || exit 1
+TEMP_DIR=$(mktemp -d)
 
 for FILE in $INPUT_FILES; do
     # Run the process (part 1)
     OUTPUT_FILE="$(_get_filename_without_extension "$FILE")-2parts-h.pdf"
-    STD_OUTPUT_1="$(convert -crop 100%x50% +repage "$FILE" "$OUTPUT_DIR/.tmp.jpg" 2>&1)"
-    EXIT_CODE_1=$?
+    STD_OUTPUT="$(convert -crop 100%x50% +repage "$FILE" "$TEMP_DIR/$FILE.jpg" 2>&1)"
+    EXIT_CODE=$?
 
-    _log_result_error "$FILE" "$STD_OUTPUT_1" "$OUTPUT_DIR" "$EXIT_CODE_1" "$OUTPUT_FILE"
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 
     # Run the process (part 2)
-    STD_OUTPUT_2="$(convert "$OUTPUT_DIR"/.tmp-0.jpg "$OUTPUT_DIR"/.tmp-1.jpg "$OUTPUT_DIR/$OUTPUT_FILE" 2>&1)"
-    EXIT_CODE_2=$?
+    STD_OUTPUT="$(convert "$TEMP_DIR"/$FILE-0.jpg "$TEMP_DIR"/$FILE-1.jpg "$OUTPUT_DIR/$OUTPUT_FILE" 2>&1)"
+    EXIT_CODE=$?
 
-    _log_result_error "$FILE" "$STD_OUTPUT_2" "$OUTPUT_DIR" "$EXIT_CODE_2" "$OUTPUT_FILE"
-
-    rm -rf "$OUTPUT_DIR"/.tmp*.jpg
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 done
+
+# Remove temporary dir
+rm -rf "$TEMP_DIR"
 
 _display_result "$OUTPUT_DIR"
