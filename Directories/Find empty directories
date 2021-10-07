@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependencies zenity || exit 1
+INPUT_FILES=$(_get_files "$*" "" "1" "" "d") || exit 1
+
+# Run the main process
+# shellcheck disable=SC2086
+STD_OUTPUT=$(find $INPUT_FILES -type d -empty)
+STD_OUTPUT="$(echo "$STD_OUTPUT" | sort -V)"
+
+WIDTH_TEXT=$(echo "$STD_OUTPUT" | wc -L)
+WIDTH_WINDOW=$((WIDTH_TEXT * 10))
+echo "$STD_OUTPUT" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "Empty directories"
