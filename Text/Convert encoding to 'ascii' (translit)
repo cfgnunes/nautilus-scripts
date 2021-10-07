@@ -12,7 +12,7 @@ TEMP_DIR=$(mktemp -d)
 
 for FILE in $INPUT_FILES; do
     # Skip 'ascii' files
-    if file -bi "$FILE" | grep -q -- "ascii"; then
+    if file -bi "$FILE" | grep -q "binary\|ascii"; then
         continue
     fi
 

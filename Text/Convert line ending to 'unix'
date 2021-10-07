@@ -11,6 +11,11 @@ OUTPUT_DIR=$(_get_output_dir) || exit 1
 TEMP_DIR=$(mktemp -d)
 
 for FILE in $INPUT_FILES; do
+    # Skip 'binary' files
+    if file -bi "$FILE" | grep -q "binary"; then
+        continue
+    fi
+
     # Run the main process
     OUTPUT_FILE_TEMP="$TEMP_DIR/$FILE"
     STD_OUTPUT="$(perl -pe 's/\r\n|\n|\r/\n/g' "$FILE" >"$OUTPUT_FILE_TEMP")"
