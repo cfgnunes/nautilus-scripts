@@ -84,9 +84,6 @@ _check_dependencies() {
         "latexmk")
             PACKAGE_NAME="latexmk"
             ;;
-        "mediainfo")
-            PACKAGE_NAME="mediainfo"
-            ;;
         "meld")
             PACKAGE_NAME="meld"
             ;;
