@@ -111,13 +111,16 @@ _check_dependencies() {
         "pdfimages" | "pdfseparate" | "pdftoppm" | "pdftotext" | "pdfunite")
             PACKAGE_NAME="poppler-utils"
             ;;
+        "pdfjam")
+            PACKAGE_NAME="texlive-extra-utils"
+            ;;
         *)
             PACKAGE_NAME=""
             ;;
         esac
 
         if [ -n "$PACKAGE_NAME" ]; then
-            _msg_error "Error: You need to install the '$PACKAGE_NAME' package."
+            _msg_error "Error: The command '$COMMAND' was not found. You need to install the '$PACKAGE_NAME' package."
         else
             _msg_error "Error: The command '$COMMAND' was not found. Please, install it."
         fi
