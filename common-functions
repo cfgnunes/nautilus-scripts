@@ -60,9 +60,6 @@ _check_dependencies() {
         "gzip")
             PACKAGE_NAME="gzip"
             ;;
-        "tar")
-            PACKAGE_NAME="tar"
-            ;;
         "file-roller")
             PACKAGE_NAME="file-roller"
             ;;
