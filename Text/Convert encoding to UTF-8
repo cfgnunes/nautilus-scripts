@@ -25,6 +25,7 @@ for FILE in $INPUT_FILES; do
     if ! cmp --silent "$FILE" "$OUTPUT_TEMP_FILE"; then
         OUTPUT_FILE="$OUTPUT_DIR/$FILE"
         _move_file "$OUTPUT_TEMP_FILE" "$OUTPUT_FILE"
+        chmod --reference="$FILE" "$OUTPUT_FILE"
         _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
     fi
 done
