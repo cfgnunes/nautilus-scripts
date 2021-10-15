@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependencies cmp iconv perl || exit 1
+INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "r") || exit 1
+OUTPUT_DIR="$PWD"
+
+OUTPUT_TEMP_FILE1=$(mktemp)
+OUTPUT_TEMP_FILE2=$(mktemp)
+OUTPUT_TEMP_FILE3=$(mktemp)
+OUTPUT_TEMP_FILE4=$(mktemp)
+
+for FILE in $INPUT_FILES; do
+    # Skip 'binary' files
+    if file -bi "$FILE" | grep -q "binary"; then
+        continue
+    fi
+
+    # Run the process (part 1) 'convert encoding to utf-8'
+    STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t utf-8 -o "$OUTPUT_TEMP_FILE1")"
+    EXIT_CODE=$?
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
+
+    # Run the process (part 2) 'convert line ending to unix'
+    STD_OUTPUT="$(perl -pe 's/\r\n|\n|\r/\n/g' "$OUTPUT_TEMP_FILE1" >"$OUTPUT_TEMP_FILE2")"
+    EXIT_CODE=$?
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
+
+    # Run the process (part 3) 'remove trailing spaces'
+    STD_OUTPUT="$(sed "s|[ \t]*$||" "$OUTPUT_TEMP_FILE2" >"$OUTPUT_TEMP_FILE3")"
+    EXIT_CODE=$?
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
+
+    # Run the process (part 4) 'remove empty line in EOF'
+    echo "" >>"$OUTPUT_TEMP_FILE3"
+    STD_OUTPUT="$(sed ':Loop;N;$!bLoop;s|\n*$||g' "$OUTPUT_TEMP_FILE3" >"$OUTPUT_TEMP_FILE4")"
+    EXIT_CODE=$?
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
+
+    # Check if the file is different, then move it to the output directory
+    if ! cmp --silent "$FILE" "$OUTPUT_TEMP_FILE4"; then
+        OUTPUT_FILE="$FILE"
+        _move_file "$FILE" "$FILE.convert.bak"
+        _move_file "$OUTPUT_TEMP_FILE4" "$OUTPUT_FILE"
+        _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    fi
+done
+
+# Remove temporary files
+rm -rf "$OUTPUT_TEMP_FILE1"
+rm -rf "$OUTPUT_TEMP_FILE2"
+rm -rf "$OUTPUT_TEMP_FILE3"
+rm -rf "$OUTPUT_TEMP_FILE4"
+
+_display_result "$OUTPUT_DIR"
