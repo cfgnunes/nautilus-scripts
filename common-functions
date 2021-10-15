@@ -179,6 +179,8 @@ _log_result_error() {
         _log_error "Zero byte file" "$FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR"
         return
     fi
+
+    return "$EXIT_CODE"
 }
 
 _display_result() {
@@ -373,5 +375,5 @@ _move_file() {
         echo "Moved '$FILE_SRC' to '$FILE_DST'."
     fi
 
-    return $EXIT_CODE
+    return "$EXIT_CODE"
 }
