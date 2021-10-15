@@ -338,17 +338,16 @@ _get_temp_filename() {
     echo "$(tr -cd 'a-z0-9' </dev/urandom | head -c 8).tmp"
 }
 
-_move_file() {
-    local FILE_SRC="$1"
-    local FILE_DST="$2"
+_transfer_file() {
+    local TRANSFER_FLAG="$1"
+    # TRANSFER_FLAG values:
+    # 'm': Move/rename.
+    # 'M': Move/rename (avoiding problems in FAT file systems).
+    # 'c': Copy.
+    local FILE_SRC="$2"
+    local FILE_DST="$3"
     local EXIT_CODE=0
     local TEMP_FILE="$FILE_SRC"
-
-    # Use a temp name to rename/move files in FAT file systems
-    # due to the case-insensitive file names
-    while [ -a "$TEMP_FILE" ]; do
-        TEMP_FILE="$(_get_temp_filename)"
-    done
 
     # Avoid problems with 'mv' command without the path
     if ! [[ "$FILE_SRC" == "/"* ]] && ! [[ "$FILE_SRC" == "./"* ]]; then
@@ -358,24 +357,45 @@ _move_file() {
         FILE_DST="./$FILE_DST"
     fi
 
-    # Avoid move a file to the same name
+    # Avoid transfer a file to the same name
     if [ "$FILE_SRC" = "$FILE_DST" ]; then
         return 0
     fi
 
     # Avoid overwrite a file
     if [ -a "$FILE_DST" ]; then
-        echo "It was not possible to move '$FILE_SRC' because there is already a file with the same name in '$FILE_DST'."
+        echo "It was not possible to transfer '$FILE_SRC' because there is already a file with the same name in '$FILE_DST'."
         return 1
     fi
 
     # Run the main process
-    mv -n "$FILE_SRC" "$TEMP_FILE" && mv -n "$TEMP_FILE" "$FILE_DST"
-    EXIT_CODE=$?
+    case "$TRANSFER_FLAG" in
+    "m")
+        mv -n "$FILE_SRC" "$FILE_DST"
+        EXIT_CODE=$?
+        ;;
+    "M")
+        # Use a temp name to rename/move files in FAT file systems
+        # due to the case-insensitive file names
+        while [ -a "$TEMP_FILE" ]; do
+            TEMP_FILE="$(_get_temp_filename)"
+        done
+        mv -n "$FILE_SRC" "$TEMP_FILE" && mv -n "$TEMP_FILE" "$FILE_DST"
+        EXIT_CODE=$?
+        ;;
+    "c")
+        cp -n "$FILE_SRC" "$FILE_DST"
+        EXIT_CODE=$?
+        ;;
+    *)
+        echo "Wrong parameters for '_transfer_file'."
+        return 1
+        ;;
+    esac
 
-    # Check if the file has moved
+    # Check if the file has transfered
     if [ "$EXIT_CODE" -eq 0 ] && ! [ -a "$FILE_SRC" ] && [ -a "$FILE_DST" ]; then
-        echo "Moved '$FILE_SRC' to '$FILE_DST'."
+        echo "Transfered '$FILE_SRC' to '$FILE_DST'."
     fi
 
     return "$EXIT_CODE"
