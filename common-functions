@@ -339,12 +339,12 @@ _move_file() {
     local FILE_SRC="$1"
     local FILE_DST="$2"
     local EXIT_CODE=0
-    local FILE_TEMP="$FILE_SRC"
+    local TEMP_FILE="$FILE_SRC"
 
     # Use a temp name to rename/move files in FAT file systems
     # due to the case-insensitive file names
-    while [ -a "$FILE_TEMP" ]; do
-        FILE_TEMP="$(_get_temp_filename)"
+    while [ -a "$TEMP_FILE" ]; do
+        TEMP_FILE="$(_get_temp_filename)"
     done
 
     # Avoid problems with 'mv' command without the path
@@ -367,7 +367,7 @@ _move_file() {
     fi
 
     # Run the main process
-    mv -n "$FILE_SRC" "$FILE_TEMP" && mv -n "$FILE_TEMP" "$FILE_DST"
+    mv -n "$FILE_SRC" "$TEMP_FILE" && mv -n "$TEMP_FILE" "$FILE_DST"
     EXIT_CODE=$?
 
     # Check if the file has moved
