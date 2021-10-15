@@ -11,8 +11,8 @@ OUTPUT_DIR=$(_get_output_dir) || exit 1
 OUTPUT_TEMP_FILE=$(mktemp)
 
 for FILE in $INPUT_FILES; do
-    # Skip 'ascii' files
-    if file -bi "$FILE" | grep -q "binary\|ascii"; then
+    # Skip 'binary' files
+    if file -bi "$FILE" | grep -q "binary"; then
         continue
     fi
 
