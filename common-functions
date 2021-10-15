@@ -63,9 +63,6 @@ _check_dependencies() {
         "file-roller")
             PACKAGE_NAME="file-roller"
             ;;
-        "file")
-            PACKAGE_NAME="file"
-            ;;
         "gs")
             PACKAGE_NAME="ghostscript"
             ;;
