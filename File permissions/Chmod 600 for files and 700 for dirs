@@ -17,7 +17,6 @@ for FILE in $INPUT_FILES; do
         STD_OUTPUT="$(chmod 700 "$FILE" 2>&1)"
     fi
     EXIT_CODE=$?
-
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 done
 

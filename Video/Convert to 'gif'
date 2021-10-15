@@ -14,7 +14,6 @@ for FILE in $INPUT_FILES; do
     OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").gif"
     STD_OUTPUT="$(ffmpeg -threads 4 -y -i "$FILE" -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 "$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
-
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 done
 
