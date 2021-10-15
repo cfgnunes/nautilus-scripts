@@ -169,7 +169,7 @@ _log_result_error() {
     fi
 
     # Check if there is the word "Error" in stdout
-    if [[ "$STD_OUTPUT" == *"Error"* ]]; then
+    if [[ "${STD_OUTPUT,,}" == *"error"* ]]; then
         _log_error "Error in output message" "$FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR"
         return
     fi
