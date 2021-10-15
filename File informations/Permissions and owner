@@ -11,7 +11,8 @@ INPUT_FILES=$(_get_files "$*" "" "1" "" "R") || exit 1
 # Run the main process
 # shellcheck disable=SC2086
 STD_OUTPUT=$(stat -c "%a %U %G %F: '%n'" $INPUT_FILES)
-STD_OUTPUT="$(echo "$STD_OUTPUT" | sort -V)"
+STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^$")
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
 WIDTH_TEXT=$(echo "$STD_OUTPUT" | wc -L)
 WIDTH_WINDOW=$((WIDTH_TEXT * 10))
