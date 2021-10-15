@@ -8,10 +8,11 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 _check_dependencies cmp iconv perl || exit 1
 INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir) || exit 1
-TEMP_DIR1=$(mktemp -d)
-TEMP_DIR2=$(mktemp -d)
-TEMP_DIR3=$(mktemp -d)
-TEMP_DIR4=$(mktemp -d)
+
+OUTPUT_TEMP_FILE1=$(mktemp)
+OUTPUT_TEMP_FILE2=$(mktemp)
+OUTPUT_TEMP_FILE3=$(mktemp)
+OUTPUT_TEMP_FILE4=$(mktemp)
 
 for FILE in $INPUT_FILES; do
     # Skip 'binary' files
@@ -20,50 +21,38 @@ for FILE in $INPUT_FILES; do
     fi
 
     # Run the process (part 1) 'convert encoding to utf-8'
-    OUTPUT_FILE_TEMP1="$TEMP_DIR1/$FILE"
-    STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t utf-8 -o "$OUTPUT_FILE_TEMP1")"
+    STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t utf-8 -o "$OUTPUT_TEMP_FILE1")"
     EXIT_CODE=$?
-
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
 
     # Run the process (part 2) 'convert line ending to unix'
-    OUTPUT_FILE_TEMP2="$TEMP_DIR2/$FILE"
-    STD_OUTPUT="$(perl -pe 's/\r\n|\n|\r/\n/g' "$OUTPUT_FILE_TEMP1" >"$OUTPUT_FILE_TEMP2")"
+    STD_OUTPUT="$(perl -pe 's/\r\n|\n|\r/\n/g' "$OUTPUT_TEMP_FILE1" >"$OUTPUT_TEMP_FILE2")"
     EXIT_CODE=$?
-    rm -rf "$OUTPUT_FILE_TEMP1"
-
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
 
     # Run the process (part 3) 'remove trailing spaces'
-    OUTPUT_FILE_TEMP3="$TEMP_DIR3/$FILE"
-    STD_OUTPUT="$(sed "s|[ \t]*$||" "$OUTPUT_FILE_TEMP2" >"$OUTPUT_FILE_TEMP3")"
+    STD_OUTPUT="$(sed "s|[ \t]*$||" "$OUTPUT_TEMP_FILE2" >"$OUTPUT_TEMP_FILE3")"
     EXIT_CODE=$?
-    rm -rf "$OUTPUT_FILE_TEMP2"
-
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
 
     # Run the process (part 4) 'remove empty line in EOF'
-    echo "" >>"$OUTPUT_FILE_TEMP3"
-    OUTPUT_FILE_TEMP4="$TEMP_DIR4/$FILE"
-    STD_OUTPUT="$(sed ':Loop;N;$!bLoop;s|\n*$||g' "$OUTPUT_FILE_TEMP3" >"$OUTPUT_FILE_TEMP4")"
+    echo "" >>"$OUTPUT_TEMP_FILE3"
+    STD_OUTPUT="$(sed ':Loop;N;$!bLoop;s|\n*$||g' "$OUTPUT_TEMP_FILE3" >"$OUTPUT_TEMP_FILE4")"
     EXIT_CODE=$?
-    rm -rf "$OUTPUT_FILE_TEMP3"
-
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""  || continue
 
     # Check if the file is different, then move it to the output directory
-    OUTPUT_FILE="$OUTPUT_DIR/$FILE"
-    if ! cmp --silent "$FILE" "$OUTPUT_FILE_TEMP4"; then
-        _move_file "$OUTPUT_FILE_TEMP4" "$OUTPUT_FILE"
-    else
-        rm -rf "$OUTPUT_FILE_TEMP4"
+    if ! cmp --silent "$FILE" "$OUTPUT_TEMP_FILE4"; then
+        OUTPUT_FILE="$OUTPUT_DIR/$FILE"
+        _move_file "$OUTPUT_TEMP_FILE4" "$OUTPUT_FILE"
+        _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
     fi
 done
 
-# Remove temporary directories
-rm -rf "$TEMP_DIR1"
-rm -rf "$TEMP_DIR2"
-rm -rf "$TEMP_DIR3"
-rm -rf "$TEMP_DIR4"
+# Remove temporary files
+rm -rf "$OUTPUT_TEMP_FILE1"
+rm -rf "$OUTPUT_TEMP_FILE2"
+rm -rf "$OUTPUT_TEMP_FILE3"
+rm -rf "$OUTPUT_TEMP_FILE4"
 
 _display_result "$OUTPUT_DIR"
