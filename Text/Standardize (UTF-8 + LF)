@@ -44,7 +44,7 @@ for FILE in $INPUT_FILES; do
     # Check if the file is different, then move it to the output directory
     if ! cmp --silent "$FILE" "$OUTPUT_TEMP_FILE4"; then
         OUTPUT_FILE="$OUTPUT_DIR/$FILE"
-        _move_file "$OUTPUT_TEMP_FILE4" "$OUTPUT_FILE"
+        _transfer_file "c" "$OUTPUT_TEMP_FILE4" "$OUTPUT_FILE"
         chmod --reference="$FILE" "$OUTPUT_FILE"
         _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
     fi
