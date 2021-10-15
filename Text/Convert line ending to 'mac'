@@ -20,6 +20,7 @@ for FILE in $INPUT_FILES; do
     OUTPUT_TEMP_FILE="$TEMP_DIR/$FILE"
     STD_OUTPUT="$(perl -pe 's/\r\n|\n|\r/\r/g' "$FILE" >"$OUTPUT_TEMP_FILE")"
     EXIT_CODE=$?
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
 
     # Check if the file is different, then move it to the output directory
     OUTPUT_FILE="$OUTPUT_DIR/$FILE"

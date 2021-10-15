@@ -39,7 +39,7 @@ for FILE in $INPUT_FILES; do
     echo "" >>"$OUTPUT_TEMP_FILE3"
     STD_OUTPUT="$(sed ':Loop;N;$!bLoop;s|\n*$||g' "$OUTPUT_TEMP_FILE3" >"$OUTPUT_TEMP_FILE4")"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""  || continue
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
 
     # Check if the file is different, then move it to the output directory
     if ! cmp --silent "$FILE" "$OUTPUT_TEMP_FILE4"; then
