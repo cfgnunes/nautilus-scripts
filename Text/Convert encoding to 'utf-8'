@@ -22,8 +22,8 @@ for FILE in $INPUT_FILES; do
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
 
     # Check if the file is different, then move it to the output directory
-    OUTPUT_FILE="$OUTPUT_DIR/$FILE"
     if ! cmp --silent "$FILE" "$OUTPUT_TEMP_FILE"; then
+        OUTPUT_FILE="$OUTPUT_DIR/$FILE"
         _move_file "$OUTPUT_TEMP_FILE" "$OUTPUT_FILE"
         _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
     fi
