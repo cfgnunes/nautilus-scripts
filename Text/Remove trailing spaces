@@ -18,7 +18,7 @@ for FILE in $INPUT_FILES; do
 
     # Run the main process
     OUTPUT_FILE_TEMP="$TEMP_DIR/$FILE"
-    STD_OUTPUT="$(sed 's|[ \t]+$||' "$FILE" >"$OUTPUT_FILE_TEMP")"
+    STD_OUTPUT="$(sed 's|[ \t]*$||' "$FILE" >"$OUTPUT_FILE_TEMP")"
     EXIT_CODE=$?
 
     # Check if the file is different, then move it to the output directory
