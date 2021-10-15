@@ -41,7 +41,7 @@ _flatten() {
 
             _log_result_error "$FULL_PATH_FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 
-            if ((EXIT_CODE == 0)) && [[ "$STD_OUTPUT" == "Moved"* ]]; then
+            if ((EXIT_CODE == 0)) && [[ "${STD_OUTPUT,,}" == "moved"* ]]; then
                 # Print 'mv' command in Undo script
                 echo "mv \"$FILENAME\" \"$FULL_PATH_FILENAME\"" >>"$UNDO_SCRIPT"
             fi
