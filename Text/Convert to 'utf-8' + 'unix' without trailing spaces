@@ -11,6 +11,7 @@ OUTPUT_DIR=$(_get_output_dir) || exit 1
 TEMP_DIR1=$(mktemp -d)
 TEMP_DIR2=$(mktemp -d)
 TEMP_DIR3=$(mktemp -d)
+TEMP_DIR4=$(mktemp -d)
 
 for FILE in $INPUT_FILES; do
     # Skip 'binary' files
@@ -18,31 +19,44 @@ for FILE in $INPUT_FILES; do
         continue
     fi
 
-    # Run the process (part 1) 'utf-8'
+    # Run the process (part 1) 'convert encoding to utf-8'
     OUTPUT_FILE_TEMP1="$TEMP_DIR1/$FILE"
     STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t utf-8 -o "$OUTPUT_FILE_TEMP1")"
     EXIT_CODE=$?
 
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 
-    # Run the process (part 2) 'unix'
+    # Run the process (part 2) 'convert line ending to unix'
     OUTPUT_FILE_TEMP2="$TEMP_DIR2/$FILE"
     STD_OUTPUT="$(perl -pe 's/\r\n|\n|\r/\n/g' "$OUTPUT_FILE_TEMP1" >"$OUTPUT_FILE_TEMP2")"
     EXIT_CODE=$?
+    rm -rf "$OUTPUT_FILE_TEMP1"
 
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 
-    # Run the process (part 3) 'remove trailing'
+    # Run the process (part 3) 'remove trailing spaces'
     OUTPUT_FILE_TEMP3="$TEMP_DIR3/$FILE"
-    STD_OUTPUT="$(sed 's|[ \t]+$||' "$OUTPUT_FILE_TEMP2" >"$OUTPUT_FILE_TEMP3")"
+    STD_OUTPUT="$(sed "s|[ \t]*$||" "$OUTPUT_FILE_TEMP2" >"$OUTPUT_FILE_TEMP3")"
     EXIT_CODE=$?
+    rm -rf "$OUTPUT_FILE_TEMP2"
+
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+
+    # Run the process (part 4) 'remove empty line in EOF'
+    echo "" >>"$OUTPUT_FILE_TEMP3"
+    OUTPUT_FILE_TEMP4="$TEMP_DIR4/$FILE"
+    STD_OUTPUT="$(sed ':Loop;N;$!bLoop;s|\n*$||g' "$OUTPUT_FILE_TEMP3" >"$OUTPUT_FILE_TEMP4")"
+    EXIT_CODE=$?
+    rm -rf "$OUTPUT_FILE_TEMP3"
 
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 
     # Check if the file is different, then move it to the output directory
     OUTPUT_FILE="$OUTPUT_DIR/$FILE"
-    if ! cmp --silent "$FILE" "$OUTPUT_FILE_TEMP3"; then
-        _move_file "$OUTPUT_FILE_TEMP3" "$OUTPUT_FILE"
+    if ! cmp --silent "$FILE" "$OUTPUT_FILE_TEMP4"; then
+        _move_file "$OUTPUT_FILE_TEMP4" "$OUTPUT_FILE"
+    else
+        rm -rf "$OUTPUT_FILE_TEMP4"
     fi
 done
 
@@ -50,5 +64,6 @@ done
 rm -rf "$TEMP_DIR1"
 rm -rf "$TEMP_DIR2"
 rm -rf "$TEMP_DIR3"
+rm -rf "$TEMP_DIR4"
 
 _display_result "$OUTPUT_DIR"
