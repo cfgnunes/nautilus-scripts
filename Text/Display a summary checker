@@ -36,15 +36,14 @@ for FILE in $INPUT_FILES; do
         RESULT_FILE+="[trailing spaces]"
     fi
 
-    # Run the checker 'has many line breaks at the end'
-    sed ':Loop;N;$!bLoop;s|\n*$||g' "$FILE" >"$OUTPUT_TEMP_FILE"
-    if ! cmp --silent "$FILE" "$OUTPUT_TEMP_FILE"; then
-        RESULT_FILE+="[many lines at the end]"
-    fi
-
     # Run the checker 'missing line break at the end'
-    if [[ -n "$(cat -e "$FILE" | tail -c 1)" ]]; then
+    if ! tail -c 1 "$FILE" | hexdump -e '16/1 "%02x" "\n"' | grep -q "0d\|0a"; then
         RESULT_FILE+="[missing line at the end]"
+    else
+        if tail -c 3 "$FILE" | hexdump -e '16/1 "%02x" "\n"' | grep -q "..0d0d\|..0a0a\|0a0d0a"; then
+            # Run the checker 'has many line breaks at the end'
+            RESULT_FILE+="[many lines at the end]"
+        fi
     fi
 
     # Add only the files that has problems
