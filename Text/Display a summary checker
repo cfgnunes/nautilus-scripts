@@ -34,23 +34,24 @@ for FILE in $INPUT_FILES; do
     # Run the checker 'has trailing spaces'
     sed "s|[ \t]*$||" "$FILE" >"$OUTPUT_TEMP_FILE"
     if ! cmp --silent "$FILE" "$OUTPUT_TEMP_FILE"; then
-        RESULT_FILE+="[has trailing spaces]"
+        RESULT_FILE+="[trailing spaces]"
     fi
 
     # Run the checker 'has many line breaks at the end'
     sed ':Loop;N;$!bLoop;s|\n*$||g' "$FILE" >"$OUTPUT_TEMP_FILE"
     if ! cmp --silent "$FILE" "$OUTPUT_TEMP_FILE"; then
-        RESULT_FILE+="[has many line breaks at the end]"
+        RESULT_FILE+="[many lines at the end]"
     fi
 
     # Run the checker 'missing line break at the end'
     if [[ -n "$(cat -e "$FILE" | tail -c 1)" ]]; then
-        RESULT_FILE+="[missing line break at the end]"
+        RESULT_FILE+="[missing line at the end]"
     fi
 
     # Run the checker 'has non ASCII characters'
-    if grep -i -q -I -P "[^\w \t\n\r\+-/,.{};()=\"\[\]<>#\*^:\\\'%\$&@|\`\!\?~àáéíóúâêôãõç]" "$FILE"; then
-        RESULT_FILE+="[has non ASCII characters]"
+    NON_ASCII_REGEX="[^ \w\t\n\r\-\,\;\:\!\?\.\'\"\(\)\[\]\{\}\@\*\/\\\&\#\%\`\^\+\<\=\>\|\~\$áàâãçéêíóôõú]"
+    if grep -i -q -I -P "$NON_ASCII_REGEX" "$FILE"; then
+        RESULT_FILE+="[non ASCII char]"
     fi
 
     # Add only the files that has problems
