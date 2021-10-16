@@ -31,7 +31,7 @@ for FILE in $INPUT_FILES; do
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
 
     # Run the process (part 3) 'remove trailing spaces'
-    STD_OUTPUT="$(sed "s|[ \t]*$||" "$OUTPUT_TEMP_FILE2" >"$OUTPUT_TEMP_FILE3")"
+    STD_OUTPUT="$(sed 's|[ \t]*\(\r*\)$|\1|' "$OUTPUT_TEMP_FILE2" >"$OUTPUT_TEMP_FILE3")"
     EXIT_CODE=$?
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
 
