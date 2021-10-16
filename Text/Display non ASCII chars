@@ -12,8 +12,7 @@ INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "r") || exit 1
 
 # Run the main process
 # shellcheck disable=SC2086
-STD_OUTPUT=$(grep -i -r -I -P -o -n --exclude-dir="*.git*" "[^ \w\t\n\r\-\,\;\:\!\?\.\'\"\(\)\[\]\{\}\@\*\/\\\&\#\%\`\^\+\<\=\>\|\~\$áàâãçéêíóôõú]" $INPUT_FILES /dev/null)
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
+STD_OUTPUT=$(grep -i -r -I -P -o -n --exclude="*.pdf" --exclude-dir="*.git*" "[^ \w\t\n\r\-\,\;\:\!\?\.\'\"\(\)\[\]\{\}\@\*\/\\\&\#\%\`\^\+\<\=\>\|\~\$áàâãçéêíóôõú]" $INPUT_FILES /dev/null)
 
 WIDTH_TEXT=$(echo "$STD_OUTPUT" | wc -L)
 WIDTH_WINDOW=$((WIDTH_TEXT * 10))

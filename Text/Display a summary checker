@@ -48,12 +48,6 @@ for FILE in $INPUT_FILES; do
         RESULT_FILE+="[missing line at the end]"
     fi
 
-    # Run the checker 'has non ASCII characters'
-    NON_ASCII_REGEX="[^ \w\t\n\r\-\,\;\:\!\?\.\'\"\(\)\[\]\{\}\@\*\/\\\&\#\%\`\^\+\<\=\>\|\~\$áàâãçéêíóôõú]"
-    if grep -i -q -I -P "$NON_ASCII_REGEX" "$FILE"; then
-        RESULT_FILE+="[non ASCII char]"
-    fi
-
     # Add only the files that has problems
     if [[ -n "$RESULT_FILE" ]]; then
         STD_OUTPUT+="$RESULT_FILE"
