@@ -5,7 +5,7 @@
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
 
 # Initial checks
-_check_dependencies cmp iconv perl zenity || exit 1
+_check_dependencies zenity || exit 1
 INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "r") || exit 1
 
 OUTPUT_TEMP_FILE=$(mktemp)
@@ -20,20 +20,19 @@ for FILE in $INPUT_FILES; do
     RESULT_FILE=""
 
     # Run the checker 'non UTF-8 encoding'
-    iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t utf-8 -o "$OUTPUT_TEMP_FILE"
-    if ! cmp --silent "$FILE" "$OUTPUT_TEMP_FILE"; then
+    FILE_ENCODING=$(file --mime-encoding "$FILE" | sed "s|\([^:]*\):[ \t]*\(.*\)|\2|")
+    if [[ "${FILE_ENCODING,,}" != *"us-ascii"* ]] && [[ "${FILE_ENCODING,,}" != *"utf-8"* ]]; then
         RESULT_FILE+="[non UTF-8 encoding]"
     fi
 
     # Run the checker 'non LF line break'
-    perl -pe 's/\r\n|\n|\r/\n/g' "$FILE" >"$OUTPUT_TEMP_FILE"
-    if ! cmp --silent "$FILE" "$OUTPUT_TEMP_FILE"; then
+    FILE_INFORMATION=$(file "$FILE" | sed "s|\([^:]*\):[ \t]*\(.*\)|\2|")
+    if [[ "$FILE_INFORMATION" == *"CR"* ]]; then
         RESULT_FILE+="[non LF line break]"
     fi
 
     # Run the checker 'has trailing spaces'
-    sed "s|[ \t]*$||" "$FILE" >"$OUTPUT_TEMP_FILE"
-    if ! cmp --silent "$FILE" "$OUTPUT_TEMP_FILE"; then
+    if grep -P -q "[ \t]\r?$" "$FILE"; then
         RESULT_FILE+="[trailing spaces]"
     fi
 
