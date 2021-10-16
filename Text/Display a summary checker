@@ -36,7 +36,7 @@ for FILE in $INPUT_FILES; do
         RESULT_FILE+="[trailing spaces]"
     fi
 
-    # Run the checker 'trailing spaces' (for Unix and Windows files)
+    # Run the checker 'trailing spaces' (for Mac files)
     if [[ "$FILE_INFORMATION" == *"with CR line"* ]] || [[ "$FILE_INFORMATION" == *"with CR, LF line"* ]]; then
         if cat -A "$FILE" | grep -q " ^M"; then
             RESULT_FILE+="[trailing spaces]"
