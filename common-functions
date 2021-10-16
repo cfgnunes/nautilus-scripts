@@ -57,9 +57,6 @@ _check_dependencies() {
         "convert")
             PACKAGE_NAME="imagemagick"
             ;;
-        "gzip")
-            PACKAGE_NAME="gzip"
-            ;;
         "file-roller")
             PACKAGE_NAME="file-roller"
             ;;
