@@ -11,7 +11,7 @@ OUTPUT_DIR="$PWD"
 NUM_SEQUENCE=1
 for FILE in $INPUT_FILES; do
     OUTPUT_FILE="$(printf "%02d" $NUM_SEQUENCE)$(_get_filename_extension "$FILE")"
-    STD_OUTPUT=$(_transfer_file "M" "$FILE" "$OUTPUT_FILE" 2>&1)
+    STD_OUTPUT=$(_transfer_file "m" "$FILE" "$OUTPUT_FILE" 2>&1)
     EXIT_CODE=$?
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 
