@@ -16,4 +16,4 @@ STD_OUTPUT=$(grep -i -r -I -P -o -n --exclude="*.pdf" --exclude-dir="*.git*" "[^
 
 WIDTH_TEXT=$(echo "$STD_OUTPUT" | wc -L)
 WIDTH_WINDOW=$((WIDTH_TEXT * 10))
-echo "$STD_OUTPUT" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "Text non ASCII chars"
+echo "$STD_OUTPUT" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "Text: non ASCII chars"
