@@ -252,10 +252,10 @@ _get_files() {
     local MAX_FILES="$4"   # Maximum number of valid files
     local DIRECTORY_FLAG="$5"
     # DIRECTORY_FLAG values:
-    # 'd': Include directories.
-    # 'r': Expand directories recursively (include only files).
-    # 'R': Expand directories recursively (include files + subdirectories).
-    # other value: Ignore directories.
+    # "d": Include directories.
+    # "r": Expand directories recursively (include only files).
+    # "R": Expand directories recursively (include files + subdirectories).
+    # empty: Ignore directories.
 
     local INPUT_FILES_NEW=""
     local FILE=""
@@ -268,9 +268,9 @@ _get_files() {
         INPUT_FILES_NEW=""
         for FILE in $INPUT_FILES; do
             if [ "$DIRECTORY_FLAG" = "r" ]; then
-                INPUT_FILES_NEW+="$(find -L "$FILE" -type f)"
+                INPUT_FILES_NEW+="$(find -L "$FILE" -type f -not -path "*/\.*")"
             else
-                INPUT_FILES_NEW+="$(find -L "$FILE")"
+                INPUT_FILES_NEW+="$(find -L "$FILE" -not -path "*/\.*")"
             fi
             INPUT_FILES_NEW+=$'\n'
         done
@@ -330,7 +330,7 @@ _get_files() {
         fi
     fi
 
-    echo "$OUTPUT_FILES" | sed '/^$/d' | sort -V
+    echo "$OUTPUT_FILES" | grep -v "^$" | sort -V
     return 0
 }
 
@@ -341,9 +341,9 @@ _get_temp_filename() {
 _transfer_file() {
     local TRANSFER_FLAG="$1"
     # TRANSFER_FLAG values:
-    # 'm': Move/rename.
-    # 'M': Move/rename (avoiding problems in FAT file systems).
-    # 'c': Copy.
+    # "m": Move/rename.
+    # "M": Move/rename (avoiding problems in FAT file systems).
+    # "c": Copy.
     local FILE_SRC="$2"
     local FILE_DST="$3"
     local EXIT_CODE=0
