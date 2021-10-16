@@ -13,7 +13,6 @@ for FILE in $INPUT_FILES; do
     OUTPUT_FILE=$(echo "$FILE" | sed "s|[- \t][- \t]*|_|g;s|__*|_|g")
     STD_OUTPUT=$(_move_file "$FILE" "$OUTPUT_FILE" 2>&1)
     EXIT_CODE=$?
-
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 done
 

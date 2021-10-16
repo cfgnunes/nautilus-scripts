@@ -14,7 +14,6 @@ for FILE in $INPUT_FILES; do
     OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").png"
     STD_OUTPUT="$(convert -transparent white -fuzz 5% "$FILE" "$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
-
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 done
 

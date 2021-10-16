@@ -13,7 +13,6 @@ for FILE in $INPUT_FILES; do
     # Run the main process
     STD_OUTPUT="$(latexmk -pdf -interaction=nonstopmode -synctex=1 -output-directory="$OUTPUT_DIR" "$FILE" 2>&1)"
     EXIT_CODE=$?
-
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 done
 
