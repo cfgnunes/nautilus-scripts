@@ -18,22 +18,34 @@ for FILE in $INPUT_FILES; do
     fi
 
     RESULT_FILE=""
+    FILE_ENCODING=$(file --mime-encoding "$FILE" | sed "s|\([^:]*\):[ \t]*\(.*\)|\2|")
+    FILE_INFORMATION=$(file "$FILE" | sed "s|\([^:]*\):[ \t]*\(.*\)|\2|")
 
     # Run the checker 'non UTF-8 encoding'
-    FILE_ENCODING=$(file --mime-encoding "$FILE" | sed "s|\([^:]*\):[ \t]*\(.*\)|\2|")
     if [[ "${FILE_ENCODING,,}" != *"us-ascii"* ]] && [[ "${FILE_ENCODING,,}" != *"utf-8"* ]]; then
         RESULT_FILE+="[non UTF-8 encoding]"
     fi
 
     # Run the checker 'non LF line break'
-    FILE_INFORMATION=$(file "$FILE" | sed "s|\([^:]*\):[ \t]*\(.*\)|\2|")
-    if [[ "$FILE_INFORMATION" == *"CR"* ]]; then
+    if [[ "$FILE_INFORMATION" == *"with CR"* ]]; then
         RESULT_FILE+="[non LF line break]"
     fi
 
-    # Run the checker 'has trailing spaces'
+    # Run the checker 'trailing spaces' (for Unix and Windows files)
     if grep -P -q "[ \t]\r?$" "$FILE"; then
         RESULT_FILE+="[trailing spaces]"
+    fi
+
+    # Run the checker 'trailing spaces' (for Unix and Windows files)
+    if [[ "$FILE_INFORMATION" == *"with CR line"* ]] || [[ "$FILE_INFORMATION" == *"with CR, LF line"* ]]; then
+        if cat -A "$FILE" | grep -q " ^M"; then
+            RESULT_FILE+="[trailing spaces]"
+        fi
+    fi
+
+    # Run the checker 'very long lines'
+    if [[ "$FILE_INFORMATION" == *"very long lines"* ]]; then
+        RESULT_FILE+="[very long lines]"
     fi
 
     # Run the checker 'missing line break at the end'
@@ -62,4 +74,4 @@ STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
 WIDTH_TEXT=$(echo "$STD_OUTPUT" | wc -L)
 WIDTH_WINDOW=$((WIDTH_TEXT * 10))
-echo "$STD_OUTPUT" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "Text summary checker"
+echo "$STD_OUTPUT" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "Text: summary checker"
