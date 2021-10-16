@@ -10,7 +10,7 @@ OUTPUT_DIR="$PWD"
 
 for FILE in $INPUT_FILES; do
     OUTPUT_FILE="${FILE,,}"
-    STD_OUTPUT=$(_transfer_file "M" "$FILE" "$OUTPUT_FILE" 2>&1)
+    STD_OUTPUT=$(_transfer_file "m" "$FILE" "$OUTPUT_FILE" 2>&1)
     EXIT_CODE=$?
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 
@@ -23,7 +23,7 @@ for FILE in $INPUT_FILES; do
             INPUT_FILES_DEPTH=$(find -L "$OUTPUT_FILE" -mindepth "$i" -maxdepth "$i")
             # Rename files for current depth
             for FILE_DEPTH in $INPUT_FILES_DEPTH; do
-                STD_OUTPUT=$(_transfer_file "M" "$FILE_DEPTH" "${FILE_DEPTH,,}" 2>&1)
+                STD_OUTPUT=$(_transfer_file "m" "$FILE_DEPTH" "${FILE_DEPTH,,}" 2>&1)
                 EXIT_CODE=$?
 
                 _log_result_error "$FILE_DEPTH" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
