@@ -43,11 +43,6 @@ for FILE in $INPUT_FILES; do
         fi
     fi
 
-    # Run the checker 'very long lines'
-    if [[ "$FILE_INFORMATION" == *"very long lines"* ]]; then
-        RESULT_FILE+="[very long lines]"
-    fi
-
     # Run the checker 'missing line break at the end'
     if ! tail -c 1 "$FILE" | hexdump -e '16/1 "%02x" "\n"' | grep -q "0d\|0a"; then
         RESULT_FILE+="[missing line at the end]"
