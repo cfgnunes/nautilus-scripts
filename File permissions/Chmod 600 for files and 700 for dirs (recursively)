@@ -8,8 +8,12 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 INPUT_FILES=$(_get_files "$*" "" "1" "" "R") || exit 1
 OUTPUT_DIR="$PWD"
 
-for FILE in $INPUT_FILES; do
-    # Run the main process
+_run_task() {
+    local FILE="$1"
+    local OUTPUT_DIR="$2"
+    local STD_OUTPUT=""
+    local EXIT_CODE=0
+
     STD_OUTPUT=""
     if [ -f "$FILE" ]; then
         STD_OUTPUT="$(chmod 600 "$FILE" 2>&1)"
@@ -18,6 +22,7 @@ for FILE in $INPUT_FILES; do
     fi
     EXIT_CODE=$?
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
-done
+}
 
+_parallel_run "$INPUT_FILES"
 _display_result "$OUTPUT_DIR"
