@@ -7,17 +7,23 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 # Initial checks
 _check_dependencies zenity || exit 1
 INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "r") || exit 1
+OUTPUT_DIR=$(mktemp -d)
 
-OUTPUT_TEMP_FILE=$(mktemp)
-STD_OUTPUT=""
+_run_task() {
+    local FILE="$1"
+    local OUTPUT_DIR="$2"
+    local OUTPUT_TEMP_FILE=""
+    local RESULT_FILE=""
+    local FILE_ENCODING=""
+    local FILE_INFORMATION=""
 
-for FILE in $INPUT_FILES; do
+    OUTPUT_TEMP_FILE=$(mktemp --tmpdir="$OUTPUT_DIR")
+
     # Skip 'binary' files
     if file -bi "$FILE" | grep -q "binary"; then
-        continue
+        return
     fi
 
-    RESULT_FILE=""
     FILE_ENCODING=$(file --mime-encoding "$FILE" | sed "s|\([^:]*\):[ \t]*\(.*\)|\2|")
     FILE_INFORMATION=$(file "$FILE" | sed "s|\([^:]*\):[ \t]*\(.*\)|\2|")
 
@@ -55,14 +61,13 @@ for FILE in $INPUT_FILES; do
 
     # Add only the files that has problems
     if [[ -n "$RESULT_FILE" ]]; then
-        STD_OUTPUT+="$RESULT_FILE"
-        STD_OUTPUT+=": '$FILE'"
-        STD_OUTPUT+=$'\n'
+        echo "$RESULT_FILE: '$FILE'" >"$OUTPUT_TEMP_FILE"
     fi
-done
+}
 
-# Remove temporary file
-rm -rf "$OUTPUT_TEMP_FILE"
+_parallel_run "$INPUT_FILES"
+STD_OUTPUT=$(cat "$OUTPUT_DIR"/*)
+rm -rf "$OUTPUT_DIR"
 
 STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^$")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
