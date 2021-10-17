@@ -12,7 +12,7 @@ OUTPUT_DIR=$(mktemp -d)
 _run_task() {
     local FILE="$1"
     local OUTPUT_DIR="$2"
-    local OUTPUT_TEMP_FILE=""
+    local TEMP_FILE=""
     local RESULT_FILE=""
     local FILE_ENCODING=""
     local FILE_INFORMATION=""
@@ -59,8 +59,8 @@ _run_task() {
 
     # Save the result only for files with problems
     if [[ -n "$RESULT_FILE" ]]; then
-        OUTPUT_TEMP_FILE=$(mktemp --tmpdir="$OUTPUT_DIR")
-        echo "$RESULT_FILE: '$FILE'" >"$OUTPUT_TEMP_FILE"
+        TEMP_FILE=$(mktemp --tmpdir="$OUTPUT_DIR")
+        echo "$RESULT_FILE: '$FILE'" >"$TEMP_FILE"
     fi
 }
 
