@@ -38,6 +38,9 @@ _run_task() {
         chmod --reference="$FILE" "$OUTPUT_FILE"
         _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
     fi
+
+    # Remove the temporary file for each iteration
+    rm -rf "$TEMP_FILE"
 }
 
 _run_parallel_task "$INPUT_FILES"
