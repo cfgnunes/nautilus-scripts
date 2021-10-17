@@ -274,6 +274,7 @@ _get_files() {
         INPUT_FILES="$INPUT_FILES_NEW"
     fi
 
+    # Checks if each file is valid
     for FILE in $INPUT_FILES; do
         VALID_FILE=0
 
