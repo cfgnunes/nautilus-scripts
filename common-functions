@@ -181,7 +181,7 @@ _log_result_error() {
         return 1
     fi
 
-    return "$EXIT_CODE"
+    return 0
 }
 
 _display_result() {
