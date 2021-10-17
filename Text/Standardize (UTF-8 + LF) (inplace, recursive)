@@ -28,10 +28,10 @@ _run_task() {
 
     # Create a temp file in a temporary directory
     # (this directory is removed after finish by a 'trap' command)
-    TEMP_FILE1=$(mktemp --tmpdir="$TEMP_DIR")
-    TEMP_FILE2=$(mktemp --tmpdir="$TEMP_DIR")
-    TEMP_FILE3=$(mktemp --tmpdir="$TEMP_DIR")
-    TEMP_FILE4=$(mktemp --tmpdir="$TEMP_DIR")
+    TEMP_FILE1="$(mktemp --tmpdir="$TEMP_DIR")"
+    TEMP_FILE2="$(mktemp --tmpdir="$TEMP_DIR")"
+    TEMP_FILE3="$(mktemp --tmpdir="$TEMP_DIR")"
+    TEMP_FILE4="$(mktemp --tmpdir="$TEMP_DIR")"
 
     # Run the process (part 1) 'convert encoding to utf-8'
     STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t utf-8 -o "$TEMP_FILE1")"
