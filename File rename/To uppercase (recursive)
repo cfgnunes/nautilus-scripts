@@ -22,7 +22,7 @@ _run_task() {
     OUTPUT_FILE="${FILE^^}"
     STD_OUTPUT=$(_transfer_file "m" "$FILE" "$OUTPUT_FILE" 2>&1)
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 
     if [ -d "$OUTPUT_FILE" ]; then
         # Get the depth of the directory
@@ -36,7 +36,7 @@ _run_task() {
                 STD_OUTPUT=$(_transfer_file "m" "$FILE_DEPTH" "${FILE_DEPTH^^}" 2>&1)
                 EXIT_CODE=$?
 
-                _log_result_error "$FILE_DEPTH" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
+                _log_error_result "$FILE_DEPTH" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
             done
         done
     fi

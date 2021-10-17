@@ -19,7 +19,7 @@ _run_task() {
     OUTPUT_FILE="$OUTPUT_DIR/$FILE"
     STD_OUTPUT="$(convert -resize "1080x1920^" -gravity center -crop 1080x1920+0+0 -strip "$FILE" "$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 }
 
 _run_parallel_task "$INPUT_FILES"

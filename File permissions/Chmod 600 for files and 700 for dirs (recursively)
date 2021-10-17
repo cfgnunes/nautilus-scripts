@@ -21,7 +21,7 @@ _run_task() {
         STD_OUTPUT="$(chmod 700 "$FILE" 2>&1)"
     fi
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 }
 
 _run_parallel_task "$INPUT_FILES"

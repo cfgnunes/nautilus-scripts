@@ -17,7 +17,7 @@ _run_task() {
 
     STD_OUTPUT="$(latexmk -pdf -interaction=nonstopmode -synctex=1 -output-directory="$OUTPUT_DIR" "$FILE" 2>&1)"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 }
 
 _run_parallel_task "$INPUT_FILES"

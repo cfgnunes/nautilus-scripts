@@ -36,23 +36,23 @@ _run_task() {
     # Run the process (part 1) 'convert encoding to utf-8'
     STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t utf-8 -o "$TEMP_FILE1")"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
 
     # Run the process (part 2) 'convert line ending to unix'
     STD_OUTPUT="$(perl -pe 's/\r\n|\n|\r/\n/g' "$TEMP_FILE1" >"$TEMP_FILE2")"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
 
     # Run the process (part 3) 'remove trailing spaces'
     STD_OUTPUT="$(sed 's|[ \t]*\(\r*\)$|\1|' "$TEMP_FILE2" >"$TEMP_FILE3")"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
 
     # Run the process (part 4) 'remove empty line in EOF'
     echo "" >>"$TEMP_FILE3"
     STD_OUTPUT="$(sed ':Loop;N;$!bLoop;s|\n*$||g' "$TEMP_FILE3" >"$TEMP_FILE4")"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
 
     # Check if the file is different, then copy it to the output directory
     if ! cmp --silent "$FILE" "$TEMP_FILE4"; then
@@ -62,12 +62,12 @@ _run_task() {
         # Create a backup file
         STD_OUTPUT=$(_transfer_file "c" "$FILE" "$BACKUP_FILE" 2>&1)
         EXIT_CODE=$?
-        _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
+        _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
         chmod --reference="$FILE_SRC" "$FILE_DST"
 
         # Modify the original file
         cat "$TEMP_FILE4" >"$OUTPUT_FILE"
-        _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+        _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
     fi
 
     # Remove the temporary files for each iteration

@@ -2,9 +2,12 @@
 
 IFS=$'\n'
 ERROR_LOG_FILE="errors.log"
+
+# Create temp directories for use in scripts
 LOG_TEMP_DIR=$(mktemp -d)
 TEMP_DIR=$(mktemp -d)
 
+# Remove created temp files in unexpected exit
 _trap_handler() {
     rm -rf "$LOG_TEMP_DIR"
     rm -rf "$TEMP_DIR"
@@ -161,7 +164,7 @@ _log_error() {
     } >"$LOG_TEMP_FILE"
 }
 
-_log_result_error() {
+_log_error_result() {
     local FILENAME="$1"
     local STD_OUTPUT="$2"
     local OUTPUT_DIR="$3"
