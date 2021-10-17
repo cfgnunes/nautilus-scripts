@@ -9,37 +9,46 @@ _check_dependencies cmp iconv perl || exit 1
 INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "r") || exit 1
 OUTPUT_DIR="$PWD"
 
-OUTPUT_TEMP_FILE1=$(mktemp)
-OUTPUT_TEMP_FILE2=$(mktemp)
-OUTPUT_TEMP_FILE3=$(mktemp)
-OUTPUT_TEMP_FILE4=$(mktemp)
+_run_task() {
+    local FILE="$1"
+    local OUTPUT_DIR="$2"
+    local STD_OUTPUT=""
+    local EXIT_CODE=0
+    local OUTPUT_TEMP_FILE1=""
+    local OUTPUT_TEMP_FILE2=""
+    local OUTPUT_TEMP_FILE3=""
+    local OUTPUT_TEMP_FILE4=""
 
-for FILE in $INPUT_FILES; do
+    OUTPUT_TEMP_FILE1=$(mktemp)
+    OUTPUT_TEMP_FILE2=$(mktemp)
+    OUTPUT_TEMP_FILE3=$(mktemp)
+    OUTPUT_TEMP_FILE4=$(mktemp)
+
     # Skip 'binary' files
     if file -bi "$FILE" | grep -q "binary"; then
-        continue
+        return
     fi
 
     # Run the process (part 1) 'convert encoding to utf-8'
     STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t utf-8 -o "$OUTPUT_TEMP_FILE1")"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
 
     # Run the process (part 2) 'convert line ending to windows'
     STD_OUTPUT="$(perl -pe 's/\r\n|\n|\r/\r\n/g' "$OUTPUT_TEMP_FILE1" >"$OUTPUT_TEMP_FILE2")"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
 
     # Run the process (part 3) 'remove trailing spaces'
     STD_OUTPUT="$(sed 's|[ \t]*\(\r*\)$|\1|' "$OUTPUT_TEMP_FILE2" >"$OUTPUT_TEMP_FILE3")"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
 
     # Run the process (part 4) 'remove empty line in EOF'
     echo "" >>"$OUTPUT_TEMP_FILE3"
     STD_OUTPUT="$(sed ':Loop;N;$!bLoop;s|\n*$||g' "$OUTPUT_TEMP_FILE3" >"$OUTPUT_TEMP_FILE4")"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
 
     # Check if the file is different, then copy it to the output directory
     if ! cmp --silent "$FILE" "$OUTPUT_TEMP_FILE4"; then
@@ -49,19 +58,20 @@ for FILE in $INPUT_FILES; do
         # Create a backup file
         STD_OUTPUT=$(_transfer_file "c" "$FILE" "$BACKUP_FILE" 2>&1)
         EXIT_CODE=$?
-        _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
+        _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
         chmod --reference="$FILE_SRC" "$FILE_DST"
 
         # Modify the original file
         cat "$OUTPUT_TEMP_FILE4" >"$OUTPUT_FILE"
         _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
     fi
-done
 
-# Remove temporary files
-rm -rf "$OUTPUT_TEMP_FILE1"
-rm -rf "$OUTPUT_TEMP_FILE2"
-rm -rf "$OUTPUT_TEMP_FILE3"
-rm -rf "$OUTPUT_TEMP_FILE4"
+    # Remove temporary files
+    rm -rf "$OUTPUT_TEMP_FILE1"
+    rm -rf "$OUTPUT_TEMP_FILE2"
+    rm -rf "$OUTPUT_TEMP_FILE3"
+    rm -rf "$OUTPUT_TEMP_FILE4"
+}
 
+_parallel_run "$INPUT_FILES"
 _display_result "$OUTPUT_DIR"
