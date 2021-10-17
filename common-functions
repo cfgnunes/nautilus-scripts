@@ -2,14 +2,13 @@
 
 IFS=$'\n'
 ERROR_LOG_FILE="errors.log"
+LOG_TEMP_DIR=$(mktemp -d)
+TEMP_DIR=$(mktemp -d)
 
 _trap_handler() {
     rm -rf "$LOG_TEMP_DIR"
     rm -rf "$TEMP_DIR"
 }
-
-LOG_TEMP_DIR=$(mktemp -d)
-TEMP_DIR=$(mktemp -d)
 trap _trap_handler EXIT
 
 _msg_error() {
