@@ -21,10 +21,10 @@ _run_task() {
 
     FILE_DIR="${FILE%/*}"
     FILE_NAME="${FILE##*/}"
-    FILE_NAME_NEW="$(echo "$FILE_NAME" | iconv -f utf8 -t ascii//TRANSLIT)"
+    FILE_NAME_NEW=$(echo "$FILE_NAME" | iconv -f utf8 -t ascii//TRANSLIT)
     OUTPUT_FILE="$FILE_DIR/$FILE_NAME_NEW"
 
-    STD_OUTPUT="$(_transfer_file "m" "$FILE" "$OUTPUT_FILE" 2>&1)"
+    STD_OUTPUT=$(_transfer_file "m" "$FILE" "$OUTPUT_FILE" 2>&1)
     EXIT_CODE=$?
     _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 }

@@ -15,9 +15,9 @@ _run_task() {
     local EXIT_CODE=0
 
     if [ -f "$FILE" ]; then
-        STD_OUTPUT="$(chmod 600 "$FILE" 2>&1)"
+        STD_OUTPUT=$(chmod 600 "$FILE" 2>&1)
     elif [ -d "$FILE" ]; then
-        STD_OUTPUT="$(chmod 700 "$FILE" 2>&1)"
+        STD_OUTPUT=$(chmod 700 "$FILE" 2>&1)
     fi
     EXIT_CODE=$?
     _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""

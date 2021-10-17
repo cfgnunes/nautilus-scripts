@@ -14,7 +14,7 @@ for FILE in $INPUT_FILES; do
     FILE_NAME_NEW="${FILE_NAME^^}"
     OUTPUT_FILE="$FILE_DIR/$FILE_NAME_NEW"
 
-    STD_OUTPUT="$(_transfer_file "m" "$FILE" "$OUTPUT_FILE" 2>&1)"
+    STD_OUTPUT=$(_transfer_file "m" "$FILE" "$OUTPUT_FILE" 2>&1)
     EXIT_CODE=$?
     _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 done
