@@ -137,13 +137,6 @@ _get_filename_without_extension() {
     echo "$FILENAME" | sed "s|\.[^.]*$||"
 }
 
-_get_filename_extension() {
-    local FILENAME="$1"
-
-    # shellcheck disable=SC2001
-    echo "$FILENAME" | sed "s|^.*\.|.|"
-}
-
 _log_error() {
     local ERROR_TYPE="$1"
     local FILENAME="$2"
