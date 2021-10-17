@@ -395,7 +395,7 @@ _parallel_run() {
             ((i = i % NUM_PROC))
             ((i++ == 0)) && wait
 
-            _run_task "$FILE" "$OUTPUT_DIR" "$OUTPUT_FILE" &
+            _run_task "$FILE" "$OUTPUT_DIR" &
         done
     )
 }
