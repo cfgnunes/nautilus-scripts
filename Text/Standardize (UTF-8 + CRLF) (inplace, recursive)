@@ -12,6 +12,7 @@ OUTPUT_DIR="$PWD"
 _run_task() {
     local FILE="$1"
     local OUTPUT_DIR="$2"
+    local OUTPUT_FILE=""
     local STD_OUTPUT=""
     local EXIT_CODE=0
     local OUTPUT_TEMP_FILE1=""
