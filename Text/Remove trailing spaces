@@ -22,12 +22,14 @@ _run_task() {
         return
     fi
 
-    TEMP_FILE=$(mktemp)
+    # Create a temp file in a temporary directory
+    # (this directory is removed after finish by a 'trap' command)
+    TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR")
 
     # Run the main process
     STD_OUTPUT="$(sed 's|[ \t]*\(\r*\)$|\1|' "$FILE" >"$TEMP_FILE")"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || rm -rf "$TEMP_FILE" && return
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
 
     # Check if the file is different, then move it to the output directory
     if ! cmp --silent "$FILE" "$TEMP_FILE"; then
@@ -36,9 +38,6 @@ _run_task() {
         chmod --reference="$FILE" "$OUTPUT_FILE"
         _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
     fi
-
-    # Remove temporary file
-    rm -rf "$TEMP_FILE"
 }
 
 _run_parallel_task "$INPUT_FILES"
