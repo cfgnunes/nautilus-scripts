@@ -9,11 +9,16 @@ _check_dependencies latexmk || exit 1
 INPUT_FILES=$(_get_files "$*" "text/x-tex" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir) || exit 1
 
-for FILE in $INPUT_FILES; do
-    # Run the main process
+_run_task() {
+    local FILE="$1"
+    local OUTPUT_DIR="$2"
+    local STD_OUTPUT=""
+    local EXIT_CODE=0
+
     STD_OUTPUT="$(latexmk -pdf -interaction=nonstopmode -synctex=1 -output-directory="$OUTPUT_DIR" "$FILE" 2>&1)"
     EXIT_CODE=$?
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
-done
+}
 
+_parallel_run "$INPUT_FILES"
 _display_result "$OUTPUT_DIR"
