@@ -14,9 +14,16 @@ _run_task() {
     local OUTPUT_FILE=""
     local STD_OUTPUT=""
     local EXIT_CODE=0
+    local FILE_DIR=""
+    local FILE_NAME=""
+    local FILE_NAME_NEW=""
 
-    OUTPUT_FILE=$(echo "$FILE" | sed "s|[_ \t][_ \t]*|-|g;s|--*|-|g")
-    STD_OUTPUT=$(_transfer_file "m" "$FILE" "$OUTPUT_FILE" 2>&1)
+    FILE_DIR="${FILE%/*}"
+    FILE_NAME="${FILE##*/}"
+    FILE_NAME_NEW="$(echo "$FILE_NAME" | sed "s|[_ \t][_ \t]*|-|g;s|--*|-|g")"
+    OUTPUT_FILE="$FILE_DIR/$FILE_NAME_NEW"
+
+    STD_OUTPUT="$(_transfer_file "m" "$FILE" "$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
     _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 }
