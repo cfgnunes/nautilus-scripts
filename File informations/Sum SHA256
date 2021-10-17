@@ -12,4 +12,4 @@ INPUT_FILES=$(_get_files "$*" "" "1" "" "r") || exit 1
 # shellcheck disable=SC2086
 STD_OUTPUT=$(sha256sum $INPUT_FILES)
 
-_display_result_info "$STD_OUTPUT" "SHA256 sum"
+_display_info_box "$STD_OUTPUT" "SHA256 sum"

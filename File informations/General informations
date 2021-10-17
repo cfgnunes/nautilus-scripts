@@ -16,4 +16,4 @@ STD_OUTPUT=$(file $INPUT_FILES)
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|\([^:]*\):[ \t]*\(.*\)|\2: '\1'|")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
-_display_result_info "$STD_OUTPUT" "File informations"
+_display_info_box "$STD_OUTPUT" "File informations"

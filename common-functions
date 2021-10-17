@@ -225,7 +225,7 @@ _display_result_task() {
     fi
 }
 
-_display_result_info() {
+_display_info_box() {
     local MESSAGE="$1"
     local TITLE="$2"
     local WIDTH_TEXT=""
