@@ -9,6 +9,11 @@ INPUT_FILES=$(_get_files "$*" "" "1" "" "R") || exit 1
 OUTPUT_DIR="$PWD"
 
 for FILE in $INPUT_FILES; do
+    # Add the './' prefix
+    if ! [[ "$FILE" == "/"* ]] && ! [[ "$FILE" == "./"* ]]; then
+        FILE="./$FILE"
+    fi
+
     FILE_DIR="${FILE%/*}"
     FILE_NAME="${FILE##*/}"
     FILE_NAME_NEW="${FILE_NAME^^}"
