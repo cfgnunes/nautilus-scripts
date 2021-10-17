@@ -117,9 +117,6 @@ _check_dependencies() {
         "pdfjam")
             PACKAGE_NAME="texlive-extra-utils"
             ;;
-        *)
-            PACKAGE_NAME=""
-            ;;
         esac
 
         if [ -n "$PACKAGE_NAME" ]; then
@@ -295,12 +292,11 @@ _get_files() {
 
     # Expand files in directories recursively
     if [ "$DIRECTORY_FLAG" = "r" ] || [ "$DIRECTORY_FLAG" = "R" ]; then
-        INPUT_FILES_NEW=""
         for FILE in $INPUT_FILES; do
             if [ "$DIRECTORY_FLAG" = "r" ]; then
                 INPUT_FILES_NEW+="$(find -L "$FILE" -type f -not -path "*.git/*")"
             else
-                INPUT_FILES_NEW+="$(find -L "$FILE" -not -path "*.git/*")"
+                INPUT_FILES_NEW+="$(find -L "$FILE" -depth -not -path "*.git/*")"
             fi
             INPUT_FILES_NEW+=$'\n'
         done
@@ -310,6 +306,11 @@ _get_files() {
     # Checks if each file is valid
     for FILE in $INPUT_FILES; do
         VALID_FILE=0
+
+        # Add the './' prefix
+        if ! [[ "$FILE" == "/"* ]] && ! [[ "$FILE" == "./"* ]]; then
+            FILE="./$FILE"
+        fi
 
         # Filter files by mime type
         if [ -n "$MIME_LIST" ]; then
@@ -373,14 +374,6 @@ _transfer_file() {
     local FILE_SRC="$2"
     local FILE_DST="$3"
     local EXIT_CODE=0
-
-    # Avoid problems with 'mv' command without the path
-    if ! [[ "$FILE_SRC" == "/"* ]] && ! [[ "$FILE_SRC" == "./"* ]]; then
-        FILE_SRC="./$FILE_SRC"
-    fi
-    if ! [[ "$FILE_DST" == "/"* ]] && ! [[ "$FILE_DST" == "./"* ]]; then
-        FILE_DST="./$FILE_DST"
-    fi
 
     # Avoid transfer a file to the same name
     if [ "$FILE_SRC" = "$FILE_DST" ]; then
