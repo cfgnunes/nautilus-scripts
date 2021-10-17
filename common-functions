@@ -233,7 +233,7 @@ _display_info_box() {
 
     rm -rf "$LOG_TEMP_DIR"
 
-    WIDTH_TEXT=$(echo "$STD_OUTPUT" | wc -L)
+    WIDTH_TEXT=$(echo "$MESSAGE" | wc -L)
     WIDTH_WINDOW=$((WIDTH_TEXT * 9))
     echo "$MESSAGE" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "$TITLE"
 }
