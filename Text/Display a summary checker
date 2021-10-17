@@ -17,8 +17,6 @@ _run_task() {
     local FILE_ENCODING=""
     local FILE_INFORMATION=""
 
-    OUTPUT_TEMP_FILE=$(mktemp --tmpdir="$OUTPUT_DIR")
-
     # Skip 'binary' files
     if file -bi "$FILE" | grep -q "binary"; then
         return
@@ -59,8 +57,9 @@ _run_task() {
         fi
     fi
 
-    # Add only the files that has problems
+    # Save the result only for files with problems
     if [[ -n "$RESULT_FILE" ]]; then
+        OUTPUT_TEMP_FILE=$(mktemp --tmpdir="$OUTPUT_DIR")
         echo "$RESULT_FILE: '$FILE'" >"$OUTPUT_TEMP_FILE"
     fi
 }
