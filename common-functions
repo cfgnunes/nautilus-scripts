@@ -2,7 +2,15 @@
 
 IFS=$'\n'
 ERROR_LOG_FILE="errors.log"
+
+_trap_handler() {
+    rm -rf "$LOG_TEMP_DIR"
+    rm -rf "$TEMP_DIR"
+}
+
 LOG_TEMP_DIR=$(mktemp -d)
+TEMP_DIR=$(mktemp -d)
+trap _trap_handler EXIT
 
 _msg_error() {
     local MESSAGE="$1"
@@ -14,7 +22,7 @@ _msg_error() {
         if hash notify-send 2>/dev/null; then
             notify-send -i error "$MESSAGE"
         elif hash zenity 2>/dev/null; then
-            zenity --error --width=300 --text "$MESSAGE"
+            zenity --error --width=300 --text "$MESSAGE" &
         elif hash kdialog 2>/dev/null; then
             kdialog --title "$MESSAGE" --passivepopup "This popup will disappear in 5 seconds" 5 &
         elif hash xmessage 2>/dev/null; then
@@ -33,7 +41,7 @@ _msg_info() {
         if hash notify-send 2>/dev/null; then
             notify-send "$MESSAGE"
         elif hash zenity 2>/dev/null; then
-            zenity --info --width=300 --text "$MESSAGE"
+            zenity --info --width=300 --text "$MESSAGE" &
         elif hash kdialog 2>/dev/null; then
             kdialog --title "$MESSAGE" --passivepopup "This popup will disappear in 5 seconds" 5 &
         elif hash xmessage 2>/dev/null; then
@@ -196,7 +204,6 @@ _display_result_task() {
     if ls "$LOG_TEMP_DIR/"* &>/dev/null; then
         cat "$LOG_TEMP_DIR/"* >"$OUTPUT_DIR/$ERROR_LOG_FILE"
     fi
-    rm -rf "$LOG_TEMP_DIR"
 
     # Print a simplified $OUTPUT_DIR to the user
     echo "$OUTPUT_DIR_PRINT" | grep -q "$PWD" && OUTPUT_DIR_PRINT="./${OUTPUT_DIR#$PWD/}"
@@ -231,11 +238,9 @@ _display_info_box() {
     local WIDTH_TEXT=""
     local WIDTH_WINDOW=""
 
-    rm -rf "$LOG_TEMP_DIR"
-
     WIDTH_TEXT=$(echo "$MESSAGE" | wc -L)
     WIDTH_WINDOW=$((WIDTH_TEXT * 9))
-    echo "$MESSAGE" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "$TITLE"
+    echo "$MESSAGE" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "$TITLE" &
 }
 
 _get_output_dir() {

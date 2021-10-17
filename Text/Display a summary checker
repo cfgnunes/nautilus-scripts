@@ -7,11 +7,9 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 # Initial checks
 _check_dependencies zenity || exit 1
 INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "r") || exit 1
-OUTPUT_DIR=$(mktemp -d)
 
 _run_task() {
     local FILE="$1"
-    local OUTPUT_DIR="$2"
     local TEMP_FILE=""
     local RESULT_FILE=""
     local FILE_ENCODING=""
@@ -59,14 +57,13 @@ _run_task() {
 
     # Save the result only for files with problems
     if [[ -n "$RESULT_FILE" ]]; then
-        TEMP_FILE=$(mktemp --tmpdir="$OUTPUT_DIR")
+        TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR")
         echo "$RESULT_FILE: '$FILE'" >"$TEMP_FILE"
     fi
 }
 
 _run_parallel_task "$INPUT_FILES"
-STD_OUTPUT=$(cat "$OUTPUT_DIR"/*)
-rm -rf "$OUTPUT_DIR"
+STD_OUTPUT=$(cat "$TEMP_DIR"/*)
 
 STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^$")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
