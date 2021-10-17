@@ -57,6 +57,8 @@ _run_task() {
 
     # Save the result only for files with problems
     if [[ -n "$RESULT_FILE" ]]; then
+        # Create a temp file in a temporary directory
+        # (this directory is removed after finish by a 'trap' command)
         TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR")
         echo "$RESULT_FILE: '$FILE'" >"$TEMP_FILE"
     fi
