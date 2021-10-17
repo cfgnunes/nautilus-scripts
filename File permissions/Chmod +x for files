@@ -14,7 +14,7 @@ _run_task() {
     local STD_OUTPUT=""
     local EXIT_CODE=0
 
-    STD_OUTPUT="$(chmod +x "$FILE" 2>&1)"
+    STD_OUTPUT=$(chmod +x "$FILE" 2>&1)
     EXIT_CODE=$?
     _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 }

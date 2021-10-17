@@ -7,7 +7,7 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 # Initial checks
 _check_dependencies cmp iconv || exit 1
 INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "") || exit 1
-OUTPUT_DIR="$(_get_output_dir)" || exit 1
+OUTPUT_DIR=$(_get_output_dir) || exit 1
 
 _run_task() {
     local FILE="$1"
@@ -27,7 +27,7 @@ _run_task() {
     TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR")
 
     # Run the main process
-    STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t iso-8859-1 -o "$TEMP_FILE")"
+    STD_OUTPUT=$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t iso-8859-1 -o "$TEMP_FILE")
     EXIT_CODE=$?
     _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
 

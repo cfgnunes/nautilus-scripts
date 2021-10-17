@@ -11,6 +11,6 @@ INPUT_FILES=$(_get_files "$*" "" "1" "" "d") || exit 1
 # Run the main process
 # shellcheck disable=SC2086
 STD_OUTPUT=$(find $INPUT_FILES -type d -empty)
-STD_OUTPUT="$(echo "$STD_OUTPUT" | sort -V)"
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
 _display_info_box "$STD_OUTPUT" "Empty directories"
