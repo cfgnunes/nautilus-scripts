@@ -382,3 +382,20 @@ _transfer_file() {
 
     return "$EXIT_CODE"
 }
+
+_parallel_run() {
+    local INPUT_FILES="$1"
+    local NUM_PROC=0
+    local i=0
+
+    NUM_PROC=$(nproc --all)
+
+    (
+        for FILE in $INPUT_FILES; do
+            ((i = i % NUM_PROC))
+            ((i++ == 0)) && wait
+
+            _run_task "$FILE" "$OUTPUT_DIR" "$OUTPUT_FILE" &
+        done
+    )
+}
