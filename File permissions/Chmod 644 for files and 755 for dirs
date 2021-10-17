@@ -14,7 +14,6 @@ _run_task() {
     local STD_OUTPUT=""
     local EXIT_CODE=0
 
-    STD_OUTPUT=""
     if [ -f "$FILE" ]; then
         STD_OUTPUT="$(chmod 644 "$FILE" 2>&1)"
     elif [ -d "$FILE" ]; then
