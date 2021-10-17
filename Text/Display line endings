@@ -25,6 +25,4 @@ STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|\([^:]*\):[ \t]*\(.*\)|\2: '\1'|")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | grep "(windows):\|(unix):\|(mac):\|(no terminators):")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
-WIDTH_TEXT=$(echo "$STD_OUTPUT" | wc -L)
-WIDTH_WINDOW=$((WIDTH_TEXT * 10))
-echo "$STD_OUTPUT" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "Text: line terminators"
+_display_result_info "$STD_OUTPUT" "Text: line terminators"

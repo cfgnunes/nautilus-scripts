@@ -12,6 +12,4 @@ INPUT_FILES=$(_get_files "$*" "" "1" "" "r") || exit 1
 # shellcheck disable=SC2086
 STD_OUTPUT=$(sha1sum $INPUT_FILES)
 
-WIDTH_TEXT=$(echo "$STD_OUTPUT" | wc -L)
-WIDTH_WINDOW=$((WIDTH_TEXT * 10))
-echo "$STD_OUTPUT" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "SHA1 hash"
+_display_result_info "$STD_OUTPUT" "SHA1 sum"

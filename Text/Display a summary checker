@@ -64,13 +64,11 @@ _run_task() {
     fi
 }
 
-_parallel_run "$INPUT_FILES"
+_run_parallel_task "$INPUT_FILES"
 STD_OUTPUT=$(cat "$OUTPUT_DIR"/*)
 rm -rf "$OUTPUT_DIR"
 
 STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^$")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
-WIDTH_TEXT=$(echo "$STD_OUTPUT" | wc -L)
-WIDTH_WINDOW=$((WIDTH_TEXT * 10))
-echo "$STD_OUTPUT" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "Text: summary checker"
+_display_result_info "$STD_OUTPUT" "Text: summary checker"
