@@ -9,12 +9,18 @@ _check_dependencies convert || exit 1
 INPUT_FILES=$(_get_files "$*" "image" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir) || exit 1
 
-for FILE in $INPUT_FILES; do
-    # Run the main process
+_run_task() {
+    local FILE="$1"
+    local OUTPUT_DIR="$2"
+    local OUTPUT_FILE="$3"
+    local STD_OUTPUT=""
+    local EXIT_CODE=0
+
     OUTPUT_FILE="$OUTPUT_DIR/$FILE"
     STD_OUTPUT="$(convert -resize "256x256^" -gravity center -crop 256x256+0+0 -strip "$FILE" "$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
-done
+}
 
+_parallel_run "$INPUT_FILES"
 _display_result "$OUTPUT_DIR"
