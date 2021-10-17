@@ -4,8 +4,8 @@ IFS=$'\n'
 ERROR_LOG_FILE="errors.log"
 
 # Create temp directories for use in scripts
-LOG_TEMP_DIR=$(mktemp -d)
-TEMP_DIR=$(mktemp -d)
+LOG_TEMP_DIR="$(mktemp -d)"
+TEMP_DIR="$(mktemp -d)"
 
 # Remove created temp files in unexpected exit
 _trap_handler() {
@@ -144,7 +144,7 @@ _log_error() {
     local OUTPUT_DIR="$4"
     local LOG_TEMP_FILE=""
 
-    LOG_TEMP_FILE=$(mktemp --tmpdir="$LOG_TEMP_DIR")
+    LOG_TEMP_FILE="$(mktemp --tmpdir="$LOG_TEMP_DIR")"
 
     {
         echo "[$(date "+%Y-%m-%d %H:%M:%S")] ERROR while processing '$FILENAME'."
@@ -307,7 +307,7 @@ _get_files() {
 
         # Filter files by mime type
         if [ -n "$MIME_LIST" ]; then
-            MIME_FILE=$(file --mime-type -b "$FILE")
+            MIME_FILE="$(file --mime-type -b "$FILE")"
             IFS_OLD=$IFS
             IFS=";"
             for MIME in $MIME_LIST; do
