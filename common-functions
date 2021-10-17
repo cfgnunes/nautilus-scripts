@@ -325,8 +325,8 @@ _get_files() {
         fi
 
         # Check the DIRECTORY_FLAG
-        if [ -d "$FILE" ]; then
-            [ -n "$DIRECTORY_FLAG" ] && VALID_FILE=1
+        if [ -n "$DIRECTORY_FLAG" ]; then
+            [ -d "$FILE" ] && VALID_FILE=1
         fi
 
         # Add the file in the list if it is valid
