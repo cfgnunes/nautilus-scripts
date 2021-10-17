@@ -300,11 +300,6 @@ _get_files() {
     for FILE in $INPUT_FILES; do
         VALID_FILE=0
 
-        # Add the './' prefix
-        if ! [[ "$FILE" == "/"* ]] && ! [[ "$FILE" == "./"* ]]; then
-            FILE="./$FILE"
-        fi
-
         # Filter files by mime type
         if [ -n "$MIME_LIST" ]; then
             MIME_FILE=$(file --mime-type -b "$FILE")
@@ -368,6 +363,14 @@ _transfer_file() {
     local FILE_DST="$3"
     local EXIT_CODE=0
 
+    # Add the './' prefix
+    if ! [[ "$FILE_SRC" == "/"* ]] && ! [[ "$FILE_SRC" == "./"* ]]; then
+        FILE_SRC="./$FILE_SRC"
+    fi
+    if ! [[ "$FILE_DST" == "/"* ]] && ! [[ "$FILE_DST" == "./"* ]]; then
+        FILE_DST="./$FILE_DST"
+    fi
+
     # Avoid transfer a file to the same name
     if [ "$FILE_SRC" = "$FILE_DST" ]; then
         return 0
@@ -405,18 +408,13 @@ _transfer_file() {
 
 _run_parallel_task() {
     local INPUT_FILES="$1"
-    local NUM_PROC=0
-    local i=0
 
-    NUM_PROC=$(nproc --all)
-
-    (
-        for FILE in $INPUT_FILES; do
-            ((i = i % NUM_PROC))
-            ((i++ == 0)) && wait
-
-            _run_task "$FILE" "$OUTPUT_DIR" &
-        done
-        wait
-    )
+    export LOG_TEMP_DIR
+    export TEMP_DIR
+    export -f _get_filename_without_extension
+    export -f _log_error
+    export -f _log_error_result
+    export -f _transfer_file
+    export -f _run_task
+    echo "$INPUT_FILES" | xargs --max-procs="$(nproc --all)" -I{} bash -c "_run_task \"{}\" \"$OUTPUT_DIR\""
 }
