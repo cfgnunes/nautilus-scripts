@@ -397,5 +397,6 @@ _parallel_run() {
 
             _run_task "$FILE" "$OUTPUT_DIR" &
         done
+        wait
     )
 }
