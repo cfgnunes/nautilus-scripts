@@ -147,7 +147,7 @@ _log_error() {
         echo -e "\tType: $ERROR_TYPE."
         echo -e "\tStandard output: $STD_OUTPUT"
         echo ""
-    } >>"$OUTPUT_DIR/$ERROR_LOG_FILE"
+    } >"$OUTPUT_DIR/.$FILENAME.$ERROR_LOG_FILE"
 }
 
 _log_result_error() {
@@ -194,7 +194,9 @@ _display_result() {
     echo "$OUTPUT_DIR_PRINT" | grep -q "$HOME" && OUTPUT_DIR_PRINT="~/${OUTPUT_DIR#$HOME/}"
 
     # Check if there was some error
-    if [ -f "$OUTPUT_DIR/$ERROR_LOG_FILE" ]; then
+    if ls "$OUTPUT_DIR/."*"$ERROR_LOG_FILE" &>/dev/null; then
+        cat "$OUTPUT_DIR/."*"$ERROR_LOG_FILE" >"$OUTPUT_DIR/$ERROR_LOG_FILE"
+        rm -rf "$OUTPUT_DIR/."*"$ERROR_LOG_FILE"
         _msg_error "Task finished with errors! See the '$OUTPUT_DIR_PRINT/$ERROR_LOG_FILE' for details."
         return 1
     fi
