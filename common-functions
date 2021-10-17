@@ -2,6 +2,7 @@
 
 IFS=$'\n'
 ERROR_LOG_FILE="errors.log"
+LOG_TEMP_DIR=$(mktemp -d)
 
 _msg_error() {
     local MESSAGE="$1"
@@ -141,13 +142,16 @@ _log_error() {
     local FILENAME="$2"
     local STD_OUTPUT="$3"
     local OUTPUT_DIR="$4"
+    local LOG_TEMP_FILE=""
+
+    LOG_TEMP_FILE=$(mktemp --tmpdir="$LOG_TEMP_DIR")
 
     {
         echo "[$(date "+%Y-%m-%d %H:%M:%S")] ERROR while processing '$FILENAME'."
         echo -e "\tType: $ERROR_TYPE."
         echo -e "\tStandard output: $STD_OUTPUT"
         echo ""
-    } >"$OUTPUT_DIR/.$FILENAME.$ERROR_LOG_FILE"
+    } >"$LOG_TEMP_FILE"
 }
 
 _log_result_error() {
@@ -193,10 +197,13 @@ _display_result() {
     # shellcheck disable=SC2088
     echo "$OUTPUT_DIR_PRINT" | grep -q "$HOME" && OUTPUT_DIR_PRINT="~/${OUTPUT_DIR#$HOME/}"
 
+    # Compile log errors in a single file
+    if ls "$LOG_TEMP_DIR/"* &>/dev/null; then
+        cat "$LOG_TEMP_DIR/"* >"$OUTPUT_DIR/$ERROR_LOG_FILE"
+    fi
+    rm -rf "$LOG_TEMP_DIR"
     # Check if there was some error
-    if ls "$OUTPUT_DIR/."*"$ERROR_LOG_FILE" &>/dev/null; then
-        cat "$OUTPUT_DIR/."*"$ERROR_LOG_FILE" >"$OUTPUT_DIR/$ERROR_LOG_FILE"
-        rm -rf "$OUTPUT_DIR/."*"$ERROR_LOG_FILE"
+    if [ -f "$OUTPUT_DIR/$ERROR_LOG_FILE" ]; then
         _msg_error "Task finished with errors! See the '$OUTPUT_DIR_PRINT/$ERROR_LOG_FILE' for details."
         return 1
     fi
