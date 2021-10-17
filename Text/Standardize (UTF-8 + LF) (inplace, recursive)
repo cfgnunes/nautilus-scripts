@@ -21,15 +21,15 @@ _run_task() {
     local OUTPUT_TEMP_FILE3=""
     local OUTPUT_TEMP_FILE4=""
 
-    OUTPUT_TEMP_FILE1=$(mktemp)
-    OUTPUT_TEMP_FILE2=$(mktemp)
-    OUTPUT_TEMP_FILE3=$(mktemp)
-    OUTPUT_TEMP_FILE4=$(mktemp)
-
     # Skip 'binary' files
     if file -bi "$FILE" | grep -q "binary"; then
         return
     fi
+
+    OUTPUT_TEMP_FILE1=$(mktemp)
+    OUTPUT_TEMP_FILE2=$(mktemp)
+    OUTPUT_TEMP_FILE3=$(mktemp)
+    OUTPUT_TEMP_FILE4=$(mktemp)
 
     # Run the process (part 1) 'convert encoding to utf-8'
     STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t utf-8 -o "$OUTPUT_TEMP_FILE1")"

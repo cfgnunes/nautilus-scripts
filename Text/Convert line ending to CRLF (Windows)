@@ -17,12 +17,12 @@ _run_task() {
     local EXIT_CODE=0
     local OUTPUT_TEMP_FILE=""
 
-    OUTPUT_TEMP_FILE=$(mktemp)
-
     # Skip 'binary' files
     if file -bi "$FILE" | grep -q "binary"; then
         return
     fi
+
+    OUTPUT_TEMP_FILE=$(mktemp)
 
     # Run the main process
     STD_OUTPUT="$(perl -pe 's/\r\n|\n|\r/\r\n/g' "$FILE" >"$OUTPUT_TEMP_FILE")"
