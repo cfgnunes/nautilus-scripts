@@ -361,7 +361,7 @@ _get_files() {
         fi
     fi
 
-    echo "$OUTPUT_FILES" | grep -v "^$" | sort -V
+    echo "$OUTPUT_FILES" | grep -v "^$"
     return 0
 }
 
