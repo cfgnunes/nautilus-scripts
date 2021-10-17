@@ -27,7 +27,7 @@ _run_task() {
     # Run the main process
     STD_OUTPUT="$(expand --tabs=8 "$FILE" >"$TEMP_FILE")"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || rm -rf "$TEMP_FILE" && return
 
     # Check if the file is different, then move it to the output directory
     if ! cmp --silent "$FILE" "$TEMP_FILE"; then
