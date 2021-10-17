@@ -17,6 +17,7 @@ _run_task() {
     local DEPTH=0
     local INPUT_FILES_DEPTH=""
     local FILE_DEPTH=""
+    local i=0
 
     OUTPUT_FILE="${FILE,,}"
     STD_OUTPUT=$(_transfer_file "m" "$FILE" "$OUTPUT_FILE" 2>&1)
