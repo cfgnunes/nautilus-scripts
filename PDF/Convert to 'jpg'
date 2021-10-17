@@ -19,7 +19,7 @@ _run_task() {
     OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE")"
     STD_OUTPUT="$(pdftoppm -jpeg "$FILE" "$OUTPUT_FILE" 2>&1)"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 }
 
 _run_parallel_task "$INPUT_FILES"

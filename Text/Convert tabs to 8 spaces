@@ -29,14 +29,14 @@ _run_task() {
     # Run the main process
     STD_OUTPUT="$(expand --tabs=8 "$FILE" >"$TEMP_FILE")"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
 
     # Check if the file is different, then move it to the output directory
     if ! cmp --silent "$FILE" "$TEMP_FILE"; then
         OUTPUT_FILE="$OUTPUT_DIR/$FILE"
         _transfer_file "c" "$TEMP_FILE" "$OUTPUT_FILE"
         chmod --reference="$FILE" "$OUTPUT_FILE"
-        _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+        _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
     fi
 
     # Remove the temporary file for each iteration
