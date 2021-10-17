@@ -14,6 +14,4 @@ INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "r") || exit 1
 # shellcheck disable=SC2086
 STD_OUTPUT=$(grep -i -r -I -P -o -n --exclude="*.pdf" --exclude-dir="*.git*" "[^ \w\t\n\r\-\,\;\:\!\?\.\'\"\(\)\[\]\{\}\@\*\/\\\&\#\%\`\^\+\<\=\>\|\~\$áàâãçéêíóôõú]" $INPUT_FILES /dev/null)
 
-WIDTH_TEXT=$(echo "$STD_OUTPUT" | wc -L)
-WIDTH_WINDOW=$((WIDTH_TEXT * 10))
-echo "$STD_OUTPUT" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "Text: non ASCII chars"
+_display_result_info "$STD_OUTPUT" "Text: non ASCII chars"

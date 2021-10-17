@@ -42,5 +42,5 @@ _run_task() {
     fi
 }
 
-_parallel_run "$INPUT_FILES"
-_display_result "$OUTPUT_DIR"
+_run_parallel_task "$INPUT_FILES"
+_display_result_task "$OUTPUT_DIR"

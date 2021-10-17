@@ -16,4 +16,4 @@ STD_OUTPUT="$(convert -delay 100 -loop 0 $INPUT_FILES "$OUTPUT_FILE" 2>&1)"
 EXIT_CODE=$?
 
 _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
-_display_result "$OUTPUT_DIR"
+_display_result_task "$OUTPUT_DIR"

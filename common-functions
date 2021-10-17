@@ -188,20 +188,21 @@ _log_result_error() {
     return 0
 }
 
-_display_result() {
+_display_result_task() {
     local OUTPUT_DIR="$1"
     local OUTPUT_DIR_PRINT="$OUTPUT_DIR"
-
-    # Print a simplified $OUTPUT_DIR to the user
-    echo "$OUTPUT_DIR_PRINT" | grep -q "$PWD" && OUTPUT_DIR_PRINT="./${OUTPUT_DIR#$PWD/}"
-    # shellcheck disable=SC2088
-    echo "$OUTPUT_DIR_PRINT" | grep -q "$HOME" && OUTPUT_DIR_PRINT="~/${OUTPUT_DIR#$HOME/}"
 
     # Compile log errors in a single file
     if ls "$LOG_TEMP_DIR/"* &>/dev/null; then
         cat "$LOG_TEMP_DIR/"* >"$OUTPUT_DIR/$ERROR_LOG_FILE"
     fi
     rm -rf "$LOG_TEMP_DIR"
+
+    # Print a simplified $OUTPUT_DIR to the user
+    echo "$OUTPUT_DIR_PRINT" | grep -q "$PWD" && OUTPUT_DIR_PRINT="./${OUTPUT_DIR#$PWD/}"
+    # shellcheck disable=SC2088
+    echo "$OUTPUT_DIR_PRINT" | grep -q "$HOME" && OUTPUT_DIR_PRINT="~/${OUTPUT_DIR#$HOME/}"
+
     # Check if there was some error
     if [ -f "$OUTPUT_DIR/$ERROR_LOG_FILE" ]; then
         _msg_error "Task finished with errors! See the '$OUTPUT_DIR_PRINT/$ERROR_LOG_FILE' for details."
@@ -222,6 +223,19 @@ _display_result() {
     else
         _msg_info "Task finished!"
     fi
+}
+
+_display_result_info() {
+    local MESSAGE="$1"
+    local TITLE="$2"
+    local WIDTH_TEXT=""
+    local WIDTH_WINDOW=""
+
+    rm -rf "$LOG_TEMP_DIR"
+
+    WIDTH_TEXT=$(echo "$STD_OUTPUT" | wc -L)
+    WIDTH_WINDOW=$((WIDTH_TEXT * 9))
+    echo "$MESSAGE" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "$TITLE"
 }
 
 _get_output_dir() {
@@ -396,7 +410,7 @@ _transfer_file() {
     return "$EXIT_CODE"
 }
 
-_parallel_run() {
+_run_parallel_task() {
     local INPUT_FILES="$1"
     local NUM_PROC=0
     local i=0

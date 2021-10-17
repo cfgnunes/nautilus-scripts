@@ -13,6 +13,4 @@ INPUT_FILES=$(_get_files "$*" "" "1" "" "R") || exit 1
 STD_OUTPUT=$(stat -c "%a %U %G %F: '%n'" $INPUT_FILES)
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
-WIDTH_TEXT=$(echo "$STD_OUTPUT" | wc -L)
-WIDTH_WINDOW=$((WIDTH_TEXT * 10))
-echo "$STD_OUTPUT" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "File informations (permissions and owner)"
+_display_result_info "$STD_OUTPUT" "File informations (permissions and owner)"
