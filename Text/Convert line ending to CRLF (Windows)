@@ -15,30 +15,30 @@ _run_task() {
     local OUTPUT_FILE=""
     local STD_OUTPUT=""
     local EXIT_CODE=0
-    local OUTPUT_TEMP_FILE=""
+    local TEMP_FILE=""
 
     # Skip 'binary' files
     if file -bi "$FILE" | grep -q "binary"; then
         return
     fi
 
-    OUTPUT_TEMP_FILE=$(mktemp)
+    TEMP_FILE=$(mktemp)
 
     # Run the main process
-    STD_OUTPUT="$(perl -pe 's/\r\n|\n|\r/\r\n/g' "$FILE" >"$OUTPUT_TEMP_FILE")"
+    STD_OUTPUT="$(perl -pe 's/\r\n|\n|\r/\r\n/g' "$FILE" >"$TEMP_FILE")"
     EXIT_CODE=$?
     _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
 
     # Check if the file is different, then move it to the output directory
-    if ! cmp --silent "$FILE" "$OUTPUT_TEMP_FILE"; then
+    if ! cmp --silent "$FILE" "$TEMP_FILE"; then
         OUTPUT_FILE="$OUTPUT_DIR/$FILE"
-        _transfer_file "c" "$OUTPUT_TEMP_FILE" "$OUTPUT_FILE"
+        _transfer_file "c" "$TEMP_FILE" "$OUTPUT_FILE"
         chmod --reference="$FILE" "$OUTPUT_FILE"
         _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
     fi
 
     # Remove temporary file
-    rm -rf "$OUTPUT_TEMP_FILE"
+    rm -rf "$TEMP_FILE"
 }
 
 _parallel_run "$INPUT_FILES"
