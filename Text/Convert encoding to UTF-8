@@ -8,18 +8,25 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 _check_dependencies cmp iconv || exit 1
 INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir) || exit 1
-OUTPUT_TEMP_FILE=$(mktemp)
 
-for FILE in $INPUT_FILES; do
+_run_task() {
+    local FILE="$1"
+    local OUTPUT_DIR="$2"
+    local STD_OUTPUT=""
+    local EXIT_CODE=0
+    local OUTPUT_TEMP_FILE=""
+
+    OUTPUT_TEMP_FILE=$(mktemp)
+
     # Skip 'binary' files
     if file -bi "$FILE" | grep -q "binary"; then
-        continue
+        return
     fi
 
     # Run the main process
     STD_OUTPUT="$(iconv -f "$(file -bi "$FILE" | cut -d '=' -f 2)" "$FILE" -t utf-8 -o "$OUTPUT_TEMP_FILE")"
     EXIT_CODE=$?
-    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || continue
+    _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "" || return
 
     # Check if the file is different, then move it to the output directory
     if ! cmp --silent "$FILE" "$OUTPUT_TEMP_FILE"; then
@@ -28,9 +35,10 @@ for FILE in $INPUT_FILES; do
         chmod --reference="$FILE" "$OUTPUT_FILE"
         _log_result_error "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
     fi
-done
 
-# Remove temporary file
-rm -rf "$OUTPUT_TEMP_FILE"
+    # Remove temporary file
+    rm -rf "$OUTPUT_TEMP_FILE"
+}
 
+_parallel_run "$INPUT_FILES"
 _display_result "$OUTPUT_DIR"
