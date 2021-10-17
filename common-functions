@@ -44,6 +44,7 @@ _msg_info() {
 _check_dependencies() {
     local LIST_COMMANDS="$1"
     local PACKAGE_NAME=""
+    local COMMAND=""
 
     for COMMAND in $LIST_COMMANDS; do
         if hash "$COMMAND" 2>/dev/null; then
@@ -254,11 +255,13 @@ _get_files() {
     # "R": Expand directories recursively (include files + subdirectories).
     # empty: Ignore directories.
 
-    local INPUT_FILES_NEW=""
     local FILE=""
+    local INPUT_FILES_NEW=""
+    local MIME_FILE=""
+    local MIME=""
     local OUTPUT_FILES=""
-    local VALID_FILES_COUNT=0
     local VALID_FILE=0
+    local VALID_FILES_COUNT=0
 
     # Expand files in directories recursively
     if [ "$DIRECTORY_FLAG" = "r" ] || [ "$DIRECTORY_FLAG" = "R" ]; then

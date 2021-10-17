@@ -15,6 +15,7 @@ _run_task() {
     local OUTPUT_FILE=""
     local STD_OUTPUT=""
     local EXIT_CODE=0
+    local BACKUP_FILE=""
     local OUTPUT_TEMP_FILE1=""
     local OUTPUT_TEMP_FILE2=""
     local OUTPUT_TEMP_FILE3=""
