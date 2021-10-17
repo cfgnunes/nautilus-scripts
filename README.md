@@ -7,7 +7,7 @@ Some of them only work in nautilus, some others only in nemo.
 Some of them only work with files that not contained spaces, and so on.
 So I decided to write my own scripts, that has the following advantages:
 
-- Run the processes in parallel: processes multiple files at same time.
+- It runs the processes in parallel: processes multiple files at same time;
 - It is easy to copy and adapt the scripts for other purposes;
 - It has status notifications (dependency errors, supported mime-type);
 - It works in any file manager: no use of the variable \$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS or NEMO equivalent;
