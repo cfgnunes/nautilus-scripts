@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependencies ffmpeg || exit 1
+INPUT_FILES=$(_get_files "$*" "video" "1" "" "") || exit 1
+OUTPUT_DIR=$(_get_output_dir) || exit 1
+
+_run_task() {
+    local FILE="$1"
+    local OUTPUT_DIR="$2"
+    local OUTPUT_FILE=""
+    local STD_OUTPUT=""
+    local EXIT_CODE=0
+
+    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").mp4"
+    STD_OUTPUT=$(ffmpeg -threads 4 -y -i "$FILE" "$OUTPUT_FILE" 2>&1)
+    EXIT_CODE=$?
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+}
+
+_run_parallel_task "$INPUT_FILES"
+_display_result_task "$OUTPUT_DIR"
