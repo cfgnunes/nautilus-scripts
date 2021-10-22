@@ -8,7 +8,7 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1
 INPUT_FILES=$(_get_files "$*" "" "1" "" "") || exit 1
 OUTPUT_DIR="$PWD"
 
-_run_task() {
+_main_task() {
     local FILE="$1"
     local OUTPUT_DIR="$2"
     local STD_OUTPUT=""
@@ -19,5 +19,5 @@ _run_task() {
     _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 }
 
-_run_parallel_task "$INPUT_FILES"
-_display_result_task "$OUTPUT_DIR"
+_run_parallel_tasks "$INPUT_FILES"
+_display_result_tasks "$OUTPUT_DIR"

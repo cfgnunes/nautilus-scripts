@@ -17,4 +17,4 @@ EXIT_CODE=$?
 
 _log_error_result "$INPUT_FILES" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 
-_display_result_task "$OUTPUT_DIR"
+_display_result_tasks "$OUTPUT_DIR"
