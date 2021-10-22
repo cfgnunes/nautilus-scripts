@@ -24,4 +24,4 @@ for FILE in $INPUT_FILES; do
     _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 done
 
-_display_result_task "$OUTPUT_DIR"
+_display_result_tasks "$OUTPUT_DIR"
