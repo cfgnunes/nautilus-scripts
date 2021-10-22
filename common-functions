@@ -90,6 +90,9 @@ _check_dependencies() {
         "meld")
             PACKAGE_NAME="meld"
             ;;
+        "mp3val")
+            PACKAGE_NAME="mp3val"
+            ;;
         "7z")
             PACKAGE_NAME="p7zip-full"
             ;;

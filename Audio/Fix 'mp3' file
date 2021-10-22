@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependencies mp3val || exit 1
+INPUT_FILES=$(_get_files "$*" "audio/mpeg" "1" "" "") || exit 1
+OUTPUT_DIR="$PWD"
+
+_run_task() {
+    local FILE="$1"
+    local OUTPUT_DIR="$2"
+    local EXIT_CODE=0
+
+    mp3val -si -f "$FILE" 2>&1
+    EXIT_CODE=$?
+    _log_error_result "$FILE" "" "$OUTPUT_DIR" "$EXIT_CODE" ""
+}
+
+_run_parallel_task "$INPUT_FILES"
+_display_result_task "$OUTPUT_DIR"
