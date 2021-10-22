@@ -12,11 +12,12 @@ OUTPUT_DIR="$PWD"
 _main_task() {
     local FILE="$1"
     local OUTPUT_DIR="$2"
+    local STD_OUTPUT=""
     local EXIT_CODE=0
 
-    mp3val -si -f "$FILE"
+    STD_OUTPUT=$(mp3val -si -f "$FILE" 2>&1)
     EXIT_CODE=$?
-    _log_error_result "$FILE" "" "$OUTPUT_DIR" "$EXIT_CODE" ""
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 }
 
 _run_parallel_tasks "$INPUT_FILES"
