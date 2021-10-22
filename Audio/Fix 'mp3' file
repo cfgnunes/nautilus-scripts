@@ -14,7 +14,7 @@ _run_task() {
     local OUTPUT_DIR="$2"
     local EXIT_CODE=0
 
-    mp3val -si -f "$FILE" 2>&1
+    mp3val -si -f "$FILE"
     EXIT_CODE=$?
     _log_error_result "$FILE" "" "$OUTPUT_DIR" "$EXIT_CODE" ""
 }
