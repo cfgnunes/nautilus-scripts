@@ -419,5 +419,5 @@ _run_parallel_tasks() {
     export -f _log_error_result
     export -f _main_task
     export -f _transfer_file
-    echo "$INPUT_FILES" | xargs --max-procs="$(nproc --all --ignore=1)" -I{} bash -c "_main_task '{}' '$OUTPUT_DIR'"
+    echo "$INPUT_FILES" | xargs -d "\n" --max-procs="$(nproc --all --ignore=1)" -I "{}" bash -c "_main_task \"{}\" \"$OUTPUT_DIR\""
 }
