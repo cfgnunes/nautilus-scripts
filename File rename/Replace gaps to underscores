@@ -12,13 +12,12 @@ _main_task() {
     local FILE="$1"
     local OUTPUT_DIR="$2"
     local OUTPUT_FILE=""
-    local STD_OUTPUT=""
     local EXIT_CODE=0
 
     OUTPUT_FILE=$(echo "$FILE" | sed "s|[- \t][- \t]*|_|g;s|__*|_|g")
-    STD_OUTPUT=$(_transfer_file "m" "$FILE" "$OUTPUT_FILE" 2>&1)
+    _transfer_file "m" "$FILE" "$OUTPUT_FILE"
     EXIT_CODE=$?
-    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
+    _log_error_result "$FILE" "" "$OUTPUT_DIR" "$EXIT_CODE" ""
 }
 
 _run_parallel_tasks "$INPUT_FILES"
