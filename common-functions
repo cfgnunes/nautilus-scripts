@@ -401,9 +401,9 @@ _transfer_file() {
         ;;
     esac
 
-    # Check if the file has transfered
+    # Check if the file has transferred
     if [ "$EXIT_CODE" -eq 0 ] && ! [ -a "$FILE_SRC" ] && [ -a "$FILE_DST" ]; then
-        echo "Transfered '$FILE_SRC' to '$FILE_DST'."
+        echo "Transferred '$FILE_SRC' to '$FILE_DST'."
     fi
 
     return "$EXIT_CODE"
