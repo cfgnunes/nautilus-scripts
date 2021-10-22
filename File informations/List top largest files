@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC2001
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+INPUT_FILES=$(_get_files "$*" "" "1" "" "d") || exit 1
+
+# Run the main process
+# shellcheck disable=SC2086
+STD_OUTPUT=$(find $INPUT_FILES -type f ! -path "*.git/*" -exec du -b {} +)
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -h -r)
+STD_OUTPUT=$(echo "$STD_OUTPUT" | head -n 10)
+
+_display_info_box "$STD_OUTPUT" "Top largest files"
