@@ -16,7 +16,7 @@ _main_task() {
     local STD_OUTPUT=""
     local EXIT_CODE=0
 
-    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").mkv"
+    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").mp4"
     STD_OUTPUT=$(ffmpeg -threads 4 -y -i "$FILE" -vcodec copy "$OUTPUT_FILE" 2>&1)
     EXIT_CODE=$?
     _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
