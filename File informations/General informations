@@ -13,7 +13,7 @@ INPUT_FILES=$(_get_files "$*" "" "1" "" "r") || exit 1
 # Run the main process
 # shellcheck disable=SC2086
 STD_OUTPUT=$(file $INPUT_FILES)
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|\([^:]*\):[ \t]*\(.*\)|\2: '\1'|")
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|\([^:]*\):[ \t]*\(.*\)|\2: \"\1\"|")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
 _display_info_box "$STD_OUTPUT" "File informations"

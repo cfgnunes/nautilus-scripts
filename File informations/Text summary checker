@@ -60,7 +60,7 @@ _main_task() {
         # Create a temp file in a temporary directory
         # (this directory is removed after finish by a 'trap' command)
         TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR")
-        echo "$RESULT_FILE: '$FILE'" >"$TEMP_FILE"
+        echo "$RESULT_FILE: \"$FILE\"" >"$TEMP_FILE"
     fi
 }
 

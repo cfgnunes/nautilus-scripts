@@ -13,7 +13,7 @@ INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "r") || exit 1
 # Run the main process
 # shellcheck disable=SC2086
 STD_OUTPUT=$(file --mime-encoding $INPUT_FILES)
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|\([^:]*\):[ \t]*\(.*\)|\2: '\1'|")
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|\([^:]*\):[ \t]*\(.*\)|\2: \"\1\"|")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "binary:")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
