@@ -11,6 +11,6 @@ INPUT_FILES=$(_get_files "$*" "" "1" "" "d") || exit 1
 # Run the main process
 # shellcheck disable=SC2086
 STD_OUTPUT=$(fdupes -r $INPUT_FILES)
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed -r "s|(.+)|'\1'|")
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sed -r "s|(.+)|\"\1\"|")
 
 _display_info_box "$STD_OUTPUT" "Duplicate files"
