@@ -2,6 +2,7 @@
 
 IFS=$'\n'
 ERROR_LOG_FILE="errors.log"
+DEFAULT_OUTPUT_DIR="output"
 
 # Create temp directories for use in scripts
 LOG_TEMP_DIR=$(mktemp -d)
@@ -136,8 +137,7 @@ _check_dependencies() {
 _get_filename_without_extension() {
     local FILENAME="$1"
 
-    # shellcheck disable=SC2001
-    echo "$FILENAME" | sed "s|\.[^.]*$||"
+    echo "${FILENAME%.*}"
 }
 
 _log_error() {
@@ -203,9 +203,11 @@ _display_result_tasks() {
     fi
 
     # Print a simplified $OUTPUT_DIR to the user
-    echo "$OUTPUT_DIR_PRINT" | grep -q "$PWD" && OUTPUT_DIR_PRINT="./${OUTPUT_DIR#$PWD/}"
-    # shellcheck disable=SC2088
-    echo "$OUTPUT_DIR_PRINT" | grep -q "$HOME" && OUTPUT_DIR_PRINT="~/${OUTPUT_DIR#$HOME/}"
+    if [[ "$OUTPUT_DIR_PRINT" == *"/$DEFAULT_OUTPUT_DIR"* ]]; then
+        OUTPUT_DIR_PRINT="./$DEFAULT_OUTPUT_DIR"
+    elif [[ "$OUTPUT_DIR_PRINT" == "$HOME"* ]]; then
+        OUTPUT_DIR_PRINT="~${OUTPUT_DIR_PRINT#$HOME}"
+    fi
 
     # Check if there was some error
     if [ -f "$OUTPUT_DIR/$ERROR_LOG_FILE" ]; then
@@ -241,7 +243,6 @@ _display_info_box() {
 }
 
 _get_output_dir() {
-    local DIR_NAME="output"
     local DIR_BASE="$PWD"
     local OUTPUT_DIR=""
     local DIR_SUFFIX=1
@@ -249,17 +250,17 @@ _get_output_dir() {
     # Check directories available to put the 'output' dir
     [[ ! -w "$DIR_BASE" ]] && DIR_BASE="$HOME"
     [[ ! -w "$DIR_BASE" ]] && DIR_BASE="/tmp"
-    OUTPUT_DIR="$DIR_BASE/$DIR_NAME"
+    OUTPUT_DIR="$DIR_BASE/$DEFAULT_OUTPUT_DIR"
 
     if [[ ! -w "$DIR_BASE" ]]; then
         _msg_error "Error: Could not find a directory with write permissions."
         return 1
     fi
 
-    # If there is a 'output' directory, try to use 'output-1', 'output-2', ...
+    # If there is a 'output' directory, try to use 'output1', 'output2', ...
     while [ -d "$OUTPUT_DIR" ]; do
         DIR_SUFFIX=$((DIR_SUFFIX + 1))
-        OUTPUT_DIR="$DIR_BASE/$DIR_NAME$DIR_SUFFIX"
+        OUTPUT_DIR="$DIR_BASE/$DEFAULT_OUTPUT_DIR$DIR_SUFFIX"
     done
 
     mkdir -p "$OUTPUT_DIR"
