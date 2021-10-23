@@ -70,6 +70,9 @@ _check_dependencies() {
         "convert")
             PACKAGE_NAME="imagemagick"
             ;;
+        "fdupes")
+            PACKAGE_NAME="fdupes"
+            ;;
         "file-roller")
             PACKAGE_NAME="file-roller"
             ;;
