@@ -237,11 +237,23 @@ _display_result_tasks() {
 _display_info_box() {
     local MESSAGE="$1"
     local TITLE="$2"
-    local WIDTH_TEXT=""
+    local LEN_TEXT=""
     local WIDTH_WINDOW=""
 
-    WIDTH_TEXT=$(echo "$MESSAGE" | wc -L)
-    WIDTH_WINDOW=$((WIDTH_TEXT * 9))
+    if [[ -z "$MESSAGE" ]]; then
+        zenity --info --width=300 --text "There are no results to be displayed." &
+        return
+    fi
+
+    LEN_TEXT=${#MESSAGE}
+
+    WIDTH_WINDOW=$((LEN_TEXT * 10))
+    if ((WIDTH_WINDOW > 1300)); then
+        WIDTH_WINDOW=1300
+    elif ((WIDTH_WINDOW < 300)); then
+        WIDTH_WINDOW=300
+    fi
+
     echo "$MESSAGE" | zenity --text-info --no-wrap --font="Liberation Mono" --height=300 --width="$WIDTH_WINDOW" --title "$TITLE" &
 }
 
