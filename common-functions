@@ -209,7 +209,7 @@ _display_result_tasks() {
     if [[ "$OUTPUT_DIR_PRINT" == *"/$DEFAULT_OUTPUT_DIR"* ]]; then
         OUTPUT_DIR_PRINT="./$DEFAULT_OUTPUT_DIR"
     elif [[ "$OUTPUT_DIR_PRINT" == "$HOME"* ]]; then
-        OUTPUT_DIR_PRINT="~${OUTPUT_DIR_PRINT#$HOME}"
+        OUTPUT_DIR_PRINT="~${OUTPUT_DIR_PRINT#"$HOME"}"
     fi
 
     # Check if there was some error
