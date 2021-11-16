@@ -11,5 +11,6 @@ INPUT_FILES=$(_get_files "$*" "directory" "2" "2" "d") || exit 1
 # Run the main process
 # shellcheck disable=SC2086
 STD_OUTPUT=$(diff --brief --recursive $INPUT_FILES)
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
 _display_info_box "$STD_OUTPUT" "Diff directories"
