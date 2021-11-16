@@ -5,9 +5,11 @@
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
 
 # Initial checks
-_check_dependencies meld || exit 1
-INPUT_FILES=$(_get_files "$*" "directory" "2" "3" "d") || exit 1
+_check_dependencies zenity || exit 1
+INPUT_FILES=$(_get_files "$*" "directory" "2" "2" "d") || exit 1
 
 # Run the main process
 # shellcheck disable=SC2086
-meld $INPUT_FILES &
+STD_OUTPUT=$(diff --brief --recursive $INPUT_FILES)
+
+_display_info_box "$STD_OUTPUT" "Diff directories"
