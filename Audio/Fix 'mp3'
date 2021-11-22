@@ -10,10 +10,10 @@ INPUT_FILES=$(_get_files "$*" "audio/mpeg" "1" "" "") || exit 1
 OUTPUT_DIR="$PWD"
 
 _main_task() {
-    local FILE="$1"
-    local OUTPUT_DIR="$2"
-    local STD_OUTPUT=""
-    local EXIT_CODE=0
+    local FILE=$1
+    local OUTPUT_DIR=$2
+    local STD_OUTPUT
+    local EXIT_CODE
 
     STD_OUTPUT=$(mp3val -si -f "$FILE" 2>&1)
     EXIT_CODE=$?

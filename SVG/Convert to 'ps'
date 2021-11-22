@@ -10,11 +10,11 @@ INPUT_FILES=$(_get_files "$*" "svg;gzip" "1" "" "") || exit 1
 OUTPUT_DIR=$(_get_output_dir) || exit 1
 
 _main_task() {
-    local FILE="$1"
-    local OUTPUT_DIR="$2"
-    local OUTPUT_FILE=""
-    local STD_OUTPUT=""
-    local EXIT_CODE=0
+    local FILE=$1
+    local OUTPUT_DIR=$2
+    local OUTPUT_FILE
+    local STD_OUTPUT
+    local EXIT_CODE
 
     OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").ps"
     STD_OUTPUT=$(inkscape --without-gui --export-area-drawing --file="$FILE" --export-ps="$OUTPUT_FILE" 2>&1)
