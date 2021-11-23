@@ -9,11 +9,11 @@ _check_dependencies zenity || exit 1
 INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "r") || exit 1
 
 _main_task() {
-    local FILE="$1"
-    local TEMP_FILE=""
-    local RESULT_FILE=""
-    local FILE_ENCODING=""
-    local FILE_INFORMATION=""
+    local FILE=$1
+    local TEMP_FILE
+    local RESULT_FILE
+    local FILE_ENCODING
+    local FILE_INFORMATION
 
     # Skip 'binary' files
     if file -bi "$FILE" | grep -q "binary"; then

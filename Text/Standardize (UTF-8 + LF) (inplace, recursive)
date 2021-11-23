@@ -10,16 +10,16 @@ INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "r") || exit 1
 OUTPUT_DIR="$PWD"
 
 _main_task() {
-    local FILE="$1"
-    local OUTPUT_DIR="$2"
-    local OUTPUT_FILE=""
-    local STD_OUTPUT=""
-    local EXIT_CODE=0
-    local BACKUP_FILE=""
-    local TEMP_FILE1=""
-    local TEMP_FILE2=""
-    local TEMP_FILE3=""
-    local TEMP_FILE4=""
+    local FILE=$1
+    local OUTPUT_DIR=$2
+    local OUTPUT_FILE
+    local STD_OUTPUT
+    local EXIT_CODE
+    local BACKUP_FILE
+    local TEMP_FILE1
+    local TEMP_FILE2
+    local TEMP_FILE3
+    local TEMP_FILE4
 
     # Skip 'binary' files
     if file -bi "$FILE" | grep -q "binary"; then
