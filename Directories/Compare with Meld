@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Source the file 'scripts/common-functions'
+# shellcheck disable=SC1090
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
+
+# Initial checks
+_check_dependencies meld || exit 1
+INPUT_FILES=$(_get_files "$*" "directory" "2" "3" "d") || exit 1
+
+# Run the main process
+# shellcheck disable=SC2086
+meld $INPUT_FILES &
