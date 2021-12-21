@@ -91,6 +91,9 @@ _check_dependencies() {
         "latexmk")
             PACKAGE_NAME="latexmk"
             ;;
+        "lpr")
+            PACKAGE_NAME="cups"
+            ;;
         "meld")
             PACKAGE_NAME="meld"
             ;;
