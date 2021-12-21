@@ -10,6 +10,8 @@ INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "r") || exit 1
 
 _main_task() {
     local FILE=$1
+    # shellcheck disable=SC2034
+    local OUTPUT_DIR=$2
     local TEMP_FILE
     local RESULT_FILE
     local FILE_ENCODING
