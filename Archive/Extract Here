@@ -5,9 +5,50 @@
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
 
 # Initial checks
-_check_dependencies file-roller || exit 1
-INPUT_FILES=$(_get_files "$*" "" "1" "" "") || exit 1
+#_check_dependencies 7z || exit 1
+INPUT_FILES=$(_get_files "$*" "" "1" "" "d") || exit 1
+OUTPUT_DIR="$PWD"
 
-# Run the main process
-# shellcheck disable=SC2086
-file-roller -h $INPUT_FILES &
+_main_task() {
+    local FILE=$1
+    local OUTPUT_DIR=$2
+    local STD_OUTPUT
+    local EXIT_CODE
+
+    case $FILE in
+    *.tar.bz2 | *.tbz2)
+        _check_dependencies tar
+        STD_OUTPUT=$(tar xjf "$FILE" 2>&1)
+        ;;
+    *.tar.gz | *.tgz)
+        _check_dependencies tar
+        STD_OUTPUT=$(tar xzf "$FILE" 2>&1)
+        ;;
+    *.tar.xz)
+        _check_dependencies tar
+        STD_OUTPUT=$(tar xJf "$FILE" 2>&1)
+        ;;
+    *.tar.zst)
+        _check_dependencies tar unzstd
+        STD_OUTPUT=$(tar --use-compress-program=unzstd -xf "$FILE" 2>&1)
+        ;;
+    *.deb)
+        _check_dependencies ar
+        STD_OUTPUT=$(ar x "$FILE" 2>&1)
+        ;;
+    *.zst)
+        _check_dependencies unzstd
+        STD_OUTPUT=$(unzstd "$FILE" 2>&1)
+        ;;
+    *)
+        _check_dependencies 7z
+        STD_OUTPUT=$(7z x -aoa "$FILE" 2>&1)
+        ;;
+    esac
+
+    EXIT_CODE=$?
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
+}
+
+_run_parallel_tasks "$INPUT_FILES"
+_display_result_tasks "$OUTPUT_DIR"

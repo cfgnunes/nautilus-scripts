@@ -64,6 +64,9 @@ _check_dependencies() {
         fi
 
         case "$COMMAND" in
+        "ar")
+            PACKAGE_NAME="binutils"
+            ;;
         "cmp")
             PACKAGE_NAME="diffutils"
             ;;
@@ -126,6 +129,9 @@ _check_dependencies() {
             ;;
         "pdfjam")
             PACKAGE_NAME="texlive-extra-utils"
+            ;;
+        "zstd" | "unzstd")
+            PACKAGE_NAME="zstd"
             ;;
         esac
 
@@ -434,10 +440,13 @@ _run_parallel_tasks() {
 
     export LOG_TEMP_DIR
     export TEMP_DIR
+    export -f _check_dependencies
     export -f _get_filename_without_extension
     export -f _log_error
     export -f _log_error_result
     export -f _main_task
+    export -f _msg_error
+    export -f _msg_info
     export -f _transfer_file
     echo "$INPUT_FILES" | xargs --delimiter="\n" --max-procs="$(nproc --all --ignore=1)" --replace="{}" bash -c "_main_task \"{}\" \"$OUTPUT_DIR\""
 }
