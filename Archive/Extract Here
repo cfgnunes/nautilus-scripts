@@ -18,19 +18,35 @@ _main_task() {
     case $FILE in
     *.tar.bz2 | *.tbz2)
         _check_dependencies tar
-        STD_OUTPUT=$(tar xjf "$FILE" 2>&1)
+        STD_OUTPUT=$(tar --extract --bzip2 --file="$FILE" 2>&1)
         ;;
     *.tar.gz | *.tgz)
         _check_dependencies tar
-        STD_OUTPUT=$(tar xzf "$FILE" 2>&1)
+        STD_OUTPUT=$(tar --extract --gzip --file="$FILE" 2>&1)
         ;;
-    *.tar.xz)
+    *.tar.lz | *.tlz)
         _check_dependencies tar
-        STD_OUTPUT=$(tar xJf "$FILE" 2>&1)
+        STD_OUTPUT=$(tar --extract --lzip --file="$FILE" 2>&1)
         ;;
-    *.tar.zst)
+    *.tar.lzma | *.tlzma)
+        _check_dependencies tar
+        STD_OUTPUT=$(tar --extract --lzma --file="$FILE" 2>&1)
+        ;;
+    *.tar.lzo | *.tlzo)
+        _check_dependencies tar
+        STD_OUTPUT=$(tar --extract --lzop --file="$FILE" 2>&1)
+        ;;
+    *.tar.xz | *.txz)
+        _check_dependencies tar
+        STD_OUTPUT=$(tar --extract --xz --file="$FILE" 2>&1)
+        ;;
+    *.tar.Z | *.taz)
+        _check_dependencies tar
+        STD_OUTPUT=$(tar --extract --gzip --file="$FILE" 2>&1)
+        ;;
+    *.tar.zst | *.tzst)
         _check_dependencies tar unzstd
-        STD_OUTPUT=$(tar --use-compress-program=unzstd -xf "$FILE" 2>&1)
+        STD_OUTPUT=$(tar --extract --use-compress-program=unzstd --file="$FILE" 2>&1)
         ;;
     *.deb)
         _check_dependencies ar
