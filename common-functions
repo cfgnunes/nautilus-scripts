@@ -229,7 +229,7 @@ _display_info_box() {
 _get_output_dir() {
     local DIR_BASE="$PWD"
     local OUTPUT_DIR
-    local DIR_SUFFIX=1
+    local DIR_SUFFIX=0
 
     # Check directories available to put the 'output' dir
     [[ ! -w "$DIR_BASE" ]] && DIR_BASE="$HOME"
@@ -241,10 +241,11 @@ _get_output_dir() {
         return 1
     fi
 
-    # If there is a 'output' directory, try to use 'output1', 'output2', ...
-    while [ -d "$OUTPUT_DIR" ]; do
+    # If there is a 'output' directory or file,
+    # try to use 'output (1)', 'output (2)', ...
+    while [ -e "$OUTPUT_DIR" ]; do
         DIR_SUFFIX=$((DIR_SUFFIX + 1))
-        OUTPUT_DIR="$DIR_BASE/$DEFAULT_OUTPUT_DIR$DIR_SUFFIX"
+        OUTPUT_DIR="$DIR_BASE/$DEFAULT_OUTPUT_DIR ($DIR_SUFFIX)"
     done
 
     mkdir -p "$OUTPUT_DIR"
