@@ -211,8 +211,7 @@ _display_info_box() {
     local WIDTH_WINDOW
 
     if [[ -z "$MESSAGE" ]]; then
-        zenity --info --width=300 --text "There are no results to be displayed." &
-        return
+        MESSAGE="There are no results to be displayed."
     fi
 
     LEN_TEXT=${#MESSAGE}
