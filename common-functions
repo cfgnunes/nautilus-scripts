@@ -54,7 +54,7 @@ _msg_info() {
 }
 
 _check_dependencies() {
-    local LIST_COMMANDS=$1
+    local LIST_COMMANDS=$*
     local PACKAGE_NAME
     local COMMAND
 
@@ -73,53 +73,17 @@ _check_dependencies() {
         "convert")
             PACKAGE_NAME="imagemagick"
             ;;
-        "fdupes")
-            PACKAGE_NAME="fdupes"
-            ;;
-        "file-roller")
-            PACKAGE_NAME="file-roller"
-            ;;
         "gs")
             PACKAGE_NAME="ghostscript"
-            ;;
-        "inkscape")
-            PACKAGE_NAME="inkscape"
-            ;;
-        "jpegoptim")
-            PACKAGE_NAME="jpegoptim"
-            ;;
-        "lame")
-            PACKAGE_NAME="lame"
-            ;;
-        "latexmk")
-            PACKAGE_NAME="latexmk"
             ;;
         "lpr")
             PACKAGE_NAME="cups"
             ;;
-        "meld")
-            PACKAGE_NAME="meld"
-            ;;
-        "mp3val")
-            PACKAGE_NAME="mp3val"
-            ;;
         "7z")
             PACKAGE_NAME="p7zip-full"
             ;;
-        "qpdf")
-            PACKAGE_NAME="qpdf"
-            ;;
-        "zenity")
-            PACKAGE_NAME="zenity"
-            ;;
-        "zip")
-            PACKAGE_NAME="zip"
-            ;;
         "iconv")
             PACKAGE_NAME="libc-bin"
-            ;;
-        "pandoc")
-            PACKAGE_NAME="pandoc"
             ;;
         "perl")
             PACKAGE_NAME="perl-base"
@@ -129,9 +93,6 @@ _check_dependencies() {
             ;;
         "pdfjam")
             PACKAGE_NAME="texlive-extra-utils"
-            ;;
-        "zstd" | "unzstd")
-            PACKAGE_NAME="zstd"
             ;;
         esac
 
