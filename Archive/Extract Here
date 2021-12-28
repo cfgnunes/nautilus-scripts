@@ -12,16 +12,16 @@ _main_task() {
     local FILE=$1
     local OUTPUT_DIR=$2
     local COUNT_FILES
-    local DIR_SUFFIX=0
     local EXIT_CODE
-    local OUTPUT_DIR_PREFIX
     local OUTPUT_TEMP_DIR
     local STD_OUTPUT
+    local SINGLE_OUTPUT_FILENAME
 
+    # Extract files into a temporary directory
     OUTPUT_TEMP_DIR=$(mktemp --directory --tmpdir=.)
-
     pushd "$OUTPUT_TEMP_DIR" &>/dev/null || exit 1
 
+    # Extract the archive according the file extension
     case $FILE in
     *.tar.bz2 | *.tbz2 | *.tz2)
         STD_OUTPUT=$(tar --extract --bzip2 --file="../$FILE" 2>&1)
@@ -51,7 +51,7 @@ _main_task() {
         STD_OUTPUT=$(ar x "../$FILE" 2>&1)
         ;;
     *.tar)
-         STD_OUTPUT=$(tar --extract --file="../$FILE" 2>&1)
+        STD_OUTPUT=$(tar --extract --file="../$FILE" 2>&1)
         ;;
     *.zst)
         STD_OUTPUT=$(zstd -d "../$FILE" 2>&1)
@@ -61,30 +61,27 @@ _main_task() {
         ;;
     esac
 
+    # Check for result errors
     EXIT_CODE=$?
     _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 
+    # Check if the archive is a 'single file' compressed
     COUNT_FILES=$(find . -mindepth 1 -maxdepth 1 | wc -l)
+    if [[ "$COUNT_FILES" == "1" ]]; then
+        SINGLE_OUTPUT_FILENAME=$(find . -mindepth 1 -maxdepth 1)
+    fi
     popd &>/dev/null || return
 
-    case $COUNT_FILES in
-    "0") ;;
-    "1")
-        mv "$OUTPUT_TEMP_DIR"/* . &>/dev/null || true
-        mv "$OUTPUT_TEMP_DIR"/.* . &>/dev/null || true
-        ;;
-    *)
-        OUTPUT_DIR_PREFIX=$(echo "$FILE" | sed "s|\.\w*$||;s|\.tar$||")
-        OUTPUT_DIR=$OUTPUT_DIR_PREFIX
-
-        # If there is a 'output' directory, try to use 'output (1)', 'output (2)', ...
-        while [ -e "$OUTPUT_DIR" ]; do
-            DIR_SUFFIX=$((DIR_SUFFIX + 1))
-            OUTPUT_DIR="$OUTPUT_DIR_PREFIX ($DIR_SUFFIX)"
-        done
-        mv -n "$OUTPUT_TEMP_DIR" "$OUTPUT_DIR"
-        ;;
-    esac
+    if [[ "$COUNT_FILES" == "0" ]]; then
+        echo ""
+    elif [[ -n "$SINGLE_OUTPUT_FILENAME" ]] && [[ "./$(_get_filename_without_extension "$FILE")" == "$(_get_filename_without_extension "$SINGLE_OUTPUT_FILENAME")" ]]; then
+        # For a single outputfile with same name of archive
+        _transfer_file "m" "$OUTPUT_TEMP_DIR/$SINGLE_OUTPUT_FILENAME" "$SINGLE_OUTPUT_FILENAME"
+    else
+        # For multiple output files, or
+        # a single outputfile with different name of archive
+        _transfer_file "m" "$OUTPUT_TEMP_DIR" "$(_get_filename_without_extension "$FILE")"
+    fi
     rm -rf "$OUTPUT_TEMP_DIR"
 }
 
