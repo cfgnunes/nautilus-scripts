@@ -11,7 +11,7 @@ OUTPUT_DIR="$PWD"
 _main_task() {
     local FILE=$1
     local OUTPUT_DIR=$2
-    local COUNT_FILES
+    local COUNT_ROOT_FILES
     local EXIT_CODE
     local OUTPUT_TEMP_DIR
     local STD_OUTPUT
@@ -66,13 +66,13 @@ _main_task() {
     _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 
     # Check if the archive is a 'single file' compressed
-    COUNT_FILES=$(find . -mindepth 1 -maxdepth 1 | wc -l)
-    if [[ "$COUNT_FILES" == "1" ]]; then
+    COUNT_ROOT_FILES=$(find . -mindepth 1 -maxdepth 1 | wc -l)
+    if [[ "$COUNT_ROOT_FILES" == "1" ]]; then
         SINGLE_OUTPUT_FILENAME=$(find . -mindepth 1 -maxdepth 1)
     fi
     popd &>/dev/null || return
 
-    if [[ "$COUNT_FILES" == "0" ]]; then
+    if [[ "$COUNT_ROOT_FILES" == "0" ]]; then
         echo ""
     elif [[ -n "$SINGLE_OUTPUT_FILENAME" ]] &&
         [[ "./$(_get_filename_without_extension "$FILE")" == "$(_get_filename_without_extension "$SINGLE_OUTPUT_FILENAME")" ]] ||
