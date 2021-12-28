@@ -211,7 +211,7 @@ _display_info_box() {
     local WIDTH_WINDOW
 
     if [[ -z "$MESSAGE" ]]; then
-        MESSAGE="There are no results to be displayed."
+        MESSAGE="(Empty result)"
     fi
 
     LEN_TEXT=${#MESSAGE}
