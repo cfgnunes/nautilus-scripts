@@ -109,8 +109,7 @@ _check_dependencies() {
 
 _get_filename_without_extension() {
     local FILENAME=$1
-
-    echo "${FILENAME%.*}"
+    echo "$FILENAME" | sed -r "s|(\.tar){0,1}\.\w*$||"
 }
 
 _log_error() {
@@ -353,12 +352,13 @@ _transfer_file() {
     local FILE_SRC=$2
     local FILE_DST=$3
     local EXIT_CODE
+    local FILE_SUFFIX=0
 
     # Add the './' prefix
-    if ! [[ "$FILE_SRC" == "/"* ]] && ! [[ "$FILE_SRC" == "./"* ]]; then
+    if ! [[ "$FILE_SRC" == "/"* ]] && ! [[ "$FILE_SRC" == "./"* ]] && ! [[ "$FILE_SRC" == "." ]]; then
         FILE_SRC="./$FILE_SRC"
     fi
-    if ! [[ "$FILE_DST" == "/"* ]] && ! [[ "$FILE_DST" == "./"* ]]; then
+    if ! [[ "$FILE_DST" == "/"* ]] && ! [[ "$FILE_DST" == "./"* ]] && ! [[ "$FILE_DST" == "." ]]; then
         FILE_DST="./$FILE_DST"
     fi
 
@@ -367,19 +367,25 @@ _transfer_file() {
         return 0
     fi
 
-    # Avoid overwrite a file
-    if [ -a "$FILE_DST" ]; then
-        echo "It was not possible to transfer '$FILE_SRC' because there is already a file with the same name in '$FILE_DST'."
-        return 1
+    # Avoid overwrite a file. If there is the same name,
+    # try to use the name 'file (1)', 'file (2)', ...
+    if [[ "$FILE_DST" != "." ]]; then
+        local FILE_DST_NEW
+        FILE_DST_NEW="$FILE_DST"
+        while [ -a "$FILE_DST_NEW" ]; do
+            FILE_SUFFIX=$((FILE_SUFFIX + 1))
+            FILE_DST_NEW="$FILE_DST ($FILE_SUFFIX)"
+        done
+        FILE_DST="$FILE_DST_NEW"
     fi
 
     # Run the main process
     case "$TRANSFER_FLAG" in
     "m")
-        mv -n "$FILE_SRC" "$FILE_DST"
+        mv "$FILE_SRC" "$FILE_DST"
         ;;
     "c")
-        cp -a -n "$FILE_SRC" "$FILE_DST"
+        cp -a "$FILE_SRC" "$FILE_DST"
         ;;
     *)
         echo "Wrong parameters for '_transfer_file'."
