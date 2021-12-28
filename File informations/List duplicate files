@@ -5,12 +5,24 @@
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
 
 # Initial checks
-_check_dependencies fdupes || exit 1
+_check_dependencies rdfind || exit 1
 INPUT_FILES=$(_get_files "$*" "" "1" "" "d") || exit 1
+
+# Create a temp file in a temporary directory
+# (this directory is removed after finish by a 'trap' command)
+TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR")
 
 # Run the main process
 # shellcheck disable=SC2086
-STD_OUTPUT=$(fdupes -r $INPUT_FILES)
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed -r "s|(.+)|\"\1\"|")
+rdfind -dryrun true -outputname "$TEMP_FILE" $INPUT_FILES
+STD_OUTPUT=$(cat "$TEMP_FILE")
+STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^#")
+STD_OUTPUT=$(echo "$STD_OUTPUT" | cut -d ' ' -f 1,8-)
+# shellcheck disable=SC2001
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|DUPTYPE_FIRST_OCCURRENCE |\n|")
+# shellcheck disable=SC2001
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|DUPTYPE_WITHIN_SAME_TREE ||")
+# shellcheck disable=SC2001
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|DUPTYPE_OUTSIDE_TREE ||")
 
 _display_info_box "$STD_OUTPUT" "Duplicate files"
