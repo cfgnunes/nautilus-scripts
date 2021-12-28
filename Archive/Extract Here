@@ -5,7 +5,7 @@
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
 
 # Initial checks
-INPUT_FILES=$(_get_files "$*" "" "1" "" "d") || exit 1
+INPUT_FILES=$(_get_files "$*" "" "1" "" "") || exit 1
 OUTPUT_DIR="$PWD"
 
 _main_task() {
@@ -49,6 +49,9 @@ _main_task() {
         ;;
     *.deb)
         STD_OUTPUT=$(ar x "../$FILE" 2>&1)
+        ;;
+    *.tar)
+         STD_OUTPUT=$(tar --extract --file="../$FILE" 2>&1)
         ;;
     *.zst)
         STD_OUTPUT=$(zstd -d "../$FILE" 2>&1)
