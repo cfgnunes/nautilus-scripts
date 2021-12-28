@@ -5,66 +5,55 @@
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
 
 # Initial checks
-#_check_dependencies 7z || exit 1
 INPUT_FILES=$(_get_files "$*" "" "1" "" "d") || exit 1
 OUTPUT_DIR="$PWD"
 
 _main_task() {
     local FILE=$1
     local OUTPUT_DIR=$2
-    local STD_OUTPUT
-    local EXIT_CODE
-    local OUTPUT_TEMP_DIR
-    local OUTPUT_DIR_PREFIX
+    local COUNT_FILES
     local DIR_SUFFIX=0
+    local EXIT_CODE
+    local OUTPUT_DIR_PREFIX
+    local OUTPUT_TEMP_DIR
+    local STD_OUTPUT
 
-    OUTPUT_TEMP_DIR=$(mktemp -d --tmpdir=.)
+    OUTPUT_TEMP_DIR=$(mktemp --directory --tmpdir=.)
 
-    cd "$OUTPUT_TEMP_DIR" || return
+    pushd "$OUTPUT_TEMP_DIR" &>/dev/null || exit 1
 
     case $FILE in
     *.tar.bz2 | *.tbz2 | *.tz2)
-        _check_dependencies tar bzip2
         STD_OUTPUT=$(tar --extract --bzip2 --file="../$FILE" 2>&1)
         ;;
     *.tar.gz | *.taz | *.tgz)
-        _check_dependencies tar gzip
         STD_OUTPUT=$(tar --extract --gzip --file="../$FILE" 2>&1)
         ;;
     *.tar.lz | *.tlz)
-        _check_dependencies tar lzip
         STD_OUTPUT=$(tar --extract --lzip --file="../$FILE" 2>&1)
         ;;
     *.tar.lzma | *.tlzma)
-        _check_dependencies tar lzma
         STD_OUTPUT=$(tar --extract --lzma --file="../$FILE" 2>&1)
         ;;
     *.tar.lzo | *.tlzo)
-        _check_dependencies tar lzop
         STD_OUTPUT=$(tar --extract --lzop --file="../$FILE" 2>&1)
         ;;
     *.tar.xz | *.txz)
-        _check_dependencies tar xz
         STD_OUTPUT=$(tar --extract --xz --file="../$FILE" 2>&1)
         ;;
     *.tar.Z | *.taZ)
-        _check_dependencies tar gzip
         STD_OUTPUT=$(tar --extract --gzip --file="../$FILE" 2>&1)
         ;;
     *.tar.zst | *.tzst)
-        _check_dependencies tar zstd
         STD_OUTPUT=$(tar --extract --zstd --file="../$FILE" 2>&1)
         ;;
     *.deb)
-        _check_dependencies ar
         STD_OUTPUT=$(ar x "../$FILE" 2>&1)
         ;;
     *.zst)
-        _check_dependencies zstd
         STD_OUTPUT=$(zstd -d "../$FILE" 2>&1)
         ;;
     *)
-        _check_dependencies 7z
         STD_OUTPUT=$(7z x -aoa "../$FILE" 2>&1)
         ;;
     esac
@@ -72,13 +61,16 @@ _main_task() {
     EXIT_CODE=$?
     _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
 
-    if [[ "$(find . -mindepth 1 -maxdepth 1 | wc -l)" = "1" ]]; then
-        mv ./* .. &>/dev/null || true
-        mv ./.* .. &>/dev/null || true
-        cd ..
-    else
-        cd ..
+    COUNT_FILES=$(find . -mindepth 1 -maxdepth 1 | wc -l)
+    popd &>/dev/null || return
 
+    case $COUNT_FILES in
+    "0") ;;
+    "1")
+        mv "$OUTPUT_TEMP_DIR"/* . &>/dev/null || true
+        mv "$OUTPUT_TEMP_DIR"/.* . &>/dev/null || true
+        ;;
+    *)
         OUTPUT_DIR_PREFIX=$(echo "$FILE" | sed "s|\.\w*$||;s|\.tar$||")
         OUTPUT_DIR=$OUTPUT_DIR_PREFIX
 
@@ -88,10 +80,9 @@ _main_task() {
             OUTPUT_DIR="$OUTPUT_DIR_PREFIX ($DIR_SUFFIX)"
         done
         mv -n "$OUTPUT_TEMP_DIR" "$OUTPUT_DIR"
-    fi
-
-    # Try to remove the output directory (if it is empty)
-    rmdir "$OUTPUT_TEMP_DIR" &>/dev/null
+        ;;
+    esac
+    rm -rf "$OUTPUT_TEMP_DIR"
 }
 
 _run_parallel_tasks "$INPUT_FILES"
