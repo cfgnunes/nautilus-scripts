@@ -10,7 +10,7 @@ INPUT_FILES=$(_get_files "$*" "" "1" "" "R") || exit 1
 
 # Run the main process
 # shellcheck disable=SC2086
-STD_OUTPUT=$(stat -c "%a %U %G %F: '%n'" $INPUT_FILES)
+STD_OUTPUT=$(stat -c "%a %U %G %F: \"%n\"" $INPUT_FILES)
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
 _display_info_box "$STD_OUTPUT" "File informations (permissions and owner)"
