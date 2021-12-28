@@ -5,8 +5,8 @@ ERROR_LOG_FILE="errors.log"
 DEFAULT_OUTPUT_DIR="output"
 
 # Create temp directories for use in scripts
-LOG_TEMP_DIR=$(mktemp -d)
-TEMP_DIR=$(mktemp -d)
+LOG_TEMP_DIR=$(mktemp --directory)
+TEMP_DIR=$(mktemp --directory)
 
 # Remove created temp files in unexpected exit
 _trap_handler() {
