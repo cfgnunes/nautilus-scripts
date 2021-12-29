@@ -74,7 +74,9 @@ _main_task() {
 
     if [[ "$COUNT_FILES" == "0" ]]; then
         echo ""
-    elif [[ -n "$SINGLE_OUTPUT_FILENAME" ]] && [[ "./$(_get_filename_without_extension "$FILE")" == "$(_get_filename_without_extension "$SINGLE_OUTPUT_FILENAME")" ]]; then
+    elif [[ -n "$SINGLE_OUTPUT_FILENAME" ]] &&
+        [[ "./$(_get_filename_without_extension "$FILE")" == "$(_get_filename_without_extension "$SINGLE_OUTPUT_FILENAME")" ]] ||
+        [[ "./$(_get_filename_without_extension "$FILE")" == "$SINGLE_OUTPUT_FILENAME" ]]; then
         # For a single outputfile with same name of archive
         _transfer_file "m" "$OUTPUT_TEMP_DIR/$SINGLE_OUTPUT_FILENAME" "$SINGLE_OUTPUT_FILENAME"
     else
