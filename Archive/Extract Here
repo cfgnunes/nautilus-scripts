@@ -14,8 +14,8 @@ _main_task() {
     local COUNT_ROOT_FILES
     local EXIT_CODE
     local OUTPUT_TEMP_DIR
-    local STD_OUTPUT
     local SINGLE_OUTPUT_FILENAME
+    local STD_OUTPUT
 
     # Extract files into a temporary directory
     OUTPUT_TEMP_DIR=$(mktemp --directory --tmpdir=.)
