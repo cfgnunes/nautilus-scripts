@@ -228,7 +228,6 @@ _display_info_box() {
 _get_output_dir() {
     local DIR_BASE="$PWD"
     local OUTPUT_DIR
-    local DIR_SUFFIX=0
 
     # Check directories available to put the 'output' dir
     [[ ! -w "$DIR_BASE" ]] && DIR_BASE="$HOME"
@@ -242,9 +241,10 @@ _get_output_dir() {
 
     # If there is a 'output' directory or file,
     # try to use 'output (1)', 'output (2)', ...
+    local SUFFIX=0
     while [ -a "$OUTPUT_DIR" ]; do
-        DIR_SUFFIX=$((DIR_SUFFIX + 1))
-        OUTPUT_DIR="$DIR_BASE/$DEFAULT_OUTPUT_DIR ($DIR_SUFFIX)"
+        SUFFIX=$((SUFFIX + 1))
+        OUTPUT_DIR="$DIR_BASE/$DEFAULT_OUTPUT_DIR ($SUFFIX)"
     done
 
     mkdir -p "$OUTPUT_DIR"
@@ -352,7 +352,6 @@ _transfer_file() {
     local FILE_SRC=$2
     local FILE_DST=$3
     local EXIT_CODE
-    local FILE_SUFFIX=0
 
     # Add the './' prefix
     if ! [[ "$FILE_SRC" == "/"* ]] && ! [[ "$FILE_SRC" == "./"* ]] && ! [[ "$FILE_SRC" == "." ]]; then
@@ -371,10 +370,11 @@ _transfer_file() {
     # try to use the name 'file (1)', 'file (2)', ...
     if [[ "$FILE_DST" != "." ]]; then
         local FILE_DST_NEW
+        local SUFFIX=0
         FILE_DST_NEW="$FILE_DST"
         while [ -a "$FILE_DST_NEW" ]; do
-            FILE_SUFFIX=$((FILE_SUFFIX + 1))
-            FILE_DST_NEW="$FILE_DST ($FILE_SUFFIX)"
+            SUFFIX=$((SUFFIX + 1))
+            FILE_DST_NEW="$FILE_DST ($SUFFIX)"
         done
         FILE_DST="$FILE_DST_NEW"
     fi
