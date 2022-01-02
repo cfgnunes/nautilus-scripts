@@ -12,6 +12,7 @@ So I decided to write my own scripts, that has the following advantages:
 - It has status notifications (dependency errors, supported mime-type);
 - It works in any file manager: no use of the variable \$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS or NEMO equivalent;
 - It has an direct usage, without an input box to ask parameters;
+- It never overwrites the input file. The output is different of the input;
 - All shell scripts were checked by [shellcheck](https://github.com/koalaman/shellcheck).
 
 ## Getting Started
