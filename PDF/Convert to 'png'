@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Source the file 'scripts/common-functions'
-# shellcheck disable=SC1090
-source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" | sed 's|\(scripts\).*|\1/common-functions|')"
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+# shellcheck source=/dev/null
+source "${SCRIPT_DIR%/*}/common-functions"
 
 # Initial checks
 _check_dependencies pdftoppm || exit 1
