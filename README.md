@@ -31,7 +31,7 @@ git clone https://github.com/cfgnunes/nautilus-scripts.git ~/.gnome2/nemo-script
 ### Installing in caja file manager
 
 ```sh
-git clone https://github.com/cfgnunes/nautilus-scripts.git ~/.config/caja/scripts/scripts
+git clone https://github.com/cfgnunes/nautilus-scripts.git ~/.config/caja/scripts
 ```
 
 ## Contributing
