@@ -203,6 +203,10 @@ _display_result_tasks() {
     fi
 }
 
+_display_password_box() {
+    zenity --password --title="Password"
+}
+
 _display_info_box() {
     local MESSAGE=$1
     local TITLE=$2
@@ -406,6 +410,7 @@ _run_parallel_tasks() {
     local INPUT_FILES=$1
 
     export LOG_TEMP_DIR
+    export PASSWORD
     export TEMP_DIR
     export -f _check_dependencies
     export -f _get_filename_without_extension
