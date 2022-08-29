@@ -73,6 +73,9 @@ _check_dependencies() {
         "convert")
             PACKAGE_NAME="imagemagick"
             ;;
+        "gpg")
+            PACKAGE_NAME="gnupg"
+            ;;
         "gs")
             PACKAGE_NAME="ghostscript"
             ;;
