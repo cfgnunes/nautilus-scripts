@@ -17,7 +17,7 @@ _main_task() {
     local EXIT_CODE
 
     OUTPUT_FILE="$OUTPUT_DIR/$FILE.asc"
-    STD_OUTPUT=$(gpg --symmetric --for-your-eyes-only --armor --cipher-algo AES256 --output "$OUTPUT_FILE" "$FILE" 2>&1)
+    STD_OUTPUT=$(gpg --symmetric --for-your-eyes-only --armor --s2k-count 1015808 --s2k-digest-algo SHA256 --compress-algo zlib --cipher-algo AES256 --output "$OUTPUT_FILE" "$FILE" 2>&1)
     EXIT_CODE=$?
     _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 }
