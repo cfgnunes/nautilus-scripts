@@ -207,7 +207,7 @@ _display_result_tasks() {
 }
 
 _display_password_box() {
-    zenity --password --title="Password"
+    zenity --password --title="Password" 2>/dev/null
 }
 
 _display_info_box() {
