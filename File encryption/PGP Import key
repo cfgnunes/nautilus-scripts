@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+# shellcheck source=/dev/null
+source "${SCRIPT_DIR%/*}/common-functions"
+
+# Initial checks
+_check_dependencies gpg || exit 1
+INPUT_FILES=$(_get_files "$*" "" "1" "" "") || exit 1
+OUTPUT_DIR="$PWD"
+
+_main_task() {
+    local FILE=$1
+    local OUTPUT_DIR=$2
+    local STD_OUTPUT
+    local EXIT_CODE
+    local KEY_ID
+
+    # Get the ID from the key
+    KEY_ID=$(gpg --with-colons --import-options show-only --import "$FILE" | grep "^fpr" | head -1 | cut -d ':' -f 10)
+
+    # Import the key
+    STD_OUTPUT=$(gpg --batch --yes --import "$FILE" 2>&1)
+    EXIT_CODE=$?
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
+
+    # Set the trust level to 'ultimate'
+    STD_OUTPUT=$(echo "$KEY_ID:6:" | gpg --batch --yes --import-ownertrust 2>&1)
+    EXIT_CODE=$?
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
+}
+
+_run_parallel_tasks "$INPUT_FILES"
+_display_result_tasks "$OUTPUT_DIR"
