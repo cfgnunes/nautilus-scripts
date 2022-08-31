@@ -413,7 +413,7 @@ _run_parallel_tasks() {
     local INPUT_FILES=$1
 
     export LOG_TEMP_DIR
-    export PASSWORD
+    export DATA
     export TEMP_DIR
     export -f _check_dependencies
     export -f _get_filename_without_extension
