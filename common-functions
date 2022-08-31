@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 IFS=$'\n'
-ERROR_LOG_FILE="errors.log"
+DEFAULT_ERROR_LOG_FILE="errors"
 DEFAULT_OUTPUT_DIR="output"
 
 # Create temp directories for use in scripts
@@ -171,10 +171,19 @@ _log_error_result() {
 _display_result_tasks() {
     local OUTPUT_DIR=$1
     local OUTPUT_DIR_PRINT="$OUTPUT_DIR"
+    local ERROR_LOG_FILE="$OUTPUT_DIR/$DEFAULT_ERROR_LOG_FILE.log"
+
+    # If there is a 'errors.log' directory or file,
+    # try to use 'errors (1).log', 'errors (2).log', ...
+    local SUFFIX=0
+    while [ -a "$ERROR_LOG_FILE" ]; do
+        SUFFIX=$((SUFFIX + 1))
+        ERROR_LOG_FILE="$OUTPUT_DIR/$DEFAULT_ERROR_LOG_FILE ($SUFFIX).log"
+    done
 
     # Compile log errors in a single file
     if ls "$LOG_TEMP_DIR/"* &>/dev/null; then
-        cat "$LOG_TEMP_DIR/"* >"$OUTPUT_DIR/$ERROR_LOG_FILE"
+        cat "$LOG_TEMP_DIR/"* >"$ERROR_LOG_FILE"
     fi
 
     # Print a simplified $OUTPUT_DIR to the user
@@ -185,7 +194,7 @@ _display_result_tasks() {
     fi
 
     # Check if there was some error
-    if [ -f "$OUTPUT_DIR/$ERROR_LOG_FILE" ]; then
+    if [ -f "$ERROR_LOG_FILE" ]; then
         _msg_error "Task finished with errors! See the '$OUTPUT_DIR_PRINT/$ERROR_LOG_FILE' for details."
         return 1
     fi
