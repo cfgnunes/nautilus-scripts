@@ -216,7 +216,15 @@ _display_result_tasks() {
 }
 
 _display_password_box() {
-    zenity --password --title="Password" 2>/dev/null
+    local PASSWORD
+    PASSWORD=$(zenity --password --title="Password" 2>/dev/null) || return 1
+
+    if [[ -z "$PASSWORD" ]]; then
+        _msg_error "Error: you must set a password!"
+        return 1
+    fi
+
+    echo "$PASSWORD"
 }
 
 _display_info_box() {
