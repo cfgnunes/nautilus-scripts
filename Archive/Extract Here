@@ -77,11 +77,11 @@ _main_task() {
     elif [[ -n "$SINGLE_OUTPUT_FILENAME" ]] &&
         [[ "./$(_get_filename_without_extension "$FILE")" == "$(_get_filename_without_extension "$SINGLE_OUTPUT_FILENAME")" ]] ||
         [[ "./$(_get_filename_without_extension "$FILE")" == "$SINGLE_OUTPUT_FILENAME" ]]; then
-        # For a single outputfile with same name of archive
+        # For a single output file with same name of archive
         _transfer_file "m" "$OUTPUT_TEMP_DIR/$SINGLE_OUTPUT_FILENAME" "$SINGLE_OUTPUT_FILENAME"
     else
         # For multiple output files, or
-        # a single outputfile with different name of archive
+        # a single output file with different name of archive
         _transfer_file "m" "$OUTPUT_TEMP_DIR" "$(_get_filename_without_extension "$FILE")"
     fi
     rm -rf "$OUTPUT_TEMP_DIR"
