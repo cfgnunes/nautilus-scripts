@@ -64,6 +64,9 @@ _check_dependencies() {
         fi
 
         case "$COMMAND" in
+        "7z")
+            PACKAGE_NAME="p7zip-full"
+            ;;
         "ar")
             PACKAGE_NAME="binutils"
             ;;
@@ -79,26 +82,23 @@ _check_dependencies() {
         "gs")
             PACKAGE_NAME="ghostscript"
             ;;
-        "lpr")
-            PACKAGE_NAME="cups"
-            ;;
-        "7z")
-            PACKAGE_NAME="p7zip-full"
-            ;;
-        "photorec")
-            PACKAGE_NAME="testdisk"
-            ;;
         "iconv")
             PACKAGE_NAME="libc-bin"
             ;;
-        "perl")
-            PACKAGE_NAME="perl-base"
+        "lpr")
+            PACKAGE_NAME="cups"
             ;;
         "pdfimages" | "pdfseparate" | "pdftoppm" | "pdftotext" | "pdfunite")
             PACKAGE_NAME="poppler-utils"
             ;;
         "pdfjam")
             PACKAGE_NAME="texlive-extra-utils"
+            ;;
+        "perl")
+            PACKAGE_NAME="perl-base"
+            ;;
+        "photorec")
+            PACKAGE_NAME="testdisk"
             ;;
         esac
 
