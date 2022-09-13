@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+# shellcheck source=/dev/null
+source "${SCRIPT_DIR%/*}/common-functions"
+
+# Initial checks
+_check_dependencies photorec || exit 1
+INPUT_FILES=$(_get_files "$*" "" "1" "" "") || exit 1
+
+_main_task() {
+    local FILE=$1
+    local OUTPUT_DIR=$2
+    local STD_OUTPUT
+    local EXIT_CODE
+
+    OUTPUT_DIR="output-$(_get_filename_without_extension "$FILE")"
+    STD_OUTPUT=$(photorec /d "$OUTPUT_DIR" /cmd "$FILE" partition_none,fileopt,everything,enable,search 2>&1)
+    EXIT_CODE=$?
+    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
+}
+
+_run_parallel_tasks "$INPUT_FILES"
+_display_result_tasks "$PWD"
