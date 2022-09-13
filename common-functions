@@ -85,6 +85,9 @@ _check_dependencies() {
         "7z")
             PACKAGE_NAME="p7zip-full"
             ;;
+        "photorec")
+            PACKAGE_NAME="testdisk"
+            ;;
         "iconv")
             PACKAGE_NAME="libc-bin"
             ;;
