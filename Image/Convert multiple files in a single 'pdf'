@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+# shellcheck source=/dev/null
+source "${SCRIPT_DIR%/*}/common-functions"
+
+# Initial checks
+_check_dependencies convert || exit 1
+INPUT_FILES=$(_get_files "$*" "" "2" "" "") || exit 1
+OUTPUT_DIR=$(_get_output_dir) || exit 1
+
+# Run the main process
+OUTPUT_FILE="$OUTPUT_DIR/image.pdf"
+# shellcheck disable=SC2086
+STD_OUTPUT=$(convert $INPUT_FILES "$OUTPUT_FILE" 2>&1)
+EXIT_CODE=$?
+
+_log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+_display_result_tasks "$OUTPUT_DIR"
