@@ -30,6 +30,13 @@ _main_task() {
         RESULT_FILE+="[non UTF-8 encoding]"
     fi
 
+    # Run the checker 'UTF-8 with BOM'
+    if [[ "${FILE_ENCODING,,}" == *"utf-8"* ]]; then
+        if head -c3 "$FILE" | LC_ALL=C grep -qP '\xef\xbb\xbf'; then
+            RESULT_FILE+="[UTF-8 with BOM]"
+        fi
+    fi
+
     # Run the checker 'non LF line break'
     if [[ "$FILE_INFORMATION" == *"with CR"* ]]; then
         RESULT_FILE+="[non LF line break]"
