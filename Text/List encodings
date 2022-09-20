@@ -17,4 +17,4 @@ STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|\([^:]*\):[ \t]*\(.*\)|\2: \"\1\"|")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "binary:")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
-_display_info_box "$STD_OUTPUT" "Text: encodings"
+_display_info_box "$STD_OUTPUT" "Text files: encodings"
