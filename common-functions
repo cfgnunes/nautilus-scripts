@@ -304,9 +304,9 @@ _get_files() {
     if [ "$DIRECTORY_FLAG" = "r" ] || [ "$DIRECTORY_FLAG" = "R" ]; then
         for FILE in $INPUT_FILES; do
             if [ "$DIRECTORY_FLAG" = "r" ]; then
-                INPUT_FILES_NEW+=$(find -L "$FILE" -type f -not -path "*.git/*")
+                INPUT_FILES_NEW+=$(find -L "$FILE" -type f ! -path "*.git/*")
             else
-                INPUT_FILES_NEW+=$(find -L "$FILE" -depth -not -path "*.git/*")
+                INPUT_FILES_NEW+=$(find -L "$FILE" -depth ! -path "*.git/*")
             fi
             INPUT_FILES_NEW+=$'\n'
         done
