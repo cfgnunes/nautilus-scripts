@@ -32,4 +32,4 @@ STD_OUTPUT=$(cat "$TEMP_DIR"/*)
 STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^$")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
-_display_info_box "$STD_OUTPUT" "PDF files without fonts (not searchable)"
+_display_info_box "$STD_OUTPUT" "Fontless PDFs (not searchable)"
