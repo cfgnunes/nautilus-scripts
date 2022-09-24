@@ -5,7 +5,7 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 source "${SCRIPT_DIR%/*}/common-functions"
 
 # Initial checks
-_check_dependencies pdffonts zenity || exit 1
+_check_dependencies pdfinfo zenity || exit 1
 INPUT_FILES=$(_get_files "$*" "pdf" "1" "" "r") || exit 1
 
 _main_task() {
@@ -13,12 +13,9 @@ _main_task() {
     # shellcheck disable=SC2034
     local OUTPUT_DIR=$2
     local TEMP_FILE
-    local FILE_INFORMATION
 
-    FILE_INFORMATION=$(pdffonts "$FILE" | sed -n 3p)
-
-    # Save the result only for files without fonts
-    if [[ -z "$FILE_INFORMATION" ]]; then
+    # Save the result only for 'not optimized' PDFs
+    if pdfinfo "$FILE" | grep "Optimized:" | grep -q "no"; then
         # Create a temp file in a temporary directory
         # (this directory is removed after finish by a 'trap' command)
         TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR")
@@ -32,4 +29,4 @@ STD_OUTPUT=$(cat "$TEMP_DIR"/*)
 STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^$")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
-_display_info_box "$STD_OUTPUT" "Fontless PDFs (not searchable)"
+_display_info_box "$STD_OUTPUT" "PDFs: not optimized"
