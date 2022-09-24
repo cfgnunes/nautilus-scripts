@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+# shellcheck source=/dev/null
+source "${SCRIPT_DIR%/*}/common-functions"
+
+# Initial checks
+_check_dependencies pdffonts zenity || exit 1
+INPUT_FILES=$(_get_files "$*" "pdf" "1" "" "r") || exit 1
+
+_main_task() {
+    local FILE=$1
+    # shellcheck disable=SC2034
+    local OUTPUT_DIR=$2
+    local TEMP_FILE
+    local RESULT_FILE
+    local FILE_INFORMATION
+
+    FILE_INFORMATION=$(pdffonts "$FILE" | sed -n 3p)
+
+    # Check if the PDF has some font
+    if [[ -z "$FILE_INFORMATION" ]]; then
+        RESULT_FILE+="$FILE"
+    fi
+
+    # Save the result only for files without fonts
+    if [[ -n "$RESULT_FILE" ]]; then
+        # Create a temp file in a temporary directory
+        # (this directory is removed after finish by a 'trap' command)
+        TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR")
+        echo "$RESULT_FILE: \"$FILE\"" >"$TEMP_FILE"
+    fi
+}
+
+_run_parallel_tasks "$INPUT_FILES"
+STD_OUTPUT=$(cat "$TEMP_DIR"/*)
+
+STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^$")
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
+
+_display_info_box "$STD_OUTPUT" "PDF files without fonts"
