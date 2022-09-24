@@ -88,7 +88,7 @@ _check_dependencies() {
         "lpr")
             PACKAGE_NAME="cups"
             ;;
-        "pdfimages" | "pdfseparate" | "pdftoppm" | "pdftotext" | "pdfunite")
+        "pdffonts" | "pdfimages" | "pdfseparate" | "pdftoppm" | "pdftotext" | "pdfunite")
             PACKAGE_NAME="poppler-utils"
             ;;
         "pdfjam")
