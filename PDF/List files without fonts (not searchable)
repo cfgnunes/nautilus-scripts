@@ -13,22 +13,16 @@ _main_task() {
     # shellcheck disable=SC2034
     local OUTPUT_DIR=$2
     local TEMP_FILE
-    local RESULT_FILE
     local FILE_INFORMATION
 
     FILE_INFORMATION=$(pdffonts "$FILE" | sed -n 3p)
 
-    # Check if the PDF has some font
-    if [[ -z "$FILE_INFORMATION" ]]; then
-        RESULT_FILE+="$FILE"
-    fi
-
     # Save the result only for files without fonts
-    if [[ -n "$RESULT_FILE" ]]; then
+    if [[ -z "$FILE_INFORMATION" ]]; then
         # Create a temp file in a temporary directory
         # (this directory is removed after finish by a 'trap' command)
         TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR")
-        echo "$RESULT_FILE: \"$FILE\"" >"$TEMP_FILE"
+        echo "\"$FILE\"" >"$TEMP_FILE"
     fi
 }
 
@@ -38,4 +32,4 @@ STD_OUTPUT=$(cat "$TEMP_DIR"/*)
 STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^$")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
-_display_info_box "$STD_OUTPUT" "PDF files without fonts"
+_display_info_box "$STD_OUTPUT" "PDF files without fonts (not searchable)"
