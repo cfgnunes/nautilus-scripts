@@ -14,7 +14,7 @@ _main_task() {
     local OUTPUT_DIR=$2
     local TEMP_FILE
 
-    # Save the result only for 'not optimized' PDFs
+    # Save the result only for 'not linearized (not optimized)' PDFs
     if pdfinfo "$FILE" | grep "Optimized:" | grep -q "no"; then
         # Create a temp file in a temporary directory
         # (this directory is removed after finish by a 'trap' command)
@@ -29,4 +29,4 @@ STD_OUTPUT=$(cat "$TEMP_DIR"/*)
 STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^$")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
-_display_info_box "$STD_OUTPUT" "PDFs: not optimized"
+_display_info_box "$STD_OUTPUT" "PDFs: not linearized (not optimized)"
