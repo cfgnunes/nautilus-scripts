@@ -79,4 +79,4 @@ STD_OUTPUT=$(cat "$TEMP_DIR"/*)
 STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^$")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
-_display_info_box "$STD_OUTPUT" "Text files: with problems"
+_display_info_box "$STD_OUTPUT" "Find files: with problems"
