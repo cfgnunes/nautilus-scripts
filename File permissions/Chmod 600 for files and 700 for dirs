@@ -6,7 +6,7 @@ source "${SCRIPT_DIR%/*}/common-functions"
 
 # Initial checks
 INPUT_FILES=$(_get_files "$*" "" "1" "" "d") || exit 1
-OUTPUT_DIR="$PWD"
+OUTPUT_DIR=$PWD
 
 _main_task() {
     local FILE=$1

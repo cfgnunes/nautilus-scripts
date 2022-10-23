@@ -6,7 +6,7 @@ source "${SCRIPT_DIR%/*}/common-functions"
 
 # Initial checks
 INPUT_FILES=$(_get_files "$*" "" "1" "" "R") || exit 1
-OUTPUT_DIR="$PWD"
+OUTPUT_DIR=$PWD
 
 for FILE in $INPUT_FILES; do
     # Add the './' prefix

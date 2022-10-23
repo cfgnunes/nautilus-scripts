@@ -7,7 +7,7 @@ source "${SCRIPT_DIR%/*}/common-functions"
 # Initial checks
 _check_dependencies cmp iconv perl || exit 1
 INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "r") || exit 1
-OUTPUT_DIR="$PWD"
+OUTPUT_DIR=$PWD
 
 _main_task() {
     local FILE=$1
@@ -56,7 +56,7 @@ _main_task() {
 
     # Check if the file is different, then copy it to the output directory
     if ! cmp --silent "$FILE" "$TEMP_FILE4"; then
-        OUTPUT_FILE="$FILE"
+        OUTPUT_FILE=$FILE
         BACKUP_FILE="$FILE.convert.bak"
 
         # Create a backup file
