@@ -173,7 +173,7 @@ _log_error_result() {
 
 _display_result_tasks() {
     local OUTPUT_DIR=$1
-    local OUTPUT_DIR_PRINT="$OUTPUT_DIR"
+    local OUTPUT_DIR_PRINT=$OUTPUT_DIR
     local ERROR_LOG_FILE="$OUTPUT_DIR/$DEFAULT_ERROR_LOG_FILE.log"
 
     # If there is a 'errors.log' directory or file,
@@ -253,15 +253,15 @@ _display_info_box() {
 }
 
 _get_output_dir() {
-    local DIR_BASE="$PWD"
+    local BASE_DIR=$PWD
     local OUTPUT_DIR
 
     # Check directories available to put the 'output' dir
-    [[ ! -w "$DIR_BASE" ]] && DIR_BASE="$HOME"
-    [[ ! -w "$DIR_BASE" ]] && DIR_BASE="/tmp"
-    OUTPUT_DIR="$DIR_BASE/$DEFAULT_OUTPUT_DIR"
+    [[ ! -w "$BASE_DIR" ]] && BASE_DIR=$HOME
+    [[ ! -w "$BASE_DIR" ]] && BASE_DIR="/tmp"
+    OUTPUT_DIR="$BASE_DIR/$DEFAULT_OUTPUT_DIR"
 
-    if [[ ! -w "$DIR_BASE" ]]; then
+    if [[ ! -w "$BASE_DIR" ]]; then
         _msg_error "Error: Could not find a directory with write permissions."
         return 1
     fi
@@ -271,7 +271,7 @@ _get_output_dir() {
     local SUFFIX=0
     while [ -a "$OUTPUT_DIR" ]; do
         SUFFIX=$((SUFFIX + 1))
-        OUTPUT_DIR="$DIR_BASE/$DEFAULT_OUTPUT_DIR ($SUFFIX)"
+        OUTPUT_DIR="$BASE_DIR/$DEFAULT_OUTPUT_DIR ($SUFFIX)"
     done
 
     mkdir -p "$OUTPUT_DIR"
@@ -310,7 +310,7 @@ _get_files() {
             fi
             INPUT_FILES_NEW+=$'\n'
         done
-        INPUT_FILES="$INPUT_FILES_NEW"
+        INPUT_FILES=$INPUT_FILES_NEW
     fi
 
     # Checks if each file is valid
@@ -398,12 +398,12 @@ _transfer_file() {
     if [[ "$FILE_DST" != "." ]]; then
         local FILE_DST_NEW
         local SUFFIX=0
-        FILE_DST_NEW="$FILE_DST"
+        FILE_DST_NEW=$FILE_DST
         while [ -a "$FILE_DST_NEW" ]; do
             SUFFIX=$((SUFFIX + 1))
             FILE_DST_NEW="$FILE_DST ($SUFFIX)"
         done
-        FILE_DST="$FILE_DST_NEW"
+        FILE_DST=$FILE_DST_NEW
     fi
 
     # Run the main process
