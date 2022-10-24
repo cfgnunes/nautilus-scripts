@@ -56,7 +56,7 @@ _main_task() {
 
     # Check if the file is different, then copy it to the output directory
     if ! cmp --silent "$FILE" "$TEMP_FILE4"; then
-        OUTPUT_FILE="$FILE"
+        OUTPUT_FILE=$FILE
         BACKUP_FILE="$FILE.convert.bak"
 
         # Create a backup file
