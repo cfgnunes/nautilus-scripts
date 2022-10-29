@@ -283,7 +283,7 @@ _get_output_dir() {
 _get_files() {
     local INPUT_FILES=$1 # Input list
     local MIME_LIST=$2   # Filter by MIME type
-    local MIN_FILES=$3   # Minimum number of valid files
+    local MIN_FILES=$3   # Minimum number of valid files (default: 1)
     local MAX_FILES=$4   # Maximum number of valid files
     local OPTION_FLAG=$5
     # OPTION_FLAG values:
@@ -299,6 +299,14 @@ _get_files() {
     local OUTPUT_FILES
     local VALID_FILE=0
     local VALID_FILES_COUNT=0
+
+    # Check the input parameters
+    if [ -z "$INPUT_FILES" ]; then
+        return 0
+    fi
+    if [ -z "$MIN_FILES" ]; then
+        MIN_FILES=1
+    fi
 
     # Expand files in directories recursively
     if [ "$OPTION_FLAG" = "r" ] || [ "$OPTION_FLAG" = "R" ]; then
@@ -353,11 +361,9 @@ _get_files() {
         return 1
     fi
 
-    if [ -n "$MIN_FILES" ]; then
-        if ((VALID_FILES_COUNT < MIN_FILES)); then
-            _msg_error "Error: You selected $VALID_FILES_COUNT files, but the minium is $MIN_FILES!"
-            return 1
-        fi
+    if ((VALID_FILES_COUNT < MIN_FILES)); then
+        _msg_error "Error: You selected $VALID_FILES_COUNT files, but the minium is $MIN_FILES!"
+        return 1
     fi
 
     if [ -n "$MAX_FILES" ]; then
