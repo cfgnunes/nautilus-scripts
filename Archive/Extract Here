@@ -67,12 +67,12 @@ _main_task() {
 
     # Check if the archive is a 'single file' compressed
     COUNT_ROOT_FILES=$(find . -mindepth 1 -maxdepth 1 | wc -l)
-    if [[ "$COUNT_ROOT_FILES" == "1" ]]; then
+    if ((COUNT_ROOT_FILES == 1)); then
         SINGLE_OUTPUT_FILENAME=$(find . -mindepth 1 -maxdepth 1)
     fi
     popd &>/dev/null || return
 
-    if [[ "$COUNT_ROOT_FILES" == "0" ]]; then
+    if ((COUNT_ROOT_FILES == 0)); then
         echo ""
     elif [[ -n "$SINGLE_OUTPUT_FILENAME" ]] &&
         [[ "./$(_get_filename_without_extension "$FILE")" == "$(_get_filename_without_extension "$SINGLE_OUTPUT_FILENAME")" ]] ||

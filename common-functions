@@ -102,7 +102,7 @@ _check_dependencies() {
             ;;
         esac
 
-        if [ -n "$PACKAGE_NAME" ]; then
+        if [[ -n "$PACKAGE_NAME" ]]; then
             _msg_error "Error: The command '$COMMAND' was not found. You need to install the '$PACKAGE_NAME' package."
         else
             _msg_error "Error: The command '$COMMAND' was not found. Please, install it."
@@ -143,7 +143,7 @@ _log_error_result() {
     local OUTPUT_FILE=$5 # To check if output file has zero bytes
 
     # Check the 'EXIT_CODE' and log the error
-    if [ "$EXIT_CODE" -ne 0 ]; then
+    if ((EXIT_CODE != 0)); then
         _log_error "Exit code error" "$FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR"
         return 1
     fi
@@ -157,13 +157,13 @@ _log_error_result() {
     fi
 
     # Check if output file exists
-    if [[ -n "$OUTPUT_FILE" ]] && ! [ -f "$OUTPUT_FILE" ]; then
+    if [[ -n "$OUTPUT_FILE" ]] && ! [[ -f "$OUTPUT_FILE" ]]; then
         _log_error "Output not exists" "$FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR"
         return 1
     fi
 
     # Check if output file is not a zero byte
-    if [ "$(stat --printf="%s" "$OUTPUT_FILE")" == "0" ]; then
+    if (($(stat --printf="%s" "$OUTPUT_FILE") == 0)); then
         _log_error "Zero byte file" "$FILENAME" "$STD_OUTPUT" "$OUTPUT_DIR"
         return 1
     fi
@@ -179,7 +179,7 @@ _display_result_tasks() {
     # If there is a 'errors.log' directory or file,
     # try to use 'errors (1).log', 'errors (2).log', ...
     local SUFFIX=0
-    while [ -a "$ERROR_LOG_FILE" ]; do
+    while [[ -e "$ERROR_LOG_FILE" ]]; do
         SUFFIX=$((SUFFIX + 1))
         ERROR_LOG_FILE="$OUTPUT_DIR/$DEFAULT_ERROR_LOG_FILE ($SUFFIX).log"
     done
@@ -197,18 +197,18 @@ _display_result_tasks() {
     fi
 
     # Check if there was some error
-    if [ -f "$ERROR_LOG_FILE" ]; then
+    if [[ -f "$ERROR_LOG_FILE" ]]; then
         _msg_error "Task finished with errors! See the '$OUTPUT_DIR_PRINT/$ERROR_LOG_FILE' for details."
         return 1
     fi
 
     # If OUTPUT_DIR parameter is defined
-    if [ -n "$OUTPUT_DIR" ]; then
+    if [[ -n "$OUTPUT_DIR" ]]; then
         # Try to remove the output directory (if it is empty)
         rmdir "$OUTPUT_DIR" &>/dev/null
 
         # Check if output directory still exists
-        if [ -d "$OUTPUT_DIR" ]; then
+        if [[ -d "$OUTPUT_DIR" ]]; then
             _msg_info "Task finished! The output files is in '$OUTPUT_DIR_PRINT' directory."
         else
             _msg_info "Task finished, but there is no output files!"
@@ -269,7 +269,7 @@ _get_output_dir() {
     # If there is a 'output' directory or file,
     # try to use 'output (1)', 'output (2)', ...
     local SUFFIX=0
-    while [ -a "$OUTPUT_DIR" ]; do
+    while [[ -e "$OUTPUT_DIR" ]]; do
         SUFFIX=$((SUFFIX + 1))
         OUTPUT_DIR="$BASE_DIR/$DEFAULT_OUTPUT_DIR ($SUFFIX)"
     done
@@ -302,14 +302,14 @@ _get_files() {
     local VALID_FILES_COUNT=0
 
     # Check the input parameters
-    if [ -z "$INPUT_FILES" ]; then
+    if [[ -z "$INPUT_FILES" ]]; then
         _msg_error "Error: There is no input files!"
         return 1
     fi
-    if [ -z "$MIN_FILES" ] || ((MIN_FILES < 0)); then
+    if [[ -z "$MIN_FILES" ]] || ((MIN_FILES < 0)); then
         MIN_FILES=1
     fi
-    if [ -z "$OPTION_FLAG" ]; then
+    if [[ -z "$OPTION_FLAG" ]]; then
         OPTION_FLAG="f"
     fi
 
@@ -350,7 +350,7 @@ _get_files() {
         VALID_FILE=0
 
         # Filter files by mime type
-        if [ -n "$MIME_LIST" ]; then
+        if [[ -n "$MIME_LIST" ]]; then
             IFS_OLD=$IFS
             IFS=";"
             for MIME in $MIME_LIST; do
@@ -366,10 +366,10 @@ _get_files() {
         # Skip files or directories
         case "$OPTION_FLAG" in
         "f")
-            [ -d "$FILE" ] && VALID_FILE=0
+            [[ -d "$FILE" ]] && VALID_FILE=0
             ;;
         "d")
-            [ -f "$FILE" ] && VALID_FILE=0
+            [[ -f "$FILE" ]] && VALID_FILE=0
             ;;
         esac
 
@@ -383,7 +383,7 @@ _get_files() {
 
     # Check if there is at last one file with valid mime type
     if ((VALID_FILES_COUNT == 0)); then
-        if [ -n "$MIME_LIST" ]; then
+        if [[ -n "$MIME_LIST" ]]; then
             _msg_error "Error: There is no '$MIME_LIST' in the selected files!"
         else
             _msg_error "Error: There is no valid itens in the in the selected files!"
@@ -396,7 +396,7 @@ _get_files() {
         return 1
     fi
 
-    if [ -n "$MAX_FILES" ]; then
+    if [[ -n "$MAX_FILES" ]]; then
         if ((VALID_FILES_COUNT > MAX_FILES)); then
             _msg_error "Error: You selected $VALID_FILES_COUNT files, but the maximum is $MAX_FILES!"
             return 1
@@ -425,7 +425,7 @@ _transfer_file() {
     fi
 
     # Avoid transfer a file to the same name
-    if [ "$FILE_SRC" = "$FILE_DST" ]; then
+    if [[ "$FILE_SRC" == "$FILE_DST" ]]; then
         return 0
     fi
 
@@ -435,7 +435,7 @@ _transfer_file() {
         local FILE_DST_NEW
         local SUFFIX=0
         FILE_DST_NEW=$FILE_DST
-        while [ -a "$FILE_DST_NEW" ]; do
+        while [[ -e "$FILE_DST_NEW" ]]; do
             SUFFIX=$((SUFFIX + 1))
             FILE_DST_NEW="$FILE_DST ($SUFFIX)"
         done
@@ -458,7 +458,7 @@ _transfer_file() {
     EXIT_CODE=$?
 
     # Check if the file has transferred
-    if [ "$EXIT_CODE" -eq 0 ] && ! [ -a "$FILE_SRC" ] && [ -a "$FILE_DST" ]; then
+    if ((EXIT_CODE == 0)) && ! [[ -e "$FILE_SRC" ]] && [[ -e "$FILE_DST" ]]; then
         echo "Transferred '$FILE_SRC' to '$FILE_DST'."
     fi
 
