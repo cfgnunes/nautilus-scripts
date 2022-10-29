@@ -6,7 +6,7 @@ source "${SCRIPT_DIR%/*}/common-functions"
 
 # Initial checks
 _check_dependencies mp3val || exit 1
-INPUT_FILES=$(_get_files "$*" "audio/mpeg" "1" "" "f") || exit 1
+INPUT_FILES=$(_get_files "$*" "f" "1" "" "audio/mpeg") || exit 1
 OUTPUT_DIR=$PWD
 
 _main_task() {

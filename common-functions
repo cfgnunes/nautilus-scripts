@@ -282,10 +282,7 @@ _get_output_dir() {
 
 _get_files() {
     local INPUT_FILES=$1 # Input list
-    local MIME_LIST=$2   # Filter by MIME type
-    local MIN_FILES=$3   # Minimum number of valid files (default: 1)
-    local MAX_FILES=$4   # Maximum number of valid files
-    local OPTION_FLAG=$5
+    local OPTION_FLAG=$2 # Flag to include files or directories
     # OPTION_FLAG values:
     # "a": Include files and directories.
     # "f": Include files (default).
@@ -293,6 +290,9 @@ _get_files() {
     # "A": Include files and directories recursively.
     # "F": Include files recursively.
     # "D": Include directories recursively.
+    local MIN_FILES=$3 # Minimum number of valid files (default: 1)
+    local MAX_FILES=$4 # Maximum number of valid files
+    local MIME_LIST=$5 # Filter by MIME type
 
     local FILE
     local INPUT_FILES_NEW

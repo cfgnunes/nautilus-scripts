@@ -6,7 +6,7 @@ source "${SCRIPT_DIR%/*}/common-functions"
 
 # Initial checks
 _check_dependencies pdfunite || exit 1
-INPUT_FILES=$(_get_files "$*" "pdf" "2" "" "f") || exit 1
+INPUT_FILES=$(_get_files "$*" "f" "2" "" "pdf") || exit 1
 OUTPUT_DIR=$(_get_output_dir) || exit 1
 
 # Run the main process

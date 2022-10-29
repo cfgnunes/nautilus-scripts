@@ -8,7 +8,7 @@ source "${SCRIPT_DIR%/*}/common-functions"
 
 # Initial checks
 _check_dependencies zenity || exit 1
-INPUT_FILES=$(_get_files "$*" "" "1" "" "F") || exit 1
+INPUT_FILES=$(_get_files "$*" "F" "1" "" "") || exit 1
 
 # Run the main process
 # shellcheck disable=SC2086
