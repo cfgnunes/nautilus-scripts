@@ -8,7 +8,7 @@ source "${SCRIPT_DIR%/*}/common-functions"
 
 # Initial checks
 _check_dependencies rdfind || exit 1
-INPUT_FILES=$(_get_files "$*" "" "1" "" "d") || exit 1
+INPUT_FILES=$(_get_files "$*" "" "" "" "d") || exit 1
 
 # Create a temp file in a temporary directory
 # (this directory is removed after finish by a 'trap' command)

@@ -6,7 +6,7 @@ source "${SCRIPT_DIR%/*}/common-functions"
 
 # Initial checks
 _check_dependencies 7z || exit 1
-INPUT_FILES=$(_get_files "$*" "" "1" "" "d") || exit 1
+INPUT_FILES=$(_get_files "$*" "" "" "" "d") || exit 1
 OUTPUT_DIR=$(_get_output_dir) || exit 1
 
 _main_task() {
