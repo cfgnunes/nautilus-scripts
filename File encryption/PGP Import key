@@ -6,7 +6,7 @@ source "${SCRIPT_DIR%/*}/common-functions"
 
 # Initial checks
 _check_dependencies gpg || exit 1
-INPUT_FILES=$(_get_files "$*" "1" "" "" "f") || exit 1
+INPUT_FILES=$(_get_files "$*" "" "1" "" "f") || exit 1
 OUTPUT_DIR=$PWD
 
 _main_task() {
