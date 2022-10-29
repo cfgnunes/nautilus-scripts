@@ -296,7 +296,6 @@ _get_files() {
 
     local FILE
     local INPUT_FILES_NEW
-    local MIME_FILE
     local MIME
     local OUTPUT_FILES
     local VALID_FILE=0
@@ -352,11 +351,12 @@ _get_files() {
 
         # Filter files by mime type
         if [ -n "$MIME_LIST" ]; then
-            MIME_FILE=$(file --mime-type -b "$FILE")
             IFS_OLD=$IFS
             IFS=";"
             for MIME in $MIME_LIST; do
-                [[ "$MIME_FILE" == *"$MIME"* ]] && VALID_FILE=1
+                if [[ "$(file --mime-type -b "$FILE")" == *"$MIME"* ]]; then
+                    VALID_FILE=1
+                fi
             done
             IFS=$IFS_OLD
         else
