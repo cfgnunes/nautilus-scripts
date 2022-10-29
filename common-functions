@@ -287,10 +287,12 @@ _get_files() {
     local MAX_FILES=$4   # Maximum number of valid files
     local OPTION_FLAG=$5
     # OPTION_FLAG values:
+    # "a": Include files and directories.
+    # "f": Include files (default).
     # "d": Include directories.
-    # "r": Expand directories recursively (include only files).
-    # "R": Expand directories recursively (include files + subdirectories).
-    # empty: Ignore directories.
+    # "A": Include files and directories recursively.
+    # "F": Include files recursively.
+    # "D": Include directories recursively.
 
     local FILE
     local INPUT_FILES_NEW
@@ -302,24 +304,47 @@ _get_files() {
 
     # Check the input parameters
     if [ -z "$INPUT_FILES" ]; then
-        return 0
+        _msg_error "Error: There is no input files!"
+        return 1
     fi
-    if [ -z "$MIN_FILES" ]; then
+    if [ -z "$MIN_FILES" ] || ((MIN_FILES < 0)); then
         MIN_FILES=1
     fi
+    if [ -z "$OPTION_FLAG" ]; then
+        OPTION_FLAG="f"
+    fi
 
-    # Expand files in directories recursively
-    if [ "$OPTION_FLAG" = "r" ] || [ "$OPTION_FLAG" = "R" ]; then
+    # Process the OPTION_FLAG (expand files in directories recursively)
+    case "$OPTION_FLAG" in
+    "a" | "f" | "d")
+        :
+        ;;
+    "A")
         for FILE in $INPUT_FILES; do
-            if [ "$OPTION_FLAG" = "r" ]; then
-                INPUT_FILES_NEW+=$(find -L "$FILE" -type f ! -path "*.git/*")
-            else
-                INPUT_FILES_NEW+=$(find -L "$FILE" -depth ! -path "*.git/*")
-            fi
+            INPUT_FILES_NEW+=$(find -L "$FILE" -depth ! -path "*.git/*")
             INPUT_FILES_NEW+=$'\n'
         done
         INPUT_FILES=$INPUT_FILES_NEW
-    fi
+        ;;
+    "F")
+        for FILE in $INPUT_FILES; do
+            INPUT_FILES_NEW+=$(find -L "$FILE" -type f ! -path "*.git/*")
+            INPUT_FILES_NEW+=$'\n'
+        done
+        INPUT_FILES=$INPUT_FILES_NEW
+        ;;
+    "D")
+        for FILE in $INPUT_FILES; do
+            INPUT_FILES_NEW+=$(find -L "$FILE" -type d ! -path "*.git/*")
+            INPUT_FILES_NEW+=$'\n'
+        done
+        INPUT_FILES=$INPUT_FILES_NEW
+        ;;
+    *)
+        _msg_error "Error: Wrong OPTION_FLAG parameter for '_get_files'."
+        return 1
+        ;;
+    esac
 
     # Checks if each file is valid
     for FILE in $INPUT_FILES; do
@@ -338,10 +363,15 @@ _get_files() {
             VALID_FILE=1
         fi
 
-        # Skip or include directories
-        if [ -z "$OPTION_FLAG" ]; then
+        # Skip files or directories
+        case "$OPTION_FLAG" in
+        "f")
             [ -d "$FILE" ] && VALID_FILE=0
-        fi
+            ;;
+        "d")
+            [ -f "$FILE" ] && VALID_FILE=0
+            ;;
+        esac
 
         # Add the file in the list if it is valid
         if ((VALID_FILE == 1)); then
@@ -421,7 +451,7 @@ _transfer_file() {
         cp -a "$FILE_SRC" "$FILE_DST"
         ;;
     *)
-        echo "Wrong parameters for '_transfer_file'."
+        _msg_error "Error: Wrong OPTION_FLAG parameter for '_transfer_file'."
         return 1
         ;;
     esac

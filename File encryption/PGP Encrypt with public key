@@ -6,7 +6,7 @@ source "${SCRIPT_DIR%/*}/common-functions"
 
 # Initial checks
 _check_dependencies gpg zenity || exit 1
-INPUT_FILES=$(_get_files "$*" "" "" "" "") || exit 1
+INPUT_FILES=$(_get_files "$*" "1" "" "" "f") || exit 1
 USERS=$(gpg --list-public-keys --with-colons | grep "^uid" | cut -d ':' -f 10)
 if [[ -z "$USERS" ]]; then
     _msg_error "Signing failed: there is no secret keys!"
