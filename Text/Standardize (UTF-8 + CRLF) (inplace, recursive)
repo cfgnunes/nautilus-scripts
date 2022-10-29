@@ -6,7 +6,7 @@ source "${SCRIPT_DIR%/*}/common-functions"
 
 # Initial checks
 _check_dependencies cmp iconv perl || exit 1
-INPUT_FILES=$(_get_files "$*" "text;application" "1" "" "r") || exit 1
+INPUT_FILES=$(_get_files "$*" "text;application" "" "" "r") || exit 1
 OUTPUT_DIR=$PWD
 
 _main_task() {
