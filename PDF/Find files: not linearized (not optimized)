@@ -6,7 +6,7 @@ source "${SCRIPT_DIR%/*}/common-functions"
 
 # Initial checks
 _check_dependencies pdfinfo zenity || exit 1
-INPUT_FILES=$(_get_files "$*" "pdf" "" "" "r") || exit 1
+INPUT_FILES=$(_get_files "$*" "pdf" "1" "" "F") || exit 1
 
 _main_task() {
     local FILE=$1
