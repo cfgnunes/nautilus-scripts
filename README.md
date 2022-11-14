@@ -26,7 +26,7 @@ git clone https://github.com/cfgnunes/nautilus-scripts.git ~/.local/share/nautil
 ### Installing in nemo file manager
 
 ```sh
-git clone https://github.com/cfgnunes/nautilus-scripts.git ~/.gnome2/nemo-scripts/scripts
+git clone https://github.com/cfgnunes/nautilus-scripts.git ~/.local/share/nemo/scripts
 ```
 
 ### Installing in caja file manager
