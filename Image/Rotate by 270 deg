@@ -17,7 +17,7 @@ _main_task() {
     local EXIT_CODE
 
     OUTPUT_FILE="$OUTPUT_DIR/$FILE"
-    STD_OUTPUT=$(convert -rotate 270 "$FILE" "$OUTPUT_FILE" 2>&1)
+    STD_OUTPUT=$(convert -transparent none -rotate 270 "$FILE" "$OUTPUT_FILE" 2>&1)
     EXIT_CODE=$?
     _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
 }
