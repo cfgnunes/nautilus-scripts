@@ -10,5 +10,5 @@ INPUT_FILES=$(_get_files "$*" "a" "1" "" "") || exit 1
 
 # Run the main process
 # shellcheck disable=SC2086
-findimagedupes --recurse --threshold=70% --program=/usr/bin/eog -- $INPUT_FILES 2>/dev/null
+findimagedupes --recurse --threshold=65% --program=/usr/bin/eog -- $INPUT_FILES 2>/dev/null
 _display_result_tasks ""
