@@ -6,7 +6,7 @@ source "${SCRIPT_DIR/%scripts\/*/scripts}/_common_functions"
 
 # Initial checks
 _check_dependencies convert || exit 1
-INPUT_FILES=$(_get_files "$*" "f" "2" "" "image") || exit 1
+INPUT_FILES=$(_get_files "$*" "f" "1" "" "image") || exit 1
 OUTPUT_DIR=$(_get_output_dir) || exit 1
 
 # Run the main process
