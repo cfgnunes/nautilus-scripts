@@ -54,7 +54,7 @@ _main_task() {
         STD_OUTPUT=$(tar --extract --file="../$FILE" 2>&1)
         ;;
     *.zst)
-        STD_OUTPUT=$(zstd -d "../$FILE" 2>&1)
+        STD_OUTPUT=$(zstd --decompress "../$FILE" 2>&1)
         ;;
     *)
         STD_OUTPUT=$(7z x -aoa "../$FILE" 2>&1)

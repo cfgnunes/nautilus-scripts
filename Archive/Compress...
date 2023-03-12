@@ -10,5 +10,5 @@ INPUT_FILES=$(_get_files "$*" "a" "1" "" "") || exit 1
 
 # Run the main process
 # shellcheck disable=SC2086
-file-roller -d $INPUT_FILES
+file-roller --add $INPUT_FILES
 _display_result_tasks ""

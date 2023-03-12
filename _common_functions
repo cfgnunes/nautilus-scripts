@@ -19,7 +19,7 @@ _msg_error() {
     local MESSAGE=$1
 
     # Check if the script is running in a terminal
-    if env | grep -q '^TERM'; then
+    if env | grep --quiet '^TERM'; then
         echo >&2 "$MESSAGE"
     else # It doesn't use GUI notifications
         if hash notify-send 2>/dev/null; then
@@ -38,7 +38,7 @@ _msg_info() {
     local MESSAGE=$1
 
     # Check if the script is running in a terminal
-    if env | grep -q '^TERM'; then
+    if env | grep --quiet '^TERM'; then
         echo "$MESSAGE"
     else # If not, use GUI notifications
         if hash notify-send 2>/dev/null; then
@@ -274,7 +274,7 @@ _get_output_dir() {
         OUTPUT_DIR="$BASE_DIR/$DEFAULT_OUTPUT_DIR ($SUFFIX)"
     done
 
-    mkdir -p "$OUTPUT_DIR"
+    mkdir --parents "$OUTPUT_DIR"
     echo "$OUTPUT_DIR"
 
     return 0
@@ -448,7 +448,7 @@ _transfer_file() {
         mv "$FILE_SRC" "$FILE_DST"
         ;;
     "c")
-        cp -a "$FILE_SRC" "$FILE_DST"
+        cp --archive "$FILE_SRC" "$FILE_DST"
         ;;
     *)
         _msg_error "Error: Wrong OPTION_FLAG parameter for '_transfer_file'."
