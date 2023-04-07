@@ -23,42 +23,26 @@ _main_task() {
 
     # Extract the archive according the file extension
     case $FILE in
-    *.tar.bz2 | *.tbz2 | *.tz2)
-        STD_OUTPUT=$(tar --extract --bzip2 --file="../$FILE" 2>&1)
-        ;;
-    *.tar.gz | *.taz | *.tgz)
-        STD_OUTPUT=$(tar --extract --gzip --file="../$FILE" 2>&1)
-        ;;
-    *.tar.lz | *.tlz)
-        STD_OUTPUT=$(tar --extract --lzip --file="../$FILE" 2>&1)
-        ;;
-    *.tar.lzma | *.tlzma)
-        STD_OUTPUT=$(tar --extract --lzma --file="../$FILE" 2>&1)
-        ;;
-    *.tar.lzo | *.tlzo)
-        STD_OUTPUT=$(tar --extract --lzop --file="../$FILE" 2>&1)
-        ;;
-    *.tar.xz | *.txz)
-        STD_OUTPUT=$(tar --extract --xz --file="../$FILE" 2>&1)
-        ;;
-    *.tar.Z | *.taZ)
-        STD_OUTPUT=$(tar --extract --gzip --file="../$FILE" 2>&1)
-        ;;
-    *.tar.zst | *.tzst)
-        STD_OUTPUT=$(tar --extract --zstd --file="../$FILE" 2>&1)
-        ;;
-    *.deb)
-        STD_OUTPUT=$(ar x "../$FILE" 2>&1)
-        ;;
-    *.tar)
-        STD_OUTPUT=$(tar --extract --file="../$FILE" 2>&1)
-        ;;
-    *.zst)
-        STD_OUTPUT=$(zstd --decompress "../$FILE" 2>&1)
-        ;;
-    *)
-        STD_OUTPUT=$(7z x -aoa "../$FILE" 2>&1)
-        ;;
+    *.tar.bz2 | *.tbz2 | *.tz2) STD_OUTPUT=$(tar --extract --bzip2 --file="../$FILE" 2>&1) ;;
+    *.tar.gz | *.taz | *.tgz) STD_OUTPUT=$(tar --extract --gzip --file="../$FILE" 2>&1) ;;
+    *.tar.lz | *.tlz) STD_OUTPUT=$(tar --extract --lzip --file="../$FILE" 2>&1) ;;
+    *.tar.lzma | *.tlzma) STD_OUTPUT=$(tar --extract --lzma --file="../$FILE" 2>&1) ;;
+    *.tar.lzo | *.tlzo) STD_OUTPUT=$(tar --extract --lzop --file="../$FILE" 2>&1) ;;
+    *.tar.xz | *.txz) STD_OUTPUT=$(tar --extract --xz --file="../$FILE" 2>&1) ;;
+    *.tar.Z | *.taZ) STD_OUTPUT=$(tar --extract --gzip --file="../$FILE" 2>&1) ;;
+    *.tar.zst | *.tzst) STD_OUTPUT=$(tar --extract --zstd --file="../$FILE" 2>&1) ;;
+    *.7z) STD_OUTPUT=$(7z x -aoa "../$FILE" 2>&1) ;;
+    *.bz2) STD_OUTPUT=$(bunzip2 "../$FILE" 2>&1) ;;
+    *.deb) STD_OUTPUT=$(ar x "../$FILE" 2>&1) ;;
+    *.gz) STD_OUTPUT=$(gunzip "../$FILE" 2>&1) ;;
+    *.lzma) STD_OUTPUT=$(unlzma "../$FILE" 2>&1) ;;
+    *.rar) STD_OUTPUT=$(unrar x -ad "../$FILE" 2>&1) ;;
+    *.tar) STD_OUTPUT=$(tar --extract --file="../$FILE" 2>&1) ;;
+    *.xz) STD_OUTPUT=$(unxz "../$FILE" 2>&1) ;;
+    *.Z) STD_OUTPUT=$(uncompress "../$FILE" 2>&1) ;;
+    *.zip) STD_OUTPUT=$(unzip "../$FILE" 2>&1) ;;
+    *.zst) STD_OUTPUT=$(zstd --decompress "../$FILE" 2>&1) ;;
+    *) STD_OUTPUT=$(7z x -aoa "../$FILE" 2>&1) ;;
     esac
 
     # Check for result errors
