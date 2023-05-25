@@ -5,9 +5,12 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 source "${SCRIPT_DIR/%scripts\/*/scripts}/_common_functions"
 
 # Initial checks
-_check_dependencies meld || exit 1
-INPUT_FILES=$(_get_files "$*" "d" "2" "3" "") || exit 1
+_check_dependencies zenity || exit 1
+INPUT_FILES=$(_get_files "$*" "a" "2" "2" "") || exit 1
 
 # Run the main process
 # shellcheck disable=SC2086
-meld $INPUT_FILES &
+STD_OUTPUT=$(diff --brief --recursive $INPUT_FILES)
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sort --version-sort)
+
+_display_info_box "$STD_OUTPUT" "Diff directories"
