@@ -13,4 +13,4 @@ INPUT_FILES=$(_get_files "$*" "A" "1" "" "") || exit 1
 STD_OUTPUT=$(stat -c "%a %U %G %F: \"%n\"" $INPUT_FILES)
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
 
-_display_info_box "$STD_OUTPUT" "File informations (permissions and owner)"
+_display_info_box "$STD_OUTPUT" "Permissions and owner"
