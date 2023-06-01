@@ -12,6 +12,6 @@ INPUT_FILES=$(_get_files "$*" "F" "1" "" "text;application") || exit 1
 
 # Run the main process
 # shellcheck disable=SC2086
-STD_OUTPUT=$(grep -i -r -I -P -o -n --exclude="*.pdf" --exclude-dir="*.git*" "[^ \w\t\n\r\-\,\;\:\!\?\.\'\"\(\)\[\]\{\}\@\*\/\\\&\#\%\`\^\+\<\=\>\|\~\$áàâãçéêíóôõú\“\”®§©ªº°¹²³]" $INPUT_FILES /dev/null)
+STD_OUTPUT=$(grep -i -r -I -P -o -n --exclude="*.pdf" --exclude-dir="*.git*" "[^ \w\t\n\r\-\,\;\:\!\?\.\'\"\(\)\[\]\{\}\@\*\/\\\&\#\%\`\^\+\<\=\>\|\~\$áàâãçéêíóôõú\“\”®§©ªº°¹²³«»´¢£µ]" $INPUT_FILES /dev/null)
 
 _display_info_box "$STD_OUTPUT" "Find files: with bad chars"
