@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
+
+# Initial checks
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=all")
+OUTPUT_DIR=$PWD
+
+_main_task() {
+    local INPUT_FILE=$1
+    local OUTPUT_DIR=$2
+    local STD_OUTPUT=""
+
+    # Run the main process
+    if [[ -f "$INPUT_FILE" ]]; then
+        STD_OUTPUT=$(chmod --recursive 644 "$INPUT_FILE" 2>&1)
+    elif [[ -d "$INPUT_FILE" ]]; then
+        STD_OUTPUT=$(chmod --recursive 755 "$INPUT_FILE" 2>&1)
+    fi
+    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
+}
+
+_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
+_display_result_box "$OUTPUT_DIR"

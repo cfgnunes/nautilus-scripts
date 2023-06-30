@@ -1,26 +1,26 @@
 #!/usr/bin/env bash
 
+# Import the script 'common-functions.sh'
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-# shellcheck source=/dev/null
-source "${SCRIPT_DIR/%scripts\/*/scripts}/_common_functions"
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
 
 # Initial checks
-_check_dependencies ffmpeg || exit 1
-INPUT_FILES=$(_get_files "$*" "f" "1" "" "video") || exit 1
-OUTPUT_DIR=$(_get_output_dir) || exit 1
+_check_dependencies "ffmpeg"
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=file; mime=video")
+OUTPUT_DIR=$(_get_output_dir)
 
 _main_task() {
-    local FILE=$1
+    local INPUT_FILE=$1
     local OUTPUT_DIR=$2
-    local OUTPUT_FILE
-    local STD_OUTPUT
-    local EXIT_CODE
+    local OUTPUT_FILE=""
+    local STD_OUTPUT=""
 
-    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILE").aac"
-    STD_OUTPUT=$(ffmpeg -threads 4 -y -i "$FILE" -vn -acodec copy "$OUTPUT_FILE" 2>&1)
-    EXIT_CODE=$?
-    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" "$OUTPUT_FILE"
+    # Run the main process
+    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$INPUT_FILE").aac"
+    STD_OUTPUT=$(ffmpeg -threads 4 -y -i "$INPUT_FILE" -vn -acodec copy "$OUTPUT_FILE" 2>&1)
+    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "$OUTPUT_FILE" || return 1
 }
 
-_run_parallel_tasks "$INPUT_FILES"
-_display_result_tasks "$OUTPUT_DIR"
+_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
+_display_result_box "$OUTPUT_DIR"

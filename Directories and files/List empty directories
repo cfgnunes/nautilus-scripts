@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
+
+# Initial checks
+_check_dependencies ""
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=directory; get_pwd_if_no_selection=true")
+
+# Run the main process
+# shellcheck disable=SC2086
+STD_OUTPUT=$(find $INPUT_FILES -type d -empty ! -path "*.git/*")
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sed -r "s|(.+)|\"\1\"|")
+
+_display_text_box "$STD_OUTPUT"

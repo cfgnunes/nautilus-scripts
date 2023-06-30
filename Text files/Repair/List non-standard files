@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
+
+# Initial checks
+_check_dependencies ""
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=file_recursive; mime=text,application; skip_encoding=binary; skip_extension=pdf")
+OUTPUT_DIR=$PWD
+
+_main_task() {
+    local INPUT_FILE=$1
+    local OUTPUT_DIR=$2
+    local TEMP_FILE=""
+    local RESULT_FILE=""
+    local FILE_ENCODING=""
+    local FILE_INFORMATION=""
+
+    FILE_ENCODING=$(file --mime-encoding --brief "$INPUT_FILE")
+    FILE_INFORMATION=$(file --separator "//" --no-pad "$INPUT_FILE" | sed -r "s|(.*)// ||")
+
+    # Run the checker 'non UTF-8 encoding'
+    if [[ "${FILE_ENCODING,,}" != *"us-ascii"* ]] && [[ "${FILE_ENCODING,,}" != *"utf-8"* ]]; then
+        RESULT_FILE+="[non UTF-8 encoding]"
+    fi
+
+    # Run the checker 'UTF-8 with BOM'
+    if [[ "${FILE_ENCODING,,}" == *"utf-8"* ]]; then
+        if head -c3 "$INPUT_FILE" | LC_ALL=C grep --quiet -P '\xef\xbb\xbf'; then
+            RESULT_FILE+="[UTF-8 with BOM]"
+        fi
+    fi
+
+    # Run the checker 'non LF line break'
+    if [[ "$FILE_INFORMATION" == *"with CR"* ]]; then
+        RESULT_FILE+="[non LF line break]"
+    fi
+
+    # Run the checker 'trailing spaces' (for Unix and Windows files)
+    if grep --quiet -P "[ \t]\r?$" "$INPUT_FILE"; then
+        RESULT_FILE+="[trailing spaces]"
+    fi
+
+    # Run the checker 'trailing spaces' (for Mac files)
+    if [[ "$FILE_INFORMATION" == *"with CR line"* ]] || [[ "$FILE_INFORMATION" == *"with CR, LF line"* ]]; then
+        if cat -A "$INPUT_FILE" | grep --quiet " ^M"; then
+            RESULT_FILE+="[trailing spaces]"
+        fi
+    fi
+
+    # Run the checker 'missing line at the end'
+    if ! tail -c 1 "$INPUT_FILE" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet "0d\|0a"; then
+        RESULT_FILE+="[missing line at the end]"
+    else
+        if tail -c 3 "$INPUT_FILE" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet "..0d0d\|..0a0a\|0a0d0a"; then
+            # Run the checker 'has many line breaks at the end'
+            RESULT_FILE+="[extra lines at the end]"
+        fi
+    fi
+
+    # Save the result only for files with problems
+    if [[ -n "$RESULT_FILE" ]]; then
+        # Work on a temp file
+        TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+        echo "$RESULT_FILE: \"$INPUT_FILE\"" >"$TEMP_FILE"
+    fi
+}
+
+_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
+
+STD_OUTPUT=$(cat "$TEMP_DIR_TASK"/* 2>/dev/null)
+STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^$")
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
+
+_display_text_box "$STD_OUTPUT"

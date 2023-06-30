@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
+
+# Initial checks
+_check_dependencies ""
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=file_recursive")
+
+# Run the main process
+# shellcheck disable=SC2086
+STD_OUTPUT=$(du -h $INPUT_FILES)
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -h -r)
+STD_OUTPUT=$(echo "$STD_OUTPUT" | head -n 10)
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sed -r "s|\t(.*)|\t\"\1\"|")
+
+_display_text_box "$STD_OUTPUT"

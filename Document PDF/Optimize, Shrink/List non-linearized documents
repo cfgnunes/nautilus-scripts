@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
+
+# Initial checks
+_check_dependencies "pdfinfo(poppler-utils)"
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=file_recursive; mime=pdf")
+OUTPUT_DIR=$PWD
+
+_main_task() {
+    local INPUT_FILE=$1
+    local OUTPUT_DIR=$2
+    local TEMP_FILE=""
+
+    # Save the result only for 'not linearized (not optimized)' PDFs
+    if pdfinfo "$INPUT_FILE" | grep "Optimized:" | grep --quiet "no"; then
+        # Work on a temp file
+        TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+        echo "\"$INPUT_FILE\"" >"$TEMP_FILE"
+    fi
+}
+
+_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
+
+STD_OUTPUT=$(cat "$TEMP_DIR_TASK"/* 2>/dev/null)
+STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^$")
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
+
+_display_text_box "$STD_OUTPUT"

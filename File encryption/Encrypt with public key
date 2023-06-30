@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
+
+# Initial checks
+_check_dependencies "gpg"
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=file")
+OUTPUT_DIR=$(_get_output_dir)
+
+USERS=$(gpg --list-public-keys --with-colons | grep "^uid" | cut -d ':' -f 10)
+if [[ -z "$USERS" ]]; then
+    _display_error_box "Signing failed: no secret keys installed!"
+    _exit_error
+fi
+TASK_DATA=$(echo "$USERS" | tr ':' '\n' | zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=200 --width=600 2>/dev/null) || _exit_error
+if [[ -z "$TASK_DATA" ]]; then
+    _display_error_box "Signing failed: you must select a user!"
+    _exit_error
+fi
+
+_main_task() {
+    local INPUT_FILE=$1
+    local OUTPUT_DIR=$2
+    local OUTPUT_FILE=""
+    local STD_OUTPUT=""
+
+    # Run the main process
+    OUTPUT_FILE="$OUTPUT_DIR/$INPUT_FILE.gpg"
+    STD_OUTPUT=$(gpg --batch --yes --encrypt --recipient "$TASK_DATA" --for-your-eyes-only --s2k-count 1015808 --s2k-digest-algo SHA256 --compress-algo zlib --cipher-algo AES256 --output "$OUTPUT_FILE" "$INPUT_FILE" 2>&1)
+    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "$OUTPUT_FILE" || return 1
+}
+
+_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
+_display_result_box "$OUTPUT_DIR"
