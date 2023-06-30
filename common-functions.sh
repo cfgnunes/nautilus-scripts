@@ -554,16 +554,18 @@ _get_script_name() {
 }
 
 _log_error() {
-    local ERROR_MESSAGE=$1
+    local ERROR_TYPE=$1
     local INPUT_FILE=$2
     local STD_OUTPUT=$3
     local LOG_TEMP_FILE=""
     LOG_TEMP_FILE=$(mktemp --tmpdir="$_TEMP_DIR_LOG" --suffix="-error")
 
     {
-        echo "[$(date "+%Y-%m-%d %H:%M:%S")] ERROR while processing the input file: $INPUT_FILE."
-        echo -e "\tError message: $ERROR_MESSAGE"
-        echo -e "\tStandard output: $STD_OUTPUT\n"
+        echo "[$(date "+%Y-%m-%d %H:%M:%S")] ERROR while processing the file: $INPUT_FILE."
+        echo " > Error type: $ERROR_TYPE"
+        echo " > Standard output:"
+        echo "$STD_OUTPUT"
+        echo
     } >"$LOG_TEMP_FILE"
 }
 
