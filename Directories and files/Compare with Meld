@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
+# Import the script 'common-functions.sh'
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-# shellcheck source=/dev/null
-source "${SCRIPT_DIR/%scripts\/*/scripts}/_common_functions"
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
 
 # Initial checks
-_check_dependencies meld || exit 1
-INPUT_FILES=$(_get_files "$*" "a" "2" "3" "") || exit 1
+_check_dependencies "meld"
+INPUT_FILES=$(_get_files "$*" "type=all; min_files=2; max_files=3")
 
 # Run the main process
 # shellcheck disable=SC2086

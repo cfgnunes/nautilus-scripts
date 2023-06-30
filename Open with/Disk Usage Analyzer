@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
+
+# Initial checks
+_check_dependencies "baobab"
+INPUT_FILES=$(_get_files "$*" "type=directory; max_files=1; get_pwd_if_no_selection=true")
+
+# Run the main process
+baobab "$INPUT_FILES" &

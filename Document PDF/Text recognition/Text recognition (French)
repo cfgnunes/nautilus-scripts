@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
+
+# Initial checks
+_check_dependencies "ocrmypdf"
+if ! [[ -d "/usr/share/doc/tesseract-ocr-fra" ]]; then
+    if _display_question_box "French language is not installed for OCR. Would you like to install it?"; then
+        _install_package "tesseract-ocr-fra" "tesseract"
+    else
+        _exit_error
+    fi
+fi
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=file; mime=pdf")
+OUTPUT_DIR=$(_get_output_dir)
+
+_main_task() {
+    local INPUT_FILE=$1
+    local OUTPUT_DIR=$2
+    local OUTPUT_FILE=""
+    local STD_OUTPUT=""
+
+    # Run the main process
+    OUTPUT_FILE="$OUTPUT_DIR/$INPUT_FILE"
+    STD_OUTPUT=$(ocrmypdf --l fra --output-type pdfa --skip-text --clean-final --deskew --jobs 4 "$INPUT_FILE" "$OUTPUT_FILE" 2>&1)
+    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
+}
+
+_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
+_display_result_box "$OUTPUT_DIR"

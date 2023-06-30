@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
 
+# Import the script 'common-functions.sh'
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-# shellcheck source=/dev/null
-source "${SCRIPT_DIR/%scripts\/*/scripts}/_common_functions"
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
 
 # Initial checks
-_check_dependencies zenity || exit 1
-INPUT_FILES=$(_get_files "$*" "a" "2" "2" "") || exit 1
+_check_dependencies ""
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=all; min_files=2; max_files=2")
 
 # Run the main process
 # shellcheck disable=SC2086
 STD_OUTPUT=$(diff --brief --recursive $INPUT_FILES)
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sort --version-sort)
 
-_display_info_box "$STD_OUTPUT" "Diff directories"
+_display_text_box "$STD_OUTPUT"

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC2001
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
+
+# Initial checks
+_check_dependencies ""
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=file_recursive")
+
+# Run the main process
+# shellcheck disable=SC2086
+STD_OUTPUT=$(file --separator "//" --no-pad $INPUT_FILES)
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|\(.*\)// *\(.*\)|\2: \"\1\"|")
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sort --version-sort)
+
+_display_text_box "$STD_OUTPUT"

@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
+
+# Initial checks
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=all")
+OUTPUT_DIR=$PWD
+
+_main_task() {
+    local INPUT_FILE=$1
+    local OUTPUT_DIR=$2
+    local OUTPUT_FILE=""
+    local STD_OUTPUT=""
+
+    # Rename files
+    find "$INPUT_FILE" -type f | while read -r FILE; do
+        local DIR=""
+        local FILENAME=""
+        local NEW_FILENAME=""
+
+        DIR=$(dirname "$FILE")
+        FILENAME=$(basename "$FILE")
+        NEW_FILENAME=${FILENAME,,}
+
+        # Run the main process
+        STD_OUTPUT=$(_move_file "when_conflict=skip" "$FILE" "$DIR/$NEW_FILENAME" 2>&1)
+        _check_result "$?" "$STD_OUTPUT" "$FILE" "" || return 1
+    done
+
+    # Rename directories
+    find "$INPUT_FILE" -type d | sort -r | while read -r DIR; do
+        local PARENT_DIR=""
+        local DIRNAME=""
+        local NEW_DIRNAME=""
+
+        PARENT_DIR=$(dirname "$DIR")
+        DIRNAME=$(basename "$DIR")
+        NEW_DIRNAME=${DIRNAME,,}
+
+        # Run the main process
+        STD_OUTPUT=$(_move_file "when_conflict=skip" "$DIR" "$PARENT_DIR/$NEW_DIRNAME" 2>&1)
+        _check_result "$?" "$STD_OUTPUT" "$DIR" "" || return 1
+    done
+}
+
+_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
+_display_result_box "$OUTPUT_DIR"

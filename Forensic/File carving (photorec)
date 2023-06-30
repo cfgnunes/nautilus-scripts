@@ -1,24 +1,25 @@
 #!/usr/bin/env bash
 
+# Import the script 'common-functions.sh'
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-# shellcheck source=/dev/null
-source "${SCRIPT_DIR/%scripts\/*/scripts}/_common_functions"
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
 
 # Initial checks
-_check_dependencies photorec || exit 1
-INPUT_FILES=$(_get_files "$*" "f" "1" "" "") || exit 1
+_check_dependencies "photorec(testdisk)"
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=file")
+OUTPUT_DIR=$PWD
 
 _main_task() {
-    local FILE=$1
+    local INPUT_FILE=$1
     local OUTPUT_DIR=$2
-    local STD_OUTPUT
-    local EXIT_CODE
+    local STD_OUTPUT=""
 
-    OUTPUT_DIR="output-$(_get_filename_without_extension "$FILE")"
-    STD_OUTPUT=$(photorec /d "$OUTPUT_DIR" /cmd "$FILE" partition_none,fileopt,everything,enable,search 2>&1)
-    EXIT_CODE=$?
-    _log_error_result "$FILE" "$STD_OUTPUT" "$OUTPUT_DIR" "$EXIT_CODE" ""
+    # Run the main process
+    OUTPUT_DIR="output-$(_get_filename_without_extension "$INPUT_FILE")"
+    STD_OUTPUT=$(photorec /d "$OUTPUT_DIR" /cmd "$INPUT_FILE" partition_none,fileopt,everything,enable,search 2>&1)
+    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
 }
 
-_run_parallel_tasks "$INPUT_FILES"
-_display_result_tasks "$PWD"
+_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
+_display_result_box "$OUTPUT_DIR"

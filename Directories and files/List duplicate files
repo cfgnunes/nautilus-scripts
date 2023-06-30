@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC2001
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
+
+# Initial checks
+_check_dependencies "rdfind"
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=all")
+
+# Work on a temp file
+TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+
+# Run the main process
+# shellcheck disable=SC2086
+rdfind -dryrun true -outputname "$TEMP_FILE" $INPUT_FILES &>/dev/null
+STD_OUTPUT=$(cat "$TEMP_FILE")
+STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^#")
+STD_OUTPUT=$(echo "$STD_OUTPUT" | cut -d ' ' -f 1,8-)
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|\([^ ]*\)[ \t]*\(.*\)|\1 \"\2\"|")
+STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|DUPTYPE_FIRST_OCCURRENCE|\nDUPTYPE_FIRST_OCCURRENCE|")
+STD_OUTPUT=$(echo "$STD_OUTPUT" | cut -d ' ' -f 2-)
+
+# Remove temporary files
+rm -rf "$TEMP_FILE"
+
+_display_text_box "$STD_OUTPUT"

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
+
+# Initial checks
+_check_dependencies "sha1sum"
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=file_recursive")
+
+# Run the main process
+# shellcheck disable=SC2086
+STD_OUTPUT=$(sha1sum $INPUT_FILES)
+
+_display_text_box "$STD_OUTPUT"

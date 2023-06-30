@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
+
+# Initial checks
+_check_dependencies "iconv(libc-bin)"
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=file; mime=text,application; skip_encoding=binary; skip_extension=pdf")
+OUTPUT_DIR=$(_get_output_dir)
+
+_main_task() {
+    local INPUT_FILE=$1
+    local OUTPUT_DIR=$2
+    local OUTPUT_FILE=""
+    local STD_OUTPUT=""
+    local TEMP_FILE=""
+
+    # Work on a temp file
+    TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+
+    # Run the main process
+    STD_OUTPUT=$(iconv -f "$(file --brief --mime-encoding "$INPUT_FILE")" "$INPUT_FILE" -t utf-8 -o "$TEMP_FILE")
+    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "$OUTPUT_FILE" || return 1
+
+    # Move the temp file to the output
+    OUTPUT_FILE="$OUTPUT_DIR/$INPUT_FILE"
+    _move_temp_file_to_output "$INPUT_FILE" "$TEMP_FILE" "$OUTPUT_FILE" || return 1
+
+    # Remove temporary files on each iteration (if not removed before)
+    rm -rf "$TEMP_FILE"
+}
+
+_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
+_display_result_box "$OUTPUT_DIR"

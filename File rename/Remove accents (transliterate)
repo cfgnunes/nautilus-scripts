@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
+
+# Initial checks
+_check_dependencies "iconv(libc-bin)"
+_display_wait_box
+INPUT_FILES=$(_get_files "$*" "type=all")
+OUTPUT_DIR=$PWD
+
+_main_task() {
+    local INPUT_FILE=$1
+    local OUTPUT_DIR=$2
+    local OUTPUT_FILE=""
+    local STD_OUTPUT=""
+
+    # Run the main process
+    OUTPUT_FILE=$(echo "$INPUT_FILE" | iconv -f utf8 -t ascii//TRANSLIT)
+    STD_OUTPUT=$(_move_file "when_conflict=skip" "$INPUT_FILE" "$OUTPUT_FILE" 2>&1)
+    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "$OUTPUT_FILE" || return 1
+}
+
+_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
+_display_result_box "$OUTPUT_DIR"
