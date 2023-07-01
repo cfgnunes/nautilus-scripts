@@ -2,7 +2,8 @@
 
 # Import the script 'common-functions.sh'
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-source "${SCRIPT_DIR/%scripts\/*/scripts}/common-functions.sh"
+ROOT_DIR=$(echo "$SCRIPT_DIR" | grep --only-matching "^.*scripts[^/]*")
+source "$ROOT_DIR/common-functions.sh"
 
 # Initial checks
 _check_dependencies "tar"

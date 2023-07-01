@@ -246,7 +246,7 @@ _close_wait_box() {
 _exit_error() {
     _close_wait_box
     # See the: https://www.baeldung.com/linux/safely-exit-scripts
-    kill -SIGINT $$
+    _kill_tasks
 }
 
 _has_string_in_list() {
