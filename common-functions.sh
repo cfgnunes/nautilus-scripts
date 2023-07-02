@@ -96,6 +96,22 @@ _check_result() {
     return 0
 }
 
+_display_error_box() {
+    local MESSAGE=$1
+
+    if env | grep --quiet "^TERM"; then
+        echo >&2 "$MESSAGE"
+    elif hash notify-send 2>/dev/null; then
+        notify-send -i error "$MESSAGE" &>/dev/null
+    elif hash zenity &>/dev/null; then
+        zenity --title "$(_get_script_name)" --error --width=300 --text "$MESSAGE" &>/dev/null
+    elif hash kdialog &>/dev/null; then
+        kdialog --title "$(_get_script_name)" --error "$MESSAGE" &>/dev/null
+    elif hash xmessage &>/dev/null; then
+        xmessage -title "$(_get_script_name)" "$MESSAGE" &>/dev/null
+    fi
+}
+
 _display_info_box() {
     local MESSAGE=$1
 
@@ -112,20 +128,28 @@ _display_info_box() {
     fi
 }
 
-_display_error_box() {
-    local MESSAGE=$1
+_display_password_box() {
+    local PASSWORD=""
 
+    # Ask the user a password.
     if env | grep --quiet "^TERM"; then
-        echo >&2 "$MESSAGE"
-    elif hash notify-send 2>/dev/null; then
-        notify-send -i error "$MESSAGE" &>/dev/null
+        echo -n "Type your password: " >&2
+        read -r PASSWORD
     elif hash zenity &>/dev/null; then
-        zenity --title "$(_get_script_name)" --error --width=300 --text "$MESSAGE" &>/dev/null
+        PASSWORD=$(zenity --title="$(_get_script_name)" \
+            --password 2>/dev/null) || _kill_tasks
     elif hash kdialog &>/dev/null; then
-        kdialog --title "$(_get_script_name)" --error "$MESSAGE" &>/dev/null
-    elif hash xmessage &>/dev/null; then
-        xmessage -title "$(_get_script_name)" "$MESSAGE" &>/dev/null
+        PASSWORD=$(kdialog --title "$(_get_script_name)" \
+            --password "Type your password" 2>/dev/null) || _kill_tasks
     fi
+
+    # Check if the password is not empty
+    if [[ -z "$PASSWORD" ]]; then
+        _display_error_box "Error: you must define a password!"
+        _exit_error
+    fi
+
+    echo "$PASSWORD"
 }
 
 _display_question_box() {
@@ -163,30 +187,6 @@ _display_text_box() {
     elif hash xmessage &>/dev/null; then
         xmessage -title "$(_get_script_name)" "$MESSAGE" &>/dev/null &
     fi
-}
-
-_display_password_box() {
-    local PASSWORD=""
-
-    # Ask the user a password.
-    if env | grep --quiet "^TERM"; then
-        echo -n "Type your password: " >&2
-        read -r PASSWORD
-    elif hash zenity &>/dev/null; then
-        PASSWORD=$(zenity --title="$(_get_script_name)" \
-            --password 2>/dev/null) || _kill_tasks
-    elif hash kdialog &>/dev/null; then
-        PASSWORD=$(kdialog --title "$(_get_script_name)" \
-            --password "Type your password" 2>/dev/null) || _kill_tasks
-    fi
-
-    # Check if the password is not empty
-    if [[ -z "$PASSWORD" ]]; then
-        _display_error_box "Error: you must define a password!"
-        _exit_error
-    fi
-
-    echo "$PASSWORD"
 }
 
 _display_result_box() {
