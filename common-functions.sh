@@ -102,9 +102,13 @@ _display_info_box() {
     if env | grep --quiet "^TERM"; then
         echo "$MESSAGE"
     elif hash notify-send 2>/dev/null; then
-        notify-send "$MESSAGE" &
+        notify-send "$MESSAGE" &>/dev/null
     elif hash zenity &>/dev/null; then
-        zenity --title "$(_get_script_name)" --info --width=300 --text "$MESSAGE"
+        zenity --title "$(_get_script_name)" --info --width=300 --text "$MESSAGE" &>/dev/null
+    elif hash kdialog &>/dev/null; then
+        kdialog --title "$(_get_script_name)" --msgbox "$MESSAGE" &>/dev/null
+    elif hash xmessage &>/dev/null; then
+        xmessage -title "$(_get_script_name)" "$MESSAGE" &>/dev/null
     fi
 }
 
@@ -114,9 +118,13 @@ _display_error_box() {
     if env | grep --quiet "^TERM"; then
         echo >&2 "$MESSAGE"
     elif hash notify-send 2>/dev/null; then
-        notify-send -i error "$MESSAGE" &
+        notify-send -i error "$MESSAGE" &>/dev/null
     elif hash zenity &>/dev/null; then
-        zenity --title "$(_get_script_name)" --error --width=300 --text "$MESSAGE"
+        zenity --title "$(_get_script_name)" --error --width=300 --text "$MESSAGE" &>/dev/null
+    elif hash kdialog &>/dev/null; then
+        kdialog --title "$(_get_script_name)" --error "$MESSAGE" &>/dev/null
+    elif hash xmessage &>/dev/null; then
+        xmessage -title "$(_get_script_name)" "$MESSAGE" &>/dev/null
     fi
 }
 
@@ -128,7 +136,11 @@ _display_question_box() {
         read -r -p "$MESSAGE [Y/n] " RESPONSE
         [[ ${RESPONSE,,} == *"n"* ]] && return 1
     elif hash zenity &>/dev/null; then
-        zenity --question --width=300 --text="$MESSAGE" || return 1
+        zenity --title "$(_get_script_name)" --question --width=300 --text="$MESSAGE" &>/dev/null || return 1
+    elif hash kdialog &>/dev/null; then
+        kdialog --title "$(_get_script_name)" --yesno "$MESSAGE" &>/dev/null || return 1
+    elif hash xmessage &>/dev/null; then
+        xmessage -title "$(_get_script_name)" -buttons "Yes:0,No:1" "$MESSAGE" &>/dev/null || return 1
     fi
     return 0
 }
@@ -144,12 +156,12 @@ _display_text_box() {
     if env | grep --quiet "^TERM"; then
         echo "$MESSAGE"
     elif hash zenity &>/dev/null; then
-        echo "$MESSAGE" | zenity \
-            --text-info \
-            --no-wrap \
-            --height=400 \
-            --width=750 \
-            --title "$(_get_script_name)" &
+        echo "$MESSAGE" | zenity --title "$(_get_script_name)" --text-info \
+            --no-wrap --height=400 --width=750 &>/dev/null &
+    elif hash kdialog &>/dev/null; then
+        kdialog --title "$(_get_script_name)" --textinputbox "" "$MESSAGE" &>/dev/null &
+    elif hash xmessage &>/dev/null; then
+        xmessage -title "$(_get_script_name)" "$MESSAGE" &>/dev/null &
     fi
 }
 
@@ -161,9 +173,11 @@ _display_password_box() {
         echo -n "Type your password: " >&2
         read -r PASSWORD
     elif hash zenity &>/dev/null; then
-        PASSWORD=$(zenity \
-            --password \
-            --title="$(_get_script_name)" 2>/dev/null) || return 1
+        PASSWORD=$(zenity --title="$(_get_script_name)" \
+            --password 2>/dev/null) || _kill_tasks
+    elif hash kdialog &>/dev/null; then
+        PASSWORD=$(kdialog --title "$(_get_script_name)" \
+            --password "Type your password" 2>/dev/null) || _kill_tasks
     fi
 
     # Check if the password is not empty
