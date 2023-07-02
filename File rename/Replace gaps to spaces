@@ -14,7 +14,6 @@ _main_task() {
     local OUTPUT_DIR=$2
     local OUTPUT_FILE=""
     local STD_OUTPUT=""
-
     local DIR=""
     local FILENAME=""
 
