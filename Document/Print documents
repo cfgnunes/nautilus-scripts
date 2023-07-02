@@ -9,7 +9,6 @@ source "$ROOT_DIR/common-functions.sh"
 _check_dependencies "lpr(cups-bsd)"
 _display_wait_box
 INPUT_FILES=$(_get_files "$*" "type=file")
-OUTPUT_DIR=$PWD
 
 _main_task() {
     local INPUT_FILE=$1
@@ -21,5 +20,5 @@ _main_task() {
     _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
 }
 
-_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
-_display_result_box "$OUTPUT_DIR"
+_run_main_task_parallel "$INPUT_FILES" ""
+_display_result_box ""
