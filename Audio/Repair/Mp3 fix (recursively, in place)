@@ -18,7 +18,7 @@ _main_task() {
     local STD_OUTPUT=""
     local TEMP_FILE=""
 
-    # Work on a temp file
+    # Work on a temporary file
     TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR_TASK")
     STD_OUTPUT=$(cp --archive "$INPUT_FILE" "$TEMP_FILE" 2>&1)
     _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
@@ -27,11 +27,11 @@ _main_task() {
     STD_OUTPUT=$(mp3val -si -f "$TEMP_FILE" 2>&1)
     _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
 
-    # Move the temp file to the output
+    # Move the temporary file to the output
     OUTPUT_FILE=$INPUT_FILE
     _move_temp_file_to_output "$INPUT_FILE" "$TEMP_FILE" "$OUTPUT_FILE" || return 1
 
-    # Remove temporary files on each iteration (if not removed before)
+    # Remove the temporary files on each iteration (if not removed before)
     rm -rf "$TEMP_FILE"
 }
 
