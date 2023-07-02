@@ -15,12 +15,10 @@ _main_task() {
     local INPUT_FILE=$1
     local OUTPUT_DIR=$2
     local OUTPUT_FILE=""
-    local FILENAME=""
     local STD_OUTPUT=""
 
     # Run the main process
-    FILENAME=$(basename "$INPUT_FILE")
-    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILENAME").docx"
+    OUTPUT_FILE=$(_get_output_file "$INPUT_FILE" "$OUTPUT_DIR" "docx")
     STD_OUTPUT=$(pandoc "$INPUT_FILE" -s -o "$OUTPUT_FILE" 2>&1)
     _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "$OUTPUT_FILE" || return 1
 }
