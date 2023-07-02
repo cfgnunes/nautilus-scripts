@@ -35,7 +35,7 @@ _check_dependencies() {
     local PACKAGE_NAME=""
 
     # Add basic commands to check
-    DEPENDENCIES="grep file xargs(findutils) pstree(psmisc) cmp(diffutils) $DEPENDENCIES"
+    DEPENDENCIES="file xargs(findutils) pstree(psmisc) cmp(diffutils) $DEPENDENCIES"
 
     # Check all commands in the list 'DEPENDENCIES'
     IFS=" "
