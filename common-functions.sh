@@ -50,9 +50,9 @@ _check_dependencies() {
 
         PACKAGE_NAME=$(echo "$ITEM" | grep --only-matching -P "\(+\K[^)]+")
         if [[ -n "$PACKAGE_NAME" ]]; then
-            MESSAGE="The '$COMMAND' was not found (from package '$PACKAGE_NAME'). Would you like to install it?"
+            MESSAGE="The command '$COMMAND' was not found (from package '$PACKAGE_NAME'). Would you like to install it?"
         else
-            MESSAGE="The '$COMMAND' was not found. Would you like to install it?"
+            MESSAGE="The command '$COMMAND' was not found. Would you like to install it?"
             PACKAGE_NAME=$COMMAND
         fi
 
@@ -98,9 +98,11 @@ _check_result() {
 
 _display_file_selection_box() {
     if hash zenity &>/dev/null; then
-        zenity --file-selection --multiple --separator="$_DEFAULT_IFS" 2>/dev/null
+        zenity --title "$(_get_script_name)" --file-selection --multiple \
+            --separator="$_DEFAULT_IFS" 2>/dev/null
     elif hash kdialog &>/dev/null; then
-        kdialog --title "$(_get_script_name)" --getopenfilename 2>/dev/null
+        kdialog --title "$(_get_script_name)" --getopenfilename --multiple \
+            --separate-output 2>/dev/null
     fi
 }
 
