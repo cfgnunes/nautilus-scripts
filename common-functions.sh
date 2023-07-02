@@ -559,23 +559,6 @@ _get_script_name() {
     basename "$0"
 }
 
-_write_log() {
-    local MESSAGE=$1
-    local INPUT_FILE=$2
-    local STD_OUTPUT=$3
-    local LOG_TEMP_FILE=""
-    LOG_TEMP_FILE=$(mktemp --tmpdir="$_TEMP_DIR_LOG" --suffix="-log")
-
-    {
-        echo "[$(date "+%Y-%m-%d %H:%M:%S")]"
-        echo " > Input file: $INPUT_FILE"
-        echo " > $MESSAGE"
-        echo " > Standard output:"
-        echo "$STD_OUTPUT"
-        echo
-    } >"$LOG_TEMP_FILE"
-}
-
 _move_file() {
     local PARAMETERS=$1
     local FILE_SRC=$2
@@ -687,4 +670,21 @@ _run_main_task_parallel() {
         --max-procs="$(nproc --all --ignore=1)" \
         --replace="{}" \
         bash -c "_main_task \"{}\" \"$OUTPUT_DIR\""
+}
+
+_write_log() {
+    local MESSAGE=$1
+    local INPUT_FILE=$2
+    local STD_OUTPUT=$3
+    local LOG_TEMP_FILE=""
+    LOG_TEMP_FILE=$(mktemp --tmpdir="$_TEMP_DIR_LOG" --suffix="-log")
+
+    {
+        echo "[$(date "+%Y-%m-%d %H:%M:%S")]"
+        echo " > Input file: $INPUT_FILE"
+        echo " > $MESSAGE"
+        echo " > Standard output:"
+        echo "$STD_OUTPUT"
+        echo
+    } >"$LOG_TEMP_FILE"
 }
