@@ -17,7 +17,7 @@ _main_task() {
 
     # Save the result only for 'encrypted' PDFs
     if pdfinfo "$INPUT_FILE" | grep "Encrypted:" | grep --quiet "yes ("; then
-        # Work on a temp file
+        # Work on a temporary file
         TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR_TASK")
         echo "\"$INPUT_FILE\"" >"$TEMP_FILE"
     fi

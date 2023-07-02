@@ -21,7 +21,7 @@ _main_task() {
     local TEMP_FILE3=""
     local TEMP_FILE4=""
 
-    # Work on a temp file
+    # Work on a temporary file
     TEMP_FILE1=$(mktemp --tmpdir="$TEMP_DIR_TASK" --suffix="-file1")
     TEMP_FILE2=$(mktemp --tmpdir="$TEMP_DIR_TASK" --suffix="-file2")
     TEMP_FILE3=$(mktemp --tmpdir="$TEMP_DIR_TASK" --suffix="-file3")
@@ -44,11 +44,11 @@ _main_task() {
     STD_OUTPUT=$(sed ':Loop;N;$!bLoop;s|\n*$||g' "$TEMP_FILE3" >"$TEMP_FILE4")
     _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
 
-    # Move the temp file to the output
+    # Move the temporary file to the output
     OUTPUT_FILE=$INPUT_FILE
     _move_temp_file_to_output "$INPUT_FILE" "$TEMP_FILE4" "$OUTPUT_FILE" || return 1
 
-    # Remove temporary files on each iteration (if not removed before)
+    # Remove the temporary files on each iteration (if not removed before)
     rm -rf "$TEMP_FILE1"
     rm -rf "$TEMP_FILE2"
     rm -rf "$TEMP_FILE3"

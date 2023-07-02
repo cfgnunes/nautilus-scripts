@@ -12,7 +12,7 @@ _check_dependencies "rdfind"
 _display_wait_box
 INPUT_FILES=$(_get_files "$*" "type=all")
 
-# Work on a temp file
+# Work on a temporary file
 TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR_TASK")
 
 # Run the main process
@@ -25,7 +25,7 @@ STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|\([^ ]*\)[ \t]*\(.*\)|\1 \"\2\"|")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|DUPTYPE_FIRST_OCCURRENCE|\nDUPTYPE_FIRST_OCCURRENCE|")
 STD_OUTPUT=$(echo "$STD_OUTPUT" | cut -d ' ' -f 2-)
 
-# Remove temporary files
+# Remove the temporary files
 rm -rf "$TEMP_FILE"
 
 _display_text_box "$STD_OUTPUT"

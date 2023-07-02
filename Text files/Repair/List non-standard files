@@ -62,7 +62,7 @@ _main_task() {
 
     # Save the result only for files with problems
     if [[ -n "$RESULT_FILE" ]]; then
-        # Work on a temp file
+        # Work on a temporary file
         TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR_TASK")
         echo "$RESULT_FILE: \"$INPUT_FILE\"" >"$TEMP_FILE"
     fi

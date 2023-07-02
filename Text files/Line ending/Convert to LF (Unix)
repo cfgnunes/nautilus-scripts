@@ -18,18 +18,18 @@ _main_task() {
     local STD_OUTPUT=""
     local TEMP_FILE=""
 
-    # Work on a temp file
+    # Work on a temporary file
     TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR_TASK")
 
     # Run the main process
     STD_OUTPUT=$(perl -pe 's/\r\n|\n|\r/\n/g' "$INPUT_FILE" >"$TEMP_FILE")
     _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "$OUTPUT_FILE" || return 1
 
-    # Move the temp file to the output
+    # Move the temporary file to the output
     OUTPUT_FILE="$OUTPUT_DIR/$INPUT_FILE"
     _move_temp_file_to_output "$INPUT_FILE" "$TEMP_FILE" "$OUTPUT_FILE" || return 1
 
-    # Remove temporary files on each iteration (if not removed before)
+    # Remove the temporary files on each iteration (if not removed before)
     rm -rf "$TEMP_FILE"
 }
 
