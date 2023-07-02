@@ -560,6 +560,28 @@ _get_output_dir() {
     echo "$OUTPUT_DIR"
 }
 
+_get_output_file() {
+    local INPUT_FILE=$1
+    local OUTPUT_DIR=$2
+    local EXTENSION=$3
+    local OUTPUT_FILE=""
+    local FILENAME=""
+
+    FILENAME=$(basename "$INPUT_FILE")
+    OUTPUT_FILE="$OUTPUT_DIR/"
+
+    if [[ -z "$EXTENSION" ]]; then # Same extension
+        OUTPUT_FILE+="$FILENAME"
+    elif [[ "$EXTENSION" == "." ]]; then # Remove extension
+        OUTPUT_FILE+="$(_get_filename_without_extension "$FILENAME")"
+    else
+        OUTPUT_FILE+="$(_get_filename_without_extension "$FILENAME")"
+        OUTPUT_FILE+=".$EXTENSION" # Add extension
+    fi
+
+    echo "$OUTPUT_FILE"
+}
+
 _get_parameter_value() {
     local PARAMETERS=$1
     local PARAMETER_KEY=$2
@@ -687,6 +709,7 @@ _run_main_task_parallel() {
     export -f _get_filename_extension
     export -f _get_filename_suffix
     export -f _get_filename_without_extension
+    export -f _get_output_file
     export -f _get_parameter_value
     export -f _main_task
     export -f _move_file

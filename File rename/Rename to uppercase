@@ -13,9 +13,9 @@ _main_task() {
     local INPUT_FILE=$1
     local OUTPUT_DIR=$2
     local OUTPUT_FILE=""
-    local FILENAME=""
     local STD_OUTPUT=""
     local DIR=""
+    local FILENAME=""
 
     DIR=$(dirname "$INPUT_FILE")
     FILENAME=$(basename "$INPUT_FILE")

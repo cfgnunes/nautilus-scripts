@@ -18,7 +18,7 @@ _task() {
     local STD_OUTPUT=""
 
     # Run the main process
-    OUTPUT_FILE="$OUTPUT_DIR/joined-image.png"
+    OUTPUT_FILE="$OUTPUT_DIR/concatenated-images.png"
     # shellcheck disable=SC2086
     STD_OUTPUT=$(convert +append $INPUT_FILES "$OUTPUT_FILE" 2>&1)
     _check_result "$?" "$STD_OUTPUT" "" "$OUTPUT_FILE" || return 1

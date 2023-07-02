@@ -15,7 +15,6 @@ _main_task() {
     local INPUT_FILE=$1
     local OUTPUT_DIR=$2
     local OUTPUT_FILE=""
-    local FILENAME=""
     local STD_OUTPUT=""
     local TEMP_FILE=""
 
@@ -27,8 +26,7 @@ _main_task() {
     _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "$OUTPUT_FILE" || return 1
 
     # Move the temporary file to the output
-    FILENAME=$(basename "$INPUT_FILE")
-    OUTPUT_FILE="$OUTPUT_DIR/$FILENAME"
+    OUTPUT_FILE=$(_get_output_file "$INPUT_FILE" "$OUTPUT_DIR" "")
     _move_temp_file_to_output "$INPUT_FILE" "$TEMP_FILE" "$OUTPUT_FILE" || return 1
 
     # Remove the temporary files on each iteration (if not removed before)
