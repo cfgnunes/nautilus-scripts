@@ -15,9 +15,15 @@ _main_task() {
     local OUTPUT_FILE=""
     local STD_OUTPUT=""
 
+    local DIR=""
+    local FILENAME=""
+
+    DIR=$(dirname "$INPUT_FILE")
+    FILENAME=$(basename "$INPUT_FILE")
+
     # Run the main process
-    OUTPUT_FILE=$(echo "$INPUT_FILE" | sed "s|[- \t][- \t]*|_|g;s|__*|_|g")
-    STD_OUTPUT=$(_move_file "when_conflict=skip" "$INPUT_FILE" "$OUTPUT_FILE" 2>&1)
+    OUTPUT_FILE=$(echo "$FILENAME" | sed "s|[- \t][- \t]*|_|g;s|__*|_|g")
+    STD_OUTPUT=$(_move_file "when_conflict=skip" "$INPUT_FILE" "$DIR/$OUTPUT_FILE" 2>&1)
     _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
 }
 
