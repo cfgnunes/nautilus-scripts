@@ -75,21 +75,21 @@ _check_result() {
 
     # Check the 'EXIT_CODE' and log the error
     if ((EXIT_CODE != 0)); then
-        _log_error "Exit code error." "$INPUT_FILE" "$STD_OUTPUT"
+        _write_log "Error: Non-zero exit code." "$INPUT_FILE" "$STD_OUTPUT"
         return 1
     fi
 
     # Check if there is the word "Error" in stdout
     if ! echo "$INPUT_FILE" | grep --quiet --ignore-case "[^\w]error"; then
         if echo "$STD_OUTPUT" | grep --quiet --ignore-case "[^\w]error"; then
-            _log_error "Word 'error' found in the standard output." "$INPUT_FILE" "$STD_OUTPUT"
+            _write_log "Error: Word 'error' found in the standard output." "$INPUT_FILE" "$STD_OUTPUT"
             return 1
         fi
     fi
 
     # Check if output file exists
     if [[ -n "$OUTPUT_FILE" ]] && ! [[ -e "$OUTPUT_FILE" ]]; then
-        _log_error "The output file does not exist." "$INPUT_FILE" "$STD_OUTPUT"
+        _write_log "Error: The output file does not exist." "$INPUT_FILE" "$STD_OUTPUT"
         return 1
     fi
 
@@ -179,6 +179,12 @@ _display_result_box() {
     local OUTPUT_DIR=$1
     local ERROR_LOG_FILE="$OUTPUT_DIR/$_PREFIX_ERROR_LOG_FILE.log"
     _close_wait_box
+
+    if [[ -z "$OUTPUT_DIR" ]]; then
+        ERROR_LOG_FILE="$PWD/$_PREFIX_ERROR_LOG_FILE.log"
+    else
+        ERROR_LOG_FILE="$OUTPUT_DIR/$_PREFIX_ERROR_LOG_FILE.log"
+    fi
 
     # If the file already exists, add a suffix
     ERROR_LOG_FILE=$(_get_filename_suffix "$ERROR_LOG_FILE")
@@ -553,16 +559,17 @@ _get_script_name() {
     basename "$0"
 }
 
-_log_error() {
-    local ERROR_TYPE=$1
+_write_log() {
+    local MESSAGE=$1
     local INPUT_FILE=$2
     local STD_OUTPUT=$3
     local LOG_TEMP_FILE=""
-    LOG_TEMP_FILE=$(mktemp --tmpdir="$_TEMP_DIR_LOG" --suffix="-error")
+    LOG_TEMP_FILE=$(mktemp --tmpdir="$_TEMP_DIR_LOG" --suffix="-log")
 
     {
-        echo "[$(date "+%Y-%m-%d %H:%M:%S")] ERROR while processing the file: $INPUT_FILE."
-        echo " > Error type: $ERROR_TYPE"
+        echo "[$(date "+%Y-%m-%d %H:%M:%S")]"
+        echo " > Input file: $INPUT_FILE"
+        echo " > $MESSAGE"
         echo " > Standard output:"
         echo "$STD_OUTPUT"
         echo
@@ -605,6 +612,7 @@ _move_file() {
     "skip")
         # Skip, do not move the file
         if [[ -e "$FILE_DST" ]]; then
+            _write_log "Warning: The file already exists." "$FILE_SRC" "$FILE_DST"
             return 0
         fi
         ;;
@@ -667,11 +675,11 @@ _run_main_task_parallel() {
     export -f _get_filename_extension
     export -f _get_filename_suffix
     export -f _get_filename_without_extension
-    export -f _log_error
+    export -f _get_parameter_value
     export -f _main_task
     export -f _move_file
     export -f _move_temp_file_to_output
-    export -f _get_parameter_value
+    export -f _write_log
 
     # Run '_main_task' for each file in parallel using 'xargs'
     echo -n "$INPUT_FILES" | xargs \
