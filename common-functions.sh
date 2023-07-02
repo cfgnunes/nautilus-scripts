@@ -96,6 +96,14 @@ _check_result() {
     return 0
 }
 
+_display_file_selection_box() {
+    if hash zenity &>/dev/null; then
+        zenity --file-selection --multiple --separator="$_DEFAULT_IFS" 2>/dev/null
+    elif hash kdialog &>/dev/null; then
+        kdialog --title "$(_get_script_name)" --getopenfilename 2>/dev/null
+    fi
+}
+
 _display_error_box() {
     local MESSAGE=$1
 
@@ -181,11 +189,11 @@ _display_text_box() {
         echo "$MESSAGE"
     elif hash zenity &>/dev/null; then
         echo "$MESSAGE" | zenity --title "$(_get_script_name)" --text-info \
-            --no-wrap --height=400 --width=750 &>/dev/null &
+            --no-wrap --height=400 --width=750 &>/dev/null
     elif hash kdialog &>/dev/null; then
-        kdialog --title "$(_get_script_name)" --textinputbox "" "$MESSAGE" &>/dev/null &
+        kdialog --title "$(_get_script_name)" --textinputbox "" "$MESSAGE" &>/dev/null
     elif hash xmessage &>/dev/null; then
-        xmessage -title "$(_get_script_name)" "$MESSAGE" &>/dev/null &
+        xmessage -title "$(_get_script_name)" "$MESSAGE" &>/dev/null
     fi
 }
 
@@ -411,8 +419,13 @@ _get_files() {
             echo "$PWD"
             return 0
         fi
-        _display_error_box "Error: there are no input files!"
-        _exit_error
+
+        # Try selecting the files by opening a file selection box
+        INPUT_FILES=$(_display_file_selection_box)
+        if [[ -z "$INPUT_FILES" ]]; then
+            _display_error_box "Error: there are no input files!"
+            _exit_error
+        fi
     fi
 
     # Default value for the parameter "type"
