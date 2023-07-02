@@ -15,10 +15,12 @@ _main_task() {
     local INPUT_FILE=$1
     local OUTPUT_DIR=$2
     local OUTPUT_FILE=""
+    local FILENAME=""
     local STD_OUTPUT=""
 
     # Run the main process
-    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$INPUT_FILE").png"
+    FILENAME=$(basename "$INPUT_FILE")
+    OUTPUT_FILE="$OUTPUT_DIR/$(_get_filename_without_extension "$FILENAME").png"
     STD_OUTPUT=$(convert "$INPUT_FILE" "$OUTPUT_FILE" 2>&1)
     _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "$OUTPUT_FILE" || return 1
 }
