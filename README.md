@@ -6,17 +6,18 @@ This is a collection of scripts designed to enhance the functionality of file ma
 
 While there are numerous scripts available for GNOME Files on the web, many of them suffer from issues like poor functionality, lack of error checking, and dependency management. Some scripts only work with files that don't have spaces in their names, among other limitations. To address these shortcomings, I have developed my own set of scripts, which offer the following advantages:
 
-- **Parallel Task Execution**: Processes multiple files simultaneously.
-- **Progress Dialog**: Displays a progress dialog and allows interruption of tasks at any time.
-- **Easy Adaptation**: Scripts are easily copied and adapted for other purposes.
-- **Keyboard Shortcuts**: Provides keyboard shortcuts for direct access to the scripts (refer to the `scripts-accels` file).
-- **Direct Usage**: Enables direct usage without requiring input parameters.
-- **Status Notifications**: Notifies users of dependency errors and MIME types.
-- **Dependency Management**: Prompts users to install any missing dependencies.
-- **Compatibility with Any File Manager**: Works with any file manager, without relying on `$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS` or Nemo equivalents.
-- **Non-destructive Output**: Never overwrites the input file; the output is distinct from the input.
-- **Bash Implementation**: All scripts are implemented in Bash.
-- **Shell Script Validation**: All shell scripts have been checked using [shellcheck](https://github.com/koalaman/shellcheck).
+- **Parallel task execution**: Processes multiple files simultaneously.
+- **Progress dialog**: Displays a progress dialog and allows interruption of tasks at any time.
+- **Easy adaptation**: Scripts are easily copied and adapted for other purposes.
+- **Direct usage**: Enables direct usage without requiring input parameters.
+- **Status notifications**: Notifies users of dependency errors and MIME types.
+- **Non-destructive output**: Never overwrites the input file; the output is distinct from the input.
+- **Log file**: Produces an `Errors.log` file when a task ends with an error.
+- **Dependency management**: Prompts users to install any missing dependencies.
+- **Compatibility with any file manager**: Works with any file manager, without relying on `$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS` or Nemo equivalents.
+- **Keyboard shortcuts**: Provides keyboard shortcuts for direct access to the scripts (refer to the `scripts-accels` file).
+- **Bash implementation**: All scripts are implemented in Bash.
+- **Shell script validation**: All shell scripts have been checked using [shellcheck](https://github.com/koalaman/shellcheck).
 
 ## Installing
 
