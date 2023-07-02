@@ -9,7 +9,6 @@ source "$ROOT_DIR/common-functions.sh"
 _check_dependencies ""
 _display_wait_box
 INPUT_FILES=$(_get_files "$*" "type=file")
-OUTPUT_DIR=$PWD
 
 # Check dependencies for each file extension
 for INPUT_FILE in $INPUT_FILES; do
@@ -119,5 +118,5 @@ _main_task() {
     rm -rf "$TEMP_DIR_OUTPUT"
 }
 
-_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
-_display_result_box "$OUTPUT_DIR"
+_run_main_task_parallel "$INPUT_FILES" ""
+_display_result_box ""

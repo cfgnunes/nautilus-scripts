@@ -9,7 +9,6 @@ source "$ROOT_DIR/common-functions.sh"
 _check_dependencies ""
 _display_wait_box
 INPUT_FILES=$(_get_files "$*" "type=file_recursive; mime=text,application; skip_encoding=binary; skip_extension=pdf")
-OUTPUT_DIR=$PWD
 
 _main_task() {
     local INPUT_FILE=$1
@@ -69,7 +68,7 @@ _main_task() {
     fi
 }
 
-_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
+_run_main_task_parallel "$INPUT_FILES" ""
 
 STD_OUTPUT=$(cat "$TEMP_DIR_TASK"/* 2>/dev/null)
 STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^$")

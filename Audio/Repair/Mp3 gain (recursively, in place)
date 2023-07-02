@@ -9,7 +9,6 @@ source "$ROOT_DIR/common-functions.sh"
 _check_dependencies "mp3gain"
 _display_wait_box
 INPUT_FILES=$(_get_files "$*" "type=file_recursive; mime=audio/mpeg; skip_extension=bak")
-OUTPUT_DIR=$PWD
 
 _main_task() {
     local INPUT_FILE=$1
@@ -36,5 +35,5 @@ _main_task() {
     rm -rf "$TEMP_FILE"
 }
 
-_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
-_display_result_box "$OUTPUT_DIR"
+_run_main_task_parallel "$INPUT_FILES" ""
+_display_result_box ""

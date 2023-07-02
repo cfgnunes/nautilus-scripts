@@ -9,7 +9,6 @@ source "$ROOT_DIR/common-functions.sh"
 _check_dependencies "iconv(libc-bin) perl(perl-base)"
 _display_wait_box
 INPUT_FILES=$(_get_files "$*" "type=file_recursive; mime=text,application; skip_encoding=binary; skip_extension=pdf,bak")
-OUTPUT_DIR=$PWD
 
 _main_task() {
     local INPUT_FILE=$1
@@ -56,5 +55,5 @@ _main_task() {
     rm -rf "$TEMP_FILE4"
 }
 
-_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
-_display_result_box "$OUTPUT_DIR"
+_run_main_task_parallel "$INPUT_FILES" ""
+_display_result_box ""
