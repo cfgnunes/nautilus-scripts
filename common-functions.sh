@@ -305,7 +305,7 @@ _kill_tasks() {
     local CHILD_PIDS=""
     local SCRIPT_PID=""
 
-    echo "Aborting the tasks..."
+    echo "Aborting the script..."
 
     # Get the process ID (PID) of the current script
     SCRIPT_PID=$$
