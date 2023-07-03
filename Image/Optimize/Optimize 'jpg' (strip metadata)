@@ -8,20 +8,20 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies "jpegoptim"
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=file; mime=image")
-OUTPUT_DIR=$(_get_output_dir)
+input_files=$(_get_files "$*" "type=file; mime=image")
+output_dir=$(_get_output_dir)
 
 _main_task() {
-    local INPUT_FILE=$1
-    local OUTPUT_DIR=$2
-    local OUTPUT_FILE=""
-    local STD_OUTPUT=""
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
 
     # Run the main process
-    OUTPUT_FILE=$(_get_output_file "$INPUT_FILE" "$OUTPUT_DIR" "")
-    STD_OUTPUT=$(jpegoptim --strip-all --dest="$OUTPUT_DIR" "$INPUT_FILE" 2>&1)
-    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "$OUTPUT_FILE" || return 1
+    output_file=$(_get_output_file "$input_file" "$output_dir" "")
+    std_output=$(jpegoptim --strip-all --dest="$output_dir" "$input_file" 2>&1)
+    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
-_run_main_task_parallel "$INPUT_FILES" "$OUTPUT_DIR"
-_display_result_box "$OUTPUT_DIR"
+_run_main_task_parallel "$input_files" "$output_dir"
+_display_result_box "$output_dir"

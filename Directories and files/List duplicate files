@@ -10,22 +10,22 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies "rdfind"
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=all")
+input_files=$(_get_files "$*" "type=all")
 
 # Work on a temporary file
-TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
 
 # Run the main process
 # shellcheck disable=SC2086
-rdfind -dryrun true -outputname "$TEMP_FILE" $INPUT_FILES &>/dev/null
-STD_OUTPUT=$(cat "$TEMP_FILE")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^#")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | cut -d ' ' -f 1,8-)
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|\([^ ]*\)[ \t]*\(.*\)|\1 \"\2\"|")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|DUPTYPE_FIRST_OCCURRENCE|\nDUPTYPE_FIRST_OCCURRENCE|")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | cut -d ' ' -f 2-)
+rdfind -dryrun true -outputname "$temp_file" $input_files &>/dev/null
+std_output=$(cat "$temp_file")
+std_output=$(echo "$std_output" | grep -v "^#")
+std_output=$(echo "$std_output" | cut -d ' ' -f 1,8-)
+std_output=$(echo "$std_output" | sed "s|\([^ ]*\)[ \t]*\(.*\)|\1 \"\2\"|")
+std_output=$(echo "$std_output" | sed "s|DUPTYPE_FIRST_OCCURRENCE|\nDUPTYPE_FIRST_OCCURRENCE|")
+std_output=$(echo "$std_output" | cut -d ' ' -f 2-)
 
 # Remove the temporary files
-rm -rf "$TEMP_FILE"
+rm -rf "$temp_file"
 
-_display_text_box "$STD_OUTPUT"
+_display_text_box "$std_output"

@@ -8,52 +8,52 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies "iconv(libc-bin) perl(perl-base)"
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=file_recursive; mime=text,application; skip_encoding=binary; skip_extension=pdf,bak")
+input_files=$(_get_files "$*" "type=file_recursive; mime=text,application; skip_encoding=binary; skip_extension=pdf,bak")
 
 _main_task() {
-    local INPUT_FILE=$1
-    local OUTPUT_DIR=$2
-    local OUTPUT_FILE=""
-    local STD_OUTPUT=""
-    local BACKUP_FILE=""
-    local TEMP_FILE1=""
-    local TEMP_FILE2=""
-    local TEMP_FILE3=""
-    local TEMP_FILE4=""
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+    local backup_file=""
+    local temp_file1=""
+    local temp_file2=""
+    local temp_file3=""
+    local temp_file4=""
 
     # Work on a temporary file
-    TEMP_FILE1=$(mktemp --tmpdir="$TEMP_DIR_TASK" --suffix="-file1")
-    TEMP_FILE2=$(mktemp --tmpdir="$TEMP_DIR_TASK" --suffix="-file2")
-    TEMP_FILE3=$(mktemp --tmpdir="$TEMP_DIR_TASK" --suffix="-file3")
-    TEMP_FILE4=$(mktemp --tmpdir="$TEMP_DIR_TASK" --suffix="-file4")
+    temp_file1=$(mktemp --tmpdir="$TEMP_DIR_TASK" --suffix="-file1")
+    temp_file2=$(mktemp --tmpdir="$TEMP_DIR_TASK" --suffix="-file2")
+    temp_file3=$(mktemp --tmpdir="$TEMP_DIR_TASK" --suffix="-file3")
+    temp_file4=$(mktemp --tmpdir="$TEMP_DIR_TASK" --suffix="-file4")
 
     # Run the process (part 1) 'convert encoding to utf-8'
-    STD_OUTPUT=$(iconv -f "$(file --brief --mime-encoding "$INPUT_FILE")" "$INPUT_FILE" -t utf-8 -o "$TEMP_FILE1")
-    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
+    std_output=$(iconv -f "$(file --brief --mime-encoding "$input_file")" "$input_file" -t utf-8 -o "$temp_file1")
+    _check_result "$?" "$std_output" "$input_file" "" || return 1
 
     # Run the process (part 2) 'convert line ending to windows'
-    STD_OUTPUT=$(perl -pe 's/\r\n|\n|\r/\r\n/g' "$TEMP_FILE1" >"$TEMP_FILE2")
-    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
+    std_output=$(perl -pe 's/\r\n|\n|\r/\r\n/g' "$temp_file1" >"$temp_file2")
+    _check_result "$?" "$std_output" "$input_file" "" || return 1
 
     # Run the process (part 3) 'remove trailing spaces'
-    STD_OUTPUT=$(sed 's|[ \t]*\(\r*\)$|\1|' "$TEMP_FILE2" >"$TEMP_FILE3")
-    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
+    std_output=$(sed 's|[ \t]*\(\r*\)$|\1|' "$temp_file2" >"$temp_file3")
+    _check_result "$?" "$std_output" "$input_file" "" || return 1
 
     # Run the process (part 4) 'remove empty line in EOF'
-    echo "" >>"$TEMP_FILE3"
-    STD_OUTPUT=$(sed ':Loop;N;$!bLoop;s|\n*$||g' "$TEMP_FILE3" >"$TEMP_FILE4")
-    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
+    echo "" >>"$temp_file3"
+    std_output=$(sed ':Loop;N;$!bLoop;s|\n*$||g' "$temp_file3" >"$temp_file4")
+    _check_result "$?" "$std_output" "$input_file" "" || return 1
 
     # Move the temporary file to the output
-    OUTPUT_FILE=$INPUT_FILE
-    _move_temp_file_to_output "$INPUT_FILE" "$TEMP_FILE4" "$OUTPUT_FILE" || return 1
+    output_file=$input_file
+    _move_temp_file_to_output "$input_file" "$temp_file4" "$output_file" || return 1
 
     # Remove the temporary files on each iteration (if not removed before)
-    rm -rf "$TEMP_FILE1"
-    rm -rf "$TEMP_FILE2"
-    rm -rf "$TEMP_FILE3"
-    rm -rf "$TEMP_FILE4"
+    rm -rf "$temp_file1"
+    rm -rf "$temp_file2"
+    rm -rf "$temp_file3"
+    rm -rf "$temp_file4"
 }
 
-_run_main_task_parallel "$INPUT_FILES" ""
+_run_main_task_parallel "$input_files" ""
 _display_result_box ""

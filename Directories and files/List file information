@@ -10,12 +10,12 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies ""
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=file_recursive")
+input_files=$(_get_files "$*" "type=file_recursive")
 
 # Run the main process
 # shellcheck disable=SC2086
-STD_OUTPUT=$(file --separator "//" --no-pad $INPUT_FILES 2>/dev/null)
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|\(.*\)// *\(.*\)|\2: \"\1\"|")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sort --version-sort)
+std_output=$(file --separator "//" --no-pad $input_files 2>/dev/null)
+std_output=$(echo "$std_output" | sed "s|\(.*\)// *\(.*\)|\2: \"\1\"|")
+std_output=$(echo "$std_output" | sort --version-sort)
 
-_display_text_box "$STD_OUTPUT"
+_display_text_box "$std_output"

@@ -8,25 +8,25 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies "ffmpeg"
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=file; mime=audio,video,stream; min_files=2; max_files=2")
-OUTPUT_DIR=$(_get_output_dir)
+input_files=$(_get_files "$*" "type=file; mime=audio,video,stream; min_files=2; max_files=2")
+output_dir=$(_get_output_dir)
 
 _task() {
-    local INPUT_FILES=$1
-    local OUTPUT_DIR=$2
-    local OUTPUT_FILE=""
-    local STD_OUTPUT=""
-    local INPUT_FILE_1=""
-    local INPUT_FILE_2=""
+    local input_files=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+    local input_file_1=""
+    local input_file_2=""
 
-    INPUT_FILE_1=$(echo "$INPUT_FILES" | sed -n 1p)
-    INPUT_FILE_2=$(echo "$INPUT_FILES" | sed -n 2p)
+    input_file_1=$(echo "$input_files" | sed -n 1p)
+    input_file_2=$(echo "$input_files" | sed -n 2p)
 
     # Run the main process
-    OUTPUT_FILE="$OUTPUT_DIR/mixed-audio.wav"
-    STD_OUTPUT=$(ffmpeg -threads 4 -y -i "$INPUT_FILE_1" -i "$INPUT_FILE_2" -filter_complex "amix=inputs=2:duration=longest" "$OUTPUT_FILE" 2>&1)
-    _check_result "$?" "$STD_OUTPUT" "" "$OUTPUT_FILE" || return 1
+    output_file="$output_dir/mixed-audio.wav"
+    std_output=$(ffmpeg -threads 4 -y -i "$input_file_1" -i "$input_file_2" -filter_complex "amix=inputs=2:duration=longest" "$output_file" 2>&1)
+    _check_result "$?" "$std_output" "" "$output_file" || return 1
 }
 
-_task "$INPUT_FILES" "$OUTPUT_DIR"
-_display_result_box "$OUTPUT_DIR"
+_task "$input_files" "$output_dir"
+_display_result_box "$output_dir"

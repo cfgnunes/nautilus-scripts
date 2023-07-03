@@ -8,32 +8,32 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies "mp3val"
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=file_recursive; mime=audio/mpeg; skip_extension=bak")
+input_files=$(_get_files "$*" "type=file_recursive; mime=audio/mpeg; skip_extension=bak")
 
 _main_task() {
-    local INPUT_FILE=$1
-    local OUTPUT_DIR=$2
-    local BACKUP_FILE=""
-    local OUTPUT_FILE=""
-    local STD_OUTPUT=""
-    local TEMP_FILE=""
+    local input_file=$1
+    local output_dir=$2
+    local backup_file=""
+    local output_file=""
+    local std_output=""
+    local temp_file=""
 
     # Work on a temporary file
-    TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-    STD_OUTPUT=$(cp --archive "$INPUT_FILE" "$TEMP_FILE" 2>&1)
-    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+    std_output=$(cp --archive "$input_file" "$temp_file" 2>&1)
+    _check_result "$?" "$std_output" "$input_file" "" || return 1
 
     # Run the main process
-    STD_OUTPUT=$(mp3val -si -f "$TEMP_FILE" 2>&1)
-    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
+    std_output=$(mp3val -si -f "$temp_file" 2>&1)
+    _check_result "$?" "$std_output" "$input_file" "" || return 1
 
     # Move the temporary file to the output
-    OUTPUT_FILE=$INPUT_FILE
-    _move_temp_file_to_output "$INPUT_FILE" "$TEMP_FILE" "$OUTPUT_FILE" || return 1
+    output_file=$input_file
+    _move_temp_file_to_output "$input_file" "$temp_file" "$output_file" || return 1
 
     # Remove the temporary files on each iteration (if not removed before)
-    rm -rf "$TEMP_FILE"
+    rm -rf "$temp_file"
 }
 
-_run_main_task_parallel "$INPUT_FILES" ""
+_run_main_task_parallel "$input_files" ""
 _display_result_box ""

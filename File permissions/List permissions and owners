@@ -7,11 +7,11 @@ source "$ROOT_DIR/common-functions.sh"
 
 # Initial checks
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=all_recursive")
+input_files=$(_get_files "$*" "type=all_recursive")
 
 # Run the main process
 # shellcheck disable=SC2086
-STD_OUTPUT=$(stat -c "%a %U %G %F: \"%n\"" $INPUT_FILES)
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
+std_output=$(stat -c "%a %U %G %F: \"%n\"" $input_files)
+std_output=$(echo "$std_output" | sort -V)
 
-_display_text_box "$STD_OUTPUT"
+_display_text_box "$std_output"

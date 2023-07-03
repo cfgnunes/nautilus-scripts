@@ -8,13 +8,13 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies ""
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=directory; get_pwd_if_no_selection=true")
+input_files=$(_get_files "$*" "type=directory; get_pwd_if_no_selection=true")
 
 # Run the main process
 # shellcheck disable=SC2086
-STD_OUTPUT=$(du -h $INPUT_FILES 2>/dev/null)
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -h -r)
-STD_OUTPUT=$(echo "$STD_OUTPUT" | head -n 10)
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed -r "s|\t(.*)|\t\"\1\"|")
+std_output=$(du -h $input_files 2>/dev/null)
+std_output=$(echo "$std_output" | sort -h -r)
+std_output=$(echo "$std_output" | head -n 10)
+std_output=$(echo "$std_output" | sed -r "s|\t(.*)|\t\"\1\"|")
 
-_display_text_box "$STD_OUTPUT"
+_display_text_box "$std_output"

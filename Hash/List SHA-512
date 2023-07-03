@@ -8,10 +8,10 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies "sha512sum"
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=file_recursive")
+input_files=$(_get_files "$*" "type=file_recursive")
 
 # Run the main process
 # shellcheck disable=SC2086
-STD_OUTPUT=$(sha512sum $INPUT_FILES)
+std_output=$(sha512sum $input_files)
 
-_display_text_box "$STD_OUTPUT"
+_display_text_box "$std_output"

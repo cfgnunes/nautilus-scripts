@@ -8,11 +8,11 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies ""
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=all; min_files=2; max_files=2")
+input_files=$(_get_files "$*" "type=all; min_files=2; max_files=2")
 
 # Run the main process
 # shellcheck disable=SC2086
-STD_OUTPUT=$(diff --brief --recursive $INPUT_FILES)
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sort --version-sort)
+std_output=$(diff --brief --recursive $input_files)
+std_output=$(echo "$std_output" | sort --version-sort)
 
-_display_text_box "$STD_OUTPUT"
+_display_text_box "$std_output"

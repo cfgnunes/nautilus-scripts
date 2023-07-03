@@ -8,25 +8,25 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies "pdffonts(poppler-utils)"
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=file_recursive; mime=pdf")
+input_files=$(_get_files "$*" "type=file_recursive; mime=pdf")
 
 _main_task() {
-    local INPUT_FILE=$1
-    local OUTPUT_DIR=$2
-    local TEMP_FILE=""
+    local input_file=$1
+    local output_dir=$2
+    local temp_file=""
 
     # Save the result only for 'without fonts' PDFs
-    if ! pdffonts "$INPUT_FILE" | sed -n 3p | grep --quiet "."; then
+    if ! pdffonts "$input_file" | sed -n 3p | grep --quiet "."; then
         # Work on a temporary file
-        TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-        echo "\"$INPUT_FILE\"" >"$TEMP_FILE"
+        temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+        echo "\"$input_file\"" >"$temp_file"
     fi
 }
 
-_run_main_task_parallel "$INPUT_FILES" ""
+_run_main_task_parallel "$input_files" ""
 
-STD_OUTPUT=$(cat "$TEMP_DIR_TASK"/* 2>/dev/null)
-STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^$")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
+std_output=$(cat "$TEMP_DIR_TASK"/* 2>/dev/null)
+std_output=$(echo "$std_output" | grep -v "^$")
+std_output=$(echo "$std_output" | sort -V)
 
-_display_text_box "$STD_OUTPUT"
+_display_text_box "$std_output"

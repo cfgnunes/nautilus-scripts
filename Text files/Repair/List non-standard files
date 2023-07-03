@@ -8,70 +8,70 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies ""
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=file_recursive; mime=text,application; skip_encoding=binary; skip_extension=pdf")
+input_files=$(_get_files "$*" "type=file_recursive; mime=text,application; skip_encoding=binary; skip_extension=pdf")
 
 _main_task() {
-    local INPUT_FILE=$1
-    local OUTPUT_DIR=$2
-    local TEMP_FILE=""
-    local RESULT_FILE=""
-    local FILE_ENCODING=""
-    local FILE_INFORMATION=""
+    local input_file=$1
+    local output_dir=$2
+    local temp_file=""
+    local result_file=""
+    local file_encoding=""
+    local file_information=""
 
-    FILE_ENCODING=$(file --mime-encoding --brief "$INPUT_FILE")
-    FILE_INFORMATION=$(file --separator "//" --no-pad "$INPUT_FILE" | sed -r "s|(.*)// ||")
+    file_encoding=$(file --mime-encoding --brief "$input_file")
+    file_information=$(file --separator "//" --no-pad "$input_file" | sed -r "s|(.*)// ||")
 
     # Run the checker 'non UTF-8 encoding'
-    if [[ "${FILE_ENCODING,,}" != *"us-ascii"* ]] && [[ "${FILE_ENCODING,,}" != *"utf-8"* ]]; then
-        RESULT_FILE+="[non UTF-8 encoding]"
+    if [[ "${file_encoding,,}" != *"us-ascii"* ]] && [[ "${file_encoding,,}" != *"utf-8"* ]]; then
+        result_file+="[non UTF-8 encoding]"
     fi
 
     # Run the checker 'UTF-8 with BOM'
-    if [[ "${FILE_ENCODING,,}" == *"utf-8"* ]]; then
-        if head -c3 "$INPUT_FILE" | LC_ALL=C grep --quiet -P '\xef\xbb\xbf'; then
-            RESULT_FILE+="[UTF-8 with BOM]"
+    if [[ "${file_encoding,,}" == *"utf-8"* ]]; then
+        if head -c3 "$input_file" | LC_ALL=C grep --quiet -P '\xef\xbb\xbf'; then
+            result_file+="[UTF-8 with BOM]"
         fi
     fi
 
     # Run the checker 'non LF line break'
-    if [[ "$FILE_INFORMATION" == *"with CR"* ]]; then
-        RESULT_FILE+="[non LF line break]"
+    if [[ "$file_information" == *"with CR"* ]]; then
+        result_file+="[non LF line break]"
     fi
 
     # Run the checker 'trailing spaces' (for Unix and Windows files)
-    if grep --quiet -P "[ \t]\r?$" "$INPUT_FILE"; then
-        RESULT_FILE+="[trailing spaces]"
+    if grep --quiet -P "[ \t]\r?$" "$input_file"; then
+        result_file+="[trailing spaces]"
     fi
 
     # Run the checker 'trailing spaces' (for Mac files)
-    if [[ "$FILE_INFORMATION" == *"with CR line"* ]] || [[ "$FILE_INFORMATION" == *"with CR, LF line"* ]]; then
-        if cat -A "$INPUT_FILE" | grep --quiet " ^M"; then
-            RESULT_FILE+="[trailing spaces]"
+    if [[ "$file_information" == *"with CR line"* ]] || [[ "$file_information" == *"with CR, LF line"* ]]; then
+        if cat -A "$input_file" | grep --quiet " ^M"; then
+            result_file+="[trailing spaces]"
         fi
     fi
 
     # Run the checker 'missing line at the end'
-    if ! tail -c 1 "$INPUT_FILE" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet "0d\|0a"; then
-        RESULT_FILE+="[missing line at the end]"
+    if ! tail -c 1 "$input_file" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet "0d\|0a"; then
+        result_file+="[missing line at the end]"
     else
-        if tail -c 3 "$INPUT_FILE" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet "..0d0d\|..0a0a\|0a0d0a"; then
+        if tail -c 3 "$input_file" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet "..0d0d\|..0a0a\|0a0d0a"; then
             # Run the checker 'has many line breaks at the end'
-            RESULT_FILE+="[extra lines at the end]"
+            result_file+="[extra lines at the end]"
         fi
     fi
 
     # Save the result only for files with problems
-    if [[ -n "$RESULT_FILE" ]]; then
+    if [[ -n "$result_file" ]]; then
         # Work on a temporary file
-        TEMP_FILE=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-        echo "$RESULT_FILE: \"$INPUT_FILE\"" >"$TEMP_FILE"
+        temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+        echo "$result_file: \"$input_file\"" >"$temp_file"
     fi
 }
 
-_run_main_task_parallel "$INPUT_FILES" ""
+_run_main_task_parallel "$input_files" ""
 
-STD_OUTPUT=$(cat "$TEMP_DIR_TASK"/* 2>/dev/null)
-STD_OUTPUT=$(echo "$STD_OUTPUT" | grep -v "^$")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
+std_output=$(cat "$TEMP_DIR_TASK"/* 2>/dev/null)
+std_output=$(echo "$std_output" | grep -v "^$")
+std_output=$(echo "$std_output" | sort -V)
 
-_display_text_box "$STD_OUTPUT"
+_display_text_box "$std_output"

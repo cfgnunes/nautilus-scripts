@@ -8,25 +8,25 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies "gpg"
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=file")
+input_files=$(_get_files "$*" "type=file")
 
 _main_task() {
-    local INPUT_FILE=$1
-    local OUTPUT_DIR=$2
-    local STD_OUTPUT=""
-    local KEY_ID=""
+    local input_file=$1
+    local output_dir=$2
+    local std_output=""
+    local key_id=""
 
     # Get the ID from the key
-    KEY_ID=$(gpg --with-colons --import-options show-only --import "$INPUT_FILE" | grep "^fpr" | head -1 | cut -d ':' -f 10)
+    key_id=$(gpg --with-colons --import-options show-only --import "$input_file" | grep "^fpr" | head -1 | cut -d ':' -f 10)
 
     # Import the key
-    STD_OUTPUT=$(gpg --batch --yes --import "$INPUT_FILE" 2>&1)
-    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
+    std_output=$(gpg --batch --yes --import "$input_file" 2>&1)
+    _check_result "$?" "$std_output" "$input_file" "" || return 1
 
     # Set the trust level to 'ultimate'
-    STD_OUTPUT=$(echo "$KEY_ID:6:" | gpg --batch --yes --import-ownertrust 2>&1)
-    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
+    std_output=$(echo "$key_id:6:" | gpg --batch --yes --import-ownertrust 2>&1)
+    _check_result "$?" "$std_output" "$input_file" "" || return 1
 }
 
-_run_main_task_parallel "$INPUT_FILES" ""
+_run_main_task_parallel "$input_files" ""
 _display_result_box ""

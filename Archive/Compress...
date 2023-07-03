@@ -7,8 +7,8 @@ source "$ROOT_DIR/common-functions.sh"
 
 # Initial checks
 _check_dependencies "file-roller"
-INPUT_FILES=$(_get_files "$*" "type=all")
+input_files=$(_get_files "$*" "type=all")
 
 # Run the main process
 # shellcheck disable=SC2086
-file-roller --add $INPUT_FILES &
+file-roller --add $input_files &
