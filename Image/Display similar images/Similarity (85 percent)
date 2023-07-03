@@ -8,9 +8,9 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies "findimagedupes eog"
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=file_recursive; mime=image")
+input_files=$(_get_files "$*" "type=file_recursive; mime=image")
 
 # Run the main process
 # shellcheck disable=SC2086
-findimagedupes --recurse --threshold=85% --program=/usr/bin/eog -- $INPUT_FILES 2>/dev/null
+findimagedupes --recurse --threshold=85% --program=/usr/bin/eog -- $input_files 2>/dev/null
 _display_result_box ""

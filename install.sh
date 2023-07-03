@@ -6,45 +6,45 @@ set -eu
 
 _main() {
     echo "Installing the scripts..."
-    local INSTALL_DIR=""
-    local ACCELS_DIR=""
-    local FILE_MANAGER=""
+    local install_dir=""
+    local accels_dir=""
+    local file_manager=""
 
     if hash nautilus &>/dev/null; then
-        INSTALL_DIR="$HOME/.local/share/nautilus/scripts"
-        ACCELS_DIR="$HOME/.config/nautilus"
-        FILE_MANAGER="nautilus"
+        install_dir="$HOME/.local/share/nautilus/scripts"
+        accels_dir="$HOME/.config/nautilus"
+        file_manager="nautilus"
     elif hash nemo &>/dev/null; then
-        INSTALL_DIR="$HOME/.local/share/nemo/scripts"
-        FILE_MANAGER="nemo"
+        install_dir="$HOME/.local/share/nemo/scripts"
+        file_manager="nemo"
     elif hash caja &>/dev/null; then
-        INSTALL_DIR="$HOME/.config/caja/scripts"
-        FILE_MANAGER="caja"
+        install_dir="$HOME/.config/caja/scripts"
+        file_manager="caja"
     else
         echo "Error: not found any compatible file managers!"
         return 1
     fi
 
     echo " > Removing previous files..."
-    rm -rf "$INSTALL_DIR"
-    rm -f "$ACCELS_DIR/scripts-accels"
+    rm -rf "$install_dir"
+    rm -f "$accels_dir/scripts-accels"
 
     echo " > Installing new scripts..."
-    mkdir --parents "$INSTALL_DIR"
-    cp -r ./* "$INSTALL_DIR/"
+    mkdir --parents "$install_dir"
+    cp -r ./* "$install_dir/"
 
-    if [[ -n "$ACCELS_DIR" ]]; then
+    if [[ -n "$accels_dir" ]]; then
         echo " > Installing 'scripts-accels'..."
-        mkdir --parents "$ACCELS_DIR"
-        cp "scripts-accels" "$ACCELS_DIR/scripts-accels"
+        mkdir --parents "$accels_dir"
+        cp "scripts-accels" "$accels_dir/scripts-accels"
     fi
 
     echo " > Setting file permissions..."
-    find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
-    find -L "$INSTALL_DIR" -maxdepth 1 -type f ! -path "*.git/*" -exec chmod -x {} \;
+    find -L "$install_dir" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
+    find -L "$install_dir" -maxdepth 1 -type f ! -path "*.git/*" -exec chmod -x {} \;
 
     echo " > Closing the file manager to reload its configurations..."
-    eval "$FILE_MANAGER -q &>/dev/null" || true
+    eval "$file_manager -q &>/dev/null" || true
 
     echo "Done!"
 }

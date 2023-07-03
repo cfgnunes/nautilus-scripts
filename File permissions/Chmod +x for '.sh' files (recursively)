@@ -7,17 +7,17 @@ source "$ROOT_DIR/common-functions.sh"
 
 # Initial checks
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=all")
+input_files=$(_get_files "$*" "type=all")
 
 _main_task() {
-    local INPUT_FILE=$1
-    local OUTPUT_DIR=$2
-    local STD_OUTPUT=""
+    local input_file=$1
+    local output_dir=$2
+    local std_output=""
 
     # Run the main process
-    STD_OUTPUT=$(find -L "$INPUT_FILE" ! -path "*.git/*" -iname "*.sh" -type f -exec chmod +x {} \; 2>&1)
-    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
+    std_output=$(find -L "$input_file" ! -path "*.git/*" -iname "*.sh" -type f -exec chmod +x {} \; 2>&1)
+    _check_result "$?" "$std_output" "$input_file" "" || return 1
 }
 
-_run_main_task_parallel "$INPUT_FILES" ""
+_run_main_task_parallel "$input_files" ""
 _display_result_box ""

@@ -7,8 +7,8 @@ source "$ROOT_DIR/common-functions.sh"
 
 # Initial checks
 _check_dependencies "meld"
-INPUT_FILES=$(_get_files "$*" "type=all; min_files=2; max_files=3")
+input_files=$(_get_files "$*" "type=all; min_files=2; max_files=3")
 
 # Run the main process
 # shellcheck disable=SC2086
-meld $INPUT_FILES &
+meld $input_files &

@@ -8,21 +8,21 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies "pdfunite(poppler-utils)"
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=file; mime=pdf; min_files=2")
-OUTPUT_DIR=$(_get_output_dir)
+input_files=$(_get_files "$*" "type=file; mime=pdf; min_files=2")
+output_dir=$(_get_output_dir)
 
 _task() {
-    local INPUT_FILES=$1
-    local OUTPUT_DIR=$2
-    local OUTPUT_FILE=""
-    local STD_OUTPUT=""
+    local input_files=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
 
     # Run the main process
-    OUTPUT_FILE="$OUTPUT_DIR/joined-documents.pdf"
+    output_file="$output_dir/joined-documents.pdf"
     # shellcheck disable=SC2086
-    STD_OUTPUT=$(pdfunite $INPUT_FILES "$OUTPUT_FILE" 2>&1)
-    _check_result "$?" "$STD_OUTPUT" "" "$OUTPUT_FILE" || return 1
+    std_output=$(pdfunite $input_files "$output_file" 2>&1)
+    _check_result "$?" "$std_output" "" "$output_file" || return 1
 }
 
-_task "$INPUT_FILES" "$OUTPUT_DIR"
-_display_result_box "$OUTPUT_DIR"
+_task "$input_files" "$output_dir"
+_display_result_box "$output_dir"

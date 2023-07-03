@@ -1,95 +1,95 @@
 #!/usr/bin/env bash
-
+#
 # This file contains common functions that will be imported by the scripts.
 
 set -u
 
 # Define only 'New line' as default field separator:
 # used in 'for' commands to iterate over files.
-_DEFAULT_IFS=$'\n'
-IFS=$_DEFAULT_IFS
+readonly DEFAULT_IFS=$'\n'
+IFS=$DEFAULT_IFS
 
 # Parameters
-_PREFIX_ERROR_LOG_FILE="Errors"
-_PREFIX_OUTPUT_DIR="Output"
+readonly PREFIX_ERROR_LOG_FILE="Errors"
+readonly PREFIX_OUTPUT_DIR="Output"
 
 # Create temp directories for use in scripts
-_TEMP_DIR=$(mktemp --directory --suffix="-script")
-_TEMP_DIR_LOG=$(mktemp --directory --tmpdir="$_TEMP_DIR" --suffix="-log")
-TEMP_DIR_TASK=$(mktemp --directory --tmpdir="$_TEMP_DIR" --suffix="-task")
+TEMP_DIR=$(mktemp --directory --suffix="-script")
+TEMP_DIR_LOG=$(mktemp --directory --tmpdir="$TEMP_DIR" --suffix="-log")
+TEMP_DIR_TASK=$(mktemp --directory --tmpdir="$TEMP_DIR" --suffix="-task")
 
 # A temporary FIFO to use in the "wait_box"
-_TEMP_FIFO="$_TEMP_DIR/fifo"
+readonly TEMP_FIFO="$TEMP_DIR/fifo"
 
 # Remove the temp directory in unexpected exit
 _trap_handler() {
-    rm -rf "$_TEMP_DIR"
+    rm -rf "$TEMP_DIR"
     echo "End of the script."
 }
 trap _trap_handler EXIT
 
 _check_dependencies() {
-    local DEPENDENCIES=$*
-    local COMMAND=""
-    local MESSAGE=""
-    local PACKAGE_NAME=""
+    local dependencies=$*
+    local command=""
+    local message=""
+    local package_name=""
 
     # Add basic commands to check
-    DEPENDENCIES="file xargs(findutils) pstree(psmisc) cmp(diffutils) $DEPENDENCIES"
+    dependencies="file xargs(findutils) pstree(psmisc) cmp(diffutils) $dependencies"
 
-    # Check all commands in the list 'DEPENDENCIES'
+    # Check all commands in the list 'dependencies'
     IFS=" "
-    for ITEM in $DEPENDENCIES; do
+    for item in $dependencies; do
         # Item syntax: command(package), example: photorec(testdisk)
-        COMMAND=${ITEM%%(*}
+        command=${item%%(*}
 
         # Check if has the command in the shell
-        if hash "$COMMAND" &>/dev/null; then
+        if hash "$command" &>/dev/null; then
             continue
         fi
 
-        PACKAGE_NAME=$(echo "$ITEM" | grep --only-matching -P "\(+\K[^)]+")
-        if [[ -n "$PACKAGE_NAME" ]]; then
-            MESSAGE="The command '$COMMAND' was not found (from package '$PACKAGE_NAME'). Would you like to install it?"
+        package_name=$(echo "$item" | grep --only-matching -P "\(+\K[^)]+")
+        if [[ -n "$package_name" ]]; then
+            message="The command '$command' was not found (from package '$package_name'). Would you like to install it?"
         else
-            MESSAGE="The command '$COMMAND' was not found. Would you like to install it?"
-            PACKAGE_NAME=$COMMAND
+            message="The command '$command' was not found. Would you like to install it?"
+            package_name=$command
         fi
 
         # Ask the user to install the package
-        if _display_question_box "$MESSAGE"; then
-            _install_package "$PACKAGE_NAME" "$COMMAND"
+        if _display_question_box "$message"; then
+            _install_package "$package_name" "$command"
             continue
         fi
 
         _exit_error
     done
-    IFS=$_DEFAULT_IFS
+    IFS=$DEFAULT_IFS
 }
 
 _check_result() {
-    local EXIT_CODE=$1
-    local STD_OUTPUT=$2
-    local INPUT_FILE=$3
-    local OUTPUT_FILE=$4
+    local exit_code=$1
+    local std_output=$2
+    local input_file=$3
+    local output_file=$4
 
-    # Check the 'EXIT_CODE' and log the error
-    if ((EXIT_CODE != 0)); then
-        _write_log "Error: Non-zero exit code." "$INPUT_FILE" "$STD_OUTPUT"
+    # Check the 'exit_code' and log the error
+    if ((exit_code != 0)); then
+        _write_log "Error: Non-zero exit code." "$input_file" "$std_output"
         return 1
     fi
 
     # Check if there is the word "Error" in stdout
-    if ! echo "$INPUT_FILE" | grep --quiet --ignore-case "[^\w]error"; then
-        if echo "$STD_OUTPUT" | grep --quiet --ignore-case "[^\w]error"; then
-            _write_log "Error: Word 'error' found in the standard output." "$INPUT_FILE" "$STD_OUTPUT"
+    if ! echo "$input_file" | grep --quiet --ignore-case "[^\w]error"; then
+        if echo "$std_output" | grep --quiet --ignore-case "[^\w]error"; then
+            _write_log "Error: Word 'error' found in the standard output." "$input_file" "$std_output"
             return 1
         fi
     fi
 
     # Check if output file exists
-    if [[ -n "$OUTPUT_FILE" ]] && ! [[ -e "$OUTPUT_FILE" ]]; then
-        _write_log "Error: The output file does not exist." "$INPUT_FILE" "$STD_OUTPUT"
+    if [[ -n "$output_file" ]] && ! [[ -e "$output_file" ]]; then
+        _write_log "Error: The output file does not exist." "$input_file" "$std_output"
         return 1
     fi
 
@@ -99,7 +99,7 @@ _check_result() {
 _display_file_selection_box() {
     if hash zenity &>/dev/null; then
         zenity --title "$(_get_script_name)" --file-selection --multiple \
-            --separator="$_DEFAULT_IFS" 2>/dev/null
+            --separator="$DEFAULT_IFS" 2>/dev/null
     elif hash kdialog &>/dev/null; then
         kdialog --title "$(_get_script_name)" --getopenfilename --multiple \
             --separate-output 2>/dev/null
@@ -107,131 +107,131 @@ _display_file_selection_box() {
 }
 
 _display_error_box() {
-    local MESSAGE=$1
+    local message=$1
 
     if env | grep --quiet "^TERM"; then
-        echo >&2 "$MESSAGE"
+        echo >&2 "$message"
     elif hash notify-send 2>/dev/null; then
-        notify-send -i error "$MESSAGE" &>/dev/null
+        notify-send -i error "$message" &>/dev/null
     elif hash zenity &>/dev/null; then
-        zenity --title "$(_get_script_name)" --error --width=300 --text "$MESSAGE" &>/dev/null
+        zenity --title "$(_get_script_name)" --error --width=300 --text "$message" &>/dev/null
     elif hash kdialog &>/dev/null; then
-        kdialog --title "$(_get_script_name)" --error "$MESSAGE" &>/dev/null
+        kdialog --title "$(_get_script_name)" --error "$message" &>/dev/null
     elif hash xmessage &>/dev/null; then
-        xmessage -title "$(_get_script_name)" "$MESSAGE" &>/dev/null
+        xmessage -title "$(_get_script_name)" "$message" &>/dev/null
     fi
 }
 
 _display_info_box() {
-    local MESSAGE=$1
+    local message=$1
 
     if env | grep --quiet "^TERM"; then
-        echo "$MESSAGE"
+        echo "$message"
     elif hash notify-send 2>/dev/null; then
-        notify-send "$MESSAGE" &>/dev/null
+        notify-send "$message" &>/dev/null
     elif hash zenity &>/dev/null; then
-        zenity --title "$(_get_script_name)" --info --width=300 --text "$MESSAGE" &>/dev/null
+        zenity --title "$(_get_script_name)" --info --width=300 --text "$message" &>/dev/null
     elif hash kdialog &>/dev/null; then
-        kdialog --title "$(_get_script_name)" --msgbox "$MESSAGE" &>/dev/null
+        kdialog --title "$(_get_script_name)" --msgbox "$message" &>/dev/null
     elif hash xmessage &>/dev/null; then
-        xmessage -title "$(_get_script_name)" "$MESSAGE" &>/dev/null
+        xmessage -title "$(_get_script_name)" "$message" &>/dev/null
     fi
 }
 
 _display_password_box() {
-    local PASSWORD=""
+    local password=""
 
     # Ask the user a password.
     if env | grep --quiet "^TERM"; then
         echo -n "Type your password: " >&2
-        read -r PASSWORD
+        read -r password
     elif hash zenity &>/dev/null; then
-        PASSWORD=$(zenity --title="$(_get_script_name)" \
+        password=$(zenity --title="$(_get_script_name)" \
             --password 2>/dev/null) || _kill_tasks
     elif hash kdialog &>/dev/null; then
-        PASSWORD=$(kdialog --title "$(_get_script_name)" \
+        password=$(kdialog --title "$(_get_script_name)" \
             --password "Type your password" 2>/dev/null) || _kill_tasks
     fi
 
     # Check if the password is not empty
-    if [[ -z "$PASSWORD" ]]; then
+    if [[ -z "$password" ]]; then
         _display_error_box "Error: you must define a password!"
         _exit_error
     fi
 
-    echo "$PASSWORD"
+    echo "$password"
 }
 
 _display_question_box() {
-    local MESSAGE=$1
-    local RESPONSE=""
+    local message=$1
+    local response=""
 
     if env | grep --quiet "^TERM"; then
-        read -r -p "$MESSAGE [Y/n] " RESPONSE
-        [[ ${RESPONSE,,} == *"n"* ]] && return 1
+        read -r -p "$message [Y/n] " response
+        [[ ${response,,} == *"n"* ]] && return 1
     elif hash zenity &>/dev/null; then
-        zenity --title "$(_get_script_name)" --question --width=300 --text="$MESSAGE" &>/dev/null || return 1
+        zenity --title "$(_get_script_name)" --question --width=300 --text="$message" &>/dev/null || return 1
     elif hash kdialog &>/dev/null; then
-        kdialog --title "$(_get_script_name)" --yesno "$MESSAGE" &>/dev/null || return 1
+        kdialog --title "$(_get_script_name)" --yesno "$message" &>/dev/null || return 1
     elif hash xmessage &>/dev/null; then
-        xmessage -title "$(_get_script_name)" -buttons "Yes:0,No:1" "$MESSAGE" &>/dev/null || return 1
+        xmessage -title "$(_get_script_name)" -buttons "Yes:0,No:1" "$message" &>/dev/null || return 1
     fi
     return 0
 }
 
 _display_text_box() {
-    local MESSAGE=$1
+    local message=$1
     _close_wait_box
 
-    if [[ -z "$MESSAGE" ]]; then
-        MESSAGE="(Empty result)"
+    if [[ -z "$message" ]]; then
+        message="(Empty result)"
     fi
 
     if env | grep --quiet "^TERM"; then
-        echo "$MESSAGE"
+        echo "$message"
     elif hash zenity &>/dev/null; then
-        echo "$MESSAGE" | zenity --title "$(_get_script_name)" --text-info \
+        echo "$message" | zenity --title "$(_get_script_name)" --text-info \
             --no-wrap --height=400 --width=750 &>/dev/null
     elif hash kdialog &>/dev/null; then
-        kdialog --title "$(_get_script_name)" --textinputbox "" "$MESSAGE" &>/dev/null
+        kdialog --title "$(_get_script_name)" --textinputbox "" "$message" &>/dev/null
     elif hash xmessage &>/dev/null; then
-        xmessage -title "$(_get_script_name)" "$MESSAGE" &>/dev/null
+        xmessage -title "$(_get_script_name)" "$message" &>/dev/null
     fi
 }
 
 _display_result_box() {
-    local OUTPUT_DIR=$1
-    local ERROR_LOG_FILE="$OUTPUT_DIR/$_PREFIX_ERROR_LOG_FILE.log"
+    local output_dir=$1
+    local error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
     _close_wait_box
 
-    if [[ -z "$OUTPUT_DIR" ]]; then
-        ERROR_LOG_FILE="$PWD/$_PREFIX_ERROR_LOG_FILE.log"
+    if [[ -z "$output_dir" ]]; then
+        error_log_file="$PWD/$PREFIX_ERROR_LOG_FILE.log"
     else
-        ERROR_LOG_FILE="$OUTPUT_DIR/$_PREFIX_ERROR_LOG_FILE.log"
+        error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
     fi
 
     # If the file already exists, add a suffix
-    ERROR_LOG_FILE=$(_get_filename_suffix "$ERROR_LOG_FILE")
+    error_log_file=$(_get_filename_suffix "$error_log_file")
 
     # Compile log errors in a single file
-    if ls "$_TEMP_DIR_LOG/"* &>/dev/null; then
-        cat "$_TEMP_DIR_LOG/"* >"$ERROR_LOG_FILE"
+    if ls "$TEMP_DIR_LOG/"* &>/dev/null; then
+        cat "$TEMP_DIR_LOG/"* >"$error_log_file"
     fi
 
     # Check if there was some error
-    if [[ -f "$ERROR_LOG_FILE" ]]; then
-        _display_error_box "Error: task finished with errors! See the '$ERROR_LOG_FILE' for details."
+    if [[ -f "$error_log_file" ]]; then
+        _display_error_box "Error: task finished with errors! See the '$error_log_file' for details."
         _exit_error
     fi
 
-    # If OUTPUT_DIR parameter is defined
-    if [[ -n "$OUTPUT_DIR" ]]; then
+    # If output_dir parameter is defined
+    if [[ -n "$output_dir" ]]; then
         # Try to remove the output directory (if it is empty)
-        rmdir "$OUTPUT_DIR" &>/dev/null
+        rmdir "$output_dir" &>/dev/null
 
         # Check if output directory still exists
-        if [[ -d "$OUTPUT_DIR" ]]; then
-            _display_info_box "Task finished! The output files are in '$OUTPUT_DIR'."
+        if [[ -d "$output_dir" ]]; then
+            _display_info_box "Task finished! The output files are in '$output_dir'."
         else
             _display_info_box "Task finished, but there are no output files!"
         fi
@@ -245,31 +245,31 @@ _display_wait_box() {
 }
 
 _display_wait_box_message() {
-    local MESSAGE=$1
+    local message=$1
 
     if env | grep --quiet "^TERM"; then
-        echo "$MESSAGE"
+        echo "$message"
     elif hash zenity &>/dev/null; then
-        rm -f "$_TEMP_FIFO"
-        mkfifo "$_TEMP_FIFO"
+        rm -f "$TEMP_FIFO"
+        mkfifo "$TEMP_FIFO"
         # shellcheck disable=SC2002
-        cat "$_TEMP_FIFO" | (
+        cat "$TEMP_FIFO" | (
             zenity \
                 --title="$(_get_script_name)" \
                 --width=400 \
                 --progress \
                 --pulsate \
                 --auto-close \
-                --text="$MESSAGE" ||
-                (echo >"$_TEMP_FIFO" && _kill_tasks)
+                --text="$message" ||
+                (echo >"$TEMP_FIFO" && _kill_tasks)
         ) &
     fi
 }
 
 _close_wait_box() {
     # Close the zenity progress by FIFO
-    if [[ -p "$_TEMP_FIFO" ]]; then
-        echo >"$_TEMP_FIFO"
+    if [[ -p "$TEMP_FIFO" ]]; then
+        echo >"$TEMP_FIFO"
     fi
 }
 
@@ -280,37 +280,37 @@ _exit_error() {
 }
 
 _has_string_in_list() {
-    local STRING=$1
-    local LIST=$2
+    local string=$1
+    local list=$2
 
     IFS=", "
-    for ITEM in $LIST; do
-        if [[ "$STRING" == *"$ITEM"* ]]; then
-            IFS=$_DEFAULT_IFS
+    for item in $list; do
+        if [[ "$string" == *"$item"* ]]; then
+            IFS=$DEFAULT_IFS
             return 0
         fi
     done
-    IFS=$_DEFAULT_IFS
+    IFS=$DEFAULT_IFS
 
     return 1
 }
 
 _install_package() {
-    local PACKAGE_NAME=$1
-    local COMMAND=$2
+    local package_name=$1
+    local command=$2
 
-    _display_wait_box_message "Installing the package '$PACKAGE_NAME'. Please, wait..."
+    _display_wait_box_message "Installing the package '$package_name'. Please, wait..."
 
     # Install the package
     if hash pkexec &>/dev/null; then
         if hash apt-get &>/dev/null; then
-            pkexec bash -c "apt-get update; apt-get -y install $PACKAGE_NAME &>/dev/null"
+            pkexec bash -c "apt-get update; apt-get -y install $package_name &>/dev/null"
         elif hash pacman &>/dev/null; then
-            pkexec bash -c "pacman -Syy; pacman --noconfirm -S $PACKAGE_NAME &>/dev/null"
+            pkexec bash -c "pacman -Syy; pacman --noconfirm -S $package_name &>/dev/null"
         elif hash dnf &>/dev/null; then
-            pkexec bash -c "dnf check-update; dnf -y install $PACKAGE_NAME &>/dev/null"
+            pkexec bash -c "dnf check-update; dnf -y install $package_name &>/dev/null"
         elif hash yum &>/dev/null; then
-            pkexec bash -c "yum check-update; yum -y install $PACKAGE_NAME &>/dev/null"
+            pkexec bash -c "yum check-update; yum -y install $package_name &>/dev/null"
         else
             _display_error_box "Error: could not find a package manager!"
             _exit_error
@@ -323,77 +323,77 @@ _install_package() {
     _close_wait_box
 
     # Check if the package was installed
-    if ! hash "$COMMAND" &>/dev/null; then
-        _display_error_box "Error: could not install the package '$PACKAGE_NAME'!"
+    if ! hash "$command" &>/dev/null; then
+        _display_error_box "Error: could not install the package '$package_name'!"
         _exit_error
     fi
 
-    _display_info_box "The package '$PACKAGE_NAME' has been successfully installed!"
+    _display_info_box "The package '$package_name' has been successfully installed!"
 }
 
 _kill_tasks() {
-    local CHILD_PIDS=""
-    local SCRIPT_PID=""
+    local child_pids=""
+    local script_pid=""
 
     echo "Aborting the script..."
 
     # Get the process ID (PID) of the current script
-    SCRIPT_PID=$$
-    CHILD_PIDS=$(pstree -p "$SCRIPT_PID" | grep --only-matching -P "\(+\K[^)]+")
+    script_pid=$$
+    child_pids=$(pstree -p "$script_pid" | grep --only-matching -P "\(+\K[^)]+")
 
     # Use xargs and kill to send the SIGTERM signal to all child processes
-    echo -n "$CHILD_PIDS" | xargs kill &>/dev/null
+    echo -n "$child_pids" | xargs kill &>/dev/null
 }
 
 _get_filename_extension() {
-    local FILENAME=$1
-    echo "$FILENAME" | grep --only-matching --perl-regexp "(\.tar)?\.[^./]*$"
+    local filename=$1
+    echo "$filename" | grep --only-matching --perl-regexp "(\.tar)?\.[^./]*$"
 }
 
 _get_filename_without_extension() {
-    local FILENAME=$1
-    echo "$FILENAME" | sed -r "s|(\.tar)?\.[^./]*$||"
+    local filename=$1
+    echo "$filename" | sed -r "s|(\.tar)?\.[^./]*$||"
 }
 
 _get_filename_suffix() {
-    local FILENAME=$1
-    local FILENAME_RESULT=$FILENAME
-    local FILENAME_BASE=""
-    local FILENAME_EXTENSION=""
+    local filename=$1
+    local filename_result=$filename
+    local filename_base=""
+    local filename_extension=""
 
-    FILENAME_BASE=$(_get_filename_without_extension "$FILENAME")
-    FILENAME_EXTENSION=$(_get_filename_extension "$FILENAME")
+    filename_base=$(_get_filename_without_extension "$filename")
+    filename_extension=$(_get_filename_extension "$filename")
 
     # Avoid overwrite a file. If there is a file with the same name,
     # try to add a suffix, as 'file (1)', 'file (2)', ...
-    local SUFFIX=0
-    while [[ -e "$FILENAME_RESULT" ]]; do
-        SUFFIX=$((SUFFIX + 1))
-        FILENAME_RESULT="$FILENAME_BASE ($SUFFIX)$FILENAME_EXTENSION"
+    local suffix=0
+    while [[ -e "$filename_result" ]]; do
+        suffix=$((suffix + 1))
+        filename_result="$filename_base ($suffix)$filename_extension"
     done
 
-    echo "$FILENAME_RESULT"
+    echo "$filename_result"
 }
 
 _get_files() {
-    local INPUT_FILES=$1
-    local PARAMETERS=$2
-    local FILE_ENCODING=""
-    local FILE_EXTENSION=""
-    local FILE_MIME=""
-    local INPUT_FILE=""
-    local INPUT_FILES_EXPAND=""
-    local OUTPUT_FILES=""
-    local PAR_ENCODING=""
-    local PAR_EXTENSION=""
-    local PAR_MAX_FILES=0
-    local PAR_MIME=""
-    local PAR_MIN_FILES=0
-    local PAR_RETURN_PWD=""
-    local PAR_SKIP_ENCODING=""
-    local PAR_SKIP_EXTENSION=""
-    local PAR_SKIP_MIME=""
-    local VALID_FILES_COUNT=0
+    local input_files=$1
+    local parameters=$2
+    local file_encoding=""
+    local file_extension=""
+    local file_mime=""
+    local input_file=""
+    local input_files_expand=""
+    local output_files=""
+    local par_encoding=""
+    local par_extension=""
+    local par_max_files=0
+    local par_mime=""
+    local par_min_files=0
+    local par_return_pwd=""
+    local par_skip_encoding=""
+    local par_skip_extension=""
+    local par_skip_mime=""
+    local valid_files_count=0
 
     # Valid values for the parameter key "type":
     #   "all": Filter files and directories.
@@ -402,62 +402,62 @@ _get_files() {
     #   "file_recursive": Filter files recursively.
 
     # Read values from the parameters
-    PAR_ENCODING=$(_get_parameter_value "$PARAMETERS" "encoding")
-    PAR_EXTENSION=$(_get_parameter_value "$PARAMETERS" "extension")
-    PAR_MAX_FILES=$(_get_parameter_value "$PARAMETERS" "max_files")
-    PAR_MIME=$(_get_parameter_value "$PARAMETERS" "mime")
-    PAR_MIN_FILES=$(_get_parameter_value "$PARAMETERS" "min_files")
-    PAR_RETURN_PWD=$(_get_parameter_value "$PARAMETERS" "get_pwd_if_no_selection")
-    PAR_SKIP_ENCODING=$(_get_parameter_value "$PARAMETERS" "skip_encoding")
-    PAR_SKIP_EXTENSION=$(_get_parameter_value "$PARAMETERS" "skip_extension")
-    PAR_SKIP_MIME=$(_get_parameter_value "$PARAMETERS" "skip_mime")
-    PAR_TYPE=$(_get_parameter_value "$PARAMETERS" "type")
+    par_encoding=$(_get_parameter_value "$parameters" "encoding")
+    par_extension=$(_get_parameter_value "$parameters" "extension")
+    par_max_files=$(_get_parameter_value "$parameters" "max_files")
+    par_mime=$(_get_parameter_value "$parameters" "mime")
+    par_min_files=$(_get_parameter_value "$parameters" "min_files")
+    par_return_pwd=$(_get_parameter_value "$parameters" "get_pwd_if_no_selection")
+    par_skip_encoding=$(_get_parameter_value "$parameters" "skip_encoding")
+    par_skip_extension=$(_get_parameter_value "$parameters" "skip_extension")
+    par_skip_mime=$(_get_parameter_value "$parameters" "skip_mime")
+    par_type=$(_get_parameter_value "$parameters" "type")
 
     # Check if there are input files
-    if [[ -z "$INPUT_FILES" ]]; then
+    if [[ -z "$input_files" ]]; then
         # Return the current working directory if there are no
         # files selected (parameter 'get_pwd_if_no_selection=true').
-        if [[ "$PAR_RETURN_PWD" == "true" ]]; then
+        if [[ "$par_return_pwd" == "true" ]]; then
             echo "$PWD"
             return 0
         fi
 
         # Try selecting the files by opening a file selection box
-        INPUT_FILES=$(_display_file_selection_box)
-        if [[ -z "$INPUT_FILES" ]]; then
+        input_files=$(_display_file_selection_box)
+        if [[ -z "$input_files" ]]; then
             _display_error_box "Error: there are no input files!"
             _exit_error
         fi
     fi
 
     # Default value for the parameter "type"
-    if [[ -z "$PAR_TYPE" ]]; then
-        PAR_TYPE="file"
+    if [[ -z "$par_type" ]]; then
+        par_type="file"
     fi
 
     # Process the parameter "type":
     # expand files in directories recursively.
-    case "$PAR_TYPE" in
+    case "$par_type" in
     "all" | "file" | "directory")
         :
         ;;
     "all_recursive")
-        for INPUT_FILE in $INPUT_FILES; do
-            if [[ -n "$INPUT_FILES_EXPAND" ]]; then
-                INPUT_FILES_EXPAND+=$_DEFAULT_IFS
+        for input_file in $input_files; do
+            if [[ -n "$input_files_expand" ]]; then
+                input_files_expand+=$DEFAULT_IFS
             fi
-            INPUT_FILES_EXPAND+=$(find -L "$INPUT_FILE" ! -path "*.git/*" 2>/dev/null)
+            input_files_expand+=$(find -L "$input_file" ! -path "*.git/*" 2>/dev/null)
         done
-        INPUT_FILES=$INPUT_FILES_EXPAND
+        input_files=$input_files_expand
         ;;
     "file_recursive")
-        for INPUT_FILE in $INPUT_FILES; do
-            if [[ -n "$INPUT_FILES_EXPAND" ]]; then
-                INPUT_FILES_EXPAND+=$_DEFAULT_IFS
+        for input_file in $input_files; do
+            if [[ -n "$input_files_expand" ]]; then
+                input_files_expand+=$DEFAULT_IFS
             fi
-            INPUT_FILES_EXPAND+=$(find -L "$INPUT_FILE" -type f ! -path "*.git/*" 2>/dev/null)
+            input_files_expand+=$(find -L "$input_file" -type f ! -path "*.git/*" 2>/dev/null)
         done
-        INPUT_FILES=$INPUT_FILES_EXPAND
+        input_files=$input_files_expand
         ;;
     *)
         _display_error_box "Error: invalid value for the parameter 'type' in the function '_get_files'."
@@ -466,142 +466,142 @@ _get_files() {
     esac
 
     # Select only valid files
-    for INPUT_FILE in $INPUT_FILES; do
+    for input_file in $input_files; do
 
         # Validation for files
-        if [[ -f "$INPUT_FILE" ]]; then
+        if [[ -f "$input_file" ]]; then
 
-            FILE_EXTENSION=$(_get_filename_extension "$INPUT_FILE")
-            FILE_EXTENSION=${FILE_EXTENSION,,} # Lowercase file extension
-            FILE_MIME=$(file --brief --mime-type "$INPUT_FILE")
-            FILE_ENCODING=$(file --brief --mime-encoding "$INPUT_FILE")
+            file_extension=$(_get_filename_extension "$input_file")
+            file_extension=${file_extension,,} # Lowercase file extension
+            file_mime=$(file --brief --mime-type "$input_file")
+            file_encoding=$(file --brief --mime-encoding "$input_file")
 
-            if [[ -n "$PAR_SKIP_EXTENSION" ]]; then
-                _has_string_in_list "$FILE_EXTENSION" "$PAR_SKIP_EXTENSION" && continue
+            if [[ -n "$par_skip_extension" ]]; then
+                _has_string_in_list "$file_extension" "$par_skip_extension" && continue
             fi
 
-            if [[ -n "$PAR_SKIP_ENCODING" ]]; then
-                _has_string_in_list "$FILE_ENCODING" "$PAR_SKIP_ENCODING" && continue
+            if [[ -n "$par_skip_encoding" ]]; then
+                _has_string_in_list "$file_encoding" "$par_skip_encoding" && continue
             fi
 
-            if [[ -n "$PAR_SKIP_MIME" ]]; then
-                _has_string_in_list "$FILE_MIME" "$PAR_SKIP_MIME" && continue
+            if [[ -n "$par_skip_mime" ]]; then
+                _has_string_in_list "$file_mime" "$par_skip_mime" && continue
             fi
 
-            if [[ -n "$PAR_EXTENSION" ]]; then
-                _has_string_in_list "$FILE_EXTENSION" "$PAR_EXTENSION" || continue
+            if [[ -n "$par_extension" ]]; then
+                _has_string_in_list "$file_extension" "$par_extension" || continue
             fi
 
-            if [[ -n "$PAR_ENCODING" ]]; then
-                _has_string_in_list "$FILE_ENCODING" "$PAR_ENCODING" || continue
+            if [[ -n "$par_encoding" ]]; then
+                _has_string_in_list "$file_encoding" "$par_encoding" || continue
             fi
 
-            if [[ -n "$PAR_MIME" ]]; then
-                _has_string_in_list "$FILE_MIME" "$PAR_MIME" || continue
+            if [[ -n "$par_mime" ]]; then
+                _has_string_in_list "$file_mime" "$par_mime" || continue
             fi
 
-            if [[ "$PAR_TYPE" == "directory" ]]; then
+            if [[ "$par_type" == "directory" ]]; then
                 continue
             fi
 
         # Validation for directories
-        elif [[ -d "$INPUT_FILE" ]]; then
+        elif [[ -d "$input_file" ]]; then
 
-            if [[ "$PAR_TYPE" == "file" ]]; then
+            if [[ "$par_type" == "file" ]]; then
                 continue
             fi
         fi
 
-        # Add the valid file in the final list 'OUTPUT_FILES'
-        VALID_FILES_COUNT=$((VALID_FILES_COUNT + 1))
-        if [[ -n "$OUTPUT_FILES" ]]; then
-            OUTPUT_FILES+=$_DEFAULT_IFS
+        # Add the valid file in the final list 'output_files'
+        valid_files_count=$((valid_files_count + 1))
+        if [[ -n "$output_files" ]]; then
+            output_files+=$DEFAULT_IFS
         fi
-        OUTPUT_FILES+=$INPUT_FILE
+        output_files+=$input_file
     done
 
     # Check if there is at last one valid file
-    if ((VALID_FILES_COUNT == 0)); then
+    if ((valid_files_count == 0)); then
         _display_error_box "Error: there are no valid files in the selection!"
         _exit_error
     fi
 
-    if [[ -n "$PAR_MIN_FILES" ]] && ((VALID_FILES_COUNT < PAR_MIN_FILES)); then
-        _display_error_box "Error: there are $VALID_FILES_COUNT files in the selection, but the minimum is $PAR_MIN_FILES!"
+    if [[ -n "$par_min_files" ]] && ((valid_files_count < par_min_files)); then
+        _display_error_box "Error: there are $valid_files_count files in the selection, but the minimum is $par_min_files!"
         _exit_error
     fi
 
-    if [[ -n "$PAR_MAX_FILES" ]] && ((VALID_FILES_COUNT > PAR_MAX_FILES)); then
-        _display_error_box "Error: there are $VALID_FILES_COUNT files in the selection, but the maximum is $PAR_MAX_FILES!"
+    if [[ -n "$par_max_files" ]] && ((valid_files_count > par_max_files)); then
+        _display_error_box "Error: there are $valid_files_count files in the selection, but the maximum is $par_max_files!"
         _exit_error
     fi
 
-    echo "$OUTPUT_FILES"
+    echo "$output_files"
 }
 
 _get_output_dir() {
-    local BASE_DIR=$PWD
-    local OUTPUT_DIR=""
+    local base_dir=$PWD
+    local output_dir=""
 
     # Check directories available to put the 'output' dir
-    [[ ! -w "$BASE_DIR" ]] && BASE_DIR=$HOME
-    [[ ! -w "$BASE_DIR" ]] && BASE_DIR="/tmp"
-    OUTPUT_DIR="$BASE_DIR/$_PREFIX_OUTPUT_DIR"
+    [[ ! -w "$base_dir" ]] && base_dir=$HOME
+    [[ ! -w "$base_dir" ]] && base_dir="/tmp"
+    output_dir="$base_dir/$PREFIX_OUTPUT_DIR"
 
-    if [[ ! -w "$BASE_DIR" ]]; then
+    if [[ ! -w "$base_dir" ]]; then
         _display_error_box "Error: could not find a directory with write permissions!"
         return 1
     fi
 
     # If the file already exists, add a suffix
-    OUTPUT_DIR=$(_get_filename_suffix "$OUTPUT_DIR")
+    output_dir=$(_get_filename_suffix "$output_dir")
 
-    mkdir --parents "$OUTPUT_DIR"
-    echo "$OUTPUT_DIR"
+    mkdir --parents "$output_dir"
+    echo "$output_dir"
 }
 
 _get_output_file() {
-    local INPUT_FILE=$1
-    local OUTPUT_DIR=$2
-    local EXTENSION=$3
-    local OUTPUT_FILE=""
-    local FILENAME=""
+    local input_file=$1
+    local output_dir=$2
+    local extension=$3
+    local output_file=""
+    local filename=""
 
-    FILENAME=$(basename "$INPUT_FILE")
-    OUTPUT_FILE="$OUTPUT_DIR/"
+    filename=$(basename "$input_file")
+    output_file="$output_dir/"
 
-    if [[ -z "$EXTENSION" ]]; then # Same extension
-        OUTPUT_FILE+="$FILENAME"
-    elif [[ "$EXTENSION" == "." ]]; then # Remove extension
-        OUTPUT_FILE+="$(_get_filename_without_extension "$FILENAME")"
+    if [[ -z "$extension" ]]; then # Same extension
+        output_file+="$filename"
+    elif [[ "$extension" == "." ]]; then # Remove extension
+        output_file+="$(_get_filename_without_extension "$filename")"
     else
-        OUTPUT_FILE+="$(_get_filename_without_extension "$FILENAME")"
-        OUTPUT_FILE+=".$EXTENSION" # Add extension
+        output_file+="$(_get_filename_without_extension "$filename")"
+        output_file+=".$extension" # Add extension
     fi
 
-    echo "$OUTPUT_FILE"
+    echo "$output_file"
 }
 
 _get_parameter_value() {
-    local PARAMETERS=$1
-    local PARAMETER_KEY=$2
-    local PARAMETER_VALUE=""
+    local parameters=$1
+    local parameter_key=$2
+    local parameter_value=""
 
-    # Return if the 'PARAMETER_KEY' not found in the 'PARAMETERS'
-    if [[ "$PARAMETERS" != *"$PARAMETER_KEY="* ]]; then
+    # Return if the 'parameter_key' not found in the 'parameters'
+    if [[ "$parameters" != *"$parameter_key="* ]]; then
         return 1
     fi
 
     IFS="; "
-    for PARAMETER in $PARAMETERS; do
-        PARAMETER_VALUE=${PARAMETER##*=}
-        if [[ "$PARAMETER_KEY" == "${PARAMETER%%=*}" ]]; then
-            IFS=$_DEFAULT_IFS
-            echo "$PARAMETER_VALUE"
+    for PARAMETER in $parameters; do
+        parameter_value=${PARAMETER##*=}
+        if [[ "$parameter_key" == "${PARAMETER%%=*}" ]]; then
+            IFS=$DEFAULT_IFS
+            echo "$parameter_value"
             return 0
         fi
     done
-    IFS=$_DEFAULT_IFS
+    IFS=$DEFAULT_IFS
 
     return 1
 }
@@ -611,42 +611,42 @@ _get_script_name() {
 }
 
 _move_file() {
-    local PARAMETERS=$1
-    local FILE_SRC=$2
-    local FILE_DST=$3
-    local EXIT_CODE=0
-    local PAR_WHEN_CONFLICT=""
+    local parameters=$1
+    local file_src=$2
+    local file_dst=$3
+    local exit_code=0
+    local par_when_conflict=""
 
     # Add the './' prefix in the path
-    if ! [[ "$FILE_SRC" == "/"* ]] && ! [[ "$FILE_SRC" == "./"* ]] && ! [[ "$FILE_SRC" == "." ]]; then
-        FILE_SRC="./$FILE_SRC"
+    if ! [[ "$file_src" == "/"* ]] && ! [[ "$file_src" == "./"* ]] && ! [[ "$file_src" == "." ]]; then
+        file_src="./$file_src"
     fi
-    if ! [[ "$FILE_DST" == "/"* ]] && ! [[ "$FILE_DST" == "./"* ]] && ! [[ "$FILE_DST" == "." ]]; then
-        FILE_DST="./$FILE_DST"
+    if ! [[ "$file_dst" == "/"* ]] && ! [[ "$file_dst" == "./"* ]] && ! [[ "$file_dst" == "." ]]; then
+        file_dst="./$file_dst"
     fi
 
     # Ignore move to the same file
-    if [[ "$FILE_SRC" == "$FILE_DST" ]]; then
+    if [[ "$file_src" == "$file_dst" ]]; then
         return 0
     fi
 
     # Read values from the parameters
-    PAR_WHEN_CONFLICT=$(_get_parameter_value "$PARAMETERS" "when_conflict")
+    par_when_conflict=$(_get_parameter_value "$parameters" "when_conflict")
 
     # Process the parameter "when_conflict":
-    # what to do when the 'FILE_DST' already exists
-    case "$PAR_WHEN_CONFLICT" in
+    # what to do when the 'file_dst' already exists
+    case "$par_when_conflict" in
     "overwrite")
         :
         ;;
     "rename")
         # Rename the file (add a suffix)
-        FILE_DST=$(_get_filename_suffix "$FILE_DST")
+        file_dst=$(_get_filename_suffix "$file_dst")
         ;;
     "skip")
         # Skip, do not move the file
-        if [[ -e "$FILE_DST" ]]; then
-            _write_log "Warning: The file already exists." "$FILE_SRC" "$FILE_DST"
+        if [[ -e "$file_dst" ]]; then
+            _write_log "Warning: The file already exists." "$file_src" "$file_dst"
             return 0
         fi
         ;;
@@ -657,50 +657,50 @@ _move_file() {
     esac
 
     # Move the file
-    mv -f "$FILE_SRC" "$FILE_DST"
-    EXIT_CODE=$?
+    mv -f "$file_src" "$file_dst"
+    exit_code=$?
 
-    return "$EXIT_CODE"
+    return "$exit_code"
 }
 
 _move_temp_file_to_output() {
-    local INPUT_FILE=$1
-    local TEMP_FILE=$2
-    local OUTPUT_FILE=$3
-    local STD_OUTPUT=""
+    local input_file=$1
+    local temp_file=$2
+    local output_file=$3
+    local std_output=""
 
     # Check if the result file is different from the input file, then replace it
-    if ! cmp --silent "$INPUT_FILE" "$TEMP_FILE"; then
+    if ! cmp --silent "$input_file" "$temp_file"; then
 
-        # If 'INPUT_FILE' is same as 'OUTPUT_FILE', create a backup
-        if [[ "$INPUT_FILE" == "$OUTPUT_FILE" ]]; then
-            BACKUP_FILE="$INPUT_FILE.bak"
+        # If 'input_file' is same as 'output_file', create a backup
+        if [[ "$input_file" == "$output_file" ]]; then
+            backup_file="$input_file.bak"
 
             # Create a backup of the original file
-            STD_OUTPUT=$(_move_file "when_conflict=rename" "$INPUT_FILE" "$BACKUP_FILE" 2>&1)
-            _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "$BACKUP_FILE" || return 1
+            std_output=$(_move_file "when_conflict=rename" "$input_file" "$backup_file" 2>&1)
+            _check_result "$?" "$std_output" "$input_file" "$backup_file" || return 1
         fi
 
-        # Move the 'TEMP_FILE' to 'OUTPUT_FILE'
-        STD_OUTPUT=$(_move_file "when_conflict=rename" "$TEMP_FILE" "$OUTPUT_FILE" 2>&1)
-        _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "$OUTPUT_FILE" || return 1
+        # Move the 'temp_file' to 'output_file'
+        std_output=$(_move_file "when_conflict=rename" "$temp_file" "$output_file" 2>&1)
+        _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 
-        # Preserve the same permissions of 'INPUT_FILE'
-        STD_OUTPUT=$(chmod --reference="$INPUT_FILE" "$OUTPUT_FILE" 2>&1)
-        _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "$OUTPUT_FILE" || return 1
+        # Preserve the same permissions of 'input_file'
+        std_output=$(chmod --reference="$input_file" "$output_file" 2>&1)
+        _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
     fi
 
     # Remove the temporary file
-    rm -rf "$TEMP_FILE"
+    rm -rf "$temp_file"
 }
 
 _run_main_task_parallel() {
-    local INPUT_FILES=$1
-    local OUTPUT_DIR=$2
+    local input_files=$1
+    local output_dir=$2
 
     # Export variables and functions to use inside a new shell
-    export _TEMP_DIR_LOG
-    export TASK_DATA
+    export task_data
+    export TEMP_DIR_LOG
     export TEMP_DIR_TASK
     export -f _check_result
     export -f _close_wait_box
@@ -717,26 +717,26 @@ _run_main_task_parallel() {
     export -f _write_log
 
     # Run '_main_task' for each file in parallel using 'xargs'
-    echo -n "$INPUT_FILES" | xargs \
-        --delimiter="$_DEFAULT_IFS" \
+    echo -n "$input_files" | xargs \
+        --delimiter="$DEFAULT_IFS" \
         --max-procs="$(nproc --all --ignore=1)" \
         --replace="{}" \
-        bash -c "_main_task \"{}\" \"$OUTPUT_DIR\""
+        bash -c "_main_task \"{}\" \"$output_dir\""
 }
 
 _write_log() {
-    local MESSAGE=$1
-    local INPUT_FILE=$2
-    local STD_OUTPUT=$3
-    local LOG_TEMP_FILE=""
-    LOG_TEMP_FILE=$(mktemp --tmpdir="$_TEMP_DIR_LOG" --suffix="-log")
+    local message=$1
+    local input_file=$2
+    local std_output=$3
+    local log_temp_file=""
+    log_temp_file=$(mktemp --tmpdir="$TEMP_DIR_LOG" --suffix="-log")
 
     {
         echo "[$(date "+%Y-%m-%d %H:%M:%S")]"
-        echo " > Input file: $INPUT_FILE"
-        echo " > $MESSAGE"
+        echo " > Input file: $input_file"
+        echo " > $message"
         echo " > Standard output:"
-        echo "$STD_OUTPUT"
+        echo "$std_output"
         echo
-    } >"$LOG_TEMP_FILE"
+    } >"$log_temp_file"
 }

@@ -10,21 +10,21 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies ""
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=file_recursive; mime=text,application; skip_encoding=binary; skip_extension=pdf")
+input_files=$(_get_files "$*" "type=file_recursive; mime=text,application; skip_encoding=binary; skip_extension=pdf")
 
 # Run the main process
 # shellcheck disable=SC2086
-STD_OUTPUT=$(file --separator "//" --no-pad $INPUT_FILES)
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|//.*with CRLF, CR, LF line.*|// CRLF+CR+LF (windows)|")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|//.*with CRLF, LF line.*|// CRLF+LF (windows)|")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|//.*with CRLF, CR line.*|// CRLF+CR (windows)|")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|//.*with CRLF line.*|// CRLF (windows)|")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|//.*with CR line.*|// CR (mac)|")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|//.*with CR, LF line.*|// CR+LF (mac)|")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|//.*no line.*|// (no line)|")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|//.*text.*|// LF (unix)|")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sed "s|\(.*\)// *\(.*\)|\2: \"\1\"|")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | grep "(windows):\|(unix):\|(mac):\|(no line):")
-STD_OUTPUT=$(echo "$STD_OUTPUT" | sort -V)
+std_output=$(file --separator "//" --no-pad $input_files)
+std_output=$(echo "$std_output" | sed "s|//.*with CRLF, CR, LF line.*|// CRLF+CR+LF (windows)|")
+std_output=$(echo "$std_output" | sed "s|//.*with CRLF, LF line.*|// CRLF+LF (windows)|")
+std_output=$(echo "$std_output" | sed "s|//.*with CRLF, CR line.*|// CRLF+CR (windows)|")
+std_output=$(echo "$std_output" | sed "s|//.*with CRLF line.*|// CRLF (windows)|")
+std_output=$(echo "$std_output" | sed "s|//.*with CR line.*|// CR (mac)|")
+std_output=$(echo "$std_output" | sed "s|//.*with CR, LF line.*|// CR+LF (mac)|")
+std_output=$(echo "$std_output" | sed "s|//.*no line.*|// (no line)|")
+std_output=$(echo "$std_output" | sed "s|//.*text.*|// LF (unix)|")
+std_output=$(echo "$std_output" | sed "s|\(.*\)// *\(.*\)|\2: \"\1\"|")
+std_output=$(echo "$std_output" | grep "(windows):\|(unix):\|(mac):\|(no line):")
+std_output=$(echo "$std_output" | sort -V)
 
-_display_text_box "$STD_OUTPUT"
+_display_text_box "$std_output"

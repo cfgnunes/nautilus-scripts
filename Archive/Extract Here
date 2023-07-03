@@ -8,11 +8,11 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies ""
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=file")
+input_files=$(_get_files "$*" "type=file")
 
 # Check dependencies for each file extension
-for INPUT_FILE in $INPUT_FILES; do
-    case $INPUT_FILE in
+for input_file in $input_files; do
+    case $input_file in
     *.tar.bz | *.tbz) _check_dependencies "tar" ;;
     *.tar.bz2 | *.tbz2) _check_dependencies "tar" ;;
     *.tar.gz | *.tgz) _check_dependencies "tar" ;;
@@ -42,81 +42,81 @@ for INPUT_FILE in $INPUT_FILES; do
 done
 
 _main_task() {
-    local INPUT_FILE=$1
-    local OUTPUT_DIR=$2
-    local COUNT_ROOT_ITEMS=""
-    local OUTPUT_ITEM=""
-    local STD_OUTPUT=""
-    local TEMP_DIR_OUTPUT=""
+    local input_file=$1
+    local output_dir=$2
+    local count_root_items=""
+    local output_item=""
+    local std_output=""
+    local temp_dir_output=""
 
     # Extract files into a temporary directory
-    FILENAME=$(_get_filename_without_extension "$INPUT_FILE")
-    TEMP_DIR_OUTPUT=$(mktemp --directory --tmpdir=. "tmp.$FILENAME.XXXXXXXXXX")
+    filename=$(_get_filename_without_extension "$input_file")
+    temp_dir_output=$(mktemp --directory --tmpdir=. "tmp.$filename.XXXXXXXXXX")
 
-    mkdir --parents "$TEMP_DIR_OUTPUT"
-    pushd "$TEMP_DIR_OUTPUT" &>/dev/null || return 1
+    mkdir --parents "$temp_dir_output"
+    pushd "$temp_dir_output" &>/dev/null || return 1
 
     # Extract the archive according the file extension
-    case $INPUT_FILE in
-    *.tar.bz | *.tbz) STD_OUTPUT=$(tar --extract --bzip2 --file="../$INPUT_FILE" 2>&1) ;;
-    *.tar.bz2 | *.tbz2) STD_OUTPUT=$(tar --extract --bzip2 --file="../$INPUT_FILE" 2>&1) ;;
-    *.tar.gz | *.tgz) STD_OUTPUT=$(tar --extract --gzip --file="../$INPUT_FILE" 2>&1) ;;
-    *.tar.lz | *.tlz) STD_OUTPUT=$(tar --extract --lzip --file="../$INPUT_FILE" 2>&1) ;;
-    *.tar.lzma | *.tlzma) STD_OUTPUT=$(tar --extract --lzma --file="../$INPUT_FILE" 2>&1) ;;
-    *.tar.lzo | *.tzo) STD_OUTPUT=$(tar --extract --lzop --file="../$INPUT_FILE" 2>&1) ;;
-    *.tar.xz | *.txz) STD_OUTPUT=$(tar --extract --xz --file="../$INPUT_FILE" 2>&1) ;;
-    *.tar.Z | *.taz) STD_OUTPUT=$(tar --extract --gzip --file="../$INPUT_FILE" 2>&1) ;;
-    *.tar.zst | *.tzst) STD_OUTPUT=$(tar --extract --zstd --file="../$INPUT_FILE" 2>&1) ;;
-    *.7z) STD_OUTPUT=$(7z x -aoa "../$INPUT_FILE" 2>&1) ;;
-    *.bz) STD_OUTPUT=$(bunzip2 "../$INPUT_FILE" 2>&1) ;;
-    *.bz2) STD_OUTPUT=$(bunzip2 "../$INPUT_FILE" 2>&1) ;;
-    *.deb) STD_OUTPUT=$(ar x "../$INPUT_FILE" 2>&1) ;;
-    *.gz) STD_OUTPUT=$(gunzip "../$INPUT_FILE" 2>&1) ;;
-    *.lha) STD_OUTPUT=$(lha -x "../$INPUT_FILE" 2>&1) ;;
-    *.lzma) STD_OUTPUT=$(unlzma "../$INPUT_FILE" 2>&1) ;;
-    *.lzip) STD_OUTPUT=$(lzip -d "../$INPUT_FILE" 2>&1) ;;
-    *.lzop) STD_OUTPUT=$(lzop -d "../$INPUT_FILE" 2>&1) ;;
-    *.rar) STD_OUTPUT=$(unrar x -ad "../$INPUT_FILE" 2>&1) ;;
-    *.tar) STD_OUTPUT=$(tar --extract --file="../$INPUT_FILE" 2>&1) ;;
-    *.xz) STD_OUTPUT=$(unxz "../$INPUT_FILE" 2>&1) ;;
-    *.Z) STD_OUTPUT=$(uncompress "../$INPUT_FILE" 2>&1) ;;
-    *.zip) STD_OUTPUT=$(unzip "../$INPUT_FILE" 2>&1) ;;
-    *.zst) STD_OUTPUT=$(zstd --decompress "../$INPUT_FILE" 2>&1) ;;
-    *) STD_OUTPUT=$(7z x -aoa "../$INPUT_FILE" 2>&1) ;;
+    case $input_file in
+    *.tar.bz | *.tbz) std_output=$(tar --extract --bzip2 --file="../$input_file" 2>&1) ;;
+    *.tar.bz2 | *.tbz2) std_output=$(tar --extract --bzip2 --file="../$input_file" 2>&1) ;;
+    *.tar.gz | *.tgz) std_output=$(tar --extract --gzip --file="../$input_file" 2>&1) ;;
+    *.tar.lz | *.tlz) std_output=$(tar --extract --lzip --file="../$input_file" 2>&1) ;;
+    *.tar.lzma | *.tlzma) std_output=$(tar --extract --lzma --file="../$input_file" 2>&1) ;;
+    *.tar.lzo | *.tzo) std_output=$(tar --extract --lzop --file="../$input_file" 2>&1) ;;
+    *.tar.xz | *.txz) std_output=$(tar --extract --xz --file="../$input_file" 2>&1) ;;
+    *.tar.Z | *.taz) std_output=$(tar --extract --gzip --file="../$input_file" 2>&1) ;;
+    *.tar.zst | *.tzst) std_output=$(tar --extract --zstd --file="../$input_file" 2>&1) ;;
+    *.7z) std_output=$(7z x -aoa "../$input_file" 2>&1) ;;
+    *.bz) std_output=$(bunzip2 "../$input_file" 2>&1) ;;
+    *.bz2) std_output=$(bunzip2 "../$input_file" 2>&1) ;;
+    *.deb) std_output=$(ar x "../$input_file" 2>&1) ;;
+    *.gz) std_output=$(gunzip "../$input_file" 2>&1) ;;
+    *.lha) std_output=$(lha -x "../$input_file" 2>&1) ;;
+    *.lzma) std_output=$(unlzma "../$input_file" 2>&1) ;;
+    *.lzip) std_output=$(lzip -d "../$input_file" 2>&1) ;;
+    *.lzop) std_output=$(lzop -d "../$input_file" 2>&1) ;;
+    *.rar) std_output=$(unrar x -ad "../$input_file" 2>&1) ;;
+    *.tar) std_output=$(tar --extract --file="../$input_file" 2>&1) ;;
+    *.xz) std_output=$(unxz "../$input_file" 2>&1) ;;
+    *.Z) std_output=$(uncompress "../$input_file" 2>&1) ;;
+    *.zip) std_output=$(unzip "../$input_file" 2>&1) ;;
+    *.zst) std_output=$(zstd --decompress "../$input_file" 2>&1) ;;
+    *) std_output=$(7z x -aoa "../$input_file" 2>&1) ;;
     esac
 
     # Check for result errors
-    _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
+    _check_result "$?" "$std_output" "$input_file" "" || return 1
 
     # Check if the archive has just one item (single file/directory compressed)
-    COUNT_ROOT_ITEMS=$(find . -mindepth 1 -maxdepth 1 | wc -l)
-    if ((COUNT_ROOT_ITEMS == 1)); then
-        OUTPUT_ITEM=$(find . -mindepth 1 -maxdepth 1)
+    count_root_items=$(find . -mindepth 1 -maxdepth 1 | wc -l)
+    if ((count_root_items == 1)); then
+        output_item=$(find . -mindepth 1 -maxdepth 1)
     fi
     popd &>/dev/null || return 1
 
     # Move the items to the correct directory
-    if ((COUNT_ROOT_ITEMS == 1)) &&
-        [[ "./$(_get_filename_without_extension "$INPUT_FILE")" == "$(_get_filename_without_extension "$OUTPUT_ITEM")" ]]; then
+    if ((count_root_items == 1)) &&
+        [[ "./$(_get_filename_without_extension "$input_file")" == "$(_get_filename_without_extension "$output_item")" ]]; then
         # For archive with "one item with same name of the archive"
         # For example: "README.tar.gz"
-        STD_OUTPUT=$(_move_file "when_conflict=rename" "$TEMP_DIR_OUTPUT/$OUTPUT_ITEM" "$OUTPUT_ITEM")
-        _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
-    elif ((COUNT_ROOT_ITEMS == 1)) &&
-        [[ "./$(_get_filename_without_extension "$INPUT_FILE")" == "$OUTPUT_ITEM" ]]; then
+        std_output=$(_move_file "when_conflict=rename" "$temp_dir_output/$output_item" "$output_item")
+        _check_result "$?" "$std_output" "$input_file" "" || return 1
+    elif ((count_root_items == 1)) &&
+        [[ "./$(_get_filename_without_extension "$input_file")" == "$output_item" ]]; then
         # For archive with "one item with same name of the archive"
         # For example: "README.TXT.tar.gz"
-        STD_OUTPUT=$(_move_file "when_conflict=rename" "$TEMP_DIR_OUTPUT/$OUTPUT_ITEM" "$OUTPUT_ITEM")
-        _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
-    elif ((COUNT_ROOT_ITEMS > 0)); then
+        std_output=$(_move_file "when_conflict=rename" "$temp_dir_output/$output_item" "$output_item")
+        _check_result "$?" "$std_output" "$input_file" "" || return 1
+    elif ((count_root_items > 0)); then
         # For archive with "one item with different name of the archive" or "multiple items"
-        STD_OUTPUT=$(_move_file "when_conflict=rename" "$TEMP_DIR_OUTPUT" "$(_get_filename_without_extension "$INPUT_FILE")")
-        _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
+        std_output=$(_move_file "when_conflict=rename" "$temp_dir_output" "$(_get_filename_without_extension "$input_file")")
+        _check_result "$?" "$std_output" "$input_file" "" || return 1
     fi
 
     # Remove the temporary directory
-    rm -rf "$TEMP_DIR_OUTPUT"
+    rm -rf "$temp_dir_output"
 }
 
-_run_main_task_parallel "$INPUT_FILES" ""
+_run_main_task_parallel "$input_files" ""
 _display_result_box ""

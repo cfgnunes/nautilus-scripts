@@ -10,18 +10,18 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies ""
 _display_wait_box
-INPUT_FILES=$(_get_files "$*" "type=file_recursive; mime=text,application; skip_encoding=binary; skip_extension=pdf")
+input_files=$(_get_files "$*" "type=file_recursive; mime=text,application; skip_encoding=binary; skip_extension=pdf")
 
 # Run the main process
 # shellcheck disable=SC2086
-STD_OUTPUT=$(
+std_output=$(
     grep \
         --ignore-case \
         --perl-regexp \
         --only-matching \
         --line-number \
         "[^ \w\t\n\r\-\,\;\:\!\?\.\'\"\(\)\[\]\{\}\@\*\/\\\&\#\%\`\^\+\<\=\>\|\~\$áàâãçéêíóôõú\“\”®§©ªº°¹²³«»´¢£µ]" \
-        $INPUT_FILES /dev/null
+        $input_files /dev/null
 )
 
-_display_text_box "$STD_OUTPUT"
+_display_text_box "$std_output"
