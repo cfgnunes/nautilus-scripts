@@ -24,7 +24,7 @@ _main_task() {
     _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
 
     # Run the main process
-    STD_OUTPUT=$(mp3gain -q -r -c -s s "$TEMP_FILE" 2>&1)
+    STD_OUTPUT=$(mp3gain -r -s s -c "$TEMP_FILE" 2>&1)
     _check_result "$?" "$STD_OUTPUT" "$INPUT_FILE" "" || return 1
 
     # Move the temporary file to the output
