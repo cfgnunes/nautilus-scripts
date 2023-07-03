@@ -39,16 +39,16 @@ _check_dependencies() {
 
     # Check all commands in the list 'dependencies'
     IFS=" "
-    for item in $dependencies; do
+    for dependency in $dependencies; do
         # Item syntax: command(package), example: photorec(testdisk)
-        command=${item%%(*}
+        command=${dependency%%(*}
 
         # Check if has the command in the shell
         if hash "$command" &>/dev/null; then
             continue
         fi
 
-        package_name=$(echo "$item" | grep --only-matching -P "\(+\K[^)]+")
+        package_name=$(echo "$dependency" | grep --only-matching -P "\(+\K[^)]+")
         if [[ -n "$package_name" ]]; then
             message="The command '$command' was not found (from package '$package_name'). Would you like to install it?"
         else
@@ -593,9 +593,9 @@ _get_parameter_value() {
     fi
 
     IFS="; "
-    for PARAMETER in $parameters; do
-        parameter_value=${PARAMETER##*=}
-        if [[ "$parameter_key" == "${PARAMETER%%=*}" ]]; then
+    for parameter in $parameters; do
+        parameter_value=${parameter##*=}
+        if [[ "$parameter_key" == "${parameter%%=*}" ]]; then
             IFS=$DEFAULT_IFS
             echo "$parameter_value"
             return 0
