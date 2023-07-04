@@ -4,9 +4,9 @@
 
 set -u
 
-# Define only 'New line' as default field separator:
+# Define the '\r' as default field separator:
 # used in 'for' commands to iterate over files.
-readonly DEFAULT_IFS=$'\n'
+readonly DEFAULT_IFS=$'\r'
 IFS=$DEFAULT_IFS
 
 # Parameters
@@ -447,21 +447,15 @@ _get_files() {
         ;;
     "all_recursive")
         for input_file in $input_files; do
-            if [[ -n "$input_files_expand" ]]; then
-                input_files_expand+=$DEFAULT_IFS
-            fi
-            input_files_expand+=$(find -L "$input_file" ! -path "*.git/*" 2>/dev/null)
+            input_files_expand+=$(find -L "$input_file" ! -path "*.git/*" -printf "%p$DEFAULT_IFS" 2>/dev/null)
         done
-        input_files=$input_files_expand
+        input_files=$(echo -n "$input_files_expand" | sed "s|$DEFAULT_IFS$||") # Removes the last field separator
         ;;
     "file_recursive")
         for input_file in $input_files; do
-            if [[ -n "$input_files_expand" ]]; then
-                input_files_expand+=$DEFAULT_IFS
-            fi
-            input_files_expand+=$(find -L "$input_file" -type f ! -path "*.git/*" 2>/dev/null)
+            input_files_expand+=$(find -L "$input_file" -type f ! -path "*.git/*" -printf "%p$DEFAULT_IFS" 2>/dev/null)
         done
-        input_files=$input_files_expand
+        input_files=$(echo -n "$input_files_expand" | sed "s|$DEFAULT_IFS$||") # Removes the last field separator
         ;;
     *)
         _display_error_box "Error: invalid value for the parameter 'type' in the function '_get_files'."
@@ -721,11 +715,11 @@ _run_main_task_parallel() {
     export -f _write_log
 
     # Run '_main_task' for each file in parallel using 'xargs'
-    xargs \
+    echo -n "$input_files" | xargs \
         --delimiter="$DEFAULT_IFS" \
         --max-procs="$(nproc --all --ignore=1)" \
         --replace="{}" \
-        bash -c "_main_task \"{}\" \"$output_dir\"" <<<"$input_files"
+        bash -c "_main_task \"{}\" \"$output_dir\""
 }
 
 _write_log() {
