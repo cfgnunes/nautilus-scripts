@@ -6,8 +6,8 @@ set -u
 
 # Define the '\r' as default field separator:
 # used in 'for' commands to iterate over files.
-readonly DEFAULT_IFS=$'\r'
-IFS=$DEFAULT_IFS
+readonly FILENAME_SEPARATOR=$'\r'
+IFS=$FILENAME_SEPARATOR
 
 # Parameters
 readonly PREFIX_ERROR_LOG_FILE="Errors"
@@ -73,7 +73,7 @@ _check_dependencies() {
 
         _exit_script
     done
-    IFS=$DEFAULT_IFS
+    IFS=$FILENAME_SEPARATOR
 }
 
 _check_result() {
@@ -108,7 +108,7 @@ _check_result() {
 _display_file_selection_box() {
     if _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --file-selection --multiple \
-            --separator="$DEFAULT_IFS" 2>/dev/null
+            --separator="$FILENAME_SEPARATOR" 2>/dev/null
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --getopenfilename --multiple \
             --separate-output 2>/dev/null
@@ -304,11 +304,11 @@ _has_string_in_list() {
     IFS=", "
     for item in $list; do
         if [[ "$string" == *"$item"* ]]; then
-            IFS=$DEFAULT_IFS
+            IFS=$FILENAME_SEPARATOR
             return 0
         fi
     done
-    IFS=$DEFAULT_IFS
+    IFS=$FILENAME_SEPARATOR
 
     return 1
 }
@@ -447,13 +447,13 @@ _get_files() {
         ;;
     "all_recursive")
         for input_file in $input_files; do
-            input_files_expand+=$(find -L "$input_file" ! -path "*.git/*" -printf "%p$DEFAULT_IFS" 2>/dev/null)
+            input_files_expand+=$(find -L "$input_file" ! -path "*.git/*" -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
         done
         input_files=$input_files_expand
         ;;
     "file_recursive")
         for input_file in $input_files; do
-            input_files_expand+=$(find -L "$input_file" -type f ! -path "*.git/*" -printf "%p$DEFAULT_IFS" 2>/dev/null)
+            input_files_expand+=$(find -L "$input_file" -type f ! -path "*.git/*" -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
         done
         input_files=$input_files_expand
         ;;
@@ -513,11 +513,11 @@ _get_files() {
         # Add the valid file in the final list 'output_files'
         valid_files_count=$((valid_files_count + 1))
         output_files+=$input_file
-        output_files+=$DEFAULT_IFS
+        output_files+=$FILENAME_SEPARATOR
     done
 
     # Removes the last field separator
-    input_files=${input_files%"$DEFAULT_IFS"}
+    input_files=${input_files%"$FILENAME_SEPARATOR"}
 
     # Check if there is at last one valid file
     if ((valid_files_count == 0)); then
@@ -595,12 +595,12 @@ _get_parameter_value() {
     for parameter in $parameters; do
         parameter_value=${parameter##*=}
         if [[ "$parameter_key" == "${parameter%%=*}" ]]; then
-            IFS=$DEFAULT_IFS
+            IFS=$FILENAME_SEPARATOR
             echo "$parameter_value"
             return 0
         fi
     done
-    IFS=$DEFAULT_IFS
+    IFS=$FILENAME_SEPARATOR
 
     return 1
 }
@@ -717,7 +717,7 @@ _run_main_task_parallel() {
 
     # Run '_main_task' for each file in parallel using 'xargs'
     echo -n "$input_files" | xargs \
-        --delimiter="$DEFAULT_IFS" \
+        --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(nproc --all --ignore=1)" \
         --replace="{}" \
         bash -c "_main_task \"{}\" \"$output_dir\""
