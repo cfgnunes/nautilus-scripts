@@ -13,7 +13,7 @@ input_files=$(_get_files "$*" "type=directory; get_pwd_if_no_selection=true")
 # Run the main process
 # shellcheck disable=SC2086
 std_output=$(find $input_files -type d -empty ! -path "*.git/*" 2>/dev/null)
-std_output=$(sort -V <<<"$std_output")
 std_output=$(sed -r "s|(.+)|\"\1\"|" <<<"$std_output")
+std_output=$(sort --version-sort <<<"$std_output")
 
 _display_text_box "$std_output"

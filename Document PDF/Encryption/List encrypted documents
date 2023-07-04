@@ -27,6 +27,6 @@ _run_main_task_parallel "$input_files" ""
 
 std_output=$(cat "$TEMP_DIR_TASK"/* 2>/dev/null)
 std_output=$(grep -v "^$" <<<"$std_output")
-std_output=$(sort -V <<<"$std_output")
+std_output=$(sort --version-sort <<<"$std_output")
 
 _display_text_box ""
