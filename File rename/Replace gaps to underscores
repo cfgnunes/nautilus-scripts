@@ -2,7 +2,7 @@
 
 # Import the script 'common-functions.sh'
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-ROOT_DIR=$(echo "$SCRIPT_DIR" | grep --only-matching "^.*scripts[^/]*")
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
 # Initial checks
@@ -21,7 +21,7 @@ _main_task() {
     filename=$(basename "$input_file")
 
     # Run the main process
-    output_file=$(echo "$filename" | sed "s|[- \t][- \t]*|_|g;s|__*|_|g")
+    output_file=$(sed "s|[- \t][- \t]*|_|g;s|__*|_|g" <<<"$filename")
     std_output=$(_move_file "when_conflict=skip" "$input_file" "$dir/$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 }

@@ -2,7 +2,7 @@
 
 # Import the script 'common-functions.sh'
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-ROOT_DIR=$(echo "$SCRIPT_DIR" | grep --only-matching "^.*scripts[^/]*")
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
 # Initial checks
@@ -13,7 +13,7 @@ input_files=$(_get_files "$*" "type=directory; get_pwd_if_no_selection=true")
 # Run the main process
 # shellcheck disable=SC2086
 std_output=$(find $input_files -type d -empty ! -path "*.git/*" 2>/dev/null)
-std_output=$(echo "$std_output" | sort -V)
-std_output=$(echo "$std_output" | sed -r "s|(.+)|\"\1\"|")
+std_output=$(sort -V <<<"$std_output")
+std_output=$(sed -r "s|(.+)|\"\1\"|" <<<"$std_output")
 
 _display_text_box "$std_output"

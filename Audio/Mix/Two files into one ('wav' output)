@@ -2,7 +2,7 @@
 
 # Import the script 'common-functions.sh'
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-ROOT_DIR=$(echo "$SCRIPT_DIR" | grep --only-matching "^.*scripts[^/]*")
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
 # Initial checks
@@ -19,8 +19,8 @@ _task() {
     local input_file_1=""
     local input_file_2=""
 
-    input_file_1=$(echo "$input_files" | sed -n 1p)
-    input_file_2=$(echo "$input_files" | sed -n 2p)
+    input_file_1=$(sed -n 1p <<<"$input_files")
+    input_file_2=$(sed -n 2p <<<"$input_files")
 
     # Run the main process
     output_file="$output_dir/mixed-audio.wav"

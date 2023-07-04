@@ -57,7 +57,7 @@ _check_dependencies() {
             continue
         fi
 
-        package_name=$(echo "$dependency" | grep --only-matching -P "\(+\K[^)]+")
+        package_name=$(grep --only-matching -P "\(+\K[^)]+" <<<"$dependency")
         if [[ -n "$package_name" ]]; then
             message="The command '$command' was not found (from package '$package_name'). Would you like to install it?"
         else
@@ -89,8 +89,8 @@ _check_result() {
     fi
 
     # Check if there is the word "Error" in stdout
-    if ! echo "$input_file" | grep --quiet --ignore-case "[^\w]error"; then
-        if echo "$std_output" | grep --quiet --ignore-case "[^\w]error"; then
+    if ! grep --quiet --ignore-case "[^\w]error" <<<"$input_file"; then
+        if grep --quiet --ignore-case "[^\w]error" <<<"$std_output"; then
             _write_log "Error: Word 'error' found in the standard output." "$input_file" "$std_output"
             return 1
         fi
@@ -199,8 +199,8 @@ _display_text_box() {
     if env | grep --quiet "^TERM"; then
         echo "$message"
     elif _command_exists "zenity"; then
-        echo "$message" | zenity --title "$(_get_script_name)" --text-info \
-            --no-wrap --height=400 --width=750 &>/dev/null
+        zenity --title "$(_get_script_name)" --text-info \
+            --no-wrap --height=400 --width=750 <<<"$message" &>/dev/null
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --textinputbox "" "$message" &>/dev/null
     elif _command_exists "xmessage"; then
@@ -351,12 +351,12 @@ _install_package() {
 
 _get_filename_extension() {
     local filename=$1
-    echo "$filename" | grep --only-matching --perl-regexp "(\.tar)?\.[^./]*$"
+    grep --only-matching --perl-regexp "(\.tar)?\.[^./]*$" <<<"$filename"
 }
 
 _get_filename_without_extension() {
     local filename=$1
-    echo "$filename" | sed -r "s|(\.tar)?\.[^./]*$||"
+    sed -r "s|(\.tar)?\.[^./]*$||" <<<"$filename"
 }
 
 _get_filename_suffix() {
