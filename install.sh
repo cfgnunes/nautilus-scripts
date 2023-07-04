@@ -4,20 +4,29 @@
 
 set -eu
 
+_command_exists() {
+    local command_check="$1"
+
+    if command -v "$command_check" &>/dev/null; then
+        return 0
+    fi
+    return 1
+}
+
 _main() {
     echo "Installing the scripts..."
     local install_dir=""
     local accels_dir=""
     local file_manager=""
 
-    if hash nautilus &>/dev/null; then
+    if _command_exists "nautilus"; then
         install_dir="$HOME/.local/share/nautilus/scripts"
         accels_dir="$HOME/.config/nautilus"
         file_manager="nautilus"
-    elif hash nemo &>/dev/null; then
+    elif _command_exists "nemo"; then
         install_dir="$HOME/.local/share/nemo/scripts"
         file_manager="nemo"
-    elif hash caja &>/dev/null; then
+    elif _command_exists "caja"; then
         install_dir="$HOME/.config/caja/scripts"
         file_manager="caja"
     else
