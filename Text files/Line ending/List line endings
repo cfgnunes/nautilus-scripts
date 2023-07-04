@@ -25,6 +25,6 @@ std_output=$(sed "s|//.*no line.*|// (no line)|" <<<"$std_output")
 std_output=$(sed "s|//.*text.*|// LF (unix)|" <<<"$std_output")
 std_output=$(sed "s|\(.*\)// *\(.*\)|\2: \"\1\"|" <<<"$std_output")
 std_output=$(grep "(windows):\|(unix):\|(mac):\|(no line):" <<<"$std_output")
-std_output=$(sort -V <<<"$std_output")
+std_output=$(sort --version-sort <<<"$std_output")
 
 _display_text_box "$std_output"

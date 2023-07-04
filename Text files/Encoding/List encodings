@@ -16,6 +16,6 @@ input_files=$(_get_files "$*" "type=file_recursive; mime=text,application; skip_
 # shellcheck disable=SC2086
 std_output=$(file --separator "//" --no-pad --mime-encoding $input_files)
 std_output=$(sed "s|\(.*\)// *\(.*\)|\2: \"\1\"|" <<<"$std_output")
-std_output=$(sort -V <<<"$std_output")
+std_output=$(sort --version-sort <<<"$std_output")
 
 _display_text_box "$std_output"
