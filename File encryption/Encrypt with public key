@@ -14,12 +14,12 @@ output_dir=$(_get_output_dir)
 users=$(gpg --list-public-keys --with-colons | grep "^uid" | cut -d ':' -f 10)
 if [[ -z "$users" ]]; then
     _display_error_box "Signing failed: no secret keys installed!"
-    _exit_error
+    _exit_script
 fi
-task_data=$(echo "$users" | tr ':' '\n' | zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=200 --width=600 2>/dev/null) || _exit_error
+task_data=$(echo "$users" | tr ':' '\n' | zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=200 --width=600 2>/dev/null) || _exit_script
 if [[ -z "$task_data" ]]; then
     _display_error_box "Signing failed: you must select a user!"
-    _exit_error
+    _exit_script
 fi
 
 _main_task() {

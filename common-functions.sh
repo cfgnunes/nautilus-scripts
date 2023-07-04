@@ -71,7 +71,7 @@ _check_dependencies() {
             continue
         fi
 
-        _exit_error
+        _exit_script
     done
     IFS=$DEFAULT_IFS
 }
@@ -156,16 +156,16 @@ _display_password_box() {
         read -r password
     elif _command_exists "zenity"; then
         password=$(zenity --title="$(_get_script_name)" \
-            --password 2>/dev/null) || _kill_tasks
+            --password 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
         password=$(kdialog --title "$(_get_script_name)" \
-            --password "Type your password" 2>/dev/null) || _kill_tasks
+            --password "Type your password" 2>/dev/null) || _exit_script
     fi
 
     # Check if the password is not empty
     if [[ -z "$password" ]]; then
         _display_error_box "Error: you must define a password!"
-        _exit_error
+        _exit_script
     fi
 
     echo "$password"
@@ -230,7 +230,7 @@ _display_result_box() {
     # Check if there was some error
     if [[ -f "$error_log_file" ]]; then
         _display_error_box "Error: task finished with errors! See the '$error_log_file' for details."
-        _exit_error
+        _exit_script
     fi
 
     # If output_dir parameter is defined
@@ -270,7 +270,7 @@ _display_wait_box_message() {
                 --pulsate \
                 --auto-close \
                 --text="$message" ||
-                (echo >"$TEMP_FIFO" && _kill_tasks)
+                (echo >"$TEMP_FIFO" && _exit_script)
         ) &
     fi
 }
@@ -282,10 +282,19 @@ _close_wait_box() {
     fi
 }
 
-_exit_error() {
-    _close_wait_box
+_exit_script() {
+    local child_pids=""
+    local script_pid=$$
+
+    # Get the process ID (PID) of the current script
+    child_pids=$(pstree -p "$script_pid" | grep --only-matching -P "\(+\K[^)]+")
+
+    echo "Aborting the script..."
+
+    # Use xargs and kill to send the SIGTERM signal
+    # to all child processes including the current script.
     # See the: https://www.baeldung.com/linux/safely-exit-scripts
-    _kill_tasks
+    echo -n "$child_pids" | xargs kill &>/dev/null
 }
 
 _has_string_in_list() {
@@ -322,11 +331,11 @@ _install_package() {
             pkexec bash -c "yum check-update; yum -y install $package_name &>/dev/null"
         else
             _display_error_box "Error: could not find a package manager!"
-            _exit_error
+            _exit_script
         fi
     else
         _display_error_box "Error: could not run the installer as administrator!"
-        _exit_error
+        _exit_script
     fi
 
     _close_wait_box
@@ -334,24 +343,10 @@ _install_package() {
     # Check if the package was installed
     if ! _command_exists "$command"; then
         _display_error_box "Error: could not install the package '$package_name'!"
-        _exit_error
+        _exit_script
     fi
 
     _display_info_box "The package '$package_name' has been successfully installed!"
-}
-
-_kill_tasks() {
-    local child_pids=""
-    local script_pid=""
-
-    echo "Aborting the script..."
-
-    # Get the process ID (PID) of the current script
-    script_pid=$$
-    child_pids=$(pstree -p "$script_pid" | grep --only-matching -P "\(+\K[^)]+")
-
-    # Use xargs and kill to send the SIGTERM signal to all child processes
-    echo -n "$child_pids" | xargs kill &>/dev/null
 }
 
 _get_filename_extension() {
@@ -435,7 +430,7 @@ _get_files() {
         input_files=$(_display_file_selection_box)
         if [[ -z "$input_files" ]]; then
             _display_error_box "Error: there are no input files!"
-            _exit_error
+            _exit_script
         fi
     fi
 
@@ -470,7 +465,7 @@ _get_files() {
         ;;
     *)
         _display_error_box "Error: invalid value for the parameter 'type' in the function '_get_files'."
-        _exit_error
+        _exit_script
         ;;
     esac
 
@@ -532,17 +527,17 @@ _get_files() {
     # Check if there is at last one valid file
     if ((valid_files_count == 0)); then
         _display_error_box "Error: there are no valid files in the selection!"
-        _exit_error
+        _exit_script
     fi
 
     if [[ -n "$par_min_files" ]] && ((valid_files_count < par_min_files)); then
         _display_error_box "Error: there are $valid_files_count files in the selection, but the minimum is $par_min_files!"
-        _exit_error
+        _exit_script
     fi
 
     if [[ -n "$par_max_files" ]] && ((valid_files_count > par_max_files)); then
         _display_error_box "Error: there are $valid_files_count files in the selection, but the maximum is $par_max_files!"
-        _exit_error
+        _exit_script
     fi
 
     echo "$output_files"
@@ -661,7 +656,7 @@ _move_file() {
         ;;
     *)
         _display_error_box "Error: invalid value for the parameter 'conflict' in the function '_move_file'."
-        _exit_error
+        _exit_script
         ;;
     esac
 
@@ -714,7 +709,7 @@ _run_main_task_parallel() {
     export -f _check_result
     export -f _close_wait_box
     export -f _display_error_box
-    export -f _exit_error
+    export -f _exit_script
     export -f _get_filename_extension
     export -f _get_filename_suffix
     export -f _get_filename_without_extension
