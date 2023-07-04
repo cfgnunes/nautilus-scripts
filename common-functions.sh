@@ -28,6 +28,15 @@ _trap_handler() {
 }
 trap _trap_handler EXIT
 
+_command_exists() {
+    local command_check="$1"
+
+    if command -v "$command_check" &>/dev/null; then
+        return 0
+    fi
+    return 1
+}
+
 _check_dependencies() {
     local dependencies=$*
     local command=""
@@ -44,7 +53,7 @@ _check_dependencies() {
         command=${dependency%%(*}
 
         # Check if has the command in the shell
-        if hash "$command" &>/dev/null; then
+        if _command_exists "$command"; then
             continue
         fi
 
@@ -97,10 +106,10 @@ _check_result() {
 }
 
 _display_file_selection_box() {
-    if hash zenity &>/dev/null; then
+    if _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --file-selection --multiple \
             --separator="$DEFAULT_IFS" 2>/dev/null
-    elif hash kdialog &>/dev/null; then
+    elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --getopenfilename --multiple \
             --separate-output 2>/dev/null
     fi
@@ -111,13 +120,13 @@ _display_error_box() {
 
     if env | grep --quiet "^TERM"; then
         echo >&2 "$message"
-    elif hash notify-send 2>/dev/null; then
+    elif _command_exists "notify-send"; then
         notify-send -i error "$message" &>/dev/null
-    elif hash zenity &>/dev/null; then
+    elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --error --width=300 --text "$message" &>/dev/null
-    elif hash kdialog &>/dev/null; then
+    elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --error "$message" &>/dev/null
-    elif hash xmessage &>/dev/null; then
+    elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "$message" &>/dev/null
     fi
 }
@@ -127,13 +136,13 @@ _display_info_box() {
 
     if env | grep --quiet "^TERM"; then
         echo "$message"
-    elif hash notify-send 2>/dev/null; then
+    elif _command_exists "notify-send"; then
         notify-send "$message" &>/dev/null
-    elif hash zenity &>/dev/null; then
+    elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --info --width=300 --text "$message" &>/dev/null
-    elif hash kdialog &>/dev/null; then
+    elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --msgbox "$message" &>/dev/null
-    elif hash xmessage &>/dev/null; then
+    elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "$message" &>/dev/null
     fi
 }
@@ -145,10 +154,10 @@ _display_password_box() {
     if env | grep --quiet "^TERM"; then
         echo -n "Type your password: " >&2
         read -r password
-    elif hash zenity &>/dev/null; then
+    elif _command_exists "zenity"; then
         password=$(zenity --title="$(_get_script_name)" \
             --password 2>/dev/null) || _kill_tasks
-    elif hash kdialog &>/dev/null; then
+    elif _command_exists "kdialog"; then
         password=$(kdialog --title "$(_get_script_name)" \
             --password "Type your password" 2>/dev/null) || _kill_tasks
     fi
@@ -169,11 +178,11 @@ _display_question_box() {
     if env | grep --quiet "^TERM"; then
         read -r -p "$message [Y/n] " response
         [[ ${response,,} == *"n"* ]] && return 1
-    elif hash zenity &>/dev/null; then
+    elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --question --width=300 --text="$message" &>/dev/null || return 1
-    elif hash kdialog &>/dev/null; then
+    elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --yesno "$message" &>/dev/null || return 1
-    elif hash xmessage &>/dev/null; then
+    elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" -buttons "Yes:0,No:1" "$message" &>/dev/null || return 1
     fi
     return 0
@@ -189,12 +198,12 @@ _display_text_box() {
 
     if env | grep --quiet "^TERM"; then
         echo "$message"
-    elif hash zenity &>/dev/null; then
+    elif _command_exists "zenity"; then
         echo "$message" | zenity --title "$(_get_script_name)" --text-info \
             --no-wrap --height=400 --width=750 &>/dev/null
-    elif hash kdialog &>/dev/null; then
+    elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --textinputbox "" "$message" &>/dev/null
-    elif hash xmessage &>/dev/null; then
+    elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "$message" &>/dev/null
     fi
 }
@@ -249,7 +258,7 @@ _display_wait_box_message() {
 
     if env | grep --quiet "^TERM"; then
         echo "$message"
-    elif hash zenity &>/dev/null; then
+    elif _command_exists "zenity"; then
         rm -f "$TEMP_FIFO"
         mkfifo "$TEMP_FIFO"
         # shellcheck disable=SC2002
@@ -302,14 +311,14 @@ _install_package() {
     _display_wait_box_message "Installing the package '$package_name'. Please, wait..."
 
     # Install the package
-    if hash pkexec &>/dev/null; then
-        if hash apt-get &>/dev/null; then
+    if _command_exists "pkexec"; then
+        if _command_exists "apt-get"; then
             pkexec bash -c "apt-get update; apt-get -y install $package_name &>/dev/null"
-        elif hash pacman &>/dev/null; then
+        elif _command_exists "pacman"; then
             pkexec bash -c "pacman -Syy; pacman --noconfirm -S $package_name &>/dev/null"
-        elif hash dnf &>/dev/null; then
+        elif _command_exists "dnf"; then
             pkexec bash -c "dnf check-update; dnf -y install $package_name &>/dev/null"
-        elif hash yum &>/dev/null; then
+        elif _command_exists "yum"; then
             pkexec bash -c "yum check-update; yum -y install $package_name &>/dev/null"
         else
             _display_error_box "Error: could not find a package manager!"
@@ -323,7 +332,7 @@ _install_package() {
     _close_wait_box
 
     # Check if the package was installed
-    if ! hash "$command" &>/dev/null; then
+    if ! _command_exists "$command"; then
         _display_error_box "Error: could not install the package '$package_name'!"
         _exit_error
     fi
