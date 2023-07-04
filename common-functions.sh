@@ -294,7 +294,7 @@ _exit_script() {
     # Use xargs and kill to send the SIGTERM signal
     # to all child processes including the current script.
     # See the: https://www.baeldung.com/linux/safely-exit-scripts
-    echo -n "$child_pids" | xargs kill &>/dev/null
+    xargs kill <<<"$child_pids" &>/dev/null
 }
 
 _has_string_in_list() {
@@ -721,11 +721,11 @@ _run_main_task_parallel() {
     export -f _write_log
 
     # Run '_main_task' for each file in parallel using 'xargs'
-    echo -n "$input_files" | xargs \
+    xargs \
         --delimiter="$DEFAULT_IFS" \
         --max-procs="$(nproc --all --ignore=1)" \
         --replace="{}" \
-        bash -c "_main_task \"{}\" \"$output_dir\""
+        bash -c "_main_task \"{}\" \"$output_dir\"" <<<"$input_files"
 }
 
 _write_log() {
