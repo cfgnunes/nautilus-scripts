@@ -449,13 +449,13 @@ _get_files() {
         for input_file in $input_files; do
             input_files_expand+=$(find -L "$input_file" ! -path "*.git/*" -printf "%p$DEFAULT_IFS" 2>/dev/null)
         done
-        input_files=$(echo -n "$input_files_expand" | sed "s|$DEFAULT_IFS$||") # Removes the last field separator
+        input_files=$input_files_expand
         ;;
     "file_recursive")
         for input_file in $input_files; do
             input_files_expand+=$(find -L "$input_file" -type f ! -path "*.git/*" -printf "%p$DEFAULT_IFS" 2>/dev/null)
         done
-        input_files=$(echo -n "$input_files_expand" | sed "s|$DEFAULT_IFS$||") # Removes the last field separator
+        input_files=$input_files_expand
         ;;
     *)
         _display_error_box "Error: invalid value for the parameter 'type' in the function '_get_files'."
@@ -512,11 +512,12 @@ _get_files() {
 
         # Add the valid file in the final list 'output_files'
         valid_files_count=$((valid_files_count + 1))
-        if [[ -n "$output_files" ]]; then
-            output_files+=$DEFAULT_IFS
-        fi
         output_files+=$input_file
+        output_files+=$DEFAULT_IFS
     done
+
+    # Removes the last field separator
+    input_files=${input_files%"$DEFAULT_IFS"}
 
     # Check if there is at last one valid file
     if ((valid_files_count == 0)); then
