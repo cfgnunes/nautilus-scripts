@@ -2,7 +2,7 @@
 
 # Import the script 'common-functions.sh'
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-ROOT_DIR=$(echo "$SCRIPT_DIR" | grep --only-matching "^.*scripts[^/]*")
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
 # Initial checks
@@ -26,7 +26,7 @@ _main_task() {
 _run_main_task_parallel "$input_files" ""
 
 std_output=$(cat "$TEMP_DIR_TASK"/* 2>/dev/null)
-std_output=$(echo "$std_output" | grep -v "^$")
-std_output=$(echo "$std_output" | sort -V)
+std_output=$(grep -v "^$" <<<"$std_output")
+std_output=$(sort -V <<<"$std_output")
 
 _display_text_box "$std_output"

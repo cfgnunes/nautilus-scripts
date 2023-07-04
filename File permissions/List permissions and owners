@@ -2,7 +2,7 @@
 
 # Import the script 'common-functions.sh'
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-ROOT_DIR=$(echo "$SCRIPT_DIR" | grep --only-matching "^.*scripts[^/]*")
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
 # Initial checks
@@ -12,6 +12,6 @@ input_files=$(_get_files "$*" "type=all_recursive")
 # Run the main process
 # shellcheck disable=SC2086
 std_output=$(stat -c "%a %U %G %F: \"%n\"" $input_files)
-std_output=$(echo "$std_output" | sort -V)
+std_output=$(sort -V <<<"$std_output")
 
 _display_text_box "$std_output"
