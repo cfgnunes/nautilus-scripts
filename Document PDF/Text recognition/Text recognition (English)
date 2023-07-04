@@ -11,7 +11,7 @@ if ! [[ -d "/usr/share/doc/tesseract-ocr-eng" ]]; then
     if _display_question_box "English language is not installed for OCR. Would you like to install it?"; then
         _install_package "tesseract-ocr-eng" "tesseract"
     else
-        _exit_error
+        _exit_script
     fi
 fi
 _display_wait_box
