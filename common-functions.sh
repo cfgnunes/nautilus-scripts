@@ -110,8 +110,11 @@ _display_file_selection_box() {
         zenity --title "$(_get_script_name)" --file-selection --multiple \
             --separator="$FILENAME_SEPARATOR" 2>/dev/null
     elif _command_exists "kdialog"; then
-        kdialog --title "$(_get_script_name)" --getopenfilename --multiple \
-            --separate-output 2>/dev/null
+        local input_files=""
+        input_files=$(kdialog --title "$(_get_script_name)" --getopenfilename --multiple 2>/dev/null)
+        input_files=${input_files% }
+        input_files=${input_files// \//$FILENAME_SEPARATOR/}
+        echo -n "$input_files"
     fi
 }
 
@@ -152,8 +155,7 @@ _display_password_box() {
 
     # Ask the user a password.
     if env | grep --quiet "^TERM"; then
-        echo -n "Type your password: " >&2
-        read -r password
+        read -r -p "Type your password: " password >&2
     elif _command_exists "zenity"; then
         password=$(zenity --title="$(_get_script_name)" \
             --password 2>/dev/null) || _exit_script
