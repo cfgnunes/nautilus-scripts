@@ -86,7 +86,7 @@ _main_task() {
     esac
 
     # Check for result errors
-    _check_result "$?" "$std_output" "$input_file" "" || return 1
+    _check_result "$?" "$std_output" "$input_file" ""
 
     # Check if the archive has just one item (single file/directory compressed)
     count_root_items=$(find . -mindepth 1 -maxdepth 1 | wc -l)
@@ -94,6 +94,9 @@ _main_task() {
         output_item=$(find . -mindepth 1 -maxdepth 1)
     fi
     popd &>/dev/null || return 1
+
+    # Try to remove the temporary directory (if it is empty)
+    rmdir "$temp_dir_output" &>/dev/null && return 1
 
     # Move the items to the correct directory
     if ((count_root_items == 1)) &&
