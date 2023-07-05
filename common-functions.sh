@@ -22,11 +22,11 @@ TEMP_DIR_TASK=$(mktemp --directory --tmpdir="$TEMP_DIR" --suffix="-task")
 readonly TEMP_FIFO="$TEMP_DIR/fifo"
 
 # Remove the temp directory in unexpected exit
-_trap_handler() {
+_cleanup() {
     rm -rf "$TEMP_DIR"
-    echo "End of the script."
+    _print_terminal "End of the script."
 }
-trap _trap_handler EXIT
+trap _cleanup EXIT
 
 _command_exists() {
     local command_check="$1"
@@ -121,7 +121,7 @@ _display_file_selection_box() {
 _display_error_box() {
     local message=$1
 
-    if env | grep --quiet "^TERM"; then
+    if _is_terminal_session; then
         echo >&2 "$message"
     elif _command_exists "notify-send"; then
         notify-send -i error "$message" &>/dev/null
@@ -137,7 +137,7 @@ _display_error_box() {
 _display_info_box() {
     local message=$1
 
-    if env | grep --quiet "^TERM"; then
+    if _is_terminal_session; then
         echo "$message"
     elif _command_exists "notify-send"; then
         notify-send "$message" &>/dev/null
@@ -154,7 +154,7 @@ _display_password_box() {
     local password=""
 
     # Ask the user a password.
-    if env | grep --quiet "^TERM"; then
+    if _is_terminal_session; then
         read -r -p "Type your password: " password >&2
     elif _command_exists "zenity"; then
         password=$(zenity --title="$(_get_script_name)" \
@@ -177,7 +177,7 @@ _display_question_box() {
     local message=$1
     local response=""
 
-    if env | grep --quiet "^TERM"; then
+    if _is_terminal_session; then
         read -r -p "$message [Y/n] " response
         [[ ${response,,} == *"n"* ]] && return 1
     elif _command_exists "zenity"; then
@@ -198,7 +198,7 @@ _display_text_box() {
         message="(Empty result)"
     fi
 
-    if env | grep --quiet "^TERM"; then
+    if _is_terminal_session; then
         echo "$message"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --text-info \
@@ -258,7 +258,7 @@ _display_wait_box() {
 _display_wait_box_message() {
     local message=$1
 
-    if env | grep --quiet "^TERM"; then
+    if _is_terminal_session; then
         echo "$message"
     elif _command_exists "zenity"; then
         rm -f "$TEMP_FIFO"
@@ -291,7 +291,7 @@ _exit_script() {
     # Get the process ID (PID) of the current script
     child_pids=$(pstree -p "$script_pid" | grep --only-matching -P "\(+\K[^)]+")
 
-    echo "Aborting the script..."
+    _print_terminal "Aborting the script..."
 
     # Use xargs and kill to send the SIGTERM signal
     # to all child processes including the current script.
@@ -349,6 +349,13 @@ _install_package() {
     fi
 
     _display_info_box "The package '$package_name' has been successfully installed!"
+}
+
+_is_terminal_session() {
+    if env | grep --quiet "^TERM"; then
+        return 0
+    fi
+    return 1
 }
 
 _get_filename_extension() {
@@ -693,6 +700,14 @@ _move_temp_file_to_output() {
 
     # Remove the temporary file
     rm -rf "$temp_file"
+}
+
+_print_terminal() {
+    local message=$1
+
+    if _is_terminal_session; then
+        echo "$message"
+    fi
 }
 
 _run_main_task_parallel() {
