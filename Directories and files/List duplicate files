@@ -24,6 +24,7 @@ std_output=$(cut -d ' ' -f 1,8- <<<"$std_output")
 std_output=$(sed "s|\([^ ]*\)[ \t]*\(.*\)|\1 \"\2\"|" <<<"$std_output")
 std_output=$(sed "s|DUPTYPE_FIRST_OCCURRENCE|\nDUPTYPE_FIRST_OCCURRENCE|" <<<"$std_output")
 std_output=$(cut -d ' ' -f 2- <<<"$std_output")
+std_output=$(grep -v "\"\"" <<<"$std_output")
 
 # Remove the temporary files
 rm -rf "$temp_file"
