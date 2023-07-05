@@ -7,7 +7,7 @@ source "$ROOT_DIR/common-functions.sh"
 
 # Initial checks
 _display_wait_box
-input_files=$(_get_files "$*" "type=all_recursive")
+input_files=$(_get_files "$*" "type=all; recursive=true")
 
 # Run the main process
 # shellcheck disable=SC2086

@@ -8,7 +8,7 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies ""
 _display_wait_box
-input_files=$(_get_files "$*" "type=file_recursive; mime=text,application; skip_encoding=binary; skip_extension=pdf")
+input_files=$(_get_files "$*" "type=file; recursive=true; mime=text,application; skip_encoding=binary; skip_extension=pdf")
 
 _main_task() {
     local input_file=$1

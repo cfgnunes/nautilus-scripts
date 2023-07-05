@@ -383,6 +383,11 @@ _is_valid_file() {
     par_skip_mime=$(_get_parameter_value "$parameters" "skip_mime")
     par_type=$(_get_parameter_value "$parameters" "type")
 
+    # Default value for the parameter "type"
+    if [[ -z "$par_type" ]]; then
+        par_type="file"
+    fi
+
     # Validation for files
     if [[ -f "$input_file" ]]; then
 
@@ -472,8 +477,8 @@ _get_files() {
     local output_files=""
     local par_max_files=0
     local par_min_files=0
+    local par_recursive=""
     local par_return_pwd=""
-    local par_type=""
     local temp_file=""
     local valid_files_count=0
 
@@ -486,8 +491,8 @@ _get_files() {
     # Read values from the parameters
     par_max_files=$(_get_parameter_value "$parameters" "max_files")
     par_min_files=$(_get_parameter_value "$parameters" "min_files")
+    par_recursive=$(_get_parameter_value "$parameters" "recursive")
     par_return_pwd=$(_get_parameter_value "$parameters" "get_pwd_if_no_selection")
-    par_type=$(_get_parameter_value "$parameters" "type")
 
     # Check if there are input files
     if [[ -z "$input_files" ]]; then
@@ -507,34 +512,13 @@ _get_files() {
         fi
     fi
 
-    # Default value for the parameter "type"
-    if [[ -z "$par_type" ]]; then
-        par_type="file"
-    fi
-
-    # Process the parameter "type":
-    # expand files in directories recursively.
-    case "$par_type" in
-    "all" | "file" | "directory")
-        :
-        ;;
-    "all_recursive")
+    # Expand files in directories recursively.
+    if [[ "$par_recursive" == "true" ]]; then
         for input_file in $input_files; do
             input_files_expand+=$(find -L "$input_file" ! -path "*.git/*" -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
         done
         input_files=$input_files_expand
-        ;;
-    "file_recursive")
-        for input_file in $input_files; do
-            input_files_expand+=$(find -L "$input_file" -type f ! -path "*.git/*" -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
-        done
-        input_files=$input_files_expand
-        ;;
-    *)
-        _display_error_box "Error: invalid value for the parameter 'type' in the function '_get_files'."
-        _exit_script
-        ;;
-    esac
+    fi
 
     # Run '_is_valid_file' for each file in parallel using 'xargs'
     export -f _get_filename_extension

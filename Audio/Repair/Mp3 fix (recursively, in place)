@@ -8,7 +8,7 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies "mp3val"
 _display_wait_box
-input_files=$(_get_files "$*" "type=file_recursive; mime=audio/mpeg; skip_extension=bak")
+input_files=$(_get_files "$*" "type=file; recursive=true; mime=audio/mpeg; skip_extension=bak")
 
 _main_task() {
     local input_file=$1

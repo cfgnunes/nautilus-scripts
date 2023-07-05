@@ -8,7 +8,7 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies "sha256sum"
 _display_wait_box
-input_files=$(_get_files "$*" "type=file_recursive")
+input_files=$(_get_files "$*" "type=file; recursive=true")
 
 # Run the main process
 # shellcheck disable=SC2086
