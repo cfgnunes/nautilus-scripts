@@ -17,9 +17,10 @@ readonly PREFIX_OUTPUT_DIR="Output"
 TEMP_DIR=$(mktemp --directory --suffix="-script")
 TEMP_DIR_LOG=$(mktemp --directory --tmpdir="$TEMP_DIR" --suffix="-log")
 TEMP_DIR_TASK=$(mktemp --directory --tmpdir="$TEMP_DIR" --suffix="-task")
+TEMP_DIR_VALID_FILES=$(mktemp --directory --tmpdir="$TEMP_DIR" --suffix="-valid-files")
 
 # A temporary FIFO to use in the "wait_box"
-readonly TEMP_FIFO="$TEMP_DIR/fifo"
+readonly TEMP_FIFO="$TEMP_DIR/fifo.txt"
 
 # Remove the temp directory in unexpected exit
 _cleanup() {
@@ -371,6 +372,7 @@ _is_valid_file() {
     local par_skip_extension=""
     local par_skip_mime=""
     local par_type=""
+    local temp_file=""
 
     # Read values from the parameters
     par_encoding=$(_get_parameter_value "$parameters" "encoding")
@@ -424,6 +426,11 @@ _is_valid_file() {
             return 1
         fi
     fi
+
+    # Create a temp file with containing the name of the valid file
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_VALID_FILES" --suffix="-valid")
+    echo "$input_file" >"$temp_file"
+
     return 0
 }
 
@@ -467,6 +474,7 @@ _get_files() {
     local par_min_files=0
     local par_return_pwd=""
     local par_type=""
+    local temp_file=""
     local valid_files_count=0
 
     # Valid values for the parameter key "type":
@@ -528,15 +536,19 @@ _get_files() {
         ;;
     esac
 
-    # Select only valid files
-    for input_file in $input_files; do
-        if ! _is_valid_file "$input_file" "$parameters"; then
-            continue
-        fi
+    # Run '_is_valid_file' for each file in parallel using 'xargs'
+    export -f _is_valid_file
+    export TEMP_DIR_VALID_FILES
+    echo -n "$input_files" | xargs \
+        --delimiter="$FILENAME_SEPARATOR" \
+        --max-procs="$(nproc --all --ignore=1)" \
+        --replace="{}" \
+        bash -c "_is_valid_file \"{}\" \"$parameters\""
 
-        # Add the valid file in the final list 'output_files'
+    # Compile valid files in a single list 'output_files'
+    for temp_file in "$TEMP_DIR_VALID_FILES/"*; do
         valid_files_count=$((valid_files_count + 1))
-        output_files+=$input_file
+        output_files+=$(cat "$temp_file")
         output_files+=$FILENAME_SEPARATOR
     done
 
