@@ -29,4 +29,4 @@ std_output=$(cat "$TEMP_DIR_TASK"/* 2>/dev/null)
 std_output=$(grep -v "^$" <<<"$std_output")
 std_output=$(sort --version-sort <<<"$std_output")
 
-_display_text_box ""
+_display_text_box "$std_output"
