@@ -519,7 +519,7 @@ _get_files() {
     done
 
     # Removes the last field separator
-    input_files=${input_files%"$FILENAME_SEPARATOR"}
+    output_files=${output_files%"$FILENAME_SEPARATOR"}
 
     # Check if there is at last one valid file
     if ((valid_files_count == 0)); then
