@@ -8,7 +8,7 @@ source "$ROOT_DIR/common-functions.sh"
 # Initial checks
 _check_dependencies "findimagedupes eog"
 _display_wait_box
-input_files=$(_get_files "$*" "type=file_recursive; mime=image")
+input_files=$(_get_files "$*" "type=file; recursive=true; mime=image")
 
 # Run the main process
 # shellcheck disable=SC2086
