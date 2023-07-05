@@ -428,7 +428,7 @@ _is_valid_file() {
     fi
 
     # Create a temp file with containing the name of the valid file
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_VALID_FILES" --suffix="-valid")
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_VALID_FILES")
     echo "$input_file" >"$temp_file"
 
     return 0
@@ -537,6 +537,9 @@ _get_files() {
     esac
 
     # Run '_is_valid_file' for each file in parallel using 'xargs'
+    export -f _get_filename_extension
+    export -f _get_parameter_value
+    export -f _has_string_in_list
     export -f _is_valid_file
     export TEMP_DIR_VALID_FILES
     echo -n "$input_files" | xargs \
