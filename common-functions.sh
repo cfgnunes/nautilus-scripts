@@ -358,6 +358,75 @@ _is_terminal_session() {
     return 1
 }
 
+_is_valid_file() {
+    local input_file=$1
+    local parameters=$2
+    local file_encoding=""
+    local file_extension=""
+    local file_mime=""
+    local par_encoding=""
+    local par_extension=""
+    local par_mime=""
+    local par_skip_encoding=""
+    local par_skip_extension=""
+    local par_skip_mime=""
+    local par_type=""
+
+    # Read values from the parameters
+    par_encoding=$(_get_parameter_value "$parameters" "encoding")
+    par_extension=$(_get_parameter_value "$parameters" "extension")
+    par_mime=$(_get_parameter_value "$parameters" "mime")
+    par_skip_encoding=$(_get_parameter_value "$parameters" "skip_encoding")
+    par_skip_extension=$(_get_parameter_value "$parameters" "skip_extension")
+    par_skip_mime=$(_get_parameter_value "$parameters" "skip_mime")
+    par_type=$(_get_parameter_value "$parameters" "type")
+
+    # Validation for files
+    if [[ -f "$input_file" ]]; then
+
+        file_extension=$(_get_filename_extension "$input_file")
+        file_extension=${file_extension,,} # Lowercase file extension
+        file_mime=$(file --brief --mime-type "$input_file")
+        file_encoding=$(file --brief --mime-encoding "$input_file")
+
+        if [[ -n "$par_skip_extension" ]]; then
+            _has_string_in_list "$file_extension" "$par_skip_extension" && return 1
+        fi
+
+        if [[ -n "$par_skip_encoding" ]]; then
+            _has_string_in_list "$file_encoding" "$par_skip_encoding" && return 1
+        fi
+
+        if [[ -n "$par_skip_mime" ]]; then
+            _has_string_in_list "$file_mime" "$par_skip_mime" && return 1
+        fi
+
+        if [[ -n "$par_extension" ]]; then
+            _has_string_in_list "$file_extension" "$par_extension" || return 1
+        fi
+
+        if [[ -n "$par_encoding" ]]; then
+            _has_string_in_list "$file_encoding" "$par_encoding" || return 1
+        fi
+
+        if [[ -n "$par_mime" ]]; then
+            _has_string_in_list "$file_mime" "$par_mime" || return 1
+        fi
+
+        if [[ "$par_type" == "directory" ]]; then
+            return 1
+        fi
+
+    # Validation for directories
+    elif [[ -d "$input_file" ]]; then
+
+        if [[ "$par_type" == "file" ]]; then
+            return 1
+        fi
+    fi
+    return 0
+}
+
 _get_filename_extension() {
     local filename=$1
     grep --only-matching --perl-regexp "(\.tar)?\.[^./]*$" <<<"$filename"
@@ -391,21 +460,13 @@ _get_filename_suffix() {
 _get_files() {
     local input_files=$1
     local parameters=$2
-    local file_encoding=""
-    local file_extension=""
-    local file_mime=""
     local input_file=""
     local input_files_expand=""
     local output_files=""
-    local par_encoding=""
-    local par_extension=""
     local par_max_files=0
-    local par_mime=""
     local par_min_files=0
     local par_return_pwd=""
-    local par_skip_encoding=""
-    local par_skip_extension=""
-    local par_skip_mime=""
+    local par_type=""
     local valid_files_count=0
 
     # Valid values for the parameter key "type":
@@ -415,15 +476,9 @@ _get_files() {
     #   "file_recursive": Filter files recursively.
 
     # Read values from the parameters
-    par_encoding=$(_get_parameter_value "$parameters" "encoding")
-    par_extension=$(_get_parameter_value "$parameters" "extension")
     par_max_files=$(_get_parameter_value "$parameters" "max_files")
-    par_mime=$(_get_parameter_value "$parameters" "mime")
     par_min_files=$(_get_parameter_value "$parameters" "min_files")
     par_return_pwd=$(_get_parameter_value "$parameters" "get_pwd_if_no_selection")
-    par_skip_encoding=$(_get_parameter_value "$parameters" "skip_encoding")
-    par_skip_extension=$(_get_parameter_value "$parameters" "skip_extension")
-    par_skip_mime=$(_get_parameter_value "$parameters" "skip_mime")
     par_type=$(_get_parameter_value "$parameters" "type")
 
     # Check if there are input files
@@ -475,49 +530,8 @@ _get_files() {
 
     # Select only valid files
     for input_file in $input_files; do
-
-        # Validation for files
-        if [[ -f "$input_file" ]]; then
-
-            file_extension=$(_get_filename_extension "$input_file")
-            file_extension=${file_extension,,} # Lowercase file extension
-            file_mime=$(file --brief --mime-type "$input_file")
-            file_encoding=$(file --brief --mime-encoding "$input_file")
-
-            if [[ -n "$par_skip_extension" ]]; then
-                _has_string_in_list "$file_extension" "$par_skip_extension" && continue
-            fi
-
-            if [[ -n "$par_skip_encoding" ]]; then
-                _has_string_in_list "$file_encoding" "$par_skip_encoding" && continue
-            fi
-
-            if [[ -n "$par_skip_mime" ]]; then
-                _has_string_in_list "$file_mime" "$par_skip_mime" && continue
-            fi
-
-            if [[ -n "$par_extension" ]]; then
-                _has_string_in_list "$file_extension" "$par_extension" || continue
-            fi
-
-            if [[ -n "$par_encoding" ]]; then
-                _has_string_in_list "$file_encoding" "$par_encoding" || continue
-            fi
-
-            if [[ -n "$par_mime" ]]; then
-                _has_string_in_list "$file_mime" "$par_mime" || continue
-            fi
-
-            if [[ "$par_type" == "directory" ]]; then
-                continue
-            fi
-
-        # Validation for directories
-        elif [[ -d "$input_file" ]]; then
-
-            if [[ "$par_type" == "file" ]]; then
-                continue
-            fi
+        if ! _is_valid_file "$input_file" "$parameters"; then
+            continue
         fi
 
         # Add the valid file in the final list 'output_files'
