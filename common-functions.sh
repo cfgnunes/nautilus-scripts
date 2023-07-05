@@ -435,6 +435,7 @@ _get_files() {
             return 0
         fi
 
+        # TODO: Add a GUI box to add directories
         # Try selecting the files by opening a file selection box
         input_files=$(_display_file_selection_box)
         if [[ -z "$input_files" ]]; then
