@@ -434,7 +434,7 @@ _is_valid_file() {
 
     # Create a temp file with containing the name of the valid file
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_VALID_FILES")
-    echo "$input_file" >"$temp_file"
+    echo -n "$input_file$FILENAME_SEPARATOR" >"$temp_file"
 
     return 0
 }
@@ -525,6 +525,7 @@ _get_files() {
     export -f _get_parameter_value
     export -f _has_string_in_list
     export -f _is_valid_file
+    export FILENAME_SEPARATOR
     export TEMP_DIR_VALID_FILES
     echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
@@ -533,14 +534,12 @@ _get_files() {
         bash -c "_is_valid_file \"{}\" \"$parameters\""
 
     # Compile valid files in a single list 'output_files'
-    for temp_file in "$TEMP_DIR_VALID_FILES/"*; do
-        valid_files_count=$((valid_files_count + 1))
-        output_files+=$(cat "$temp_file")
-        output_files+=$FILENAME_SEPARATOR
-    done
+    output_files=$(cat "$TEMP_DIR_VALID_FILES/"*)
 
     # Removes the last field separator
     output_files=${output_files%"$FILENAME_SEPARATOR"}
+
+    valid_files_count=$(find "$TEMP_DIR_VALID_FILES/" -type f -printf "-\n" | wc -l)
 
     # Check if there is at last one valid file
     if ((valid_files_count == 0)); then
