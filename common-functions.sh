@@ -473,7 +473,6 @@ _get_files() {
     local input_files=$1
     local parameters=$2
     local input_file=""
-    local input_files_expand=""
     local output_files=""
     local par_max_files=0
     local par_min_files=0
@@ -514,6 +513,7 @@ _get_files() {
 
     # Expand files in directories recursively.
     if [[ "$par_recursive" == "true" ]]; then
+        local input_files_expand=""
         for input_file in $input_files; do
             input_files_expand+=$(find -L "$input_file" ! -path "*.git/*" -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
         done
@@ -533,12 +533,7 @@ _get_files() {
         --replace="{}" \
         bash -c "_is_valid_file \"{}\" \"$parameters\""
 
-    # Compile valid files in a single list 'output_files'
-    output_files=$(cat "$TEMP_DIR_VALID_FILES/"*)
-
-    # Removes the last field separator
-    output_files=${output_files%"$FILENAME_SEPARATOR"}
-
+    # Count the number of valid files
     valid_files_count=$(find "$TEMP_DIR_VALID_FILES/" -type f -printf "-\n" | wc -l)
 
     # Check if there is at last one valid file
@@ -556,6 +551,12 @@ _get_files() {
         _display_error_box "Error: there are $valid_files_count files in the selection, but the maximum is $par_max_files!"
         _exit_script
     fi
+
+    # Compile valid files in a single list 'output_files'
+    output_files=$(cat "$TEMP_DIR_VALID_FILES/"*)
+
+    # Removes the last field separator
+    output_files=${output_files%"$FILENAME_SEPARATOR"}
 
     echo "$output_files"
 }
