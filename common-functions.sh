@@ -90,8 +90,8 @@ _check_result() {
     fi
 
     # Check if there is the word "Error" in stdout
-    if ! grep --quiet --ignore-case "[^\w]error" <<<"$input_file"; then
-        if grep --quiet --ignore-case "[^\w]error" <<<"$std_output"; then
+    if ! grep --quiet --ignore-case --perl-regexp "[^\w]error" <<<"$input_file"; then
+        if grep --quiet --ignore-case --perl-regexp "[^\w]error" <<<"$std_output"; then
             _write_log "Error: Word 'error' found in the standard output." "$input_file" "$std_output"
             return 1
         fi
