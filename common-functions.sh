@@ -639,6 +639,14 @@ _move_file() {
     local exit_code=0
     local par_when_conflict=""
 
+    # Check for empty parameters
+    if [[ -z "$file_src" ]]; then
+        return 1
+    fi
+    if [[ -z "$file_dst" ]]; then
+        return 1
+    fi
+
     # Add the './' prefix in the path
     if ! [[ "$file_src" == "/"* ]] && ! [[ "$file_src" == "./"* ]] && ! [[ "$file_src" == "." ]]; then
         file_src="./$file_src"
