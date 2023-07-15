@@ -19,7 +19,13 @@ _main_task() {
 
     # Run the main process
     output_file=$(_get_output_file "$input_file" "$output_dir" "tar.gz")
-    std_output=$(tar -czf "$output_file" "$input_file" 2>&1)
+    if [[ -d "$input_file" ]]; then
+        cd "$input_file" || return 1
+        std_output=$(tar -czf "$output_file" -- * .[^.]* 2>&1)
+    else
+        std_output=$(tar -czf "$output_file" "$input_file" 2>&1)
+    fi
+
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
