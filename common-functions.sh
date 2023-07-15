@@ -441,12 +441,12 @@ _is_valid_file() {
 
 _get_filename_extension() {
     local filename=$1
-    grep --only-matching --perl-regexp "(\.tar)?\.[^./]*$" <<<"$filename"
+    grep --ignore-case --perl-regexp --only-matching "(\.tar)?\.[a-z0-9_~-]*$" <<<"$filename"
 }
 
 _get_filename_without_extension() {
     local filename=$1
-    sed -r "s|(\.tar)?\.[^./]*$||" <<<"$filename"
+    sed -r "s|(\.tar)?\.[a-z0-9_~-]*$||i" <<<"$filename"
 }
 
 _get_filename_suffix() {
