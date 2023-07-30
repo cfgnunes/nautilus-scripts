@@ -558,12 +558,14 @@ _get_files() {
     output_files=$(cat "$TEMP_DIR_VALID_FILES/"*)
 
     # Sort the list by filename
-    output_files=$(sed -z "s|\n|//|g" <<<"$output_files")
-    output_files=$(sed "s|//$||" <<<"$output_files")
-    output_files=$(sed -z "s|$FILENAME_SEPARATOR|\n|g" <<<"$output_files")
-    output_files=$(sort --version-sort <<<"$output_files")
-    output_files=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$output_files")
-    output_files=$(sed -z "s|//|\n|g" <<<"$output_files")
+    if ((valid_files_count > 1)); then
+        output_files=$(sed -z "s|\n|//|g" <<<"$output_files")
+        output_files=$(sed "s|//$||" <<<"$output_files")
+        output_files=$(sed -z "s|$FILENAME_SEPARATOR|\n|g" <<<"$output_files")
+        output_files=$(sort --version-sort <<<"$output_files")
+        output_files=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$output_files")
+        output_files=$(sed -z "s|//|\n|g" <<<"$output_files")
+    fi
 
     # Removes the last field separator
     output_files=${output_files%"$FILENAME_SEPARATOR"}
