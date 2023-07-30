@@ -557,9 +557,6 @@ _get_files() {
     # Compile valid files in a single list 'output_files'
     output_files=$(cat "$TEMP_DIR_VALID_FILES/"*)
 
-    # Removes the last field separator
-    output_files=${output_files%"$FILENAME_SEPARATOR"}
-
     # Sort the list by filename
     output_files=$(sed -z "s|\n|//|g" <<<"$output_files")
     output_files=$(sed "s|//$||" <<<"$output_files")
@@ -567,6 +564,9 @@ _get_files() {
     output_files=$(sort --version-sort <<<"$output_files")
     output_files=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$output_files")
     output_files=$(sed -z "s|//|\n|g" <<<"$output_files")
+
+    # Removes the last field separator
+    output_files=${output_files%"$FILENAME_SEPARATOR"}
 
     echo "$output_files"
 }
