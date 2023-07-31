@@ -23,5 +23,6 @@ std_output=$(
         "[^ \w\t\n\r\-\,\;\:\!\?\.\'\"\(\)\[\]\{\}\@\*\/\\\&\#\%\`\^\+\<\=\>\|\~\$áàâãçéêíóôõú\“\”®§©ªº°¹²³«»´¢£µ]" \
         -- $input_files /dev/null
 )
+std_output=$(sed "s|$PWD/||g" <<<"$std_output") # Remove dir $PWD of the filename
 
 _display_text_box "$std_output"

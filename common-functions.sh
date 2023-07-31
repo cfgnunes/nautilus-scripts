@@ -245,7 +245,10 @@ _display_result_box() {
 
         # Check if output directory still exists
         if [[ -d "$output_dir" ]]; then
-            _display_info_box "Task finished! The output files are in '$output_dir'."
+            local output_dir_simple=""
+            output_dir_simple=$(sed "s|$PWD/||g" <<<"$output_dir")
+            output_dir_simple=$(sed "s|$HOME/|~/|g" <<<"$output_dir_simple")
+            _display_info_box "Task finished! The output files are in '$output_dir_simple'."
         else
             _display_info_box "Task finished, but there are no output files!"
         fi
