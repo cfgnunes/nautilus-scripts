@@ -17,7 +17,7 @@ temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
 
 # Run the main process
 # shellcheck disable=SC2086
-rdfind -dryrun true -outputname "$temp_file" -- $input_files &>/dev/null
+rdfind -dryrun true -outputname "$temp_file" $input_files &>/dev/null
 std_output=$(grep -v "^#" <"$temp_file")
 std_output=$(grep -v ".*\.git/.*" <<<"$std_output")
 std_output=$(cut -d ' ' -f 1,8- <<<"$std_output")
