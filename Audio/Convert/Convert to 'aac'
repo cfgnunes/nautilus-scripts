@@ -19,7 +19,7 @@ _main_task() {
 
     # Run the main process
     output_file=$(_get_output_file "$input_file" "$output_dir" "aac")
-    std_output=$(ffmpeg -threads 4 -y -i "$input_file" -vn -ac 2 "$output_file" 2>&1)
+    std_output=$(ffmpeg -threads 4 -y -i "$input_file" -vn -ac 2 -- "$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

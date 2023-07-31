@@ -12,6 +12,6 @@ input_files=$(_get_files "$*" "type=file; recursive=true")
 
 # Run the main process
 # shellcheck disable=SC2086
-std_output=$(sha1sum $input_files)
+std_output=$(sha1sum -- $input_files)
 
 _display_text_box "$std_output"

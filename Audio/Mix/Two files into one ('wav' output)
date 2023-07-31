@@ -24,7 +24,7 @@ _task() {
 
     # Run the main process
     output_file="$output_dir/mixed-audio.wav"
-    std_output=$(ffmpeg -threads 4 -y -i "$input_file_1" -i "$input_file_2" -filter_complex "amix=inputs=2:duration=longest" "$output_file" 2>&1)
+    std_output=$(ffmpeg -threads 4 -y -i "$input_file_1" -i "$input_file_2" -filter_complex "amix=inputs=2:duration=longest" -- "$output_file" 2>&1)
     _check_result "$?" "$std_output" "" "$output_file" || return 1
 }
 

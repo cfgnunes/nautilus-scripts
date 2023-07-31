@@ -22,7 +22,7 @@ _main_task() {
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
 
     # Run the main process
-    std_output=$(iconv -f "$(file --brief --mime-encoding "$input_file")" "$input_file" -t utf-8 -o "$temp_file")
+    std_output=$(iconv -f "$(file --brief --mime-encoding -- "$input_file")" "$input_file" -t utf-8 -o "$temp_file")
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     # Move the temporary file to the output

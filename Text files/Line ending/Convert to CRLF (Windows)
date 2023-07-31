@@ -22,7 +22,7 @@ _main_task() {
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
 
     # Run the main process
-    std_output=$(perl -pe 's/\r\n|\n|\r/\r\n/g' "$input_file" >"$temp_file")
+    std_output=$(perl -pe 's/\r\n|\n|\r/\r\n/g' -- "$input_file" >"$temp_file")
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     # Move the temporary file to the output

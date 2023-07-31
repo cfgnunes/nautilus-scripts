@@ -20,7 +20,7 @@ _task() {
     # Run the main process
     output_file="$output_dir/animated-image.gif"
     # shellcheck disable=SC2086
-    std_output=$(convert -delay 100 -loop 0 $input_files "$output_file" 2>&1)
+    std_output=$(convert -delay 100 -loop 0 -- $input_files "$output_file" 2>&1)
     _check_result "$?" "$std_output" "" "$output_file" || return 1
 }
 

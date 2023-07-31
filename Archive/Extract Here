@@ -49,14 +49,14 @@ _main_task() {
     local temp_dir_output=""
 
     if [[ -z "$output_dir" ]]; then
-        output_dir=$(dirname "$input_file")
+        output_dir=$(dirname -- "$input_file")
     fi
 
     # Get the full path of the file
-    input_file=$(readlink -f "$input_file")
+    input_file=$(readlink -f -- "$input_file")
 
     # Extract files into a temporary directory
-    filename=$(basename "$input_file")
+    filename=$(basename -- "$input_file")
     filename=$(_get_filename_without_extension "$filename")
     temp_dir_output=$(mktemp --directory --tmpdir="$output_dir" "tmp.$filename.XXXXXXXXXX")
 
@@ -74,21 +74,21 @@ _main_task() {
     *.tar.xz | *.txz) std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
     *.tar.Z | *.taz) std_output=$(tar --extract --gzip --file="$input_file" 2>&1) ;;
     *.tar.zst | *.tzst) std_output=$(tar --extract --zstd --file="$input_file" 2>&1) ;;
-    *.7z) std_output=$(7z x -aoa "$input_file" 2>&1) ;;
-    *.bz) std_output=$(bunzip2 "$input_file" 2>&1) ;;
-    *.bz2) std_output=$(bunzip2 "$input_file" 2>&1) ;;
-    *.deb) std_output=$(ar x "$input_file" 2>&1) ;;
-    *.gz) std_output=$(gunzip "$input_file" 2>&1) ;;
-    *.lha) std_output=$(lha -x "$input_file" 2>&1) ;;
-    *.lzma) std_output=$(unlzma "$input_file" 2>&1) ;;
-    *.lzip) std_output=$(lzip -d "$input_file" 2>&1) ;;
-    *.lzop) std_output=$(lzop -d "$input_file" 2>&1) ;;
-    *.rar) std_output=$(unrar x "$input_file" 2>&1) ;;
+    *.7z) std_output=$(7z x -aoa -- "$input_file" 2>&1) ;;
+    *.bz) std_output=$(bunzip2 -- "$input_file" 2>&1) ;;
+    *.bz2) std_output=$(bunzip2 -- "$input_file" 2>&1) ;;
+    *.deb) std_output=$(ar x -- "$input_file" 2>&1) ;;
+    *.gz) std_output=$(gunzip -- "$input_file" 2>&1) ;;
+    *.lha) std_output=$(lha -x -- "$input_file" 2>&1) ;;
+    *.lzma) std_output=$(unlzma -- "$input_file" 2>&1) ;;
+    *.lzip) std_output=$(lzip -d -- "$input_file" 2>&1) ;;
+    *.lzop) std_output=$(lzop -d -- "$input_file" 2>&1) ;;
+    *.rar) std_output=$(unrar x -- "$input_file" 2>&1) ;;
     *.tar) std_output=$(tar --extract --file="$input_file" 2>&1) ;;
-    *.xz) std_output=$(unxz "$input_file" 2>&1) ;;
-    *.Z) std_output=$(uncompress "$input_file" 2>&1) ;;
-    *.zst) std_output=$(zstd --decompress "$input_file" 2>&1) ;;
-    *) std_output=$(7z x -aoa "$input_file" 2>&1) ;;
+    *.xz) std_output=$(unxz -- "$input_file" 2>&1) ;;
+    *.Z) std_output=$(uncompress -- "$input_file" 2>&1) ;;
+    *.zst) std_output=$(zstd --decompress -- "$input_file" 2>&1) ;;
+    *) std_output=$(7z x -aoa -- "$input_file" 2>&1) ;;
     esac
 
     # Check for result errors

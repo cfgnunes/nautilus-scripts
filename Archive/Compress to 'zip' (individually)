@@ -23,7 +23,7 @@ _main_task() {
         cd "$input_file" || return 1
         std_output=$(zip -9 --recurse-paths "$output_file" -- * .[^.]* 2>&1)
     else
-        std_output=$(zip -9 --recurse-paths "$output_file" "$input_file" 2>&1)
+        std_output=$(zip -9 --recurse-paths "$output_file" -- "$input_file" 2>&1)
     fi
 
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1

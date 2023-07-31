@@ -16,7 +16,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process
-    std_output=$(lpr "$input_file" 2>&1)
+    std_output=$(lpr -- "$input_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 }
 
