@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+# Initial checks
+_check_dependencies "tar"
+_display_wait_box
+input_files=$(_get_files "$*" "type=all")
+output_dir=$(_get_output_dir)
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+
+    # Run the main process
+    output_file=$(_get_output_file "$input_file" "$output_dir" "tar.xz")
+    if [[ -d "$input_file" ]]; then
+        cd -- "$input_file" || return 1
+        std_output=$(tar -cJf "$output_file" -- * .[^.]* 2>&1)
+    else
+        std_output=$(tar -cJf "$output_file" -- "$input_file" 2>&1)
+    fi
+
+    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+}
+
+_run_main_task_parallel "$input_files" "$output_dir"
+_display_result_box "$output_dir"
