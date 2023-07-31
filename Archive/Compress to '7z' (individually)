@@ -20,7 +20,7 @@ _main_task() {
     # Run the main process
     output_file=$(_get_output_file "$input_file" "$output_dir" "7z")
     if [[ -d "$input_file" ]]; then
-        cd "$input_file" || return 1
+        cd -- "$input_file" || return 1
         std_output=$(7z a -mx9 "$output_file" -- * .[^.]* 2>&1)
     else
         std_output=$(7z a -mx9 "$output_file" -- "$input_file" 2>&1)
