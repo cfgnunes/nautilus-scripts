@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC2001
+
 # Import the script 'common-functions.sh'
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
@@ -12,6 +14,7 @@ input_files=$(_get_files "$*" "type=all; recursive=true")
 # Run the main process
 # shellcheck disable=SC2086
 std_output=$(stat -c "%a %U %G %F: \"%n\"" -- $input_files)
-std_output=$(sort --version-sort <<<"$std_output")
+std_output=$(sed "s|$PWD/||g" <<<"$std_output")    # Remove dir $PWD of the filename
+std_output=$(sort --version-sort <<<"$std_output") # Sort the result
 
 _display_text_box "$std_output"
