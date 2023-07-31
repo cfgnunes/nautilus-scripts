@@ -513,6 +513,14 @@ _get_files() {
         fi
     fi
 
+    # Get the full path of each input_file.
+    local input_files_full=""
+    for input_file in $input_files; do
+        input_files_full+=$(readlink -f -- "$input_file" 2>/dev/null)
+        input_files_full+=$FILENAME_SEPARATOR
+    done
+    input_files=$input_files_full
+
     # Expand files in directories recursively.
     if [[ "$par_recursive" == "true" ]]; then
         local input_files_expand=""
@@ -641,7 +649,7 @@ _get_parameter_value() {
 }
 
 _get_script_name() {
-    basename "$0"
+    basename -- "$0"
 }
 
 _move_file() {
