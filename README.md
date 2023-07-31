@@ -27,6 +27,11 @@ To install in GNOME Files (Nautilus), Caja or Nemo, just run the following comma
 bash install.sh
 ```
 
+## Known issues
+
+- Doesn't support filenames with '%';
+- Doesn't support very long list of input files (Argument list too long).
+
 ## Contributing
 
 If you spot a bug, or want to improve the code, or even improve the content, you can do the following:
