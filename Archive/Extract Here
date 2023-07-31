@@ -52,9 +52,6 @@ _main_task() {
         output_dir=$(dirname -- "$input_file")
     fi
 
-    # Get the full path of the file
-    input_file=$(readlink -f -- "$input_file")
-
     # Extract files into a temporary directory
     filename=$(basename -- "$input_file")
     filename=$(_get_filename_without_extension "$filename")
