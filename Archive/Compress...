@@ -11,4 +11,4 @@ input_files=$(_get_files "$*" "type=all")
 
 # Run the main process
 # shellcheck disable=SC2086
-file-roller --add $input_files &
+file-roller --add -- $input_files &

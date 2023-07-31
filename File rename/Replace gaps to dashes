@@ -17,8 +17,8 @@ _main_task() {
     local dir=""
     local filename=""
 
-    dir=$(dirname "$input_file")
-    filename=$(basename "$input_file")
+    dir=$(dirname -- "$input_file")
+    filename=$(basename -- "$input_file")
 
     # Run the main process
     output_file=$(sed "s|[_ \t][_ \t]*|-|g;s|--*|-|g" <<<"$filename")

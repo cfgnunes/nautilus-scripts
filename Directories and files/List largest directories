@@ -12,7 +12,7 @@ input_files=$(_get_files "$*" "type=directory; get_pwd_if_no_selection=true")
 
 # Run the main process
 # shellcheck disable=SC2086
-std_output=$(du -h $input_files 2>/dev/null)
+std_output=$(du -h -- $input_files 2>/dev/null)
 std_output=$(sort -h -r <<<"$std_output")
 std_output=$(head -n 10 <<<"$std_output")
 std_output=$(sed -r "s|\t(.*)|\t\"\1\"|" <<<"$std_output")

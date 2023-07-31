@@ -21,7 +21,7 @@ std_output=$(
         --only-matching \
         --line-number \
         "[^ \w\t\n\r\-\,\;\:\!\?\.\'\"\(\)\[\]\{\}\@\*\/\\\&\#\%\`\^\+\<\=\>\|\~\$áàâãçéêíóôõú\“\”®§©ªº°¹²³«»´¢£µ]" \
-        $input_files /dev/null
+        -- $input_files /dev/null
 )
 
 _display_text_box "$std_output"

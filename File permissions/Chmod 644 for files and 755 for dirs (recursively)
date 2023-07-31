@@ -16,9 +16,9 @@ _main_task() {
 
     # Run the main process
     if [[ -f "$input_file" ]]; then
-        std_output=$(chmod --recursive 644 "$input_file" 2>&1)
+        std_output=$(chmod --recursive 644 -- "$input_file" 2>&1)
     elif [[ -d "$input_file" ]]; then
-        std_output=$(chmod --recursive 755 "$input_file" 2>&1)
+        std_output=$(chmod --recursive 755 -- "$input_file" 2>&1)
     fi
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 }

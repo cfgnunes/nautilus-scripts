@@ -11,7 +11,7 @@ input_files=$(_get_files "$*" "type=all; recursive=true")
 
 # Run the main process
 # shellcheck disable=SC2086
-std_output=$(stat -c "%a %U %G %F: \"%n\"" $input_files)
+std_output=$(stat -c "%a %U %G %F: \"%n\"" -- $input_files)
 std_output=$(sort --version-sort <<<"$std_output")
 
 _display_text_box "$std_output"

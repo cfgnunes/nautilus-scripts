@@ -14,7 +14,7 @@ input_files=$(_get_files "$*" "type=file; recursive=true")
 
 # Run the main process
 # shellcheck disable=SC2086
-std_output=$(file --separator "//" --no-pad $input_files 2>/dev/null)
+std_output=$(file --separator "//" --no-pad -- $input_files 2>/dev/null)
 std_output=$(sed "s|\(.*\)// *\(.*\)|\2: \"\1\"|" <<<"$std_output")
 std_output=$(sort --version-sort <<<"$std_output")
 

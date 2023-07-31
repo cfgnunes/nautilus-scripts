@@ -12,7 +12,7 @@ input_files=$(_get_files "$*" "type=all; min_files=2; max_files=2")
 
 # Run the main process
 # shellcheck disable=SC2086
-std_output=$(diff --brief --recursive $input_files)
+std_output=$(diff --brief --recursive -- $input_files)
 std_output=$(sort --version-sort <<<"$std_output")
 
 _display_text_box "$std_output"

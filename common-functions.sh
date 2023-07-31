@@ -395,8 +395,8 @@ _is_valid_file() {
 
         file_extension=$(_get_filename_extension "$input_file")
         file_extension=${file_extension,,} # Lowercase file extension
-        file_mime=$(file --brief --mime-type "$input_file")
-        file_encoding=$(file --brief --mime-encoding "$input_file")
+        file_mime=$(file --brief --mime-type -- "$input_file")
+        file_encoding=$(file --brief --mime-encoding -- "$input_file")
 
         if [[ -n "$par_skip_extension" ]]; then
             _has_string_in_list "$file_extension" "$par_skip_extension" && return 1
@@ -601,7 +601,7 @@ _get_output_file() {
     local output_file=""
     local filename=""
 
-    filename=$(basename "$input_file")
+    filename=$(basename -- "$input_file")
     output_file="$output_dir/"
 
     if [[ -z "$extension" ]]; then # Same extension
@@ -699,7 +699,7 @@ _move_file() {
     esac
 
     # Move the file
-    mv -f "$file_src" "$file_dst"
+    mv -f -- "$file_src" "$file_dst"
     exit_code=$?
 
     return "$exit_code"
@@ -712,7 +712,7 @@ _move_temp_file_to_output() {
     local std_output=""
 
     # Check if the result file is different from the input file, then replace it
-    if ! cmp --silent "$input_file" "$temp_file"; then
+    if ! cmp --silent -- "$input_file" "$temp_file"; then
 
         # If 'input_file' is same as 'output_file', create a backup
         if [[ "$input_file" == "$output_file" ]]; then
@@ -728,7 +728,7 @@ _move_temp_file_to_output() {
         _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 
         # Preserve the same permissions of 'input_file'
-        std_output=$(chmod --reference="$input_file" "$output_file" 2>&1)
+        std_output=$(chmod --reference="$input_file" -- "$output_file" 2>&1)
         _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
     fi
 
