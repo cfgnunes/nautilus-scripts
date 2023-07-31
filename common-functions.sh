@@ -544,7 +544,7 @@ _get_files() {
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(nproc --all --ignore=1)" \
         --replace="{}" \
-        bash -c "_is_valid_file \"{}\" \"$parameters\""
+        bash -c "_is_valid_file '{}' '$parameters'"
 
     # Count the number of valid files
     valid_files_count=$(find "$TEMP_DIR_VALID_FILES/" -type f -printf "-\n" | wc -l)
@@ -782,7 +782,7 @@ _run_main_task_parallel() {
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(nproc --all --ignore=1)" \
         --replace="{}" \
-        bash -c "_main_task \"{}\" \"$output_dir\""
+        bash -c "_main_task '{}' '$output_dir'"
 }
 
 _write_log() {
