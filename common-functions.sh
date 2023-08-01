@@ -540,6 +540,7 @@ _get_files() {
     export -f _is_valid_file
     export FILENAME_SEPARATOR
     export TEMP_DIR_VALID_FILES
+    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
     echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(nproc --all --ignore=1)" \
@@ -778,6 +779,7 @@ _run_main_task_parallel() {
     export -f _write_log
 
     # Run '_main_task' for each file in parallel using 'xargs'
+    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
     echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(nproc --all --ignore=1)" \
