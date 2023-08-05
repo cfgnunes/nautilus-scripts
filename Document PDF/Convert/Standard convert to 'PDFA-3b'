@@ -19,7 +19,7 @@ _main_task() {
 
     # Run the main process
     output_file=$(_get_output_file "$input_file" "$output_dir" "")
-    std_output=$(gs -q -dNOPAUSE -dBATCH -dPDFA=3 -dUseCIEColor -sProcessColorModel=DeviceCMYK -sDEVICE=pdfwrite -sPDFACompatibilityPolicy=1 -sOutputFile="$output_file" -- "$input_file" 2>&1)
+    std_output=$(gs -q -dNOPAUSE -dBATCH -dPDFA=3 -dPDFACompatibilityPolicy=1 -sColorConversionStrategy=UseDeviceIndependentColor -sDEVICE=pdfwrite -sOutputFile="$output_file" -- "$input_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
