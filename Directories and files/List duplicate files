@@ -12,15 +12,9 @@ _check_dependencies "jdupes"
 _display_wait_box
 input_files=$(_get_files "$*" "type=all")
 
-# Work on a temporary file
-temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-
 # Run the main process
 # shellcheck disable=SC2086
 std_output=$(jdupes --recurse -X nostr:/.git/ -- $input_files 2>/dev/null)
 std_output=$(sed "s|$PWD/||g" <<<"$std_output") # Remove dir $PWD of the filename
-
-# Remove the temporary files
-rm -rf "$temp_file"
 
 _display_text_box "$std_output"
