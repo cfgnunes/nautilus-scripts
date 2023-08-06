@@ -518,31 +518,37 @@ _get_files() {
         fi
     fi
 
-    # Get the full path of each input_file.
+    local input_files_final=""
     local input_files_full=""
     for input_file in $input_files; do
-        input_files_full+=$(readlink -f -- "$input_file" 2>/dev/null)
-        input_files_full+=$FILENAME_SEPARATOR
+        # Get the full path of each input_file.
+        input_files_full=$(readlink -f -- "$input_file" 2>/dev/null)
+
+        # Expand files in directories recursively.
+        if [[ "$par_recursive" == "true" ]] && [[ -d "$input_files_full" ]]; then
+            input_files_final+=$(find -L "$input_files_full" ! -path "*.git/*" -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
+        else
+            input_files_final+=$input_files_full
+            input_files_final+=$FILENAME_SEPARATOR
+        fi
     done
-    input_files=$input_files_full
+    input_files=$input_files_final
 
-    # Expand files in directories recursively.
-    if [[ "$par_recursive" == "true" ]]; then
-        local input_files_expand=""
-        for input_file in $input_files; do
-            input_files_expand+=$(find -L "$input_file" ! -path "*.git/*" -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
-        done
-        input_files=$input_files_expand
-    fi
+    # Removes the last field separator
+    input_files=${input_files%"$FILENAME_SEPARATOR"}
 
-    # Run '_is_valid_file' for each file in parallel using 'xargs'
+    # Allows the symbol "'" in filenames
+    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
+
+    # Export variables and functions to use inside a new shell (using 'xargs')
     export -f _get_filename_extension
     export -f _get_parameter_value
     export -f _has_string_in_list
     export -f _is_valid_file
     export FILENAME_SEPARATOR
     export TEMP_DIR_VALID_FILES
-    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
+
+    # Run '_is_valid_file' for each file in parallel (using 'xargs')
     echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(nproc --all --ignore=1)" \
@@ -762,7 +768,10 @@ _run_main_task_parallel() {
     local input_files=$1
     local output_dir=$2
 
-    # Export variables and functions to use inside a new shell
+    # Allows the symbol "'" in filenames
+    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
+
+    # Export variables and functions to use inside a new shell (using 'xargs')
     export task_data
     export TEMP_DIR_LOG
     export TEMP_DIR_TASK
@@ -780,8 +789,7 @@ _run_main_task_parallel() {
     export -f _move_temp_file_to_output
     export -f _write_log
 
-    # Run '_main_task' for each file in parallel using 'xargs'
-    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
+    # Run '_main_task' for each file in parallel (using 'xargs')
     echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(nproc --all --ignore=1)" \
