@@ -8,7 +8,7 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
 # Initial checks
-_check_dependencies "rdfind"
+_check_dependencies "jdupes"
 _display_wait_box
 input_files=$(_get_files "$*" "type=all")
 
@@ -17,15 +17,8 @@ temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
 
 # Run the main process
 # shellcheck disable=SC2086
-rdfind -dryrun true -outputname "$temp_file" $input_files &>/dev/null
-std_output=$(grep -v "^#" <"$temp_file")            # Remove empty lines
-std_output=$(sed "s|$PWD/||g" <<<"$std_output")     # Remove dir $PWD of the filename
-std_output=$(grep -v ".*\.git/.*" <<<"$std_output") # Ignore files in ".git" folder
-std_output=$(cut -d ' ' -f 1,8- <<<"$std_output")
-std_output=$(sed "s|\([^ ]*\)[ \t]*\(.*\)|\1 \"\2\"|" <<<"$std_output")
-std_output=$(sed "s|DUPTYPE_FIRST_OCCURRENCE|\nDUPTYPE_FIRST_OCCURRENCE|" <<<"$std_output")
-std_output=$(cut -d ' ' -f 2- <<<"$std_output")
-std_output=$(grep -v "\"\"" <<<"$std_output")
+std_output=$(jdupes --recurse -X nostr:/.git/ -- $input_files 2>/dev/null)
+std_output=$(sed "s|$PWD/||g" <<<"$std_output") # Remove dir $PWD of the filename
 
 # Remove the temporary files
 rm -rf "$temp_file"
