@@ -46,4 +46,4 @@ _main_task() {
 }
 
 _run_main_task_parallel "$(_get_repositories_from_clipboard)" "$output_dir"
-_display_result_box ""
+_display_result_box "$output_dir"

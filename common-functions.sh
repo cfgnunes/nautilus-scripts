@@ -241,7 +241,9 @@ _display_result_box() {
     # If output_dir parameter is defined
     if [[ -n "$output_dir" ]]; then
         # Try to remove the output directory (if it is empty)
-        rmdir "$output_dir" &>/dev/null
+        if [[ "$output_dir" == *"/$PREFIX_OUTPUT_DIR"* ]]; then
+            rmdir "$output_dir" &>/dev/null
+        fi
 
         # Check if output directory still exists
         if [[ -d "$output_dir" ]]; then
