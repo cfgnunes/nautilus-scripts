@@ -21,7 +21,8 @@ _get_repositories_from_clipboard() {
     repositories+=$(xclip -quiet -selection clipboard -o)
     repositories+=$'\n'
     repositories=$(sort -u <<<"$repositories")
-    repositories=$(grep "\.git$" <<<"$repositories")
+    repositories=$(grep "/" <<<"$repositories")
+    repositories=$(grep "\.git" <<<"$repositories")
     repositories=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$repositories")
     repositories=${repositories%"$FILENAME_SEPARATOR"}
 
