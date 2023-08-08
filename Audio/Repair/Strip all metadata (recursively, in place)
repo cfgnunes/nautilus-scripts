@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+# Initial checks
+_check_dependencies "mp3gain"
+_display_wait_box
+input_files=$(_get_files "$*" "type=file; recursive=true; mime=audio/mpeg; skip_extension=bak")
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local backup_file=""
+    local output_file=""
+    local std_output=""
+    local temp_file=""
+
+    # Work on a temporary file
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")$(_get_filename_extension "$input_file")
+
+    # Run the main process
+    std_output=$(ffmpeg -threads 4 -y -i "$input_file" -map_metadata -1 -c:v copy -c:a copy -- "$temp_file" 2>&1)
+    _check_result "$?" "$std_output" "$input_file" "" || return 1
+
+    # Move the temporary file to the output
+    output_file=$input_file
+    _move_temp_file_to_output "$input_file" "$temp_file" "$output_file" || return 1
+
+    # Remove the temporary files on each iteration (if not removed before)
+    rm -rf "$temp_file"
+}
+
+_run_main_task_parallel "$input_files" ""
+_display_result_box ""
