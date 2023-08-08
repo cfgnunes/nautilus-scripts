@@ -731,6 +731,11 @@ _move_temp_file_to_output() {
     local output_file=$3
     local std_output=""
 
+    # Skip empty files
+    if [[ ! -s "$temp_file" ]]; then
+        return 1
+    fi
+
     # Check if the result file is different from the input file, then replace it
     if ! cmp --silent -- "$input_file" "$temp_file"; then
 
