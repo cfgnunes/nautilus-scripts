@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+# Initial checks
+_check_dependencies "cksum(coreutils)"
+_display_wait_box
+input_files=$(_get_files "$*" "type=file; recursive=true")
+
+# Run the main process
+# shellcheck disable=SC2086
+std_output=$(cksum -- $input_files)
+# shellcheck disable=SC2001
+std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove dir $PWD of the filename
+
+_display_text_box "$std_output"
