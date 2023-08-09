@@ -15,7 +15,7 @@ input_files=$(_get_files "$*" "type=file; recursive=true; mime=text,application;
 # Run the main process
 # shellcheck disable=SC2086
 std_output=$(file --separator "//" --no-pad $input_files)
-std_output=$(sed "s|$PWD/||g" <<<"$std_output") # Remove dir $PWD of the filename
+std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove dir $PWD of the filename
 std_output=$(sed "s|//.*with CRLF, CR, LF line.*|// CRLF+CR+LF (windows)|" <<<"$std_output")
 std_output=$(sed "s|//.*with CRLF, LF line.*|// CRLF+LF (windows)|" <<<"$std_output")
 std_output=$(sed "s|//.*with CRLF, CR line.*|// CRLF+CR (windows)|" <<<"$std_output")

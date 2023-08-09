@@ -26,7 +26,7 @@ _main_task() {
     else
         local input_file_relative=""
         # shellcheck disable=SC2001
-        input_file_relative=$(sed "s|$PWD/||g" <<<"$input_file")
+        input_file_relative=$(sed "s|$PWD/|./|g" <<<"$input_file")
         std_output=$(tar -czf "$output_file" -- "$input_file_relative" 2>&1)
     fi
 
