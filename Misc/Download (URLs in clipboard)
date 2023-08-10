@@ -22,9 +22,9 @@ _get_urls_from_clipboard() {
     urls+=$'\n'
     urls+=$(xclip -quiet -selection clipboard -o)
     urls+=$'\n'
-    urls=$(sed "s|[ \t]*\(\r*\)$|\1|" <<<"$urls") # Remove spaces after
-    urls=$(sed "s|^\(\r*\)[ \t]*|\1|" <<<"$urls") # Remove spaces before
-    urls=$(grep -v " " <<<"$urls")                # Remove lines with spaces
+    urls=$(sed "s|[ \t]*\(\r*\)$|\1|g" <<<"$urls") # Remove spaces after
+    urls=$(sed "s|^\(\r*\)[ \t]*|\1|g" <<<"$urls") # Remove spaces before
+    urls=$(grep -v " " <<<"$urls")                 # Remove lines with spaces
     urls=$(grep "^http" <<<"$urls")
     urls=$(sort -u <<<"$urls")
     urls=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$urls")
