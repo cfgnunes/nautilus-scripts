@@ -1,8 +1,9 @@
 F4 Terminal
 F3 Visual Studio Code
 F7 Disk Usage Analyzer
+<Control>D Download (URLs in clipboard)
 <Control>E Extract Here
-<Control>G Git clone from clipboard
+<Control>G Git clone (URLs in clipboard)
 <Control>K Compress...
 <Control>M Compare with Meld
 <Control>Y List file information

@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+# Initial checks
+_check_dependencies "git xclip"
+_display_wait_box
+input_files=$(_get_files "$*" "type=directory; max_files=1; get_pwd_if_no_selection=true")
+output_dir=$input_files
+
+_get_urls_from_clipboard() {
+    local urls=""
+
+    urls+=$(xclip -quiet -selection primary -o)
+    urls+=$'\n'
+    urls+=$(xclip -quiet -selection secondary -o)
+    urls+=$'\n'
+    urls+=$(xclip -quiet -selection clipboard -o)
+    urls+=$'\n'
+    urls=$(grep "^http" <<<"$urls")
+    urls=$(sort -u <<<"$urls")
+    urls=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$urls")
+    urls=${urls%"$FILENAME_SEPARATOR"}
+
+    if [[ -z "$urls" ]]; then
+        _display_error_box "Error: there are GIT urls in the clipboard!"
+        _exit_script
+    fi
+
+    echo "$urls"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local std_output=""
+
+    cd "$output_dir" || return 1
+
+    # Run the main process
+    std_output=$(wget --connect-timeout=5 "$input_file" 2>&1)
+    _check_result "$?" "$std_output" "$input_file" "" || return 1
+}
+
+_run_main_task_parallel "$(_get_urls_from_clipboard)" "$output_dir"
+_display_result_box "$output_dir"
