@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+# Initial checks
+_check_dependencies "sha256sum"
+_display_wait_box
+input_files=$(_get_files "$*" "type=file; min_files=1; max_files=1; mime=text")
+output_dir=$PWD
+
+_verify_checksum() {
+    local line=$1
+    local saved_checksum=""
+    local file=""
+    local current_output=""
+    local current_checksum=""
+
+    output_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+
+    saved_checksum=$(echo "$line" | cut -d " " -f1)
+    file=$(echo "$line" | cut -d " " -f3- | sed "s|\r|'|g")
+
+    # If the file does not exist, report and skip the check
+    if [[ ! -e "$file" ]]; then
+        echo "[PROBLEM] File missing: $file" >>"$output_file"
+        return 1
+    fi
+
+    current_output=$(sha256sum -- "$file" 2>/dev/null)
+    current_checksum=$(echo "$current_output" | cut -d " " -f1)
+
+    # Compare
+    if [[ "$saved_checksum" != "$current_checksum" ]]; then
+        echo "[PROBLEM] Mismatch for the file: $file. Saved: $saved_checksum. Current: $current_checksum." >>"$output_file"
+        return 1
+    fi
+
+    return 0
+}
+
+cd "$output_dir" || _exit_script
+
+export -f _verify_checksum
+export TEMP_DIR_TASK
+sed "s|'|\r|g" "$input_files" | xargs --max-procs="$(nproc --all --ignore=1)" --replace="{}" bash -c "_verify_checksum '{}'"
+
+# Compile the result in a single file
+std_output=$(cat "$TEMP_DIR_TASK/"*)
+
+if [[ -z "$std_output" ]]; then
+    std_output="No errors found."
+fi
+
+_display_text_box "$std_output"
