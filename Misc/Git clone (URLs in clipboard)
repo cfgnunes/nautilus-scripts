@@ -12,26 +12,26 @@ input_files=$(_get_files "$*" "type=directory; max_files=1; get_pwd_if_no_select
 output_dir=$input_files
 
 _get_repositories_from_clipboard() {
-    local repositories=""
+    local urls=""
 
-    repositories+=$(xclip -quiet -selection primary -o)
-    repositories+=$'\n'
-    repositories+=$(xclip -quiet -selection secondary -o)
-    repositories+=$'\n'
-    repositories+=$(xclip -quiet -selection clipboard -o)
-    repositories+=$'\n'
-    repositories=$(sort -u <<<"$repositories")
-    repositories=$(grep "/" <<<"$repositories")
-    repositories=$(grep "\.git" <<<"$repositories")
-    repositories=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$repositories")
-    repositories=${repositories%"$FILENAME_SEPARATOR"}
+    urls+=$(xclip -quiet -selection primary -o)
+    urls+=$'\n'
+    urls+=$(xclip -quiet -selection secondary -o)
+    urls+=$'\n'
+    urls+=$(xclip -quiet -selection clipboard -o)
+    urls+=$'\n'
+    urls=$(grep "/" <<<"$urls")
+    urls=$(grep "\.git" <<<"$urls")
+    urls=$(sort -u <<<"$urls")
+    urls=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$urls")
+    urls=${urls%"$FILENAME_SEPARATOR"}
 
-    if [[ -z "$repositories" ]]; then
-        _display_error_box "Error: there are GIT repositories in the clipboard!"
+    if [[ -z "$urls" ]]; then
+        _display_error_box "Error: there are no valid URLs in the clipboard!"
         _exit_script
     fi
 
-    echo "$repositories"
+    echo "$urls"
 }
 
 _main_task() {
