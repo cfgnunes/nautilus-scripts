@@ -52,43 +52,42 @@ _main() {
     find -L "$install_dir" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
     find -L "$install_dir" -maxdepth 1 -type f ! -path "*.git/*" -exec chmod -x {} \;
 
-    echo " > Closing the file manager to reload its configurations..."
-    eval "$file_manager -q &>/dev/null" || true
-
-    read -r -p " > Would you like to install all dependencies for the scripts now? [Y/n]" answer
+    read -r -p " > Would you like to install some basic dependencies for the scripts now? [Y/n]" answer
     case "${answer,,}" in
     y | yes | "")
         echo " > Installing dependencies..."
-        _install_dependencies "baobab binutils bzip2 coreutils cups-bsd eog ffmpeg file-roller findimagedupes foremost ghostscript git gpg gzip imagemagick inkscape jdupes jpegoptim lame lhasa libc-bin lzip lzop meld mp3gain mp3val ocrmypdf optipng p7zip-full pandoc perl-base poppler-utils qpdf rhash squashfs-tools tar testdisk unrar xclip xz-utils zip zstd"
+        _install_dependencies
         ;;
     *)
         echo " > Skipping installation of dependencies..."
         ;;
     esac
 
+    echo " > Closing the file manager to reload its configurations..."
+    eval "$file_manager -q &>/dev/null" || true
+
     echo "Done!"
 }
 
 _install_dependencies() {
-    local packages=$1
-
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
-            sudo apt-get update
-            # shellcheck disable=SC2086
-            sudo apt-get -y install $packages
+            sudo apt-get update || true
+            # For: Debian, Ubuntu, Mint.
+            sudo apt-get -y install baobab binutils bzip2 coreutils eog file-roller foremost ghostscript gpg gzip imagemagick inkscape jdupes jpegoptim lame lzip lzop meld optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk unrar xclip zip zstd xz-utils p7zip-full libc-bin poppler-utils
         elif _command_exists "pacman"; then
-            sudo pacman -Syy
-            # shellcheck disable=SC2086
-            sudo pacman --noconfirm -S $packages
+            # For: Arch, Manjaro.
+            # Missing packages: jdupes
+            sudo pacman -Syy || true
+            sudo pacman --noconfirm -S baobab binutils bzip2 coreutils eog file-roller foremost ghostscript gzip imagemagick inkscape jpegoptim lame lzip lzop meld optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk unrar xclip zip zstd gnupg xz p7zip glibc poppler poppler-glib
         elif _command_exists "dnf"; then
-            sudo dnf check-update
-            # shellcheck disable=SC2086
-            sudo dnf -y install $packages
+            # For: Fedora.
+            sudo dnf check-update || true
+            sudo dnf -y install baobab binutils bzip2 coreutils eog file-roller foremost ghostscript gzip ImageMagick inkscape jdupes jpegoptim lame lzip lzop meld optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk unrar xclip zip zstd gnupg xz p7zip glibc poppler poppler-glib
         elif _command_exists "yum"; then
-            sudo yum check-update
-            # shellcheck disable=SC2086
-            sudo yum -y install $packages
+            # For: Fedora.
+            sudo yum check-update || true
+            sudo yum -y install baobab binutils bzip2 coreutils eog file-roller foremost ghostscript gzip ImageMagick inkscape jdupes jpegoptim lame lzip lzop meld optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk unrar xclip zip zstd gnupg xz p7zip glibc poppler poppler-glib
         else
             echo "Error: could not find a package manager!"
             exit 1
