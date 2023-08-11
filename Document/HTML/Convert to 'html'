@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Import the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+# Initial checks
+_check_dependencies "pandoc"
+_display_wait_box
+input_files=$(_get_files "$*" "type=file")
+output_dir=$(_get_output_dir)
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+
+    # Run the main process
+    output_file=$(_get_output_file "$input_file" "$output_dir" "html")
+    std_output=$(pandoc "$input_file" -s -t html -o "$output_file" 2>&1)
+    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+}
+
+_run_main_task_parallel "$input_files" "$output_dir"
+_display_result_box "$output_dir"
