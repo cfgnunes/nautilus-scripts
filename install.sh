@@ -88,10 +88,6 @@ _install_dependencies() {
             # Distro: Fedora.
             sudo dnf check-update || true
             sudo dnf -y install $common_names gnupg ImageMagick xz p7zip poppler poppler-glib jdupes
-        elif _command_exists "yum"; then
-            # Distro: Fedora.
-            sudo yum check-update || true
-            sudo yum -y install $common_names gnupg ImageMagick xz p7zip poppler poppler-glib jdupes
         else
             echo "Error: could not find a package manager!"
             exit 1
