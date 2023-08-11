@@ -26,12 +26,12 @@ _main_task() {
     if [[ -d "$input_file" ]]; then
         cd -- "$input_file" || return 1
         shopt -s extglob
-        std_output=$(eval $task_data a -mx9 "$output_file" -- ?(.[^.])* 2>&1)
+        std_output=$("$task_data" a -mx9 "$output_file" -- ?(.[^.])* 2>&1)
     else
         local input_file_relative=""
         # shellcheck disable=SC2001
         input_file_relative=$(sed "s|$PWD/|./|g" <<<"$input_file")
-        std_output=$(eval $task_data a -mx9 "$output_file" -- "$input_file_relative" 2>&1)
+        std_output=$("$task_data" a -mx9 "$output_file" -- "$input_file_relative" 2>&1)
     fi
 
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
