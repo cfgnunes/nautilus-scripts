@@ -446,6 +446,10 @@ _is_valid_file() {
     return 0
 }
 
+_get_distro_name() {
+    cat /etc/*-release | grep -i "^id=" | cut -d "=" -f 2
+}
+
 _get_filename_extension() {
     local filename=$1
     grep --ignore-case --perl-regexp --only-matching "(\.tar)?\.[a-z0-9_~-]*$" <<<"$filename"
