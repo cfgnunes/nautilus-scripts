@@ -76,7 +76,7 @@ _main_task() {
     *.tar.xz | *.txz) std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
     *.tar.Z | *.taz) std_output=$(tar --extract --gzip --file="$input_file" 2>&1) ;;
     *.tar.zst | *.tzst) std_output=$(tar --extract --zstd --file="$input_file" 2>&1) ;;
-    *.7z) std_output=$(eval $task_data x -aoa -- "$input_file" 2>&1) ;;
+    *.7z) std_output=$("$task_data" x -aoa -- "$input_file" 2>&1) ;;
     *.bz) std_output=$(bunzip2 -- "$input_file" 2>&1) ;;
     *.bz2) std_output=$(bunzip2 -- "$input_file" 2>&1) ;;
     *.deb) std_output=$(ar x -- "$input_file" 2>&1) ;;
@@ -91,7 +91,7 @@ _main_task() {
     *.xz) std_output=$(unxz -- "$input_file" 2>&1) ;;
     *.Z) std_output=$(uncompress -- "$input_file" 2>&1) ;;
     *.zst) std_output=$(zstd --decompress -- "$input_file" 2>&1) ;;
-    *) std_output=$(eval $task_data x -aoa -- "$input_file" 2>&1) ;;
+    *) std_output=$("$task_data" x -aoa -- "$input_file" 2>&1) ;;
     esac
 
     # Check for result errors
