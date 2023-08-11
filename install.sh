@@ -77,15 +77,15 @@ _install_dependencies() {
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
             sudo apt-get update || true
-            # Distro: Debian, Ubuntu, Mint.
+            # Distro: Debian, Ubuntu, Linux Mint.
             sudo apt-get -y install $common_names gpg imagemagick xz-utils p7zip-full poppler-utils jdupes
         elif _command_exists "pacman"; then
-            # Distro: Arch, Manjaro.
+            # Distro: Arch Linux, Manjaro.
             # Missing packages: jdupes
             sudo pacman -Syy || true
             sudo pacman --noconfirm -S $common_names gnupg imagemagick xz p7zip poppler poppler-glib
         elif _command_exists "dnf"; then
-            # Distro: Fedora.
+            # Distro: Fedora, CentOS, Red Hat.
             sudo dnf check-update || true
             sudo dnf -y install $common_names gnupg ImageMagick xz p7zip poppler poppler-glib jdupes
         else
