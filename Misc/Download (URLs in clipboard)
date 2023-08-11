@@ -8,7 +8,7 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
 # Initial checks
-_check_dependencies "git xclip"
+_check_dependencies "wget xclip"
 _display_wait_box
 input_files=$(_get_files "$*" "type=directory; max_files=1; get_pwd_if_no_selection=true")
 output_dir=$input_files

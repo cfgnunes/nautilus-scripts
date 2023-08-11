@@ -72,7 +72,7 @@ _main() {
 }
 
 _install_dependencies() {
-    local common_names="bzip2 foremost ghostscript gzip jpegoptim lame lzip lzop optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk unrar xclip zip zstd"
+    local common_names="bzip2 foremost ghostscript gzip jpegoptim lame lzip lzop optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk unrar wget xclip zip zstd"
 
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
