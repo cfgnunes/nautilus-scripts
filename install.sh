@@ -31,7 +31,7 @@ _main() {
         file_manager="caja"
     else
         echo "Error: not found any compatible file managers!"
-        return 1
+        exit 1
     fi
 
     echo " > Removing previous files..."
@@ -91,11 +91,11 @@ _install_dependencies() {
             sudo yum -y install $packages
         else
             echo "Error: could not find a package manager!"
-            return 1
+            exit 1
         fi
     else
         echo "Error: could not run the installer as administrator!"
-        return 1
+        exit 1
     fi
 }
 
