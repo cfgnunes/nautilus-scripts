@@ -337,8 +337,6 @@ _install_package() {
             pkexec bash -c "pacman -Syy; pacman --noconfirm -S $package_name &>/dev/null"
         elif _command_exists "dnf"; then
             pkexec bash -c "dnf check-update; dnf -y install $package_name &>/dev/null"
-        elif _command_exists "yum"; then
-            pkexec bash -c "yum check-update; yum -y install $package_name &>/dev/null"
         else
             _display_error_box "Error: could not find a package manager!"
             _exit_script
