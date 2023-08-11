@@ -2,6 +2,8 @@
 
 # Install the scripts for the GNOME Files (Nautilus), Caja and Nemo file managers.
 
+# shellcheck disable=SC2086
+
 set -eu
 
 _command_exists() {
@@ -70,24 +72,26 @@ _main() {
 }
 
 _install_dependencies() {
+    local common_names="baobab bzip2 eog file-roller foremost ghostscript gzip inkscape jpegoptim lame lzip lzop meld optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk unrar xclip zip zstd"
+
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
             sudo apt-get update || true
-            # For: Debian, Ubuntu, Mint.
-            sudo apt-get -y install baobab binutils bzip2 coreutils eog file-roller foremost ghostscript gpg gzip imagemagick inkscape jdupes jpegoptim lame lzip lzop meld optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk unrar xclip zip zstd xz-utils p7zip-full libc-bin poppler-utils
+            # Distro: Debian, Ubuntu, Mint.
+            sudo apt-get -y install $common_names gpg imagemagick xz-utils p7zip-full poppler-utils jdupes
         elif _command_exists "pacman"; then
-            # For: Arch, Manjaro.
+            # Distro: Arch, Manjaro.
             # Missing packages: jdupes
             sudo pacman -Syy || true
-            sudo pacman --noconfirm -S baobab binutils bzip2 coreutils eog file-roller foremost ghostscript gzip imagemagick inkscape jpegoptim lame lzip lzop meld optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk unrar xclip zip zstd gnupg xz p7zip glibc poppler poppler-glib
+            sudo pacman --noconfirm -S $common_names gnupg imagemagick xz p7zip poppler poppler-glib
         elif _command_exists "dnf"; then
-            # For: Fedora.
+            # Distro: Fedora.
             sudo dnf check-update || true
-            sudo dnf -y install baobab binutils bzip2 coreutils eog file-roller foremost ghostscript gzip ImageMagick inkscape jdupes jpegoptim lame lzip lzop meld optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk unrar xclip zip zstd gnupg xz p7zip glibc poppler poppler-glib
+            sudo dnf -y install $common_names gnupg ImageMagick xz p7zip poppler poppler-glib jdupes
         elif _command_exists "yum"; then
-            # For: Fedora.
+            # Distro: Fedora.
             sudo yum check-update || true
-            sudo yum -y install baobab binutils bzip2 coreutils eog file-roller foremost ghostscript gzip ImageMagick inkscape jdupes jpegoptim lame lzip lzop meld optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk unrar xclip zip zstd gnupg xz p7zip glibc poppler poppler-glib
+            sudo yum -y install $common_names gnupg ImageMagick xz p7zip poppler poppler-glib jdupes
         else
             echo "Error: could not find a package manager!"
             exit 1
