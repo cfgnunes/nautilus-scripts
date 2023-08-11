@@ -6,6 +6,10 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
 # Initial checks
+task_data="7z"
+if [[ "$(_get_distro_name)" == "fedora" ]]; then
+    task_data="7za"
+fi
 _check_dependencies ""
 _display_wait_box
 input_files=$(_get_files "$*" "type=file")
@@ -22,7 +26,7 @@ for input_file in $input_files; do
     *.tar.xz | *.txz) _check_dependencies "tar" ;;
     *.tar.Z | *.taz) _check_dependencies "tar" ;;
     *.tar.zst | *.tzst) _check_dependencies "tar" ;;
-    *.7z) _check_dependencies "7z(p7zip-full)" ;;
+    *.7z) _check_dependencies "$task_data(p7zip-full)" ;;
     *.bz) _check_dependencies "bunzip2(bzip2)" ;;
     *.bz2) _check_dependencies "bunzip2(bzip2)" ;;
     *.deb) _check_dependencies "ar(binutils)" ;;
@@ -37,7 +41,7 @@ for input_file in $input_files; do
     *.xz) _check_dependencies "unxz(xz-utils)" ;;
     *.Z) _check_dependencies "uncompress(gzip)" ;;
     *.zst) _check_dependencies "zstd" ;;
-    *) _check_dependencies "7z(p7zip-full)" ;;
+    *) _check_dependencies "$task_data(p7zip-full)" ;;
     esac
 done
 
@@ -72,7 +76,7 @@ _main_task() {
     *.tar.xz | *.txz) std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
     *.tar.Z | *.taz) std_output=$(tar --extract --gzip --file="$input_file" 2>&1) ;;
     *.tar.zst | *.tzst) std_output=$(tar --extract --zstd --file="$input_file" 2>&1) ;;
-    *.7z) std_output=$(7z x -aoa -- "$input_file" 2>&1) ;;
+    *.7z) std_output=$(eval $task_data x -aoa -- "$input_file" 2>&1) ;;
     *.bz) std_output=$(bunzip2 -- "$input_file" 2>&1) ;;
     *.bz2) std_output=$(bunzip2 -- "$input_file" 2>&1) ;;
     *.deb) std_output=$(ar x -- "$input_file" 2>&1) ;;
@@ -87,7 +91,7 @@ _main_task() {
     *.xz) std_output=$(unxz -- "$input_file" 2>&1) ;;
     *.Z) std_output=$(uncompress -- "$input_file" 2>&1) ;;
     *.zst) std_output=$(zstd --decompress -- "$input_file" 2>&1) ;;
-    *) std_output=$(7z x -aoa -- "$input_file" 2>&1) ;;
+    *) std_output=$(eval $task_data x -aoa -- "$input_file" 2>&1) ;;
     esac
 
     # Check for result errors
