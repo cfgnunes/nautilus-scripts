@@ -6,7 +6,7 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
 # Initial checks
-_check_dependencies "sha512sum"
+_check_dependencies "sha512sum(coreutils)"
 _display_wait_box
 input_files=$(_get_files "$*" "type=file; min_files=1; max_files=1; mime=text")
 output_dir=$PWD
