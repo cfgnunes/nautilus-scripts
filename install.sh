@@ -75,15 +75,19 @@ _install_dependencies() {
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
             sudo apt-get update
+            # shellcheck disable=SC2086
             sudo apt-get -y install $packages
         elif _command_exists "pacman"; then
             sudo pacman -Syy
+            # shellcheck disable=SC2086
             sudo pacman --noconfirm -S $packages
         elif _command_exists "dnf"; then
             sudo dnf check-update
+            # shellcheck disable=SC2086
             sudo dnf -y install $packages
         elif _command_exists "yum"; then
             sudo yum check-update
+            # shellcheck disable=SC2086
             sudo yum -y install $packages
         else
             echo "Error: could not find a package manager!"
