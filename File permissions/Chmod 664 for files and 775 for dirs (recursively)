@@ -15,9 +15,9 @@ _main_task() {
     local std_output=""
 
     # Run the main process
-    std_output=$(find -L "$input_file" ! -path "*.git/*" -type f -exec chmod 664 -- {} \; 2>&1)
+    std_output=$(find -L "$input_file" ! -path "*.git/*" -type f -exec chmod 664 -- {} \+ 2>&1)
     _check_result "$?" "$std_output" "$input_file" "" || return 1
-    std_output=$(find -L "$input_file" ! -path "*.git/*" -type d -exec chmod 775 -- {} \; 2>&1)
+    std_output=$(find -L "$input_file" ! -path "*.git/*" -type d -exec chmod 775 -- {} \+ 2>&1)
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 }
 
