@@ -779,6 +779,7 @@ _run_main_task_parallel() {
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Export variables and functions to use inside a new shell (using 'xargs')
+    export FILENAME_SEPARATOR
     export task_data
     export TEMP_DIR_LOG
     export TEMP_DIR_TASK
