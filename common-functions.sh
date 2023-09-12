@@ -523,12 +523,19 @@ _get_files() {
     local input_files_final=""
     local input_files_full=""
     for input_file in $input_files; do
+
         # Get the full path of each input_file.
-        input_files_full=$(readlink -f -- "$input_file" 2>/dev/null)
+        if [[ -d "$input_file" ]]; then
+            # It's a directory, so just use pwd -P
+            input_files_full=$(cd "$input_file" && pwd -P)
+        else
+            # It's a file
+            input_files_full=$(cd "$(dirname "$input_file")" && pwd -P)/$(basename "$input_file")
+        fi
 
         # Expand files in directories recursively.
         if [[ "$par_recursive" == "true" ]] && [[ -d "$input_files_full" ]]; then
-            input_files_final+=$(find -L "$input_files_full" ! -path "*.git/*" -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
+            input_files_final+=$(find "$input_files_full" ! -path "*.git/*" -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
         else
             input_files_final+=$input_files_full
             input_files_final+=$FILENAME_SEPARATOR
