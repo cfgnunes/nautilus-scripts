@@ -16,7 +16,7 @@ _main_task() {
     local std_output=""
 
     # Rename files
-    find -L "$input_file" -type f ! -path "*.git/*" -print0 2>/dev/null | while read -r -d '' file; do
+    find "$input_file" -type f ! -path "*.git/*" -print0 2>/dev/null | while read -r -d '' file; do
         local dir=""
         local filename=""
         local new_filename=""
@@ -31,7 +31,7 @@ _main_task() {
     done
 
     # Rename directories
-    find -L "$input_file" -type d ! -path "*.git/*" -print0 2>/dev/null | sort -r -z | while read -r -d '' dir; do
+    find "$input_file" -type d ! -path "*.git/*" -print0 2>/dev/null | sort -r -z | while read -r -d '' dir; do
         local parent_dir=""
         local dirname=""
         local new_dirname=""
