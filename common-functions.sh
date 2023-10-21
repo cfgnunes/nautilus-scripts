@@ -16,10 +16,10 @@ readonly PREFIX_ERROR_LOG_FILE="Errors"
 readonly PREFIX_OUTPUT_DIR="Output"
 
 # Create temp directories for use in scripts
-TEMP_DIR=$(mktemp --directory --suffix="-script")
-TEMP_DIR_LOG=$(mktemp --directory --tmpdir="$TEMP_DIR" --suffix="-log")
-TEMP_DIR_TASK=$(mktemp --directory --tmpdir="$TEMP_DIR" --suffix="-task")
-TEMP_DIR_VALID_FILES=$(mktemp --directory --tmpdir="$TEMP_DIR" --suffix="-valid-files")
+TEMP_DIR=$(mktemp --directory)
+TEMP_DIR_LOG=$(mktemp --directory --tmpdir="$TEMP_DIR")
+TEMP_DIR_TASK=$(mktemp --directory --tmpdir="$TEMP_DIR")
+TEMP_DIR_VALID_FILES=$(mktemp --directory --tmpdir="$TEMP_DIR")
 
 # A temporary FIFO to use in the "wait_box"
 readonly TEMP_FIFO="$TEMP_DIR/fifo.txt"
@@ -817,7 +817,7 @@ _write_log() {
     local input_file=$2
     local std_output=$3
     local log_temp_file=""
-    log_temp_file=$(mktemp --tmpdir="$TEMP_DIR_LOG" --suffix="-log")
+    log_temp_file=$(mktemp --tmpdir="$TEMP_DIR_LOG")
 
     {
         echo "[$(date "+%Y-%m-%d %H:%M:%S")]"
