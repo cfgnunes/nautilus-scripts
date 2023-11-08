@@ -5,11 +5,19 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
-# Initial checks
-_check_dependencies "convert(imagemagick)"
-_display_wait_box
-input_files=$(_get_files "$*" "type=file; mime=image; min_files=2")
-output_dir=$(_get_output_dir)
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Initial checks
+    _check_dependencies "convert(imagemagick)"
+    _display_wait_box
+    input_files=$(_get_files "$*" "type=file; mime=image; min_files=2")
+    output_dir=$(_get_output_dir)
+
+    _task "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
 
 _task() {
     local input_files=$1
@@ -24,5 +32,4 @@ _task() {
     _check_result "$?" "$std_output" "" "$output_file" || return 1
 }
 
-_task "$input_files" "$output_dir"
-_display_result_box "$output_dir"
+_main "$@"

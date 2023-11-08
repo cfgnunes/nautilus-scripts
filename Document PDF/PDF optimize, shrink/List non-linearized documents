@@ -5,10 +5,25 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
-# Initial checks
-_check_dependencies "pdfinfo(poppler-utils)"
-_display_wait_box
-input_files=$(_get_files "$*" "type=file; recursive=true; mime=pdf")
+_main() {
+    local input_files=""
+    local std_output=""
+
+    # Initial checks
+    _check_dependencies "pdfinfo(poppler-utils)"
+    _display_wait_box
+    input_files=$(_get_files "$*" "type=file; recursive=true; mime=pdf")
+
+    _run_main_task_parallel "$input_files" ""
+
+    std_output=$(cat "$TEMP_DIR_TASK"/* 2>/dev/null)
+    std_output=$(grep -v "^$" <<<"$std_output") # Remove empty lines
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|$PWD/|./|g" <<<"$std_output")  # Remove dir $PWD of the filename
+    std_output=$(sort --version-sort <<<"$std_output") # Sort the result
+
+    _display_text_box "$std_output"
+}
 
 _main_task() {
     local input_file=$1
@@ -23,12 +38,4 @@ _main_task() {
     fi
 }
 
-_run_main_task_parallel "$input_files" ""
-
-std_output=$(cat "$TEMP_DIR_TASK"/* 2>/dev/null)
-std_output=$(grep -v "^$" <<<"$std_output") # Remove empty lines
-# shellcheck disable=SC2001
-std_output=$(sed "s|$PWD/|./|g" <<<"$std_output")  # Remove dir $PWD of the filename
-std_output=$(sort --version-sort <<<"$std_output") # Sort the result
-
-_display_text_box "$std_output"
+_main "$@"

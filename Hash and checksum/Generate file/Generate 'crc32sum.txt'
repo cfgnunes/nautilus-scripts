@@ -5,11 +5,25 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
-# Initial checks
-_check_dependencies "rhash"
-_display_wait_box
-input_files=$(_get_files "$*" "type=file; recursive=true")
-output_dir=$PWD
+_main() {
+    local input_files=""
+    local output_dir=""
+    local compiled_output_file=""
+
+    # Initial checks
+    _check_dependencies "rhash"
+    _display_wait_box
+    input_files=$(_get_files "$*" "type=file; recursive=true")
+    output_dir=$PWD
+
+    _run_main_task_parallel "$input_files" "$output_dir"
+
+    # Compile the result in a single file
+    compiled_output_file=$(_get_filename_suffix "$output_dir/crc32sum.txt")
+    cat "$TEMP_DIR_TASK/"* >"$compiled_output_file"
+
+    _display_result_box "$output_dir"
+}
 
 _main_task() {
     local input_file=$1
@@ -27,10 +41,4 @@ _main_task() {
     echo "$std_output" >"$output_file"
 }
 
-_run_main_task_parallel "$input_files" "$output_dir"
-
-# Compile the result in a single file
-compiled_output_file=$(_get_filename_suffix "$output_dir/crc32sum.txt")
-cat "$TEMP_DIR_TASK/"* >"$compiled_output_file"
-
-_display_result_box "$output_dir"
+_main "$@"
