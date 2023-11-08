@@ -787,7 +787,7 @@ _run_task_parallel() {
 
     # Export variables and functions to use inside a new shell (using 'xargs')
     export FILENAME_SEPARATOR
-    export task_data
+    export TASK_DATA
     export TEMP_DIR_LOG
     export TEMP_DIR_TASK
     export -f _check_result
