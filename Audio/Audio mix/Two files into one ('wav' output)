@@ -15,11 +15,11 @@ _main() {
     input_files=$(_get_files "$*" "type=file; mime=audio,video,stream; min_files=2; max_files=2")
     output_dir=$(_get_output_dir)
 
-    _task "$input_files" "$output_dir"
+    _main_task_multiple_files "$input_files" "$output_dir"
     _display_result_box "$output_dir"
 }
 
-_task() {
+_main_task_multiple_files() {
     local input_files=$1
     local output_dir=$2
     local output_file=""
