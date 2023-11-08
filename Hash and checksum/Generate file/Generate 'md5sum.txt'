@@ -16,7 +16,7 @@ _main() {
     input_files=$(_get_files "$*" "type=file; recursive=true")
     output_dir=$PWD
 
-    _run_main_task_parallel "$input_files" "$output_dir"
+    _run_task_parallel "$input_files" "$output_dir"
 
     # Compile the result in a single file
     compiled_output_file=$(_get_filename_suffix "$output_dir/md5sum.txt")

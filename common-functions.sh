@@ -778,7 +778,7 @@ _print_terminal() {
     fi
 }
 
-_run_main_task_parallel() {
+_run_task_parallel() {
     local input_files=$1
     local output_dir=$2
 

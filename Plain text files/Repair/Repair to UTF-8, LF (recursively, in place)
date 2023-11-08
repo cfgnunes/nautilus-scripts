@@ -14,7 +14,7 @@ _main() {
     _display_wait_box
     input_files=$(_get_files "$*" "type=file; recursive=true; mime=text,application; skip_encoding=binary; skip_extension=pdf,bak")
 
-    _run_main_task_parallel "$input_files" "$output_dir"
+    _run_task_parallel "$input_files" "$output_dir"
     _display_result_box ""
 }
 

@@ -50,7 +50,7 @@ _main() {
         esac
     done
 
-    _run_main_task_parallel "$input_files" ""
+    _run_task_parallel "$input_files" ""
     _display_result_box ""
 }
 

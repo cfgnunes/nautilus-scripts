@@ -15,7 +15,7 @@ _main() {
     input_files=$(_get_files "$*" "type=file; mime=video")
     output_dir=$(_get_output_dir)
 
-    _run_main_task_parallel "$input_files" "$output_dir"
+    _run_task_parallel "$input_files" "$output_dir"
     _display_result_box "$output_dir"
 }
 
