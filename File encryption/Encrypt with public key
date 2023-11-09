@@ -21,8 +21,8 @@ _main() {
         _display_error_box "Signing failed: no secret keys installed!"
         _exit_script
     fi
-    task_data=$(echo "$users" | tr ':' '\n' | zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=200 --width=600 2>/dev/null) || _exit_script
-    if [[ -z "$task_data" ]]; then
+    TASK_DATA=$(echo "$users" | tr ':' '\n' | zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=200 --width=600 2>/dev/null) || _exit_script
+    if [[ -z "$TASK_DATA" ]]; then
         _display_error_box "Signing failed: you must select a user!"
         _exit_script
     fi
@@ -39,7 +39,7 @@ _main_task() {
 
     # Run the main process
     output_file=$(_get_output_file "$input_file.gpg" "$output_dir" "")
-    std_output=$(gpg --batch --yes --encrypt --recipient "$task_data" --for-your-eyes-only --s2k-count 1015808 --s2k-digest-algo SHA256 --compress-algo zlib --cipher-algo AES256 --output "$output_file" -- "$input_file" 2>&1)
+    std_output=$(gpg --batch --yes --encrypt --recipient "$TASK_DATA" --for-your-eyes-only --s2k-count 1015808 --s2k-digest-algo SHA256 --compress-algo zlib --cipher-algo AES256 --output "$output_file" -- "$input_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
