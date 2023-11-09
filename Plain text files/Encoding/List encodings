@@ -5,18 +5,25 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
-# Initial checks
-_check_dependencies ""
-_display_wait_box
-input_files=$(_get_files "$*" "type=file; recursive=true; mime=text,application; skip_encoding=binary; skip_extension=pdf")
+_main() {
+    local input_files=""
+    local std_output=""
 
-# Run the main process
-# shellcheck disable=SC2086
-std_output=$(file --separator "//" --no-pad --mime-encoding -- $input_files)
-# shellcheck disable=SC2001
-std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove dir $PWD of the filename
-# shellcheck disable=SC2001
-std_output=$(sed "s|\(.*\)// *\(.*\)|\2: \"\1\"|" <<<"$std_output")
-std_output=$(sort --version-sort <<<"$std_output") # Sort the result
+    # Initial checks
+    _check_dependencies ""
+    _display_wait_box
+    input_files=$(_get_files "$*" "type=file; recursive=true; mime=text,application; skip_encoding=binary; skip_extension=pdf")
 
-_display_text_box "$std_output"
+    # Run the main process
+    # shellcheck disable=SC2086
+    std_output=$(file --separator "//" --no-pad --mime-encoding -- $input_files)
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove dir $PWD of the filename
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|\(.*\)// *\(.*\)|\2: \"\1\"|" <<<"$std_output")
+    std_output=$(sort --version-sort <<<"$std_output") # Sort the result
+
+    _display_text_box "$std_output"
+}
+
+_main "$@"

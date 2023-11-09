@@ -5,45 +5,54 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
-# Initial checks
-task_data="7z"
-if [[ "$(_get_distro_name)" == "fedora" ]]; then
-    task_data="7za"
-fi
-_check_dependencies ""
-_display_wait_box
-input_files=$(_get_files "$*" "type=file")
+_main() {
+    local input_files=""
+    local output_dir=""
+    local input_file=""
 
-# Check dependencies for each file extension
-for input_file in $input_files; do
-    case $input_file in
-    *.tar.bz | *.tbz) _check_dependencies "tar" ;;
-    *.tar.bz2 | *.tbz2) _check_dependencies "tar" ;;
-    *.tar.gz | *.tgz) _check_dependencies "tar" ;;
-    *.tar.lz | *.tlz) _check_dependencies "tar" ;;
-    *.tar.lzma | *.tlzma) _check_dependencies "tar" ;;
-    *.tar.lzo | *.tzo) _check_dependencies "tar" ;;
-    *.tar.xz | *.txz) _check_dependencies "tar" ;;
-    *.tar.Z | *.taz) _check_dependencies "tar" ;;
-    *.tar.zst | *.tzst) _check_dependencies "tar" ;;
-    *.7z) _check_dependencies "$task_data(p7zip-full)" ;;
-    *.bz) _check_dependencies "bunzip2(bzip2)" ;;
-    *.bz2) _check_dependencies "bunzip2(bzip2)" ;;
-    *.deb) _check_dependencies "ar(binutils)" ;;
-    *.gz) _check_dependencies "gunzip(gzip)" ;;
-    *.lha) _check_dependencies "lha(lhasa)" ;;
-    *.lzip) _check_dependencies "lzip" ;;
-    *.lzma) _check_dependencies "unlzma(xz-utils)" ;;
-    *.lzop) _check_dependencies "lzop" ;;
-    *.rar) _check_dependencies "unrar" ;;
-    *.squashfs | *.sfs | *.sqsh) _check_dependencies "unsquashfs(squashfs-tools)" ;;
-    *.tar) _check_dependencies "tar" ;;
-    *.xz) _check_dependencies "unxz(xz-utils)" ;;
-    *.Z) _check_dependencies "uncompress(gzip)" ;;
-    *.zst) _check_dependencies "zstd" ;;
-    *) _check_dependencies "$task_data(p7zip-full)" ;;
-    esac
-done
+    # Initial checks
+    task_data="7z"
+    if [[ "$(_get_distro_name)" == "fedora" ]]; then
+        task_data="7za"
+    fi
+    _check_dependencies ""
+    _display_wait_box
+    input_files=$(_get_files "$*" "type=file")
+
+    # Check dependencies for each file extension
+    for input_file in $input_files; do
+        case $input_file in
+        *.tar.bz | *.tbz) _check_dependencies "tar" ;;
+        *.tar.bz2 | *.tbz2) _check_dependencies "tar" ;;
+        *.tar.gz | *.tgz) _check_dependencies "tar" ;;
+        *.tar.lz | *.tlz) _check_dependencies "tar" ;;
+        *.tar.lzma | *.tlzma) _check_dependencies "tar" ;;
+        *.tar.lzo | *.tzo) _check_dependencies "tar" ;;
+        *.tar.xz | *.txz) _check_dependencies "tar" ;;
+        *.tar.Z | *.taz) _check_dependencies "tar" ;;
+        *.tar.zst | *.tzst) _check_dependencies "tar" ;;
+        *.7z) _check_dependencies "$task_data(p7zip-full)" ;;
+        *.bz) _check_dependencies "bunzip2(bzip2)" ;;
+        *.bz2) _check_dependencies "bunzip2(bzip2)" ;;
+        *.deb) _check_dependencies "ar(binutils)" ;;
+        *.gz) _check_dependencies "gunzip(gzip)" ;;
+        *.lha) _check_dependencies "lha(lhasa)" ;;
+        *.lzip) _check_dependencies "lzip" ;;
+        *.lzma) _check_dependencies "unlzma(xz-utils)" ;;
+        *.lzop) _check_dependencies "lzop" ;;
+        *.rar) _check_dependencies "unrar" ;;
+        *.squashfs | *.sfs | *.sqsh) _check_dependencies "unsquashfs(squashfs-tools)" ;;
+        *.tar) _check_dependencies "tar" ;;
+        *.xz) _check_dependencies "unxz(xz-utils)" ;;
+        *.Z) _check_dependencies "uncompress(gzip)" ;;
+        *.zst) _check_dependencies "zstd" ;;
+        *) _check_dependencies "$task_data(p7zip-full)" ;;
+        esac
+    done
+
+    _run_main_task_parallel "$input_files" ""
+    _display_result_box ""
+}
 
 _main_task() {
     local input_file=$1
@@ -129,5 +138,4 @@ _main_task() {
     rm -rf "$temp_dir_output"
 }
 
-_run_main_task_parallel "$input_files" ""
-_display_result_box ""
+_main "$@"

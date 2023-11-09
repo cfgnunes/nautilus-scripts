@@ -5,11 +5,19 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
-# Initial checks
-_check_dependencies "photorec(testdisk)"
-_display_wait_box
-input_files=$(_get_files "$*" "type=file")
-output_dir=$PWD
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Initial checks
+    _check_dependencies "photorec(testdisk)"
+    _display_wait_box
+    input_files=$(_get_files "$*" "type=file")
+    output_dir=$PWD
+
+    _run_main_task_parallel "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
 
 _main_task() {
     local input_file=$1
@@ -22,5 +30,4 @@ _main_task() {
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 }
 
-_run_main_task_parallel "$input_files" "$output_dir"
-_display_result_box "$output_dir"
+_main "$@"

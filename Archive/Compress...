@@ -5,10 +5,16 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
-# Initial checks
-_check_dependencies "file-roller"
-input_files=$(_get_files "$*" "type=all")
+_main() {
+    local input_files=""
 
-# Run the main process
-# shellcheck disable=SC2086
-file-roller --add -- $input_files &
+    # Initial checks
+    _check_dependencies "file-roller"
+    input_files=$(_get_files "$*" "type=all")
+
+    # Run the main process
+    # shellcheck disable=SC2086
+    file-roller --add -- $input_files &
+}
+
+_main "$@"

@@ -5,16 +5,23 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
-# Initial checks
-_check_dependencies ""
-_display_wait_box
-input_files=$(_get_files "$*" "type=all; min_files=2; max_files=2")
+_main() {
+    local input_files=""
+    local std_output=""
 
-# Run the main process
-# shellcheck disable=SC2086
-std_output=$(diff --brief --recursive -- $input_files)
-# shellcheck disable=SC2001
-std_output=$(sed "s|$PWD/|./|g" <<<"$std_output")  # Remove dir $PWD of the filename
-std_output=$(sort --version-sort <<<"$std_output") # Sort the result
+    # Initial checks
+    _check_dependencies ""
+    _display_wait_box
+    input_files=$(_get_files "$*" "type=all; min_files=2; max_files=2")
 
-_display_text_box "$std_output"
+    # Run the main process
+    # shellcheck disable=SC2086
+    std_output=$(diff --brief --recursive -- $input_files)
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|$PWD/|./|g" <<<"$std_output")  # Remove dir $PWD of the filename
+    std_output=$(sort --version-sort <<<"$std_output") # Sort the result
+
+    _display_text_box "$std_output"
+}
+
+_main "$@"

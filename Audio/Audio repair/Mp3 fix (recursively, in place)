@@ -5,10 +5,18 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
-# Initial checks
-_check_dependencies "mp3val"
-_display_wait_box
-input_files=$(_get_files "$*" "type=file; recursive=true; mime=audio/mpeg; skip_extension=bak")
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Initial checks
+    _check_dependencies "mp3val"
+    _display_wait_box
+    input_files=$(_get_files "$*" "type=file; recursive=true; mime=audio/mpeg; skip_extension=bak")
+
+    _run_main_task_parallel "$input_files" "$output_dir"
+    _display_result_box ""
+}
 
 _main_task() {
     local input_file=$1
@@ -35,5 +43,4 @@ _main_task() {
     rm -rf "$temp_file"
 }
 
-_run_main_task_parallel "$input_files" ""
-_display_result_box ""
+_main "$@"

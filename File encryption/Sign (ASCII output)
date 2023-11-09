@@ -5,22 +5,31 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
-# Initial checks
-_check_dependencies "gpg"
-_display_wait_box
-input_files=$(_get_files "$*" "type=file")
-output_dir=$(_get_output_dir)
+_main() {
+    local input_files=""
+    local output_dir=""
+    local users=""
 
-users=$(gpg --list-secret-keys --with-colons | grep "^uid" | cut -d ':' -f 10)
-if [[ -z "$users" ]]; then
-    _display_error_box "Signing failed: no secret keys installed!"
-    _exit_script
-fi
-task_data=$(echo "$users" | tr ':' '\n' | zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=200 --width=600 2>/dev/null) || _exit_script
-if [[ -z "$task_data" ]]; then
-    _display_error_box "Signing failed: you must select a user!"
-    _exit_script
-fi
+    # Initial checks
+    _check_dependencies "gpg"
+    _display_wait_box
+    input_files=$(_get_files "$*" "type=file")
+    output_dir=$(_get_output_dir)
+
+    users=$(gpg --list-secret-keys --with-colons | grep "^uid" | cut -d ':' -f 10)
+    if [[ -z "$users" ]]; then
+        _display_error_box "Signing failed: no secret keys installed!"
+        _exit_script
+    fi
+    task_data=$(echo "$users" | tr ':' '\n' | zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=200 --width=600 2>/dev/null) || _exit_script
+    if [[ -z "$task_data" ]]; then
+        _display_error_box "Signing failed: you must select a user!"
+        _exit_script
+    fi
+
+    _run_main_task_parallel "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
 
 _main_task() {
     local input_file=$1
@@ -34,5 +43,4 @@ _main_task() {
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
-_run_main_task_parallel "$input_files" "$output_dir"
-_display_result_box "$output_dir"
+_main "$@"
