@@ -52,7 +52,6 @@ _main() {
 
     echo " > Setting file permissions..."
     find "$install_dir" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
-    find "$install_dir" -maxdepth 1 -type f ! -path "*.git/*" -exec chmod -x {} \;
 
     read -r -p " > Would you like to install some basic dependencies for the scripts now? [Y/n]" answer
     case "${answer,,}" in
