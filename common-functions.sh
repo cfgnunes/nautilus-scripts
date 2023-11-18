@@ -125,7 +125,7 @@ _display_error_box() {
     local message=$1
 
     if _is_terminal_session; then
-        echo >&2 "$message"
+        echo >&2 "Error: $message"
     elif _command_exists "notify-send"; then
         notify-send -i error "$message" &>/dev/null
     elif _command_exists "zenity"; then
@@ -133,7 +133,7 @@ _display_error_box() {
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --error "$message" &>/dev/null
     elif _command_exists "xmessage"; then
-        xmessage -title "$(_get_script_name)" "$message" &>/dev/null
+        xmessage -title "$(_get_script_name)" "Error: $message" &>/dev/null
     fi
 }
 
@@ -141,7 +141,7 @@ _display_info_box() {
     local message=$1
 
     if _is_terminal_session; then
-        echo "$message"
+        echo "Info: $message"
     elif _command_exists "notify-send"; then
         notify-send "$message" &>/dev/null
     elif _command_exists "zenity"; then
@@ -149,7 +149,7 @@ _display_info_box() {
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --msgbox "$message" &>/dev/null
     elif _command_exists "xmessage"; then
-        xmessage -title "$(_get_script_name)" "$message" &>/dev/null
+        xmessage -title "$(_get_script_name)" "Info: $message" &>/dev/null
     fi
 }
 
@@ -169,7 +169,7 @@ _display_password_box() {
 
     # Check if the password is not empty
     if [[ -z "$password" ]]; then
-        _display_error_box "Error: you must define a password!"
+        _display_error_box "You must define a password!"
         _exit_script
     fi
 
@@ -234,7 +234,7 @@ _display_result_box() {
 
     # Check if there was some error
     if [[ -f "$error_log_file" ]]; then
-        _display_error_box "Error: task finished with errors! See the '$error_log_file' for details."
+        _display_error_box "Task finished with errors! See the '$error_log_file' for details."
         _exit_script
     fi
 
@@ -338,11 +338,11 @@ _install_package() {
         elif _command_exists "dnf"; then
             pkexec bash -c "dnf check-update; dnf -y install $package_name &>/dev/null"
         else
-            _display_error_box "Error: could not find a package manager!"
+            _display_error_box "Could not find a package manager!"
             _exit_script
         fi
     else
-        _display_error_box "Error: could not run the installer as administrator!"
+        _display_error_box "Could not run the installer as administrator!"
         _exit_script
     fi
 
@@ -350,7 +350,7 @@ _install_package() {
 
     # Check if the package was installed
     if ! _command_exists "$command"; then
-        _display_error_box "Error: could not install the package '$package_name'!"
+        _display_error_box "Could not install the package '$package_name'!"
         _exit_script
     fi
 
@@ -515,7 +515,7 @@ _get_files() {
         # Try selecting the files by opening a file selection box
         input_files=$(_display_file_selection_box)
         if [[ -z "$input_files" ]]; then
-            _display_error_box "Error: there are no input files!"
+            _display_error_box "There are no input files!"
             _exit_script
         fi
     fi
@@ -569,17 +569,17 @@ _get_files() {
 
     # Check if there is at last one valid file
     if ((valid_files_count == 0)); then
-        _display_error_box "Error: there are no valid files in the selection!"
+        _display_error_box "There are no valid files in the selection!"
         _exit_script
     fi
 
     if [[ -n "$par_min_files" ]] && ((valid_files_count < par_min_files)); then
-        _display_error_box "Error: there are $valid_files_count files in the selection, but the minimum is $par_min_files!"
+        _display_error_box "You must select at least $par_min_files valid files!"
         _exit_script
     fi
 
     if [[ -n "$par_max_files" ]] && ((valid_files_count > par_max_files)); then
-        _display_error_box "Error: there are $valid_files_count files in the selection, but the maximum is $par_max_files!"
+        _display_error_box "You must select up to $par_max_files valid files!"
         _exit_script
     fi
 
@@ -617,7 +617,7 @@ _get_output_dir() {
     output_dir="$base_dir/$PREFIX_OUTPUT_DIR"
 
     if [[ ! -w "$base_dir" ]]; then
-        _display_error_box "Error: could not find a directory with write permissions!"
+        _display_error_box "Could not find a directory with write permissions!"
         return 1
     fi
 
@@ -730,7 +730,7 @@ _move_file() {
         fi
         ;;
     *)
-        _display_error_box "Error: invalid value for the parameter 'conflict' in the function '_move_file'."
+        _display_error_box "Invalid value for the parameter 'conflict' in the function '_move_file'."
         _exit_script
         ;;
     esac
