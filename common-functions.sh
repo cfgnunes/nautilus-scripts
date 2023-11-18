@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#
+
 # This file contains common functions that will be imported by the scripts.
 
 # shellcheck disable=SC2001
