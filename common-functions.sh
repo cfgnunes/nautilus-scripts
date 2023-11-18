@@ -618,7 +618,7 @@ _get_output_dir() {
 
     if [[ ! -w "$base_dir" ]]; then
         _display_error_box "Could not find a directory with write permissions!"
-        return 1
+        _exit_script
     fi
 
     # If the file already exists, add a suffix
