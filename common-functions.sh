@@ -6,6 +6,9 @@
 
 set -u
 
+# Use an 'Output' directory or current directory for the output
+readonly USE_OUTPUT_DIR=false
+
 # Define the '\r' as default field separator:
 # used in 'for' commands to iterate over files.
 readonly FILENAME_SEPARATOR=$'\r'
@@ -605,6 +608,11 @@ _get_files() {
 _get_output_dir() {
     local base_dir=$PWD
     local output_dir=""
+
+    if ! $USE_OUTPUT_DIR; then
+        echo "$base_dir"
+        return
+    fi
 
     # Check directories available to put the 'output' dir
     [[ ! -w "$base_dir" ]] && base_dir=$HOME

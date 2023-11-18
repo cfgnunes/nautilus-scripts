@@ -26,7 +26,8 @@ _main_task_multiple_files() {
     local std_output=""
 
     # Run the main process
-    output_file="$output_dir/joined-documents.pdf"
+    output_file="$output_dir/combined-documents.pdf"
+    output_file=$(_get_output_file "$output_file" "$output_dir" "")
     # shellcheck disable=SC2086
     std_output=$(pdfunite -- $input_files "$output_file" 2>&1)
     _check_result "$?" "$std_output" "" "$output_file" || return 1
