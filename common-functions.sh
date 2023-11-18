@@ -645,9 +645,9 @@ _get_output_file() {
         output_file+="$filename"
     elif [[ "$extension" == "." ]]; then # Remove extension
         output_file+="$(_get_filename_without_extension "$filename")"
-    else
+    else # Replace extension
         output_file+="$(_get_filename_without_extension "$filename")"
-        output_file+=".$extension" # Add extension
+        output_file+=".$extension"
     fi
 
     # If the file already exists, add a suffix
