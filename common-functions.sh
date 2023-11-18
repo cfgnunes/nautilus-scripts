@@ -7,7 +7,7 @@
 set -u
 
 # Use an 'Output' directory or current directory for the output
-readonly USE_OUTPUT_DIR=false
+readonly USE_OUTPUT_DIR=true
 
 # Define the '\r' as default field separator:
 # used in 'for' commands to iterate over files.
