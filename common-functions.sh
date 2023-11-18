@@ -6,17 +6,14 @@
 
 set -u
 
-# Use an 'Output' directory or current directory for the output
+# Use an 'Output' directory instead of the current directory for the output
 readonly USE_OUTPUT_DIR=true
-
-# Define the '\r' as default field separator:
-# used in 'for' commands to iterate over files.
-readonly FILENAME_SEPARATOR=$'\r'
-IFS=$FILENAME_SEPARATOR
-
-# Parameters
 readonly PREFIX_ERROR_LOG_FILE="Errors"
 readonly PREFIX_OUTPUT_DIR="Output"
+
+# Define the field separator used in 'for' commands to iterate over files
+readonly FILENAME_SEPARATOR=$'\r'
+IFS=$FILENAME_SEPARATOR
 
 # Create temp directories for use in scripts
 TEMP_DIR=$(mktemp --directory)
