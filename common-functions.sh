@@ -642,6 +642,9 @@ _get_output_file() {
         output_file+=".$extension" # Add extension
     fi
 
+    # If the file already exists, add a suffix
+    output_file=$(_get_filename_suffix "$output_file")
+
     echo "$output_file"
 }
 
