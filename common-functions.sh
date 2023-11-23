@@ -812,7 +812,7 @@ _run_task_parallel() {
     export -f _move_temp_file_to_output
     export -f _write_log
 
-    # Run '_main_task' for each file in parallel (using 'xargs')
+    # Run the function '_main_task' for each file in parallel (using 'xargs')
     echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(nproc --all --ignore=1)" \
