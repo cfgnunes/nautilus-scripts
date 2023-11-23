@@ -15,6 +15,7 @@ _main() {
     input_files=$(_get_files "$*" "type=all")
     output_dir=$(_get_output_dir)
 
+    # Run the function '_main_task' for each file in parallel
     _run_task_parallel "$input_files" "$output_dir"
     _display_result_box "$output_dir"
 }
