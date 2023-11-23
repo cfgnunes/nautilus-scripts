@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Import the script 'common-functions.sh'
+# Source the script 'common-functions.sh'
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
