@@ -36,6 +36,10 @@ _main() {
         exit 1
     fi
 
+    echo " > Moving previous files to a temporary directory..."
+    local tmp_install_dir="$(mktemp -d)"
+    mv "$install_dir"/* "$tmp_install_dir" || true
+
     echo " > Removing previous files..."
     rm -rf "$install_dir"
     rm -f "$accels_dir/scripts-accels"
@@ -43,6 +47,9 @@ _main() {
     echo " > Installing new scripts..."
     mkdir --parents "$install_dir"
     cp -r ./* "$install_dir/"
+
+    echo " > Restoring previous files to the new directory..."
+    mv "$tmp_install_dir" "$install_dir/User defined scripts"
 
     if [[ -n "$accels_dir" ]]; then
         echo " > Installing 'scripts-accels'..."
