@@ -41,9 +41,9 @@ _main() {
             ;;
         esac
 
-        # Move or remove the previous scripts
+        # 'Preserve' or 'Remove' previous scripts
         if $preserve_previous_scripts; then
-            echo " > Moving previous scripts to a temporary directory..."
+            echo " > Preserving previous scripts to a temporary directory..."
             tmp_install_dir=$(mktemp -d)
             mv "$install_dir"/* "$tmp_install_dir" || true
         else
@@ -63,15 +63,15 @@ _main() {
         mv "$tmp_install_dir" "$install_dir/User previous scripts"
     fi
 
-    # Install the file 'scripts-accels'
+    # Install 'scripts-accels'
     if [[ -n "$accels_dir" ]]; then
-        echo " > Installing the file 'scripts-accels'..."
+        echo " > Installing 'scripts-accels'..."
         rm -f "$accels_dir/scripts-accels"
         mkdir --parents "$accels_dir"
         cp "scripts-accels" "$accels_dir/scripts-accels"
     fi
 
-    # Set the file permissions
+    # Set file permissions
     echo " > Setting file permissions..."
     find "$install_dir" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
 
