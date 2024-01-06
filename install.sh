@@ -6,22 +6,15 @@
 
 set -eu
 
-_command_exists() {
-    local command_check="$1"
-
-    if command -v "$command_check" &>/dev/null; then
-        return 0
-    fi
-    return 1
-}
-
 _main() {
-    echo "Installing the scripts..."
-    local install_dir=""
+    echo "Starting the installation..."
     local accels_dir=""
     local file_manager=""
+    local install_dir=""
     local tmp_install_dir=""
+    local preserve_previous_scripts=true
 
+    # Get the default file manager
     if _command_exists "nautilus"; then
         install_dir="$HOME/.local/share/nautilus/scripts"
         accels_dir="$HOME/.config/nautilus"
@@ -33,49 +26,78 @@ _main() {
         install_dir="$HOME/.config/caja/scripts"
         file_manager="caja"
     else
-        echo "Error: not found any compatible file managers!"
+        echo "Error: could not find any compatible file managers!"
         exit 1
     fi
 
-    echo " > Moving previous files to a temporary directory..."
-    tmp_install_dir=$(mktemp -d)
-    mv "$install_dir"/* "$tmp_install_dir" || true
+    # Check for previous scripts
+    if [[ -d "$install_dir" ]]; then
 
-    echo " > Removing previous files..."
-    rm -rf "$install_dir"
-    rm -f "$accels_dir/scripts-accels"
+        # Ask if the user wants to preserve the previous scripts
+        read -r -p " > Would you like to preserve the previous scripts? [y/N]" answer
+        case "${answer,,}" in
+        n | no | "")
+            preserve_previous_scripts=false
+            ;;
+        esac
 
+        # Move or remove the previous scripts
+        if $preserve_previous_scripts; then
+            echo " > Moving previous scripts to a temporary directory..."
+            tmp_install_dir=$(mktemp -d)
+            mv "$install_dir"/* "$tmp_install_dir" || true
+        else
+            echo " > Removing previous scripts..."
+            rm -rf "$install_dir"
+        fi
+    fi
+
+    # Install the scripts
     echo " > Installing new scripts..."
     mkdir --parents "$install_dir"
     cp -r ./* "$install_dir/"
 
-    echo " > Restoring previous files to the new directory..."
-    mv "$tmp_install_dir" "$install_dir/User defined scripts"
+    # Restore previous scripts
+    if $preserve_previous_scripts; then
+        echo " > Restoring previous scripts to the install directory..."
+        mv "$tmp_install_dir" "$install_dir/User previous scripts"
+    fi
 
+    # Install the file 'scripts-accels'
     if [[ -n "$accels_dir" ]]; then
-        echo " > Installing 'scripts-accels'..."
+        echo " > Installing the file 'scripts-accels'..."
+        rm -f "$accels_dir/scripts-accels"
         mkdir --parents "$accels_dir"
         cp "scripts-accels" "$accels_dir/scripts-accels"
     fi
 
+    # Set the file permissions
     echo " > Setting file permissions..."
     find "$install_dir" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
 
-    read -r -p " > Would you like to install some basic dependencies for the scripts now? [Y/n]" answer
+    # Ask if the user wants to install some basic dependencies
+    read -r -p " > Would you like to install now some basic dependencies for the scripts? [Y/n]" answer
     case "${answer,,}" in
     y | yes | "")
         echo " > Installing dependencies..."
         _install_dependencies
         ;;
-    *)
-        echo " > Skipping installation of dependencies..."
-        ;;
     esac
 
+    # Close the file manager
     echo " > Closing the file manager to reload its configurations..."
     eval "$file_manager -q &>/dev/null" || true
 
     echo "Done!"
+}
+
+_command_exists() {
+    local command_check="$1"
+
+    if command -v "$command_check" &>/dev/null; then
+        return 0
+    fi
+    return 1
 }
 
 _install_dependencies() {
@@ -100,7 +122,7 @@ _install_dependencies() {
             exit 1
         fi
     else
-        echo "Error: could not run the installer as administrator!"
+        echo "Error: could not run as administrator!"
         exit 1
     fi
 }
