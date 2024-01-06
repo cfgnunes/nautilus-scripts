@@ -20,6 +20,7 @@ _main() {
     local install_dir=""
     local accels_dir=""
     local file_manager=""
+    local tmp_install_dir=""
 
     if _command_exists "nautilus"; then
         install_dir="$HOME/.local/share/nautilus/scripts"
@@ -37,7 +38,7 @@ _main() {
     fi
 
     echo " > Moving previous files to a temporary directory..."
-    local tmp_install_dir="$(mktemp -d)"
+    tmp_install_dir=$(mktemp -d)
     mv "$install_dir"/* "$tmp_install_dir" || true
 
     echo " > Removing previous files..."
