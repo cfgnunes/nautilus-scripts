@@ -12,7 +12,7 @@ _main() {
 
     # Show the main menu
     menu_options=$(whiptail --title "Nautilus Scripts Installer" --separate-output --checklist \
-        "Installer options:" 10 68 4 \
+        "Installer options:" 11 68 4 \
         "1" "Install basic package dependencies" ON \
         "2" "Install the file 'scripts-accels'" ON \
         "3" "Preserve the previous scripts" OFF \
