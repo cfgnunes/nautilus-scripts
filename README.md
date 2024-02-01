@@ -17,7 +17,7 @@ While there are numerous scripts available for GNOME Files on the web, many of t
 - **Compatibility with any file manager**: Works with any file manager, without relying on `$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS` or Nemo equivalents.
 - **Keyboard shortcuts**: Provides keyboard shortcuts for direct access to the scripts (refer to the `scripts-accels` file).
 - **Bash implementation**: All scripts are implemented in Bash.
-- **Shell script validation**: All shell scripts have been checked using [shellcheck](https://github.com/koalaman/shellcheck).
+- **Shell script validation**: All shell scripts have been checked using [ShellCheck](https://github.com/koalaman/shellcheck).
 
 ## Installing
 
