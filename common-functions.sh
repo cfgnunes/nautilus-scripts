@@ -154,20 +154,21 @@ _display_info_box() {
 }
 
 _display_password_box() {
+    local message="Type your password"
     local password=""
 
-    # Ask the user a password.
+    # Ask the user the 'password'.
     if _is_terminal_session; then
-        read -r -p "Type your password: " password >&2
+        read -r -p "$message: " password >&2
     elif _command_exists "zenity"; then
         password=$(zenity --title="$(_get_script_name)" \
             --password 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
         password=$(kdialog --title "$(_get_script_name)" \
-            --password "Type your password" 2>/dev/null) || _exit_script
+            --password "$message" 2>/dev/null) || _exit_script
     fi
 
-    # Check if the password is not empty
+    # Check if the 'password' is not empty
     if [[ -z "$password" ]]; then
         _display_error_box "You must define a password!"
         _exit_script
