@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local std_output=""
+
+    # Initial checks
+    _check_dependencies "isoinfo(genisoimage)"
+    _display_wait_box
+    input_files=$(_get_files "$*" "type=file; type=file; min_files=1; max_files=1; mime=iso")
+
+    # Run the main process
+    # shellcheck disable=SC2086
+    std_output=$(isoinfo -d -i $input_files 2>/dev/null)
+
+    _display_text_box "$std_output"
+}
+
+_main "$@"
