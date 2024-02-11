@@ -47,7 +47,7 @@ _check_dependencies() {
     local package_name=""
 
     # Add basic commands to check
-    dependencies="file xargs(findutils) pstree(psmisc) cmp(diffutils) $dependencies"
+    dependencies="file xargs(findutils) pstree(psmisc) cmp(diffutils) mkfifo(coreutils) $dependencies"
 
     # Check all commands in the list 'dependencies'
     IFS=" "
