@@ -10,7 +10,7 @@ _main() {
     local std_output=""
 
     # Initial checks
-    _check_dependencies "sha256sum(coreutils)"
+    _check_dependencies ""
     _display_wait_box
     input_files=$(_get_files "$*" "type=file; recursive=true")
 

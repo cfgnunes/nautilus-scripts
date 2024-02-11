@@ -11,7 +11,7 @@ _main() {
     local compiled_output_file=""
 
     # Initial checks
-    _check_dependencies "md5sum(coreutils)"
+    _check_dependencies ""
     _display_wait_box
     input_files=$(_get_files "$*" "type=file; recursive=true")
     output_dir=$PWD
