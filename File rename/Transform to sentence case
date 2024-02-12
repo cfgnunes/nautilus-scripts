@@ -31,11 +31,9 @@ _main_task() {
     filename=$(basename -- "$input_file")
 
     # Run the main process
-    # Run the main process
     local char=""
     local capitalize_next=true
     local first_only=false
-
     for ((i = 0; i < ${#filename}; i++)); do
         char="${filename:$i:1}"
 

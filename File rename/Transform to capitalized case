@@ -33,7 +33,6 @@ _main_task() {
     # Run the main process
     local char=""
     local capitalize_next=true
-
     for ((i = 0; i < ${#filename}; i++)); do
         char="${filename:$i:1}"
 
