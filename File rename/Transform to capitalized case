@@ -26,22 +26,25 @@ _main_task() {
     local std_output=""
     local dir=""
     local filename=""
+
+    dir=$(dirname -- "$input_file")
+    filename=$(basename -- "$input_file")
+
+    # Transform to capitalized case
     local extension_converted=""
     local extension=""
     local filename_converted=""
-    local filename_full=""
+    local filename_without_extension=""
 
-    dir=$(dirname -- "$input_file")
-    filename_full=$(basename -- "$input_file")
+    filename_without_extension=$(_get_filename_without_extension "$filename")
+    extension=$(_get_filename_extension "$filename")
 
-    filename=$(_get_filename_without_extension "$filename_full")
-    extension=$(_get_filename_extension "$filename_full")
+    filename_converted=$(sed -r "s|(\w)(\w*)|\U\1\L\2|g" <<<"$filename_without_extension")
+    extension_converted=${extension,,}
+    output_file="$filename_converted$extension_converted"
 
     # Run the main process
-    # Transform to capitalized case
-    filename_converted=$(sed -r "s|(\w)(\w*)|\U\1\L\2|g" <<<"$filename")
-    extension_converted=${extension,,}
-    std_output=$(_move_file "when_conflict=skip" "$input_file" "$dir/$filename_converted$extension_converted" 2>&1)
+    std_output=$(_move_file "when_conflict=skip" "$input_file" "$dir/$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 }
 
