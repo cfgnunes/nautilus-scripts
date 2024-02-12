@@ -34,7 +34,7 @@ _main_task() {
     local file_information=""
 
     file_encoding=$(file --mime-encoding --brief -- "$input_file")
-    file_information=$(file --separator "//" --no-pad -- "$input_file" | sed -r "s|(.*)// ||")
+    file_information=$(file --separator "//" --no-pad -- "$input_file" | sed "s|\(.*\)// ||")
 
     # Run the checker 'non UTF-8 encoding'
     if [[ "${file_encoding,,}" != *"us-ascii"* ]] && [[ "${file_encoding,,}" != *"utf-8"* ]]; then

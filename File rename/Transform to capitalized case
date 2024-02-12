@@ -38,8 +38,8 @@ _main_task() {
 
     filename_without_extension=$(_get_filename_without_extension "$filename")
     extension=$(_get_filename_extension "$filename")
-
-    filename_converted=$(sed -r "s|(\w)(\w*)|\U\1\L\2|g" <<<"$filename_without_extension")
+    # shellcheck disable=SC2001
+    filename_converted=$(sed "s|\(\w\)\(\w*\)|\U\1\L\2|g" <<<"$filename_without_extension")
     extension_converted=${extension,,}
     output_file="$filename_converted$extension_converted"
 

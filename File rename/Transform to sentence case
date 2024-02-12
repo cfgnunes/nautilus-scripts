@@ -31,7 +31,8 @@ _main_task() {
     filename=$(basename -- "$input_file")
 
     # Transform to sentence case
-    output_file=$(sed -r "s|(\w)(.*)|\U\1\L\2|g" <<<"$filename")
+    # shellcheck disable=SC2001
+    output_file=$(sed "s|\(\w\)\(.*\)|\U\1\L\2|g" <<<"$filename")
 
     # Run the main process
     std_output=$(_move_file "when_conflict=skip" "$input_file" "$dir/$output_file" 2>&1)
