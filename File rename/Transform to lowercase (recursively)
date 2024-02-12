@@ -33,6 +33,7 @@ _main_task() {
 
         dir=$(dirname -- "$file")
         filename=$(basename -- "$file")
+        # Transform to lowercase
         new_filename=${filename,,}
 
         # Run the main process
@@ -48,6 +49,7 @@ _main_task() {
 
         parent_dir=$(dirname -- "$dir")
         dirname=$(basename -- "$dir")
+        # Transform to lowercase
         new_dirname=${dirname,,}
 
         # Run the main process
