@@ -31,24 +31,8 @@ _main_task() {
     filename=$(basename -- "$input_file")
 
     # Run the main process
-    local char=""
-    local capitalize_next=true
-    local first_only=false
-    for ((i = 0; i < ${#filename}; i++)); do
-        char="${filename:$i:1}"
-
-        if grep --ignore-case --perl-regexp --only-matching --line-number --quiet "[ \t\n\r\-\_\,\;\:\!\?\'\"\(\)\[\]\{\}\@\*\/\\\&\#\%\`\^\+\<\=\>\|]" <<<"$char"; then
-            capitalize_next=1
-            output_file+="${char,,}"
-        elif $capitalize_next && ! $first_only; then
-            output_file+="${char^^}"
-            capitalize_next=false
-            first_only=true
-        else
-            output_file+="${char,,}"
-        fi
-    done
-
+    # Transform to sentence case
+    output_file=$(sed -r "s|(\w)(.*)|\U\1\L\2|g" <<<"$filename")
     std_output=$(_move_file "when_conflict=skip" "$input_file" "$dir/$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 }
