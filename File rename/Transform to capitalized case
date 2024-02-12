@@ -32,7 +32,7 @@ _main_task() {
 
     # Run the main process
     # Transform to capitalized case
-    output_file=$(sed -r "s|\b(\w)(\w*)|\U\1\L\2|g" <<<"$filename")
+    output_file=$(sed -r "s|(\w)(\w*)|\U\1\L\2|g" <<<"$filename")
     std_output=$(_move_file "when_conflict=skip" "$input_file" "$dir/$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 }
