@@ -19,7 +19,7 @@ _main() {
     # Run the function '_main_task' for each file in parallel
     _run_task_parallel "$input_files" "$output_dir"
 
-    # Compile the results in a single file
+    # Compile all results into a single output
     compiled_output_file=$(_get_filename_suffix "$output_dir/sha1sum.txt")
     cat "$TEMP_DIR_TASK/"* >"$compiled_output_file"
 
