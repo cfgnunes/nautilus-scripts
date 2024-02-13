@@ -28,7 +28,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_file "$input_file" "$output_dir" "epub")
-    std_output=$(pandoc "$input_file" -s -o "$output_file" 2>&1)
+    std_output=$(pandoc "$input_file" --standalone -o "$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
