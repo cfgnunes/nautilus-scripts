@@ -104,7 +104,7 @@ _install_scripts() {
     if [[ "$menu_options" == *3* ]]; then
         echo " > Preserving previous scripts to a temporary directory..."
         tmp_install_dir=$(mktemp -d)
-        mv "$install_dir"/* "$tmp_install_dir" || true
+        mv "$install_dir/"* "$tmp_install_dir" || true
     else
         echo " > Removing previous scripts..."
         rm -rf "$install_dir"
