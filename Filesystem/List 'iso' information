@@ -16,7 +16,7 @@ _main() {
 
     _run_task_parallel "$input_files" ""
 
-    std_output=$(cat "$TEMP_DIR_TASK/"* 2>/dev/null) # Compile all results into a single output
+    std_output=$(cat -- "$TEMP_DIR_TASK/"* 2>/dev/null) # Compile all results into a single output
     # shellcheck disable=SC2001
     std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove dir $PWD of the filename
 

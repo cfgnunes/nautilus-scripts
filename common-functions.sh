@@ -229,8 +229,8 @@ _display_result_box() {
     error_log_file=$(_get_filename_suffix "$error_log_file")
 
     # Compile log errors in a single file
-    if ls "$TEMP_DIR_LOG/"* &>/dev/null; then
-        cat "$TEMP_DIR_LOG/"* >"$error_log_file"
+    if ls -- "$TEMP_DIR_LOG/"* &>/dev/null; then
+        cat -- "$TEMP_DIR_LOG/"* >"$error_log_file"
     fi
 
     # Check if there was some error
@@ -273,7 +273,7 @@ _display_wait_box_message() {
         rm -f "$TEMP_FIFO"
         mkfifo "$TEMP_FIFO"
         # shellcheck disable=SC2002
-        cat "$TEMP_FIFO" | (
+        cat -- "$TEMP_FIFO" | (
             zenity \
                 --title="$(_get_script_name)" \
                 --width=400 \
@@ -584,7 +584,7 @@ _get_files() {
     fi
 
     # Compile valid files in a single list 'output_files'
-    output_files=$(cat "$TEMP_DIR_VALID_FILES/"*)
+    output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"*)
 
     # Sort the list by filename
     if ((valid_files_count > 1)); then
