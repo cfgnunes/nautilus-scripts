@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# This file contains common functions that will be sourced by the scripts.
+# This file contains common functions that the scripts will source.
 
 # shellcheck disable=SC2001
 
@@ -15,16 +15,16 @@ readonly PREFIX_OUTPUT_DIR="Output"
 readonly FILENAME_SEPARATOR=$'\r'
 IFS=$FILENAME_SEPARATOR
 
-# Create temp directories for use in scripts
+# Create temp directories for use in scripts.
 TEMP_DIR=$(mktemp --directory)
 TEMP_DIR_LOG=$(mktemp --directory --tmpdir="$TEMP_DIR")
 TEMP_DIR_TASK=$(mktemp --directory --tmpdir="$TEMP_DIR")
 TEMP_DIR_VALID_FILES=$(mktemp --directory --tmpdir="$TEMP_DIR")
 
-# A temporary FIFO to use in the "wait_box"
+# A temporary FIFO to use in the "wait_box".
 readonly TEMP_FIFO="$TEMP_DIR/fifo.txt"
 
-# Remove the temp directory in unexpected exit
+# Remove the temp directory in an unexpected exit.
 _cleanup() {
     rm -rf "$TEMP_DIR"
     _print_terminal "End of the script."
@@ -55,7 +55,7 @@ _check_dependencies() {
         # Item syntax: command(package), example: photorec(testdisk)
         command=${dependency%%(*}
 
-        # Check if has the command in the shell
+        # Check if it has the command in the shell.
         if _command_exists "$command"; then
             continue
         fi
@@ -99,7 +99,7 @@ _check_result() {
         fi
     fi
 
-    # Check if output file exists
+    # Check if the output file exists.
     if [[ -n "$output_file" ]] && ! [[ -e "$output_file" ]]; then
         _write_log "Error: The output file does not exist." "$input_file" "$std_output"
         return 1
@@ -157,7 +157,7 @@ _display_password_box() {
     local message="Type your password"
     local password=""
 
-    # Ask the user the 'password'.
+    # Ask the user for the 'password'.
     if _is_terminal_session; then
         read -r -p "$message: " password >&2
     elif _command_exists "zenity"; then
@@ -239,14 +239,14 @@ _display_result_box() {
         _exit_script
     fi
 
-    # If output_dir parameter is defined
+    # If 'output_dir' parameter is defined
     if [[ -n "$output_dir" ]]; then
         # Try to remove the output directory (if it is empty)
         if [[ "$output_dir" == *"/$PREFIX_OUTPUT_DIR"* ]]; then
             rmdir "$output_dir" &>/dev/null
         fi
 
-        # Check if output directory still exists
+        # Check if the output directory still exists.
         if [[ -d "$output_dir" ]]; then
             local output_dir_simple=""
             output_dir_simple=$(sed "s|$PWD/|./|g" <<<"$output_dir")
@@ -302,8 +302,7 @@ _exit_script() {
 
     _print_terminal "Aborting the script..."
 
-    # Use xargs and kill to send the SIGTERM signal
-    # to all child processes including the current script.
+    # Use xargs and kill to send the SIGTERM signal to all child processes, including the current script.
     # See the: https://www.baeldung.com/linux/safely-exit-scripts
     xargs kill <<<"$child_pids" &>/dev/null
 }
@@ -438,7 +437,7 @@ _is_valid_file() {
         fi
     fi
 
-    # Create a temp file with containing the name of the valid file
+    # Create a temp file containing the name of the valid file
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_VALID_FILES")
     echo -n "$input_file$FILENAME_SEPARATOR" >"$temp_file"
 
@@ -468,7 +467,7 @@ _get_filename_suffix() {
     filename_base=$(_get_filename_without_extension "$filename")
     filename_extension=$(_get_filename_extension "$filename")
 
-    # Avoid overwrite a file. If there is a file with the same name,
+    # Avoid overwriting a file. If there is a file with the same name,
     # try to add a suffix, as 'file (1)', 'file (2)', ...
     local suffix=0
     while [[ -e "$filename_result" ]]; do
@@ -527,7 +526,7 @@ _get_files() {
 
         # Get the full path of each input_file.
         if [[ -d "$input_file" ]]; then
-            # It's a directory, so just use pwd -P
+            # It's a directory, so use pwd -P
             input_files_full=$(cd "$input_file" && pwd -P)
         else
             # It's a file
@@ -550,7 +549,7 @@ _get_files() {
     # Allows the symbol "'" in filenames
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
-    # Export variables and functions to use inside a new shell (using 'xargs')
+    # Export variables and functions inside a new shell (using 'xargs')
     export -f _get_filename_extension
     export -f _get_parameter_value
     export -f _has_string_in_list
@@ -568,7 +567,7 @@ _get_files() {
     # Count the number of valid files
     valid_files_count=$(find "$TEMP_DIR_VALID_FILES/" -type f -printf "-\n" | wc -l)
 
-    # Check if there is at last one valid file
+    # Check if there is at least one valid file.
     if ((valid_files_count == 0)); then
         _display_error_box "There are no valid files in the selection!"
         _exit_script
@@ -659,7 +658,7 @@ _get_parameter_value() {
     local parameter_key=$2
     local parameter_value=""
 
-    # Return if the 'parameter_key' not found in the 'parameters'
+    # Return if the 'parameter_key' is not found in the 'parameters'
     if [[ "$parameters" != *"$parameter_key="* ]]; then
         return 1
     fi
@@ -705,7 +704,7 @@ _move_file() {
         file_dst="./$file_dst"
     fi
 
-    # Ignore move to the same file
+    # Ignore moving to the same file
     if [[ "$file_src" == "$file_dst" ]]; then
         return 0
     fi
@@ -713,8 +712,7 @@ _move_file() {
     # Read values from the parameters
     par_when_conflict=$(_get_parameter_value "$parameters" "when_conflict")
 
-    # Process the parameter "when_conflict":
-    # what to do when the 'file_dst' already exists
+    # Process the parameter "when_conflict": what to do when the 'file_dst' already exists.
     case "$par_when_conflict" in
     "overwrite")
         :
@@ -754,28 +752,28 @@ _move_temp_file_to_output() {
         return 1
     fi
 
-    # Check if the result file is different from the input file, then replace it
+    # If the result file differs from the input file, then replace it.
     if ! cmp --silent -- "$input_file" "$temp_file"; then
 
-        # If 'input_file' is same as 'output_file', create a backup
+        # If 'input_file' is the same as 'output_file', create a backup.
         if [[ "$input_file" == "$output_file" ]]; then
             backup_file="$input_file.bak"
 
-            # Create a backup of the original file
+            # Create a backup of the original file.
             std_output=$(_move_file "when_conflict=rename" "$input_file" "$backup_file" 2>&1)
             _check_result "$?" "$std_output" "$input_file" "$backup_file" || return 1
         fi
 
-        # Move the 'temp_file' to 'output_file'
+        # Move the 'temp_file' to 'output_file'.
         std_output=$(_move_file "when_conflict=rename" "$temp_file" "$output_file" 2>&1)
         _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 
-        # Preserve the same permissions of 'input_file'
+        # Preserve the same permissions of 'input_file'.
         std_output=$(chmod --reference="$input_file" -- "$output_file" 2>&1)
         _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
     fi
 
-    # Remove the temporary file
+    # Remove the temporary file.
     rm -rf "$temp_file"
 }
 
@@ -794,7 +792,7 @@ _run_task_parallel() {
     # Allows the symbol "'" in filenames
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
-    # Export variables and functions to use inside a new shell (using 'xargs')
+    # Export variables and functions inside a new shell (using 'xargs')
     export FILENAME_SEPARATOR
     export TASK_DATA
     export TEMP_DIR_LOG
