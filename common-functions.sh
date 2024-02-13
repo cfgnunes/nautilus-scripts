@@ -836,7 +836,7 @@ _write_log() {
         echo "[$(date "+%Y-%m-%d %H:%M:%S")]"
         echo " > Input file: $input_file"
         echo " > $message"
-        echo " > Standard output:"
+        echo " > Output:"
         echo "$std_output"
         echo
     } >"$log_temp_file"
