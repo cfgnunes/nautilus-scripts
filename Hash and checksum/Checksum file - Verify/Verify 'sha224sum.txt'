@@ -45,7 +45,7 @@ cd "$output_dir" || _exit_script
 
 export -f _verify_checksum
 export TEMP_DIR_TASK
-sed "s|'|\r|g" "$input_files" | xargs --max-procs="$(nproc --all --ignore=1)" --replace="{}" bash -c "_verify_checksum '{}'"
+sed "s|'|\r|g" "$input_files" | xargs --max-procs="$(_get_max_procs)" --replace="{}" bash -c "_verify_checksum '{}'"
 
 std_output=$(cat -- "$TEMP_DIR_TASK/"* 2>/dev/null) # Compile all results into a single output.
 

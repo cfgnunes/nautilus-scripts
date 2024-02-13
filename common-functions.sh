@@ -560,7 +560,7 @@ _get_files() {
     # Run '_is_valid_file' for each file in parallel (using 'xargs').
     echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
-        --max-procs="$(nproc --all --ignore=1)" \
+        --max-procs="$(_get_max_procs)" \
         --replace="{}" \
         bash -c "_is_valid_file '{}' '$parameters'"
 
@@ -600,6 +600,11 @@ _get_files() {
     output_files=${output_files%"$FILENAME_SEPARATOR"}
 
     echo "$output_files"
+}
+
+_get_max_procs() {
+    # Return the maximum number of proccessing units available (minus one).
+    nproc --all --ignore=1 2>/dev/null
 }
 
 _get_output_dir() {
@@ -804,6 +809,7 @@ _run_task_parallel() {
     export -f _get_filename_extension
     export -f _get_filename_suffix
     export -f _get_filename_without_extension
+    export -f _get_max_procs
     export -f _get_output_file
     export -f _get_parameter_value
     export -f _main_task
@@ -814,7 +820,7 @@ _run_task_parallel() {
     # Execute the function '_main_task' for each file in parallel (using 'xargs').
     echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
-        --max-procs="$(nproc --all --ignore=1)" \
+        --max-procs="$(_get_max_procs)" \
         --replace="{}" \
         bash -c "_main_task '{}' '$output_dir'"
 }
