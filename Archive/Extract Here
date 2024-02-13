@@ -36,6 +36,7 @@ _main() {
         *.bz2) _check_dependencies "bunzip2(bzip2)" ;;
         *.deb) _check_dependencies "ar(binutils)" ;;
         *.gz) _check_dependencies "gunzip(gzip)" ;;
+        *.iso) _check_dependencies "xorriso" ;;
         *.lha) _check_dependencies "lha(lhasa)" ;;
         *.lzip) _check_dependencies "lzip" ;;
         *.lzma) _check_dependencies "unlzma(xz-utils)" ;;
@@ -91,6 +92,7 @@ _main_task() {
     *.bz2) std_output=$(bunzip2 -- "$input_file" 2>&1) ;;
     *.deb) std_output=$(ar x -- "$input_file" 2>&1) ;;
     *.gz) std_output=$(gunzip -- "$input_file" 2>&1) ;;
+    *.iso) std_output=$(xorriso -osirrox on -indev "$input_file" -find / -exec chmod u+rw -- -extract / . -rollback_end 2>&1) ;;
     *.lha) std_output=$(lha -x -- "$input_file" 2>&1) ;;
     *.lzip) std_output=$(lzip -d -- "$input_file" 2>&1) ;;
     *.lzma) std_output=$(unlzma -- "$input_file" 2>&1) ;;
