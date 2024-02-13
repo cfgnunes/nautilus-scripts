@@ -45,12 +45,12 @@ _main_task() {
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 
     # Run the process (part 3) 'remove trailing spaces'
-    std_output=$(sed 's|[ \t]*\(\r*\)$|\1|' "$temp_file2" >"$temp_file3")
+    std_output=$(sed "s|[ \t]*\(\r*\)$|\1|" "$temp_file2" >"$temp_file3")
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 
     # Run the process (part 4) 'remove empty line in EOF'
     echo "" >>"$temp_file3"
-    std_output=$(sed ':Loop;N;$!bLoop;s|\n*$||g' "$temp_file3" >"$temp_file4")
+    std_output=$(sed ":Loop;N;$!bLoop;s|\n*$||g" "$temp_file3" >"$temp_file4")
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 
     # Move the temporary file to the output
