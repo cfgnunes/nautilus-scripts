@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Source the script 'common-functions.sh'
+# Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
     local input_file=""
 
-    # Initial checks
+    # Execute initial checks.
     TASK_DATA="7z"
     if [[ "$(_get_distro_name)" == "fedora" ]]; then
         TASK_DATA="7za"
@@ -19,7 +19,7 @@ _main() {
     _display_wait_box
     input_files=$(_get_files "$*" "type=file")
 
-    # Check dependencies for each file extension
+    # Check dependencies for each file extension.
     for input_file in $input_files; do
         case $input_file in
         *.tar.bz | *.tbz) _check_dependencies "tar" ;;
@@ -51,7 +51,7 @@ _main() {
         esac
     done
 
-    # Run the function '_main_task' for each file in parallel
+    # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" ""
     _display_result_box ""
 }
@@ -68,7 +68,7 @@ _main_task() {
         output_dir=$(dirname -- "$input_file")
     fi
 
-    # Extract files into a temporary directory
+    # Extract files into a temporary directory.
     filename=$(basename -- "$input_file")
     filename=$(_get_filename_without_extension "$filename")
     temp_dir_output=$(mktemp --directory --tmpdir="$output_dir" "tmp.$filename.XXXXXXXXXX")
@@ -106,10 +106,10 @@ _main_task() {
     *) std_output=$("$TASK_DATA" x -aoa -- "$input_file" 2>&1) ;;
     esac
 
-    # Check for result errors
+    # Check for result errors.
     _check_result "$?" "$std_output" "$input_file" ""
 
-    # Check if the archive has just one item (single file/directory compressed)
+    # Check if the archive has just one item (single file/directory compressed).
     count_root_items=$(find . -mindepth 1 -maxdepth 1 | wc -l)
     if ((count_root_items == 1)); then
         output_item=$(find . -mindepth 1 -maxdepth 1)
@@ -117,27 +117,27 @@ _main_task() {
     fi
     popd &>/dev/null || return 1
 
-    # Try to remove the temporary directory (if it is empty)
+    # Try to remove the temporary directory (if it is empty).
     rmdir "$temp_dir_output" &>/dev/null && return 1
 
-    # Move the items to the correct directory
+    # Move the items to the correct directory.
     if [[ "$filename" == "$output_item" ]] ||
         [[ "$filename" == "$(_get_filename_without_extension "$output_item")" ]]; then
-        # For archives with "one item with the same name of the archive"
-        # For example: "README.TXT.tar.gz" or "README.tar.gz"
+        # For archives with "one item with the same name of the archive".
+        # For example: "README.TXT.tar.gz" or "README.tar.gz".
         std_output=$(_move_file "when_conflict=rename" "$temp_dir_output/$output_item" "$output_dir/$output_item" 2>&1)
         _check_result "$?" "$std_output" "$input_file" "" || return 1
     elif [[ "squashfs-root" == "$output_item" ]]; then
-        # For SquashFS
+        # For SquashFS.
         std_output=$(_move_file "when_conflict=rename" "$temp_dir_output/$output_item" "$output_dir/$filename" 2>&1)
         _check_result "$?" "$std_output" "$input_file" "" || return 1
     elif ((count_root_items > 0)); then
-        # For archives with "one item with a different name of the archive" or "multiple items"
+        # For archives with "one item with a different name of the archive" or "multiple items".
         std_output=$(_move_file "when_conflict=rename" "$temp_dir_output" "$output_dir/$filename" 2>&1)
         _check_result "$?" "$std_output" "$input_file" "" || return 1
     fi
 
-    # Remove the temporary directory
+    # Remove the temporary directory.
     rm -rf "$temp_dir_output"
 }
 

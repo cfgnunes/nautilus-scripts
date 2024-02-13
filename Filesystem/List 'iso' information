@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Source the script 'common-functions.sh'
+# Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
@@ -9,16 +9,17 @@ _main() {
     local input_files=""
     local std_output=""
 
-    # Initial checks
+    # Execute initial checks.
     _check_dependencies "isoinfo(genisoimage)"
     _display_wait_box
     input_files=$(_get_files "$*" "type=file; recursive=true; mime=iso")
 
+    # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" ""
 
-    std_output=$(cat -- "$TEMP_DIR_TASK/"* 2>/dev/null) # Compile all results into a single output
+    std_output=$(cat -- "$TEMP_DIR_TASK/"* 2>/dev/null) # Compile all results into a single output.
     # shellcheck disable=SC2001
-    std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove dir $PWD of the filename
+    std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove $PWD directory from filenames.
 
     _display_text_box "$std_output"
 }
@@ -28,10 +29,10 @@ _main_task() {
     local output_dir=$2
     local temp_file=""
 
-    # Run the main process
+    # Run the main process.
     std_output=$(isoinfo -debug -d -p -R -J -i "$input_file" 2>/dev/null)
 
-    # Save the result to a temporary file
+    # Save the result to a temporary file.
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
     echo "\"$input_file\"" >"$temp_file"
     echo "$std_output" >>"$temp_file"

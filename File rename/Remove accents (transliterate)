@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Source the script 'common-functions.sh'
+# Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
@@ -9,12 +9,12 @@ _main() {
     local input_files=""
     local output_dir=""
 
-    # Initial checks
+    # Execute initial checks.
     _check_dependencies "iconv(libc-bin)"
     _display_wait_box
     input_files=$(_get_files "$*" "type=all")
 
-    # Run the function '_main_task' for each file in parallel
+    # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
     _display_result_box ""
 }
@@ -30,10 +30,10 @@ _main_task() {
     dir=$(dirname -- "$input_file")
     filename=$(basename -- "$input_file")
 
-    # Remove accents (transliterate)
+    # Remove accents (transliterate).
     output_file=$(iconv -f utf8 -t ascii//TRANSLIT <<<"$filename")
 
-    # Run the main process
+    # Run the main process.
     std_output=$(_move_file "when_conflict=skip" "$input_file" "$dir/$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 }

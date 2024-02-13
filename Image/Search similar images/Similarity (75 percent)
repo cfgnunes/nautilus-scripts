@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Source the script 'common-functions.sh'
+# Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
@@ -8,12 +8,12 @@ source "$ROOT_DIR/common-functions.sh"
 _main() {
     local input_files=""
 
-    # Initial checks
+    # Execute initial checks.
     _check_dependencies "findimagedupes eog"
     _display_wait_box
     input_files=$(_get_files "$*" "type=file; recursive=true; mime=image")
 
-    # Run the main process
+    # Run the main process.
     # shellcheck disable=SC2086
     findimagedupes --recurse --threshold=75% --program=/usr/bin/eog -- $input_files 2>/dev/null
     _display_result_box ""

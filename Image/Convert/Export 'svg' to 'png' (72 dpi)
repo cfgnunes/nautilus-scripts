@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Source the script 'common-functions.sh'
+# Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
@@ -9,13 +9,13 @@ _main() {
     local input_files=""
     local output_dir=""
 
-    # Initial checks
+    # Execute initial checks.
     _check_dependencies "inkscape"
     _display_wait_box
     input_files=$(_get_files "$*" "type=file; mime=svg,gzip")
     output_dir=$(_get_output_dir)
 
-    # Run the function '_main_task' for each file in parallel
+    # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
     _display_result_box "$output_dir"
 }
@@ -26,7 +26,7 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    # Run the main process
+    # Run the main process.
     output_file=$(_get_output_file "$input_file" "$output_dir" "png")
     std_output=$(inkscape --export-area-drawing --export-dpi=72 --export-filename="$output_file" -- "$input_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1

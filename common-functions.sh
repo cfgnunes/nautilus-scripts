@@ -6,12 +6,12 @@
 
 set -u
 
-# Use an 'Output' directory instead of the current directory for the output
+# Use an 'Output' directory instead of the current directory for the output.
 readonly USE_OUTPUT_DIR=true
 readonly PREFIX_ERROR_LOG_FILE="Errors"
 readonly PREFIX_OUTPUT_DIR="Output"
 
-# Define the field separator used in 'for' commands to iterate over files
+# Define the field separator used in 'for' commands to iterate over files.
 readonly FILENAME_SEPARATOR=$'\r'
 IFS=$FILENAME_SEPARATOR
 
@@ -46,13 +46,13 @@ _check_dependencies() {
     local message=""
     local package_name=""
 
-    # Add basic commands to check
+    # Add basic commands to check.
     dependencies="file xargs(findutils) pstree(psmisc) cmp(diffutils) mkfifo(coreutils) $dependencies"
 
-    # Check all commands in the list 'dependencies'
+    # Check all commands in the list 'dependencies'.
     IFS=" "
     for dependency in $dependencies; do
-        # Item syntax: command(package), example: photorec(testdisk)
+        # Item syntax: command(package), example: photorec(testdisk).
         command=${dependency%%(*}
 
         # Check if it has the command in the shell.
@@ -68,7 +68,7 @@ _check_dependencies() {
             package_name=$command
         fi
 
-        # Ask the user to install the package
+        # Ask the user to install the package.
         if _display_question_box "$message"; then
             _install_package "$package_name" "$command"
             continue
@@ -85,13 +85,13 @@ _check_result() {
     local input_file=$3
     local output_file=$4
 
-    # Check the 'exit_code' and log the error
+    # Check the 'exit_code' and log the error.
     if ((exit_code != 0)); then
         _write_log "Error: Non-zero exit code." "$input_file" "$std_output"
         return 1
     fi
 
-    # Check if there is the word "Error" in stdout
+    # Check if there is the word "Error" in stdout.
     if ! grep --quiet --ignore-case --perl-regexp "[^\w]error" <<<"$input_file"; then
         if grep --quiet --ignore-case --perl-regexp "[^\w]error" <<<"$std_output"; then
             _write_log "Error: Word 'error' found in the standard output." "$input_file" "$std_output"
@@ -168,7 +168,7 @@ _display_password_box() {
             --password "$message" 2>/dev/null) || _exit_script
     fi
 
-    # Check if the 'password' is not empty
+    # Check if the 'password' is not empty.
     if [[ -z "$password" ]]; then
         _display_error_box "You must define a password!"
         _exit_script
@@ -225,23 +225,23 @@ _display_result_box() {
         error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
     fi
 
-    # If the file already exists, add a suffix
+    # If the file already exists, add a suffix.
     error_log_file=$(_get_filename_suffix "$error_log_file")
 
-    # Compile log errors in a single file
+    # Compile log errors in a single file.
     if ls -- "$TEMP_DIR_LOG/"* &>/dev/null; then
         cat -- "$TEMP_DIR_LOG/"* >"$error_log_file"
     fi
 
-    # Check if there was some error
+    # Check if there was some error.
     if [[ -f "$error_log_file" ]]; then
         _display_error_box "Task finished with errors! See the '$error_log_file' for details."
         _exit_script
     fi
 
-    # If 'output_dir' parameter is defined
+    # If 'output_dir' parameter is defined.
     if [[ -n "$output_dir" ]]; then
-        # Try to remove the output directory (if it is empty)
+        # Try to remove the output directory (if it is empty).
         if [[ "$output_dir" == *"/$PREFIX_OUTPUT_DIR"* ]]; then
             rmdir "$output_dir" &>/dev/null
         fi
@@ -287,7 +287,7 @@ _display_wait_box_message() {
 }
 
 _close_wait_box() {
-    # Close the zenity progress by FIFO
+    # Close the zenity progress by FIFO.
     if [[ -p "$TEMP_FIFO" ]]; then
         echo >"$TEMP_FIFO"
     fi
@@ -297,7 +297,7 @@ _exit_script() {
     local child_pids=""
     local script_pid=$$
 
-    # Get the process ID (PID) of the current script
+    # Get the process ID (PID) of the current script.
     child_pids=$(pstree -p "$script_pid" | grep --only-matching -P "\(+\K[^)]+")
 
     _print_terminal "Aborting the script..."
@@ -329,7 +329,7 @@ _install_package() {
 
     _display_wait_box_message "Installing the package '$package_name'. Please, wait..."
 
-    # Install the package
+    # Install the package.
     if _command_exists "pkexec"; then
         if _command_exists "apt-get"; then
             pkexec bash -c "apt-get update; apt-get -y install $package_name &>/dev/null"
@@ -348,7 +348,7 @@ _install_package() {
 
     _close_wait_box
 
-    # Check if the package was installed
+    # Check if the package was installed.
     if ! _command_exists "$command"; then
         _display_error_box "Could not install the package '$package_name'!"
         _exit_script
@@ -379,7 +379,7 @@ _is_valid_file() {
     local par_type=""
     local temp_file=""
 
-    # Read values from the parameters
+    # Read values from the parameters.
     par_encoding=$(_get_parameter_value "$parameters" "encoding")
     par_extension=$(_get_parameter_value "$parameters" "extension")
     par_mime=$(_get_parameter_value "$parameters" "mime")
@@ -388,16 +388,16 @@ _is_valid_file() {
     par_skip_mime=$(_get_parameter_value "$parameters" "skip_mime")
     par_type=$(_get_parameter_value "$parameters" "type")
 
-    # Default value for the parameter "type"
+    # Default value for the parameter "type".
     if [[ -z "$par_type" ]]; then
         par_type="file"
     fi
 
-    # Validation for files
+    # Validation for files.
     if [[ -f "$input_file" ]]; then
 
         file_extension=$(_get_filename_extension "$input_file")
-        file_extension=${file_extension,,} # Lowercase file extension
+        file_extension=${file_extension,,} # Lowercase the file extension.
         file_mime=$(file --brief --mime-type -- "$input_file")
         file_encoding=$(file --brief --mime-encoding -- "$input_file")
 
@@ -429,7 +429,7 @@ _is_valid_file() {
             return 1
         fi
 
-    # Validation for directories
+    # Validation for directories.
     elif [[ -d "$input_file" ]]; then
 
         if [[ "$par_type" == "file" ]]; then
@@ -437,7 +437,7 @@ _is_valid_file() {
         fi
     fi
 
-    # Create a temp file containing the name of the valid file
+    # Create a temp file containing the name of the valid file.
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_VALID_FILES")
     echo -n "$input_file$FILENAME_SEPARATOR" >"$temp_file"
 
@@ -496,13 +496,13 @@ _get_files() {
     #   "directory": Filter directories.
     #   "file_recursive": Filter files recursively.
 
-    # Read values from the parameters
+    # Read values from the parameters.
     par_max_files=$(_get_parameter_value "$parameters" "max_files")
     par_min_files=$(_get_parameter_value "$parameters" "min_files")
     par_recursive=$(_get_parameter_value "$parameters" "recursive")
     par_return_pwd=$(_get_parameter_value "$parameters" "get_pwd_if_no_selection")
 
-    # Check if there are input files
+    # Check if there are input files.
     if [[ -z "$input_files" ]]; then
         # Return the current working directory if there are no
         # files selected (parameter 'get_pwd_if_no_selection=true').
@@ -511,8 +511,8 @@ _get_files() {
             return 0
         fi
 
-        # TODO: Add a GUI box to add directories
-        # Try selecting the files by opening a file selection box
+        # TODO: Add a GUI box to add directories.
+        # Try selecting the files by opening a file selection box.
         input_files=$(_display_file_selection_box)
         if [[ -z "$input_files" ]]; then
             _display_error_box "There are no input files!"
@@ -526,10 +526,10 @@ _get_files() {
 
         # Get the full path of each input_file.
         if [[ -d "$input_file" ]]; then
-            # It's a directory, so use pwd -P
+            # It's a directory, so use 'pwd -P'.
             input_files_full=$(cd "$input_file" && pwd -P)
         else
-            # It's a file
+            # It's a file.
             input_files_full=$(cd "$(dirname "$input_file")" && pwd -P)/$(basename "$input_file")
         fi
 
@@ -543,13 +543,13 @@ _get_files() {
     done
     input_files=$input_files_final
 
-    # Removes the last field separator
+    # Removes the last field separator.
     input_files=${input_files%"$FILENAME_SEPARATOR"}
 
-    # Allows the symbol "'" in filenames
+    # Allows the symbol "'" in filenames.
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
-    # Export variables and functions inside a new shell (using 'xargs')
+    # Export variables and functions inside a new shell (using 'xargs').
     export -f _get_filename_extension
     export -f _get_parameter_value
     export -f _has_string_in_list
@@ -557,14 +557,14 @@ _get_files() {
     export FILENAME_SEPARATOR
     export TEMP_DIR_VALID_FILES
 
-    # Run '_is_valid_file' for each file in parallel (using 'xargs')
+    # Run '_is_valid_file' for each file in parallel (using 'xargs').
     echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(nproc --all --ignore=1)" \
         --replace="{}" \
         bash -c "_is_valid_file '{}' '$parameters'"
 
-    # Count the number of valid files
+    # Count the number of valid files.
     valid_files_count=$(find "$TEMP_DIR_VALID_FILES/" -type f -printf "-\n" | wc -l)
 
     # Check if there is at least one valid file.
@@ -583,20 +583,20 @@ _get_files() {
         _exit_script
     fi
 
-    # Compile valid files in a single list 'output_files'
+    # Compile valid files in a single list 'output_files'.
     output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"*)
 
-    # Sort the list by filename
+    # Sort the list by filename.
     if ((valid_files_count > 1)); then
         output_files=$(sed -z "s|\n|//|g" <<<"$output_files")
         output_files=$(sed "s|//$||" <<<"$output_files")
         output_files=$(sed -z "s|$FILENAME_SEPARATOR|\n|g" <<<"$output_files")
-        output_files=$(sort --version-sort <<<"$output_files")
+        output_files=$(sort --version-sort <<<"$output_files") # Sort the result.
         output_files=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$output_files")
         output_files=$(sed -z "s|//|\n|g" <<<"$output_files")
     fi
 
-    # Removes the last field separator
+    # Removes the last field separator.
     output_files=${output_files%"$FILENAME_SEPARATOR"}
 
     echo "$output_files"
@@ -611,7 +611,7 @@ _get_output_dir() {
         return
     fi
 
-    # Check directories available to put the 'output' dir
+    # Check directories available to put the 'output' dir.
     [[ ! -w "$base_dir" ]] && base_dir=$HOME
     [[ ! -w "$base_dir" ]] && base_dir="/tmp"
     output_dir="$base_dir/$PREFIX_OUTPUT_DIR"
@@ -621,7 +621,7 @@ _get_output_dir() {
         _exit_script
     fi
 
-    # If the file already exists, add a suffix
+    # If the file already exists, add a suffix.
     output_dir=$(_get_filename_suffix "$output_dir")
 
     mkdir --parents "$output_dir"
@@ -638,16 +638,16 @@ _get_output_file() {
     filename=$(basename -- "$input_file")
     output_file="$output_dir/"
 
-    if [[ -z "$extension" ]]; then # Same extension
+    if [[ -z "$extension" ]]; then # Same extension.
         output_file+="$filename"
-    elif [[ "$extension" == "." ]]; then # Remove extension
+    elif [[ "$extension" == "." ]]; then # Remove extension.
         output_file+="$(_get_filename_without_extension "$filename")"
-    else # Replace extension
+    else # Replace extension.
         output_file+="$(_get_filename_without_extension "$filename")"
         output_file+=".$extension"
     fi
 
-    # If the file already exists, add a suffix
+    # If the file already exists, add a suffix.
     output_file=$(_get_filename_suffix "$output_file")
 
     echo "$output_file"
@@ -688,7 +688,7 @@ _move_file() {
     local exit_code=0
     local par_when_conflict=""
 
-    # Check for empty parameters
+    # Check for empty parameters.
     if [[ -z "$file_src" ]]; then
         return 1
     fi
@@ -696,7 +696,7 @@ _move_file() {
         return 1
     fi
 
-    # Add the './' prefix in the path
+    # Add the './' prefix in the path.
     if ! [[ "$file_src" == "/"* ]] && ! [[ "$file_src" == "./"* ]] && ! [[ "$file_src" == "." ]]; then
         file_src="./$file_src"
     fi
@@ -704,12 +704,12 @@ _move_file() {
         file_dst="./$file_dst"
     fi
 
-    # Ignore moving to the same file
+    # Ignore moving to the same file.
     if [[ "$file_src" == "$file_dst" ]]; then
         return 0
     fi
 
-    # Read values from the parameters
+    # Read values from the parameters.
     par_when_conflict=$(_get_parameter_value "$parameters" "when_conflict")
 
     # Process the parameter "when_conflict": what to do when the 'file_dst' already exists.
@@ -718,11 +718,11 @@ _move_file() {
         :
         ;;
     "rename")
-        # Rename the file (add a suffix)
+        # Rename the file (add a suffix).
         file_dst=$(_get_filename_suffix "$file_dst")
         ;;
     "skip")
-        # Skip, do not move the file
+        # Skip, do not move the file.
         if [[ -e "$file_dst" ]]; then
             _write_log "Warning: The file already exists." "$file_src" "$file_dst"
             return 0
@@ -734,7 +734,7 @@ _move_file() {
         ;;
     esac
 
-    # Move the file
+    # Move the file.
     mv -f -- "$file_src" "$file_dst"
     exit_code=$?
 
@@ -747,7 +747,7 @@ _move_temp_file_to_output() {
     local output_file=$3
     local std_output=""
 
-    # Skip empty files
+    # Skip empty files.
     if [[ ! -s "$temp_file" ]]; then
         return 1
     fi
@@ -789,10 +789,10 @@ _run_task_parallel() {
     local input_files=$1
     local output_dir=$2
 
-    # Allows the symbol "'" in filenames
+    # Allows the symbol "'" in filenames.
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
-    # Export variables and functions inside a new shell (using 'xargs')
+    # Export variables and functions inside a new shell (using 'xargs').
     export FILENAME_SEPARATOR
     export TASK_DATA
     export TEMP_DIR_LOG
@@ -811,7 +811,7 @@ _run_task_parallel() {
     export -f _move_temp_file_to_output
     export -f _write_log
 
-    # Run the function '_main_task' for each file in parallel (using 'xargs')
+    # Execute the function '_main_task' for each file in parallel (using 'xargs').
     echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(nproc --all --ignore=1)" \
