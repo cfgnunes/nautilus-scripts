@@ -12,13 +12,30 @@ _main() {
     # Initial checks
     _check_dependencies "isoinfo(genisoimage)"
     _display_wait_box
-    input_files=$(_get_files "$*" "type=file; type=file; min_files=1; max_files=1; mime=iso")
+    input_files=$(_get_files "$*" "type=file; recursive=true; mime=iso")
 
-    # Run the main process
-    # shellcheck disable=SC2086
-    std_output=$(isoinfo -debug -d -p -R -J -i $input_files 2>/dev/null)
+    _run_task_parallel "$input_files" ""
+
+    std_output=$(cat "$TEMP_DIR_TASK/"* 2>/dev/null) # Compile the results in a single text
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove dir $PWD of the filename
 
     _display_text_box "$std_output"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local temp_file=""
+
+    # Run the main process
+    std_output=$(isoinfo -debug -d -p -R -J -i "$input_file" 2>/dev/null)
+
+    # Work on a temporary file
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+    echo "\"$input_file\"" >"$temp_file"
+    echo "$std_output" >>"$temp_file"
+    echo >>"$temp_file"
 }
 
 _main "$@"
