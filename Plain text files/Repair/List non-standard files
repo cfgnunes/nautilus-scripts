@@ -48,9 +48,9 @@ _main_task() {
         fi
     fi
 
-    # Run the checker 'non LF line break'
+    # Run the checker 'non-LF line break'
     if [[ "$file_information" == *"with CR"* ]]; then
-        result_file+="[non LF line break]"
+        result_file+="[non-LF line break]"
     fi
 
     # Run the checker 'trailing spaces' (for Unix and Windows files)

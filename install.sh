@@ -20,7 +20,7 @@ _main() {
         3>&1 1>&2 2>&3)
     menu_exit=$?
 
-    # Check if the user pressed Cancel or Esc no the menu
+    # Check if the user pressed Cancel or Esc in the menu.
     if [[ $menu_exit != 0 ]]; then
         echo "User cancelled."
         exit 1

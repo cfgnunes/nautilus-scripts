@@ -76,7 +76,7 @@ _main_task() {
     mkdir --parents "$temp_dir_output"
     pushd "$temp_dir_output" &>/dev/null || return 1
 
-    # Extract the archive according the file extension
+    # Extract the archive according to the file extension.
     case $input_file in
     *.tar.bz | *.tbz) std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1) ;;
     *.tar.bz2 | *.tbz2) std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1) ;;
@@ -123,7 +123,7 @@ _main_task() {
     # Move the items to the correct directory
     if [[ "$filename" == "$output_item" ]] ||
         [[ "$filename" == "$(_get_filename_without_extension "$output_item")" ]]; then
-        # For archive with "one item with same name of the archive"
+        # For archives with "one item with the same name of the archive"
         # For example: "README.TXT.tar.gz" or "README.tar.gz"
         std_output=$(_move_file "when_conflict=rename" "$temp_dir_output/$output_item" "$output_dir/$output_item" 2>&1)
         _check_result "$?" "$std_output" "$input_file" "" || return 1
@@ -132,7 +132,7 @@ _main_task() {
         std_output=$(_move_file "when_conflict=rename" "$temp_dir_output/$output_item" "$output_dir/$filename" 2>&1)
         _check_result "$?" "$std_output" "$input_file" "" || return 1
     elif ((count_root_items > 0)); then
-        # For archive with "one item with different name of the archive" or "multiple items"
+        # For archives with "one item with a different name of the archive" or "multiple items"
         std_output=$(_move_file "when_conflict=rename" "$temp_dir_output" "$output_dir/$filename" 2>&1)
         _check_result "$?" "$std_output" "$input_file" "" || return 1
     fi
