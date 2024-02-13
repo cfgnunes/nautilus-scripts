@@ -16,7 +16,7 @@ _main() {
 
     # Run the main process
     # shellcheck disable=SC2086
-    std_output=$(isoinfo -d -i $input_files 2>/dev/null)
+    std_output=$(isoinfo -debug -d -p -R -J -i $input_files 2>/dev/null)
 
     _display_text_box "$std_output"
 }
