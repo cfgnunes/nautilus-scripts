@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Source the script 'common-functions.sh'
+# Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
@@ -10,16 +10,16 @@ _main() {
     local output_dir=""
     local compiled_output_file=""
 
-    # Initial checks
+    # Execute initial checks.
     _check_dependencies ""
     _display_wait_box
     input_files=$(_get_files "$*" "type=file; recursive=true")
     output_dir=$PWD
 
-    # Run the function '_main_task' for each file in parallel
+    # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
 
-    # Compile all results into a single output
+    # Compile all results into a single output.
     compiled_output_file=$(_get_filename_suffix "$output_dir/sha224sum.txt")
     cat -- "$TEMP_DIR_TASK/"* >"$compiled_output_file"
 
@@ -32,11 +32,11 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    # Run the main process
+    # Run the main process.
     output_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
     std_output=$(sha224sum -- "$input_file" 2>/dev/null)
     # shellcheck disable=SC2001
-    std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove dir $PWD of the filename
+    std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove $PWD directory from filenames.
     _check_result "$?" "" "$input_file" "$output_file" || return 1
 
     echo "$std_output" >"$output_file"

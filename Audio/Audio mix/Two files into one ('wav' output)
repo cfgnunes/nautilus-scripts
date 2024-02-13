@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Source the script 'common-functions.sh'
+# Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
@@ -9,7 +9,7 @@ _main() {
     local input_files=""
     local output_dir=""
 
-    # Initial checks
+    # Execute initial checks.
     _check_dependencies "ffmpeg"
     _display_wait_box
     input_files=$(_get_files "$*" "type=file; mime=audio,video,stream; min_files=2; max_files=2")
@@ -30,7 +30,7 @@ _main_task_multiple_files() {
     input_file_1=$(cut -f 1 -d "$FILENAME_SEPARATOR" <<<"$input_files")
     input_file_2=$(cut -f 2 -d "$FILENAME_SEPARATOR" <<<"$input_files")
 
-    # Run the main process
+    # Run the main process.
     output_file="$output_dir/mixed-audio.wav"
     output_file=$(_get_output_file "$output_file" "$output_dir" "")
     std_output=$(ffmpeg -threads 4 -y -i "$input_file_1" -i "$input_file_2" -filter_complex "amix=inputs=2:duration=longest" -- "$output_file" 2>&1)

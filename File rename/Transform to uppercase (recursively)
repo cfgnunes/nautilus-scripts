@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Source the script 'common-functions.sh'
+# Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
@@ -9,12 +9,12 @@ _main() {
     local input_files=""
     local output_dir=""
 
-    # Initial checks
+    # Execute initial checks.
     _check_dependencies ""
     _display_wait_box
     input_files=$(_get_files "$*" "type=all")
 
-    # Run the function '_main_task' for each file in parallel
+    # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
     _display_result_box ""
 }
@@ -25,7 +25,7 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    # Rename files
+    # Rename files.
     find "$input_file" -type f ! -path "*.git/*" -print0 2>/dev/null | while read -r -d '' file; do
         local dir=""
         local filename=""
@@ -34,15 +34,15 @@ _main_task() {
         dir=$(dirname -- "$file")
         filename=$(basename -- "$file")
 
-        # Transform to uppercase
+        # Transform to uppercase.
         new_filename=${filename^^}
 
-        # Run the main process
+        # Run the main process.
         std_output=$(_move_file "when_conflict=skip" "$file" "$dir/$new_filename" 2>&1)
         _check_result "$?" "$std_output" "$file" ""
     done
 
-    # Rename directories
+    # Rename directories.
     find "$input_file" -type d ! -path "*.git/*" -print0 2>/dev/null | sort -r -z | while read -r -d '' dir; do
         local parent_dir=""
         local dirname=""
@@ -51,10 +51,10 @@ _main_task() {
         parent_dir=$(dirname -- "$dir")
         dirname=$(basename -- "$dir")
 
-        # Transform to uppercase
+        # Transform to uppercase.
         new_dirname=${dirname^^}
 
-        # Run the main process
+        # Run the main process.
         std_output=$(_move_file "when_conflict=skip" "$dir" "$parent_dir/$new_dirname" 2>&1)
         _check_result "$?" "$std_output" "$dir" ""
     done

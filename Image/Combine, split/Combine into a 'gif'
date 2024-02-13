@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Source the script 'common-functions.sh'
+# Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
@@ -9,7 +9,7 @@ _main() {
     local input_files=""
     local output_dir=""
 
-    # Initial checks
+    # Execute initial checks.
     _check_dependencies "convert(imagemagick)"
     _display_wait_box
     input_files=$(_get_files "$*" "type=file; mime=image; min_files=2")
@@ -25,7 +25,7 @@ _main_task_multiple_files() {
     local output_file=""
     local std_output=""
 
-    # Run the main process
+    # Run the main process.
     output_file="$output_dir/animated-image.gif"
     output_file=$(_get_output_file "$output_file" "$output_dir" "")
     # shellcheck disable=SC2086

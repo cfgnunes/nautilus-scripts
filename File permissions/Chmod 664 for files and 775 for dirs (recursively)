@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Source the script 'common-functions.sh'
+# Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
@@ -9,12 +9,12 @@ _main() {
     local input_files=""
     local output_dir=""
 
-    # Initial checks
+    # Execute initial checks.
     _check_dependencies ""
     _display_wait_box
     input_files=$(_get_files "$*" "type=all")
 
-    # Run the function '_main_task' for each file in parallel
+    # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
     _display_result_box ""
 }
@@ -24,7 +24,7 @@ _main_task() {
     local output_dir=$2
     local std_output=""
 
-    # Run the main process
+    # Run the main process.
     std_output=$(find "$input_file" ! -path "*.git/*" -type f -exec chmod 664 -- {} \+ 2>&1)
     _check_result "$?" "$std_output" "$input_file" "" || return 1
     std_output=$(find "$input_file" ! -path "*.git/*" -type d -exec chmod 775 -- {} \+ 2>&1)

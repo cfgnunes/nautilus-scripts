@@ -28,12 +28,12 @@ _main() {
 
     echo "Starting the installation..."
 
-    # Install basic package dependencies
+    # Install basic package dependencies.
     if [[ "$menu_options" == *1* ]]; then
         _install_dependencies
     fi
 
-    # Install the scripts
+    # Install the scripts.
     _install_scripts "$menu_options"
 
     echo "Done!"
@@ -60,7 +60,7 @@ _install_dependencies() {
             sudo apt-get -y install $common_names gpg imagemagick xz-utils p7zip-full poppler-utils jdupes
         elif _command_exists "pacman"; then
             # Distro: Arch Linux, Manjaro.
-            # Missing packages: jdupes
+            # Missing packages: jdupes.
             sudo pacman -Syy || true
             sudo pacman --noconfirm -S $common_names gnupg imagemagick xz p7zip poppler poppler-glib
         elif _command_exists "dnf"; then
@@ -84,7 +84,7 @@ _install_scripts() {
     local install_dir=""
     local tmp_install_dir=""
 
-    # Get the default file manager
+    # Get the default file manager.
     if _command_exists "nautilus"; then
         install_dir="$HOME/.local/share/nautilus/scripts"
         accels_dir="$HOME/.config/nautilus"
@@ -100,7 +100,7 @@ _install_scripts() {
         exit 1
     fi
 
-    # 'Preserve' or 'Remove' previous scripts
+    # 'Preserve' or 'Remove' previous scripts.
     if [[ "$menu_options" == *3* ]]; then
         echo " > Preserving previous scripts to a temporary directory..."
         tmp_install_dir=$(mktemp -d)
@@ -110,18 +110,18 @@ _install_scripts() {
         rm -rf "$install_dir"
     fi
 
-    # Install the scripts
+    # Install the scripts.
     echo " > Installing new scripts..."
     mkdir --parents "$install_dir"
     cp -r ./* "$install_dir/"
 
-    # Restore previous scripts
+    # Restore previous scripts.
     if [[ "$menu_options" == *3* ]]; then
         echo " > Restoring previous scripts to the install directory..."
         mv "$tmp_install_dir" "$install_dir/User previous scripts"
     fi
 
-    # Install the file 'scripts-accels'
+    # Install the file 'scripts-accels'.
     if [[ "$menu_options" == *2* ]]; then
         if [[ -n "$accels_dir" ]]; then
             echo " > Installing the file 'scripts-accels'..."
@@ -131,11 +131,11 @@ _install_scripts() {
         fi
     fi
 
-    # Set file permissions
+    # Set file permissions.
     echo " > Setting file permissions..."
     find "$install_dir" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
 
-    # Close the file manager to reload its configurations
+    # Close the file manager to reload its configurations.
     if [[ "$menu_options" == *4* ]]; then
         echo " > Closing the file manager to reload its configurations..."
         eval "$file_manager -q &>/dev/null" || true
