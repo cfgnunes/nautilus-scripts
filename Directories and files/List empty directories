@@ -19,7 +19,8 @@ _main() {
     std_output=$(find $input_files -type d -empty ! -path "*.git/*" 2>/dev/null)
     # shellcheck disable=SC2001
     std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove dir $PWD of the filename
-    std_output=$(sed -r "s|(.+)|\"\1\"|" <<<"$std_output")
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|\(.*\)|\"\1\"|" <<<"$std_output")
 
     _display_text_box "$std_output"
 }
