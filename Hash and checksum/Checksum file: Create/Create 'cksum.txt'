@@ -19,7 +19,7 @@ _main() {
     # Run the function '_main_task' for each file in parallel
     _run_task_parallel "$input_files" "$output_dir"
 
-    # Compile the result in a single file
+    # Compile the results in a single file
     compiled_output_file=$(_get_filename_suffix "$output_dir/cksum.txt")
     cat "$TEMP_DIR_TASK/"* >"$compiled_output_file"
 

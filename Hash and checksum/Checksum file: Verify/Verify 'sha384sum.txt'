@@ -47,7 +47,7 @@ export -f _verify_checksum
 export TEMP_DIR_TASK
 sed "s|'|\r|g" "$input_files" | xargs --max-procs="$(nproc --all --ignore=1)" --replace="{}" bash -c "_verify_checksum '{}'"
 
-# Compile the result in a single file
+# Compile the results in a single file
 std_output=$(cat "$TEMP_DIR_TASK/"*)
 
 if [[ -z "$std_output" ]]; then
