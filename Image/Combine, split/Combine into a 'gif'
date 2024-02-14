@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "convert(imagemagick)"
     _display_wait_box
-    input_files=$(_get_files "$*" "type:file, mime:image, min_files:2")
+    input_files=$(_get_files "$*" "type:file, mime:image/, min_files:2")
     output_dir=$(_get_output_dir)
 
     _main_task_multiple_files "$input_files" "$output_dir"
