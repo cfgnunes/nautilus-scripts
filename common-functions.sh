@@ -364,71 +364,6 @@ _is_terminal_session() {
     return 1
 }
 
-_validate_file() {
-    local input_file=$1
-    local par_encoding=$2
-    local par_extension=$3
-    local par_mime=$4
-    local par_skip_encoding=$5
-    local par_skip_extension=$6
-    local par_skip_mime=$7
-    local file_encoding=""
-    local file_extension=""
-    local file_mime=""
-    local temp_file=""
-
-    # Validation for files.
-    if [[ -f "$input_file" ]]; then
-
-        # Validation for files (extension).
-        if [[ -n "$par_skip_extension" ]] || [[ -n "$par_extension" ]]; then
-            file_extension=$(_get_filename_extension "$input_file")
-            file_extension=${file_extension,,} # Lowercase the file extension.
-
-            if [[ -n "$par_skip_extension" ]]; then
-                _has_string_in_list "$file_extension" "$par_skip_extension" && return 1
-            fi
-
-            if [[ -n "$par_extension" ]]; then
-                _has_string_in_list "$file_extension" "$par_extension" || return 1
-            fi
-        fi
-
-        # Validation for files (encoding).
-        if [[ -n "$par_skip_encoding" ]] || [[ -n "$par_encoding" ]]; then
-            file_encoding=$(file --brief --mime-encoding -- "$input_file")
-
-            if [[ -n "$par_skip_encoding" ]]; then
-                _has_string_in_list "$file_encoding" "$par_skip_encoding" && return 1
-            fi
-
-            if [[ -n "$par_encoding" ]]; then
-                _has_string_in_list "$file_encoding" "$par_encoding" || return 1
-            fi
-        fi
-
-        # Validation for files (mime).
-        if [[ -n "$par_skip_mime" ]] || [[ -n "$par_mime" ]]; then
-            file_mime=$(file --brief --mime-type -- "$input_file")
-
-            if [[ -n "$par_skip_mime" ]]; then
-                _has_string_in_list "$file_mime" "$par_skip_mime" && return 1
-            fi
-
-            if [[ -n "$par_mime" ]]; then
-                _has_string_in_list "$file_mime" "$par_mime" || return 1
-            fi
-        fi
-
-    fi
-
-    # Create a temp file containing the name of the valid file.
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_VALID_FILES")
-    echo -n "$input_file$FILENAME_SEPARATOR" >"$temp_file"
-
-    return 0
-}
-
 _get_distro_name() {
     cat /etc/*-release | grep -i "^id=" | cut -d "=" -f 2
 }
@@ -854,6 +789,71 @@ _run_task_parallel() {
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
         bash -c "_main_task '{}' '$output_dir'"
+}
+
+_validate_file() {
+    local input_file=$1
+    local par_encoding=$2
+    local par_extension=$3
+    local par_mime=$4
+    local par_skip_encoding=$5
+    local par_skip_extension=$6
+    local par_skip_mime=$7
+    local file_encoding=""
+    local file_extension=""
+    local file_mime=""
+    local temp_file=""
+
+    # Validation for files.
+    if [[ -f "$input_file" ]]; then
+
+        # Validation for files (extension).
+        if [[ -n "$par_skip_extension" ]] || [[ -n "$par_extension" ]]; then
+            file_extension=$(_get_filename_extension "$input_file")
+            file_extension=${file_extension,,} # Lowercase the file extension.
+
+            if [[ -n "$par_skip_extension" ]]; then
+                _has_string_in_list "$file_extension" "$par_skip_extension" && return 1
+            fi
+
+            if [[ -n "$par_extension" ]]; then
+                _has_string_in_list "$file_extension" "$par_extension" || return 1
+            fi
+        fi
+
+        # Validation for files (encoding).
+        if [[ -n "$par_skip_encoding" ]] || [[ -n "$par_encoding" ]]; then
+            file_encoding=$(file --brief --mime-encoding -- "$input_file")
+
+            if [[ -n "$par_skip_encoding" ]]; then
+                _has_string_in_list "$file_encoding" "$par_skip_encoding" && return 1
+            fi
+
+            if [[ -n "$par_encoding" ]]; then
+                _has_string_in_list "$file_encoding" "$par_encoding" || return 1
+            fi
+        fi
+
+        # Validation for files (mime).
+        if [[ -n "$par_skip_mime" ]] || [[ -n "$par_mime" ]]; then
+            file_mime=$(file --brief --mime-type -- "$input_file")
+
+            if [[ -n "$par_skip_mime" ]]; then
+                _has_string_in_list "$file_mime" "$par_skip_mime" && return 1
+            fi
+
+            if [[ -n "$par_mime" ]]; then
+                _has_string_in_list "$file_mime" "$par_mime" || return 1
+            fi
+        fi
+
+    fi
+
+    # Create a temp file containing the name of the valid file.
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_VALID_FILES")
+    echo -n "$input_file$FILENAME_SEPARATOR" >"$temp_file"
+
+    return 0
 }
 
 _write_log() {
