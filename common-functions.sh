@@ -396,37 +396,48 @@ _is_valid_file() {
     # Validation for files.
     if [[ -f "$input_file" ]]; then
 
-        file_extension=$(_get_filename_extension "$input_file")
-        file_extension=${file_extension,,} # Lowercase the file extension.
-        file_mime=$(file --brief --mime-type -- "$input_file")
-        file_encoding=$(file --brief --mime-encoding -- "$input_file")
-
-        if [[ -n "$par_skip_extension" ]]; then
-            _has_string_in_list "$file_extension" "$par_skip_extension" && return 1
-        fi
-
-        if [[ -n "$par_skip_encoding" ]]; then
-            _has_string_in_list "$file_encoding" "$par_skip_encoding" && return 1
-        fi
-
-        if [[ -n "$par_skip_mime" ]]; then
-            _has_string_in_list "$file_mime" "$par_skip_mime" && return 1
-        fi
-
-        if [[ -n "$par_extension" ]]; then
-            _has_string_in_list "$file_extension" "$par_extension" || return 1
-        fi
-
-        if [[ -n "$par_encoding" ]]; then
-            _has_string_in_list "$file_encoding" "$par_encoding" || return 1
-        fi
-
-        if [[ -n "$par_mime" ]]; then
-            _has_string_in_list "$file_mime" "$par_mime" || return 1
-        fi
-
         if [[ "$par_type" == "directory" ]]; then
             return 1
+        fi
+
+        # Validation for files (extension).
+        if [[ -n "$par_skip_extension" ]] || [[ -n "$par_extension" ]]; then
+            file_extension=$(_get_filename_extension "$input_file")
+            file_extension=${file_extension,,} # Lowercase the file extension.
+
+            if [[ -n "$par_skip_extension" ]]; then
+                _has_string_in_list "$file_extension" "$par_skip_extension" && return 1
+            fi
+
+            if [[ -n "$par_extension" ]]; then
+                _has_string_in_list "$file_extension" "$par_extension" || return 1
+            fi
+        fi
+
+        # Validation for files (encoding).
+        if [[ -n "$par_skip_encoding" ]] || [[ -n "$par_encoding" ]]; then
+            file_encoding=$(file --brief --mime-encoding -- "$input_file")
+
+            if [[ -n "$par_skip_encoding" ]]; then
+                _has_string_in_list "$file_encoding" "$par_skip_encoding" && return 1
+            fi
+
+            if [[ -n "$par_encoding" ]]; then
+                _has_string_in_list "$file_encoding" "$par_encoding" || return 1
+            fi
+        fi
+
+        # Validation for files (mime).
+        if [[ -n "$par_skip_mime" ]] || [[ -n "$par_mime" ]]; then
+            file_mime=$(file --brief --mime-type -- "$input_file")
+
+            if [[ -n "$par_skip_mime" ]]; then
+                _has_string_in_list "$file_mime" "$par_skip_mime" && return 1
+            fi
+
+            if [[ -n "$par_mime" ]]; then
+                _has_string_in_list "$file_mime" "$par_mime" || return 1
+            fi
         fi
 
     # Validation for directories.
