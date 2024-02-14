@@ -682,10 +682,6 @@ _move_file() {
             return 0
         fi
         ;;
-    *)
-        _display_error_box "Invalid value for the parameter 'conflict' in the function '_move_file'."
-        _exit_script
-        ;;
     esac
 
     # Move the file.
