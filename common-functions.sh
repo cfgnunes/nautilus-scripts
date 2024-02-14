@@ -372,7 +372,6 @@ _is_valid_file() {
     local par_skip_encoding=$5
     local par_skip_extension=$6
     local par_skip_mime=$7
-    local par_type=$8
     local file_encoding=""
     local file_extension=""
     local file_mime=""
@@ -380,10 +379,6 @@ _is_valid_file() {
 
     # Validation for files.
     if [[ -f "$input_file" ]]; then
-
-        if [[ "$par_type" == "directory" ]]; then
-            return 1
-        fi
 
         # Validation for files (extension).
         if [[ -n "$par_skip_extension" ]] || [[ -n "$par_extension" ]]; then
@@ -425,12 +420,6 @@ _is_valid_file() {
             fi
         fi
 
-    # Validation for directories.
-    elif [[ -d "$input_file" ]]; then
-
-        if [[ "$par_type" == "file" ]]; then
-            return 1
-        fi
     fi
 
     # Create a temp file containing the name of the valid file.
@@ -479,18 +468,8 @@ _get_files() {
     local parameters=$2
     local input_file=""
     local output_files=""
-    local par_encoding=""
-    local par_extension=""
-    local par_max_files=0
-    local par_mime=""
-    local par_min_files=0
-    local par_recursive=""
-    local par_return_pwd=""
-    local par_skip_encoding=""
-    local par_skip_extension=""
-    local par_skip_mime=""
-    local par_type=""
     local valid_files_count=0
+    local find_type_parameter=""
 
     # Valid values for the parameter key "type":
     #   "all": Filter files and directories.
@@ -501,22 +480,34 @@ _get_files() {
     if [[ -z "$input_files" ]]; then
         # Return the current working directory if there are no
         # files selected (parameter 'get_pwd_if_no_selection=true').
+        local par_return_pwd=""
         par_return_pwd=$(_get_parameter_value "$parameters" "get_pwd_if_no_selection")
         if [[ "$par_return_pwd" == "true" ]]; then
             echo "$PWD"
             return 0
         fi
 
-        # TODO: Add a GUI box to add directories.
         # Try selecting the files by opening a file selection box.
         input_files=$(_display_file_selection_box)
         if [[ -z "$input_files" ]]; then
             _display_error_box "There are no input files!"
             _exit_script
         fi
+
+        # TODO: Add a GUI box to add directories.
     fi
 
     # Read values from the parameters.
+    local par_encoding=""
+    local par_extension=""
+    local par_max_files=0
+    local par_mime=""
+    local par_min_files=0
+    local par_recursive=""
+    local par_skip_encoding=""
+    local par_skip_extension=""
+    local par_skip_mime=""
+    local par_type=""
     par_encoding=$(_get_parameter_value "$parameters" "encoding")
     par_extension=$(_get_parameter_value "$parameters" "extension")
     par_max_files=$(_get_parameter_value "$parameters" "max_files")
@@ -533,28 +524,48 @@ _get_files() {
         par_type="file"
     fi
 
-    local input_files_final=""
-    local input_files_full=""
+    local input_files_temp=""
     for input_file in $input_files; do
 
-        # Get the full path of each input_file.
-        if [[ -d "$input_file" ]]; then
-            # It's a directory, so use 'pwd -P'.
-            input_files_full=$(cd "$input_file" && pwd -P)
-        else
-            # It's a file.
-            input_files_full=$(cd "$(dirname "$input_file")" && pwd -P)/$(basename "$input_file")
+        # Get the full path of each 'input_file'.
+        local input_directory_full=""
+        local input_file_full=""
+        input_directory_full=$(cd "$input_file" && pwd -P)
+        input_file_full=$(cd "$(dirname "$input_file")" && pwd -P)/$(basename "$input_file")
+
+        if [[ -f "$input_file" ]]; then # If the 'input_file' is a regular file.
+
+            # Include in the 'input_files_temp' the regular file.
+            if [[ "$par_type" == "file" ]] || [[ "$par_type" == "all" ]]; then
+                input_files_temp+=$input_file_full
+                input_files_temp+=$FILENAME_SEPARATOR
+            fi
+
+        elif [[ -d "$input_file" ]]; then # If the 'input_file' is a directory.
+
+            if [[ "$par_recursive" == "true" ]]; then
+
+                # Expand the directories with 'find' command.
+                case "$par_type" in
+                "all") find_type_parameter="f,d" ;;
+                "file") find_type_parameter="f" ;;
+                "directory") find_type_parameter="d" ;;
+                esac
+
+                # Include in the list the files or directories (recursively)
+                input_files_temp+=$(find "$input_directory_full" -type "$find_type_parameter" ! -path "*.git/*" -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
+            else
+
+                # Include in the 'input_files_temp' the directory.
+                if [[ "$par_type" == "directory" ]] || [[ "$par_type" == "all" ]]; then
+                    input_files_temp+=$input_directory_full
+                    input_files_temp+=$FILENAME_SEPARATOR
+                fi
+            fi
         fi
 
-        # Expand files in directories recursively.
-        if [[ "$par_recursive" == "true" ]] && [[ -d "$input_files_full" ]]; then
-            input_files_final+=$(find "$input_files_full" ! -path "*.git/*" -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
-        else
-            input_files_final+=$input_files_full
-            input_files_final+=$FILENAME_SEPARATOR
-        fi
     done
-    input_files=$input_files_final
+    input_files=$input_files_temp
 
     # Removes the last field separator.
     input_files=${input_files%"$FILENAME_SEPARATOR"}
@@ -581,8 +592,7 @@ _get_files() {
             '$par_mime' \
             '$par_skip_encoding' \
             '$par_skip_extension' \
-            '$par_skip_mime' \
-            '$par_type'"
+            '$par_skip_mime'"
 
     # Count the number of valid files.
     valid_files_count=$(find "$TEMP_DIR_VALID_FILES/" -type f -printf "-\n" | wc -l)
