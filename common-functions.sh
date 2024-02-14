@@ -366,32 +366,17 @@ _is_terminal_session() {
 
 _is_valid_file() {
     local input_file=$1
-    local parameters=$2
+    local par_encoding=$2
+    local par_extension=$3
+    local par_mime=$4
+    local par_skip_encoding=$5
+    local par_skip_extension=$6
+    local par_skip_mime=$7
+    local par_type=$8
     local file_encoding=""
     local file_extension=""
     local file_mime=""
-    local par_encoding=""
-    local par_extension=""
-    local par_mime=""
-    local par_skip_encoding=""
-    local par_skip_extension=""
-    local par_skip_mime=""
-    local par_type=""
     local temp_file=""
-
-    # Read values from the parameters.
-    par_encoding=$(_get_parameter_value "$parameters" "encoding")
-    par_extension=$(_get_parameter_value "$parameters" "extension")
-    par_mime=$(_get_parameter_value "$parameters" "mime")
-    par_skip_encoding=$(_get_parameter_value "$parameters" "skip_encoding")
-    par_skip_extension=$(_get_parameter_value "$parameters" "skip_extension")
-    par_skip_mime=$(_get_parameter_value "$parameters" "skip_mime")
-    par_type=$(_get_parameter_value "$parameters" "type")
-
-    # Default value for the parameter "type".
-    if [[ -z "$par_type" ]]; then
-        par_type="file"
-    fi
 
     # Validation for files.
     if [[ -f "$input_file" ]]; then
@@ -494,29 +479,29 @@ _get_files() {
     local parameters=$2
     local input_file=""
     local output_files=""
+    local par_encoding=""
+    local par_extension=""
     local par_max_files=0
+    local par_mime=""
     local par_min_files=0
     local par_recursive=""
     local par_return_pwd=""
-    local temp_file=""
+    local par_skip_encoding=""
+    local par_skip_extension=""
+    local par_skip_mime=""
+    local par_type=""
     local valid_files_count=0
 
     # Valid values for the parameter key "type":
     #   "all": Filter files and directories.
     #   "file": Filter files (default).
     #   "directory": Filter directories.
-    #   "file_recursive": Filter files recursively.
-
-    # Read values from the parameters.
-    par_max_files=$(_get_parameter_value "$parameters" "max_files")
-    par_min_files=$(_get_parameter_value "$parameters" "min_files")
-    par_recursive=$(_get_parameter_value "$parameters" "recursive")
-    par_return_pwd=$(_get_parameter_value "$parameters" "get_pwd_if_no_selection")
 
     # Check if there are input files.
     if [[ -z "$input_files" ]]; then
         # Return the current working directory if there are no
         # files selected (parameter 'get_pwd_if_no_selection=true').
+        par_return_pwd=$(_get_parameter_value "$parameters" "get_pwd_if_no_selection")
         if [[ "$par_return_pwd" == "true" ]]; then
             echo "$PWD"
             return 0
@@ -529,6 +514,23 @@ _get_files() {
             _display_error_box "There are no input files!"
             _exit_script
         fi
+    fi
+
+    # Read values from the parameters.
+    par_encoding=$(_get_parameter_value "$parameters" "encoding")
+    par_extension=$(_get_parameter_value "$parameters" "extension")
+    par_max_files=$(_get_parameter_value "$parameters" "max_files")
+    par_mime=$(_get_parameter_value "$parameters" "mime")
+    par_min_files=$(_get_parameter_value "$parameters" "min_files")
+    par_recursive=$(_get_parameter_value "$parameters" "recursive")
+    par_skip_encoding=$(_get_parameter_value "$parameters" "skip_encoding")
+    par_skip_extension=$(_get_parameter_value "$parameters" "skip_extension")
+    par_skip_mime=$(_get_parameter_value "$parameters" "skip_mime")
+    par_type=$(_get_parameter_value "$parameters" "type")
+
+    # Default value for the parameter "type".
+    if [[ -z "$par_type" ]]; then
+        par_type="file"
     fi
 
     local input_files_final=""
@@ -573,7 +575,14 @@ _get_files() {
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
-        bash -c "_is_valid_file '{}' '$parameters'"
+        bash -c "_is_valid_file '{}' \
+            '$par_encoding' \
+            '$par_extension' \
+            '$par_mime' \
+            '$par_skip_encoding' \
+            '$par_skip_extension' \
+            '$par_skip_mime' \
+            '$par_type'"
 
     # Count the number of valid files.
     valid_files_count=$(find "$TEMP_DIR_VALID_FILES/" -type f -printf "-\n" | wc -l)
