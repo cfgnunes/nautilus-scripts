@@ -403,8 +403,6 @@ _get_files() {
     local parameters=$2
     local input_file=""
     local output_files=""
-    local valid_files_count=0
-    local find_type_parameter=""
 
     # Valid values for the parameter key "type":
     #   "all": Filter files and directories.
@@ -459,18 +457,17 @@ _get_files() {
         par_type="file"
     fi
 
+    # Iterate over all 'input_files'.
     local input_files_temp=""
     for input_file in $input_files; do
 
-        # Get the full path of each 'input_file'.
-        local input_directory_full=""
-        local input_file_full=""
-        input_directory_full=$(cd "$input_file" && pwd -P)
-        input_file_full=$(cd "$(dirname "$input_file")" && pwd -P)/$(basename "$input_file")
-
         if [[ -f "$input_file" ]]; then # If the 'input_file' is a regular file.
 
-            # Include in the 'input_files_temp' the regular file.
+            # Get the full path of the regular file.
+            local input_file_full=""
+            input_file_full=$(cd "$(dirname "$input_file")" && pwd -P)/$(basename "$input_file")
+
+            # Add the regular file in the 'input_files_temp'.
             if [[ "$par_type" == "file" ]] || [[ "$par_type" == "all" ]]; then
                 input_files_temp+=$input_file_full
                 input_files_temp+=$FILENAME_SEPARATOR
@@ -478,7 +475,12 @@ _get_files() {
 
         elif [[ -d "$input_file" ]]; then # If the 'input_file' is a directory.
 
+            # Get the full path of the directory.
+            local input_directory_full=""
+            input_directory_full=$(cd "$input_file" && pwd -P)
+
             if [[ "$par_recursive" == "true" ]]; then
+                local find_type_parameter=""
 
                 # Expand the directories with 'find' command.
                 case "$par_type" in
@@ -487,12 +489,12 @@ _get_files() {
                 "directory") find_type_parameter="d" ;;
                 esac
 
-                # Include in the list the files or directories (recursively)
+                # Add the expanded files (or directories) in the 'input_files_temp'.
                 input_files_temp+=$(find "$input_directory_full" -type "$find_type_parameter" ! -path "*.git/*" -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
 
             else
 
-                # Include in the 'input_files_temp' the directory.
+                # Add the directory in the 'input_files_temp'.
                 if [[ "$par_type" == "directory" ]] || [[ "$par_type" == "all" ]]; then
                     input_files_temp+=$input_directory_full
                     input_files_temp+=$FILENAME_SEPARATOR
@@ -531,6 +533,7 @@ _get_files() {
             '$par_skip_mime'"
 
     # Count the number of valid files.
+    local valid_files_count=0
     valid_files_count=$(find "$TEMP_DIR_VALID_FILES/" -type f -printf "-\n" | wc -l)
 
     # Check if there is at least one valid file.
