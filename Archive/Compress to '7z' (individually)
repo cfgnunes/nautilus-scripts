@@ -16,7 +16,7 @@ _main() {
     fi
     _check_dependencies "$TASK_DATA(p7zip-full)"
     _display_wait_box
-    input_files=$(_get_files "$*" "type=all")
+    input_files=$(_get_files "$*" "type:all")
     output_dir=$(_get_output_dir)
 
     # Execute the function '_main_task' for each file in parallel.

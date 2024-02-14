@@ -17,7 +17,7 @@ _main() {
     fi
     _check_dependencies ""
     _display_wait_box
-    input_files=$(_get_files "$*" "type=file")
+    input_files=$(_get_files "$*" "type:file")
 
     # Check dependencies for each file extension.
     for input_file in $input_files; do
