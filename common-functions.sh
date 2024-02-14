@@ -799,16 +799,13 @@ _validate_file() {
     local par_skip_encoding=$5
     local par_skip_extension=$6
     local par_skip_mime=$7
-    local file_encoding=""
-    local file_extension=""
-    local file_mime=""
-    local temp_file=""
 
     # Validation for files.
     if [[ -f "$input_file" ]]; then
 
         # Validation for files (extension).
         if [[ -n "$par_skip_extension" ]] || [[ -n "$par_extension" ]]; then
+            local file_extension=""
             file_extension=$(_get_filename_extension "$input_file")
             file_extension=${file_extension,,} # Lowercase the file extension.
 
@@ -823,6 +820,7 @@ _validate_file() {
 
         # Validation for files (encoding).
         if [[ -n "$par_skip_encoding" ]] || [[ -n "$par_encoding" ]]; then
+            local file_encoding=""
             file_encoding=$(file --brief --mime-encoding -- "$input_file")
 
             if [[ -n "$par_skip_encoding" ]]; then
@@ -836,6 +834,7 @@ _validate_file() {
 
         # Validation for files (mime).
         if [[ -n "$par_skip_mime" ]] || [[ -n "$par_mime" ]]; then
+            local file_mime=""
             file_mime=$(file --brief --mime-type -- "$input_file")
 
             if [[ -n "$par_skip_mime" ]]; then
@@ -850,6 +849,7 @@ _validate_file() {
     fi
 
     # Create a temp file containing the name of the valid file.
+    local temp_file=""
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_VALID_FILES")
     echo -n "$input_file$FILENAME_SEPARATOR" >"$temp_file"
 
