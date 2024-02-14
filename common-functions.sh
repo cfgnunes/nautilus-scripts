@@ -364,7 +364,7 @@ _is_terminal_session() {
     return 1
 }
 
-_is_valid_file() {
+_validate_file() {
     local input_file=$1
     local par_encoding=$2
     local par_extension=$3
@@ -554,6 +554,7 @@ _get_files() {
 
                 # Include in the list the files or directories (recursively)
                 input_files_temp+=$(find "$input_directory_full" -type "$find_type_parameter" ! -path "*.git/*" -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
+
             else
 
                 # Include in the 'input_files_temp' the directory.
@@ -577,16 +578,16 @@ _get_files() {
     export -f _get_filename_extension
     export -f _get_parameter_value
     export -f _has_string_in_list
-    export -f _is_valid_file
+    export -f _validate_file
     export FILENAME_SEPARATOR
     export TEMP_DIR_VALID_FILES
 
-    # Run '_is_valid_file' for each file in parallel (using 'xargs').
+    # Run '_validate_file' for each file in parallel (using 'xargs').
     echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
-        bash -c "_is_valid_file '{}' \
+        bash -c "_validate_file '{}' \
             '$par_encoding' \
             '$par_extension' \
             '$par_mime' \
