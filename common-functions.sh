@@ -510,7 +510,7 @@ _get_files() {
         # Return the current working directory if there are no
         # files selected (parameter 'get_pwd_if_no_selection=true').
         if [[ "$par_return_pwd" == "true" ]]; then
-            echo "$PWD"
+            echo -n "$PWD"
             return 0
         fi
 
