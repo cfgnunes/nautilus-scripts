@@ -308,6 +308,45 @@ _exit_script() {
     xargs kill <<<"$child_pids" &>/dev/null
 }
 
+_expand_directory() {
+    local input_directory=$1
+    local par_type=$2
+    local par_select_extension=$3
+    local par_skip_extension=$4
+    local selected_files=""
+    local find_type_parameter=""
+
+    # Expand the directories with 'find' command.
+    case "$par_type" in
+    "all") find_type_parameter="f,d" ;;
+    "file") find_type_parameter="f" ;;
+    "directory") find_type_parameter="d" ;;
+    esac
+
+    if [[ -n "$par_select_extension" ]]; then
+        selected_files=$(find "$input_directory" \
+            -type "$find_type_parameter" \
+            -regextype posix-extended \
+            -regex ".*($par_select_extension)$" \
+            ! -path "$IGNORE_FIND_PATH" \
+            -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
+    elif [[ -n "$par_skip_extension" ]]; then
+        selected_files=$(find "$input_directory" \
+            -type "$find_type_parameter" \
+            -regextype posix-extended \
+            ! -regex ".*($par_skip_extension)$" \
+            ! -path "$IGNORE_FIND_PATH" \
+            -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
+    else
+        selected_files=$(find "$input_directory" \
+            -type "$find_type_parameter" \
+            ! -path "$IGNORE_FIND_PATH" \
+            -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
+    fi
+
+    echo -n "$selected_files"
+}
+
 _has_string_in_list() {
     local string=$1
     local list=$2
@@ -490,57 +529,21 @@ _get_files() {
 
             # Add the regular file in the 'input_files_temp'.
             if [[ "$par_type" == "file" ]] || [[ "$par_type" == "all" ]]; then
-                input_files_temp+=$(_get_full_file_path "$input_file")
+                input_files_temp+=$(_get_full_path_file "$input_file")
                 input_files_temp+=$FILENAME_SEPARATOR
             fi
-
         elif [[ -d "$input_file" ]]; then # If the 'input_file' is a directory.
-
-            # Get the full path of the directory.
-            local input_directory_full=""
-            input_directory_full=$(_get_full_dir_path "$input_file")
-
             if [[ "$par_recursive" == "true" ]]; then
-                local find_type_parameter=""
-
-                # Expand the directories with 'find' command.
-                case "$par_type" in
-                "all") find_type_parameter="f,d" ;;
-                "file") find_type_parameter="f" ;;
-                "directory") find_type_parameter="d" ;;
-                esac
-
                 # Add the expanded files (or directories) in the 'input_files_temp'.
-                if [[ -n "$par_select_extension" ]]; then
-                    input_files_temp+=$(find "$input_directory_full" \
-                        -type "$find_type_parameter" \
-                        -regextype posix-extended \
-                        -regex ".*($par_select_extension)$" \
-                        ! -path "$IGNORE_FIND_PATH" \
-                        -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
-                elif [[ -n "$par_skip_extension" ]]; then
-                    input_files_temp+=$(find "$input_directory_full" \
-                        -type "$find_type_parameter" \
-                        -regextype posix-extended \
-                        ! -regex ".*($par_skip_extension)$" \
-                        ! -path "$IGNORE_FIND_PATH" \
-                        -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
-                else
-                    input_files_temp+=$(find "$input_directory_full" \
-                        -type "$find_type_parameter" \
-                        ! -path "$IGNORE_FIND_PATH" \
-                        -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
-                fi
+                input_files_temp+=$(_expand_directory "$(_get_full_path_dir "$input_file")" "$par_type" "$par_select_extension" "$par_skip_extension")
             else
-
                 # Add the directory in the 'input_files_temp'.
                 if [[ "$par_type" == "directory" ]] || [[ "$par_type" == "all" ]]; then
-                    input_files_temp+=$input_directory_full
+                    input_files_temp+=$(_get_full_path_dir "$input_file")
                     input_files_temp+=$FILENAME_SEPARATOR
                 fi
             fi
         fi
-
     done
     input_files=$input_files_temp
 
@@ -609,13 +612,13 @@ _get_files() {
     echo "$output_files"
 }
 
-_get_full_dir_path() {
+_get_full_path_dir() {
     local input_file=$1
 
     cd "$input_file" && pwd -P
 }
 
-_get_full_file_path() {
+_get_full_path_file() {
     local input_file=$1
 
     echo "$(cd "$(dirname "$input_file")" && pwd -P)/$(basename "$input_file")"
