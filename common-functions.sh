@@ -13,8 +13,8 @@ FILENAME_SEPARATOR=$'\r'       # The field separator used in 'loop' commands to 
 IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
 PREFIX_ERROR_LOG_FILE="Errors" # Name of 'error' directory.
 PREFIX_OUTPUT_DIR="Output"     # Name of 'output' directory.
-TEMP_DIR=$(mktemp --directory) # Temp directories for use in scripts.
 USE_OUTPUT_DIR=true            # Use 'Output' directory instead of the current directory.
+TEMP_DIR=$(mktemp --directory) # Temp directories for use in scripts.
 TEMP_DIR_LOG=$(mktemp --directory --tmpdir="$TEMP_DIR")
 TEMP_DIR_TASK=$(mktemp --directory --tmpdir="$TEMP_DIR")
 TEMP_DIR_VALID_FILES=$(mktemp --directory --tmpdir="$TEMP_DIR")
@@ -96,8 +96,8 @@ _check_result() {
     fi
 
     # Check if there is the word "Error" in stdout.
-    if ! grep --quiet --ignore-case --perl-regexp "[^\w]error" <<<"$input_file"; then
-        if grep --quiet --ignore-case --perl-regexp "[^\w]error" <<<"$std_output"; then
+    if ! grep -q --ignore-case --perl-regexp "[^\w]error" <<<"$input_file"; then
+        if grep -q --ignore-case --perl-regexp "[^\w]error" <<<"$std_output"; then
             _write_log "Error: Word 'error' found in the standard output." "$input_file" "$std_output"
             return 1
         fi
@@ -303,7 +303,8 @@ _exit_script() {
 
     _print_terminal "Aborting the script..."
 
-    # Use xargs and kill to send the SIGTERM signal to all child processes, including the current script.
+    # Use xargs and kill to send the SIGTERM signal to all child processes,
+    # including the current script.
     # See the: https://www.baeldung.com/linux/safely-exit-scripts
     xargs kill <<<"$child_pids" &>/dev/null
 }
@@ -398,7 +399,7 @@ _install_package() {
 }
 
 _is_terminal_session() {
-    if env | grep --quiet "^TERM"; then
+    if env | grep -q "^TERM"; then
         return 0
     fi
     return 1
@@ -535,7 +536,11 @@ _get_files() {
         elif [[ -d "$input_file" ]]; then # If the 'input_file' is a directory.
             if [[ "$par_recursive" == "true" ]]; then
                 # Add the expanded files (or directories) in the 'input_files_temp'.
-                input_files_temp+=$(_expand_directory "$(_get_full_path_dir "$input_file")" "$par_type" "$par_select_extension" "$par_skip_extension")
+                input_files_temp+=$(_expand_directory \
+                    "$(_get_full_path_dir "$input_file")" \
+                    "$par_type" \
+                    "$par_select_extension" \
+                    "$par_skip_extension")
             else
                 # Add the directory in the 'input_files_temp'.
                 if [[ "$par_type" == "directory" ]] || [[ "$par_type" == "all" ]]; then
@@ -555,7 +560,12 @@ _get_files() {
 
     # Validates the mime or encoding of the file
     if [[ -n "$par_select_encoding$par_select_mime$par_skip_encoding$par_skip_mime" ]]; then
-        output_files=$(_validate_file_mime_parallel "$input_files" "$par_select_encoding" "$par_select_mime" "$par_skip_encoding" "$par_skip_mime")
+        output_files=$(_validate_file_mime_parallel \
+            "$input_files" \
+            "$par_select_encoding" \
+            "$par_select_mime" \
+            "$par_skip_encoding" \
+            "$par_skip_mime")
     else
         output_files=$input_files
     fi
