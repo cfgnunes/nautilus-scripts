@@ -39,7 +39,7 @@ IFS=$FILENAME_SEPARATOR
 # -----------------------------------------------------------------------------
 
 _cleanup_on_exit() {
-    rm -rf "$TEMP_DIR"
+    rm -rf -- "$TEMP_DIR"
     _print_terminal "End of the script."
 }
 trap _cleanup_on_exit EXIT
@@ -271,7 +271,7 @@ _display_wait_box_message() {
     if _is_terminal_session; then
         echo "$message"
     elif _command_exists "zenity"; then
-        rm -f "$TEMP_FIFO"
+        rm -f -- "$TEMP_FIFO"
         mkfifo "$TEMP_FIFO"
         # shellcheck disable=SC2002
         cat -- "$TEMP_FIFO" | (
@@ -524,45 +524,19 @@ _get_files() {
         # TODO: Add a GUI box to add directories.
     fi
 
-    # Iterate over all 'input_files'.
-    local input_files_temp=""
-    for input_file in $input_files; do
-
-        if [[ -f "$input_file" ]]; then # If the 'input_file' is a regular file.
-            _validate_file_extension "$input_file" "$par_skip_extension" "$par_select_extension" || continue
-
-            # Add the regular file in the 'input_files_temp'.
-            if [[ "$par_type" == "file" ]] || [[ "$par_type" == "all" ]]; then
-                input_files_temp+=$(_get_full_path_file "$input_file")
-                input_files_temp+=$FILENAME_SEPARATOR
-            fi
-        elif [[ -d "$input_file" ]]; then # If the 'input_file' is a directory.
-            if [[ "$par_recursive" == "true" ]]; then
-                # Add the expanded files (or directories) in the 'input_files_temp'.
-                input_files_temp+=$(_expand_directory \
-                    "$(_get_full_path_dir "$input_file")" \
-                    "$par_type" \
-                    "$par_select_extension" \
-                    "$par_skip_extension")
-            else
-                # Add the directory in the 'input_files_temp'.
-                if [[ "$par_type" == "directory" ]] || [[ "$par_type" == "all" ]]; then
-                    input_files_temp+=$(_get_full_path_dir "$input_file")
-                    input_files_temp+=$FILENAME_SEPARATOR
-                fi
-            fi
-        fi
-    done
-    input_files=$input_files_temp
-
-    # Removes the last field separator.
-    input_files=${input_files%"$FILENAME_SEPARATOR"}
-
     # Allows the symbol "'" in filenames.
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
-    # Validates the mime or encoding of the file
-    output_files=$(_validate_file_mime_parallel \
+    # Pre-select the input files. Also, expand it (if 'par_recursive' is true).
+    input_files=$(_validate_file_preselect_parallel \
+        "$input_files" \
+        "$par_type" \
+        "$par_skip_extension" \
+        "$par_select_extension" \
+        "$par_recursive")
+
+    # Validates the mime or encoding of the file.
+    input_files=$(_validate_file_mime_parallel \
         "$input_files" \
         "$par_select_encoding" \
         "$par_select_mime" \
@@ -570,7 +544,9 @@ _get_files() {
         "$par_skip_mime")
 
     # Validates the number of valid files.
-    _validate_number_files "$output_files" "$par_min_files" "$par_max_files"
+    _validate_files_count "$input_files" "$par_min_files" "$par_max_files"
+
+    output_files=$input_files
 
     # Sort the list by filename.
     output_files=$(sed -z "s|\n|//|g" <<<"$output_files")
@@ -583,7 +559,7 @@ _get_files() {
     # Removes the last field separator.
     output_files=${output_files%"$FILENAME_SEPARATOR"}
 
-    echo "$output_files"
+    echo -n "$output_files"
 }
 
 _get_full_path_dir() {
@@ -759,7 +735,7 @@ _move_temp_file_to_output() {
     fi
 
     # Remove the temporary file.
-    rm -rf "$temp_file"
+    rm -rf -- "$temp_file"
 }
 
 _print_terminal() {
@@ -773,9 +749,6 @@ _print_terminal() {
 _run_task_parallel() {
     local input_files=$1
     local output_dir=$2
-
-    # Allows the symbol "'" in filenames.
-    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Export variables and functions inside a new shell (using 'xargs').
     export \
@@ -903,12 +876,105 @@ _validate_file_mime_parallel() {
             '$par_skip_mime'"
 
     # Compile valid files in a single list 'output_files'.
+    local output_files=""
     output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"*)
+    rm -f -- "$TEMP_DIR_VALID_FILES/"*
+
+    # Removes the last field separator.
+    output_files=${output_files%"$FILENAME_SEPARATOR"}
 
     echo -n "$output_files"
 }
 
-_validate_number_files() {
+_validate_file_preselect() {
+    local input_file=$1
+    local par_type=$2
+    local par_skip_extension=$3
+    local par_select_extension=$4
+    local par_recursive=$5
+    local input_file_valid=""
+
+    if [[ -f "$input_file" ]]; then # If the 'input_file' is a regular file.
+        _validate_file_extension "$input_file" "$par_skip_extension" "$par_select_extension" || return 1
+
+        # Add the regular file in the 'input_file_valid'.
+        if [[ "$par_type" == "file" ]] || [[ "$par_type" == "all" ]]; then
+            input_file_valid=$(_get_full_path_file "$input_file")
+            input_file_valid+=$FILENAME_SEPARATOR
+        fi
+    elif [[ -d "$input_file" ]]; then # If the 'input_file' is a directory.
+        if [[ "$par_recursive" == "true" ]]; then
+            # Add the expanded files (or directories) in the 'input_file_valid'.
+            input_file_valid=$(_expand_directory \
+                "$(_get_full_path_dir "$input_file")" \
+                "$par_type" \
+                "$par_select_extension" \
+                "$par_skip_extension")
+        else
+            # Add the directory in the 'input_file_valid'.
+            if [[ "$par_type" == "directory" ]] || [[ "$par_type" == "all" ]]; then
+                input_file_valid=$(_get_full_path_dir "$input_file")
+                input_file_valid+=$FILENAME_SEPARATOR
+            fi
+        fi
+    fi
+
+    if [[ -z "$input_file_valid" ]]; then
+        return 1
+    fi
+
+    # Create a temp file containing the name of the valid file.
+    local temp_file=""
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_VALID_FILES")
+    echo -n "$input_file_valid" >"$temp_file"
+
+    return 0
+}
+
+_validate_file_preselect_parallel() {
+    local input_files=$1
+    local par_type=$2
+    local par_skip_extension=$3
+    local par_select_extension=$4
+    local par_recursive=$5
+
+    # Export variables and functions inside a new shell (using 'xargs').
+    export \
+        FILENAME_SEPARATOR \
+        IGNORE_FIND_PATH \
+        TEMP_DIR_VALID_FILES
+    export -f \
+        _expand_directory \
+        _get_filename_extension \
+        _get_full_path_dir \
+        _get_full_path_file \
+        _has_string_in_list \
+        _validate_file_extension \
+        _validate_file_preselect
+
+    # Run '_validate_file_preselect' for each file in parallel (using 'xargs').
+    echo -n "$input_files" | xargs \
+        --delimiter="$FILENAME_SEPARATOR" \
+        --max-procs="$(_get_max_procs)" \
+        --replace="{}" \
+        bash -c "_validate_file_preselect '{}' \
+            '$par_type' \
+            '$par_skip_extension' \
+            '$par_select_extension' \
+            '$par_recursive'"
+
+    # Compile valid files in a single list 'output_files'.
+    local output_files=""
+    output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"*)
+    rm -f -- "$TEMP_DIR_VALID_FILES/"*
+
+    # Removes the last field separator.
+    output_files=${output_files%"$FILENAME_SEPARATOR"}
+
+    echo -n "$output_files"
+}
+
+_validate_files_count() {
     local input_files=$1
     local par_min_files=$2
     local par_max_files=$3
