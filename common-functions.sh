@@ -486,17 +486,7 @@ _get_files() {
     for input_file in $input_files; do
 
         if [[ -f "$input_file" ]]; then # If the 'input_file' is a regular file.
-
-            # Get the extension of the file.
-            local file_extension=""
-            file_extension=$(_get_filename_extension "$input_file")
-            file_extension=${file_extension,,} # Lowercase the file extension.
-
-            if [[ -n "$par_skip_extension" ]]; then
-                _has_string_in_list "$file_extension" "$par_skip_extension" && continue
-            elif [[ -n "$par_select_extension" ]]; then
-                _has_string_in_list "$file_extension" "$par_select_extension" || continue
-            fi
+            _validate_file_extension "$input_file" "$par_skip_extension" "$par_select_extension" || continue
 
             # Get the full path of the regular file.
             local input_file_full=""
@@ -571,14 +561,14 @@ _get_files() {
     export -f \
         _get_filename_extension \
         _has_string_in_list \
-        _validate_file
+        _validate_file_mime
 
-    # Run '_validate_file' for each file in parallel (using 'xargs').
+    # Run '_validate_file_mime' for each file in parallel (using 'xargs').
     echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
-        bash -c "_validate_file '{}' \
+        bash -c "_validate_file_mime '{}' \
             '$par_select_encoding' \
             '$par_select_mime' \
             '$par_skip_encoding' \
@@ -831,7 +821,26 @@ _run_task_parallel() {
         bash -c "_main_task '{}' '$output_dir'"
 }
 
-_validate_file() {
+_validate_file_extension() {
+    local input_file=$1
+    local par_skip_extension=$2
+    local par_select_extension=$3
+
+    # Get the extension of the file.
+    local file_extension=""
+    file_extension=$(_get_filename_extension "$input_file")
+    file_extension=${file_extension,,} # Lowercase the file extension.
+
+    if [[ -n "$par_skip_extension" ]]; then
+        _has_string_in_list "$file_extension" "$par_skip_extension" && return 1
+    elif [[ -n "$par_select_extension" ]]; then
+        _has_string_in_list "$file_extension" "$par_select_extension" || return 1
+    fi
+
+    return 0
+}
+
+_validate_file_mime() {
     local input_file=$1
     local par_select_encoding=$2
     local par_select_mime=$3
