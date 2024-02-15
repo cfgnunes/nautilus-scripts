@@ -16,7 +16,7 @@ _main() {
 
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(find $input_files -type d -empty ! -path "*.git/*" 2>/dev/null)
+    std_output=$(find $input_files -type d -empty ! -path "$IGNORE_FIND_PATH" 2>/dev/null)
     # shellcheck disable=SC2001
     std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove $PWD directory from filenames.
     # shellcheck disable=SC2001
