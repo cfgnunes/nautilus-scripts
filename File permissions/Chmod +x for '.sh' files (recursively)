@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies ""
     _display_wait_box
-    input_files=$(_get_files "$*" "type:all")
+    input_files=$(_get_files "$*" "type:all, recursive:true, extension:sh")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -25,7 +25,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(find "$input_file" ! -path "*.git/*" -iname "*.sh" -type f -exec chmod +x -- {} \+ 2>&1)
+    std_output=$(chmod +x -- "$input_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 }
 
