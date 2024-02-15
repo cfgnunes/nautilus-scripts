@@ -417,13 +417,13 @@ _get_files() {
 
     # Default values for the the parameters.
     local par_array=""
-    local par_encoding=""
-    local par_extension=""
     local par_max_files=""
-    local par_mime=""
     local par_min_files=""
     local par_recursive="false"
     local par_return_pwd="false"
+    local par_select_encoding=""
+    local par_select_extension=""
+    local par_select_mime=""
     local par_skip_encoding=""
     local par_skip_extension=""
     local par_skip_mime=""
@@ -433,13 +433,13 @@ _get_files() {
     IFS=":, " read -r -a par_array <<<"$parameters"
     for i in "${!par_array[@]}"; do
         case "${par_array[i]}" in
-        "encoding") par_encoding=${par_array[i + 1]} ;;
-        "extension") par_extension=${par_array[i + 1]} ;;
-        "get_pwd_if_no_selection") par_return_pwd=${par_array[i + 1]} ;;
         "max_files") par_max_files=${par_array[i + 1]} ;;
-        "mime") par_mime=${par_array[i + 1]} ;;
         "min_files") par_min_files=${par_array[i + 1]} ;;
         "recursive") par_recursive=${par_array[i + 1]} ;;
+        "get_pwd_if_no_selection") par_return_pwd=${par_array[i + 1]} ;;
+        "encoding") par_select_encoding=${par_array[i + 1]} ;;
+        "extension") par_select_extension=${par_array[i + 1]} ;;
+        "mime") par_select_mime=${par_array[i + 1]} ;;
         "skip_encoding") par_skip_encoding=${par_array[i + 1]} ;;
         "skip_extension") par_skip_extension=${par_array[i + 1]} ;;
         "skip_mime") par_skip_mime=${par_array[i + 1]} ;;
@@ -533,9 +533,9 @@ _get_files() {
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
         bash -c "_validate_file '{}' \
-            '$par_encoding' \
-            '$par_extension' \
-            '$par_mime' \
+            '$par_select_encoding' \
+            '$par_select_extension' \
+            '$par_select_mime' \
             '$par_skip_encoding' \
             '$par_skip_extension' \
             '$par_skip_mime'"
@@ -771,9 +771,9 @@ _run_task_parallel() {
 
 _validate_file() {
     local input_file=$1
-    local par_encoding=$2
-    local par_extension=$3
-    local par_mime=$4
+    local par_select_encoding=$2
+    local par_select_extension=$3
+    local par_select_mime=$4
     local par_skip_encoding=$5
     local par_skip_extension=$6
     local par_skip_mime=$7
@@ -782,7 +782,7 @@ _validate_file() {
     if [[ -f "$input_file" ]]; then
 
         # Validation for files (extension).
-        if [[ -n "$par_skip_extension" ]] || [[ -n "$par_extension" ]]; then
+        if [[ -n "$par_skip_extension" ]] || [[ -n "$par_select_extension" ]]; then
             local file_extension=""
             file_extension=$(_get_filename_extension "$input_file")
             file_extension=${file_extension,,} # Lowercase the file extension.
@@ -791,13 +791,13 @@ _validate_file() {
                 _has_string_in_list "$file_extension" "$par_skip_extension" && return 1
             fi
 
-            if [[ -n "$par_extension" ]]; then
-                _has_string_in_list "$file_extension" "$par_extension" || return 1
+            if [[ -n "$par_select_extension" ]]; then
+                _has_string_in_list "$file_extension" "$par_select_extension" || return 1
             fi
         fi
 
         # Validation for files (encoding).
-        if [[ -n "$par_skip_encoding" ]] || [[ -n "$par_encoding" ]]; then
+        if [[ -n "$par_skip_encoding" ]] || [[ -n "$par_select_encoding" ]]; then
             local file_encoding=""
             file_encoding=$(file --brief --mime-encoding -- "$input_file")
 
@@ -805,13 +805,13 @@ _validate_file() {
                 _has_string_in_list "$file_encoding" "$par_skip_encoding" && return 1
             fi
 
-            if [[ -n "$par_encoding" ]]; then
-                _has_string_in_list "$file_encoding" "$par_encoding" || return 1
+            if [[ -n "$par_select_encoding" ]]; then
+                _has_string_in_list "$file_encoding" "$par_select_encoding" || return 1
             fi
         fi
 
         # Validation for files (mime).
-        if [[ -n "$par_skip_mime" ]] || [[ -n "$par_mime" ]]; then
+        if [[ -n "$par_skip_mime" ]] || [[ -n "$par_select_mime" ]]; then
             local file_mime=""
             file_mime=$(file --brief --mime-type -- "$input_file")
 
@@ -819,8 +819,8 @@ _validate_file() {
                 _has_string_in_list "$file_mime" "$par_skip_mime" && return 1
             fi
 
-            if [[ -n "$par_mime" ]]; then
-                _has_string_in_list "$file_mime" "$par_mime" || return 1
+            if [[ -n "$par_select_mime" ]]; then
+                _has_string_in_list "$file_mime" "$par_select_mime" || return 1
             fi
         fi
 
