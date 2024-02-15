@@ -524,9 +524,6 @@ _get_files() {
         # TODO: Add a GUI box to add directories.
     fi
 
-    # Allows the symbol "'" in filenames.
-    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
-
     # Pre-select the input files. Also, expand it (if 'par_recursive' is true).
     input_files=$(_validate_file_preselect_parallel \
         "$input_files" \
@@ -771,6 +768,9 @@ _run_task_parallel() {
         _move_temp_file_to_output \
         _write_log
 
+    # Allows the symbol "'" in filenames.
+    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
+
     # Execute the function '_main_task' for each file in parallel (using 'xargs').
     echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
@@ -864,6 +864,9 @@ _validate_file_mime_parallel() {
         _has_string_in_list \
         _validate_file_mime
 
+    # Allows the symbol "'" in filenames.
+    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
+
     # Run '_validate_file_mime' for each file in parallel (using 'xargs').
     echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
@@ -951,6 +954,9 @@ _validate_file_preselect_parallel() {
         _has_string_in_list \
         _validate_file_extension \
         _validate_file_preselect
+
+    # Allows the symbol "'" in filenames.
+    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Run '_validate_file_preselect' for each file in parallel (using 'xargs').
     echo -n "$input_files" | xargs \
