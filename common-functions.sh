@@ -488,13 +488,9 @@ _get_files() {
         if [[ -f "$input_file" ]]; then # If the 'input_file' is a regular file.
             _validate_file_extension "$input_file" "$par_skip_extension" "$par_select_extension" || continue
 
-            # Get the full path of the regular file.
-            local input_file_full=""
-            input_file_full=$(_get_full_file_path "$input_file")
-
             # Add the regular file in the 'input_files_temp'.
             if [[ "$par_type" == "file" ]] || [[ "$par_type" == "all" ]]; then
-                input_files_temp+=$input_file_full
+                input_files_temp+=$(_get_full_file_path "$input_file")
                 input_files_temp+=$FILENAME_SEPARATOR
             fi
 
