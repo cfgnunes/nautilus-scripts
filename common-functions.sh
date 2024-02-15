@@ -490,7 +490,7 @@ _get_files() {
 
             # Get the full path of the regular file.
             local input_file_full=""
-            input_file_full=$(cd "$(dirname "$input_file")" && pwd -P)/$(basename "$input_file")
+            input_file_full=$(_get_full_file_path "$input_file")
 
             # Add the regular file in the 'input_files_temp'.
             if [[ "$par_type" == "file" ]] || [[ "$par_type" == "all" ]]; then
@@ -502,7 +502,7 @@ _get_files() {
 
             # Get the full path of the directory.
             local input_directory_full=""
-            input_directory_full=$(cd "$input_file" && pwd -P)
+            input_directory_full=$(_get_full_dir_path "$input_file")
 
             if [[ "$par_recursive" == "true" ]]; then
                 local find_type_parameter=""
@@ -611,6 +611,18 @@ _get_files() {
     output_files=${output_files%"$FILENAME_SEPARATOR"}
 
     echo "$output_files"
+}
+
+_get_full_dir_path() {
+    local input_file=$1
+
+    cd "$input_file" && pwd -P
+}
+
+_get_full_file_path() {
+    local input_file=$1
+
+    echo "$(cd "$(dirname "$input_file")" && pwd -P)/$(basename "$input_file")"
 }
 
 _get_log_file() {
