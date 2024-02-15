@@ -591,8 +591,8 @@ _get_log_file() {
 }
 
 _get_max_procs() {
-    # Return the maximum number of proccessing units available (minus one).
-    nproc --all --ignore=1 2>/dev/null
+    # Return the maximum number of processing units available.
+    nproc --all 2>/dev/null
 }
 
 _get_output_dir() {
