@@ -447,6 +447,20 @@ _get_files() {
         esac
     done
 
+    # Check the parameters.
+    if [[ -n "$par_skip_extension" ]] && [[ -n "$par_select_extension" ]]; then
+        _display_error_box "Not possible to use 'skip_extension' and 'select_extension' together!"
+        _exit_script
+    fi
+    if [[ -n "$par_skip_encoding" ]] && [[ -n "$par_select_encoding" ]]; then
+        _display_error_box "Not possible to use 'skip_encoding' and 'select_encoding' together!"
+        _exit_script
+    fi
+    if [[ -n "$par_skip_mime" ]] && [[ -n "$par_select_mime" ]]; then
+        _display_error_box "Not possible to use 'skip_mime' and 'select_mime' together!"
+        _exit_script
+    fi
+
     # Check if there are input files.
     if [[ -z "$input_files" ]]; then
         # Return the current working directory if there are no
@@ -471,6 +485,17 @@ _get_files() {
     for input_file in $input_files; do
 
         if [[ -f "$input_file" ]]; then # If the 'input_file' is a regular file.
+
+            # Get the extension of the file.
+            local file_extension=""
+            file_extension=$(_get_filename_extension "$input_file")
+            file_extension=${file_extension,,} # Lowercase the file extension.
+
+            if [[ -n "$par_skip_extension" ]]; then
+                _has_string_in_list "$file_extension" "$par_skip_extension" && continue
+            elif [[ -n "$par_select_extension" ]]; then
+                _has_string_in_list "$file_extension" "$par_select_extension" || continue
+            fi
 
             # Get the full path of the regular file.
             local input_file_full=""
@@ -499,8 +524,26 @@ _get_files() {
                 esac
 
                 # Add the expanded files (or directories) in the 'input_files_temp'.
-                input_files_temp+=$(find "$input_directory_full" -type "$find_type_parameter" ! -path "*.git/*" -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
-
+                if [[ -n "$par_select_extension" ]]; then
+                    input_files_temp+=$(find "$input_directory_full" \
+                        -type "$find_type_parameter" \
+                        -regextype posix-extended \
+                        -regex ".*($par_select_extension)$" \
+                        ! -path "*.git/*" \
+                        -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
+                elif [[ -n "$par_skip_extension" ]]; then
+                    input_files_temp+=$(find "$input_directory_full" \
+                        -type "$find_type_parameter" \
+                        -regextype posix-extended \
+                        ! -regex ".*($par_skip_extension)$" \
+                        ! -path "*.git/*" \
+                        -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
+                else
+                    input_files_temp+=$(find "$input_directory_full" \
+                        -type "$find_type_parameter" \
+                        ! -path "*.git/*" \
+                        -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
+                fi
             else
 
                 # Add the directory in the 'input_files_temp'.
@@ -534,10 +577,8 @@ _get_files() {
         --replace="{}" \
         bash -c "_validate_file '{}' \
             '$par_select_encoding' \
-            '$par_select_extension' \
             '$par_select_mime' \
             '$par_skip_encoding' \
-            '$par_skip_extension' \
             '$par_skip_mime'"
 
     # Count the number of valid files.
@@ -772,29 +813,12 @@ _run_task_parallel() {
 _validate_file() {
     local input_file=$1
     local par_select_encoding=$2
-    local par_select_extension=$3
-    local par_select_mime=$4
-    local par_skip_encoding=$5
-    local par_skip_extension=$6
-    local par_skip_mime=$7
+    local par_select_mime=$3
+    local par_skip_encoding=$4
+    local par_skip_mime=$5
 
     # Validation for files.
     if [[ -f "$input_file" ]]; then
-
-        # Validation for files (extension).
-        if [[ -n "$par_skip_extension" ]] || [[ -n "$par_select_extension" ]]; then
-            local file_extension=""
-            file_extension=$(_get_filename_extension "$input_file")
-            file_extension=${file_extension,,} # Lowercase the file extension.
-
-            if [[ -n "$par_skip_extension" ]]; then
-                _has_string_in_list "$file_extension" "$par_skip_extension" && return 1
-            fi
-
-            if [[ -n "$par_select_extension" ]]; then
-                _has_string_in_list "$file_extension" "$par_select_extension" || return 1
-            fi
-        fi
 
         # Validation for files (encoding).
         if [[ -n "$par_skip_encoding" ]] || [[ -n "$par_select_encoding" ]]; then
@@ -803,9 +827,7 @@ _validate_file() {
 
             if [[ -n "$par_skip_encoding" ]]; then
                 _has_string_in_list "$file_encoding" "$par_skip_encoding" && return 1
-            fi
-
-            if [[ -n "$par_select_encoding" ]]; then
+            elif [[ -n "$par_select_encoding" ]]; then
                 _has_string_in_list "$file_encoding" "$par_select_encoding" || return 1
             fi
         fi
@@ -817,9 +839,7 @@ _validate_file() {
 
             if [[ -n "$par_skip_mime" ]]; then
                 _has_string_in_list "$file_mime" "$par_skip_mime" && return 1
-            fi
-
-            if [[ -n "$par_select_mime" ]]; then
+            elif [[ -n "$par_select_mime" ]]; then
                 _has_string_in_list "$file_mime" "$par_select_mime" || return 1
             fi
         fi
