@@ -19,7 +19,7 @@ _main() {
         fi
     fi
     _display_wait_box
-    input_files=$(_get_files "$*" "type:file, mime:pdf")
+    input_files=$(_get_files "$*" "type:file, mime:application/pdf")
     output_dir=$(_get_output_dir)
 
     # Execute the function '_main_task' for each file in parallel.
