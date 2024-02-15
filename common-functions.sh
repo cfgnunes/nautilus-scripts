@@ -404,10 +404,16 @@ _get_files() {
     local input_file=""
     local output_files=""
 
-    # Valid values for the parameter key "type":
-    #   "all": Filter files and directories.
+    # Parameter: "type"
+    # Values:
     #   "file": Filter files (default).
     #   "directory": Filter directories.
+    #   "all": Filter files and directories.
+    #
+    # Parameter: "recursive"
+    # Values:
+    #   "false": Do not expand directories (default).
+    #   "true": Expand directories.
 
     # Check if there are input files.
     if [[ -z "$input_files" ]]; then
@@ -433,9 +439,9 @@ _get_files() {
     # Read values from the parameters.
     local par_encoding=""
     local par_extension=""
-    local par_max_files=0
+    local par_max_files=""
     local par_mime=""
-    local par_min_files=0
+    local par_min_files=""
     local par_recursive=""
     local par_skip_encoding=""
     local par_skip_extension=""
