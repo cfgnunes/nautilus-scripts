@@ -766,7 +766,7 @@ _run_task_parallel() {
         _move_temp_file_to_output \
         _write_log
 
-    # Allows the symbol "'" in filenames.
+    # Allows the symbol "'" in filenames (inside 'xargs').
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Execute the function '_main_task' for each file in parallel (using 'xargs').
@@ -862,7 +862,7 @@ _validate_file_mime_parallel() {
         _has_string_in_list \
         _validate_file_mime
 
-    # Allows the symbol "'" in filenames.
+    # Allows the symbol "'" in filenames (inside 'xargs').
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Run '_validate_file_mime' for each file in parallel (using 'xargs').
@@ -953,7 +953,7 @@ _validate_file_preselect_parallel() {
         _validate_file_extension \
         _validate_file_preselect
 
-    # Allows the symbol "'" in filenames.
+    # Allows the symbol "'" in filenames (inside 'xargs').
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Run '_validate_file_preselect' for each file in parallel (using 'xargs').
