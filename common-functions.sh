@@ -422,10 +422,10 @@ _get_files() {
     local par_max_files=""
     local par_mime=""
     local par_min_files=""
-    local par_recursive=""
-    local par_return_pwd=""
+    local par_recursive="false"
+    local par_return_pwd="false"
     local par_skip_encoding=""
-    local par_skip_extension="false"
+    local par_skip_extension=""
     local par_skip_mime=""
     local par_type="file"
 
