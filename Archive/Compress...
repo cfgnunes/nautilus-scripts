@@ -10,7 +10,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "file-roller"
-    input_files=$(_get_files "$*" "type=all")
+    input_files=$(_get_files "$*" "type:all")
 
     # Run the main process.
     # shellcheck disable=SC2086

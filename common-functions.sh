@@ -311,7 +311,7 @@ _has_string_in_list() {
     local string=$1
     local list=$2
 
-    IFS=", "
+    IFS="| "
     for item in $list; do
         if [[ "$string" == *"$item"* ]]; then
             IFS=$FILENAME_SEPARATOR
@@ -430,7 +430,7 @@ _get_files() {
     local par_type="file"
 
     # Read values from the parameters.
-    IFS="=; " read -r -a par_array <<<"$parameters"
+    IFS=":, " read -r -a par_array <<<"$parameters"
     for i in "${!par_array[@]}"; do
         case "${par_array[i]}" in
         "encoding") par_encoding=${par_array[i + 1]} ;;

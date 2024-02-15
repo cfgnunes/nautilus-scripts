@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "iconv(libc-bin)"
     _display_wait_box
-    input_files=$(_get_files "$*" "type=all")
+    input_files=$(_get_files "$*" "type:all")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
