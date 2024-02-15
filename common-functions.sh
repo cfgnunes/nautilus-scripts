@@ -415,12 +415,42 @@ _get_files() {
     #   "false": Do not expand directories (default).
     #   "true": Expand directories.
 
+    # Default values for the the parameters.
+    local par_array=""
+    local par_encoding=""
+    local par_extension=""
+    local par_max_files=""
+    local par_mime=""
+    local par_min_files=""
+    local par_recursive=""
+    local par_return_pwd=""
+    local par_skip_encoding=""
+    local par_skip_extension="false"
+    local par_skip_mime=""
+    local par_type="file"
+
+    # Read values from the parameters.
+    IFS="=; " read -r -a par_array <<<"$parameters"
+    for i in "${!par_array[@]}"; do
+        case "${par_array[i]}" in
+        "encoding") par_encoding=${par_array[i + 1]} ;;
+        "extension") par_extension=${par_array[i + 1]} ;;
+        "get_pwd_if_no_selection") par_return_pwd=${par_array[i + 1]} ;;
+        "max_files") par_max_files=${par_array[i + 1]} ;;
+        "mime") par_mime=${par_array[i + 1]} ;;
+        "min_files") par_min_files=${par_array[i + 1]} ;;
+        "recursive") par_recursive=${par_array[i + 1]} ;;
+        "skip_encoding") par_skip_encoding=${par_array[i + 1]} ;;
+        "skip_extension") par_skip_extension=${par_array[i + 1]} ;;
+        "skip_mime") par_skip_mime=${par_array[i + 1]} ;;
+        "type") par_type=${par_array[i + 1]} ;;
+        esac
+    done
+
     # Check if there are input files.
     if [[ -z "$input_files" ]]; then
         # Return the current working directory if there are no
         # files selected (parameter 'get_pwd_if_no_selection=true').
-        local par_return_pwd=""
-        par_return_pwd=$(_get_parameter_value "$parameters" "get_pwd_if_no_selection")
         if [[ "$par_return_pwd" == "true" ]]; then
             echo "$PWD"
             return 0
@@ -434,33 +464,6 @@ _get_files() {
         fi
 
         # TODO: Add a GUI box to add directories.
-    fi
-
-    # Read values from the parameters.
-    local par_encoding=""
-    local par_extension=""
-    local par_max_files=""
-    local par_mime=""
-    local par_min_files=""
-    local par_recursive=""
-    local par_skip_encoding=""
-    local par_skip_extension=""
-    local par_skip_mime=""
-    local par_type=""
-    par_encoding=$(_get_parameter_value "$parameters" "encoding")
-    par_extension=$(_get_parameter_value "$parameters" "extension")
-    par_max_files=$(_get_parameter_value "$parameters" "max_files")
-    par_mime=$(_get_parameter_value "$parameters" "mime")
-    par_min_files=$(_get_parameter_value "$parameters" "min_files")
-    par_recursive=$(_get_parameter_value "$parameters" "recursive")
-    par_skip_encoding=$(_get_parameter_value "$parameters" "skip_encoding")
-    par_skip_extension=$(_get_parameter_value "$parameters" "skip_extension")
-    par_skip_mime=$(_get_parameter_value "$parameters" "skip_mime")
-    par_type=$(_get_parameter_value "$parameters" "type")
-
-    # Default value for the parameter "type".
-    if [[ -z "$par_type" ]]; then
-        par_type="file"
     fi
 
     # Iterate over all 'input_files'.
@@ -519,7 +522,6 @@ _get_files() {
 
     # Export variables and functions inside a new shell (using 'xargs').
     export -f _get_filename_extension
-    export -f _get_parameter_value
     export -f _has_string_in_list
     export -f _validate_file
     export FILENAME_SEPARATOR
@@ -633,40 +635,15 @@ _get_output_file() {
     echo "$output_file"
 }
 
-_get_parameter_value() {
-    local parameters=$1
-    local parameter_key=$2
-    local parameter_value=""
-
-    # Return if the 'parameter_key' is not found in the 'parameters'
-    if [[ "$parameters" != *"$parameter_key="* ]]; then
-        return 1
-    fi
-
-    IFS="; "
-    for parameter in $parameters; do
-        parameter_value=${parameter##*=}
-        if [[ "$parameter_key" == "${parameter%%=*}" ]]; then
-            IFS=$FILENAME_SEPARATOR
-            echo "$parameter_value"
-            return 0
-        fi
-    done
-    IFS=$FILENAME_SEPARATOR
-
-    return 1
-}
-
 _get_script_name() {
     basename -- "$0"
 }
 
 _move_file() {
-    local parameters=$1
+    local par_when_conflict=$1
     local file_src=$2
     local file_dst=$3
     local exit_code=0
-    local par_when_conflict=""
 
     # Check for empty parameters.
     if [[ -z "$file_src" ]]; then
@@ -688,9 +665,6 @@ _move_file() {
     if [[ "$file_src" == "$file_dst" ]]; then
         return 0
     fi
-
-    # Read values from the parameters.
-    par_when_conflict=$(_get_parameter_value "$parameters" "when_conflict")
 
     # Process the parameter "when_conflict": what to do when the 'file_dst' already exists.
     case "$par_when_conflict" in
@@ -740,12 +714,12 @@ _move_temp_file_to_output() {
             backup_file="$input_file.bak"
 
             # Create a backup of the original file.
-            std_output=$(_move_file "when_conflict=rename" "$input_file" "$backup_file" 2>&1)
+            std_output=$(_move_file "rename" "$input_file" "$backup_file" 2>&1)
             _check_result "$?" "$std_output" "$input_file" "$backup_file" || return 1
         fi
 
         # Move the 'temp_file' to 'output_file'.
-        std_output=$(_move_file "when_conflict=rename" "$temp_file" "$output_file" 2>&1)
+        std_output=$(_move_file "rename" "$temp_file" "$output_file" 2>&1)
         _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 
         # Preserve the same permissions of 'input_file'.
@@ -786,7 +760,6 @@ _run_task_parallel() {
     export -f _get_filename_without_extension
     export -f _get_max_procs
     export -f _get_output_file
-    export -f _get_parameter_value
     export -f _main_task
     export -f _move_file
     export -f _move_temp_file_to_output
