@@ -438,7 +438,7 @@ _get_files() {
     local input_files=$1
     local parameters=$2
     local input_file=""
-    local output_files=""
+    local output_files=$input_files
 
     # Parameter: "type"
     # Values:
@@ -506,7 +506,7 @@ _get_files() {
     fi
 
     # Check if there are input files.
-    if [[ -z "$input_files" ]]; then
+    if [[ -z "$output_files" ]]; then
         # Return the current working directory if there are no
         # files selected (parameter 'get_pwd_if_no_selection=true').
         if [[ "$par_return_pwd" == "true" ]]; then
@@ -515,8 +515,8 @@ _get_files() {
         fi
 
         # Try selecting the files by opening a file selection box.
-        input_files=$(_display_file_selection_box)
-        if [[ -z "$input_files" ]]; then
+        output_files=$(_display_file_selection_box)
+        if [[ -z "$output_files" ]]; then
             _display_error_box "There are no input files!"
             _exit_script
         fi
@@ -525,25 +525,23 @@ _get_files() {
     fi
 
     # Pre-select the input files. Also, expand it (if 'par_recursive' is true).
-    input_files=$(_validate_file_preselect_parallel \
-        "$input_files" \
+    output_files=$(_validate_file_preselect_parallel \
+        "$output_files" \
         "$par_type" \
         "$par_skip_extension" \
         "$par_select_extension" \
         "$par_recursive")
 
     # Validates the mime or encoding of the file.
-    input_files=$(_validate_file_mime_parallel \
-        "$input_files" \
+    output_files=$(_validate_file_mime_parallel \
+        "$output_files" \
         "$par_select_encoding" \
         "$par_select_mime" \
         "$par_skip_encoding" \
         "$par_skip_mime")
 
     # Validates the number of valid files.
-    _validate_files_count "$input_files" "$par_min_files" "$par_max_files"
-
-    output_files=$input_files
+    _validate_files_count "$output_files" "$par_min_files" "$par_max_files"
 
     # Sort the list by filename.
     output_files=$(sed -z "s|\n|//|g" <<<"$output_files")
