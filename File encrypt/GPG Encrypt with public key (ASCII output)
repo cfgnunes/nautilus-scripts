@@ -11,7 +11,7 @@ _main() {
     local users=""
 
     # Execute initial checks.
-    _check_dependencies "gpg"
+    _check_dependencies "gpg(apt:gpg,pacman:gnupg,dnf:gnupg)"
     _display_wait_box
     input_files=$(_get_files "type:file")
     users=$(gpg --list-public-keys --with-colons | grep "^uid" | cut -d ':' -f 10)

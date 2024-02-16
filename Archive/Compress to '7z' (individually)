@@ -13,7 +13,7 @@ _main() {
     TASK_DATA="7z"
     [[ "$(_get_distro_name)" == "fedora" ]] && TASK_DATA="7za"
 
-    _check_dependencies "$TASK_DATA(p7zip-full)"
+    _check_dependencies "$TASK_DATA(apt:p7zip-full,pacman:p7zip,dnf:p7zip)"
     _display_wait_box
     input_files=$(_get_files "type:all")
     output_dir=$(_get_output_dir "use_same_dir:true")

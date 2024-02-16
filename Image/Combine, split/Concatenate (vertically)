@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "convert(imagemagick)"
+    _check_dependencies "convert(apt:imagemagick,pacman:imagemagick,dnf:ImageMagick)"
     _display_wait_box
     input_files=$(_get_files "type:file, mime:image/, min_files:2")
     output_dir=$(_get_output_dir "use_same_dir:false")

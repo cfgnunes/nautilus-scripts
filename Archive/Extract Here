@@ -30,7 +30,7 @@ _main() {
         *.tar.xz | *.txz) _check_dependencies "tar" ;;
         *.tar.Z | *.taz) _check_dependencies "tar" ;;
         *.tar.zst | *.tzst) _check_dependencies "tar" ;;
-        *.7z) _check_dependencies "$TASK_DATA(p7zip-full)" ;;
+        *.7z) _check_dependencies "$TASK_DATA(apt:p7zip-full,pacman:p7zip,dnf:p7zip)" ;;
         *.bz) _check_dependencies "bunzip2(bzip2)" ;;
         *.bz2) _check_dependencies "bunzip2(bzip2)" ;;
         *.deb) _check_dependencies "ar(binutils)" ;;
@@ -38,15 +38,15 @@ _main() {
         *.iso) _check_dependencies "xorriso" ;;
         *.lha) _check_dependencies "lha(lhasa)" ;;
         *.lzip) _check_dependencies "lzip" ;;
-        *.lzma) _check_dependencies "unlzma(xz-utils)" ;;
+        *.lzma) _check_dependencies "unlzma(apt:xz-utils,pacman:xz,dnf:xz)" ;;
         *.lzop) _check_dependencies "lzop" ;;
         *.rar) _check_dependencies "unrar" ;;
         *.squashfs | *.sfs | *.sqsh) _check_dependencies "unsquashfs(squashfs-tools)" ;;
         *.tar) _check_dependencies "tar" ;;
-        *.xz) _check_dependencies "unxz(xz-utils)" ;;
+        *.xz) _check_dependencies "unxz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
         *.Z) _check_dependencies "uncompress(gzip)" ;;
         *.zst) _check_dependencies "zstd" ;;
-        *) _check_dependencies "$TASK_DATA(p7zip-full)" ;;
+        *) _check_dependencies "$TASK_DATA(apt:p7zip-full,pacman:p7zip,dnf:p7zip)" ;;
         esac
     done
 
