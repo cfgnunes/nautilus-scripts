@@ -6,28 +6,18 @@ set -eu
 
 _main() {
     local menu_options=""
-    local menu_exit=""
-
-    # Show the main menu
-    menu_options=$(whiptail --title "Nautilus Scripts Installer" --separate-output --checklist \
-        "Installer options:" 11 68 4 \
-        "1" "Install basic package dependencies" ON \
-        "2" "Install the file 'scripts-accels'" ON \
-        "3" "Preserve the previous scripts" OFF \
-        "4" "Close the file manager to reload its configurations" ON \
-        3>&1 1>&2 2>&3)
-    menu_exit=$?
-
-    # Check if the user pressed Cancel or Esc in the menu.
-    if [[ $menu_exit != 0 ]]; then
-        echo "User cancelled."
-        exit 1
-    fi
+    local opt=""
 
     echo "Starting the installation..."
 
+    # Show the main options
+    read -r -p "> Install basic package dependencies [Y/n]? " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
+    read -r -p "> Install the file 'scripts-accels' [Y/n]? " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
+    read -r -p "> Preserve the previous scripts [Y/n]? " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
+    read -r -p "> Close the file manager to reload its configurations [Y/n]? " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
+
     # Install basic package dependencies.
-    if [[ "$menu_options" == *1* ]]; then
+    if [[ "$menu_options" == *"dependencies"* ]]; then
         _install_dependencies
     fi
 
@@ -100,7 +90,7 @@ _install_scripts() {
     fi
 
     # 'Preserve' or 'Remove' previous scripts.
-    if [[ "$menu_options" == *3* ]]; then
+    if [[ "$menu_options" == *"preserve"* ]]; then
         echo " > Preserving previous scripts to a temporary directory..."
         tmp_install_dir=$(mktemp -d)
         mv "$install_dir/"* "$tmp_install_dir" || true
@@ -115,13 +105,13 @@ _install_scripts() {
     cp -r ./* "$install_dir/"
 
     # Restore previous scripts.
-    if [[ "$menu_options" == *3* ]]; then
+    if [[ "$menu_options" == *"preserve"* ]]; then
         echo " > Restoring previous scripts to the install directory..."
         mv "$tmp_install_dir" "$install_dir/User previous scripts"
     fi
 
     # Install the file 'scripts-accels'.
-    if [[ "$menu_options" == *2* ]]; then
+    if [[ "$menu_options" == *"accels"* ]]; then
         if [[ -n "$accels_dir" ]]; then
             echo " > Installing the file 'scripts-accels'..."
             rm -f "$accels_dir/scripts-accels"
@@ -135,7 +125,7 @@ _install_scripts() {
     find "$install_dir" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
 
     # Close the file manager to reload its configurations.
-    if [[ "$menu_options" == *4* ]]; then
+    if [[ "$menu_options" == *"reload"* ]]; then
         echo " > Closing the file manager to reload its configurations..."
         eval "$file_manager -q &>/dev/null" || true
     fi
