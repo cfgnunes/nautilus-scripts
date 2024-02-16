@@ -652,21 +652,41 @@ _get_output_dir() {
 _get_output_file() {
     local input_file=$1
     local output_dir=$2
-    local extension=$3
+    local parameters=$3
     local output_file=""
     local filename=""
+    local par_extension_option="same"
+    local par_extension=""
+
+    # Read values from the parameters.
+    IFS=":, " read -r -a par_array <<<"$parameters"
+    for i in "${!par_array[@]}"; do
+        case "${par_array[i]}" in
+        "extension_option") par_extension_option=${par_array[i + 1]} ;;
+        "extension") par_extension=${par_array[i + 1]} ;;
+        esac
+    done
 
     filename=$(basename -- "$input_file")
     output_file="$output_dir/"
 
-    if [[ -z "$extension" ]]; then # Same extension.
+    # Change the extension of the 'output_file'.
+    case "$par_extension_option" in
+    "append")
         output_file+="$filename"
-    elif [[ "$extension" == "." ]]; then # Remove extension.
+        output_file+=".$par_extension"
+        ;;
+    "copy")
+        output_file+="$filename"
+        ;;
+    "new")
         output_file+="$(_get_filename_without_extension "$filename")"
-    else # Replace extension.
+        output_file+=".$par_extension"
+        ;;
+    "strip")
         output_file+="$(_get_filename_without_extension "$filename")"
-        output_file+=".$extension"
-    fi
+        ;;
+    esac
 
     # If the file already exists, add a suffix.
     output_file=$(_get_filename_suffix "$output_file")
