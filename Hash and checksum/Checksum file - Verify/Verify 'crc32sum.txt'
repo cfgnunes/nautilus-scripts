@@ -25,7 +25,7 @@ _verify_checksum() {
 
     # If the file does not exist, report and skip the check.
     if [[ ! -e "$file" ]]; then
-        echo "[PROBLEM] File missing: $file" >>"$output_file"
+        echo "[FAILED] No such file: $file" >>"$output_file"
         return 1
     fi
 
@@ -34,7 +34,7 @@ _verify_checksum() {
 
     # Compare the checksum.
     if [[ "$saved_checksum" != "$current_checksum" ]]; then
-        echo "[PROBLEM] Mismatch for the file: $file. Saved: $saved_checksum. Current: $current_checksum." >>"$output_file"
+        echo "[FAILED] Mismatch checksum for the file: $file. Saved: $saved_checksum. Current: $current_checksum." >>"$output_file"
         return 1
     fi
 
