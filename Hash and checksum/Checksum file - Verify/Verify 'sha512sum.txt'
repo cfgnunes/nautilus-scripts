@@ -49,7 +49,7 @@ _verify_checksum() {
 
     # If the file does not exist, report and skip the check.
     if [[ ! -e "$saved_file_decoded" ]]; then
-        echo "[FAILED] No such file: $saved_file" >>"$temp_file"
+        echo "[ERROR] No such file: $saved_file" >>"$temp_file"
         return 1
     fi
 
@@ -58,7 +58,7 @@ _verify_checksum() {
 
     # Compare the checksum.
     if [[ "$saved_checksum" != "$current_checksum" ]]; then
-        echo "[FAILED] Mismatch checksum for the file: $saved_file. Saved: $saved_checksum. Current: $current_checksum." >>"$temp_file"
+        echo "[ERROR] Mismatch checksum for the file: $saved_file. Saved: $saved_checksum. Current: $current_checksum." >>"$temp_file"
         return 1
     fi
 
