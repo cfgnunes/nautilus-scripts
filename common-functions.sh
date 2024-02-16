@@ -68,11 +68,11 @@ _check_dependencies() {
         # Select the package according the package manager.
         if [[ -n "$package_name" ]] && [[ "$package_name" == *":"* ]]; then
             if _command_exists "apt-get"; then
-                package_name=$(grep --only-matching "apt:[a-z-]*" <<<"$package_name" | sed "s|.*:||g")
+                package_name=$(grep --only-matching "apt:[a-z0-9-]*" <<<"$package_name" | sed "s|.*:||g")
             elif _command_exists "pacman"; then
-                package_name=$(grep --only-matching "pacman:[a-z-]*" <<<"$package_name" | sed "s|.*:||g")
+                package_name=$(grep --only-matching "pacman:[a-z0-9-]*" <<<"$package_name" | sed "s|.*:||g")
             elif _command_exists "dnf"; then
-                package_name=$(grep --only-matching "dnf:[a-z-]*" <<<"$package_name" | sed "s|.*:||g")
+                package_name=$(grep --only-matching "dnf:[a-z0-9-]*" <<<"$package_name" | sed "s|.*:||g")
             else
                 _display_error_box "Could not find a package manager!"
                 _exit_script
