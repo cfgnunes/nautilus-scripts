@@ -10,7 +10,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "meld"
-    input_files=$(_get_files "$*" "type:all, min_files:2, max_files:3")
+    input_files=$(_get_files "type:all, min_files:2, max_files:3")
 
     # Run the main process.
     # shellcheck disable=SC2086
