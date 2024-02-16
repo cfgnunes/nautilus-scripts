@@ -445,7 +445,7 @@ _get_filemanager_list() {
     elif [[ -n "$NEMO_SCRIPT_SELECTED_URIS" ]]; then
         filemanager_list=$NEMO_SCRIPT_SELECTED_URIS # Nemo
     elif [[ -n "$CAJA_SCRIPT_SELECTED_URIS" ]]; then
-        filemanager_list=$CAJA_SCRIPT_SELECTED_URIS # Nemo
+        filemanager_list=$CAJA_SCRIPT_SELECTED_URIS # Caja
     else
         set -u
         echo -n "$INPUT_FILES" # Standard input
