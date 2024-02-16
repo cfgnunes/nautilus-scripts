@@ -64,7 +64,7 @@ _check_dependencies() {
             continue
         fi
 
-        package_name=$(grep --only-matching -P "\(+\K[^)]+" <<<"$dependency")
+        package_name=$(grep --only-matching --perl-regexp "\(+\K[^)]+" <<<"$dependency")
         if [[ -n "$package_name" ]]; then
             message="The command '$command' was not found (from package '$package_name'). Would you like to install it?"
         else
@@ -299,7 +299,7 @@ _exit_script() {
     local script_pid=$$
 
     # Get the process ID (PID) of the current script.
-    child_pids=$(pstree -p "$script_pid" | grep --only-matching -P "\(+\K[^)]+")
+    child_pids=$(pstree -p "$script_pid" | grep --only-matching --perl-regexp "\(+\K[^)]+")
 
     _print_terminal "Aborting the script..."
 
@@ -406,12 +406,12 @@ _is_terminal_session() {
 }
 
 _get_distro_name() {
-    cat /etc/*-release | grep -i "^id=" | cut -d "=" -f 2
+    cat /etc/*-release | grep --ignore-case "^id=" | cut -d "=" -f 2
 }
 
 _get_filename_extension() {
     local filename=$1
-    grep --ignore-case --perl-regexp --only-matching "(\.tar)?\.[a-z0-9_~-]*$" <<<"$filename"
+    grep --ignore-case --only-matching --perl-regexp "(\.tar)?\.[a-z0-9_~-]*$" <<<"$filename"
 }
 
 _get_filename_without_extension() {
