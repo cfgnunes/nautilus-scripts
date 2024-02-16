@@ -462,8 +462,6 @@ _get_filemanager_list() {
 _get_files() {
     local input_files=$1
     local parameters=$2
-    local input_file=""
-    local output_files=$input_files
 
     # Parameter: "type"
     # Values:
