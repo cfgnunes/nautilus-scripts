@@ -1,35 +1,48 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2001
 
 # This file contains common functions that the scripts will source.
 
-# shellcheck disable=SC2001
-
 set -u
 
-# Use an 'Output' directory instead of the current directory for the output.
-readonly USE_OUTPUT_DIR=true
-readonly PREFIX_ERROR_LOG_FILE="Errors"
-readonly PREFIX_OUTPUT_DIR="Output"
+# -----------------------------------------------------------------------------
+# CONSTANT GLOBAL VARIABLES
+# -----------------------------------------------------------------------------
 
-# Define the field separator used in 'for' commands to iterate over files.
-readonly FILENAME_SEPARATOR=$'\r'
-IFS=$FILENAME_SEPARATOR
-
-# Create temp directories for use in scripts.
-TEMP_DIR=$(mktemp --directory)
+FILENAME_SEPARATOR=$'\r'       # The field separator used in 'loop' commands to iterate over files.
+IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
+PREFIX_ERROR_LOG_FILE="Errors" # Name of 'error' directory.
+PREFIX_OUTPUT_DIR="Output"     # Name of 'output' directory.
+TEMP_DIR=$(mktemp --directory) # Temp directories for use in scripts.
+USE_OUTPUT_DIR=true            # Use 'Output' directory instead of the current directory.
 TEMP_DIR_LOG=$(mktemp --directory --tmpdir="$TEMP_DIR")
 TEMP_DIR_TASK=$(mktemp --directory --tmpdir="$TEMP_DIR")
 TEMP_DIR_VALID_FILES=$(mktemp --directory --tmpdir="$TEMP_DIR")
+TEMP_FIFO="$TEMP_DIR/fifo.txt" # Temporary FIFO to use in the "wait_box".
 
-# A temporary FIFO to use in the "wait_box".
-readonly TEMP_FIFO="$TEMP_DIR/fifo.txt"
+readonly \
+    FILENAME_SEPARATOR \
+    IGNORE_FIND_PATH \
+    PREFIX_ERROR_LOG_FILE \
+    PREFIX_OUTPUT_DIR \
+    TEMP_DIR \
+    USE_OUTPUT_DIR \
+    TEMP_DIR_LOG \
+    TEMP_DIR_TASK \
+    TEMP_DIR_VALID_FILES \
+    TEMP_FIFO
 
-# Remove the temp directory in an unexpected exit.
-_cleanup() {
+IFS=$FILENAME_SEPARATOR
+
+# -----------------------------------------------------------------------------
+# FUNCTIONS
+# -----------------------------------------------------------------------------
+
+_cleanup_on_exit() {
     rm -rf "$TEMP_DIR"
     _print_terminal "End of the script."
 }
-trap _cleanup EXIT
+trap _cleanup_on_exit EXIT
 
 _command_exists() {
     local command_check="$1"
@@ -529,19 +542,19 @@ _get_files() {
                         -type "$find_type_parameter" \
                         -regextype posix-extended \
                         -regex ".*($par_select_extension)$" \
-                        ! -path "*.git/*" \
+                        ! -path "$IGNORE_FIND_PATH" \
                         -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
                 elif [[ -n "$par_skip_extension" ]]; then
                     input_files_temp+=$(find "$input_directory_full" \
                         -type "$find_type_parameter" \
                         -regextype posix-extended \
                         ! -regex ".*($par_skip_extension)$" \
-                        ! -path "*.git/*" \
+                        ! -path "$IGNORE_FIND_PATH" \
                         -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
                 else
                     input_files_temp+=$(find "$input_directory_full" \
                         -type "$find_type_parameter" \
-                        ! -path "*.git/*" \
+                        ! -path "$IGNORE_FIND_PATH" \
                         -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
                 fi
             else
