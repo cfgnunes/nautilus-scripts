@@ -808,7 +808,6 @@ _run_task_parallel() {
 _uri_decode() {
     local uri_encoded=$1
 
-    uri_encoded=${uri_encoded//+/ }
     uri_encoded=${uri_encoded//%/\\x}
     echo -e "$uri_encoded"
 }
