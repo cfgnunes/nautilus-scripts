@@ -1049,7 +1049,9 @@ _validate_files_count() {
     # Count the number of valid files.
     local valid_files_count=0
     valid_files_count=$(echo -n "$input_files" | tr -cd "$FILENAME_SEPARATOR" | wc -c)
-    valid_files_count=$((valid_files_count + 1))
+    if [[ -n "$input_files" ]]; then
+        valid_files_count=$((valid_files_count + 1))
+    fi
 
     # Check if there is at least one valid file.
     if ((valid_files_count == 0)); then
