@@ -5,52 +5,64 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
-# Execute initial checks.
-_check_dependencies ""
-_display_wait_box
-input_files=$(_get_files "type:file, min_files:1, max_files:1, mime:text/")
-output_dir=$PWD
+_main() {
+    local input_files=""
+
+    # Execute initial checks.
+    _check_dependencies ""
+    _display_wait_box
+    input_files=$(_get_files "type:file, min_files:1, max_files:1, mime:text/")
+
+    checksum_file=$(cat "$input_files")
+    checksum_file=$(sed -z "s|'|'\\\''|g" <<<"$checksum_file")
+
+    export -f _verify_checksum
+    export TEMP_DIR_TASK
+    echo -n "$checksum_file" | xargs --max-procs="$(_get_max_procs)" --delimiter=$'\n' --replace="{}" bash -c "_verify_checksum '{}'"
+
+    std_output=$(cat -- "$TEMP_DIR_TASK/"* 2>/dev/null) # Compile all results into a single output.
+    std_output=$(sort --version-sort <<<"$std_output")  # Sort the result.
+
+    if [[ -z "$std_output" ]]; then
+        std_output="No errors found."
+    fi
+
+    _display_text_box "$std_output"
+}
 
 _verify_checksum() {
     local line=$1
     local saved_checksum=""
-    local file=""
+    local saved_file=""
     local current_output=""
     local current_checksum=""
+    local temp_file=""
 
-    output_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+    # Temporary file to store the output of the current checksum.
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
 
     saved_checksum=$(echo "$line" | cut -d " " -f1)
-    file=$(echo "$line" | cut -d " " -f3- | sed "s|\r|'|g")
+    saved_file=$(echo "$line" | cut -d " " -f3-)
+
+    # Some checksum start with '\', for filenames with '\n' or '\'
+    saved_file_decoded=$(echo -e "$saved_file")
 
     # If the file does not exist, report and skip the check.
-    if [[ ! -e "$file" ]]; then
-        echo "[FAILED] No such file: $file" >>"$output_file"
+    if [[ ! -e "$saved_file_decoded" ]]; then
+        echo "[FAILED] No such file: $saved_file" >>"$temp_file"
         return 1
     fi
 
-    current_output=$(md5sum -- "$file" 2>/dev/null)
+    current_output=$(md5sum -- "$saved_file_decoded" 2>/dev/null)
     current_checksum=$(echo "$current_output" | cut -d " " -f1)
 
     # Compare the checksum.
     if [[ "$saved_checksum" != "$current_checksum" ]]; then
-        echo "[FAILED] Mismatch checksum for the file: $file. Saved: $saved_checksum. Current: $current_checksum." >>"$output_file"
+        echo "[FAILED] Mismatch checksum for the file: $saved_file. Saved: $saved_checksum. Current: $current_checksum." >>"$temp_file"
         return 1
     fi
 
     return 0
 }
 
-cd "$output_dir" || _exit_script
-
-export -f _verify_checksum
-export TEMP_DIR_TASK
-sed "s|'|\r|g" "$input_files" | xargs --max-procs="$(_get_max_procs)" --replace="{}" bash -c "_verify_checksum '{}'"
-
-std_output=$(cat -- "$TEMP_DIR_TASK/"* 2>/dev/null) # Compile all results into a single output.
-
-if [[ -z "$std_output" ]]; then
-    std_output="No errors found."
-fi
-
-_display_text_box "$std_output"
+_main "$@"
