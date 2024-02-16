@@ -352,7 +352,7 @@ _has_string_in_list() {
     local string=$1
     local list=$2
 
-    if grep -q --ignore-case --perl-regexp ".*($list).*" <<<"$string"; then
+    if grep -q --ignore-case --perl-regexp "($list)" <<<"$string"; then
         return 0
     fi
 
