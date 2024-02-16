@@ -12,15 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "ocrmypdf"
     if ! [[ -d "/usr/share/doc/tesseract-ocr-por" ]]; then
-        if _display_question_box "Portuguese language is not installed for OCR. Would you like to install it?"; then
-            if _command_exists "apt-get"; then
-                _install_package "tesseract-ocr-por" "tesseract"
-            elif _command_exists "dnf"; then
-                _install_package "tesseract-langpack-por" "tesseract"
-            fi
-        else
-            _exit_script
-        fi
+        _check_dependencies "(apt:tesseract-ocr-por,dnf:tesseract-langpack-por)"
     fi
     _display_wait_box
     input_files=$(_get_files "type:file, mime:application/pdf")

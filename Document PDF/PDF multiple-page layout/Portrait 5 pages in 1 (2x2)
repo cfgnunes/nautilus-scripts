@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "pdfjam(texlive-extra-utils)"
+    _check_dependencies "pdfjam(apt:texlive-extra-utils,dnf:texlive-pdfjam)"
     _display_wait_box
     input_files=$(_get_files "type:file, mime:application/pdf")
     output_dir=$(_get_output_dir "use_same_dir:false")
