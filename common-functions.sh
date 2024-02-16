@@ -627,20 +627,20 @@ _get_output_dir() {
     local base_dir=$PWD
     local output_dir=""
 
+    # Check directories available to put the 'output' dir.
+    [[ ! -w "$base_dir" ]] && base_dir=$HOME
+    [[ ! -w "$base_dir" ]] && base_dir="/tmp"
+    if [[ ! -w "$base_dir" ]]; then
+        _display_error_box "Could not find a directory with write permissions!"
+        _exit_script
+    fi
+
     if ! $USE_OUTPUT_DIR; then
         echo "$base_dir"
         return
     fi
 
-    # Check directories available to put the 'output' dir.
-    [[ ! -w "$base_dir" ]] && base_dir=$HOME
-    [[ ! -w "$base_dir" ]] && base_dir="/tmp"
     output_dir="$base_dir/$PREFIX_OUTPUT_DIR"
-
-    if [[ ! -w "$base_dir" ]]; then
-        _display_error_box "Could not find a directory with write permissions!"
-        _exit_script
-    fi
 
     # If the file already exists, add a suffix.
     output_dir=$(_get_filename_suffix "$output_dir")
@@ -655,7 +655,7 @@ _get_output_file() {
     local parameters=$3
     local output_file=""
     local filename=""
-    local par_extension_option="same"
+    local par_extension_option="new"
     local par_extension=""
 
     # Read values from the parameters.
