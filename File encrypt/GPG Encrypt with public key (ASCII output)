@@ -15,7 +15,7 @@ _main() {
     _display_wait_box
     input_files=$(_get_files "type:file")
     users=$(gpg --list-public-keys --with-colons | grep "^uid" | cut -d ':' -f 10)
-    output_dir=$(_get_output_dir "use_same_dir:false")
+    output_dir=$(_get_output_dir "use_same_dir:true")
 
     if [[ -z "$users" ]]; then
         _display_error_box "Signing failed: no secret keys installed!"
