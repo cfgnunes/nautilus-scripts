@@ -40,7 +40,7 @@ _main() {
 }
 
 _command_exists() {
-    local command_check="$1"
+    local command_check=$1
 
     if command -v "$command_check" &>/dev/null; then
         return 0
@@ -78,7 +78,7 @@ _install_dependencies() {
 }
 
 _install_scripts() {
-    local menu_options="$1"
+    local menu_options=$1
     local accels_dir=""
     local file_manager=""
     local install_dir=""

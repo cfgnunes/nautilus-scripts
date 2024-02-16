@@ -45,7 +45,7 @@ _cleanup_on_exit() {
 trap _cleanup_on_exit EXIT
 
 _command_exists() {
-    local command_check="$1"
+    local command_check=$1
 
     if command -v "$command_check" &>/dev/null; then
         return 0
