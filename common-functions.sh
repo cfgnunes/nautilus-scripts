@@ -44,15 +44,6 @@ _cleanup_on_exit() {
 }
 trap _cleanup_on_exit EXIT
 
-_command_exists() {
-    local command_check=$1
-
-    if command -v "$command_check" &>/dev/null; then
-        return 0
-    fi
-    return 1
-}
-
 _check_dependencies() {
     local dependencies=$*
     local command=""
@@ -119,6 +110,15 @@ _check_result() {
     fi
 
     return 0
+}
+
+_command_exists() {
+    local command_check=$1
+
+    if command -v "$command_check" &>/dev/null; then
+        return 0
+    fi
+    return 1
 }
 
 _display_file_selection_box() {
@@ -229,22 +229,10 @@ _display_text_box() {
 
 _display_result_box() {
     local output_dir=$1
-    local error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
     _close_wait_box
 
-    if [[ -z "$output_dir" ]]; then
-        error_log_file="$PWD/$PREFIX_ERROR_LOG_FILE.log"
-    else
-        error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
-    fi
-
-    # If the file already exists, add a suffix.
-    error_log_file=$(_get_filename_suffix "$error_log_file")
-
-    # Compile log errors in a single file.
-    if ls -- "$TEMP_DIR_LOG/"* &>/dev/null; then
-        cat -- "$TEMP_DIR_LOG/"* >"$error_log_file"
-    fi
+    local error_log_file=""
+    error_log_file=$(_get_log_file "$output_dir")
 
     # Check if there was some error.
     if [[ -f "$error_log_file" ]]; then
@@ -577,11 +565,13 @@ _get_files() {
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Export variables and functions inside a new shell (using 'xargs').
-    export -f _get_filename_extension
-    export -f _has_string_in_list
-    export -f _validate_file
-    export FILENAME_SEPARATOR
-    export TEMP_DIR_VALID_FILES
+    export \
+        FILENAME_SEPARATOR \
+        TEMP_DIR_VALID_FILES
+    export -f \
+        _get_filename_extension \
+        _has_string_in_list \
+        _validate_file
 
     # Run '_validate_file' for each file in parallel (using 'xargs').
     echo -n "$input_files" | xargs \
@@ -631,6 +621,27 @@ _get_files() {
     output_files=${output_files%"$FILENAME_SEPARATOR"}
 
     echo "$output_files"
+}
+
+_get_log_file() {
+    local output_dir=$1
+    local error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
+
+    if [[ -z "$output_dir" ]]; then
+        error_log_file="$PWD/$PREFIX_ERROR_LOG_FILE.log"
+    else
+        error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
+    fi
+
+    # If the file already exists, add a suffix.
+    error_log_file=$(_get_filename_suffix "$error_log_file")
+
+    # Compile log errors in a single file.
+    if ls -- "$TEMP_DIR_LOG/"* &>/dev/null; then
+        cat -- "$TEMP_DIR_LOG/"* >"$error_log_file"
+    fi
+
+    echo "$error_log_file"
 }
 
 _get_max_procs() {
@@ -700,10 +711,7 @@ _move_file() {
     local exit_code=0
 
     # Check for empty parameters.
-    if [[ -z "$file_src" ]]; then
-        return 1
-    fi
-    if [[ -z "$file_dst" ]]; then
+    if [[ -z "$file_src" ]] || [[ -z "$file_dst" ]]; then
         return 1
     fi
 
@@ -722,9 +730,7 @@ _move_file() {
 
     # Process the parameter "when_conflict": what to do when the 'file_dst' already exists.
     case "$par_when_conflict" in
-    "overwrite")
-        :
-        ;;
+    "overwrite") : ;;
     "rename")
         # Rename the file (add a suffix).
         file_dst=$(_get_filename_suffix "$file_dst")
@@ -797,23 +803,25 @@ _run_task_parallel() {
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Export variables and functions inside a new shell (using 'xargs').
-    export FILENAME_SEPARATOR
-    export TASK_DATA
-    export TEMP_DIR_LOG
-    export TEMP_DIR_TASK
-    export -f _check_result
-    export -f _close_wait_box
-    export -f _display_error_box
-    export -f _exit_script
-    export -f _get_filename_extension
-    export -f _get_filename_suffix
-    export -f _get_filename_without_extension
-    export -f _get_max_procs
-    export -f _get_output_file
-    export -f _main_task
-    export -f _move_file
-    export -f _move_temp_file_to_output
-    export -f _write_log
+    export \
+        FILENAME_SEPARATOR \
+        TASK_DATA \
+        TEMP_DIR_LOG \
+        TEMP_DIR_TASK
+    export -f \
+        _check_result \
+        _close_wait_box \
+        _display_error_box \
+        _exit_script \
+        _get_filename_extension \
+        _get_filename_suffix \
+        _get_filename_without_extension \
+        _get_max_procs \
+        _get_output_file \
+        _main_task \
+        _move_file \
+        _move_temp_file_to_output \
+        _write_log
 
     # Execute the function '_main_task' for each file in parallel (using 'xargs').
     echo -n "$input_files" | xargs \
