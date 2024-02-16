@@ -553,58 +553,23 @@ _get_files() {
     # Allows the symbol "'" in filenames.
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
-    # Export variables and functions inside a new shell (using 'xargs').
-    export \
-        FILENAME_SEPARATOR \
-        TEMP_DIR_VALID_FILES
-    export -f \
-        _get_filename_extension \
-        _has_string_in_list \
-        _validate_file_mime
-
-    # Run '_validate_file_mime' for each file in parallel (using 'xargs').
-    echo -n "$input_files" | xargs \
-        --delimiter="$FILENAME_SEPARATOR" \
-        --max-procs="$(_get_max_procs)" \
-        --replace="{}" \
-        bash -c "_validate_file_mime '{}' \
-            '$par_select_encoding' \
-            '$par_select_mime' \
-            '$par_skip_encoding' \
-            '$par_skip_mime'"
-
-    # Count the number of valid files.
-    local valid_files_count=0
-    valid_files_count=$(find "$TEMP_DIR_VALID_FILES/" -type f -printf "-\n" | wc -l)
-
-    # Check if there is at least one valid file.
-    if ((valid_files_count == 0)); then
-        _display_error_box "There are no valid files in the selection!"
-        _exit_script
+    # Validates the mime or encoding of the file
+    if [[ -n "$par_select_encoding$par_select_mime$par_skip_encoding$par_skip_mime" ]]; then
+        output_files=$(_validate_file_mime_parallel "$input_files" "$par_select_encoding" "$par_select_mime" "$par_skip_encoding" "$par_skip_mime")
+    else
+        output_files=$input_files
     fi
 
-    if [[ -n "$par_min_files" ]] && ((valid_files_count < par_min_files)); then
-        _display_error_box "You must select at least $par_min_files valid files!"
-        _exit_script
-    fi
-
-    if [[ -n "$par_max_files" ]] && ((valid_files_count > par_max_files)); then
-        _display_error_box "You must select up to $par_max_files valid files!"
-        _exit_script
-    fi
-
-    # Compile valid files in a single list 'output_files'.
-    output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"*)
+    # Validates the numver of valid files.
+    _validate_number_files "$output_files" "$par_min_files" "$par_max_files"
 
     # Sort the list by filename.
-    if ((valid_files_count > 1)); then
-        output_files=$(sed -z "s|\n|//|g" <<<"$output_files")
-        output_files=$(sed "s|//$||" <<<"$output_files")
-        output_files=$(sed -z "s|$FILENAME_SEPARATOR|\n|g" <<<"$output_files")
-        output_files=$(sort --version-sort <<<"$output_files") # Sort the result.
-        output_files=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$output_files")
-        output_files=$(sed -z "s|//|\n|g" <<<"$output_files")
-    fi
+    output_files=$(sed -z "s|\n|//|g" <<<"$output_files")
+    output_files=$(sed "s|//$||" <<<"$output_files")
+    output_files=$(sed -z "s|$FILENAME_SEPARATOR|\n|g" <<<"$output_files")
+    output_files=$(sort --version-sort <<<"$output_files") # Sort the result.
+    output_files=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$output_files")
+    output_files=$(sed -z "s|//|\n|g" <<<"$output_files")
 
     # Removes the last field separator.
     output_files=${output_files%"$FILENAME_SEPARATOR"}
@@ -893,6 +858,66 @@ _validate_file_mime() {
     echo -n "$input_file$FILENAME_SEPARATOR" >"$temp_file"
 
     return 0
+}
+
+_validate_file_mime_parallel() {
+    local input_files=$1
+    local par_select_encoding=$2
+    local par_select_mime=$3
+    local par_skip_encoding=$4
+    local par_skip_mime=$5
+
+    # Export variables and functions inside a new shell (using 'xargs').
+    export \
+        FILENAME_SEPARATOR \
+        TEMP_DIR_VALID_FILES
+    export -f \
+        _get_filename_extension \
+        _has_string_in_list \
+        _validate_file_mime
+
+    # Run '_validate_file_mime' for each file in parallel (using 'xargs').
+    echo -n "$input_files" | xargs \
+        --delimiter="$FILENAME_SEPARATOR" \
+        --max-procs="$(_get_max_procs)" \
+        --replace="{}" \
+        bash -c "_validate_file_mime '{}' \
+            '$par_select_encoding' \
+            '$par_select_mime' \
+            '$par_skip_encoding' \
+            '$par_skip_mime'"
+
+    # Compile valid files in a single list 'output_files'.
+    output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"*)
+
+    echo -n "$output_files"
+}
+
+_validate_number_files() {
+    local input_files=$1
+    local par_min_files=$2
+    local par_max_files=$3
+
+    # Count the number of valid files.
+    local valid_files_count=0
+    valid_files_count=$(echo -n "$input_files" | tr -cd "$FILENAME_SEPARATOR" | wc -c)
+    valid_files_count=$((valid_files_count + 1))
+
+    # Check if there is at least one valid file.
+    if ((valid_files_count == 0)); then
+        _display_error_box "There are no valid files in the selection!"
+        _exit_script
+    fi
+
+    if [[ -n "$par_min_files" ]] && ((valid_files_count < par_min_files)); then
+        _display_error_box "You must select at least $par_min_files valid files!"
+        _exit_script
+    fi
+
+    if [[ -n "$par_max_files" ]] && ((valid_files_count > par_max_files)); then
+        _display_error_box "You must select up to $par_max_files valid files!"
+        _exit_script
+    fi
 }
 
 _write_log() {
