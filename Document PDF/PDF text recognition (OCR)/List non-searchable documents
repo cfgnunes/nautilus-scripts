@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "pdffonts(poppler-utils)"
     _display_wait_box
-    input_files=$(_get_files "$*" "type:file, recursive:true, mime:application/pdf")
+    input_files=$(_get_files "type:file, recursive:true, mime:application/pdf")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" ""

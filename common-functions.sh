@@ -445,6 +445,7 @@ _get_filemanager_list() {
     elif [[ -n "$NEMO_SCRIPT_SELECTED_URIS" ]]; then
         filemanager_list=$NEMO_SCRIPT_SELECTED_URIS # Nemo
     else
+        set -u
         echo -n "$INPUT_FILES" # Standard input
         return
     fi
@@ -456,12 +457,14 @@ _get_filemanager_list() {
     filemanager_list=$(_uri_decode "$filemanager_list")
     filemanager_list=${filemanager_list//file:\/\//}
 
+    set -u
     echo -n "$filemanager_list"
 }
 
 _get_files() {
-    local input_files=$1
-    local parameters=$2
+    local parameters=$1
+    local input_files=""
+    input_files=$(_get_filemanager_list)
 
     # Parameter: "type"
     # Values:

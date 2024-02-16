@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies ""
     _display_wait_box
-    input_files=$(_get_files "$*" "type:file, mime:text/|application/, skip_encoding:binary, skip_extension:pdf")
+    input_files=$(_get_files "type:file, mime:text/|application/, skip_encoding:binary, skip_extension:pdf")
     output_dir=$(_get_output_dir)
 
     # Execute the function '_main_task' for each file in parallel.
