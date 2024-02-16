@@ -14,10 +14,10 @@ While there are numerous scripts available for GNOME Files on the web, many of t
 - **Non-destructive output**: Never overwrites the input file; the output is distinct from the input.
 - **Log file**: Produces an `Errors.log` file when a task ends with an error.
 - **Dependency management**: Prompts users to install any missing dependencies.
-- **Compatibility with any file manager**: Works with any file manager, without relying on `$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS` or Nemo equivalents.
-- **Keyboard shortcuts**: Provides keyboard shortcuts for direct access to the scripts (refer to the `scripts-accels` file).
+- **Compatibility with any file manager**: Works with any file manager.
+- **Keyboard shortcuts**: Provides keyboard shortcuts for the scripts (refer to the `scripts-accels` file).
 - **Bash implementation**: All scripts are implemented in Bash.
-- **Shell script validation**: All shell scripts have been checked using [ShellCheck](https://github.com/koalaman/shellcheck).
+- **Shell script validation**: All scripts have been checked using [ShellCheck](https://github.com/koalaman/shellcheck).
 
 ## Installing
 
