@@ -64,11 +64,29 @@ _check_dependencies() {
         fi
 
         package_name=$(grep --only-matching --perl-regexp "\(+\K[^)]+" <<<"$dependency")
-        if [[ -n "$package_name" ]]; then
+
+        # Select the package according the package manager.
+        if [[ -n "$package_name" ]] && [[ "$package_name" == *":"* ]]; then
+            if _command_exists "apt-get"; then
+                package_name=$(grep --only-matching "apt:[a-z-]*" <<<"$package_name" | sed "s|.*:||g")
+            elif _command_exists "pacman"; then
+                package_name=$(grep --only-matching "pacman:[a-z-]*" <<<"$package_name" | sed "s|.*:||g")
+            elif _command_exists "dnf"; then
+                package_name=$(grep --only-matching "dnf:[a-z-]*" <<<"$package_name" | sed "s|.*:||g")
+            else
+                _display_error_box "Could not find a package manager!"
+                _exit_script
+            fi
+        fi
+
+        # Ask to the user to install the dependency.
+        if [[ -n "$command" ]] && [[ -n "$package_name" ]]; then
             message="The command '$command' was not found (from package '$package_name'). Would you like to install it?"
-        else
+        elif [[ -n "$command" ]]; then
             message="The command '$command' was not found. Would you like to install it?"
             package_name=$command
+        else
+            message="The package '$package_name' was not found. Would you like to install it?"
         fi
 
         # Ask the user to install the package.
@@ -373,7 +391,7 @@ _has_string_in_list() {
 
 _install_package() {
     local package_name=$1
-    local command=$2
+    local command_check=$2
 
     _display_wait_box_message "Installing the package '$package_name'. Please, wait..."
 
@@ -397,7 +415,7 @@ _install_package() {
     _close_wait_box
 
     # Check if the package was installed.
-    if ! _command_exists "$command"; then
+    if [[ -n "$command_check" ]] && ! _command_exists "$command_check"; then
         _display_error_box "Could not install the package '$package_name'!"
         _exit_script
     fi
