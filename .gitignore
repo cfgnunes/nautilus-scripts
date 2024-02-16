@@ -8,5 +8,8 @@
 # Output dirs
 Output*/
 
+# User previous scripts
+User previous scripts/
+
 # Visual Studio Code dir
 .vscode/
