@@ -2,8 +2,6 @@
 
 # Install the scripts for the GNOME Files (Nautilus), Caja and Nemo file managers.
 
-# shellcheck disable=SC2086
-
 set -eu
 
 _main() {
@@ -48,6 +46,7 @@ _command_exists() {
     return 1
 }
 
+# shellcheck disable=SC2086
 _install_dependencies() {
     local common_names="bzip2 foremost ghostscript gzip jpegoptim lame lzip lzop optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk unrar wget xclip zip zstd"
 
