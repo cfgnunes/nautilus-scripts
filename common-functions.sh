@@ -501,6 +501,14 @@ _get_files() {
         _display_error_box "Not possible to use 'skip_mime' and 'select_mime' together!"
         _exit_script
     fi
+    if [[ $par_type != "file" ]] && [[ -n "$par_select_extension" ]]; then
+        _display_error_box "To use the parameter 'extension' the value of 'type' must be 'file'!"
+        _exit_script
+    fi
+    if [[ $par_type != "file" ]] && [[ -n "$par_skip_extension" ]]; then
+        _display_error_box "To use the parameter 'skip_extension' the value of 'type' must be 'file'!"
+        _exit_script
+    fi
 
     # Check if there are input files.
     if [[ -z "$input_files" ]]; then
@@ -559,18 +567,14 @@ _get_files() {
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Validates the mime or encoding of the file
-    if [[ -n "$par_select_encoding$par_select_mime$par_skip_encoding$par_skip_mime" ]]; then
-        output_files=$(_validate_file_mime_parallel \
-            "$input_files" \
-            "$par_select_encoding" \
-            "$par_select_mime" \
-            "$par_skip_encoding" \
-            "$par_skip_mime")
-    else
-        output_files=$input_files
-    fi
+    output_files=$(_validate_file_mime_parallel \
+        "$input_files" \
+        "$par_select_encoding" \
+        "$par_select_mime" \
+        "$par_skip_encoding" \
+        "$par_skip_mime")
 
-    # Validates the numver of valid files.
+    # Validates the number of valid files.
     _validate_number_files "$output_files" "$par_min_files" "$par_max_files"
 
     # Sort the list by filename.
@@ -812,6 +816,11 @@ _validate_file_extension() {
     local par_skip_extension=$2
     local par_select_extension=$3
 
+    # Return 0 if all parameters is empty.
+    if [[ -z "$par_skip_extension" ]] && [[ -z "$par_select_extension" ]]; then
+        return 0
+    fi
+
     # Get the extension of the file.
     local file_extension=""
     file_extension=$(_get_filename_extension "$input_file")
@@ -833,33 +842,28 @@ _validate_file_mime() {
     local par_skip_encoding=$4
     local par_skip_mime=$5
 
-    # Validation for files.
-    if [[ -f "$input_file" ]]; then
+    # Validation for files (encoding).
+    if [[ -n "$par_skip_encoding" ]] || [[ -n "$par_select_encoding" ]]; then
+        local file_encoding=""
+        file_encoding=$(file --brief --mime-encoding -- "$input_file")
 
-        # Validation for files (encoding).
-        if [[ -n "$par_skip_encoding" ]] || [[ -n "$par_select_encoding" ]]; then
-            local file_encoding=""
-            file_encoding=$(file --brief --mime-encoding -- "$input_file")
-
-            if [[ -n "$par_skip_encoding" ]]; then
-                _has_string_in_list "$file_encoding" "$par_skip_encoding" && return 1
-            elif [[ -n "$par_select_encoding" ]]; then
-                _has_string_in_list "$file_encoding" "$par_select_encoding" || return 1
-            fi
+        if [[ -n "$par_skip_encoding" ]]; then
+            _has_string_in_list "$file_encoding" "$par_skip_encoding" && return 1
+        elif [[ -n "$par_select_encoding" ]]; then
+            _has_string_in_list "$file_encoding" "$par_select_encoding" || return 1
         fi
+    fi
 
-        # Validation for files (mime).
-        if [[ -n "$par_skip_mime" ]] || [[ -n "$par_select_mime" ]]; then
-            local file_mime=""
-            file_mime=$(file --brief --mime-type -- "$input_file")
+    # Validation for files (mime).
+    if [[ -n "$par_skip_mime" ]] || [[ -n "$par_select_mime" ]]; then
+        local file_mime=""
+        file_mime=$(file --brief --mime-type -- "$input_file")
 
-            if [[ -n "$par_skip_mime" ]]; then
-                _has_string_in_list "$file_mime" "$par_skip_mime" && return 1
-            elif [[ -n "$par_select_mime" ]]; then
-                _has_string_in_list "$file_mime" "$par_select_mime" || return 1
-            fi
+        if [[ -n "$par_skip_mime" ]]; then
+            _has_string_in_list "$file_mime" "$par_skip_mime" && return 1
+        elif [[ -n "$par_select_mime" ]]; then
+            _has_string_in_list "$file_mime" "$par_select_mime" || return 1
         fi
-
     fi
 
     # Create a temp file containing the name of the valid file.
@@ -876,6 +880,12 @@ _validate_file_mime_parallel() {
     local par_select_mime=$3
     local par_skip_encoding=$4
     local par_skip_mime=$5
+
+    # Return the 'input_files' if all parameters is empty.
+    if [[ -z "$par_select_encoding$par_select_mime$par_skip_encoding$par_skip_mime" ]]; then
+        echo -n "$input_files"
+        return
+    fi
 
     # Export variables and functions inside a new shell (using 'xargs').
     export \
