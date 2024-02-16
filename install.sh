@@ -112,12 +112,6 @@ _install_scripts() {
     mkdir --parents "$INSTALL_DIR"
     cp -r . "$INSTALL_DIR"
 
-    # Restore previous scripts.
-    if [[ "$menu_options" == *"preserve"* ]]; then
-        echo " > Restoring previous scripts to the install directory..."
-        mv "$tmp_install_dir/scripts" "$INSTALL_DIR/User previous scripts"
-    fi
-
     # Install the file 'scripts-accels'.
     if [[ "$menu_options" == *"accels"* ]]; then
         if [[ -n "$ACCELS_DIR" ]]; then
@@ -131,6 +125,12 @@ _install_scripts() {
     # Set file permissions.
     echo " > Setting file permissions..."
     find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
+
+    # Restore previous scripts.
+    if [[ "$menu_options" == *"preserve"* ]]; then
+        echo " > Restoring previous scripts to the install directory..."
+        mv "$tmp_install_dir/scripts" "$INSTALL_DIR/User previous scripts"
+    fi
 
     # Close the file manager to reload its configurations.
     if [[ "$menu_options" == *"reload"* ]]; then
