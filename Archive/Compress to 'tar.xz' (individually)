@@ -27,7 +27,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file=$(_get_output_file "$input_file" "$output_dir" "tar.xz")
+    output_file=$(_get_output_file "$input_file" "$output_dir" "extension_option:new, extension:tar.xz")
     if [[ -d "$input_file" ]]; then
         cd -- "$input_file" || return 1
         shopt -s extglob
