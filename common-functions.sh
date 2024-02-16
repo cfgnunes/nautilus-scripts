@@ -478,7 +478,6 @@ _get_files() {
     #   "true": Expand directories.
 
     # Default values for the the parameters.
-    local par_array=""
     local par_max_files=""
     local par_min_files=""
     local par_recursive="false"
@@ -673,7 +672,7 @@ _get_output_file() {
         case "${par_array[i]}" in
         "extension_option") par_extension_option=${par_array[i + 1]} ;;
         "extension") par_extension=${par_array[i + 1]} ;;
-        "prefix") par_prefix=${par_array[i + 1]} ;;
+        "prefix") par_prefix=$(_read_array_values "$i" "," "${par_array[@]}") ;;
         esac
     done
 
@@ -803,6 +802,23 @@ _print_terminal() {
     fi
 }
 
+_read_array_values() {
+    local start_index=$1
+    local char_delimiter=$2
+    local array=("$@")
+    local n="${#array[@]}"
+    local value=""
+
+    # Read all values until the 'char_delimiter'
+    for ((i = start_index + 3; i < n; i++)); do
+        if [[ "${array[i]}" != "$char_delimiter" ]]; then
+            value+="${array[i]} "
+        fi
+    done
+
+    echo "${value% }"
+}
+
 _run_task_parallel() {
     local input_files=$1
     local output_dir=$2
@@ -826,6 +842,7 @@ _run_task_parallel() {
         _main_task \
         _move_file \
         _move_temp_file_to_output \
+        _read_array_values \
         _write_log
 
     # Allows the symbol "'" in filenames (inside 'xargs').
