@@ -13,7 +13,6 @@ FILENAME_SEPARATOR=$'\r'       # The field separator used in 'loop' commands to 
 IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
 PREFIX_ERROR_LOG_FILE="Errors" # Name of 'error' directory.
 PREFIX_OUTPUT_DIR="Output"     # Name of 'output' directory.
-USE_OUTPUT_DIR=true            # Use 'Output' directory instead of the current directory.
 TEMP_DIR=$(mktemp --directory) # Temp directories for use in scripts.
 TEMP_DIR_LOG=$(mktemp --directory --tmpdir="$TEMP_DIR")
 TEMP_DIR_TASK=$(mktemp --directory --tmpdir="$TEMP_DIR")
@@ -26,7 +25,6 @@ readonly \
     PREFIX_ERROR_LOG_FILE \
     PREFIX_OUTPUT_DIR \
     TEMP_DIR \
-    USE_OUTPUT_DIR \
     TEMP_DIR_LOG \
     TEMP_DIR_TASK \
     TEMP_DIR_VALID_FILES \
@@ -624,8 +622,18 @@ _get_max_procs() {
 }
 
 _get_output_dir() {
+    local parameters=$1
     local base_dir=$PWD
     local output_dir=""
+    local par_use_same_dir=""
+
+    # Read values from the parameters.
+    IFS=":, " read -r -a par_array <<<"$parameters"
+    for i in "${!par_array[@]}"; do
+        case "${par_array[i]}" in
+        "use_same_dir") par_use_same_dir=${par_array[i + 1]} ;;
+        esac
+    done
 
     # Check directories available to put the 'output' dir.
     [[ ! -w "$base_dir" ]] && base_dir=$HOME
@@ -635,7 +643,7 @@ _get_output_dir() {
         _exit_script
     fi
 
-    if ! $USE_OUTPUT_DIR; then
+    if [[ "$par_use_same_dir" == "true" ]]; then
         echo "$base_dir"
         return
     fi

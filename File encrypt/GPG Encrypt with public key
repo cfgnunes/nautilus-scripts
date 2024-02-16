@@ -14,7 +14,7 @@ _main() {
     _check_dependencies "gpg"
     _display_wait_box
     input_files=$(_get_files "type:file")
-    output_dir=$(_get_output_dir)
+    output_dir=$(_get_output_dir "use_same_dir:false")
 
     users=$(gpg --list-public-keys --with-colons | grep "^uid" | cut -d ':' -f 10)
     if [[ -z "$users" ]]; then

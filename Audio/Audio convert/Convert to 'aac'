@@ -13,7 +13,7 @@ _main() {
     _check_dependencies "ffmpeg"
     _display_wait_box
     input_files=$(_get_files "type:file, mime:audio/|video/|application/octet-stream")
-    output_dir=$(_get_output_dir)
+    output_dir=$(_get_output_dir "use_same_dir:false")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"

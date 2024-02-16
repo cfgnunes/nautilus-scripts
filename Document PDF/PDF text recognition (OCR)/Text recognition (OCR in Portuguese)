@@ -20,7 +20,7 @@ _main() {
     fi
     _display_wait_box
     input_files=$(_get_files "type:file, mime:application/pdf")
-    output_dir=$(_get_output_dir)
+    output_dir=$(_get_output_dir "use_same_dir:false")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
