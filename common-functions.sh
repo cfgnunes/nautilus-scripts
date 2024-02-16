@@ -444,6 +444,8 @@ _get_filemanager_list() {
         filemanager_list=$NAUTILUS_SCRIPT_SELECTED_URIS # Nautilus
     elif [[ -n "$NEMO_SCRIPT_SELECTED_URIS" ]]; then
         filemanager_list=$NEMO_SCRIPT_SELECTED_URIS # Nemo
+    elif [[ -n "$CAJA_SCRIPT_SELECTED_URIS" ]]; then
+        filemanager_list=$CAJA_SCRIPT_SELECTED_URIS # Nemo
     else
         set -u
         echo -n "$INPUT_FILES" # Standard input

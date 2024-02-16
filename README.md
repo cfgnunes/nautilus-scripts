@@ -29,7 +29,6 @@ bash install.sh
 
 ## Known issues
 
-- Doesn't support filenames with '%';
 - Doesn't support very long list of input files (Argument list too long).
 
 ## Contributing
