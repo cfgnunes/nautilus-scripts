@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "pdftoppm(apt:poppler-utils,pacman:poppler-glib,dnf:poppler-glib)"
+    _check_dependencies "pdftoppm(apt:poppler-utils,pacman:poppler-glib,dnf:poppler-utils)"
     _display_wait_box
     input_files=$(_get_files "type:file, mime:application/pdf")
     output_dir=$(_get_output_dir "use_same_dir:false")

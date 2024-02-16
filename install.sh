@@ -82,7 +82,7 @@ _install_dependencies() {
             # Distro: Fedora, CentOS, Red Hat.
             # Missing packages: findimagedupes.
             sudo dnf check-update || true
-            sudo dnf -y install $common_names gnupg ImageMagick xz p7zip poppler poppler-glib ffmpeg-free jdupes genisoimage ocrmypdf mp3gain
+            sudo dnf -y install $common_names gnupg2 ImageMagick xz p7zip poppler-utils ffmpeg-free jdupes genisoimage ocrmypdf mp3gain
         else
             echo "Error: could not find a package manager!"
             exit 1
