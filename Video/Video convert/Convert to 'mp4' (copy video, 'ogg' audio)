@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "ffmpeg"
+    _check_dependencies "ffmpeg(apt:ffmpeg,pacman:ffmpeg,dnf:ffmpeg-free)"
     _display_wait_box
     input_files=$(_get_files "type:file, mime:video/")
     output_dir=$(_get_output_dir "use_same_dir:true")

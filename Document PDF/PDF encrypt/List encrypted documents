@@ -10,7 +10,7 @@ _main() {
     local std_output=""
 
     # Execute initial checks.
-    _check_dependencies "pdfinfo(poppler-utils)"
+    _check_dependencies "pdfinfo(apt:poppler-utils,pacman:poppler-glib,dnf:poppler-glib)"
     _display_wait_box
     input_files=$(_get_files "type:file, recursive:true, mime:application/pdf")
 
