@@ -592,7 +592,7 @@ _get_full_path_dir() {
 _get_full_path_file() {
     local input_file=$1
 
-    echo "$(cd "$(dirname "$input_file")" && pwd -P)/$(basename "$input_file")"
+    echo "$(cd "$(dirname -- "$input_file")" && pwd -P)/$(basename -- "$input_file")"
 }
 
 _get_log_file() {
@@ -665,6 +665,7 @@ _get_output_file() {
     local filename=""
     local par_extension_option="new"
     local par_extension=""
+    local par_prefix=""
 
     # Read values from the parameters.
     IFS=":, " read -r -a par_array <<<"$parameters"
@@ -672,6 +673,7 @@ _get_output_file() {
         case "${par_array[i]}" in
         "extension_option") par_extension_option=${par_array[i + 1]} ;;
         "extension") par_extension=${par_array[i + 1]} ;;
+        "prefix") par_prefix=${par_array[i + 1]} ;;
         esac
     done
 
@@ -681,17 +683,21 @@ _get_output_file() {
     # Change the extension of the 'output_file'.
     case "$par_extension_option" in
     "append")
+        [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
         output_file+="$filename"
         output_file+=".$par_extension"
         ;;
     "copy")
+        [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
         output_file+="$filename"
         ;;
     "new")
+        [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
         output_file+="$(_get_filename_without_extension "$filename")"
         output_file+=".$par_extension"
         ;;
     "strip")
+        [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
         output_file+="$(_get_filename_without_extension "$filename")"
         ;;
     esac
