@@ -126,7 +126,7 @@ _display_dir_selection_box() {
             --separator="$FILENAME_SEPARATOR" 2>/dev/null
     elif _command_exists "kdialog"; then
         local input_files=""
-        input_files=$(kdialog --title "$(_get_script_name)" --getopenfilename --multiple 2>/dev/null)
+        input_files=$(kdialog --title "$(_get_script_name)" --getexistingdirectory 2>/dev/null)
         input_files=${input_files% }
         input_files=${input_files// \//$FILENAME_SEPARATOR/}
         echo -n "$input_files"
