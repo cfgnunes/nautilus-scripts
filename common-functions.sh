@@ -352,14 +352,9 @@ _has_string_in_list() {
     local string=$1
     local list=$2
 
-    IFS="| "
-    for item in $list; do
-        if [[ "$string" == *"$item"* ]]; then
-            IFS=$FILENAME_SEPARATOR
-            return 0
-        fi
-    done
-    IFS=$FILENAME_SEPARATOR
+    if grep -q --ignore-case --perl-regexp ".*($list).*" <<<"$string"; then
+        return 0
+    fi
 
     return 1
 }
