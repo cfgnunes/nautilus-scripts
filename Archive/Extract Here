@@ -12,9 +12,8 @@ _main() {
 
     # Execute initial checks.
     TASK_DATA="7z"
-    if [[ "$(_get_distro_name)" == "fedora" ]]; then
-        TASK_DATA="7za"
-    fi
+    [[ "$(_get_distro_name)" == "fedora" ]] && TASK_DATA="7za"
+
     _check_dependencies ""
     _display_wait_box
     input_files=$(_get_files "type:file")
