@@ -33,6 +33,7 @@ readonly \
     TEMP_FIFO
 
 IFS=$FILENAME_SEPARATOR
+INPUT_FILES=$*
 
 # -----------------------------------------------------------------------------
 # FUNCTIONS
@@ -434,6 +435,30 @@ _get_filename_suffix() {
     echo "$filename_result"
 }
 
+_get_filemanager_list() {
+    local filemanager_list=""
+    set +u
+
+    # Try to use the list of input files provided by the file manager.
+    if [[ -n "$NAUTILUS_SCRIPT_SELECTED_URIS" ]]; then
+        filemanager_list=$NAUTILUS_SCRIPT_SELECTED_URIS # Nautilus
+    elif [[ -n "$NEMO_SCRIPT_SELECTED_URIS" ]]; then
+        filemanager_list=$NEMO_SCRIPT_SELECTED_URIS # Nemo
+    else
+        echo -n "$INPUT_FILES" # Standard input
+        return
+    fi
+
+    # Replace '\n' to 'FILENAME_SEPARATOR'.
+    filemanager_list=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$filemanager_list")
+
+    # Decode the URI list.
+    filemanager_list=$(_uri_decode "$filemanager_list")
+    filemanager_list=${filemanager_list//file:\/\//}
+
+    echo -n "$filemanager_list"
+}
+
 _get_files() {
     local input_files=$1
     local parameters=$2
@@ -506,7 +531,7 @@ _get_files() {
     fi
 
     # Check if there are input files.
-    if [[ -z "$output_files" ]]; then
+    if [[ -z "$input_files" ]]; then
         # Return the current working directory if there are no
         # files selected (parameter 'get_pwd_if_no_selection=true').
         if [[ "$par_return_pwd" == "true" ]]; then
@@ -515,8 +540,8 @@ _get_files() {
         fi
 
         # Try selecting the files by opening a file selection box.
-        output_files=$(_display_file_selection_box)
-        if [[ -z "$output_files" ]]; then
+        input_files=$(_display_file_selection_box)
+        if [[ -z "$input_files" ]]; then
             _display_error_box "There are no input files!"
             _exit_script
         fi
@@ -525,36 +550,36 @@ _get_files() {
     fi
 
     # Pre-select the input files. Also, expand it (if 'par_recursive' is true).
-    output_files=$(_validate_file_preselect_parallel \
-        "$output_files" \
+    input_files=$(_validate_file_preselect_parallel \
+        "$input_files" \
         "$par_type" \
         "$par_skip_extension" \
         "$par_select_extension" \
         "$par_recursive")
 
     # Validates the mime or encoding of the file.
-    output_files=$(_validate_file_mime_parallel \
-        "$output_files" \
+    input_files=$(_validate_file_mime_parallel \
+        "$input_files" \
         "$par_select_encoding" \
         "$par_select_mime" \
         "$par_skip_encoding" \
         "$par_skip_mime")
 
     # Validates the number of valid files.
-    _validate_files_count "$output_files" "$par_min_files" "$par_max_files"
+    _validate_files_count "$input_files" "$par_min_files" "$par_max_files"
 
     # Sort the list by filename.
-    output_files=$(sed -z "s|\n|//|g" <<<"$output_files")
-    output_files=$(sed "s|//$||" <<<"$output_files")
-    output_files=$(sed -z "s|$FILENAME_SEPARATOR|\n|g" <<<"$output_files")
-    output_files=$(sort --version-sort <<<"$output_files") # Sort the result.
-    output_files=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$output_files")
-    output_files=$(sed -z "s|//|\n|g" <<<"$output_files")
+    input_files=$(sed -z "s|\n|//|g" <<<"$input_files")
+    input_files=$(sed "s|//$||" <<<"$input_files")
+    input_files=$(sed -z "s|$FILENAME_SEPARATOR|\n|g" <<<"$input_files")
+    input_files=$(sort --version-sort <<<"$input_files") # Sort the result.
+    input_files=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$input_files")
+    input_files=$(sed -z "s|//|\n|g" <<<"$input_files")
 
     # Removes the last field separator.
-    output_files=${output_files%"$FILENAME_SEPARATOR"}
+    input_files=${input_files%"$FILENAME_SEPARATOR"}
 
-    echo -n "$output_files"
+    echo -n "$input_files"
 }
 
 _get_full_path_dir() {
@@ -775,6 +800,14 @@ _run_task_parallel() {
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
         bash -c "_main_task '{}' '$output_dir'"
+}
+
+_uri_decode() {
+    local uri_encoded=$1
+
+    uri_encoded=${uri_encoded//+/ }
+    uri_encoded=${uri_encoded//%/\\x}
+    echo -e "$uri_encoded"
 }
 
 _validate_file_extension() {
