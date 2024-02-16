@@ -13,7 +13,7 @@ _main() {
     _check_dependencies "pdftoppm(poppler-utils)"
     _display_wait_box
     input_files=$(_get_files "type:file, mime:application/pdf")
-    output_dir=$(_get_output_dir "use_same_dir:true")
+    output_dir=$(_get_output_dir "use_same_dir:false")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -28,7 +28,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_file "$input_file" "$output_dir" "extension_option:strip")
-    std_output=$(pdftoppm -png "$input_file" -- "$output_file" 2>&1)
+    std_output=$(pdftoppm -jpeg "$input_file" -- "$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 }
 
