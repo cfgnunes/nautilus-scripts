@@ -4,15 +4,40 @@
 
 set -eu
 
+# Global variables
+ACCELS_DIR=""
+FILE_MANAGER=""
+INSTALL_DIR=""
+
 _main() {
     local menu_options=""
     local opt=""
 
+    # Get the default file manager.
+    if _command_exists "nautilus"; then
+        INSTALL_DIR="$HOME/.local/share/nautilus/scripts"
+        ACCELS_DIR="$HOME/.config/nautilus"
+        FILE_MANAGER="nautilus"
+    elif _command_exists "nemo"; then
+        INSTALL_DIR="$HOME/.local/share/nemo/scripts"
+        FILE_MANAGER="nemo"
+    elif _command_exists "caja"; then
+        INSTALL_DIR="$HOME/.config/caja/scripts"
+        FILE_MANAGER="caja"
+    else
+        echo "Error: could not find any compatible file managers!"
+        exit 1
+    fi
+
     # Show the main options
-    read -r -p "Install basic package dependencies [Y/n]? " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
-    read -r -p "Install the file 'scripts-accels' [Y/n]? " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
-    read -r -p "Preserve the previous scripts [Y/n]? " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
-    read -r -p "Close the file manager to reload its configurations [Y/n]? " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
+    read -r -p "Install basic package dependencies? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
+    if [[ -n "$ACCELS_DIR" ]]; then
+        read -r -p "Install the file 'scripts-accels'? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
+    fi
+    if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
+        read -r -p "Preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
+    fi
+    read -r -p "Close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
 
     echo
     echo "Starting the installation..."
@@ -70,66 +95,47 @@ _install_dependencies() {
 
 _install_scripts() {
     local menu_options=$1
-    local accels_dir=""
-    local file_manager=""
-    local install_dir=""
     local tmp_install_dir=""
-
-    # Get the default file manager.
-    if _command_exists "nautilus"; then
-        install_dir="$HOME/.local/share/nautilus/scripts"
-        accels_dir="$HOME/.config/nautilus"
-        file_manager="nautilus"
-    elif _command_exists "nemo"; then
-        install_dir="$HOME/.local/share/nemo/scripts"
-        file_manager="nemo"
-    elif _command_exists "caja"; then
-        install_dir="$HOME/.config/caja/scripts"
-        file_manager="caja"
-    else
-        echo "Error: could not find any compatible file managers!"
-        exit 1
-    fi
 
     # 'Preserve' or 'Remove' previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then
         echo " > Preserving previous scripts to a temporary directory..."
         tmp_install_dir=$(mktemp -d)
-        mv "$install_dir/"* "$tmp_install_dir" || true
+        mv "$INSTALL_DIR" "$tmp_install_dir" || true
     else
         echo " > Removing previous scripts..."
-        rm -rf "$install_dir"
+        rm -rf "$INSTALL_DIR"
     fi
 
     # Install the scripts.
     echo " > Installing new scripts..."
-    mkdir --parents "$install_dir"
-    cp -r ./* "$install_dir/"
+    mkdir --parents "$INSTALL_DIR"
+    cp -r . "$INSTALL_DIR"
 
     # Restore previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then
         echo " > Restoring previous scripts to the install directory..."
-        mv "$tmp_install_dir" "$install_dir/User previous scripts"
+        mv "$tmp_install_dir/scripts" "$INSTALL_DIR/User previous scripts"
     fi
 
     # Install the file 'scripts-accels'.
     if [[ "$menu_options" == *"accels"* ]]; then
-        if [[ -n "$accels_dir" ]]; then
+        if [[ -n "$ACCELS_DIR" ]]; then
             echo " > Installing the file 'scripts-accels'..."
-            rm -f "$accels_dir/scripts-accels"
-            mkdir --parents "$accels_dir"
-            cp "scripts-accels" "$accels_dir/scripts-accels"
+            rm -f "$ACCELS_DIR/scripts-accels"
+            mkdir --parents "$ACCELS_DIR"
+            cp "scripts-accels" "$ACCELS_DIR/scripts-accels"
         fi
     fi
 
     # Set file permissions.
     echo " > Setting file permissions..."
-    find "$install_dir" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
+    find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
 
     # Close the file manager to reload its configurations.
     if [[ "$menu_options" == *"reload"* ]]; then
         echo " > Closing the file manager to reload its configurations..."
-        eval "$file_manager -q &>/dev/null" || true
+        eval "$FILE_MANAGER -q &>/dev/null" || true
     fi
 }
 
