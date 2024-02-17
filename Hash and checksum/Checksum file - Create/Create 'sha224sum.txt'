@@ -21,7 +21,7 @@ _main() {
 
     # Compile all results into a single output.
     compiled_output_file=$(_get_filename_suffix "$output_dir/sha224sum.txt")
-    cat -- "$TEMP_DIR_TASK/"* >"$compiled_output_file"
+    cat -- "$TEMP_DIR_TASK/"* 2>/dev/null >"$compiled_output_file"
 
     _display_result_box "$output_dir"
 }
