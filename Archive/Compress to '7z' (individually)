@@ -10,10 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    TASK_DATA="7z"
-    [[ "$(_get_distro_name)" == "fedora" ]] && TASK_DATA="7za"
-
-    _check_dependencies "$TASK_DATA(apt:p7zip-full,pacman:p7zip,dnf:p7zip)"
+    _check_dependencies "7za(apt:p7zip-full,pacman:p7zip,dnf:p7zip)"
     _display_wait_box
     input_files=$(_get_files "type:all")
     output_dir=$(_get_output_dir "use_same_dir:true")
@@ -33,14 +30,13 @@ _main_task() {
     output_file=$(_get_output_file "$input_file" "$output_dir" "extension_option:new, extension:7z")
     if [[ -d "$input_file" ]]; then
         cd -- "$input_file" || return 1
-        std_output=$("$TASK_DATA" a -mx9 "$output_file" -- . 2>&1)
+        std_output=$(7za a -mx9 "$output_file" -- . 2>&1)
     else
         local input_file_relative=""
         # shellcheck disable=SC2001
         input_file_relative=$(sed "s|$PWD/|./|g" <<<"$input_file")
-        std_output=$("$TASK_DATA" a -mx9 "$output_file" -- "$input_file_relative" 2>&1)
+        std_output=$(7za a -mx9 "$output_file" -- "$input_file_relative" 2>&1)
     fi
-
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

@@ -37,7 +37,6 @@ _main_task() {
         input_file_relative=$(sed "s|$PWD/|./|g" <<<"$input_file")
         std_output=$(tar -czf "$output_file" -- "$input_file_relative" 2>&1)
     fi
-
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
