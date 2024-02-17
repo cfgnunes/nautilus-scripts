@@ -11,27 +11,34 @@ set -u
 
 FILENAME_SEPARATOR=$'\r'       # The field separator used in 'loop' commands to iterate over files.
 IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
+INPUT_FILES=$*                 # Input files list.
 PREFIX_ERROR_LOG_FILE="Errors" # Name of 'error' directory.
 PREFIX_OUTPUT_DIR="Output"     # Name of 'output' directory.
 TEMP_DIR=$(mktemp --directory) # Temp directories for use in scripts.
 TEMP_DIR_LOG=$(mktemp --directory --tmpdir="$TEMP_DIR")
 TEMP_DIR_TASK=$(mktemp --directory --tmpdir="$TEMP_DIR")
 TEMP_DIR_VALID_FILES=$(mktemp --directory --tmpdir="$TEMP_DIR")
-TEMP_FIFO="$TEMP_DIR/fifo.txt" # Temporary FIFO to use in the "wait_box".
+WAIT_BOX_FIFO="$TEMP_DIR/fifo.txt" # FIFO to use in the "wait_box".
+mkfifo "$WAIT_BOX_FIFO"
 
 readonly \
     FILENAME_SEPARATOR \
     IGNORE_FIND_PATH \
+    INPUT_FILES \
     PREFIX_ERROR_LOG_FILE \
     PREFIX_OUTPUT_DIR \
     TEMP_DIR \
     TEMP_DIR_LOG \
     TEMP_DIR_TASK \
     TEMP_DIR_VALID_FILES \
-    TEMP_FIFO
+    WAIT_BOX_FIFO
+
+# -----------------------------------------------------------------------------
+# STATE GLOBAL VARIABLES
+# -----------------------------------------------------------------------------
 
 IFS=$FILENAME_SEPARATOR
-INPUT_FILES=$*
+WAIT_BOX_PID=""
 
 # -----------------------------------------------------------------------------
 # FUNCTIONS
@@ -301,27 +308,37 @@ _display_wait_box_message() {
     if ! _is_gui_session; then
         echo "$message"
     elif _command_exists "zenity"; then
-        rm -f -- "$TEMP_FIFO"
-        mkfifo "$TEMP_FIFO"
         # shellcheck disable=SC2002
-        cat -- "$TEMP_FIFO" | (
+        cat "$WAIT_BOX_FIFO" | (
             zenity \
                 --title="$(_get_script_name)" \
                 --width=400 \
                 --progress \
                 --pulsate \
                 --auto-close \
-                --text="$message" ||
-                (echo >"$TEMP_FIFO" && _exit_script)
+                --text="$message" || _exit_script
         ) &
+        WAIT_BOX_PID=$(($! - 1)) # Get the PID of the 'cat' command.
     fi
 }
 
 _close_wait_box() {
-    # Close the zenity progress by FIFO.
-    if [[ -p "$TEMP_FIFO" ]]; then
-        echo >"$TEMP_FIFO"
+    _is_wait_box_open() {
+        # Check the PID of the 'cat' command.
+        ps -p "$WAIT_BOX_PID" -o comm | grep -q "cat"
+    }
+
+    if ! _is_wait_box_open; then
+        return
     fi
+
+    # Close the zenity progress by FIFO: Send a 'echo' for the 'cat' command.
+    echo >"$WAIT_BOX_FIFO"
+
+    # Wait the process terminate: it is not instantly.
+    while _is_wait_box_open; do
+        :
+    done
 }
 
 _exit_script() {
@@ -864,7 +881,6 @@ _run_task_parallel() {
         TEMP_DIR_TASK
     export -f \
         _check_result \
-        _close_wait_box \
         _display_error_box \
         _exit_script \
         _get_filename_extension \
