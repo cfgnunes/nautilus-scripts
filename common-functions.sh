@@ -149,7 +149,7 @@ _display_file_selection_box() {
 _display_error_box() {
     local message=$1
 
-    if _is_terminal_session; then
+    if ! _is_gui_session; then
         echo >&2 "Error: $message"
     elif _command_exists "notify-send"; then
         notify-send -i error "$message" &>/dev/null
@@ -165,7 +165,7 @@ _display_error_box() {
 _display_info_box() {
     local message=$1
 
-    if _is_terminal_session; then
+    if ! _is_gui_session; then
         echo "Info: $message"
     elif _command_exists "notify-send"; then
         notify-send "$message" &>/dev/null
@@ -183,7 +183,7 @@ _display_password_box() {
     local password=""
 
     # Ask the user for the 'password'.
-    if _is_terminal_session; then
+    if ! _is_gui_session; then
         read -r -p "$message: " password >&2
     elif _command_exists "zenity"; then
         password=$(zenity --title="$(_get_script_name)" \
@@ -206,7 +206,7 @@ _display_question_box() {
     local message=$1
     local response=""
 
-    if _is_terminal_session; then
+    if ! _is_gui_session; then
         read -r -p "$message [Y/n] " response
         [[ ${response,,} == *"n"* ]] && return 1
     elif _command_exists "zenity"; then
@@ -227,7 +227,7 @@ _display_text_box() {
         message="(Empty result)"
     fi
 
-    if _is_terminal_session; then
+    if ! _is_gui_session; then
         echo "$message"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --text-info \
@@ -280,7 +280,7 @@ _display_wait_box() {
 _display_wait_box_message() {
     local message=$1
 
-    if _is_terminal_session; then
+    if ! _is_gui_session; then
         echo "$message"
     elif _command_exists "zenity"; then
         rm -f -- "$TEMP_FIFO"
@@ -405,8 +405,8 @@ _install_package() {
     _display_info_box "The package '$package_name' has been successfully installed!"
 }
 
-_is_terminal_session() {
-    if env | grep -q "^TERM"; then
+_is_gui_session() {
+    if env | grep -q "^DISPLAY"; then
         return 0
     fi
     return 1
@@ -812,7 +812,7 @@ _move_temp_file_to_output() {
 _print_terminal() {
     local message=$1
 
-    if _is_terminal_session; then
+    if ! _is_gui_session; then
         echo "$message"
     fi
 }
