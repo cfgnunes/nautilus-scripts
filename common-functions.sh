@@ -648,6 +648,10 @@ _get_log_file() {
     local output_dir=$1
     local error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
 
+    if [[ -z "$(ls -A "$TEMP_DIR_LOG" 2>/dev/null)" ]]; then
+        return 1
+    fi
+
     if [[ -z "$output_dir" ]]; then
         error_log_file="$PWD/$PREFIX_ERROR_LOG_FILE.log"
     else
@@ -658,9 +662,7 @@ _get_log_file() {
     error_log_file=$(_get_filename_suffix "$error_log_file")
 
     # Compile log errors in a single file.
-    if ls -- "$TEMP_DIR_LOG/"* &>/dev/null; then
-        cat -- "$TEMP_DIR_LOG/"* >"$error_log_file"
-    fi
+    cat -- "$TEMP_DIR_LOG/"* 2>/dev/null >"$error_log_file"
 
     echo "$error_log_file"
 }
@@ -819,29 +821,26 @@ _move_temp_file_to_output() {
         return 1
     fi
 
-    # If the result file differs from the input file, then replace it.
-    if ! cmp --silent -- "$input_file" "$temp_file"; then
-
-        # If 'input_file' is the same as 'output_file', create a backup.
-        if [[ "$input_file" == "$output_file" ]]; then
-            backup_file="$input_file.bak"
-
-            # Create a backup of the original file.
-            std_output=$(_move_file "rename" "$input_file" "$backup_file" 2>&1)
-            _check_result "$?" "$std_output" "$input_file" "$backup_file" || return 1
-        fi
-
-        # Move the 'temp_file' to 'output_file'.
-        std_output=$(_move_file "rename" "$temp_file" "$output_file" 2>&1)
-        _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
-
-        # Preserve the same permissions of 'input_file'.
-        std_output=$(chmod --reference="$input_file" -- "$output_file" 2>&1)
-        _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+    # Skip files if the content of 'temp_file' is equal to the 'input_file'.
+    if cmp --silent -- "$temp_file" "$input_file"; then
+        return 1
     fi
 
-    # Remove the temporary file.
-    rm -rf -- "$temp_file"
+    # If 'input_file' euqual 'output_file', create a backup of the 'input_file'.
+    if [[ "$input_file" == "$output_file" ]]; then
+        std_output=$(_move_file "rename" "$input_file" "$input_file.bak" 2>&1)
+        _check_result "$?" "$std_output" "$input_file" "$input_file.bak" || return 1
+    fi
+
+    # Move the 'temp_file' to 'output_file'.
+    std_output=$(_move_file "rename" "$temp_file" "$output_file" 2>&1)
+    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+
+    # Preserve the same permissions of 'input_file'.
+    std_output=$(chmod --reference="$input_file" -- "$output_file" 2>&1)
+    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+
+    return 0
 }
 
 _print_terminal() {
@@ -1013,7 +1012,7 @@ _validate_file_mime_parallel() {
 
     # Compile valid files in a single list 'output_files'.
     local output_files=""
-    output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"*)
+    output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"* 2>/dev/null)
     rm -f -- "$TEMP_DIR_VALID_FILES/"*
 
     # Removes the last field separator.
@@ -1104,7 +1103,7 @@ _validate_file_preselect_parallel() {
 
     # Compile valid files in a single list 'output_files'.
     local output_files=""
-    output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"*)
+    output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"* 2>/dev/null)
     rm -f -- "$TEMP_DIR_VALID_FILES/"*
 
     # Removes the last field separator.
