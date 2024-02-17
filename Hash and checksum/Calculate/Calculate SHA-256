@@ -7,20 +7,36 @@ source "$ROOT_DIR/common-functions.sh"
 
 _main() {
     local input_files=""
-    local std_output=""
+    local output_dir=""
 
     # Execute initial checks.
     _check_dependencies ""
     _display_wait_box
     input_files=$(_get_files "type:file, recursive:true")
+    output_dir=$(_get_output_dir "use_same_dir:true")
 
-    # Run the main process.
-    # shellcheck disable=SC2086
-    std_output=$(sha256sum -- $input_files)
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove $PWD directory from filenames.
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+
+    std_output=$(cat -- "$TEMP_DIR_TASK/"* 2>/dev/null) # Compile all results into a single output.
 
     _display_text_box "$std_output"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+
+    # Run the main process.
+    output_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+    std_output=$(sha256sum -- "$input_file" 2>/dev/null)
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove $PWD directory from filenames.
+    _check_result "$?" "" "$input_file" "$output_file" || return 1
+
+    echo "$std_output" >"$output_file"
 }
 
 _main "$@"
