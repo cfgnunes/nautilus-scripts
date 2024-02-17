@@ -120,6 +120,19 @@ _command_exists() {
     return 1
 }
 
+_display_dir_selection_box() {
+    if _command_exists "zenity"; then
+        zenity --title "$(_get_script_name)" --file-selection --multiple --directory \
+            --separator="$FILENAME_SEPARATOR" 2>/dev/null
+    elif _command_exists "kdialog"; then
+        local input_files=""
+        input_files=$(kdialog --title "$(_get_script_name)" --getopenfilename --multiple 2>/dev/null)
+        input_files=${input_files% }
+        input_files=${input_files// \//$FILENAME_SEPARATOR/}
+        echo -n "$input_files"
+    fi
+}
+
 _display_file_selection_box() {
     if _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --file-selection --multiple \
@@ -540,13 +553,15 @@ _get_files() {
         fi
 
         # Try selecting the files by opening a file selection box.
-        input_files=$(_display_file_selection_box)
+        if [[ "$par_type" == "file" ]] || [[ "$par_type" == "all" ]]; then
+            input_files=$(_display_file_selection_box)
+        else
+            input_files=$(_display_dir_selection_box)
+        fi
         if [[ -z "$input_files" ]]; then
             _display_error_box "There are no input files!"
             _exit_script
         fi
-
-        # TODO: Add a GUI box to add directories.
     fi
 
     # Pre-select the input files. Also, expand it (if 'par_recursive' is true).
