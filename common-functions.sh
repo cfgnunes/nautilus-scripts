@@ -323,11 +323,6 @@ _display_wait_box_message() {
 }
 
 _close_wait_box() {
-    _is_wait_box_open() {
-        # Check the PID of the 'cat' command.
-        ps -p "$WAIT_BOX_PID" -o comm | grep -q "cat"
-    }
-
     if ! _is_wait_box_open; then
         return
     fi
@@ -339,6 +334,11 @@ _close_wait_box() {
     while _is_wait_box_open; do
         :
     done
+}
+
+_is_wait_box_open() {
+    # Check the PID of the 'cat' command.
+    ps -p "$WAIT_BOX_PID" -o comm | grep -q "cat"
 }
 
 _exit_script() {
