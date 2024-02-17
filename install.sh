@@ -39,7 +39,7 @@ _command_exists() {
 
 # shellcheck disable=SC2086
 _install_dependencies() {
-    local common_names="bzip2 foremost ghostscript gzip jpegoptim lame lhasa lzip lzop optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk unrar wget xclip xorriso zip zstd"
+    local common_names="bzip2 foremost ghostscript gzip jpegoptim lame lhasa lzip lzop optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk wget xclip xorriso zip zstd"
 
     echo " > Installing dependencies..."
 
