@@ -39,7 +39,7 @@ _command_exists() {
 
 # shellcheck disable=SC2086
 _install_dependencies() {
-    local common_names="bzip2 foremost ghostscript gzip jpegoptim lame lhasa lzip lzop optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk unrar wget xclip zip zstd"
+    local common_names="bzip2 foremost ghostscript gzip jpegoptim lame lhasa lzip lzop optipng pandoc perl-base qpdf rhash squashfs-tools tar testdisk unrar wget xclip xorriso zip zstd"
 
     echo " > Installing dependencies..."
 
@@ -47,17 +47,17 @@ _install_dependencies() {
         if _command_exists "apt-get"; then
             sudo apt-get update || true
             # Distro: Debian, Ubuntu, Linux Mint.
-            sudo apt-get -y install $common_names gpg imagemagick xz-utils p7zip-full poppler-utils ffmpeg jdupes findimagedupes genisoimage ocrmypdf xorriso mp3gain
+            sudo apt-get -y install $common_names gpg imagemagick xz-utils p7zip-full poppler-utils ffmpeg jdupes findimagedupes genisoimage ocrmypdf mp3gain
         elif _command_exists "pacman"; then
             # Distro: Arch Linux, Manjaro.
-            # Missing packages: jdupes, findimagedupes, genisoimage, ocrmypdf, xorriso, mp3gain.
+            # Missing packages: jdupes, findimagedupes, ocrmypdf, mp3gain.
             sudo pacman -Syy || true
             sudo pacman --noconfirm -S $common_names gnupg imagemagick xz p7zip poppler poppler-glib ffmpeg
         elif _command_exists "dnf"; then
             # Distro: Fedora, CentOS, Red Hat.
             # Missing packages: findimagedupes.
             sudo dnf check-update || true
-            sudo dnf -y install $common_names gnupg ImageMagick xz p7zip poppler poppler-glib ffmpeg-free jdupes genisoimage ocrmypdf xorriso mp3gain
+            sudo dnf -y install $common_names gnupg ImageMagick xz p7zip poppler poppler-glib ffmpeg-free jdupes genisoimage ocrmypdf mp3gain
         else
             echo "Error: could not find a package manager!"
             exit 1
