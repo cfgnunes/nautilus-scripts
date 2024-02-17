@@ -36,7 +36,7 @@ _main_task() {
 
     # Move the temporary file to the output.
     output_file=$(_get_output_file "$input_file" "$output_dir" "extension_option:copy")
-    _move_temp_file_to_output "$input_file" "$temp_file" "$output_file" || return 1
+    _move_temp_file_to_output "$input_file" "$temp_file" "$output_file"
 
     # Remove the temporary files on each iteration (if not removed before).
     rm -rf "$temp_file"
