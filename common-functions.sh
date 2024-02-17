@@ -345,7 +345,7 @@ _exit_script() {
     local child_pids=""
     local script_pid=$$
 
-    # Get the process ID (PID) of the current script.
+    # Get the process ID (PID) of all child processes.
     child_pids=$(pstree -p "$script_pid" | grep --only-matching --perl-regexp "\(+\K[^)]+")
 
     _print_terminal "Aborting the script..."
