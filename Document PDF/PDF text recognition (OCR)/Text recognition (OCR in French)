@@ -13,7 +13,11 @@ _main() {
     _check_dependencies "ocrmypdf"
     if ! [[ -d "/usr/share/doc/tesseract-ocr-fra" ]]; then
         if _display_question_box "French language is not installed for OCR. Would you like to install it?"; then
-            _install_package "tesseract-ocr-fra" "tesseract"
+            if _command_exists "apt-get"; then
+                _install_package "tesseract-ocr-fra" "tesseract"
+            elif _command_exists "dnf"; then
+                _install_package "tesseract-langpack-fra" "tesseract"
+            fi
         else
             _exit_script
         fi
