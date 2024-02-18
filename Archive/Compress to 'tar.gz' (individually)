@@ -25,25 +25,17 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
-    local temp_file=""
-
-    # Avoid conflict with same filename with different extension.
-    temp_file=$(_get_output_file "$input_file" "$output_dir" "extension_option:append, extension:tar.gz")
 
     # Run the main process.
     output_file=$(_get_output_file "$input_file" "$output_dir" "extension_option:new, extension:tar.gz")
     if [[ -d "$input_file" ]]; then
         cd -- "$input_file" || return 1
-        std_output=$(tar -czf "$temp_file" --transform="s|^\.||g" -- . 2>&1)
+        std_output=$(tar -czf "$output_file" --transform="s|^\.||g" -- . 2>&1)
     else
         local input_file_relative=""
         input_file_relative=$(_strip_filename_pwd "$input_file")
-        std_output=$(tar -czf "$temp_file" --transform="s|^\.||g" -- "$input_file_relative" 2>&1)
+        std_output=$(tar -czf "$output_file" --transform="s|^\.||g" -- "$input_file_relative" 2>&1)
     fi
-    _check_result "$?" "$std_output" "$input_file" "$temp_file" || return 1
-
-    # Move the temporary file to the output.
-    std_output=$(_move_file "rename" "$temp_file" "$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
