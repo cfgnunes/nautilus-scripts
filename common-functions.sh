@@ -507,9 +507,6 @@ _get_filemanager_list() {
     filemanager_list=$(_uri_decode "$filemanager_list")
     filemanager_list=${filemanager_list//file:\/\//}
 
-    # Removes last field separators.
-    filemanager_list=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$filemanager_list")
-
     set -u
     echo -n "$filemanager_list"
 }
@@ -1064,9 +1061,6 @@ _validate_file_mime_parallel() {
     output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"* 2>/dev/null)
     rm -f -- "$TEMP_DIR_VALID_FILES/"*
 
-    # Removes last field separators.
-    input_files=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$input_files")
-
     echo -n "$output_files"
 }
 
@@ -1155,9 +1149,6 @@ _validate_file_preselect_parallel() {
     output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"* 2>/dev/null)
     rm -f -- "$TEMP_DIR_VALID_FILES/"*
 
-    # Removes last field separators.
-    output_files=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$output_files")
-
     echo -n "$output_files"
 }
 
@@ -1186,10 +1177,9 @@ _validate_files_count() {
 
     # Count the number of valid files.
     local valid_files_count=0
-    valid_files_count=$(echo -n "$input_files" | tr -cd "$FILENAME_SEPARATOR" | wc -c)
-    if [[ -n "$input_files" ]]; then
-        valid_files_count=$((valid_files_count + 1))
-    fi
+    valid_files_count=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$input_files")
+    valid_files_count=$(echo -n "$valid_files_count" | tr -cd "$FILENAME_SEPARATOR" | wc -c)
+    valid_files_count=$((valid_files_count + 1))
 
     # Check if there is at least one valid file.
     if ((valid_files_count == 0)); then
