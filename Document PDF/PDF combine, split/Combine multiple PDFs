@@ -13,7 +13,7 @@ _main() {
     _check_dependencies "pdfunite(apt:poppler-utils,pacman:poppler-glib,dnf:poppler-utils)"
     _display_wait_box
     input_files=$(_get_files "type:file, mime:application/pdf, min_files:2")
-    output_dir=$(_get_output_dir "use_same_dir:false")
+    output_dir=$(_get_output_dir "use_same_dir:true")
 
     _main_task_multiple_files "$input_files" "$output_dir"
     _display_result_box "$output_dir"
@@ -26,7 +26,7 @@ _main_task_multiple_files() {
     local std_output=""
 
     # Run the main process.
-    output_file="$output_dir/combined-documents.pdf"
+    output_file=$(_get_filename_with_suffix "$output_dir/Combined documents.pdf")
     output_file=$(_get_output_file "$output_file" "$output_dir" "extension_option:copy")
     # shellcheck disable=SC2086
     std_output=$(pdfunite -- $input_files "$output_file" 2>&1)
