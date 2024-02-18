@@ -19,9 +19,7 @@ _main() {
 
     std_output=$(cat -- "$TEMP_DIR_TASK/"* 2>/dev/null) # Compile all results into a single output.
     std_output=$(grep -v "^$" <<<"$std_output")         # Remove empty lines.
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|$PWD/|./|g" <<<"$std_output")  # Remove $PWD directory from filenames.
-    std_output=$(sort --version-sort <<<"$std_output") # Sort the result.
+    std_output=$(sort --version-sort <<<"$std_output")  # Sort the result.
 
     _display_text_box "$std_output"
 }
@@ -35,7 +33,7 @@ _main_task() {
     if ! pdffonts "$input_file" | sed -n 3p | grep --quiet "."; then
         # Work on a temporary file.
         temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-        echo "\"$input_file\"" >"$temp_file"
+        echo "\"$(_strip_filename_pwd "$input_file")\"" >"$temp_file"
     fi
 }
 
