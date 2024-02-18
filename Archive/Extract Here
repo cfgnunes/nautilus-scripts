@@ -114,15 +114,15 @@ _main_task() {
         # For archives with "one item with the same name of the archive".
         # For example: "README.TXT.tar.gz" or "README.tar.gz".
         std_output=$(_move_file "rename" "$temp_dir_output/$output_item" "$output_dir/$output_item" 2>&1)
-        _check_result "$?" "$std_output" "$input_file" "" || return 1
+        _check_result "$?" "$std_output" "$input_file" ""
     elif [[ "squashfs-root" == "$output_item" ]]; then
         # For SquashFS.
         std_output=$(_move_file "rename" "$temp_dir_output/$output_item" "$output_dir/$filename" 2>&1)
-        _check_result "$?" "$std_output" "$input_file" "" || return 1
+        _check_result "$?" "$std_output" "$input_file" ""
     elif ((count_root_items > 0)); then
         # For archives with "one item with a different name of the archive" or "multiple items".
         std_output=$(_move_file "rename" "$temp_dir_output" "$output_dir/$filename" 2>&1)
-        _check_result "$?" "$std_output" "$input_file" "" || return 1
+        _check_result "$?" "$std_output" "$input_file" ""
     fi
 
     # Remove the temporary directory.
