@@ -533,6 +533,7 @@ _get_files() {
     local par_skip_extension=""
     local par_skip_mime=""
     local par_type="file"
+    local par_validate_conflict=""
 
     # Read values from the parameters.
     IFS=":, " read -r -a par_array <<<"$parameters"
@@ -549,6 +550,7 @@ _get_files() {
         "skip_extension") par_skip_extension=${par_array[i + 1]} ;;
         "skip_mime") par_skip_mime=${par_array[i + 1]} ;;
         "type") par_type=${par_array[i + 1]} ;;
+        "validate_conflict") par_validate_conflict=${par_array[i + 1]} ;;
         esac
     done
 
@@ -621,6 +623,11 @@ _get_files() {
     input_files=$(sort --version-sort <<<"$input_files") # Sort the result.
     input_files=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$input_files")
     input_files=$(sed -z "s|//|\n|g" <<<"$input_files")
+
+    # Validates filenames with same base name.
+    if [[ "$par_validate_conflict" == "true" ]]; then
+        _validate_conflict_filenames "$input_files"
+    fi
 
     # Removes the last field separator.
     input_files=${input_files%"$FILENAME_SEPARATOR"}
@@ -922,6 +929,23 @@ _uri_decode() {
 
     uri_encoded=${uri_encoded//%/\\x}
     echo -e "$uri_encoded"
+}
+
+_validate_conflict_filenames() {
+    local input_files=$1
+    local dup_filenames="$input_files"
+
+    dup_filenames=$(_strip_filename_pwd "$dup_filenames")
+    dup_filenames=$(sed -z "s|\n|//|g" <<<"$dup_filenames")
+    dup_filenames=$(sed -z "s|$FILENAME_SEPARATOR|\n|g" <<<"$dup_filenames")
+    dup_filenames=$(sed "s|//$||" <<<"$dup_filenames")
+    dup_filenames=$(_strip_filename_extension "$dup_filenames")
+    dup_filenames=$(uniq -d <<<"$dup_filenames")
+
+    if [[ -n "$dup_filenames" ]]; then
+        _display_error_box "There are files with the same base name!"
+        _exit_script
+    fi
 }
 
 _validate_file_extension() {
