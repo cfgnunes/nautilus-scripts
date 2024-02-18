@@ -19,7 +19,7 @@ _main() {
     _run_task_parallel "$input_files" "$output_dir"
 
     local compiled_output_file=""
-    compiled_output_file=$(_get_filename_suffix "$output_dir/sha256sum.txt")
+    compiled_output_file=$(_get_filename_with_suffix "$output_dir/sha256sum.txt")
     cat -- "$TEMP_DIR_TASK/"* 2>/dev/null >"$compiled_output_file" # Compile all results into a single output.
 
     _display_result_box "$output_dir"

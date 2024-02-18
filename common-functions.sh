@@ -461,7 +461,7 @@ _get_filename_without_extension() {
     sed -r "s|(\.tar)?\.[a-z0-9_~-]*$||i" <<<"$filename"
 }
 
-_get_filename_suffix() {
+_get_filename_with_suffix() {
     local filename=$1
     local filename_result=$filename
     local filename_base=""
@@ -659,7 +659,7 @@ _get_log_file() {
     fi
 
     # If the file already exists, add a suffix.
-    error_log_file=$(_get_filename_suffix "$error_log_file")
+    error_log_file=$(_get_filename_with_suffix "$error_log_file")
 
     # Compile log errors in a single file.
     cat -- "$TEMP_DIR_LOG/"* 2>/dev/null >"$error_log_file"
@@ -702,7 +702,7 @@ _get_output_dir() {
     output_dir="$base_dir/$PREFIX_OUTPUT_DIR"
 
     # If the file already exists, add a suffix.
-    output_dir=$(_get_filename_suffix "$output_dir")
+    output_dir=$(_get_filename_with_suffix "$output_dir")
 
     mkdir --parents "$output_dir"
     echo "$output_dir"
@@ -754,7 +754,7 @@ _get_output_file() {
     esac
 
     # If the file already exists, add a suffix.
-    output_file=$(_get_filename_suffix "$output_file")
+    output_file=$(_get_filename_with_suffix "$output_file")
 
     echo "$output_file"
 }
@@ -792,7 +792,7 @@ _move_file() {
     "overwrite") : ;;
     "rename")
         # Rename the file (add a suffix).
-        file_dst=$(_get_filename_suffix "$file_dst")
+        file_dst=$(_get_filename_with_suffix "$file_dst")
         ;;
     "skip")
         # Skip, do not move the file.
@@ -882,7 +882,7 @@ _run_task_parallel() {
         _display_error_box \
         _exit_script \
         _get_filename_extension \
-        _get_filename_suffix \
+        _get_filename_with_suffix \
         _get_filename_without_extension \
         _get_max_procs \
         _get_output_file \
