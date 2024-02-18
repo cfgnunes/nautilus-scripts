@@ -19,7 +19,6 @@ TEMP_DIR_LOG=$(mktemp --directory --tmpdir="$TEMP_DIR")
 TEMP_DIR_TASK=$(mktemp --directory --tmpdir="$TEMP_DIR")
 TEMP_DIR_VALID_FILES=$(mktemp --directory --tmpdir="$TEMP_DIR")
 WAIT_BOX_FIFO="$TEMP_DIR/fifo.txt" # FIFO to use in the "wait_box".
-mkfifo "$WAIT_BOX_FIFO"
 
 readonly \
     FILENAME_SEPARATOR \
@@ -308,6 +307,10 @@ _display_wait_box_message() {
     if ! _is_gui_session; then
         echo "$message"
     elif _command_exists "zenity"; then
+        if ! [[ -p "$WAIT_BOX_FIFO" ]]; then
+            mkfifo "$WAIT_BOX_FIFO"
+        fi
+
         # shellcheck disable=SC2002
         cat "$WAIT_BOX_FIFO" | (
             zenity \
@@ -337,6 +340,10 @@ _close_wait_box() {
 }
 
 _is_wait_box_open() {
+    if ! _is_gui_session; then
+        return
+    fi
+
     # Check the PID of the 'cat' command.
     ps -p "$WAIT_BOX_PID" -o comm | grep -q "cat"
 }
