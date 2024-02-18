@@ -658,7 +658,11 @@ _get_log_file() {
     error_log_file=$(_get_filename_next_suffix "$error_log_file")
 
     # Compile log errors in a single file.
-    cat -- "$TEMP_DIR_LOG/"* 2>/dev/null >"$error_log_file"
+    {
+        echo "Script: $(_get_script_name)"
+        echo
+        cat -- "$TEMP_DIR_LOG/"* 2>/dev/null
+    } >"$error_log_file"
 
     echo "$error_log_file"
 }
