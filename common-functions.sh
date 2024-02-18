@@ -11,7 +11,6 @@ set -u
 
 FILENAME_SEPARATOR=$'\r'       # The field separator used in 'loop' commands to iterate over files.
 IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
-INPUT_FILES=$*                 # Input files list.
 PREFIX_ERROR_LOG_FILE="Errors" # Name of 'error' directory.
 PREFIX_OUTPUT_DIR="Output"     # Name of 'output' directory.
 TEMP_DIR=$(mktemp --directory) # Temp directories for use in scripts.
@@ -37,6 +36,7 @@ readonly \
 # -----------------------------------------------------------------------------
 
 IFS=$FILENAME_SEPARATOR
+INPUT_FILES=$*
 WAIT_BOX_PID=""
 
 # -----------------------------------------------------------------------------
