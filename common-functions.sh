@@ -952,7 +952,7 @@ _validate_conflict_filenames() {
     dup_filenames=$(uniq -d <<<"$dup_filenames")
 
     if [[ -n "$dup_filenames" ]]; then
-        _display_error_box "There are files with the same base name in the selection!"
+        _display_error_box "There are selected files with the same base name!"
         _exit_script
     fi
 }
