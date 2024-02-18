@@ -8,7 +8,6 @@ source "$ROOT_DIR/common-functions.sh"
 _main() {
     local input_files=""
     local output_dir=""
-    local compiled_output_file=""
 
     # Execute initial checks.
     _check_dependencies ""
@@ -19,6 +18,7 @@ _main() {
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
 
+    local compiled_output_file=""
     compiled_output_file=$(_get_filename_suffix "$output_dir/sha512sum.txt")
     cat -- "$TEMP_DIR_TASK/"* 2>/dev/null >"$compiled_output_file" # Compile all results into a single output.
 
