@@ -26,7 +26,7 @@ _main_task_multiple_files() {
     local std_output=""
 
     # Run the main process.
-    output_file="$output_dir/animated-image.gif"
+    output_file=$(_get_filename_with_suffix "$output_dir/Animated image.gif")
     output_file=$(_get_output_file "$output_file" "$output_dir" "extension_option:copy")
     # shellcheck disable=SC2086
     std_output=$(convert -delay 100 -loop 0 -- $input_files "$output_file" 2>&1)
