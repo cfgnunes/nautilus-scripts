@@ -22,7 +22,6 @@ WAIT_BOX_FIFO="$TEMP_DIR/fifo.txt" # FIFO to use in the "wait_box".
 readonly \
     FILENAME_SEPARATOR \
     IGNORE_FIND_PATH \
-    INPUT_FILES \
     PREFIX_ERROR_LOG_FILE \
     PREFIX_OUTPUT_DIR \
     TEMP_DIR \
@@ -508,6 +507,9 @@ _get_filemanager_list() {
     filemanager_list=$(_uri_decode "$filemanager_list")
     filemanager_list=${filemanager_list//file:\/\//}
 
+    # Removes last field separators.
+    filemanager_list=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$filemanager_list")
+
     set -u
     echo -n "$filemanager_list"
 }
@@ -641,8 +643,8 @@ _get_files() {
         _validate_conflict_filenames "$input_files"
     fi
 
-    # Removes the last field separator.
-    input_files=${input_files%"$FILENAME_SEPARATOR"}
+    # Removes last field separators.
+    input_files=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$input_files")
 
     echo -n "$input_files"
 }
@@ -1062,8 +1064,8 @@ _validate_file_mime_parallel() {
     output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"* 2>/dev/null)
     rm -f -- "$TEMP_DIR_VALID_FILES/"*
 
-    # Removes the last field separator.
-    output_files=${output_files%"$FILENAME_SEPARATOR"}
+    # Removes last field separators.
+    input_files=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$input_files")
 
     echo -n "$output_files"
 }
@@ -1153,8 +1155,8 @@ _validate_file_preselect_parallel() {
     output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"* 2>/dev/null)
     rm -f -- "$TEMP_DIR_VALID_FILES/"*
 
-    # Removes the last field separator.
-    output_files=${output_files%"$FILENAME_SEPARATOR"}
+    # Removes last field separators.
+    output_files=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$output_files")
 
     echo -n "$output_files"
 }
