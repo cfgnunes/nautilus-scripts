@@ -71,15 +71,15 @@ _install_dependencies() {
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
             sudo apt-get update || true
-            # Distro: Debian, Ubuntu, Linux Mint.
+            # Distro: Ubuntu, Mint, Debian.
             sudo apt-get -y install $common_names gpg imagemagick xz-utils p7zip-full poppler-utils ffmpeg jdupes findimagedupes genisoimage ocrmypdf mp3gain
         elif _command_exists "pacman"; then
-            # Distro: Arch Linux, Manjaro.
+            # Distro: Manjaro, Arch Linux.
             # Missing packages: jdupes, findimagedupes, ocrmypdf, mp3gain.
             sudo pacman -Syy || true
             sudo pacman --noconfirm -S $common_names gnupg imagemagick xz p7zip poppler poppler-glib ffmpeg
         elif _command_exists "dnf"; then
-            # Distro: Fedora, CentOS, Red Hat.
+            # Distro: Fedora, Red Hat.
             # Missing packages: findimagedupes.
             sudo dnf check-update || true
             sudo dnf -y install $common_names gnupg2 ImageMagick xz p7zip poppler-utils ffmpeg-free jdupes genisoimage ocrmypdf mp3gain
