@@ -61,8 +61,8 @@ _main_task() {
     fi
 
     # Extract files into a temporary directory.
-    filename=$(basename -- "$input_file")
-    filename=$(_get_filename_without_extension "$filename")
+    filename=$(basename -- "$input_file")             # Remove the path.
+    filename=$(_strip_filename_extension "$filename") # Remove the extension.
     temp_dir_output=$(mktemp --directory --tmpdir="$output_dir" "tmp.$filename.XXXXXXXXXX")
 
     mkdir --parents "$temp_dir_output"
@@ -110,7 +110,7 @@ _main_task() {
 
     # Move the items to the correct directory.
     if [[ "$filename" == "$output_item" ]] ||
-        [[ "$filename" == "$(_get_filename_without_extension "$output_item")" ]]; then
+        [[ "$filename" == "$(_strip_filename_extension "$output_item")" ]]; then
         # For archives with "one item with the same name of the archive".
         # For example: "README.TXT.tar.gz" or "README.tar.gz".
         std_output=$(_move_file "rename" "$temp_dir_output/$output_item" "$output_dir/$output_item" 2>&1)

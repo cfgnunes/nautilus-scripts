@@ -287,7 +287,7 @@ _display_result_box() {
         # Check if the output directory still exists.
         if [[ -d "$output_dir" ]]; then
             local output_dir_simple=""
-            output_dir_simple=$(sed "s|$PWD/|./|g" <<<"$output_dir")
+            output_dir_simple=$(_strip_filename_pwd "$output_dir")
             output_dir_simple=$(sed "s|$HOME/|~/|g" <<<"$output_dir_simple")
             _display_info_box "Task finished! The output files are in '$output_dir_simple'."
         else
@@ -453,21 +453,17 @@ _get_distro_name() {
 
 _get_filename_extension() {
     local filename=$1
+
     grep --ignore-case --only-matching --perl-regexp "(\.tar)?\.[a-z0-9_~-]*$" <<<"$filename"
 }
 
-_get_filename_without_extension() {
-    local filename=$1
-    sed -r "s|(\.tar)?\.[a-z0-9_~-]*$||i" <<<"$filename"
-}
-
-_get_filename_with_suffix() {
+_get_filename_next_suffix() {
     local filename=$1
     local filename_result=$filename
     local filename_base=""
     local filename_extension=""
 
-    filename_base=$(_get_filename_without_extension "$filename")
+    filename_base=$(_strip_filename_extension "$filename")
     filename_extension=$(_get_filename_extension "$filename")
 
     # Avoid overwriting a file. If there is a file with the same name,
@@ -659,7 +655,7 @@ _get_log_file() {
     fi
 
     # If the file already exists, add a suffix.
-    error_log_file=$(_get_filename_with_suffix "$error_log_file")
+    error_log_file=$(_get_filename_next_suffix "$error_log_file")
 
     # Compile log errors in a single file.
     cat -- "$TEMP_DIR_LOG/"* 2>/dev/null >"$error_log_file"
@@ -702,7 +698,7 @@ _get_output_dir() {
     output_dir="$base_dir/$PREFIX_OUTPUT_DIR"
 
     # If the file already exists, add a suffix.
-    output_dir=$(_get_filename_with_suffix "$output_dir")
+    output_dir=$(_get_filename_next_suffix "$output_dir")
 
     mkdir --parents "$output_dir"
     echo "$output_dir"
@@ -744,17 +740,17 @@ _get_output_file() {
         ;;
     "new")
         [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
-        output_file+="$(_get_filename_without_extension "$filename")"
+        output_file+="$(_strip_filename_extension "$filename")"
         output_file+=".$par_extension"
         ;;
     "strip")
         [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
-        output_file+="$(_get_filename_without_extension "$filename")"
+        output_file+="$(_strip_filename_extension "$filename")"
         ;;
     esac
 
     # If the file already exists, add a suffix.
-    output_file=$(_get_filename_with_suffix "$output_file")
+    output_file=$(_get_filename_next_suffix "$output_file")
 
     echo "$output_file"
 }
@@ -792,7 +788,7 @@ _move_file() {
     "overwrite") : ;;
     "rename")
         # Rename the file (add a suffix).
-        file_dst=$(_get_filename_with_suffix "$file_dst")
+        file_dst=$(_get_filename_next_suffix "$file_dst")
         ;;
     "skip")
         # Skip, do not move the file.
@@ -882,14 +878,15 @@ _run_task_parallel() {
         _display_error_box \
         _exit_script \
         _get_filename_extension \
-        _get_filename_with_suffix \
-        _get_filename_without_extension \
+        _get_filename_next_suffix \
         _get_max_procs \
         _get_output_file \
         _main_task \
         _move_file \
         _move_temp_file_to_output \
         _read_array_values \
+        _strip_filename_extension \
+        _strip_filename_pwd \
         _write_log
 
     # Allows the symbol "'" in filenames (inside 'xargs').
@@ -901,6 +898,18 @@ _run_task_parallel() {
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
         bash -c "_main_task '{}' '$output_dir'"
+}
+
+_strip_filename_extension() {
+    local filename=$1
+
+    sed -r "s|(\.tar)?\.[a-z0-9_~-]*$||i" <<<"$filename"
+}
+
+_strip_filename_pwd() {
+    local filename=$1
+
+    sed "s|$PWD/|./|g" <<<"$filename"
 }
 
 _uri_decode() {
