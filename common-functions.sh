@@ -838,7 +838,6 @@ _move_temp_file_to_output() {
 
     # Preserve the same permissions of 'input_file'.
     std_output=$(chmod --reference="$input_file" -- "$output_file" 2>&1)
-    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     return 0
 }

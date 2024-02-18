@@ -34,7 +34,6 @@ _main_task() {
     std_output=$(sha1sum -- "$input_file" 2>/dev/null)
     # shellcheck disable=SC2001
     std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove $PWD directory from filenames.
-    _check_result "$?" "" "$input_file" "$output_file" || return 1
 
     echo "$std_output" >"$output_file"
 }

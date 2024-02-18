@@ -34,7 +34,6 @@ _main_task() {
     std_output=$(rhash --printf="%p:\nCRC32: %c\nMD5: %m\nSHA-1: %h\nSHA-224: %{sha-224}\nSHA-256: %{sha-256}\nSHA-384: %{sha-384}\nSHA-512: %{sha-512}\n " -- "$input_file" 2>/dev/null)
     # shellcheck disable=SC2001
     std_output=$(sed "s|$PWD/|./|g" <<<"$std_output") # Remove $PWD directory from filenames.
-    _check_result "$?" "" "$input_file" "$output_file" || return 1
 
     echo "$std_output" >"$output_file"
 }

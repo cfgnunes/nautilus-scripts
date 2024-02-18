@@ -26,14 +26,10 @@ _main_task() {
     local std_output=""
     local temp_file1=""
     local temp_file2=""
-    local temp_file3=""
-    local temp_file4=""
 
     # Work on a temporary file.
     temp_file1=$(mktemp --tmpdir="$TEMP_DIR_TASK")
     temp_file2=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-    temp_file3=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-    temp_file4=$(mktemp --tmpdir="$TEMP_DIR_TASK")
 
     # Run the process (part 1) 'convert encoding to utf-8'
     std_output=$(iconv -f "$(file --brief --mime-encoding -- "$input_file")" "$input_file" -t utf-8 -o "$temp_file1")
@@ -44,23 +40,19 @@ _main_task() {
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 
     # Run the process (part 3) 'remove trailing spaces'
-    std_output=$(sed "s|[ \t]*\(\r*\)$|\1|" "$temp_file2" >"$temp_file3")
-    _check_result "$?" "$std_output" "$input_file" "" || return 1
+    sed -i "s|[ \t]*\(\r*\)$|\1|" "$temp_file2"
 
     # Run the process (part 4) 'remove the empty line in EOF'
-    echo "" >>"$temp_file3"
-    std_output=$(sed ':Loop;N;$!bLoop;s|\n*$||g' "$temp_file3" >"$temp_file4")
-    _check_result "$?" "$std_output" "$input_file" "" || return 1
+    echo "" >>"$temp_file2"
+    sed -i ':Loop;N;$!bLoop;s|\n*$||g' "$temp_file2"
 
     # Move the temporary file to the output.
     output_file=$input_file
-    _move_temp_file_to_output "$input_file" "$temp_file4" "$output_file"
+    _move_temp_file_to_output "$input_file" "$temp_file2" "$output_file"
 
     # Remove the temporary files on each iteration (if not removed before).
     rm -rf "$temp_file1"
     rm -rf "$temp_file2"
-    rm -rf "$temp_file3"
-    rm -rf "$temp_file4"
 }
 
 _main "$@"
