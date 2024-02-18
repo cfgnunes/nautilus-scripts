@@ -1172,7 +1172,7 @@ _validate_files_count() {
     elif [[ "$par_select_mime" == *"text"* ]]; then
         valid_file_term="plain text files"
     elif [[ "$par_select_mime" == *"pdf"* ]]; then
-        valid_file_term="documents"
+        valid_file_term="PDF files"
     fi
 
     # Count the number of valid files.
