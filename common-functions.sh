@@ -341,7 +341,7 @@ _close_wait_box() {
 
 _is_wait_box_open() {
     if ! _is_gui_session; then
-        return
+        return 1
     fi
 
     # Check the PID of the 'cat' command.
