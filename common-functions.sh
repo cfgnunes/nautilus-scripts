@@ -935,15 +935,13 @@ _validate_conflict_filenames() {
     local input_files=$1
     local dup_filenames="$input_files"
 
-    dup_filenames=$(_strip_filename_pwd "$dup_filenames")
     dup_filenames=$(sed -z "s|\n|//|g" <<<"$dup_filenames")
     dup_filenames=$(sed -z "s|$FILENAME_SEPARATOR|\n|g" <<<"$dup_filenames")
-    dup_filenames=$(sed "s|//$||" <<<"$dup_filenames")
     dup_filenames=$(_strip_filename_extension "$dup_filenames")
     dup_filenames=$(uniq -d <<<"$dup_filenames")
 
     if [[ -n "$dup_filenames" ]]; then
-        _display_error_box "There are files with the same base name!"
+        _display_error_box "There are files with the same base name in the selection!"
         _exit_script
     fi
 }
