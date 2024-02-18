@@ -576,12 +576,14 @@ _get_files() {
 
     # Check if there are input files.
     if [[ -z "$input_files" ]]; then
-        # Return the current working directory if there are no files selected.
-        if [[ "$par_type" == "directory" ]] && [[ "$par_min_files" == "0" ]]; then
-            echo -n "$PWD"
-            return 0
-        fi
 
+        # Return the current working directory if there are no files selected.
+        if [[ "$par_min_files" == "0" ]]; then
+            if [[ "$par_type" == "directory" ]] || [[ "$par_type" == "all" ]]; then
+                echo -n "$PWD"
+                return 0
+            fi
+        fi
 
         # Try selecting the files by opening a file selection box.
         if [[ "$par_type" == "file" ]] || [[ "$par_type" == "all" ]]; then
@@ -612,7 +614,12 @@ _get_files() {
         "$par_skip_mime")
 
     # Validates the number of valid files.
-    _validate_files_count "$input_files" "$par_min_files" "$par_max_files"
+    _validate_files_count \
+        "$input_files" \
+        "$par_type" \
+        "$par_select_mime" \
+        "$par_min_files" \
+        "$par_max_files"
 
     # Sort the list by filename.
     input_files=$(sed -z "s|\n|//|g" <<<"$input_files")
@@ -1147,8 +1154,26 @@ _validate_file_preselect_parallel() {
 
 _validate_files_count() {
     local input_files=$1
-    local par_min_files=$2
-    local par_max_files=$3
+    local par_type=$2
+    local par_select_mime=$3
+    local par_min_files=$4
+    local par_max_files=$5
+
+    # Define a term for a valid file.
+    local valid_file_term="valid files"
+    if [[ "$par_type" == "directory" ]]; then
+        valid_file_term="directories"
+    elif [[ "$par_select_mime" == *"audio"* ]]; then
+        valid_file_term="audio files"
+    elif [[ "$par_select_mime" == *"image"* ]]; then
+        valid_file_term="image files"
+    elif [[ "$par_select_mime" == *"video"* ]]; then
+        valid_file_term="video files"
+    elif [[ "$par_select_mime" == *"text"* ]]; then
+        valid_file_term="plain text files"
+    elif [[ "$par_select_mime" == *"pdf"* ]]; then
+        valid_file_term="documents"
+    fi
 
     # Count the number of valid files.
     local valid_files_count=0
@@ -1159,17 +1184,17 @@ _validate_files_count() {
 
     # Check if there is at least one valid file.
     if ((valid_files_count == 0)); then
-        _display_error_box "There are no valid files in the selection!"
+        _display_error_box "You must select $valid_file_term!"
         _exit_script
     fi
 
     if [[ -n "$par_min_files" ]] && ((valid_files_count < par_min_files)); then
-        _display_error_box "You must select at least $par_min_files valid files!"
+        _display_error_box "You must select at least $par_min_files $valid_file_term!"
         _exit_script
     fi
 
     if [[ -n "$par_max_files" ]] && ((valid_files_count > par_max_files)); then
-        _display_error_box "You must select up to $par_max_files valid files!"
+        _display_error_box "You must select up to $par_max_files $valid_file_term!"
         _exit_script
     fi
 }
