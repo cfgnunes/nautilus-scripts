@@ -21,8 +21,8 @@ _main() {
         _display_error_box "Signing failed: no secret keys installed!"
         _exit_script
     fi
-    TASK_DATA=$(echo "$users" | tr ':' '\n' | zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=200 --width=600 2>/dev/null) || _exit_script
-    if [[ -z "$TASK_DATA" ]]; then
+    TEMP_DATA_TASK=$(echo "$users" | tr ':' '\n' | zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=200 --width=600 2>/dev/null) || _exit_script
+    if [[ -z "$TEMP_DATA_TASK" ]]; then
         _display_error_box "Signing failed: you must select a user!"
         _exit_script
     fi
@@ -40,7 +40,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_file "$input_file" "$output_dir" "extension_option:append, extension:asc")
-    std_output=$(gpg --batch --yes --clearsign --local-user "$TASK_DATA" --output "$output_file" -- "$input_file" 2>&1)
+    std_output=$(gpg --batch --yes --clearsign --local-user "$TEMP_DATA_TASK" --output "$output_file" -- "$input_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
