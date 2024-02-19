@@ -17,7 +17,7 @@ _main() {
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" ""
 
-    std_output=$(cat -- "$TEMP_DIR_TASK/"* 2>/dev/null) # Compile all results into a single output.
+    std_output=$(_temp_result_read_all)
     std_output=$(_text_remove_pwd "$std_output")
 
     _display_text_box "$std_output"

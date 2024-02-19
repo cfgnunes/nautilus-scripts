@@ -912,6 +912,7 @@ _run_task_parallel() {
         _move_temp_file_to_output \
         _read_array_values \
         _strip_filename_extension \
+        _temp_result_write \
         _text_remove_pwd \
         _write_log
 
@@ -930,6 +931,19 @@ _strip_filename_extension() {
     local filename=$1
 
     sed -r "s|(\.tar)?\.[a-z0-9_~-]*$||i" <<<"$filename"
+}
+
+_temp_result_read_all() {
+    # Compile all temp results into a single output.
+    cat -- "$TEMP_DIR_TASK/"* 2>/dev/null
+}
+
+_temp_result_write() {
+    local input_text=$1
+    local temp_file=""
+
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+    echo "$input_text" >"$temp_file"
 }
 
 _text_sort() {
