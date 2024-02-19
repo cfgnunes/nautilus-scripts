@@ -10,7 +10,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "code"
-    input_files=$(_get_files "type:all, min_files:0")
+    input_files=$(_get_files "type:all, get_pwd_if_no_selection:true")
 
     # Run the main process.
     # shellcheck disable=SC2086
