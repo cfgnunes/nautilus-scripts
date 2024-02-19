@@ -16,6 +16,7 @@ _main() {
     checksum_file=$(cat "$input_files")
     checksum_file=$(sed -z "s|'|'\\\''|g" <<<"$checksum_file")
 
+    export -f _temp_result_write
     export -f _verify_checksum
     export TEMP_DIR_TASK
     echo -n "$checksum_file" | xargs --max-procs="$(_get_max_procs)" --delimiter=$'\n' --replace="{}" bash -c "_verify_checksum '{}'"
@@ -36,10 +37,6 @@ _verify_checksum() {
     local saved_file=""
     local current_output=""
     local current_checksum=""
-    local temp_file=""
-
-    # Temporary file to store the output of the current checksum.
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
 
     saved_checksum=$(echo "$line" | cut -d " " -f1)
     saved_file=$(echo "$line" | cut -d " " -f3-)
@@ -49,7 +46,7 @@ _verify_checksum() {
 
     # If the file does not exist, report and skip the check.
     if [[ ! -e "$saved_file_decoded" ]]; then
-        echo "[ERROR] No such file: $saved_file" >>"$temp_file"
+        _temp_result_write "[ERROR] No such file: $saved_file"
         return 1
     fi
 
@@ -58,7 +55,7 @@ _verify_checksum() {
 
     # Compare the checksum.
     if [[ "$saved_checksum" != "$current_checksum" ]]; then
-        echo "[ERROR] Mismatch checksum for the file: $saved_file. Saved: $saved_checksum. Current: $current_checksum." >>"$temp_file"
+        _temp_result_write "[ERROR] Mismatch checksum for the file: $saved_file. Saved: $saved_checksum. Current: $current_checksum."
         return 1
     fi
 
