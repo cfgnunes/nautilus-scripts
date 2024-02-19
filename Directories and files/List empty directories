@@ -19,7 +19,7 @@ _main() {
     std_output=$(find $input_files -type d -empty ! -path "$IGNORE_FIND_PATH" 2>/dev/null)
     std_output=$(_strip_filename_pwd "$std_output")
     # shellcheck disable=SC2001
-    std_output=$(sed "s|\(.*\)|\"\1\"|" <<<"$std_output")
+    std_output=$(sed "s|\(..*\)|\"\1\"|" <<<"$std_output")
 
     _display_text_box "$std_output"
 }
