@@ -339,7 +339,7 @@ _close_wait_box() {
 }
 
 _is_wait_box_open() {
-    if ! _is_gui_session; then
+    if [[ -z "$WAIT_BOX_PID" ]]; then
         return 1
     fi
 
