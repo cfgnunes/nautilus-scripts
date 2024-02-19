@@ -146,11 +146,12 @@ _command_exists() {
 
 _display_dir_selection_box() {
     if _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --file-selection --multiple --directory \
-            --separator="$FILENAME_SEPARATOR" 2>/dev/null
+        zenity --title "$(_get_script_name)" --file-selection --multiple \
+            --directory --separator="$FILENAME_SEPARATOR" 2>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
         local input_files=""
-        input_files=$(kdialog --title "$(_get_script_name)" --getexistingdirectory 2>/dev/null)
+        input_files=$(kdialog --title "$(_get_script_name)" \
+            --getexistingdirectory 2>/dev/null) || _exit_script
         input_files=${input_files% }
         input_files=${input_files// \//$FILENAME_SEPARATOR/}
         echo -n "$input_files"
@@ -160,10 +161,11 @@ _display_dir_selection_box() {
 _display_file_selection_box() {
     if _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --file-selection --multiple \
-            --separator="$FILENAME_SEPARATOR" 2>/dev/null
+            --separator="$FILENAME_SEPARATOR" 2>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
         local input_files=""
-        input_files=$(kdialog --title "$(_get_script_name)" --getopenfilename --multiple 2>/dev/null)
+        input_files=$(kdialog --title "$(_get_script_name)" \
+            --getopenfilename --multiple 2>/dev/null) || _exit_script
         input_files=${input_files% }
         input_files=${input_files// \//$FILENAME_SEPARATOR/}
         echo -n "$input_files"
@@ -255,11 +257,11 @@ _display_text_box() {
         echo "$message"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --text-info \
-            --no-wrap --height=400 --width=750 <<<"$message" &>/dev/null
+            --no-wrap --height=400 --width=750 <<<"$message" &>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
-        kdialog --title "$(_get_script_name)" --textinputbox "" "$message" &>/dev/null
+        kdialog --title "$(_get_script_name)" --textinputbox "" "$message" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
-        xmessage -title "$(_get_script_name)" "$message" &>/dev/null
+        xmessage -title "$(_get_script_name)" "$message" &>/dev/null || _exit_script
     fi
 }
 
