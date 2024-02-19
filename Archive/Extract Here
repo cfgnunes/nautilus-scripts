@@ -38,6 +38,7 @@ _main() {
         *.tar) _check_dependencies "tar" ;;
         *.xz) _check_dependencies "unxz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
         *.Z) _check_dependencies "uncompress(gzip)" ;;
+        *.zip) _check_dependencies "unzip" ;;
         *.zst) _check_dependencies "zstd" ;;
         *) _check_dependencies "7za(apt:p7zip-full,pacman:p7zip,dnf:p7zip)" ;;
         esac
@@ -90,6 +91,13 @@ _main_task() {
     *.tar) std_output=$(tar --extract --file="$input_file" 2>&1) ;;
     *.xz) std_output=$(unxz -- "$input_file" 2>&1) ;;
     *.Z) std_output=$(uncompress -- "$input_file" 2>&1) ;;
+    *.zip)
+        if _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        else
+            std_output=$(unzip -- "$input_file" 2>&1)
+        fi
+        ;;
     *.zst) std_output=$(zstd --decompress -- "$input_file" 2>&1) ;;
     *) std_output=$(7za x -aoa -- "$input_file" 2>&1) ;;
     esac
