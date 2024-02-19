@@ -104,7 +104,7 @@ _install_scripts() {
         mv "$INSTALL_DIR" "$tmp_install_dir" || true
     else
         echo " > Removing previous scripts..."
-        rm -rf "$INSTALL_DIR"
+        rm -rf -- "$INSTALL_DIR"
     fi
 
     # Install the scripts.
@@ -116,7 +116,7 @@ _install_scripts() {
     if [[ "$menu_options" == *"accels"* ]]; then
         if [[ -n "$ACCELS_DIR" ]]; then
             echo " > Installing the file 'scripts-accels'..."
-            rm -f "$ACCELS_DIR/scripts-accels"
+            rm -f -- "$ACCELS_DIR/scripts-accels"
             mkdir --parents "$ACCELS_DIR"
             cp "scripts-accels" "$ACCELS_DIR/scripts-accels"
         fi
