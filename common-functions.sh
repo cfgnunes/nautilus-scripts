@@ -119,21 +119,21 @@ _check_result() {
 
     # Check the 'exit_code' and log the error.
     if ((exit_code != 0)); then
-        _write_log "Error: Non-zero exit code." "$input_file" "$std_output"
+        _log_write "Error: Non-zero exit code." "$input_file" "$std_output"
         return 1
     fi
 
     # Check if there is the word "Error" in stdout.
     if ! grep -q --ignore-case --perl-regexp "[^\w]error" <<<"$input_file"; then
         if grep -q --ignore-case --perl-regexp "[^\w]error" <<<"$std_output"; then
-            _write_log "Error: Word 'error' found in the standard output." "$input_file" "$std_output"
+            _log_write "Error: Word 'error' found in the standard output." "$input_file" "$std_output"
             return 1
         fi
     fi
 
     # Check if the output file exists.
     if [[ -n "$output_file" ]] && ! [[ -e "$output_file" ]]; then
-        _write_log "Error: The output file does not exist." "$input_file" "$std_output"
+        _log_write "Error: The output file does not exist." "$input_file" "$std_output"
         return 1
     fi
 
@@ -275,7 +275,7 @@ _display_result_box() {
     _close_wait_box
 
     local error_log_file=""
-    error_log_file=$(_get_log_file "$output_dir")
+    error_log_file=$(_log_compile "$output_dir")
 
     # Check if there was some error.
     if [[ -f "$error_log_file" ]]; then
@@ -505,7 +505,7 @@ _get_filemanager_list() {
     input_files=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$input_files")
 
     # Decode the URI list.
-    input_files=$(_uri_decode "$input_files")
+    input_files=$(_text_uri_decode "$input_files")
     input_files=${input_files//file:\/\//}
 
     # Removes last field separators.
@@ -663,33 +663,6 @@ _get_full_path_file() {
     echo "$(cd "$(dirname -- "$input_file")" && pwd -P)/$(basename -- "$input_file")"
 }
 
-_get_log_file() {
-    local output_dir=$1
-    local error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
-
-    if [[ -z "$(ls -A "$TEMP_DIR_LOG" 2>/dev/null)" ]]; then
-        return 1
-    fi
-
-    if [[ -z "$output_dir" ]]; then
-        error_log_file="$PWD/$PREFIX_ERROR_LOG_FILE.log"
-    else
-        error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
-    fi
-
-    # If the file already exists, add a suffix.
-    error_log_file=$(_get_filename_next_suffix "$error_log_file")
-
-    # Compile log errors in a single file.
-    {
-        echo "Script: $(_get_script_name)"
-        echo
-        cat -- "$TEMP_DIR_LOG/"* 2>/dev/null
-    } >"$error_log_file"
-
-    echo "$error_log_file"
-}
-
 _get_max_procs() {
     # Return the maximum number of processing units available.
     nproc --all 2>/dev/null
@@ -786,6 +759,50 @@ _get_script_name() {
     basename -- "$0"
 }
 
+_log_compile() {
+    local output_dir=$1
+    local error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
+
+    if [[ -z "$(ls -A "$TEMP_DIR_LOG" 2>/dev/null)" ]]; then
+        return 1
+    fi
+
+    if [[ -z "$output_dir" ]]; then
+        error_log_file="$PWD/$PREFIX_ERROR_LOG_FILE.log"
+    else
+        error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
+    fi
+
+    # If the file already exists, add a suffix.
+    error_log_file=$(_get_filename_next_suffix "$error_log_file")
+
+    # Compile log errors in a single file.
+    {
+        echo "Script: $(_get_script_name)"
+        echo
+        cat -- "$TEMP_DIR_LOG/"* 2>/dev/null
+    } >"$error_log_file"
+
+    echo "$error_log_file"
+}
+
+_log_write() {
+    local message=$1
+    local input_file=$2
+    local std_output=$3
+    local log_temp_file=""
+    log_temp_file=$(mktemp --tmpdir="$TEMP_DIR_LOG")
+
+    {
+        echo "[$(date "+%Y-%m-%d %H:%M:%S")]"
+        echo " > Input file: $input_file"
+        echo " > $message"
+        echo " > Output:"
+        echo "$std_output"
+        echo
+    } >"$log_temp_file"
+}
+
 _move_file() {
     local par_when_conflict=$1
     local file_src=$2
@@ -820,7 +837,7 @@ _move_file() {
     "skip")
         # Skip, do not move the file.
         if [[ -e "$file_dst" ]]; then
-            _write_log "Warning: The file already exists." "$file_src" "$file_dst"
+            _log_write "Warning: The file already exists." "$file_src" "$file_dst"
             return 0
         fi
         ;;
@@ -915,7 +932,7 @@ _run_task_parallel() {
         _strip_filename_extension \
         _temp_result_write \
         _text_remove_pwd \
-        _write_log
+        _log_write
 
     # Allows the symbol "'" in filenames (inside 'xargs').
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
@@ -934,7 +951,7 @@ _strip_filename_extension() {
     sed -r "s|(\.tar)?\.[a-z0-9_~-]*$||i" <<<"$filename"
 }
 
-_temp_result_read_all() {
+_temp_result_compile() {
     # Compile all temp results into a single output.
     cat -- "$TEMP_DIR_TASK/result"* 2>/dev/null
 }
@@ -982,7 +999,7 @@ _text_remove_pwd() {
     echo "$input_text"
 }
 
-_uri_decode() {
+_text_uri_decode() {
     local uri_encoded=$1
 
     uri_encoded=${uri_encoded//%/\\x}
@@ -1253,21 +1270,4 @@ _validate_files_count() {
         _display_error_box "You must select up to $par_max_files $valid_file_term!"
         _exit_script
     fi
-}
-
-_write_log() {
-    local message=$1
-    local input_file=$2
-    local std_output=$3
-    local log_temp_file=""
-    log_temp_file=$(mktemp --tmpdir="$TEMP_DIR_LOG")
-
-    {
-        echo "[$(date "+%Y-%m-%d %H:%M:%S")]"
-        echo " > Input file: $input_file"
-        echo " > $message"
-        echo " > Output:"
-        echo "$std_output"
-        echo
-    } >"$log_temp_file"
 }
