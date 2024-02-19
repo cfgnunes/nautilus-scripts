@@ -18,8 +18,8 @@ _main() {
     _run_task_parallel "$input_files" ""
 
     std_output=$(cat -- "$TEMP_DIR_TASK/"* 2>/dev/null) # Compile all results into a single output.
-    std_output=$(grep -v "^$" <<<"$std_output")         # Remove empty lines.
-    std_output=$(sort --version-sort <<<"$std_output")  # Sort the result.
+    std_output=$(_text_remove_empty_lines "$std_output")
+    std_output=$(_text_sort "$std_output")
 
     _display_text_box "$std_output"
 }
@@ -39,12 +39,12 @@ _main_task() {
         pdf_information=$(grep --only-matching "(print.*)" <<<"$pdf_information")
         # Work on a temporary file.
         temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-        echo "Protected $pdf_information: \"$(_strip_filename_pwd "$input_file")\"" >"$temp_file"
+        echo "Protected $pdf_information: \"$(_text_remove_pwd "$input_file")\"" >"$temp_file"
         echo >>"$temp_file"
     elif [[ "$std_output" == *"Incorrect password"* ]]; then
         # Work on a temporary file.
         temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-        echo "Protected with password: \"$(_strip_filename_pwd "$input_file")\"" >"$temp_file"
+        echo "Protected with password: \"$(_text_remove_pwd "$input_file")\"" >"$temp_file"
         echo >>"$temp_file"
     fi
 }

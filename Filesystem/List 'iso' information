@@ -18,7 +18,7 @@ _main() {
     _run_task_parallel "$input_files" ""
 
     std_output=$(cat -- "$TEMP_DIR_TASK/"* 2>/dev/null) # Compile all results into a single output.
-    std_output=$(_strip_filename_pwd "$std_output")
+    std_output=$(_text_remove_pwd "$std_output")
 
     _display_text_box "$std_output"
 }
@@ -33,7 +33,7 @@ _main_task() {
 
     # Save the result to a temporary file.
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-    echo "\"$(_strip_filename_pwd "$input_file")\"" >"$temp_file"
+    echo "\"$(_text_remove_pwd "$input_file")\"" >"$temp_file"
     echo "$std_output" >>"$temp_file"
     echo >>"$temp_file"
 }

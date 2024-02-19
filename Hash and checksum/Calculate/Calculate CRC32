@@ -31,7 +31,7 @@ _main_task() {
     # Run the main process.
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
     std_output=$(rhash --printf="%c  %p\n" -- "$input_file" 2>/dev/null)
-    std_output=$(_strip_filename_pwd "$std_output")
+    std_output=$(_text_remove_pwd "$std_output")
 
     echo "$std_output" >"$temp_file"
 }

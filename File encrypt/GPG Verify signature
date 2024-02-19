@@ -32,7 +32,7 @@ _main_task() {
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
     std_output=$(gpg --yes --verify -- "$input_file" 2>&1)
 
-    echo "\"$(_strip_filename_pwd "$input_file")\"" >"$temp_file"
+    echo "\"$(_text_remove_pwd "$input_file")\"" >"$temp_file"
     echo "$std_output" >>"$temp_file"
     echo >>"$temp_file"
 }
