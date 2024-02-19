@@ -13,7 +13,7 @@ _main() {
     input_files=$(_get_files "type:directory, min_files:0, max_files:1")
 
     # Run the main process.
-    baobab "$input_files" &
+    baobab -- "$input_files" &
 }
 
 _main "$@"

@@ -17,7 +17,7 @@ _main() {
 
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(file --separator "//" --no-pad $input_files)
+    std_output=$(file --separator "//" --no-pad -- $input_files)
     std_output=$(_strip_filename_pwd "$std_output")
     std_output=$(sed "s|//.*with CRLF, CR, LF line.*|// CRLF+CR+LF (windows)|" <<<"$std_output")
     std_output=$(sed "s|//.*with CRLF, LF line.*|// CRLF+LF (windows)|" <<<"$std_output")
