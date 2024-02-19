@@ -11,10 +11,40 @@ _main() {
     # Execute initial checks.
     _check_dependencies "meld"
     input_files=$(_get_files "type:all, min_files:2, max_files:3")
+    _validate_input_files "$input_files"
 
     # Run the main process.
     # shellcheck disable=SC2086
     meld -- $input_files &
+}
+
+_validate_input_files() {
+    local input_files=$1
+    local file_encoding=""
+    local file_type=""
+    local file_type_first=""
+    local input_file=""
+
+    for input_file in $input_files; do
+        file_encoding=$(file --brief --mime-encoding -- "$input_file")
+        file_type=$(stat -c %F -- "$input_file")
+
+        # Accept only directories or text files (avoid binary files).
+        if [[ "$file_encoding" == *"binary"* ]] && [[ "$file_type" != *"directory"* ]]; then
+            _display_error_box "You must select only directories or plain text files!"
+            _exit_script
+        fi
+
+        # All the files must have same mime type.
+        if [[ -z "$file_type_first" ]]; then
+            file_type_first=$file_type
+        else
+            if [[ "$file_type" != "$file_type_first" ]]; then
+                _display_error_box "All selected files must have same type!"
+                _exit_script
+            fi
+        fi
+    done
 }
 
 _main "$@"
