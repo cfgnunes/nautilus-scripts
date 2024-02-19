@@ -920,6 +920,7 @@ _run_task_parallel() {
         TEMP_DIR_TASK
     export -f \
         _check_result \
+        _command_exists \
         _exit_script \
         _get_filename_extension \
         _get_filename_next_suffix \
