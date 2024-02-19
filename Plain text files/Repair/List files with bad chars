@@ -26,7 +26,7 @@ _main() {
             -- $input_files /dev/null
     )
 
-    std_output=$(_strip_filename_pwd "$std_output")
+    std_output=$(_text_remove_pwd "$std_output")
 
     _display_text_box "$std_output"
 }

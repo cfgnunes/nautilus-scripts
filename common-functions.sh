@@ -292,8 +292,8 @@ _display_result_box() {
         # Check if the output directory still exists.
         if [[ -d "$output_dir" ]]; then
             local output_dir_simple=""
-            output_dir_simple=$(_strip_filename_pwd "$output_dir")
-            output_dir_simple=$(sed "s|$HOME/|~/|g" <<<"$output_dir_simple")
+            output_dir_simple=$(_text_remove_pwd "$output_dir")
+            output_dir_simple=$(_text_remove_home "$output_dir_simple")
             _display_info_box "Task finished! The output files are in '$output_dir_simple'."
         else
             _display_info_box "Task finished, but there are no output files!"
@@ -635,7 +635,7 @@ _get_files() {
     input_files=$(sed -z "s|\n|//|g" <<<"$input_files")
     input_files=$(sed "s|//$||" <<<"$input_files")
     input_files=$(sed -z "s|$FILENAME_SEPARATOR|\n|g" <<<"$input_files")
-    input_files=$(sort --version-sort <<<"$input_files") # Sort the result.
+    input_files=$(_text_sort "$input_files")
     input_files=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$input_files")
     input_files=$(sed -z "s|//|\n|g" <<<"$input_files")
 
@@ -912,7 +912,7 @@ _run_task_parallel() {
         _move_temp_file_to_output \
         _read_array_values \
         _strip_filename_extension \
-        _strip_filename_pwd \
+        _text_remove_pwd \
         _write_log
 
     # Allows the symbol "'" in filenames (inside 'xargs').
@@ -932,10 +932,38 @@ _strip_filename_extension() {
     sed -r "s|(\.tar)?\.[a-z0-9_~-]*$||i" <<<"$filename"
 }
 
-_strip_filename_pwd() {
-    local filename=$1
+_text_sort() {
+    local input_text=$1
 
-    sed "s|$PWD/|./|g" <<<"$filename"
+    sort --version-sort <<<"$input_text"
+}
+
+_text_remove_empty_lines() {
+    local input_text=$1
+
+    grep -v "^$" <<<"$input_text"
+}
+
+_text_remove_home() {
+    local input_text=$1
+
+    if [[ -n "$HOME" ]]; then
+        sed "s|$HOME/|~/|g" <<<"$input_text"
+        return
+    fi
+
+    echo "$input_text"
+}
+
+_text_remove_pwd() {
+    local input_text=$1
+
+    if [[ -n "$PWD" ]]; then
+        sed "s|$PWD/|./|g" <<<"$input_text"
+        return
+    fi
+
+    echo "$input_text"
 }
 
 _uri_decode() {

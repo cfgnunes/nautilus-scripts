@@ -21,7 +21,7 @@ _main() {
     echo -n "$checksum_file" | xargs --max-procs="$(_get_max_procs)" --delimiter=$'\n' --replace="{}" bash -c "_verify_checksum '{}'"
 
     std_output=$(cat -- "$TEMP_DIR_TASK/"* 2>/dev/null) # Compile all results into a single output.
-    std_output=$(sort --version-sort <<<"$std_output")  # Sort the result.
+    std_output=$(_text_sort "$std_output")
 
     if [[ -z "$std_output" ]]; then
         std_output="No errors found."
