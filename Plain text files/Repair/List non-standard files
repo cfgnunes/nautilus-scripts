@@ -32,7 +32,7 @@ _main_task() {
     local file_encoding=""
     local file_information=""
 
-    file_encoding=$(file --mime-encoding --brief -- "$input_file")
+    file_encoding=$(file --brief --mime-encoding -- "$input_file")
     file_information=$(file --separator "//" --no-pad -- "$input_file" | sed "s|\(.*\)// ||")
 
     # Run the checker 'non UTF-8 encoding'
