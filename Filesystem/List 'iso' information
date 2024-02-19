@@ -18,7 +18,6 @@ _main() {
     _run_task_parallel "$input_files" ""
 
     std_output=$(_temp_result_read_all)
-    std_output=$(_text_remove_pwd "$std_output")
 
     _display_text_box "$std_output"
 }
@@ -26,16 +25,12 @@ _main() {
 _main_task() {
     local input_file=$1
     local output_dir=$2
-    local temp_file=""
+    local std_output=""
 
     # Run the main process.
     std_output=$(isoinfo -debug -d -p -R -J -i "$input_file" 2>/dev/null)
 
-    # Save the result to a temporary file.
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-    echo "\"$(_text_remove_pwd "$input_file")\"" >"$temp_file"
-    echo "$std_output" >>"$temp_file"
-    echo >>"$temp_file"
+    _temp_result_write "\"$(_text_remove_pwd "$input_file")\""$'\n'"$std_output"$'\n'
 }
 
 _main "$@"
