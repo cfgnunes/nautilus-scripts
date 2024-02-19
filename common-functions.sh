@@ -36,6 +36,7 @@ readonly \
 
 IFS=$FILENAME_SEPARATOR
 INPUT_FILES=$*
+TEMP_DATA_TASK=""
 WAIT_BOX_PID=""
 
 # -----------------------------------------------------------------------------
@@ -897,7 +898,7 @@ _run_task_parallel() {
     # Export variables and functions inside a new shell (using 'xargs').
     export \
         FILENAME_SEPARATOR \
-        TASK_DATA \
+        TEMP_DATA_TASK \
         TEMP_DIR_LOG \
         TEMP_DIR_TASK
     export -f \
