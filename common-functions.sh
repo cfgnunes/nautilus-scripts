@@ -485,16 +485,16 @@ _get_filename_next_suffix() {
 }
 
 _get_filemanager_list() {
-    local filemanager_list=""
+    local input_files=""
     set +u
 
     # Try to use the list of input files provided by the file manager.
     if [[ -n "$NAUTILUS_SCRIPT_SELECTED_URIS" ]]; then
-        filemanager_list=$NAUTILUS_SCRIPT_SELECTED_URIS # Nautilus
+        input_files=$NAUTILUS_SCRIPT_SELECTED_URIS # Nautilus
     elif [[ -n "$NEMO_SCRIPT_SELECTED_URIS" ]]; then
-        filemanager_list=$NEMO_SCRIPT_SELECTED_URIS # Nemo
+        input_files=$NEMO_SCRIPT_SELECTED_URIS # Nemo
     elif [[ -n "$CAJA_SCRIPT_SELECTED_URIS" ]]; then
-        filemanager_list=$CAJA_SCRIPT_SELECTED_URIS # Caja
+        input_files=$CAJA_SCRIPT_SELECTED_URIS # Caja
     else
         set -u
         echo -n "$INPUT_FILES" # Standard input
@@ -502,14 +502,17 @@ _get_filemanager_list() {
     fi
 
     # Replace '\n' to 'FILENAME_SEPARATOR'.
-    filemanager_list=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$filemanager_list")
+    input_files=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$input_files")
 
     # Decode the URI list.
-    filemanager_list=$(_uri_decode "$filemanager_list")
-    filemanager_list=${filemanager_list//file:\/\//}
+    input_files=$(_uri_decode "$input_files")
+    input_files=${input_files//file:\/\//}
+
+    # Removes last field separators.
+    input_files=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$input_files")
 
     set -u
-    echo -n "$filemanager_list"
+    echo -n "$input_files"
 }
 
 _get_files() {
@@ -901,7 +904,6 @@ _run_task_parallel() {
         TEMP_DIR_TASK
     export -f \
         _check_result \
-        _display_error_box \
         _exit_script \
         _get_filename_extension \
         _get_filename_next_suffix \
