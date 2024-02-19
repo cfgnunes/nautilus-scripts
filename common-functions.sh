@@ -53,6 +53,7 @@ _check_dependencies() {
     local command=""
     local message=""
     local package_name=""
+    local dependency=""
 
     # Add basic commands to check.
     dependencies="file xargs(findutils) pstree(psmisc) cmp(diffutils) mkfifo(coreutils) $dependencies"
