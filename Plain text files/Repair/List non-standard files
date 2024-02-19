@@ -27,7 +27,6 @@ _main() {
 _main_task() {
     local input_file=$1
     local output_dir=$2
-    local temp_file=""
     local result_file=""
     local file_encoding=""
     local file_information=""
@@ -76,9 +75,7 @@ _main_task() {
 
     # Save the result only for files with problems.
     if [[ -n "$result_file" ]]; then
-        # Work on a temporary file.
-        temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-        echo "$result_file: \"$(_text_remove_pwd "$input_file")\"" >"$temp_file"
+        _temp_result_write "$result_file: \"$(_text_remove_pwd "$input_file")\""
     fi
 }
 
