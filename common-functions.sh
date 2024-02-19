@@ -935,14 +935,15 @@ _strip_filename_extension() {
 
 _temp_result_read_all() {
     # Compile all temp results into a single output.
-    cat -- "$TEMP_DIR_TASK/"* 2>/dev/null
+    cat -- "$TEMP_DIR_TASK/result"* 2>/dev/null
 }
 
 _temp_result_write() {
     local input_text=$1
     local temp_file=""
 
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+    # Save the result from a parallel task to be compiled into a single output.
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK" "result.XXXXXXXXXX")
     echo "$input_text" >"$temp_file"
 }
 
