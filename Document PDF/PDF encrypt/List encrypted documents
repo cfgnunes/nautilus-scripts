@@ -28,24 +28,16 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
-    local temp_file=""
 
+    # Run the main process.
     std_output=$(pdfinfo -- "$input_file" 2>&1)
 
     # Save the result only for 'encrypted' PDFs.
     if [[ "$std_output" == *"yes ("* ]]; then
-        local pdf_information=""
-        pdf_information=$std_output
-        pdf_information=$(grep --only-matching "(print.*)" <<<"$pdf_information")
-        # Work on a temporary file.
-        temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-        echo "Protected $pdf_information: \"$(_text_remove_pwd "$input_file")\"" >"$temp_file"
-        echo >>"$temp_file"
+        std_output=$(grep --only-matching "(print.*)" <<<"$std_output")
+        _temp_result_write "Protected $std_output: \"$(_text_remove_pwd "$input_file")\""
     elif [[ "$std_output" == *"Incorrect password"* ]]; then
-        # Work on a temporary file.
-        temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-        echo "Protected with password: \"$(_text_remove_pwd "$input_file")\"" >"$temp_file"
-        echo >>"$temp_file"
+        _temp_result_write "Protected with password: \"$(_text_remove_pwd "$input_file")\""
     fi
 }
 
