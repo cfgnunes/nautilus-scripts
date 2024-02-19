@@ -17,7 +17,7 @@ _main() {
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
 
-    std_output=$(cat -- "$TEMP_DIR_TASK/"* 2>/dev/null) # Compile all results into a single output.
+    std_output=$(_temp_result_read_all)
 
     _display_text_box "$std_output"
 }
@@ -25,15 +25,13 @@ _main() {
 _main_task() {
     local input_file=$1
     local output_dir=$2
-    local temp_file=""
     local std_output=""
 
     # Run the main process.
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
     std_output=$(sha384sum -- "$input_file" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
 
-    echo "$std_output" >"$temp_file"
+    _temp_result_write "$std_output"
 }
 
 _main "$@"

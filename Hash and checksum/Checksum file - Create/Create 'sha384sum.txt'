@@ -20,7 +20,7 @@ _main() {
 
     local compiled_output_file=""
     compiled_output_file=$(_get_filename_next_suffix "$output_dir/sha384sum.txt")
-    cat -- "$TEMP_DIR_TASK/"* 2>/dev/null >"$compiled_output_file" # Compile all results into a single output.
+    _temp_result_read_all >"$compiled_output_file"
 
     _display_result_box "$output_dir"
 }
@@ -28,15 +28,13 @@ _main() {
 _main_task() {
     local input_file=$1
     local output_dir=$2
-    local temp_file=""
     local std_output=""
 
     # Run the main process.
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
     std_output=$(sha384sum -- "$input_file" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
 
-    echo "$std_output" >"$temp_file"
+    _temp_result_write "$std_output"
 }
 
 _main "$@"
