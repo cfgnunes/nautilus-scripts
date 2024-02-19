@@ -624,6 +624,7 @@ _get_files() {
         "$input_files" \
         "$par_type" \
         "$par_select_mime" \
+        "$par_select_extension" \
         "$par_min_files" \
         "$par_max_files"
 
@@ -1156,8 +1157,9 @@ _validate_files_count() {
     local input_files=$1
     local par_type=$2
     local par_select_mime=$3
-    local par_min_files=$4
-    local par_max_files=$5
+    local par_select_extension=$4
+    local par_min_files=$5
+    local par_max_files=$6
 
     # Define a term for a valid file.
     local valid_file_term="valid files"
@@ -1185,7 +1187,11 @@ _validate_files_count() {
 
     # Check if there is at least one valid file.
     if ((valid_files_count == 0)); then
-        _display_error_box "You must select $valid_file_term!"
+        if [[ -n "$par_select_extension" ]]; then
+            _display_error_box "You must select files with extension: '.${par_select_extension//|/\' or \'.}'!"
+        else
+            _display_error_box "You must select $valid_file_term!"
+        fi
         _exit_script
     fi
 
