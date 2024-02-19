@@ -33,7 +33,7 @@ _main_task() {
 
     # Save the result to a temporary file.
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-    echo "\"$input_file\"" >"$temp_file"
+    echo "\"$(_strip_filename_pwd "$input_file")\"" >"$temp_file"
     echo "$std_output" >>"$temp_file"
     echo >>"$temp_file"
 }
