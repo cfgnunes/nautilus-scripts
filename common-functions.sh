@@ -624,8 +624,9 @@ _get_files() {
     _validate_files_count \
         "$input_files" \
         "$par_type" \
-        "$par_select_mime" \
         "$par_select_extension" \
+        "$par_select_mime" \
+        "$par_skip_encoding" \
         "$par_min_files" \
         "$par_max_files"
 
@@ -1157,10 +1158,11 @@ _validate_file_preselect_parallel() {
 _validate_files_count() {
     local input_files=$1
     local par_type=$2
-    local par_select_mime=$3
-    local par_select_extension=$4
-    local par_min_files=$5
-    local par_max_files=$6
+    local par_select_extension=$3
+    local par_select_mime=$4
+    local par_skip_encoding=$5
+    local par_min_files=$6
+    local par_max_files=$7
 
     # Define a term for a valid file.
     local valid_file_term="valid files"
@@ -1176,6 +1178,8 @@ _validate_files_count() {
         valid_file_term="plain text files"
     elif [[ "$par_select_mime" == *"pdf"* ]]; then
         valid_file_term="PDF files"
+    elif [[ "$par_skip_encoding" == *"binary"* ]]; then
+        valid_file_term="plain text files"
     fi
 
     # Count the number of valid files.
