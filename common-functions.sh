@@ -271,7 +271,7 @@ _display_result_box() {
 
     # Check if there was some error.
     if [[ -f "$error_log_file" ]]; then
-        _display_error_box "Task finished with errors! See the '$error_log_file' for details."
+        _display_error_box "The task finished with errors! See the '$error_log_file' for details."
         _exit_script
     fi
 
@@ -431,7 +431,7 @@ _install_package() {
             _exit_script
         fi
     else
-        _display_error_box "Could not run the installer as administrator!"
+        _display_error_box "Could not run the installer with administrator permission!"
         _exit_script
     fi
 
@@ -572,11 +572,11 @@ _get_files() {
         _exit_script
     fi
     if [[ $par_type != "file" ]] && [[ -n "$par_select_extension" ]]; then
-        _display_error_box "To use the parameter 'extension' the value of 'type' must be 'file'!"
+        _display_error_box "To use the parameter 'extension', the value of 'type' must be 'file'!"
         _exit_script
     fi
     if [[ $par_type != "file" ]] && [[ -n "$par_skip_extension" ]]; then
-        _display_error_box "To use the parameter 'skip_extension' the value of 'type' must be 'file'!"
+        _display_error_box "To use the parameter 'skip_extension', the value of 'type' must be 'file'!"
         _exit_script
     fi
 
