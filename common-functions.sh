@@ -390,7 +390,7 @@ _expand_directory() {
         find_command+=" -regex \".*($par_select_extension)$\""
     elif [[ -n "$par_skip_extension" ]]; then
         find_command+=" -regextype posix-extended "
-        find_command+=" ! -regex \".*($par_select_extension)$\""
+        find_command+=" ! -regex \".*($par_skip_extension)$\""
     fi
 
     find_command+=" ! -path \"$IGNORE_FIND_PATH\""
@@ -595,10 +595,10 @@ _get_files() {
         fi
 
         # Try selecting the files by opening a file selection box.
-        if [[ "$par_type" == "file" ]] || [[ "$par_type" == "all" ]]; then
-            input_files=$(_display_file_selection_box)
-        else
+        if [[ "$par_type" == "directory" ]]; then
             input_files=$(_display_dir_selection_box)
+        else
+            input_files=$(_display_file_selection_box)
         fi
         if [[ -z "$input_files" ]]; then
             _display_error_box "There are no input files!"
