@@ -534,6 +534,7 @@ _get_files() {
     local par_max_files=""
     local par_min_files=""
     local par_recursive="false"
+    local par_return_pwd="false"
     local par_select_encoding=""
     local par_select_extension=""
     local par_select_mime=""
@@ -550,6 +551,7 @@ _get_files() {
         "max_files") par_max_files=${par_array[i + 1]} ;;
         "min_files") par_min_files=${par_array[i + 1]} ;;
         "recursive") par_recursive=${par_array[i + 1]} ;;
+        "get_pwd_if_no_selection") par_return_pwd=${par_array[i + 1]} ;;
         "encoding") par_select_encoding=${par_array[i + 1]} ;;
         "extension") par_select_extension=${par_array[i + 1]} ;;
         "mime") par_select_mime=${par_array[i + 1]} ;;
@@ -585,13 +587,11 @@ _get_files() {
 
     # Check if there are input files.
     if [[ -z "$input_files" ]]; then
-
         # Return the current working directory if there are no files selected.
-        if [[ "$par_min_files" == "0" ]]; then
-            if [[ "$par_type" == "directory" ]] || [[ "$par_type" == "all" ]]; then
-                echo -n "$PWD"
-                return 0
-            fi
+        # (parameter 'get_pwd_if_no_selection=true').
+        if [[ "$par_return_pwd" == "true" ]]; then
+            echo -n "$PWD"
+            return 0
         fi
 
         # Try selecting the files by opening a file selection box.
