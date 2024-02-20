@@ -378,6 +378,7 @@ _gdbus_notify() {
     local icon=$1
     local title=$2
     local message=$3
+    local app=$title
     local method="Notify"
     local interface="org.freedesktop.Notifications"
     local object_path="/org/freedesktop/Notifications"
@@ -387,8 +388,8 @@ _gdbus_notify() {
         --dest $interface \
         --object-path $object_path \
         --method $interface.$method \
-        "" 0 "$icon" "$title" "$message" \
-        "[]" '{"urgency": <1>}' 0 &>/dev/null
+        "$app" 0 "$icon" "$title" "$message" \
+        "[]" '{"urgency": <1>}' 5000 &>/dev/null
 }
 
 _expand_directory() {
