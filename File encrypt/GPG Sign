@@ -39,7 +39,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file=$(_get_output_file "$input_file" "$output_dir" "extension_option:append, extension:asc")
+    output_file=$(_get_output_file "$input_file" "$output_dir" "extension_option:append, extension:gpg")
     std_output=$(gpg --batch --yes --sign --local-user "$TASK_DATA" --output "$output_file" -- "$input_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
