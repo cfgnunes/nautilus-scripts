@@ -388,7 +388,7 @@ _gdbus_notify() {
         --object-path $object_path \
         --method $interface.$method \
         "" 0 "$icon" "$title" "$message" \
-        "[]" '{"urgency": <1>}' 0
+        "[]" '{"urgency": <1>}' 0 &>/dev/null
 }
 
 _expand_directory() {
