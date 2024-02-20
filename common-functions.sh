@@ -377,18 +377,18 @@ _exit_script() {
 _gdbus_notify() {
     local icon=$1
     local title=$2
-    local message=$3
-    local app=$title
+    local body=$3
+    local app_name=$title
     local method="Notify"
     local interface="org.freedesktop.Notifications"
     local object_path="/org/freedesktop/Notifications"
 
     # Use 'gdbus' to send the notification.
     gdbus call --session \
-        --dest $interface \
-        --object-path $object_path \
-        --method $interface.$method \
-        "$app" 0 "$icon" "$title" "$message" \
+        --dest "$interface" \
+        --object-path "$object_path" \
+        --method "$interface.$method" \
+        "$app_name" 0 "$icon" "$title" "$body" \
         "[]" '{"urgency": <1>}' 5000 &>/dev/null
 }
 
