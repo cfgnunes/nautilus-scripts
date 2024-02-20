@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local std_output=""
+
+    # Execute initial checks.
+    _check_dependencies ""
+    _display_wait_box
+    input_files=$(_get_files "type:file, recursive:true, skip_encoding:binary, skip_extension:pdf")
+
+    # Run the main process.
+    # shellcheck disable=SC2086
+    std_output=$(wc --lines -- $input_files)
+    std_output=$(grep -v ".*[0-9]* total$" <<<"$std_output")
+    # shellcheck disable=SC2001
+    std_output=$(sed "s| *\([0-9]*\) *\(.*\)|\1 \"\2\"|" <<<"$std_output")
+    std_output=$(_text_remove_pwd "$std_output")
+    std_output=$(sort -h -r <<<"$std_output")
+    # shellcheck disable=SC2001
+
+    _display_text_box "$std_output"
+}
+
+_main "$@"
