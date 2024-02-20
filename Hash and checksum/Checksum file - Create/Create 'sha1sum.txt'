@@ -28,15 +28,15 @@ _main() {
 _main_task() {
     local input_file=$1
     local output_dir=$2
-    local output_file=""
+    local temp_file=""
     local std_output=""
 
     # Run the main process.
-    output_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
     std_output=$(sha1sum -- "$input_file" 2>/dev/null)
     std_output=$(_strip_filename_pwd "$std_output")
 
-    echo "$std_output" >"$output_file"
+    echo "$std_output" >"$temp_file"
 }
 
 _main "$@"
