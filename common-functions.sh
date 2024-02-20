@@ -184,8 +184,6 @@ _display_error_box() {
         echo >&2 "Error: $message"
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-error" "$(_get_script_name)" "$message"
-    elif _command_exists "notify-send"; then
-        notify-send -i error "$message" &>/dev/null
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --error --width=300 --text "$message" &>/dev/null
     elif _command_exists "kdialog"; then
@@ -202,8 +200,6 @@ _display_info_box() {
         echo "Info: $message"
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-information" "$(_get_script_name)" "$message"
-    elif _command_exists "notify-send"; then
-        notify-send "$message" &>/dev/null
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --info --width=300 --text "$message" &>/dev/null
     elif _command_exists "kdialog"; then
