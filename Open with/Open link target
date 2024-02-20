@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+
+    # Execute initial checks.
+    _check_dependencies "xdg-open(xdg-utils)"
+    input_files=$(_get_files "type:all, max_files:1, get_pwd_if_no_selection:true")
+
+    # Run the main process.
+    xdg-open "$(readlink -f "$input_files")" &
+}
+
+_main "$@"

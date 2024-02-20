@@ -7,3 +7,4 @@ F7 Disk Usage Analyzer
 <Control>K Compress...
 <Control>M Compare with Meld
 <Control>Y List file information
+<Control><Shift>O Open link target
