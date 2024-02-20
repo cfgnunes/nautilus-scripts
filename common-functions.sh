@@ -182,6 +182,8 @@ _display_error_box() {
 
     if ! _is_gui_session; then
         echo >&2 "Error: $message"
+    elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
+        _gdbus_notify "dialog-error" "$(_get_script_name)" "$message"
     elif _command_exists "notify-send"; then
         notify-send -i error "$message" &>/dev/null
     elif _command_exists "zenity"; then
@@ -198,6 +200,8 @@ _display_info_box() {
 
     if ! _is_gui_session; then
         echo "Info: $message"
+    elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
+        _gdbus_notify "dialog-information" "$(_get_script_name)" "$message"
     elif _command_exists "notify-send"; then
         notify-send "$message" &>/dev/null
     elif _command_exists "zenity"; then
@@ -368,6 +372,23 @@ _exit_script() {
     # including the current script.
     # See the: https://www.baeldung.com/linux/safely-exit-scripts
     xargs kill <<<"$child_pids" &>/dev/null
+}
+
+_gdbus_notify() {
+    local icon=$1
+    local title=$2
+    local message=$3
+    local method="Notify"
+    local interface="org.freedesktop.Notifications"
+    local object_path="/org/freedesktop/Notifications"
+
+    # Use 'gdbus' to send the notification.
+    gdbus call --session \
+        --dest $interface \
+        --object-path $object_path \
+        --method $interface.$method \
+        "" 0 "$icon" "$title" "$message" \
+        "[]" '{"urgency": <1>}' 0
 }
 
 _expand_directory() {
