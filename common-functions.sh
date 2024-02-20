@@ -669,16 +669,17 @@ _get_files() {
     echo -n "$input_files"
 }
 
-_get_full_path_dir() {
-    local input_file=$1
+_get_full_path_filename() {
+    local input_filemame=$1
+    local output_filename=""
 
-    cd "$input_file" && pwd -P
-}
+    if [[ -d "$input_filemame" ]]; then
+        output_filename=$(cd "$input_filemame" && pwd -P)
+    else
+        output_filename=$(cd "$(dirname -- "$input_filemame")" && pwd -P)/$(basename -- "$input_filemame")
+    fi
 
-_get_full_path_file() {
-    local input_file=$1
-
-    echo "$(cd "$(dirname -- "$input_file")" && pwd -P)/$(basename -- "$input_file")"
+    echo -n "$output_filename"
 }
 
 _get_max_procs() {
@@ -1160,21 +1161,21 @@ _validate_file_preselect() {
 
         # Add the file in the 'input_file_valid'.
         if [[ "$par_type" == "file" ]] || [[ "$par_type" == "all" ]]; then
-            input_file_valid=$(_get_full_path_file "$input_file")
+            input_file_valid=$(_get_full_path_filename "$input_file")
             input_file_valid+=$FILENAME_SEPARATOR
         fi
     else # If the 'input_file' is a directory.
         if [[ "$par_recursive" == "true" ]]; then
             # Add the expanded files (or directories) in the 'input_file_valid'.
             input_file_valid=$(_expand_directory \
-                "$(_get_full_path_dir "$input_file")" \
+                "$(_get_full_path_filename "$input_file")" \
                 "$par_type" \
                 "$par_select_extension" \
                 "$par_skip_extension")
         else
             # Add the directory in the 'input_file_valid'.
             if [[ "$par_type" == "directory" ]] || [[ "$par_type" == "all" ]]; then
-                input_file_valid=$(_get_full_path_dir "$input_file")
+                input_file_valid=$(_get_full_path_filename "$input_file")
                 input_file_valid+=$FILENAME_SEPARATOR
             fi
         fi
@@ -1207,8 +1208,7 @@ _validate_file_preselect_parallel() {
     export -f \
         _expand_directory \
         _get_filename_extension \
-        _get_full_path_dir \
-        _get_full_path_file \
+        _get_full_path_filename \
         _has_string_in_list \
         _validate_file_extension \
         _validate_file_preselect
