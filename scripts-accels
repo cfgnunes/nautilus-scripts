@@ -6,5 +6,5 @@ F7 Disk Usage Analyzer
 <Control>G Git clone (URLs in clipboard)
 <Control>K Compress...
 <Control>M Compare with Meld
-<Control>Y List file information
+<Control>Y List file type
 <Control><Shift>O Open link target
