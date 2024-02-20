@@ -670,16 +670,14 @@ _get_files() {
 }
 
 _get_full_path_filename() {
-    local input_filemame=$1
-    local output_filename=""
+    local input_filename=$1
+    local full_path=""
+    local dir=""
 
-    if [[ -d "$input_filemame" ]]; then
-        output_filename=$(cd "$input_filemame" && pwd -P)
-    else
-        output_filename=$(cd "$(dirname -- "$input_filemame")" && pwd -P)/$(basename -- "$input_filemame")
-    fi
+    dir=$(cd -- "$(dirname -- "$input_filename")" &>/dev/null && pwd -P)
+    full_path=$dir/$(basename -- "$input_filename")
 
-    echo -n "$output_filename"
+    echo -n "$full_path"
 }
 
 _get_max_procs() {
