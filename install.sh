@@ -72,17 +72,17 @@ _install_dependencies() {
         if _command_exists "apt-get"; then
             sudo apt-get update || true
             # Distro: Ubuntu, Mint, Debian.
-            sudo apt-get -y install $common_names gpg imagemagick xz-utils p7zip-full poppler-utils ffmpeg jdupes findimagedupes genisoimage ocrmypdf mp3gain
+            sudo apt-get -y install $common_names gpg imagemagick xz-utils p7zip-full poppler-utils ffmpeg jdupes findimagedupes genisoimage ocrmypdf
         elif _command_exists "pacman"; then
             # Distro: Manjaro, Arch Linux.
-            # Missing packages: jdupes, findimagedupes, ocrmypdf, mp3gain.
+            # Missing packages: jdupes, findimagedupes, ocrmypdf.
             sudo pacman -Syy || true
             sudo pacman --noconfirm -S $common_names gnupg imagemagick xz p7zip poppler poppler-glib ffmpeg
         elif _command_exists "dnf"; then
             # Distro: Fedora, Red Hat.
             # Missing packages: findimagedupes.
             sudo dnf check-update || true
-            sudo dnf -y install $common_names gnupg2 ImageMagick xz p7zip poppler-utils ffmpeg-free jdupes genisoimage ocrmypdf mp3gain
+            sudo dnf -y install $common_names gnupg2 ImageMagick xz p7zip poppler-utils ffmpeg-free jdupes genisoimage ocrmypdf
         else
             echo "Error: could not find a package manager!"
             exit 1

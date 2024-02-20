@@ -16,7 +16,9 @@ _main() {
 
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(jdupes --recurse -X nostr:/.git/ -- $input_files 2>/dev/null)
+    std_output=$(jdupes --recurse -- $input_files 2>/dev/null)
+    # NOTE: Older versions of 'jdupes' do not support '-X nostr:/.git/'.
+    std_output=$(grep -v "/\.git/" <<<"$std_output")
     std_output=$(_text_remove_pwd "$std_output")
 
     _display_text_box "$std_output"
