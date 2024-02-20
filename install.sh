@@ -13,6 +13,8 @@ _main() {
     local menu_options=""
     local opt=""
 
+    echo "Nautilus Scripts installation."
+
     # Get the default file manager.
     if _command_exists "nautilus"; then
         INSTALL_DIR="$HOME/.local/share/nautilus/scripts"
@@ -30,14 +32,14 @@ _main() {
     fi
 
     # Show the main options
-    read -r -p "Install basic package dependencies? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
+    read -r -p " > Install basic package dependencies? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
     if [[ -n "$ACCELS_DIR" ]]; then
-        read -r -p "Install the file 'scripts-accels'? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
+        read -r -p " > Install the file 'scripts-accels'? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
     fi
     if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
-        read -r -p "Preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
+        read -r -p " > Preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
     fi
-    read -r -p "Close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
+    read -r -p " > Close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
 
     echo
     echo "Starting the installation..."
