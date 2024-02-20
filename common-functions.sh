@@ -54,6 +54,19 @@ _check_dependencies() {
     local message=""
     local package_name=""
     local dependency=""
+    local pkg_manager=""
+
+    # Check for installed package manager.
+    if _command_exists "apt-get"; then
+        pkg_manager="apt"
+    elif _command_exists "pacman"; then
+        pkg_manager="pacman"
+    elif _command_exists "dnf"; then
+        pkg_manager="dnf"
+    else
+        _display_error_box "Could not find a package manager!"
+        _exit_script
+    fi
 
     # Add basic commands to check.
     dependencies="file xargs(findutils) pstree(psmisc) cmp(diffutils) mkfifo(coreutils) $dependencies"
@@ -73,16 +86,7 @@ _check_dependencies() {
 
         # Select the package according the package manager.
         if [[ -n "$package_name" ]] && [[ "$package_name" == *":"* ]]; then
-            if _command_exists "apt-get"; then
-                package_name=$(grep --only-matching "apt:[a-z0-9-]*" <<<"$package_name" | sed "s|.*:||g")
-            elif _command_exists "pacman"; then
-                package_name=$(grep --only-matching "pacman:[a-z0-9-]*" <<<"$package_name" | sed "s|.*:||g")
-            elif _command_exists "dnf"; then
-                package_name=$(grep --only-matching "dnf:[a-z0-9-]*" <<<"$package_name" | sed "s|.*:||g")
-            else
-                _display_error_box "Could not find a package manager!"
-                _exit_script
-            fi
+            package_name=$(grep --only-matching "$pkg_manager:[a-z0-9-]*" <<<"$package_name" | sed "s|.*:||g")
         fi
 
         # Ask to the user to install the dependency.
@@ -370,38 +374,31 @@ _expand_directory() {
     local par_type=$2
     local par_select_extension=$3
     local par_skip_extension=$4
-    local selected_files=""
-    local find_type_parameter=""
+    local find_command=""
+
+    # Build a 'find' command.
+    find_command="find \"$input_directory\""
 
     # Expand the directories with 'find' command.
     case "$par_type" in
-    "all") find_type_parameter="f,d" ;;
-    "file") find_type_parameter="f" ;;
-    "directory") find_type_parameter="d" ;;
+    "file") find_command+=" ! -type d" ;;
+    "directory") find_command+=" -type d" ;;
     esac
 
     if [[ -n "$par_select_extension" ]]; then
-        selected_files=$(find "$input_directory" \
-            -type "$find_type_parameter" \
-            -regextype posix-extended \
-            -regex ".*($par_select_extension)$" \
-            ! -path "$IGNORE_FIND_PATH" \
-            -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
+        find_command+=" -regextype posix-extended "
+        find_command+=" -regex \".*($par_select_extension)$\""
     elif [[ -n "$par_skip_extension" ]]; then
-        selected_files=$(find "$input_directory" \
-            -type "$find_type_parameter" \
-            -regextype posix-extended \
-            ! -regex ".*($par_skip_extension)$" \
-            ! -path "$IGNORE_FIND_PATH" \
-            -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
-    else
-        selected_files=$(find "$input_directory" \
-            -type "$find_type_parameter" \
-            ! -path "$IGNORE_FIND_PATH" \
-            -printf "%p$FILENAME_SEPARATOR" 2>/dev/null)
+        find_command+=" -regextype posix-extended "
+        find_command+=" ! -regex \".*($par_select_extension)$\""
     fi
 
-    echo -n "$selected_files"
+    find_command+=" ! -path \"$IGNORE_FIND_PATH\""
+    # shellcheck disable=SC2089
+    find_command+=" -printf \"%p$FILENAME_SEPARATOR\""
+
+    # shellcheck disable=SC2086
+    eval $find_command 2>/dev/null
 }
 
 _has_string_in_list() {
@@ -1079,15 +1076,15 @@ _validate_file_preselect() {
     local par_recursive=$5
     local input_file_valid=""
 
-    if [[ -f "$input_file" ]]; then # If the 'input_file' is a regular file.
+    if [[ ! -d "$input_file" ]]; then # If the 'input_file' is a file.
         _validate_file_extension "$input_file" "$par_skip_extension" "$par_select_extension" || return 1
 
-        # Add the regular file in the 'input_file_valid'.
+        # Add the file in the 'input_file_valid'.
         if [[ "$par_type" == "file" ]] || [[ "$par_type" == "all" ]]; then
             input_file_valid=$(_get_full_path_file "$input_file")
             input_file_valid+=$FILENAME_SEPARATOR
         fi
-    elif [[ -d "$input_file" ]]; then # If the 'input_file' is a directory.
+    else # If the 'input_file' is a directory.
         if [[ "$par_recursive" == "true" ]]; then
             # Add the expanded files (or directories) in the 'input_file_valid'.
             input_file_valid=$(_expand_directory \
