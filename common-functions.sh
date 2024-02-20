@@ -479,7 +479,7 @@ _get_distro_name() {
 _get_filename_extension() {
     local filename=$1
 
-    grep --ignore-case --only-matching --perl-regexp "(\.tar)?\.[a-z0-9_~-]*$" <<<"$filename"
+    grep --ignore-case --only-matching --perl-regexp "(\.tar)?\.[a-z0-9_~-]*$" <<<"$filename" || true
 }
 
 _get_filename_next_suffix() {
@@ -984,16 +984,10 @@ _temp_result_write() {
     echo "$input_text" >"$temp_file"
 }
 
-_text_sort() {
-    local input_text=$1
-
-    sort --version-sort <<<"$input_text"
-}
-
 _text_remove_empty_lines() {
     local input_text=$1
 
-    grep -v "^$" <<<"$input_text"
+    grep -v "^$" <<<"$input_text" || true
 }
 
 _text_remove_home() {
@@ -1016,6 +1010,12 @@ _text_remove_pwd() {
     fi
 
     echo "$input_text"
+}
+
+_text_sort() {
+    local input_text=$1
+
+    sort --version-sort <<<"$input_text"
 }
 
 _text_uri_decode() {
