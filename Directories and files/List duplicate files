@@ -19,6 +19,7 @@ _main() {
     std_output=$(jdupes --recurse -- $input_files 2>/dev/null)
     # NOTE: Older versions of 'jdupes' do not support '-X nostr:/.git/'.
     std_output=$(grep -v "/\.git/" <<<"$std_output")
+    std_output=$(sed ':a;N;$!ba;s/\n\{2,\}/\n\n/g' <<<"$std_output") # Remove multiple empty lines
     std_output=$(_text_remove_pwd "$std_output")
 
     _display_text_box "$std_output"
