@@ -27,7 +27,7 @@ _main() {
     std_output=$(sed "s|//.*with CR, LF line.*|// CR+LF (mac)|" <<<"$std_output")
     std_output=$(sed "s|//.*no line.*|// (no line)|" <<<"$std_output")
     std_output=$(sed "s|//.*text.*|// LF (unix)|" <<<"$std_output")
-    std_output=$(sed "s|\(.*\)// *\(.*\)|\2: \"\1\"|" <<<"$std_output")
+    std_output=$(sed "s|\(.*\)// *\(.*\)|\2: '\1'|" <<<"$std_output")
     std_output=$(grep "(windows):\|(unix):\|(mac):\|(no line):" <<<"$std_output")
     std_output=$(_text_sort "$std_output")
 
