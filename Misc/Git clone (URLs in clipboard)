@@ -50,7 +50,6 @@ _get_repositories_from_clipboard() {
     urls=$(grep "\.git" <<<"$urls")
     urls=$(sort -u <<<"$urls")
     urls=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$urls")
-    urls=${urls%"$FILENAME_SEPARATOR"}
 
     if [[ -z "$urls" ]]; then
         _display_error_box "There are no valid URLs in the clipboard!"
