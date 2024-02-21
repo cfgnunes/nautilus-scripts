@@ -13,7 +13,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies ""
     _display_wait_box
-    input_files=$(_get_files "type:file, recursive:true, skip_encoding:binary, skip_extension:pdf")
+    input_files=$(_get_files "type:file, recursive:true, skip_encoding:binary, skip_extension:pdf|svg")
 
     # Run the main process.
     # shellcheck disable=SC2086
