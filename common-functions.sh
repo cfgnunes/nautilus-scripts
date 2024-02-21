@@ -499,29 +499,24 @@ _get_filename_next_suffix() {
 
 _get_filemanager_list() {
     local input_files=""
-    set +u
+    local var_filemanager=""
 
     # Try to use the list of input files provided by the file manager.
-    if [[ -n "$NAUTILUS_SCRIPT_SELECTED_URIS" ]]; then
-        input_files=$NAUTILUS_SCRIPT_SELECTED_URIS # Nautilus
-    elif [[ -n "$NEMO_SCRIPT_SELECTED_URIS" ]]; then
-        input_files=$NEMO_SCRIPT_SELECTED_URIS # Nemo
-    elif [[ -n "$CAJA_SCRIPT_SELECTED_URIS" ]]; then
-        input_files=$CAJA_SCRIPT_SELECTED_URIS # Caja
+    var_filemanager=$(printenv | grep --only-matching ".*SCRIPT_SELECTED_URIS")
+
+    if [[ -n "$var_filemanager" ]]; then
+        input_files=${!var_filemanager}
+
+        # Replace '\n' to 'FILENAME_SEPARATOR'.
+        input_files=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$input_files")
+
+        # Decode the URI list.
+        input_files=$(_text_uri_decode "$input_files")
+        input_files=${input_files//file:\/\//}
     else
-        set -u
-        echo -n "$INPUT_FILES" # Standard input
-        return
+        input_files=$INPUT_FILES # Standard input
     fi
 
-    # Replace '\n' to 'FILENAME_SEPARATOR'.
-    input_files=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$input_files")
-
-    # Decode the URI list.
-    input_files=$(_text_uri_decode "$input_files")
-    input_files=${input_files//file:\/\//}
-
-    set -u
     echo -n "$input_files"
 }
 
