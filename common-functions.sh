@@ -1225,7 +1225,7 @@ _validate_files_count() {
     local par_select_extension=$3
     local par_select_mime=$4
     local par_skip_encoding=$5
-    local par_min_files=$6
+    local par_min_files="${6:-1}"
     local par_max_files=$7
 
     # Define a term for a valid file.
@@ -1255,7 +1255,7 @@ _validate_files_count() {
     fi
 
     # Check if there is at least one valid file.
-    if ((valid_files_count == 0)); then
+    if ((valid_files_count == 0)) && ((par_min_files != 0)); then
         if [[ -n "$par_select_extension" ]]; then
             _display_error_box "You must select files with extension: '.${par_select_extension//|/\' or \'.}'!"
         else
