@@ -513,6 +513,9 @@ _get_filemanager_list() {
         input_files=$INPUT_FILES # Standard input
     fi
 
+    # Removes last field separators.
+    input_files=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$input_files")
+
     echo -n "$input_files"
 }
 
