@@ -467,10 +467,6 @@ _is_gui_session() {
     return 1
 }
 
-_get_distro_name() {
-    cat /etc/*-release | grep --ignore-case "^id=" | cut -d "=" -f 2
-}
-
 _get_filename_extension() {
     local filename=$1
 
