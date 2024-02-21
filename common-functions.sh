@@ -592,21 +592,20 @@ _get_files() {
 
     # Check if there are input files.
     if [[ -z "$input_files" ]]; then
-        # Return the current working directory if there are no files selected.
         if [[ "$par_get_pwd" == "true" ]] && [[ -n "$PWD" ]]; then
-            echo -n "$PWD"
-            return 0
-        fi
-
-        # Try selecting the files by opening a file selection box.
-        if [[ "$par_type" == "directory" ]]; then
-            input_files=$(_display_dir_selection_box)
+            # Return the current working directory if there are no files selected.
+            input_files=$PWD
         else
-            input_files=$(_display_file_selection_box)
-        fi
-        if [[ -z "$input_files" ]]; then
-            _display_error_box "There are no input files!"
-            _exit_script
+            # Try selecting the files by opening a file selection box.
+            if [[ "$par_type" == "directory" ]]; then
+                input_files=$(_display_dir_selection_box)
+            else
+                input_files=$(_display_file_selection_box)
+            fi
+            if [[ -z "$input_files" ]]; then
+                _display_error_box "There are no input files!"
+                _exit_script
+            fi
         fi
     fi
 

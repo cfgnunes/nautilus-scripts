@@ -7,5 +7,9 @@ F7 Disk Usage Analyzer
 <Control>K Compress...
 <Control>M Compare with Meld
 <Control>Y List file type
-<Control><Shift>Y List permissions and owners
+<Control><Shift>A List all files
+<Control><Shift>D List duplicate files
+<Control><Shift>E List empty directories
+<Control><Shift>H List hidden files
 <Control><Shift>O Open link target
+<Control><Shift>P List permissions and owners
