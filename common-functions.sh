@@ -1015,7 +1015,7 @@ _validate_conflict_filenames() {
     local input_files=$1
     local dup_filenames="$input_files"
 
-    dup_filenames=$(sed -z "s|\n|//|g" <<<"$dup_filenames")
+    dup_filenames=$(tr "\n" "\v" <<<"$dup_filenames")
     dup_filenames=$(tr "$FILENAME_SEPARATOR" "\n" <<<"$dup_filenames")
     dup_filenames=$(_strip_filename_extension "$dup_filenames")
     dup_filenames=$(uniq -d <<<"$dup_filenames")
