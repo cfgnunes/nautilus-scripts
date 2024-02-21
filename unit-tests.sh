@@ -33,7 +33,6 @@ _main() {
     _run_has_string_in_list
     _run_install_package
     _run_is_gui_session
-    _run_get_distro_name
     _run_get_filename_extension
     _run_get_filename_next_suffix
     _run_get_filemanager_list
@@ -207,11 +206,6 @@ _run_install_package() {
 
 _run_is_gui_session() {
     # TODO Implement the test: '_run_is_gui_session'.
-    :
-}
-
-_run_get_distro_name() {
-    # TODO Implement the test: '_run_get_distro_name'.
     :
 }
 
