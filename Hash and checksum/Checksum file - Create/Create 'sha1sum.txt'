@@ -20,7 +20,7 @@ _main() {
 
     local compiled_output_file=""
     compiled_output_file=$(_get_filename_next_suffix "$output_dir/sha1sum.txt")
-    _temp_result_compile >"$compiled_output_file"
+    _process_result_compile >"$compiled_output_file"
 
     _display_result_box "$output_dir"
 }
@@ -34,7 +34,7 @@ _main_task() {
     std_output=$(sha1sum -- "$input_file" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
 
-    _temp_result_write "$std_output"
+    _process_result_write "$std_output"
 }
 
 _main "$@"

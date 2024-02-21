@@ -891,6 +891,20 @@ _print_terminal() {
     fi
 }
 
+_process_result_compile() {
+    # Compile all temp results into a single output.
+    cat -- "$TEMP_DIR_TASK/result"* 2>/dev/null
+}
+
+_process_result_write() {
+    local input_text=$1
+    local temp_file=""
+
+    # Save the result from a parallel task to be compiled into a single output.
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK" "result.XXXXXXXXXX")
+    echo "$input_text" >"$temp_file"
+}
+
 _read_array_values() {
     local start_index=$1
     local char_delimiter=$2
@@ -929,9 +943,9 @@ _run_task_parallel() {
         _main_task \
         _move_file \
         _move_temp_file_to_output \
+        _process_result_write \
         _read_array_values \
         _strip_filename_extension \
-        _temp_result_write \
         _text_remove_pwd \
         _log_write
 
@@ -950,20 +964,6 @@ _strip_filename_extension() {
     local filename=$1
 
     sed -r "s|(\.tar)?\.[a-z0-9_~-]*$||i" <<<"$filename"
-}
-
-_temp_result_compile() {
-    # Compile all temp results into a single output.
-    cat -- "$TEMP_DIR_TASK/result"* 2>/dev/null
-}
-
-_temp_result_write() {
-    local input_text=$1
-    local temp_file=""
-
-    # Save the result from a parallel task to be compiled into a single output.
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK" "result.XXXXXXXXXX")
-    echo "$input_text" >"$temp_file"
 }
 
 _text_remove_empty_lines() {
