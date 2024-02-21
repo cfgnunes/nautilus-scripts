@@ -520,7 +520,7 @@ _get_filemanager_list() {
     fi
 
     # Replace '\n' to 'FILENAME_SEPARATOR'.
-    input_files=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$input_files")
+    input_files=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$input_files")
 
     # Decode the URI list.
     input_files=$(_text_uri_decode "$input_files")
@@ -651,12 +651,12 @@ _get_files() {
         "$par_max_files"
 
     # Sort the list by filename.
-    input_files=$(sed -z "s|\n|//|g" <<<"$input_files")
-    input_files=$(sed "s|//$||" <<<"$input_files")
-    input_files=$(sed -z "s|$FILENAME_SEPARATOR|\n|g" <<<"$input_files")
+    input_files=$(tr "\n" "\v" <<<"$input_files")
+    input_files=$(sed "s|\v$||" <<<"$input_files")
+    input_files=$(tr "$FILENAME_SEPARATOR" "\n" <<<"$input_files")
     input_files=$(_text_sort "$input_files")
-    input_files=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$input_files")
-    input_files=$(sed -z "s|//|\n|g" <<<"$input_files")
+    input_files=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$input_files")
+    input_files=$(tr "\v" "\n" <<<"$input_files")
 
     # Validates filenames with same base name.
     if [[ "$par_validate_conflict" == "true" ]]; then
@@ -1029,7 +1029,7 @@ _validate_conflict_filenames() {
     local dup_filenames="$input_files"
 
     dup_filenames=$(sed -z "s|\n|//|g" <<<"$dup_filenames")
-    dup_filenames=$(sed -z "s|$FILENAME_SEPARATOR|\n|g" <<<"$dup_filenames")
+    dup_filenames=$(tr "$FILENAME_SEPARATOR" "\n" <<<"$dup_filenames")
     dup_filenames=$(_strip_filename_extension "$dup_filenames")
     dup_filenames=$(uniq -d <<<"$dup_filenames")
 

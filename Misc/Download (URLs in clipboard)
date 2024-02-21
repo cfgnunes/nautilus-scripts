@@ -47,7 +47,7 @@ _get_urls_from_clipboard() {
     urls=$(grep -v " " <<<"$urls")                 # Remove lines with spaces.
     urls=$(grep "^http" <<<"$urls")
     urls=$(sort -u <<<"$urls")
-    urls=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$urls")
+    urls=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$urls")
     urls=${urls%"$FILENAME_SEPARATOR"}
 
     if [[ -z "$urls" ]]; then

@@ -49,7 +49,7 @@ _get_repositories_from_clipboard() {
     urls=$(grep "/" <<<"$urls")
     urls=$(grep "\.git" <<<"$urls")
     urls=$(sort -u <<<"$urls")
-    urls=$(sed -z "s|\n|$FILENAME_SEPARATOR|g" <<<"$urls")
+    urls=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$urls")
     urls=${urls%"$FILENAME_SEPARATOR"}
 
     if [[ -z "$urls" ]]; then
