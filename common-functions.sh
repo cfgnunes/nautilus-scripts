@@ -339,7 +339,7 @@ _display_wait_box_message() {
 
 _close_wait_box() {
     # If 'wait_box' is open (waiting an input in the 'fifo').
-    if pgrep -fl "$WAIT_BOX_FIFO"; then
+    if pgrep -fl "$WAIT_BOX_FIFO" &>/dev/null; then
         # Close the zenity progress by FIFO: Send a 'echo' for the 'cat' command.
         echo >"$WAIT_BOX_FIFO"
     fi
