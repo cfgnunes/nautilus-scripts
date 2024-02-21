@@ -16,12 +16,12 @@ _main() {
     checksum_file=$(cat "$input_files")
     checksum_file=$(sed -z "s|'|'\\\''|g" <<<"$checksum_file")
 
-    export -f _temp_result_write
+    export -f _process_result_write
     export -f _verify_checksum
     export TEMP_DIR_TASK
     echo -n "$checksum_file" | xargs --max-procs="$(_get_max_procs)" --delimiter=$'\n' --replace="{}" bash -c "_verify_checksum '{}'"
 
-    std_output=$(_temp_result_compile)
+    std_output=$(_process_result_compile)
     std_output=$(_text_sort "$std_output")
 
     if [[ -z "$std_output" ]]; then
@@ -46,7 +46,7 @@ _verify_checksum() {
 
     # If the file does not exist, report and skip the check.
     if [[ ! -e "$saved_file_decoded" ]]; then
-        _temp_result_write "[ERROR] No such file: $saved_file"
+        _process_result_write "[ERROR] No such file: $saved_file"
         return 1
     fi
 
@@ -55,7 +55,7 @@ _verify_checksum() {
 
     # Compare the checksum.
     if [[ "$saved_checksum" != "$current_checksum" ]]; then
-        _temp_result_write "[ERROR] Mismatch checksum for the file: $saved_file. Saved: $saved_checksum. Current: $current_checksum."
+        _process_result_write "[ERROR] Mismatch checksum for the file: $saved_file. Saved: $saved_checksum. Current: $current_checksum."
         return 1
     fi
 
