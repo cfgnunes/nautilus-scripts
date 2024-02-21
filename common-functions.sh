@@ -526,9 +526,6 @@ _get_filemanager_list() {
     input_files=$(_text_uri_decode "$input_files")
     input_files=${input_files//file:\/\//}
 
-    # Removes last field separators.
-    input_files=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$input_files")
-
     set -u
     echo -n "$input_files"
 }
@@ -956,7 +953,7 @@ _run_task_parallel() {
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Execute the function '_main_task' for each file in parallel (using 'xargs').
-    echo -n "$input_files" | xargs \
+    echo -n "$input_files" | sed "s|$FILENAME_SEPARATOR*$||" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
@@ -1128,7 +1125,7 @@ _validate_file_mime_parallel() {
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Run '_validate_file_mime' for each file in parallel (using 'xargs').
-    echo -n "$input_files" | xargs \
+    echo -n "$input_files" | sed "s|$FILENAME_SEPARATOR*$||" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
@@ -1215,7 +1212,7 @@ _validate_file_preselect_parallel() {
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Run '_validate_file_preselect' for each file in parallel (using 'xargs').
-    echo -n "$input_files" | xargs \
+    echo -n "$input_files" | sed "s|$FILENAME_SEPARATOR*$||" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
