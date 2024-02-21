@@ -15,11 +15,11 @@ _main() {
     input_files=$(_get_files "type:file, mime:application/pdf, min_files:2")
     output_dir=$(_get_output_dir "use_same_dir:true")
 
-    _main_task_multiple_files "$input_files" "$output_dir"
+    _main_task "$input_files" "$output_dir"
     _display_result_box "$output_dir"
 }
 
-_main_task_multiple_files() {
+_main_task() {
     local input_files=$1
     local output_dir=$2
     local output_file=""
