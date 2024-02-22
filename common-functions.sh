@@ -584,9 +584,9 @@ _get_files() {
 
     # Check if there are input files.
     if [[ -z "$input_files" ]]; then
-        if [[ "$par_get_pwd" == "true" ]] && [[ -n "$PWD" ]]; then
+        if [[ "$par_get_pwd" == "true" ]]; then
             # Return the current working directory if there are no files selected.
-            input_files=$PWD
+            input_files=$(pwd)
         else
             # Try selecting the files by opening a file selection box.
             if [[ "$par_type" == "directory" ]]; then
@@ -664,7 +664,7 @@ _get_max_procs() {
 
 _get_output_dir() {
     local parameters=$1
-    local base_dir=$PWD
+    local base_dir=""
     local output_dir=""
     local par_use_same_dir=""
 
@@ -677,6 +677,7 @@ _get_output_dir() {
     done
 
     # Check directories available to put the 'output' dir.
+    base_dir=$(pwd)
     [[ ! -w "$base_dir" ]] && base_dir=$HOME
     [[ ! -w "$base_dir" ]] && base_dir="/tmp"
     if [[ ! -w "$base_dir" ]]; then
@@ -978,10 +979,10 @@ _text_remove_home() {
 
 _text_remove_pwd() {
     local input_text=$1
-    local pwd=""
-    pwd=$(pwd -P)
+    local string_pwd=""
+    string_pwd=$(pwd -P)
 
-    sed "s|$pwd|.|g; s|\./\./|./|g" <<<"$input_text"
+    sed "s|$string_pwd|.|g; s|\./\./|./|g" <<<"$input_text"
 }
 
 _text_sort() {
