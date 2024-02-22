@@ -970,7 +970,7 @@ _text_remove_home() {
     local input_text=$1
 
     if [[ -n "$HOME" ]]; then
-        sed "s|$HOME/|~/|g" <<<"$input_text"
+        sed "s|$HOME|~|g" <<<"$input_text"
     else
         echo "$input_text"
     fi
@@ -981,7 +981,7 @@ _text_remove_pwd() {
     local pwd=""
     pwd=$(pwd -P)
 
-    sed "s|$pwd/|./|g; s|\./\./|./|g" <<<"$input_text"
+    sed "s|$pwd|.|g; s|\./\./|./|g" <<<"$input_text"
 }
 
 _text_sort() {
