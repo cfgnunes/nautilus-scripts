@@ -5,7 +5,7 @@
 set -eu
 
 # Global variables
-ACCELS_DIR=""
+ACCELS_FILE=""
 FILE_MANAGER=""
 INSTALL_DIR=""
 
@@ -18,13 +18,15 @@ _main() {
     # Get the default file manager.
     if _command_exists "nautilus"; then
         INSTALL_DIR="$HOME/.local/share/nautilus/scripts"
-        ACCELS_DIR="$HOME/.config/nautilus"
+        ACCELS_FILE="$HOME/.config/nautilus/scripts-accels"
         FILE_MANAGER="nautilus"
     elif _command_exists "nemo"; then
         INSTALL_DIR="$HOME/.local/share/nemo/scripts"
+        ACCELS_FILE="$HOME/.gnome2/accels/nemo"
         FILE_MANAGER="nemo"
     elif _command_exists "caja"; then
         INSTALL_DIR="$HOME/.config/caja/scripts"
+        ACCELS_FILE="$HOME/.config/caja/accels"
         FILE_MANAGER="caja"
     else
         echo "Error: could not find any compatible file managers!"
@@ -33,7 +35,7 @@ _main() {
 
     # Show the main options
     read -r -p " > Install basic package dependencies? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
-    if [[ -n "$ACCELS_DIR" ]]; then
+    if [[ -f "accels-$FILE_MANAGER" ]]; then
         read -r -p " > Install the file 'scripts-accels'? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
     fi
     if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
@@ -116,12 +118,10 @@ _install_scripts() {
 
     # Install the file 'scripts-accels'.
     if [[ "$menu_options" == *"accels"* ]]; then
-        if [[ -n "$ACCELS_DIR" ]]; then
-            echo " > Installing the file 'scripts-accels'..."
-            rm -f -- "$ACCELS_DIR/scripts-accels"
-            mkdir --parents "$ACCELS_DIR"
-            cp "scripts-accels" "$ACCELS_DIR/scripts-accels"
-        fi
+        echo " > Installing the file 'scripts-accels'..."
+        mkdir --parents "$(dirname -- "$ACCELS_FILE")"
+        mv "$ACCELS_FILE" "$ACCELS_FILE.bak" 2>/dev/null || true
+        cp "accels-$FILE_MANAGER" "$ACCELS_FILE"
     fi
 
     # Set file permissions.
