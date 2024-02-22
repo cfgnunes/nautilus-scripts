@@ -121,7 +121,24 @@ _install_scripts() {
         echo " > Installing the file 'scripts-accels'..."
         mkdir --parents "$(dirname -- "$ACCELS_FILE")"
         mv "$ACCELS_FILE" "$ACCELS_FILE.bak" 2>/dev/null || true
-        cp "accels-$FILE_MANAGER" "$ACCELS_FILE"
+
+        case "$FILE_MANAGER" in
+        "nautilus")
+            cp "accels-nautilus" "$ACCELS_FILE"
+            ;;
+        "nemo")
+            cp "accels-gtk2" "$ACCELS_FILE"
+            sed -i "s|USER|$USER|g" "$ACCELS_FILE"
+            sed -i "s|FILE_MANAGER|$FILE_MANAGER|g" "$ACCELS_FILE"
+            sed -i "s|ACCELS_PATH|local\\\\\\\\sshare\\\\\\\\snemo|g" "$ACCELS_FILE"
+            ;;
+        "caja")
+            cp "accels-gtk2" "$ACCELS_FILE"
+            sed -i "s|USER|$USER|g" "$ACCELS_FILE"
+            sed -i "s|FILE_MANAGER|$FILE_MANAGER|g" "$ACCELS_FILE"
+            sed -i "s|ACCELS_PATH|config\\\\\\\\scaja|g" "$ACCELS_FILE"
+            ;;
+        esac
     fi
 
     # Set file permissions.

@@ -1,0 +1,18 @@
+; FILE_MANAGER GtkAccelMap rc-file         -*- scheme -*-
+; this file is an automated accelerator map dump
+;
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sArchive\\sCompress..." "<Primary>K")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sArchive\\sExtract%20Here" "<Primary>E")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sCompare%20with%20Meld" "<Primary>M")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20all%20files" "<Primary><Shift>A")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20duplicate%20files" "<Primary><Shift>J")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20empty%20directories" "<Primary><Shift>E ")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20file%20type" "<Primary>Y")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20hidden%20files" "<Primary><Shift>H")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sFile%20permissions\\sList%20permissions%20and%20owners" "<Primary><Shift>P")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sMisc\\sDownload%20(URLs%20in%20clipboard)" "<Primary><Shift>D")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sMisc\\sGit%20clone%20(URLs%20in%20clipboard)" "<Primary><Shift>G")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sMisc\\sOpen%20link%20target" "<Primary><Shift>O")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sOpen%20with\\sDisk%20Usage%20Analyzer" "F7")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sOpen%20with\\sTerminal" "F4")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sOpen%20with\\sCode%20Editor" "F3")
