@@ -1,8 +1,8 @@
 ; FILE_MANAGER GtkAccelMap rc-file         -*- scheme -*-
 ; this file is an automated accelerator map dump
 ;
-(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sArchive\\sCompress..." "<Primary><Shift>c")
-(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sArchive\\sExtract%20Here" "<Primary>e")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sArchiving\\sCompress..." "<Primary><Shift>c")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sArchiving\\sExtract%20Here" "<Primary>e")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sCompare%20with%20Meld" "<Primary><Shift>m")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20all%20files" "<Primary><Shift>a")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20duplicate%20files" "<Primary><Shift>j")
