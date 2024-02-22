@@ -9,12 +9,15 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _check_dependencies "file-roller"
     input_files=$(_get_files "type:all")
 
     # Run the main process.
     # shellcheck disable=SC2086
-    file-roller --add -- $input_files &
+    if _command_exists "file-roller"; then
+        file-roller --add -- $input_files &
+    elif _command_exists "engrampa"; then
+        engrampa --add -- $input_files &
+    fi
 }
 
 _main "$@"
