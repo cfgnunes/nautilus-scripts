@@ -14,7 +14,7 @@ _main() {
     local menu_options=""
     local opt=""
 
-    echo "Nautilus Scripts installation."
+    echo "Scripts installer."
 
     # Get the default file manager.
     if _command_exists "nautilus"; then
