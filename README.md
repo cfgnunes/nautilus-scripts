@@ -8,17 +8,37 @@ While there are numerous scripts available for GNOME Files on the web, many of t
 
 - **Parallel task execution**: Processes multiple files simultaneously.
 - **Progress dialog**: Displays a progress dialog and allows interruption of tasks at any time.
-- **Easy adaptation**: Scripts are easily copied and adapted for other purposes.
-- **Direct usage**: Enables direct usage without requiring input parameters.
 - **Status notifications**: Notifies users of dependency errors and MIME types.
+- **Keyboard shortcuts**: Provides keyboard shortcuts for the scripts.
+- **Dependency management**: Prompts users to install any missing dependencies.
 - **Non-destructive output**: Never overwrites the input file; the output is distinct from the input.
 - **Log file**: Produces an `Errors.log` file when a task ends with an error.
-- **Dependency management**: Prompts users to install any missing dependencies.
-- **Compatibility with any file manager**: Works with any file manager.
-- **Keyboard shortcuts**: Provides keyboard shortcuts for the scripts (refer to the `scripts-accels` file).
+- **Direct usage**: Enables direct usage without requiring input parameters.
 - **Bash implementation**: All scripts are implemented in Bash.
+- **Easy adaptation**: Scripts are easily copied and adapted for other purposes.
 - **Shell script validation**: All scripts have been checked using [ShellCheck](https://github.com/koalaman/shellcheck).
+- **Compatibility with any file manager**: Works with any file manager (Nautilus, Caja, Nemo).
 - **Linux distribution compatibility**: Designed to work seamlessly on major Linux distributions, such as Ubuntu, Mint, Debian, Fedora and Manjaro.
+
+## Keyboard Shortcuts
+
+| Key                 | Action                        |
+| ------------------- | ----------------------------- |
+| `F3`                | Code Editor                   |
+| `F4`                | Terminal                      |
+| `F7`                | Disk Usage Analyzer           |
+| `<Control>E`        | Extract Here                  |
+| `<Control>Y`        | List file type                |
+| `<Control><Shift>A` | List all files                |
+| `<Control><Shift>C` | Compress...                   |
+| `<Control><Shift>D` | Download (URLs in clipboard)  |
+| `<Control><Shift>E` | List empty directories        |
+| `<Control><Shift>G` | Git clone (URLs in clipboard) |
+| `<Control><Shift>H` | List hidden files             |
+| `<Control><Shift>J` | List duplicate files          |
+| `<Control><Shift>M` | Compare with Meld             |
+| `<Control><Shift>O` | Open link target              |
+| `<Control><Shift>P` | List permissions and owners   |
 
 ## Installing
 
