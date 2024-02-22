@@ -27,7 +27,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file=$(_get_output_file "$input_file" "$output_dir" "extension_option:append, extension:base64")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:append, extension:base64")
     std_output=$(base64 -- "$input_file" >"$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }

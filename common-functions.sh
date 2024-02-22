@@ -696,13 +696,13 @@ _get_output_dir() {
     echo "$output_dir"
 }
 
-_get_output_file() {
+_get_output_filename() {
     local input_file=$1
     local output_dir=$2
     local parameters=$3
     local output_file=""
     local filename=""
-    local par_extension_option="new"
+    local par_extension_opt="preserve"
     local par_extension=""
     local par_prefix=""
 
@@ -710,7 +710,7 @@ _get_output_file() {
     IFS=":, " read -r -a par_array <<<"$parameters"
     for i in "${!par_array[@]}"; do
         case "${par_array[i]}" in
-        "extension_option") par_extension_option=${par_array[i + 1]} ;;
+        "extension_opt") par_extension_opt=${par_array[i + 1]} ;;
         "extension") par_extension=${par_array[i + 1]} ;;
         "prefix") par_prefix=$(_read_array_values "$i" "," "${par_array[@]}") ;;
         esac
@@ -719,21 +719,21 @@ _get_output_file() {
     filename=$(basename -- "$input_file")
     output_file="$output_dir/"
 
-    # Change the extension of the 'output_file'.
-    case "$par_extension_option" in
+    # Define the extension of the 'output_file'.
+    case "$par_extension_opt" in
     "append")
         [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
         output_file+="$filename"
         output_file+=".$par_extension"
         ;;
-    "copy")
-        [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
-        output_file+="$filename"
-        ;;
-    "new")
+    "modify")
         [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
         output_file+="$(_strip_filename_extension "$filename")"
         output_file+=".$par_extension"
+        ;;
+    "preserve")
+        [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
+        output_file+="$filename"
         ;;
     "strip")
         [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
@@ -930,7 +930,7 @@ _run_task_parallel() {
         _get_filename_extension \
         _get_filename_next_suffix \
         _get_max_procs \
-        _get_output_file \
+        _get_output_filename \
         _main_task \
         _move_file \
         _move_temp_file_to_output \

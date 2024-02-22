@@ -41,7 +41,7 @@ _main() {
     _run_get_full_path_file
     _run_get_max_procs
     _run_get_output_dir
-    _run_get_output_file
+    _run_get_output_filename
     _run_get_script_name
     _run_log_compile
     _run_log_write
@@ -295,8 +295,8 @@ _run_get_output_dir() {
     :
 }
 
-_run_get_output_file() {
-    # TODO Implement the test: '_run_get_output_file'.
+_run_get_output_filename() {
+    # TODO Implement the test: '_run_get_output_filename'.
     :
 }
 

@@ -27,7 +27,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_filename_next_suffix "$output_dir/Concatenated images.png")
-    output_file=$(_get_output_file "$output_file" "$output_dir" "extension_option:copy")
+    output_file=$(_get_output_filename "$output_file" "$output_dir" "extension_opt:preserve")
     # shellcheck disable=SC2086
     std_output=$(convert +append -- $input_files "$output_file" 2>&1)
     _check_result "$?" "$std_output" "" "$output_file" || return 1

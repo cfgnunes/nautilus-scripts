@@ -27,7 +27,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file=$(_get_output_file "$input_file" "$output_dir" "extension_option:new, extension:iso")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:modify, extension:iso")
     std_output=$(genisoimage -o "$output_file" -V "$(basename -- "$input_file")" -A "" -sysid "" -J -joliet-long -R "$input_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
