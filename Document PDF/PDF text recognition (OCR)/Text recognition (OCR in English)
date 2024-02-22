@@ -30,7 +30,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file=$(_get_output_file "$input_file" "$output_dir" "extension_option:copy")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:preserve")
     std_output=$(ocrmypdf --l eng --optimize 0 --output-type pdfa --skip-text --jobs "$(_get_max_procs)" -- "$input_file" "$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 }

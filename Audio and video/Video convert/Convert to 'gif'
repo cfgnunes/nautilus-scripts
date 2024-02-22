@@ -27,7 +27,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file=$(_get_output_file "$input_file" "$output_dir" "extension_option:new, extension:gif")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:modify, extension:gif")
     std_output=$(ffmpeg -y -i "$input_file" -filter:v "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 -- "$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }

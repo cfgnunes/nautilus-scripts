@@ -27,7 +27,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file=$(_get_output_file "$input_file" "$output_dir" "extension_option:new, extension:7z")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:modify, extension:7z")
     if [[ -d "$input_file" ]]; then
         cd -- "$input_file" || return 1
         std_output=$(7za a -mx9 "$output_file" -- . 2>&1)
