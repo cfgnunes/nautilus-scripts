@@ -17,6 +17,9 @@ _main() {
         gnome-terminal --working-directory="$input_files" &
     elif _command_exists "mate-terminal"; then
         mate-terminal --working-directory="$input_files" &
+    else
+        _check_dependencies "gnome-terminal"
+        gnome-terminal --working-directory="$input_files" &
     fi
 }
 

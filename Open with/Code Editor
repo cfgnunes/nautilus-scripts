@@ -23,6 +23,9 @@ _main() {
         gedit -- $input_files &
     elif _command_exists "xed"; then
         xed -- $input_files &
+    else
+        _check_dependencies "gedit"
+        gedit -- $input_files &
     fi
 }
 

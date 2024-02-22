@@ -17,6 +17,9 @@ _main() {
         file-roller --add -- $input_files &
     elif _command_exists "engrampa"; then
         engrampa --add -- $input_files &
+    else
+        _check_dependencies "file-roller"
+        file-roller --add -- $input_files &
     fi
 }
 
