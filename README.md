@@ -15,7 +15,7 @@ While there are numerous scripts available for GNOME Files on the web, many of t
 - **Log file**: Produces an `Errors.log` file when a task ends with an error.
 - **Dependency management**: Prompts users to install any missing dependencies.
 - **Compatibility with any file manager**: Works with any file manager.
-- **Keyboard shortcuts**: Provides keyboard shortcuts for the scripts (refer to the `scripts-accels` file).
+- **Keyboard shortcuts**: Provides keyboard shortcuts for the scripts (refer to the `accels` file).
 - **Bash implementation**: All scripts are implemented in Bash.
 - **Shell script validation**: All scripts have been checked using [ShellCheck](https://github.com/koalaman/shellcheck).
 - **Linux distribution compatibility**: Designed to work seamlessly on major Linux distributions, such as Ubuntu, Mint, Debian, Fedora and Manjaro.
