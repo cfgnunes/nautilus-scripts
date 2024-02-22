@@ -581,14 +581,6 @@ _get_files() {
         _display_error_box "Not possible to use 'skip_mime' and 'select_mime' together!"
         _exit_script
     fi
-    if [[ $par_type != "file" ]] && [[ -n "$par_select_extension" ]]; then
-        _display_error_box "To use the parameter 'extension', the value of 'type' must be 'file'!"
-        _exit_script
-    fi
-    if [[ $par_type != "file" ]] && [[ -n "$par_skip_extension" ]]; then
-        _display_error_box "To use the parameter 'skip_extension', the value of 'type' must be 'file'!"
-        _exit_script
-    fi
 
     # Check if there are input files.
     if [[ -z "$input_files" ]]; then
