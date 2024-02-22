@@ -2,14 +2,14 @@ F3 Code Editor
 F4 Terminal
 F7 Disk Usage Analyzer
 <Control>E Extract Here
-<Control>K Compress...
-<Control>M Compare with Meld
 <Control>Y List file type
 <Control><Shift>A List all files
+<Control><Shift>C Compress...
 <Control><Shift>D Download (URLs in clipboard)
 <Control><Shift>E List empty directories
 <Control><Shift>G Git clone (URLs in clipboard)
-<Control><Shift>H List hidden files
 <Control><Shift>J List duplicate files
+<Control><Shift>M Compare with Meld
 <Control><Shift>O Open link target
 <Control><Shift>P List permissions and owners
+<Control><Shift>U List hidden files
