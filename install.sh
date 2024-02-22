@@ -5,6 +5,7 @@
 set -eu
 
 # Global variables
+ASSSETS_DIR=".assets"
 ACCELS_FILE=""
 FILE_MANAGER=""
 INSTALL_DIR=""
@@ -35,9 +36,7 @@ _main() {
 
     # Show the main options
     read -r -p " > Install basic package dependencies? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
-    if [[ -f "accels-$FILE_MANAGER" ]]; then
-        read -r -p " > Install the file 'scripts-accels'? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
-    fi
+    read -r -p " > Install the file 'scripts-accels'? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
     if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
         read -r -p " > Preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
     fi
@@ -124,16 +123,16 @@ _install_scripts() {
 
         case "$FILE_MANAGER" in
         "nautilus")
-            cp "accels-nautilus" "$ACCELS_FILE"
+            cp "$ASSSETS_DIR/scripts-accels" "$ACCELS_FILE"
             ;;
         "nemo")
-            cp "accels-gtk2" "$ACCELS_FILE"
+            cp "$ASSSETS_DIR/accels-gtk2" "$ACCELS_FILE"
             sed -i "s|USER|$USER|g" "$ACCELS_FILE"
             sed -i "s|FILE_MANAGER|$FILE_MANAGER|g" "$ACCELS_FILE"
             sed -i "s|ACCELS_PATH|local\\\\\\\\sshare\\\\\\\\snemo|g" "$ACCELS_FILE"
             ;;
         "caja")
-            cp "accels-gtk2" "$ACCELS_FILE"
+            cp "$ASSSETS_DIR/accels-gtk2" "$ACCELS_FILE"
             sed -i "s|USER|$USER|g" "$ACCELS_FILE"
             sed -i "s|FILE_MANAGER|$FILE_MANAGER|g" "$ACCELS_FILE"
             sed -i "s|ACCELS_PATH|config\\\\\\\\scaja|g" "$ACCELS_FILE"
@@ -143,7 +142,7 @@ _install_scripts() {
 
     # Set file permissions.
     echo " > Setting file permissions..."
-    find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
+    find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*$ASSSETS_DIR/*" -exec chmod +x {} \;
 
     # Restore previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then

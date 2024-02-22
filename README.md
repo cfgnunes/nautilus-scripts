@@ -2,7 +2,7 @@
 
 This is a collection of scripts designed to enhance the functionality of file managers such as [GNOME Files](https://gitlab.gnome.org/GNOME/nautilus), [Caja](https://github.com/mate-desktop/caja), and [Nemo](https://github.com/linuxmint/nemo).
 
-![screenshot](screenshot.png)
+![screenshot](.assets/screenshot.png)
 
 While there are numerous scripts available for GNOME Files on the web, many of them suffer from issues like poor functionality, lack of error checking, and dependency management. Some scripts only work with files that don't have spaces in their names, among other limitations. To address these shortcomings, I have developed my own set of scripts, which offer the following advantages:
 
@@ -15,7 +15,7 @@ While there are numerous scripts available for GNOME Files on the web, many of t
 - **Log file**: Produces an `Errors.log` file when a task ends with an error.
 - **Dependency management**: Prompts users to install any missing dependencies.
 - **Compatibility with any file manager**: Works with any file manager.
-- **Keyboard shortcuts**: Provides keyboard shortcuts for the scripts (refer to the `accels` file).
+- **Keyboard shortcuts**: Provides keyboard shortcuts for the scripts (refer to the `scripts-accels` file).
 - **Bash implementation**: All scripts are implemented in Bash.
 - **Shell script validation**: All scripts have been checked using [ShellCheck](https://github.com/koalaman/shellcheck).
 - **Linux distribution compatibility**: Designed to work seamlessly on major Linux distributions, such as Ubuntu, Mint, Debian, Fedora and Manjaro.
