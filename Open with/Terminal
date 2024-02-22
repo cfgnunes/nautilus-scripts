@@ -9,7 +9,6 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _check_dependencies "gnome-terminal"
     input_files=$(_get_files "type:directory, max_files:1, get_pwd_if_no_selection:true")
 
     # shellcheck disable=SC2086
