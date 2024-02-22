@@ -9,12 +9,19 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _check_dependencies "code"
     input_files=$(_get_files "type:all, get_pwd_if_no_selection:true")
 
-    # Run the main process.
     # shellcheck disable=SC2086
-    code -- $input_files &
+    # Run the main process.
+    if _command_exists "code"; then
+        code -- $input_files &
+    elif _command_exists "geany"; then
+        geany -- $input_files &
+    elif _command_exists "gnome-text-editor"; then
+        gnome-text-editor -- $input_files &
+    elif _command_exists "gedit"; then
+        gedit -- $input_files &
+    fi
 }
 
 _main "$@"
