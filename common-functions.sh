@@ -500,7 +500,7 @@ _get_filemanager_list() {
     # Try to use the list of input files provided by the file manager.
     var_filemanager=$(printenv | grep --only-matching -m 1 ".*SCRIPT_SELECTED_URIS")
 
-    if [[ -n "$var_filemanager" ]]; then
+    if [[ -n "$var_filemanager" ]] && [[ -n "${!var_filemanager}" ]]; then
         input_files=${!var_filemanager}
 
         # Replace '\n' to 'FILENAME_SEPARATOR'.
