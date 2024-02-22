@@ -498,7 +498,7 @@ _get_filemanager_list() {
     local var_filemanager=""
 
     # Try to use the list of input files provided by the file manager.
-    var_filemanager=$(printenv | grep --only-matching ".*SCRIPT_SELECTED_URIS")
+    var_filemanager=$(printenv | grep --only-matching -m 1 ".*SCRIPT_SELECTED_URIS")
 
     if [[ -n "$var_filemanager" ]]; then
         input_files=${!var_filemanager}
