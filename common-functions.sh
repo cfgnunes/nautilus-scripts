@@ -760,28 +760,32 @@ _is_gui_session() {
 
 _log_compile() {
     local output_dir=$1
-    local error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
+    local log_file_output="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
+    local log_files_count=""
 
-    if [[ -z "$(ls -A "$TEMP_DIR_LOG" 2>/dev/null)" ]]; then
+    # Do nothing if there is no error log files.
+    log_files_count="$(find "$TEMP_DIR_LOG" -type f | wc -l 2>/dev/null)"
+    if ((log_files_count == 0)); then
         return 1
     fi
 
     if [[ -z "$output_dir" ]]; then
         output_dir=$(_get_output_dir "use_same_dir:true")
     fi
-    error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
+    log_file_output="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
 
     # If the file already exists, add a suffix.
-    error_log_file=$(_get_filename_next_suffix "$error_log_file")
+    log_file_output=$(_get_filename_next_suffix "$log_file_output")
 
     # Compile log errors in a single file.
     {
-        echo "Script: $(_get_script_name)"
+        echo "Script: '$(_get_script_name)'."
+        echo "Total errors: $log_files_count."
         echo
         cat -- "$TEMP_DIR_LOG/"* 2>/dev/null
-    } >"$error_log_file"
+    } >"$log_file_output"
 
-    echo "$error_log_file"
+    echo "$log_file_output"
 }
 
 _log_write() {
