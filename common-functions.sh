@@ -733,14 +733,14 @@ _get_output_filename() {
         output_file+="$filename"
         output_file+=".$par_extension"
         ;;
-    "modify")
-        [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
-        output_file+="$(_strip_filename_extension "$filename")"
-        output_file+=".$par_extension"
-        ;;
     "preserve")
         [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
         output_file+="$filename"
+        ;;
+    "replace")
+        [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
+        output_file+="$(_strip_filename_extension "$filename")"
+        output_file+=".$par_extension"
         ;;
     "strip")
         [[ -n "$par_prefix" ]] && output_file+="$par_prefix "

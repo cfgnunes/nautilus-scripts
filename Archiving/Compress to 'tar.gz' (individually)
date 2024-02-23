@@ -27,7 +27,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:modify, extension:tar.gz")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:tar.gz")
     if [[ -d "$input_file" ]]; then
         cd -- "$input_file" || return 1
         std_output=$(tar -czf "$output_file" --transform="s|^\.||g" -- . 2>&1)
