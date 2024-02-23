@@ -280,7 +280,7 @@ _display_result_box() {
 
     # Check if there was some error.
     if [[ -f "$error_log_file" ]]; then
-        _display_error_box "The task finished with errors! See the '$error_log_file' for details."
+        _display_error_box "Finished with errors! See the '$error_log_file' for details."
         _exit_script
     fi
 
@@ -297,15 +297,15 @@ _display_result_box() {
             output_dir_simple=$(_text_remove_pwd "$output_dir")
             output_dir_simple=$(_text_remove_home "$output_dir_simple")
             if [[ "$output_dir_simple" == "." ]]; then
-                _display_info_box "Task finished! The output files are in the same dir."
+                _display_info_box "Finished! The output files are in the same dir."
             else
-                _display_info_box "Task finished! The output files are in '$output_dir_simple'."
+                _display_info_box "Finished! The output files are in '$output_dir_simple'."
             fi
         else
-            _display_info_box "Task finished, but there are no output files!"
+            _display_info_box "Finished, but there are no output files!"
         fi
     else
-        _display_info_box "Task finished!"
+        _display_info_box "Finished!"
     fi
 }
 
