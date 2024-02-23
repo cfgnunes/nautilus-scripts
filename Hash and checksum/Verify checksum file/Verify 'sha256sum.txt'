@@ -13,8 +13,7 @@ _main() {
     _display_wait_box
     input_files=$(_get_files "type:file, max_files:1, mime:text/")
 
-    checksum_file=$(cat "$input_files")
-    checksum_file=$(sed -z "s|'|'\\\''|g" <<<"$checksum_file")
+    checksum_file=$(sed -z "s|'|'\\\''|g" <"$input_files")
 
     export -f _verify_checksum
     echo -n "$checksum_file" | xargs --max-procs="$(_get_max_procs)" --delimiter=$'\n' --replace="{}" bash -c "_verify_checksum '{}'"
