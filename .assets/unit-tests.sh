@@ -26,23 +26,21 @@ _main() {
     _run_display_wait_box
     _run_display_wait_box_message
     _run_close_wait_box
-    _run_is_wait_box_open
     _run_exit_script
-    _run_gdbus_notify
     _run_expand_directory
-    _run_has_string_in_list
-    _run_install_package
-    _run_is_gui_session
+    _run_gdbus_notify
     _run_get_filename_extension
     _run_get_filename_next_suffix
     _run_get_filemanager_list
     _run_get_files
-    _run_get_full_path_dir
-    _run_get_full_path_file
+    _run_get_full_path_filename
     _run_get_max_procs
     _run_get_output_dir
     _run_get_output_filename
     _run_get_script_name
+    _run_has_string_in_list
+    _run_install_package
+    _run_is_gui_session
     _run_log_compile
     _run_log_write
     _run_move_file
@@ -50,9 +48,12 @@ _main() {
     _run_print_terminal
     _run_read_array_values
     _run_run_task_parallel
-    _run_strip_filename_extension
+    _run_storage_text_clean
     _run_storage_text_read_all
     _run_storage_text_write
+    _run_storage_text_write_ln
+    _run_str_human_readable_path
+    _run_strip_filename_extension
     _run_text_remove_empty_lines
     _run_text_remove_home
     _run_text_remove_pwd
@@ -174,18 +175,8 @@ _run_close_wait_box() {
     :
 }
 
-_run_is_wait_box_open() {
-    # TODO Implement the test: '_run_is_wait_box_open'.
-    :
-}
-
 _run_exit_script() {
     # TODO Implement the test: '_run_exit_script'.
-    :
-}
-
-_run_gdbus_notify() {
-    # TODO Implement the test: '_run_gdbus_notify'.
     :
 }
 
@@ -194,18 +185,8 @@ _run_expand_directory() {
     :
 }
 
-_run_has_string_in_list() {
-    # TODO Implement the test: '_run_has_string_in_list'.
-    :
-}
-
-_run_install_package() {
-    # TODO Implement the test: '_run_install_package'.
-    :
-}
-
-_run_is_gui_session() {
-    # TODO Implement the test: '_run_is_gui_session'.
+_run_gdbus_notify() {
+    # TODO Implement the test: '_run_gdbus_notify'.
     :
 }
 
@@ -275,13 +256,8 @@ _run_get_files() {
     :
 }
 
-_run_get_full_path_dir() {
-    # TODO Implement the test: '_run_get_full_path_dir'.
-    :
-}
-
-_run_get_full_path_file() {
-    # TODO Implement the test: '_run_get_full_path_file'.
+_run_get_full_path_filename() {
+    # TODO Implement the test: '_run_get_full_path_filename'.
     :
 }
 
@@ -302,6 +278,21 @@ _run_get_output_filename() {
 
 _run_get_script_name() {
     # TODO Implement the test: '_run_get_script_name'.
+    :
+}
+
+_run_has_string_in_list() {
+    # TODO Implement the test: '_run_has_string_in_list'.
+    :
+}
+
+_run_install_package() {
+    # TODO Implement the test: '_run_install_package'.
+    :
+}
+
+_run_is_gui_session() {
+    # TODO Implement the test: '_run_is_gui_session'.
     :
 }
 
@@ -337,6 +328,38 @@ _run_read_array_values() {
 
 _run_run_task_parallel() {
     # TODO Implement the test: '_run_run_task_parallel'.
+    :
+}
+
+_run_storage_text_clean() {
+    # TODO Implement the test: '_run_storage_text_clean'.
+    :
+}
+
+_run_storage_text_read_all() {
+    local expected_output=""
+    local output=""
+
+    _storage_text_write_ln "Line"
+    _storage_text_write_ln "Line"
+
+    expected_output="Line"$'\n'"Line"
+    output=$(_storage_text_read_all)
+    _test_equal "Write and read the compiled temp result." "$output" "$expected_output"
+}
+
+_run_storage_text_write() {
+    # TODO Implement the test: '_run_storage_text_write'.
+    :
+}
+
+_run_storage_text_write_ln() {
+    # TODO Implement the test: '_run_storage_text_write_ln'.
+    :
+}
+
+_run_str_human_readable_path() {
+    # TODO Implement the test: '_run_str_human_readable_path'.
     :
 }
 
@@ -389,23 +412,6 @@ _run_strip_filename_extension() {
     expected_output="/tmp/File !@#$%&*()_"$'\n'"+"
     output=$(_strip_filename_extension "$input")
     _test_equal "$input" "$output" "$expected_output"
-}
-
-_run_storage_text_read_all() {
-    local expected_output=""
-    local output=""
-
-    _storage_text_write_ln "Line"
-    _storage_text_write_ln "Line"
-
-    expected_output="Line"$'\n'"Line"
-    output=$(_storage_text_read_all)
-    _test_equal "Write and read the compiled temp result." "$output" "$expected_output"
-}
-
-_run_storage_text_write() {
-    # TODO Implement the test: '_run_storage_text_write'.
-    :
 }
 
 _run_text_remove_empty_lines() {
