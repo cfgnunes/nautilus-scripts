@@ -17,7 +17,7 @@ _main() {
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
 
-    std_output=$(_process_result_compile)
+    std_output=$(_storage_text_read_all)
 
     _display_text_box "$std_output"
 }
@@ -31,7 +31,7 @@ _main_task() {
     std_output=$(sha512sum -- "$input_file" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
 
-    _process_result_write "$std_output"
+    _storage_text_write_ln "$std_output"
 }
 
 _main "$@"

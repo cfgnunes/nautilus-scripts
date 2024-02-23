@@ -14,9 +14,9 @@ IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
 PREFIX_ERROR_LOG_FILE="Errors" # Name of 'error' directory.
 PREFIX_OUTPUT_DIR="Output"     # Name of 'output' directory.
 TEMP_DIR=$(mktemp --directory) # Temp directories for use in scripts.
-TEMP_DIR_LOG=$(mktemp --directory --tmpdir="$TEMP_DIR")
-TEMP_DIR_TASK=$(mktemp --directory --tmpdir="$TEMP_DIR")
-TEMP_DIR_VALID_FILES=$(mktemp --directory --tmpdir="$TEMP_DIR")
+TEMP_DIR_LOG="$TEMP_DIR/logs"
+TEMP_DIR_TASK="$TEMP_DIR/task"
+TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
 WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"       # FIFO to use in the 'wait_box'.
 WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control" # File control to use in the 'wait_box'.
 
@@ -28,7 +28,7 @@ readonly \
     TEMP_DIR \
     TEMP_DIR_LOG \
     TEMP_DIR_TASK \
-    TEMP_DIR_VALID_FILES \
+    TEMP_DIR_STORAGE_TEXT \
     WAIT_BOX_CONTROL \
     WAIT_BOX_FIFO
 
@@ -39,6 +39,13 @@ readonly \
 IFS=$FILENAME_SEPARATOR
 INPUT_FILES=$*
 TEMP_DATA_TASK=""
+
+# -----------------------------------------------------------------------------
+# BUILD THE STRUCTURE OF THE 'TEMP_DIR'
+# -----------------------------------------------------------------------------
+mkdir -p "$TEMP_DIR_LOG"
+mkdir -p "$TEMP_DIR_TASK"
+mkdir -p "$TEMP_DIR_STORAGE_TEXT"
 
 # -----------------------------------------------------------------------------
 # FUNCTIONS
@@ -882,18 +889,27 @@ _print_terminal() {
     fi
 }
 
-_process_result_compile() {
-    # Compile all temp results into a single output.
-    cat -- "$TEMP_DIR_TASK/result"* 2>/dev/null
+_storage_text_clean() {
+    rm -f -- "$TEMP_DIR_STORAGE_TEXT/"* &>/dev/null
 }
 
-_process_result_write() {
+_storage_text_read_all() {
+    # Read all files.
+    cat -- "$TEMP_DIR_STORAGE_TEXT/"* 2>/dev/null
+}
+
+_storage_text_write() {
     local input_text=$1
     local temp_file=""
 
-    # Save the result from a parallel task to be compiled into a single output.
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK" "result.XXXXXXXXXX")
-    echo "$input_text" >"$temp_file"
+    # Save the text to be compiled into a single file.
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_STORAGE_TEXT")
+    echo -n "$input_text" >"$temp_file"
+}
+
+_storage_text_write_ln() {
+    local input_text=$1
+    _storage_text_write "$input_text"$'\n'
 }
 
 _read_array_values() {
@@ -917,31 +933,10 @@ _run_task_parallel() {
     local input_files=$1
     local output_dir=$2
 
-    # Export variables and functions inside a new shell (using 'xargs').
-    export \
-        FILENAME_SEPARATOR \
-        TEMP_DATA_TASK \
-        TEMP_DIR_LOG \
-        TEMP_DIR_TASK
-    export -f \
-        _check_result \
-        _command_exists \
-        _exit_script \
-        _get_filename_extension \
-        _get_filename_next_suffix \
-        _get_max_procs \
-        _get_output_filename \
-        _main_task \
-        _move_file \
-        _move_temp_file_to_output \
-        _process_result_write \
-        _read_array_values \
-        _strip_filename_extension \
-        _text_remove_pwd \
-        _log_write
-
     # Allows the symbol "'" in filenames (inside 'xargs').
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
+
+    export -f _main_task
 
     # Execute the function '_main_task' for each file in parallel (using 'xargs').
     echo -n "$input_files" | sed "s|$FILENAME_SEPARATOR*$||" | xargs \
@@ -1086,9 +1081,7 @@ _validate_file_mime() {
     fi
 
     # Create a temp file containing the name of the valid file.
-    local temp_file=""
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_VALID_FILES")
-    echo -n "$input_file$FILENAME_SEPARATOR" >"$temp_file"
+    _storage_text_write "$input_file$FILENAME_SEPARATOR"
 
     return 0
 }
@@ -1106,15 +1099,6 @@ _validate_file_mime_parallel() {
         return
     fi
 
-    # Export variables and functions inside a new shell (using 'xargs').
-    export \
-        FILENAME_SEPARATOR \
-        TEMP_DIR_VALID_FILES
-    export -f \
-        _get_filename_extension \
-        _has_string_in_list \
-        _validate_file_mime
-
     # Allows the symbol "'" in filenames (inside 'xargs').
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
@@ -1131,8 +1115,8 @@ _validate_file_mime_parallel() {
 
     # Compile valid files in a single list 'output_files'.
     local output_files=""
-    output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"* 2>/dev/null)
-    rm -f -- "$TEMP_DIR_VALID_FILES/"*
+    output_files=$(_storage_text_read_all)
+    _storage_text_clean
 
     echo -n "$output_files"
 }
@@ -1175,9 +1159,7 @@ _validate_file_preselect() {
     fi
 
     # Create a temp file containing the name of the valid file.
-    local temp_file=""
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_VALID_FILES")
-    echo -n "$input_file_valid" >"$temp_file"
+    _storage_text_write "$input_file_valid"
 
     return 0
 }
@@ -1188,19 +1170,6 @@ _validate_file_preselect_parallel() {
     local par_skip_extension=$3
     local par_select_extension=$4
     local par_recursive=$5
-
-    # Export variables and functions inside a new shell (using 'xargs').
-    export \
-        FILENAME_SEPARATOR \
-        IGNORE_FIND_PATH \
-        TEMP_DIR_VALID_FILES
-    export -f \
-        _expand_directory \
-        _get_filename_extension \
-        _get_full_path_filename \
-        _has_string_in_list \
-        _validate_file_extension \
-        _validate_file_preselect
 
     # Allows the symbol "'" in filenames (inside 'xargs').
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
@@ -1218,8 +1187,8 @@ _validate_file_preselect_parallel() {
 
     # Compile valid files in a single list 'output_files'.
     local output_files=""
-    output_files=$(cat -- "$TEMP_DIR_VALID_FILES/"* 2>/dev/null)
-    rm -f -- "$TEMP_DIR_VALID_FILES/"*
+    output_files=$(_storage_text_read_all)
+    _storage_text_clean
 
     echo -n "$output_files"
 }
@@ -1279,3 +1248,40 @@ _validate_files_count() {
         _exit_script
     fi
 }
+
+# -----------------------------------------------------------------------------
+# EXPORTS
+# -----------------------------------------------------------------------------
+
+# Export variables to be used inside new shells (when using 'xargs').
+export \
+    FILENAME_SEPARATOR \
+    IGNORE_FIND_PATH \
+    TEMP_DATA_TASK \
+    TEMP_DIR_LOG \
+    TEMP_DIR_STORAGE_TEXT \
+    TEMP_DIR_TASK
+
+# Export functions to be used inside new shells (when using 'xargs').
+export -f \
+    _check_result \
+    _command_exists \
+    _exit_script \
+    _expand_directory \
+    _get_filename_extension \
+    _get_filename_next_suffix \
+    _get_full_path_filename \
+    _get_max_procs \
+    _get_output_filename \
+    _has_string_in_list \
+    _log_write \
+    _move_file \
+    _move_temp_file_to_output \
+    _read_array_values \
+    _storage_text_write \
+    _storage_text_write_ln \
+    _strip_filename_extension \
+    _text_remove_pwd \
+    _validate_file_extension \
+    _validate_file_mime \
+    _validate_file_preselect
