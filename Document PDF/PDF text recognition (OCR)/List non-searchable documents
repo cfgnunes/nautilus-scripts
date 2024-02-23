@@ -17,7 +17,7 @@ _main() {
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" ""
 
-    std_output=$(_process_result_compile)
+    std_output=$(_storage_text_read_all)
     std_output=$(_text_remove_empty_lines "$std_output")
     std_output=$(_text_sort "$std_output")
 
@@ -31,7 +31,7 @@ _main_task() {
 
     # Save the result only for 'without fonts' PDFs.
     if ! pdffonts "$input_file" | sed -n 3p | grep --quiet "."; then
-        _process_result_write "\"$(_text_remove_pwd "$input_file")\""
+        _storage_text_write_ln "\"$(_text_remove_pwd "$input_file")\""
     fi
 }
 

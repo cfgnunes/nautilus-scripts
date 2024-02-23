@@ -51,8 +51,8 @@ _main() {
     _run_read_array_values
     _run_run_task_parallel
     _run_strip_filename_extension
-    _run_process_result_compile
-    _run_process_result_write
+    _run_storage_text_read_all
+    _run_storage_text_write
     _run_text_remove_empty_lines
     _run_text_remove_home
     _run_text_remove_pwd
@@ -391,20 +391,20 @@ _run_strip_filename_extension() {
     _test_equal "$input" "$output" "$expected_output"
 }
 
-_run_process_result_compile() {
+_run_storage_text_read_all() {
     local expected_output=""
     local output=""
 
-    _process_result_write "Line"
-    _process_result_write "Line"
+    _storage_text_write_ln "Line"
+    _storage_text_write_ln "Line"
 
     expected_output="Line"$'\n'"Line"
-    output=$(_process_result_compile)
+    output=$(_storage_text_read_all)
     _test_equal "Write and read the compiled temp result." "$output" "$expected_output"
 }
 
-_run_process_result_write() {
-    # TODO Implement the test: '_run_process_result_write'.
+_run_storage_text_write() {
+    # TODO Implement the test: '_run_storage_text_write'.
     :
 }
 
