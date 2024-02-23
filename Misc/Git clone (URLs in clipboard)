@@ -17,7 +17,7 @@ _main() {
     output_dir=$input_files
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$(_get_repositories_from_clipboard)" "$output_dir"
+    _run_task_parallel "$(_get_urls_from_clipboard)" "$output_dir"
     _display_result_box "$output_dir"
 }
 
@@ -33,7 +33,7 @@ _main_task() {
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 }
 
-_get_repositories_from_clipboard() {
+_get_urls_from_clipboard() {
     local urls=""
 
     urls+=$(xclip -quiet -selection primary -o)
@@ -42,20 +42,15 @@ _get_repositories_from_clipboard() {
     urls+=$'\n'
     urls+=$(xclip -quiet -selection clipboard -o)
     urls+=$'\n'
-    urls=$(sed "s|[ \t]*git[ \t]*clone[ \t]*||g" <<<"$urls")
-    urls=$(sed "s|[ \t]*\(\r*\)$|\1|g" <<<"$urls") # Remove spaces after.
-    urls=$(sed "s|^\(\r*\)[ \t]*|\1|g" <<<"$urls") # Remove spaces before.
-    urls=$(grep -v " " <<<"$urls")                 # Remove lines with spaces.
-    urls=$(grep "/" <<<"$urls")
-    urls=$(grep "\.git" <<<"$urls")
+    urls=$(grep --only-matching --perl-regexp "((git|ssh|http(s)?)|(git@[\w\.]+))(:(//)?)([\w\.@\:/\-~]+)(\.git)(/)?" <<<"$urls")
     urls=$(sort -u <<<"$urls")
-    urls=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$urls")
 
     if [[ -z "$urls" ]]; then
         _display_error_box "There are no valid URLs in the clipboard!"
         _exit_script
     fi
 
+    urls=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$urls")
     echo "$urls"
 }
 
