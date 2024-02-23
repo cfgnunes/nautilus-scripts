@@ -34,10 +34,10 @@ While numerous scripts are available for GNOME Files on the web, many suffer fro
 | `<Control><Shift>D` | Download (URLs in clipboard)  |
 | `<Control><Shift>E` | List empty directories        |
 | `<Control><Shift>G` | Git clone (URLs in clipboard) |
-| `<Control><Shift>H` | List hidden files             |
+| `<Control><Shift>H` | List hidden items             |
 | `<Control><Shift>J` | List duplicate files          |
 | `<Control><Shift>M` | Compare with Meld             |
-| `<Control><Shift>O` | Open link target              |
+| `<Control><Shift>O` | Open item location            |
 | `<Control><Shift>P` | List permissions and owners   |
 
 ## Installing
