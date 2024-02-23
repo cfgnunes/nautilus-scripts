@@ -14,9 +14,10 @@ _main() {
     input_files=$(_get_files "type:all, max_files:1, get_pwd_if_no_selection:true")
 
     # Run the main process.
+    input_files="$(readlink -f "$input_files")"
     dir=$(cd -- "$(dirname -- "$input_files")" &>/dev/null && pwd -P)
     if [[ -n "$dir" ]]; then
-        xdg-open "$(readlink -f "$dir")" &
+        xdg-open "$dir" &
     fi
 }
 
