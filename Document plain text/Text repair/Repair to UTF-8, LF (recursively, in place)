@@ -51,8 +51,8 @@ _main_task() {
     _move_temp_file_to_output "$input_file" "$temp_file2" "$output_file"
 
     # Remove the temporary files on each iteration (if not removed before).
-    rm -rf -- "$temp_file1"
-    rm -rf -- "$temp_file2"
+    rm -f -- "$temp_file1"
+    rm -f -- "$temp_file2"
 }
 
 _main "$@"
