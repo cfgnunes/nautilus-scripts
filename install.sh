@@ -128,13 +128,11 @@ _install_scripts() {
         "nemo")
             cp "$ASSSETS_DIR/accels-gtk2" "$ACCELS_FILE"
             sed -i "s|USER|$USER|g" "$ACCELS_FILE"
-            sed -i "s|FILE_MANAGER|$FILE_MANAGER|g" "$ACCELS_FILE"
             sed -i "s|ACCELS_PATH|local\\\\\\\\sshare\\\\\\\\snemo|g" "$ACCELS_FILE"
             ;;
         "caja")
             cp "$ASSSETS_DIR/accels-gtk2" "$ACCELS_FILE"
             sed -i "s|USER|$USER|g" "$ACCELS_FILE"
-            sed -i "s|FILE_MANAGER|$FILE_MANAGER|g" "$ACCELS_FILE"
             sed -i "s|ACCELS_PATH|config\\\\\\\\scaja|g" "$ACCELS_FILE"
             ;;
         esac

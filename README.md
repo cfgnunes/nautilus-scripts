@@ -30,7 +30,7 @@ While numerous scripts are available for GNOME Files on the web, many suffer fro
 | `<Control>E`             | Extract Here                  |
 | `<Control>K`             | Compress...                   |
 | `<Shift><Control>A`      | List all files                |
-| `<Shift><Control>U`      | List duplicate files          |
+| `<Shift><Control>D`      | List duplicate files          |
 | `<Shift><Control>E`      | List empty directories        |
 | `<Shift><Control>H`      | List hidden items             |
 | `<Shift><Control>L`      | Make a link (symbolic link)   |
