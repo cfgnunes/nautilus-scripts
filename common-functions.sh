@@ -369,24 +369,6 @@ _exit_script() {
     xargs kill <<<"$child_pids" &>/dev/null
 }
 
-_gdbus_notify() {
-    local icon=$1
-    local title=$2
-    local body=$3
-    local app_name=$title
-    local method="Notify"
-    local interface="org.freedesktop.Notifications"
-    local object_path="/org/freedesktop/Notifications"
-
-    # Use 'gdbus' to send the notification.
-    gdbus call --session \
-        --dest "$interface" \
-        --object-path "$object_path" \
-        --method "$interface.$method" \
-        "$app_name" 0 "$icon" "$title" "$body" \
-        "[]" '{"urgency": <1>}' 5000 &>/dev/null
-}
-
 _expand_directory() {
     local input_directory=$1
     local par_type=$2
@@ -419,56 +401,22 @@ _expand_directory() {
     eval $find_command 2>/dev/null
 }
 
-_has_string_in_list() {
-    local string=$1
-    local list=$2
+_gdbus_notify() {
+    local icon=$1
+    local title=$2
+    local body=$3
+    local app_name=$title
+    local method="Notify"
+    local interface="org.freedesktop.Notifications"
+    local object_path="/org/freedesktop/Notifications"
 
-    if grep -q --ignore-case --perl-regexp "($list)" <<<"$string"; then
-        return 0
-    fi
-
-    return 1
-}
-
-_install_package() {
-    local package_name=$1
-    local command_check=$2
-
-    _display_wait_box_message "Installing the package '$package_name'. Please, wait..."
-
-    # Install the package.
-    if _command_exists "pkexec"; then
-        if _command_exists "apt-get"; then
-            pkexec bash -c "apt-get update; apt-get -y install $package_name &>/dev/null"
-        elif _command_exists "pacman"; then
-            pkexec bash -c "pacman -Syy; pacman --noconfirm -S $package_name &>/dev/null"
-        elif _command_exists "dnf"; then
-            pkexec bash -c "dnf check-update; dnf -y install $package_name &>/dev/null"
-        else
-            _display_error_box "Could not find a package manager!"
-            _exit_script
-        fi
-    else
-        _display_error_box "Could not run the installer with administrator permission!"
-        _exit_script
-    fi
-
-    _close_wait_box
-
-    # Check if the package was installed.
-    if [[ -n "$command_check" ]] && ! _command_exists "$command_check"; then
-        _display_error_box "Could not install the package '$package_name'!"
-        _exit_script
-    fi
-
-    _display_info_box "The package '$package_name' has been successfully installed!"
-}
-
-_is_gui_session() {
-    if env | grep -q "^DISPLAY"; then
-        return 0
-    fi
-    return 1
+    # Use 'gdbus' to send the notification.
+    gdbus call --session \
+        --dest "$interface" \
+        --object-path "$object_path" \
+        --method "$interface.$method" \
+        "$app_name" 0 "$icon" "$title" "$body" \
+        "[]" '{"urgency": <1>}' 5000 &>/dev/null
 }
 
 _get_filename_extension() {
@@ -758,6 +706,58 @@ _get_script_name() {
     basename -- "$0"
 }
 
+_has_string_in_list() {
+    local string=$1
+    local list=$2
+
+    if grep -q --ignore-case --perl-regexp "($list)" <<<"$string"; then
+        return 0
+    fi
+
+    return 1
+}
+
+_install_package() {
+    local package_name=$1
+    local command_check=$2
+
+    _display_wait_box_message "Installing the package '$package_name'. Please, wait..."
+
+    # Install the package.
+    if _command_exists "pkexec"; then
+        if _command_exists "apt-get"; then
+            pkexec bash -c "apt-get update; apt-get -y install $package_name &>/dev/null"
+        elif _command_exists "pacman"; then
+            pkexec bash -c "pacman -Syy; pacman --noconfirm -S $package_name &>/dev/null"
+        elif _command_exists "dnf"; then
+            pkexec bash -c "dnf check-update; dnf -y install $package_name &>/dev/null"
+        else
+            _display_error_box "Could not find a package manager!"
+            _exit_script
+        fi
+    else
+        _display_error_box "Could not run the installer with administrator permission!"
+        _exit_script
+    fi
+
+    _close_wait_box
+
+    # Check if the package was installed.
+    if [[ -n "$command_check" ]] && ! _command_exists "$command_check"; then
+        _display_error_box "Could not install the package '$package_name'!"
+        _exit_script
+    fi
+
+    _display_info_box "The package '$package_name' has been successfully installed!"
+}
+
+_is_gui_session() {
+    if env | grep -q "^DISPLAY"; then
+        return 0
+    fi
+    return 1
+}
+
 _log_compile() {
     local output_dir=$1
     local error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
@@ -889,29 +889,6 @@ _print_terminal() {
     fi
 }
 
-_storage_text_clean() {
-    rm -f -- "$TEMP_DIR_STORAGE_TEXT/"* &>/dev/null
-}
-
-_storage_text_read_all() {
-    # Read all files.
-    cat -- "$TEMP_DIR_STORAGE_TEXT/"* 2>/dev/null
-}
-
-_storage_text_write() {
-    local input_text=$1
-    local temp_file=""
-
-    # Save the text to be compiled into a single file.
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_STORAGE_TEXT")
-    echo -n "$input_text" >"$temp_file"
-}
-
-_storage_text_write_ln() {
-    local input_text=$1
-    _storage_text_write "$input_text"$'\n'
-}
-
 _read_array_values() {
     local start_index=$1
     local char_delimiter=$2
@@ -944,6 +921,29 @@ _run_task_parallel() {
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
         bash -c "_main_task '{}' '$output_dir'"
+}
+
+_storage_text_clean() {
+    rm -f -- "$TEMP_DIR_STORAGE_TEXT/"* &>/dev/null
+}
+
+_storage_text_read_all() {
+    # Read all files.
+    cat -- "$TEMP_DIR_STORAGE_TEXT/"* 2>/dev/null
+}
+
+_storage_text_write() {
+    local input_text=$1
+    local temp_file=""
+
+    # Save the text to be compiled into a single file.
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_STORAGE_TEXT")
+    echo -n "$input_text" >"$temp_file"
+}
+
+_storage_text_write_ln() {
+    local input_text=$1
+    _storage_text_write "$input_text"$'\n'
 }
 
 _str_human_readable_path() {
