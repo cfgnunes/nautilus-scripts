@@ -358,10 +358,10 @@ _exit_script() {
     local child_pids=""
     local script_pid=$$
 
+    _print_terminal "Exiting the script..."
+
     # Get the process ID (PID) of all child processes.
     child_pids=$(pstree -p "$script_pid" | grep --only-matching --perl-regexp "\(+\K[^)]+")
-
-    _print_terminal "Aborting the script..."
 
     # Use xargs and kill to send the SIGTERM signal to all child processes,
     # including the current script.
