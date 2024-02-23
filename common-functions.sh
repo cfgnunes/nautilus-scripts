@@ -293,7 +293,7 @@ _display_result_box() {
 
         # Check if the output directory still exists.
         if [[ -d "$output_dir" ]]; then
-            _display_info_box "Finished! The output files are in $(_str_human_readable_path "$output_dir")."
+            _display_info_box "Finished! The output files are in the $(_str_human_readable_path "$output_dir") directory."
         else
             _display_info_box "Finished, but there are no output files!"
         fi
@@ -960,9 +960,9 @@ _str_human_readable_path() {
     output_path=$(sed "s|^\./||g" <<<"$output_path")
 
     if [[ "$output_path" == "." ]]; then
-        output_path="same directory"
+        output_path="same"
     elif [[ "$output_path" == "~" ]]; then
-        output_path="home directory"
+        output_path="home"
     elif [[ "$output_path" == "" ]]; then
         output_path="(none)"
     else
