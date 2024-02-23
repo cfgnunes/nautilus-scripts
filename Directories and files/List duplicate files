@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2001
 
 # Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
@@ -8,19 +9,31 @@ source "$ROOT_DIR/common-functions.sh"
 _main() {
     local input_files=""
     local std_output=""
+    local temp_file=""
 
     # Execute initial checks.
-    _check_dependencies "jdupes"
+    _check_dependencies "rdfind"
     _display_wait_box
-    input_files=$(_get_files "type:directory, get_pwd_if_no_selection:true")
+    input_files=$(_get_files "type:all, get_pwd_if_no_selection:true")
+
+    # Work on a temporary file
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+
+    # NOTE: The 'rdfind' do not support ' -- ' in the command line.
 
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(jdupes --recurse -- $input_files 2>/dev/null)
-    # NOTE: Older versions of 'jdupes' do not support '-X nostr:/.git/'.
+    rdfind -dryrun true -outputname "$temp_file" $input_files &>/dev/null
+    std_output=$(grep "DUPTYPE" <"$temp_file")
+    std_output=$(sed "s|DUPTYPE_FIRST_OCCURRENCE|\nDUPTYPE_FIRST_OCCURRENCE|" <<<"$std_output")
+    std_output=$(cut -d ' ' -f 8- <<<"$std_output")
     std_output=$(grep -v "/\.git/" <<<"$std_output")
-    std_output=$(sed ':a;N;$!ba;s/\n\{2,\}/\n\n/g' <<<"$std_output") # Remove multiple empty lines
+    std_output=$(sed -z "s|^\n*\([^\n]\)|\1|g; s|\n\{3,\}|\n\n|g" <<<"$std_output")
     std_output=$(_text_remove_pwd "$std_output")
+    std_output=$(sed "s|//|/|" <<<"$std_output")
+    std_output=$(sed "s|^\(..*\)$|'\1'|" <<<"$std_output")
+
+    rm -f -- "$temp_file"
 
     _display_text_box "$std_output"
 }
