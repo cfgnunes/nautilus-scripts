@@ -15,10 +15,14 @@ _main() {
 
     # Run the main process.
     input_files="$(readlink -f "$input_files")"
-    dir=$(cd -- "$(dirname -- "$input_files")" &>/dev/null && pwd -P)
-    if [[ -n "$dir" ]]; then
-        xdg-open "$dir" &
+    if [[ "$input_files" == "/" ]]; then
+        return
     fi
+    dir=$(cd -- "$(dirname -- "$input_files")" &>/dev/null && pwd -P)
+    if [[ -z "$dir" ]]; then
+        return
+    fi
+    xdg-open "$dir" &
 }
 
 _main "$@"
