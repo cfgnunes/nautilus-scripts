@@ -296,7 +296,11 @@ _display_result_box() {
             local output_dir_simple=""
             output_dir_simple=$(_text_remove_pwd "$output_dir")
             output_dir_simple=$(_text_remove_home "$output_dir_simple")
-            _display_info_box "Task finished! The output files are in '$output_dir_simple'."
+            if [[ "$output_dir_simple" == "." ]]; then
+                _display_info_box "Task finished! The output files are in the same dir."
+            else
+                _display_info_box "Task finished! The output files are in '$output_dir_simple'."
+            fi
         else
             _display_info_box "Task finished, but there are no output files!"
         fi
@@ -763,10 +767,9 @@ _log_compile() {
     fi
 
     if [[ -z "$output_dir" ]]; then
-        error_log_file="$PWD/$PREFIX_ERROR_LOG_FILE.log"
-    else
-        error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
+        output_dir=$(_get_output_dir "use_same_dir:true")
     fi
+    error_log_file="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
 
     # If the file already exists, add a suffix.
     error_log_file=$(_get_filename_next_suffix "$error_log_file")
