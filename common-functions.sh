@@ -502,23 +502,18 @@ _get_files() {
     local par_validate_conflict=""
 
     # Read values from the parameters.
-    IFS=":, " read -r -a par_array <<<"$parameters"
-    for i in "${!par_array[@]}"; do
-        case "${par_array[i]}" in
-        "max_files") par_max_files=${par_array[i + 1]} ;;
-        "min_files") par_min_files=${par_array[i + 1]} ;;
-        "recursive") par_recursive=${par_array[i + 1]} ;;
-        "get_pwd_if_no_selection") par_get_pwd=${par_array[i + 1]} ;;
-        "encoding") par_select_encoding=${par_array[i + 1]} ;;
-        "extension") par_select_extension=${par_array[i + 1]} ;;
-        "mime") par_select_mime=${par_array[i + 1]} ;;
-        "skip_encoding") par_skip_encoding=${par_array[i + 1]} ;;
-        "skip_extension") par_skip_extension=${par_array[i + 1]} ;;
-        "skip_mime") par_skip_mime=${par_array[i + 1]} ;;
-        "type") par_type=${par_array[i + 1]} ;;
-        "validate_conflict") par_validate_conflict=${par_array[i + 1]} ;;
-        esac
-    done
+    par_max_files=$(_get_parameter_value "$parameters" "max_files")
+    par_min_files=$(_get_parameter_value "$parameters" "min_files")
+    par_recursive=$(_get_parameter_value "$parameters" "recursive")
+    par_get_pwd=$(_get_parameter_value "$parameters" "get_pwd_if_no_selection")
+    par_select_encoding=$(_get_parameter_value "$parameters" "encoding")
+    par_select_extension=$(_get_parameter_value "$parameters" "extension")
+    par_select_mime=$(_get_parameter_value "$parameters" "mime")
+    par_skip_encoding=$(_get_parameter_value "$parameters" "skip_encoding")
+    par_skip_extension=$(_get_parameter_value "$parameters" "skip_extension")
+    par_skip_mime=$(_get_parameter_value "$parameters" "skip_mime")
+    par_type=$(_get_parameter_value "$parameters" "type")
+    par_validate_conflict=$(_get_parameter_value "$parameters" "validate_conflict")
 
     # Check the parameters.
     if [[ -n "$par_skip_extension" ]] && [[ -n "$par_select_extension" ]]; then
@@ -621,12 +616,7 @@ _get_output_dir() {
     local par_use_same_dir=""
 
     # Read values from the parameters.
-    IFS=":, " read -r -a par_array <<<"$parameters"
-    for i in "${!par_array[@]}"; do
-        case "${par_array[i]}" in
-        "use_same_dir") par_use_same_dir=${par_array[i + 1]} ;;
-        esac
-    done
+    par_use_same_dir=$(_get_parameter_value "$parameters" "use_same_dir")
 
     # Check directories available to put the 'output' dir.
     base_dir=$(pwd)
@@ -663,15 +653,10 @@ _get_output_filename() {
     local par_suffix=""
 
     # Read values from the parameters.
-    IFS=":, " read -r -a par_array <<<"$parameters"
-    for i in "${!par_array[@]}"; do
-        case "${par_array[i]}" in
-        "extension_opt") par_extension_opt=${par_array[i + 1]} ;;
-        "extension") par_extension=${par_array[i + 1]} ;;
-        "prefix") par_prefix=$(_read_array_values "$i" "," "${par_array[@]}") ;;
-        "suffix") par_suffix=$(_read_array_values "$i" "," "${par_array[@]}") ;;
-        esac
-    done
+    par_extension_opt=$(_get_parameter_value "$parameters" "extension_opt")
+    par_extension=$(_get_parameter_value "$parameters" "extension")
+    par_prefix=$(_get_parameter_value "$parameters" "prefix")
+    par_suffix=$(_get_parameter_value "$parameters" "suffix")
 
     filename=$(basename -- "$input_file")
     output_file="$output_dir/"
@@ -705,6 +690,29 @@ _get_output_filename() {
     output_file=$(_get_filename_next_suffix "$output_file")
 
     echo "$output_file"
+}
+
+_get_parameter_value() {
+    local parameters=$1
+    local key=$2
+    local value=""
+
+    if [[ -z "$key" ]]; then
+        return
+    fi
+
+    # Separate parameters in 'key:value'.
+    value="$(grep --only-matching --perl-regexp "([^,]*):([^,]*)" <<<"$parameters")"
+    value=$(_str_trim_whitespace "$value")
+
+    # Select the line of the specified key.
+    value="$(grep "^$key:" <<<"$value")"
+
+    # Get the value.
+    value="$(sed "s|.*:\(.*\)|\1|" <<<"$value")"
+    value=$(_str_trim_whitespace "$value")
+
+    echo "$value"
 }
 
 _get_script_name() {
@@ -898,23 +906,6 @@ _print_terminal() {
     fi
 }
 
-_read_array_values() {
-    local start_index=$1
-    local char_delimiter=$2
-    local array=("$@")
-    local n="${#array[@]}"
-    local value=""
-
-    # Read all values until the 'char_delimiter'
-    for ((i = start_index + 3; i < n; i++)); do
-        if [[ "${array[i]}" != "$char_delimiter" ]]; then
-            value+="${array[i]} "
-        fi
-    done
-
-    echo "${value% }"
-}
-
 _run_task_parallel() {
     local input_files=$1
     local output_dir=$2
@@ -974,6 +965,12 @@ _str_human_readable_path() {
     fi
 
     echo -n "$output_path"
+}
+
+_str_trim_whitespace() {
+    local input_str=$1
+
+    sed "s|^[ ]*||;s|[ ]*$||" <<<"$input_str"
 }
 
 _strip_filename_extension() {
@@ -1282,13 +1279,14 @@ export -f \
     _get_full_path_filename \
     _get_max_procs \
     _get_output_filename \
+    _get_parameter_value \
     _has_string_in_list \
     _log_write \
     _move_file \
     _move_temp_file_to_output \
-    _read_array_values \
     _storage_text_write \
     _storage_text_write_ln \
+    _str_trim_whitespace \
     _strip_filename_extension \
     _text_remove_pwd \
     _validate_file_extension \
