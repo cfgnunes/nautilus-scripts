@@ -23,21 +23,21 @@ _main() {
     echo "Scripts installer."
 
     # Show the main options
-    read -r -p " > Would you like to install basic dependencies? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
-    read -r -p " > Would you like to install the keyboard shortcuts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
-    if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
-        read -r -p " > Would you like to preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
-    fi
-    read -r -p " > Would you like to close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
-    read -r -p " > Would you like to choose script categories to install? (y/N) " opt
-    if [[ "${opt,,}" == *"y"* ]]; then
-        echo " > Choose the script categories to install (<SPACE> to select, <UP/DOWN> to choose):"
-        for dirname in ./*/; do
-            dirn="${dirname:2}"          # Remove leading path separators './'.
-            script_dirs+=("${dirn::-1}") # Remove trailing path separator '/'.
-        done
-        _multiselect_menu choices_categories script_dirs preselection
-    fi
+    #    read -r -p " > Would you like to install basic dependencies? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
+    #    read -r -p " > Would you like to install the keyboard shortcuts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
+    #    if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
+    #        read -r -p " > Would you like to preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
+    #    fi
+    #    read -r -p " > Would you like to close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
+    #    read -r -p " > Would you like to choose script categories to install? (y/N) " opt
+    #    if [[ "${opt,,}" == *"y"* ]]; then
+    echo " > Choose the script categories to install (<SPACE> to select, <UP/DOWN> to choose):"
+    for dirname in ./*/; do
+        dirn="${dirname:2}"          # Remove leading path separators './'.
+        script_dirs+=("${dirn::-1}") # Remove trailing path separator '/'.
+    done
+    _multiselect_menu choices_categories script_dirs preselection
+    #    fi
 
     echo
     echo "Starting the installation..."
@@ -187,35 +187,32 @@ _install_scripts() {
 }
 
 _multiselect_menu() {
+    local return_value=$1
+    local -n options=$2
+    local -n defaults=$3
+
     # Helpers for console print format and control.
-    ESC=$(printf "\033")
     __cursor_blink_on() {
-        printf "%s[?25h" "$ESC"
+        echo -e -n "\033[?25h"
     }
     __cursor_blink_off() {
-        printf "%s[?25l" "$ESC"
+        echo -e -n "\033[?25l"
     }
     __cursor_to() {
-        printf "%s[$1;${2:-1}H" "$ESC"
+        echo -e -n "\033[$1;${2:-1}H"
     }
     __print_inactive() {
-        printf "$2 $1 "
+        echo -e -n "$2 $1 "
     }
     __print_active() {
-        printf "$2%s[7m $1 %s[27m" "$ESC" "$ESC"
+        echo -e -n "$2\033[7m $1 \033[27m"
     }
     __get_cursor_row() {
         IFS=';' read -sdRr -p $'\E[6n' ROW COL
         echo "${ROW#*[}"
     }
 
-    local return_value=$1
-    local -n options=$2
-    local -n defaults=$3
-    # if [ ${#defaults[@]} -eq 0 ]; then
-    #     defaults=()
-    # fi
-
+    # Proccess the 'defaults' parameter.
     local selected=()
     for ((i = 0; i < ${#options[@]}; i++)); do
         if [[ -v "defaults[i]" ]]; then
@@ -227,7 +224,7 @@ _multiselect_menu() {
         else
             selected+=("true")
         fi
-        printf "\n"
+        echo
     done
 
     # Determine current screen position for overwriting the options.
@@ -237,9 +234,10 @@ _multiselect_menu() {
     start_row=$((last_row - ${#options[@]}))
 
     # Ensure cursor and input echoing back on upon a ctrl+c during read -s.
-    trap "__cursor_blink_on; stty echo; printf '\n'; exit" 2
+    trap "__cursor_blink_on; stty echo; echo; exit" 2
     __cursor_blink_off
 
+    # Local functions to use in the menu.
     __key_input() {
         local key
         IFS="" read -rsn1 key 2>/dev/null >&2
@@ -282,9 +280,11 @@ _multiselect_menu() {
         done
     }
 
+    # Print the menu.
     local active=0
     while true; do
         __print_options $active
+
         # User key control.
         case $(__key_input) in
         "space")
@@ -311,7 +311,6 @@ _multiselect_menu() {
 
     # Cursor position back to normal.
     __cursor_to "$last_row"
-    printf "\n"
     __cursor_blink_on
 
     eval "$return_value"='("${selected[@]}")'
