@@ -13,8 +13,8 @@ INSTALL_DIR=""
 _main() {
     local menu_options=""
     local opt=""
-    local choices_menu=()
-    local choices_categories=()
+    local opt_menu=()
+    local opt_categories=()
     local script_dirs=()
     local defaults_categories=()
 
@@ -36,7 +36,7 @@ _main() {
             dirn="${dirname:2}"          # Remove leading path separators './'.
             script_dirs+=("${dirn::-1}") # Remove trailing path separator '/'.
         done
-        _multiselect_menu choices_categories script_dirs defaults_categories
+        _multiselect_menu opt_categories script_dirs defaults_categories
     fi
 
     echo
@@ -48,7 +48,7 @@ _main() {
     fi
 
     # Install the scripts.
-    _install_scripts "$menu_options" choices_categories script_dirs
+    _install_scripts "$menu_options" opt_categories script_dirs
 
     echo "Done!"
 }
@@ -115,7 +115,7 @@ _install_dependencies() {
 
 _install_scripts() {
     local menu_options=$1
-    local -n _choices_categories=$2
+    local -n _opt_categories=$2
     local -n _script_dirs=$3
     local tmp_install_dir=""
 
@@ -133,12 +133,12 @@ _install_scripts() {
     echo " > Installing new scripts..."
     mkdir --parents "$INSTALL_DIR"
 
-    if [ ${#_choices_categories[@]} -eq 0 ]; then # Co custom choices, so copy all.
+    if [ ${#_opt_categories[@]} -eq 0 ]; then # Co custom choices, so copy all.
         cp -r . "$INSTALL_DIR"
     else
         index=0
         for option in "${_script_dirs[@]}"; do
-            if [ "${_choices_categories[index]}" == "true" ]; then
+            if [ "${_opt_categories[index]}" == "true" ]; then
                 cp -r "${option}" "$INSTALL_DIR"
                 cp "common-functions.sh" "$INSTALL_DIR"
             fi
@@ -186,8 +186,8 @@ _install_scripts() {
     fi
 }
 
-# Menu code from:
-# https://unix.stackexchange.com/questions/146570/arrow-key-enter-menu
+# Menu code based on:
+# https://unix.stackexchange.com/a/673436
 _multiselect_menu() {
     local return_value=$1
     local -n options=$2
