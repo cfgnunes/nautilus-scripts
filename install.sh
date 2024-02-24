@@ -2,7 +2,7 @@
 
 # Install the scripts for the GNOME Files (Nautilus), Caja and Nemo file managers.
 
-set -eu
+set -u
 
 # Global variables
 ASSSETS_DIR=".assets"
@@ -13,6 +13,9 @@ INSTALL_DIR=""
 _main() {
     local menu_options=""
     local opt=""
+    local choices=()
+    local script_dirs=()
+    local preselection=()
 
     echo "Scripts installer."
 
@@ -40,6 +43,17 @@ _main() {
     if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
         read -r -p " > Would you like to preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
     fi
+    read -r -p " > Would you like to choose script options? (y/N) "
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        echo
+        echo " > Please pick the desired categories. You can find more information in README.md."
+        for dirname in ./*/; do
+            dirn="${dirname:2}"             # remove leading path separators (./)
+            script_dirs+=("${dirn::-1}")    # remove trailing path separator (/)
+        done
+        multiselect choices script_dirs preselection
+    fi
     read -r -p " > Would you like to close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
 
     echo
@@ -51,7 +65,7 @@ _main() {
     fi
 
     # Install the scripts.
-    _install_scripts "$menu_options"
+    _install_scripts "$menu_options" choices script_dirs
 
     echo "Done!"
 }
@@ -98,6 +112,8 @@ _install_dependencies() {
 
 _install_scripts() {
     local menu_options=$1
+    local -n ch=$2
+    local -n sd=$3
     local tmp_install_dir=""
 
     # 'Preserve' or 'Remove' previous scripts.
@@ -113,7 +129,21 @@ _install_scripts() {
     # Install the scripts.
     echo " > Installing new scripts..."
     mkdir --parents "$INSTALL_DIR"
-    cp -r . "$INSTALL_DIR"
+    
+    if [ ${#ch[@]} -eq 0 ]; then # no custom choices, so copy all
+        cp -r . "$INSTALL_DIR"
+    else
+        idx=0
+        for option in "${sd[@]}"; do
+            if [ "${ch[idx]}" == "true" ]; then
+                # echo -e "${option}\t=> ${ch[idx]}"
+                cp -r "${option}" "$INSTALL_DIR"
+                cp "common-functions.sh" "$INSTALL_DIR"
+            fi
+            ((idx++))
+        done
+    fi
+    return 0
 
     # Install the file 'scripts-accels'.
     if [[ "$menu_options" == *"accels"* ]]; then
