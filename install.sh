@@ -2,7 +2,7 @@
 
 # Install the scripts for the GNOME Files (Nautilus), Caja and Nemo file managers.
 
-set -eu
+set -u
 
 # Global variables
 ASSSETS_DIR=".assets"
@@ -13,6 +13,9 @@ INSTALL_DIR=""
 _main() {
     local menu_options=""
     local opt=""
+    local choices=()
+    local script_dirs=()
+    local preselection=()
 
     echo "Scripts installer."
 
@@ -40,6 +43,18 @@ _main() {
     if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
         read -r -p " > Would you like to preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
     fi
+    read -r -p " > Would you like to choose script options? (y/N) "
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        echo
+        echo " > Please pick the desired categories. You can find more information in README.md."
+        echo " (SPACE) to select, (UP/DOWN) to choose"
+        for dirname in ./*/; do
+            dirn="${dirname:2}"             # remove leading path separators (./)
+            script_dirs+=("${dirn::-1}")    # remove trailing path separator (/)
+        done
+        multiselect choices script_dirs preselection
+    fi
     read -r -p " > Would you like to close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
 
     echo
@@ -51,7 +66,7 @@ _main() {
     fi
 
     # Install the scripts.
-    _install_scripts "$menu_options"
+    _install_scripts "$menu_options" choices script_dirs
 
     echo "Done!"
 }
@@ -98,6 +113,8 @@ _install_dependencies() {
 
 _install_scripts() {
     local menu_options=$1
+    local -n ch=$2
+    local -n sd=$3
     local tmp_install_dir=""
 
     # 'Preserve' or 'Remove' previous scripts.
@@ -113,7 +130,21 @@ _install_scripts() {
     # Install the scripts.
     echo " > Installing new scripts..."
     mkdir --parents "$INSTALL_DIR"
-    cp -r . "$INSTALL_DIR"
+    
+    if [ ${#ch[@]} -eq 0 ]; then # no custom choices, so copy all
+        cp -r . "$INSTALL_DIR"
+    else
+        idx=0
+        for option in "${sd[@]}"; do
+            if [ "${ch[idx]}" == "true" ]; then
+                # echo -e "${option}\t=> ${ch[idx]}"
+                cp -r "${option}" "$INSTALL_DIR"
+                cp "common-functions.sh" "$INSTALL_DIR"
+            fi
+            ((idx++))
+        done
+    fi
+    return 0
 
     # Install the file 'scripts-accels'.
     if [[ "$menu_options" == *"accels"* ]]; then
@@ -153,6 +184,110 @@ _install_scripts() {
         echo " > Closing the file manager to reload its configurations..."
         eval "$FILE_MANAGER -q &>/dev/null" || true
     fi
+}
+
+function multiselect {
+    # helpers for console print format and control
+    ESC=$( printf "\033")
+    cursor_blink_on()   { printf "$ESC[?25h"; }
+    cursor_blink_off()  { printf "$ESC[?25l"; }
+    cursor_to()         { printf "$ESC[$1;${2:-1}H"; }
+    print_inactive()    { printf "$2   $1 "; }
+    print_active()      { printf "$2  $ESC[7m $1 $ESC[27m"; }
+    get_cursor_row()    { IFS=';' read -sdR -p $'\E[6n' ROW COL; echo "${ROW#*[}"; }
+
+    local return_value=$1
+    local -n options=$2
+    local -n defaults=$3
+    # if [ ${#defaults[@]} -eq 0 ]; then
+    #     defaults=()
+    # fi
+
+    local selected=()
+    for ((i=0; i<${#options[@]}; i++)); do
+        if [[ -v "defaults[i]" ]] ; then
+            if [[ ${defaults[i]} = "false" ]]; then
+                selected+=("false")
+            else
+                selected+=("true")
+            fi
+        else
+            selected+=("true")
+        fi
+        printf "\n"
+    done
+
+    # determine current screen position for overwriting the options
+    local lastrow
+    lastrow=$(get_cursor_row)
+    local startrow=$((lastrow - ${#options[@]}))
+
+    # ensure cursor and input echoing back on upon a ctrl+c during read -s
+    trap "cursor_blink_on; stty echo; printf '\n'; exit" 2
+    cursor_blink_off
+
+    key_input() {
+        local key
+        IFS= read -rsn1 key 2>/dev/null >&2
+        if [[ $key = ""      ]]; then echo enter; fi;
+        if [[ $key = $'\x20' ]]; then echo space; fi;
+        if [[ $key = "k" ]]; then echo up; fi;
+        if [[ $key = "j" ]]; then echo down; fi;
+        if [[ $key = $'\x1b' ]]; then
+            read -rsn2 key
+            if [[ $key = [A || $key = k ]]; then echo up;    fi;
+            if [[ $key = [B || $key = j ]]; then echo down;  fi;
+        fi 
+    }
+
+    toggle_option() {
+        local option=$1
+        if [[ ${selected[option]} == true ]]; then
+            selected[option]=false
+        else
+            selected[option]=true
+        fi
+    }
+
+    print_options() {
+        # print options by overwriting the last lines
+        idx=0
+        for option in "${options[@]}"; do
+            local prefix="[ ]"
+            if [[ ${selected[idx]} == true ]]; then
+              prefix="[\e[38;5;46m✔\e[0m]"
+            fi
+
+            cursor_to $((startrow + idx))
+            if [ $idx -eq "$1" ]; then
+                print_active "$option" "$prefix"
+            else
+                print_inactive "$option" "$prefix"
+            fi
+            ((idx++))
+        done
+    }
+
+    local active=0
+    while true; do
+        print_options $active
+        # user key control
+        case $(key_input) in
+            space)  toggle_option $active;;
+            enter)  print_options -1; break;;
+            up)     ((active--));
+                    if [ $active -lt 0 ]; then active=$((${#options[@]} - 1)); fi;;
+            down)   ((active++));
+                    if [ $active -ge ${#options[@]} ]; then active=0; fi;;
+        esac
+    done
+
+    # cursor position back to normal
+    cursor_to "$lastrow"
+    printf "\n"
+    cursor_blink_on
+
+    eval "$return_value"='("${selected[@]}")'
 }
 
 _main "$@"
