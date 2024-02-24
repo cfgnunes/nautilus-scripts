@@ -219,7 +219,7 @@ function multiselect {
 
     # determine current screen position for overwriting the options
     local lastrow=`get_cursor_row`
-    local startrow=$(($lastrow - ${#options[@]}))
+    local startrow=$((lastrow - ${#options[@]}))
 
     # ensure cursor and input echoing back on upon a ctrl+c during read -s
     trap "cursor_blink_on; stty echo; printf '\n'; exit" 2
@@ -257,7 +257,7 @@ function multiselect {
               prefix="[\e[38;5;46m✔\e[0m]"
             fi
 
-            cursor_to $(($startrow + $idx))
+            cursor_to $((startrow + idx))
             if [ $idx -eq $1 ]; then
                 print_active "$option" "$prefix"
             else
