@@ -50,7 +50,7 @@ _main() {
 
     if [[ "$menu_options" == *"categories"* ]]; then
         echo
-        echo "Select the categories (<SPACE> to select, <UP/DOWN> to choose, <ENTER> to confirm):"
+        echo "Choose the categories (<SPACE> to select, <UP/DOWN> to choose, <ENTER> to confirm):"
         for dirname in ./*/; do
             dirn="${dirname:2}"              # Remove leading path separators './'.
             categories_dirs+=("${dirn::-1}") # Remove trailing path separator '/'.
@@ -167,7 +167,7 @@ _install_scripts() {
 
     # Install the file 'scripts-accels'.
     if [[ "$menu_options" == *"shortcuts"* ]]; then
-        echo " > Installing the file 'scripts-accels'..."
+        echo " > Installing the keyboard shortcuts..."
         mkdir --parents "$(dirname -- "$ACCELS_FILE")"
         mv "$ACCELS_FILE" "$ACCELS_FILE.bak" 2>/dev/null || true
 
