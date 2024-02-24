@@ -819,7 +819,7 @@ _log_write() {
 }
 
 _move_file() {
-    local par_when_conflict=$1
+    local par_when_conflict=${1:-"skip"}
     local file_src=$2
     local file_dst=$3
     local exit_code=0
@@ -855,6 +855,10 @@ _move_file() {
             _log_write "Warning: The file already exists." "$file_src" "$file_dst"
             return 0
         fi
+        ;;
+    *)
+        _display_error_box "Wrong parameter '$par_when_conflict' in '${FUNCNAME[1]}'!"
+        _exit_script
         ;;
     esac
 

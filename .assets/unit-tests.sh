@@ -6,6 +6,13 @@ set -eu
 
 _TOTAL_TESTS=0
 _TOTAL_FAILED=0
+_TEMP_DIR_TEST="/tmp/unit-test"
+_TEMP_FILE1="$_TEMP_DIR_TEST/file1"
+_TEMP_FILE2="$_TEMP_DIR_TEST/file2"
+_TEMP_FILE3="$_TEMP_DIR_TEST/file3"
+_TEMP_FILE1_CONTENT="File 1 test."
+_TEMP_FILE2_CONTENT="File 2 test."
+_TEMP_FILE3_CONTENT="File 3 test."
 
 _main() {
     echo "Running the unit tests..."
@@ -72,6 +79,18 @@ _main() {
     echo "Done!"
 }
 
+_files_test_create() {
+    rm -rf "$_TEMP_DIR_TEST"
+    mkdir -p "$_TEMP_DIR_TEST"
+    echo "$_TEMP_FILE1_CONTENT" >"$_TEMP_FILE1"
+    echo "$_TEMP_FILE2_CONTENT" >"$_TEMP_FILE2"
+    echo "$_TEMP_FILE3_CONTENT" >"$_TEMP_FILE3"
+}
+
+_files_test_clean() {
+    rm -rf "$_TEMP_DIR_TEST"
+}
+
 _test_equal() {
     local description=$1
     local value1=$2
@@ -79,6 +98,23 @@ _test_equal() {
     _TOTAL_TESTS=$((_TOTAL_TESTS + 1))
 
     if [[ "$value1" == "$value2" ]]; then
+        echo -n " > [PASS]"
+    else
+        echo -n " > [FAILED]"
+        _TOTAL_FAILED=$((_TOTAL_FAILED + 1))
+    fi
+    echo -n $'\t'"(${FUNCNAME[1]})"$'\t'
+    echo -n "$description" | sed -z "s|\n|\\\n|g" | cat -ETv
+    echo
+}
+
+_test_file() {
+    local description=$1
+    local file=$2
+
+    _TOTAL_TESTS=$((_TOTAL_TESTS + 1))
+
+    if [[ -f "$file" ]]; then
         echo -n " > [PASS]"
     else
         echo -n " > [FAILED]"
@@ -312,8 +348,12 @@ _run_get_parameter_value() {
 }
 
 _run_get_script_name() {
-    # TODO Implement the test: '_run_get_script_name'.
-    :
+    local expected_output=""
+    local output=""
+
+    expected_output="unit-tests.sh"
+    output=$(_get_script_name)
+    _test_equal "$expected_output" "$output" "$expected_output"
 }
 
 _run_has_string_in_list() {
@@ -342,8 +382,53 @@ _run_log_write() {
 }
 
 _run_move_file() {
-    # TODO Implement the test: '_run_move_file'.
-    :
+    local expected_output=""
+    local output=""
+
+    _files_test_create
+    _move_file "" "$_TEMP_FILE1" "$_TEMP_FILE2"
+    expected_output=$_TEMP_FILE1_CONTENT
+    output=$(<"$_TEMP_FILE1")
+    _test_equal "" "$output" "$expected_output"
+    expected_output=$_TEMP_FILE2_CONTENT
+    output=$(<"$_TEMP_FILE2")
+    _test_equal "" "$output" "$expected_output"
+    _files_test_clean
+
+    _files_test_create
+    _move_file "rename" "$_TEMP_FILE1" "$_TEMP_FILE1"
+    expected_output=$_TEMP_FILE1_CONTENT
+    output=$(<"$_TEMP_FILE1")
+    _test_equal "skip" "$output" "$expected_output"
+    _files_test_clean
+
+    _files_test_create
+    _move_file "skip" "$_TEMP_FILE1" "$_TEMP_FILE2"
+    expected_output=$_TEMP_FILE1_CONTENT
+    output=$(<"$_TEMP_FILE1")
+    _test_equal "skip" "$output" "$expected_output"
+    expected_output=$_TEMP_FILE2_CONTENT
+    output=$(<"$_TEMP_FILE2")
+    _test_equal "skip" "$output" "$expected_output"
+    _files_test_clean
+
+    _files_test_create
+    _move_file "overwrite" "$_TEMP_FILE1" "$_TEMP_FILE2"
+    expected_output=$_TEMP_FILE1_CONTENT
+    output=$(<"$_TEMP_FILE2")
+    _test_equal "overwrite" "$output" "$expected_output"
+    _files_test_clean
+
+    _files_test_create
+    _move_file "rename" "$_TEMP_FILE1" "$_TEMP_FILE2"
+    expected_output=$_TEMP_FILE2_CONTENT
+    output=$(<"$_TEMP_FILE2")
+    _test_equal "rename" "$output" "$expected_output"
+    expected_output=$_TEMP_FILE1_CONTENT
+    output=$(<"$_TEMP_FILE2 (1)")
+    _test_equal "rename" "$output" "$expected_output"
+    _files_test_clean
+
 }
 
 _run_move_temp_file_to_output() {
@@ -394,8 +479,34 @@ _run_str_human_readable_path() {
 }
 
 _run_str_trim_whitespace() {
-    # TODO Implement the test: '_run_str_trim_whitespace'.
-    :
+    local input=""
+    local expected_output=""
+    local output=""
+
+    input=""
+    expected_output=""
+    output=$(_str_trim_whitespace "$input")
+    _test_equal "$input" "$output" "$expected_output"
+
+    input="Test"
+    expected_output="Test"
+    output=$(_str_trim_whitespace "$input")
+    _test_equal "$input" "$output" "$expected_output"
+
+    input=" Test"
+    expected_output="Test"
+    output=$(_str_trim_whitespace "$input")
+    _test_equal "$input" "$output" "$expected_output"
+
+    input="Test "
+    expected_output="Test"
+    output=$(_str_trim_whitespace "$input")
+    _test_equal "$input" "$output" "$expected_output"
+
+    input=" Test "
+    expected_output="Test"
+    output=$(_str_trim_whitespace "$input")
+    _test_equal "$input" "$output" "$expected_output"
 }
 
 _run_strip_filename_extension() {
