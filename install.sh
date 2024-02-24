@@ -11,31 +11,49 @@ FILE_MANAGER=""
 INSTALL_DIR=""
 
 _main() {
-    local ans=""
     local menu_options=""
-    local defaults_categories=()
-    local opt_categories=()
-    local script_dirs=()
+    local categories_defaults=()
+    local categories_dirs=()
+    local categories_selected=()
+    local menu_defaults=()
+    local menu_labels=()
+    local menu_selected=()
 
     _check_default_filemanager
 
     echo "Scripts installer."
+    echo "> Select the options (<SPACE> to select, <UP/DOWN> to choose, <ENTER> to confirm):"
+    menu_labels=(
+        "Install basic dependencies"
+        "Install the keyboard shortcuts"
+        "Preserve the previous scripts"
+        "Close the file manager to reload its configurations"
+        "Choose the script categories to install"
+    )
+    menu_defaults=(
+        "true"
+        "true"
+        "true"
+        "true"
+        "false"
+    )
 
-    # Show the main options
-    read -r -p " > Would you like to install basic dependencies? (Y/n) " ans && [[ "${ans,,}" == *"n"* ]] || menu_options+="dependencies,"
-    read -r -p " > Would you like to install the keyboard shortcuts? (Y/n) " ans && [[ "${ans,,}" == *"n"* ]] || menu_options+="accels,"
-    if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
-        read -r -p " > Would you like to preserve the previous scripts? (Y/n) " ans && [[ "${ans,,}" == *"n"* ]] || menu_options+="preserve,"
-    fi
-    read -r -p " > Would you like to close the file manager to reload its configurations? (Y/n) " ans && [[ "${ans,,}" == *"n"* ]] || menu_options+="reload,"
-    read -r -p " > Would you like to choose the script categories to install? (y/N) " ans
-    if [[ "${ans,,}" == *"y"* ]]; then
-        echo " > Choose the categories (<SPACE> to select, <UP/DOWN> to choose, <ENTER> to confirm):"
+    _multiselect_menu menu_selected menu_labels menu_defaults
+
+    [[ ${menu_selected[0]} == "true" ]] && menu_options+="dependencies,"
+    [[ ${menu_selected[1]} == "true" ]] && menu_options+="shortcuts,"
+    [[ ${menu_selected[2]} == "true" ]] && menu_options+="preserve,"
+    [[ ${menu_selected[3]} == "true" ]] && menu_options+="reload,"
+    [[ ${menu_selected[4]} == "true" ]] && menu_options+="categories,"
+
+    if [[ "$menu_options" == *"categories"* ]]; then
+        echo
+        echo "> Select the categories (<SPACE> to select, <UP/DOWN> to choose, <ENTER> to confirm):"
         for dirname in ./*/; do
-            dirn="${dirname:2}"          # Remove leading path separators './'.
-            script_dirs+=("${dirn::-1}") # Remove trailing path separator '/'.
+            dirn="${dirname:2}"              # Remove leading path separators './'.
+            categories_dirs+=("${dirn::-1}") # Remove trailing path separator '/'.
         done
-        _multiselect_menu opt_categories script_dirs defaults_categories
+        _multiselect_menu categories_selected categories_dirs categories_defaults
     fi
 
     echo
@@ -47,7 +65,7 @@ _main() {
     fi
 
     # Install the scripts.
-    _install_scripts "$menu_options" opt_categories script_dirs
+    _install_scripts "$menu_options" categories_selected categories_dirs
 
     echo "Done!"
 }
@@ -114,8 +132,8 @@ _install_dependencies() {
 
 _install_scripts() {
     local menu_options=$1
-    local -n _opt_categories=$2
-    local -n _script_dirs=$3
+    local -n _categories_selected=$2
+    local -n _categories_dirs=$3
     local tmp_install_dir=""
 
     # 'Preserve' or 'Remove' previous scripts.
@@ -132,12 +150,12 @@ _install_scripts() {
     echo " > Installing new scripts..."
     mkdir --parents "$INSTALL_DIR"
 
-    if [ ${#_opt_categories[@]} -eq 0 ]; then # No custom choices, so copy all.
+    if [ ${#_categories_selected[@]} -eq 0 ]; then # No custom choices, so copy all.
         cp -r . "$INSTALL_DIR"
     else
         index=0
-        for option in "${_script_dirs[@]}"; do
-            if [ "${_opt_categories[index]}" == "true" ]; then
+        for option in "${_categories_dirs[@]}"; do
+            if [ "${_categories_selected[index]}" == "true" ]; then
                 cp -r "${option}" "$INSTALL_DIR"
                 cp "common-functions.sh" "$INSTALL_DIR"
             fi
@@ -146,7 +164,7 @@ _install_scripts() {
     fi
 
     # Install the file 'scripts-accels'.
-    if [[ "$menu_options" == *"accels"* ]]; then
+    if [[ "$menu_options" == *"shortcuts"* ]]; then
         echo " > Installing the file 'scripts-accels'..."
         mkdir --parents "$(dirname -- "$ACCELS_FILE")"
         mv "$ACCELS_FILE" "$ACCELS_FILE.bak" 2>/dev/null || true
@@ -203,10 +221,10 @@ _multiselect_menu() {
         echo -e -n "\033[$1;${2:-1}H"
     }
     __print_inactive() {
-        echo -e -n "  > $2 $1 "
+        echo -e -n " > $2 $1 "
     }
     __print_active() {
-        echo -e -n "  > $2\033[7m $1 \033[27m"
+        echo -e -n " > $2\033[7m $1 \033[27m"
     }
     __get_cursor_row() {
         IFS=';' read -sdRr -p $'\E[6n' ROW COL
