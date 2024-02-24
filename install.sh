@@ -22,13 +22,15 @@ _main() {
     _check_default_filemanager
 
     echo "Scripts installer."
-    echo "> Select the options (<SPACE> to select, <UP/DOWN> to choose, <ENTER> to confirm):"
+    echo
+    echo "Select the options (<SPACE> to select, <UP/DOWN> to choose, <ENTER> to confirm):"
+
     menu_labels=(
-        "Install basic dependencies"
-        "Install the keyboard shortcuts"
-        "Preserve the previous scripts"
-        "Close the file manager to reload its configurations"
-        "Choose the script categories to install"
+        "Install basic dependencies."
+        "Install the keyboard shortcuts."
+        "Preserve previous scripts (if any)."
+        "Close the file manager to reload its configurations."
+        "Choose the script categories to install."
     )
     menu_defaults=(
         "true"
@@ -42,13 +44,13 @@ _main() {
 
     [[ ${menu_selected[0]} == "true" ]] && menu_options+="dependencies,"
     [[ ${menu_selected[1]} == "true" ]] && menu_options+="shortcuts,"
-    [[ ${menu_selected[2]} == "true" ]] && menu_options+="preserve,"
+    [[ ${menu_selected[2]} == "true" ]] && [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]] && menu_options+="preserve,"
     [[ ${menu_selected[3]} == "true" ]] && menu_options+="reload,"
     [[ ${menu_selected[4]} == "true" ]] && menu_options+="categories,"
 
     if [[ "$menu_options" == *"categories"* ]]; then
         echo
-        echo "> Select the categories (<SPACE> to select, <UP/DOWN> to choose, <ENTER> to confirm):"
+        echo "Select the categories (<SPACE> to select, <UP/DOWN> to choose, <ENTER> to confirm):"
         for dirname in ./*/; do
             dirn="${dirname:2}"              # Remove leading path separators './'.
             categories_dirs+=("${dirn::-1}") # Remove trailing path separator '/'.
