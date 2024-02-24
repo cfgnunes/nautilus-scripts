@@ -13,13 +13,14 @@ INSTALL_DIR=""
 _main() {
     local menu_options=""
     local opt=""
-    local choices=()
+    local choices_menu=()
+    local choices_categories=()
     local script_dirs=()
     local preselection=()
 
-    echo "Scripts installer."
-
     _check_default_filemanager
+
+    echo "Scripts installer."
 
     # Show the main options
     read -r -p " > Would you like to install basic dependencies? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
@@ -35,7 +36,7 @@ _main() {
             dirn="${dirname:2}"          # Remove leading path separators './'.
             script_dirs+=("${dirn::-1}") # Remove trailing path separator '/'.
         done
-        _multiselect_menu choices script_dirs preselection
+        _multiselect_menu choices_categories script_dirs preselection
     fi
 
     echo
@@ -47,7 +48,7 @@ _main() {
     fi
 
     # Install the scripts.
-    _install_scripts "$menu_options" choices script_dirs
+    _install_scripts "$menu_options" choices_categories script_dirs
 
     echo "Done!"
 }
@@ -114,8 +115,8 @@ _install_dependencies() {
 
 _install_scripts() {
     local menu_options=$1
-    local -n menu_choices=$2
-    local -n menu_script_dirs=$3
+    local -n _choices_categories=$2
+    local -n _script_dirs=$3
     local tmp_install_dir=""
 
     # 'Preserve' or 'Remove' previous scripts.
@@ -132,13 +133,12 @@ _install_scripts() {
     echo " > Installing new scripts..."
     mkdir --parents "$INSTALL_DIR"
 
-    if [ ${#menu_choices[@]} -eq 0 ]; then # no custom choices, so copy all
+    if [ ${#_choices_categories[@]} -eq 0 ]; then # Co custom choices, so copy all.
         cp -r . "$INSTALL_DIR"
     else
         index=0
-        for option in "${menu_script_dirs[@]}"; do
-            if [ "${menu_choices[index]}" == "true" ]; then
-                # echo -e "${option}\t=> ${menu_choices[index]}"
+        for option in "${_script_dirs[@]}"; do
+            if [ "${_choices_categories[index]}" == "true" ]; then
                 cp -r "${option}" "$INSTALL_DIR"
                 cp "common-functions.sh" "$INSTALL_DIR"
             fi
