@@ -660,6 +660,7 @@ _get_output_filename() {
     local par_extension_opt="preserve"
     local par_extension=""
     local par_prefix=""
+    local par_suffix=""
 
     # Read values from the parameters.
     IFS=":, " read -r -a par_array <<<"$parameters"
@@ -668,31 +669,35 @@ _get_output_filename() {
         "extension_opt") par_extension_opt=${par_array[i + 1]} ;;
         "extension") par_extension=${par_array[i + 1]} ;;
         "prefix") par_prefix=$(_read_array_values "$i" "," "${par_array[@]}") ;;
+        "suffix") par_suffix=$(_read_array_values "$i" "," "${par_array[@]}") ;;
         esac
     done
 
     filename=$(basename -- "$input_file")
     output_file="$output_dir/"
+    [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
 
     # Define the extension of the 'output_file'.
     case "$par_extension_opt" in
     "append")
-        [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
-        output_file+="$filename"
+        output_file+="$(_strip_filename_extension "$filename")"
+        [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
+        output_file+="$(_get_filename_extension "$filename")"
         output_file+=".$par_extension"
         ;;
     "preserve")
-        [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
-        output_file+="$filename"
+        output_file+="$(_strip_filename_extension "$filename")"
+        [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
+        output_file+="$(_get_filename_extension "$filename")"
         ;;
     "replace")
-        [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
         output_file+="$(_strip_filename_extension "$filename")"
+        [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
         output_file+=".$par_extension"
         ;;
     "strip")
-        [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
         output_file+="$(_strip_filename_extension "$filename")"
+        [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
         ;;
     esac
 
