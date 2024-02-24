@@ -16,7 +16,7 @@ _main() {
     local choices_menu=()
     local choices_categories=()
     local script_dirs=()
-    local preselection=()
+    local defaults_categories=()
 
     _check_default_filemanager
 
@@ -36,7 +36,7 @@ _main() {
             dirn="${dirname:2}"          # Remove leading path separators './'.
             script_dirs+=("${dirn::-1}") # Remove trailing path separator '/'.
         done
-        _multiselect_menu choices_categories script_dirs preselection
+        _multiselect_menu choices_categories script_dirs defaults_categories
     fi
 
     echo
