@@ -143,7 +143,6 @@ _install_scripts() {
             ((idx++))
         done
     fi
-    return 0
 
     # Install the file 'scripts-accels'.
     if [[ "$menu_options" == *"accels"* ]]; then
