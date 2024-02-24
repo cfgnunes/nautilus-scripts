@@ -35,12 +35,12 @@ _main() {
     fi
 
     # Show the main options
-    read -r -p " > Install basic package dependencies? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
-    read -r -p " > Install the file 'scripts-accels'? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
+    read -r -p " > Would you like to install basic dependencies? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
+    read -r -p " > Would you like to install the keyboard shortcuts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
     if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
-        read -r -p " > Preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
+        read -r -p " > Would you like to preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
     fi
-    read -r -p " > Close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
+    read -r -p " > Would you like to close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
 
     echo
     echo "Starting the installation..."
