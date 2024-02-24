@@ -27,18 +27,16 @@ _main() {
     if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
         read -r -p " > Would you like to preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
     fi
-    read -r -p " > Would you like to choose script options? (y/N) "
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo
-        echo " > Please pick the desired categories. You can find more information in README.md."
-        echo " (SPACE) to select, (UP/DOWN) to choose"
+    read -r -p " > Would you like to close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
+    read -r -p " > Would you like to choose script categories to install? (y/N) " opt
+    if [[ "${opt,,}" == *"y"* ]]; then
+        echo " > Choose the script categories to install (<SPACE> to select, <UP/DOWN> to choose):"
         for dirname in ./*/; do
             dirn="${dirname:2}"          # remove leading path separators (./)
             script_dirs+=("${dirn::-1}") # remove trailing path separator (/)
         done
         _multiselect_menu choices script_dirs preselection
     fi
-    read -r -p " > Would you like to close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
 
     echo
     echo "Starting the installation..."
@@ -189,7 +187,6 @@ _install_scripts() {
 }
 
 _multiselect_menu() {
-
     # Helpers for console print format and control.
     ESC=$(printf "\033")
     cursor_blink_on() { printf "$ESC[?25h"; }
