@@ -133,7 +133,7 @@ _install_scripts() {
     echo " > Installing new scripts..."
     mkdir --parents "$INSTALL_DIR"
 
-    if [ ${#_opt_categories[@]} -eq 0 ]; then # Co custom choices, so copy all.
+    if [ ${#_opt_categories[@]} -eq 0 ]; then # No custom choices, so copy all.
         cp -r . "$INSTALL_DIR"
     else
         index=0
