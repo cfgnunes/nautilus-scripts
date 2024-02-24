@@ -11,27 +11,26 @@ FILE_MANAGER=""
 INSTALL_DIR=""
 
 _main() {
+    local ans=""
     local menu_options=""
-    local opt=""
-    local opt_menu=()
+    local defaults_categories=()
     local opt_categories=()
     local script_dirs=()
-    local defaults_categories=()
 
     _check_default_filemanager
 
     echo "Scripts installer."
 
     # Show the main options
-    read -r -p " > Would you like to install basic dependencies? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
-    read -r -p " > Would you like to install the keyboard shortcuts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
+    read -r -p " > Would you like to install basic dependencies? (Y/n) " ans && [[ "${ans,,}" == *"n"* ]] || menu_options+="dependencies,"
+    read -r -p " > Would you like to install the keyboard shortcuts? (Y/n) " ans && [[ "${ans,,}" == *"n"* ]] || menu_options+="accels,"
     if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
-        read -r -p " > Would you like to preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
+        read -r -p " > Would you like to preserve the previous scripts? (Y/n) " ans && [[ "${ans,,}" == *"n"* ]] || menu_options+="preserve,"
     fi
-    read -r -p " > Would you like to close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
-    read -r -p " > Would you like to choose script categories to install? (y/N) " opt
-    if [[ "${opt,,}" == *"y"* ]]; then
-        echo " > Choose the script categories to install (<SPACE> to select, <UP/DOWN> to choose):"
+    read -r -p " > Would you like to close the file manager to reload its configurations? (Y/n) " ans && [[ "${ans,,}" == *"n"* ]] || menu_options+="reload,"
+    read -r -p " > Would you like to choose the script categories to install? (y/N) " ans
+    if [[ "${ans,,}" == *"y"* ]]; then
+        echo " > Choose the categories (<SPACE> to select, <UP/DOWN> to choose, <ENTER> to confirm):"
         for dirname in ./*/; do
             dirn="${dirname:2}"          # Remove leading path separators './'.
             script_dirs+=("${dirn::-1}") # Remove trailing path separator '/'.
