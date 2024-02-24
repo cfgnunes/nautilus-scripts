@@ -44,14 +44,13 @@ _main() {
         read -r -p " > Would you like to preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
     fi
     read -r -p " > Would you like to choose script options? (y/N) "
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
         echo
         echo " > Please pick the desired categories. You can find more information in README.md."
         echo " (SPACE) to select, (UP/DOWN) to choose"
         for dirname in ./*/; do
-            dirn="${dirname:2}"             # remove leading path separators (./)
-            script_dirs+=("${dirn::-1}")    # remove trailing path separator (/)
+            dirn="${dirname:2}"          # remove leading path separators (./)
+            script_dirs+=("${dirn::-1}") # remove trailing path separator (/)
         done
         multiselect choices script_dirs preselection
     fi
@@ -130,7 +129,7 @@ _install_scripts() {
     # Install the scripts.
     echo " > Installing new scripts..."
     mkdir --parents "$INSTALL_DIR"
-    
+
     if [ ${#ch[@]} -eq 0 ]; then # no custom choices, so copy all
         cp -r . "$INSTALL_DIR"
     else
@@ -188,13 +187,16 @@ _install_scripts() {
 
 function multiselect {
     # helpers for console print format and control
-    ESC=$( printf "\033")
-    cursor_blink_on()   { printf "$ESC[?25h"; }
-    cursor_blink_off()  { printf "$ESC[?25l"; }
-    cursor_to()         { printf "$ESC[$1;${2:-1}H"; }
-    print_inactive()    { printf "$2   $1 "; }
-    print_active()      { printf "$2  $ESC[7m $1 $ESC[27m"; }
-    get_cursor_row()    { IFS=';' read -sdR -p $'\E[6n' ROW COL; echo "${ROW#*[}"; }
+    ESC=$(printf "\033")
+    cursor_blink_on() { printf "$ESC[?25h"; }
+    cursor_blink_off() { printf "$ESC[?25l"; }
+    cursor_to() { printf "$ESC[$1;${2:-1}H"; }
+    print_inactive() { printf "$2   $1 "; }
+    print_active() { printf "$2  $ESC[7m $1 $ESC[27m"; }
+    get_cursor_row() {
+        IFS=';' read -sdR -p $'\E[6n' ROW COL
+        echo "${ROW#*[}"
+    }
 
     local return_value=$1
     local -n options=$2
@@ -204,8 +206,8 @@ function multiselect {
     # fi
 
     local selected=()
-    for ((i=0; i<${#options[@]}; i++)); do
-        if [[ -v "defaults[i]" ]] ; then
+    for ((i = 0; i < ${#options[@]}; i++)); do
+        if [[ -v "defaults[i]" ]]; then
             if [[ ${defaults[i]} = "false" ]]; then
                 selected+=("false")
             else
@@ -229,15 +231,15 @@ function multiselect {
     key_input() {
         local key
         IFS= read -rsn1 key 2>/dev/null >&2
-        if [[ $key = ""      ]]; then echo enter; fi;
-        if [[ $key = $'\x20' ]]; then echo space; fi;
-        if [[ $key = "k" ]]; then echo up; fi;
-        if [[ $key = "j" ]]; then echo down; fi;
+        if [[ $key = "" ]]; then echo enter; fi
+        if [[ $key = $'\x20' ]]; then echo space; fi
+        if [[ $key = "k" ]]; then echo up; fi
+        if [[ $key = "j" ]]; then echo down; fi
         if [[ $key = $'\x1b' ]]; then
             read -rsn2 key
-            if [[ $key = [A || $key = k ]]; then echo up;    fi;
-            if [[ $key = [B || $key = j ]]; then echo down;  fi;
-        fi 
+            if [[ $key = [A || $key = k ]]; then echo up; fi
+            if [[ $key = [B || $key = j ]]; then echo down; fi
+        fi
     }
 
     toggle_option() {
@@ -255,7 +257,7 @@ function multiselect {
         for option in "${options[@]}"; do
             local prefix="[ ]"
             if [[ ${selected[idx]} == true ]]; then
-              prefix="[\e[38;5;46m✔\e[0m]"
+                prefix="[\e[38;5;46m✔\e[0m]"
             fi
 
             cursor_to $((startrow + idx))
@@ -273,12 +275,19 @@ function multiselect {
         print_options $active
         # user key control
         case $(key_input) in
-            space)  toggle_option $active;;
-            enter)  print_options -1; break;;
-            up)     ((active--));
-                    if [ $active -lt 0 ]; then active=$((${#options[@]} - 1)); fi;;
-            down)   ((active++));
-                    if [ $active -ge ${#options[@]} ]; then active=0; fi;;
+        space) toggle_option $active ;;
+        enter)
+            print_options -1
+            break
+            ;;
+        up)
+            ((active--))
+            if [ $active -lt 0 ]; then active=$((${#options[@]} - 1)); fi
+            ;;
+        down)
+            ((active++))
+            if [ $active -ge ${#options[@]} ]; then active=0; fi
+            ;;
         esac
     done
 
