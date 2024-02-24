@@ -204,10 +204,10 @@ _multiselect_menu() {
         echo -e -n "\033[$1;${2:-1}H"
     }
     __print_inactive() {
-        echo -e -n "$2 $1 "
+        echo -e -n "  > $2 $1 "
     }
     __print_active() {
-        echo -e -n "$2\033[7m $1 \033[27m"
+        echo -e -n "  > $2\033[7m $1 \033[27m"
     }
     __get_cursor_row() {
         IFS=';' read -sdRr -p $'\E[6n' ROW COL
