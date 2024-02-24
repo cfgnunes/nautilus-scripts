@@ -32,8 +32,8 @@ _main() {
     if [[ "${opt,,}" == *"y"* ]]; then
         echo " > Choose the script categories to install (<SPACE> to select, <UP/DOWN> to choose):"
         for dirname in ./*/; do
-            dirn="${dirname:2}"          # remove leading path separators (./)
-            script_dirs+=("${dirn::-1}") # remove trailing path separator (/)
+            dirn="${dirname:2}"          # Remove leading path separators './'.
+            script_dirs+=("${dirn::-1}") # Remove trailing path separator '/'.
         done
         _multiselect_menu choices script_dirs preselection
     fi
@@ -135,14 +135,14 @@ _install_scripts() {
     if [ ${#menu_choices[@]} -eq 0 ]; then # no custom choices, so copy all
         cp -r . "$INSTALL_DIR"
     else
-        idx=0
+        index=0
         for option in "${menu_script_dirs[@]}"; do
-            if [ "${menu_choices[idx]}" == "true" ]; then
-                # echo -e "${option}\t=> ${menu_choices[idx]}"
+            if [ "${menu_choices[index]}" == "true" ]; then
+                # echo -e "${option}\t=> ${menu_choices[index]}"
                 cp -r "${option}" "$INSTALL_DIR"
                 cp "common-functions.sh" "$INSTALL_DIR"
             fi
-            ((idx++))
+            ((index++))
         done
     fi
 
@@ -189,13 +189,23 @@ _install_scripts() {
 _multiselect_menu() {
     # Helpers for console print format and control.
     ESC=$(printf "\033")
-    cursor_blink_on() { printf "$ESC[?25h"; }
-    cursor_blink_off() { printf "$ESC[?25l"; }
-    cursor_to() { printf "$ESC[$1;${2:-1}H"; }
-    print_inactive() { printf "$2   $1 "; }
-    print_active() { printf "$2  $ESC[7m $1 $ESC[27m"; }
-    get_cursor_row() {
-        IFS=';' read -sdR -p $'\E[6n' ROW COL
+    __cursor_blink_on() {
+        printf "%s[?25h" "$ESC"
+    }
+    __cursor_blink_off() {
+        printf "%s[?25l" "$ESC"
+    }
+    __cursor_to() {
+        printf "%s[$1;${2:-1}H" "$ESC"
+    }
+    __print_inactive() {
+        printf "$2 $1 "
+    }
+    __print_active() {
+        printf "$2%s[7m $1 %s[27m" "$ESC" "$ESC"
+    }
+    __get_cursor_row() {
+        IFS=';' read -sdRr -p $'\E[6n' ROW COL
         echo "${ROW#*[}"
     }
 
@@ -220,30 +230,31 @@ _multiselect_menu() {
         printf "\n"
     done
 
-    # determine current screen position for overwriting the options
-    local lastrow
-    lastrow=$(get_cursor_row)
-    local startrow=$((lastrow - ${#options[@]}))
+    # Determine current screen position for overwriting the options.
+    local start_row=""
+    local last_row=""
+    last_row=$(__get_cursor_row)
+    start_row=$((last_row - ${#options[@]}))
 
-    # ensure cursor and input echoing back on upon a ctrl+c during read -s
-    trap "cursor_blink_on; stty echo; printf '\n'; exit" 2
-    cursor_blink_off
+    # Ensure cursor and input echoing back on upon a ctrl+c during read -s.
+    trap "__cursor_blink_on; stty echo; printf '\n'; exit" 2
+    __cursor_blink_off
 
-    key_input() {
+    __key_input() {
         local key
-        IFS= read -rsn1 key 2>/dev/null >&2
-        if [[ $key = "" ]]; then echo enter; fi
-        if [[ $key = $'\x20' ]]; then echo space; fi
-        if [[ $key = "k" ]]; then echo up; fi
-        if [[ $key = "j" ]]; then echo down; fi
+        IFS="" read -rsn1 key 2>/dev/null >&2
+        if [[ $key = "" ]]; then echo "enter"; fi
+        if [[ $key = $'\x20' ]]; then echo "space"; fi
+        if [[ $key = "k" ]]; then echo "up"; fi
+        if [[ $key = "j" ]]; then echo "down"; fi
         if [[ $key = $'\x1b' ]]; then
             read -rsn2 key
-            if [[ $key = [A || $key = k ]]; then echo up; fi
-            if [[ $key = [B || $key = j ]]; then echo down; fi
+            if [[ $key = [A || $key = k ]]; then echo "up"; fi
+            if [[ $key = [B || $key = j ]]; then echo "down"; fi
         fi
     }
 
-    toggle_option() {
+    __toggle_option() {
         local option=$1
         if [[ ${selected[option]} == true ]]; then
             selected[option]=false
@@ -252,50 +263,56 @@ _multiselect_menu() {
         fi
     }
 
-    print_options() {
-        # print options by overwriting the last lines
-        idx=0
+    __print_options() {
+        # Print options by overwriting the last lines.
+        index=0
         for option in "${options[@]}"; do
             local prefix="[ ]"
-            if [[ ${selected[idx]} == true ]]; then
+            if [[ ${selected[index]} == true ]]; then
                 prefix="[\e[38;5;46m*\e[0m]"
             fi
 
-            cursor_to $((startrow + idx))
-            if [ $idx -eq "$1" ]; then
-                print_active "$option" "$prefix"
+            __cursor_to $((start_row + index))
+            if [ $index -eq "$1" ]; then
+                __print_active "$option" "$prefix"
             else
-                print_inactive "$option" "$prefix"
+                __print_inactive "$option" "$prefix"
             fi
-            ((idx++))
+            ((index++))
         done
     }
 
     local active=0
     while true; do
-        print_options $active
-        # user key control
-        case $(key_input) in
-        space) toggle_option $active ;;
-        enter)
-            print_options -1
+        __print_options $active
+        # User key control.
+        case $(__key_input) in
+        "space")
+            __toggle_option $active
+            ;;
+        "enter")
+            __print_options -1
             break
             ;;
-        up)
+        "up")
             ((active--))
-            if [ $active -lt 0 ]; then active=$((${#options[@]} - 1)); fi
+            if [ $active -lt 0 ]; then
+                active=$((${#options[@]} - 1))
+            fi
             ;;
-        down)
+        "down")
             ((active++))
-            if [ $active -ge ${#options[@]} ]; then active=0; fi
+            if [ $active -ge ${#options[@]} ]; then
+                active=0
+            fi
             ;;
         esac
     done
 
-    # cursor position back to normal
-    cursor_to "$lastrow"
+    # Cursor position back to normal.
+    __cursor_to "$last_row"
     printf "\n"
-    cursor_blink_on
+    __cursor_blink_on
 
     eval "$return_value"='("${selected[@]}")'
 }
