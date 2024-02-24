@@ -23,21 +23,21 @@ _main() {
     echo "Scripts installer."
 
     # Show the main options
-    #    read -r -p " > Would you like to install basic dependencies? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
-    #    read -r -p " > Would you like to install the keyboard shortcuts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
-    #    if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
-    #        read -r -p " > Would you like to preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
-    #    fi
-    #    read -r -p " > Would you like to close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
-    #    read -r -p " > Would you like to choose script categories to install? (y/N) " opt
-    #    if [[ "${opt,,}" == *"y"* ]]; then
-    echo " > Choose the script categories to install (<SPACE> to select, <UP/DOWN> to choose):"
-    for dirname in ./*/; do
-        dirn="${dirname:2}"          # Remove leading path separators './'.
-        script_dirs+=("${dirn::-1}") # Remove trailing path separator '/'.
-    done
-    _multiselect_menu choices_categories script_dirs preselection
-    #    fi
+    read -r -p " > Would you like to install basic dependencies? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
+    read -r -p " > Would you like to install the keyboard shortcuts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
+    if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
+        read -r -p " > Would you like to preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
+    fi
+    read -r -p " > Would you like to close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
+    read -r -p " > Would you like to choose script categories to install? (y/N) " opt
+    if [[ "${opt,,}" == *"y"* ]]; then
+        echo " > Choose the script categories to install (<SPACE> to select, <UP/DOWN> to choose):"
+        for dirname in ./*/; do
+            dirn="${dirname:2}"          # Remove leading path separators './'.
+            script_dirs+=("${dirn::-1}") # Remove trailing path separator '/'.
+        done
+        _multiselect_menu choices_categories script_dirs preselection
+    fi
 
     echo
     echo "Starting the installation..."
