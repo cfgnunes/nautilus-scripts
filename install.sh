@@ -19,6 +19,42 @@ _main() {
 
     echo "Scripts installer."
 
+    _check_default_filemanager
+
+    # Show the main options
+    read -r -p " > Would you like to install basic dependencies? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
+    read -r -p " > Would you like to install the keyboard shortcuts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
+    if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
+        read -r -p " > Would you like to preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
+    fi
+    read -r -p " > Would you like to choose script options? (y/N) "
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo
+        echo " > Please pick the desired categories. You can find more information in README.md."
+        echo " (SPACE) to select, (UP/DOWN) to choose"
+        for dirname in ./*/; do
+            dirn="${dirname:2}"          # remove leading path separators (./)
+            script_dirs+=("${dirn::-1}") # remove trailing path separator (/)
+        done
+        _multiselect_menu choices script_dirs preselection
+    fi
+    read -r -p " > Would you like to close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
+
+    echo
+    echo "Starting the installation..."
+
+    # Install basic package dependencies.
+    if [[ "$menu_options" == *"dependencies"* ]]; then
+        _install_dependencies
+    fi
+
+    # Install the scripts.
+    _install_scripts "$menu_options" choices script_dirs
+
+    echo "Done!"
+}
+
+_check_default_filemanager() {
     # Get the default file manager.
     if _command_exists "nautilus"; then
         INSTALL_DIR="$HOME/.local/share/nautilus/scripts"
@@ -36,38 +72,6 @@ _main() {
         echo "Error: could not find any compatible file managers!"
         exit 1
     fi
-
-    # Show the main options
-    read -r -p " > Would you like to install basic dependencies? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="dependencies,"
-    read -r -p " > Would you like to install the keyboard shortcuts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="accels,"
-    if [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
-        read -r -p " > Would you like to preserve the previous scripts? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="preserve,"
-    fi
-    read -r -p " > Would you like to choose script options? (y/N) "
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo
-        echo " > Please pick the desired categories. You can find more information in README.md."
-        echo " (SPACE) to select, (UP/DOWN) to choose"
-        for dirname in ./*/; do
-            dirn="${dirname:2}"          # remove leading path separators (./)
-            script_dirs+=("${dirn::-1}") # remove trailing path separator (/)
-        done
-        multiselect choices script_dirs preselection
-    fi
-    read -r -p " > Would you like to close the file manager to reload its configurations? (Y/n) " opt && [[ "${opt,,}" == *"n"* ]] || menu_options+="reload,"
-
-    echo
-    echo "Starting the installation..."
-
-    # Install basic package dependencies.
-    if [[ "$menu_options" == *"dependencies"* ]]; then
-        _install_dependencies
-    fi
-
-    # Install the scripts.
-    _install_scripts "$menu_options" choices script_dirs
-
-    echo "Done!"
 }
 
 _command_exists() {
@@ -112,8 +116,8 @@ _install_dependencies() {
 
 _install_scripts() {
     local menu_options=$1
-    local -n ch=$2
-    local -n sd=$3
+    local -n menu_choices=$2
+    local -n menu_script_dirs=$3
     local tmp_install_dir=""
 
     # 'Preserve' or 'Remove' previous scripts.
@@ -130,13 +134,13 @@ _install_scripts() {
     echo " > Installing new scripts..."
     mkdir --parents "$INSTALL_DIR"
 
-    if [ ${#ch[@]} -eq 0 ]; then # no custom choices, so copy all
+    if [ ${#menu_choices[@]} -eq 0 ]; then # no custom choices, so copy all
         cp -r . "$INSTALL_DIR"
     else
         idx=0
-        for option in "${sd[@]}"; do
-            if [ "${ch[idx]}" == "true" ]; then
-                # echo -e "${option}\t=> ${ch[idx]}"
+        for option in "${menu_script_dirs[@]}"; do
+            if [ "${menu_choices[idx]}" == "true" ]; then
+                # echo -e "${option}\t=> ${menu_choices[idx]}"
                 cp -r "${option}" "$INSTALL_DIR"
                 cp "common-functions.sh" "$INSTALL_DIR"
             fi
@@ -184,8 +188,9 @@ _install_scripts() {
     fi
 }
 
-function multiselect {
-    # helpers for console print format and control
+_multiselect_menu() {
+
+    # Helpers for console print format and control.
     ESC=$(printf "\033")
     cursor_blink_on() { printf "$ESC[?25h"; }
     cursor_blink_off() { printf "$ESC[?25l"; }
