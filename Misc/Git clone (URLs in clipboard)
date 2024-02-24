@@ -42,7 +42,7 @@ _get_urls_from_clipboard() {
     urls+=$'\n'
     urls+=$(xclip -quiet -selection clipboard -o)
     urls+=$'\n'
-    urls=$(grep --only-matching --perl-regexp "((git|ssh|http(s)?)|(git@[\w\.]+))(:(//)?)([\w\.@\:/\-~]+)(\.git)(/)?" <<<"$urls")
+    urls=$(grep --only-matching --perl-regexp "((git|ssh|http(s)?)|(git@[\w\.]+))(.*)(\.git)" <<<"$urls")
     urls=$(sort -u <<<"$urls")
 
     if [[ -z "$urls" ]]; then
