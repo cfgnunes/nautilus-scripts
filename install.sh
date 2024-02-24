@@ -256,7 +256,7 @@ function multiselect {
         for option in "${options[@]}"; do
             local prefix="[ ]"
             if [[ ${selected[idx]} == true ]]; then
-                prefix="[\e[38;5;46m✔\e[0m]"
+                prefix="[\e[38;5;46m*\e[0m]"
             fi
 
             cursor_to $((startrow + idx))
