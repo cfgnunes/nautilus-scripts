@@ -42,18 +42,15 @@ _get_urls_from_clipboard() {
     urls+=$'\n'
     urls+=$(xclip -quiet -selection clipboard -o)
     urls+=$'\n'
-    urls=$(sed "s|[ \t]*\(\r*\)$|\1|g" <<<"$urls") # Remove spaces after.
-    urls=$(sed "s|^\(\r*\)[ \t]*|\1|g" <<<"$urls") # Remove spaces before.
-    urls=$(grep -v " " <<<"$urls")                 # Remove lines with spaces.
-    urls=$(grep "^http" <<<"$urls")
+    urls=$(grep --only-matching --perl-regexp "https?://\w+\.[^ '\"]+" <<<"$urls")
     urls=$(sort -u <<<"$urls")
-    urls=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$urls")
 
     if [[ -z "$urls" ]]; then
         _display_error_box "There are no valid URLs in the clipboard!"
         _exit_script
     fi
 
+    urls=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$urls")
     echo "$urls"
 }
 
