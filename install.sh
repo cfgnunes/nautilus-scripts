@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2034
 
 # Install the scripts for the GNOME Files (Nautilus), Caja and Nemo file managers.
 
@@ -229,8 +230,12 @@ _multiselect_menu() {
         echo -e -n " > $2\033[7m $1 \033[27m"
     }
     __get_cursor_row() {
-        IFS=';' read -sdRr -p $'\E[6n' ROW COL
-        echo "${ROW#*[}"
+        local col=""
+        local row=""
+
+        # shellcheck disable=SC2034
+        IFS=';' read -sdRr -p $'\E[6n' row col
+        echo "${row#*[}"
     }
 
     # Proccess the 'defaults' parameter.
