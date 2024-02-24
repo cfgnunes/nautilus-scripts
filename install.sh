@@ -48,6 +48,7 @@ _main() {
     then
         echo
         echo " > Please pick the desired categories. You can find more information in README.md."
+        echo " (SPACE) to select, (UP/DOWN) to choose"
         for dirname in ./*/; do
             dirn="${dirname:2}"             # remove leading path separators (./)
             script_dirs+=("${dirn::-1}")    # remove trailing path separator (/)
