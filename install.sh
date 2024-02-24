@@ -240,8 +240,9 @@ _multiselect_menu() {
     __cursor_blink_off
 
     # Local functions to use in the menu.
-    __key_input() {
-        local key
+    __get_keyboard_key() {
+        local key=""
+
         IFS="" read -rsn1 key 2>/dev/null >&2
         if [[ $key = "" ]]; then echo "enter"; fi
         if [[ $key = $'\x20' ]]; then echo "space"; fi
@@ -254,6 +255,7 @@ _multiselect_menu() {
 
     __toggle_option() {
         local option=$1
+
         if [[ ${selected[option]} == true ]]; then
             selected[option]=false
         else
@@ -261,9 +263,10 @@ _multiselect_menu() {
         fi
     }
 
+    # Print options by overwriting the last lines.
     __print_options() {
-        # Print options by overwriting the last lines.
-        index=0
+        local index=0
+
         for option in "${options[@]}"; do
             local prefix="[ ]"
             if [[ ${selected[index]} == true ]]; then
@@ -286,7 +289,7 @@ _multiselect_menu() {
         __print_options $active
 
         # User key control.
-        case $(__key_input) in
+        case $(__get_keyboard_key) in
         "space")
             __toggle_option $active
             ;;
