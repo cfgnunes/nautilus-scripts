@@ -22,24 +22,24 @@ While numerous scripts are available for GNOME Files on the web, many suffer fro
 
 ## Keyboard Shortcuts
 
-| Key                      | Action                        |
-| ------------------------ | ----------------------------- |
-| `F3`                     | Code Editor                   |
-| `F4`                     | Terminal                      |
-| `F7`                     | Disk Usage Analyzer           |
-| `<Control>E`             | Extract Here                  |
-| `<Control>K`             | Compress...                   |
-| `<Shift><Control>A`      | List all files                |
-| `<Shift><Control>D`      | List duplicate files          |
-| `<Shift><Control>E`      | List empty directories        |
-| `<Shift><Control>H`      | List hidden items             |
-| `<Shift><Control>L`      | Make a link (symbolic link)   |
-| `<Shift><Control>M`      | Compare with Meld             |
-| `<Shift><Control>O`      | Open item location            |
-| `<Shift><Control>P`      | List permissions and owners   |
-| `<Shift><Control>Y`      | List file type                |
-| `<Shift><Control><Alt>D` | Download (URLs in clipboard)  |
-| `<Shift><Control><Alt>G` | Git clone (URLs in clipboard) |
+| Key                 | Action                        |
+| ------------------- | ----------------------------- |
+| `F3`                | Code Editor                   |
+| `F4`                | Terminal                      |
+| `F7`                | Disk Usage Analyzer           |
+| `<Control>E`        | Extract Here                  |
+| `<Control>K`        | Compress...                   |
+| `<Shift><Control>A` | List all files                |
+| `<Shift><Control>D` | Download (URLs in clipboard)  |
+| `<Shift><Control>E` | List empty directories        |
+| `<Shift><Control>G` | Git clone (URLs in clipboard) |
+| `<Shift><Control>H` | List hidden items             |
+| `<Shift><Control>L` | Make a link (symbolic link)   |
+| `<Shift><Control>M` | Compare with Meld             |
+| `<Shift><Control>O` | Open item location            |
+| `<Shift><Control>P` | List permissions and owners   |
+| `<Shift><Control>U` | List duplicate files          |
+| `<Shift><Control>Y` | List file type                |
 
 ## Installing
 
