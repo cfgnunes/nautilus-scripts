@@ -249,8 +249,8 @@ _multiselect_menu() {
         if [[ $key = "j" ]]; then echo "down"; fi
         if [[ $key = $'\x1b' ]]; then
             read -rsn2 key
-            if [[ $key = [A || $key = k ]]; then echo "up"; fi
-            if [[ $key = [B || $key = j ]]; then echo "down"; fi
+            if [[ $key = "[A" || $key = k ]]; then echo "up"; fi
+            if [[ $key = "[B" || $key = j ]]; then echo "down"; fi
         fi
     }
 
