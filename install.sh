@@ -186,6 +186,8 @@ _install_scripts() {
     fi
 }
 
+# Menu code from:
+# https://unix.stackexchange.com/questions/146570/arrow-key-enter-menu
 _multiselect_menu() {
     local return_value=$1
     local -n options=$2
