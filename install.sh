@@ -206,8 +206,7 @@ _install_scripts() {
     fi
 }
 
-# Menu code based on:
-# https://unix.stackexchange.com/a/673436
+# Menu code based on: https://unix.stackexchange.com/a/673436
 _multiselect_menu() {
     local return_value=$1
     local -n options=$2
