@@ -37,6 +37,7 @@ _main() {
     _run_get_max_procs
     _run_get_output_dir
     _run_get_output_filename
+    _run_get_parameter_value
     _run_get_script_name
     _run_has_string_in_list
     _run_install_package
@@ -46,13 +47,13 @@ _main() {
     _run_move_file
     _run_move_temp_file_to_output
     _run_print_terminal
-    _run_read_array_values
     _run_run_task_parallel
     _run_storage_text_clean
     _run_storage_text_read_all
     _run_storage_text_write
     _run_storage_text_write_ln
     _run_str_human_readable_path
+    _run_str_trim_whitespace
     _run_strip_filename_extension
     _run_text_remove_empty_lines
     _run_text_remove_home
@@ -276,6 +277,40 @@ _run_get_output_filename() {
     :
 }
 
+_run_get_parameter_value() {
+    local parameters=""
+    local key=""
+    local expected_output=""
+    local output=""
+
+    parameters="extension_opt:preserve, prefix:Link to, suffix: (Test) "
+
+    key=""
+    expected_output=""
+    output=$(_get_parameter_value "$parameters" "$key")
+    _test_equal "$key" "$output" "$expected_output"
+
+    key="not_exist"
+    expected_output=""
+    output=$(_get_parameter_value "$parameters" "$key")
+    _test_equal "$key" "$output" "$expected_output"
+
+    key="prefix"
+    expected_output="Link to"
+    output=$(_get_parameter_value "$parameters" "$key")
+    _test_equal "$key" "$output" "$expected_output"
+
+    key="suffix"
+    expected_output="(Test)"
+    output=$(_get_parameter_value "$parameters" "$key")
+    _test_equal "$key" "$output" "$expected_output"
+
+    key="extension_opt"
+    expected_output="preserve"
+    output=$(_get_parameter_value "$parameters" "$key")
+    _test_equal "$key" "$output" "$expected_output"
+}
+
 _run_get_script_name() {
     # TODO Implement the test: '_run_get_script_name'.
     :
@@ -321,11 +356,6 @@ _run_print_terminal() {
     :
 }
 
-_run_read_array_values() {
-    # TODO Implement the test: '_run_read_array_values'.
-    :
-}
-
 _run_run_task_parallel() {
     # TODO Implement the test: '_run_run_task_parallel'.
     :
@@ -360,6 +390,11 @@ _run_storage_text_write_ln() {
 
 _run_str_human_readable_path() {
     # TODO Implement the test: '_run_str_human_readable_path'.
+    :
+}
+
+_run_str_trim_whitespace() {
+    # TODO Implement the test: '_run_str_trim_whitespace'.
     :
 }
 
