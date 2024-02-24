@@ -245,12 +245,10 @@ _multiselect_menu() {
         IFS="" read -rsn1 key 2>/dev/null >&2
         if [[ $key = "" ]]; then echo "enter"; fi
         if [[ $key = $'\x20' ]]; then echo "space"; fi
-        if [[ $key = "k" ]]; then echo "up"; fi
-        if [[ $key = "j" ]]; then echo "down"; fi
         if [[ $key = $'\x1b' ]]; then
             read -rsn2 key
-            if [[ $key = "[A" || $key = k ]]; then echo "up"; fi
-            if [[ $key = "[B" || $key = j ]]; then echo "down"; fi
+            if [[ $key = "[A" || $key = "[D" ]]; then echo "up"; fi
+            if [[ $key = "[B" || $key = "[C" ]]; then echo "down"; fi
         fi
     }
 
