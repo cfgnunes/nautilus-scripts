@@ -225,18 +225,6 @@ _multiselect_menu() {
 
         echo -e -n "\e[${row};${col}H"
     }
-    __print_inactive() {
-        local prefix=$1
-        local option=$2
-
-        echo -e -n " > $prefix $option"
-    }
-    __print_active() {
-        local prefix=$1
-        local option=$2
-
-        echo -e -n " > $prefix \e[7m$option\e[27m"
-    }
     __get_cursor_row() {
         local row=""
         local col=""
@@ -257,13 +245,6 @@ _multiselect_menu() {
             if [[ $key = "[B" || $key = "[C" ]]; then echo "down"; fi
         fi
     }
-
-    # Determine current screen position for overwriting the options.
-    local start_row=""
-    local last_row=""
-    last_row=$(__get_cursor_row)
-    start_row=$((last_row - ${#options[@]}))
-
     __exit_menu() {
         __cursor_to "$last_row"
         __cursor_blink_on
@@ -273,6 +254,12 @@ _multiselect_menu() {
 
     # Ensure cursor and input echoing back on upon a ctrl+c during read -s.
     trap "__exit_menu" 2
+
+    # Determine current screen position for overwriting the options.
+    local start_row=""
+    local last_row=""
+    last_row=$(__get_cursor_row)
+    start_row=$((last_row - ${#options[@]}))
 
     # Proccess the 'defaults' parameter.
     local selected=()
@@ -296,18 +283,20 @@ _multiselect_menu() {
         local option=""
 
         for option in "${options[@]}"; do
-            # Set the prefix "[ ]" or "[*]".
-            local prefix="[ ]"
+            # Set the prefix " > [ ]" or " > [*]".
+            local prefix=" > [ ]"
             if [[ ${selected[index]} == "true" ]]; then
-                prefix="[\e[1;32m*\e[0m]"
+                prefix=" > [\e[1;32m*\e[0m]"
             fi
 
             # Print the prefix with the option in the menu.
             __cursor_to "$((start_row + index))"
             if [[ "$index" == "$index_active" ]]; then
-                __print_active "$prefix" "$option"
+                # Print the active option.
+                echo -e -n "$prefix \e[7m$option\e[27m"
             else
-                __print_inactive "$prefix" "$option"
+                # Print the inactive option.
+                echo -e -n "$prefix $option"
             fi
             # Avoid print chars when press two keys at same time.
             __cursor_to "$start_row"
@@ -316,7 +305,7 @@ _multiselect_menu() {
         done
     }
 
-    # Print the menu with options.
+    # Main loop of the menu.
     __cursor_blink_off
     local active=0
     while true; do
@@ -351,7 +340,7 @@ _multiselect_menu() {
         esac
     done
 
-    # Cursor position back to normal.
+    # Set the cursor position back to normal.
     __cursor_to "$last_row"
     __cursor_blink_on
 
