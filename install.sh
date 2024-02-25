@@ -295,11 +295,13 @@ _multiselect_menu() {
         local option=""
 
         for option in "${options[@]}"; do
+            # Set the prefix "[ ]" or "[*]".
             local prefix="[ ]"
             if [[ ${selected[index]} == "true" ]]; then
                 prefix="[\e[1;32m*\e[0m]"
             fi
 
+            # Print the prefix with the option in the menu.
             __cursor_to "$((start_row + index))"
             if [[ "$index" == "$index_active" ]]; then
                 __print_active "$prefix" "$option"
