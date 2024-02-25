@@ -249,7 +249,7 @@ _multiselect_menu() {
         __cursor_to "$last_row"
         __cursor_blink_on
         stty echo
-        exit
+        exit 1
     }
 
     # Ensure cursor and input echoing back on upon a ctrl+c during read -s.
@@ -259,7 +259,7 @@ _multiselect_menu() {
     local selected=()
     for ((i = 0; i < ${#options[@]}; i++)); do
         if [[ -v "defaults[i]" ]]; then
-            if [[ ${defaults[i]} = "false" ]]; then
+            if [[ ${defaults[i]} == "false" ]]; then
                 selected+=("false")
             else
                 selected+=("true")
