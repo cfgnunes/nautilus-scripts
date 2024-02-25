@@ -220,21 +220,42 @@ _multiselect_menu() {
         echo -e -n "\033[?25l"
     }
     __cursor_to() {
-        echo -e -n "\033[$1;${2:-1}H"
+        local row=$1
+        local col=${2:-1}
+
+        echo -e -n "\033[${row};${col}H"
     }
     __print_inactive() {
-        echo -e -n " > $2 $1 "
+        local prefix=$1
+        local option=$2
+
+        echo -e -n " > $prefix $option "
     }
     __print_active() {
-        echo -e -n " > $2\033[7m $1 \033[27m"
+        local prefix=$1
+        local option=$2
+
+        echo -e -n " > $prefix\033[7m $option \033[27m"
     }
     __get_cursor_row() {
-        local col=""
         local row=""
+        local col=""
 
         # shellcheck disable=SC2034
         IFS=';' read -rsdR -p $'\E[6n' row col
         echo "${row#*[}"
+    }
+    __get_keyboard_key() {
+        local key=""
+
+        IFS="" read -rsn1 key &>/dev/null
+        if [[ $key = "" ]]; then echo "enter"; fi
+        if [[ $key = " " ]]; then echo "space"; fi
+        if [[ $key = $'\033' ]]; then
+            IFS="" read -rsn2 key &>/dev/null
+            if [[ $key = "[A" || $key = "[D" ]]; then echo "up"; fi
+            if [[ $key = "[B" || $key = "[C" ]]; then echo "down"; fi
+        fi
     }
 
     # Proccess the 'defaults' parameter.
@@ -262,46 +283,23 @@ _multiselect_menu() {
     trap "__cursor_blink_on; stty echo; echo; exit" 2
     __cursor_blink_off
 
-    # Local functions to use in the menu.
-    __get_keyboard_key() {
-        local key=""
-
-        IFS="" read -rsn1 key &>/dev/null
-        if [[ $key = "" ]]; then echo "enter"; fi
-        if [[ $key = " " ]]; then echo "space"; fi
-        if [[ $key = $'\x1b' ]]; then
-            IFS="" read -rsn2 key &>/dev/null
-            if [[ $key = "[A" || $key = "[D" ]]; then echo "up"; fi
-            if [[ $key = "[B" || $key = "[C" ]]; then echo "down"; fi
-        fi
-    }
-
-    __toggle_option() {
-        local option=$1
-
-        if [[ ${selected[option]} == true ]]; then
-            selected[option]=false
-        else
-            selected[option]=true
-        fi
-    }
-
     # Print options by overwriting the last lines.
     __print_options() {
+        local index_active=$1
         local index=0
         local option=""
 
         for option in "${options[@]}"; do
             local prefix="[ ]"
-            if [[ ${selected[index]} == true ]]; then
+            if [[ ${selected[index]} == "true" ]]; then
                 prefix="[\e[38;5;46m*\e[0m]"
             fi
 
             __cursor_to $((start_row + index))
-            if [[ "$index" == "$1" ]]; then
-                __print_active "$option" "$prefix"
+            if [[ "$index" == "$index_active" ]]; then
+                __print_active "$prefix" "$option"
             else
-                __print_inactive "$option" "$prefix"
+                __print_inactive "$prefix" "$option"
             fi
             index=$((index + 1))
         done
@@ -315,7 +313,12 @@ _multiselect_menu() {
         # User key control.
         case $(__get_keyboard_key) in
         "space")
-            __toggle_option "$active"
+            # Toggle the option.
+            if [[ ${selected[active]} == "true" ]]; then
+                selected[active]="false"
+            else
+                selected[active]="true"
+            fi
             ;;
         "enter")
             __print_options -1
