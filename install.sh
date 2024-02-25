@@ -253,7 +253,7 @@ _multiselect_menu() {
     }
 
     # Ensure cursor and input echoing back on upon a ctrl+c during read -s.
-    trap "__exit_menu" 2
+    trap "__exit_menu" SIGINT
 
     # Determine current screen position for overwriting the options.
     local start_row=""
@@ -345,6 +345,9 @@ _multiselect_menu() {
     __cursor_blink_on
 
     eval "$return_value"='("${selected[@]}")'
+
+    # Unset the trap function.
+    trap "" SIGINT
 }
 
 _main "$@"
