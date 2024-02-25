@@ -153,12 +153,12 @@ _install_scripts() {
     echo " > Installing new scripts..."
     mkdir --parents "$INSTALL_DIR"
 
-    if [ ${#_categories_selected[@]} -eq 0 ]; then # No custom choices, so copy all.
+    if [[ ${#_categories_selected[@]} == "0" ]]; then # No custom choices, so copy all.
         cp -r . "$INSTALL_DIR"
     else
         index=0
         for option in "${_categories_dirs[@]}"; do
-            if [ "${_categories_selected[index]}" == "true" ]; then
+            if [[ "${_categories_selected[index]}" == "true" ]]; then
                 cp -r "${option}" "$INSTALL_DIR"
                 cp "common-functions.sh" "$INSTALL_DIR"
             fi
@@ -298,7 +298,7 @@ _multiselect_menu() {
             fi
 
             __cursor_to $((start_row + index))
-            if [ $index -eq "$1" ]; then
+            if [[ "$index" == "$1" ]]; then
                 __print_active "$option" "$prefix"
             else
                 __print_inactive "$option" "$prefix"
@@ -323,13 +323,13 @@ _multiselect_menu() {
             ;;
         "up")
             ((active--))
-            if [ $active -lt 0 ]; then
+            if [[ $active -lt 0 ]]; then
                 active=$((${#options[@]} - 1))
             fi
             ;;
         "down")
             ((active++))
-            if [ $active -ge ${#options[@]} ]; then
+            if [[ $active -ge ${#options[@]} ]]; then
                 active=0
             fi
             ;;
