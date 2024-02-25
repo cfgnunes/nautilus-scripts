@@ -257,6 +257,15 @@ _multiselect_menu() {
             if [[ $key = "[B" || $key = "[C" ]]; then echo "down"; fi
         fi
     }
+    __exit_menu() {
+        __cursor_to "$last_row"
+        __cursor_blink_on
+        stty echo
+        exit
+    }
+
+    # Ensure cursor and input echoing back on upon a ctrl+c during read -s.
+    trap "__exit_menu" 2
 
     # Proccess the 'defaults' parameter.
     local selected=()
@@ -278,10 +287,6 @@ _multiselect_menu() {
     local last_row=""
     last_row=$(__get_cursor_row)
     start_row=$((last_row - ${#options[@]}))
-
-    # Ensure cursor and input echoing back on upon a ctrl+c during read -s.
-    trap "__cursor_blink_on; stty echo; echo; exit" 2
-    __cursor_blink_off
 
     # Print options by overwriting the last lines.
     __print_options() {
@@ -306,6 +311,7 @@ _multiselect_menu() {
     }
 
     # Print the menu with options.
+    __cursor_blink_off
     local active=0
     while true; do
         __print_options "$active"
