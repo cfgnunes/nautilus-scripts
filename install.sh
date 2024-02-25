@@ -255,12 +255,6 @@ _multiselect_menu() {
     # Ensure cursor and input echoing back on upon a ctrl+c during read -s.
     trap "__exit_menu" SIGINT
 
-    # Determine current screen position for overwriting the options.
-    local start_row=""
-    local last_row=""
-    last_row=$(__get_cursor_row)
-    start_row=$((last_row - ${#options[@]}))
-
     # Proccess the 'defaults' parameter.
     local selected=()
     for ((i = 0; i < ${#options[@]}; i++)); do
@@ -275,6 +269,12 @@ _multiselect_menu() {
         fi
         echo
     done
+
+    # Determine current screen position for overwriting the options.
+    local start_row=""
+    local last_row=""
+    last_row=$(__get_cursor_row)
+    start_row=$((last_row - ${#options[@]}))
 
     # Print options by overwriting the last lines.
     __print_options() {
