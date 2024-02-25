@@ -257,6 +257,13 @@ _multiselect_menu() {
             if [[ $key = "[B" || $key = "[C" ]]; then echo "down"; fi
         fi
     }
+
+    # Determine current screen position for overwriting the options.
+    local start_row=""
+    local last_row=""
+    last_row=$(__get_cursor_row)
+    start_row=$((last_row - ${#options[@]}))
+
     __exit_menu() {
         __cursor_to "$last_row"
         __cursor_blink_on
@@ -281,12 +288,6 @@ _multiselect_menu() {
         fi
         echo
     done
-
-    # Determine current screen position for overwriting the options.
-    local start_row=""
-    local last_row=""
-    last_row=$(__get_cursor_row)
-    start_row=$((last_row - ${#options[@]}))
 
     # Print options by overwriting the last lines.
     __print_options() {
