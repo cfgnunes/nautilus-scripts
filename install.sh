@@ -307,7 +307,7 @@ _multiselect_menu() {
                 __print_inactive "$prefix" "$option"
             fi
             # Avoid print chars when press two keys at same time.
-            __cursor_to "$((start_row))"
+            __cursor_to "$start_row"
 
             index=$((index + 1))
         done
