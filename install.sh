@@ -214,16 +214,16 @@ _multiselect_menu() {
 
     # Helpers for console print format and control.
     __cursor_blink_on() {
-        echo -e -n "\033[?25h"
+        echo -e -n "\e[?25h"
     }
     __cursor_blink_off() {
-        echo -e -n "\033[?25l"
+        echo -e -n "\e[?25l"
     }
     __cursor_to() {
         local row=$1
         local col=${2:-1}
 
-        echo -e -n "\033[${row};${col}H"
+        echo -e -n "\e[${row};${col}H"
     }
     __print_inactive() {
         local prefix=$1
@@ -235,7 +235,7 @@ _multiselect_menu() {
         local prefix=$1
         local option=$2
 
-        echo -e -n " > $prefix \033[7m$option\033[27m"
+        echo -e -n " > $prefix \e[7m$option\e[27m"
     }
     __get_cursor_row() {
         local row=""
@@ -251,7 +251,7 @@ _multiselect_menu() {
         IFS="" read -rsn1 key &>/dev/null
         if [[ $key = "" ]]; then echo "enter"; fi
         if [[ $key = " " ]]; then echo "space"; fi
-        if [[ $key = $'\033' ]]; then
+        if [[ $key = $'\e' ]]; then
             IFS="" read -rsn2 key &>/dev/null
             if [[ $key = "[A" || $key = "[D" ]]; then echo "up"; fi
             if [[ $key = "[B" || $key = "[C" ]]; then echo "down"; fi
