@@ -229,13 +229,13 @@ _multiselect_menu() {
         local prefix=$1
         local option=$2
 
-        echo -e -n " > $prefix $option "
+        echo -e -n " > $prefix $option"
     }
     __print_active() {
         local prefix=$1
         local option=$2
 
-        echo -e -n " > $prefix\033[7m $option \033[27m"
+        echo -e -n " > $prefix \033[7m$option\033[27m"
     }
     __get_cursor_row() {
         local row=""
@@ -305,7 +305,7 @@ _multiselect_menu() {
         done
     }
 
-    # Print the menu.
+    # Print the menu with options.
     local active=0
     while true; do
         __print_options "$active"
