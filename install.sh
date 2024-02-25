@@ -233,7 +233,7 @@ _multiselect_menu() {
         local row=""
 
         # shellcheck disable=SC2034
-        IFS=';' read -sdRr -p $'\E[6n' row col
+        IFS=';' read -rsdR -p $'\E[6n' row col
         echo "${row#*[}"
     }
 
@@ -266,11 +266,11 @@ _multiselect_menu() {
     __get_keyboard_key() {
         local key=""
 
-        IFS="" read -rsn1 key 2>/dev/null >&2
+        IFS="" read -rsn1 key &>/dev/null
         if [[ $key = "" ]]; then echo "enter"; fi
-        if [[ $key = $'\x20' ]]; then echo "space"; fi
+        if [[ $key = " " ]]; then echo "space"; fi
         if [[ $key = $'\x1b' ]]; then
-            read -rsn2 key
+            IFS="" read -rsn2 key &>/dev/null
             if [[ $key = "[A" || $key = "[D" ]]; then echo "up"; fi
             if [[ $key = "[B" || $key = "[C" ]]; then echo "down"; fi
         fi
@@ -289,6 +289,7 @@ _multiselect_menu() {
     # Print options by overwriting the last lines.
     __print_options() {
         local index=0
+        local option=""
 
         for option in "${options[@]}"; do
             local prefix="[ ]"
@@ -309,12 +310,12 @@ _multiselect_menu() {
     # Print the menu.
     local active=0
     while true; do
-        __print_options $active
+        __print_options "$active"
 
         # User key control.
         case $(__get_keyboard_key) in
         "space")
-            __toggle_option $active
+            __toggle_option "$active"
             ;;
         "enter")
             __print_options -1
