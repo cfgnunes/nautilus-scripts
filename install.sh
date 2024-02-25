@@ -297,7 +297,7 @@ _multiselect_menu() {
         for option in "${options[@]}"; do
             local prefix="[ ]"
             if [[ ${selected[index]} == "true" ]]; then
-                prefix="[\e[38;5;46m*\e[0m]"
+                prefix="[\e[1;32m*\e[0m]"
             fi
 
             __cursor_to "$((start_row + index))"
