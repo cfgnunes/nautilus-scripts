@@ -3,7 +3,7 @@
 
 # Install the scripts for the GNOME Files (Nautilus), Caja and Nemo file managers.
 
-set -u
+set -eu
 
 # Global variables
 ASSSETS_DIR=".assets"
@@ -303,7 +303,7 @@ _multiselect_menu() {
             else
                 __print_inactive "$option" "$prefix"
             fi
-            ((index++))
+            index=$((index + 1))
         done
     }
 
@@ -322,13 +322,13 @@ _multiselect_menu() {
             break
             ;;
         "up")
-            ((active--))
+            active=$((active - 1))
             if [[ $active -lt 0 ]]; then
                 active=$((${#options[@]} - 1))
             fi
             ;;
         "down")
-            ((active++))
+            active=$((active + 1))
             if [[ $active -ge ${#options[@]} ]]; then
                 active=0
             fi
