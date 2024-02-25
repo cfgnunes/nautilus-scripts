@@ -300,12 +300,15 @@ _multiselect_menu() {
                 prefix="[\e[38;5;46m*\e[0m]"
             fi
 
-            __cursor_to $((start_row + index))
+            __cursor_to "$((start_row + index))"
             if [[ "$index" == "$index_active" ]]; then
                 __print_active "$prefix" "$option"
             else
                 __print_inactive "$prefix" "$option"
             fi
+            # Avoid print chars when press two keys at same time.
+            __cursor_to "$((start_row))"
+
             index=$((index + 1))
         done
     }
