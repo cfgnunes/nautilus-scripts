@@ -237,13 +237,17 @@ _multiselect_menu() {
         local key=""
 
         IFS="" read -rsn1 key &>/dev/null
-        if [[ $key = "" ]]; then echo "enter"; fi
-        if [[ $key = " " ]]; then echo "space"; fi
-        if [[ $key = $'\e' ]]; then
+        case "$key" in
+        "") echo "enter" ;;
+        " ") echo "space" ;;
+        $'\e')
             IFS="" read -rsn2 key &>/dev/null
-            if [[ $key = "[A" || $key = "[D" ]]; then echo "up"; fi
-            if [[ $key = "[B" || $key = "[C" ]]; then echo "down"; fi
-        fi
+            case "$key" in
+            "[A" | "[D") echo "up" ;;
+            "[B" | "[C") echo "down" ;;
+            esac
+            ;;
+        esac
     }
     __exit_menu() {
         __cursor_to "$last_row"
