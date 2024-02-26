@@ -138,6 +138,7 @@ _install_scripts() {
     local -n _categories_selected=$2
     local -n _categories_dirs=$3
     local tmp_install_dir=""
+    local i=""
 
     # 'Preserve' or 'Remove' previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then
@@ -156,13 +157,11 @@ _install_scripts() {
     if [[ ${#_categories_selected[@]} == "0" ]]; then # No custom choices, so copy all.
         cp -r . "$INSTALL_DIR"
     else
-        index=0
-        for option in "${_categories_dirs[@]}"; do
-            if [[ "${_categories_selected[index]}" == "true" ]]; then
-                cp -r "${option}" "$INSTALL_DIR"
-                cp "common-functions.sh" "$INSTALL_DIR"
+        cp "common-functions.sh" "$INSTALL_DIR"
+        for i in "${!_categories_dirs[@]}"; do
+            if [[ "${_categories_selected[i]}" == "true" ]]; then
+                cp -r "${_categories_dirs[i]}" "$INSTALL_DIR"
             fi
-            ((index++))
         done
     fi
 
@@ -261,7 +260,8 @@ _multiselect_menu() {
 
     # Proccess the 'defaults' parameter.
     local selected=()
-    for ((i = 0; i < ${#options[@]}; i++)); do
+    local i=""
+    for i in "${!options[@]}"; do
         if [[ -v "defaults[i]" ]]; then
             if [[ ${defaults[i]} == "false" ]]; then
                 selected+=("false")
