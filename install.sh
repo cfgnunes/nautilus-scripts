@@ -12,10 +12,10 @@ FILE_MANAGER=""
 INSTALL_DIR=""
 
 _main() {
-    local menu_options=""
     local categories_defaults=()
     local categories_dirs=()
     local categories_selected=()
+    local menu_options=""
     local menu_defaults=()
     local menu_labels=()
     local menu_selected=()
@@ -24,7 +24,7 @@ _main() {
 
     echo "Scripts installer."
     echo
-    echo "Select the options (<SPACE> to select, <UP/DOWN> to choose, <ENTER> to confirm):"
+    echo "Select the options (<SPACE> to select, <UP/DOWN> to choose):"
 
     menu_labels=(
         "Install basic dependencies."
@@ -51,7 +51,7 @@ _main() {
 
     if [[ "$menu_options" == *"categories"* ]]; then
         echo
-        echo "Choose the categories (<SPACE> to select, <UP/DOWN> to choose, <ENTER> to confirm):"
+        echo "Choose the categories (<SPACE> to select, <UP/DOWN> to choose):"
         for dirname in ./*/; do
             dirn="${dirname:2}"              # Remove leading path separators './'.
             categories_dirs+=("${dirn::-1}") # Remove trailing path separator '/'.
@@ -112,16 +112,17 @@ _install_dependencies() {
         if _command_exists "apt-get"; then
             sudo apt-get update
             # Distro: Ubuntu, Mint, Debian.
+            sudo apt-get -y update || true
             sudo apt-get -y install $common_names imagemagick xz-utils p7zip-full poppler-utils ffmpeg findimagedupes genisoimage
         elif _command_exists "pacman"; then
             # Distro: Manjaro, Arch Linux.
             # Missing packages: findimagedupes.
-            sudo pacman -Syy
+            sudo pacman -Syy || true
             sudo pacman --noconfirm -S $common_names imagemagick xz p7zip poppler poppler-glib ffmpeg
         elif _command_exists "dnf"; then
             # Distro: Fedora, Red Hat.
             # Missing packages: findimagedupes.
-            sudo dnf check-update
+            sudo dnf check-update || true
             sudo dnf -y install $common_names ImageMagick xz p7zip poppler-utils ffmpeg-free genisoimage
         else
             echo "Error: could not find a package manager!"
@@ -138,7 +139,6 @@ _install_scripts() {
     local -n _categories_selected=$2
     local -n _categories_dirs=$3
     local tmp_install_dir=""
-    local i=""
 
     # 'Preserve' or 'Remove' previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then
@@ -158,6 +158,7 @@ _install_scripts() {
         cp -r . "$INSTALL_DIR"
     else
         cp "common-functions.sh" "$INSTALL_DIR"
+        local i=0
         for i in "${!_categories_dirs[@]}"; do
             if [[ "${_categories_selected[i]}" == "true" ]]; then
                 cp -r "${_categories_dirs[i]}" "$INSTALL_DIR"
@@ -248,7 +249,7 @@ _multiselect_menu() {
             ;;
         esac
     }
-    __exit_menu() {
+    __on_ctrl_c() {
         __cursor_to "$last_row"
         __cursor_blink_on
         stty echo
@@ -256,11 +257,11 @@ _multiselect_menu() {
     }
 
     # Ensure cursor and input echoing back on upon a ctrl+c during read -s.
-    trap "__exit_menu" SIGINT
+    trap "__on_ctrl_c" SIGINT
 
     # Proccess the 'defaults' parameter.
     local selected=()
-    local i=""
+    local i=0
     for i in "${!options[@]}"; do
         if [[ -v "defaults[i]" ]]; then
             if [[ ${defaults[i]} == "false" ]]; then
@@ -283,19 +284,19 @@ _multiselect_menu() {
     # Print options by overwriting the last lines.
     __print_options() {
         local index_active=$1
-        local index=0
-        local option=""
 
-        for option in "${options[@]}"; do
-            # Set the prefix " > [ ]" or " > [*]".
-            local prefix=" > [ ]"
-            if [[ ${selected[index]} == "true" ]]; then
-                prefix=" > [\e[1;32m*\e[0m]"
+        local i=0
+        for i in "${!options[@]}"; do
+            # Set the prefix "[ ]" or "[*]".
+            local prefix="[ ]"
+            if [[ ${selected[i]} == "true" ]]; then
+                prefix="[\e[1;32m*\e[0m]"
             fi
 
             # Print the prefix with the option in the menu.
-            __cursor_to "$((start_row + index))"
-            if [[ "$index" == "$index_active" ]]; then
+            __cursor_to "$((start_row + i))"
+            local option="${options[i]}"
+            if ((i == index_active)); then
                 # Print the active option.
                 echo -e -n "$prefix \e[7m$option\e[27m"
             else
@@ -304,8 +305,6 @@ _multiselect_menu() {
             fi
             # Avoid print chars when press two keys at same time.
             __cursor_to "$start_row"
-
-            index=$((index + 1))
         done
     }
 
