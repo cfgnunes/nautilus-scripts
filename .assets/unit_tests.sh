@@ -351,7 +351,7 @@ _run_get_script_name() {
     local expected_output=""
     local output=""
 
-    expected_output="unit-tests.sh"
+    expected_output="unit_tests.sh"
     output=$(_get_script_name)
     _test_equal "$expected_output" "$output" "$expected_output"
 }
