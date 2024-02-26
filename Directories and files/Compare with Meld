@@ -26,8 +26,8 @@ _validate_input_files() {
     local input_file=""
 
     for input_file in $input_files; do
-        file_encoding=$(file --brief --mime-encoding -- "$input_file")
-        file_type=$(stat -c %F -- "$input_file")
+        file_encoding=$(file --dereference --brief --mime-encoding -- "$input_file")
+        file_type=$(stat --dereference -c %F -- "$input_file")
 
         # Accept only directories or text files (avoid binary files).
         if [[ "$file_encoding" == *"binary"* ]] && [[ "$file_type" != *"directory"* ]]; then

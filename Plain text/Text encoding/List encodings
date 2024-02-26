@@ -16,7 +16,7 @@ _main() {
 
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(file --separator "//" --no-pad --mime-encoding -- $input_files)
+    std_output=$(file --dereference --separator "//" --no-pad --mime-encoding -- $input_files)
     std_output=$(_text_remove_pwd "$std_output")
     # shellcheck disable=SC2001
     std_output=$(sed "s|\(.*\)// *\(.*\)|\2: '\1'|" <<<"$std_output")

@@ -32,7 +32,7 @@ _main_task() {
     temp_file2=$(mktemp --tmpdir="$TEMP_DIR_TASK")
 
     # Run the process (part 1) 'convert encoding to utf-8'
-    std_output=$(iconv -f "$(file --brief --mime-encoding -- "$input_file")" "$input_file" -t utf-8 -o "$temp_file1")
+    std_output=$(iconv -f "$(file --dereference --brief --mime-encoding -- "$input_file")" "$input_file" -t utf-8 -o "$temp_file1")
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 
     # Run the process (part 2) 'convert line ending to windows'
