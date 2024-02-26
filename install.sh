@@ -6,10 +6,11 @@
 set -eu
 
 # Global variables
-ASSSETS_DIR=".assets"
 ACCELS_FILE=""
 FILE_MANAGER=""
 INSTALL_DIR=""
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ASSSETS_DIR="$SCRIPT_DIR/.assets"
 
 _main() {
     local categories_defaults=()
@@ -49,13 +50,20 @@ _main() {
     [[ ${menu_selected[3]} == "true" ]] && menu_options+="reload,"
     [[ ${menu_selected[4]} == "true" ]] && menu_options+="categories,"
 
+    # Get the scripts categories.
+    local cat_dirs_find=""
+    local dir=""
+    cat_dirs_find=$(find "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
+        ! -path "*.git" ! -path "$ASSSETS_DIR" 2>/dev/null | sed "s|^.*/||" | sort --version-sort)
+
+    while IFS= read -d $'\n' -r dir; do
+        categories_selected+=("true")
+        categories_dirs+=("$dir")
+    done <<<"$cat_dirs_find"
+
     if [[ "$menu_options" == *"categories"* ]]; then
         echo
         echo "Choose the categories (<SPACE> to select, <UP/DOWN> to choose):"
-        for dirname in ./*/; do
-            dirn="${dirname:2}"              # Remove leading path separators './'.
-            categories_dirs+=("${dirn::-1}") # Remove trailing path separator '/'.
-        done
         _multiselect_menu categories_selected categories_dirs categories_defaults
     fi
 
@@ -150,23 +158,19 @@ _install_scripts() {
         rm -rf -- "$INSTALL_DIR"
     fi
 
-    # Install the scripts.
     echo " > Installing new scripts..."
     mkdir --parents "$INSTALL_DIR"
 
-    if [[ ${#_categories_selected[@]} == "0" ]]; then # No custom choices, so copy all.
-        cp -r . "$INSTALL_DIR"
-    else
-        cp "common-functions.sh" "$INSTALL_DIR"
-        local i=0
-        for i in "${!_categories_dirs[@]}"; do
-            if [[ "${_categories_selected[i]}" == "true" ]]; then
-                cp -r "${_categories_dirs[i]}" "$INSTALL_DIR"
-            fi
-        done
-    fi
+    # Copy the script files.
+    cp -- "$SCRIPT_DIR/common-functions.sh" "$INSTALL_DIR"
+    local i=0
+    for i in "${!_categories_dirs[@]}"; do
+        if [[ "${_categories_selected[i]}" == "true" ]]; then
+            cp -r -- "$SCRIPT_DIR/${_categories_dirs[i]}" "$INSTALL_DIR"
+        fi
+    done
 
-    # Install the file 'scripts-accels'.
+    # Copy the file 'scripts-accels'.
     if [[ "$menu_options" == *"shortcuts"* ]]; then
         echo " > Installing the keyboard shortcuts..."
         mkdir --parents "$(dirname -- "$ACCELS_FILE")"
@@ -174,15 +178,15 @@ _install_scripts() {
 
         case "$FILE_MANAGER" in
         "nautilus")
-            cp "$ASSSETS_DIR/scripts-accels" "$ACCELS_FILE"
+            cp -- "$ASSSETS_DIR/scripts-accels" "$ACCELS_FILE"
             ;;
         "nemo")
-            cp "$ASSSETS_DIR/accels-gtk2" "$ACCELS_FILE"
+            cp -- "$ASSSETS_DIR/accels-gtk2" "$ACCELS_FILE"
             sed -i "s|USER|$USER|g" "$ACCELS_FILE"
             sed -i "s|ACCELS_PATH|local\\\\\\\\sshare\\\\\\\\snemo|g" "$ACCELS_FILE"
             ;;
         "caja")
-            cp "$ASSSETS_DIR/accels-gtk2" "$ACCELS_FILE"
+            cp -- "$ASSSETS_DIR/accels-gtk2" "$ACCELS_FILE"
             sed -i "s|USER|$USER|g" "$ACCELS_FILE"
             sed -i "s|ACCELS_PATH|config\\\\\\\\scaja|g" "$ACCELS_FILE"
             ;;
@@ -191,7 +195,7 @@ _install_scripts() {
 
     # Set file permissions.
     echo " > Setting file permissions..."
-    find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*$ASSSETS_DIR/*" -exec chmod +x {} \;
+    find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
 
     # Restore previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then
