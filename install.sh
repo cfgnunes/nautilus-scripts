@@ -118,9 +118,8 @@ _install_dependencies() {
 
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
-            sudo apt-get update
             # Distro: Ubuntu, Mint, Debian.
-            sudo apt-get -y update || true
+            sudo apt-get update || true
             sudo apt-get -y install $common_names imagemagick xz-utils p7zip-full poppler-utils ffmpeg findimagedupes genisoimage
         elif _command_exists "pacman"; then
             # Distro: Manjaro, Arch Linux.
