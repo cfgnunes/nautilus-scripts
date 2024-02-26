@@ -29,10 +29,10 @@ _main() {
 
     menu_labels=(
         "Install basic dependencies."
-        "Install the keyboard shortcuts."
+        "Install keyboard shortcuts."
         "Preserve previous scripts (if any)."
         "Close the file manager to reload its configurations."
-        "Choose the script categories to install."
+        "Choose script categories to install."
     )
     menu_defaults=(
         "true"
@@ -70,13 +70,11 @@ _main() {
     echo
     echo "Starting the installation..."
 
-    # Install basic package dependencies.
-    if [[ "$menu_options" == *"dependencies"* ]]; then
-        _install_dependencies
-    fi
-
-    # Install the scripts.
-    _install_scripts "$menu_options" categories_selected categories_dirs
+    # Run the installer steps.
+    [[ "$menu_options" == *"dependencies"* ]] && _step_install_dependencies
+    [[ "$menu_options" == *"shortcuts"* ]] && _step_install_shortcuts
+    _step_install_scripts "$menu_options" categories_selected categories_dirs
+    [[ "$menu_options" == *"reload"* ]] && _step_close_filemanager
 
     echo "Done!"
 }
@@ -111,7 +109,7 @@ _command_exists() {
 }
 
 # shellcheck disable=SC2086
-_install_dependencies() {
+_step_install_dependencies() {
     local common_names="bzip2 foremost ghostscript gzip jpegoptim lame lhasa lzip lzop optipng pandoc perl-base qpdf rdfind rhash squashfs-tools tar testdisk unzip wget xclip xorriso zip zstd"
 
     echo " > Installing dependencies..."
@@ -141,7 +139,7 @@ _install_dependencies() {
     fi
 }
 
-_install_scripts() {
+_step_install_scripts() {
     local menu_options=$1
     local -n _categories_selected=$2
     local -n _categories_dirs=$3
@@ -169,29 +167,6 @@ _install_scripts() {
         fi
     done
 
-    # Copy the file 'scripts-accels'.
-    if [[ "$menu_options" == *"shortcuts"* ]]; then
-        echo " > Installing the keyboard shortcuts..."
-        mkdir --parents "$(dirname -- "$ACCELS_FILE")"
-        mv "$ACCELS_FILE" "$ACCELS_FILE.bak" 2>/dev/null || true
-
-        case "$FILE_MANAGER" in
-        "nautilus")
-            cp -- "$ASSSETS_DIR/scripts-accels" "$ACCELS_FILE"
-            ;;
-        "nemo")
-            cp -- "$ASSSETS_DIR/accels-gtk2" "$ACCELS_FILE"
-            sed -i "s|USER|$USER|g" "$ACCELS_FILE"
-            sed -i "s|ACCELS_PATH|local\\\\\\\\sshare\\\\\\\\snemo|g" "$ACCELS_FILE"
-            ;;
-        "caja")
-            cp -- "$ASSSETS_DIR/accels-gtk2" "$ACCELS_FILE"
-            sed -i "s|USER|$USER|g" "$ACCELS_FILE"
-            sed -i "s|ACCELS_PATH|config\\\\\\\\scaja|g" "$ACCELS_FILE"
-            ;;
-        esac
-    fi
-
     # Set file permissions.
     echo " > Setting file permissions..."
     find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
@@ -201,12 +176,35 @@ _install_scripts() {
         echo " > Restoring previous scripts to the install directory..."
         mv "$tmp_install_dir/scripts" "$INSTALL_DIR/User previous scripts"
     fi
+}
 
-    # Close the file manager to reload its configurations.
-    if [[ "$menu_options" == *"reload"* ]]; then
-        echo " > Closing the file manager to reload its configurations..."
-        eval "$FILE_MANAGER -q &>/dev/null" || true
-    fi
+_step_install_shortcuts() {
+    echo " > Installing the keyboard shortcuts..."
+
+    mkdir --parents "$(dirname -- "$ACCELS_FILE")"
+    mv "$ACCELS_FILE" "$ACCELS_FILE.bak" 2>/dev/null || true
+
+    case "$FILE_MANAGER" in
+    "nautilus")
+        cp -- "$ASSSETS_DIR/scripts-accels" "$ACCELS_FILE"
+        ;;
+    "nemo")
+        cp -- "$ASSSETS_DIR/accels-gtk2" "$ACCELS_FILE"
+        sed -i "s|USER|$USER|g" "$ACCELS_FILE"
+        sed -i "s|ACCELS_PATH|local\\\\\\\\sshare\\\\\\\\snemo|g" "$ACCELS_FILE"
+        ;;
+    "caja")
+        cp -- "$ASSSETS_DIR/accels-gtk2" "$ACCELS_FILE"
+        sed -i "s|USER|$USER|g" "$ACCELS_FILE"
+        sed -i "s|ACCELS_PATH|config\\\\\\\\scaja|g" "$ACCELS_FILE"
+        ;;
+    esac
+}
+
+_step_close_filemanager() {
+    echo " > Closing the file manager to reload its configurations..."
+
+    eval "$FILE_MANAGER -q &>/dev/null" || true
 }
 
 # Menu code based on: https://unix.stackexchange.com/a/673436
