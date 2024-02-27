@@ -5,15 +5,29 @@
 
 set -eu
 
-# Global variables.
-ACCELS_FILE=""
-FILE_MANAGER=""
-INSTALL_DIR=""
+# -----------------------------------------------------------------------------
+# CONSTANTS
+# -----------------------------------------------------------------------------
+
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ASSSETS_DIR="$SCRIPT_DIR/.assets"
 
+readonly SCRIPT_DIR ASSSETS_DIR
+
+# -----------------------------------------------------------------------------
+# GLOBAL VARIABLES
+# -----------------------------------------------------------------------------
+
+ACCELS_FILE=""
+FILE_MANAGER=""
+INSTALL_DIR=""
+
 # shellcheck disable=SC1091
 source "$ASSSETS_DIR/multiselect_menu.sh"
+
+# -----------------------------------------------------------------------------
+# FUNCTIONS
+# -----------------------------------------------------------------------------
 
 _main() {
     local categories_defaults=()
