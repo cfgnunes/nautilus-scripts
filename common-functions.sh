@@ -6,7 +6,7 @@
 set -u
 
 # -----------------------------------------------------------------------------
-# CONSTANT GLOBAL VARIABLES
+# CONSTANTS
 # -----------------------------------------------------------------------------
 
 FILENAME_SEPARATOR=$'\r'       # The field separator used in 'loop' commands to iterate over files.
@@ -33,7 +33,7 @@ readonly \
     WAIT_BOX_FIFO
 
 # -----------------------------------------------------------------------------
-# STATE GLOBAL VARIABLES
+# GLOBAL VARIABLES
 # -----------------------------------------------------------------------------
 
 IFS=$FILENAME_SEPARATOR
@@ -43,6 +43,7 @@ TEMP_DATA_TASK=""
 # -----------------------------------------------------------------------------
 # BUILD THE STRUCTURE OF THE 'TEMP_DIR'
 # -----------------------------------------------------------------------------
+
 mkdir -p "$TEMP_DIR_LOG"
 mkdir -p "$TEMP_DIR_TASK"
 mkdir -p "$TEMP_DIR_STORAGE_TEXT"
