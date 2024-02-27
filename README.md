@@ -29,17 +29,17 @@ While numerous scripts are available for GNOME Files on the web, many suffer fro
 | `F7`                | Disk Usage Analyzer           |
 | `<Control>E`        | Extract Here                  |
 | `<Control>K`        | Compress...                   |
-| `<Shift><Control>A` | List all files                |
-| `<Shift><Control>D` | Download (URLs in clipboard)  |
-| `<Shift><Control>E` | List empty directories        |
-| `<Shift><Control>G` | Git clone (URLs in clipboard) |
-| `<Shift><Control>H` | List hidden items             |
-| `<Shift><Control>L` | Make a link (symbolic link)   |
-| `<Shift><Control>M` | Compare with Meld             |
-| `<Shift><Control>O` | Open item location            |
-| `<Shift><Control>P` | List permissions and owners   |
-| `<Shift><Control>U` | List duplicate files          |
-| `<Shift><Control>Y` | List file type                |
+| `<Control><Shift>A` | List all files                |
+| `<Control><Shift>D` | Download (URLs in clipboard)  |
+| `<Control><Shift>E` | List empty directories        |
+| `<Control><Shift>G` | Git clone (URLs in clipboard) |
+| `<Control><Shift>H` | List hidden items             |
+| `<Control><Shift>L` | Make a link (symbolic link)   |
+| `<Control><Shift>M` | Compare with Meld             |
+| `<Control><Shift>O` | Open item location            |
+| `<Control><Shift>P` | List permissions and owners   |
+| `<Control><Shift>U` | List duplicate files          |
+| `<Control><Shift>Y` | List file type                |
 
 ## Installing
 
