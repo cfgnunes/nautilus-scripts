@@ -10,9 +10,9 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "genisoimage"
+    _check_dependencies "mksquashfs(squashfs-tools)"
     _display_wait_box
-    input_files=$(_get_files "type:directory")
+    input_files=$(_get_files "type:all, validate_conflict:true")
     output_dir=$(_get_output_dir "use_same_dir:true")
 
     # Execute the function '_main_task' for each file in parallel.
@@ -27,8 +27,8 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:iso")
-    std_output=$(genisoimage -o "$output_file" -V "$(basename -- "$input_file")" -A "" -sysid "" -J -joliet-long "$input_file" 2>&1)
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:squashfs")
+    std_output=$(mksquashfs "$input_file" "$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
