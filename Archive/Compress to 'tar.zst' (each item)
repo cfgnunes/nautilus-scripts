@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _check_dependencies "tar zstd"
+    _display_wait_box
+    input_files=$(_get_files "type:all, validate_conflict:true")
+    output_dir=$(_get_output_dir "use_same_dir:true")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+
+    # Run the main process.
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:tar.zst")
+    if [[ -d "$input_file" ]]; then
+        cd -- "$input_file" || return 1
+        std_output=$(tar --use-compress-program=zstd -cvf "$output_file" --transform="s|^\.||g" -- . 2>&1)
+    else
+        local input_file_relative=""
+        input_file_relative=$(_text_remove_pwd "$input_file")
+        std_output=$(tar --use-compress-program=zstd -cvf "$output_file" --transform="s|^\.||g" -- "$input_file_relative" 2>&1)
+    fi
+    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+}
+
+_main "$@"
