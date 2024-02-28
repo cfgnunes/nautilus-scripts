@@ -29,12 +29,12 @@ _main_task() {
     # Run the main process.
     local first_pixel_color=""
     first_pixel_color=$(convert -format "%[pixel:p{0,0}]" -- "$input_file""[1x1+0+0]" "info:")
-    _check_result "$?" "$std_output" "$input_file" "" || return 1
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:preserve")
     local factor="*1.15"
     std_output=$(convert -set option:distort:viewport "%[fx:(w*$factor)]x%[fx:(h*$factor)]+%[fx:(w-(w*$factor))/2]+%[fx:(h-(h*$factor))/2]" -virtual-pixel transparent -filter point -distort SRT 0 -bordercolor "$first_pixel_color" -border 1 -fill "$first_pixel_color" -draw "color 0,0 floodfill" -shave 1 -draw "color 0,0 floodfill" +repage -- "$input_file" "$output_file" 2>&1)
-    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
 _main "$@"

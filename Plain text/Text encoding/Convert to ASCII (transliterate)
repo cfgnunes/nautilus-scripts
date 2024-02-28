@@ -32,7 +32,7 @@ _main_task() {
 
     # Run the main process.
     std_output=$(iconv -f "$(file --dereference --brief --mime-encoding -- "$input_file")" "$input_file" -t ascii//TRANSLIT -o "$temp_file")
-    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     # Move the temporary file to the output.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:preserve")

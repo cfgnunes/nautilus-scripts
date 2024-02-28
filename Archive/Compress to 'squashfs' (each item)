@@ -29,7 +29,7 @@ _main_task() {
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:squashfs")
     std_output=$(mksquashfs "$input_file" "$output_file" 2>&1)
-    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
 _main "$@"

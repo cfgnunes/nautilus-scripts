@@ -120,7 +120,7 @@ _check_dependencies() {
     IFS=$FILENAME_SEPARATOR
 }
 
-_check_result() {
+_check_output() {
     local exit_code=$1
     local std_output=$2
     local input_file=$3
@@ -889,16 +889,16 @@ _move_temp_file_to_output() {
     # If 'input_file' euqual 'output_file', create a backup of the 'input_file'.
     if [[ "$input_file" == "$output_file" ]]; then
         std_output=$(_move_file "rename" "$input_file" "$input_file.bak" 2>&1)
-        _check_result "$?" "$std_output" "$input_file" "$input_file.bak" || return 1
+        _check_output "$?" "$std_output" "$input_file" "$input_file.bak" || return 1
     fi
 
     # Move the 'temp_file' to 'output_file'.
     std_output=$(_move_file "rename" "$temp_file" "$output_file" 2>&1)
-    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     # Preserve the same permissions of 'input_file'.
     std_output=$(chmod --reference="$input_file" -- "$output_file" 2>&1)
-    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     return 0
 }
@@ -1275,7 +1275,7 @@ export \
 
 # Export functions to be used inside new shells (when using 'xargs').
 export -f \
-    _check_result \
+    _check_output \
     _command_exists \
     _exit_script \
     _expand_directory \

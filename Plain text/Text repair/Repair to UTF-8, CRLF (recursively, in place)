@@ -33,11 +33,11 @@ _main_task() {
 
     # Run the process (part 1) 'convert encoding to utf-8'
     std_output=$(iconv -f "$(file --dereference --brief --mime-encoding -- "$input_file")" "$input_file" -t utf-8 -o "$temp_file1")
-    _check_result "$?" "$std_output" "$input_file" "" || return 1
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Run the process (part 2) 'convert line ending to windows'
     std_output=$(perl -pe "s/\r\n|\n|\r/\r\n/g" "$temp_file1" >"$temp_file2")
-    _check_result "$?" "$std_output" "$input_file" "" || return 1
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Run the process (part 3) 'remove trailing spaces'
     sed -i "s|[ \t]*\(\r*\)$|\1|" "$temp_file2"

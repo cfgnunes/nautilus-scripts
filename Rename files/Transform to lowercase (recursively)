@@ -39,7 +39,7 @@ _main_task() {
 
         # Run the main process.
         std_output=$(_move_file "skip" "$file" "$dir/$new_filename" 2>&1)
-        _check_result "$?" "$std_output" "$file" ""
+        _check_output "$?" "$std_output" "$file" ""
     done
 
     # Rename directories.
@@ -56,7 +56,7 @@ _main_task() {
 
         # Run the main process.
         std_output=$(_move_file "skip" "$dir" "$parent_dir/$new_dirname" 2>&1)
-        _check_result "$?" "$std_output" "$dir" ""
+        _check_output "$?" "$std_output" "$dir" ""
     done
 }
 

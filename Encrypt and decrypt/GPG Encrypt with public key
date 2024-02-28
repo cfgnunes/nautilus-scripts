@@ -42,7 +42,7 @@ _main_task() {
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:append, extension:gpg")
     std_output=$(gpg --batch --yes --encrypt --recipient "$TEMP_DATA_TASK" --for-your-eyes-only --s2k-count 1015808 --s2k-digest-algo SHA256 --compress-algo zlib --cipher-algo AES256 --output "$output_file" -- "$input_file" 2>&1)
-    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
 _main "$@"

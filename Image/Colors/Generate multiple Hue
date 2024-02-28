@@ -31,7 +31,7 @@ _main_task() {
     for ((i = 100 + 30; i < 300; i += 30)); do
         output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:preserve, suffix:($suffix)")
         std_output=$(convert -define modulate:colorspace=HSB -modulate "100,100,$i" -- "$input_file" "$output_file" 2>&1)
-        _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+        _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         suffix=$((suffix + 1))
     done
 }

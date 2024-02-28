@@ -20,7 +20,7 @@ _main() {
     _run_source_common_functions
     _run_cleanup_on_exit
     _run_check_dependencies
-    _run_check_result
+    _run_check_output
     _run_command_exists
     _run_display_dir_selection_box
     _run_display_file_selection_box
@@ -147,8 +147,8 @@ _run_check_dependencies() {
     :
 }
 
-_run_check_result() {
-    # TODO Implement the test: '_run_check_result'.
+_run_check_output() {
+    # TODO Implement the test: '_run_check_output'.
     :
 }
 

@@ -26,9 +26,9 @@ _main_task() {
 
     # Run the main process.
     std_output=$(find "$input_file" ! -path "$IGNORE_FIND_PATH" -type f -exec chmod 600 -- {} \+ 2>&1)
-    _check_result "$?" "$std_output" "$input_file" "" || return 1
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
     std_output=$(find "$input_file" ! -path "$IGNORE_FIND_PATH" -type d -exec chmod 700 -- {} \+ 2>&1)
-    _check_result "$?" "$std_output" "$input_file" "" || return 1
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
 _main "$@"

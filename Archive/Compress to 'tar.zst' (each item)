@@ -36,7 +36,7 @@ _main_task() {
         input_file_relative=$(_text_remove_pwd "$input_file")
         std_output=$(tar --use-compress-program=zstd -cvf "$output_file" --transform="s|^\.||g" -- "$input_file_relative" 2>&1)
     fi
-    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
 _main "$@"

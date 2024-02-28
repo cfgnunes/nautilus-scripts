@@ -30,7 +30,7 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:preserve")
     local factor="*1.15"
     std_output=$(convert -set option:distort:viewport "%[fx:(w*$factor)]x%[fx:(h*$factor)]+%[fx:(w-(w*$factor))/2]+%[fx:(h-(h*$factor))/2]" -virtual-pixel white -filter point -distort SRT 0 +repage -- "$input_file" "$output_file" 2>&1)
-    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
 _main "$@"

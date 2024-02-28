@@ -28,7 +28,7 @@ _main_task() {
     # Run the main process.
     output_dir="$(_strip_filename_extension "$input_file")-output"
     std_output=$(foremost -t all -i "$input_file" -o "$output_dir" 2>&1)
-    _check_result "$?" "$std_output" "$input_file" "" || return 1
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
 _main "$@"
