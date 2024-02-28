@@ -13,7 +13,7 @@ _main() {
     _check_dependencies "convert(apt:imagemagick,pacman:imagemagick,dnf:ImageMagick)"
     _display_wait_box
     input_files=$(_get_files "type:file, mime:image/")
-    output_dir=$(_get_output_dir "use_same_dir:true")
+    output_dir=$(_get_output_dir "use_same_dir:false")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -27,8 +27,6 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:preserve")
-
     local dimension=""
     dimension=$(identify -format "%[fx:w]x%[fx:h]" -- "$input_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "" || return 1
@@ -37,6 +35,7 @@ _main_task() {
     first_pixel_color=$(convert -format "%[pixel:p{0,0}]" -- "$input_file""[1x1+0+0]" "info:")
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:preserve")
     std_output=$(convert -background white -trim -gravity center -extent "$dimension" -bordercolor white -border 1 -fill "$first_pixel_color" -draw "color 0,0 floodfill" -shave 1 +repage -- "$input_file" "$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
