@@ -36,7 +36,7 @@ _main_task() {
     first_pixel_color=$(convert -format "%[pixel:p{0,0}]" -- "$input_file""[1x1+0+0]" "info:")
     _check_result "$?" "$std_output" "$input_file" "" || return 1
 
-    std_output=$(convert -fuzz 10% -trim -gravity center -extent "$dimension" -fill "$first_pixel_color" -draw "color 0,0 floodfill" +repage -- "$input_file" "$output_file" 2>&1)
+    std_output=$(convert -fuzz 10% -background white -trim -gravity center -extent "$dimension" -bordercolor white -border 1 -fill "$first_pixel_color" -draw "color 0,0 floodfill" -shave 1 +repage -- "$input_file" "$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
