@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _check_dependencies "tesseract"
+    if ! [[ -d "/usr/share/doc/tesseract-ocr-spa" ]]; then
+        _check_dependencies "(apt:tesseract-ocr-spa,dnf:tesseract-langpack-spa)"
+    fi
+    _display_wait_box
+    input_files=$(_get_files "type:file, mime:image/, validate_conflict:true")
+    output_dir=$(_get_output_dir "use_same_dir:true")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+
+    # Run the main process.
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:strip")
+    std_output=$(tesseract "$input_file" "$output_file" -l spa 2>&1)
+    _check_result "$?" "$std_output" "$input_file" "" || return 1
+}
+
+_main "$@"
