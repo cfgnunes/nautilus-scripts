@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _check_dependencies "convert(apt:imagemagick,pacman:imagemagick,dnf:ImageMagick)"
+    _display_wait_box
+    input_files=$(_get_files "type:file, mime:image/")
+    output_dir=$(_get_output_dir "use_same_dir:false")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+    local temp_file1=""
+    local temp_file2=""
+    local temp_file3=""
+    local temp_file4=""
+    local icon_size="192"
+
+    # Work on a temporary file.
+    temp_file1="$(mktemp --tmpdir="$TEMP_DIR_TASK").png"
+    temp_file2="$(mktemp --tmpdir="$TEMP_DIR_TASK").png"
+    temp_file3="$(mktemp --tmpdir="$TEMP_DIR_TASK").png"
+    temp_file4="$(mktemp --tmpdir="$TEMP_DIR_TASK").png"
+
+    # Run the process (part 0) 'export svg'.
+    local filename_extension=""
+    local input_file_proc=""
+    filename_extension=$(_get_filename_extension "$input_file")
+    if [[ "${filename_extension,,}" == ".svg"* ]]; then
+        std_output=$(inkscape --export-area-drawing --export-height=$((icon_size * 2)) --export-filename="$temp_file4" -- "$input_file" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$temp_file4" || return 1
+        input_file_proc=$temp_file4
+    else
+        input_file_proc=$input_file
+    fi
+
+    # Run the process (part 1) 'get information of the image'.
+    local first_pixel_color=""
+    first_pixel_color=$(convert -format "%[pixel:p{0,0}]" -- "$input_file_proc" "info:")
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    local pixel_color2=""
+    pixel_color2=$(convert -format "%[pixel:p{0,15}]" -- "$input_file_proc" "info:")
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    local pixel_color3=""
+    pixel_color3=$(convert -format "%[pixel:p{15,0}]" -- "$input_file_proc" "info:")
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    if [[ "$first_pixel_color" == "$pixel_color2" ]] && [[ "$first_pixel_color" == "$pixel_color3" ]]; then
+        # Run the process (part 2) 'automatic crop the content'.
+        std_output=$(convert -trim +repage -- "$input_file_proc" "$temp_file1" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$temp_file1" || return 1
+
+        # Run the process (part 3) 'extend to square'.
+        std_output=$(convert -set option:distort:viewport "%[fx:max(w,h)]x%[fx:max(w,h)]+%[fx:(w-max(w,h))/2]+%[fx:(h-max(w,h))/2]" -virtual-pixel transparent -filter point -distort SRT 0 -bordercolor "$first_pixel_color" -border 1 -fill "$first_pixel_color" -draw "color 0,0 floodfill" -shave 1 -draw "color 0,0 floodfill" +repage -- "$temp_file1" "$temp_file2" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$temp_file2" || return 1
+
+        # Run the process (part 4) 'extend 10 percent' to add a border.
+        local factor="*1.10"
+        std_output=$(convert -set option:distort:viewport "%[fx:(w*$factor)]x%[fx:(h*$factor)]+%[fx:(w-(w*$factor))/2]+%[fx:(h-(h*$factor))/2]" -virtual-pixel transparent -filter point -distort SRT 0 -bordercolor "$first_pixel_color" -border 1 -fill "$first_pixel_color" -draw "color 0,0 floodfill" -shave 1 -draw "color 0,0 floodfill" +repage -- "$temp_file2" "$temp_file3" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$temp_file3" || return 1
+    else
+        # Run the process (part 2) 'automatic crop the content' (with fuzz).
+        std_output=$(convert -fuzz 15% -trim +repage -- "$input_file_proc" "$temp_file3" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$temp_file3" || return 1
+    fi
+
+    # Run the process (part 5) 'resize and crop the final image' to add a border.
+    std_output=$(convert -resize "${icon_size}x${icon_size}^" -gravity center -crop ${icon_size}x${icon_size}+0+0 -strip +repage -- "$temp_file3" "$temp_file4" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "$temp_file4" || return 1
+
+    # Move the temporary file to the output.
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:png")
+    _move_temp_file_to_output "$input_file" "$temp_file4" "$output_file"
+
+    # Remove the temporary files on each iteration (if not removed before).
+    rm -f -- "$temp_file1"
+    rm -f -- "$temp_file2"
+    rm -f -- "$temp_file3"
+    rm -f -- "$temp_file4"
+}
+
+_main "$@"
