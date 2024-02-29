@@ -19,7 +19,7 @@ _main() {
     std_output=$(du -h -- $input_files 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
     std_output=$(sort -h -r <<<"$std_output") # Sort the result.
-    std_output=$(head -n 10 <<<"$std_output")
+    std_output=$(head -n 15 <<<"$std_output")
     # shellcheck disable=SC2001
     std_output=$(sed "s|\t\(.*\)|\t'\1'|" <<<"$std_output")
 
