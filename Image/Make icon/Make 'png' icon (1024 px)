@@ -29,7 +29,7 @@ _main_task() {
     local temp_file2=""
     local temp_file3=""
     local temp_file4=""
-    local icon_size="128"
+    local icon_size="1024"
 
     # Work on a temporary file.
     temp_file1="$(mktemp --tmpdir="$TEMP_DIR_TASK").png"
