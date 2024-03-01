@@ -1,6 +1,6 @@
 # Nautilus scripts
 
-This is a collection of scripts designed to enhance the functionality of file managers such as [GNOME Files](https://gitlab.gnome.org/GNOME/nautilus), [Caja](https://github.com/mate-desktop/caja), and [Nemo](https://github.com/linuxmint/nemo).
+This project is a collection of scripts designed to enhance the functionality of file managers such as [GNOME Files](https://gitlab.gnome.org/GNOME/nautilus), [Caja](https://github.com/mate-desktop/caja), and [Nemo](https://github.com/linuxmint/nemo).
 
 ![screenshot](.assets/screenshot.png)
 
@@ -12,12 +12,12 @@ While numerous scripts are available for GNOME Files on the web, many suffer fro
 - **Dependency management**: Prompts users to install any missing dependencies.
 - **Non-destructive output**: Never overwrites the input file; the output is distinct.
 - **Log file**: Produces an `Errors.log` file when a task ends with an error.
-- **Direct usage**: Enables direct usage without requiring input parameters.
+- **Direct usage**: Direct usage without requiring input parameters.
 - **Keyboard shortcuts**: Provides keyboard shortcuts for the scripts.
 - **File manager compatibility**: Designed for major file managers like Nautilus, Caja, and Nemo.
 - **Distro compatibility**: Designed to work on major Linux distributions, such as Ubuntu, Mint, Debian, Fedora, and Manjaro.
 - **Easy adaptation**: Scripts are easily copied and adapted for other purposes.
-- **Bash implementation**: All scripts are implemented in Bash.
+- **Bash implementation**: All scripts are implemented in Bash. So, the scripts work well in the shell (without a graphical interface) and file managers.
 - **Shell script validation**: All scripts have been checked using [ShellCheck](https://github.com/koalaman/shellcheck).
 
 ## Keyboard Shortcuts
