@@ -423,7 +423,7 @@ _gdbus_notify() {
 _get_filename_extension() {
     local filename=$1
 
-    grep --ignore-case --only-matching --perl-regexp "(\.tar)?\.[a-z0-9_~-]*$" <<<"$filename" || true
+    grep --ignore-case --only-matching --perl-regexp "(\.tar)?\.[a-z0-9_~-]{0,15}$" <<<"$filename" || true
 }
 
 _get_filename_next_suffix() {
@@ -658,6 +658,11 @@ _get_output_filename() {
     par_extension=$(_get_parameter_value "$parameters" "extension")
     par_prefix=$(_get_parameter_value "$parameters" "prefix")
     par_suffix=$(_get_parameter_value "$parameters" "suffix")
+
+    # Directories does not have an extension.
+    if [[ -d "$input_file" ]]; then
+        par_extension_opt="append"
+    fi
 
     filename=$(basename -- "$input_file")
     output_file="$output_dir/"
@@ -981,7 +986,7 @@ _str_trim_whitespace() {
 _strip_filename_extension() {
     local filename=$1
 
-    sed -r "s|(\.tar)?\.[a-z0-9_~-]*$||i" <<<"$filename"
+    sed -r "s|(\.tar)?\.[a-z0-9_~-]{0,15}$||i" <<<"$filename"
 }
 
 _text_remove_empty_lines() {
