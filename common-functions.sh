@@ -59,7 +59,7 @@ _cleanup_on_exit() {
 trap _cleanup_on_exit EXIT
 
 _check_dependencies() {
-    local dependencies=$*
+    local dependencies=$1
     local command=""
     local message=""
     local package_name=""
