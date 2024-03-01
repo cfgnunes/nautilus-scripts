@@ -1222,18 +1222,15 @@ _validate_files_count() {
     local valid_file_term="valid files"
     if [[ "$par_type" == "directory" ]]; then
         valid_file_term="directories"
-    elif [[ "$par_select_mime" == *"audio"* ]]; then
-        valid_file_term="audio files"
-    elif [[ "$par_select_mime" == *"image"* ]]; then
-        valid_file_term="image files"
-    elif [[ "$par_select_mime" == *"video"* ]]; then
-        valid_file_term="video files"
-    elif [[ "$par_select_mime" == *"text"* ]]; then
-        valid_file_term="plain text files"
-    elif [[ "$par_select_mime" == *"pdf"* ]]; then
-        valid_file_term="PDF files"
+    elif [[ -n "$par_select_mime" ]]; then
+        valid_file_term="$par_select_mime"
+        valid_file_term=$(sed "s|\|| or |g" <<<"$par_select_mime")
+        valid_file_term=$(sed "s|/$||g; s|/ | |g" <<<"$valid_file_term")
+        valid_file_term+=" files"
     elif [[ "$par_skip_encoding" == *"binary"* ]]; then
         valid_file_term="plain text files"
+    elif [[ "$par_type" == "file" ]]; then
+        valid_file_term="files"
     fi
 
     # Count the number of valid files.
