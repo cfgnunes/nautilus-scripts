@@ -20,7 +20,7 @@ _main() {
         _display_error_box "Signing failed: no secret keys installed!"
         _exit_script
     fi
-    TEMP_DATA_TASK=$(echo "$users" | tr ':' '\n' | zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=200 --width=600 2>/dev/null) || _exit_script
+    TEMP_DATA_TASK=$(echo "$users" | tr ":" "\n" | zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=200 --width=600 2>/dev/null) || _exit_script
     if [[ -z "$TEMP_DATA_TASK" ]]; then
         _display_error_box "Signing failed: you must select a user!"
         _exit_script
