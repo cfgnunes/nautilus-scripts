@@ -31,7 +31,7 @@ _main_task() {
     filename=$(basename -- "$input_file")
 
     # Replace gaps with spaces.
-    output_file=$(sed "s|[-_\t][-_\t]*| |g;s|  *| |g" <<<"$filename")
+    output_file=$(tr -s -- "-_\t" " " <<<"$filename")
 
     # Run the main process.
     std_output=$(_move_file "skip" "$input_file" "$dir/$output_file" 2>&1)

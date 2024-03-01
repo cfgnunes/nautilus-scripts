@@ -31,7 +31,7 @@ _main_task() {
     filename=$(basename -- "$input_file")
 
     # Replace gaps with underscores.
-    output_file=$(sed "s|[- \t][- \t]*|_|g;s|__*|_|g" <<<"$filename")
+    output_file=$(tr -s -- "- \t" "_" <<<"$filename")
 
     # Run the main process.
     std_output=$(_move_file "skip" "$input_file" "$dir/$output_file" 2>&1)
