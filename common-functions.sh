@@ -466,7 +466,22 @@ _get_filename_next_suffix() {
     echo "$filename_result"
 }
 
-_get_filemanager_list() {
+_get_filenames_count() {
+    local input_files=$1
+    local files_count=0
+
+    input_files=$(tr -s "$FILENAME_SEPARATOR" <<<"$input_files")
+    input_files=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$input_files")
+
+    if [[ -n "$input_files" ]]; then
+        files_count=$(echo -n "$input_files" | tr -cd "$FILENAME_SEPARATOR" | wc -c)
+        files_count=$((files_count + 1))
+    fi
+
+    echo -n "$files_count"
+}
+
+_get_filenames_list() {
     local input_files=""
     local var_filemanager=""
 
@@ -486,16 +501,13 @@ _get_filemanager_list() {
         input_files=$INPUT_FILES # Standard input
     fi
 
-    # Removes last field separators.
-    input_files=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$input_files")
-
     echo -n "$input_files"
 }
 
 _get_files() {
     local parameters=$1
     local input_files=""
-    input_files=$(_get_filemanager_list)
+    input_files=$(_get_filenames_list)
 
     # Parameter: "type"
     # Values:
@@ -551,7 +563,7 @@ _get_files() {
     fi
 
     # Check if there are input files.
-    if [[ -z "$input_files" ]]; then
+    if (($(_get_filenames_count "$input_files") == 0)); then
         if [[ "$par_get_pwd" == "true" ]]; then
             # Return the current working directory if there are no files selected.
             input_files=$(pwd)
@@ -562,7 +574,7 @@ _get_files() {
             else
                 input_files=$(_display_file_selection_box)
             fi
-            if [[ -z "$input_files" ]]; then
+            if (($(_get_filenames_count "$input_files") == 0)); then
                 _display_error_box "There are no input files!"
                 _exit_script
             fi
@@ -1251,11 +1263,7 @@ _validate_files_count() {
 
     # Count the number of valid files.
     local valid_files_count=0
-    if [[ -n "$input_files" ]]; then
-        valid_files_count=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$input_files")
-        valid_files_count=$(echo -n "$valid_files_count" | tr -cd "$FILENAME_SEPARATOR" | wc -c)
-        valid_files_count=$((valid_files_count + 1))
-    fi
+    valid_files_count=$(_get_filenames_count "$input_files")
 
     # Check if there is at least one valid file.
     if ((valid_files_count == 0)) && ((par_min_files != 0)); then
