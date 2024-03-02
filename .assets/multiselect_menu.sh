@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Code based on: https://unix.stackexchange.com/a/673436
-# Version: 2024-02-26
+# Version: 2024-03-02
 
 _multiselect_menu() {
     local return_value=$1
@@ -10,16 +10,16 @@ _multiselect_menu() {
 
     # Helpers for console print format and control.
     __cursor_blink_on() {
-        echo -e -n "\e[?25h"
+        printf "\e[?25h"
     }
     __cursor_blink_off() {
-        echo -e -n "\e[?25l"
+        printf "\e[?25l"
     }
     __cursor_to() {
         local row=$1
         local col=${2:-1}
 
-        echo -e -n "\e[${row};${col}H"
+        printf "\e[%s;%sH" "$row" "$col"
     }
     __get_cursor_row() {
         local row=""
@@ -27,20 +27,20 @@ _multiselect_menu() {
 
         # shellcheck disable=SC2034
         IFS=';' read -rsdR -p $'\E[6n' row col
-        echo "${row#*[}"
+        printf "%s" "${row#*[}"
     }
     __get_keyboard_key() {
         local key=""
 
         IFS="" read -rsn1 key &>/dev/null
         case "$key" in
-        "") echo "enter" ;;
-        " ") echo "space" ;;
+        "") printf "enter" ;;
+        " ") printf "space" ;;
         $'\e')
             IFS="" read -rsn2 key &>/dev/null
             case "$key" in
-            "[A" | "[D") echo "up" ;;
-            "[B" | "[C") echo "down" ;;
+            "[A" | "[D") printf "up" ;;
+            "[B" | "[C") printf "down" ;;
             esac
             ;;
         esac
@@ -53,7 +53,7 @@ _multiselect_menu() {
         exit 1
     }
 
-    # Ensure cursor and input echoing back on upon a ctrl+c during read -s.
+    # Ensure cursor back on upon a ctrl+c during read -s.
     trap "__on_ctrl_c" SIGINT
 
     # Proccess the 'defaults' parameter.
@@ -69,7 +69,7 @@ _multiselect_menu() {
         else
             selected+=("true")
         fi
-        echo
+        printf "\n"
     done
 
     # Determine current screen position for overwriting the options.
@@ -95,10 +95,10 @@ _multiselect_menu() {
             local option="${options[i]}"
             if ((i == index_active)); then
                 # Print the active option.
-                echo -e -n "$prefix \e[7m$option\e[27m"
+                printf "$prefix \e[7m%s\e[27m" "$option"
             else
                 # Print the inactive option.
-                echo -e -n "$prefix $option"
+                printf "$prefix %s" "$option"
             fi
             # Avoid print chars when press two keys at same time.
             __cursor_to "$start_row"
