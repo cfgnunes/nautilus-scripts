@@ -15,7 +15,7 @@ _TEMP_FILE2_CONTENT="File 2 test."
 _TEMP_FILE3_CONTENT="File 3 test."
 
 _main() {
-    echo "Running the unit tests..."
+    printf "Running the unit tests...\n"
 
     _run_source_common_functions
     _run_cleanup_on_exit
@@ -79,16 +79,16 @@ _main() {
     _run_validate_file_preselect_parallel
     _run_validate_files_count
 
-    echo "Tests/Failed: $_TOTAL_TESTS/$_TOTAL_FAILED"
-    echo "Done!"
+    printf "\nFinished! "
+    printf "Results: %s tests, %s failed.\n" "$_TOTAL_TESTS" "$_TOTAL_FAILED"
 }
 
 _files_test_create() {
     rm -rf "$_TEMP_DIR_TEST"
     mkdir -p "$_TEMP_DIR_TEST"
-    echo "$_TEMP_FILE1_CONTENT" >"$_TEMP_FILE1"
-    echo "$_TEMP_FILE2_CONTENT" >"$_TEMP_FILE2"
-    echo "$_TEMP_FILE3_CONTENT" >"$_TEMP_FILE3"
+    printf "%s" "$_TEMP_FILE1_CONTENT" >"$_TEMP_FILE1"
+    printf "%s" "$_TEMP_FILE2_CONTENT" >"$_TEMP_FILE2"
+    printf "%s" "$_TEMP_FILE3_CONTENT" >"$_TEMP_FILE3"
 }
 
 _files_test_clean() {
@@ -102,14 +102,14 @@ _test_equal() {
     _TOTAL_TESTS=$((_TOTAL_TESTS + 1))
 
     if [[ "$value1" == "$value2" ]]; then
-        echo -n " > [PASS]"
+        printf " > [PASS]"
     else
-        echo -n " > [FAILED]"
+        printf " > [FAILED]"
         _TOTAL_FAILED=$((_TOTAL_FAILED + 1))
     fi
-    echo -n $'\t'"(${FUNCNAME[1]})"$'\t'
-    echo -n "$description" | sed -z "s|\n|\\\n|g" | cat -ETv
-    echo
+    printf "\t(%s)\t" "${FUNCNAME[1]}"
+    printf "%s" "$description" | sed -z "s|\n|\\\n|g" | cat -ETv
+    printf "\n"
 }
 
 _test_file() {
@@ -119,14 +119,14 @@ _test_file() {
     _TOTAL_TESTS=$((_TOTAL_TESTS + 1))
 
     if [[ -f "$file" ]]; then
-        echo -n " > [PASS]"
+        printf " > [PASS]"
     else
-        echo -n " > [FAILED]"
+        printf " > [FAILED]"
         _TOTAL_FAILED=$((_TOTAL_FAILED + 1))
     fi
-    echo -n $'\t'"(${FUNCNAME[1]})"$'\t'
-    echo -n "$description" | sed -z "s|\n|\\\n|g" | cat -ETv
-    echo
+    printf "\t(%s)\t" "${FUNCNAME[1]}"
+    printf "%s" "$description" | sed -z "s|\n|\\\n|g" | cat -ETv
+    printf "\n"
 }
 
 _run_source_common_functions() {
