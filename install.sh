@@ -70,7 +70,7 @@ _main() {
     # Get the scripts categories.
     local cat_dirs_find=""
     local dir=""
-    cat_dirs_find=$(find "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
+    cat_dirs_find=$(find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
         ! -path "*.git" ! -path "$ASSSETS_DIR" 2>/dev/null | sed "s|^.*/||" | sort --version-sort)
 
     # Convert the output of 'find' command to an 'array'.
