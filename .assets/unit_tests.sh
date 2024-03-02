@@ -22,6 +22,8 @@ _main() {
     _run_check_dependencies
     _run_check_output
     _run_command_exists
+    _run_convert_filenames_to_text
+    _run_convert_text_to_filenames
     _run_display_dir_selection_box
     _run_display_file_selection_box
     _run_display_error_box
@@ -38,7 +40,8 @@ _main() {
     _run_gdbus_notify
     _run_get_filename_extension
     _run_get_filename_next_suffix
-    _run_get_filemanager_list
+    _run_get_filenames_count
+    _run_get_filenames_list
     _run_get_files
     _run_get_full_path_filename
     _run_get_max_procs
@@ -60,6 +63,7 @@ _main() {
     _run_storage_text_write
     _run_storage_text_write_ln
     _run_str_human_readable_path
+    _run_str_remove_empty_tokens
     _run_str_trim_whitespace
     _run_strip_filename_extension
     _run_text_remove_empty_lines
@@ -154,6 +158,16 @@ _run_check_output() {
 
 _run_command_exists() {
     # TODO Implement the test: '_run_command_exists'.
+    :
+}
+
+_run_convert_filenames_to_text() {
+    # TODO Implement the test: '_run_convert_filenames_to_text'.
+    :
+}
+
+_run_convert_text_to_filenames() {
+    # TODO Implement the test: '_run_convert_text_to_filenames'.
     :
 }
 
@@ -280,6 +294,16 @@ _run_get_filename_extension() {
 
 _run_get_filename_next_suffix() {
     # TODO Implement the test: '_run_get_filename_next_suffix'.
+    :
+}
+
+_run_get_filenames_count() {
+    # TODO Implement the test: '_run_get_filenames_count'.
+    :
+}
+
+_run_get_filenames_list() {
+    # TODO Implement the test: '_run_get_filenames_list'.
     :
 }
 
@@ -475,6 +499,11 @@ _run_storage_text_write_ln() {
 
 _run_str_human_readable_path() {
     # TODO Implement the test: '_run_str_human_readable_path'.
+    :
+}
+
+_run_str_remove_empty_tokens() {
+    # TODO Implement the test: '_run_str_remove_empty_tokens'.
     :
 }
 
