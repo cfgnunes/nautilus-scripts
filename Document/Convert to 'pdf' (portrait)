@@ -73,6 +73,8 @@ _main_task() {
         printf "%s" "$command_use"
     }
 
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:pdf")
+
     # Run the main process.
     case $(__get_command_use "$input_file") in
     "libreoffice")
@@ -81,7 +83,6 @@ _main_task() {
         local temp_file=""
 
         output_file_temp=$(_get_output_filename "$input_file" "$TEMP_DIR_TASK" "extension_opt:replace, extension:pdf")
-        output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:pdf")
 
         # NOTE: Workaround to fix the bug 37531 in the 'libreoffice'
         # See the: https://bugs.documentfoundation.org/show_bug.cgi?id=37531
@@ -98,17 +99,14 @@ _main_task() {
         _check_output "$?" "$std_output" "$input_file" ""
         ;;
     "inkscape")
-        output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:pdf")
         std_output=$(inkscape --export-area-drawing --export-filename="$output_file" -- "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "convert")
-        output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:pdf")
         std_output=$(convert -- "$input_file" "$output_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     *)
-        output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:pdf")
         std_output=$(pandoc -V "header-includes:\usepackage[a4paper, margin=1.5cm]{geometry} \usepackage{newtxtext, newtxmath}" --standalone -o "$output_file" -- "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file"
         ;;
