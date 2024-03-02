@@ -20,8 +20,8 @@ _main() {
         case $(_get_command_use "$input_file") in
         "7za") _check_dependencies "7za(apt:p7zip-full,pacman:p7zip,dnf:p7zip)" ;;
         "ar") _check_dependencies "ar(binutils)" ;;
-        "bunzip2") _check_dependencies "bunzip2(bzip2)" ;;
-        "gunzip") _check_dependencies "gunzip(gzip)" ;;
+        "bunzip2") _command_exists "7za" || _check_dependencies "bunzip2(bzip2)" ;;
+        "gunzip") _command_exists "7za" || _check_dependencies "gunzip(gzip)" ;;
         "lha") _check_dependencies "lha(lhasa)" ;;
         "lrzip") _check_dependencies "lrzip" ;;
         "lz4") _check_dependencies "lz4" ;;
@@ -43,7 +43,7 @@ _main() {
         "unrar") _check_dependencies "unrar" ;;
         "unsquashfs") _check_dependencies "unsquashfs(squashfs-tools)" ;;
         "unxz") _check_dependencies "unxz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
-        "unzip") _check_dependencies "unzip" ;;
+        "unzip") _command_exists "7za" || _check_dependencies "unzip" ;;
         "xorriso") _check_dependencies "xorriso" ;;
         "zstd") _check_dependencies "zstd" ;;
         esac
@@ -80,9 +80,21 @@ _main_task() {
     case $(_get_command_use "$input_file") in
     "7za") std_output=$(7za x -aoa -- "$input_file" 2>&1) ;;
     "ar") std_output=$(ar x -- "$input_file" 2>&1) ;;
-    "bunzip2") std_output=$(bunzip2 -k -c -- "$input_file" >"$filename" 2>&1) ;;
-    "gunzip") std_output=$(gunzip -k -c -- "$input_file" >"$filename" 2>&1) ;;
-    "lha") std_output=$(lha -x -- "$input_file" 2>&1) ;;
+    "bunzip2")
+        if _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        else
+            std_output=$(bunzip2 -k -c -- "$input_file" >"$filename" 2>&1)
+        fi
+        ;;
+    "gunzip")
+        if _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        else
+            std_output=$(gunzip -k -c -- "$input_file" >"$filename" 2>&1)
+        fi
+        ;;
+    "lha") std_output=$(lha -e "$input_file" 2>&1) ;;
     "lrzip") std_output=$(lrzip -d -o "$temp_dir_output/$filename" -- "$input_file" 2>&1) ;;
     "lz4") std_output=$(lz4 -d -c -- "$input_file" >"$filename" 2>&1) ;;
     "lzip") std_output=$(lzip -k -d -c -- "$input_file" >"$filename" 2>&1) ;;
