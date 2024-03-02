@@ -10,10 +10,28 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "pandoc"
+    _check_dependencies ""
     _display_wait_box
     input_files=$(_get_files "type:file, validate_conflict:true")
     output_dir=$(_get_output_dir "use_same_dir:false")
+
+    # Check dependencies for each file extension.
+    for input_file in $input_files; do
+        case "${input_file,,}" in
+        *.doc | *.docx) _check_dependencies "libreoffice" ;;
+        *.xls | *.xlsx) _check_dependencies "libreoffice" ;;
+        *.ppt | *.pptx) _check_dependencies "libreoffice" ;;
+        *.odt | *.fodt) _check_dependencies "libreoffice" ;;
+        *.ods | *.fods) _check_dependencies "libreoffice" ;;
+        *.odp | *.fodp) _check_dependencies "libreoffice" ;;
+        *.odg | *.fodg) _check_dependencies "libreoffice" ;;
+        *.odf | *.fodf) _check_dependencies "libreoffice" ;;
+        *.html) _check_dependencies "libreoffice" ;;
+        *.rtf) _check_dependencies "libreoffice" ;;
+        *.svg | *.svgz) _check_dependencies "inkscape" ;;
+        *) _check_dependencies "pandoc" ;;
+        esac
+    done
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -29,7 +47,6 @@ _main_task() {
     __get_command_use() {
         local _input_file=$1
         local file_mime=""
-        local filename_extension=""
         local command_use=""
 
         # Get the mime type and define what command to use.
@@ -37,17 +54,16 @@ _main_task() {
 
         case "${file_mime,,}" in
         *"octet-stream"*) # Can not find from mime. So, use the extension.
-            filename_extension=$(_get_filename_extension "$_input_file")
-            case "${filename_extension,,}" in
-            ".doc"*) command_use="libreoffice" ;;
-            ".xls"*) command_use="libreoffice" ;;
-            ".ppt"*) command_use="libreoffice" ;;
-            ".odt") command_use="libreoffice" ;;
-            ".ods") command_use="libreoffice" ;;
-            ".odp") command_use="libreoffice" ;;
-            ".odg") command_use="libreoffice" ;;
-            ".odf") command_use="libreoffice" ;;
-            ".svg") command_use="inkscape" ;;
+            case "${_input_file,,}" in
+            *.doc | *.docx) command_use="libreoffice" ;;
+            *.xls | *.xlsx) command_use="libreoffice" ;;
+            *.ppt | *.pptx) command_use="libreoffice" ;;
+            *.odt | *.fodt) command_use="libreoffice" ;;
+            *.ods | *.fods) command_use="libreoffice" ;;
+            *.odp | *.fodp) command_use="libreoffice" ;;
+            *.odg | *.fodg) command_use="libreoffice" ;;
+            *.odf | *.fodf) command_use="libreoffice" ;;
+            *.svg | *.svgz) command_use="inkscape" ;;
             *) command_use="pandoc" ;;
             esac
             ;;
@@ -62,8 +78,8 @@ _main_task() {
         *"msword"*) command_use="libreoffice" ;;                      # doc
         *"ms-powerpoint"*) command_use="libreoffice" ;;               # ppt
         *"ms-excel"*) command_use="libreoffice" ;;                    # xls
-        *"text/rtf"*) command_use="libreoffice" ;;                    # rtf
         *"text/html"*) command_use="libreoffice" ;;                   # html
+        *"text/rtf"*) command_use="libreoffice" ;;                    # rtf
         *"text/xml"*) command_use="libreoffice" ;;                    # fodt, fodp, fods...
         *"image/svg"*) command_use="inkscape" ;;                      # svg
         *"image/"*) command_use="convert" ;;
