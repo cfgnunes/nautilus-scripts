@@ -391,8 +391,7 @@ _exit_script() {
     # Get the process ID (PID) of all child processes.
     child_pids=$(pstree -p "$script_pid" | grep --only-matching --perl-regexp "\(+\K[^)]+")
 
-    # NOTE: Use xargs and kill to send the SIGTERM signal to all child processes,
-    # including the current script.
+    # NOTE: Use xargs and kill to send the SIGTERM signal to all child processes, including the current script.
     # See the: https://www.baeldung.com/linux/safely-exit-scripts
     xargs kill <<<"$child_pids" &>/dev/null
 }
