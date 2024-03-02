@@ -13,7 +13,7 @@ _main() {
     _check_dependencies "pandoc"
     _display_wait_box
     input_files=$(_get_files "type:file, validate_conflict:true")
-    output_dir=$(_get_output_dir "use_same_dir:true")
+    output_dir=$(_get_output_dir "use_same_dir:false")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -47,6 +47,7 @@ _main_task() {
             ".odp") command_use="libreoffice" ;;
             ".odg") command_use="libreoffice" ;;
             ".odf") command_use="libreoffice" ;;
+            ".svg") command_use="inkscape" ;;
             *) command_use="pandoc" ;;
             esac
             ;;
@@ -62,7 +63,10 @@ _main_task() {
         *"ms-powerpoint"*) command_use="libreoffice" ;;               # ppt
         *"ms-excel"*) command_use="libreoffice" ;;                    # xls
         *"text/rtf"*) command_use="libreoffice" ;;                    # rtf
+        *"text/html"*) command_use="libreoffice" ;;                   # html
         *"text/xml"*) command_use="libreoffice" ;;                    # fodt, fodp, fods...
+        *"image/svg"*) command_use="inkscape" ;;                      # svg
+        *"image/"*) command_use="convert" ;;
         *) command_use="pandoc" ;;
         esac
 
@@ -74,21 +78,39 @@ _main_task() {
     "libreoffice")
         # The 'libreoffice' does not support define the outputfile manually.
         local output_file_temp=""
+        local temp_file=""
+
         output_file_temp=$(_get_output_filename "$input_file" "$TEMP_DIR_TASK" "extension_opt:replace, extension:pdf")
         output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:pdf")
 
+        # NOTE: Workaround to fix the bug 37531 in the 'libreoffice'
+        # See the: https://bugs.documentfoundation.org/show_bug.cgi?id=37531
+        temp_file="$(mktemp --tmpdir="$TEMP_DIR_TASK").bug37531"
+
         # The 'libreoffice' does not support ' -- ' in the command line.
-        std_output=$(libreoffice --headless --convert-to "pdf" --outdir "$TEMP_DIR_TASK" "$input_file" 2>&1)
+        std_output=$(libreoffice --headless --convert-to "pdf" "-env:UserInstallation=file://$temp_file" --outdir "$TEMP_DIR_TASK" "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file_temp"
+
+        # Remove the temporary file.
+        rm -f -- "$temp_file"
 
         std_output=$(_move_file "rename" "$output_file_temp" "$output_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" ""
+        ;;
+    "inkscape")
+        output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:pdf")
+        std_output=$(inkscape --export-area-drawing --export-filename="$output_file" -- "$input_file" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+        ;;
+    "convert")
+        output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:pdf")
+        std_output=$(convert -- "$input_file" "$output_file" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     *)
         output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:pdf")
         std_output=$(pandoc -V "header-includes:\usepackage[a4paper, margin=1.5cm]{geometry} \usepackage{newtxtext, newtxmath}" --standalone -o "$output_file" -- "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file"
-
         ;;
     esac
 }
