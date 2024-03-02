@@ -92,6 +92,7 @@ _get_command_use() {
     # Get the mime type and define what command to use.
     file_mime=$(file --dereference --brief --mime-type -- "$input_file")
 
+    # NOTE: See the file: /usr/share/mime/packages/freedesktop.org.xml
     case "${file_mime,,}" in
     *"wordprocessingml.document"*) command_use="libreoffice" ;;   # docx
     *"presentationml.presentation"*) command_use="libreoffice" ;; # pptx
@@ -111,7 +112,7 @@ _get_command_use() {
     *"image/svg"*) command_use="inkscape" ;;                      # svg
     *"image/"*) command_use="convert" ;;
     *)
-        # If can not find from mime, use the extension.
+        # If not found the 'file_mime', use the extension.
         case "${input_file,,}" in
         *.doc | *.docx) command_use="libreoffice" ;;
         *.xls | *.xlsx) command_use="libreoffice" ;;
