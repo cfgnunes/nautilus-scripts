@@ -83,16 +83,16 @@ _main_task() {
 }
 
 _get_command_use() {
-    local _input_file=$1
+    local input_file=$1
     local file_mime=""
     local command_use=""
 
     # Get the mime type and define what command to use.
-    file_mime=$(file --dereference --brief --mime-type -- "$_input_file")
+    file_mime=$(file --dereference --brief --mime-type -- "$input_file")
 
     case "${file_mime,,}" in
     *"octet-stream"*) # Can not find from mime. So, use the extension.
-        case "${_input_file,,}" in
+        case "${input_file,,}" in
         *.doc | *.docx) command_use="libreoffice" ;;
         *.xls | *.xlsx) command_use="libreoffice" ;;
         *.ppt | *.pptx) command_use="libreoffice" ;;
