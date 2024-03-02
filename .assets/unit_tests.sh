@@ -281,6 +281,11 @@ _run_get_filename_extension() {
     output=$(_get_filename_extension "$input")
     _test_equal "$input" "$output" "$expected_output"
 
+    input="/tmp/File.thisisnotanextension"
+    expected_output=""
+    output=$(_get_filename_extension "$input")
+    _test_equal "$input" "$output" "$expected_output"
+
     input="/tmp/File"
     expected_output=""
     output=$(_get_filename_extension "$input")
@@ -575,6 +580,11 @@ _run_strip_filename_extension() {
 
     input="/tmp/File.txt"
     expected_output="/tmp/File"
+    output=$(_strip_filename_extension "$input")
+    _test_equal "$input" "$output" "$expected_output"
+
+    input="/tmp/File.thisisnotanextension"
+    expected_output="/tmp/File.thisisnotanextension"
     output=$(_strip_filename_extension "$input")
     _test_equal "$input" "$output" "$expected_output"
 
