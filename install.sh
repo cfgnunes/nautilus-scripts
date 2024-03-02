@@ -130,7 +130,7 @@ _command_exists() {
 _step_install_dependencies() {
     echo " > Installing dependencies..."
 
-    local common_names="bzip2 foremost ghostscript gzip jpegoptim lhasa lzip lzop optipng pandoc perl-base qpdf rdfind rhash squashfs-tools tar testdisk unzip wget xclip xorriso zip zstd"
+    local common_names="bzip2 foremost ghostscript gzip jpegoptim optipng pandoc perl-base qpdf rdfind rhash squashfs-tools tar testdisk unzip wget xclip xorriso zip"
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
             # Distro: Ubuntu, Mint, Debian.
