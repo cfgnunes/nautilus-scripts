@@ -813,7 +813,7 @@ _log_compile() {
     local log_files_count=""
 
     # Do nothing if there is no error log files.
-    log_files_count="$(find "$TEMP_DIR_LOG" -type f | wc -l 2>/dev/null)"
+    log_files_count="$(find "$TEMP_DIR_LOG" -type f 2>/dev/null | wc -l)"
     if ((log_files_count == 0)); then
         return 1
     fi
