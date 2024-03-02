@@ -90,8 +90,8 @@ _main_task() {
     "tar") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
     "tar+bunzip2") std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1) ;;
     "tar+gunzip") std_output=$(tar --extract --gzip --file="$input_file" 2>&1) ;;
-    "tar+lrzip") ;; # TODO implement this.
-    "tar+lz4") ;;   # TODO implement this.
+    "tar+lrzip") std_output=$(lrztar -d "$input_file" 2>&1) ;;
+    "tar+lz4") std_output=$(lz4 -d -c -- "$input_file" | tar xf - 2>&1) ;;
     "tar+lzip") std_output=$(tar --extract --lzip --file="$input_file" 2>&1) ;;
     "tar+lzop") std_output=$(tar --extract --lzop --file="$input_file" 2>&1) ;;
     "tar+uncompress") std_output=$(tar --extract --uncompress --file="$input_file" 2>&1) ;;
@@ -182,7 +182,7 @@ _get_command_use() {
     #"application/x-bzip2") command_use="bunzip2" ;;              # bz, bz2
     #"application/x-compress") command_use="uncompress" ;;        # z
     #"application/x-gzip") command_use="gunzip" ;;                # gz
-    #"application/x-lrzip") command_use="lrzip" ;;                  # lrz
+    #"application/x-lrzip") command_use="lrzip" ;;                # lrz
     #"application/x-lz4") command_use="lz4" ;;                    # lz4
     #"application/x-lzip") command_use="lzip" ;;                  # lz
     #"application/x-lzma") command_use="unlzma" ;;                # lzma
