@@ -15,15 +15,17 @@ _main() {
     input_files=$(_get_files "type:file, validate_conflict:true")
     output_dir=$(_get_output_dir "use_same_dir:false")
 
-    # Check dependencies for each file extension.
-    case $(_get_command_use "$input_file") in
-    "convert") _check_dependencies "convert" ;;
-    "inkscape") _check_dependencies "inkscape" ;;
-    "latexmk") _check_dependencies "latexmk" ;;
-    "libreoffice") _check_dependencies "libreoffice" ;;
-    "pandoc") _check_dependencies "pandoc" ;;
-    *) _check_dependencies "pandoc" ;;
-    esac
+    # Check dependencies for each file type.
+    for input_file in $input_files; do
+        case $(_get_command_use "$input_file") in
+        "convert") _check_dependencies "convert" ;;
+        "inkscape") _check_dependencies "inkscape" ;;
+        "latexmk") _check_dependencies "latexmk" ;;
+        "libreoffice") _check_dependencies "libreoffice" ;;
+        "pandoc") _check_dependencies "pandoc" ;;
+        *) _check_dependencies "pandoc" ;;
+        esac
+    done
 
     export -f _get_command_use
 
@@ -91,20 +93,6 @@ _get_command_use() {
     file_mime=$(file --dereference --brief --mime-type -- "$input_file")
 
     case "${file_mime,,}" in
-    *"octet-stream"*) # Can not find from mime. So, use the extension.
-        case "${input_file,,}" in
-        *.doc | *.docx) command_use="libreoffice" ;;
-        *.xls | *.xlsx) command_use="libreoffice" ;;
-        *.ppt | *.pptx) command_use="libreoffice" ;;
-        *.odt | *.fodt) command_use="libreoffice" ;;
-        *.ods | *.fods) command_use="libreoffice" ;;
-        *.odp | *.fodp) command_use="libreoffice" ;;
-        *.odg | *.fodg) command_use="libreoffice" ;;
-        *.odf | *.fodf) command_use="libreoffice" ;;
-        *.svg | *.svgz) command_use="inkscape" ;;
-        *) command_use="pandoc" ;;
-        esac
-        ;;
     *"wordprocessingml.document"*) command_use="libreoffice" ;;   # docx
     *"presentationml.presentation"*) command_use="libreoffice" ;; # pptx
     *"spreadsheetml.sheet"*) command_use="libreoffice" ;;         # xlsx
@@ -122,7 +110,21 @@ _get_command_use() {
     *"text/x-tex"*) command_use="latexmk" ;;                      # tex
     *"image/svg"*) command_use="inkscape" ;;                      # svg
     *"image/"*) command_use="convert" ;;
-    *) command_use="pandoc" ;;
+    *)
+        # If can not find from mime, use the extension.
+        case "${input_file,,}" in
+        *.doc | *.docx) command_use="libreoffice" ;;
+        *.xls | *.xlsx) command_use="libreoffice" ;;
+        *.ppt | *.pptx) command_use="libreoffice" ;;
+        *.odt | *.fodt) command_use="libreoffice" ;;
+        *.ods | *.fods) command_use="libreoffice" ;;
+        *.odp | *.fodp) command_use="libreoffice" ;;
+        *.odg | *.fodg) command_use="libreoffice" ;;
+        *.odf | *.fodf) command_use="libreoffice" ;;
+        *.svg | *.svgz) command_use="inkscape" ;;
+        *) command_use="pandoc" ;;
+        esac
+        ;;
     esac
 
     printf "%s" "$command_use"
