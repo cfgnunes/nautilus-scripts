@@ -28,7 +28,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:pdf")
-    std_output=$(pandoc -V "header-includes:\usepackage[a4paper, landscape, margin=2cm]{geometry} \usepackage{newtxtext, newtxmath}" --standalone -o "$output_file" -- "$input_file" 2>&1)
+    std_output=$(pandoc -V "header-includes:\usepackage[a4paper, landscape, margin=1.5cm]{geometry} \usepackage{newtxtext, newtxmath}" --standalone -o "$output_file" -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
