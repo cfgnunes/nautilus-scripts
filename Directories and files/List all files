@@ -15,7 +15,7 @@ _main() {
     input_files=$(_get_files "type:file, recursive:true, get_pwd_if_no_selection:true, min_files:0")
 
     # Run the main process.
-    std_output=$(tr "$FILENAME_SEPARATOR" "\n" <<<"$input_files")
+    std_output=$(_convert_filenames_to_text "$input_files")
     std_output=$(_text_remove_pwd "$std_output")
     # shellcheck disable=SC2001
     std_output=$(sed "s|^\(..*\)$|'\1'|" <<<"$std_output")

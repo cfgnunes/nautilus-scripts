@@ -158,6 +158,26 @@ _command_exists() {
     return 1
 }
 
+_convert_filenames_to_text() {
+    local input_files=$1
+    local nl_escaped="'\$'\\\n''"
+
+    input_files=$(sed -z "s|\n|$nl_escaped|g; s|$nl_escaped$||g" <<<"$input_files")
+    input_files=$(tr "$FILENAME_SEPARATOR" "\n" <<<"$input_files")
+
+    echo -n "$input_files"
+}
+
+_convert_text_to_filenames() {
+    local input_files=$1
+    local nl_escaped="'\$'\\\n''"
+
+    input_files=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$input_files")
+    input_files=$(sed -z "s|$nl_escaped|\n|g" <<<"$input_files")
+
+    echo -n "$input_files"
+}
+
 _display_dir_selection_box() {
     if _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --file-selection --multiple \
@@ -576,12 +596,9 @@ _get_files() {
         "$par_max_files"
 
     # Sort the list by filename.
-    input_files=$(tr "\n" "\v" <<<"$input_files")
-    input_files=$(sed "s|\v$||" <<<"$input_files")
-    input_files=$(tr "$FILENAME_SEPARATOR" "\n" <<<"$input_files")
+    input_files=$(_convert_filenames_to_text "$input_files")
     input_files=$(_text_sort "$input_files")
-    input_files=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$input_files")
-    input_files=$(tr "\v" "\n" <<<"$input_files")
+    input_files=$(_convert_text_to_filenames "$input_files")
 
     # Validates filenames with same base name.
     if [[ "$par_validate_conflict" == "true" ]]; then
@@ -1030,8 +1047,7 @@ _validate_conflict_filenames() {
     local input_files=$1
     local dup_filenames="$input_files"
 
-    dup_filenames=$(tr "\n" "\v" <<<"$dup_filenames")
-    dup_filenames=$(tr "$FILENAME_SEPARATOR" "\n" <<<"$dup_filenames")
+    dup_filenames=$(_convert_filenames_to_text "$dup_filenames")
     dup_filenames=$(_strip_filename_extension "$dup_filenames")
     dup_filenames=$(uniq -d <<<"$dup_filenames")
 
@@ -1279,6 +1295,8 @@ export \
 export -f \
     _check_output \
     _command_exists \
+    _convert_filenames_to_text \
+    _convert_text_to_filenames \
     _exit_script \
     _expand_directory \
     _get_filename_extension \
