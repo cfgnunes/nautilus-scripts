@@ -43,7 +43,7 @@ _main_task() {
     sed -i "s|[ \t]*\(\r*\)$|\1|" "$temp_file2"
 
     # Run the process (part 4) 'remove the empty line in EOF'
-    echo "" >>"$temp_file2"
+    printf "\n" >>"$temp_file2"
     sed -i ':Loop;N;$!bLoop;s|\n*$||g' "$temp_file2"
 
     # Move the temporary file to the output.

@@ -217,7 +217,7 @@ _display_error_box() {
     local message=$1
 
     if ! _is_gui_session; then
-        echo >&2 "Error: $message"
+        printf "Error: %s\n" "$message"
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-error" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
@@ -233,7 +233,7 @@ _display_info_box() {
     local message=$1
 
     if ! _is_gui_session; then
-        echo "Info: $message"
+        printf "Info: %s\n" "$message"
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-information" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
@@ -372,8 +372,8 @@ _display_wait_box_message() {
 _close_wait_box() {
     # If 'wait_box' is open (waiting an input in the 'fifo').
     if pgrep -fl "$WAIT_BOX_FIFO" &>/dev/null; then
-        # Close the zenity progress by FIFO: Send a 'echo' for the 'cat' command.
-        echo >"$WAIT_BOX_FIFO"
+        # Close the zenity progress by FIFO: Send a '\n' for the 'cat' command.
+        printf "\n" >"$WAIT_BOX_FIFO"
     fi
 
     # If 'wait_box' will open.
@@ -726,7 +726,7 @@ _get_output_filename() {
     # If the file already exists, add a suffix.
     output_file=$(_get_filename_next_suffix "$output_file")
 
-    echo "$output_file"
+    printf "%s" "$output_file"
 }
 
 _get_parameter_value() {
@@ -829,13 +829,12 @@ _log_compile() {
 
     # Compile log errors in a single file.
     {
-        echo "Script: '$(_get_script_name)'."
-        echo "Total errors: $log_files_count."
-        echo
+        printf "Script: '%s'.\n" "$(_get_script_name)"
+        printf "Total errors: %s.\n\n" "$log_files_count"
         cat -- "$TEMP_DIR_LOG/"* 2>/dev/null
     } >"$log_file_output"
 
-    echo "$log_file_output"
+    printf "%s" "$log_file_output"
 }
 
 _log_write() {
@@ -846,12 +845,11 @@ _log_write() {
     log_temp_file=$(mktemp --tmpdir="$TEMP_DIR_LOG")
 
     {
-        echo "[$(date "+%Y-%m-%d %H:%M:%S")]"
-        echo " > Input file: $input_file"
-        echo " > $message"
-        echo " > Output:"
-        echo "$std_output"
-        echo
+        printf "[%s]\n" "$(date "+%Y-%m-%d %H:%M:%S")"
+        printf " > Input file: %s\n" "$input_file"
+        printf " > %s\n" "$message"
+        printf " > Output:\n"
+        printf "%s\n\n" "$std_output"
     } >"$log_temp_file"
 }
 
@@ -1062,7 +1060,8 @@ _text_uri_decode() {
     local uri_encoded=$1
 
     uri_encoded=${uri_encoded//%/\\x}
-    echo -e "$uri_encoded"
+    # shellcheck disable=SC2059
+    printf "$uri_encoded"
 }
 
 _validate_conflict_filenames() {

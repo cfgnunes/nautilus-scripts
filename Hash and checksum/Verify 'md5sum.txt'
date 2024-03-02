@@ -35,11 +35,12 @@ _verify_checksum() {
     local current_output=""
     local current_checksum=""
 
-    saved_checksum=$(echo "$line" | cut -d " " -f1)
-    saved_file=$(echo "$line" | cut -d " " -f3-)
+    saved_checksum=$(printf "%s" "$line" | cut -d " " -f1)
+    saved_file=$(printf "%s" "$line" | cut -d " " -f3-)
 
     # Some checksum start with '\', for filenames with '\n' or '\'
-    saved_file_decoded=$(echo -e "$saved_file")
+    # shellcheck disable=SC2059
+    saved_file_decoded=$(printf "$saved_file")
 
     # If the file does not exist, report and skip the check.
     if [[ ! -e "$saved_file_decoded" ]]; then
@@ -48,7 +49,7 @@ _verify_checksum() {
     fi
 
     current_output=$(md5sum -- "$saved_file_decoded" 2>/dev/null)
-    current_checksum=$(echo "$current_output" | cut -d " " -f1)
+    current_checksum=$(printf "%s" "$current_output" | cut -d " " -f1)
 
     # Compare the checksum.
     if [[ "$saved_checksum" != "$current_checksum" ]]; then
