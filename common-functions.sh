@@ -175,35 +175,42 @@ _convert_text_to_filenames() {
     input_files=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$input_files")
     input_files=$(sed -z "s|$nl_escaped|\n|g" <<<"$input_files")
 
+    input_files=$(_str_remove_empty_tokens "$input_files")
     echo -n "$input_files"
 }
 
 _display_dir_selection_box() {
+    local input_files=""
+
     if _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --file-selection --multiple \
-            --directory --separator="$FILENAME_SEPARATOR" 2>/dev/null || _exit_script
+        input_files=$(zenity --title "$(_get_script_name)" --file-selection --multiple \
+            --directory --separator="$FILENAME_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
-        local input_files=""
         input_files=$(kdialog --title "$(_get_script_name)" \
             --getexistingdirectory 2>/dev/null) || _exit_script
         input_files=${input_files% }
         input_files=${input_files// \//$FILENAME_SEPARATOR/}
-        echo -n "$input_files"
     fi
+
+    input_files=$(_str_remove_empty_tokens "$input_files")
+    echo -n "$input_files"
 }
 
 _display_file_selection_box() {
+    local input_files=""
+
     if _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --file-selection --multiple \
-            --separator="$FILENAME_SEPARATOR" 2>/dev/null || _exit_script
+        input_files=$(zenity --title "$(_get_script_name)" --file-selection --multiple \
+            --separator="$FILENAME_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
-        local input_files=""
         input_files=$(kdialog --title "$(_get_script_name)" \
             --getopenfilename --multiple 2>/dev/null) || _exit_script
         input_files=${input_files% }
         input_files=${input_files// \//$FILENAME_SEPARATOR/}
-        echo -n "$input_files"
     fi
+
+    input_files=$(_str_remove_empty_tokens "$input_files")
+    echo -n "$input_files"
 }
 
 _display_error_box() {
@@ -470,11 +477,8 @@ _get_filenames_count() {
     local input_files=$1
     local files_count=0
 
-    input_files=$(tr -s "$FILENAME_SEPARATOR" <<<"$input_files")
-    input_files=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$input_files")
-
     if [[ -n "$input_files" ]]; then
-        files_count=$(echo -n "$input_files" | tr -cd "$FILENAME_SEPARATOR" | wc -c)
+        files_count=$(tr -cd "$FILENAME_SEPARATOR" <<<"$input_files" | wc -c)
         files_count=$((files_count + 1))
     fi
 
@@ -501,6 +505,7 @@ _get_filenames_list() {
         input_files=$INPUT_FILES # Standard input
     fi
 
+    input_files=$(_str_remove_empty_tokens "$input_files")
     echo -n "$input_files"
 }
 
@@ -616,9 +621,6 @@ _get_files() {
     if [[ "$par_validate_conflict" == "true" ]]; then
         _validate_conflict_filenames "$input_files"
     fi
-
-    # Removes last field separators.
-    input_files=$(sed "s|$FILENAME_SEPARATOR*$||" <<<"$input_files")
 
     echo -n "$input_files"
 }
@@ -955,7 +957,7 @@ _run_task_parallel() {
     export -f _main_task
 
     # Execute the function '_main_task' for each file in parallel (using 'xargs').
-    echo -n "$input_files" | sed "s|$FILENAME_SEPARATOR*$||" | xargs \
+    echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
@@ -1004,6 +1006,14 @@ _str_human_readable_path() {
     fi
 
     echo -n "$output_path"
+}
+
+_str_remove_empty_tokens() {
+    local input_str=$1
+    input_str=$(tr -s "$FILENAME_SEPARATOR" <<<"$input_str")
+    input_str=$(sed "s|$FILENAME_SEPARATOR$||" <<<"$input_str")
+
+    echo -n "$input_str"
 }
 
 _str_trim_whitespace() {
@@ -1147,7 +1157,7 @@ _validate_file_mime_parallel() {
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Run '_validate_file_mime' for each file in parallel (using 'xargs').
-    echo -n "$input_files" | sed "s|$FILENAME_SEPARATOR*$||" | xargs \
+    echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
@@ -1157,12 +1167,12 @@ _validate_file_mime_parallel() {
             '$par_skip_encoding' \
             '$par_skip_mime'"
 
-    # Compile valid files in a single list 'output_files'.
-    local output_files=""
-    output_files=$(_storage_text_read_all)
+    # Compile valid files in a single list.
+    input_files=$(_storage_text_read_all)
     _storage_text_clean
 
-    echo -n "$output_files"
+    input_files=$(_str_remove_empty_tokens "$input_files")
+    echo -n "$input_files"
 }
 
 _validate_file_preselect() {
@@ -1219,7 +1229,7 @@ _validate_file_preselect_parallel() {
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Run '_validate_file_preselect' for each file in parallel (using 'xargs').
-    echo -n "$input_files" | sed "s|$FILENAME_SEPARATOR*$||" | xargs \
+    echo -n "$input_files" | xargs \
         --delimiter="$FILENAME_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
@@ -1229,12 +1239,12 @@ _validate_file_preselect_parallel() {
             '$par_select_extension' \
             '$par_recursive'"
 
-    # Compile valid files in a single list 'output_files'.
-    local output_files=""
-    output_files=$(_storage_text_read_all)
+    # Compile valid files in a single list.
+    input_files=$(_storage_text_read_all)
     _storage_text_clean
 
-    echo -n "$output_files"
+    input_files=$(_str_remove_empty_tokens "$input_files")
+    echo -n "$input_files"
 }
 
 _validate_files_count() {
@@ -1319,6 +1329,7 @@ export -f \
     _move_temp_file_to_output \
     _storage_text_write \
     _storage_text_write_ln \
+    _str_remove_empty_tokens \
     _str_trim_whitespace \
     _strip_filename_extension \
     _text_remove_pwd \
