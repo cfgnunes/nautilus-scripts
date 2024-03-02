@@ -25,7 +25,6 @@ _multiselect_menu() {
         local row=""
         local col=""
 
-        # shellcheck disable=SC2034
         IFS=';' read -rsdR -p $'\E[6n' row col
         printf "%s" "${row#*[}"
     }
