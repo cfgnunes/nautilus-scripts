@@ -17,7 +17,7 @@ _main() {
 
     # Check dependencies for each file extension.
     for input_file in $input_files; do
-        case $input_file in
+        case "${input_file,,}" in
         *.tar.bz | *.tbz | *.tar.bz2 | *.tbz2) _check_dependencies "tar" ;;
         *.tar.gz | *.tgz | *.tar.Z | *.taz) _check_dependencies "tar" ;;
         *.tar.lz | *.tlz) _check_dependencies "tar" ;;
@@ -37,7 +37,7 @@ _main() {
         *.squashfs | *.sfs | *.sqsh) _check_dependencies "unsquashfs(squashfs-tools)" ;;
         *.tar) _check_dependencies "tar" ;;
         *.xz) _check_dependencies "unxz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
-        *.Z) _check_dependencies "uncompress(gzip)" ;;
+        *.z) _check_dependencies "uncompress(gzip)" ;;
         *.zip) _check_dependencies "unzip" ;;
         *.zst) _check_dependencies "zstd" ;;
         *) _check_dependencies "7za(apt:p7zip-full,pacman:p7zip,dnf:p7zip)" ;;
@@ -70,7 +70,7 @@ _main_task() {
     pushd "$temp_dir_output" &>/dev/null || return 1
 
     # Extract the archive according to the file extension.
-    case $input_file in
+    case ${input_file,,} in
     *.tar.bz | *.tbz | *.tar.bz2 | *.tbz2) std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1) ;;
     *.tar.gz | *.tgz | *.tar.Z | *.taz) std_output=$(tar --extract --gzip --file="$input_file" 2>&1) ;;
     *.tar.lz | *.tlz) std_output=$(tar --extract --lzip --file="$input_file" 2>&1) ;;
@@ -90,7 +90,7 @@ _main_task() {
     *.squashfs | *.sfs | *.sqsh) std_output=$(unsquashfs "$input_file" 2>&1) ;;
     *.tar) std_output=$(tar --extract --file="$input_file" 2>&1) ;;
     *.xz) std_output=$(unxz -- "$input_file" 2>&1) ;;
-    *.Z) std_output=$(uncompress -- "$input_file" 2>&1) ;;
+    *.z) std_output=$(uncompress -- "$input_file" 2>&1) ;;
     *.zip)
         if _command_exists "7za"; then
             std_output=$(7za x -aoa -- "$input_file" 2>&1)
