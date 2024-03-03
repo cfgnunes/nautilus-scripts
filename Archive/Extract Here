@@ -35,7 +35,7 @@ _main() {
         "tar+lzop") _check_dependencies "tar lzop" ;;
         "tar+uncompress") _check_dependencies "tar uncompress(gzip)" ;;
         "tar+unlzma") _check_dependencies "tar unlzma(apt:xz-utils,pacman:xz,dnf:xz)" ;;
-        "tar+xz ") _check_dependencies "tar unxz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
+        "tar+xz") _check_dependencies "tar unxz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
         "tar+zstd") _check_dependencies "tar zstd" ;;
         "uncompress") _check_dependencies "uncompress(gzip)" ;;
         "unlzma") _check_dependencies "unlzma(apt:xz-utils,pacman:xz,dnf:xz)" ;;
@@ -109,7 +109,7 @@ _main_task() {
     "tar+lzop") std_output=$(tar --extract --lzop --file="$input_file" 2>&1) ;;
     "tar+uncompress") std_output=$(tar --extract --uncompress --file="$input_file" 2>&1) ;;
     "tar+unlzma") std_output=$(tar --extract --lzma --file="$input_file" 2>&1) ;;
-    "tar+xz ") std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
+    "tar+xz") std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
     "tar+zstd") std_output=$(tar --extract --zstd --file="$input_file" 2>&1) ;;
     "uncompress") std_output=$(uncompress -k -c -- "$input_file" >"$filename" 2>&1) ;;
     "unlzma") std_output=$(unlzma -k -c -- "$input_file" >"$filename" 2>&1) ;;
@@ -212,7 +212,7 @@ _get_command_use() {
         *.tar.lz4) command_use="tar+lz4" ;;
         *.tar.lzma | *.tlz) command_use="tar+unlzma" ;;
         *.tar.lzo | *.tzo) command_use="tar+lzop" ;;
-        *.tar.xz | *.txz) command_use="tar+xz " ;;
+        *.tar.xz | *.txz) command_use="tar+xz" ;;
         *.tar.z | *.taz) command_use="tar+uncompress" ;;
         *.tar.zst | *.tzst) command_use="tar+zstd" ;;
         *.7z) command_use="7za" ;;
