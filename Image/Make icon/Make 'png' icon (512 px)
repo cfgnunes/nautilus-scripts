@@ -42,8 +42,19 @@ _main_task() {
     local input_file_proc=""
     filename_extension=$(_get_filename_extension "$input_file")
     if [[ "${filename_extension,,}" == ".svg"* ]]; then
-        std_output=$(inkscape --export-area-drawing --export-height=$icon_size --export-filename="$temp_file4" -- "$input_file" 2>&1)
+
+        local inkscape_version=""
+        local inkscape_version_old="1.0"
+        inkscape_version=$(inkscape --version | cut -d " " -f 2)
+        if [[ "$inkscape_version" == $(echo -e "$inkscape_version\n$inkscape_version_old" | sort -V | head -n1) ]]; then
+            # Old Inkscape version.
+            std_output=$(inkscape --without-gui --export-area-drawing --file="$input_file" --export-height=$icon_size --export-png="$temp_file4" 2>&1)
+        else
+            # New Inkscape version.
+            std_output=$(inkscape --export-area-drawing --export-height=$icon_size --export-filename="$temp_file4" -- "$input_file" 2>&1)
+        fi
         _check_output "$?" "$std_output" "$input_file" "$temp_file4" || return 1
+
         input_file_proc=$temp_file4
     else
         input_file_proc=$input_file

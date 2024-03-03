@@ -28,7 +28,18 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:png")
-    std_output=$(inkscape --export-area-drawing --export-height=256 --export-filename="$output_file" -- "$input_file" 2>&1)
+
+    local inkscape_version=""
+    local inkscape_version_old="1.0"
+    inkscape_version=$(inkscape --version | cut -d " " -f 2)
+    if [[ "$inkscape_version" == $(echo -e "$inkscape_version\n$inkscape_version_old" | sort -V | head -n1) ]]; then
+        # Old Inkscape version.
+        std_output=$(inkscape --without-gui --export-area-drawing --file="$input_file" --export-height=256 --export-png="$output_file" 2>&1)
+    else
+        # New Inkscape version.
+        std_output=$(inkscape --export-area-drawing --export-height=256 --export-filename="$output_file" -- "$input_file" 2>&1)
+    fi
+
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
