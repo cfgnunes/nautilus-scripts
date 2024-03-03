@@ -135,7 +135,8 @@ _get_command_use() {
     "text/rtf") command_use="libreoffice" ;;                      # rtf
     "text/xml") command_use="libreoffice" ;;                      # fodt, fodp, fods...
     "text/x-tex") command_use="latexmk" ;;                        # tex
-    "image/svg") command_use="inkscape" ;;                        # svg
+    "image/svg+xml") command_use="inkscape" ;;                    # svg
+    "image/svg+xml-compressed") command_use="inkscape" ;;         # svgz
     "image/"*) command_use="convert" ;;                           # (image files)
     "text/"*) command_use="pandoc_text" ;;                        # (plain text files)
     *)
