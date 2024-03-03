@@ -28,7 +28,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:preserve")
-    std_output=$(convert -brightness-contrast 20x10 -alpha off -fill white -draw 'color 0,0 floodfill' -normalize -- "$input_file" "$output_file" 2>&1)
+    std_output=$(convert "$input_file" -brightness-contrast 20x10 -alpha off -fill white -draw 'color 0,0 floodfill' -normalize "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

@@ -28,7 +28,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:png")
-    std_output=$(convert -fuzz 10% -transparent black -- "$input_file" "$output_file" 2>&1)
+    std_output=$(convert "$input_file" -fuzz 10% -transparent black "$output_file" 2>&1)
     _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

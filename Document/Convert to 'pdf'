@@ -46,7 +46,7 @@ _main_task() {
     # Run the main process.
     case $(_get_command_use "$input_file") in
     "convert")
-        std_output=$(convert -- "$input_file" "$output_file" 2>&1)
+        std_output=$(convert "$input_file" "$output_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "inkscape")

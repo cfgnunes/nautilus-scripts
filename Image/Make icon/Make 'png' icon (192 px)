@@ -51,36 +51,36 @@ _main_task() {
 
     # Run the process (part 1) 'get information of the image'.
     local first_pixel_color=""
-    first_pixel_color=$(convert -format "%[pixel:p{0,0}]" -- "$input_file_proc" "info:" 2>&1)
+    first_pixel_color=$(convert "$input_file_proc" -format "%[pixel:p{0,0}]" "info:" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     local last_pixel=""
-    last_pixel=$(identify -format "%[fx:w-1],0" -- "$input_file_proc" 2>&1)
+    last_pixel=$(identify -format "%[fx:w-1],0" "$input_file_proc" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     local last_pixel_color=""
-    last_pixel_color=$(convert -format "%[pixel:p{$last_pixel}]" -- "$input_file_proc" "info:")
+    last_pixel_color=$(convert "$input_file_proc" -format "%[pixel:p{$last_pixel}]" "info:")
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     if [[ "$first_pixel_color" == "$last_pixel_color" ]]; then
         # Run the process (part 2) 'automatic crop the content'.
-        std_output=$(convert -trim +repage -- "$input_file_proc" "$temp_file1" 2>&1)
+        std_output=$(convert "$input_file_proc" -trim +repage "$temp_file1" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$temp_file1" || return 1
 
         # Run the process (part 3) 'extend to square'.
-        std_output=$(convert -set option:distort:viewport "%[fx:max(w,h)]x%[fx:max(w,h)]+%[fx:(w-max(w,h))/2]+%[fx:(h-max(w,h))/2]" -virtual-pixel transparent -filter point -distort SRT 0 -bordercolor "$first_pixel_color" -border 1 -fill "$first_pixel_color" -draw "color 0,0 floodfill" -shave 1 -draw "color 0,0 floodfill" +repage -- "$temp_file1" "$temp_file2" 2>&1)
+        std_output=$(convert "$temp_file1" -set option:distort:viewport "%[fx:max(w,h)]x%[fx:max(w,h)]+%[fx:(w-max(w,h))/2]+%[fx:(h-max(w,h))/2]" -virtual-pixel transparent -filter point -distort SRT 0 -bordercolor "$first_pixel_color" -border 1 -fill "$first_pixel_color" -draw "color 0,0 floodfill" -shave 1 -draw "color 0,0 floodfill" +repage "$temp_file2" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$temp_file2" || return 1
 
         # Run the process (part 4) 'extend 14%' to add a border.
         local factor="*1.14"
-        std_output=$(convert -set option:distort:viewport "%[fx:(w*$factor)]x%[fx:(h*$factor)]+%[fx:(w-(w*$factor))/2]+%[fx:(h-(h*$factor))/2]" -virtual-pixel transparent -filter point -distort SRT 0 -bordercolor "$first_pixel_color" -border 1 -fill "$first_pixel_color" -draw "color 0,0 floodfill" -shave 1 -draw "color 0,0 floodfill" +repage -- "$temp_file2" "$temp_file3" 2>&1)
+        std_output=$(convert "$temp_file2" -set option:distort:viewport "%[fx:(w*$factor)]x%[fx:(h*$factor)]+%[fx:(w-(w*$factor))/2]+%[fx:(h-(h*$factor))/2]" -virtual-pixel transparent -filter point -distort SRT 0 -bordercolor "$first_pixel_color" -border 1 -fill "$first_pixel_color" -draw "color 0,0 floodfill" -shave 1 -draw "color 0,0 floodfill" +repage "$temp_file3" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$temp_file3" || return 1
 
         input_file_proc=$temp_file3
     fi
 
     # Run the process (part 5) 'resize and crop the final image' to add a border.
-    std_output=$(convert -resize "${icon_size}x${icon_size}^" -gravity center -crop ${icon_size}x${icon_size}+0+0 -strip +repage -- "$input_file_proc" "$temp_file4" 2>&1)
+    std_output=$(convert "$input_file_proc" -resize "${icon_size}x${icon_size}^" -gravity center -crop ${icon_size}x${icon_size}+0+0 -strip +repage "$temp_file4" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$temp_file4" || return 1
 
     # Move the temporary file to the output.

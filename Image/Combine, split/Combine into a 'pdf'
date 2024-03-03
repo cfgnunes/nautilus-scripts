@@ -29,7 +29,7 @@ _main_task() {
     output_file=$(_get_filename_next_suffix "$output_dir/Combined images.pdf")
     output_file=$(_get_output_filename "$output_file" "$output_dir" "extension_opt:preserve")
     # shellcheck disable=SC2086
-    std_output=$(convert -- $input_files "$output_file" 2>&1)
+    std_output=$(convert $input_files "$output_file" 2>&1)
     _check_output "$?" "$std_output" "" "$output_file" || return 1
 }
 

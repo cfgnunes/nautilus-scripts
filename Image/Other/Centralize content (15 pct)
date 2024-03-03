@@ -32,11 +32,11 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     local first_pixel_color=""
-    first_pixel_color=$(convert -format "%[pixel:p{0,0}]" -- "$input_file""[1x1+0+0]" "info:")
+    first_pixel_color=$(convert "$input_file" -format "%[pixel:p{0,0}]""[1x1+0+0]" "info:")
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:preserve")
-    std_output=$(convert -fuzz 15% -background transparent -trim -gravity center -extent "$dimension" -bordercolor "$first_pixel_color" -border 1 -fill "$first_pixel_color" -draw "color 0,0 floodfill" -shave 1 +repage -- "$input_file" "$output_file" 2>&1)
+    std_output=$(convert "$input_file" -fuzz 15% -background transparent -trim -gravity center -extent "$dimension" -bordercolor "$first_pixel_color" -border 1 -fill "$first_pixel_color" -draw "color 0,0 floodfill" -shave 1 +repage "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
