@@ -154,6 +154,15 @@ _step_install_dependencies() {
         echo "Error: could not run as administrator!"
         exit 1
     fi
+
+    # Fix permissions in ImageMagick to write PDF files.
+    local imagemagick_config="/etc/ImageMagick-6/policy.xml"
+    if [[ -f "$imagemagick_config" ]]; then
+        echo " > Fixing write permission with PDF in ImageMagick..."
+        sudo sed -i 's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/' "$imagemagick_config"
+        sudo sed -i 's/1GiB/8GiB/' "$imagemagick_config"
+        sudo sed -i '/shared-secret/d' "$imagemagick_config"
+    fi
 }
 
 _step_install_scripts() {
