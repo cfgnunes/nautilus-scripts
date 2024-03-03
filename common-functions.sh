@@ -78,9 +78,6 @@ _check_dependencies() {
         _exit_script
     fi
 
-    # Add basic commands to check.
-    dependencies="file xargs(findutils) pstree(psmisc) cmp(diffutils) mkfifo(coreutils) $dependencies"
-
     # Check all commands in the list 'dependencies'.
     IFS=" "
     for dependency in $dependencies; do
