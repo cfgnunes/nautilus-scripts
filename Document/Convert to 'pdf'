@@ -19,7 +19,7 @@ _main() {
         "convert") _check_dependencies "convert" ;;
         "inkscape") _check_dependencies "inkscape" ;;
         "latexmk") _check_dependencies "latexmk" ;;
-        "libreoffice") _check_dependencies "libreoffice" ;;
+        "libreoffice") _check_dependencies "libreoffice(libreoffice-base-core)" ;;
         "pandoc") _check_dependencies "pandoc (texlive) (texlive-fonts-extra)" ;;
         *) _check_dependencies "pandoc" ;;
         esac
