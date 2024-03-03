@@ -20,7 +20,7 @@ _main() {
         "inkscape") _check_dependencies "inkscape" ;;
         "latexmk") _check_dependencies "latexmk" ;;
         "libreoffice") _check_dependencies "libreoffice" ;;
-        "pandoc") _check_dependencies "pandoc (texlive-latex-base) (texlive-fonts-extra)" ;;
+        "pandoc") _check_dependencies "pandoc (texlive) (texlive-fonts-extra)" ;;
         *) _check_dependencies "pandoc" ;;
         esac
     done
