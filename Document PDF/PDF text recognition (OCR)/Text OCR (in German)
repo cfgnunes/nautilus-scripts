@@ -10,10 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "ocrmypdf"
-    if ! [[ -d "/usr/share/doc/tesseract-ocr-deu" ]]; then
-        _check_dependencies "(apt:tesseract-ocr-deu,dnf:tesseract-langpack-deu)"
-    fi
+    _check_dependencies "ocrmypdf (apt:tesseract-ocr-deu,dnf:tesseract-langpack-deu)"
     _display_wait_box
     input_files=$(_get_files "type:file, mime:application/pdf")
     output_dir=$(_get_output_dir "use_same_dir:false")

@@ -87,16 +87,20 @@ _check_dependencies() {
         # Item syntax: command(package), example: photorec(testdisk).
         command=${dependency%%(*}
 
-        # Check if it has the command in the shell.
+        # Check if there is the command in the shell.
         if _command_exists "$command"; then
             continue
         fi
 
+        # Get the 'package_name' according the package manager.
         package_name=$(grep --only-matching --perl-regexp "\(+\K[^)]+" <<<"$dependency")
-
-        # Select the package according the package manager.
         if [[ -n "$package_name" ]] && [[ "$package_name" == *":"* ]]; then
             package_name=$(grep --only-matching "$pkg_manager:[a-z0-9-]*" <<<"$package_name" | sed "s|.*:||g")
+        fi
+
+        # Check if the package was installed (for packages that not has a command).
+        if [[ -z "$command" ]] && _is_package_installed "$pkg_manager" "$package_name"; then
+            continue
         fi
 
         # Ask to the user to install the dependency.
@@ -804,6 +808,30 @@ _is_gui_session() {
     if env | grep -q "^DISPLAY"; then
         return 0
     fi
+    return 1
+}
+
+_is_package_installed() {
+    local pkg_manager=$1
+    local package_name=$2
+
+    case "$pkg_manager" in
+    "apt")
+        if dpkg -s "$package_name" &>/dev/null; then
+            return 0
+        fi
+        ;;
+    "pacman")
+        if pacman -Q "$package_name" &>/dev/null; then
+            return 0
+        fi
+        ;;
+    "dnf")
+        if dnf list installed | grep -q "$package_name"; then
+            return 0
+        fi
+        ;;
+    esac
     return 1
 }
 
