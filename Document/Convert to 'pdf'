@@ -11,9 +11,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
-    _display_wait_box
     input_files=$(_get_files "type:file, validate_conflict:true")
-    output_dir=$(_get_output_dir "use_same_dir:false")
 
     # Check dependencies for each file type.
     for input_file in $input_files; do
@@ -26,6 +24,9 @@ _main() {
         *) _check_dependencies "pandoc" ;;
         esac
     done
+
+    _display_wait_box
+    output_dir=$(_get_output_dir "use_same_dir:false")
 
     export -f _get_command_use
 
