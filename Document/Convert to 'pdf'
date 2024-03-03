@@ -18,15 +18,15 @@ _main() {
         case $(_get_command_use "$input_file") in
         "convert") _check_dependencies "convert" ;;
         "inkscape") _check_dependencies "inkscape" ;;
-        "latexmk") _check_dependencies "latexmk" ;;
+        "latexmk") _check_dependencies "latexmk (texlive) (texlive-fonts-extra) (texlive-latex-extra) (texlive-publishers) (texlive-science) (texlive-xetex)" ;;
         "libreoffice") _check_dependencies "libreoffice(libreoffice-base-core)" ;;
-        "pandoc") _check_dependencies "pandoc (texlive) (texlive-fonts-extra)" ;;
-        *) _check_dependencies "pandoc" ;;
+        "pandoc_text") _check_dependencies "pandoc (texlive) (texlive-fonts-extra)" ;;
+        "pandoc") _check_dependencies "pandoc" ;;
         esac
     done
 
     _display_wait_box
-    output_dir=$(_get_output_dir "use_same_dir:false")
+    output_dir=$(_get_output_dir "use_same_dir:true")
 
     export -f _get_command_use
 
@@ -54,32 +54,49 @@ _main_task() {
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "latexmk")
-        std_output=$(pandoc --standalone -o "$output_file" -- "$input_file" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "$output_file"
+        local output_file_temp=""
+        local temp_dir=""
+
+        output_file_temp=$(_get_output_filename "$input_file" "$TEMP_DIR_TASK" "extension_opt:replace, extension:pdf")
+
+        temp_dir="$(mktemp --tmpdir="$TEMP_DIR_TASK")"
+
+        std_output=$(latexmk -f -pdf -interaction=nonstopmode -output-directory="$TEMP_DIR_TASK" "$input_file" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$output_file_temp" || return 1
+
+        # Remove the temporary file.
+        rm -f -- "$temp_dir"
+
+        std_output=$(_move_file "rename" "$output_file_temp" "$output_file" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "" || return 1
         ;;
     "libreoffice")
-        # The 'libreoffice' does not support define the outputfile manually.
         local output_file_temp=""
-        local temp_file=""
+        local temp_dir=""
 
         output_file_temp=$(_get_output_filename "$input_file" "$TEMP_DIR_TASK" "extension_opt:replace, extension:pdf")
 
         # NOTE: Workaround to fix the bug 37531 in the 'libreoffice'
         # See the: https://bugs.documentfoundation.org/show_bug.cgi?id=37531
-        temp_file="$(mktemp --tmpdir="$TEMP_DIR_TASK").bug37531"
+        temp_dir="$(mktemp --tmpdir="$TEMP_DIR_TASK")"
 
         # The 'libreoffice' does not support ' -- ' in the command line.
-        std_output=$(libreoffice --headless --convert-to "pdf" "-env:UserInstallation=file://$temp_file" --outdir "$TEMP_DIR_TASK" "$input_file" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "$output_file_temp"
+        # The 'libreoffice' does not support define the output file manually.
+        std_output=$(libreoffice --headless --convert-to "pdf" "-env:UserInstallation=file://$temp_dir.bug37531" --outdir "$TEMP_DIR_TASK" "$input_file" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$output_file_temp" || return 1
 
         # Remove the temporary file.
-        rm -f -- "$temp_file"
+        rm -f -- "$temp_dir"
 
         std_output=$(_move_file "rename" "$output_file_temp" "$output_file" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" ""
+        _check_output "$?" "$std_output" "$input_file" "" || return 1
         ;;
-    *)
+    "pandoc_text")
         std_output=$(pandoc -V "header-includes:\usepackage[a4paper, margin=1.5cm]{geometry} \usepackage{newtxtext, newtxmath}" --standalone -o "$output_file" -- "$input_file" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$output_file"
+        ;;
+    "pandoc")
+        std_output=$(pandoc --standalone -o "$output_file" -- "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file"
         ;;
     esac
@@ -119,7 +136,8 @@ _get_command_use() {
     "text/xml") command_use="libreoffice" ;;                      # fodt, fodp, fods...
     "text/x-tex") command_use="latexmk" ;;                        # tex
     "image/svg") command_use="inkscape" ;;                        # svg
-    *"image/"*) command_use="convert" ;;
+    "image/"*) command_use="convert" ;;                           # (image files)
+    "text/"*) command_use="pandoc_text" ;;                        # (plain text files)
     *)
         # If not found the 'file_mime', use the extension.
         case "${input_file,,}" in
@@ -131,7 +149,9 @@ _get_command_use() {
         *.odp | *.fodp) command_use="libreoffice" ;;
         *.odg | *.fodg) command_use="libreoffice" ;;
         *.odf | *.fodf) command_use="libreoffice" ;;
+        *.htm | *.html) command_use="libreoffice" ;;
         *.svg | *.svgz) command_use="inkscape" ;;
+        *.rtf) command_use="libreoffice" ;;
         *) command_use="pandoc" ;;
         esac
         ;;
