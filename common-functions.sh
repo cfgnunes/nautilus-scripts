@@ -85,14 +85,14 @@ _check_dependencies() {
         command=${dependency%%(*}
 
         # Check if there is the command in the shell.
-        if _command_exists "$command"; then
+        if [[ -n "$command" ]] && _command_exists "$command"; then
             continue
         fi
 
         # Get the 'package_name' according the package manager.
         package_name=$(grep --only-matching --perl-regexp "\(+\K[^)]+" <<<"$dependency")
         if [[ -n "$package_name" ]] && [[ "$package_name" == *":"* ]]; then
-            package_name=$(grep --only-matching "$pkg_manager:[a-z0-9-]*" <<<"$package_name" | sed "s|.*:||g")
+            package_name=$(grep --only-matching "$pkg_manager:[A-Za-z0-9-]*" <<<"$package_name" | sed "s|.*:||g")
         fi
 
         # Check if the package was installed (for packages that not has a command).
@@ -106,8 +106,10 @@ _check_dependencies() {
         elif [[ -n "$command" ]]; then
             message="The command '$command' was not found. Would you like to install it?"
             package_name=$command
-        else
+        elif [[ -n "$package_name" ]]; then
             message="The package '$package_name' was not found. Would you like to install it?"
+        else
+            continue
         fi
 
         # Ask the user to install the package.
