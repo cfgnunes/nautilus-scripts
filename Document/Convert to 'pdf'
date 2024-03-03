@@ -103,14 +103,22 @@ _get_command_use() {
     *"opendocument.spreadsheet"*) command_use="libreoffice" ;;    # ods
     *"opendocument.graphics"*) command_use="libreoffice" ;;       # odg
     *"opendocument.formula"*) command_use="libreoffice" ;;        # odf
-    *"msword"*) command_use="libreoffice" ;;                      # doc
-    *"ms-powerpoint"*) command_use="libreoffice" ;;               # ppt
-    *"ms-excel"*) command_use="libreoffice" ;;                    # xls
-    *"text/html"*) command_use="libreoffice" ;;                   # html
-    *"text/rtf"*) command_use="libreoffice" ;;                    # rtf
-    *"text/xml"*) command_use="libreoffice" ;;                    # fodt, fodp, fods...
-    *"text/x-tex"*) command_use="latexmk" ;;                      # tex
-    *"image/svg"*) command_use="inkscape" ;;                      # svg
+    "application/msword") command_use="libreoffice" ;;            # doc
+    "application/vnd.ms-word") command_use="libreoffice" ;;       # doc
+    "application/x-msword") command_use="libreoffice" ;;          # doc
+    "application/vnd.ms-powerpoint") command_use="libreoffice" ;; # ppt
+    "application/powerpoint") command_use="libreoffice" ;;        # ppt
+    "application/mspowerpoint") command_use="libreoffice" ;;      # ppt
+    "application/x-mspowerpoint") command_use="libreoffice" ;;    # ppt
+    "application/vnd.ms-excel") command_use="libreoffice" ;;      # xls
+    "application/msexcel") command_use="libreoffice" ;;           # xls
+    "application/x-msexcel") command_use="libreoffice" ;;         # xls
+    "text/html") command_use="libreoffice" ;;                     # html
+    "application/rtf") command_use="libreoffice" ;;               # rtf
+    "text/rtf") command_use="libreoffice" ;;                      # rtf
+    "text/xml") command_use="libreoffice" ;;                      # fodt, fodp, fods...
+    "text/x-tex") command_use="latexmk" ;;                        # tex
+    "image/svg") command_use="inkscape" ;;                        # svg
     *"image/"*) command_use="convert" ;;
     *)
         # If not found the 'file_mime', use the extension.
