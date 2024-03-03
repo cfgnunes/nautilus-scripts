@@ -20,7 +20,7 @@ _main() {
         "inkscape") _check_dependencies "inkscape" ;;
         "latexmk") _check_dependencies "latexmk (texlive) (texlive-fonts-extra) (texlive-latex-extra) (texlive-publishers) (texlive-science) (texlive-xetex)" ;;
         "libreoffice") _check_dependencies "libreoffice(libreoffice-base-core)" ;;
-        "pandoc_text") _check_dependencies "pandoc (texlive)" ;;
+        "pandoc_latex") _check_dependencies "pandoc (texlive)" ;;
         "pandoc") _check_dependencies "pandoc" ;;
         esac
     done
@@ -91,7 +91,7 @@ _main_task() {
         std_output=$(_move_file "rename" "$output_file_temp" "$output_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "" || return 1
         ;;
-    "pandoc_text")
+    "pandoc_latex")
         std_output=$(pandoc -V "geometry:margin=1.5cm" -V "geometry:a4paper" -V "fontfamily:charter" --standalone -o "$output_file" -- "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file"
         ;;
@@ -138,7 +138,7 @@ _get_command_use() {
     "image/svg+xml") command_use="inkscape" ;;                    # svg
     "image/svg+xml-compressed") command_use="inkscape" ;;         # svgz
     "image/"*) command_use="convert" ;;                           # (image files)
-    "text/"*) command_use="pandoc_text" ;;                        # (plain text files)
+    "text/"*) command_use="pandoc_latex" ;;                       # (plain text files)
     *)
         # If not found the 'file_mime', use the extension.
         case "${input_file,,}" in
