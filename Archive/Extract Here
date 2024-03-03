@@ -12,7 +12,6 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
-    _display_wait_box
     input_files=$(_get_files "type:file")
 
     # Check dependencies for each file type.
@@ -30,8 +29,8 @@ _main() {
         "tar") _check_dependencies "tar" ;;
         "tar+bunzip2") _check_dependencies "tar bunzip2" ;;
         "tar+gunzip") _check_dependencies "tar gunzip" ;;
-        "tar+lrzip") _check_dependencies "tar" ;;
-        "tar+lz4") _check_dependencies "tar" ;;
+        "tar+lrzip") _check_dependencies "tar lrzip" ;;
+        "tar+lz4") _check_dependencies "tar lz4" ;;
         "tar+lzip") _check_dependencies "tar lzip" ;;
         "tar+lzop") _check_dependencies "tar lzop" ;;
         "tar+uncompress") _check_dependencies "tar uncompress(gzip)" ;;
@@ -48,6 +47,8 @@ _main() {
         "zstd") _check_dependencies "zstd" ;;
         esac
     done
+
+    _display_wait_box
 
     export -f _get_command_use
 
