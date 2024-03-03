@@ -54,42 +54,44 @@ _main_task() {
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "latexmk")
-        local output_file_temp=""
-        local temp_dir=""
+        # Use a local temporary directory to work.
+        local filename=""
+        local temp_dir_output=""
+        filename=$(basename -- "$input_file")             # Remove the path.
+        filename=$(_strip_filename_extension "$filename") # Remove the extension.
+        temp_dir_output=$(mktemp --directory --tmpdir="$output_dir" "tmp.$filename.XXXXXXXXXX")
 
-        output_file_temp=$(_get_output_filename "$input_file" "$TEMP_DIR_TASK" "extension_opt:replace, extension:pdf")
+        output_file_temp=$(_get_output_filename "$input_file" "$temp_dir_output" "extension_opt:replace, extension:pdf")
 
-        temp_dir="$(mktemp --tmpdir="$TEMP_DIR_TASK")"
-
-        std_output=$(latexmk -f -pdf -interaction=nonstopmode -output-directory="$TEMP_DIR_TASK" "$input_file" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "$output_file_temp" || return 1
-
-        # Remove the temporary file.
-        rm -f -- "$temp_dir"
+        std_output=$(latexmk -f -pdf -interaction=nonstopmode -output-directory="$temp_dir_output" "$input_file" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$output_file_temp"
 
         std_output=$(_move_file "rename" "$output_file_temp" "$output_file" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "" || return 1
+        _check_output "$?" "$std_output" "$input_file" ""
+
+        # Remove the temporary directory.
+        rm -rf -- "$temp_dir_output"
         ;;
     "libreoffice")
         local output_file_temp=""
-        local temp_dir=""
+        local temp_file=""
 
         output_file_temp=$(_get_output_filename "$input_file" "$TEMP_DIR_TASK" "extension_opt:replace, extension:pdf")
 
         # NOTE: Workaround to fix the bug 37531 in the 'libreoffice'
         # See the: https://bugs.documentfoundation.org/show_bug.cgi?id=37531
-        temp_dir="$(mktemp --tmpdir="$TEMP_DIR_TASK")"
+        temp_file="$(mktemp --tmpdir="$TEMP_DIR_TASK").bug37531"
 
         # The 'libreoffice' does not support ' -- ' in the command line.
         # The 'libreoffice' does not support define the output file manually.
-        std_output=$(libreoffice --headless --convert-to "pdf" "-env:UserInstallation=file://$temp_dir.bug37531" --outdir "$TEMP_DIR_TASK" "$input_file" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "$output_file_temp" || return 1
+        std_output=$(libreoffice --headless --convert-to "pdf" "-env:UserInstallation=file://$temp_file" --outdir "$TEMP_DIR_TASK" "$input_file" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$output_file_temp"
 
         # Remove the temporary file.
-        rm -f -- "$temp_dir"
+        rm -f -- "$temp_file"
 
         std_output=$(_move_file "rename" "$output_file_temp" "$output_file" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "" || return 1
+        _check_output "$?" "$std_output" "$input_file" ""
         ;;
     "pandoc_latex")
         std_output=$(pandoc -V "geometry:margin=1.5cm" -V "geometry:a4paper" -V "fontfamily:charter" --standalone -o "$output_file" -- "$input_file" 2>&1)

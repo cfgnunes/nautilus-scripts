@@ -63,13 +63,14 @@ _main_task() {
     local count_root_items=""
     local output_item=""
     local std_output=""
-    local temp_dir_output=""
 
     if [[ -z "$output_dir" ]]; then
         output_dir=$(dirname -- "$input_file")
     fi
 
-    # Extract files into a temporary directory.
+    # Use a local temporary directory to work.
+    local filename=""
+    local temp_dir_output=""
     filename=$(basename -- "$input_file")             # Remove the path.
     filename=$(_strip_filename_extension "$filename") # Remove the extension.
     temp_dir_output=$(mktemp --directory --tmpdir="$output_dir" "tmp.$filename.XXXXXXXXXX")
