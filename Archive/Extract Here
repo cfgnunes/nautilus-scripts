@@ -107,10 +107,15 @@ _main_task() {
     "tar+lz4") std_output=$(lz4 -d -c -- "$input_file" | tar xf - 2>&1) ;;
     "tar+lzip") std_output=$(tar --extract --lzip --file="$input_file" 2>&1) ;;
     "tar+lzop") std_output=$(tar --extract --lzop --file="$input_file" 2>&1) ;;
-    "tar+uncompress") std_output=$(tar --extract --uncompress --file="$input_file" 2>&1) ;;
+    "tar+uncompress") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
     "tar+unlzma") std_output=$(tar --extract --lzma --file="$input_file" 2>&1) ;;
     "tar+xz") std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
-    "tar+zstd") std_output=$(tar --extract --zstd --file="$input_file" 2>&1) ;;
+    "tar+zstd")
+        std_output=$(zstd -d "$input_file" -o ".temp.tar" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" ""
+        std_output=$(tar --extract --file=".temp.tar" 2>&1)
+        rm -f ".temp.tar"
+        ;;
     "uncompress") std_output=$(uncompress -k -c -- "$input_file" >"$filename" 2>&1) ;;
     "unlzma") std_output=$(unlzma -k -c -- "$input_file" >"$filename" 2>&1) ;;
     "unrar") std_output=$(unrar x -- "$input_file" 2>&1) ;;
