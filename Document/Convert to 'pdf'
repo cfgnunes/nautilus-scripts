@@ -40,8 +40,9 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+    local output_format="pdf"
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:pdf")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:$output_format")
 
     # Run the main process.
     case $(_get_command_use "$input_file") in
@@ -70,7 +71,7 @@ _main_task() {
         filename=$(_strip_filename_extension "$filename") # Remove the extension.
         temp_dir_output=$(mktemp --directory --tmpdir="$output_dir" "tmp.$filename.XXXXXXXXXX")
 
-        output_file_temp=$(_get_output_filename "$input_file" "$temp_dir_output" "extension_opt:replace, extension:pdf")
+        output_file_temp=$(_get_output_filename "$input_file" "$temp_dir_output" "extension_opt:replace, extension:$output_format")
 
         std_output=$(latexmk -f -pdf -interaction=nonstopmode -output-directory="$temp_dir_output" "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file_temp"
@@ -85,7 +86,7 @@ _main_task() {
         local output_file_temp=""
         local temp_file=""
 
-        output_file_temp=$(_get_output_filename "$input_file" "$TEMP_DIR_TASK" "extension_opt:replace, extension:pdf")
+        output_file_temp=$(_get_output_filename "$input_file" "$TEMP_DIR_TASK" "extension_opt:replace, extension:$output_format")
 
         # NOTE: Workaround to fix the bug 37531 in the 'libreoffice'
         # See the: https://bugs.documentfoundation.org/show_bug.cgi?id=37531
@@ -93,7 +94,7 @@ _main_task() {
 
         # The 'libreoffice' does not support ' -- ' in the command line.
         # The 'libreoffice' does not support define the output file manually.
-        std_output=$(libreoffice --headless --convert-to "pdf" "-env:UserInstallation=file://$temp_file" --outdir "$TEMP_DIR_TASK" "$input_file" 2>&1)
+        std_output=$(libreoffice --headless --convert-to "$output_format" "-env:UserInstallation=file://$temp_file" --outdir "$TEMP_DIR_TASK" "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file_temp"
 
         # Remove the temporary file.
