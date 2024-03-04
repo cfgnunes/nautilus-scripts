@@ -61,10 +61,10 @@ trap _cleanup_on_exit EXIT
 _check_dependencies() {
     local dependencies=$1
     local command=""
-    local message=""
     local package_name=""
     local dependency=""
     local pkg_manager=""
+    local packages_to_install=""
 
     # Check for installed package manager.
     if _command_exists "apt-get"; then
@@ -78,13 +78,13 @@ _check_dependencies() {
         _exit_script
     fi
 
-    # Check all commands in the list 'dependencies'.
+    # Check all dependencies.
     IFS=" "
     for dependency in $dependencies; do
         # Item syntax: command(package), example: photorec(testdisk).
         command=${dependency%%(*}
 
-        # Check if there is the command in the shell.
+        # Ignore install the dependency if there is the command in the shell.
         if [[ -n "$command" ]] && _command_exists "$command"; then
             continue
         fi
@@ -95,32 +95,30 @@ _check_dependencies() {
             package_name=$(grep --only-matching "$pkg_manager:[A-Za-z0-9-]*" <<<"$package_name" | sed "s|.*:||g")
         fi
 
-        # Check if the package was installed (for packages that not has a command).
+        # Ignore install the dependency if the package is already installed (packages that not has a command).
         if [[ -z "$command" ]] && _is_package_installed "$pkg_manager" "$package_name"; then
             continue
         fi
 
-        # Ask to the user to install the dependency.
-        if [[ -n "$command" ]] && [[ -n "$package_name" ]]; then
-            message="The command '$command' was not found (from package '$package_name'). Would you like to install it?"
-        elif [[ -n "$command" ]]; then
-            message="The command '$command' was not found. Would you like to install it?"
+        # Add the package to the list to install.
+        if [[ -n "$command" ]]; then
             package_name=$command
-        elif [[ -n "$package_name" ]]; then
-            message="The package '$package_name' was not found. Would you like to install it?"
-        else
-            continue
         fi
-
-        # Ask the user to install the package.
-        if _display_question_box "$message"; then
-            _install_package "$package_name" "$command"
-            continue
-        fi
-
-        _exit_script
+        packages_to_install+=" $package_name"
     done
     IFS=$FILENAME_SEPARATOR
+
+    # Ask to the user to install the packages.
+    if [[ -n "$packages_to_install" ]]; then
+        local message="These packages were not found:"
+        message+=$(sed "s| |\n- |g" <<<"$packages_to_install")
+        message+="\nWould you like to install?"
+        if _display_question_box "$message"; then
+            _install_packages "${packages_to_install/ /}"
+        else
+            _exit_script
+        fi
+    fi
 }
 
 _check_output() {
@@ -191,6 +189,7 @@ _display_dir_selection_box() {
     elif _command_exists "kdialog"; then
         input_files=$(kdialog --title "$(_get_script_name)" \
             --getexistingdirectory 2>/dev/null) || _exit_script
+        # Use parameter expansion to remove the last space.
         input_files=${input_files% }
         input_files=${input_files// \//$FILENAME_SEPARATOR/}
     fi
@@ -208,6 +207,7 @@ _display_file_selection_box() {
     elif _command_exists "kdialog"; then
         input_files=$(kdialog --title "$(_get_script_name)" \
             --getopenfilename --multiple 2>/dev/null) || _exit_script
+        # Use parameter expansion to remove the last space.
         input_files=${input_files% }
         input_files=${input_files// \//$FILENAME_SEPARATOR/}
     fi
@@ -769,20 +769,19 @@ _has_string_in_list() {
     return 1
 }
 
-_install_package() {
-    local package_name=$1
-    local command_check=$2
+_install_packages() {
+    local packages=$1
 
-    _display_wait_box_message "Installing the package '$package_name'. Please, wait..."
+    _display_wait_box_message "Installing the packages. Please, wait..."
 
-    # Install the package.
+    # Install the packages.
     if _command_exists "pkexec"; then
         if _command_exists "apt-get"; then
-            pkexec bash -c "apt-get update; apt-get -y install $package_name &>/dev/null"
+            pkexec bash -c "apt-get update; apt-get -y install $packages &>/dev/null"
         elif _command_exists "pacman"; then
-            pkexec bash -c "pacman -Syy; pacman --noconfirm -S $package_name &>/dev/null"
+            pkexec bash -c "pacman -Syy; pacman --noconfirm -S $packages &>/dev/null"
         elif _command_exists "dnf"; then
-            pkexec bash -c "dnf check-update; dnf -y install $package_name &>/dev/null"
+            pkexec bash -c "dnf check-update; dnf -y install $packages &>/dev/null"
         else
             _display_error_box "Could not find a package manager!"
             _exit_script
@@ -793,14 +792,7 @@ _install_package() {
     fi
 
     _close_wait_box
-
-    # Check if the package was installed.
-    if [[ -n "$command_check" ]] && ! _command_exists "$command_check"; then
-        _display_error_box "Could not install the package '$package_name'!"
-        _exit_script
-    fi
-
-    _display_info_box "The package '$package_name' has been successfully installed!"
+    _display_info_box "The packages were been installed!"
 }
 
 _is_gui_session() {
