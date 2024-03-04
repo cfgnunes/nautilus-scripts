@@ -32,7 +32,7 @@ _main_task() {
     std_output=$(gpg --batch --yes --import "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
-    # Set the trust level to 'ultimate'
+    # Set the trust level to 'ultimate'.
     std_output=$(printf "%s\n" "$key_id:6:" | gpg --batch --yes --import-ownertrust 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
