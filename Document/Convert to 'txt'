@@ -16,7 +16,7 @@ _main() {
     # Check dependencies for each file type.
     for input_file in $input_files; do
         case $(_get_command_use "$input_file") in
-        "libreoffice") _check_dependencies "libreoffice(apt:libreoffice-core,dnf:libreoffice-core)" ;;
+        "libreoffice") _check_dependencies "libreoffice(apt:libreoffice-core,dnf:libreoffice-core) (apt:libreoffice-writer) (apt:libreoffice-calc) (apt:libreoffice-impress)" ;;
         "pandoc") _check_dependencies "pandoc" ;;
         "pdftotext") _check_dependencies "pdftotext(apt:poppler-utils,pacman:poppler-glib,dnf:poppler-utils)" ;;
         esac
