@@ -88,7 +88,7 @@ _main_task() {
 
         output_file_temp=$(_get_output_filename "$input_file" "$TEMP_DIR_TASK" "extension_opt:replace, extension:$output_format")
 
-        # NOTE: Workaround to fix the bug 37531 in the 'libreoffice'
+        # NOTE: Workaround to fix the bug 37531 in the 'libreoffice'.
         # See the: https://bugs.documentfoundation.org/show_bug.cgi?id=37531
         temp_file="$(mktemp --tmpdir="$TEMP_DIR_TASK").bug37531"
 
