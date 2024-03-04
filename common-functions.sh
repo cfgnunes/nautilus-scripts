@@ -100,11 +100,15 @@ _check_dependencies() {
             continue
         fi
 
-        # Add the package to the list to install.
+        # If the package is not specified, use the same name of the command.
         if [[ -n "$command" ]]; then
             package_name=$command
         fi
-        packages_to_install+=" $package_name"
+
+        # Add the package to the list to install.
+        if [[ -n "$package_name" ]]; then
+            packages_to_install+=" $package_name"
+        fi
     done
     IFS=$FILENAME_SEPARATOR
 
