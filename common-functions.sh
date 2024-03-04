@@ -101,7 +101,7 @@ _check_dependencies() {
         fi
 
         # If the package is not specified, use the same name of the command.
-        if [[ -n "$command" ]]; then
+        if [[ -n "$command" ]] && [[ -z "$package_name" ]]; then
             package_name=$command
         fi
 
