@@ -10,10 +10,21 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "pandoc"
-    _display_wait_box
+    _check_dependencies ""
     input_files=$(_get_files "type:file, validate_conflict:true")
+
+    # Check dependencies for each file type.
+    for input_file in $input_files; do
+        case $(_get_command_use "$input_file") in
+        "libreoffice") _check_dependencies "libreoffice(apt:libreoffice-core,dnf:libreoffice-core)" ;;
+        "pandoc") _check_dependencies "pandoc" ;;
+        esac
+    done
+
+    _display_wait_box
     output_dir=$(_get_output_dir "use_same_dir:true")
+
+    export -f _get_command_use
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -25,11 +36,70 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+    local output_format="txt"
+
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:$output_format")
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:txt")
-    std_output=$(pandoc -t plain --wrap=none -s -o "$output_file" -- "$input_file" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+    case $(_get_command_use "$input_file") in
+    "libreoffice")
+        local output_file_temp=""
+        local temp_file=""
+
+        output_file_temp=$(_get_output_filename "$input_file" "$TEMP_DIR_TASK" "extension_opt:replace, extension:$output_format")
+
+        # NOTE: Workaround to fix the bug 37531 in the 'libreoffice'
+        # See the: https://bugs.documentfoundation.org/show_bug.cgi?id=37531
+        temp_file="$(mktemp --tmpdir="$TEMP_DIR_TASK").bug37531"
+
+        # The 'libreoffice' does not support ' -- ' in the command line.
+        # The 'libreoffice' does not support define the output file manually.
+        std_output=$(libreoffice --headless --convert-to "$output_format" "-env:UserInstallation=file://$temp_file" --outdir "$TEMP_DIR_TASK" "$input_file" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$output_file_temp"
+
+        # Remove the temporary file.
+        rm -f -- "$temp_file"
+
+        std_output=$(_move_file "rename" "$output_file_temp" "$output_file" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" ""
+        ;;
+    "pandoc")
+        std_output=$(pandoc -t plain --wrap=none -s -o "$output_file" -- "$input_file" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$output_file"
+        ;;
+    esac
+}
+
+_get_command_use() {
+    local input_file=$1
+    local file_mime=""
+    local command_use=""
+
+    # Get the mime type and define what command to use.
+    file_mime=$(file --dereference --brief --mime-type -- "$input_file")
+
+    # NOTE: See the file: /usr/share/mime/packages/freedesktop.org.xml
+    case "${file_mime,,}" in
+    *"wordprocessingml.document"*) command_use="libreoffice" ;; # docx
+    *"opendocument.text"*) command_use="libreoffice" ;;         # odt
+    "application/msword") command_use="libreoffice" ;;          # doc
+    "application/vnd.ms-word") command_use="libreoffice" ;;     # doc
+    "application/x-msword") command_use="libreoffice" ;;        # doc
+    "application/rtf") command_use="libreoffice" ;;             # rtf
+    "text/rtf") command_use="libreoffice" ;;                    # rtf
+    "text/xml") command_use="libreoffice" ;;                    # fodt, fodp, fods...
+    *)
+        # If not found the 'file_mime', use the extension.
+        case "${input_file,,}" in
+        *.doc | *.docx) command_use="libreoffice" ;;
+        *.odt | *.fodt) command_use="libreoffice" ;;
+        *.rtf) command_use="libreoffice" ;;
+        *) command_use="pandoc" ;;
+        esac
+        ;;
+    esac
+
+    printf "%s" "$command_use"
 }
 
 _main "$@"
