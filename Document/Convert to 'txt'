@@ -18,6 +18,7 @@ _main() {
         case $(_get_command_use "$input_file") in
         "libreoffice") _check_dependencies "libreoffice(apt:libreoffice-core,dnf:libreoffice-core)" ;;
         "pandoc") _check_dependencies "pandoc" ;;
+        "pdftotext") _check_dependencies "pdftotext(apt:poppler-utils,pacman:poppler-glib,dnf:poppler-utils)" ;;
         esac
     done
 
@@ -67,6 +68,10 @@ _main_task() {
         std_output=$(pandoc -t plain --wrap=none -s -o "$output_file" -- "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file"
         ;;
+    "pdftotext")
+        std_output=$(pdftotext "$input_file" -- "$output_file" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$output_file"
+        ;;
     esac
 }
 
@@ -88,12 +93,18 @@ _get_command_use() {
     "application/rtf") command_use="libreoffice" ;;             # rtf
     "text/rtf") command_use="libreoffice" ;;                    # rtf
     "text/xml") command_use="libreoffice" ;;                    # fodt, fodp, fods...
+    "application/acrobat") command_use="pdftotext" ;;           # pdf
+    "application/nappdf") command_use="pdftotext" ;;            # pdf
+    "application/pdf") command_use="pdftotext" ;;               # pdf
+    "application/x-pdf") command_use="pdftotext" ;;             # pdf
+    "image/pdf") command_use="pdftotext" ;;                     # pdf
     *)
         # If not found the 'file_mime', use the extension.
         case "${input_file,,}" in
         *.doc | *.docx) command_use="libreoffice" ;;
         *.odt | *.fodt) command_use="libreoffice" ;;
         *.rtf) command_use="libreoffice" ;;
+        *.pdf) command_use="pdftotext" ;;
         *) command_use="pandoc" ;;
         esac
         ;;
