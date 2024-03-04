@@ -796,7 +796,7 @@ _install_packages() {
     fi
 
     _close_wait_box
-    _display_info_box "The packages were been installed!"
+    _display_info_box "The packages have been installed!"
 }
 
 _is_gui_session() {
