@@ -36,7 +36,7 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
-    local output_format="docx"
+    local output_format="odp"
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:$output_format")
 
@@ -80,20 +80,18 @@ _get_command_use() {
 
     # NOTE: See the file: /usr/share/mime/packages/freedesktop.org.xml
     case "${file_mime,,}" in
-    *"wordprocessingml.document"*) command_use="libreoffice" ;; # docx
-    *"opendocument.text"*) command_use="libreoffice" ;;         # odt
-    "application/msword") command_use="libreoffice" ;;          # doc
-    "application/vnd.ms-word") command_use="libreoffice" ;;     # doc
-    "application/x-msword") command_use="libreoffice" ;;        # doc
-    "application/rtf") command_use="libreoffice" ;;             # rtf
-    "text/rtf") command_use="libreoffice" ;;                    # rtf
-    "text/xml") command_use="libreoffice" ;;                    # fodt, fodp, fods...
+    *"presentationml.presentation"*) command_use="libreoffice" ;; # pptx
+    *"opendocument.presentation"*) command_use="libreoffice" ;;   # odp
+    "application/vnd.ms-powerpoint") command_use="libreoffice" ;; # ppt
+    "application/powerpoint") command_use="libreoffice" ;;        # ppt
+    "application/mspowerpoint") command_use="libreoffice" ;;      # ppt
+    "application/x-mspowerpoint") command_use="libreoffice" ;;    # ppt
+    "text/xml") command_use="libreoffice" ;;                      # fodt, fodp, fods...
     *)
         # If not found the 'file_mime', use the extension.
         case "${input_file,,}" in
-        *.doc | *.docx) command_use="libreoffice" ;;
-        *.odt | *.fodt) command_use="libreoffice" ;;
-        *.rtf) command_use="libreoffice" ;;
+        *.ppt | *.pptx) command_use="libreoffice" ;;
+        *.odp | *.fodp) command_use="libreoffice" ;;
         *) command_use="pandoc" ;;
         esac
         ;;
