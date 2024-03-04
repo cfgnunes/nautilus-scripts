@@ -25,11 +25,21 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+    local temp_file=""
+
+    # Work on a temporary file.
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:strip")
-    std_output=$(tesseract "$input_file" "$output_file" -l por 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    std_output=$(tesseract "$input_file" "$temp_file" -l por 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "$temp_file.txt" || return 1
+
+    # Move the temporary file to the output.
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:txt")
+    _move_temp_file_to_output "$input_file" "$temp_file.txt" "$output_file"
+
+    # Remove the temporary files on each iteration (if not removed before).
+    rm -f -- "$temp_file"
 }
 
 _main "$@"
