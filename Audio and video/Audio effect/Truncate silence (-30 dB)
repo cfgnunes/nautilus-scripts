@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "ffmpeg(apt:ffmpeg,pacman:ffmpeg,dnf:ffmpeg-free)"
     _display_wait_box
-    input_files=$(_get_files "par_type=file, par_select_mime=audio/|video/|application/octet-stream")
+    input_files=$(_get_files "par_type=file; par_select_mime='audio/|video/|application/octet-stream'")
     output_dir=$(_get_output_dir "par_use_same_dir=false")
 
     # Execute the function '_main_task' for each file in parallel.

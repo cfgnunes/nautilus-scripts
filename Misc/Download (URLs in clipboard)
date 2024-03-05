@@ -13,7 +13,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "wget xclip"
     _display_wait_box
-    input_files=$(_get_files "par_type=directory, par_max_files=1, par_get_pwd=true")
+    input_files=$(_get_files "par_type=directory; par_max_files=1; par_get_pwd=true")
     output_dir=$input_files
 
     # Execute the function '_main_task' for each file in parallel.

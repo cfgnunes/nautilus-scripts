@@ -11,7 +11,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies ""
     _display_wait_box
-    input_files=$(_get_files "par_type=file, par_max_files=1, par_select_mime=text/")
+    input_files=$(_get_files "par_type=file; par_max_files=1; par_select_mime=text/")
 
     checksum_file=$(sed -z "s|'|'\\\''|g" <"$input_files")
 

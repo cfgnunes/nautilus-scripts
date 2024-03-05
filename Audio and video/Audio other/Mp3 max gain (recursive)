@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "mp3gain"
     _display_wait_box
-    input_files=$(_get_files "par_type=file, par_recursive=true, par_select_mime=audio/mpeg, par_skip_extension=bak")
+    input_files=$(_get_files "par_type=file; par_recursive=true; par_select_mime=audio/mpeg; par_skip_extension=bak")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"

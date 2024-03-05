@@ -11,7 +11,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
-    input_files=$(_get_files "par_type=file, par_validate_conflict=true")
+    input_files=$(_get_files "par_type=file; par_validate_conflict=true")
 
     # Check dependencies for each file type.
     local dependencies=""
@@ -41,7 +41,7 @@ _main_task() {
     local std_output=""
     local output_format="pptx"
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace, par_extension=$output_format")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=$output_format")
 
     # Run the main process.
     case $(_get_command_use "$input_file") in
@@ -49,7 +49,7 @@ _main_task() {
         local output_file_temp=""
         local temp_file=""
 
-        output_file_temp=$(_get_output_filename "$input_file" "$TEMP_DIR_TASK" "par_extension_opt=replace, par_extension=$output_format")
+        output_file_temp=$(_get_output_filename "$input_file" "$TEMP_DIR_TASK" "par_extension_opt=replace; par_extension=$output_format")
 
         # NOTE: Workaround to fix the bug 37531 in LibreOffice.
         # See the: https://bugs.documentfoundation.org/show_bug.cgi?id=37531

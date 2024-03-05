@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "convert(apt:imagemagick,pacman:imagemagick,dnf:ImageMagick)"
     _display_wait_box
-    input_files=$(_get_files "par_type=file, par_select_mime=image/, par_min_files=2, par_sort_list=true")
+    input_files=$(_get_files "par_type=file; par_select_mime=image/; par_min_files=2; par_sort_list=true")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     _main_task "$input_files" "$output_dir"

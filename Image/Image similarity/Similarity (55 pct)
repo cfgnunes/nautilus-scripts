@@ -11,7 +11,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "findimagedupes"
     _display_wait_box
-    input_files=$(_get_files "par_type=file, par_recursive=true, par_select_mime=image/")
+    input_files=$(_get_files "par_type=file; par_recursive=true; par_select_mime=image/")
 
     # Get the installed image viewer.
     local image_viewer=""

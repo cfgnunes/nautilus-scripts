@@ -550,7 +550,6 @@ _get_files() {
     local par_validate_conflict=""
 
     # Eval the values from 'parameters'.
-    parameters=$(tr "," ";" <<<"$parameters")
     eval "$parameters"
 
     # Check the parameters.
@@ -650,7 +649,6 @@ _get_output_dir() {
     local par_use_same_dir=""
 
     # Eval the values from 'parameters'.
-    parameters=$(tr "," ";" <<<"$parameters")
     eval "$parameters"
 
     # Check directories available to put the 'output' dir.
@@ -688,7 +686,6 @@ _get_output_filename() {
     local par_suffix=""
 
     # Eval the values from 'parameters'.
-    parameters=$(tr "," ";" <<<"$parameters")
     eval "$parameters"
 
     # Directories do not have an extension.

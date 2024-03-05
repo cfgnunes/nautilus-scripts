@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies ""
     _display_wait_box
-    input_files=$(_get_files "par_type=directory, par_get_pwd=true")
+    input_files=$(_get_files "par_type=directory; par_get_pwd=true")
 
     # Run the main process.
     # shellcheck disable=SC2086

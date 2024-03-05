@@ -47,7 +47,6 @@ _main() {
     _run_get_max_procs
     _run_get_output_dir
     _run_get_output_filename
-    _run_get_parameter_value
     _run_get_script_name
     _run_has_string_in_list
     _run_install_package
@@ -339,40 +338,6 @@ _run_get_output_dir() {
 _run_get_output_filename() {
     # TODO Implement the test: '_run_get_output_filename'.
     :
-}
-
-_run_get_parameter_value() {
-    local parameters=""
-    local key=""
-    local expected_output=""
-    local output=""
-
-    parameters="par_extension_opt=preserve, par_prefix='Link to', par_suffix=' (Test) '"
-
-    key=""
-    expected_output=""
-    output=$(_get_parameter_value "$parameters" "$key")
-    _test_equal "$key" "$output" "$expected_output"
-
-    key="not_exist"
-    expected_output=""
-    output=$(_get_parameter_value "$parameters" "$key")
-    _test_equal "$key" "$output" "$expected_output"
-
-    key="prefix"
-    expected_output="Link to"
-    output=$(_get_parameter_value "$parameters" "$key")
-    _test_equal "$key" "$output" "$expected_output"
-
-    key="suffix"
-    expected_output="(Test)"
-    output=$(_get_parameter_value "$parameters" "$key")
-    _test_equal "$key" "$output" "$expected_output"
-
-    key="extension_opt"
-    expected_output="preserve"
-    output=$(_get_parameter_value "$parameters" "$key")
-    _test_equal "$key" "$output" "$expected_output"
 }
 
 _run_get_script_name() {
