@@ -9,6 +9,7 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
+    _check_dependencies ""
     input_files=$(_get_files "type:all, get_pwd_if_no_selection:true")
 
     # shellcheck disable=SC2086
