@@ -10,7 +10,11 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "gpg(apt:gpg,pacman:gnupg,dnf:gnupg2) zenity"
+    _check_dependencies "
+        command=zenity |
+        command=gpg; pkg_manager=apt |
+        command=gpg; pkg_manager=dnf; package=gnupg2 |
+        command=gpg; pkg_manager=pacman; package=gnupg"
     input_files=$(_get_files "par_type=file")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 

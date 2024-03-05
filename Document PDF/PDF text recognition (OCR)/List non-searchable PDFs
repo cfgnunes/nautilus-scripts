@@ -10,7 +10,10 @@ _main() {
     local std_output=""
 
     # Execute initial checks.
-    _check_dependencies "pdffonts(apt:poppler-utils,pacman:poppler-glib,dnf:poppler-utils)"
+    _check_dependencies "
+        command=pdffonts; pkg_manager=apt; package=poppler-utils |
+        command=pdffonts; pkg_manager=dnf; package=poppler-utils |
+        command=pdffonts; pkg_manager=pacman; package=poppler-glib"
     _display_wait_box
     input_files=$(_get_files "par_type=file; par_recursive=true; par_get_pwd=true; par_select_mime=application/pdf")
 

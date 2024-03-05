@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "iconv(libc-bin)"
+    _check_dependencies "command=iconv; package=libc-bin"
     _display_wait_box
     input_files=$(_get_files "par_type=all")
 

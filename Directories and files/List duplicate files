@@ -12,7 +12,7 @@ _main() {
     local temp_file=""
 
     # Execute initial checks.
-    _check_dependencies "rdfind"
+    _check_dependencies "command=rdfind"
     _display_wait_box
     input_files=$(_get_files "par_type=all; par_get_pwd=true")
 

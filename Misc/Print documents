@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "lpr(cups-bsd)"
+    _check_dependencies "command=lpr; package=cups-bsd"
     _display_wait_box
     input_files=$(_get_files "par_type=file")
 

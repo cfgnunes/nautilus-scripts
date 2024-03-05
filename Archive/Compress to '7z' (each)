@@ -10,7 +10,10 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "7za(apt:p7zip-full,pacman:p7zip,dnf:p7zip)"
+    _check_dependencies "
+        command=7za; pkg_manager=apt; package=p7zip-full |
+        command=7za; pkg_manager=dnf; package=p7zip |
+        command=7za; pkg_manager=pacman; package=p7zip"
     _display_wait_box
     input_files=$(_get_files "par_type=all")
     output_dir=$(_get_output_dir "par_use_same_dir=true")

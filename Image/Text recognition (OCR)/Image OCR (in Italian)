@@ -10,7 +10,10 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "tesseract(tesseract-ocr) (apt:tesseract-ocr-ita,dnf:tesseract-langpack-ita)"
+    _check_dependencies "
+        command=tesseract; package=tesseract-ocr |
+        pkg_manager=apt; package=tesseract-ocr-ita |
+        pkg_manager=dnf; package=tesseract-langpack-ita"
     _display_wait_box
     input_files=$(_get_files "par_type=file; par_select_mime=image/; par_validate_conflict=true")
     output_dir=$(_get_output_dir "par_use_same_dir=true")

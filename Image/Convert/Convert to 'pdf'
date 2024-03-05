@@ -10,10 +10,29 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "convert(apt:imagemagick,pacman:imagemagick,dnf:ImageMagick)"
-    _display_wait_box
+    _check_dependencies ""
     input_files=$(_get_files "par_type=file; par_select_mime=image/; par_validate_conflict=true")
+
+    # Check dependencies for each file type.
+    local dependencies=""
+    for input_file in $input_files; do
+        case $(_get_command_use "$input_file") in
+        "convert")
+            dependencies+="
+                command=convert; pkg_manager=apt; package=imagemagick |
+                command=convert; pkg_manager=dnf; package=ImageMagick |
+                command=convert; pkg_manager=pacman; package=imagemagick"
+            ;;
+        "inkscape") dependencies+="inkscape" ;;
+        esac
+        dependencies+=$'\n'
+    done
+
+    _check_dependencies "$dependencies"
+    _display_wait_box
     output_dir=$(_get_output_dir "par_use_same_dir=true")
+
+    export -f _get_command_use
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -25,11 +44,55 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+    local output_format="pdf"
+
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=$output_format")
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=pdf")
-    std_output=$(convert "$input_file" "$output_file" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+    case $(_get_command_use "$input_file") in
+    "convert")
+        std_output=$(convert "$input_file" "$output_file" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+        ;;
+    "inkscape")
+        local inkscape_version=""
+        local inkscape_version_old="1.0"
+        inkscape_version=$(inkscape --version | cut -d " " -f 2)
+        if [[ "$inkscape_version" == $(echo -e "$inkscape_version\n$inkscape_version_old" | sort -V | head -n1) ]]; then
+            # Old Inkscape version.
+            std_output=$(inkscape --without-gui --export-area-drawing --file="$input_file" --export-pdf="$output_file" 2>&1)
+        else
+            # New Inkscape version.
+            std_output=$(inkscape --export-area-drawing --export-filename="$output_file" -- "$input_file" 2>&1)
+        fi
+        _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+        ;;
+    esac
+}
+
+_get_command_use() {
+    local input_file=$1
+    local file_mime=""
+    local command_use=""
+
+    # Get the mime type and define what command to use.
+    file_mime=$(file --dereference --brief --mime-type -- "$input_file")
+
+    # NOTE: See the file: /usr/share/mime/packages/freedesktop.org.xml
+    case "${file_mime,,}" in
+    "image/svg+xml") command_use="inkscape" ;;            # svg
+    "image/svg+xml-compressed") command_use="inkscape" ;; # svgz
+    "image/"*) command_use="convert" ;;                   # (image files)
+    *)
+        # If not found the 'file_mime', use the extension.
+        case "${input_file,,}" in
+        *.svg | *.svgz) command_use="inkscape" ;;
+        *) command_use="convert" ;;
+        esac
+        ;;
+    esac
+
+    printf "%s" "$command_use"
 }
 
 _main "$@"

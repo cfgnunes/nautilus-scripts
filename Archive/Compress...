@@ -18,7 +18,7 @@ _main() {
     elif _command_exists "engrampa"; then
         engrampa --add -- $input_files &
     else
-        _check_dependencies "file-roller"
+        _check_dependencies "command=file-roller"
         file-roller --add -- $input_files &
     fi
 }

@@ -10,7 +10,10 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "convert(apt:imagemagick,pacman:imagemagick,dnf:ImageMagick)"
+    _check_dependencies "
+        command=convert; pkg_manager=apt; package=imagemagick |
+        command=convert; pkg_manager=dnf; package=ImageMagick |
+        command=convert; pkg_manager=pacman; package=imagemagick"
     _display_wait_box
     input_files=$(_get_files "par_type=file; par_select_mime=image/")
     output_dir=$(_get_output_dir "par_use_same_dir=false")

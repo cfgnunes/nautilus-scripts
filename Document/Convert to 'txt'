@@ -17,11 +17,16 @@ _main() {
     local dependencies=""
     for input_file in $input_files; do
         case $(_get_command_use "$input_file") in
-        "libreoffice") dependencies+="(apt:libreoffice-writer,dnf:libreoffice-writer) (apt:libreoffice-calc,dnf:libreoffice-calc) (apt:libreoffice-impress,dnf:libreoffice-impress)" ;;
-        "pandoc") dependencies+="pandoc" ;;
-        "pdftotext") dependencies+="pdftotext(apt:poppler-utils,pacman:poppler-glib,dnf:poppler-utils)" ;;
+        "libreoffice_writer") dependencies+="package=libreoffice-writer" ;;
+        "pandoc") dependencies+="command=pandoc" ;;
+        "pdftotext")
+            dependencies+="
+                command=pdftotext; pkg_manager=apt; package=poppler-utils |
+                command=pdftotext; pkg_manager=dnf; package=poppler-utils |
+                command=pdftotext; pkg_manager=pacman; package=poppler-glib"
+            ;;
         esac
-        dependencies+=" "
+        dependencies+=$'\n'
     done
 
     _check_dependencies "$dependencies"
@@ -46,7 +51,7 @@ _main_task() {
 
     # Run the main process.
     case $(_get_command_use "$input_file") in
-    "libreoffice")
+    "libreoffice_writer")
         local output_file_temp=""
         local temp_file=""
 
@@ -88,26 +93,25 @@ _get_command_use() {
 
     # NOTE: See the file: /usr/share/mime/packages/freedesktop.org.xml
     case "${file_mime,,}" in
-    *"wordprocessingml.document"*) command_use="libreoffice" ;; # docx
-    *"opendocument.text"*) command_use="libreoffice" ;;         # odt
-    "application/msword") command_use="libreoffice" ;;          # doc
-    "application/vnd.ms-word") command_use="libreoffice" ;;     # doc
-    "application/x-msword") command_use="libreoffice" ;;        # doc
-    "application/rtf") command_use="libreoffice" ;;             # rtf
-    "text/rtf") command_use="libreoffice" ;;                    # rtf
-    "text/xml") command_use="libreoffice" ;;                    # fodt, fodp, fods...
-    "application/acrobat") command_use="pdftotext" ;;           # pdf
-    "application/nappdf") command_use="pdftotext" ;;            # pdf
-    "application/pdf") command_use="pdftotext" ;;               # pdf
-    "application/x-pdf") command_use="pdftotext" ;;             # pdf
-    "image/pdf") command_use="pdftotext" ;;                     # pdf
+    *"wordprocessingml.document"*) command_use="libreoffice_writer" ;; # docx
+    "application/msword") command_use="libreoffice_writer" ;;          # doc
+    "application/vnd.ms-word") command_use="libreoffice_writer" ;;     # doc
+    "application/x-msword") command_use="libreoffice_writer" ;;        # doc
+    *"opendocument.text"*) command_use="libreoffice_writer" ;;         # odt
+    "application/acrobat") command_use="pdftotext" ;;                  # pdf
+    "application/nappdf") command_use="pdftotext" ;;                   # pdf
+    "application/pdf") command_use="pdftotext" ;;                      # pdf
+    "application/x-pdf") command_use="pdftotext" ;;                    # pdf
+    "image/pdf") command_use="pdftotext" ;;                            # pdf
+    "application/rtf") command_use="libreoffice_writer" ;;             # rtf
+    "text/rtf") command_use="libreoffice_writer" ;;                    # rtf
     *)
         # If not found the 'file_mime', use the extension.
         case "${input_file,,}" in
-        *.doc | *.docx) command_use="libreoffice" ;;
-        *.odt | *.fodt) command_use="libreoffice" ;;
-        *.rtf) command_use="libreoffice" ;;
+        *.doc | *.docx) command_use="libreoffice_writer" ;;
+        *.odt | *.fodt) command_use="libreoffice_writer" ;;
         *.pdf) command_use="pdftotext" ;;
+        *.rtf) command_use="libreoffice_writer" ;;
         *) command_use="pandoc" ;;
         esac
         ;;

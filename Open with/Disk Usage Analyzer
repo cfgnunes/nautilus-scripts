@@ -9,7 +9,7 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _check_dependencies "baobab"
+    _check_dependencies "command=baobab"
     input_files=$(_get_files "par_type=directory; par_max_files=1; par_get_pwd=true")
 
     # Run the main process.

@@ -61,56 +61,57 @@ trap _cleanup_on_exit EXIT
 _check_dependencies() {
     local dependencies=$1
     local command=""
-    local package_name=""
-    local dependency=""
+    local package=""
     local packages_to_install=""
+    local pkg_manager=""
+    local pkg_manager_installed=""
 
     [[ -z "$dependencies" ]] && return
 
     # Skip duplicated dependencies in the input list.
-    dependencies=$(tr " " "\n" <<<"$dependencies")
+    dependencies=$(tr "|" "\n" <<<"$dependencies")
+    dependencies=$(tr -s " \n" <<<"$dependencies")
     dependencies=$(sort -u <<<"$dependencies")
     dependencies=$(_text_remove_empty_lines "$dependencies")
 
     [[ -z "$dependencies" ]] && return
 
-    local pkg_manager=""
-    pkg_manager=$(_pkg_get_package_manager)
-    if [[ -z "$pkg_manager" ]]; then
+    # Get the name of the installed package manager.
+    pkg_manager_installed=$(_pkg_get_package_manager)
+    if [[ -z "$pkg_manager_installed" ]]; then
         _display_error_box "Could not find a package manager!"
         _exit_script
     fi
 
     # Check all dependencies.
     IFS=$'\n'
+    local dependency=""
     for dependency in $dependencies; do
-        # Item syntax: command(package), example: photorec(testdisk).
-        command=${dependency%%(*}
+        eval "$dependency"
 
         # Ignore installing the dependency if there is the command in the shell.
         if [[ -n "$command" ]] && _command_exists "$command"; then
             continue
         fi
 
-        # Get the 'package_name' according to the package manager.
-        package_name=$(grep --only-matching --perl-regexp "\(+\K[^)]+" <<<"$dependency")
-        if [[ -n "$package_name" ]] && [[ "$package_name" == *":"* ]]; then
-            package_name=$(grep --only-matching "$pkg_manager:[A-Za-z0-9-]*" <<<"$package_name" | sed "s|.*:||g")
-        fi
-
-        # Ignore installing the dependency if the package is already installed (packages that do not have a command).
-        if [[ -n "$package_name" ]] && [[ -z "$command" ]] && _pkg_is_package_installed "$package_name"; then
+        # Ignore installing the dependency if the installed package managers differs.
+        if [[ -n "$pkg_manager" ]] && [[ "$pkg_manager_installed" != "$pkg_manager" ]]; then
             continue
         fi
 
-        # If the package is not specified, use the same command name.
-        if [[ -z "$package_name" ]] && [[ -n "$command" ]]; then
-            package_name=$command
+        # Ignore installing the dependency if the package is already installed (packages that do not have a command).
+        if [[ -n "$package" ]] && [[ -z "$command" ]] && _pkg_is_package_installed "$pkg_manager_installed" "$package"; then
+            continue
+        fi
+
+        # If the package is not specified, use the command name as package name.
+        if [[ -z "$package" ]] && [[ -n "$command" ]]; then
+            package=$command
         fi
 
         # Add the package to the list to install.
-        if [[ -n "$package_name" ]]; then
-            packages_to_install+=" $package_name"
+        if [[ -n "$package" ]]; then
+            packages_to_install+=" $package"
         fi
     done
     IFS=$FILENAME_SEPARATOR
@@ -121,7 +122,7 @@ _check_dependencies() {
         message+=$(sed "s| |\n- |g" <<<"$packages_to_install")
         message+="\nWould you like to install?"
         if _display_question_box "$message"; then
-            _pkg_install_packages "${packages_to_install/ /}"
+            _pkg_install_packages "$pkg_manager_installed" "${packages_to_install/ /}"
         else
             _exit_script
         fi
@@ -897,9 +898,8 @@ _pkg_get_package_manager() {
 }
 
 _pkg_install_packages() {
-    local packages=$1
-    local pkg_manager=""
-    pkg_manager=$(_pkg_get_package_manager)
+    local pkg_manager=$1
+    local packages=$2
 
     _display_wait_box_message "Installing the packages. Please, wait..."
 
@@ -924,11 +924,11 @@ _pkg_install_packages() {
     _close_wait_box
 
     # Check if all packages were installed.
-    local package_name=""
+    local package=""
     IFS=" "
-    for package_name in $packages; do
-        if ! _pkg_is_package_installed "$package_name"; then
-            _display_error_box "Could not install the package '$package_name'!"
+    for package in $packages; do
+        if ! _pkg_is_package_installed "$pkg_manager" "$package"; then
+            _display_error_box "Could not install the package '$package'!"
             _exit_script
         fi
     done
@@ -938,23 +938,22 @@ _pkg_install_packages() {
 }
 
 _pkg_is_package_installed() {
-    local package_name=$1
-    local pkg_manager=""
-    pkg_manager=$(_pkg_get_package_manager)
+    local pkg_manager=$1
+    local package=$2
 
     case "$pkg_manager" in
     "apt")
-        if dpkg -s "$package_name" &>/dev/null; then
+        if dpkg -s "$package" &>/dev/null; then
             return 0
         fi
         ;;
     "pacman")
-        if pacman -Q "$package_name" &>/dev/null; then
+        if pacman -Q "$package" &>/dev/null; then
             return 0
         fi
         ;;
     "dnf")
-        if dnf list installed | grep -q "$package_name"; then
+        if dnf list installed | grep -q "$package"; then
             return 0
         fi
         ;;
@@ -1048,7 +1047,7 @@ _strip_filename_extension() {
 _text_remove_empty_lines() {
     local input_text=$1
 
-    grep -v "^$" <<<"$input_text" || true
+    grep -v "^ *$" <<<"$input_text" || true
 }
 
 _text_remove_home() {

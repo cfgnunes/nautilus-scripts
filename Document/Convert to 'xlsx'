@@ -17,10 +17,10 @@ _main() {
     local dependencies=""
     for input_file in $input_files; do
         case $(_get_command_use "$input_file") in
-        "libreoffice") dependencies+="(apt:libreoffice-calc,dnf:libreoffice-calc)" ;;
-        "pandoc") dependencies+="pandoc" ;;
+        "libreoffice_calc") dependencies+="package=libreoffice-calc" ;;
+        "pandoc") dependencies+="command=pandoc" ;;
         esac
-        dependencies+=" "
+        dependencies+=$'\n'
     done
 
     _check_dependencies "$dependencies"
@@ -45,7 +45,7 @@ _main_task() {
 
     # Run the main process.
     case $(_get_command_use "$input_file") in
-    "libreoffice")
+    "libreoffice_calc")
         local output_file_temp=""
         local temp_file=""
 
@@ -83,19 +83,18 @@ _get_command_use() {
 
     # NOTE: See the file: /usr/share/mime/packages/freedesktop.org.xml
     case "${file_mime,,}" in
-    *"spreadsheetml.sheet"*) command_use="libreoffice" ;;      # xlsx
-    *"opendocument.spreadsheet"*) command_use="libreoffice" ;; # ods
-    "application/vnd.ms-excel") command_use="libreoffice" ;;   # xls
-    "application/msexcel") command_use="libreoffice" ;;        # xls
-    "application/x-msexcel") command_use="libreoffice" ;;      # xls
-    "text/csv") command_use="libreoffice" ;;                   # csv
-    "text/xml") command_use="libreoffice" ;;                   # fodt, fodp, fods...
+    *"spreadsheetml.sheet"*) command_use="libreoffice_calc" ;;      # xlsx
+    *"opendocument.spreadsheet"*) command_use="libreoffice_calc" ;; # ods
+    "application/vnd.ms-excel") command_use="libreoffice_calc" ;;   # xls
+    "application/msexcel") command_use="libreoffice_calc" ;;        # xls
+    "application/x-msexcel") command_use="libreoffice_calc" ;;      # xls
+    "text/csv") command_use="libreoffice_calc" ;;                   # csv
     *)
         # If not found the 'file_mime', use the extension.
         case "${input_file,,}" in
-        *.xls | *.xlsx) command_use="libreoffice" ;;
-        *.ods | *.fods) command_use="libreoffice" ;;
-        *.csv) command_use="libreoffice" ;;
+        *.xls | *.xlsx) command_use="libreoffice_calc" ;;
+        *.ods | *.fods) command_use="libreoffice_calc" ;;
+        *.csv) command_use="libreoffice_calc" ;;
         *) command_use="pandoc" ;;
         esac
         ;;

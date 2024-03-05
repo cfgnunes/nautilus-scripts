@@ -17,14 +17,36 @@ _main() {
     local dependencies=""
     for input_file in $input_files; do
         case $(_get_command_use "$input_file") in
-        "convert") dependencies+="convert" ;;
-        "inkscape") dependencies+="inkscape" ;;
-        "latexmk") dependencies+="latexmk(apt:latexmk,dnf:latexmk) (apt:texlive) (apt:texlive-fonts-extra) (apt:texlive-latex-extra) (apt:texlive-publishers) (apt:texlive-science) (apt:texlive-xetex) (dnf:texlive-scheme-basic)" ;;
-        "libreoffice") dependencies+="(apt:libreoffice-writer,dnf:libreoffice-writer) (apt:libreoffice-calc,dnf:libreoffice-calc) (apt:libreoffice-impress,dnf:libreoffice-impress)" ;;
-        "pandoc_latex") dependencies+="pandoc (apt:texlive,dnf:texlive-scheme-basic)" ;;
-        "pandoc") dependencies+="pandoc" ;;
+        "convert")
+            dependencies+="
+                command=convert; pkg_manager=apt; package=imagemagick |
+                command=convert; pkg_manager=dnf; package=ImageMagick |
+                command=convert; pkg_manager=pacman; package=imagemagick"
+            ;;
+        "inkscape") dependencies+="command=inkscape" ;;
+        "latexmk")
+            dependencies+="
+                command=latexmk |
+                pkg_manager=apt; package=texlive |
+                pkg_manager=apt; package=texlive-fonts-extra |
+                pkg_manager=apt; package=texlive-latex-extra |
+                pkg_manager=apt; package=texlive-publishers |
+                pkg_manager=apt; package=texlive-science |
+                pkg_manager=apt; package=texlive-xetex |
+                pkg_manager=dnf; package=texlive-scheme-basic"
+            ;;
+        "libreoffice_calc") dependencies+="package=libreoffice-calc" ;;
+        "libreoffice_impress") dependencies+="package=libreoffice-impress" ;;
+        "libreoffice_writer") dependencies+="package=libreoffice-writer" ;;
+        "pandoc_latex")
+            dependencies+="
+                command=pandoc |
+                pkg_manager=apt; package=texlive |
+                pkg_manager=dnf; package=texlive-scheme-basic"
+            ;;
+        "pandoc") dependencies+="command=pandoc" ;;
         esac
-        dependencies+=" "
+        dependencies+=$'\n'
     done
 
     _check_dependencies "$dependencies"
@@ -85,7 +107,7 @@ _main_task() {
         # Remove the temporary directory.
         rm -rf -- "$temp_dir_output"
         ;;
-    "libreoffice")
+    "libreoffice_calc" | "libreoffice_impress" | "libreoffice_writer")
         local output_file_temp=""
         local temp_file=""
 
@@ -127,47 +149,44 @@ _get_command_use() {
 
     # NOTE: See the file: /usr/share/mime/packages/freedesktop.org.xml
     case "${file_mime,,}" in
-    *"wordprocessingml.document"*) command_use="libreoffice" ;;   # docx
-    *"presentationml.presentation"*) command_use="libreoffice" ;; # pptx
-    *"spreadsheetml.sheet"*) command_use="libreoffice" ;;         # xlsx
-    *"opendocument.text"*) command_use="libreoffice" ;;           # odt
-    *"opendocument.presentation"*) command_use="libreoffice" ;;   # odp
-    *"opendocument.spreadsheet"*) command_use="libreoffice" ;;    # ods
-    *"opendocument.graphics"*) command_use="libreoffice" ;;       # odg
-    *"opendocument.formula"*) command_use="libreoffice" ;;        # odf
-    "application/msword") command_use="libreoffice" ;;            # doc
-    "application/vnd.ms-word") command_use="libreoffice" ;;       # doc
-    "application/x-msword") command_use="libreoffice" ;;          # doc
-    "application/vnd.ms-powerpoint") command_use="libreoffice" ;; # ppt
-    "application/powerpoint") command_use="libreoffice" ;;        # ppt
-    "application/mspowerpoint") command_use="libreoffice" ;;      # ppt
-    "application/x-mspowerpoint") command_use="libreoffice" ;;    # ppt
-    "application/vnd.ms-excel") command_use="libreoffice" ;;      # xls
-    "application/msexcel") command_use="libreoffice" ;;           # xls
-    "application/x-msexcel") command_use="libreoffice" ;;         # xls
-    "text/html") command_use="libreoffice" ;;                     # html
-    "application/rtf") command_use="libreoffice" ;;               # rtf
-    "text/rtf") command_use="libreoffice" ;;                      # rtf
-    "text/xml") command_use="libreoffice" ;;                      # fodt, fodp, fods...
-    "text/x-tex") command_use="latexmk" ;;                        # tex
-    "image/svg+xml") command_use="inkscape" ;;                    # svg
-    "image/svg+xml-compressed") command_use="inkscape" ;;         # svgz
-    "image/"*) command_use="convert" ;;                           # (image files)
-    "text/"*) command_use="pandoc_latex" ;;                       # (plain text files)
+    *"wordprocessingml.document"*) command_use="libreoffice_writer" ;;    # docx
+    *"presentationml.presentation"*) command_use="libreoffice_impress" ;; # pptx
+    *"spreadsheetml.sheet"*) command_use="libreoffice_calc" ;;            # xlsx
+    "application/msword") command_use="libreoffice_writer" ;;             # doc
+    "application/vnd.ms-word") command_use="libreoffice_writer" ;;        # doc
+    "application/x-msword") command_use="libreoffice_writer" ;;           # doc
+    *"opendocument.formula"*) command_use="libreoffice_writer" ;;         # odf
+    *"opendocument.graphics"*) command_use="libreoffice_impress" ;;       # odg
+    *"opendocument.presentation"*) command_use="libreoffice_impress" ;;   # odp
+    *"opendocument.spreadsheet"*) command_use="libreoffice_calc" ;;       # ods
+    *"opendocument.text"*) command_use="libreoffice_writer" ;;            # odt
+    "application/mspowerpoint") command_use="libreoffice_impress" ;;      # ppt
+    "application/powerpoint") command_use="libreoffice_impress" ;;        # ppt
+    "application/vnd.ms-powerpoint") command_use="libreoffice_impress" ;; # ppt
+    "application/x-mspowerpoint") command_use="libreoffice_impress" ;;    # ppt
+    "application/rtf") command_use="libreoffice_writer" ;;                # rtf
+    "text/rtf") command_use="libreoffice_writer" ;;                       # rtf
+    "image/svg+xml") command_use="inkscape" ;;                            # svg
+    "image/svg+xml-compressed") command_use="inkscape" ;;                 # svgz
+    "text/x-tex") command_use="latexmk" ;;                                # tex
+    "application/msexcel") command_use="libreoffice_calc" ;;              # xls
+    "application/vnd.ms-excel") command_use="libreoffice_calc" ;;         # xls
+    "application/x-msexcel") command_use="libreoffice_calc" ;;            # xls
+    "image/"*) command_use="convert" ;;                                   # (image files)
+    "text/"*) command_use="pandoc_latex" ;;                               # (plain text files)
     *)
         # If not found the 'file_mime', use the extension.
         case "${input_file,,}" in
-        *.doc | *.docx) command_use="libreoffice" ;;
-        *.xls | *.xlsx) command_use="libreoffice" ;;
-        *.ppt | *.pptx) command_use="libreoffice" ;;
-        *.odt | *.fodt) command_use="libreoffice" ;;
-        *.ods | *.fods) command_use="libreoffice" ;;
-        *.odp | *.fodp) command_use="libreoffice" ;;
-        *.odg | *.fodg) command_use="libreoffice" ;;
-        *.odf | *.fodf) command_use="libreoffice" ;;
-        *.htm | *.html) command_use="libreoffice" ;;
+        *.doc | *.docx) command_use="libreoffice_writer" ;;
+        *.odf | *.fodf) command_use="libreoffice_writer" ;;
+        *.odg | *.fodg) command_use="libreoffice_impress" ;;
+        *.odp | *.fodp) command_use="libreoffice_impress" ;;
+        *.ods | *.fods) command_use="libreoffice_calc" ;;
+        *.odt | *.fodt) command_use="libreoffice_writer" ;;
+        *.ppt | *.pptx) command_use="libreoffice_impress" ;;
+        *.xls | *.xlsx) command_use="libreoffice_calc" ;;
         *.svg | *.svgz) command_use="inkscape" ;;
-        *.rtf) command_use="libreoffice" ;;
+        *.rtf) command_use="libreoffice_writer" ;;
         *) command_use="pandoc" ;;
         esac
         ;;

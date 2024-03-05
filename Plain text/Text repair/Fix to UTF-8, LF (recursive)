@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "iconv(libc-bin) perl(perl-base)"
+    _check_dependencies "command=iconv; package=libc-bin | command=perl; package=perl-base"
     _display_wait_box
     input_files=$(_get_files "par_type=file; par_recursive=true; par_skip_encoding=binary; par_skip_extension='pdf|svg|bak'")
 

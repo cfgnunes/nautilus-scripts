@@ -19,7 +19,7 @@ _main() {
     elif _command_exists "mate-terminal"; then
         mate-terminal --working-directory="$input_files" &
     else
-        _check_dependencies "gnome-terminal"
+        _check_dependencies "command=gnome-terminal"
         gnome-terminal --working-directory="$input_files" &
     fi
 }

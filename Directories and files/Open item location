@@ -10,7 +10,7 @@ _main() {
     local dir=""
 
     # Execute initial checks.
-    _check_dependencies "xdg-open(xdg-utils)"
+    _check_dependencies "command=xdg-open; package=xdg-utils"
     input_files=$(_get_files "par_type=all; par_max_files=1; par_get_pwd=true")
 
     # Run the main process.

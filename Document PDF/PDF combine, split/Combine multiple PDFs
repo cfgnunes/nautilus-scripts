@@ -10,7 +10,10 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "pdfunite(apt:poppler-utils,pacman:poppler-glib,dnf:poppler-utils)"
+    _check_dependencies "
+        command=pdfunite; pkg_manager=apt; package=poppler-utils |
+        command=pdfunite; pkg_manager=dnf; package=poppler-utils |
+        command=pdfunite; pkg_manager=pacman; package=poppler-glib"
     _display_wait_box
     input_files=$(_get_files "par_type=file; par_select_mime=application/pdf; par_min_files=2; par_sort_list=true")
     output_dir=$(_get_output_dir "par_use_same_dir=true")

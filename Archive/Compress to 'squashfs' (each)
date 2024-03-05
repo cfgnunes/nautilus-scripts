@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "mksquashfs(squashfs-tools)"
+    _check_dependencies "command=mksquashfs; package=squashfs-tools"
     _display_wait_box
     input_files=$(_get_files "par_type=all")
     output_dir=$(_get_output_dir "par_use_same_dir=true")

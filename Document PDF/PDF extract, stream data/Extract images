@@ -10,7 +10,10 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "pdfimages(apt:poppler-utils,pacman:poppler-glib,dnf:poppler-utils)"
+    _check_dependencies "
+        command=pdfimages; pkg_manager=apt; package=poppler-utils |
+        command=pdfimages; pkg_manager=dnf; package=poppler-utils |
+        command=pdfimages; pkg_manager=pacman; package=poppler-glib"
     _display_wait_box
     input_files=$(_get_files "par_type=file; par_select_mime=application/pdf")
     output_dir=$(_get_output_dir "par_use_same_dir=false")

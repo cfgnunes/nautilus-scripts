@@ -25,7 +25,7 @@ _main() {
     elif _command_exists "xed"; then
         xed -- $input_files &
     else
-        _check_dependencies "gedit"
+        _check_dependencies "command=gedit"
         gedit -- $input_files &
     fi
 }
