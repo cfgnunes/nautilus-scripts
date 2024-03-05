@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2034
 
 # Install the scripts for the GNOME Files (Nautilus), Caja and Nemo file managers.
 
@@ -23,12 +22,13 @@ FILE_MANAGER=""
 INSTALL_DIR=""
 
 # shellcheck disable=SC1091
-source "$ASSSETS_DIR/multiselect_menu.sh"
+source "$ASSSETS_DIR/_multiselect_menu.sh"
 
 # -----------------------------------------------------------------------------
 # FUNCTIONS
 # -----------------------------------------------------------------------------
 
+# shellcheck disable=SC2034
 _main() {
     local categories_defaults=()
     local categories_dirs=()
@@ -40,15 +40,14 @@ _main() {
 
     _check_default_filemanager
 
-    echo "Scripts installer."
-    echo
-    echo "Select the options (<SPACE> to select, <UP/DOWN> to choose):"
+    printf "Scripts installer.\n\n"
+    printf "Select the options (<SPACE> to select, <UP/DOWN> to choose):\n"
 
     menu_labels=(
         "Install basic dependencies."
         "Install keyboard shortcuts."
-        "Preserve previous scripts (if any)."
         "Close the file manager to reload its configurations."
+        "Preserve previous scripts (if any)."
         "Choose script categories to install."
     )
     menu_defaults=(
@@ -63,8 +62,8 @@ _main() {
 
     [[ ${menu_selected[0]} == "true" ]] && menu_options+="dependencies,"
     [[ ${menu_selected[1]} == "true" ]] && menu_options+="shortcuts,"
-    [[ ${menu_selected[2]} == "true" ]] && [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]] && menu_options+="preserve,"
-    [[ ${menu_selected[3]} == "true" ]] && menu_options+="reload,"
+    [[ ${menu_selected[2]} == "true" ]] && menu_options+="reload,"
+    [[ ${menu_selected[3]} == "true" ]] && [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]] && menu_options+="preserve,"
     [[ ${menu_selected[4]} == "true" ]] && menu_options+="categories,"
 
     # Get the categories (directories of scripts).
@@ -80,13 +79,11 @@ _main() {
     done <<<"$cat_dirs_find"
 
     if [[ "$menu_options" == *"categories"* ]]; then
-        echo
-        echo "Choose the categories (<SPACE> to select, <UP/DOWN> to choose):"
+        printf "\nChoose the categories (<SPACE> to select, <UP/DOWN> to choose):\n"
         _multiselect_menu categories_selected categories_dirs categories_defaults
     fi
 
-    echo
-    echo "Starting the installation..."
+    printf "\nStarting the installation...\n"
 
     # Installer steps.
     [[ "$menu_options" == *"dependencies"* ]] && _step_install_dependencies
@@ -94,7 +91,7 @@ _main() {
     _step_install_scripts "$menu_options" categories_selected categories_dirs
     [[ "$menu_options" == *"reload"* ]] && _step_close_filemanager
 
-    echo "Done!"
+    printf "Finished!\n"
 }
 
 _check_default_filemanager() {
@@ -112,7 +109,7 @@ _check_default_filemanager() {
         ACCELS_FILE="$HOME/.config/caja/accels"
         FILE_MANAGER="caja"
     else
-        echo "Error: could not find any compatible file managers!"
+        printf "Error: could not find any compatible file managers!\n"
         exit 1
     fi
 }
@@ -128,7 +125,7 @@ _command_exists() {
 
 # shellcheck disable=SC2086
 _step_install_dependencies() {
-    echo " > Installing dependencies..."
+    printf " > Installing dependencies...\n"
 
     local common_names="bzip2 foremost ghostscript gzip jpegoptim optipng pandoc perl-base qpdf rdfind rhash squashfs-tools tar testdisk unzip wget xclip xorriso zip"
     if _command_exists "sudo"; then
@@ -147,18 +144,18 @@ _step_install_dependencies() {
             sudo dnf check-update || true
             sudo dnf -y install $common_names ImageMagick xz p7zip poppler-utils ffmpeg-free genisoimage
         else
-            echo "Error: could not find a package manager!"
+            printf "Error: could not find a package manager!\n"
             exit 1
         fi
     else
-        echo "Error: could not run as administrator!"
+        printf "Error: could not run as administrator!\n"
         exit 1
     fi
 
     # Fix permissions in ImageMagick to write PDF files.
     local imagemagick_config="/etc/ImageMagick-6/policy.xml"
     if [[ -f "$imagemagick_config" ]]; then
-        echo " > Fixing write permission with PDF in ImageMagick..."
+        printf " > Fixing write permission with PDF in ImageMagick...\n"
         sudo sed -i 's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/' "$imagemagick_config"
         sudo sed -i 's/1GiB/8GiB/' "$imagemagick_config"
         sudo sed -i '/shared-secret/d' "$imagemagick_config"
@@ -173,15 +170,15 @@ _step_install_scripts() {
 
     # 'Preserve' or 'Remove' previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then
-        echo " > Preserving previous scripts to a temporary directory..."
+        printf " > Preserving previous scripts to a temporary directory...\n"
         tmp_install_dir=$(mktemp -d)
         mv "$INSTALL_DIR" "$tmp_install_dir" || true
     else
-        echo " > Removing previous scripts..."
+        printf " > Removing previous scripts...\n"
         rm -rf -- "$INSTALL_DIR"
     fi
 
-    echo " > Installing new scripts..."
+    printf " > Installing new scripts...\n"
     mkdir --parents "$INSTALL_DIR"
 
     # Copy the script files.
@@ -194,18 +191,18 @@ _step_install_scripts() {
     done
 
     # Set file permissions.
-    echo " > Setting file permissions..."
+    printf " > Setting file permissions...\n"
     find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
 
     # Restore previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then
-        echo " > Restoring previous scripts to the install directory..."
+        printf " > Restoring previous scripts to the install directory...\n"
         mv "$tmp_install_dir/scripts" "$INSTALL_DIR/User previous scripts"
     fi
 }
 
 _step_install_shortcuts() {
-    echo " > Installing the keyboard shortcuts..."
+    printf " > Installing the keyboard shortcuts...\n"
 
     mkdir --parents "$(dirname -- "$ACCELS_FILE")"
     mv "$ACCELS_FILE" "$ACCELS_FILE.bak" 2>/dev/null || true
@@ -228,7 +225,7 @@ _step_install_shortcuts() {
 }
 
 _step_close_filemanager() {
-    echo " > Closing the file manager to reload its configurations..."
+    printf " > Closing the file manager to reload its configurations...\n"
 
     eval "$FILE_MANAGER -q &>/dev/null" || true
 }
