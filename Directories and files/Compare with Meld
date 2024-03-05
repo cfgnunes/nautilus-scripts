@@ -35,7 +35,7 @@ _validate_input_files() {
             _exit_script
         fi
 
-        # All the files must have same mime type.
+        # All the files must have the same mime type.
         if [[ -z "$file_type_first" ]]; then
             file_type_first=$file_type
         else

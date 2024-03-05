@@ -52,10 +52,10 @@ _multiselect_menu() {
         exit 1
     }
 
-    # Ensure cursor back on upon a ctrl+c during read -s.
+    # Ensure the cursor is back on upon a ctrl+c during read -s.
     trap "__on_ctrl_c" SIGINT
 
-    # Proccess the 'defaults' parameter.
+    # Process the 'defaults' parameter.
     local selected=()
     local i=0
     for i in "${!options[@]}"; do
@@ -71,7 +71,7 @@ _multiselect_menu() {
         printf "\n"
     done
 
-    # Determine current screen position for overwriting the options.
+    # Determine the current screen position for overwriting the options.
     local start_row=""
     local last_row=""
     last_row=$(__get_cursor_row)
@@ -99,12 +99,12 @@ _multiselect_menu() {
                 # Print the inactive option.
                 printf "$prefix %s" "$option"
             fi
-            # Avoid print chars when press two keys at same time.
+            # Avoid print chars when pressing two keys at the same time.
             __cursor_to "$start_row"
         done
     }
 
-    # Main loop of the menu.
+    # The menu's main loop.
     __cursor_blink_off
     local active=0
     while true; do

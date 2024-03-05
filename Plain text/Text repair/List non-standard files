@@ -34,41 +34,41 @@ _main_task() {
     file_encoding=$(file --dereference --brief --mime-encoding -- "$input_file")
     file_information=$(file --dereference --separator "//" --no-pad -- "$input_file" | sed "s|\(.*\)// ||")
 
-    # Run the checker 'non UTF-8 encoding'
+    # Run the checker 'non UTF-8 encoding'.
     if [[ "${file_encoding,,}" != *"us-ascii"* ]] && [[ "${file_encoding,,}" != *"utf-8"* ]]; then
         result_file+="[non UTF-8 encoding]"
     fi
 
-    # Run the checker 'UTF-8 with BOM'
+    # Run the checker 'UTF-8 with BOM'.
     if [[ "${file_encoding,,}" == *"utf-8"* ]]; then
         if head -c3 "$input_file" | LC_ALL=C grep --quiet -P '\xef\xbb\xbf'; then
             result_file+="[UTF-8 with BOM]"
         fi
     fi
 
-    # Run the checker 'non-LF line break'
+    # Run the checker 'non-LF line break'.
     if [[ "$file_information" == *"with CR"* ]]; then
         result_file+="[non-LF line break]"
     fi
 
-    # Run the checker 'trailing spaces' (for Unix and Windows files)
+    # Run the checker 'trailing spaces' (for Unix and Windows files).
     if grep --quiet -P "[ \t]\r?$" "$input_file"; then
         result_file+="[trailing spaces]"
     fi
 
-    # Run the checker 'trailing spaces' (for Mac files)
+    # Run the checker 'trailing spaces' (for Mac files).
     if [[ "$file_information" == *"with CR line"* ]] || [[ "$file_information" == *"with CR, LF line"* ]]; then
         if cat -A "$input_file" | grep --quiet " ^M"; then
             result_file+="[trailing spaces]"
         fi
     fi
 
-    # Run the checker 'missing line at the end'
+    # Run the checker 'missing line at the end'.
     if ! tail -c 1 "$input_file" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet "0d\|0a"; then
         result_file+="[missing line at the end]"
     else
         if tail -c 3 "$input_file" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet "..0d0d\|..0a0a\|0a0d0a"; then
-            # Run the checker 'has many line breaks at the end'
+            # Run the checker 'has many line breaks at the end'.
             result_file+="[extra lines at the end]"
         fi
     fi

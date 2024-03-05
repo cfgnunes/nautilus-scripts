@@ -28,7 +28,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:preserve")
-    # NOTE: Older versions of 'qpdf' do not support ' -- ' in the command line.
+    # NOTE: Older 'qpdf' versions do not support ' -- ' in the command line.
     std_output=$(qpdf --rotate=180:1-z "$input_file" "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }

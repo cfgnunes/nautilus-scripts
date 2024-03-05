@@ -67,7 +67,7 @@ _main() {
     [[ ${menu_selected[3]} == "true" ]] && menu_options+="reload,"
     [[ ${menu_selected[4]} == "true" ]] && menu_options+="categories,"
 
-    # Get the scripts categories.
+    # Get the categories (directories of scripts).
     local cat_dirs_find=""
     local dir=""
     cat_dirs_find=$(find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \

@@ -9,7 +9,7 @@ set -u
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
-FILENAME_SEPARATOR=$'\r'       # The field separator used in 'loop' commands to iterate over files.
+FILENAME_SEPARATOR=$'\r'       # The field separator is used in 'loop' commands to iterate over files.
 IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
 PREFIX_ERROR_LOG_FILE="Errors" # Name of 'error' directory.
 PREFIX_OUTPUT_DIR="Output"     # Name of 'output' directory.
@@ -82,23 +82,23 @@ _check_dependencies() {
         # Item syntax: command(package), example: photorec(testdisk).
         command=${dependency%%(*}
 
-        # Ignore install the dependency if there is the command in the shell.
+        # Ignore installing the dependency if there is the command in the shell.
         if [[ -n "$command" ]] && _command_exists "$command"; then
             continue
         fi
 
-        # Get the 'package_name' according the package manager.
+        # Get the 'package_name' according to the package manager.
         package_name=$(grep --only-matching --perl-regexp "\(+\K[^)]+" <<<"$dependency")
         if [[ -n "$package_name" ]] && [[ "$package_name" == *":"* ]]; then
             package_name=$(grep --only-matching "$pkg_manager:[A-Za-z0-9-]*" <<<"$package_name" | sed "s|.*:||g")
         fi
 
-        # Ignore install the dependency if the package is already installed (packages that not has a command).
+        # Ignore installing the dependency if the package is already installed (packages that do not have a command).
         if [[ -n "$package_name" ]] && [[ -z "$command" ]] && _pkg_is_package_installed "$package_name"; then
             continue
         fi
 
-        # If the package is not specified, use the same name of the command.
+        # If the package is not specified, use the same command name.
         if [[ -z "$package_name" ]] && [[ -n "$command" ]]; then
             package_name=$command
         fi
@@ -110,7 +110,7 @@ _check_dependencies() {
     done
     IFS=$FILENAME_SEPARATOR
 
-    # Ask to the user to install the packages.
+    # Ask the user to install the packages.
     if [[ -n "$packages_to_install" ]]; then
         local message="These packages were not found:"
         message+=$(sed "s| |\n- |g" <<<"$packages_to_install")
@@ -356,7 +356,7 @@ _display_wait_box_message() {
             mkfifo "$WAIT_BOX_FIFO"
         fi
 
-        # Tells the script that the 'wait_box' will open if the task takes more than 2 seconds.
+        # Tells the script that the 'wait_box' will open if the task takes over 2 seconds.
         if ! [[ -f "$WAIT_BOX_CONTROL" ]]; then
             touch "$WAIT_BOX_CONTROL"
         fi
@@ -375,7 +375,7 @@ _display_wait_box_message() {
 }
 
 _close_wait_box() {
-    # If 'wait_box' is open (waiting an input in the 'fifo').
+    # If 'wait_box' is open (waiting for an input in the FIFO).
     if pgrep -fl "$WAIT_BOX_FIFO" &>/dev/null; then
         # Close the zenity progress by FIFO: Send a '\n' for the 'cat' command.
         printf "\n" >"$WAIT_BOX_FIFO"
@@ -396,7 +396,7 @@ _exit_script() {
     # Get the process ID (PID) of all child processes.
     child_pids=$(pstree -p "$script_pid" | grep --only-matching --perl-regexp "\(+\K[^)]+")
 
-    # NOTE: Use xargs and kill to send the SIGTERM signal to all child processes, including the current script.
+    # NOTE: Use 'xargs' and kill to send the SIGTERM signal to all child processes, including the current script.
     # See the: https://www.baeldung.com/linux/safely-exit-scripts
     xargs kill <<<"$child_pids" &>/dev/null
 }
@@ -499,7 +499,7 @@ _get_filenames_filemanager() {
     if [[ -n "$var_filemanager" ]] && [[ -n "${!var_filemanager}" ]]; then
         input_files=${!var_filemanager}
 
-        # Replace '\n' to 'FILENAME_SEPARATOR'.
+        # Replace '\n' with 'FILENAME_SEPARATOR'.
         input_files=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$input_files")
 
         # Decode the URI list.
@@ -529,7 +529,7 @@ _get_files() {
     #   "false": Do not expand directories (default).
     #   "true": Expand directories.
 
-    # Default values for the the parameters.
+    # Default values for the parameters.
     local par_max_files=""
     local par_min_files=""
     local par_recursive="false"
@@ -621,7 +621,7 @@ _get_files() {
     input_files=$(_text_sort "$input_files")
     input_files=$(_convert_text_to_filenames "$input_files")
 
-    # Validates filenames with same base name.
+    # Validates filenames with the same base name.
     if [[ "$par_validate_conflict" == "true" ]]; then
         _validate_conflict_filenames "$input_files"
     fi
@@ -694,7 +694,7 @@ _get_output_filename() {
     par_prefix=$(_get_parameter_value "$parameters" "prefix")
     par_suffix=$(_get_parameter_value "$parameters" "suffix")
 
-    # Directories does not have an extension.
+    # Directories do not have an extension.
     if [[ -d "$input_file" ]]; then
         par_extension_opt="append"
     fi
@@ -783,7 +783,7 @@ _log_compile() {
     local log_file_output="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
     local log_files_count=""
 
-    # Do nothing if there is no error log files.
+    # Do nothing if there are no error log files.
     log_files_count="$(find "$TEMP_DIR_LOG" -type f 2>/dev/null | wc -l)"
     if ((log_files_count == 0)); then
         return 1
@@ -893,7 +893,7 @@ _move_temp_file_to_output() {
         return 1
     fi
 
-    # If 'input_file' euqual 'output_file', create a backup of the 'input_file'.
+    # If 'input_file' equals 'output_file', create a backup of the 'input_file'.
     if [[ "$input_file" == "$output_file" ]]; then
         std_output=$(_move_file "rename" "$input_file" "$input_file.bak" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$input_file.bak" || return 1
@@ -913,7 +913,7 @@ _move_temp_file_to_output() {
 _pkg_get_package_manager() {
     local pkg_manager=""
 
-    # Check for installed package manager.
+    # Check for an installed package manager.
     if _command_exists "apt-get"; then
         pkg_manager="apt"
     elif _command_exists "pacman"; then
@@ -1138,7 +1138,7 @@ _validate_file_extension() {
     local par_skip_extension=$2
     local par_select_extension=$3
 
-    # Return 0 if all parameters is empty.
+    # Return 0 if all parameters are empty.
     if [[ -z "$par_skip_extension" ]] && [[ -z "$par_select_extension" ]]; then
         return 0
     fi
@@ -1201,7 +1201,7 @@ _validate_file_mime_parallel() {
     local par_skip_encoding=$4
     local par_skip_mime=$5
 
-    # Return the 'input_files' if all parameters is empty.
+    # Return the 'input_files' if all parameters are empty.
     if [[ -z "$par_select_encoding$par_select_mime$par_skip_encoding$par_skip_mime" ]]; then
         printf "%s" "$input_files"
         return

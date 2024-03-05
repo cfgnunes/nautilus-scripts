@@ -31,7 +31,7 @@ _main_task() {
     audio_format=$(ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$input_file")
     _check_output "$?" "Could not find the audio format from the video." "$input_file" "$output_file" || return 1
 
-    # Define the filename extension according the audio format.
+    # Define the filename extension according to the audio format.
     local extension=""
     case $audio_format in
     "aac") extension="m4a" ;;
