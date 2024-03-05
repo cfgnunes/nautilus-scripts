@@ -9,7 +9,7 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    input_files=$(_get_files "type:all")
+    input_files=$(_get_files "par_type=all")
 
     # Run the main process.
     # shellcheck disable=SC2086

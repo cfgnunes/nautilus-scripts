@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies ""
     _display_wait_box
-    input_files=$(_get_files "type:all, recursive:true, get_pwd_if_no_selection:true, min_files:0, extension:/\.[^/]*")
+    input_files=$(_get_files "par_type=all, par_recursive=true, par_get_pwd=true, par_min_files=0, par_select_extension='/\.[^/]*'")
 
     # Run the main process.
     std_output=$(_convert_filenames_to_text "$input_files")

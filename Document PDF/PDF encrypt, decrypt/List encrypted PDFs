@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "pdfinfo(apt:poppler-utils,pacman:poppler-glib,dnf:poppler-utils)"
     _display_wait_box
-    input_files=$(_get_files "type:file, recursive:true, get_pwd_if_no_selection:true, mime:application/pdf")
+    input_files=$(_get_files "par_type=file, par_recursive=true, par_get_pwd=true, par_select_mime=application/pdf")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" ""

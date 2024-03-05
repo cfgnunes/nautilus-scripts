@@ -11,8 +11,8 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "gpg(apt:gpg,pacman:gnupg,dnf:gnupg2) zenity"
-    input_files=$(_get_files "type:file")
-    output_dir=$(_get_output_dir "use_same_dir:true")
+    input_files=$(_get_files "par_type=file")
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     local users=""
     users=$(gpg --list-secret-keys --with-colons | grep "^uid" | cut -d ':' -f 10)
@@ -40,7 +40,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:append, extension:gpg")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=append, par_extension=gpg")
     std_output=$(gpg --batch --yes --sign --local-user "$TEMP_DATA_TASK" --output "$output_file" -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }

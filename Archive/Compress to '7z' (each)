@@ -12,8 +12,8 @@ _main() {
     # Execute initial checks.
     _check_dependencies "7za(apt:p7zip-full,pacman:p7zip,dnf:p7zip)"
     _display_wait_box
-    input_files=$(_get_files "type:all")
-    output_dir=$(_get_output_dir "use_same_dir:true")
+    input_files=$(_get_files "par_type=all")
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -27,7 +27,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:7z")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace, par_extension=7z")
     if [[ -d "$input_file" ]]; then
         cd -- "$input_file" || return 1
         std_output=$(7za a -mx9 "$output_file" -- . 2>&1)

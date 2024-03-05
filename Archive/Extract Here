@@ -12,7 +12,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
-    input_files=$(_get_files "type:file")
+    input_files=$(_get_files "par_type=file")
 
     # Check dependencies for each file type.
     local dependencies=""

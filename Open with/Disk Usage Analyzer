@@ -10,7 +10,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "baobab"
-    input_files=$(_get_files "type:directory, max_files:1, get_pwd_if_no_selection:true")
+    input_files=$(_get_files "par_type=directory, par_max_files=1, par_get_pwd=true")
 
     # Run the main process.
     baobab -- "$input_files" &

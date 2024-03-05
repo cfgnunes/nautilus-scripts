@@ -12,8 +12,8 @@ _main() {
     # Execute initial checks.
     _check_dependencies "ffmpeg(apt:ffmpeg,pacman:ffmpeg,dnf:ffmpeg-free)"
     _display_wait_box
-    input_files=$(_get_files "type:file, mime:audio/|video/|application/octet-stream, min_files:2, max_files:2")
-    output_dir=$(_get_output_dir "use_same_dir:true")
+    input_files=$(_get_files "par_type=file, par_select_mime=audio/|video/|application/octet-stream, par_min_files=2, par_max_files=2")
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     _main_task "$input_files" "$output_dir"
     _display_result_box "$output_dir"
@@ -32,7 +32,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_filename_next_suffix "$output_dir/Mixed audio.wav")
-    output_file=$(_get_output_filename "$output_file" "$output_dir" "extension_opt:preserve")
+    output_file=$(_get_output_filename "$output_file" "$output_dir" "par_extension_opt=preserve")
     std_output=$(ffmpeg -y -i "$input_file_1" -i "$input_file_2" -filter_complex "amix=inputs=2:duration=longest" -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "" "$output_file" || return 1
 }

@@ -12,8 +12,8 @@ _main() {
     # Execute initial checks.
     _check_dependencies "perl(perl-base)"
     _display_wait_box
-    input_files=$(_get_files "type:file, skip_encoding:binary, skip_extension:pdf|svg")
-    output_dir=$(_get_output_dir "use_same_dir:false")
+    input_files=$(_get_files "par_type=file, par_skip_encoding=binary, par_skip_extension=pdf|svg")
+    output_dir=$(_get_output_dir "par_use_same_dir=false")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -35,7 +35,7 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     # Move the temporary file to the output.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:preserve")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve")
     _move_temp_file_to_output "$input_file" "$temp_file" "$output_file"
 
     # Remove the temporary files on each iteration (if not removed before).

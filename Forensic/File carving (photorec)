@@ -12,8 +12,8 @@ _main() {
     # Execute initial checks.
     _check_dependencies "photorec(testdisk)"
     _display_wait_box
-    input_files=$(_get_files "type:file")
-    output_dir=$(_get_output_dir "use_same_dir:true")
+    input_files=$(_get_files "par_type=file")
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"

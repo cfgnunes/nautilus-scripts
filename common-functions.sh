@@ -548,19 +548,9 @@ _get_files() {
     local par_type="file"
     local par_validate_conflict=""
 
-    # Read values from the parameters.
-    par_max_files=$(_get_parameter_value "$parameters" "max_files")
-    par_min_files=$(_get_parameter_value "$parameters" "min_files")
-    par_recursive=$(_get_parameter_value "$parameters" "recursive")
-    par_get_pwd=$(_get_parameter_value "$parameters" "get_pwd_if_no_selection")
-    par_select_encoding=$(_get_parameter_value "$parameters" "encoding")
-    par_select_extension=$(_get_parameter_value "$parameters" "extension")
-    par_select_mime=$(_get_parameter_value "$parameters" "mime")
-    par_skip_encoding=$(_get_parameter_value "$parameters" "skip_encoding")
-    par_skip_extension=$(_get_parameter_value "$parameters" "skip_extension")
-    par_skip_mime=$(_get_parameter_value "$parameters" "skip_mime")
-    par_type=$(_get_parameter_value "$parameters" "type")
-    par_validate_conflict=$(_get_parameter_value "$parameters" "validate_conflict")
+    # Eval the values from 'parameters'.
+    parameters=$(tr "," ";" <<<"$parameters")
+    eval "$parameters"
 
     # Check the parameters.
     if [[ -n "$par_skip_extension" ]] && [[ -n "$par_select_extension" ]]; then
@@ -656,8 +646,9 @@ _get_output_dir() {
     local output_dir=""
     local par_use_same_dir=""
 
-    # Read values from the parameters.
-    par_use_same_dir=$(_get_parameter_value "$parameters" "use_same_dir")
+    # Eval the values from 'parameters'.
+    parameters=$(tr "," ";" <<<"$parameters")
+    eval "$parameters"
 
     # Check directories available to put the 'output' dir.
     base_dir=$(pwd)
@@ -693,11 +684,9 @@ _get_output_filename() {
     local par_prefix=""
     local par_suffix=""
 
-    # Read values from the parameters.
-    par_extension_opt=$(_get_parameter_value "$parameters" "extension_opt")
-    par_extension=$(_get_parameter_value "$parameters" "extension")
-    par_prefix=$(_get_parameter_value "$parameters" "prefix")
-    par_suffix=$(_get_parameter_value "$parameters" "suffix")
+    # Eval the values from 'parameters'.
+    parameters=$(tr "," ";" <<<"$parameters")
+    eval "$parameters"
 
     # Directories do not have an extension.
     if [[ -d "$input_file" ]]; then
@@ -738,29 +727,6 @@ _get_output_filename() {
     printf "%s" "$output_file"
 }
 
-_get_parameter_value() {
-    local parameters=$1
-    local key=$2
-    local value=""
-
-    if [[ -z "$key" ]]; then
-        return
-    fi
-
-    # Separate parameters in 'key:value'.
-    value="$(grep --only-matching --perl-regexp "([^,]*):([^,]*)" <<<"$parameters")"
-    value=$(_str_trim_whitespace "$value")
-
-    # Select the line of the specified key.
-    value="$(grep "^$key:" <<<"$value")"
-
-    # Get the value.
-    value="$(sed "s|.*:\(.*\)|\1|" <<<"$value")"
-    value=$(_str_trim_whitespace "$value")
-
-    printf "%s" "$value"
-}
-
 _get_script_name() {
     basename -- "$0"
 }
@@ -795,7 +761,7 @@ _log_compile() {
     fi
 
     if [[ -z "$output_dir" ]]; then
-        output_dir=$(_get_output_dir "use_same_dir:true")
+        output_dir=$(_get_output_dir "par_use_same_dir=true")
     fi
     log_file_output="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
 
@@ -1072,12 +1038,6 @@ _str_remove_empty_tokens() {
     input_str=$(sed "s|$FILENAME_SEPARATOR$||" <<<"$input_str")
 
     printf "%s" "$input_str"
-}
-
-_str_trim_whitespace() {
-    local input_str=$1
-
-    sed "s|^[ ]*||;s|[ ]*$||" <<<"$input_str"
 }
 
 _strip_filename_extension() {
@@ -1381,7 +1341,6 @@ export -f \
     _get_full_path_filename \
     _get_max_procs \
     _get_output_filename \
-    _get_parameter_value \
     _has_string_in_list \
     _log_write \
     _move_file \
@@ -1389,7 +1348,6 @@ export -f \
     _storage_text_write \
     _storage_text_write_ln \
     _str_remove_empty_tokens \
-    _str_trim_whitespace \
     _strip_filename_extension \
     _text_remove_pwd \
     _validate_file_extension \

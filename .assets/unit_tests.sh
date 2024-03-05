@@ -64,7 +64,6 @@ _main() {
     _run_storage_text_write_ln
     _run_str_human_readable_path
     _run_str_remove_empty_tokens
-    _run_str_trim_whitespace
     _run_strip_filename_extension
     _run_text_remove_empty_lines
     _run_text_remove_home
@@ -348,7 +347,7 @@ _run_get_parameter_value() {
     local expected_output=""
     local output=""
 
-    parameters="extension_opt:preserve, prefix:Link to, suffix: (Test) "
+    parameters="par_extension_opt=preserve, par_prefix='Link to', par_suffix=' (Test) '"
 
     key=""
     expected_output=""
@@ -510,37 +509,6 @@ _run_str_human_readable_path() {
 _run_str_remove_empty_tokens() {
     # TODO Implement the test: '_run_str_remove_empty_tokens'.
     :
-}
-
-_run_str_trim_whitespace() {
-    local input=""
-    local expected_output=""
-    local output=""
-
-    input=""
-    expected_output=""
-    output=$(_str_trim_whitespace "$input")
-    _test_equal "$input" "$output" "$expected_output"
-
-    input="Test"
-    expected_output="Test"
-    output=$(_str_trim_whitespace "$input")
-    _test_equal "$input" "$output" "$expected_output"
-
-    input=" Test"
-    expected_output="Test"
-    output=$(_str_trim_whitespace "$input")
-    _test_equal "$input" "$output" "$expected_output"
-
-    input="Test "
-    expected_output="Test"
-    output=$(_str_trim_whitespace "$input")
-    _test_equal "$input" "$output" "$expected_output"
-
-    input=" Test "
-    expected_output="Test"
-    output=$(_str_trim_whitespace "$input")
-    _test_equal "$input" "$output" "$expected_output"
 }
 
 _run_strip_filename_extension() {

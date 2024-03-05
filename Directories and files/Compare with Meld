@@ -10,7 +10,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "meld"
-    input_files=$(_get_files "type:all, min_files:2, max_files:3")
+    input_files=$(_get_files "par_type=all, par_min_files=2, par_max_files=3")
     _validate_input_files "$input_files"
 
     # Run the main process.
