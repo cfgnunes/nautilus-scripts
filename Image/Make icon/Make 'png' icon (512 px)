@@ -83,7 +83,7 @@ _main_task() {
         _check_output "$?" "$std_output" "$input_file" "$temp_file2" || return 1
 
         # Run the process (part 4) 'extend 14%' to add a border.
-        local factor="*1.14"
+        local factor="1.14"
         std_output=$(convert "$temp_file2" -set option:distort:viewport "%[fx:(w*$factor)]x%[fx:(h*$factor)]+%[fx:(w-(w*$factor))/2]+%[fx:(h-(h*$factor))/2]" -virtual-pixel transparent -filter point -distort SRT 0 -bordercolor "$first_pixel_color" -border 1 -fill "$first_pixel_color" -draw "color 0,0 floodfill" -shave 1 -draw "color 0,0 floodfill" +repage "$temp_file3" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$temp_file3" || return 1
 
