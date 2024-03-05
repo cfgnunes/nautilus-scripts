@@ -28,22 +28,22 @@ _main() {
         "lzop") _check_dependencies "lzop" ;;
         "tar") _check_dependencies "tar" ;;
         "tar+bunzip2") _check_dependencies "tar bunzip2" ;;
+        "tar+gunzip_uncompress") _check_dependencies "tar gunzip(gzip)" ;;
         "tar+gunzip") _check_dependencies "tar gunzip" ;;
         "tar+lrzip") _check_dependencies "tar lrzip" ;;
         "tar+lz4") _check_dependencies "tar lz4" ;;
         "tar+lzip") _check_dependencies "tar lzip" ;;
         "tar+lzop") _check_dependencies "tar lzop" ;;
-        "tar+uncompress") _check_dependencies "tar uncompress(gzip)" ;;
-        "tar+unlzma") _check_dependencies "tar unlzma(apt:xz-utils,pacman:xz,dnf:xz)" ;;
-        "tar+xz") _check_dependencies "tar unxz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
+        "tar+xz_lzma") _check_dependencies "tar xz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
+        "tar+xz") _check_dependencies "tar xz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
         "tar+zstd") _check_dependencies "tar zstd" ;;
-        "uncompress") _check_dependencies "uncompress(gzip)" ;;
-        "unlzma") _check_dependencies "unlzma(apt:xz-utils,pacman:xz,dnf:xz)" ;;
+        "uncompress") _command_exists "7za" || _check_dependencies "gunzip(gzip)" ;;
         "unrar") _check_dependencies "unrar" ;;
         "unsquashfs") _check_dependencies "unsquashfs(squashfs-tools)" ;;
-        "unxz") _check_dependencies "unxz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
         "unzip") _command_exists "7za" || _check_dependencies "unzip" ;;
         "xorriso") _check_dependencies "xorriso" ;;
+        "xz_lzma") _check_dependencies "xz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
+        "xz") _check_dependencies "xz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
         "zstd") _check_dependencies "zstd" ;;
         esac
     done
@@ -103,13 +103,13 @@ _main_task() {
     "lzop") std_output=$(lzop -d -- "$input_file" 2>&1) ;;
     "tar") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
     "tar+bunzip2") std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1) ;;
+    "tar+gunzip_uncompress") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
     "tar+gunzip") std_output=$(tar --extract --gzip --file="$input_file" 2>&1) ;;
     "tar+lrzip") std_output=$(lrztar -d "$input_file" 2>&1) ;;
     "tar+lz4") std_output=$(lz4 -d -c -- "$input_file" | tar xf - 2>&1) ;;
     "tar+lzip") std_output=$(tar --extract --lzip --file="$input_file" 2>&1) ;;
     "tar+lzop") std_output=$(tar --extract --lzop --file="$input_file" 2>&1) ;;
-    "tar+uncompress") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
-    "tar+unlzma") std_output=$(tar --extract --lzma --file="$input_file" 2>&1) ;;
+    "tar+xz_lzma") std_output=$(tar --extract --lzma --file="$input_file" 2>&1) ;;
     "tar+xz") std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
     "tar+zstd")
         std_output=$(zstd -d "$input_file" -o ".temp.tar" 2>&1)
@@ -117,11 +117,15 @@ _main_task() {
         std_output=$(tar --extract --file=".temp.tar" 2>&1)
         rm -f ".temp.tar"
         ;;
-    "uncompress") std_output=$(uncompress -k -c -- "$input_file" >"$filename" 2>&1) ;;
-    "unlzma") std_output=$(unlzma -k -c -- "$input_file" >"$filename" 2>&1) ;;
+    "uncompress")
+        if _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        else
+            std_output=$(gunzip -k -c -- "$input_file" >"$filename" 2>&1)
+        fi
+        ;;
     "unrar") std_output=$(unrar x -- "$input_file" 2>&1) ;;
     "unsquashfs") std_output=$(unsquashfs "$input_file" 2>&1) ;;
-    "unxz") std_output=$(unxz -k -c -- "$input_file" >"$filename" 2>&1) ;;
     "unzip")
         if _command_exists "7za"; then
             std_output=$(7za x -aoa -- "$input_file" 2>&1)
@@ -130,6 +134,8 @@ _main_task() {
         fi
         ;;
     "xorriso") std_output=$(xorriso -osirrox on -indev "$input_file" -find / -exec chmod u+rw -- -extract / . -rollback_end 2>&1) ;;
+    "xz_lzma") std_output=$(xz --format=lzma --decompress -k -c -- "$input_file" >"$filename" 2>&1) ;;
+    "xz") std_output=$(xz --decompress -k -c -- "$input_file" >"$filename" 2>&1) ;;
     "zstd") std_output=$(zstd --decompress -c -- "$input_file" >"$filename" 2>&1) ;;
     esac
 
@@ -204,9 +210,9 @@ _get_command_use() {
     #"application/x-lrzip") command_use="lrzip" ;;                # lrz
     #"application/x-lz4") command_use="lz4" ;;                    # lz4
     #"application/x-lzip") command_use="lzip" ;;                  # lz
-    #"application/x-lzma") command_use="unlzma" ;;                # lzma
+    #"application/x-lzma") command_use="xz_lzma" ;;               # lzma
     #"application/x-lzop") command_use="lzop" ;;                  # lzo
-    #"application/x-xz") command_use="unxz" ;;                    # xz
+    #"application/x-xz") command_use="xz" ;;                      # xz
     #"application/zstd") command_use="zstd" ;;                    # zst
     *)
         # If not found the 'file_mime', use the extension.
@@ -216,10 +222,10 @@ _get_command_use() {
         *.tar.lrz | *.tlrz) command_use="tar+lrzip" ;;
         *.tar.lz) command_use="tar+lzip" ;;
         *.tar.lz4) command_use="tar+lz4" ;;
-        *.tar.lzma | *.tlz) command_use="tar+unlzma" ;;
+        *.tar.lzma | *.tlz) command_use="tar+xz_lzma" ;;
         *.tar.lzo | *.tzo) command_use="tar+lzop" ;;
         *.tar.xz | *.txz) command_use="tar+xz" ;;
-        *.tar.z | *.taz) command_use="tar+uncompress" ;;
+        *.tar.z | *.taz) command_use="tar+gunzip_uncompress" ;;
         *.tar.zst | *.tzst) command_use="tar+zstd" ;;
         *.7z) command_use="7za" ;;
         *.bz | *.bz2) command_use="bunzip2" ;;
@@ -230,12 +236,12 @@ _get_command_use() {
         *.lz) command_use="lzip" ;;
         *.lz4) command_use="lz4" ;;
         *.lzh | *.lzs | *.lha) command_use="lha" ;;
-        *.lzma) command_use="unlzma" ;;
+        *.lzma) command_use="xz_lzma" ;;
         *.lzo) command_use="lzop" ;;
         *.rar) command_use="unrar" ;;
         *.sqsh | *.squashfs | *.sfs) command_use="unsquashfs" ;;
         *.tar) command_use="tar" ;;
-        *.xz) command_use="unxz" ;;
+        *.xz) command_use="xz" ;;
         *.z) command_use="uncompress" ;;
         *.zip) command_use="unzip" ;;
         *.zst) command_use="zstd" ;;
