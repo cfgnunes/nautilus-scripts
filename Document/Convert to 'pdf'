@@ -14,17 +14,24 @@ _main() {
     input_files=$(_get_files "type:file, validate_conflict:true")
 
     # Check dependencies for each file type.
+    local dependencies=""
     for input_file in $input_files; do
         case $(_get_command_use "$input_file") in
-        "convert") _check_dependencies "convert" ;;
-        "inkscape") _check_dependencies "inkscape" ;;
-        "latexmk") _check_dependencies "latexmk(apt:latexmk,dnf:latexmk) (apt:texlive) (apt:texlive-fonts-extra) (apt:texlive-latex-extra) (apt:texlive-publishers) (apt:texlive-science) (apt:texlive-xetex) (dnf:texlive-scheme-basic)" ;;
-        "libreoffice") _check_dependencies "(apt:libreoffice-writer,dnf:libreoffice-writer) (apt:libreoffice-calc,dnf:libreoffice-calc) (apt:libreoffice-impress,dnf:libreoffice-impress)" ;;
-        "pandoc_latex") _check_dependencies "pandoc (apt:texlive,dnf:texlive-scheme-basic)" ;;
-        "pandoc") _check_dependencies "pandoc" ;;
+        "convert") dependencies+="convert" ;;
+        "inkscape") dependencies+="inkscape" ;;
+        "latexmk") dependencies+="latexmk(apt:latexmk,dnf:latexmk) (apt:texlive) (apt:texlive-fonts-extra) (apt:texlive-latex-extra) (apt:texlive-publishers) (apt:texlive-science) (apt:texlive-xetex) (dnf:texlive-scheme-basic)" ;;
+        "libreoffice") dependencies+="(apt:libreoffice-writer,dnf:libreoffice-writer) (apt:libreoffice-calc,dnf:libreoffice-calc) (apt:libreoffice-impress,dnf:libreoffice-impress)" ;;
+        "pandoc_latex") dependencies+="pandoc (apt:texlive,dnf:texlive-scheme-basic)" ;;
+        "pandoc") dependencies+="pandoc" ;;
         esac
+        dependencies+=$'\n'
     done
 
+    # Remove duplicated dependencies in the list.
+    dependencies=$(tr " " "\n" <<<"$dependencies")
+    dependencies=$(sort -u <<<"$dependencies")
+
+    _check_dependencies "$dependencies"
     _display_wait_box
     output_dir=$(_get_output_dir "use_same_dir:true")
 

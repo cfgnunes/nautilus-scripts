@@ -14,14 +14,21 @@ _main() {
     input_files=$(_get_files "type:file, validate_conflict:true")
 
     # Check dependencies for each file type.
+    local dependencies=""
     for input_file in $input_files; do
         case $(_get_command_use "$input_file") in
-        "libreoffice") _check_dependencies "(apt:libreoffice-writer,dnf:libreoffice-writer) (apt:libreoffice-calc,dnf:libreoffice-calc) (apt:libreoffice-impress,dnf:libreoffice-impress)" ;;
-        "pandoc") _check_dependencies "pandoc" ;;
-        "pdftotext") _check_dependencies "pdftotext(apt:poppler-utils,pacman:poppler-glib,dnf:poppler-utils)" ;;
+        "libreoffice") dependencies+="(apt:libreoffice-writer,dnf:libreoffice-writer) (apt:libreoffice-calc,dnf:libreoffice-calc) (apt:libreoffice-impress,dnf:libreoffice-impress)" ;;
+        "pandoc") dependencies+="pandoc" ;;
+        "pdftotext") dependencies+="pdftotext(apt:poppler-utils,pacman:poppler-glib,dnf:poppler-utils)" ;;
         esac
+        dependencies+=$'\n'
     done
 
+    # Remove duplicated dependencies in the list.
+    dependencies=$(tr " " "\n" <<<"$dependencies")
+    dependencies=$(sort -u <<<"$dependencies")
+
+    _check_dependencies "$dependencies"
     _display_wait_box
     output_dir=$(_get_output_dir "use_same_dir:true")
 

@@ -77,7 +77,7 @@ _check_dependencies() {
     fi
 
     # Check all dependencies.
-    IFS=" "
+    IFS=$' \n'
     for dependency in $dependencies; do
         # Item syntax: command(package), example: photorec(testdisk).
         command=${dependency%%(*}

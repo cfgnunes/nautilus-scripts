@@ -15,39 +15,46 @@ _main() {
     input_files=$(_get_files "type:file")
 
     # Check dependencies for each file type.
+    local dependencies=""
     for input_file in $input_files; do
         case $(_get_command_use "$input_file") in
-        "7za") _check_dependencies "7za(apt:p7zip-full,pacman:p7zip,dnf:p7zip)" ;;
-        "ar") _check_dependencies "ar(binutils)" ;;
-        "bunzip2") _command_exists "7za" || _check_dependencies "bunzip2(bzip2)" ;;
-        "gunzip") _command_exists "7za" || _check_dependencies "gunzip(gzip)" ;;
-        "lha") _check_dependencies "lha(lhasa)" ;;
-        "lrzip") _check_dependencies "lrzip" ;;
-        "lz4") _check_dependencies "lz4" ;;
-        "lzip") _check_dependencies "lzip" ;;
-        "lzop") _check_dependencies "lzop" ;;
-        "tar") _check_dependencies "tar" ;;
-        "tar+bunzip2") _check_dependencies "tar bunzip2" ;;
-        "tar+gunzip_uncompress") _check_dependencies "tar gunzip(gzip)" ;;
-        "tar+gunzip") _check_dependencies "tar gunzip" ;;
-        "tar+lrzip") _check_dependencies "tar lrzip" ;;
-        "tar+lz4") _check_dependencies "tar lz4" ;;
-        "tar+lzip") _check_dependencies "tar lzip" ;;
-        "tar+lzop") _check_dependencies "tar lzop" ;;
-        "tar+xz_lzma") _check_dependencies "tar xz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
-        "tar+xz") _check_dependencies "tar xz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
-        "tar+zstd") _check_dependencies "tar zstd" ;;
-        "uncompress") _command_exists "7za" || _check_dependencies "gunzip(gzip)" ;;
-        "unrar") _check_dependencies "unrar" ;;
-        "unsquashfs") _check_dependencies "unsquashfs(squashfs-tools)" ;;
-        "unzip") _command_exists "7za" || _check_dependencies "unzip" ;;
-        "xorriso") _check_dependencies "xorriso" ;;
-        "xz_lzma") _check_dependencies "xz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
-        "xz") _check_dependencies "xz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
-        "zstd") _check_dependencies "zstd" ;;
+        "7za") dependencies+="7za(apt:p7zip-full,pacman:p7zip,dnf:p7zip)" ;;
+        "ar") dependencies+="ar(binutils)" ;;
+        "bunzip2") _command_exists "7za" || dependencies+="bunzip2(bzip2)" ;;
+        "gunzip") _command_exists "7za" || dependencies+="gunzip(gzip)" ;;
+        "lha") dependencies+="lha(lhasa)" ;;
+        "lrzip") dependencies+="lrzip" ;;
+        "lz4") dependencies+="lz4" ;;
+        "lzip") dependencies+="lzip" ;;
+        "lzop") dependencies+="lzop" ;;
+        "tar") dependencies+="tar" ;;
+        "tar+bunzip2") dependencies+="tar bunzip2(bzip2)" ;;
+        "tar+gunzip_uncompress") dependencies+="tar gunzip(gzip)" ;;
+        "tar+gunzip") dependencies+="tar gunzip(gzip)" ;;
+        "tar+lrzip") dependencies+="tar lrzip" ;;
+        "tar+lz4") dependencies+="tar lz4" ;;
+        "tar+lzip") dependencies+="tar lzip" ;;
+        "tar+lzop") dependencies+="tar lzop" ;;
+        "tar+xz_lzma") dependencies+="tar xz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
+        "tar+xz") dependencies+="tar xz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
+        "tar+zstd") dependencies+="tar zstd" ;;
+        "uncompress") _command_exists "7za" || dependencies+="gunzip(gzip)" ;;
+        "unrar") dependencies+="unrar" ;;
+        "unsquashfs") dependencies+="unsquashfs(squashfs-tools)" ;;
+        "unzip") _command_exists "7za" || dependencies+="unzip" ;;
+        "xorriso") dependencies+="xorriso" ;;
+        "xz_lzma") dependencies+="xz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
+        "xz") dependencies+="xz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
+        "zstd") dependencies+="zstd" ;;
         esac
+        dependencies+=$'\n'
     done
 
+    # Remove duplicated dependencies in the list.
+    dependencies=$(tr " " "\n" <<<"$dependencies")
+    dependencies=$(sort -u <<<"$dependencies")
+
+    _check_dependencies "$dependencies"
     _display_wait_box
 
     export -f _get_command_use
