@@ -63,17 +63,15 @@ _check_dependencies() {
     local command=""
     local package_name=""
     local dependency=""
-    local pkg_manager=""
     local packages_to_install=""
 
-    # Check for installed package manager.
-    if _command_exists "apt-get"; then
-        pkg_manager="apt"
-    elif _command_exists "pacman"; then
-        pkg_manager="pacman"
-    elif _command_exists "dnf"; then
-        pkg_manager="dnf"
-    else
+    if [[ -z "$dependencies" ]]; then
+        return
+    fi
+
+    local pkg_manager=""
+    pkg_manager=$(_pkg_get_package_manager)
+    if [[ -z "$pkg_manager" ]]; then
         _display_error_box "Could not find a package manager!"
         _exit_script
     fi
@@ -96,12 +94,12 @@ _check_dependencies() {
         fi
 
         # Ignore install the dependency if the package is already installed (packages that not has a command).
-        if [[ -z "$command" ]] && _is_package_installed "$pkg_manager" "$package_name"; then
+        if [[ -n "$package_name" ]] && [[ -z "$command" ]] && _pkg_is_package_installed "$package_name"; then
             continue
         fi
 
         # If the package is not specified, use the same name of the command.
-        if [[ -n "$command" ]] && [[ -z "$package_name" ]]; then
+        if [[ -z "$package_name" ]] && [[ -n "$command" ]]; then
             package_name=$command
         fi
 
@@ -118,7 +116,7 @@ _check_dependencies() {
         message+=$(sed "s| |\n- |g" <<<"$packages_to_install")
         message+="\nWould you like to install?"
         if _display_question_box "$message"; then
-            _install_packages "${packages_to_install/ /}"
+            _pkg_install_packages "${packages_to_install/ /}"
         else
             _exit_script
         fi
@@ -133,21 +131,21 @@ _check_output() {
 
     # Check the 'exit_code' and log the error.
     if ((exit_code != 0)); then
-        _log_write "Error: Non-zero exit code." "$input_file" "$std_output"
+        _log_write "Error: Non-zero exit code." "$input_file" "$std_output" "$output_file"
         return 1
     fi
 
     # Check if there is the word "Error" in stdout.
     if ! grep -q --ignore-case --perl-regexp "[^\w]error" <<<"$input_file"; then
         if grep -q --ignore-case --perl-regexp "[^\w]error" <<<"$std_output"; then
-            _log_write "Error: Word 'error' found in the standard output." "$input_file" "$std_output"
+            _log_write "Error: Word 'error' found in the standard output." "$input_file" "$std_output" "$output_file"
             return 1
         fi
     fi
 
     # Check if the output file exists.
     if [[ -n "$output_file" ]] && ! [[ -e "$output_file" ]]; then
-        _log_write "Error: The output file does not exist." "$input_file" "$std_output"
+        _log_write "Error: The output file does not exist." "$input_file" "$std_output" "$output_file"
         return 1
     fi
 
@@ -773,60 +771,10 @@ _has_string_in_list() {
     return 1
 }
 
-_install_packages() {
-    local packages=$1
-
-    _display_wait_box_message "Installing the packages. Please, wait..."
-
-    # Install the packages.
-    if _command_exists "pkexec"; then
-        if _command_exists "apt-get"; then
-            pkexec bash -c "apt-get update; apt-get -y install $packages &>/dev/null"
-        elif _command_exists "pacman"; then
-            pkexec bash -c "pacman -Syy; pacman --noconfirm -S $packages &>/dev/null"
-        elif _command_exists "dnf"; then
-            pkexec bash -c "dnf check-update; dnf -y install $packages &>/dev/null"
-        else
-            _display_error_box "Could not find a package manager!"
-            _exit_script
-        fi
-    else
-        _display_error_box "Could not run the installer with administrator permission!"
-        _exit_script
-    fi
-
-    _close_wait_box
-    _display_info_box "The packages have been installed!"
-}
-
 _is_gui_session() {
     if env | grep -q "^DISPLAY"; then
         return 0
     fi
-    return 1
-}
-
-_is_package_installed() {
-    local pkg_manager=$1
-    local package_name=$2
-
-    case "$pkg_manager" in
-    "apt")
-        if dpkg -s "$package_name" &>/dev/null; then
-            return 0
-        fi
-        ;;
-    "pacman")
-        if pacman -Q "$package_name" &>/dev/null; then
-            return 0
-        fi
-        ;;
-    "dnf")
-        if dnf list installed | grep -q "$package_name"; then
-            return 0
-        fi
-        ;;
-    esac
     return 1
 }
 
@@ -863,14 +811,17 @@ _log_write() {
     local message=$1
     local input_file=$2
     local std_output=$3
+    local output_file=$4
+
     local log_temp_file=""
     log_temp_file=$(mktemp --tmpdir="$TEMP_DIR_LOG")
 
     {
         printf "[%s]\n" "$(date "+%Y-%m-%d %H:%M:%S")"
         printf " > Input file: %s\n" "$input_file"
+        printf " > Output file: %s\n" "$output_file"
         printf " > %s\n" "$message"
-        printf " > Output:\n"
+        printf " > Terminal output:\n"
         printf "%s\n\n" "$std_output"
     } >"$log_temp_file"
 }
@@ -909,7 +860,7 @@ _move_file() {
     "skip")
         # Skip, do not move the file.
         if [[ -e "$file_dst" ]]; then
-            _log_write "Warning: The file already exists." "$file_src" "$file_dst"
+            _log_write "Warning: The file already exists." "$file_src" "" "$file_dst"
             return 0
         fi
         ;;
@@ -957,6 +908,88 @@ _move_temp_file_to_output() {
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     return 0
+}
+
+_pkg_get_package_manager() {
+    local pkg_manager=""
+
+    # Check for installed package manager.
+    if _command_exists "apt-get"; then
+        pkg_manager="apt"
+    elif _command_exists "pacman"; then
+        pkg_manager="pacman"
+    elif _command_exists "dnf"; then
+        pkg_manager="dnf"
+    fi
+
+    printf "%s" "$pkg_manager"
+}
+
+_pkg_install_packages() {
+    local packages=$1
+    local pkg_manager=""
+    pkg_manager=$(_pkg_get_package_manager)
+
+    _display_wait_box_message "Installing the packages. Please, wait..."
+
+    # Install the packages.
+    if ! _command_exists "pkexec"; then
+        _display_error_box "Could not run the installer with administrator permission!"
+        _exit_script
+    fi
+
+    case "$pkg_manager" in
+    "apt")
+        pkexec bash -c "apt-get update; apt-get -y install $packages &>/dev/null"
+        ;;
+    "pacman")
+        pkexec bash -c "pacman -Syy; pacman --noconfirm -S $packages &>/dev/null"
+        ;;
+    "dnf")
+        pkexec bash -c "dnf check-update; dnf -y install $packages &>/dev/null"
+        ;;
+    esac
+
+    _close_wait_box
+
+    # Check if all packages were installed.
+    local package_name=""
+    IFS=" "
+    for package_name in $packages; do
+        if ! _pkg_is_package_installed "$package_name"; then
+            _display_error_box "Could not install the package '$package_name'!"
+            _exit_script
+
+        fi
+    done
+    IFS=$FILENAME_SEPARATOR
+
+    _display_info_box "The packages have been successfully installed!"
+}
+
+_pkg_is_package_installed() {
+    local package_name=$1
+    local pkg_manager=""
+    pkg_manager=$(_pkg_get_package_manager)
+
+    case "$pkg_manager" in
+    "apt")
+        if dpkg -s "$package_name" &>/dev/null; then
+            return 0
+        fi
+        ;;
+    "pacman")
+        if pacman -Q "$package_name" &>/dev/null; then
+            return 0
+        fi
+        ;;
+    "dnf")
+        if dnf list installed | grep -q "$package_name"; then
+            return 0
+        fi
+        ;;
+    esac
+    return 1
 }
 
 _print_terminal() {
