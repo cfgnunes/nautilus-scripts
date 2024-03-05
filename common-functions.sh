@@ -535,16 +535,17 @@ _get_files() {
     #   "true": Expand directories.
 
     # Default values for the parameters.
+    local par_get_pwd="false"
     local par_max_files=""
     local par_min_files=""
     local par_recursive="false"
-    local par_get_pwd="false"
     local par_select_encoding=""
     local par_select_extension=""
     local par_select_mime=""
     local par_skip_encoding=""
     local par_skip_extension=""
     local par_skip_mime=""
+    local par_sort_list="false"
     local par_type="file"
     local par_validate_conflict=""
 
@@ -612,9 +613,11 @@ _get_files() {
         "$par_max_files"
 
     # Sort the list by filename.
-    input_files=$(_convert_filenames_to_text "$input_files")
-    input_files=$(_text_sort "$input_files")
-    input_files=$(_convert_text_to_filenames "$input_files")
+    if [[ "$par_sort_list" == "true" ]]; then
+        input_files=$(_convert_filenames_to_text "$input_files")
+        input_files=$(_text_sort "$input_files")
+        input_files=$(_convert_text_to_filenames "$input_files")
+    fi
 
     # Validates filenames with the same base name.
     if [[ "$par_validate_conflict" == "true" ]]; then
