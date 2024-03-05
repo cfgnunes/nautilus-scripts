@@ -489,7 +489,7 @@ _get_filenames_count() {
     printf "%s" "$files_count"
 }
 
-_get_filenames_input() {
+_get_filenames_filemanager() {
     local input_files=""
     local var_filemanager=""
 
@@ -516,7 +516,7 @@ _get_filenames_input() {
 _get_files() {
     local parameters=$1
     local input_files=""
-    input_files=$(_get_filenames_input)
+    input_files=$(_get_filenames_filemanager)
 
     # Parameter: "type"
     # Values:
