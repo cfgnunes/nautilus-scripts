@@ -930,7 +930,6 @@ _pkg_install_packages() {
         if ! _pkg_is_package_installed "$package_name"; then
             _display_error_box "Could not install the package '$package_name'!"
             _exit_script
-
         fi
     done
     IFS=$FILENAME_SEPARATOR
