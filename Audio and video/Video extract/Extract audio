@@ -26,8 +26,26 @@ _main_task() {
     local output_file=""
     local std_output=""
 
+    # Get the audio format from the video.
+    local audio_format=""
+    audio_format=$(ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$input_file")
+    _check_output "$?" "Could not find the audio format from the video." "$input_file" "$output_file" || return 1
+
+    # Define the filename extension according the audio format.
+    local extension=""
+    case $audio_format in
+    "aac") extension="m4a" ;;
+    "aiff") extension="aiff" ;;
+    "alac") extension="m4a" ;;
+    "eac3") extension="ac3" ;;
+    "pcm") extension="wav" ;;
+    "vorbis") extension="ogg" ;;
+    "wmav2") extension="wma" ;;
+    *) extension=$audio_format ;;
+    esac
+
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:aac")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "extension_opt:replace, extension:$extension")
     std_output=$(ffmpeg -y -i "$input_file" -vn -acodec copy -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
