@@ -47,12 +47,8 @@ _main() {
         "xz") dependencies+="xz(apt:xz-utils,pacman:xz,dnf:xz)" ;;
         "zstd") dependencies+="zstd" ;;
         esac
-        dependencies+=$'\n'
+        dependencies+=" "
     done
-
-    # Remove duplicated dependencies in the list.
-    dependencies=$(tr " " "\n" <<<"$dependencies")
-    dependencies=$(sort -u <<<"$dependencies")
 
     _check_dependencies "$dependencies"
     _display_wait_box

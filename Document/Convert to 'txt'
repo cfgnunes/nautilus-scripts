@@ -21,12 +21,8 @@ _main() {
         "pandoc") dependencies+="pandoc" ;;
         "pdftotext") dependencies+="pdftotext(apt:poppler-utils,pacman:poppler-glib,dnf:poppler-utils)" ;;
         esac
-        dependencies+=$'\n'
+        dependencies+=" "
     done
-
-    # Remove duplicated dependencies in the list.
-    dependencies=$(tr " " "\n" <<<"$dependencies")
-    dependencies=$(sort -u <<<"$dependencies")
 
     _check_dependencies "$dependencies"
     _display_wait_box

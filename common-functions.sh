@@ -65,9 +65,14 @@ _check_dependencies() {
     local dependency=""
     local packages_to_install=""
 
-    if [[ -z "$dependencies" ]]; then
-        return
-    fi
+    [[ -z "$dependencies" ]] && return
+
+    # Skip duplicated dependencies in the input list.
+    dependencies=$(tr " " "\n" <<<"$dependencies")
+    dependencies=$(sort -u <<<"$dependencies")
+    dependencies=$(_text_remove_empty_lines "$dependencies")
+
+    [[ -z "$dependencies" ]] && return
 
     local pkg_manager=""
     pkg_manager=$(_pkg_get_package_manager)
@@ -77,7 +82,7 @@ _check_dependencies() {
     fi
 
     # Check all dependencies.
-    IFS=$' \n'
+    IFS=$'\n'
     for dependency in $dependencies; do
         # Item syntax: command(package), example: photorec(testdisk).
         command=${dependency%%(*}

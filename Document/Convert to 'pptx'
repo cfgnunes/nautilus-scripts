@@ -20,12 +20,8 @@ _main() {
         "libreoffice") dependencies+="(apt:libreoffice-impress,dnf:libreoffice-impress)" ;;
         "pandoc") dependencies+="pandoc" ;;
         esac
-        dependencies+=$'\n'
+        dependencies+=" "
     done
-
-    # Remove duplicated dependencies in the list.
-    dependencies=$(tr " " "\n" <<<"$dependencies")
-    dependencies=$(sort -u <<<"$dependencies")
 
     _check_dependencies "$dependencies"
     _display_wait_box
