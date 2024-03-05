@@ -19,7 +19,7 @@ _main() {
         "convert") _check_dependencies "convert" ;;
         "inkscape") _check_dependencies "inkscape" ;;
         "latexmk") _check_dependencies "latexmk(apt:latexmk,dnf:latexmk) (apt:texlive) (apt:texlive-fonts-extra) (apt:texlive-latex-extra) (apt:texlive-publishers) (apt:texlive-science) (apt:texlive-xetex) (dnf:texlive-scheme-basic)" ;;
-        "libreoffice") _check_dependencies "libreoffice(apt:libreoffice-core,dnf:libreoffice-core) (apt:libreoffice-writer) (apt:libreoffice-calc) (apt:libreoffice-impress)" ;;
+        "libreoffice") _check_dependencies "(apt:libreoffice-writer,dnf:libreoffice-writer) (apt:libreoffice-calc,dnf:libreoffice-calc) (apt:libreoffice-impress,dnf:libreoffice-impress)" ;;
         "pandoc_latex") _check_dependencies "pandoc (apt:texlive,dnf:texlive-scheme-basic)" ;;
         "pandoc") _check_dependencies "pandoc" ;;
         esac
