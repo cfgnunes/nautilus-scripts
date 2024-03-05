@@ -23,11 +23,15 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
+    local new_pemission=""
 
     # Run the main process.
-    std_output=$(find "$input_file" ! -path "$IGNORE_FIND_PATH" -type f -exec chmod "$((666 - $(umask)))" -- {} \+ 2>&1)
+    new_pemission=$(printf "%04o" "$((0666 - $(umask)))")
+    std_output=$(find "$input_file" ! -path "$IGNORE_FIND_PATH" -type f -exec chmod "$new_pemission" -- {} \+ 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
-    std_output=$(find "$input_file" ! -path "$IGNORE_FIND_PATH" -type d -exec chmod "$((777 - $(umask)))" -- {} \+ 2>&1)
+
+    new_pemission=$(printf "%04o" "$((0777 - $(umask)))")
+    std_output=$(find "$input_file" ! -path "$IGNORE_FIND_PATH" -type d -exec chmod "$new_pemission" -- {} \+ 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
