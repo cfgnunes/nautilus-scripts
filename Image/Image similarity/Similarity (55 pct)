@@ -9,13 +9,24 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _check_dependencies "findimagedupes eog"
+    _check_dependencies "findimagedupes"
     _display_wait_box
     input_files=$(_get_files "type:file, recursive:true, mime:image/")
 
+    # Get the installed image viewer.
+    local image_viewer=""
+    if _command_exists "eog"; then
+        image_viewer="eog"
+    elif _command_exists "loupe"; then
+        image_viewer="loupe"
+    else
+        _check_dependencies "eog"
+        image_viewer="eog"
+    fi
+
     # Run the main process.
     # shellcheck disable=SC2086
-    findimagedupes --recurse --threshold=55% --program=/usr/bin/eog -- $input_files 2>/dev/null
+    findimagedupes --recurse --threshold=55% --program="$(which "$image_viewer")" -- $input_files 2>/dev/null
     _display_result_box ""
 }
 
