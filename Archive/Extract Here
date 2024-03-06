@@ -18,9 +18,9 @@ _main() {
     local dependencies=""
     for input_file in $input_files; do
         case $(_get_command_use "$input_file") in
+        "tar" | "tar+"*) dependencies+="command=tar"$'\n' ;;&
         "7za") dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip" ;;
         "ar") dependencies+="command=ar; package=binutils" ;;
-        "tar"*) dependencies+="command=tar" ;;
         "unrar") dependencies+="command=unrar" ;;
         "unsquashfs") dependencies+="command=unsquashfs; package=squashfs-tools" ;;
         "unzip") _command_exists "7za" || dependencies+="command=unzip" ;;
