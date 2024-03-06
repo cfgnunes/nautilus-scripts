@@ -561,6 +561,21 @@ _run_text_remove_empty_lines() {
     expected_output="Line1"$'\n'"Line2"
     output=$(_text_remove_empty_lines "$input")
     _test_equal "$input" "$output" "$expected_output"
+
+    input="Line1"$'\n'"  "$'\n'"Line2"
+    expected_output="Line1"$'\n'"Line2"
+    output=$(_text_remove_empty_lines "$input")
+    _test_equal "$input" "$output" "$expected_output"
+
+    input="Line1"$'\n'" "$'\t'$'\n'"Line2"
+    expected_output="Line1"$'\n'"Line2"
+    output=$(_text_remove_empty_lines "$input")
+    _test_equal "$input" "$output" "$expected_output"
+
+    input="Line1"$'\n'$'\r'$'\n'"Line2"
+    expected_output="Line1"$'\n'"Line2"
+    output=$(_text_remove_empty_lines "$input")
+    _test_equal "$input" "$output" "$expected_output"
 }
 
 _run_text_remove_home() {

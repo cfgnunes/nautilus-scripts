@@ -1047,7 +1047,7 @@ _strip_filename_extension() {
 _text_remove_empty_lines() {
     local input_text=$1
 
-    grep -v "^ *$" <<<"$input_text" || true
+    grep -v "^\s*$" <<<"$input_text" || true
 }
 
 _text_remove_home() {
