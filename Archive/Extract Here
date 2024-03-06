@@ -25,8 +25,8 @@ _main() {
         "unsquashfs") dependencies+="command=unsquashfs; package=squashfs-tools" ;;
         "unzip") _command_exists "7za" || dependencies+="command=unzip" ;;
         "xorriso") dependencies+="command=xorriso" ;;
-        *"bunzip2") dependencies+="command=bunzip2; package=bzip2" ;;
-        *"gunzip" | *"gunzip_uncompress") dependencies+="command=gunzip; package=gzip" ;;
+        *"bzip2") dependencies+="command=bzip2" ;;
+        *"gzip" | *"compress") dependencies+="command=gzip" ;;
         *"lha") dependencies+="command=lha; package=lhasa" ;;
         *"lrzip") dependencies+="command=lrzip" ;;
         *"lz4") dependencies+="command=lz4" ;;
@@ -73,41 +73,36 @@ _main_task() {
     case $(_get_command_use "$input_file") in
     "7za") std_output=$(7za x -aoa -- "$input_file" 2>&1) ;;
     "ar") std_output=$(ar x -- "$input_file" 2>&1) ;;
-    "bunzip2")
+    "bzip2")
         if _command_exists "7za"; then
             std_output=$(7za x -aoa -- "$input_file" 2>&1)
         else
-            std_output=$(bunzip2 -k -c -- "$input_file" >"$filename" 2>&1)
+            std_output=$(bzip2 -d -c -k -- "$input_file" >"$filename" 2>&1)
         fi
         ;;
-    "gunzip" | "gunzip_uncompress")
+    "gzip" | "compress")
         if _command_exists "7za"; then
             std_output=$(7za x -aoa -- "$input_file" 2>&1)
         else
-            std_output=$(gunzip -k -c -- "$input_file" >"$filename" 2>&1)
+            std_output=$(gzip -d -c -k -- "$input_file" >"$filename" 2>&1)
         fi
         ;;
     "lha") std_output=$(lha -e "$input_file" 2>&1) ;;
     "lrzip") std_output=$(lrzip -d -o "$temp_dir_output/$filename" -- "$input_file" 2>&1) ;;
     "lz4") std_output=$(lz4 -d -c -- "$input_file" >"$filename" 2>&1) ;;
-    "lzip") std_output=$(lzip -k -d -c -- "$input_file" >"$filename" 2>&1) ;;
+    "lzip") std_output=$(lzip -d -c -k -- "$input_file" >"$filename" 2>&1) ;;
     "lzop") std_output=$(lzop -d -- "$input_file" 2>&1) ;;
     "tar") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
-    "tar+bunzip2") std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1) ;;
-    "tar+gunzip_uncompress") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
-    "tar+gunzip") std_output=$(tar --extract --gzip --file="$input_file" 2>&1) ;;
+    "tar+bzip2") std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1) ;;
+    "tar+compress") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
+    "tar+gzip") std_output=$(tar --extract --gzip --file="$input_file" 2>&1) ;;
     "tar+lrzip") std_output=$(lrztar -d "$input_file" 2>&1) ;;
     "tar+lz4") std_output=$(lz4 -d -c -- "$input_file" | tar xf - 2>&1) ;;
     "tar+lzip") std_output=$(tar --extract --lzip --file="$input_file" 2>&1) ;;
     "tar+lzop") std_output=$(tar --extract --lzop --file="$input_file" 2>&1) ;;
     "tar+xz_lzma") std_output=$(tar --extract --lzma --file="$input_file" 2>&1) ;;
     "tar+xz") std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
-    "tar+zstd")
-        std_output=$(zstd -d "$input_file" -o ".temp.tar" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" ""
-        std_output=$(tar --extract --file=".temp.tar" 2>&1)
-        rm -f ".temp.tar"
-        ;;
+    "tar+zstd") std_output=$(zstd -d -c -- "$input_file" | tar xf - 2>&1) ;;
     "unrar") std_output=$(unrar x -- "$input_file" 2>&1) ;;
     "unsquashfs") std_output=$(unsquashfs "$input_file" 2>&1) ;;
     "unzip")
@@ -118,9 +113,9 @@ _main_task() {
         fi
         ;;
     "xorriso") std_output=$(xorriso -osirrox on -indev "$input_file" -find / -exec chmod u+rw -- -extract / . -rollback_end 2>&1) ;;
-    "xz_lzma") std_output=$(xz --format=lzma --decompress -k -c -- "$input_file" >"$filename" 2>&1) ;;
-    "xz") std_output=$(xz --decompress -k -c -- "$input_file" >"$filename" 2>&1) ;;
-    "zstd") std_output=$(zstd --decompress -c -- "$input_file" >"$filename" 2>&1) ;;
+    "xz_lzma") std_output=$(xz -d -c -k --format=lzma -- "$input_file" >"$filename" 2>&1) ;;
+    "xz") std_output=$(xz -d -c -k -- "$input_file" >"$filename" 2>&1) ;;
+    "zstd") std_output=$(zstd -d -c -- "$input_file" >"$filename" 2>&1) ;;
     esac
 
     # Check for result errors.
@@ -185,12 +180,12 @@ _get_command_use() {
     "application/x-zip-compressed") command_use="unzip" ;;       # zip
     "application/x-zip") command_use="unzip" ;;                  # zip
     "application/zip") command_use="unzip" ;;                    # zip
-    #"application/bzip2") command_use="bunzip2" ;;                # bz, bz2
-    #"application/gzip") command_use="gunzip" ;;                  # gz
-    #"application/x-bzip") command_use="bunzip2" ;;               # bz, bz2
-    #"application/x-bzip2") command_use="bunzip2" ;;              # bz, bz2
-    #"application/x-compress") command_use="gunzip_uncompress" ;; # z
-    #"application/x-gzip") command_use="gunzip" ;;                # gz
+    #"application/bzip2") command_use="bzip2" ;;                  # bz, bz2
+    #"application/gzip") command_use="gzip" ;;                    # gz
+    #"application/x-bzip") command_use="bzip2" ;;                 # bz, bz2
+    #"application/x-bzip2") command_use="bzip2" ;;                # bz, bz2
+    #"application/x-compress") command_use="compress" ;;          # z
+    #"application/x-gzip") command_use="gzip" ;;                  # gz
     #"application/x-lrzip") command_use="lrzip" ;;                # lrz
     #"application/x-lz4") command_use="lz4" ;;                    # lz4
     #"application/x-lzip") command_use="lzip" ;;                  # lz
@@ -201,20 +196,20 @@ _get_command_use() {
     *)
         # If not found the 'file_mime', use the extension.
         case "${input_file,,}" in
-        *.tar.bz | *.tbz | *.tar.bz2 | *.tbz2 | *.tb2) command_use="tar+bunzip2" ;;
-        *.tar.gz | *.tgz) command_use="tar+gunzip" ;;
+        *.tar.bz | *.tbz | *.tar.bz2 | *.tbz2 | *.tb2) command_use="tar+bzip2" ;;
+        *.tar.gz | *.tgz) command_use="tar+gzip" ;;
         *.tar.lrz | *.tlrz) command_use="tar+lrzip" ;;
         *.tar.lz) command_use="tar+lzip" ;;
         *.tar.lz4) command_use="tar+lz4" ;;
         *.tar.lzma | *.tlz) command_use="tar+xz_lzma" ;;
         *.tar.lzo | *.tzo) command_use="tar+lzop" ;;
         *.tar.xz | *.txz) command_use="tar+xz" ;;
-        *.tar.z | *.taz) command_use="tar+gunzip_uncompress" ;;
+        *.tar.z | *.taz) command_use="tar+compress" ;;
         *.tar.zst | *.tzst) command_use="tar+zstd" ;;
         *.7z) command_use="7za" ;;
-        *.bz | *.bz2) command_use="bunzip2" ;;
+        *.bz | *.bz2) command_use="bzip2" ;;
         *.deb | *.udeb) command_use="ar" ;;
-        *.gz) command_use="gunzip" ;;
+        *.gz) command_use="gzip" ;;
         *.iso | *.iso9660) command_use="xorriso" ;;
         *.lrz) command_use="lrzip" ;;
         *.lz) command_use="lzip" ;;
@@ -226,7 +221,7 @@ _get_command_use() {
         *.sqsh | *.squashfs | *.sfs) command_use="unsquashfs" ;;
         *.tar) command_use="tar" ;;
         *.xz) command_use="xz" ;;
-        *.z) command_use="gunzip_uncompress" ;;
+        *.z) command_use="compress" ;;
         *.zip) command_use="unzip" ;;
         *.zst) command_use="zstd" ;;
         *) command_use="7za" ;;
