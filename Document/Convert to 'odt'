@@ -79,7 +79,7 @@ _get_command_use() {
     local command_use=""
 
     # Get the mime type and define what command to use.
-    file_mime=$(file --dereference --brief --mime-type -- "$input_file")
+    file_mime=$(_get_file_mime "$input_file")
 
     # NOTE: See the file: /usr/share/mime/packages/freedesktop.org.xml
     case "${file_mime,,}" in

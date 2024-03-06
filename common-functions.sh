@@ -458,6 +458,12 @@ _gdbus_notify() {
         "[]" '{"urgency": <1>}' 5000 &>/dev/null
 }
 
+_get_file_mime() {
+    local file=$1
+
+    file --dereference --brief --mime-type -- "$file"
+}
+
 _get_filename_extension() {
     local filename=$1
 
@@ -1147,7 +1153,7 @@ _validate_file_mime() {
     # Validation for files (mime).
     if [[ -n "$par_skip_mime" ]] || [[ -n "$par_select_mime" ]]; then
         local file_mime=""
-        file_mime=$(file --dereference --brief --mime-type -- "$input_file")
+        file_mime=$(_get_file_mime "$input_file")
 
         if [[ -n "$par_skip_mime" ]]; then
             _has_string_in_list "$file_mime" "$par_skip_mime" && return 1
@@ -1339,6 +1345,7 @@ export -f \
     _convert_text_to_filenames \
     _exit_script \
     _expand_directory \
+    _get_file_mime \
     _get_filename_extension \
     _get_filename_next_suffix \
     _get_full_path_filename \
