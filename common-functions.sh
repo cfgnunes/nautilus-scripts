@@ -60,10 +60,7 @@ trap _cleanup_on_exit EXIT
 
 _check_dependencies() {
     local dependencies=$1
-    local command=""
-    local package=""
     local packages_to_install=""
-    local pkg_manager=""
     local pkg_manager_installed=""
 
     [[ -z "$dependencies" ]] && return
@@ -87,6 +84,9 @@ _check_dependencies() {
     IFS=$'\n'
     local dependency=""
     for dependency in $dependencies; do
+        local command=""
+        local package=""
+        local pkg_manager=""
         eval "$dependency"
 
         # Ignore installing the dependency if there is the command in the shell.
