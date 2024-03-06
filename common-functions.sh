@@ -258,17 +258,21 @@ _display_info_box() {
 }
 
 _display_password_box() {
-    local message="Type your password"
+    _display_password_box_message "Type your password"
+}
+
+_display_password_box_message() {
+    local message="$1"
     local password=""
 
     # Ask the user for the 'password'.
     if ! _is_gui_session; then
         read -r -p "$message: " password >&2
     elif _command_exists "zenity"; then
-        password=$(zenity --title="$(_get_script_name)" \
-            --password 2>/dev/null) || _exit_script
+        password=$(zenity --title="Password" \
+            --entry --hide-text --text "$message" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
-        password=$(kdialog --title "$(_get_script_name)" \
+        password=$(kdialog --title "Password" \
             --password "$message" 2>/dev/null) || _exit_script
     fi
 
@@ -1343,6 +1347,8 @@ export -f \
     _command_exists \
     _convert_filenames_to_text \
     _convert_text_to_filenames \
+    _display_password_box \
+    _display_password_box_message \
     _exit_script \
     _expand_directory \
     _get_file_mime \
@@ -1352,6 +1358,7 @@ export -f \
     _get_max_procs \
     _get_output_filename \
     _has_string_in_list \
+    _is_gui_session \
     _log_write \
     _move_file \
     _move_temp_file_to_output \

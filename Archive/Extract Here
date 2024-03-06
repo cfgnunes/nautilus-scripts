@@ -98,7 +98,14 @@ _main_task() {
         __chain_extractor "$input_file" || std_output="Could not find the archive format to extract."
         ;;
     "7za")
-        __chain_extractor "$input_file" || std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        # If if the archive is password-protected.
+        if 7za t -slt -p -- "$input_file" 2>&1 | grep -q "Wrong password"; then
+            local password=""
+            password=$(_display_password_box_message "'$(basename -- "$input_file")' is password-protected.")
+            std_output=$(7za x -aoa -p"$password" -- "$input_file" 2>&1)
+        else
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        fi
         ;;
     "ar") std_output=$(ar x -- "$input_file" 2>&1) ;;
     "bzip2")
