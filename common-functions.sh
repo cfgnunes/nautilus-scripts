@@ -888,10 +888,10 @@ _pkg_get_package_manager() {
     # Check for an installed package manager.
     if _command_exists "apt-get"; then
         pkg_manager="apt"
-    elif _command_exists "pacman"; then
-        pkg_manager="pacman"
     elif _command_exists "dnf"; then
         pkg_manager="dnf"
+    elif _command_exists "pacman"; then
+        pkg_manager="pacman"
     fi
 
     printf "%s" "$pkg_manager"
@@ -913,11 +913,11 @@ _pkg_install_packages() {
     "apt")
         pkexec bash -c "apt-get update; apt-get -y install $packages &>/dev/null"
         ;;
-    "pacman")
-        pkexec bash -c "pacman -Syy; pacman --noconfirm -S $packages &>/dev/null"
-        ;;
     "dnf")
         pkexec bash -c "dnf check-update; dnf -y install $packages &>/dev/null"
+        ;;
+    "pacman")
+        pkexec bash -c "pacman -Syy; pacman --noconfirm -S $packages &>/dev/null"
         ;;
     esac
 
@@ -947,13 +947,13 @@ _pkg_is_package_installed() {
             return 0
         fi
         ;;
-    "pacman")
-        if pacman -Q "$package" &>/dev/null; then
+    "dnf")
+        if dnf list installed | grep -q "$package"; then
             return 0
         fi
         ;;
-    "dnf")
-        if dnf list installed | grep -q "$package"; then
+    "pacman")
+        if pacman -Q "$package" &>/dev/null; then
             return 0
         fi
         ;;
