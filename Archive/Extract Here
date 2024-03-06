@@ -25,8 +25,8 @@ _main() {
         "unsquashfs") dependencies+="command=unsquashfs; package=squashfs-tools" ;;
         "unzip") _command_exists "7za" || dependencies+="command=unzip" ;;
         "xorriso") dependencies+="command=xorriso" ;;
-        *"bunzip2" | *"gunzip_uncompress") _command_exists "7za" || dependencies+="command=bunzip2; package=bzip2" ;;
-        *"gunzip") _command_exists "7za" || dependencies+="command=gunzip; package=gzip" ;;
+        *"bunzip2") dependencies+="command=bunzip2; package=bzip2" ;;
+        *"gunzip" | *"gunzip_uncompress") dependencies+="command=gunzip; package=gzip" ;;
         *"lha") dependencies+="command=lha; package=lhasa" ;;
         *"lrzip") dependencies+="command=lrzip" ;;
         *"lz4") dependencies+="command=lz4" ;;
