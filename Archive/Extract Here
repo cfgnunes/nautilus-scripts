@@ -9,31 +9,48 @@ _main() {
     local input_files=""
     local output_dir=""
     local input_file=""
+    local chain_extractor_installed=false
 
     # Execute initial checks.
     _check_dependencies ""
     input_files=$(_get_files "par_type=file")
 
+    if _command_exists "unar" && _command_exists "7za"; then
+        chain_extractor_installed=true
+    fi
+
     # Check dependencies for each file type.
     local dependencies=""
     for input_file in $input_files; do
         case $(_get_command_use "$input_file") in
-        "tar" | "tar+"*) dependencies+="command=tar"$'\n' ;;&
-        "7za") dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip" ;;
+        "_unknown_") dependencies+="command=unar; pkg_manager=apt | command=unar; pkg_manager=dnf | command=unar; pkg_manager=pacman; package=unarchiver | command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip" ;;
+        "7za") $chain_extractor_installed || dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip" ;;
         "ar") dependencies+="command=ar; package=binutils" ;;
-        "unrar") dependencies+="command=unrar" ;;
+        "bzip2") $chain_extractor_installed || dependencies+="command=bzip2" ;;
+        "cpio") $chain_extractor_installed || dependencies+="command=cpio" ;;
+        "gzip" | "compress") $chain_extractor_installed || dependencies+="command=gzip" ;;
+        "lha") dependencies+="command=lha; package=lhasa" ;;
+        "lrzip") dependencies+="command=lrzip" ;;
+        "lz4") dependencies+="command=lz4" ;;
+        "lzip") dependencies+="command=lzip" ;;
+        "lzop") dependencies+="command=lzop" ;;
+        "tar") dependencies+="command=tar" ;;
+        "tar+bzip2") dependencies+="command=tar | command=bzip2" ;;
+        "tar+gzip" | "tar+compress") dependencies+="command=tar | command=gzip" ;;
+        "tar+lrzip") dependencies+="command=lrztar; package=lrzip" ;;
+        "tar+lz4") dependencies+="command=tar | command=lz4" ;;
+        "tar+lzip") dependencies+="command=tar | command=lzip" ;;
+        "tar+lzop") dependencies+="command=tar | command=lzop" ;;
+        "tar+xz" | "tar+lzma") dependencies+="command=tar | command=xz; pkg_manager=apt; package=xz-utils | command=xz; pkg_manager=dnf | command=xz; pkg_manager=pacman" ;;
+        "tar+zstd") dependencies+="command=tar | command=zstd" ;;
+        "unar") $chain_extractor_installed || dependencies+="command=unar; pkg_manager=apt | command=unar; pkg_manager=dnf | command=unar; pkg_manager=pacman; package=unarchiver" ;;
+        "unrar") $chain_extractor_installed || dependencies+="command=unrar" ;;
         "unsquashfs") dependencies+="command=unsquashfs; package=squashfs-tools" ;;
-        "unzip") _command_exists "7za" || dependencies+="command=unzip" ;;
+        "unzip") $chain_extractor_installed || dependencies+="command=unzip" ;;
         "xorriso") dependencies+="command=xorriso" ;;
-        *"bzip2") dependencies+="command=bzip2" ;;
-        *"gzip" | *"compress") dependencies+="command=gzip" ;;
-        *"lha") dependencies+="command=lha; package=lhasa" ;;
-        *"lrzip") dependencies+="command=lrzip" ;;
-        *"lz4") dependencies+="command=lz4" ;;
-        *"lzip") dependencies+="command=lzip" ;;
-        *"lzop") dependencies+="command=lzop" ;;
-        *"xz" | *"xz_lzma") dependencies+="command=xz; pkg_manager=apt; package=xz-utils | command=xz; pkg_manager=dnf | command=xz; pkg_manager=pacman" ;;
-        *"zstd") dependencies+="command=zstd" ;;
+        "xz" | "lzma") dependencies+="command=xz; pkg_manager=apt; package=xz-utils | command=xz; pkg_manager=dnf | command=xz; pkg_manager=pacman" ;;
+        "zpaq") dependencies+="command=zpaq" ;;
+        "zstd") dependencies+="command=zstd" ;;
         esac
         dependencies+=$'\n'
     done
@@ -51,8 +68,6 @@ _main() {
 _main_task() {
     local input_file=$1
     local output_dir=$2
-    local count_root_items=""
-    local output_item=""
     local std_output=""
 
     if [[ -z "$output_dir" ]]; then
@@ -69,28 +84,37 @@ _main_task() {
     mkdir --parents "$temp_dir_output"
     pushd "$temp_dir_output" &>/dev/null || true
 
+    # Define some default extractors.
+    __chain_extractor() {
+        unar -- "$1" &>/dev/null && return 0
+        7z x -aoa -- "$1" &>/dev/null && return 0
+        7za x -aoa -- "$1" &>/dev/null && return 0
+        return 1
+    }
+
     # Extract the archive according to the file extension.
     case $(_get_command_use "$input_file") in
-    "7za") std_output=$(7za x -aoa -- "$input_file" 2>&1) ;;
+    "_unknown_")
+        __chain_extractor "$input_file" || std_output="Could not find the archive format to extract."
+        ;;
+    "7za")
+        __chain_extractor "$input_file" || std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        ;;
     "ar") std_output=$(ar x -- "$input_file" 2>&1) ;;
     "bzip2")
-        if _command_exists "7za"; then
-            std_output=$(7za x -aoa -- "$input_file" 2>&1)
-        else
-            std_output=$(bzip2 -d -c -k -- "$input_file" >"$filename" 2>&1)
-        fi
+        __chain_extractor "$input_file" || std_output=$(bzip2 -d -c -k -- "$input_file" >"$filename" 2>&1)
+        ;;
+    "cpio")
+        __chain_extractor "$input_file" || std_output=$(cpio -idv <"$input_file" 2>&1)
         ;;
     "gzip" | "compress")
-        if _command_exists "7za"; then
-            std_output=$(7za x -aoa -- "$input_file" 2>&1)
-        else
-            std_output=$(gzip -d -c -k -- "$input_file" >"$filename" 2>&1)
-        fi
+        __chain_extractor "$input_file" || std_output=$(bzip2 -d -c -k -- "$input_file" >"$filename" 2>&1)
         ;;
     "lha") std_output=$(lha -e "$input_file" 2>&1) ;;
     "lrzip") std_output=$(lrzip -d -o "$temp_dir_output/$filename" -- "$input_file" 2>&1) ;;
     "lz4") std_output=$(lz4 -d -c -- "$input_file" >"$filename" 2>&1) ;;
     "lzip") std_output=$(lzip -d -c -k -- "$input_file" >"$filename" 2>&1) ;;
+    "lzma") std_output=$(xz -d -c -k --format=lzma -- "$input_file" >"$filename" 2>&1) ;;
     "lzop") std_output=$(lzop -d -- "$input_file" 2>&1) ;;
     "tar") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
     "tar+bzip2") std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1) ;;
@@ -99,22 +123,23 @@ _main_task() {
     "tar+lrzip") std_output=$(lrztar -d "$input_file" 2>&1) ;;
     "tar+lz4") std_output=$(lz4 -d -c -- "$input_file" | tar xf - 2>&1) ;;
     "tar+lzip") std_output=$(tar --extract --lzip --file="$input_file" 2>&1) ;;
+    "tar+lzma") std_output=$(tar --extract --lzma --file="$input_file" 2>&1) ;;
     "tar+lzop") std_output=$(tar --extract --lzop --file="$input_file" 2>&1) ;;
-    "tar+xz_lzma") std_output=$(tar --extract --lzma --file="$input_file" 2>&1) ;;
     "tar+xz") std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
     "tar+zstd") std_output=$(zstd -d -c -- "$input_file" | tar xf - 2>&1) ;;
-    "unrar") std_output=$(unrar x -- "$input_file" 2>&1) ;;
+    "unar")
+        _chain_extractor "$input_file" || std_output=$(unar -- "$input_file" 2>&1)
+        ;;
+    "unrar")
+        __chain_extractor "$input_file" || std_output=$(unrar x -- "$input_file" 2>&1)
+        ;;
     "unsquashfs") std_output=$(unsquashfs "$input_file" 2>&1) ;;
     "unzip")
-        if _command_exists "7za"; then
-            std_output=$(7za x -aoa -- "$input_file" 2>&1)
-        else
-            std_output=$(unzip -- "$input_file" 2>&1)
-        fi
+        __chain_extractor "$input_file" || std_output=$(unzip -- "$input_file" 2>&1)
         ;;
     "xorriso") std_output=$(xorriso -osirrox on -indev "$input_file" -find / -exec chmod u+rw -- -extract / . -rollback_end 2>&1) ;;
-    "xz_lzma") std_output=$(xz -d -c -k --format=lzma -- "$input_file" >"$filename" 2>&1) ;;
     "xz") std_output=$(xz -d -c -k -- "$input_file" >"$filename" 2>&1) ;;
+    "zpaq") std_output=$(zpaq x "$input_file" 2>&1) ;;
     "zstd") std_output=$(zstd -d -c -- "$input_file" >"$filename" 2>&1) ;;
     esac
 
@@ -122,11 +147,14 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" ""
 
     # Check if the archive has just one item (single file/directory compressed).
+    local count_root_items=""
+    local single_output_item=""
     count_root_items=$(find . -mindepth 1 -maxdepth 1 2>/dev/null | wc -l)
     if ((count_root_items == 1)); then
-        output_item=$(find . -mindepth 1 -maxdepth 1 2>/dev/null)
-        output_item="${output_item#./}"
+        single_output_item=$(find . -mindepth 1 -maxdepth 1 2>/dev/null)
+        single_output_item="${single_output_item#./}"
     fi
+
     popd &>/dev/null || true
 
     # Check if the 'temp_dir_output' is empty.
@@ -138,15 +166,15 @@ _main_task() {
     fi
 
     # Move the items to the correct directory.
-    if [[ "$filename" == "$output_item" ]] ||
-        [[ "$filename" == "$(_strip_filename_extension "$output_item")" ]]; then
+    if [[ "$filename" == "$single_output_item" ]] ||
+        [[ "$filename" == "$(_strip_filename_extension "$single_output_item")" ]]; then
         # For archives with "one item with the same name of the archive".
         # For example: "README.TXT.tar.gz" or "README.tar.gz".
-        std_output=$(_move_file "rename" "$temp_dir_output/$output_item" "$output_dir/$output_item" 2>&1)
+        std_output=$(_move_file "rename" "$temp_dir_output/$single_output_item" "$output_dir/$single_output_item" 2>&1)
         _check_output "$?" "$std_output" "$input_file" ""
-    elif [[ "squashfs-root" == "$output_item" ]]; then
+    elif [[ "squashfs-root" == "$single_output_item" ]]; then
         # For SquashFS.
-        std_output=$(_move_file "rename" "$temp_dir_output/$output_item" "$output_dir/$filename" 2>&1)
+        std_output=$(_move_file "rename" "$temp_dir_output/$single_output_item" "$output_dir/$filename" 2>&1)
         _check_output "$?" "$std_output" "$input_file" ""
     elif ((count_root_items > 0)); then
         # For archives with "one item with a different name of the archive" or "multiple items".
@@ -160,56 +188,78 @@ _main_task() {
 
 _get_command_use() {
     local input_file=$1
-    local file_mime=""
     local command_use=""
-    local tar_check=true
+    local file_mime=""
+    local filename_extension=""
 
-    # Get the mime type and define what command to use.
-    file_mime=$(file --dereference --brief --mime-type -- "$input_file")
+    # Get the mime type and filename extension to define what command to use.
+    file_mime=$(_get_file_mime "$input_file")
+    filename_extension=$(_get_filename_extension "$input_file")
 
     # NOTE: See the file: /usr/share/mime/packages/freedesktop.org.xml
     case "${file_mime,,}" in
     "application/x-7z-compressed") command_use="7za" ;;          # 7z
+    "application/x-ace") command_use="unar" ;;                   # ace
+    "application/x-alz") command_use="unar" ;;                   # alz
+    "application/x-arc") command_use="unar" ;;                   # arc
+    "application/x-arj") command_use="unar" ;;                   # arj
     "application/bzip2") command_use="bzip2" ;;                  # bz, bz2
     "application/x-bzip") command_use="bzip2" ;;                 # bz, bz2
     "application/x-bzip2") command_use="bzip2" ;;                # bz, bz2
+    "application/vnd.ms-cab-compressed") command_use="unar" ;;   # cab
+    "zz-application/zz-winassoc-cab") command_use="unar" ;;      # cab
+    "application/x-cpio") command_use="cpio" ;;                  # cpio
     "application/vnd.debian.binary-package") command_use="ar" ;; # deb
     "application/gzip") command_use="gzip" ;;                    # gz
     "application/x-gzip") command_use="gzip" ;;                  # gz
     "application/x-iso9660-image") command_use="xorriso" ;;      # iso
+    "application/x-lrzip") command_use="lrzip" ;;                # lrz
     "application/x-lzip") command_use="lzip" ;;                  # lz
+    "application/x-lz4") command_use="lz4" ;;                    # lz4
     "application/x-lha") command_use="lha" ;;                    # lzh
     "application/x-lzh-compressed") command_use="lha" ;;         # lzh
-    "application/x-lzma") command_use="xz_lzma" ;;               # lzma
+    "application/x-lzma") command_use="lzma" ;;                  # lzma
     "application/x-lzop") command_use="lzop" ;;                  # lzo
+    "application/x-msi") command_use="unar" ;;                   # msi
+    "application/x-pak") command_use="unar" ;;                   # pak
     "application/vnd.rar") command_use="unrar" ;;                # rar
     "application/x-rar-compressed") command_use="unrar" ;;       # rar
     "application/x-rar") command_use="unrar" ;;                  # rar
+    "application/x-stuffit") command_use="unar" ;;               # sit
+    "application/stuffit") command_use="unar" ;;                 # sit
+    "application/x-sit") command_use="unar" ;;                   # sit
     "application/vnd.squashfs") command_use="unsquashfs" ;;      # sqsh
+    "application/x-xar") command_use="unar" ;;                   # xar
     "application/x-xz") command_use="xz" ;;                      # xz
     "application/x-compress") command_use="compress" ;;          # z
     "application/x-zip-compressed") command_use="unzip" ;;       # zip
     "application/x-zip") command_use="unzip" ;;                  # zip
     "application/zip") command_use="unzip" ;;                    # zip
+    "application/x-zoo") command_use="unar" ;;                   # zoo
     "application/zstd") command_use="zstd" ;;                    # zst
-    #"application/x-lrzip") command_use="lrzip" ;;                # lrz
-    #"application/x-lz4") command_use="lz4" ;;                    # lz4
+    #"application/x-gtar") command_use="tar" ;;                   # tar (conflict with 'cpio' files)
+    #"application/x-tar") command_use="tar" ;;                    # tar (conflict with 'cpio' files)
     *)
-        tar_check=false
         # If not found the 'file_mime', use the extension.
-        case "${input_file,,}" in
+        case "${filename_extension,,}" in
         *.tar.bz | *.tbz | *.tar.bz2 | *.tbz2 | *.tb2) command_use="tar+bzip2" ;;
         *.tar.gz | *.tgz) command_use="tar+gzip" ;;
         *.tar.lrz | *.tlrz) command_use="tar+lrzip" ;;
         *.tar.lz) command_use="tar+lzip" ;;
         *.tar.lz4) command_use="tar+lz4" ;;
-        *.tar.lzma | *.tlz) command_use="tar+xz_lzma" ;;
+        *.tar.lzma | *.tlz) command_use="tar+lzma" ;;
         *.tar.lzo | *.tzo) command_use="tar+lzop" ;;
         *.tar.xz | *.txz) command_use="tar+xz" ;;
         *.tar.z | *.taz) command_use="tar+compress" ;;
         *.tar.zst | *.tzst) command_use="tar+zstd" ;;
         *.7z) command_use="7za" ;;
+        *.ace) command_use="unar" ;;
+        *.alz) command_use="unar" ;;
+        *.arc) command_use="unar" ;;
+        *.arj) command_use="unar" ;;
         *.bz | *.bz2) command_use="bzip2" ;;
+        *.cab) command_use="unar" ;;
+        *.cpio) command_use="cpio" ;;
         *.deb | *.udeb) command_use="ar" ;;
         *.gz) command_use="gzip" ;;
         *.iso | *.iso9660) command_use="xorriso" ;;
@@ -217,27 +267,31 @@ _get_command_use() {
         *.lz) command_use="lzip" ;;
         *.lz4) command_use="lz4" ;;
         *.lzh | *.lzs | *.lha) command_use="lha" ;;
-        *.lzma) command_use="xz_lzma" ;;
+        *.lzma) command_use="lzma" ;;
         *.lzo) command_use="lzop" ;;
+        *.msi) command_use="unar" ;;
+        *.pak) command_use="unar" ;;
         *.rar) command_use="unrar" ;;
+        *.sit) command_use="unar" ;;
         *.sqsh | *.squashfs | *.sfs) command_use="unsquashfs" ;;
-        *.tar) command_use="tar" ;;
+        *.tar | *.gtar | *.gem) command_use="tar" ;;
+        *.xar) command_use="unar" ;;
         *.xz) command_use="xz" ;;
         *.z) command_use="compress" ;;
         *.zip) command_use="unzip" ;;
+        *.zoo) command_use="unar" ;;
+        *.zpaq) command_use="zpaq" ;;
         *.zst) command_use="zstd" ;;
-        *) command_use="7za" ;;
+        *) command_use="_unknown_" ;;
         esac
         ;;
     esac
 
-    # Check if the file is a '.tar' compressed.
-    if $tar_check; then
+    # Check if the file is a 'tar' compressed (using the filename).
+    if [[ "${filename_extension,,}" = *".tar."* ]]; then
         case "$command_use" in
-        "bzip2" | "compress" | "gzip" | "lrzip" | "lzop" | "xz_lzma" | "xz" | "zstd")
-            if [[ -n "$(tar --list --file="$input_file" 2>/dev/null)" ]]; then
-                command_use="tar+$command_use"
-            fi
+        "bzip2" | "compress" | "gzip" | "lrzip" | "lz4" | "lzip" | "lzma" | "lzop" | "xz" | "zstd")
+            command_use="tar+$command_use"
             ;;
         esac
     fi
