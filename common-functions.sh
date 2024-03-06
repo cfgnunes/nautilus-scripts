@@ -87,6 +87,7 @@ _check_dependencies() {
         local command=""
         local package=""
         local pkg_manager=""
+        # Evaluate the values from 'dependency' variable.
         eval "$dependency"
 
         # Ignore installing the dependency if there is the command in the shell.
@@ -535,7 +536,7 @@ _get_files() {
     #   "false": Do not expand directories (default).
     #   "true": Expand directories.
 
-    # Default values for the parameters.
+    # Default values for input parameters.
     local par_get_pwd="false"
     local par_max_files=""
     local par_min_files=""
@@ -550,7 +551,7 @@ _get_files() {
     local par_type="file"
     local par_validate_conflict=""
 
-    # Eval the values from 'parameters'.
+    # Evaluate the values from 'parameters' variable.
     eval "$parameters"
 
     # Check the parameters.
@@ -647,9 +648,11 @@ _get_output_dir() {
     local parameters=$1
     local base_dir=""
     local output_dir=""
+
+    # Default values for input parameters.
     local par_use_same_dir=""
 
-    # Eval the values from 'parameters'.
+    # Evaluate the values from 'parameters' variable.
     eval "$parameters"
 
     # Check directories available to put the 'output' dir.
@@ -681,12 +684,14 @@ _get_output_filename() {
     local parameters=$3
     local output_file=""
     local filename=""
+
+    # Default values for input parameters.
     local par_extension_opt="preserve"
     local par_extension=""
     local par_prefix=""
     local par_suffix=""
 
-    # Eval the values from 'parameters'.
+    # Evaluate the values from 'parameters' variable.
     eval "$parameters"
 
     # Directories do not have an extension.
