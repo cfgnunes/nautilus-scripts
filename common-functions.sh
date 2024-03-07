@@ -67,7 +67,7 @@ _check_dependencies() {
 
     # Skip duplicated dependencies in the input list.
     dependencies=$(tr "|" "\n" <<<"$dependencies")
-    dependencies=$(tr -s " \n" <<<"$dependencies")
+    dependencies=$(tr -d " " <<<"$dependencies")
     dependencies=$(sort -u <<<"$dependencies")
     dependencies=$(_text_remove_empty_lines "$dependencies")
 
