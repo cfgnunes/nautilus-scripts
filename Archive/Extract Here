@@ -325,32 +325,32 @@ _main_task() {
         ;;
     "unsquashfs") std_output=$(unsquashfs "$input_file" 2>&1) ;;
     "unzip")
-        if _command_exists "unzip"; then
-            std_output=$(unzip -- "$input_file" 2>&1)
+        if _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
         elif _command_exists "bsdtar"; then
             std_output=$(bsdtar -xf "$input_file" 2>&1)
         elif _command_exists "unar"; then
             std_output=$(unar -- "$input_file" 2>&1)
-        elif _command_exists "7za"; then
-            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        elif _command_exists "unzip"; then
+            std_output=$(unzip -- "$input_file" 2>&1)
         fi
         ;;
     "unzip_new")
-        if _command_exists "bsdtar"; then
+        if _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        elif _command_exists "bsdtar"; then
             std_output=$(bsdtar -xf "$input_file" 2>&1)
         elif _command_exists "unar"; then
             std_output=$(unar -- "$input_file" 2>&1)
-        elif _command_exists "7za"; then
-            std_output=$(7za x -aoa -- "$input_file" 2>&1)
         fi
         ;;
     "unzip_new+password")
         local password=""
         password=$(_display_password_box_message "Password required for '$(basename -- "$input_file")'\n\nPassword:") || __abort_extraction
-        if _command_exists "bsdtar"; then
-            std_output=$(bsdtar --passphrase "$password" -xf "$input_file" 2>&1)
-        elif _command_exists "7za"; then
+        if _command_exists "7za"; then
             std_output=$(7za x -aoa -p"$password" -- "$input_file" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar --passphrase "$password" -xf "$input_file" 2>&1)
         fi
         ;;
     "xorriso")
