@@ -153,10 +153,11 @@ _main_task() {
     local temp_dir_output=""
     filename=$(basename -- "$input_file")             # Remove the path.
     filename=$(_strip_filename_extension "$filename") # Remove the extension.
-    temp_dir_output=$(mktemp --directory --tmpdir="$output_dir" "tmp.$filename.XXXXXXXXXX")
 
-    mkdir --parents "$temp_dir_output"
-    pushd "$temp_dir_output" &>/dev/null || true
+    __use_temp_dir() {
+        temp_dir_output=$(mktemp --directory --tmpdir="$output_dir" "tmp.$filename.XXXXXXXXXX")
+        pushd "$temp_dir_output" &>/dev/null || true
+    }
 
     __abort_extraction() {
         # Remove the temporary directory and abort the extraction.
@@ -167,6 +168,7 @@ _main_task() {
     # Extract the archive according to the file extension.
     case $(_get_command_use "$input_file") in
     "_unknown_")
+        __use_temp_dir
         local exit_code=0
 
         # Try to extract with 'unar'.
@@ -184,6 +186,7 @@ _main_task() {
         fi
         ;;
     "7za")
+        __use_temp_dir
         if _command_exists "7za"; then
             std_output=$(7za x -aoa -- "$input_file" 2>&1)
         elif _command_exists "bsdtar"; then
@@ -195,10 +198,15 @@ _main_task() {
     "7za+password")
         local password=""
         password=$(_display_password_box_message "Password required for '$(basename -- "$input_file")'\n\nPassword:") || __abort_extraction
+        __use_temp_dir
         std_output=$(7za x -aoa -p"$password" -- "$input_file" 2>&1)
         ;;
-    "ar") std_output=$(ar x -- "$input_file" 2>&1) ;;
+    "ar")
+        __use_temp_dir
+        std_output=$(ar x -- "$input_file" 2>&1)
+        ;;
     "bzip2")
+        __use_temp_dir
         if _command_exists "bzip2"; then
             std_output=$(bzip2 -d -c -k -- "$input_file" >"$filename" 2>&1)
         elif _command_exists "bsdtar"; then
@@ -210,6 +218,7 @@ _main_task() {
         fi
         ;;
     "cpio")
+        __use_temp_dir
         if _command_exists "cpio"; then
             std_output=$(cpio -idv <"$input_file" 2>&1)
         elif _command_exists "bsdtar"; then
@@ -218,8 +227,12 @@ _main_task() {
             std_output=$(unar -- "$input_file" 2>&1)
         fi
         ;;
-    "gpg") std_output=$(gpg --batch --yes --decrypt --output "$filename" -- "$input_file" 2>&1) ;;
+    "gpg")
+        __use_temp_dir
+        std_output=$(gpg --batch --yes --decrypt --output "$filename" -- "$input_file" 2>&1)
+        ;;
     "gzip" | "compress")
+        __use_temp_dir
         if _command_exists "gzip"; then
             std_output=$(gzip -d -c -k -- "$input_file" >"$filename" 2>&1)
         elif _command_exists "bsdtar"; then
@@ -231,18 +244,35 @@ _main_task() {
         fi
         ;;
     "lha")
+        __use_temp_dir
         if _command_exists "lha"; then
             std_output=$(lha -e "$input_file" 2>&1)
         elif _command_exists "unar"; then
             std_output=$(unar -- "$input_file" 2>&1)
         fi
         ;;
-    "lrzip") std_output=$(lrzip -d -o "$temp_dir_output/$filename" -- "$input_file" 2>&1) ;;
-    "lz4") std_output=$(lz4 -d -c -- "$input_file" >"$filename" 2>&1) ;;
-    "lzip") std_output=$(lzip -d -c -k -- "$input_file" >"$filename" 2>&1) ;;
-    "lzma") std_output=$(xz -d -c -k --format=lzma -- "$input_file" >"$filename" 2>&1) ;;
-    "lzop") std_output=$(lzop -d -- "$input_file" 2>&1) ;;
+    "lrzip")
+        __use_temp_dir
+        std_output=$(lrzip -d -o "$temp_dir_output/$filename" -- "$input_file" 2>&1)
+        ;;
+    "lz4")
+        __use_temp_dir
+        std_output=$(lz4 -d -c -- "$input_file" >"$filename" 2>&1)
+        ;;
+    "lzip")
+        __use_temp_dir
+        std_output=$(lzip -d -c -k -- "$input_file" >"$filename" 2>&1)
+        ;;
+    "lzma")
+        __use_temp_dir
+        std_output=$(xz -d -c -k --format=lzma -- "$input_file" >"$filename" 2>&1)
+        ;;
+    "lzop")
+        __use_temp_dir
+        std_output=$(lzop -d -- "$input_file" 2>&1)
+        ;;
     "tar")
+        __use_temp_dir
         if _command_exists "tar"; then
             std_output=$(tar --extract --file="$input_file" 2>&1)
         elif _command_exists "bsdtar"; then
@@ -254,6 +284,7 @@ _main_task() {
         fi
         ;;
     "tar+bzip2")
+        __use_temp_dir
         if _command_exists "tar"; then
             std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1)
         elif _command_exists "bsdtar"; then
@@ -265,6 +296,7 @@ _main_task() {
         fi
         ;;
     "tar+compress")
+        __use_temp_dir
         if _command_exists "tar"; then
             std_output=$(tar --extract --file="$input_file" 2>&1)
         elif _command_exists "bsdtar"; then
@@ -276,6 +308,7 @@ _main_task() {
         fi
         ;;
     "tar+gzip")
+        __use_temp_dir
         if _command_exists "tar"; then
             std_output=$(tar --extract --gzip --file="$input_file" 2>&1)
         elif _command_exists "bsdtar"; then
@@ -286,10 +319,20 @@ _main_task() {
             std_output=$(7za x -aoa -- "$input_file" 2>&1)
         fi
         ;;
-    "tar+lrzip") std_output=$(lrztar -d "$input_file" 2>&1) ;;
-    "tar+lz4") std_output=$(lz4 -d -c -- "$input_file" | tar xf - 2>&1) ;;
-    "tar+lzip") std_output=$(tar --extract --lzip --file="$input_file" 2>&1) ;;
+    "tar+lrzip")
+        __use_temp_dir
+        std_output=$(lrztar -d "$input_file" 2>&1)
+        ;;
+    "tar+lz4")
+        __use_temp_dir
+        std_output=$(lz4 -d -c -- "$input_file" | tar xf - 2>&1)
+        ;;
+    "tar+lzip")
+        __use_temp_dir
+        std_output=$(tar --extract --lzip --file="$input_file" 2>&1)
+        ;;
     "tar+lzma")
+        __use_temp_dir
         if _command_exists "tar"; then
             std_output=$(tar --extract --lzma --file="$input_file" 2>&1)
         elif _command_exists "bsdtar"; then
@@ -300,8 +343,12 @@ _main_task() {
             std_output=$(7za x -aoa -- "$input_file" 2>&1)
         fi
         ;;
-    "tar+lzop") std_output=$(tar --extract --lzop --file="$input_file" 2>&1) ;;
+    "tar+lzop")
+        __use_temp_dir
+        std_output=$(tar --extract --lzop --file="$input_file" 2>&1)
+        ;;
     "tar+xz")
+        __use_temp_dir
         if _command_exists "tar"; then
             std_output=$(tar --extract --xz --file="$input_file" 2>&1)
         elif _command_exists "bsdtar"; then
@@ -312,9 +359,16 @@ _main_task() {
             std_output=$(7za x -aoa -- "$input_file" 2>&1)
         fi
         ;;
-    "tar+zstd") std_output=$(zstd -d -c -- "$input_file" | tar xf - 2>&1) ;;
-    "unar") std_output=$(unar -- "$input_file" 2>&1) ;;
+    "tar+zstd")
+        __use_temp_dir
+        std_output=$(zstd -d -c -- "$input_file" | tar xf - 2>&1)
+        ;;
+    "unar")
+        __use_temp_dir
+        std_output=$(unar -- "$input_file" 2>&1)
+        ;;
     "unrar")
+        __use_temp_dir
         if _command_exists "unrar"; then
             std_output=$(unrar x -- "$input_file" 2>&1)
         elif _command_exists "bsdtar"; then
@@ -323,8 +377,12 @@ _main_task() {
             std_output=$(unar -- "$input_file" 2>&1)
         fi
         ;;
-    "unsquashfs") std_output=$(unsquashfs "$input_file" 2>&1) ;;
+    "unsquashfs")
+        __use_temp_dir
+        std_output=$(unsquashfs "$input_file" 2>&1)
+        ;;
     "unzip")
+        __use_temp_dir
         if _command_exists "7za"; then
             std_output=$(7za x -aoa -- "$input_file" 2>&1)
         elif _command_exists "bsdtar"; then
@@ -336,6 +394,7 @@ _main_task() {
         fi
         ;;
     "unzip_new")
+        __use_temp_dir
         if _command_exists "7za"; then
             std_output=$(7za x -aoa -- "$input_file" 2>&1)
         elif _command_exists "bsdtar"; then
@@ -347,6 +406,7 @@ _main_task() {
     "unzip_new+password")
         local password=""
         password=$(_display_password_box_message "Password required for '$(basename -- "$input_file")'\n\nPassword:") || __abort_extraction
+        __use_temp_dir
         if _command_exists "7za"; then
             std_output=$(7za x -aoa -p"$password" -- "$input_file" 2>&1)
         elif _command_exists "bsdtar"; then
@@ -354,6 +414,7 @@ _main_task() {
         fi
         ;;
     "xorriso")
+        __use_temp_dir
         if _command_exists "xorriso"; then
             std_output=$(xorriso -osirrox on -indev "$input_file" -find / -exec chmod u+rw -- -extract / . -rollback_end 2>&1)
         elif _command_exists "bsdtar"; then
@@ -364,6 +425,7 @@ _main_task() {
         fi
         ;;
     "xz")
+        __use_temp_dir
         if _command_exists "xz"; then
             std_output=$(xz -d -c -k -- "$input_file" >"$filename" 2>&1)
         elif _command_exists "bsdtar"; then
@@ -374,8 +436,14 @@ _main_task() {
             std_output=$(7za x -aoa -- "$input_file" 2>&1)
         fi
         ;;
-    "zpaq") std_output=$(zpaq x "$input_file" 2>&1) ;;
-    "zstd") std_output=$(zstd -d -c -- "$input_file" >"$filename" 2>&1) ;;
+    "zpaq")
+        __use_temp_dir
+        std_output=$(zpaq x "$input_file" 2>&1)
+        ;;
+    "zstd")
+        __use_temp_dir
+        std_output=$(zstd -d -c -- "$input_file" >"$filename" 2>&1)
+        ;;
     esac
 
     # Check for result errors.
