@@ -9,6 +9,7 @@ _main() {
     local input_files=""
     local output_dir=""
     local input_file=""
+    local show_wait_box=true
 
     # Execute initial checks.
     _check_dependencies ""
@@ -29,6 +30,7 @@ _main() {
             dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip"
             ;;
         "7za+password")
+            show_wait_box=false
             dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip"
             ;;
         "ar") dependencies+="command=ar; package=binutils" ;;
@@ -117,7 +119,7 @@ _main() {
     done
 
     _check_dependencies "$dependencies"
-    _display_wait_box
+    $show_wait_box && _display_wait_box
 
     export -f _get_command_use
 
