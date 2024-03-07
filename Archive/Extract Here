@@ -9,45 +9,107 @@ _main() {
     local input_files=""
     local output_dir=""
     local input_file=""
-    local chain_extractor_installed=false
 
     # Execute initial checks.
     _check_dependencies ""
     input_files=$(_get_files "par_type=file")
 
-    _command_exists "unar" && chain_extractor_installed=true
-    _command_exists "7za" && chain_extractor_installed=true
-
     # Check dependencies for each file type.
     local dependencies=""
     for input_file in $input_files; do
         case $(_get_command_use "$input_file") in
-        "_unknown_") dependencies+="command=unar; pkg_manager=apt | command=unar; pkg_manager=dnf | command=unar; pkg_manager=pacman; package=unarchiver | command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip" ;;
-        "7za") _command_exists "unar" || dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip" ;;
+        "_unknown_")
+            dependencies+="command=unar; pkg_manager=apt | command=unar; pkg_manager=dnf | command=unar; pkg_manager=pacman; package=unarchiver"
+            dependencies+=$'\n'
+            dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip"
+            ;;
+        "7za")
+            _command_exists "bsdtar" && continue
+            _command_exists "unar" && continue
+            dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip"
+            ;;
+        "7za+password")
+            dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip"
+            ;;
         "ar") dependencies+="command=ar; package=binutils" ;;
-        "bzip2") $chain_extractor_installed || dependencies+="command=bzip2" ;;
-        "cpio") $chain_extractor_installed || dependencies+="command=cpio" ;;
-        "gzip" | "compress") $chain_extractor_installed || dependencies+="command=gzip" ;;
-        "lha") _command_exists "unar" || dependencies+="command=lha; package=lhasa" ;;
+        "bzip2")
+            _command_exists "bsdtar" && continue
+            _command_exists "unar" && continue
+            _command_exists "7za" && continue
+            dependencies+="command=bzip2"
+            ;;
+        "cpio")
+            _command_exists "bsdtar" && continue
+            _command_exists "unar" && continue
+            dependencies+="command=cpio"
+            ;;
+        "gpg") dependencies+="command=gpg; pkg_manager=apt | command=gpg; pkg_manager=dnf; package=gnupg2 | command=gpg; pkg_manager=pacman; package=gnupg" ;;
+        "gzip" | "compress")
+            _command_exists "bsdtar" && continue
+            _command_exists "unar" && continue
+            _command_exists "7za" && continue
+            dependencies+="command=gzip"
+            ;;
+        "lha")
+            _command_exists "unar" && continue
+            dependencies+="command=lha; package=lhasa"
+            ;;
         "lrzip") dependencies+="command=lrzip" ;;
         "lz4") dependencies+="command=lz4" ;;
-        "lzip") _command_exists "xz" || dependencies+="command=lzip" ;;
+        "lzip") dependencies+="command=lzip" ;;
         "lzop") dependencies+="command=lzop" ;;
-        "tar") dependencies+="command=tar" ;;
-        "tar+bzip2") dependencies+="command=tar | command=bzip2" ;;
-        "tar+gzip" | "tar+compress") dependencies+="command=tar | command=gzip" ;;
+        "tar")
+            _command_exists "bsdtar" && continue
+            _command_exists "unar" && continue
+            _command_exists "7za" && continue
+            dependencies+="command=tar"
+            ;;
+        "tar+bzip2")
+            _command_exists "bsdtar" && continue
+            _command_exists "unar" && continue
+            _command_exists "7za" && continue
+            dependencies+="command=tar | command=bzip2"
+            ;;
+        "tar+gzip" | "tar+compress")
+            _command_exists "bsdtar" && continue
+            _command_exists "unar" && continue
+            _command_exists "7za" && continue
+            dependencies+="command=tar | command=gzip"
+            ;;
         "tar+lrzip") dependencies+="command=lrztar; package=lrzip" ;;
         "tar+lz4") dependencies+="command=tar | command=lz4" ;;
-        "tar+lzip") _command_exists "xz" || dependencies+="command=tar | command=lzip" ;;
+        "tar+lzip") dependencies+="command=tar | command=lzip" ;;
         "tar+lzop") dependencies+="command=tar | command=lzop" ;;
-        "tar+xz" | "tar+lzma") dependencies+="command=tar | command=xz; pkg_manager=apt; package=xz-utils | command=xz; pkg_manager=dnf | command=xz; pkg_manager=pacman" ;;
+        "tar+xz" | "tar+lzma")
+            _command_exists "bsdtar" && continue
+            _command_exists "unar" && continue
+            _command_exists "7za" && continue
+            dependencies+="command=tar | command=xz; pkg_manager=apt; package=xz-utils | command=xz; pkg_manager=dnf | command=xz; pkg_manager=pacman"
+            ;;
         "tar+zstd") dependencies+="command=tar | command=zstd" ;;
         "unar") dependencies+="command=unar; pkg_manager=apt | command=unar; pkg_manager=dnf | command=unar; pkg_manager=pacman; package=unarchiver" ;;
-        "unrar") $chain_extractor_installed || dependencies+="command=unrar" ;;
+        "unrar")
+            _command_exists "bsdtar" && continue
+            _command_exists "unar" && continue
+            dependencies+="command=unrar"
+            ;;
         "unsquashfs") dependencies+="command=unsquashfs; package=squashfs-tools" ;;
-        "unzip") $chain_extractor_installed || dependencies+="command=unzip" ;;
-        "xorriso") dependencies+="command=xorriso" ;;
-        "xz" | "lzma") dependencies+="command=xz; pkg_manager=apt; package=xz-utils | command=xz; pkg_manager=dnf | command=xz; pkg_manager=pacman" ;;
+        "unzip")
+            _command_exists "unar" && continue
+            _command_exists "7za" && continue
+            dependencies+="command=unzip"
+            ;;
+        "xorriso")
+            _command_exists "bsdtar" && continue
+            _command_exists "unar" && continue
+            dependencies+="command=xorriso"
+            ;;
+        "xz" | "lzma")
+            _command_exists "bsdtar" && continue
+            _command_exists "unar" && continue
+            _command_exists "7za" && continue
+            dependencies+="command=xz; pkg_manager=apt; package=xz-utils | command=xz; pkg_manager=dnf | command=xz; pkg_manager=pacman"
+            ;;
         "zpaq") dependencies+="command=zpaq" ;;
         "zstd") dependencies+="command=zstd" ;;
         esac
@@ -83,48 +145,77 @@ _main_task() {
     mkdir --parents "$temp_dir_output"
     pushd "$temp_dir_output" &>/dev/null || true
 
-    __exit_extraction() {
+    __abort_extraction() {
         # Remove the temporary directory and abort the extraction.
         rm -rf -- "$temp_dir_output"
         exit 0
     }
 
-    # Define some default extractors.
-    __chain_extractor() {
-        unar -- "$1" &>/dev/null && return 0
-        7z x -aoa -- "$1" &>/dev/null && return 0
-        7za x -aoa -- "$1" &>/dev/null && return 0
-        return 1
-    }
-
     # Extract the archive according to the file extension.
     case $(_get_command_use "$input_file") in
     "_unknown_")
-        __chain_extractor "$input_file" || std_output="Could not find the archive format to extract."
+        local exit_code=0
+
+        # Try to extract with 'unar'.
+        std_output=$(unar -- "$input_file" 2>&1)
+        exit_code=$?
+
+        # Try to extract with '7za'.
+        if ((exit_code != 0)); then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+            exit_code=$?
+        fi
+
+        if ((exit_code != 0)); then
+            std_output="Could not recognize the archive format." && false
+        fi
         ;;
     "7za")
         if _command_exists "7za"; then
-            # If if the archive is password-protected.
-            if 7za t -slt -p -- "$input_file" 2>&1 | grep -q "Wrong password"; then
-                local password=""
-                password=$(_display_password_box_message "Password required for '$(basename -- "$input_file")'\n\nPassword:") || __exit_extraction
-                std_output=$(7za x -aoa -p"$password" -- "$input_file" 2>&1)
-            else
-                std_output=$(7za x -aoa -- "$input_file" 2>&1)
-            fi
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
         elif _command_exists "unar"; then
             std_output=$(unar -- "$input_file" 2>&1)
         fi
         ;;
+    "7za+password")
+        local password=""
+        password=$(_display_password_box_message "Password required for '$(basename -- "$input_file")'\n\nPassword:") || __abort_extraction
+        std_output=$(7za x -aoa -p"$password" -- "$input_file" 2>&1)
+        ;;
     "ar") std_output=$(ar x -- "$input_file" 2>&1) ;;
     "bzip2")
-        __chain_extractor "$input_file" || std_output=$(bzip2 -d -c -k -- "$input_file" >"$filename" 2>&1)
+        if _command_exists "bzip2"; then
+            std_output=$(bzip2 -d -c -k -- "$input_file" >"$filename" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
+        elif _command_exists "unar"; then
+            std_output=$(unar -- "$input_file" 2>&1)
+        elif _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        fi
         ;;
     "cpio")
-        __chain_extractor "$input_file" || std_output=$(cpio -idv <"$input_file" 2>&1)
+        if _command_exists "cpio"; then
+            std_output=$(cpio -idv <"$input_file" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
+        elif _command_exists "unar"; then
+            std_output=$(unar -- "$input_file" 2>&1)
+        fi
         ;;
+    "gpg") std_output=$(gpg --batch --yes --decrypt --output "$filename" -- "$input_file" 2>&1) ;;
     "gzip" | "compress")
-        __chain_extractor "$input_file" || std_output=$(gzip -d -c -k -- "$input_file" >"$filename" 2>&1)
+        if _command_exists "gzip"; then
+            std_output=$(gzip -d -c -k -- "$input_file" >"$filename" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
+        elif _command_exists "unar"; then
+            std_output=$(unar -- "$input_file" 2>&1)
+        elif _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        fi
         ;;
     "lha")
         if _command_exists "lha"; then
@@ -135,48 +226,127 @@ _main_task() {
         ;;
     "lrzip") std_output=$(lrzip -d -o "$temp_dir_output/$filename" -- "$input_file" 2>&1) ;;
     "lz4") std_output=$(lz4 -d -c -- "$input_file" >"$filename" 2>&1) ;;
-    "lzip")
-        if _command_exists "lzip"; then
-            std_output=$(lzip -d -c -k -- "$input_file" >"$filename" 2>&1)
-        elif _command_exists "xz"; then
-            std_output=$(xz -d -c -k -- "$input_file" >"$filename" 2>&1)
-        fi
-        ;;
+    "lzip") std_output=$(lzip -d -c -k -- "$input_file" >"$filename" 2>&1) ;;
     "lzma") std_output=$(xz -d -c -k --format=lzma -- "$input_file" >"$filename" 2>&1) ;;
     "lzop") std_output=$(lzop -d -- "$input_file" 2>&1) ;;
-    "tar") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
-    "tar+bzip2") std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1) ;;
-    "tar+compress") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
-    "tar+gzip") std_output=$(tar --extract --gzip --file="$input_file" 2>&1) ;;
-    "tar+lrzip") std_output=$(lrztar -d "$input_file" 2>&1) ;;
-    "tar+lz4") std_output=$(lz4 -d -c -- "$input_file" | tar xf - 2>&1) ;;
-    "tar+lzip")
-        if _command_exists "lzip"; then
-            std_output=$(tar --extract --lzip --file="$input_file" 2>&1)
-        elif _command_exists "xz"; then
-            std_output=$(tar --extract --xz --file="$input_file" 2>&1)
+    "tar")
+        if _command_exists "tar"; then
+            std_output=$(tar --extract --file="$input_file" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
+        elif _command_exists "unar"; then
+            std_output=$(unar -- "$input_file" 2>&1)
+        elif _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
         fi
         ;;
-    "tar+lzma") std_output=$(tar --extract --lzma --file="$input_file" 2>&1) ;;
+    "tar+bzip2")
+        if _command_exists "tar"; then
+            std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
+        elif _command_exists "unar"; then
+            std_output=$(unar -- "$input_file" 2>&1)
+        elif _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        fi
+        ;;
+    "tar+compress")
+        if _command_exists "tar"; then
+            std_output=$(tar --extract --file="$input_file" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
+        elif _command_exists "unar"; then
+            std_output=$(unar -- "$input_file" 2>&1)
+        elif _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        fi
+        ;;
+    "tar+gzip")
+        if _command_exists "tar"; then
+            std_output=$(tar --extract --gzip --file="$input_file" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
+        elif _command_exists "unar"; then
+            std_output=$(unar -- "$input_file" 2>&1)
+        elif _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        fi
+        ;;
+    "tar+lrzip") std_output=$(lrztar -d "$input_file" 2>&1) ;;
+    "tar+lz4") std_output=$(lz4 -d -c -- "$input_file" | tar xf - 2>&1) ;;
+    "tar+lzip") std_output=$(tar --extract --lzip --file="$input_file" 2>&1) ;;
+    "tar+lzma")
+        if _command_exists "tar"; then
+            std_output=$(tar --extract --lzma --file="$input_file" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
+        elif _command_exists "unar"; then
+            std_output=$(unar -- "$input_file" 2>&1)
+        elif _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        fi
+        ;;
     "tar+lzop") std_output=$(tar --extract --lzop --file="$input_file" 2>&1) ;;
-    "tar+xz") std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
+    "tar+xz")
+        if _command_exists "tar"; then
+            std_output=$(tar --extract --xz --file="$input_file" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
+        elif _command_exists "unar"; then
+            std_output=$(unar -- "$input_file" 2>&1)
+        elif _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        fi
+        ;;
     "tar+zstd") std_output=$(zstd -d -c -- "$input_file" | tar xf - 2>&1) ;;
     "unar") std_output=$(unar -- "$input_file" 2>&1) ;;
     "unrar")
-        __chain_extractor "$input_file" || std_output=$(unrar x -- "$input_file" 2>&1)
+        if _command_exists "unrar"; then
+            std_output=$(unrar x -- "$input_file" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
+        elif _command_exists "unar"; then
+            std_output=$(unar -- "$input_file" 2>&1)
+        fi
         ;;
     "unsquashfs") std_output=$(unsquashfs "$input_file" 2>&1) ;;
     "unzip")
-        __chain_extractor "$input_file" || std_output=$(unzip -- "$input_file" 2>&1)
+        if _command_exists "unzip"; then
+            std_output=$(unzip -- "$input_file" 2>&1)
+        elif _command_exists "unar"; then
+            std_output=$(unar -- "$input_file" 2>&1)
+        elif _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        fi
         ;;
-    "xorriso") std_output=$(xorriso -osirrox on -indev "$input_file" -find / -exec chmod u+rw -- -extract / . -rollback_end 2>&1) ;;
-    "xz") std_output=$(xz -d -c -k -- "$input_file" >"$filename" 2>&1) ;;
+    "xorriso")
+        if _command_exists "xorriso"; then
+            std_output=$(xorriso -osirrox on -indev "$input_file" -find / -exec chmod u+rw -- -extract / . -rollback_end 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
+            chmod -R u+rw . &>/dev/null
+        elif _command_exists "unar"; then
+            std_output=$(unar -- "$input_file" 2>&1)
+        fi
+        ;;
+    "xz")
+        if _command_exists "xz"; then
+            std_output=$(xz -d -c -k -- "$input_file" >"$filename" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
+        elif _command_exists "unar"; then
+            std_output=$(unar -- "$input_file" 2>&1)
+        elif _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        fi
+        ;;
     "zpaq") std_output=$(zpaq x "$input_file" 2>&1) ;;
     "zstd") std_output=$(zstd -d -c -- "$input_file" >"$filename" 2>&1) ;;
     esac
 
     # Check for result errors.
-    _check_output "$?" "$std_output" "$input_file" "" || __exit_extraction
+    _check_output "$?" "$std_output" "$input_file" "" || __abort_extraction
 
     # Check if the archive has just one item (single file/directory compressed).
     local count_root_items=""
@@ -191,7 +361,7 @@ _main_task() {
 
     # Check if the 'temp_dir_output' is empty.
     if ((count_root_items == 0)); then
-        __exit_extraction
+        __abort_extraction
     fi
 
     # Move the items to the correct directory.
@@ -211,7 +381,7 @@ _main_task() {
         _check_output "$?" "$std_output" "$input_file" ""
     fi
 
-    __exit_extraction
+    __abort_extraction
 }
 
 _get_command_use() {
@@ -239,6 +409,7 @@ _get_command_use() {
     "application/vnd.debian.binary-package") command_use="ar" ;; # deb
     "application/gzip") command_use="gzip" ;;                    # gz
     "application/x-gzip") command_use="gzip" ;;                  # gz
+    "application/pgp-encrypted") command_use="gpg" ;;            # gpg
     "application/x-iso9660-image") command_use="xorriso" ;;      # iso
     "application/x-lrzip") command_use="lrzip" ;;                # lrz
     "application/x-lzip") command_use="lzip" ;;                  # lz
@@ -288,6 +459,7 @@ _get_command_use() {
         *.cab) command_use="unar" ;;
         *.cpio) command_use="cpio" ;;
         *.deb | *.udeb) command_use="ar" ;;
+        *.gpg | *.asc | *.pgp) command_use="gpg" ;;
         *.gz) command_use="gzip" ;;
         *.iso | *.iso9660) command_use="xorriso" ;;
         *.lrz) command_use="lrzip" ;;
@@ -323,9 +495,39 @@ _get_command_use() {
         esac
     fi
 
+    # Check if if the 'zip' archive is password-protected.
+    if [[ "$command_use" == "unzip" ]]; then
+        if _command_exists "zipinfo"; then
+            if zipinfo -v "$input_file" 2>&1 | tr -d " " | grep -i -q "status:encrypted"; then
+                command_use="7za+password"
+            fi
+        elif _command_exists "7za"; then
+            if 7za t -slt -p"null" -- "$input_file" 2>&1 | grep -i -q "wrong password"; then
+                command_use="7za+password"
+            fi
+        fi
+    fi
+
+    # Check if if the '7z' archive is password-protected.
+    if [[ "$command_use" == "7za" ]]; then
+        if _command_exists "7za"; then
+            if 7za t -slt -p"null" -- "$input_file" 2>&1 | grep -i -q "wrong password"; then
+                command_use="7za+password"
+            fi
+        elif _command_exists "bsdtar"; then
+            if bsdtar -tf "$input_file" 2>&1 | grep -i -q "encrypted"; then
+                command_use="7za+password"
+            fi
+        elif _command_exists "lsar"; then
+            if lsar -- "$input_file" 2>&1 | grep -i -q "requires a password"; then
+                command_use="7za+password"
+            fi
+        fi
+    fi
+
     # Check if the zip require new unzip version to extract.
     if [[ "$command_use" == "unzip" ]]; then
-        if file --dereference --brief -- "$input_file" 2>/dev/null | grep -q "at least v[4-9]"; then
+        if file --dereference --brief -- "$input_file" 2>/dev/null | grep -i -q "at least v[5-9]"; then
             command_use="7za"
         fi
     fi
