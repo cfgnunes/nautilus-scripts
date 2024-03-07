@@ -20,6 +20,8 @@ _main() {
     for input_file in $input_files; do
         case $(_get_command_use "$input_file") in
         "_unknown_")
+            dependencies+="command=bsdtar; pkg_manager=apt; package=libarchive-tools | command=bsdtar; pkg_manager=dnf | command=bsdtar; pkg_manager=pacman"
+            dependencies+=$'\n'
             dependencies+="command=unar; pkg_manager=apt | command=unar; pkg_manager=dnf | command=unar; pkg_manager=pacman; package=unarchiver"
             dependencies+=$'\n'
             dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip"
@@ -169,11 +171,19 @@ _main_task() {
     case $(_get_command_use "$input_file") in
     "_unknown_")
         __use_temp_dir
-        local exit_code=0
+        local exit_code=1
+
+        # Try to extract with 'bsdtar'.
+        if ((exit_code != 0)); then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
+            exit_code=$?
+        fi
 
         # Try to extract with 'unar'.
-        std_output=$(unar -- "$input_file" 2>&1)
-        exit_code=$?
+        if ((exit_code != 0)); then
+            std_output=$(unar -- "$input_file" 2>&1)
+            exit_code=$?
+        fi
 
         # Try to extract with '7za'.
         if ((exit_code != 0)); then
