@@ -258,7 +258,7 @@ _display_info_box() {
 }
 
 _display_password_box() {
-    _display_password_box_message "Type your password"
+    _display_password_box_message "Type your password:" || return 1
 }
 
 _display_password_box_message() {
@@ -267,13 +267,13 @@ _display_password_box_message() {
 
     # Ask the user for the 'password'.
     if ! _is_gui_session; then
-        read -r -p "$message: " password >&2
+        read -r -p "$message " password >&2
     elif _command_exists "zenity"; then
         password=$(zenity --title="Password" \
-            --entry --hide-text --text "$message" 2>/dev/null) || _exit_script
+            --entry --hide-text --text "$message" 2>/dev/null) || return 1
     elif _command_exists "kdialog"; then
         password=$(kdialog --title "Password" \
-            --password "$message" 2>/dev/null) || _exit_script
+            --password "$message" 2>/dev/null) || return 1
     fi
 
     # Check if the 'password' is not empty.
