@@ -54,7 +54,7 @@ _main() {
         "true"
         "true"
         "true"
-        "true"
+        "false"
         "false"
     )
 
@@ -127,22 +127,22 @@ _command_exists() {
 _step_install_dependencies() {
     printf " > Installing dependencies...\n"
 
-    local common_names="bzip2 foremost ghostscript gzip jpegoptim optipng pandoc perl-base qpdf rdfind rhash squashfs-tools tar testdisk unzip wget xclip xorriso zip"
+    local common_names="foremost ghostscript jpegoptim optipng pandoc perl-base qpdf rdfind rhash squashfs-tools testdisk unzip wget xclip"
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
             # Distro: Ubuntu, Mint, Debian.
             sudo apt-get update || true
-            sudo apt-get -y install $common_names imagemagick xz-utils p7zip-full poppler-utils ffmpeg findimagedupes genisoimage
+            sudo apt-get -y install $common_names libarchive-tools imagemagick xz-utils poppler-utils ffmpeg findimagedupes genisoimage
         elif _command_exists "dnf"; then
             # Distro: Fedora, Red Hat.
             # Missing packages: findimagedupes.
             sudo dnf check-update || true
-            sudo dnf -y install $common_names ImageMagick xz p7zip poppler-utils ffmpeg-free genisoimage
+            sudo dnf -y install $common_names bsdtar ImageMagick xz poppler-utils ffmpeg-free genisoimage
         elif _command_exists "pacman"; then
             # Distro: Manjaro, Arch Linux.
             # Missing packages: findimagedupes.
             sudo pacman -Syy || true
-            sudo pacman --noconfirm -S $common_names imagemagick xz p7zip poppler poppler-glib ffmpeg
+            sudo pacman --noconfirm -S $common_names imagemagick xz poppler poppler-glib ffmpeg
         else
             printf "Error: could not find a package manager!\n"
             exit 1
