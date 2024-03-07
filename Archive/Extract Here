@@ -15,16 +15,15 @@ _main() {
     _check_dependencies ""
     input_files=$(_get_files "par_type=file")
 
-    if _command_exists "unar" && _command_exists "7za"; then
-        chain_extractor_installed=true
-    fi
+    _command_exists "unar" && chain_extractor_installed=true
+    _command_exists "7za" && chain_extractor_installed=true
 
     # Check dependencies for each file type.
     local dependencies=""
     for input_file in $input_files; do
         case $(_get_command_use "$input_file") in
         "_unknown_") dependencies+="command=unar; pkg_manager=apt | command=unar; pkg_manager=dnf | command=unar; pkg_manager=pacman; package=unarchiver | command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip" ;;
-        "7za") $chain_extractor_installed || dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip" ;;
+        "7za") dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip" ;;
         "ar") dependencies+="command=ar; package=binutils" ;;
         "bzip2") $chain_extractor_installed || dependencies+="command=bzip2" ;;
         "cpio") $chain_extractor_installed || dependencies+="command=cpio" ;;
@@ -43,7 +42,7 @@ _main() {
         "tar+lzop") dependencies+="command=tar | command=lzop" ;;
         "tar+xz" | "tar+lzma") dependencies+="command=tar | command=xz; pkg_manager=apt; package=xz-utils | command=xz; pkg_manager=dnf | command=xz; pkg_manager=pacman" ;;
         "tar+zstd") dependencies+="command=tar | command=zstd" ;;
-        "unar") $chain_extractor_installed || dependencies+="command=unar; pkg_manager=apt | command=unar; pkg_manager=dnf | command=unar; pkg_manager=pacman; package=unarchiver" ;;
+        "unar") dependencies+="command=unar; pkg_manager=apt | command=unar; pkg_manager=dnf | command=unar; pkg_manager=pacman; package=unarchiver" ;;
         "unrar") $chain_extractor_installed || dependencies+="command=unrar" ;;
         "unsquashfs") dependencies+="command=unsquashfs; package=squashfs-tools" ;;
         "unzip") $chain_extractor_installed || dependencies+="command=unzip" ;;
@@ -84,6 +83,12 @@ _main_task() {
     mkdir --parents "$temp_dir_output"
     pushd "$temp_dir_output" &>/dev/null || true
 
+    __exit_extraction() {
+        # Remove the temporary directory and abort the extraction.
+        rm -rf -- "$temp_dir_output"
+        exit 0
+    }
+
     # Define some default extractors.
     __chain_extractor() {
         unar -- "$1" &>/dev/null && return 0
@@ -101,7 +106,7 @@ _main_task() {
         # If if the archive is password-protected.
         if 7za t -slt -p -- "$input_file" 2>&1 | grep -q "Wrong password"; then
             local password=""
-            password=$(_display_password_box_message "'$(basename -- "$input_file")' is password-protected.")
+            password=$(_display_password_box_message "Password required for '$(basename -- "$input_file")'\n\nPassword:") || __exit_extraction
             std_output=$(7za x -aoa -p"$password" -- "$input_file" 2>&1)
         else
             std_output=$(7za x -aoa -- "$input_file" 2>&1)
@@ -134,9 +139,7 @@ _main_task() {
     "tar+lzop") std_output=$(tar --extract --lzop --file="$input_file" 2>&1) ;;
     "tar+xz") std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
     "tar+zstd") std_output=$(zstd -d -c -- "$input_file" | tar xf - 2>&1) ;;
-    "unar")
-        _chain_extractor "$input_file" || std_output=$(unar -- "$input_file" 2>&1)
-        ;;
+    "unar") std_output=$(unar -- "$input_file" 2>&1) ;;
     "unrar")
         __chain_extractor "$input_file" || std_output=$(unrar x -- "$input_file" 2>&1)
         ;;
@@ -151,7 +154,7 @@ _main_task() {
     esac
 
     # Check for result errors.
-    _check_output "$?" "$std_output" "$input_file" ""
+    _check_output "$?" "$std_output" "$input_file" "" || __exit_extraction
 
     # Check if the archive has just one item (single file/directory compressed).
     local count_root_items=""
@@ -166,10 +169,7 @@ _main_task() {
 
     # Check if the 'temp_dir_output' is empty.
     if ((count_root_items == 0)); then
-        _check_output "$?" "$std_output" "$input_file" "-"
-        # Remove the temporary directory.
-        rm -rf -- "$temp_dir_output"
-        return 1
+        __exit_extraction
     fi
 
     # Move the items to the correct directory.
@@ -189,8 +189,7 @@ _main_task() {
         _check_output "$?" "$std_output" "$input_file" ""
     fi
 
-    # Remove the temporary directory.
-    rm -rf -- "$temp_dir_output"
+    __exit_extraction
 }
 
 _get_command_use() {
@@ -214,7 +213,6 @@ _get_command_use() {
     "application/x-bzip") command_use="bzip2" ;;                 # bz, bz2
     "application/x-bzip2") command_use="bzip2" ;;                # bz, bz2
     "application/vnd.ms-cab-compressed") command_use="unar" ;;   # cab
-    "zz-application/zz-winassoc-cab") command_use="unar" ;;      # cab
     "application/x-cpio") command_use="cpio" ;;                  # cpio
     "application/vnd.debian.binary-package") command_use="ar" ;; # deb
     "application/gzip") command_use="gzip" ;;                    # gz
@@ -301,6 +299,13 @@ _get_command_use() {
             command_use="tar+$command_use"
             ;;
         esac
+    fi
+
+    # Check if the zip require new unzip version to extract.
+    if [[ "$command_use" == "unzip" ]]; then
+        if file --dereference --brief -- "$input_file" 2>/dev/null | grep -q "at least v[4-9]"; then
+            command_use="7za"
+        fi
     fi
 
     printf "%s" "$command_use"
