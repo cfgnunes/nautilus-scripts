@@ -33,7 +33,8 @@ _main() {
                 pkg_manager=apt; package=texlive-publishers |
                 pkg_manager=apt; package=texlive-science |
                 pkg_manager=apt; package=texlive-xetex |
-                pkg_manager=dnf; package=texlive-scheme-basic"
+                pkg_manager=dnf; package=texlive-scheme-basic |
+                pkg_manager=dnf; package=texlive-mdwtools"
             ;;
         "libreoffice_calc") dependencies+="package=libreoffice-calc" ;;
         "libreoffice_impress") dependencies+="package=libreoffice-impress" ;;
@@ -42,7 +43,8 @@ _main() {
             dependencies+="
                 command=pandoc |
                 pkg_manager=apt; package=texlive |
-                pkg_manager=dnf; package=texlive-scheme-basic"
+                pkg_manager=dnf; package=texlive-scheme-basic |
+                pkg_manager=dnf; package=texlive-mdwtools"
             ;;
         "pandoc") dependencies+="command=pandoc" ;;
         esac
@@ -173,19 +175,22 @@ _get_command_use() {
     "application/vnd.ms-excel") command_use="libreoffice_calc" ;;         # xls
     "application/x-msexcel") command_use="libreoffice_calc" ;;            # xls
     "image/"*) command_use="convert" ;;                                   # (image files)
-    "text/"*) command_use="pandoc_latex" ;;                               # (plain text files)
+    "text/plain") command_use="pandoc_latex" ;;                           # (plain text files)
+    "text/html") command_use="libreoffice_writer" ;;
+    "text/xml") command_use="libreoffice_writer" ;;
     *)
         # If not found the 'file_mime', use the extension.
         case "${input_file,,}" in
         *.doc | *.docx) command_use="libreoffice_writer" ;;
+        *.htm | *.html) command_use="libreoffice_writer" ;;
         *.odf | *.fodf) command_use="libreoffice_writer" ;;
         *.odg | *.fodg) command_use="libreoffice_impress" ;;
         *.odp | *.fodp) command_use="libreoffice_impress" ;;
         *.ods | *.fods) command_use="libreoffice_calc" ;;
         *.odt | *.fodt) command_use="libreoffice_writer" ;;
         *.ppt | *.pptx) command_use="libreoffice_impress" ;;
-        *.xls | *.xlsx) command_use="libreoffice_calc" ;;
         *.svg | *.svgz) command_use="inkscape" ;;
+        *.xls | *.xlsx) command_use="libreoffice_calc" ;;
         *.rtf) command_use="libreoffice_writer" ;;
         *) command_use="pandoc" ;;
         esac
