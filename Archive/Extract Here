@@ -97,15 +97,17 @@ _main() {
             ;;
         "unsquashfs") dependencies+="command=unsquashfs; package=squashfs-tools" ;;
         "unzip")
+            _command_exists "bsdtar" && continue
             _command_exists "unar" && continue
             _command_exists "7za" && continue
             dependencies+="command=unzip"
             ;;
-        "unzip_bsdtar")
+        "unzip_new")
+            _command_exists "unar" && continue
             _command_exists "7za" && continue
             dependencies+="command=bsdtar; pkg_manager=apt; package=libarchive-tools | command=bsdtar; pkg_manager=dnf | command=bsdtar; pkg_manager=pacman"
             ;;
-        "unzip_bsdtar+password")
+        "unzip_new+password")
             show_wait_box=false
             _command_exists "7za" && continue
             dependencies+="command=bsdtar; pkg_manager=apt; package=libarchive-tools | command=bsdtar; pkg_manager=dnf | command=bsdtar; pkg_manager=pacman"
@@ -325,19 +327,31 @@ _main_task() {
     "unzip")
         if _command_exists "unzip"; then
             std_output=$(unzip -- "$input_file" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
         elif _command_exists "unar"; then
             std_output=$(unar -- "$input_file" 2>&1)
         elif _command_exists "7za"; then
             std_output=$(7za x -aoa -- "$input_file" 2>&1)
         fi
         ;;
-    "unzip_bsdtar")
-        std_output=$(bsdtar -xf "$input_file" 2>&1)
+    "unzip_new")
+        if _command_exists "bsdtar"; then
+            std_output=$(bsdtar -xf "$input_file" 2>&1)
+        elif _command_exists "unar"; then
+            std_output=$(unar -- "$input_file" 2>&1)
+        elif _command_exists "7za"; then
+            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+        fi
         ;;
-    "unzip_bsdtar+password")
+    "unzip_new+password")
         local password=""
         password=$(_display_password_box_message "Password required for '$(basename -- "$input_file")'\n\nPassword:") || __abort_extraction
-        std_output=$(bsdtar --passphrase "$password" -xf "$input_file" 2>&1)
+        if _command_exists "bsdtar"; then
+            std_output=$(bsdtar --passphrase "$password" -xf "$input_file" 2>&1)
+        elif _command_exists "7za"; then
+            std_output=$(7za x -aoa -p"$password" -- "$input_file" 2>&1)
+        fi
         ;;
     "xorriso")
         if _command_exists "xorriso"; then
@@ -518,12 +532,12 @@ _get_command_use() {
     if [[ "$command_use" == "unzip" ]]; then
         if _command_exists "zipinfo"; then
             if zipinfo -v "$input_file" 2>&1 | tr -d " " | grep -i -q "status:encrypted"; then
-                command_use="unzip_bsdtar+password"
+                command_use="unzip_new+password"
                 _command_exists "7za" && command_use="7za+password"
             fi
         elif _command_exists "7za"; then
             if 7za t -slt -p"null" -- "$input_file" 2>&1 | grep -i -q "wrong password"; then
-                command_use="7za+password"
+                command_use="unzip_new+password"
             fi
         fi
     fi
@@ -547,9 +561,8 @@ _get_command_use() {
 
     # Check if the zip require new unzip version to extract.
     if [[ "$command_use" == "unzip" ]]; then
-        if file --dereference --brief -- "$input_file" 2>/dev/null | grep -i -q "at least v[5-9]"; then
-            command_use="unzip_bsdtar"
-            _command_exists "7za" && command_use="7za"
+        if file --dereference --brief -- "$input_file" 2>/dev/null | grep -i -q "at least v[4-9]"; then
+            command_use="unzip_new"
         fi
     fi
 
