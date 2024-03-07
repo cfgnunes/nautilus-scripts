@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _command_exists "bsdtar" || _check_dependencies "
+    _check_dependencies "
         command=tar |
         command=xz; pkg_manager=apt; package=xz-utils |
         command=xz; pkg_manager=dnf |
@@ -34,23 +34,13 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=tar.xz")
     if [[ -d "$input_file" ]]; then
         cd -- "$input_file" || return 1
-
-        if _command_exists "tar"; then
-            std_output=$(XZ_OPT="-9" find . -printf "%P\n" | tar -cJf "$output_file" -T - 2>&1)
-        elif _command_exists "bsdtar"; then
-            std_output=$(find . -printf "%P\n" | bsdtar -a -cf "$output_file" -T - 2>&1)
-        fi
+        std_output=$(XZ_OPT="-9" find . -printf "%P\n" | tar -cJf "$output_file" -T - 2>&1)
     else
         local input_file_relative=""
         input_file_relative=$(_text_remove_pwd "$input_file")
         # shellcheck disable=SC2001
         input_file_relative=$(sed "s|^\./||g" <<<$"$input_file_relative")
-
-        if _command_exists "tar"; then
-            std_output=$(XZ_OPT="-9" tar -cJf "$output_file" -- "$input_file_relative" 2>&1)
-        elif _command_exists "bsdtar"; then
-            std_output=$(bsdtar -a -cf "$output_file" -- "$input_file_relative" 2>&1)
-        fi
+        std_output=$(XZ_OPT="-9" tar -cJf "$output_file" -- "$input_file_relative" 2>&1)
     fi
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
