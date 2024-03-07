@@ -34,6 +34,8 @@ _main_task() {
     else
         local input_file_relative=""
         input_file_relative=$(_text_remove_pwd "$input_file")
+        # shellcheck disable=SC2001
+        input_file_relative=$(sed "s|^\./||g" <<<$"$input_file_relative")
         std_output=$(zip --recurse-paths "$output_file" -- "$input_file_relative" 2>&1)
     fi
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
