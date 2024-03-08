@@ -19,6 +19,7 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
+    std_output=$(_text_sort "$std_output")
 
     _display_text_box "$std_output"
 }
@@ -27,10 +28,17 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
+    local nl_escaped="\\\n"
 
     # Run the main process.
     std_output=$(rhash --printf="%c  %p\n" -- "$input_file" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
+
+    # Convert filenames with '\n'.
+    if [[ "$std_output" == *$'\n'* ]]; then
+        std_output=$(sed -z "s|\n|$nl_escaped|g; s|$nl_escaped$||g" <<<"$std_output")
+        std_output="\\$std_output"
+    fi
 
     _storage_text_write_ln "$std_output"
 }
