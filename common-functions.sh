@@ -14,11 +14,12 @@ IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
 PREFIX_ERROR_LOG_FILE="Errors" # Name of 'error' directory.
 PREFIX_OUTPUT_DIR="Output"     # Name of 'output' directory.
 TEMP_DIR=$(mktemp --directory) # Temp directories for use in scripts.
-TEMP_DIR_LOG="$TEMP_DIR/logs"
-TEMP_DIR_TASK="$TEMP_DIR/task"
+TEMP_DIR_ITEMS_TO_REMOVE="$TEMP_DIR/items_to_remove"
+TEMP_DIR_LOGS="$TEMP_DIR/logs"
 TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
-WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"       # FIFO to use in the 'wait_box'.
+TEMP_DIR_TASK="$TEMP_DIR/task"
 WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control" # File control to use in the 'wait_box'.
+WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"       # FIFO to use in the 'wait_box'.
 
 readonly \
     FILENAME_SEPARATOR \
@@ -26,9 +27,9 @@ readonly \
     PREFIX_ERROR_LOG_FILE \
     PREFIX_OUTPUT_DIR \
     TEMP_DIR \
-    TEMP_DIR_LOG \
-    TEMP_DIR_TASK \
+    TEMP_DIR_LOGS \
     TEMP_DIR_STORAGE_TEXT \
+    TEMP_DIR_TASK \
     WAIT_BOX_CONTROL \
     WAIT_BOX_FIFO
 
@@ -44,15 +45,24 @@ TEMP_DATA_TASK=""
 # BUILD THE STRUCTURE OF THE 'TEMP_DIR'
 # -----------------------------------------------------------------------------
 
-mkdir -p "$TEMP_DIR_LOG"
-mkdir -p "$TEMP_DIR_TASK"
-mkdir -p "$TEMP_DIR_STORAGE_TEXT"
+mkdir -p "$TEMP_DIR_ITEMS_TO_REMOVE" # Used to store the path of temporary files or directories to be removed after exit.
+mkdir -p "$TEMP_DIR_LOGS"            # Used to store 'error logs'.
+mkdir -p "$TEMP_DIR_STORAGE_TEXT"    # Used to store the output text from parallel processes.
+mkdir -p "$TEMP_DIR_TASK"            # Used in scripts to store its temporary files.
 
 # -----------------------------------------------------------------------------
 # FUNCTIONS
 # -----------------------------------------------------------------------------
 
 _cleanup_on_exit() {
+    # Remove local temporary dirs or files.
+    local items_to_remove=""
+    items_to_remove=$(cat -- "$TEMP_DIR_ITEMS_TO_REMOVE/"* 2>/dev/null)
+    while IFS="" read -r item_to_remove; do
+        rm -rf -- "$item_to_remove"
+    done <<<"$items_to_remove"
+
+    # Remove the main temporary dir.
     rm -rf -- "$TEMP_DIR"
     _print_terminal "End of the script."
 }
@@ -87,15 +97,15 @@ _check_dependencies() {
         local command=""
         local package=""
         local pkg_manager=""
-        # Evaluate the values from 'dependency' variable.
+        # Evaluate the values from the 'dependency' variable.
         eval "$dependency"
 
-        # Ignore installing the dependency if there is the command in the shell.
+        # Ignore installing the dependency if there is a command in the shell.
         if [[ -n "$command" ]] && _command_exists "$command"; then
             continue
         fi
 
-        # Ignore installing the dependency if the installed package managers differs.
+        # Ignore installing the dependency if the installed package managers differ.
         if [[ -n "$pkg_manager" ]] && [[ "$pkg_manager_installed" != "$pkg_manager" ]]; then
             continue
         fi
@@ -105,7 +115,7 @@ _check_dependencies() {
             continue
         fi
 
-        # If the package is not specified, use the command name as package name.
+        # If the package is not specified, use the command name as the package name.
         if [[ -z "$package" ]] && [[ -n "$command" ]]; then
             package=$command
         fi
@@ -142,7 +152,7 @@ _check_output() {
         return 1
     fi
 
-    # Check if there is the word "Error" in stdout.
+    # Check if the word "Error" is in the stdout.
     if ! grep -q --ignore-case --perl-regexp "[^\w]error" <<<"$input_file"; then
         if grep -q --ignore-case --perl-regexp "[^\w]error" <<<"$std_output"; then
             _log_write "Error: Word 'error' found in the standard output." "$input_file" "$std_output" "$output_file"
@@ -388,7 +398,7 @@ _display_wait_box_message() {
 _close_wait_box() {
     # If 'wait_box' is open (waiting for an input in the FIFO).
     if pgrep -fl "$WAIT_BOX_FIFO" &>/dev/null; then
-        # Close the zenity progress by FIFO: Send a '\n' for the 'cat' command.
+        # Close the Zenity using the FIFO: Send a '\n' for the 'cat'
         printf "\n" >"$WAIT_BOX_FIFO"
     fi
 
@@ -422,7 +432,7 @@ _expand_directory() {
     # Build a 'find' command.
     find_command="find \"$input_directory\""
 
-    # Expand the directories with 'find' command.
+    # Expand the directories with the 'find' command.
     case "$par_type" in
     "file") find_command+=" ! -type d" ;;
     "directory") find_command+=" -type d" ;;
@@ -561,7 +571,7 @@ _get_files() {
     local par_type="file"
     local par_validate_conflict=""
 
-    # Evaluate the values from 'parameters' variable.
+    # Evaluate the values from the 'parameters' variable.
     eval "$parameters"
 
     # Check the parameters.
@@ -581,7 +591,7 @@ _get_files() {
     # Check if there are input files.
     if (($(_get_filenames_count "$input_files") == 0)); then
         if [[ "$par_get_pwd" == "true" ]]; then
-            # Return the current working directory if there are no files selected.
+            # Return the current working directory if no files have been selected.
             input_files=$(pwd)
         else
             # Try selecting the files by opening a file selection box.
@@ -640,11 +650,13 @@ _get_files() {
 
 _get_full_path_filename() {
     local input_filename=$1
-    local full_path=""
+    local full_path=$input_filename
     local dir=""
 
-    dir=$(cd -- "$(dirname -- "$input_filename")" &>/dev/null && pwd -P)
-    full_path=$dir/$(basename -- "$input_filename")
+    if [[ $input_filename != "/"* ]]; then
+        dir=$(cd -- "$(dirname -- "$input_filename")" &>/dev/null && pwd -P)
+        full_path=$dir/$(basename -- "$input_filename")
+    fi
 
     printf "%s" "$full_path"
 }
@@ -662,7 +674,7 @@ _get_output_dir() {
     # Default values for input parameters.
     local par_use_same_dir=""
 
-    # Evaluate the values from 'parameters' variable.
+    # Evaluate the values from the 'parameters' variable.
     eval "$parameters"
 
     # Check directories available to put the 'output' dir.
@@ -701,7 +713,7 @@ _get_output_filename() {
     local par_prefix=""
     local par_suffix=""
 
-    # Evaluate the values from 'parameters' variable.
+    # Evaluate the values from the 'parameters' variable.
     eval "$parameters"
 
     # Directories do not have an extension.
@@ -747,6 +759,26 @@ _get_script_name() {
     basename -- "$0"
 }
 
+_get_temp_dir_local() {
+    local output_dir=$1
+    local suffix=$2
+    local temp_dir=""
+    temp_dir=$(mktemp --directory --tmpdir="$output_dir" "tmp.$suffix.XXXXXXXXXX")
+
+    # Remember to remove this directory after exit.
+    item_to_remove=$(mktemp --tmpdir="$TEMP_DIR_ITEMS_TO_REMOVE")
+    printf "%s\n" "$temp_dir" >"$item_to_remove"
+
+    printf "%s" "$temp_dir"
+}
+
+_get_temp_file() {
+    local temp_file=""
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+
+    printf "%s" "$temp_file"
+}
+
 _has_string_in_list() {
     local string=$1
     local list=$2
@@ -771,7 +803,7 @@ _log_compile() {
     local log_files_count=""
 
     # Do nothing if there are no error log files.
-    log_files_count="$(find "$TEMP_DIR_LOG" -type f 2>/dev/null | wc -l)"
+    log_files_count="$(find "$TEMP_DIR_LOGS" -type f 2>/dev/null | wc -l)"
     if ((log_files_count == 0)); then
         return 1
     fi
@@ -788,7 +820,7 @@ _log_compile() {
     {
         printf "Script: '%s'.\n" "$(_get_script_name)"
         printf "Total errors: %s.\n\n" "$log_files_count"
-        cat -- "$TEMP_DIR_LOG/"* 2>/dev/null
+        cat -- "$TEMP_DIR_LOGS/"* 2>/dev/null
     } >"$log_file_output"
 
     printf "%s" "$log_file_output"
@@ -801,7 +833,7 @@ _log_write() {
     local output_file=$4
 
     local log_temp_file=""
-    log_temp_file=$(mktemp --tmpdir="$TEMP_DIR_LOG")
+    log_temp_file=$(mktemp --tmpdir="$TEMP_DIR_LOGS")
 
     {
         printf "[%s]\n" "$(date "+%Y-%m-%d %H:%M:%S")"
@@ -1157,9 +1189,9 @@ _validate_file_mime() {
         file_encoding=$(file --dereference --brief --mime-encoding -- "$input_file")
 
         if [[ -n "$par_skip_encoding" ]]; then
-            _has_string_in_list "$file_encoding" "$par_skip_encoding" && return 1
+            _has_string_in_list "$file_encoding" "$par_skip_encoding" && return
         elif [[ -n "$par_select_encoding" ]]; then
-            _has_string_in_list "$file_encoding" "$par_select_encoding" || return 1
+            _has_string_in_list "$file_encoding" "$par_select_encoding" || return
         fi
     fi
 
@@ -1169,16 +1201,14 @@ _validate_file_mime() {
         file_mime=$(_get_file_mime "$input_file")
 
         if [[ -n "$par_skip_mime" ]]; then
-            _has_string_in_list "$file_mime" "$par_skip_mime" && return 1
+            _has_string_in_list "$file_mime" "$par_skip_mime" && return
         elif [[ -n "$par_select_mime" ]]; then
-            _has_string_in_list "$file_mime" "$par_select_mime" || return 1
+            _has_string_in_list "$file_mime" "$par_select_mime" || return
         fi
     fi
 
     # Create a temp file containing the name of the valid file.
     _storage_text_write "$input_file$FILENAME_SEPARATOR"
-
-    return 0
 }
 
 _validate_file_mime_parallel() {
@@ -1249,14 +1279,8 @@ _validate_file_preselect() {
         fi
     fi
 
-    if [[ -z "$input_file_valid" ]]; then
-        return 1
-    fi
-
     # Create a temp file containing the name of the valid file.
     _storage_text_write "$input_file_valid"
-
-    return 0
 }
 
 _validate_file_preselect_parallel() {
@@ -1346,7 +1370,8 @@ export \
     FILENAME_SEPARATOR \
     IGNORE_FIND_PATH \
     TEMP_DATA_TASK \
-    TEMP_DIR_LOG \
+    TEMP_DIR_ITEMS_TO_REMOVE \
+    TEMP_DIR_LOGS \
     TEMP_DIR_STORAGE_TEXT \
     TEMP_DIR_TASK
 
@@ -1366,6 +1391,8 @@ export -f \
     _get_full_path_filename \
     _get_max_procs \
     _get_output_filename \
+    _get_temp_dir_local \
+    _get_temp_file \
     _has_string_in_list \
     _is_gui_session \
     _log_write \
