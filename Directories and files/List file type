@@ -19,8 +19,6 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|\(.*\)// *\(.*\)|\2: '\1'|" <<<"$std_output")
     std_output=$(_text_sort "$std_output")
 
     _display_text_box "$std_output"
@@ -34,6 +32,8 @@ _main_task() {
     # Run the main process.
     std_output=$(file --separator "//" --no-pad -- "$input_file" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|\(.*\)// *\(.*\)|\2: '\1'|" <<<"$std_output")
 
     _storage_text_write_ln "$std_output"
 }

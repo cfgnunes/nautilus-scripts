@@ -21,8 +21,6 @@ _main() {
     std_output=$(_storage_text_read_all)
     std_output=$(sort -h -r <<<"$std_output") # Sort the result.
     std_output=$(head -n 15 <<<"$std_output")
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|\t\(.*\)|\t'\1'|" <<<"$std_output")
 
     _display_text_box "$std_output"
 }
@@ -35,6 +33,8 @@ _main_task() {
     # Run the main process.
     std_output=$(du -h -- "$input_file" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|\t\(.*\)|\t'\1'|" <<<"$std_output")
 
     _storage_text_write_ln "$std_output"
 }
