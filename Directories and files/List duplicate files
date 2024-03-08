@@ -17,7 +17,7 @@ _main() {
     input_files=$(_get_files "par_type=all; par_get_pwd=true")
 
     # Work on a temporary file.
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+    temp_file=$(_get_temp_file)
 
     # NOTE: The 'rdfind' does not support ' -- ' in the command line.
 

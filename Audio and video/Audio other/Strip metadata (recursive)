@@ -30,7 +30,7 @@ _main_task() {
     local temp_file=""
 
     # Work on a temporary file.
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")$(_get_filename_extension "$input_file")
+    temp_file=$(_get_temp_file)$(_get_filename_extension "$input_file")
 
     # Run the main process.
     std_output=$(ffmpeg -y -i "$input_file" -map_metadata -1 -vn -c:a copy -- "$temp_file" 2>&1)

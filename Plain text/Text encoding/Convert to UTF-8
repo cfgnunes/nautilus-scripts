@@ -28,7 +28,7 @@ _main_task() {
     local temp_file=""
 
     # Work on a temporary file.
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+    temp_file=$(_get_temp_file)
 
     # Run the main process.
     std_output=$(iconv -f "$(file --dereference --brief --mime-encoding -- "$input_file")" "$input_file" -t utf-8 -o "$temp_file")

@@ -31,7 +31,7 @@ _main_task() {
     local temp_file=""
 
     # Work on a temporary file.
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+    temp_file=$(_get_temp_file)
 
     # Run the main process.
     std_output=$(tesseract "$input_file" "$temp_file" -l deu 2>&1)

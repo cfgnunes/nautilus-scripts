@@ -96,7 +96,7 @@ _main_task() {
         local temp_dir_output=""
         filename=$(basename -- "$input_file")             # Remove the path.
         filename=$(_strip_filename_extension "$filename") # Remove the extension.
-        temp_dir_output=$(mktemp --directory --tmpdir="$output_dir" "tmp.$filename.XXXXXXXXXX")
+        temp_dir_output=$(_get_temp_dir_local "$output_dir" "$filename")
 
         output_file_temp=$(_get_output_filename "$input_file" "$temp_dir_output" "par_extension_opt=replace; par_extension=$output_format")
 
@@ -117,7 +117,7 @@ _main_task() {
 
         # NOTE: Workaround to fix the bug 37531 in LibreOffice.
         # See the: https://bugs.documentfoundation.org/show_bug.cgi?id=37531
-        temp_file="$(mktemp --tmpdir="$TEMP_DIR_TASK").bug37531"
+        temp_file="$(_get_temp_file).bug37531"
 
         # NOTE: LibreOffice does not support ' -- ' in the command line.
         # NOTE: LibreOffice does not support defining the output file manually.

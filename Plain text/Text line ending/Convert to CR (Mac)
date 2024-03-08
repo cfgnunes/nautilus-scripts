@@ -28,7 +28,7 @@ _main_task() {
     local temp_file=""
 
     # Work on a temporary file.
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
+    temp_file=$(_get_temp_file)
 
     # Run the main process.
     std_output=$(perl -pe "s/\r\n|\n|\r/\r/g" -- "$input_file" >"$temp_file")
