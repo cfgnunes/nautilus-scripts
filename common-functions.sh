@@ -1014,6 +1014,10 @@ _storage_text_write() {
     local input_text=$1
     local temp_file=""
 
+    if [[ -z "$input_text" ]] || [[ "$input_text" == $'\n' ]]; then
+        return
+    fi
+
     # Save the text to be compiled into a single file.
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_STORAGE_TEXT")
     printf "%s" "$input_text" >"$temp_file"
@@ -1021,6 +1025,11 @@ _storage_text_write() {
 
 _storage_text_write_ln() {
     local input_text=$1
+
+    if [[ -z "$input_text" ]]; then
+        return
+    fi
+
     _storage_text_write "$input_text"$'\n'
 }
 
