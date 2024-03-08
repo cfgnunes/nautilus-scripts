@@ -136,7 +136,7 @@ _run_source_common_functions() {
     ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
     source "$ROOT_DIR/common-functions.sh"
 
-    _test_equal "Check global variables." "$FILENAME_SEPARATOR" $'\r'
+    _test_equal "Check global variables." "$FIELD_SEPARATOR" $'\r'
 }
 
 _run_cleanup_on_exit() {
@@ -605,6 +605,11 @@ _run_text_sort() {
 
     input="Line2"$'\n'"Line1"
     expected_output="Line1"$'\n'"Line2"
+    output=$(_text_sort "$input")
+    _test_equal "$input" "$output" "$expected_output"
+
+    input="10"$'\n'"2"
+    expected_output="2"$'\n'"10"
     output=$(_text_sort "$input")
     _test_equal "$input" "$output" "$expected_output"
 }

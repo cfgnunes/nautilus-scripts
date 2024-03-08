@@ -9,7 +9,7 @@ set -u
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
-FILENAME_SEPARATOR=$'\r'       # The field separator is used in 'loop' commands to iterate over files.
+FIELD_SEPARATOR=$'\r'          # The field separator is used in 'loop' commands to iterate over files.
 IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
 PREFIX_ERROR_LOG_FILE="Errors" # Name of 'error' directory.
 PREFIX_OUTPUT_DIR="Output"     # Name of 'output' directory.
@@ -22,7 +22,7 @@ WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control" # File control to use in the 'wait
 WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"       # FIFO to use in the 'wait_box'.
 
 readonly \
-    FILENAME_SEPARATOR \
+    FIELD_SEPARATOR \
     IGNORE_FIND_PATH \
     PREFIX_ERROR_LOG_FILE \
     PREFIX_OUTPUT_DIR \
@@ -37,7 +37,7 @@ readonly \
 # GLOBAL VARIABLES
 # -----------------------------------------------------------------------------
 
-IFS=$FILENAME_SEPARATOR
+IFS=$FIELD_SEPARATOR
 INPUT_FILES=$*
 TEMP_DATA_TASK=""
 
@@ -58,9 +58,9 @@ _cleanup_on_exit() {
     # Remove local temporary dirs or files.
     local items_to_remove=""
     items_to_remove=$(cat -- "$TEMP_DIR_ITEMS_TO_REMOVE/"* 2>/dev/null)
-    while IFS="" read -r item_to_remove; do
+    for item_to_remove in $items_to_remove; do
         rm -rf -- "$item_to_remove"
-    done <<<"$items_to_remove"
+    done
 
     # Remove the main temporary dir.
     rm -rf -- "$TEMP_DIR"
@@ -125,7 +125,7 @@ _check_dependencies() {
             packages_to_install+=" $package"
         fi
     done
-    IFS=$FILENAME_SEPARATOR
+    IFS=$FIELD_SEPARATOR
 
     # Ask the user to install the packages.
     if [[ -n "$packages_to_install" ]]; then
@@ -183,7 +183,7 @@ _convert_filenames_to_text() {
     local nl_escaped="'\$'\\\n''"
 
     input_files=$(sed -z "s|\n|$nl_escaped|g; s|$nl_escaped$||g" <<<"$input_files")
-    input_files=$(tr "$FILENAME_SEPARATOR" "\n" <<<"$input_files")
+    input_files=$(tr "$FIELD_SEPARATOR" "\n" <<<"$input_files")
 
     printf "%s" "$input_files"
 }
@@ -192,7 +192,7 @@ _convert_text_to_filenames() {
     local input_files=$1
     local nl_escaped="'\$'\\\n''"
 
-    input_files=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$input_files")
+    input_files=$(tr "\n" "$FIELD_SEPARATOR" <<<"$input_files")
     input_files=$(sed -z "s|$nl_escaped|\n|g" <<<"$input_files")
 
     input_files=$(_str_remove_empty_tokens "$input_files")
@@ -204,13 +204,13 @@ _display_dir_selection_box() {
 
     if _command_exists "zenity"; then
         input_files=$(zenity --title "$(_get_script_name)" --file-selection --multiple \
-            --directory --separator="$FILENAME_SEPARATOR" 2>/dev/null) || _exit_script
+            --directory --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
         input_files=$(kdialog --title "$(_get_script_name)" \
             --getexistingdirectory 2>/dev/null) || _exit_script
         # Use parameter expansion to remove the last space.
         input_files=${input_files% }
-        input_files=${input_files// \//$FILENAME_SEPARATOR/}
+        input_files=${input_files// \//$FIELD_SEPARATOR/}
     fi
 
     input_files=$(_str_remove_empty_tokens "$input_files")
@@ -222,13 +222,13 @@ _display_file_selection_box() {
 
     if _command_exists "zenity"; then
         input_files=$(zenity --title "$(_get_script_name)" --file-selection --multiple \
-            --separator="$FILENAME_SEPARATOR" 2>/dev/null) || _exit_script
+            --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
         input_files=$(kdialog --title "$(_get_script_name)" \
             --getopenfilename --multiple 2>/dev/null) || _exit_script
         # Use parameter expansion to remove the last space.
         input_files=${input_files% }
-        input_files=${input_files// \//$FILENAME_SEPARATOR/}
+        input_files=${input_files// \//$FIELD_SEPARATOR/}
     fi
 
     input_files=$(_str_remove_empty_tokens "$input_files")
@@ -448,7 +448,7 @@ _expand_directory() {
 
     find_command+=" ! -path \"$IGNORE_FIND_PATH\""
     # shellcheck disable=SC2089
-    find_command+=" -printf \"%p$FILENAME_SEPARATOR\""
+    find_command+=" -printf \"%p$FIELD_SEPARATOR\""
 
     # shellcheck disable=SC2086
     eval $find_command 2>/dev/null
@@ -509,7 +509,7 @@ _get_filenames_count() {
     local files_count=0
 
     if [[ -n "$input_files" ]]; then
-        files_count=$(tr -cd "$FILENAME_SEPARATOR" <<<"$input_files" | wc -c)
+        files_count=$(tr -cd "$FIELD_SEPARATOR" <<<"$input_files" | wc -c)
         files_count=$((files_count + 1))
     fi
 
@@ -526,8 +526,8 @@ _get_filenames_filemanager() {
     if [[ -n "$var_filemanager" ]] && [[ -n "${!var_filemanager}" ]]; then
         input_files=${!var_filemanager}
 
-        # Replace '\n' with 'FILENAME_SEPARATOR'.
-        input_files=$(tr "\n" "$FILENAME_SEPARATOR" <<<"$input_files")
+        # Replace '\n' with 'FIELD_SEPARATOR'.
+        input_files=$(tr "\n" "$FIELD_SEPARATOR" <<<"$input_files")
 
         # Decode the URI list.
         input_files=$(_text_uri_decode "$input_files")
@@ -767,7 +767,7 @@ _get_temp_dir_local() {
 
     # Remember to remove this directory after exit.
     item_to_remove=$(mktemp --tmpdir="$TEMP_DIR_ITEMS_TO_REMOVE")
-    printf "%s\n" "$temp_dir" >"$item_to_remove"
+    printf "%s$FIELD_SEPARATOR" "$temp_dir" >"$item_to_remove"
 
     printf "%s" "$temp_dir"
 }
@@ -1027,7 +1027,7 @@ _run_task_parallel() {
 
     # Execute the function '_main_task' for each file in parallel (using 'xargs').
     printf "%s" "$input_files" | xargs \
-        --delimiter="$FILENAME_SEPARATOR" \
+        --delimiter="$FIELD_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
         bash -c "_main_task '{}' '$output_dir'"
@@ -1088,8 +1088,8 @@ _str_human_readable_path() {
 
 _str_remove_empty_tokens() {
     local input_str=$1
-    input_str=$(tr -s "$FILENAME_SEPARATOR" <<<"$input_str")
-    input_str=$(sed "s|$FILENAME_SEPARATOR$||" <<<"$input_str")
+    input_str=$(tr -s "$FIELD_SEPARATOR" <<<"$input_str")
+    input_str=$(sed "s|$FIELD_SEPARATOR$||" <<<"$input_str")
 
     printf "%s" "$input_str"
 }
@@ -1208,7 +1208,7 @@ _validate_file_mime() {
     fi
 
     # Create a temp file containing the name of the valid file.
-    _storage_text_write "$input_file$FILENAME_SEPARATOR"
+    _storage_text_write "$input_file$FIELD_SEPARATOR"
 }
 
 _validate_file_mime_parallel() {
@@ -1229,7 +1229,7 @@ _validate_file_mime_parallel() {
 
     # Run '_validate_file_mime' for each file in parallel (using 'xargs').
     printf "%s" "$input_files" | xargs \
-        --delimiter="$FILENAME_SEPARATOR" \
+        --delimiter="$FIELD_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
         bash -c "_validate_file_mime '{}' \
@@ -1260,7 +1260,7 @@ _validate_file_preselect() {
         # Add the file in the 'input_file_valid'.
         if [[ "$par_type" == "file" ]] || [[ "$par_type" == "all" ]]; then
             input_file_valid=$(_get_full_path_filename "$input_file")
-            input_file_valid+=$FILENAME_SEPARATOR
+            input_file_valid+=$FIELD_SEPARATOR
         fi
     else # If the 'input_file' is a directory.
         if [[ "$par_recursive" == "true" ]]; then
@@ -1274,7 +1274,7 @@ _validate_file_preselect() {
             # Add the directory in the 'input_file_valid'.
             if [[ "$par_type" == "directory" ]] || [[ "$par_type" == "all" ]]; then
                 input_file_valid=$(_get_full_path_filename "$input_file")
-                input_file_valid+=$FILENAME_SEPARATOR
+                input_file_valid+=$FIELD_SEPARATOR
             fi
         fi
     fi
@@ -1295,7 +1295,7 @@ _validate_file_preselect_parallel() {
 
     # Run '_validate_file_preselect' for each file in parallel (using 'xargs').
     printf "%s" "$input_files" | xargs \
-        --delimiter="$FILENAME_SEPARATOR" \
+        --delimiter="$FIELD_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
         bash -c "_validate_file_preselect '{}' \
@@ -1367,7 +1367,7 @@ _validate_files_count() {
 
 # Export variables to be used inside new shells (when using 'xargs').
 export \
-    FILENAME_SEPARATOR \
+    FIELD_SEPARATOR \
     IGNORE_FIND_PATH \
     TEMP_DATA_TASK \
     TEMP_DIR_ITEMS_TO_REMOVE \

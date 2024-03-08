@@ -18,8 +18,8 @@ _main() {
     local input_file_1=""
     local input_file_2=""
 
-    input_file_1=$(cut -f 1 -d "$FILENAME_SEPARATOR" <<<"$input_files")
-    input_file_2=$(cut -f 2 -d "$FILENAME_SEPARATOR" <<<"$input_files")
+    input_file_1=$(cut -f 1 -d "$FIELD_SEPARATOR" <<<"$input_files")
+    input_file_2=$(cut -f 2 -d "$FIELD_SEPARATOR" <<<"$input_files")
 
     [[ -d "$input_file_1" ]] && input_file_1+="/"
     [[ -d "$input_file_2" ]] && input_file_2+="/"
