@@ -7,24 +7,36 @@ source "$ROOT_DIR/common-functions.sh"
 
 _main() {
     local input_files=""
-    local std_output=""
+    local output_dir=""
 
     # Execute initial checks.
     _check_dependencies ""
     _display_wait_box
     input_files=$(_get_files "par_type=file; par_recursive=true; par_get_pwd=true; par_skip_encoding=binary; par_skip_extension='pdf|svg'")
 
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+
+    local std_output=""
+    std_output=$(_storage_text_read_all)
+    std_output=$(sort -h -r <<<"$std_output")
+
+    _display_text_box "$std_output"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local std_output=""
+
     # Run the main process.
-    # shellcheck disable=SC2086
-    std_output=$(wc --lines -- $input_files)
+    std_output=$(wc --lines -- "$input_file")
     std_output=$(grep -v ".*[0-9]* total$" <<<"$std_output")
     # shellcheck disable=SC2001
     std_output=$(sed "s| *\([0-9]*\) *\(.*\)|\1 '\2'|" <<<"$std_output")
     std_output=$(_text_remove_pwd "$std_output")
-    std_output=$(sort -h -r <<<"$std_output")
-    # shellcheck disable=SC2001
 
-    _display_text_box "$std_output"
+    _storage_text_write_ln "$std_output"
 }
 
 _main "$@"
