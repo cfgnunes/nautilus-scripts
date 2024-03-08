@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _check_dependencies "command=inkscape"
+    _display_wait_box
+    input_files=$(_get_files "par_type=file; par_select_mime='image/svg'")
+    output_dir=$(_get_output_dir "par_use_same_dir=false")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+    local temp_file=""
+    local new_font="Times"
+
+    __key_remove() {
+        local file=$1
+        local key=$2
+
+        sed -i "s|$key:[^;\"]*;*||g; s|;\"|\"|g" "$file"
+    }
+
+    __key_set_value() {
+        local file=$1
+        local key=$2
+        local value=$3
+
+        sed -i "s|$key:[^;\"]*\([;\"]\)|$key:$value\1|g" "$file"
+    }
+
+    # Work on a temporary file.
+    temp_file=$(_get_temp_file)
+    std_output=$(cp --archive -- "$input_file" "$temp_file" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    # Run the main process.
+    __key_remove "$temp_file" "font-stretch"
+    __key_set_value "$temp_file" "font-family" "$new_font"
+    __key_set_value "$temp_file" "-inkscape-font-specification" "$new_font"
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    # Move the temporary file to the output.
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve")
+    _move_temp_file_to_output "$input_file" "$temp_file" "$output_file"
+}
+
+_main "$@"
