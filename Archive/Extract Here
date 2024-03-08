@@ -608,15 +608,8 @@ _get_command_use() {
 
     # Check if if the 'zip' archive is password-protected.
     if [[ "$command_use" == "unzip" ]]; then
-        if _command_exists "zipinfo"; then
-            if zipinfo -v "$input_file" 2>&1 | tr -d " " | grep -i -q "status:encrypted"; then
-                command_use="unzip_new+password"
-                _command_exists "7za" && command_use="7za+password"
-            fi
-        elif _command_exists "7za"; then
-            if 7za t -slt -p"null" -- "$input_file" 2>&1 | grep -i -q "wrong password"; then
-                command_use="unzip_new+password"
-            fi
+        if file --dereference --brief --uncompress -- "$input_file" 2>&1 | grep -i -q "encrypted"; then
+            command_use="unzip_new+password"
         fi
     fi
 
