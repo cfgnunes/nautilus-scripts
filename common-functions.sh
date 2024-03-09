@@ -760,7 +760,7 @@ _get_temp_dir_local() {
     local output_dir=$1
     local suffix=$2
     local temp_dir=""
-    temp_dir=$(mktemp --directory --tmpdir="$output_dir" "tmp.$suffix.XXXXXXXXXX")
+    temp_dir=$(mktemp --directory --tmpdir="$output_dir" ".tmp.$suffix.XXXXXXXXXX")
 
     # Remember to remove this directory after exit.
     item_to_remove=$(mktemp --tmpdir="$TEMP_DIR_ITEMS_TO_REMOVE")
