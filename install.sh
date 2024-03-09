@@ -192,7 +192,7 @@ _step_install_scripts() {
 
     # Set file permissions.
     printf " > Setting file permissions...\n"
-    find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x {} \;
+    find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x -- {} \;
 
     # Restore previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then

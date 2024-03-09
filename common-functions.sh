@@ -58,12 +58,15 @@ _cleanup_on_exit() {
     # Remove local temporary dirs or files.
     local items_to_remove=""
     items_to_remove=$(cat -- "$TEMP_DIR_ITEMS_TO_REMOVE/"* 2>/dev/null)
-    for item_to_remove in $items_to_remove; do
-        rm -rf -- "$item_to_remove"
+
+    local item=""
+    for item in $items_to_remove; do
+        chmod --recursive u+rw -- "$item" &>/dev/null
+        rm -rf -- "$item" &>/dev/null
     done
 
     # Remove the main temporary dir.
-    rm -rf -- "$TEMP_DIR"
+    rm -rf -- "$TEMP_DIR" &>/dev/null
     _print_terminal "End of the script."
 }
 trap _cleanup_on_exit EXIT
@@ -150,14 +153,6 @@ _check_output() {
     if ((exit_code != 0)); then
         _log_write "Error: Non-zero exit code." "$input_file" "$std_output" "$output_file"
         return 1
-    fi
-
-    # Check if the word "Error" is in the stdout.
-    if ! grep -q --ignore-case --perl-regexp "[^\w]error" <<<"$input_file"; then
-        if grep -q --ignore-case --perl-regexp "[^\w]error" <<<"$std_output"; then
-            _log_write "Error: Word 'error' found in the standard output." "$input_file" "$std_output" "$output_file"
-            return 1
-        fi
     fi
 
     # Check if the output file exists.
@@ -268,10 +263,6 @@ _display_info_box() {
 }
 
 _display_password_box() {
-    _display_password_box_message "Type your password:" || return 1
-}
-
-_display_password_box_message() {
     local message="$1"
     local password=""
 
@@ -286,10 +277,19 @@ _display_password_box_message() {
             --password "$message" 2>/dev/null) || return 1
     fi
 
+    printf "%s" "$password"
+}
+
+_display_password_box_define() {
+    local message="Type your password:"
+    local password=""
+
+    password=$(_display_password_box "$message") || return 1
+
     # Check if the 'password' is not empty.
     if [[ -z "$password" ]]; then
-        _display_error_box "You must define a password!"
-        _exit_script
+        _display_error_box "The password can not be empty!"
+        return 1
     fi
 
     printf "%s" "$password"
@@ -364,11 +364,8 @@ _display_result_box() {
 }
 
 _display_wait_box() {
-    _display_wait_box_message "Running the task. Please, wait..."
-}
-
-_display_wait_box_message() {
-    local message=$1
+    local open_delay=${1:-"2"}
+    local message="Running the task. Please, wait..."
 
     if ! _is_gui_session; then
         printf "%s\n" "$message"
@@ -383,7 +380,7 @@ _display_wait_box_message() {
         fi
 
         # shellcheck disable=SC2002
-        sleep 2 && [[ -f "$WAIT_BOX_CONTROL" ]] && cat "$WAIT_BOX_FIFO" | (
+        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && cat "$WAIT_BOX_FIFO" | (
             zenity \
                 --title="$(_get_script_name)" \
                 --width=400 \
@@ -971,8 +968,8 @@ _pkg_install_packages() {
     _close_wait_box
 
     # Check if all packages were installed.
-    local package=""
     IFS=" "
+    local package=""
     for package in $packages; do
         if ! _pkg_is_package_installed "$pkg_manager" "$package"; then
             _display_error_box "Could not install the package '$package'!"
@@ -1382,7 +1379,6 @@ export -f \
     _convert_filenames_to_text \
     _convert_text_to_filenames \
     _display_password_box \
-    _display_password_box_message \
     _exit_script \
     _expand_directory \
     _get_file_mime \
