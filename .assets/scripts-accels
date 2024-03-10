@@ -8,7 +8,6 @@ F7 Disk Usage Analyzer
 <Shift><Control>E List empty directories
 <Shift><Control>G Git clone (URLs in clipboard)
 <Shift><Control>H List hidden items
-<Shift><Control>L Make a link (symbolic link)
 <Shift><Control>M Compare with Meld
 <Shift><Control>O Open item location
 <Shift><Control>P List permissions and owners
