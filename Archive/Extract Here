@@ -55,19 +55,15 @@ _extract_archive() {
 
 _all_commands_exists() {
     local commands=$1
-    local old_ifs=""
+    local commands_array=()
 
-    old_ifs=$IFS
-    IFS=" "
+    IFS=" " read -r -a commands_array <<<"$commands"
     local command=""
-    for command in $commands; do
-        if ! _command_exists "$command"; then
-            IFS=$old_ifs
+    for command in "${commands_array[@]}"; do
+        if ! command -v "$command" &>/dev/null; then
             return 1
         fi
     done
-    IFS=$old_ifs
-
     return 0
 }
 
