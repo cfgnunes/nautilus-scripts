@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _check_dependencies "command=xclip"
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=all; par_get_pwd=true")
+
+    input_files=$(cut -d "$FIELD_SEPARATOR" -f 1)
+    if [[ -d "input_files" ]]; then
+        output_dir=$input_files
+    else
+        output_dir=$(cd -- "$(dirname -- "$input_files")" &>/dev/null && pwd -P)
+    fi
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$(_get_urls_from_clipboard)" "$output_dir"
+    _display_result_box "$output_dir"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local std_output=""
+
+    cd "$output_dir" || return 1
+
+    if ! [[ -e "$input_file" ]]; then
+        return 1
+    fi
+
+    # Run the main process.
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve")
+    std_output=$(ln -s -- "$input_file" "$output_file" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+}
+
+_get_urls_from_clipboard() {
+    local urls=""
+
+    urls+=$(xclip -quiet -selection clipboard -o)
+    urls+=$'\n'
+    urls=$(grep --only-matching --perl-regexp "(file://|('\")?/)(.*)" <<<"$urls")
+    urls=$(sed "s|^['\"]||g; s|['\"]$||g" <<<"$urls")
+    urls=$(sort -u <<<"$urls")
+
+    if [[ -z "$urls" ]]; then
+        _display_error_box "There are no valid paths in the clipboard!"
+        _exit_script
+    fi
+
+    urls=$(_convert_text_to_filenames "$urls")
+    urls=$(_text_uri_decode "$urls")
+
+    printf "%s" "$urls"
+}
+
+_main "$@"
