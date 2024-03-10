@@ -182,7 +182,11 @@ _step_install_scripts() {
     cp -- "$SCRIPT_DIR/common-functions.sh" "$INSTALL_DIR"
     local i=0
     for i in "${!_categories_dirs[@]}"; do
-        if [[ "${_categories_selected[i]}" == "true" ]]; then
+        if [[ -v "_categories_selected[i]" ]]; then
+            if [[ ${_categories_selected[i]} == "true" ]]; then
+                cp -r -- "$SCRIPT_DIR/${_categories_dirs[i]}" "$INSTALL_DIR"
+            fi
+        else
             cp -r -- "$SCRIPT_DIR/${_categories_dirs[i]}" "$INSTALL_DIR"
         fi
     done
