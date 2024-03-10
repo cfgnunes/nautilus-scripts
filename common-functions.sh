@@ -535,7 +535,6 @@ _get_filenames_filemanager() {
 
         # Decode the URI list.
         input_files=$(_text_uri_decode "$input_files")
-        input_files=${input_files//file:\/\//}
     else
         input_files=$INPUT_FILES # Standard input
     fi
@@ -1138,6 +1137,8 @@ _text_uri_decode() {
     local uri_encoded=$1
 
     uri_encoded=${uri_encoded//%/\\x}
+    uri_encoded=${uri_encoded//file:\/\//}
+
     # shellcheck disable=SC2059
     printf "$uri_encoded"
 }
@@ -1408,6 +1409,7 @@ export -f \
     _str_remove_empty_tokens \
     _strip_filename_extension \
     _text_remove_pwd \
+    _text_uri_decode \
     _validate_file_extension \
     _validate_file_mime \
     _validate_file_preselect
