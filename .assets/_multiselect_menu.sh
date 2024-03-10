@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Code based on: https://unix.stackexchange.com/a/673436
-# Version: 2024-03-08
+# Version: 2024-03-10
 
 _multiselect_menu() {
     local return_value=$1
@@ -25,18 +25,18 @@ _multiselect_menu() {
         local row=""
         local col=""
 
-        IFS=";" read -rsdR -p $'\E[6n' row col
+        IFS=";" read -rs -d "R" -p $'\E[6n' row col
         printf "%s" "${row#*[}"
     }
     __get_keyboard_key() {
         local key=""
 
-        IFS="" read -rsn1 key &>/dev/null
+        IFS="" read -rs -n 1 key &>/dev/null
         case "$key" in
         "") printf "enter" ;;
         " ") printf "space" ;;
         $'\e')
-            IFS="" read -rsn2 key &>/dev/null
+            IFS="" read -rs -n 2 key &>/dev/null
             case "$key" in
             "[A" | "[D") printf "up" ;;
             "[B" | "[C") printf "down" ;;
