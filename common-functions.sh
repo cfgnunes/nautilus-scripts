@@ -94,7 +94,7 @@ _check_dependencies() {
     fi
 
     # Check all dependencies.
-    IFS=$'\n'
+    dependencies=$(tr "\n" "$FIELD_SEPARATOR" <<<"$dependencies")
     local dependency=""
     for dependency in $dependencies; do
         local command=""
@@ -128,7 +128,6 @@ _check_dependencies() {
             packages_to_install+=" $package"
         fi
     done
-    IFS=$FIELD_SEPARATOR
 
     # Ask the user to install the packages.
     if [[ -n "$packages_to_install" ]]; then

@@ -55,7 +55,9 @@ _extract_archive() {
 
 _all_commands_exists() {
     local commands=$1
+    local old_ifs=""
 
+    old_ifs=$IFS
     IFS=" "
     local command=""
     for command in $commands; do
@@ -63,7 +65,8 @@ _all_commands_exists() {
             return 1
         fi
     done
-    IFS=$FIELD_SEPARATOR
+    IFS=$old_ifs
+
     return 0
 }
 
@@ -193,7 +196,9 @@ _get_available_extractor() {
     local preferred_extractors=$1
     local available_extractor=""
     local extractor=""
+    local old_ifs=""
 
+    old_ifs=$IFS
     IFS=" "
     for extractor in $preferred_extractors; do
         if [[ "$extractor" == *"+"* ]]; then
@@ -206,7 +211,7 @@ _get_available_extractor() {
             break
         fi
     done
-    IFS=$FIELD_SEPARATOR
+    IFS=$old_ifs
 
     printf "%s" "$available_extractor"
 }
@@ -450,7 +455,7 @@ _run_extractor() {
 
         # Try to extract with '7za'.
         if ((exit_code != 0)); then
-            std_output=$(7za x -aoa -- "$input_file" 2>&1)
+            std_output=$($command_7za x -aoa -- "$input_file" 2>&1)
             exit_code=$?
         fi
 
