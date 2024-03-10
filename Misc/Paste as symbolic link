@@ -40,7 +40,6 @@ _get_urls_from_clipboard() {
     local urls=""
 
     urls+=$(xclip -quiet -selection clipboard -o)
-    urls+=$'\n'
     urls=$(grep --only-matching --perl-regexp "^(file://|('\")?/)(.*)" <<<"$urls")
     urls=$(sed "s|^['\"]||g; s|['\"]$||g" <<<"$urls")
     urls=$(sort -u <<<"$urls")
