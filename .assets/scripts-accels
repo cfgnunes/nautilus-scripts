@@ -13,4 +13,5 @@ F7 Disk Usage Analyzer
 <Shift><Control>O Open item location
 <Shift><Control>P List permissions and owners
 <Shift><Control>U List duplicate files
+<Shift><Control>V Paste as symbolic link
 <Shift><Control>Y List file type

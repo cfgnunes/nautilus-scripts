@@ -16,6 +16,7 @@
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sFile%20permissions\\sList%20permissions%20and%20owners" "<Primary><Shift>p")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sMisc\\sDownload%20(URLs%20in%20clipboard)" "<Primary><Shift>d")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sMisc\\sGit%20clone%20(URLs%20in%20clipboard)" "<Primary><Shift>g")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sMisc\\sPaste%20as%20symbolic%20link" "<Primary><Shift>v")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sOpen%20with\\sCode%20Editor" "F6")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sOpen%20with\\sDisk%20Usage%20Analyzer" "F7")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sOpen%20with\\sTerminal" "F4")

@@ -38,7 +38,7 @@ While numerous scripts are available for GNOME Files on the web, many suffer fro
 | `<Control><Shift>M` | Compare with Meld             |
 | `<Control><Shift>O` | Open item location            |
 | `<Control><Shift>P` | List permissions and owners   |
-| `<Control><Shift>U` | List duplicate files          |
+| `<Control><Shift>V` | Paste as symbolic link        |
 | `<Control><Shift>Y` | List file type                |
 
 ## Installing
