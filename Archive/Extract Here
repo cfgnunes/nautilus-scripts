@@ -357,9 +357,23 @@ _run_extractor() {
     filename=$(basename -- "$input_file")             # Remove the path.
     filename=$(_strip_filename_extension "$filename") # Remove the extension.
 
+    __temp_dir_cd() {
+        temp_dir_output=$(_get_temp_dir_local "$output_dir" "$filename")
+        pushd "$temp_dir_output" &>/dev/null || true
+    }
+    __temp_dir_exit() {
+        # Exit the temporary directory.
+        popd &>/dev/null || true
+    }
+    __temp_dir_remove() {
+        rm -rf -- "$temp_dir_output" &>/dev/null
+    }
+    __get_password() {
+        _display_password_box "Password required for '$(basename -- "$input_file")'\n\nPassword:"
+    }
+
     # Use a local temporary directory to work.
-    temp_dir_output=$(_get_temp_dir_local "$output_dir" "$filename")
-    pushd "$temp_dir_output" &>/dev/null || true
+    __temp_dir_cd
 
     case "$extractor" in
     "7za")
@@ -368,7 +382,9 @@ _run_extractor() {
 
         if ((exit_code != 0)) && grep -i -q "wrong password" <<<"$std_output"; then
             local password=""
-            password=$(_display_password_box "Password required for '$(basename -- "$input_file")'\n\nPassword:") || exit 1
+            __temp_dir_exit && __temp_dir_remove
+            password=$(__get_password) || exit 1
+            __temp_dir_cd
             std_output=$($command_7za x -aoa -p"$password" -- "$input_file" 2>&1)
         fi
         ;;
@@ -379,7 +395,9 @@ _run_extractor() {
 
         if ((exit_code != 0)) && grep -i -q "incorrect passphrase" <<<"$std_output"; then
             local password=""
-            password=$(_display_password_box "Password required for '$(basename -- "$input_file")'\n\nPassword:") || exit 1
+            __temp_dir_exit && __temp_dir_remove
+            password=$(__get_password) || exit 1
+            __temp_dir_cd
             std_output=$(bsdtar --passphrase "$password" -xf "$input_file" 2>&1)
         fi
         ;;
@@ -409,7 +427,9 @@ _run_extractor() {
 
         if ((exit_code != 0)) && grep -i -q "requires a password" <<<"$std_output"; then
             local password=""
-            password=$(_display_password_box "Password required for '$(basename -- "$input_file")'\n\nPassword:") || exit 1
+            __temp_dir_exit && __temp_dir_remove
+            password=$(__get_password) || exit 1
+            __temp_dir_cd
             std_output=$(unar -force-overwrite -password "$password" -- "$input_file" 2>&1)
         fi
         ;;
@@ -419,7 +439,9 @@ _run_extractor() {
 
         if ((exit_code != 0)) && grep -i -q "incorrect password for" <<<"$std_output"; then
             local password=""
-            password=$(_display_password_box "Password required for '$(basename -- "$input_file")'\n\nPassword:") || exit 1
+            __temp_dir_exit && __temp_dir_remove
+            password=$(__get_password) || exit 1
+            __temp_dir_cd
             std_output=$(unrar x -p"$password" -- "$input_file" 2>&1)
         fi
         ;;
@@ -430,7 +452,9 @@ _run_extractor() {
 
         if ((exit_code != 0)) && grep -i -q "incorrect password" <<<"$std_output"; then
             local password=""
-            password=$(_display_password_box "Password required for '$(basename -- "$input_file")'\n\nPassword:") || exit 1
+            __temp_dir_exit && __temp_dir_remove
+            password=$(__get_password) || exit 1
+            __temp_dir_cd
             std_output=$(unzip -P "$password" -- "$input_file" 2>&1)
         fi
         ;;
@@ -469,7 +493,7 @@ _run_extractor() {
     _check_output "$?" "$std_output" "$input_file" ""
     exit_code=$?
     if ((exit_code != 0)); then
-        rm -rf -- "$temp_dir_output"
+        __temp_dir_remove
         exit 1
     fi
 
@@ -487,12 +511,11 @@ _run_extractor() {
         single_root_item="${single_root_item#./}"
     fi
 
-    # Exit the temporary directory.
-    popd &>/dev/null || true
+    __temp_dir_exit
 
     # Check if the 'temp_dir_output' is empty.
     if ((count_root_items == 0)); then
-        rm -rf -- "$temp_dir_output"
+        __temp_dir_remove
         exit 1
     fi
 
