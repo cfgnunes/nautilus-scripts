@@ -8,20 +8,11 @@ source "$ROOT_DIR/common-functions.sh"
 _main() {
     local input_files=""
     local output_dir=""
+    output_dir=$(pwd)
 
     # Execute initial checks.
     _check_dependencies "command=git | command=xclip"
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=all; par_get_pwd=true")
-
-    # Get the current directory even if one or more files were selected.
-    input_files=$(grep --only-matching --perl-regexp "[^$FIELD_SEPARATOR]*" <<<"$input_files")
-    input_files=$(head -n 1 <<<"$input_files")
-    if [[ -d "$input_files" ]]; then
-        output_dir=$input_files
-    else
-        output_dir=$(cd -- "$(dirname -- "$input_files")" &>/dev/null && pwd -P)
-    fi
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$(_get_urls_from_clipboard)" "$output_dir"
