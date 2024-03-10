@@ -62,6 +62,7 @@ _all_commands_exists() {
     local command=""
     for command in $commands; do
         if ! _command_exists "$command"; then
+            IFS=$old_ifs
             return 1
         fi
     done
