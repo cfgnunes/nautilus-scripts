@@ -55,11 +55,11 @@ _extract_archive() {
 
 _all_commands_exists() {
     local commands=$1
-    local commands_array=()
-
-    IFS=" " read -r -a commands_array <<<"$commands"
 
     local command=""
+    local commands_array=()
+    IFS=" " read -r -a commands_array <<<"$commands"
+
     for command in "${commands_array[@]}"; do
         if ! command -v "$command" &>/dev/null; then
             return 1
@@ -195,11 +195,11 @@ _get_archive_format() {
 _get_available_extractor() {
     local preferred_extractors=$1
     local available_extractor=""
-    local preferred_extractors_array=()
-
-    IFS=" " read -r -a preferred_extractors_array <<<"$preferred_extractors"
 
     local extractor=""
+    local preferred_extractors_array=()
+    IFS=" " read -r -a preferred_extractors_array <<<"$preferred_extractors"
+
     for extractor in "${preferred_extractors_array[@]}"; do
         if [[ "$extractor" == *"+"* ]]; then
             if _all_commands_exists "${extractor//+/ }"; then
