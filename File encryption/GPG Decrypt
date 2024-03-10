@@ -14,7 +14,7 @@ _main() {
         command=gpg; pkg_manager=apt |
         command=gpg; pkg_manager=dnf; package=gnupg2 |
         command=gpg; pkg_manager=pacman; package=gnupg"
-    _display_wait_box
+    _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_extension='asc|gpg|pgp'")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 

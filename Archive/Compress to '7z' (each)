@@ -14,7 +14,7 @@ _main() {
         command=7za; pkg_manager=apt; package=p7zip-full |
         command=7za; pkg_manager=dnf; package=p7zip |
         command=7za; pkg_manager=pacman; package=p7zip"
-    _display_wait_box
+    _display_wait_box "2"
     input_files=$(_get_files "par_type=all")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 

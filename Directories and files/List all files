@@ -11,7 +11,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
-    _display_wait_box
+    _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_recursive=true; par_get_pwd=true; par_min_files=0")
 
     # Run the main process.

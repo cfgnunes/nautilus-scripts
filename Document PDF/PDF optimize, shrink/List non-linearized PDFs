@@ -13,7 +13,7 @@ _main() {
         command=pdfinfo; pkg_manager=apt; package=poppler-utils |
         command=pdfinfo; pkg_manager=dnf; package=poppler-utils |
         command=pdfinfo; pkg_manager=pacman; package=poppler-glib"
-    _display_wait_box
+    _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_recursive=true; par_get_pwd=true; par_select_mime=application/pdf")
 
     # Execute the function '_main_task' for each file in parallel.

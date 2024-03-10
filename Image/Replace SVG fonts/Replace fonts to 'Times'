@@ -11,7 +11,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "command=inkscape"
-    _display_wait_box
+    _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_mime='image/svg'")
     output_dir=$(_get_output_dir "par_use_same_dir=false")
 

@@ -14,7 +14,7 @@ _main() {
         command=ffmpeg; pkg_manager=apt; package=ffmpeg |
         command=ffmpeg; pkg_manager=dnf; package=ffmpeg-free |
         command=ffmpeg; pkg_manager=pacman; package=ffmpeg"
-    _display_wait_box
+    _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_recursive=true; par_select_mime=audio/; par_skip_extension=bak")
 
     # Execute the function '_main_task' for each file in parallel.
