@@ -438,7 +438,7 @@ _run_extractor() {
             std_output=$(unzip -P "$password" -- "$input_file" 2>&1)
         fi
         ;;
-    "xorriso") std_output=$(xorriso -osirrox on -indev "$input_file" -- -extract / . -rollback_end) ;;
+    "xorriso") std_output=$(xorriso -osirrox on -indev "$input_file" -- -extract / . -rollback_end 2>&1) ;;
     "xz") std_output=$(xz -d -c -k -- "$input_file" >"$filename") ;;
     "zpaq") std_output=$(zpaq x "$input_file" 2>&1) ;;
     "zstd") std_output=$(zstd -d -c -- "$input_file" >"$filename") ;;

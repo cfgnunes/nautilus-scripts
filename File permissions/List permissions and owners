@@ -30,7 +30,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(stat --format="%a %U %G %F: '%n'" -- "$input_file")
+    std_output=$(stat --format="%a %U %G %F: '%n'" -- "$input_file" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
 
     _storage_text_write_ln "$std_output"
