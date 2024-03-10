@@ -39,7 +39,7 @@ _get_urls_from_clipboard() {
     urls=$(sort -u <<<"$urls")
 
     if [[ -z "$urls" ]]; then
-        _display_error_box "There are no valid URLs in the clipboard!"
+        _display_error_box "There are no valid Git URLs in the clipboard!"
         _exit_script
     fi
 
