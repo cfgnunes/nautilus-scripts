@@ -63,7 +63,7 @@ _cleanup_on_exit() {
         --delimiter="$FIELD_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
-        rm -rf "{}" &>/dev/null
+        bash -c "{ chmod -R u+rw -- '{}'; rm -rf -- '{}'; } &>/dev/null"
 
     # Remove the main temporary dir.
     rm -rf -- "$TEMP_DIR" &>/dev/null
