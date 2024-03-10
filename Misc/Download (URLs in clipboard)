@@ -35,10 +35,6 @@ _main_task() {
 _get_urls_from_clipboard() {
     local urls=""
 
-    urls+=$(xclip -quiet -selection primary -o)
-    urls+=$'\n'
-    urls+=$(xclip -quiet -selection secondary -o)
-    urls+=$'\n'
     urls+=$(xclip -quiet -selection clipboard -o)
     urls+=$'\n'
     urls=$(grep --only-matching --perl-regexp "https?://\w+\.[^ '\"]+" <<<"$urls")
