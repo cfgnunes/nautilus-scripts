@@ -12,8 +12,16 @@ _main() {
     # Execute initial checks.
     _check_dependencies "command=git | command=xclip"
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=directory; par_max_files=1; par_get_pwd=true")
-    output_dir=$input_files
+    input_files=$(_get_files "par_type=all; par_get_pwd=true")
+
+    # Get the current directory even if one or more files were selected.
+    input_files=$(grep --only-matching --perl-regexp "[^$FIELD_SEPARATOR]*" <<<"$input_files")
+    input_files=$(head -n 1 <<<"$input_files")
+    if [[ -d "$input_files" ]]; then
+        output_dir=$input_files
+    else
+        output_dir=$(cd -- "$(dirname -- "$input_files")" &>/dev/null && pwd -P)
+    fi
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$(_get_urls_from_clipboard)" "$output_dir"
@@ -36,7 +44,6 @@ _get_urls_from_clipboard() {
     local urls=""
 
     urls+=$(xclip -quiet -selection clipboard -o)
-    urls+=$'\n'
     urls=$(grep --only-matching --perl-regexp "((git|ssh|http(s)?)|(git@[\w\.]+))(.*)(\.git)" <<<"$urls")
     urls=$(sort -u <<<"$urls")
 
