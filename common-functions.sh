@@ -367,6 +367,13 @@ _display_wait_box() {
     local open_delay=${1:-"2"}
     local message="Running the task. Please, wait..."
 
+    _display_wait_box_message "$message" "$open_delay"
+}
+
+_display_wait_box_message() {
+    local message=$1
+    local open_delay=${2:-"2"}
+
     if ! _is_gui_session; then
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
@@ -968,7 +975,7 @@ _pkg_install_packages() {
     _close_wait_box
 
     # Check if all packages were installed.
-    IFS=" "
+    packages=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
     local package=""
     for package in $packages; do
         if ! _pkg_is_package_installed "$pkg_manager" "$package"; then
@@ -976,7 +983,6 @@ _pkg_install_packages() {
             _exit_script
         fi
     done
-    IFS=$FILENAME_SEPARATOR
 
     _display_info_box "The packages have been successfully installed!"
 }
