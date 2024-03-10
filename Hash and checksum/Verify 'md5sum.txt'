@@ -16,7 +16,12 @@ _main() {
     checksum_file=$(sed -z "s|'|'\\\''|g" <"$input_files")
 
     export -f _verify_checksum
-    printf "%s" "$checksum_file" | xargs --max-procs="$(_get_max_procs)" --delimiter=$'\n' --replace="{}" bash -c "_verify_checksum '{}'"
+    printf "%s" "$checksum_file" | xargs \
+        --no-run-if-empty \
+        --delimiter=$'\n' \
+        --max-procs="$(_get_max_procs)" \
+        --replace="{}" \
+        bash -c "_verify_checksum '{}'"
 
     local std_output=""
     std_output=$(_storage_text_read_all)
