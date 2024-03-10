@@ -300,7 +300,7 @@ _display_question_box() {
     local response=""
 
     if ! _is_gui_session; then
-        read -r -p "$message [Y/n] " response
+        read -r -p "$message (Y/n) " response
         [[ ${response,,} == *"n"* ]] && return 1
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --question --width=300 --text="$message" &>/dev/null || return 1

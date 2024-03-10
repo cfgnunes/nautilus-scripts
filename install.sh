@@ -73,7 +73,7 @@ _main() {
         ! -path "*.git" ! -path "$ASSSETS_DIR" 2>/dev/null | sed "s|^.*/||" | sort --version-sort)
 
     # Convert the output of 'find' command to an 'array'.
-    while IFS="" read -d $'\n' -r dir; do
+    while IFS="" read -r -d $'\n' dir; do
         categories_selected+=("true")
         categories_dirs+=("$dir")
     done <<<"$cat_dirs_find"
