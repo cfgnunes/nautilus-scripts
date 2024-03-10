@@ -175,50 +175,13 @@ _get_archive_format() {
             archive_format="tar_$archive_format"
         fi
         ;;
-    "rar")
-        # Check if if the 'rar' archive is password-protected.
-        if _command_exists "lsar"; then
-            # NOTE This command will only work if the filenames is encrypted.
-            if lsar -- "$input_file" 2>&1 | grep -i -q "requires a password"; then
-                archive_format="rar_encrypted"
-            fi
-        elif _command_exists "bsdtar"; then
-            # NOTE This command will only work if the filenames is encrypted.
-            if bsdtar -tf "$input_file" 2>&1 | grep -i -q "encrypted"; then
-                archive_format="rar_encrypted"
-            fi
-        fi
-        ;;
     "zip")
         local zip_info=""
         zip_info=$(file --dereference --brief --uncompress -- "$input_file")
 
         # Check if the 'zip' archive is a newer version (version >= 4.0).
-        if grep -i -q "at least v[4-9]"; then
+        if grep -i -q "at least v[4-9]" <<<"$zip_info"; then
             archive_format+="_newer"
-        fi
-
-        # Check if if the 'zip' archive is password-protected.
-        if grep -i -q "encrypted" <<<"$zip_info"; then
-            archive_format+="_encrypted"
-        fi
-        ;;
-    "7zip")
-        # Check if if the '7zip' archive is password-protected.
-        if _command_exists "7za"; then
-            if 7za t -slt -p"null" -- "$input_file" 2>&1 | grep -i -q "wrong password"; then
-                archive_format="7zip_encrypted"
-            fi
-        elif _command_exists "lsar"; then
-            # NOTE This command will only work if the filenames is encrypted.
-            if lsar -- "$input_file" 2>&1 | grep -i -q "requires a password"; then
-                archive_format="7zip_encrypted"
-            fi
-        elif _command_exists "bsdtar"; then
-            # NOTE This command will only work if the filenames is encrypted.
-            if bsdtar -tf "$input_file" 2>&1 | grep -i -q "encrypted"; then
-                archive_format="7zip_encrypted"
-            fi
         fi
         ;;
     esac
@@ -238,7 +201,7 @@ _get_available_extractor() {
                 available_extractor=$extractor
                 break
             fi
-        elif _command_exists "${extractor//_password/}"; then
+        elif _command_exists "$extractor"; then
             available_extractor=$extractor
             break
         fi
@@ -271,7 +234,7 @@ _get_dependencies() {
         # The default extractor is the first extractor of preferred extractors.
         default_extractor=$(cut -d " " -f 1 <<<"$preferred_extractors")
 
-        case ${default_extractor//_password/} in
+        case $default_extractor in
         "7za") dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip" ;;
         "ar") dependencies+="command=ar; package=binutils" ;;
         "bsdtar") dependencies+="command=bsdtar; pkg_manager=apt; package=libarchive-tools | command=bsdtar; pkg_manager=dnf | command=bsdtar; pkg_manager=pacman" ;;
@@ -320,7 +283,6 @@ _get_preferred_extractors() {
 
     case "$archive_format" in
     "7zip") preferred_extractors="7za unar bsdtar" ;;
-    "7zip_encrypted") preferred_extractors="7za_password" ;;
     "ace") preferred_extractors="unar" ;;
     "alz") preferred_extractors="unar" ;;
     "arc") preferred_extractors="unar" ;;
@@ -341,7 +303,6 @@ _get_preferred_extractors() {
     "msi") preferred_extractors="unar" ;;
     "pak") preferred_extractors="unar" ;;
     "rar") preferred_extractors="unrar unar bsdtar" ;;
-    "rar_encrypted") preferred_extractors="unrar_password unar_password" ;;
     "sit") preferred_extractors="unar" ;;
     "squashfs") preferred_extractors="unsquashfs" ;;
     "tar_bzip2") preferred_extractors="tar+bzip2 unar 7za" ;;
@@ -359,10 +320,8 @@ _get_preferred_extractors() {
     "xar") preferred_extractors="unar bsdtar" ;;
     "xz") preferred_extractors="xz unar 7za" ;;
     "z") preferred_extractors="gzip unar" ;;
-    "zip") preferred_extractors="unzip 7za unar bsdtar" ;;
-    "zip_encrypted") preferred_extractors="unzip_password 7za_password unar_password bsdtar_password" ;;
-    "zip_newer") preferred_extractors="7za unar bsdtar" ;;
-    "zip_newer_encrypted") preferred_extractors="7za_password unar_password bsdtar_password" ;;
+    "zip") preferred_extractors="unzip 7za bsdtar unar" ;;
+    "zip_newer") preferred_extractors="7za bsdtar" ;;
     "zoo") preferred_extractors="unar" ;;
     "zpaq") preferred_extractors="zpaq" ;;
     "zstd") preferred_extractors="zstd" ;;
@@ -378,16 +337,10 @@ _run_extractor() {
     local output_dir=$4
     local exit_code=0
     local filename=""
-    local password=""
     local std_output=""
 
     if [[ -z "$output_dir" ]]; then
         output_dir=$(dirname -- "$input_file")
-    fi
-
-    # Get the user password.
-    if [[ "$extractor" == *"password" ]]; then
-        password=$(_display_password_box "Password required for '$(basename -- "$input_file")'\n\nPassword:") || exit 1
     fi
 
     # Try to use the command '7z' in the '7za' extractor.
@@ -404,11 +357,27 @@ _run_extractor() {
     pushd "$temp_dir_output" &>/dev/null || true
 
     case "$extractor" in
-    "7za") std_output=$($command_7za x -aoa -- "$input_file" 2>&1) ;;
-    "7za_password") std_output=$($command_7za x -aoa -p"$password" -- "$input_file" 2>&1) ;;
+    "7za")
+        std_output=$($command_7za x -aoa -p"null" -- "$input_file" 2>&1)
+        exit_code=$?
+
+        if ((exit_code != 0)) && grep -i -q "wrong password" <<<"$std_output"; then
+            local password=""
+            password=$(_display_password_box "Password required for '$(basename -- "$input_file")'\n\nPassword:") || exit 1
+            std_output=$($command_7za x -aoa -p"$password" -- "$input_file" 2>&1)
+        fi
+        ;;
     "ar") std_output=$(ar x -- "$input_file" 2>&1) ;;
-    "bsdtar") std_output=$(bsdtar -xf "$input_file" 2>&1) ;;
-    "bsdtar_password") std_output=$(bsdtar --passphrase "$password" -xf "$input_file" 2>&1) ;;
+    "bsdtar")
+        std_output=$(bsdtar --passphrase "null" -xf "$input_file" 2>&1)
+        exit_code=$?
+
+        if ((exit_code != 0)) && grep -i -q "incorrect passphrase" <<<"$std_output"; then
+            local password=""
+            password=$(_display_password_box "Password required for '$(basename -- "$input_file")'\n\nPassword:") || exit 1
+            std_output=$(bsdtar --passphrase "$password" -xf "$input_file" 2>&1)
+        fi
+        ;;
     "bzip2") std_output=$(bzip2 -d -c -k -- "$input_file" >"$filename") ;;
     "cpio") std_output=$(cpio -idv <"$input_file" 2>&1) ;;
     "gpg") std_output=$(gpg --batch --yes --decrypt --output "$filename" -- "$input_file" 2>&1) ;;
@@ -429,13 +398,37 @@ _run_extractor() {
     "tar+z") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
     "tar+zstd") std_output=$(zstd -d -c -- "$input_file" | tar xf -) ;;
     "tar") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
-    "unar") std_output=$(unar -- "$input_file" 2>&1) ;;
-    "unar_password") std_output=$(unar -password "$password" -- "$input_file" 2>&1) ;;
-    "unrar") std_output=$(unrar x -- "$input_file" 2>&1) ;;
-    "unrar_password") std_output=$(unrar -p"$password" -- "$input_file" 2>&1) ;;
+    "unar")
+        std_output=$(unar -- "$input_file" 2>&1)
+        exit_code=$?
+
+        if ((exit_code != 0)) && grep -i -q "requires a password" <<<"$std_output"; then
+            local password=""
+            password=$(_display_password_box "Password required for '$(basename -- "$input_file")'\n\nPassword:") || exit 1
+            std_output=$(unar -force-overwrite -password "$password" -- "$input_file" 2>&1)
+        fi
+        ;;
+    "unrar")
+        std_output=$(unrar x -p"null" -- "$input_file" 2>&1)
+        exit_code=$?
+
+        if ((exit_code != 0)) && grep -i -q "incorrect password for" <<<"$std_output"; then
+            local password=""
+            password=$(_display_password_box "Password required for '$(basename -- "$input_file")'\n\nPassword:") || exit 1
+            std_output=$(unrar x -p"$password" -- "$input_file" 2>&1)
+        fi
+        ;;
     "unsquashfs") std_output=$(unsquashfs "$input_file" 2>&1) ;;
-    "unzip") std_output=$(unzip -- "$input_file" 2>&1) ;;
-    "unzip_password") std_output=$(unzip -P "$password" -- "$input_file" 2>&1) ;;
+    "unzip")
+        std_output=$(unzip -P "null" -- "$input_file" 2>&1)
+        exit_code=$?
+
+        if ((exit_code != 0)) && grep -i -q "incorrect password" <<<"$std_output"; then
+            local password=""
+            password=$(_display_password_box "Password required for '$(basename -- "$input_file")'\n\nPassword:") || exit 1
+            std_output=$(unzip -P "$password" -- "$input_file" 2>&1)
+        fi
+        ;;
     "xorriso") std_output=$(xorriso -osirrox on -indev "$input_file" -- -extract / . -rollback_end) ;;
     "xz") std_output=$(xz -d -c -k -- "$input_file" >"$filename") ;;
     "zpaq") std_output=$(zpaq x "$input_file" 2>&1) ;;
