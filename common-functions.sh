@@ -59,11 +59,11 @@ _cleanup_on_exit() {
     local items_to_remove=""
     items_to_remove=$(cat -- "$TEMP_DIR_ITEMS_TO_REMOVE/"* 2>/dev/null)
 
-    local item=""
-    for item in $items_to_remove; do
-        chmod --recursive u+rw -- "$item" &>/dev/null
-        rm -rf -- "$item" &>/dev/null
-    done
+    printf "%s" "$items_to_remove" | xargs \
+        --delimiter="$FIELD_SEPARATOR" \
+        --max-procs="$(_get_max_procs)" \
+        --replace="{}" \
+        rm -rf "{}" &>/dev/null
 
     # Remove the main temporary dir.
     rm -rf -- "$TEMP_DIR" &>/dev/null
@@ -764,9 +764,9 @@ _get_script_name() {
 
 _get_temp_dir_local() {
     local output_dir=$1
-    local suffix=$2
+    local basename=$2
     local temp_dir=""
-    temp_dir=$(mktemp --directory --tmpdir="$output_dir" ".tmp.$suffix.XXXXXXXXXX")
+    temp_dir=$(mktemp --directory --tmpdir="$output_dir" "$basename.XXXXXXXX.tmp")
 
     # Remember to remove this directory after exit.
     item_to_remove=$(mktemp --tmpdir="$TEMP_DIR_ITEMS_TO_REMOVE")
