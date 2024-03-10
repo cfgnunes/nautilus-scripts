@@ -494,8 +494,13 @@ _get_filename_next_suffix() {
     local filename_base=""
     local filename_extension=""
 
-    filename_base=$(_strip_filename_extension "$filename")
-    filename_extension=$(_get_filename_extension "$filename")
+    # Directories do not have an extension.
+    if [[ -d "$filename" ]]; then
+        filename_base=$filename
+    else
+        filename_base=$(_strip_filename_extension "$filename")
+        filename_extension=$(_get_filename_extension "$filename")
+    fi
 
     # Avoid overwriting a file. If there is a file with the same name,
     # try to add a suffix, as 'file (1)', 'file (2)', ...
@@ -718,11 +723,6 @@ _get_output_filename() {
 
     # Evaluate the values from the 'parameters' variable.
     eval "$parameters"
-
-    # Directories do not have an extension.
-    if [[ -d "$input_file" ]]; then
-        par_extension_opt="append"
-    fi
 
     filename=$(basename -- "$input_file")
     output_file="$output_dir/"
