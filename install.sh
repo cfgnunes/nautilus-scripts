@@ -72,11 +72,8 @@ _main() {
         ! -path "*.git" ! -path "$ASSSETS_DIR" 2>/dev/null | sed "s|^.*/||" | sort --version-sort)
 
     # Convert the output of 'find' command to an 'array'.
-    local dir=""
-    while IFS="" read -r -d $'\n' dir; do
-        categories_selected+=("true")
-        categories_dirs+=("$dir")
-    done <<<"$cat_dirs_find"
+    cat_dirs_find=$(tr "\n" "\r" <<<"$cat_dirs_find")
+    IFS=$'\r' read -r -a categories_dirs <<<"$cat_dirs_find"
 
     if [[ "$menu_options" == *"categories"* ]]; then
         printf "\nChoose the categories (<SPACE> to select, <UP/DOWN> to choose):\n"
