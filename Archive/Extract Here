@@ -94,6 +94,7 @@ _get_archive_format() {
     "application/x-ace") archive_format="ace" ;;
     "application/x-alz") archive_format="alz" ;;
     "application/x-arc") archive_format="arc" ;;
+    "application/x-archive") archive_format="ar" ;;
     "application/x-arj") archive_format="arj" ;;
     "application/x-bzip") archive_format="bzip" ;;
     "application/x-bzip2") archive_format="bzip2" ;;
@@ -137,6 +138,7 @@ _get_archive_format() {
         *.7z) archive_format="7zip" ;;
         *.ace) archive_format="ace" ;;
         *.alz) archive_format="alz" ;;
+        *.ar) archive_format="ar" ;;
         *.arc) archive_format="arc" ;;
         *.arj) archive_format="arj" ;;
         *.bz | *.bz2) archive_format="bzip2" ;;
@@ -290,6 +292,7 @@ _get_preferred_extractors() {
     "7zip") preferred_extractors="7za unar bsdtar" ;;
     "ace") preferred_extractors="unar" ;;
     "alz") preferred_extractors="unar" ;;
+    "ar") preferred_extractors="ar bsdtar" ;;
     "arc") preferred_extractors="unar" ;;
     "arj") preferred_extractors="unar" ;;
     "bzip2") preferred_extractors="bzip2 unar 7za" ;;
