@@ -350,7 +350,7 @@ _run_extractor() {
 
     # Try to use the command '7z' in the '7za' extractor.
     local command_7za="7za"
-    if [[ "$extractor" == "7za"* ]]; then
+    if [[ "$extractor" == *"7za"* ]]; then
         _command_exists "7z" && command_7za="7z"
     fi
 
@@ -493,7 +493,7 @@ _run_extractor() {
     _check_output "$?" "$std_output" "$input_file" ""
     exit_code=$?
     if ((exit_code != 0)); then
-        __temp_dir_remove
+        __temp_dir_exit && __temp_dir_remove
         exit 1
     fi
 
@@ -511,13 +511,13 @@ _run_extractor() {
         single_root_item="${single_root_item#./}"
     fi
 
-    __temp_dir_exit
-
     # Check if the 'temp_dir_output' is empty.
     if ((count_root_items == 0)); then
-        __temp_dir_remove
+        __temp_dir_exit && __temp_dir_remove
         exit 1
     fi
+
+    __temp_dir_exit
 
     # Move the items to the correct directory.
     if ((count_root_items == 1)) && [[ "$archive_format" == "squashfs" ]]; then
