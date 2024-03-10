@@ -132,17 +132,17 @@ _step_install_dependencies() {
         if _command_exists "apt-get"; then
             # Distro: Ubuntu, Mint, Debian.
             sudo apt-get update || true
-            sudo apt-get -y install $common_names libarchive-tools imagemagick xz-utils poppler-utils ffmpeg findimagedupes genisoimage
+            sudo apt-get -y install $common_names libarchive-tools p7zip-full imagemagick xz-utils poppler-utils ffmpeg findimagedupes genisoimage
         elif _command_exists "dnf"; then
             # Distro: Fedora, Red Hat.
             # Missing packages: findimagedupes.
             sudo dnf check-update || true
-            sudo dnf -y install $common_names bsdtar ImageMagick xz poppler-utils ffmpeg-free genisoimage
+            sudo dnf -y install $common_names bsdtar p7zip ImageMagick xz poppler-utils ffmpeg-free genisoimage
         elif _command_exists "pacman"; then
             # Distro: Manjaro, Arch Linux.
             # Missing packages: findimagedupes.
             sudo pacman -Syy || true
-            sudo pacman --noconfirm -S $common_names imagemagick xz poppler poppler-glib ffmpeg
+            sudo pacman --noconfirm -S $common_names p7zip imagemagick xz poppler poppler-glib ffmpeg
         else
             printf "Error: could not find a package manager!\n"
             exit 1
