@@ -16,7 +16,7 @@ While numerous scripts are available for GNOME Files on the web, many suffer fro
 - **Keyboard shortcuts**: Provides keyboard shortcuts for the scripts.
 - **File manager compatibility**: Designed for major file managers like Nautilus, Caja, and Nemo.
 - **Distro compatibility**: Designed to work on major Linux distributions, such as Ubuntu, Mint, Debian, Fedora, and Manjaro.
-- **Easy adaptation**: Scripts are easily copied and adapted for other purposes.
+- **Easy adaptation**: Scripts can be easily copied and adapted for other purposes.
 - **Bash implementation**: All scripts are implemented in Bash. So, the scripts work well in the shell (without a graphical interface) and file managers.
 - **Shell script validation**: All scripts have been checked using [ShellCheck](https://github.com/koalaman/shellcheck).
 
