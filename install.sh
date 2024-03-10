@@ -68,11 +68,11 @@ _main() {
 
     # Get the categories (directories of scripts).
     local cat_dirs_find=""
-    local dir=""
     cat_dirs_find=$(find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
         ! -path "*.git" ! -path "$ASSSETS_DIR" 2>/dev/null | sed "s|^.*/||" | sort --version-sort)
 
     # Convert the output of 'find' command to an 'array'.
+    local dir=""
     while IFS="" read -r -d $'\n' dir; do
         categories_selected+=("true")
         categories_dirs+=("$dir")
