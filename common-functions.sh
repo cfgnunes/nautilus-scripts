@@ -300,7 +300,7 @@ _display_question_box() {
     local response=""
 
     if ! _is_gui_session; then
-        read -r -p "$message (Y/n) " response
+        read -r -p "$message [Y/n] " response
         [[ ${response,,} == *"n"* ]] && return 1
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --question --width=300 --text="$message" &>/dev/null || return 1
@@ -426,38 +426,6 @@ _exit_script() {
     xargs kill <<<"$child_pids" &>/dev/null
 }
 
-_expand_directory() {
-    local input_directory=$1
-    local par_type=$2
-    local par_select_extension=$3
-    local par_skip_extension=$4
-    local find_command=""
-
-    # Build a 'find' command.
-    find_command="find \"$input_directory\""
-
-    # Expand the directories with the 'find' command.
-    case "$par_type" in
-    "file") find_command+=" ! -type d" ;;
-    "directory") find_command+=" -type d" ;;
-    esac
-
-    if [[ -n "$par_select_extension" ]]; then
-        find_command+=" -regextype posix-extended "
-        find_command+=" -regex \".*($par_select_extension)$\""
-    elif [[ -n "$par_skip_extension" ]]; then
-        find_command+=" -regextype posix-extended "
-        find_command+=" ! -regex \".*($par_skip_extension)$\""
-    fi
-
-    find_command+=" ! -path \"$IGNORE_FIND_PATH\""
-    # shellcheck disable=SC2089
-    find_command+=" -printf \"%p$FIELD_SEPARATOR\""
-
-    # shellcheck disable=SC2086
-    eval $find_command 2>/dev/null
-}
-
 _gdbus_notify() {
     local icon=$1
     local title=$2
@@ -474,12 +442,6 @@ _gdbus_notify() {
         --method "$interface.$method" \
         "$app_name" 0 "$icon" "$title" "$body" \
         "[]" '{"urgency": <1>}' 5000 &>/dev/null
-}
-
-_get_file_mime() {
-    local file=$1
-
-    file --dereference --brief --mime-type -- "$file"
 }
 
 _get_filename_extension() {
@@ -569,32 +531,17 @@ _get_files() {
     local par_max_files=""
     local par_min_files=""
     local par_recursive="false"
-    local par_select_encoding=""
     local par_select_extension=""
     local par_select_mime=""
+    local par_select_regex=""
     local par_skip_encoding=""
     local par_skip_extension=""
-    local par_skip_mime=""
     local par_sort_list="false"
     local par_type="file"
     local par_validate_conflict=""
 
     # Evaluate the values from the 'parameters' variable.
     eval "$parameters"
-
-    # Check the parameters.
-    if [[ -n "$par_skip_extension" ]] && [[ -n "$par_select_extension" ]]; then
-        _display_error_box "Not possible to use 'skip_extension' and 'select_extension' together!"
-        _exit_script
-    fi
-    if [[ -n "$par_skip_encoding" ]] && [[ -n "$par_select_encoding" ]]; then
-        _display_error_box "Not possible to use 'skip_encoding' and 'select_encoding' together!"
-        _exit_script
-    fi
-    if [[ -n "$par_skip_mime" ]] && [[ -n "$par_select_mime" ]]; then
-        _display_error_box "Not possible to use 'skip_mime' and 'select_mime' together!"
-        _exit_script
-    fi
 
     # Check if there are input files.
     if (($(_get_filenames_count "$input_files") == 0)); then
@@ -616,20 +563,19 @@ _get_files() {
     fi
 
     # Pre-select the input files. Also, expand it (if 'par_recursive' is true).
-    input_files=$(_validate_file_preselect_parallel \
+    input_files=$(_validate_file_preselect \
         "$input_files" \
         "$par_type" \
         "$par_skip_extension" \
         "$par_select_extension" \
+        "$par_select_regex" \
         "$par_recursive")
 
     # Validates the mime or encoding of the file.
     input_files=$(_validate_file_mime_parallel \
         "$input_files" \
-        "$par_select_encoding" \
         "$par_select_mime" \
-        "$par_skip_encoding" \
-        "$par_skip_mime")
+        "$par_skip_encoding")
 
     # Validates the number of valid files.
     _validate_files_count \
@@ -1157,59 +1103,23 @@ _validate_conflict_filenames() {
     fi
 }
 
-_validate_file_extension() {
-    local input_file=$1
-    local par_skip_extension=$2
-    local par_select_extension=$3
-
-    # Return 0 if all parameters are empty.
-    if [[ -z "$par_skip_extension" ]] && [[ -z "$par_select_extension" ]]; then
-        return 0
-    fi
-
-    # Get the extension of the file.
-    local file_extension=""
-    file_extension=$(_get_filename_extension "$input_file")
-    file_extension=${file_extension,,} # Lowercase the file extension.
-
-    if [[ -n "$par_skip_extension" ]]; then
-        _has_string_in_list "$file_extension" "$par_skip_extension" && return 1
-    elif [[ -n "$par_select_extension" ]]; then
-        _has_string_in_list "$file_extension" "$par_select_extension" || return 1
-    fi
-
-    return 0
-}
-
 _validate_file_mime() {
     local input_file=$1
-    local par_select_encoding=$2
-    local par_select_mime=$3
-    local par_skip_encoding=$4
-    local par_skip_mime=$5
+    local par_select_mime=$2
+    local par_skip_encoding=$3
 
     # Validation for files (encoding).
-    if [[ -n "$par_skip_encoding" ]] || [[ -n "$par_select_encoding" ]]; then
+    if [[ -n "$par_skip_encoding" ]]; then
         local file_encoding=""
         file_encoding=$(file --dereference --brief --mime-encoding -- "$input_file")
-
-        if [[ -n "$par_skip_encoding" ]]; then
-            _has_string_in_list "$file_encoding" "$par_skip_encoding" && return
-        elif [[ -n "$par_select_encoding" ]]; then
-            _has_string_in_list "$file_encoding" "$par_select_encoding" || return
-        fi
+        _has_string_in_list "$file_encoding" "$par_skip_encoding" && return
     fi
 
     # Validation for files (mime).
-    if [[ -n "$par_skip_mime" ]] || [[ -n "$par_select_mime" ]]; then
+    if [[ -n "$par_select_mime" ]]; then
         local file_mime=""
-        file_mime=$(_get_file_mime "$input_file")
-
-        if [[ -n "$par_skip_mime" ]]; then
-            _has_string_in_list "$file_mime" "$par_skip_mime" && return
-        elif [[ -n "$par_select_mime" ]]; then
-            _has_string_in_list "$file_mime" "$par_select_mime" || return
-        fi
+        file_mime=$(file --dereference --brief --mime-type -- "$input_file")
+        _has_string_in_list "$file_mime" "$par_select_mime" || return
     fi
 
     # Create a temp file containing the name of the valid file.
@@ -1218,13 +1128,11 @@ _validate_file_mime() {
 
 _validate_file_mime_parallel() {
     local input_files=$1
-    local par_select_encoding=$2
-    local par_select_mime=$3
-    local par_skip_encoding=$4
-    local par_skip_mime=$5
+    local par_select_mime=$2
+    local par_skip_encoding=$3
 
     # Return the 'input_files' if all parameters are empty.
-    if [[ -z "$par_select_encoding$par_select_mime$par_skip_encoding$par_skip_mime" ]]; then
+    if [[ -z "$par_select_mime$par_skip_encoding" ]]; then
         printf "%s" "$input_files"
         return
     fi
@@ -1232,17 +1140,15 @@ _validate_file_mime_parallel() {
     # Allows the symbol "'" in filenames (inside 'xargs').
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
-    # Run '_validate_file_mime' for each file in parallel (using 'xargs').
+    # Execute the function '_validate_file_mime' for each file in parallel (using 'xargs').
     printf "%s" "$input_files" | xargs \
         --no-run-if-empty \
         --delimiter="$FIELD_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
         bash -c "_validate_file_mime '{}' \
-            '$par_select_encoding' \
             '$par_select_mime' \
-            '$par_skip_encoding' \
-            '$par_skip_mime'"
+            '$par_skip_encoding'"
 
     # Compile valid files in a single list.
     input_files=$(_storage_text_read_all)
@@ -1253,70 +1159,55 @@ _validate_file_mime_parallel() {
 }
 
 _validate_file_preselect() {
-    local input_file=$1
-    local par_type=$2
-    local par_skip_extension=$3
-    local par_select_extension=$4
-    local par_recursive=$5
-    local input_file_valid=""
-
-    if [[ ! -d "$input_file" ]]; then # If the 'input_file' is a file.
-        _validate_file_extension "$input_file" "$par_skip_extension" "$par_select_extension" || return 1
-
-        # Add the file in the 'input_file_valid'.
-        if [[ "$par_type" == "file" ]] || [[ "$par_type" == "all" ]]; then
-            input_file_valid=$(_get_full_path_filename "$input_file")
-            input_file_valid+=$FIELD_SEPARATOR
-        fi
-    else # If the 'input_file' is a directory.
-        if [[ "$par_recursive" == "true" ]]; then
-            # Add the expanded files (or directories) in the 'input_file_valid'.
-            input_file_valid=$(_expand_directory \
-                "$(_get_full_path_filename "$input_file")" \
-                "$par_type" \
-                "$par_select_extension" \
-                "$par_skip_extension")
-        else
-            # Add the directory in the 'input_file_valid'.
-            if [[ "$par_type" == "directory" ]] || [[ "$par_type" == "all" ]]; then
-                input_file_valid=$(_get_full_path_filename "$input_file")
-                input_file_valid+=$FIELD_SEPARATOR
-            fi
-        fi
-    fi
-
-    # Create a temp file containing the name of the valid file.
-    _storage_text_write "$input_file_valid"
-}
-
-_validate_file_preselect_parallel() {
     local input_files=$1
     local par_type=$2
     local par_skip_extension=$3
     local par_select_extension=$4
-    local par_recursive=$5
+    local par_select_regex=$5
+    local par_recursive=$6
+    local input_files_valid=""
 
-    # Allows the symbol "'" in filenames (inside 'xargs').
-    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
+    input_files=$(sed "s|$FIELD_SEPARATOR|\" \"|g" <<<"$input_files")
 
-    # Run '_validate_file_preselect' for each file in parallel (using 'xargs').
-    printf "%s" "$input_files" | xargs \
-        --no-run-if-empty \
-        --delimiter="$FIELD_SEPARATOR" \
-        --max-procs="$(_get_max_procs)" \
-        --replace="{}" \
-        bash -c "_validate_file_preselect '{}' \
-            '$par_type' \
-            '$par_skip_extension' \
-            '$par_select_extension' \
-            '$par_recursive'"
+    # Build a 'find' command.
+    find_command="find \"$input_files\""
 
-    # Compile valid files in a single list.
-    input_files=$(_storage_text_read_all)
-    _storage_text_clean
+    if [[ "$par_recursive" != "true" ]]; then
+        find_command+=" -maxdepth 0"
+    fi
 
-    input_files=$(_str_remove_empty_tokens "$input_files")
-    printf "%s" "$input_files"
+    # Expand the directories with the 'find' command.
+    case "$par_type" in
+    "file") find_command+=" ! -type d" ;;
+    "directory") find_command+=" -type d" ;;
+    esac
+
+    if [[ -n "$par_select_regex" ]]; then
+        find_command+=" -regextype posix-extended "
+        find_command+=" -regex \"$par_select_regex\""
+    fi
+
+    if [[ -n "$par_select_extension" ]]; then
+        find_command+=" -regextype posix-extended "
+        find_command+=" -regex \".*\.($par_select_extension)$\""
+    fi
+
+    if [[ -n "$par_skip_extension" ]]; then
+        find_command+=" -regextype posix-extended "
+        find_command+=" ! -regex \".*\.($par_skip_extension)$\""
+    fi
+
+    find_command+=" ! -path \"$IGNORE_FIND_PATH\""
+    # shellcheck disable=SC2089
+    find_command+=" -printf \"%p//\""
+
+    # shellcheck disable=SC2086
+    input_files_valid=$(eval $find_command 2>/dev/null)
+    input_files_valid=$(sed "s|//|$FIELD_SEPARATOR|g" <<<"$input_files_valid")
+    input_files_valid=$(_str_remove_empty_tokens "$input_files_valid")
+
+    # Create a temp file containing the name of the valid file.
+    printf "%s" "$input_files_valid"
 }
 
 _validate_files_count() {
@@ -1390,8 +1281,6 @@ export -f \
     _convert_text_to_filenames \
     _display_password_box \
     _exit_script \
-    _expand_directory \
-    _get_file_mime \
     _get_filename_extension \
     _get_filename_next_suffix \
     _get_full_path_filename \
@@ -1410,6 +1299,4 @@ export -f \
     _strip_filename_extension \
     _text_remove_pwd \
     _text_uri_decode \
-    _validate_file_extension \
-    _validate_file_mime \
-    _validate_file_preselect
+    _validate_file_mime
