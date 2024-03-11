@@ -361,11 +361,11 @@ _run_command() {
     __temp_dir_exit
 
     # Move the items to the correct directory.
-    if ((count_root_items == 1)) && [[ "$archive_format" == "squashfs" ]]; then
+    if [[ -n "$single_root_item" ]] && [[ "$archive_format" == "squashfs" ]]; then
         # For "squashfs" archive format.
         std_output=$(_move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$filename" 2>&1)
         _check_output "$?" "$std_output" "$input_file" ""
-    elif ((count_root_items == 1)) && [[ "$(_strip_filename_extension "$single_root_item")" == "$filename" ]]; then
+    elif [[ "$filename" == "$single_root_item" ]] || [[ "$filename" == "$(_strip_filename_extension "$single_root_item")" ]]; then
         # For archives with "one item with the same name of the archive".
         # For example: "README.txt.tar.gz" or "README.tar.gz".
         std_output=$(_move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$single_root_item" 2>&1)
