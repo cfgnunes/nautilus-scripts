@@ -28,7 +28,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=iso")
-    std_output=$(genisoimage -o "$output_file" -V "$(basename -- "$input_file")" -A "" -sysid "" -J -joliet-long -R "$input_file" 2>&1)
+    std_output=$(genisoimage -input-charset "utf-8" -o "$output_file" -V "$(basename -- "$input_file")" -A "" -sysid "" -J -R "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
