@@ -16,19 +16,15 @@ _main() {
     local dependencies=""
     dependencies=$(_get_dependencies "$input_files")
     _check_dependencies "$dependencies"
-
     _display_wait_box "0"
 
     export -f \
         _all_commands_exists \
-        _extract_archive \
-        _get_archive_format \
-        _get_available_extractor \
-        _get_preferred_extractors \
-        _run_extractor
+        _get_command \
+        _run_command
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" ""
+    _run_task_parallel "$input_files" "$output_dir"
     _display_result_box ""
 }
 
@@ -37,182 +33,9 @@ _main_task() {
     local output_dir=$2
 
     # Run the main process.
-    _extract_archive "$input_file" "$output_dir"
-}
-
-_extract_archive() {
-    local input_file=$1
-    local output_dir=$2
-    local archive_format=""
-    local extractor=""
-    local preferred_extractors=""
-
-    archive_format=$(_get_archive_format "$input_file")
-    preferred_extractors=$(_get_preferred_extractors "$archive_format")
-    extractor=$(_get_available_extractor "$preferred_extractors")
-    _run_extractor "$input_file" "$archive_format" "$extractor" "$output_dir"
-}
-
-_all_commands_exists() {
-    local commands=$1
-
     local command=""
-    local commands_array=()
-    IFS=" " read -r -a commands_array <<<"$commands"
-
-    for command in "${commands_array[@]}"; do
-        if ! command -v "$command" &>/dev/null; then
-            return 1
-        fi
-    done
-    return 0
-}
-
-_get_archive_format() {
-    local input_file=$1
-    local archive_format=""
-    local file_mime=""
-    local filename_extension=""
-
-    # Get the mime type and filename extension to define what command to use.
-    file_mime=$(_get_file_mime "$input_file")
-    filename_extension=$(_get_filename_extension "$input_file")
-
-    # NOTE: See the file: /usr/share/mime/packages/freedesktop.org.xml
-    case "${file_mime,,}" in
-    "application/bzip2") archive_format="bzip2" ;;
-    "application/gzip") archive_format="gzip" ;;
-    "application/pgp-encrypted") archive_format="gpg" ;;
-    "application/stuffit") archive_format="sit" ;;
-    "application/vnd.debian.binary-package") archive_format="deb" ;;
-    "application/vnd.ms-cab-compressed") archive_format="cab" ;;
-    "application/vnd.rar") archive_format="rar" ;;
-    "application/vnd.squashfs") archive_format="squashfs" ;;
-    "application/x-7z-compressed") archive_format="7zip" ;;
-    "application/x-ace") archive_format="ace" ;;
-    "application/x-alz") archive_format="alz" ;;
-    "application/x-arc") archive_format="arc" ;;
-    "application/x-archive") archive_format="ar" ;;
-    "application/x-arj") archive_format="arj" ;;
-    "application/x-bzip") archive_format="bzip" ;;
-    "application/x-bzip2") archive_format="bzip2" ;;
-    "application/x-compress") archive_format="z" ;;
-    "application/x-cpio") archive_format="cpio" ;;
-    "application/x-gzip") archive_format="gzip" ;;
-    "application/x-iso9660-image") archive_format="iso" ;;
-    "application/x-lha") archive_format="lha" ;;
-    "application/x-lrzip") archive_format="lrzip" ;;
-    "application/x-lz4") archive_format="lz4" ;;
-    "application/x-lzh-compressed") archive_format="lha" ;;
-    "application/x-lzip") archive_format="lzip" ;;
-    "application/x-lzma") archive_format="lzma" ;;
-    "application/x-lzop") archive_format="lzop" ;;
-    "application/x-msi") archive_format="msi" ;;
-    "application/x-pak") archive_format="pak" ;;
-    "application/x-rar-compressed") archive_format="rar" ;;
-    "application/x-rar") archive_format="rar" ;;
-    "application/x-sit") archive_format="sit" ;;
-    "application/x-stuffit") archive_format="sit" ;;
-    "application/x-xar") archive_format="xar" ;;
-    "application/x-xz") archive_format="xz" ;;
-    "application/x-zip-compressed") archive_format="zip" ;;
-    "application/x-zip") archive_format="zip" ;;
-    "application/x-zoo") archive_format="zoo" ;;
-    "application/zip") archive_format="zip" ;;
-    "application/zstd") archive_format="zstd" ;;
-    *)
-        # If not found the 'file_mime', use the extension.
-        case "${filename_extension,,}" in
-        *.tar.bz | *.tbz | *.tar.bz2 | *.tbz2 | *.tb2) archive_format="tar_bzip2" ;;
-        *.tar.gz | *.tgz) archive_format="tar_gzip" ;;
-        *.tar.lrz | *.tlrz) archive_format="tar_lrzip" ;;
-        *.tar.lz) archive_format="tar_lzip" ;;
-        *.tar.lz4) archive_format="tar_lz4" ;;
-        *.tar.lzma | *.tlz) archive_format="tar_lzma" ;;
-        *.tar.lzo | *.tzo) archive_format="tar_lzop" ;;
-        *.tar.xz | *.txz) archive_format="tar_xz" ;;
-        *.tar.z | *.taz) archive_format="tar_z" ;;
-        *.tar.zst | *.tzst) archive_format="tar_zstd" ;;
-        *.7z) archive_format="7zip" ;;
-        *.ace) archive_format="ace" ;;
-        *.alz) archive_format="alz" ;;
-        *.ar) archive_format="ar" ;;
-        *.arc) archive_format="arc" ;;
-        *.arj) archive_format="arj" ;;
-        *.bz | *.bz2) archive_format="bzip2" ;;
-        *.cab) archive_format="cab" ;;
-        *.cpio) archive_format="cpio" ;;
-        *.deb | *.udeb) archive_format="deb" ;;
-        *.gpg | *.asc | *.pgp) archive_format="gpg" ;;
-        *.gz) archive_format="gzip" ;;
-        *.iso | *.iso9660) archive_format="iso" ;;
-        *.lrz) archive_format="lrzip" ;;
-        *.lz) archive_format="lzip" ;;
-        *.lz4) archive_format="lz4" ;;
-        *.lzh | *.lzs | *.lha) archive_format="lha" ;;
-        *.lzma) archive_format="lzma" ;;
-        *.lzo) archive_format="lzop" ;;
-        *.msi) archive_format="msi" ;;
-        *.pak) archive_format="pak" ;;
-        *.rar) archive_format="rar" ;;
-        *.sit) archive_format="sit" ;;
-        *.sqsh | *.squashfs | *.sfs) archive_format="squashfs" ;;
-        *.tar | *.gtar | *.gem) archive_format="tar" ;;
-        *.xar) archive_format="xar" ;;
-        *.xz) archive_format="xz" ;;
-        *.z) archive_format="z" ;;
-        *.zip) archive_format="zip" ;;
-        *.zoo) archive_format="zoo" ;;
-        *.zpaq) archive_format="zpaq" ;;
-        *.zst) archive_format="zstd" ;;
-        *) archive_format="unknown" ;;
-        esac
-        ;;
-    esac
-
-    # Final checks.
-    case "$archive_format" in
-    "bzip2" | "z" | "gzip" | "lrzip" | "lz4" | "lzip" | "lzma" | "lzop" | "xz" | "zstd")
-        # Check if the file is a 'tar' compressed (using the filename).
-        if [[ "${filename_extension,,}" = *".tar."* ]]; then
-            archive_format="tar_$archive_format"
-        fi
-        ;;
-    "zip")
-        local zip_info=""
-        zip_info=$(file --dereference --brief --uncompress -- "$input_file")
-
-        # Check if the 'zip' archive is a newer version (version >= 4.0).
-        if grep -i -q "at least v[4-9]" <<<"$zip_info"; then
-            archive_format+="_newer"
-        fi
-        ;;
-    esac
-
-    printf "%s" "$archive_format"
-}
-
-_get_available_extractor() {
-    local preferred_extractors=$1
-    local available_extractor=""
-
-    local extractor=""
-    local preferred_extractors_array=()
-    IFS=" " read -r -a preferred_extractors_array <<<"$preferred_extractors"
-
-    for extractor in "${preferred_extractors_array[@]}"; do
-        if [[ "$extractor" == *"+"* ]]; then
-            if _all_commands_exists "${extractor//+/ }"; then
-                available_extractor=$extractor
-                break
-            fi
-        elif _command_exists "$extractor"; then
-            available_extractor=$extractor
-            break
-        fi
-    done
-
-    printf "%s" "$available_extractor"
+    command=$(_get_command "$input_file" "available")
+    _run_command "$input_file" "$command" "$output_dir" "$archive_format"
 }
 
 _get_dependencies() {
@@ -221,24 +44,17 @@ _get_dependencies() {
 
     # Check dependencies for each file.
     for input_file in $input_files; do
-        local archive_format=""
-        local available_extractor=""
-        local default_extractor=""
-        local preferred_extractors=""
+        local command=""
+        command=$(_get_command "$input_file" "available")
 
-        archive_format=$(_get_archive_format "$input_file")
-        preferred_extractors=$(_get_preferred_extractors "$archive_format")
-        available_extractor=$(_get_available_extractor "$preferred_extractors")
-
-        # If there is an available extractor, skip the dependency.
-        if [[ -n "$available_extractor" ]]; then
+        # If there is an available command, skip the dependency.
+        if [[ -n "$command" ]]; then
             continue
         fi
 
-        # The default extractor is the first extractor of preferred extractors.
-        default_extractor=$(cut -d " " -f 1 <<<"$preferred_extractors")
+        command=$(_get_command "$input_file" "default")
 
-        case $default_extractor in
+        case $command in
         "7za") dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip" ;;
         "ar") dependencies+="command=ar; package=binutils" ;;
         "bsdtar") dependencies+="command=bsdtar; pkg_manager=apt; package=libarchive-tools | command=bsdtar; pkg_manager=dnf | command=bsdtar; pkg_manager=pacman" ;;
@@ -282,64 +98,89 @@ _get_dependencies() {
     printf "%s" "$dependencies"
 }
 
-_get_preferred_extractors() {
-    local archive_format=$1
+_get_command() {
+    local input_file=$1
+    local command_status=$2
+    local preferred_commands=""
+    local command=""
 
-    case "$archive_format" in
-    "7zip") preferred_extractors="7za unar bsdtar" ;;
-    "ace") preferred_extractors="unar" ;;
-    "alz") preferred_extractors="unar" ;;
-    "ar") preferred_extractors="ar bsdtar" ;;
-    "arc") preferred_extractors="unar" ;;
-    "arj") preferred_extractors="unar" ;;
-    "bzip2") preferred_extractors="bzip2 unar 7za" ;;
-    "cab") preferred_extractors="unar" ;;
-    "cpio") preferred_extractors="cpio unar bsdtar" ;;
-    "deb") preferred_extractors="ar" ;;
-    "gpg") preferred_extractors="gpg" ;;
-    "gzip") preferred_extractors="gzip unar 7za" ;;
-    "iso") preferred_extractors="xorriso bsdtar" ;;
-    "lha") preferred_extractors="lha unar" ;;
-    "lrzip") preferred_extractors="lrzip" ;;
-    "lz4") preferred_extractors="lz4" ;;
-    "lzip") preferred_extractors="lzip" ;;
-    "lzma") preferred_extractors="xz unar" ;;
-    "lzop") preferred_extractors="lzop" ;;
-    "msi") preferred_extractors="unar" ;;
-    "pak") preferred_extractors="unar" ;;
-    "rar") preferred_extractors="unrar unar bsdtar" ;;
-    "sit") preferred_extractors="unar" ;;
-    "squashfs") preferred_extractors="unsquashfs" ;;
-    "tar_bzip2") preferred_extractors="tar+bzip2 unar 7za" ;;
-    "tar_gzip") preferred_extractors="tar+gzip unar 7za" ;;
-    "tar_lrzip") preferred_extractors="tar+lrzip" ;;
-    "tar_lz4") preferred_extractors="tar+lz4" ;;
-    "tar_lzip") preferred_extractors="tar+lzip" ;;
-    "tar_lzma") preferred_extractors="tar+lzma unar 7za" ;;
-    "tar_lzop") preferred_extractors="tar+lzop" ;;
-    "tar_xz") preferred_extractors="tar+xz unar 7za" ;;
-    "tar_z") preferred_extractors="tar+gzip unar 7za" ;;
-    "tar_zstd") preferred_extractors="tar+zstd" ;;
-    "tar") preferred_extractors="tar bsdtar unar 7za" ;;
-    "unknown") preferred_extractors="bsdtar+unar+7za" ;;
-    "xar") preferred_extractors="unar bsdtar" ;;
-    "xz") preferred_extractors="xz unar 7za" ;;
-    "z") preferred_extractors="gzip unar" ;;
-    "zip") preferred_extractors="unzip 7za bsdtar unar" ;;
-    "zip_newer") preferred_extractors="7za bsdtar" ;;
-    "zoo") preferred_extractors="unar" ;;
-    "zpaq") preferred_extractors="zpaq" ;;
-    "zstd") preferred_extractors="zstd" ;;
+    # Define the prefferred commands for each archive format.
+    case "${input_file,,}" in
+    *.tar.bz | *.tbz | *.tar.bz2 | *.tbz2 | *.tb2) preferred_commands="tar+bzip2 unar 7za" ;;
+    *.tar.gz | *.tgz) preferred_commands="tar+gzip unar 7za" ;;
+    *.tar.lrz | *.tlrz) preferred_commands="tar+lrzip" ;;
+    *.tar.lz) preferred_commands="tar+lzip" ;;
+    *.tar.lz4) preferred_commands="tar+lz4" ;;
+    *.tar.lzma | *.tlz) preferred_commands="tar+lzma unar 7za" ;;
+    *.tar.lzo | *.tzo) preferred_commands="tar+lzop" ;;
+    *.tar.xz | *.txz) preferred_commands="tar+xz unar 7za" ;;
+    *.tar.z | *.taz) preferred_commands="tar+gzip unar 7za" ;;
+    *.tar.zst | *.tzst) preferred_commands="tar+zstd" ;;
+    *.7z) preferred_commands="7za unar bsdtar" ;;
+    *.ace) preferred_commands="unar" ;;
+    *.alz) preferred_commands="unar" ;;
+    *.ar) preferred_commands="ar bsdtar" ;;
+    *.arc) preferred_commands="unar" ;;
+    *.arj) preferred_commands="unar" ;;
+    *.bz | *.bz2) preferred_commands="bzip2 unar 7za" ;;
+    *.cab) preferred_commands="unar" ;;
+    *.cpio) preferred_commands="cpio unar bsdtar" ;;
+    *.deb | *.udeb) preferred_commands="ar" ;;
+    *.gpg | *.asc | *.pgp) preferred_commands="gpg" ;;
+    *.gz) preferred_commands="gzip unar 7za" ;;
+    *.iso | *.iso9660) preferred_commands="xorriso bsdtar" ;;
+    *.lrz) preferred_commands="lrzip" ;;
+    *.lz) preferred_commands="lzip" ;;
+    *.lz4) preferred_commands="lz4" ;;
+    *.lzh | *.lzs | *.lha) preferred_commands="lha unar" ;;
+    *.lzma) preferred_commands="xz unar" ;;
+    *.lzo) preferred_commands="lzop" ;;
+    *.msi) preferred_commands="unar" ;;
+    *.pak) preferred_commands="unar" ;;
+    *.rar) preferred_commands="unrar unar bsdtar" ;;
+    *.sit) preferred_commands="unar" ;;
+    *.sqsh | *.squashfs | *.sfs) preferred_commands="unsquashfs" ;;
+    *.tar | *.gtar | *.gem) preferred_commands="tar bsdtar unar 7za" ;;
+    *.xar) preferred_commands="unar bsdtar" ;;
+    *.xz) preferred_commands="xz unar 7za" ;;
+    *.z) preferred_commands="gzip unar" ;;
+    *.zip) preferred_commands="7za bsdtar unar unzip" ;;
+    *.zoo) preferred_commands="unar" ;;
+    *.zpaq) preferred_commands="zpaq" ;;
+    *.zst) preferred_commands="zstd" ;;
+    *) preferred_commands="bsdtar+unar+7za" ;;
     esac
 
-    printf "%s" "$preferred_extractors"
+    local preferred_commands_array=()
+    IFS=" " read -r -a preferred_commands_array <<<"$preferred_commands"
+
+    if [[ "$command_status" == "default" ]]; then
+        # The default command is the first command of preferred commands.
+        command=${preferred_commands_array[0]}
+    elif [[ "$command_status" == "available" ]]; then
+        # Get the available command in the system.
+        local preferred_command=""
+        for preferred_command in "${preferred_commands_array[@]}"; do
+            if [[ "$preferred_command" == *"+"* ]]; then
+                if _all_commands_exists "${preferred_command//+/ }"; then
+                    command=$preferred_command
+                    break
+                fi
+            elif _command_exists "$preferred_command"; then
+                command=$preferred_command
+                break
+            fi
+        done
+    fi
+
+    printf "%s" "$command"
 }
 
-_run_extractor() {
+_run_command() {
     local input_file=$1
-    local archive_format=$2
-    local extractor=$3
-    local output_dir=$4
+    local command=$2
+    local output_dir=$3
+    local archive_format=$4
     local exit_code=0
     local filename=""
     local std_output=""
@@ -348,9 +189,9 @@ _run_extractor() {
         output_dir=$(dirname -- "$input_file")
     fi
 
-    # Try to use the command '7z' in the '7za' extractor.
+    # Try to use the command '7z' instead the of '7za'.
     local command_7za="7za"
-    if [[ "$extractor" == *"7za"* ]]; then
+    if [[ "$command" == *"7za"* ]]; then
         _command_exists "7z" && command_7za="7z"
     fi
 
@@ -375,7 +216,7 @@ _run_extractor() {
     # Use a local temporary directory to work.
     __temp_dir_cd
 
-    case "$extractor" in
+    case "$command" in
     "7za")
         std_output=$($command_7za x -aoa -p"null" -- "$input_file" 2>&1)
         exit_code=$?
@@ -524,7 +365,7 @@ _run_extractor() {
         # For "squashfs" archive format.
         std_output=$(_move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$filename" 2>&1)
         _check_output "$?" "$std_output" "$input_file" ""
-    elif ((count_root_items == 1)) && [[ "$single_root_item" == "$filename" ]]; then
+    elif ((count_root_items == 1)) && [[ "$(_strip_filename_extension "$single_root_item")" == "$filename" ]]; then
         # For archives with "one item with the same name of the archive".
         # For example: "README.txt.tar.gz" or "README.tar.gz".
         std_output=$(_move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$single_root_item" 2>&1)
@@ -534,6 +375,21 @@ _run_extractor() {
         std_output=$(_move_file "rename" "$temp_dir_output" "$output_dir/$filename" 2>&1)
         _check_output "$?" "$std_output" "$input_file" ""
     fi
+}
+
+_all_commands_exists() {
+    local commands=$1
+
+    local command=""
+    local commands_array=()
+    IFS=" " read -r -a commands_array <<<"$commands"
+
+    for command in "${commands_array[@]}"; do
+        if ! _command_exists "$command"; then
+            return 1
+        fi
+    done
+    return 0
 }
 
 _main "$@"
