@@ -35,9 +35,9 @@ _main_task() {
         cd -- "$input_file" || return 1
 
         if _command_exists "7za"; then
-            std_output=$(7za a -mx9 "$output_file" -- * .[!.]* 2>&1)
+            std_output=$(7za a -mx9 "$output_file" -- . 2>&1)
         elif _command_exists "bsdtar"; then
-            std_output=$(bsdtar -a -cf "$output_file" -- * .[!.]* 2>&1)
+            std_output=$(bsdtar --strip-components 1 -a -cf "$output_file" -- . 2>&1)
         fi
     else
         local input_file_basename=""
