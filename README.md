@@ -20,6 +20,14 @@ While numerous scripts are available for GNOME Files on the web, many suffer fro
 - **Bash implementation**: All scripts are implemented in Bash. So, the scripts work well in the shell (without a graphical interface) and file managers.
 - **Shell script validation**: All scripts have been checked using [ShellCheck](https://github.com/koalaman/shellcheck).
 
+## Installing
+
+To install in GNOME Files (Nautilus), Caja, or Nemo, just run the following command in the terminal:
+
+```sh
+bash install.sh
+```
+
 ## Keyboard Shortcuts
 
 | Key                 | Action                        |
@@ -28,7 +36,10 @@ While numerous scripts are available for GNOME Files on the web, many suffer fro
 | `F4`                | Terminal                      |
 | `F7`                | Disk Usage Analyzer           |
 | `<Control>E`        | Extract Here                  |
-| `<Control>K`        | Compress...                   |
+| `<Control><Alt>C`   | Compress...                   |
+| `<Control><Alt>G`   | Compress to 'tar.gz' (each)   |
+| `<Control><Alt>X`   | Compress to 'tar.xz' (each)   |
+| `<Control><Alt>Z`   | Compress to 'zip' (each)      |
 | `<Control><Shift>A` | List all files                |
 | `<Control><Shift>D` | Download (URLs in clipboard)  |
 | `<Control><Shift>E` | List empty directories        |
@@ -37,16 +48,9 @@ While numerous scripts are available for GNOME Files on the web, many suffer fro
 | `<Control><Shift>M` | Compare with Meld             |
 | `<Control><Shift>O` | Open item location            |
 | `<Control><Shift>P` | List permissions and owners   |
+| `<Control><Shift>U` | List duplicate files          |
 | `<Control><Shift>V` | Paste as symbolic link        |
 | `<Control><Shift>Y` | List file type                |
-
-## Installing
-
-To install in GNOME Files (Nautilus), Caja, or Nemo, just run the following command in the terminal:
-
-```sh
-bash install.sh
-```
 
 ## Known issues
 

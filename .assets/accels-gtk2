@@ -1,9 +1,20 @@
+; Disable the shortcut for "OpenAlternate" (<control><shift>o) in Caja and Nemo.
 (gtk_accel_path "<Actions>/DirViewActions/OpenAlternate" "")
+
+; Disable the shortcut for "OpenInNewTab" (<control><shift>o) in Caja.
 (gtk_accel_path "<Actions>/DirViewActions/OpenInNewTab" "")
+
+; Disable the shortcut for "Pin File" (<control><shift>d) in Nemo.
 (gtk_accel_path "<Actions>/DirViewActions/Pin File" "")
+
+; Disable the shortcut for "Unpin File" (<control><shift>d) in Nemo.
 (gtk_accel_path "<Actions>/DirViewActions/Unpin File" "")
-(gtk_accel_path "<Actions>/ShellActions/Show Backup Files" "")
-(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sArchive\\sCompress..." "<Primary>k")
+
+; Scripts shortcuts.
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sArchive\\sCompress..." "<Primary><Alt>c")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sArchive\\sCompress%20to%20'tar.gz'%20(each)" "<Primary><Alt>g")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sArchive\\sCompress%20to%20'tar.xz'%20(each)" "<Primary><Alt>x")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sArchive\\sCompress%20to%20'zip'%20(each)" "<Primary><Alt>z")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sArchive\\sExtract%20Here" "<Primary>e")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sCompare%20with%20Meld" "<Primary><Shift>m")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20all%20files" "<Primary><Shift>a")
