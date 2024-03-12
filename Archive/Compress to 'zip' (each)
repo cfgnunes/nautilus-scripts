@@ -30,13 +30,11 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=zip")
     if [[ -d "$input_file" ]]; then
         cd -- "$input_file" || return 1
-        std_output=$(zip --symlinks --quiet --recurse-paths "$output_file" -- . 2>&1)
+        std_output=$(zip --symlinks --quiet --recurse-paths "$output_file" -- * .[!.]* 2>&1)
     else
-        local input_file_relative=""
-        input_file_relative=$(_text_remove_pwd "$input_file")
-        # shellcheck disable=SC2001
-        input_file_relative=$(sed "s|^\./||g" <<<$"$input_file_relative")
-        std_output=$(zip --symlinks --quiet --recurse-paths "$output_file" -- "$input_file_relative" 2>&1)
+        local input_file_basename=""
+        input_file_basename=$(basename -- "$input_file")
+        std_output=$(zip --symlinks --quiet --recurse-paths "$output_file" -- "$input_file_basename" 2>&1)
     fi
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }

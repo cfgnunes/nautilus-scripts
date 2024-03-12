@@ -35,20 +35,18 @@ _main_task() {
         cd -- "$input_file" || return 1
 
         if _command_exists "7za"; then
-            std_output=$(7za a -mx9 "$output_file" -- . 2>&1)
+            std_output=$(7za a -mx9 "$output_file" -- * .[!.]* 2>&1)
         elif _command_exists "bsdtar"; then
-            std_output=$(find . -printf "%P\n" | bsdtar -a -cf "$output_file" -T - 2>&1)
+            std_output=$(bsdtar -a -cf "$output_file" -- * .[!.]* 2>&1)
         fi
     else
-        local input_file_relative=""
-        input_file_relative=$(_text_remove_pwd "$input_file")
-        # shellcheck disable=SC2001
-        input_file_relative=$(sed "s|^\./||g" <<<$"$input_file_relative")
+        local input_file_basename=""
+        input_file_basename=$(basename -- "$input_file")
 
         if _command_exists "7za"; then
-            std_output=$(7za a -mx9 "$output_file" -- "$input_file_relative" 2>&1)
+            std_output=$(7za a -mx9 "$output_file" -- "$input_file_basename" 2>&1)
         elif _command_exists "bsdtar"; then
-            std_output=$(bsdtar -a -cf "$output_file" -- "$input_file_relative" 2>&1)
+            std_output=$(bsdtar -a -cf "$output_file" -- "$input_file_basename" 2>&1)
         fi
     fi
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
