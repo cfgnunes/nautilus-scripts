@@ -35,7 +35,7 @@ _main_task() {
     # Run the main process.
     local command=""
     command=$(_get_command "$input_file" "available")
-    _run_command "$input_file" "$command" "$output_dir" "$archive_format"
+    _run_command "$input_file" "$command" "$output_dir"
 }
 
 _get_dependencies() {
@@ -128,7 +128,7 @@ _get_command() {
     *.deb | *.udeb) preferred_commands="ar" ;;
     *.gpg | *.asc | *.pgp) preferred_commands="gpg" ;;
     *.gz) preferred_commands="gzip unar 7za" ;;
-    *.iso | *.iso9660) preferred_commands="xorriso bsdtar" ;;
+    *.iso) preferred_commands="xorriso bsdtar" ;;
     *.lrz) preferred_commands="lrzip" ;;
     *.lz) preferred_commands="lzip" ;;
     *.lz4) preferred_commands="lz4" ;;
@@ -180,7 +180,6 @@ _run_command() {
     local input_file=$1
     local command=$2
     local output_dir=$3
-    local archive_format=$4
     local exit_code=0
     local filename=""
     local std_output=""
@@ -339,7 +338,7 @@ _run_command() {
     fi
 
     # Fix permissions of extracted files in "iso" archive format.
-    if [[ "$archive_format" == "iso" ]]; then
+    if [[ "${input_file,,}" == *".iso" ]]; then
         chmod --recursive u+rw -- .
     fi
 
@@ -361,14 +360,14 @@ _run_command() {
     __temp_dir_exit
 
     # Move the items to the correct directory.
-    if [[ -n "$single_root_item" ]] && [[ "$archive_format" == "squashfs" ]]; then
-        # For "squashfs" archive format.
-        std_output=$(_move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$filename" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" ""
-    elif [[ "$filename" == "$single_root_item" ]] || [[ "$filename" == "$(_strip_filename_extension "$single_root_item")" ]]; then
+    if [[ "$single_root_item" == "$filename" ]] || [[ "$(_strip_filename_extension "$single_root_item")" == "$filename" ]]; then
         # For archives with "one item with the same name of the archive".
         # For example: "README.txt.tar.gz" or "README.tar.gz".
         std_output=$(_move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$single_root_item" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" ""
+    elif [[ "$single_root_item" == "squashfs-root" ]] && [[ "$command" == "unsquashfs" ]]; then
+        # For "squashfs" archive format.
+        std_output=$(_move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$filename" 2>&1)
         _check_output "$?" "$std_output" "$input_file" ""
     else
         # For archives with "one item with a different name of the archive" or "multiple items".
