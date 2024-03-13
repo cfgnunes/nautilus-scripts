@@ -16,7 +16,7 @@ _main() {
     # shellcheck disable=SC2001
     sed "s|$FIELD_SEPARATOR|\x0|g" <<<"$input_files" | zenity \
         --title "$(_get_script_name)" \
-        --list --text "Caution: These files will be deleted. Press 'Ok' to continue with this operation." --column "Files" \
+        --list --text "Warning: These files will be deleted. Press 'Ok' to continue with this operation." --column "Files" \
         --height=400 --width=750 &>/dev/null || _exit_script
 
     _display_wait_box "2"
