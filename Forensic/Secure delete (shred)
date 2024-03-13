@@ -13,8 +13,12 @@ _main() {
     _check_dependencies ""
     input_files=$(_get_files "par_type=file")
 
+    local std_output=""
+    std_output=$(_convert_filenames_to_text "$input_files")
+    std_output=$(_text_remove_pwd "$std_output")
+
     # shellcheck disable=SC2001
-    sed "s|$FIELD_SEPARATOR|\x0|g" <<<"$input_files" | zenity \
+    sed "s|$FIELD_SEPARATOR|\x0|g" <<<"$std_output" | zenity \
         --title "$(_get_script_name)" \
         --list --text "Warning: These files will be deleted. Press 'Ok' to continue with this operation." --column "Files" \
         --height=400 --width=750 &>/dev/null || _exit_script
