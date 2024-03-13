@@ -262,6 +262,41 @@ _display_info_box() {
     fi
 }
 
+_display_list_box() {
+    local message=$1
+    local columns=$2
+    local columns_count=0
+    local items_count=0
+    local selected_item=""
+    local message_select=""
+    _close_wait_box
+
+    if [[ -n "$message" ]]; then
+        items_count=$(tr -cd $'\n' <<<"$message" | wc -c)
+        message_select=" Select a item to open its location:"
+    fi
+    columns_count=$(grep --only-matching "column=" <<<"$columns" | wc -l)
+
+    if ! _is_gui_session; then
+        message=$(sed "s|//| |g" <<<"$message")
+        printf "%s\n" "$message"
+    elif _command_exists "zenity"; then
+        IFS=";"
+        # shellcheck disable=SC2086
+        selected_item=$(sed "s|//|\x0|g" <<<"$message" | zenity \
+            --title "$(_get_script_name)" --print-column "$columns_count" \
+            --list --editable --text "Total of $items_count items.$message_select" $columns \
+            --height=400 --width=750 2>/dev/null) || _exit_script
+        IFS="$FIELD_SEPARATOR"
+
+        # Open the directory of the clicked item in the list.
+        _open_item_location "$selected_item"
+    elif _command_exists "xmessage"; then
+        message=$(sed "s|//| |g" <<<"$message")
+        xmessage -title "$(_get_script_name)" "$message" &>/dev/null || _exit_script
+    fi
+}
+
 _display_password_box() {
     local message="$1"
     local password=""
@@ -876,6 +911,27 @@ _move_temp_file_to_output() {
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     return 0
+}
+
+_open_item_location() {
+    local item=$1
+    local dir=""
+
+    if [[ -z "$item" ]]; then
+        return
+    fi
+
+    item="$(readlink -f "$item")"
+    if [[ "$item" == "/" ]]; then
+        return
+    fi
+
+    dir=$(cd -- "$(dirname -- "$item")" &>/dev/null && pwd -P)
+    if [[ -z "$dir" ]]; then
+        return
+    fi
+
+    xdg-open "$dir" &
 }
 
 _pkg_get_package_manager() {
