@@ -43,6 +43,7 @@ bash install.sh
 | `<Control><Shift>A` | List all files                |
 | `<Control><Shift>D` | Download (URLs in clipboard)  |
 | `<Control><Shift>E` | List empty directories        |
+| `<Control><Shift>F` | Compare with diff             |
 | `<Control><Shift>G` | Git clone (URLs in clipboard) |
 | `<Control><Shift>H` | List hidden items             |
 | `<Control><Shift>M` | Compare with Meld             |
