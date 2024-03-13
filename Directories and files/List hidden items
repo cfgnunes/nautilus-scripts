@@ -18,9 +18,9 @@ _main() {
     std_output=$(_convert_filenames_to_text "$input_files")
     std_output=$(_text_remove_pwd "$std_output")
     # shellcheck disable=SC2001
-    std_output=$(sed "s|^\(..*\)$|'\1'|" <<<"$std_output")
+    std_output=$(sed "s|^\(..*\)$|\1|" <<<"$std_output")
 
-    _display_text_box "$std_output"
+    _display_list_box "$std_output" "--column=Item"
 }
 
 _main "$@"

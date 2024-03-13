@@ -21,7 +21,7 @@ _main() {
     std_output=$(_storage_text_read_all)
     std_output=$(_text_sort "$std_output")
 
-    _display_text_box "$std_output"
+    _display_list_box "$std_output" "--column=MD5;--column=File"
 }
 
 _main_task() {
@@ -32,6 +32,9 @@ _main_task() {
     # Run the main process.
     std_output=$(md5sum -- "$input_file" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
+
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|\([^ ]*\)\s*\(.*\)|\1//\2|g" <<<"$std_output")
 
     _storage_text_write_ln "$std_output"
 }

@@ -16,10 +16,10 @@ _main() {
 
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(find $input_files -type d -empty ! -path "$IGNORE_FIND_PATH" -printf "'%p'\n" 2>/dev/null)
+    std_output=$(find $input_files -type d -empty ! -path "$IGNORE_FIND_PATH" -printf "%p\n" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
 
-    _display_text_box "$std_output"
+    _display_list_box "$std_output" "--column=Directory"
 }
 
 _main "$@"

@@ -22,7 +22,7 @@ _main() {
     std_output=$(_storage_text_read_all)
     std_output=$(_text_sort "$std_output")
 
-    _display_text_box "$std_output"
+    _display_list_box "$std_output" "--column=Endings;--column=File"
 }
 
 _main_task() {
@@ -41,8 +41,8 @@ _main_task() {
     std_output=$(sed "s|//.*with CR, LF line.*|// CR+LF (mac)|" <<<"$std_output")
     std_output=$(sed "s|//.*no line.*|// (no line)|" <<<"$std_output")
     std_output=$(sed "s|//.*text.*|// LF (unix)|" <<<"$std_output")
-    std_output=$(sed "s|\(.*\)// *\(.*\)|\2: '\1'|" <<<"$std_output")
-    std_output=$(grep "(windows):\|(unix):\|(mac):\|(no line):" <<<"$std_output")
+    std_output=$(sed "s|\(.*\)//\s*\(.*\)|\2//\1|" <<<"$std_output")
+    std_output=$(grep "(windows)\|(unix)\|(mac)\|(no line)" <<<"$std_output")
 
     _storage_text_write_ln "$std_output"
 }

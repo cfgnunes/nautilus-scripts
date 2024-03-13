@@ -21,7 +21,7 @@ _main() {
     std_output=$(_storage_text_read_all)
     std_output=$(sort -h -r <<<"$std_output")
 
-    _display_text_box "$std_output"
+    _display_list_box "$std_output" "--column=Count;--column=File"
 }
 
 _main_task() {
@@ -33,7 +33,7 @@ _main_task() {
     std_output=$(wc --words -- "$input_file" 2>/dev/null)
     std_output=$(grep -v ".*[0-9]* total$" <<<"$std_output")
     # shellcheck disable=SC2001
-    std_output=$(sed "s| *\([0-9]*\) *\(.*\)|\1 '\2'|" <<<"$std_output")
+    std_output=$(sed "s| *\([0-9]*\) *\(.*\)|\1//\2|" <<<"$std_output")
     std_output=$(_text_remove_pwd "$std_output")
 
     _storage_text_write_ln "$std_output"
