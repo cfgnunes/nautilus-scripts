@@ -273,7 +273,7 @@ _display_list_box() {
 
     if [[ -n "$message" ]]; then
         items_count=$(tr -cd $'\n' <<<"$message" | wc -c)
-        message_select=" Select a item to open its location:"
+        message_select=" Select an item to open its location:"
     fi
     columns_count=$(grep --only-matching "column=" <<<"$columns" | wc -l)
 
