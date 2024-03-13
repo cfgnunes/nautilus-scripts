@@ -1232,6 +1232,8 @@ _validate_files_count() {
         valid_file_term="plain text files"
     elif [[ "$par_type" == "file" ]]; then
         valid_file_term="files"
+    elif [[ "$par_type" == "all" ]]; then
+        valid_file_term="files or directories"
     fi
 
     # Count the number of valid files.
