@@ -7,22 +7,13 @@ source "$ROOT_DIR/common-functions.sh"
 
 _main() {
     local input_files=""
-    local dir=""
 
     # Execute initial checks.
     _check_dependencies "command=xdg-open; package=xdg-utils"
     input_files=$(_get_files "par_type=all; par_max_files=1; par_get_pwd=true")
 
     # Run the main process.
-    input_files="$(readlink -f "$input_files")"
-    if [[ "$input_files" == "/" ]]; then
-        return
-    fi
-    dir=$(cd -- "$(dirname -- "$input_files")" &>/dev/null && pwd -P)
-    if [[ -z "$dir" ]]; then
-        return
-    fi
-    xdg-open "$dir" &
+    _open_item_location "$input_files"
 }
 
 _main "$@"
