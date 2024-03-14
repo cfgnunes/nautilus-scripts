@@ -40,11 +40,11 @@ bash install.sh
 | `<Control><Alt>G`   | Compress to 'tar.gz' (each)   |
 | `<Control><Alt>X`   | Compress to 'tar.xz' (each)   |
 | `<Control><Alt>Z`   | Compress to 'zip' (each)      |
+| `<Control><Shift>C` | Compare with Meld             |
 | `<Control><Shift>E` | List empty directories        |
 | `<Control><Shift>F` | Compare with diff             |
 | `<Control><Shift>G` | Git clone (URLs in clipboard) |
 | `<Control><Shift>H` | List hidden items             |
-| `<Control><Shift>M` | Compare with Meld             |
 | `<Control><Shift>O` | Open item location            |
 | `<Control><Shift>P` | List permissions and owners   |
 | `<Control><Shift>U` | List duplicate files          |
