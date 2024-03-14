@@ -39,9 +39,9 @@ _main_task() {
         std_output=$(grep --only-matching "(print.*)" <<<"$std_output")
         # shellcheck disable=SC2001
         std_output=$(sed "s|^(\(.*\))$|\1|g" <<<"$std_output")
-        _storage_text_write_ln "$std_output//$(_text_remove_pwd "$input_file")"
+        _storage_text_write_ln "$std_output$STRING_SEPARATOR$(_text_remove_pwd "$input_file")"
     elif [[ "$std_output" == *"Incorrect password"* ]]; then
-        _storage_text_write_ln "password protection//$(_text_remove_pwd "$input_file")"
+        _storage_text_write_ln "password protection$STRING_SEPARATOR$(_text_remove_pwd "$input_file")"
     fi
 }
 
