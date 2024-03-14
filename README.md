@@ -15,7 +15,7 @@ While numerous scripts are available for GNOME Files on the web, many suffer fro
 - **Direct usage**: Direct usage without requiring input parameters.
 - **Keyboard shortcuts**: Provides keyboard shortcuts for the scripts.
 - **File manager compatibility**: Designed for major file managers like Nautilus, Caja, and Nemo.
-- **Distro compatibility**: Designed to work on major Linux distributions, such as Ubuntu, Mint, Debian, Fedora, and Manjaro.
+- **Distro compatibility**: Designed to work on major GNU/Linux distributions, such as Ubuntu, Mint, Debian, Fedora, and Manjaro.
 - **Easy adaptation**: Scripts can be easily copied and adapted for other purposes.
 - **Bash implementation**: All scripts are implemented in Bash. So, the scripts work well in the shell (without a graphical interface) and file managers.
 - **Shell script validation**: All scripts have been checked using [ShellCheck](https://github.com/koalaman/shellcheck).
@@ -52,6 +52,16 @@ bash install.sh
 | `<Control><Shift>U` | List duplicate files          |
 | `<Control><Shift>V` | Paste as symbolic link        |
 | `<Control><Shift>Y` | List file type                |
+
+## Compatibility
+
+Most scripts have been tested on the following GNU/Linux distributions:
+
+- Ubuntu 18.04, 20.04, 22.04
+- Debian 12
+- Mint 21 (Cinnamon and Mate)
+- Fedora Workstation 39
+- Manjaro 23 (Gnome)
 
 ## Known issues
 
