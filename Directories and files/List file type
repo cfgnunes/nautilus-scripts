@@ -30,10 +30,10 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(file --separator "$STRING_SEPARATOR" --no-pad -- "$input_file")
+    std_output=$(file --separator "$FIELD_SEPARATOR" --no-pad -- "$input_file")
     std_output=$(_text_remove_pwd "$std_output")
     # shellcheck disable=SC2001
-    std_output=$(sed "s|\(.*\)$STRING_SEPARATOR *\(.*\)|\2: '\1'|" <<<"$std_output")
+    std_output=$(sed "s|\(.*\)$FIELD_SEPARATOR *\(.*\)|\2: '\1'|" <<<"$std_output")
 
     _storage_text_write_ln "$std_output"
 }

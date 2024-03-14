@@ -10,7 +10,6 @@ set -u
 # -----------------------------------------------------------------------------
 
 FIELD_SEPARATOR=$'\r'          # The delimiter (field separator) is used in 'loop' commands to iterate over files.
-STRING_SEPARATOR=$'\v'         # The delimiter used in strintgs.
 IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
 PREFIX_ERROR_LOG_FILE="Errors" # Name of 'error' directory.
 PREFIX_OUTPUT_DIR="Output"     # Name of 'output' directory.
@@ -284,12 +283,11 @@ _display_list_box() {
     columns_count=$(grep --only-matching "column=" <<<"$columns" | wc -l)
 
     if ! _is_gui_session; then
-        message=$(tr "$STRING_SEPARATOR" " " <<<"$message")
+        message=$(tr "$FIELD_SEPARATOR" " " <<<"$message")
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
         columns=$(tr ";" "$FIELD_SEPARATOR" <<<"$columns")
         message=$(tr "\n" "$FIELD_SEPARATOR" <<<"$message")
-        message=$(tr "$STRING_SEPARATOR" "$FIELD_SEPARATOR" <<<"$message")
         # shellcheck disable=SC2086
         selected_item=$(zenity \
             --title "$(_get_script_name)" --print-column "$columns_count" \
@@ -301,7 +299,7 @@ _display_list_box() {
             _open_item_location "$selected_item"
         fi
     elif _command_exists "xmessage"; then
-        message=$(tr "$STRING_SEPARATOR" " " <<<"$message")
+        message=$(tr "$FIELD_SEPARATOR" " " <<<"$message")
         xmessage -title "$(_get_script_name)" "$message" &>/dev/null || _exit_script
     fi
 }
@@ -1264,11 +1262,11 @@ _validate_file_preselect() {
 
     find_command+=" ! -path \"$IGNORE_FIND_PATH\""
     # shellcheck disable=SC2089
-    find_command+=" -printf \"%p$STRING_SEPARATOR\""
+    find_command+=" -printf \"%p\v\""
 
     # shellcheck disable=SC2086
     input_files_valid=$(eval $find_command 2>/dev/null)
-    input_files_valid=$(tr "$STRING_SEPARATOR" "$FIELD_SEPARATOR" <<<"$input_files_valid")
+    input_files_valid=$(tr "\v" "$FIELD_SEPARATOR" <<<"$input_files_valid")
     input_files_valid=$(_str_remove_empty_tokens "$input_files_valid")
 
     # Create a temp file containing the name of the valid file.
@@ -1334,7 +1332,6 @@ _validate_files_count() {
 export \
     FIELD_SEPARATOR \
     IGNORE_FIND_PATH \
-    STRING_SEPARATOR \
     TEMP_DATA_TASK \
     TEMP_DIR_ITEMS_TO_REMOVE \
     TEMP_DIR_LOGS \

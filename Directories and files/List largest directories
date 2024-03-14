@@ -35,7 +35,7 @@ _main_task() {
     std_output=$(_text_remove_pwd "$std_output")
     std_output=$(grep -v "\.$" <<<"$std_output")
     # shellcheck disable=SC2001
-    std_output=$(sed "s|\([^ ]*\)\t\(.*\)|\1$STRING_SEPARATOR\2|g" <<<"$std_output")
+    std_output=$(sed "s|\([^ ]*\)\t\(.*\)|\1$FIELD_SEPARATOR\2|g" <<<"$std_output")
 
     _storage_text_write_ln "$std_output"
 }

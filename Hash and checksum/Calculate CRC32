@@ -41,7 +41,7 @@ _main_task() {
     fi
 
     # shellcheck disable=SC2001
-    std_output=$(sed "s|\([^ ]*\)\s*\(.*\)|\1$STRING_SEPARATOR\2|g" <<<"$std_output")
+    std_output=$(sed "s|\([^ ]*\)\s*\(.*\)|\1$FIELD_SEPARATOR\2|g" <<<"$std_output")
 
     _storage_text_write_ln "$std_output"
 }

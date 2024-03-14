@@ -31,17 +31,17 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(file --dereference --separator "$STRING_SEPARATOR" --no-pad -- "$input_file")
+    std_output=$(file --dereference --separator "$FIELD_SEPARATOR" --no-pad -- "$input_file")
     std_output=$(_text_remove_pwd "$std_output")
-    std_output=$(sed "s|$STRING_SEPARATOR.*with CRLF, CR, LF line.*|$STRING_SEPARATOR CRLF+CR+LF (windows)|" <<<"$std_output")
-    std_output=$(sed "s|$STRING_SEPARATOR.*with CRLF, LF line.*|$STRING_SEPARATOR CRLF+LF (windows)|" <<<"$std_output")
-    std_output=$(sed "s|$STRING_SEPARATOR.*with CRLF, CR line.*|$STRING_SEPARATOR CRLF+CR (windows)|" <<<"$std_output")
-    std_output=$(sed "s|$STRING_SEPARATOR.*with CRLF line.*|$STRING_SEPARATOR CRLF (windows)|" <<<"$std_output")
-    std_output=$(sed "s|$STRING_SEPARATOR.*with CR line.*|$STRING_SEPARATOR CR (mac)|" <<<"$std_output")
-    std_output=$(sed "s|$STRING_SEPARATOR.*with CR, LF line.*|$STRING_SEPARATOR CR+LF (mac)|" <<<"$std_output")
-    std_output=$(sed "s|$STRING_SEPARATOR.*no line.*|$STRING_SEPARATOR (no line)|" <<<"$std_output")
-    std_output=$(sed "s|$STRING_SEPARATOR.*text.*|$STRING_SEPARATOR LF (unix)|" <<<"$std_output")
-    std_output=$(sed "s|\(.*\)$STRING_SEPARATOR\s*\(.*\)|\2$STRING_SEPARATOR\1|" <<<"$std_output")
+    std_output=$(sed "s|$FIELD_SEPARATOR.*with CRLF, CR, LF line.*|$FIELD_SEPARATOR CRLF+CR+LF (windows)|" <<<"$std_output")
+    std_output=$(sed "s|$FIELD_SEPARATOR.*with CRLF, LF line.*|$FIELD_SEPARATOR CRLF+LF (windows)|" <<<"$std_output")
+    std_output=$(sed "s|$FIELD_SEPARATOR.*with CRLF, CR line.*|$FIELD_SEPARATOR CRLF+CR (windows)|" <<<"$std_output")
+    std_output=$(sed "s|$FIELD_SEPARATOR.*with CRLF line.*|$FIELD_SEPARATOR CRLF (windows)|" <<<"$std_output")
+    std_output=$(sed "s|$FIELD_SEPARATOR.*with CR line.*|$FIELD_SEPARATOR CR (mac)|" <<<"$std_output")
+    std_output=$(sed "s|$FIELD_SEPARATOR.*with CR, LF line.*|$FIELD_SEPARATOR CR+LF (mac)|" <<<"$std_output")
+    std_output=$(sed "s|$FIELD_SEPARATOR.*no line.*|$FIELD_SEPARATOR (no line)|" <<<"$std_output")
+    std_output=$(sed "s|$FIELD_SEPARATOR.*text.*|$FIELD_SEPARATOR LF (unix)|" <<<"$std_output")
+    std_output=$(sed "s|\(.*\)$FIELD_SEPARATOR\s*\(.*\)|\2$FIELD_SEPARATOR\1|" <<<"$std_output")
     std_output=$(grep "(windows)\|(unix)\|(mac)\|(no line)" <<<"$std_output")
 
     _storage_text_write_ln "$std_output"
