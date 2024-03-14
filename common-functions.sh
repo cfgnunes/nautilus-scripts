@@ -275,7 +275,12 @@ _display_list_box() {
     if [[ -n "$message" ]]; then
         items_count=$(tr -cd "\n" <<<"$message" | wc -c)
         message_select=" Select an item to open its location:"
+    else
+        # NOTE: Some versions of Zenity causes null pointer if the message is empty.
+        message="(empty)"
     fi
+
+    # Count the number of columns.
     columns_count=$(grep --only-matching "column=" <<<"$columns" | wc -l)
 
     if ! _is_gui_session; then
@@ -283,14 +288,18 @@ _display_list_box() {
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
         columns=$(tr ";" "$FIELD_SEPARATOR" <<<"$columns")
+        message=$(tr "\n" "$FIELD_SEPARATOR" <<<"$message")
+        message=$(tr "$STRING_SEPARATOR" "$FIELD_SEPARATOR" <<<"$message")
         # shellcheck disable=SC2086
-        selected_item=$(tr "$STRING_SEPARATOR" "\n" <<<"$message" | zenity \
+        selected_item=$(zenity \
             --title "$(_get_script_name)" --print-column "$columns_count" \
             --list --editable --text "Total of $items_count items.$message_select" $columns \
-            --height=400 --width=750 2>/dev/null) || _exit_script
+            --height=400 --width=750 $message 2>/dev/null) || _exit_script
 
-        # Open the directory of the clicked item in the list.
-        _open_item_location "$selected_item"
+        if ((items_count != 0)); then
+            # Open the directory of the clicked item in the list.
+            _open_item_location "$selected_item"
+        fi
     elif _command_exists "xmessage"; then
         message=$(tr "$STRING_SEPARATOR" " " <<<"$message")
         xmessage -title "$(_get_script_name)" "$message" &>/dev/null || _exit_script
