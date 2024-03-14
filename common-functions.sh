@@ -9,7 +9,7 @@ set -u
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
-FIELD_SEPARATOR=$'\r'          # The delimiter (field separator) is used in 'loop' commands to iterate over files.
+FIELD_SEPARATOR=$'\r'          # The main field separator. Used, for example, in 'loops' to iterate over files.
 IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
 PREFIX_ERROR_LOG_FILE="Errors" # Name of 'error' directory.
 PREFIX_OUTPUT_DIR="Output"     # Name of 'output' directory.
