@@ -124,7 +124,7 @@ _command_exists() {
 _step_install_dependencies() {
     printf " > Installing dependencies...\n"
 
-    local common_names="foremost ghostscript jpegoptim optipng pandoc perl-base qpdf rdfind rhash squashfs-tools testdisk unzip wget xclip"
+    local common_names="bzip2 foremost ghostscript gzip jpegoptim optipng pandoc perl-base qpdf rdfind rhash squashfs-tools tar testdisk unzip wget xclip zip"
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
             # Distro: Ubuntu, Mint, Debian.
