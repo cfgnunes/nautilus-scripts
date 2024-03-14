@@ -6,8 +6,6 @@ F7 Disk Usage Analyzer
 <Control><Alt>G Compress to 'tar.gz' (each)
 <Control><Alt>X Compress to 'tar.xz' (each)
 <Control><Alt>Z Compress to 'zip' (each)
-<Control><Shift>A List all files
-<Control><Shift>D Download (URLs in clipboard)
 <Control><Shift>E List empty directories
 <Control><Shift>F Compare with diff
 <Control><Shift>G Git clone (URLs in clipboard)

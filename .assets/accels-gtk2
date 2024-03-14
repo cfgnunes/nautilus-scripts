@@ -4,12 +4,6 @@
 ; Disable the shortcut for "OpenInNewTab" (<control><shift>o) in Caja.
 (gtk_accel_path "<Actions>/DirViewActions/OpenInNewTab" "")
 
-; Disable the shortcut for "Pin File" (<control><shift>d) in Nemo.
-(gtk_accel_path "<Actions>/DirViewActions/Pin File" "")
-
-; Disable the shortcut for "Unpin File" (<control><shift>d) in Nemo.
-(gtk_accel_path "<Actions>/DirViewActions/Unpin File" "")
-
 ; Scripts shortcuts.
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sArchive\\sCompress..." "<Primary><Alt>c")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sArchive\\sCompress%20to%20'tar.gz'%20(each)" "<Primary><Alt>g")
@@ -18,14 +12,12 @@
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sArchive\\sExtract%20Here" "<Primary>e")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sCompare%20with%20diff" "<Primary><Shift>f")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sCompare%20with%20Meld" "<Primary><Shift>m")
-(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20all%20files" "<Primary><Shift>a")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20duplicate%20files" "<Primary><Shift>u")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20empty%20directories" "<Primary><Shift>e")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20file%20information" "<Primary><Shift>y")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20hidden%20items" "<Primary><Shift>h")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sOpen%20item%20location" "<Primary><Shift>o")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sFile%20permissions\\sList%20permissions%20and%20owners" "<Primary><Shift>p")
-(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sMisc\\sDownload%20(URLs%20in%20clipboard)" "<Primary><Shift>d")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sMisc\\sGit%20clone%20(URLs%20in%20clipboard)" "<Primary><Shift>g")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sMisc\\sPaste%20as%20symbolic%20link" "<Primary><Shift>v")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sOpen%20with\\sCode%20Editor" "F6")
