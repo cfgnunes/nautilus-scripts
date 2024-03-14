@@ -20,7 +20,7 @@ _main() {
     local std_output=""
     std_output=$(_storage_text_read_all)
 
-    _display_text_box "$std_output"
+    _display_list_box "$std_output" "--column=Char;--column=Line;--column=File"
 }
 
 _main_task() {
@@ -35,6 +35,8 @@ _main_task() {
             -- "$input_file" /dev/null
     )
     std_output=$(_text_remove_pwd "$std_output")
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|^\([^:]*\):\([^:]*\):\([^:]*\)$|\3$FIELD_SEPARATOR\2$FIELD_SEPARATOR\1|g" <<<"$std_output")
 
     _storage_text_write_ln "$std_output"
 }
