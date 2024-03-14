@@ -31,7 +31,7 @@ _main_task() {
     local file_information=""
 
     file_encoding=$(file --dereference --brief --mime-encoding -- "$input_file")
-    file_information=$(file --dereference --separator "//" --no-pad -- "$input_file" | sed "s|\(.*\)// ||")
+    file_information=$(file --dereference --separator "$STRING_SEPARATOR" --no-pad -- "$input_file" | sed "s|\(.*\)$STRING_SEPARATOR ||")
 
     # Run the checker 'non UTF-8 encoding'.
     if [[ "${file_encoding,,}" != *"us-ascii"* ]] && [[ "${file_encoding,,}" != *"utf-8"* ]]; then
@@ -74,7 +74,7 @@ _main_task() {
 
     # Save the result only for files with problems.
     if [[ -n "$result_file" ]]; then
-        _storage_text_write_ln "$result_file//$(_text_remove_pwd "$input_file")"
+        _storage_text_write_ln "$result_file$STRING_SEPARATOR$(_text_remove_pwd "$input_file")"
     fi
 }
 
