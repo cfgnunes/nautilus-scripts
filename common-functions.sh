@@ -276,7 +276,7 @@ _display_list_box() {
         message_select=" Select an item to open its location:"
     else
         # NOTE: Some versions of Zenity causes null pointer if the message is empty.
-        message="(empty)"
+        message=" "
     fi
 
     # Count the number of columns.
