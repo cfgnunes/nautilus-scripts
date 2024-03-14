@@ -7,11 +7,9 @@ source "$ROOT_DIR/common-functions.sh"
 
 _main() {
     local input_files=""
-    local std_output=""
 
     # Execute initial checks.
     _check_dependencies "command=diffpdf"
-    _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_min_files=2; par_max_files=2; par_sort_list=true, par_select_mime=application/pdf")
 
     # Run the main process.
