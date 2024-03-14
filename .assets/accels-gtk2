@@ -21,7 +21,7 @@
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20all%20files" "<Primary><Shift>a")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20duplicate%20files" "<Primary><Shift>u")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20empty%20directories" "<Primary><Shift>e")
-(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20file%20type" "<Primary><Shift>y")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20file%20information" "<Primary><Shift>y")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sList%20hidden%20items" "<Primary><Shift>h")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sDirectories%20and%20files\\sOpen%20item%20location" "<Primary><Shift>o")
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.ACCELS_PATH\\sscripts\\sFile%20permissions\\sList%20permissions%20and%20owners" "<Primary><Shift>p")

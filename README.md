@@ -51,7 +51,7 @@ bash install.sh
 | `<Control><Shift>P` | List permissions and owners   |
 | `<Control><Shift>U` | List duplicate files          |
 | `<Control><Shift>V` | Paste as symbolic link        |
-| `<Control><Shift>Y` | List file type                |
+| `<Control><Shift>Y` | List file information         |
 
 ## Compatibility
 
