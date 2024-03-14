@@ -59,9 +59,9 @@ Most scripts have been tested on the following GNU/Linux distributions:
 
 - Ubuntu 18.04, 20.04, 22.04
 - Debian 12
-- Mint 21 (Cinnamon and Mate)
 - Fedora Workstation 39
 - Manjaro 23 (Gnome)
+- Mint 21 (Cinnamon and Mate)
 
 ## Known issues
 
