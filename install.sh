@@ -124,17 +124,30 @@ _command_exists() {
 _step_install_dependencies() {
     printf " > Installing dependencies...\n"
 
-    local common_names="bzip2 foremost ghostscript gzip jpegoptim optipng pandoc perl-base qpdf rdfind rhash squashfs-tools tar testdisk unzip wget xclip zip"
+    local common_names=""
+    # Packages for compress/decompress archives...
+    common_names+="bzip2 gzip squashfs-tools tar unzip zip "
+    # Packages for documents...
+    common_names+="pandoc "
+    # Packages for images...
+    common_names+="jpegoptim optipng "
+    # Packages for PDF...
+    common_names+="ghostscript qpdf "
+    # Packages for forensic...
+    common_names+="foremost testdisk "
+    # Packages for others scripts...
+    common_names+="perl-base rdfind rhash wget xclip "
+
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
             # Distro: Ubuntu, Mint, Debian.
             sudo apt-get update || true
-            sudo apt-get -y install $common_names libarchive-tools p7zip-full imagemagick xz-utils poppler-utils ffmpeg findimagedupes genisoimage
+            sudo apt-get -y install $common_names p7zip-full imagemagick xz-utils poppler-utils ffmpeg findimagedupes genisoimage
         elif _command_exists "dnf"; then
             # Distro: Fedora, Red Hat.
             # Missing packages: findimagedupes.
             sudo dnf check-update || true
-            sudo dnf -y install $common_names bsdtar p7zip ImageMagick xz poppler-utils ffmpeg-free genisoimage
+            sudo dnf -y install $common_names p7zip ImageMagick xz poppler-utils ffmpeg-free genisoimage
         elif _command_exists "pacman"; then
             # Distro: Manjaro, Arch Linux.
             # Missing packages: findimagedupes.
