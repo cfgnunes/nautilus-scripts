@@ -60,6 +60,7 @@ Most scripts have been tested on the following GNU/Linux distributions:
 - Fedora Workstation 39
 - Manjaro 23 (Gnome)
 - Mint 21 (Cinnamon and Mate)
+- Zorin OS Core 17.1
 
 ## Known issues
 
