@@ -285,7 +285,7 @@ _display_list_box() {
         # shellcheck disable=SC2086
         selected_item=$(sed "s|//|\x0|g" <<<"$message" | zenity \
             --title "$(_get_script_name)" --print-column "$columns_count" \
-            --list --editable --text "Total of $items_count items.$message_select" $columns \
+            --list --text "Total of $items_count items.$message_select" $columns \
             --height=400 --width=750 2>/dev/null) || _exit_script
         IFS="$FIELD_SEPARATOR"
 
