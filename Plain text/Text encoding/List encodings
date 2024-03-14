@@ -30,10 +30,10 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(file --dereference --separator "//" --no-pad --mime-encoding -- "$input_file")
+    std_output=$(file --dereference --separator "$STRING_SEPARATOR" --no-pad --mime-encoding -- "$input_file")
     std_output=$(_text_remove_pwd "$std_output")
     # shellcheck disable=SC2001
-    std_output=$(sed "s|\(.*\)//\s*\(.*\)|\2//\1|" <<<"$std_output")
+    std_output=$(sed "s|\(.*\)$STRING_SEPARATOR\s*\(.*\)|\2$STRING_SEPARATOR\1|" <<<"$std_output")
     std_output=$(grep -v "^cannot open" <<<"$std_output")
 
     _storage_text_write_ln "$std_output"

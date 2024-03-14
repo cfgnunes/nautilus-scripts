@@ -9,7 +9,8 @@ set -u
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
-FIELD_SEPARATOR=$'\r'          # The field separator is used in 'loop' commands to iterate over files.
+FIELD_SEPARATOR=$'\r'          # The delimiter (field separator) is used in 'loop' commands to iterate over files.
+STRING_SEPARATOR=$'\v'         # The delimiter used in strintgs.
 IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
 PREFIX_ERROR_LOG_FILE="Errors" # Name of 'error' directory.
 PREFIX_OUTPUT_DIR="Output"     # Name of 'output' directory.
@@ -272,27 +273,26 @@ _display_list_box() {
     _close_wait_box
 
     if [[ -n "$message" ]]; then
-        items_count=$(tr -cd $'\n' <<<"$message" | wc -c)
+        items_count=$(tr -cd "\n" <<<"$message" | wc -c)
         message_select=" Select an item to open its location:"
     fi
     columns_count=$(grep --only-matching "column=" <<<"$columns" | wc -l)
 
     if ! _is_gui_session; then
-        message=$(sed "s|//| |g" <<<"$message")
+        message=$(tr "$STRING_SEPARATOR" " " <<<"$message")
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
-        IFS=";"
+        columns=$(tr ";" "$FIELD_SEPARATOR" <<<"$columns")
         # shellcheck disable=SC2086
-        selected_item=$(sed "s|//|\x0|g" <<<"$message" | zenity \
+        selected_item=$(tr "$STRING_SEPARATOR" "\n" <<<"$message" | zenity \
             --title "$(_get_script_name)" --print-column "$columns_count" \
-            --list --text "Total of $items_count items.$message_select" $columns \
+            --list --editable --text "Total of $items_count items.$message_select" $columns \
             --height=400 --width=750 2>/dev/null) || _exit_script
-        IFS="$FIELD_SEPARATOR"
 
         # Open the directory of the clicked item in the list.
         _open_item_location "$selected_item"
     elif _command_exists "xmessage"; then
-        message=$(sed "s|//| |g" <<<"$message")
+        message=$(tr "$STRING_SEPARATOR" " " <<<"$message")
         xmessage -title "$(_get_script_name)" "$message" &>/dev/null || _exit_script
     fi
 }
@@ -1255,11 +1255,11 @@ _validate_file_preselect() {
 
     find_command+=" ! -path \"$IGNORE_FIND_PATH\""
     # shellcheck disable=SC2089
-    find_command+=" -printf \"%p//\""
+    find_command+=" -printf \"%p$STRING_SEPARATOR\""
 
     # shellcheck disable=SC2086
     input_files_valid=$(eval $find_command 2>/dev/null)
-    input_files_valid=$(sed "s|//|$FIELD_SEPARATOR|g" <<<"$input_files_valid")
+    input_files_valid=$(tr "$STRING_SEPARATOR" "$FIELD_SEPARATOR" <<<"$input_files_valid")
     input_files_valid=$(_str_remove_empty_tokens "$input_files_valid")
 
     # Create a temp file containing the name of the valid file.
@@ -1325,6 +1325,7 @@ _validate_files_count() {
 export \
     FIELD_SEPARATOR \
     IGNORE_FIND_PATH \
+    STRING_SEPARATOR \
     TEMP_DATA_TASK \
     TEMP_DIR_ITEMS_TO_REMOVE \
     TEMP_DIR_LOGS \

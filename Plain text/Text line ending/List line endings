@@ -31,17 +31,17 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(file --dereference --separator "//" --no-pad -- "$input_file")
+    std_output=$(file --dereference --separator "$STRING_SEPARATOR" --no-pad -- "$input_file")
     std_output=$(_text_remove_pwd "$std_output")
-    std_output=$(sed "s|//.*with CRLF, CR, LF line.*|// CRLF+CR+LF (windows)|" <<<"$std_output")
-    std_output=$(sed "s|//.*with CRLF, LF line.*|// CRLF+LF (windows)|" <<<"$std_output")
-    std_output=$(sed "s|//.*with CRLF, CR line.*|// CRLF+CR (windows)|" <<<"$std_output")
-    std_output=$(sed "s|//.*with CRLF line.*|// CRLF (windows)|" <<<"$std_output")
-    std_output=$(sed "s|//.*with CR line.*|// CR (mac)|" <<<"$std_output")
-    std_output=$(sed "s|//.*with CR, LF line.*|// CR+LF (mac)|" <<<"$std_output")
-    std_output=$(sed "s|//.*no line.*|// (no line)|" <<<"$std_output")
-    std_output=$(sed "s|//.*text.*|// LF (unix)|" <<<"$std_output")
-    std_output=$(sed "s|\(.*\)//\s*\(.*\)|\2//\1|" <<<"$std_output")
+    std_output=$(sed "s|$STRING_SEPARATOR.*with CRLF, CR, LF line.*|$STRING_SEPARATOR CRLF+CR+LF (windows)|" <<<"$std_output")
+    std_output=$(sed "s|$STRING_SEPARATOR.*with CRLF, LF line.*|$STRING_SEPARATOR CRLF+LF (windows)|" <<<"$std_output")
+    std_output=$(sed "s|$STRING_SEPARATOR.*with CRLF, CR line.*|$STRING_SEPARATOR CRLF+CR (windows)|" <<<"$std_output")
+    std_output=$(sed "s|$STRING_SEPARATOR.*with CRLF line.*|$STRING_SEPARATOR CRLF (windows)|" <<<"$std_output")
+    std_output=$(sed "s|$STRING_SEPARATOR.*with CR line.*|$STRING_SEPARATOR CR (mac)|" <<<"$std_output")
+    std_output=$(sed "s|$STRING_SEPARATOR.*with CR, LF line.*|$STRING_SEPARATOR CR+LF (mac)|" <<<"$std_output")
+    std_output=$(sed "s|$STRING_SEPARATOR.*no line.*|$STRING_SEPARATOR (no line)|" <<<"$std_output")
+    std_output=$(sed "s|$STRING_SEPARATOR.*text.*|$STRING_SEPARATOR LF (unix)|" <<<"$std_output")
+    std_output=$(sed "s|\(.*\)$STRING_SEPARATOR\s*\(.*\)|\2$STRING_SEPARATOR\1|" <<<"$std_output")
     std_output=$(grep "(windows)\|(unix)\|(mac)\|(no line)" <<<"$std_output")
 
     _storage_text_write_ln "$std_output"
