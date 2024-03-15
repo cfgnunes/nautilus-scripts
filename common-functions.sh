@@ -200,12 +200,6 @@ _display_dir_selection_box() {
     if _command_exists "zenity"; then
         input_files=$(zenity --title "$(_get_script_name)" --file-selection --multiple \
             --directory --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
-    elif _command_exists "kdialog"; then
-        input_files=$(kdialog --title "$(_get_script_name)" \
-            --getexistingdirectory 2>/dev/null) || _exit_script
-        # Use parameter expansion to remove the last space.
-        input_files=${input_files% }
-        input_files=${input_files// \//$FIELD_SEPARATOR/}
     fi
 
     input_files=$(_str_remove_empty_tokens "$input_files")
@@ -218,12 +212,6 @@ _display_file_selection_box() {
     if _command_exists "zenity"; then
         input_files=$(zenity --title "$(_get_script_name)" --file-selection --multiple \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
-    elif _command_exists "kdialog"; then
-        input_files=$(kdialog --title "$(_get_script_name)" \
-            --getopenfilename --multiple 2>/dev/null) || _exit_script
-        # Use parameter expansion to remove the last space.
-        input_files=${input_files% }
-        input_files=${input_files// \//$FIELD_SEPARATOR/}
     fi
 
     input_files=$(_str_remove_empty_tokens "$input_files")
@@ -239,8 +227,6 @@ _display_error_box() {
         _gdbus_notify "dialog-error" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --error --width=300 --text "$message" &>/dev/null
-    elif _command_exists "kdialog"; then
-        kdialog --title "$(_get_script_name)" --error "$message" &>/dev/null
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "Error: $message" &>/dev/null
     fi
@@ -255,8 +241,6 @@ _display_info_box() {
         _gdbus_notify "dialog-information" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --info --width=300 --text "$message" &>/dev/null
-    elif _command_exists "kdialog"; then
-        kdialog --title "$(_get_script_name)" --msgbox "$message" &>/dev/null
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "Info: $message" &>/dev/null
     fi
@@ -314,9 +298,6 @@ _display_password_box() {
     elif _command_exists "zenity"; then
         password=$(zenity --title="Password" \
             --entry --hide-text --text "$message" 2>/dev/null) || return 1
-    elif _command_exists "kdialog"; then
-        password=$(kdialog --title "Password" \
-            --password "$message" 2>/dev/null) || return 1
     fi
 
     printf "%s" "$password"
@@ -346,8 +327,6 @@ _display_question_box() {
         [[ ${response,,} == *"n"* ]] && return 1
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --question --width=300 --text="$message" &>/dev/null || return 1
-    elif _command_exists "kdialog"; then
-        kdialog --title "$(_get_script_name)" --yesno "$message" &>/dev/null || return 1
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" -buttons "Yes:0,No:1" "$message" &>/dev/null || return 1
     fi
@@ -367,8 +346,6 @@ _display_text_box() {
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --text-info \
             --no-wrap --height=400 --width=750 <<<"$message" &>/dev/null || _exit_script
-    elif _command_exists "kdialog"; then
-        kdialog --title "$(_get_script_name)" --textinputbox "" "$message" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "$message" &>/dev/null || _exit_script
     fi
