@@ -55,7 +55,7 @@ bash install.sh
 
 Most scripts have been tested on the following GNU/Linux distributions:
 
-- Ubuntu 18.04, 20.04, 22.04
+- Ubuntu 18.04, 20.04, 22.04, 24.04
 - Debian 12
 - Fedora Workstation 39
 - Manjaro 23 (Gnome)
