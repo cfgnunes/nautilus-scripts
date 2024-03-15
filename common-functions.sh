@@ -134,7 +134,7 @@ _check_dependencies() {
     if [[ -n "$packages_to_install" ]]; then
         local message="These packages were not found:"
         message+=$(sed "s| |\n- |g" <<<"$packages_to_install")
-        message+="\nWould you like to install?"
+        message+="\n\nWould you like to install?"
         if _display_question_box "$message"; then
             _pkg_install_packages "$pkg_manager_installed" "${packages_to_install/ /}"
         else
@@ -226,7 +226,7 @@ _display_error_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-error" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --error --width=400 --text "$message" &>/dev/null
+        zenity --title "$(_get_script_name)" --error --width=300 --text "$message" &>/dev/null
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "Error: $message" &>/dev/null
     fi
@@ -240,7 +240,7 @@ _display_info_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-information" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --info --width=400 --text "$message" &>/dev/null
+        zenity --title "$(_get_script_name)" --info --width=300 --text "$message" &>/dev/null
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "Info: $message" &>/dev/null
     fi
@@ -259,7 +259,7 @@ _display_list_box() {
         items_count=$(tr -cd "\n" <<<"$message" | wc -c)
         message_select=" Select an item to open its location:"
     else
-        # NOTE: Some versions of Zenity causes null pointer if the message is empty.
+        # NOTE: Some versions of Zenity crash if the message is empty (Segmentation fault).
         message=" "
     fi
 
@@ -296,8 +296,9 @@ _display_password_box() {
     if ! _is_gui_session; then
         read -r -p "$message " password >&2
     elif _command_exists "zenity"; then
+        sleep 0.1 # Avoid 'wait_box' open before.
         password=$(zenity --title="Password" --entry --hide-text \
-            --text "$message" 2>/dev/null) || return 1
+            --width=400 --text "$message" 2>/dev/null) || return 1
     fi
 
     printf "%s" "$password"
@@ -326,7 +327,7 @@ _display_question_box() {
         read -r -p "$message [Y/n] " response
         [[ ${response,,} == *"n"* ]] && return 1
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --question --width=400 --text="$message" &>/dev/null || return 1
+        zenity --title "$(_get_script_name)" --question --width=300 --text="$message" &>/dev/null || return 1
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" -buttons "Yes:0,No:1" "$message" &>/dev/null || return 1
     fi

@@ -209,7 +209,7 @@ _run_command() {
         rm -rf -- "$temp_dir_output" &>/dev/null
     }
     __get_password() {
-        _display_password_box "Password required for '$(basename -- "$input_file")'\n\nPassword:"
+        _display_password_box "Password required for '$(basename -- "$input_file")'.\n\nPassword:"
     }
 
     # Use a local temporary directory to work.

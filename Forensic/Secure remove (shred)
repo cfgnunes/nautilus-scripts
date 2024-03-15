@@ -21,7 +21,7 @@ _main() {
     printf "%s" "$std_output" | zenity \
         --title "$(_get_script_name)" \
         --list --text "Warning: These files will be removed. Press 'OK' to continue with this operation." --column "Files" \
-        --height=400 --width=750 &>/dev/null || _exit_script
+        --width=800 --height=450 &>/dev/null || _exit_script
 
     _display_wait_box "2"
 
