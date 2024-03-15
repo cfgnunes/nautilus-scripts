@@ -226,7 +226,7 @@ _display_error_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-error" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --error --width=300 --text "$message" &>/dev/null
+        zenity --title "$(_get_script_name)" --error --width=400 --text "$message" &>/dev/null
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "Error: $message" &>/dev/null
     fi
@@ -240,7 +240,7 @@ _display_info_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-information" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --info --width=300 --text "$message" &>/dev/null
+        zenity --title "$(_get_script_name)" --info --width=400 --text "$message" &>/dev/null
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "Info: $message" &>/dev/null
     fi
@@ -273,10 +273,10 @@ _display_list_box() {
         columns=$(tr ";" "$FIELD_SEPARATOR" <<<"$columns")
         message=$(tr "\n" "$FIELD_SEPARATOR" <<<"$message")
         # shellcheck disable=SC2086
-        selected_item=$(zenity \
-            --title "$(_get_script_name)" --print-column "$columns_count" \
-            --list --editable --text "Total of $items_count items.$message_select" $columns \
-            --height=400 --width=750 $message 2>/dev/null) || _exit_script
+        selected_item=$(zenity --title "$(_get_script_name)" --list --editable \
+            --width=800 --height=450 --print-column "$columns_count" \
+            --text "Total of $items_count items.$message_select" \
+            $columns $message 2>/dev/null) || _exit_script
 
         if ((items_count != 0)); then
             # Open the directory of the clicked item in the list.
@@ -296,8 +296,8 @@ _display_password_box() {
     if ! _is_gui_session; then
         read -r -p "$message " password >&2
     elif _command_exists "zenity"; then
-        password=$(zenity --title="Password" \
-            --entry --hide-text --text "$message" 2>/dev/null) || return 1
+        password=$(zenity --title="Password" --entry --hide-text \
+            --text "$message" 2>/dev/null) || return 1
     fi
 
     printf "%s" "$password"
@@ -326,7 +326,7 @@ _display_question_box() {
         read -r -p "$message [Y/n] " response
         [[ ${response,,} == *"n"* ]] && return 1
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --question --width=300 --text="$message" &>/dev/null || return 1
+        zenity --title "$(_get_script_name)" --question --width=400 --text="$message" &>/dev/null || return 1
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" -buttons "Yes:0,No:1" "$message" &>/dev/null || return 1
     fi
@@ -345,7 +345,7 @@ _display_text_box() {
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --text-info \
-            --no-wrap --height=400 --width=750 <<<"$message" &>/dev/null || _exit_script
+            --no-wrap --width=800 --height=450 <<<"$message" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "$message" &>/dev/null || _exit_script
     fi
@@ -407,13 +407,8 @@ _display_wait_box_message() {
 
         # shellcheck disable=SC2002
         sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && cat "$WAIT_BOX_FIFO" | (
-            zenity \
-                --title="$(_get_script_name)" \
-                --width=400 \
-                --progress \
-                --pulsate \
-                --auto-close \
-                --text="$message" || _exit_script
+            zenity --title="$(_get_script_name)" --progress \
+                --width=400 --pulsate --auto-close --text="$message" || _exit_script
         ) &
     fi
 }
