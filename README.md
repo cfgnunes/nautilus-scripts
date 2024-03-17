@@ -38,6 +38,7 @@ bash install.sh
 | `<Control>E`        | Extract Here                  |
 | `<Control><Alt>C`   | Compress...                   |
 | `<Control><Alt>G`   | Compress to 'tar.gz' (each)   |
+| `<Control><Alt>V`   | Paste as hard link            |
 | `<Control><Alt>X`   | Compress to 'tar.xz' (each)   |
 | `<Control><Alt>Z`   | Compress to 'zip' (each)      |
 | `<Control><Shift>C` | Compare with Meld             |
