@@ -34,8 +34,7 @@ _main_task() {
     input_file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$input_files")
 
     # Run the main process.
-    output_file=$(_get_filename_next_suffix "$output_dir/Mixed audio.wav")
-    output_file=$(_get_output_filename "$output_file" "$output_dir" "par_extension_opt=preserve")
+    output_file=$(_get_output_filename "Mixed audio.wav" "$output_dir" "par_extension_opt=preserve")
     std_output=$(ffmpeg -y -i "$input_file_1" -i "$input_file_2" -filter_complex "amix=inputs=2:duration=longest" -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "" "$output_file" || return 1
 }

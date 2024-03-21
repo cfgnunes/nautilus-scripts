@@ -18,13 +18,13 @@ _main() {
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
 
-    local compiled_output_file=""
-    compiled_output_file=$(_get_filename_next_suffix "$output_dir/sha1sum.txt")
+    local output_file=""
+    output_file=$(_get_output_filename "sha1sum.txt" "$output_dir" "par_extension_opt=preserve")
 
     local std_output=""
     std_output=$(_storage_text_read_all)
     std_output=$(_text_sort "$std_output")
-    printf "%s" "$std_output" >"$compiled_output_file"
+    printf "%s" "$std_output" >"$output_file"
 
     _display_result_box "$output_dir"
 }
