@@ -27,15 +27,15 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
-    local input_file_1=""
-    local input_file_2=""
+    local file_1=""
+    local file_2=""
 
-    input_file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
-    input_file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$input_files")
+    file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
+    file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$input_files")
 
     # Run the main process.
     output_file=$(_get_output_filename "Mixed audio.wav" "$output_dir" "par_extension_opt=preserve")
-    std_output=$(ffmpeg -y -i "$input_file_1" -i "$input_file_2" -filter_complex "amix=inputs=2:duration=longest" -- "$output_file" 2>&1)
+    std_output=$(ffmpeg -y -i "$file_1" -i "$file_2" -filter_complex "amix=inputs=2:duration=longest" -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "" "$output_file" || return 1
 }
 
