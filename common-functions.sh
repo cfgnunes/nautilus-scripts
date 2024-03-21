@@ -417,7 +417,7 @@ _display_wait_box_message() {
 _close_wait_box() {
     # If 'wait_box' is open (waiting for an input in the FIFO).
     if pgrep -fl "$WAIT_BOX_FIFO" &>/dev/null; then
-        # Close the Zenity using the FIFO: Send a '\n' for the 'cat'
+        # Close the Zenity using the FIFO: Send a '\n' for the 'cat'.
         printf "\n" >"$WAIT_BOX_FIFO"
     fi
 
