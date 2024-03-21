@@ -1,0 +1,149 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+
+    # Execute initial checks.
+    _check_dependencies ""
+    input_files=$(_get_files "par_type=all; par_min_files=2; par_max_files=3; par_sort_list=true")
+
+    # Run the main process.
+    _compare "$input_files"
+}
+
+_compare() {
+    local input_files=$1
+
+    local input_file_1=""
+    local input_file_2=""
+    local input_file_3=""
+    input_file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
+    input_file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$input_files")
+    input_file_3=$(cut -d "$FIELD_SEPARATOR" -f 3 <<<"$input_files")
+
+    # Check if the items (directories or files) are identical.
+    local diff_1_2=""
+    local diff_1_3=""
+    diff_1_2=$(diff --no-dereference --brief --recursive -- "$input_file_1" "$input_file_2" 2>&1)
+    if [[ -z "$input_file_3" ]]; then
+        if [[ -z "$diff_1_2" ]]; then
+            _display_info_box "The two selected items are identical."
+            _exit_script
+        fi
+    else
+        diff_1_3=$(diff --no-dereference --brief --recursive -- "$input_file_1" "$input_file_3" 2>&1)
+        if [[ -z "$diff_1_2" ]] && [[ -z "$diff_1_3" ]]; then
+            _display_info_box "The three selected items are identical."
+            _exit_script
+        fi
+    fi
+
+    # Define the command to execute according to file MIME type.
+    local command=""
+    local input_file_1_mime=""
+    input_file_1_mime=$(file --dereference --brief --mime-type -- "$input_file_1")
+    case $input_file_1_mime in
+    "application/pdf") command="diffpdf" ;;
+    "inode/directory") command="meld" ;;
+    "inode/x-empty") command="meld" ;;
+    "image/"*) command="compare" ;;
+    "text/"*) command="meld" ;;
+    *)
+        local input_file_1_encoding=""
+        input_file_1_encoding=$(file --dereference --brief --mime-encoding -- "$input_file")
+        if [[ "$input_file_1_encoding" == "binary" ]]; then
+            command="meld_hexadecimal"
+        else
+            command="meld"
+        fi
+        ;;
+    esac
+
+    # Check dependencies for the command.
+    local dependencies=""
+    local image_viewer=""
+    case $command in
+    "compare")
+        dependencies="
+        command=compare; pkg_manager=apt; package=imagemagick |
+        command=compare; pkg_manager=dnf; package=ImageMagick |
+        command=compare; pkg_manager=pacman; package=imagemagick |"
+
+        # Get the installed image viewer.
+        if _command_exists "eog"; then
+            image_viewer="eog"
+        elif _command_exists "loupe"; then
+            image_viewer="loupe"
+        else
+            dependencies+="command=eog"
+            image_viewer="eog"
+        fi
+
+        ;;
+    "diffpdf") dependencies="command=diffpdf" ;;
+    "meld" | "meld_hexadecimal") dependencies="command=meld" ;;
+    esac
+    _check_dependencies "$dependencies"
+
+    # Run the main process.
+    case $command in
+    "compare")
+        if [[ -z "$input_file_3" ]]; then
+
+            # Check if both images have same pixel values.
+            local pixel_error=""
+            pixel_error=$(compare -metric AE -- "$input_file_1" "$input_file_2" null: 2>&1)
+            if [[ "$pixel_error" == "0" ]]; then
+                _display_info_box "The two selected images are identical (same pixel values)."
+                _exit_script
+            fi
+
+            # Compare two images using a visual diff with 'convert' command.
+            local output_dir=""
+            local output_file=""
+            output_dir=$(_get_output_dir "par_use_same_dir=true")
+            output_file=$(_get_output_filename "diff.png" "$output_dir" "par_extension_opt=preserve")
+
+            convert \
+                '(' "$input_file_1" -flatten -grayscale Rec709Luminance ')' \
+                '(' "$input_file_2" -flatten -grayscale Rec709Luminance ')' \
+                '(' -clone 0-1 -compose darken -composite ')' \
+                -channel RGB -combine "$output_file"
+
+            $image_viewer -- "$output_file" &
+        else
+            _display_error_box "You must select only two image files to compare!"
+            _exit_script
+        fi
+        ;;
+    "diffpdf")
+        if [[ -z "$input_file_3" ]]; then
+            diffpdf -- "$input_file_1" "$input_file_2" &
+        else
+            _display_error_box "You must select only two PDFs to compare!"
+            _exit_script
+        fi
+        ;;
+    "meld")
+        if [[ -z "$input_file_3" ]]; then
+            meld -- "$input_file_1" "$input_file_2" &
+        else
+            meld -- "$input_file_1" "$input_file_2" "$input_file_3" &
+        fi
+        ;;
+    "meld_hexadecimal")
+        if [[ -z "$input_file_3" ]]; then
+            meld -- <(hexdump -C "$input_file_1") <(hexdump -C "$input_file_2") &
+        else
+            meld -- <(hexdump -C "$input_file_1") <(hexdump -C "$input_file_2") <(hexdump -C "$input_file_3") &
+        fi
+        ;;
+    esac
+}
+
+_main "$@"

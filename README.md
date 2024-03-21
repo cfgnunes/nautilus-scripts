@@ -41,7 +41,7 @@ bash install.sh
 | `<Control><Alt>V`   | Paste as hard link            |
 | `<Control><Alt>X`   | Compress to 'tar.xz' (each)   |
 | `<Control><Alt>Z`   | Compress to 'zip' (each)      |
-| `<Control><Shift>C` | Compare with Meld             |
+| `<Control><Shift>C` | Compare items                 |
 | `<Control><Shift>E` | List empty directories        |
 | `<Control><Shift>F` | Compare with diff             |
 | `<Control><Shift>G` | Git clone (URLs in clipboard) |
