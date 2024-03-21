@@ -104,7 +104,7 @@ _get_command() {
     local preferred_commands=""
     local command=""
 
-    # Define the prefferred commands for each archive format.
+    # Define the preferred commands for each archive format.
     case "${input_file,,}" in
     *.tar.bz | *.tbz | *.tar.bz2 | *.tbz2 | *.tb2) preferred_commands="tar+bzip2 unar 7za" ;;
     *.tar.gz | *.tgz) preferred_commands="tar+gzip unar 7za" ;;
@@ -188,7 +188,7 @@ _run_command() {
         output_dir=$(dirname -- "$input_file")
     fi
 
-    # Try to use the command '7z' instead the of '7za'.
+    # Try to use the command '7z' instead of '7za'.
     local command_7za="7za"
     if [[ "$command" == *"7za"* ]]; then
         _command_exists "7z" && command_7za="7z"
@@ -366,7 +366,7 @@ _run_command() {
         std_output=$(_move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$single_root_item" 2>&1)
         _check_output "$?" "$std_output" "$input_file" ""
     elif [[ "$single_root_item" == "squashfs-root" ]] && [[ "$command" == "unsquashfs" ]]; then
-        # For "squashfs" archive format.
+        # For the "squashfs" archive format.
         std_output=$(_move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$filename" 2>&1)
         _check_output "$?" "$std_output" "$input_file" ""
     else

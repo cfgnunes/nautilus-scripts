@@ -71,7 +71,7 @@ _main() {
     cat_dirs_find=$(find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
         ! -path "*.git" ! -path "$ASSSETS_DIR" 2>/dev/null | sed "s|^.*/||" | sort --version-sort)
 
-    # Convert the output of 'find' command to an 'array'.
+    # Convert the output of the 'find' command to an 'array'.
     cat_dirs_find=$(tr "\n" "\r" <<<"$cat_dirs_find")
     IFS=$'\r' read -r -a categories_dirs <<<"$cat_dirs_find"
 
@@ -135,7 +135,7 @@ _step_install_dependencies() {
     common_names+="ghostscript qpdf "
     # Packages for forensic...
     common_names+="foremost testdisk "
-    # Packages for others scripts...
+    # Packages for other scripts...
     common_names+="perl-base rdfind rhash wget xclip "
 
     if _command_exists "sudo"; then

@@ -95,7 +95,7 @@ _compare() {
     "compare")
         if [[ -z "$file_3" ]]; then
 
-            # Check if both images have same pixel values.
+            # Check if both images have the same pixel values.
             local pixel_error=""
             pixel_error=$(compare -metric AE -- "$file_1" "$file_2" null: 2>&1)
             if [[ "$pixel_error" == "0" ]]; then
@@ -109,11 +109,11 @@ _compare() {
             dimensions_1=$(identify -format "%wx%h" "$file_1")
             dimensions_2=$(identify -format "%wx%h" "$file_2")
 
-            # Compare two images using a visual diff with 'convert' command.
+            # Compare two images using a visual diff with the 'convert' command.
             local temp_file=""
             temp_file="$(_get_temp_file).png"
             if [[ "$dimensions_1" == "$dimensions_2" ]]; then
-                # Compare images with same dimensions.
+                # Compare images with the same dimensions.
                 convert \
                     '(' "$file_1" -flatten -grayscale Rec709Luminance ')' \
                     '(' "$file_2" -flatten -grayscale Rec709Luminance ')' \

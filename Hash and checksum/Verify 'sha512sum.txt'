@@ -44,10 +44,10 @@ _verify_checksum() {
     saved_checksum=$(printf "%s" "$line" | cut -d " " -f1)
     saved_file=$(printf "%s" "$line" | cut -d " " -f3-)
 
-    # Replace % to %% to printf command.
+    # Replace % to %% with the 'printf' command.
     saved_file=${saved_file//%/%%}
 
-    # Some checksum start with '\', for filenames with '\n' or '\'.
+    # Some checksums start with '\', for filenames with '\n' or '\'.
     # shellcheck disable=SC2059
     saved_file_decoded=$(printf "$saved_file")
 

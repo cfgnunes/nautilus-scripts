@@ -35,7 +35,7 @@ _main_task() {
     std_output=$(iconv -f "$(file --dereference --brief --mime-encoding -- "$input_file")" "$input_file" -t utf-8 -o "$temp_file1")
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
-    # Run the process (part 2) 'convert line ending to unix'.
+    # Run the process (part 2) 'convert line ending to Unix'.
     std_output=$(perl -pe "s/\r\n|\n|\r/\n/g" "$temp_file1" >"$temp_file2")
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
