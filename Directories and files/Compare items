@@ -147,9 +147,9 @@ _compare() {
         ;;
     "meld_hexadecimal")
         if [[ -z "$file_3" ]]; then
-            meld -- <(hexdump -C "$file_1") <(hexdump -C "$file_2") &
+            meld -- <(xxd "$file_1") <(xxd "$file_2") &
         else
-            meld -- <(hexdump -C "$file_1") <(hexdump -C "$file_2") <(hexdump -C "$file_3") &
+            meld -- <(xxd "$file_1") <(xxd "$file_2") <(xxd "$file_3") &
         fi
         ;;
     esac
