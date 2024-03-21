@@ -250,7 +250,6 @@ _step_install_shortcuts() {
     "thunar")
         cp -- "$ASSSETS_DIR/accels-thunar.scm" "$ACCELS_FILE"
         sed -i "s|SED_USER|$USER|g" "$ACCELS_FILE"
-        sed -i "s|SED_ACCELS_PATH|config\\\\\\\\scaja|g" "$ACCELS_FILE"
         ;;
     esac
 }
