@@ -9,7 +9,6 @@ F7 Disk Usage Analyzer
 <Control><Alt>Z Compress to 'zip' (each)
 <Control><Shift>C Compare items
 <Control><Shift>E List empty directories
-<Control><Shift>F Compare with diff
 <Control><Shift>G Git clone (URLs in clipboard)
 <Control><Shift>H List hidden items
 <Control><Shift>O Open item location

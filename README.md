@@ -1,10 +1,10 @@
 # Nautilus scripts
 
-This project is a collection of scripts designed to enhance the functionality of file managers such as [GNOME Files](https://gitlab.gnome.org/GNOME/nautilus), [Caja](https://github.com/mate-desktop/caja), and [Nemo](https://github.com/linuxmint/nemo).
+This project is a collection of scripts designed to enhance the functionality of file managers such as [GNOME Files](https://gitlab.gnome.org/GNOME/nautilus), [Caja](https://github.com/mate-desktop/caja), [Nemo](https://github.com/linuxmint/nemo), and [Thunar](https://gitlab.xfce.org/xfce/thunar).
 
 ![screenshot](.assets/screenshot.png)
 
-While numerous scripts are available for GNOME Files on the web, many suffer from poor functionality, lack of error checking, and dependency management. Some scripts only work with files that don't have spaces in their names, among other limitations. To address these shortcomings, I have developed my own set of scripts, which offer the following advantages:
+While numerous scripts are available for file managers on the web, many suffer from poor functionality, lack of error checking, and dependency management. Some scripts only work with files that don't have spaces in their names, among other limitations. To address these shortcomings, I have developed my own set of scripts, which offer the following advantages:
 
 - **Parallel task execution**: Processes multiple files simultaneously.
 - **Progress dialog**: Displays a progress dialog and allows interruption of tasks at any time.
@@ -14,7 +14,7 @@ While numerous scripts are available for GNOME Files on the web, many suffer fro
 - **Log file**: Produces an `Errors.log` file when a task ends with an error.
 - **Direct usage**: Direct usage without requiring input parameters.
 - **Keyboard shortcuts**: Provides keyboard shortcuts for the scripts.
-- **File manager compatibility**: Designed for major file managers like Nautilus, Caja, and Nemo.
+- **File manager compatibility**: Designed for major file managers like Nautilus, Caja, Nemo and Thunar.
 - **Distro compatibility**: Designed to work on major GNU/Linux distributions, such as Ubuntu, Mint, Debian, Fedora, and Manjaro.
 - **Easy adaptation**: Scripts can be easily copied and adapted for other purposes.
 - **Bash implementation**: All scripts are implemented in Bash. So, the scripts work well in the shell (without a graphical interface) and file managers.
@@ -22,7 +22,7 @@ While numerous scripts are available for GNOME Files on the web, many suffer fro
 
 ## Installing
 
-To install in GNOME Files (Nautilus), Caja, or Nemo, just run the following command in the terminal:
+To install in GNOME Files (Nautilus), Caja, Nemo, or Thunar, just run the following command in the terminal:
 
 ```sh
 bash install.sh
@@ -43,7 +43,6 @@ bash install.sh
 | `<Control><Alt>Z`   | Compress to 'zip' (each)      |
 | `<Control><Shift>C` | Compare items                 |
 | `<Control><Shift>E` | List empty directories        |
-| `<Control><Shift>F` | Compare with diff             |
 | `<Control><Shift>G` | Git clone (URLs in clipboard) |
 | `<Control><Shift>H` | List hidden items             |
 | `<Control><Shift>O` | Open item location            |
@@ -61,6 +60,7 @@ Most scripts have been tested on the following GNU/Linux distributions:
 - Fedora Workstation 39
 - Manjaro 23 (Gnome)
 - Mint 21 (Cinnamon and Mate)
+- Xubuntu 23.10, 24.04
 - Zorin OS Core 17.1
 
 ## Known issues
