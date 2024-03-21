@@ -269,7 +269,7 @@ _step_make_thunar_custom_actions() {
     fi
 
     {
-        printf "%s\n" "<?xml version="1.0" encoding="UTF-8"?>"
+        printf "%s\n" "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
         printf "%s\n" "<actions>"
         printf "%s\n" "<action>"
         printf "%s\n" "    <icon>utilities-terminal</icon>"
