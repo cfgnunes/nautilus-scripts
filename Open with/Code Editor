@@ -24,7 +24,7 @@ _main() {
         gedit -- $input_files &
     else
         _check_dependencies "command=xdg-open; package=xdg-utils"
-        $(_xdg_get_default_app "text/x-c") -- $input_files &
+        $(_xdg_get_default_app "text/plain") -- $input_files &
     fi
 }
 
