@@ -107,8 +107,8 @@ _check_default_filemanager() {
         FILE_MANAGER="caja"
     elif _command_exists "thunar"; then
         ACCELS_FILE="$HOME/.config/Thunar/accels.scm"
-        FILE_MANAGER="thunar"
         INSTALL_DIR="$HOME/.local/scripts"
+        FILE_MANAGER="thunar"
     else
         printf "Error: could not find any compatible file managers!\n"
         exit 1
