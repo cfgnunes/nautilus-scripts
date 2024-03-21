@@ -19,24 +19,24 @@ _main() {
 _compare() {
     local input_files=$1
 
-    local input_file_1=""
-    local input_file_2=""
-    local input_file_3=""
-    input_file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
-    input_file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$input_files")
-    input_file_3=$(cut -d "$FIELD_SEPARATOR" -f 3 <<<"$input_files")
+    local file_1=""
+    local file_2=""
+    local file_3=""
+    file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
+    file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$input_files")
+    file_3=$(cut -d "$FIELD_SEPARATOR" -f 3 <<<"$input_files")
 
     # Check if the items (directories or files) are identical.
     local diff_1_2=""
     local diff_1_3=""
-    diff_1_2=$(diff --no-dereference --brief --recursive -- "$input_file_1" "$input_file_2" 2>&1)
-    if [[ -z "$input_file_3" ]]; then
+    diff_1_2=$(diff --no-dereference --brief --recursive -- "$file_1" "$file_2" 2>&1)
+    if [[ -z "$file_3" ]]; then
         if [[ -z "$diff_1_2" ]]; then
             _display_info_box "The two selected items are identical."
             _exit_script
         fi
     else
-        diff_1_3=$(diff --no-dereference --brief --recursive -- "$input_file_1" "$input_file_3" 2>&1)
+        diff_1_3=$(diff --no-dereference --brief --recursive -- "$file_1" "$file_3" 2>&1)
         if [[ -z "$diff_1_2" ]] && [[ -z "$diff_1_3" ]]; then
             _display_info_box "The three selected items are identical."
             _exit_script
@@ -45,18 +45,18 @@ _compare() {
 
     # Define the command to execute according to file MIME type.
     local command=""
-    local input_file_1_mime=""
-    input_file_1_mime=$(file --dereference --brief --mime-type -- "$input_file_1")
-    case $input_file_1_mime in
+    local file_1_mime=""
+    file_1_mime=$(file --dereference --brief --mime-type -- "$file_1")
+    case $file_1_mime in
     "application/pdf") command="diffpdf" ;;
     "inode/directory") command="meld" ;;
     "inode/x-empty") command="meld" ;;
     "image/"*) command="compare" ;;
     "text/"*) command="meld" ;;
     *)
-        local input_file_1_encoding=""
-        input_file_1_encoding=$(file --dereference --brief --mime-encoding -- "$input_file")
-        if [[ "$input_file_1_encoding" == "binary" ]]; then
+        local file_1_encoding=""
+        file_1_encoding=$(file --dereference --brief --mime-encoding -- "$input_file")
+        if [[ "$file_1_encoding" == "binary" ]]; then
             command="meld_hexadecimal"
         else
             command="meld"
@@ -93,54 +93,63 @@ _compare() {
     # Run the main process.
     case $command in
     "compare")
-        if [[ -z "$input_file_3" ]]; then
+        if [[ -z "$file_3" ]]; then
 
             # Check if both images have same pixel values.
             local pixel_error=""
-            pixel_error=$(compare -metric AE -- "$input_file_1" "$input_file_2" null: 2>&1)
+            pixel_error=$(compare -metric AE -- "$file_1" "$file_2" null: 2>&1)
             if [[ "$pixel_error" == "0" ]]; then
                 _display_info_box "The two selected images are identical (same pixel values)."
                 _exit_script
             fi
 
+            # Get images dimensions.
+            local dimensions_1=""
+            local dimensions_2=""
+            dimensions_1=$(identify -format "%wx%h" "$file_1")
+            dimensions_2=$(identify -format "%wx%h" "$file_2")
+
             # Compare two images using a visual diff with 'convert' command.
-            local output_dir=""
-            local output_file=""
-            output_dir=$(_get_output_dir "par_use_same_dir=true")
-            output_file=$(_get_output_filename "diff.png" "$output_dir" "par_extension_opt=preserve")
+            local temp_file=""
+            temp_file="$(_get_temp_file).png"
+            if [[ "$dimensions_1" == "$dimensions_2" ]]; then
+                # Compare images with same dimensions.
+                convert \
+                    '(' "$file_1" -flatten -grayscale Rec709Luminance ')' \
+                    '(' "$file_2" -flatten -grayscale Rec709Luminance ')' \
+                    '(' -clone 0-1 -compose darken -composite ')' \
+                    -channel RGB -combine "$temp_file"
+            else
+                # Compare images with different dimensions.
+                compare "$file_1" "$file_2" -compose src "$temp_file"
+            fi
 
-            convert \
-                '(' "$input_file_1" -flatten -grayscale Rec709Luminance ')' \
-                '(' "$input_file_2" -flatten -grayscale Rec709Luminance ')' \
-                '(' -clone 0-1 -compose darken -composite ')' \
-                -channel RGB -combine "$output_file"
-
-            $image_viewer -- "$output_file" &
+            $image_viewer -- "$temp_file"
         else
             _display_error_box "You must select only two image files to compare!"
             _exit_script
         fi
         ;;
     "diffpdf")
-        if [[ -z "$input_file_3" ]]; then
-            diffpdf -- "$input_file_1" "$input_file_2" &
+        if [[ -z "$file_3" ]]; then
+            diffpdf -- "$file_1" "$file_2" &
         else
             _display_error_box "You must select only two PDFs to compare!"
             _exit_script
         fi
         ;;
     "meld")
-        if [[ -z "$input_file_3" ]]; then
-            meld -- "$input_file_1" "$input_file_2" &
+        if [[ -z "$file_3" ]]; then
+            meld -- "$file_1" "$file_2" &
         else
-            meld -- "$input_file_1" "$input_file_2" "$input_file_3" &
+            meld -- "$file_1" "$file_2" "$file_3" &
         fi
         ;;
     "meld_hexadecimal")
-        if [[ -z "$input_file_3" ]]; then
-            meld -- <(hexdump -C "$input_file_1") <(hexdump -C "$input_file_2") &
+        if [[ -z "$file_3" ]]; then
+            meld -- <(hexdump -C "$file_1") <(hexdump -C "$file_2") &
         else
-            meld -- <(hexdump -C "$input_file_1") <(hexdump -C "$input_file_2") <(hexdump -C "$input_file_3") &
+            meld -- <(hexdump -C "$file_1") <(hexdump -C "$file_2") <(hexdump -C "$file_3") &
         fi
         ;;
     esac
