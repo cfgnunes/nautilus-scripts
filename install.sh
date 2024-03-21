@@ -235,20 +235,20 @@ _step_install_shortcuts() {
 
     case "$FILE_MANAGER" in
     "nautilus")
-        cp -- "$ASSSETS_DIR/accels-gnome" "$ACCELS_FILE"
+        cp -- "$ASSSETS_DIR/accels-gnome.scm" "$ACCELS_FILE"
         ;;
     "nemo")
-        cp -- "$ASSSETS_DIR/accels-mint" "$ACCELS_FILE"
+        cp -- "$ASSSETS_DIR/accels-mint.scm" "$ACCELS_FILE"
         sed -i "s|SED_USER|$USER|g" "$ACCELS_FILE"
         sed -i "s|SED_ACCELS_PATH|local\\\\\\\\sshare\\\\\\\\snemo|g" "$ACCELS_FILE"
         ;;
     "caja")
-        cp -- "$ASSSETS_DIR/accels-mint" "$ACCELS_FILE"
+        cp -- "$ASSSETS_DIR/accels-mint.scm" "$ACCELS_FILE"
         sed -i "s|SED_USER|$USER|g" "$ACCELS_FILE"
         sed -i "s|SED_ACCELS_PATH|config\\\\\\\\scaja|g" "$ACCELS_FILE"
         ;;
     "thunar")
-        cp -- "$ASSSETS_DIR/accels-thunar" "$ACCELS_FILE"
+        cp -- "$ASSSETS_DIR/accels-thunar.scm" "$ACCELS_FILE"
         sed -i "s|SED_USER|$USER|g" "$ACCELS_FILE"
         sed -i "s|SED_ACCELS_PATH|config\\\\\\\\scaja|g" "$ACCELS_FILE"
         ;;
