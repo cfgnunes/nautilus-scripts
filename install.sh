@@ -219,7 +219,7 @@ _step_install_scripts() {
     # Install the menus for the 'Thunar' file manager.
     if [[ "$FILE_MANAGER" == "thunar" ]]; then
         printf " > Installing Thunar custom actions...\n"
-        _step_make_thunar_custom_actions
+        _step_make_thunar_menus
     fi
 }
 
@@ -260,7 +260,7 @@ _step_close_filemanager() {
     eval "$FILE_MANAGER -q &>/dev/null" || true
 }
 
-_step_make_thunar_custom_actions() {
+_step_make_thunar_menus() {
     local menus_file="$HOME/.config/Thunar/uca.xml"
 
     # Create a backup of older custom actions.
