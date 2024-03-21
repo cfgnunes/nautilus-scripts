@@ -46,7 +46,7 @@ _compare() {
     # Define the command to execute according to file MIME type.
     local command=""
     local file_1_mime=""
-    file_1_mime=$(file --dereference --brief --mime-type -- "$file_1")
+    file_1_mime=$(_get_file_mime "$file_1")
     case $file_1_mime in
     "application/pdf") command="diffpdf" ;;
     "inode/directory") command="meld" ;;
@@ -55,7 +55,7 @@ _compare() {
     "text/"*) command="meld" ;;
     *)
         local file_1_encoding=""
-        file_1_encoding=$(file --dereference --brief --mime-encoding -- "$file_1")
+        file_1_encoding=$(_get_file_encoding "$file_1")
         if [[ "$file_1_encoding" == "binary" ]]; then
             command="meld_hexadecimal"
         else
@@ -66,25 +66,12 @@ _compare() {
 
     # Check dependencies for the command.
     local dependencies=""
-    local image_viewer=""
     case $command in
-    "compare")
-        dependencies="
+    "compare") dependencies="
         command=compare; pkg_manager=apt; package=imagemagick |
         command=compare; pkg_manager=dnf; package=ImageMagick |
-        command=compare; pkg_manager=pacman; package=imagemagick |"
-
-        # Get the installed image viewer.
-        if _command_exists "eog"; then
-            image_viewer="eog"
-        elif _command_exists "loupe"; then
-            image_viewer="loupe"
-        else
-            dependencies+="command=eog"
-            image_viewer="eog"
-        fi
-
-        ;;
+        command=compare; pkg_manager=pacman; package=imagemagick |
+        command=xdg-open; package=xdg-utils" ;;
     "diffpdf") dependencies="command=diffpdf" ;;
     "meld" | "meld_hexadecimal") dependencies="command=meld" ;;
     esac
@@ -124,7 +111,7 @@ _compare() {
                 compare "$file_1" "$file_2" -compose src "$temp_file"
             fi
 
-            $image_viewer -- "$temp_file"
+            $(_xdg_get_default_app "$temp_file") -- "$temp_file"
         else
             _display_error_box "You must select only two image files to compare!"
             _exit_script

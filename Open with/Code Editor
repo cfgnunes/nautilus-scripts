@@ -25,8 +25,8 @@ _main() {
     elif _command_exists "xed"; then
         xed -- $input_files &
     else
-        _check_dependencies "command=gedit"
-        gedit -- $input_files &
+        _check_dependencies "command=xdg-open; package=xdg-utils"
+        $(_xdg_get_default_app "$temp_file") -- $input_files &
     fi
 }
 

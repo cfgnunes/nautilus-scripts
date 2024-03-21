@@ -280,7 +280,7 @@ _display_list_box() {
 
         if ((items_count != 0)); then
             # Open the directory of the clicked item in the list.
-            _open_item_location "$selected_item"
+            _xdg_open_item_location "$selected_item"
         fi
     elif _command_exists "xmessage"; then
         message=$(tr "$FIELD_SEPARATOR" " " <<<"$message")
@@ -617,6 +617,16 @@ _get_files() {
     printf "%s" "$input_files"
 }
 
+_get_file_encoding() {
+    local filename=$1
+    file --dereference --brief --mime-encoding -- "$filename"
+}
+
+_get_file_mime() {
+    local filename=$1
+    file --dereference --brief --mime-type -- "$filename"
+}
+
 _get_full_path_filename() {
     local input_filename=$1
     local full_path=$input_filename
@@ -893,27 +903,6 @@ _move_temp_file_to_output() {
     return 0
 }
 
-_open_item_location() {
-    local item=$1
-    local dir=""
-
-    if [[ -z "$item" ]]; then
-        return
-    fi
-
-    item="$(readlink -f "$item")"
-    if [[ "$item" == "/" ]]; then
-        return
-    fi
-
-    dir=$(cd -- "$(dirname -- "$item")" &>/dev/null && pwd -P)
-    if [[ -z "$dir" ]]; then
-        return
-    fi
-
-    xdg-open "$dir" &
-}
-
 _pkg_get_package_manager() {
     local pkg_manager=""
 
@@ -1147,14 +1136,14 @@ _validate_file_mime() {
     # Validation for files (encoding).
     if [[ -n "$par_skip_encoding" ]]; then
         local file_encoding=""
-        file_encoding=$(file --dereference --brief --mime-encoding -- "$input_file")
+        file_encoding=$(_get_file_encoding "$input_file")
         _has_string_in_list "$file_encoding" "$par_skip_encoding" && return
     fi
 
     # Validation for files (mime).
     if [[ -n "$par_select_mime" ]]; then
         local file_mime=""
-        file_mime=$(file --dereference --brief --mime-type -- "$input_file")
+        file_mime=$(_get_file_mime "$input_file")
         _has_string_in_list "$file_mime" "$par_select_mime" || return
     fi
 
@@ -1297,6 +1286,38 @@ _validate_files_count() {
     fi
 }
 
+_xdg_open_item_location() {
+    local item=$1
+    local dir=""
+
+    if [[ -z "$item" ]]; then
+        return
+    fi
+
+    item="$(readlink -f "$item")"
+    if [[ "$item" == "/" ]]; then
+        return
+    fi
+
+    dir=$(cd -- "$(dirname -- "$item")" &>/dev/null && pwd -P)
+    if [[ -z "$dir" ]]; then
+        return
+    fi
+
+    xdg-open "$dir" &
+}
+
+_xdg_get_default_app() {
+    local filename=$1
+    local desktop_file=""
+    local file_mime=""
+
+    file_mime=$(_get_file_mime "$filename")
+    desktop_file=$(xdg-mime query default "$file_mime" 2>/dev/null)
+
+    grep "^Exec" "/usr/share/applications/$desktop_file" | head -n1 | sed "s|Exec=||g" | cut -d " " -f 1
+}
+
 # -----------------------------------------------------------------------------
 # EXPORTS
 # -----------------------------------------------------------------------------
@@ -1319,6 +1340,8 @@ export -f \
     _convert_text_to_filenames \
     _display_password_box \
     _exit_script \
+    _get_file_encoding \
+    _get_file_mime \
     _get_filename_extension \
     _get_filename_next_suffix \
     _get_full_path_filename \
