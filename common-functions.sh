@@ -1308,14 +1308,20 @@ _xdg_open_item_location() {
 }
 
 _xdg_get_default_app() {
-    local filename=$1
+    local mime=$1
     local desktop_file=""
-    local file_mime=""
+    local default_app=""
 
-    file_mime=$(_get_file_mime "$filename")
-    desktop_file=$(xdg-mime query default "$file_mime" 2>/dev/null)
+    desktop_file=$(xdg-mime query default "$mime" 2>/dev/null)
 
-    grep "^Exec" "/usr/share/applications/$desktop_file" | head -n1 | sed "s|Exec=||g" | cut -d " " -f 1
+    default_app=$(grep "^Exec" "/usr/share/applications/$desktop_file" | head -n1 | sed "s|Exec=||g" | cut -d " " -f 1)
+
+    if [[ -z "$default_app" ]]; then
+        _display_error_box "Could not find the default application to open '$mime' files!"
+        _exit_script
+    fi
+
+    printf "%s" "$default_app"
 }
 
 # -----------------------------------------------------------------------------

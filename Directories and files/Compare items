@@ -111,7 +111,7 @@ _compare() {
                 compare "$file_1" "$file_2" -compose src "$temp_file"
             fi
 
-            $(_xdg_get_default_app "$temp_file") -- "$temp_file"
+            $(_xdg_get_default_app "image/png") -- "$temp_file"
         else
             _display_error_box "You must select only two image files to compare!"
             _exit_script

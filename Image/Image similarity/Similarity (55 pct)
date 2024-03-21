@@ -9,20 +9,13 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _check_dependencies "command=findimagedupes"
+    _check_dependencies "command=findimagedupes | command=xdg-open; package=xdg-utils"
     _display_wait_box "0"
     input_files=$(_get_files "par_type=file; par_recursive=true; par_select_mime=image/")
 
     # Get the installed image viewer.
     local image_viewer=""
-    if _command_exists "eog"; then
-        image_viewer="eog"
-    elif _command_exists "loupe"; then
-        image_viewer="loupe"
-    else
-        _check_dependencies "command=eog"
-        image_viewer="eog"
-    fi
+    image_viewer=$(_xdg_get_default_app "image/jpeg")
 
     # Run the main process.
     # shellcheck disable=SC2086
