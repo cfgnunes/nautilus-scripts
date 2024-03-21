@@ -55,7 +55,7 @@ _compare() {
     "text/"*) command="meld" ;;
     *)
         local file_1_encoding=""
-        file_1_encoding=$(file --dereference --brief --mime-encoding -- "$input_file")
+        file_1_encoding=$(file --dereference --brief --mime-encoding -- "$file_1")
         if [[ "$file_1_encoding" == "binary" ]]; then
             command="meld_hexadecimal"
         else
