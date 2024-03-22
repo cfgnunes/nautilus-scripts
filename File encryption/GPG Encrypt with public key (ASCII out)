@@ -11,7 +11,6 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "
-        command=zenity |
         command=gpg; pkg_manager=apt |
         command=gpg; pkg_manager=dnf; package=gnupg2 |
         command=gpg; pkg_manager=pacman; package=gnupg"
@@ -21,16 +20,20 @@ _main() {
     local users=""
     users=$(gpg --list-public-keys --with-colons | grep "^uid" | cut -d ':' -f 10)
     if [[ -z "$users" ]]; then
-        _display_error_box "Signing failed: no secret keys installed!"
+        _display_error_box "Failed: no secret keys installed!"
         _exit_script
     fi
 
     users=$(tr "\n" "$FIELD_SEPARATOR" <<<"$users")
     # shellcheck disable=SC2086
-    TEMP_DATA_TASK=$(zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=200 --width=600 $users 2>/dev/null) || _exit_script
+    if _command_exists "zenity"; then
+        TEMP_DATA_TASK=$(zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=200 --width=600 $users 2>/dev/null) || _exit_script
+    elif _command_exists "kdialog"; then
+        TEMP_DATA_TASK=$(kdialog --title "Select a user" --combobox "Select a user from the list below." $users 2>/dev/null) || _exit_script
+    fi
 
     if [[ -z "$TEMP_DATA_TASK" ]]; then
-        _display_error_box "Signing failed: you must select a user!"
+        _display_error_box "Failed: you must select a user!"
         _exit_script
     fi
 
