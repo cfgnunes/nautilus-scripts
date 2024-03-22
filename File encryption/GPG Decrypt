@@ -15,7 +15,7 @@ _main() {
         command=gpg; pkg_manager=dnf; package=gnupg2 |
         command=gpg; pkg_manager=pacman; package=gnupg"
 
-    input_files=$(_get_files "par_type=file; par_select_extension='asc|gpg|pgp'")
+    input_files=$(_get_files "par_type=file; par_select_mime='application/pgp-encrypted|application/octet-stream'")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
