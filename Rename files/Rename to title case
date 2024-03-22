@@ -30,18 +30,9 @@ _main_task() {
     dir=$(dirname -- "$input_file")
     filename=$(basename -- "$input_file")
 
-    # Transform to capitalized case.
-    local extension_converted=""
-    local extension=""
-    local filename_converted=""
-    local filename_without_extension=""
-
-    filename_without_extension=$(_strip_filename_extension "$filename")
-    extension=$(_get_filename_extension "$filename")
+    # Transform to title case.
     # shellcheck disable=SC2001
-    filename_converted=$(sed "s|\(\w\)\(\w*\)|\U\1\L\2|g" <<<"$filename_without_extension")
-    extension_converted=${extension,,}
-    output_file="$filename_converted$extension_converted"
+    output_file=$(sed "s|\([^ ]\)\([^ ]*\)|\U\1\L\2|g" <<<"$filename")
 
     # Run the main process.
     std_output=$(_move_file "skip" "$input_file" "$dir/$output_file" 2>&1)
