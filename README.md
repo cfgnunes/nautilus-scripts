@@ -68,6 +68,7 @@ Most scripts have been tested on the following GNU/Linux distributions:
 - Ubuntu 18.04, 20.04, 22.04, 24.04
 - Debian 12
 - Fedora Workstation 39
+- Kubuntu 22.04
 - Manjaro 23 (Gnome)
 - Mint 21 (Cinnamon and Mate)
 - Xubuntu 23.10, 24.04
