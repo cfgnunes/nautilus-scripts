@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _check_dependencies ""
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=file; par_recursive=true; par_get_pwd=true; par_skip_encoding=binary; par_skip_extension='pdf|svg'")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+
+    local std_output=""
+    std_output=$(_storage_text_read_all)
+    std_output=$(sort -h -r <<<"$std_output")
+
+    _display_list_box "$std_output" "--column=Count;--column=File"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local std_output=""
+
+    # Run the main process.
+    std_output=$(wc --max-line-length -- "$input_file" 2>/dev/null)
+    std_output=$(grep -v ".*[0-9]* total$" <<<"$std_output")
+    # shellcheck disable=SC2001
+    std_output=$(sed "s| *\([0-9]*\) *\(.*\)|\1$FIELD_SEPARATOR\2|" <<<"$std_output")
+    std_output=$(_text_remove_pwd "$std_output")
+
+    _storage_text_write_ln "$std_output"
+}
+
+_main "$@"
