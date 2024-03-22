@@ -145,6 +145,11 @@ _step_install_dependencies() {
     common_names+="foremost testdisk "
     # Packages for other scripts...
     common_names+="perl-base rdfind rhash wget "
+    if [ "$XDG_SESSION_TYPE" == "x11" ]; then
+        common_names+="xclip "
+    elif [ "$XDG_SESSION_TYPE" == "wayland" ]; then
+        common_names+="wl-clipboard "
+    fi
 
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
