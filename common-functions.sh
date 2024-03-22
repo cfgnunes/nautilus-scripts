@@ -294,7 +294,7 @@ _display_list_box() {
             --text "Total of $items_count items.$message_select" \
             $columns $message 2>/dev/null) || _exit_script
 
-        if ((items_count != 0)); then
+        if ((items_count != 0)) && [[ -n "$selected_item" ]]; then
             # Open the directory of the clicked item in the list.
             _xdg_open_item_location "$selected_item"
         fi
