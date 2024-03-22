@@ -575,7 +575,6 @@ _get_files() {
     local par_select_extension=""
     local par_select_mime=""
     local par_select_regex=""
-    local par_skip_encoding=""
     local par_skip_extension=""
     local par_sort_list="false"
     local par_type="file"
@@ -615,8 +614,7 @@ _get_files() {
     # Validates the mime or encoding of the file.
     input_files=$(_validate_file_mime_parallel \
         "$input_files" \
-        "$par_select_mime" \
-        "$par_skip_encoding")
+        "$par_select_mime")
 
     # Validates the number of valid files.
     _validate_files_count \
@@ -624,7 +622,6 @@ _get_files() {
         "$par_type" \
         "$par_select_extension" \
         "$par_select_mime" \
-        "$par_skip_encoding" \
         "$par_min_files" \
         "$par_max_files"
 
@@ -1173,14 +1170,6 @@ _validate_conflict_filenames() {
 _validate_file_mime() {
     local input_file=$1
     local par_select_mime=$2
-    local par_skip_encoding=$3
-
-    # Validation for files (encoding).
-    if [[ -n "$par_skip_encoding" ]]; then
-        local file_encoding=""
-        file_encoding=$(_get_file_encoding "$input_file")
-        _has_string_in_list "$file_encoding" "$par_skip_encoding" && return
-    fi
 
     # Validation for files (mime).
     if [[ -n "$par_select_mime" ]]; then
@@ -1196,10 +1185,9 @@ _validate_file_mime() {
 _validate_file_mime_parallel() {
     local input_files=$1
     local par_select_mime=$2
-    local par_skip_encoding=$3
 
     # Return the 'input_files' if all parameters are empty.
-    if [[ -z "$par_select_mime$par_skip_encoding" ]]; then
+    if [[ -z "$par_select_mime" ]]; then
         printf "%s" "$input_files"
         return
     fi
@@ -1214,8 +1202,7 @@ _validate_file_mime_parallel() {
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
         bash -c "_validate_file_mime '{}' \
-            '$par_select_mime' \
-            '$par_skip_encoding'"
+            '$par_select_mime'"
 
     # Compile valid files in a single list.
     input_files=$(_storage_text_read_all)
@@ -1282,9 +1269,8 @@ _validate_files_count() {
     local par_type=$2
     local par_select_extension=$3
     local par_select_mime=$4
-    local par_skip_encoding=$5
-    local par_min_files="${6:-1}"
-    local par_max_files=$7
+    local par_min_files="${5:-1}"
+    local par_max_files=$6
 
     # Define a term for a valid file.
     local valid_file_term="valid files"
@@ -1295,8 +1281,6 @@ _validate_files_count() {
         valid_file_term=$(sed "s|\|| or |g" <<<"$par_select_mime")
         valid_file_term=$(sed "s|/$||g; s|/ | |g" <<<"$valid_file_term")
         valid_file_term+=" files"
-    elif [[ "$par_skip_encoding" == *"binary"* ]]; then
-        valid_file_term="plain text files"
     elif [[ "$par_type" == "file" ]]; then
         valid_file_term="files"
     elif [[ "$par_type" == "all" ]]; then
