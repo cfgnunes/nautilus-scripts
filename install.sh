@@ -106,9 +106,13 @@ _check_default_filemanager() {
         ACCELS_FILE="$HOME/.config/caja/accels"
         FILE_MANAGER="caja"
     elif _command_exists "thunar"; then
+        INSTALL_DIR="$HOME/.local/share/scripts"
         ACCELS_FILE="$HOME/.config/Thunar/accels.scm"
-        INSTALL_DIR="$HOME/.local/scripts"
         FILE_MANAGER="thunar"
+    elif _command_exists "dolphin"; then
+        INSTALL_DIR="$HOME/.local/share/scripts"
+        ACCELS_FILE=""
+        FILE_MANAGER="dolphin"
     else
         printf "Error: could not find any compatible file managers!\n"
         exit 1
@@ -140,7 +144,7 @@ _step_install_dependencies() {
     # Packages for forensic...
     common_names+="foremost testdisk "
     # Packages for other scripts...
-    common_names+="perl-base rdfind rhash wget xclip "
+    common_names+="perl-base rdfind rhash wget "
 
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
@@ -216,10 +220,13 @@ _step_install_scripts() {
         mv "$tmp_install_dir/scripts" "$INSTALL_DIR/User previous scripts"
     fi
 
-    # Install the menus for the 'Thunar' file manager.
+    # Install menus for 'Thunar' or 'Dolphin'.
     if [[ "$FILE_MANAGER" == "thunar" ]]; then
-        printf " > Installing Thunar custom actions...\n"
-        _step_make_thunar_menus
+        printf " > Installing Thunar actions...\n"
+        _step_make_thunar_actions
+    elif [[ "$FILE_MANAGER" == "dolphin" ]]; then
+        printf " > Installing Dolphin actions...\n"
+        _step_make_dolphin_actions
     fi
 }
 
@@ -260,7 +267,45 @@ _step_close_filemanager() {
     eval "$FILE_MANAGER -q &>/dev/null" || true
 }
 
-_step_make_thunar_menus() {
+_step_make_dolphin_actions() {
+    local dolphin_menus_dir="$HOME/.local/share/kio/servicemenus"
+    rm -rf "$dolphin_menus_dir" 2>/dev/null || true
+    mkdir --parents "$dolphin_menus_dir"
+
+    local desktop_filename=""
+    local filename=""
+    local name_sub=""
+    local name=""
+    local script_relative=""
+    local submenu=""
+    find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*.assets/*" -print0 2>/dev/null | sort --zero-terminated |
+        while IFS= read -r -d "" filename; do
+            # shellcheck disable=SC2001
+            script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
+            name_sub=${script_relative#*/}
+            name_sub=$(sed "s|/| - |g" <<<"$name_sub")
+            name=${script_relative##*/}
+            submenu=${script_relative%%/*}
+
+            desktop_filename="${dolphin_menus_dir}/${submenu} ${name}.desktop"
+            {
+                printf "%s\n" "[Desktop Entry]"
+                printf "%s\n" "Type=Service"
+                printf "%s\n" "X-KDE-ServiceTypes=KonqPopupMenu/Plugin"
+                printf "%s\n" "Actions=scriptAction;"
+                printf "%s\n" "MimeType=all/allfiles;inode/*;"
+                printf "%s\n" "Encoding=UTF-8"
+                printf "%s\n" "X-KDE-Submenu=$submenu"
+                printf "\n"
+                printf "%s\n" "[Desktop Action scriptAction]"
+                printf "%s\n" "Name=$name_sub"
+                printf "%s\n" "Exec=bash \"$filename\" %F"
+            } >"$desktop_filename"
+            chmod +x "$desktop_filename"
+        done
+}
+
+_step_make_thunar_actions() {
     local menus_file="$HOME/.config/Thunar/uca.xml"
 
     # Create a backup of older custom actions.
