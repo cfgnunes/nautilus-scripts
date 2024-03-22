@@ -574,7 +574,6 @@ _get_files() {
     local par_recursive="false"
     local par_select_extension=""
     local par_select_mime=""
-    local par_select_regex=""
     local par_skip_extension=""
     local par_sort_list="false"
     local par_type="file"
@@ -608,7 +607,6 @@ _get_files() {
         "$par_type" \
         "$par_skip_extension" \
         "$par_select_extension" \
-        "$par_select_regex" \
         "$par_recursive")
 
     # Validates the mime or encoding of the file.
@@ -1217,8 +1215,7 @@ _validate_file_preselect() {
     local par_type=$2
     local par_skip_extension=$3
     local par_select_extension=$4
-    local par_select_regex=$5
-    local par_recursive=$6
+    local par_recursive=$5
     local input_files_valid=""
 
     input_files=$(sed "s|$FIELD_SEPARATOR|\" \"|g" <<<"$input_files")
@@ -1235,11 +1232,6 @@ _validate_file_preselect() {
     "file") find_command+=" ! -type d" ;;
     "directory") find_command+=" -type d" ;;
     esac
-
-    if [[ -n "$par_select_regex" ]]; then
-        find_command+=" -regextype posix-extended "
-        find_command+=" -regex \"$par_select_regex\""
-    fi
 
     if [[ -n "$par_select_extension" ]]; then
         find_command+=" -regextype posix-extended "
@@ -1269,7 +1261,7 @@ _validate_files_count() {
     local par_type=$2
     local par_select_extension=$3
     local par_select_mime=$4
-    local par_min_files="${5:-1}"
+    local par_min_files="$5"
     local par_max_files=$6
 
     # Define a term for a valid file.
@@ -1292,7 +1284,7 @@ _validate_files_count() {
     valid_files_count=$(_get_filenames_count "$input_files")
 
     # Check if there is at least one valid file.
-    if ((valid_files_count == 0)) && ((par_min_files != 0)); then
+    if ((valid_files_count == 0)); then
         if [[ -n "$par_select_extension" ]]; then
             _display_error_box "You must select files with extension: '.${par_select_extension//|/\' or \'.}'!"
         else

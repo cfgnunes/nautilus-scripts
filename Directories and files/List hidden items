@@ -12,13 +12,12 @@ _main() {
     # Execute initial checks.
     _check_dependencies ""
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=all; par_recursive=true; par_get_pwd=true; par_min_files=0; par_select_regex='.*/\.[^/]*'")
+    input_files=$(_get_files "par_type=all; par_get_pwd=true")
 
     # Run the main process.
-    std_output=$(_convert_filenames_to_text "$input_files")
+    # shellcheck disable=SC2086
+    std_output=$(find $input_files ! -path "$IGNORE_FIND_PATH" -regextype posix-extended -regex ".*/\.[^/]*" -printf "%p\n" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|^\(..*\)$|\1|" <<<"$std_output")
 
     _display_list_box "$std_output" "--column=Item"
 }
