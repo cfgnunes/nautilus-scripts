@@ -22,6 +22,10 @@ _main() {
         gnome-text-editor -- $input_files &
     elif _command_exists "gedit"; then
         gedit -- $input_files &
+    elif _command_exists "xed"; then
+        xed -- $input_files &
+    elif _command_exists "kate"; then
+        kate -- $input_files &
     else
         _check_dependencies "command=xdg-open; package=xdg-utils"
         $(_xdg_get_default_app "text/plain") -- $input_files &
