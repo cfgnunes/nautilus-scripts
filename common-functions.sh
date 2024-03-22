@@ -645,12 +645,28 @@ _get_files() {
 
 _get_file_encoding() {
     local filename=$1
-    file --dereference --brief --mime-encoding -- "$filename"
+    local std_output=""
+
+    std_output=$(file --dereference --brief --mime-encoding -- "$filename" 2>/dev/null)
+
+    if [[ "$std_output" == "cannot"* ]]; then
+        return
+    fi
+
+    printf "%s" "$std_output"
 }
 
 _get_file_mime() {
     local filename=$1
-    file --dereference --brief --mime-type -- "$filename"
+    local std_output=""
+
+    std_output=$(file --dereference --brief --mime-type -- "$filename" 2>/dev/null)
+
+    if [[ "$std_output" == "cannot"* ]]; then
+        return
+    fi
+
+    printf "%s" "$std_output"
 }
 
 _get_full_path_filename() {
