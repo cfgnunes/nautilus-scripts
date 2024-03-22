@@ -55,7 +55,7 @@ bash install.sh
 
 File managers compatibility:
 
-| Name                   | Environment | Shortcuts working |
+| File manager           | Environment | Shortcuts working |
 | ---------------------- | ----------- | ----------------- |
 | GNOME Files (Nautilus) | GNOME       | Yes               |
 | Dolphin                | KDE Plasma  |                   |
