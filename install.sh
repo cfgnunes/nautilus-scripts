@@ -428,6 +428,7 @@ _step_make_thunar_actions() {
                 printf "\t%s\n" "<unique-id>$unique_id-1</unique-id>"
                 printf "\t%s\n" "<command>bash &quot;$filename&quot; %F</command>"
                 printf "\t%s\n" "<description></description>"
+                printf "\t%s\n" "<range></range>"
                 printf "\t%s\n" "<patterns>*</patterns>"
                 printf "\t%s\n" "<directories/>"
                 printf "\t%s\n" "<audio-files/>"
