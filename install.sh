@@ -285,10 +285,6 @@ _step_make_dolphin_actions() {
     local filename=""
     local name_sub=""
     local name=""
-    local par_select_mime=""
-    local par_recursive=""
-    local par_min_files=""
-    local par_max_files=""
     local script_relative=""
     local submenu=""
 
@@ -304,6 +300,8 @@ _step_make_dolphin_actions() {
             submenu=${script_relative%%/*}
 
             # Set the mime requirements.
+            local par_recursive=""
+            local par_select_mime=""
             par_recursive=$(_get_script_parameter_value "$filename" "par_recursive")
             par_select_mime=$(_get_script_parameter_value "$filename" "par_select_mime")
 
@@ -333,6 +331,8 @@ _step_make_dolphin_actions() {
             par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
 
             # Set the min/max files requirements.
+            local par_min_files=""
+            local par_max_files=""
             par_min_files=$(_get_script_parameter_value "$filename" "par_min_files")
             par_max_files=$(_get_script_parameter_value "$filename" "par_max_files")
 
@@ -420,22 +420,65 @@ _step_make_thunar_actions() {
             while IFS= read -r -d "" filename; do
                 name=$(basename -- "$filename" 2>/dev/null)
                 submenu=$(dirname -- "$filename" 2>/dev/null | sed "s|.*scripts/|Scripts/|g")
-                unique_id=$(md5sum <<<"$name" 2>/dev/null | tr -d "a-z- ")
+
                 printf "%s\n" "<action>"
                 printf "\t%s\n" "<icon></icon>"
                 printf "\t%s\n" "<name>$name</name>"
                 printf "\t%s\n" "<submenu>$submenu</submenu>"
-                printf "\t%s\n" "<unique-id>$unique_id-1</unique-id>"
+
+                # Generate a unique id.
+                unique_id=$(md5sum <<<"$submenu$name" 2>/dev/null | sed "s|[^0-9]*||g" | cut -c 1-8)
+                printf "\t%s\n" "<unique-id>$unique_id</unique-id>"
+
                 printf "\t%s\n" "<command>bash &quot;$filename&quot; %F</command>"
                 printf "\t%s\n" "<description></description>"
-                printf "\t%s\n" "<range></range>"
+
+                # Set the min/max files requirements.
+                local par_min_files=""
+                local par_max_files=""
+                par_min_files=$(_get_script_parameter_value "$filename" "par_min_files")
+                par_max_files=$(_get_script_parameter_value "$filename" "par_max_files")
+                if [[ -n "$par_min_files" ]] && [[ -n "$par_max_files" ]]; then
+                    printf "\t%s\n" "<range>$par_min_files-$par_max_files</range>"
+                else
+                    printf "\t%s\n" "<range></range>"
+                fi
+
                 printf "\t%s\n" "<patterns>*</patterns>"
-                printf "\t%s\n" "<directories/>"
-                printf "\t%s\n" "<audio-files/>"
-                printf "\t%s\n" "<image-files/>"
+
+                # Set the type requirements.
+                local par_recursive=""
+                local par_type=""
+                par_recursive=$(_get_script_parameter_value "$filename" "par_recursive")
+                par_type=$(_get_script_parameter_value "$filename" "par_type")
+                if [[ "$par_type" == "all" ]] || [[ "$par_type" == "directory" ]] || [[ "$par_recursive" == "true" ]]; then
+                    printf "\t%s\n" "<directories/>"
+                fi
+
+                # Set the type requirements.
+                local par_select_mime=""
+                par_select_mime=$(_get_script_parameter_value "$filename" "par_select_mime")
+
+                if [[ -n "$par_select_mime" ]]; then
+                    if [[ "$par_select_mime" == *"audio"* ]]; then
+                        printf "\t%s\n" "<audio-files/>"
+                    fi
+                    if [[ "$par_select_mime" == *"image"* ]]; then
+                        printf "\t%s\n" "<image-files/>"
+                    fi
+                    if [[ "$par_select_mime" == *"text"* ]]; then
+                        printf "\t%s\n" "<text-files/>"
+                    fi
+                    if [[ "$par_select_mime" == *"video"* ]]; then
+                        printf "\t%s\n" "<video-files/>"
+                    fi
+                else
+                    printf "\t%s\n" "<audio-files/>"
+                    printf "\t%s\n" "<image-files/>"
+                    printf "\t%s\n" "<text-files/>"
+                    printf "\t%s\n" "<video-files/>"
+                fi
                 printf "\t%s\n" "<other-files/>"
-                printf "\t%s\n" "<text-files/>"
-                printf "\t%s\n" "<video-files/>"
                 printf "%s\n" "</action>"
             done
 
