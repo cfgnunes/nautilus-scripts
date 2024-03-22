@@ -47,7 +47,6 @@ _main() {
         "Install basic dependencies."
         "Install keyboard shortcuts."
         "Close the file manager to reload its configurations."
-        "Preserve previous scripts (if any)."
         "Choose script categories to install."
     )
     menu_defaults=(
@@ -55,16 +54,22 @@ _main() {
         "true"
         "true"
         "false"
-        "false"
     )
+
+    if [[ "$FILE_MANAGER" != "dolphin" ]] && [[ "$FILE_MANAGER" != "thunar" ]] && [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
+        menu_labels+=("Preserve previous scripts (if any).")
+        menu_defaults+=("false")
+    fi
 
     _multiselect_menu menu_selected menu_labels menu_defaults
 
     [[ ${menu_selected[0]} == "true" ]] && menu_options+="dependencies,"
     [[ ${menu_selected[1]} == "true" ]] && menu_options+="shortcuts,"
     [[ ${menu_selected[2]} == "true" ]] && menu_options+="reload,"
-    [[ ${menu_selected[3]} == "true" ]] && [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]] && menu_options+="preserve,"
-    [[ ${menu_selected[4]} == "true" ]] && menu_options+="categories,"
+    [[ ${menu_selected[3]} == "true" ]] && menu_options+="categories,"
+    if [[ "$FILE_MANAGER" != "dolphin" ]] && [[ "$FILE_MANAGER" != "thunar" ]] && [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
+        [[ ${menu_selected[4]} == "true" ]] && menu_options+="preserve,"
+    fi
 
     # Get the categories (directories of scripts).
     local cat_dirs_find=""
@@ -97,22 +102,22 @@ _check_default_filemanager() {
         INSTALL_DIR="$HOME/.local/share/nautilus/scripts"
         ACCELS_FILE="$HOME/.config/nautilus/scripts-accels"
         FILE_MANAGER="nautilus"
-    elif _command_exists "nemo"; then
-        INSTALL_DIR="$HOME/.local/share/nemo/scripts"
-        ACCELS_FILE="$HOME/.gnome2/accels/nemo"
-        FILE_MANAGER="nemo"
     elif _command_exists "caja"; then
         INSTALL_DIR="$HOME/.config/caja/scripts"
         ACCELS_FILE="$HOME/.config/caja/accels"
         FILE_MANAGER="caja"
-    elif _command_exists "thunar"; then
-        INSTALL_DIR="$HOME/.local/share/scripts"
-        ACCELS_FILE="$HOME/.config/Thunar/accels.scm"
-        FILE_MANAGER="thunar"
     elif _command_exists "dolphin"; then
         INSTALL_DIR="$HOME/.local/share/scripts"
         ACCELS_FILE=""
         FILE_MANAGER="dolphin"
+    elif _command_exists "nemo"; then
+        INSTALL_DIR="$HOME/.local/share/nemo/scripts"
+        ACCELS_FILE="$HOME/.gnome2/accels/nemo"
+        FILE_MANAGER="nemo"
+    elif _command_exists "thunar"; then
+        INSTALL_DIR="$HOME/.local/share/scripts"
+        ACCELS_FILE="$HOME/.config/Thunar/accels.scm"
+        FILE_MANAGER="thunar"
     else
         printf "Error: could not find any compatible file managers!\n"
         exit 1
@@ -249,15 +254,15 @@ _step_install_shortcuts() {
     "nautilus")
         cp -- "$ASSSETS_DIR/accels-gnome.scm" "$ACCELS_FILE"
         ;;
-    "nemo")
-        cp -- "$ASSSETS_DIR/accels-mint.scm" "$ACCELS_FILE"
-        sed -i "s|SED_USER|$USER|g" "$ACCELS_FILE"
-        sed -i "s|SED_ACCELS_PATH|local\\\\\\\\sshare\\\\\\\\snemo|g" "$ACCELS_FILE"
-        ;;
     "caja")
         cp -- "$ASSSETS_DIR/accels-mint.scm" "$ACCELS_FILE"
         sed -i "s|SED_USER|$USER|g" "$ACCELS_FILE"
         sed -i "s|SED_ACCELS_PATH|config\\\\\\\\scaja|g" "$ACCELS_FILE"
+        ;;
+    "nemo")
+        cp -- "$ASSSETS_DIR/accels-mint.scm" "$ACCELS_FILE"
+        sed -i "s|SED_USER|$USER|g" "$ACCELS_FILE"
+        sed -i "s|SED_ACCELS_PATH|local\\\\\\\\sshare\\\\\\\\snemo|g" "$ACCELS_FILE"
         ;;
     "thunar")
         cp -- "$ASSSETS_DIR/accels-thunar.scm" "$ACCELS_FILE"
@@ -288,6 +293,7 @@ _step_make_dolphin_actions() {
             # shellcheck disable=SC2001
             script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
             name_sub=${script_relative#*/}
+            # shellcheck disable=SC2001
             name_sub=$(sed "s|/| - |g" <<<"$name_sub")
             name=${script_relative##*/}
             submenu=${script_relative%%/*}
