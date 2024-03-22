@@ -20,7 +20,7 @@ _main() {
     local users=""
     users=$(gpg --list-public-keys --with-colons | grep "^uid" | cut -d ':' -f 10)
     if [[ -z "$users" ]]; then
-        _display_error_box "Failed: no secret keys installed!"
+        _display_error_box "Failed: no keys imported!"
         _exit_script
     fi
 
