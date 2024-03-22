@@ -57,7 +57,7 @@ _main() {
     )
 
     if [[ "$FILE_MANAGER" != "dolphin" ]] && [[ "$FILE_MANAGER" != "thunar" ]] && [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
-        menu_labels+=("Preserve previous scripts (if any).")
+        menu_labels+=("Preserve previous scripts.")
         menu_defaults+=("false")
     fi
 
@@ -282,12 +282,17 @@ _step_make_dolphin_actions() {
     rm -rf "$dolphin_menus_dir" 2>/dev/null || true
     mkdir --parents "$dolphin_menus_dir"
 
-    local desktop_filename=""
     local filename=""
     local name_sub=""
     local name=""
+    local par_select_mime=""
+    local par_recursive=""
+    local par_min_files=""
+    local par_max_files=""
     local script_relative=""
     local submenu=""
+
+    # Generate a '.desktop' file for each script.
     find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*.assets/*" -print0 2>/dev/null | sort --zero-terminated |
         while IFS= read -r -d "" filename; do
             # shellcheck disable=SC2001
@@ -298,13 +303,56 @@ _step_make_dolphin_actions() {
             name=${script_relative##*/}
             submenu=${script_relative%%/*}
 
-            desktop_filename="${dolphin_menus_dir}/${submenu} ${name}.desktop"
+            # Set the mime requirements.
+            par_recursive=$(_get_script_parameter_value "$filename" "par_recursive")
+            par_select_mime=$(_get_script_parameter_value "$filename" "par_select_mime")
+
+            if [[ -z "$par_select_mime" ]]; then
+                local par_type=""
+                par_type=$(_get_script_parameter_value "$filename" "par_type")
+
+                case "$par_type" in
+                "directory") par_select_mime="inode/directory" ;;
+                "all") par_select_mime="all/all" ;;
+                "file") par_select_mime="all/allfiles" ;;
+                *) par_select_mime="all/allfiles" ;;
+                esac
+            fi
+
+            if [[ "$par_recursive" == "true" ]]; then
+                case "$par_select_mime" in
+                "inode/directory") : ;;
+                "all/all") : ;;
+                "all/allfiles") par_select_mime="all/all" ;;
+                *) par_select_mime+=";inode/directory" ;;
+                esac
+            fi
+
+            par_select_mime="$par_select_mime;"
+            # shellcheck disable=SC2001
+            par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
+
+            # Set the min/max files requirements.
+            par_min_files=$(_get_script_parameter_value "$filename" "par_min_files")
+            par_max_files=$(_get_script_parameter_value "$filename" "par_max_files")
+
+            local desktop_filename=""
+            desktop_filename="${dolphin_menus_dir}/${submenu} - ${name}.desktop"
             {
                 printf "%s\n" "[Desktop Entry]"
                 printf "%s\n" "Type=Service"
                 printf "%s\n" "X-KDE-ServiceTypes=KonqPopupMenu/Plugin"
                 printf "%s\n" "Actions=scriptAction;"
-                printf "%s\n" "MimeType=all/allfiles;inode/*;"
+                printf "%s\n" "MimeType=$par_select_mime"
+
+                if [[ -n "$par_min_files" ]]; then
+                    printf "%s\n" "X-KDE-MinNumberOfUrls=$par_min_files"
+                fi
+
+                if [[ -n "$par_max_files" ]]; then
+                    printf "%s\n" "X-KDE-MaxNumberOfUrls=$par_max_files"
+                fi
+
                 printf "%s\n" "Encoding=UTF-8"
                 printf "%s\n" "X-KDE-Submenu=$submenu"
                 printf "\n"
@@ -392,6 +440,13 @@ _step_make_thunar_actions() {
 
         printf "%s\n" "<actions>"
     } >"$menus_file"
+}
+
+_get_script_parameter_value() {
+    local filename=$1
+    local parameter=$2
+
+    grep --only-matching -m 1 "$parameter=[^\";]*" "$filename" | cut -d "=" -f 2 | tr -d "'" | tr "|" ";" 2>/dev/null
 }
 
 _main "$@"
