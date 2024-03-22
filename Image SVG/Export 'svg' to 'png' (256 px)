@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "command=inkscape"
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=file; par_select_mime='image/svg|application/gzip'")
+    input_files=$(_get_files "par_type=file; par_select_mime='image/svg+xml|application/gzip'")
     output_dir=$(_get_output_dir "par_use_same_dir=true; par_validate_conflict=true")
 
     # Execute the function '_main_task' for each file in parallel.
