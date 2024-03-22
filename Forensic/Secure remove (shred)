@@ -17,11 +17,9 @@ _main() {
     std_output=$(_convert_filenames_to_text "$input_files")
     std_output=$(_text_remove_pwd "$std_output")
 
-    # shellcheck disable=SC2001
-    printf "%s" "$std_output" | zenity \
-        --title "$(_get_script_name)" \
-        --list --text "Warning: These files will be removed. Press 'OK' to continue with this operation." --column "Files" \
-        --width=800 --height=450 &>/dev/null || _exit_script
+    if ! _display_question_box "Warning:\nThe selected files will be removed.\nWould you like to continue?"; then
+        _exit_script
+    fi
 
     _display_wait_box "2"
 
