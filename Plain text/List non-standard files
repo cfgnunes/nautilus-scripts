@@ -40,7 +40,7 @@ _main_task() {
 
     # Run the checker 'UTF-8 with BOM'.
     if [[ "${file_encoding,,}" == *"utf-8"* ]]; then
-        if head -c3 "$input_file" | LC_ALL=C grep --quiet -P '\xef\xbb\xbf'; then
+        if head -c3 "$input_file" | LC_ALL=C grep --quiet -m1 -P '\xef\xbb\xbf'; then
             issues+="[UTF-8 with BOM]"
         fi
     fi
@@ -51,22 +51,27 @@ _main_task() {
     fi
 
     # Run the checker 'trailing spaces' (for Unix and Windows files).
-    if grep --quiet -P "[ \t]\r?$" "$input_file"; then
+    if grep --quiet -m1 -P "[ \t]\r?$" "$input_file"; then
         issues+="[trailing spaces]"
     fi
 
     # Run the checker 'trailing spaces' (for Mac files).
     if [[ "$file_information" == *"with CR line"* ]] || [[ "$file_information" == *"with CR, LF line"* ]]; then
-        if cat -A "$input_file" | grep --quiet " ^M"; then
+        if cat -A "$input_file" | grep --quiet -m1 " ^M"; then
             issues+="[trailing spaces]"
         fi
     fi
 
+    # Run the checker 'mix tabs and spaces'.
+    if cat -A "$input_file" | grep --quiet -m1 "^^I" && cat -A "$input_file" | grep --quiet -m1 "^  "; then
+        issues+="[mix tabs and spaces]"
+    fi
+
     # Run the checker 'missing line at the end'.
-    if ! tail -c 1 "$input_file" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet "0d\|0a"; then
+    if ! tail -c 1 "$input_file" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet -m1 "0d\|0a"; then
         issues+="[missing line at the end]"
     else
-        if tail -c 3 "$input_file" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet "..0d0d\|..0a0a\|0a0d0a"; then
+        if tail -c 3 "$input_file" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet -m1 "..0d0d\|..0a0a\|0a0d0a"; then
             # Run the checker 'has many line breaks at the end'.
             issues+="[extra lines at the end]"
         fi
