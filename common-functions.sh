@@ -429,9 +429,7 @@ _display_wait_box_message() {
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
         # Flag to inform that the 'wait_box' will open (if the task takes over 2 seconds).
-        if ! [[ -f "$WAIT_BOX_CONTROL" ]]; then
-            touch "$WAIT_BOX_CONTROL"
-        fi
+        touch "$WAIT_BOX_CONTROL"
 
         # Create the FIFO to use in Zenity 'wait_box'.
         if ! [[ -p "$WAIT_BOX_FIFO" ]]; then
@@ -446,9 +444,7 @@ _display_wait_box_message() {
         ) &
     elif _command_exists "kdialog"; then
         # Flag to inform that the 'wait_box' will open (if the task takes over 2 seconds).
-        if ! [[ -f "$WAIT_BOX_CONTROL" ]]; then
-            touch "$WAIT_BOX_CONTROL"
-        fi
+        touch "$WAIT_BOX_CONTROL"
 
         # Thread to open the KDialog 'wait_box'.
         sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && (
@@ -458,10 +454,12 @@ _display_wait_box_message() {
         # Thread to check if the KDialog 'wait_box' was closed.
         (
             while [[ -f "$WAIT_BOX_CONTROL" ]] || [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
-                local dbus_ref=""
-                dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
-                if [[ -n "$dbus_ref" ]]; then
-                    qdbus "$dbus_ref" "/ProgressDialog" wasCancelled 2>/dev/null || _exit_script
+                if [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; then
+                    local dbus_ref=""
+                    dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
+                    if [[ -n "$dbus_ref" ]]; then
+                        qdbus "$dbus_ref" "/ProgressDialog" "wasCancelled" 2>/dev/null || _exit_script
+                    fi
                 fi
                 sleep 1
             done
@@ -470,23 +468,23 @@ _display_wait_box_message() {
 }
 
 _close_wait_box() {
-    # If 'wait_box' will open.
+    # Check if 'wait_box' will open.
     if [[ -f "$WAIT_BOX_CONTROL" ]]; then
         rm -f -- "$WAIT_BOX_CONTROL" # Cancel the future open.
     fi
 
-    # If Zenity 'wait_box' is open (waiting for an input in the FIFO).
+    # Check if Zenity 'wait_box' is open (waiting for an input in the FIFO).
     if pgrep -fl "$WAIT_BOX_FIFO" &>/dev/null; then
         # Close the Zenity using the FIFO: Send a '\n' for the 'cat'.
         printf "\n" >"$WAIT_BOX_FIFO"
     fi
 
-    # If KDialog 'wait_box' is open.
+    # Check if KDialog 'wait_box' is open.
     while [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
         local dbus_ref=""
         dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
         if [[ -n "$dbus_ref" ]]; then
-            qdbus "$dbus_ref" "/ProgressDialog" close
+            qdbus "$dbus_ref" "/ProgressDialog" "close" 2>/dev/null
             rm -f -- "$WAIT_BOX_CONTROL_KDE"
         fi
     done
