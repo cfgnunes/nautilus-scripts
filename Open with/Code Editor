@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2086
 
 # Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
@@ -12,7 +13,17 @@ _main() {
     _check_dependencies ""
     input_files=$(_get_files "par_type=all; par_get_pwd=true")
 
-    # shellcheck disable=SC2086
+    # Check if the first file is a binary file.
+    local file_1=""
+    file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
+    if ! [[ -d "$file_1" ]]; then
+        if [[ "$(_get_file_encoding "$file_1")" == "binary" ]]; then
+            _check_dependencies "command=ghex"
+            ghex -- $input_files &
+            exit 0
+        fi
+    fi
+
     # Run the main process.
     if _command_exists "code"; then
         code -- $input_files &
