@@ -73,7 +73,8 @@ _compare() {
         command=compare; pkg_manager=pacman; package=imagemagick |
         command=xdg-open; package=xdg-utils" ;;
     "diffpdf") dependencies="command=diffpdf" ;;
-    "meld" | "meld_hexadecimal") dependencies="command=meld" ;;
+    "meld") dependencies="command=meld" ;;
+    "meld_hexadecimal") dependencies="command=meld | command=xxd" ;;
     esac
     _check_dependencies "$dependencies"
 
@@ -93,7 +94,7 @@ _compare() {
             _exit_script
         fi
 
-        # Get images dimensions.
+        # Get image dimensions.
         local dimensions_1=""
         local dimensions_2=""
         dimensions_1=$(identify -format "%wx%h" "$file_1")
@@ -138,6 +139,7 @@ _compare() {
             _exit_script
         fi
 
+        # Get the file sizes.
         local file_1_size=""
         local file_2_size=""
         local size_difference=0
@@ -145,38 +147,37 @@ _compare() {
         file_2_size=$(_get_file_size "$file_2")
         size_difference=$(_get_difference "$file_1_size" "$file_2_size")
 
+        # If the files have different sizes,
+        # compute a column width for better comparison.
+        local cols=24
+        if ((size_difference != 0)); then
+            cols=$(_get_ideal_cols "$size_difference")
+        fi
+
+        # Convert files to hexadecimal text view.
         local file_1_hex=""
         local file_2_hex=""
         file_1_hex="$TEMP_DIR_TASK/$(basename -- "$file_1")"
         file_2_hex="$TEMP_DIR_TASK/$(basename -- "$file_2")"
+        xxd -c "$cols" "$file_1" "$file_1_hex"
+        xxd -c "$cols" "$file_2" "$file_2_hex"
 
-        # Convert files to hexadecimal text view.
-        if ((size_difference == 0)); then
-            xxd "$file_1" >"$file_1_hex"
-            xxd "$file_2" >"$file_2_hex"
-        else
-            local cols=""
-            cols=$(_get_ideal_cols "$size_difference")
-            xxd -c "$cols" "$file_1" | sed "s|^[^:]*: ||g" >"$file_1_hex"
-            xxd -c "$cols" "$file_2" | sed "s|^[^:]*: ||g" >"$file_2_hex"
-        fi
+        # Remove the addresses for better comparison.
+        sed -i "s|^[^:]*: ||g" "$file_1_hex"
+        sed -i "s|^[^:]*: ||g" "$file_2_hex"
 
-        # Compare the files with 'meld'.
+        # Compare and edit the files with 'meld'.
         meld -- "$file_1_hex" "$file_2_hex"
 
-        # Convert to plain hexdump.
-        if ((size_difference == 0)); then
-            sed -i "s|^[^:]*: ||g" "$file_1_hex"
-            sed -i "s|^[^:]*: ||g" "$file_2_hex"
-        fi
+        # Convert to plain hexadecimal dump.
         sed -i "s|  .*||g; s| ||g" "$file_1_hex"
         sed -i "s|  .*||g; s| ||g" "$file_2_hex"
 
-        # Save the files after a possible modifications.
+        # Save the files after possible modifications.
         local file_1_modified="$file_1_hex.bin"
         local file_2_modified="$file_2_hex.bin"
-        xxd -revert -plain "$file_1_hex" >"$file_1_modified"
-        xxd -revert -plain "$file_2_hex" >"$file_2_modified"
+        xxd -revert -plain "$file_1_hex" "$file_1_modified"
+        xxd -revert -plain "$file_2_hex" "$file_2_modified"
         _move_temp_file_to_output "$file_1" "$file_1_modified" "$file_1"
         _move_temp_file_to_output "$file_2" "$file_2_modified" "$file_2"
         ;;
@@ -185,7 +186,7 @@ _compare() {
 
 _get_ideal_cols() {
     local size_difference=$1
-    local cols=16
+    local cols=24
 
     local i=0
     for ((i = 23; i >= 5; i--)); do
