@@ -16,6 +16,7 @@
 (gtk_accel_path "<Actions>/ThunarActions/uca-action-68568877" "F6")
 ; (gtk_accel_path "<Actions>/ThunarActions/uca-action-23268647" "F4")
 (gtk_accel_path "<Actions>/ThunarActions/uca-action-56940409" "F7")
+; (gtk_accel_path "<Actions>/ThunarActions/uca-action-67869371" "<Primary>e")
 (gtk_accel_path "<Actions>/ThunarActions/uca-action-05717278" "<Primary><Alt>c")
 (gtk_accel_path "<Actions>/ThunarActions/uca-action-17837890" "<Primary><Alt>g")
 (gtk_accel_path "<Actions>/ThunarActions/uca-action-56456963" "<Primary><Alt>v")
@@ -30,4 +31,3 @@
 (gtk_accel_path "<Actions>/ThunarActions/uca-action-32770338" "<Primary><Shift>u")
 (gtk_accel_path "<Actions>/ThunarActions/uca-action-37604610" "<Primary><Shift>v")
 (gtk_accel_path "<Actions>/ThunarActions/uca-action-95672578" "<Primary><Shift>y")
-(gtk_accel_path "<Actions>/ThunarActions/uca-action-67869371" "<Primary>e")
