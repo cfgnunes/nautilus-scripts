@@ -20,61 +20,61 @@ _main() {
     std_output=$(_storage_text_read_all)
     std_output=$(_text_sort "$std_output")
 
-    _display_list_box "$std_output" "--column=Problem;--column=File"
+    _display_list_box "$std_output" "--column=Issues;--column=File"
 }
 
 _main_task() {
     local input_file=$1
     local output_dir=$2
-    local result_file=""
     local file_encoding=""
     local file_information=""
+    local issues=""
 
     file_encoding=$(_get_file_encoding "$input_file")
     file_information=$(file --dereference --separator "$FIELD_SEPARATOR" --no-pad -- "$input_file" | sed "s|\(.*\)$FIELD_SEPARATOR ||")
 
     # Run the checker 'non UTF-8 encoding'.
     if [[ "${file_encoding,,}" != *"us-ascii"* ]] && [[ "${file_encoding,,}" != *"utf-8"* ]]; then
-        result_file+="[non UTF-8 encoding]"
+        issues+="[non UTF-8 encoding]"
     fi
 
     # Run the checker 'UTF-8 with BOM'.
     if [[ "${file_encoding,,}" == *"utf-8"* ]]; then
         if head -c3 "$input_file" | LC_ALL=C grep --quiet -P '\xef\xbb\xbf'; then
-            result_file+="[UTF-8 with BOM]"
+            issues+="[UTF-8 with BOM]"
         fi
     fi
 
     # Run the checker 'non-LF line break'.
     if [[ "$file_information" == *"with CR"* ]]; then
-        result_file+="[non-LF line break]"
+        issues+="[non-LF line break]"
     fi
 
     # Run the checker 'trailing spaces' (for Unix and Windows files).
     if grep --quiet -P "[ \t]\r?$" "$input_file"; then
-        result_file+="[trailing spaces]"
+        issues+="[trailing spaces]"
     fi
 
     # Run the checker 'trailing spaces' (for Mac files).
     if [[ "$file_information" == *"with CR line"* ]] || [[ "$file_information" == *"with CR, LF line"* ]]; then
         if cat -A "$input_file" | grep --quiet " ^M"; then
-            result_file+="[trailing spaces]"
+            issues+="[trailing spaces]"
         fi
     fi
 
     # Run the checker 'missing line at the end'.
     if ! tail -c 1 "$input_file" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet "0d\|0a"; then
-        result_file+="[missing line at the end]"
+        issues+="[missing line at the end]"
     else
         if tail -c 3 "$input_file" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet "..0d0d\|..0a0a\|0a0d0a"; then
             # Run the checker 'has many line breaks at the end'.
-            result_file+="[extra lines at the end]"
+            issues+="[extra lines at the end]"
         fi
     fi
 
-    # Save the result only for files with problems.
-    if [[ -n "$result_file" ]]; then
-        _storage_text_write_ln "$result_file$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
+    # Save the result only for files with issues.
+    if [[ -n "$issues" ]]; then
+        _storage_text_write_ln "$issues$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
     fi
 }
 
