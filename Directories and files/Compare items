@@ -80,50 +80,50 @@ _compare() {
     # Run the main process.
     case $command in
     "compare")
-        if [[ -z "$file_3" ]]; then
-
-            # Check if both images have the same pixel values.
-            local pixel_error=""
-            pixel_error=$(compare -metric AE -- "$file_1" "$file_2" null: 2>&1)
-            if [[ "$pixel_error" == "0" ]]; then
-                _display_info_box "The two selected images are identical (same pixel values)."
-                _exit_script
-            fi
-
-            # Get images dimensions.
-            local dimensions_1=""
-            local dimensions_2=""
-            dimensions_1=$(identify -format "%wx%h" "$file_1")
-            dimensions_2=$(identify -format "%wx%h" "$file_2")
-
-            # Compare two images using a visual diff with the 'convert' command.
-            local temp_file=""
-            temp_file="$(_get_temp_file).png"
-            if [[ "$dimensions_1" == "$dimensions_2" ]]; then
-                # Compare images with the same dimensions.
-                convert \
-                    '(' "$file_1" -flatten -grayscale Rec709Luminance ')' \
-                    '(' "$file_2" -flatten -grayscale Rec709Luminance ')' \
-                    '(' -clone 0-1 -compose darken -composite ')' \
-                    -channel RGB -combine "$temp_file"
-            else
-                # Compare images with different dimensions.
-                compare "$file_1" "$file_2" -compose src "$temp_file"
-            fi
-
-            $(_xdg_get_default_app "image/png") -- "$temp_file"
-        else
+        if [[ -n "$file_3" ]]; then
             _display_error_box "You must select only two image files to compare!"
             _exit_script
         fi
+
+        # Check if both images have the same pixel values.
+        local pixel_error=""
+        pixel_error=$(compare -metric AE -- "$file_1" "$file_2" null: 2>&1)
+        if [[ "$pixel_error" == "0" ]]; then
+            _display_info_box "The two selected images are identical (same pixel values)."
+            _exit_script
+        fi
+
+        # Get images dimensions.
+        local dimensions_1=""
+        local dimensions_2=""
+        dimensions_1=$(identify -format "%wx%h" "$file_1")
+        dimensions_2=$(identify -format "%wx%h" "$file_2")
+
+        # Compare two images using a visual diff with the 'convert' command.
+        local temp_file=""
+        temp_file="$(_get_temp_file).png"
+        if [[ "$dimensions_1" == "$dimensions_2" ]]; then
+            # Compare images with the same dimensions.
+            convert \
+                '(' "$file_1" -flatten -grayscale Rec709Luminance ')' \
+                '(' "$file_2" -flatten -grayscale Rec709Luminance ')' \
+                '(' -clone 0-1 -compose darken -composite ')' \
+                -channel RGB -combine "$temp_file"
+        else
+            # Compare images with different dimensions.
+            compare "$file_1" "$file_2" -compose src "$temp_file"
+        fi
+
+        $(_xdg_get_default_app "image/png") -- "$temp_file"
+
         ;;
     "diffpdf")
-        if [[ -z "$file_3" ]]; then
-            diffpdf -- "$file_1" "$file_2" &
-        else
+        if [[ -n "$file_3" ]]; then
             _display_error_box "You must select only two PDFs to compare!"
             _exit_script
         fi
+
+        diffpdf -- "$file_1" "$file_2" &
         ;;
     "meld")
         if [[ -z "$file_3" ]]; then
