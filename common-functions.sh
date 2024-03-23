@@ -593,13 +593,13 @@ _get_files() {
     local input_files=""
     input_files=$(_get_filenames_filemanager)
 
-    # Parameter: "type"
+    # Parameter: "par_type"
     # Values:
     #   "file": Filter files (default).
     #   "directory": Filter directories.
     #   "all": Filter files and directories.
     #
-    # Parameter: "recursive"
+    # Parameter: "par_recursive"
     # Values:
     #   "false": Do not expand directories (default).
     #   "true": Expand directories.
