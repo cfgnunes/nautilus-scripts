@@ -162,6 +162,16 @@ _compare() {
         fi
 
         meld -- "$file_1_hex" "$file_2_hex"
+
+        # Save the file after a possible modification.
+        local file_1_modified="$file_1_hex.bin"
+        local file_2_modified="$file_2_hex.bin"
+        if ((size_difference == 0)); then
+            xxd -revert "$file_1_hex" >"$file_1_modified"
+            xxd -revert "$file_2_hex" >"$file_2_modified"
+        fi
+        _move_temp_file_to_output "$file_1" "$file_1_modified" "$file_1"
+        _move_temp_file_to_output "$file_2" "$file_2_modified" "$file_2"
         ;;
     esac
 }
