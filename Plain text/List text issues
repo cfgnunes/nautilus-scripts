@@ -40,7 +40,7 @@ _main_task() {
 
     # Run the checker 'UTF-8 with BOM'.
     if [[ "${file_encoding,,}" == *"utf-8"* ]]; then
-        if head -c3 "$input_file" | LC_ALL=C grep --quiet -m1 -P '\xef\xbb\xbf'; then
+        if head -c3 "$input_file" | LC_ALL=C grep --quiet --perl-regexp -m1 '\xef\xbb\xbf'; then
             issues+="[UTF-8 with BOM]"
         fi
     fi
@@ -51,7 +51,7 @@ _main_task() {
     fi
 
     # Run the checker 'trailing spaces' (for Unix and Windows files).
-    if grep --quiet -m1 -P "[ \t]\r?$" "$input_file"; then
+    if grep --quiet --perl-regexp -m1 "[ \t]\r?$" "$input_file"; then
         issues+="[trailing spaces]"
     fi
 
