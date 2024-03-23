@@ -58,13 +58,18 @@ _main_task() {
     # Run the checker 'trailing spaces' (for Mac files).
     if [[ "$file_information" == *"with CR line"* ]] || [[ "$file_information" == *"with CR, LF line"* ]]; then
         if cat -A "$input_file" | grep --quiet -m1 " ^M"; then
-            issues+="[trailing spaces]"
+            [[ "$issues" != *"trailing spaces"* ]] && issues+="[trailing spaces]"
         fi
     fi
 
-    # Run the checker 'mix tabs and spaces'.
-    if cat -A "$input_file" | grep --quiet -m1 "^^I" && cat -A "$input_file" | grep --quiet -m1 "^  "; then
+    # Run the checker 'mix tabs and spaces' (different lines).
+    if grep --quiet --perl-regexp -m1 "^\t" "$input_file" && grep --quiet --perl-regexp -m1 "^  " "$input_file"; then
         issues+="[mix tabs and spaces]"
+    fi
+
+    # Run the checker 'mix tabs and spaces' (same line).
+    if grep --quiet --perl-regexp -m1 "\t " "$input_file" || grep --quiet --perl-regexp -m1 " \t" "$input_file"; then
+        [[ "$issues" != *"mix tabs and spaces"* ]] && issues+="[mix tabs and spaces]"
     fi
 
     # Run the checker 'missing line at the end'.
