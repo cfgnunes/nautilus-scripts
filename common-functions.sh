@@ -324,6 +324,7 @@ _display_password_box() {
         password=$(zenity --title="Password" --entry --hide-text \
             --width=400 --text "$message" 2>/dev/null) || return 1
     elif _command_exists "kdialog"; then
+        sleep 0.1 # Avoid 'wait_box' open before.
         password=$(kdialog --title "Password" \
             --password "$message" 2>/dev/null) || return 1
     fi
@@ -447,9 +448,8 @@ _display_wait_box_message() {
         touch "$WAIT_BOX_CONTROL"
 
         # Thread to open the KDialog 'wait_box'.
-        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && (
-            kdialog --title="$(_get_script_name)" --progressbar "$message" 0 >"$WAIT_BOX_CONTROL_KDE"
-        ) &
+        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && kdialog \
+            --title="$(_get_script_name)" --progressbar "$message" 0 >"$WAIT_BOX_CONTROL_KDE" &
 
         # Thread to check if the KDialog 'wait_box' was closed.
         (
