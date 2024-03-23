@@ -469,15 +469,15 @@ _display_wait_box_message() {
 }
 
 _close_wait_box() {
+    # If 'wait_box' will open.
+    if [[ -f "$WAIT_BOX_CONTROL" ]]; then
+        rm -f -- "$WAIT_BOX_CONTROL" # Cancel the future open.
+    fi
+
     # If Zenity 'wait_box' is open (waiting for an input in the FIFO).
     if pgrep -fl "$WAIT_BOX_FIFO" &>/dev/null; then
         # Close the Zenity using the FIFO: Send a '\n' for the 'cat'.
         printf "\n" >"$WAIT_BOX_FIFO"
-    fi
-
-    # If 'wait_box' will open.
-    if [[ -f "$WAIT_BOX_CONTROL" ]]; then
-        rm -f -- "$WAIT_BOX_CONTROL" # Cancel the future open.
     fi
 
     # If KDialog 'wait_box' is open.
