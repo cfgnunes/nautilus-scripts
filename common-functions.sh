@@ -660,7 +660,8 @@ _get_files() {
         "$par_select_extension" \
         "$par_select_mime" \
         "$par_min_files" \
-        "$par_max_files"
+        "$par_max_files" \
+        "$par_recursive"
 
     # Sort the list by filename.
     if [[ "$par_sort_list" == "true" ]]; then
@@ -1300,8 +1301,9 @@ _validate_files_count() {
     local par_type=$2
     local par_select_extension=$3
     local par_select_mime=$4
-    local par_min_files="$5"
+    local par_min_files=$5
     local par_max_files=$6
+    local par_recursive=$7
 
     # Define a term for a valid file.
     local valid_file_term="valid files"
@@ -1324,10 +1326,18 @@ _validate_files_count() {
 
     # Check if there is at least one valid file.
     if ((valid_files_count == 0)); then
-        if [[ -n "$par_select_extension" ]]; then
-            _display_error_box "You must select files with extension: '.${par_select_extension//|/\' or \'.}'!"
+        if [[ "$par_recursive" == "true" ]]; then
+            if [[ -n "$par_select_extension" ]]; then
+                _display_error_box "No files with extension: '.${par_select_extension//|/\' or \'.}' were found in the selection!"
+            else
+                _display_error_box "No $valid_file_term were found in the selection!"
+            fi
         else
-            _display_error_box "You must select $valid_file_term!"
+            if [[ -n "$par_select_extension" ]]; then
+                _display_error_box "You must select files with extension: '.${par_select_extension//|/\' or \'.}'!"
+            else
+                _display_error_box "You must select $valid_file_term!"
+            fi
         fi
         _exit_script
     fi
