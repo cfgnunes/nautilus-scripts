@@ -161,9 +161,10 @@ _compare() {
             xxd -c "$cols" "$file_2" | sed "s|^[^:]*: ||g" >"$file_2_hex"
         fi
 
+        # Compare the files with 'meld'.
         meld -- "$file_1_hex" "$file_2_hex"
 
-        # Save the file after a possible modification.
+        # Save the files after a possible modifications.
         local file_1_modified="$file_1_hex.bin"
         local file_2_modified="$file_2_hex.bin"
         if ((size_difference == 0)); then
