@@ -18,8 +18,9 @@ TEMP_DIR_ITEMS_TO_REMOVE="$TEMP_DIR/items_to_remove"
 TEMP_DIR_LOGS="$TEMP_DIR/logs"
 TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
 TEMP_DIR_TASK="$TEMP_DIR/task"
-WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control" # File control to use in the 'wait_box'.
-WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"       # FIFO to use in the 'wait_box'.
+WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control"         # File control to use in the 'wait_box'.
+WAIT_BOX_CONTROL_KDE="$TEMP_DIR/wait_box_control_kde" # File control to use in the 'wait_box' (using 'kdialog').
+WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"               # FIFO to use in the 'wait_box' (using 'Zenity').
 
 readonly \
     FIELD_SEPARATOR \
@@ -31,6 +32,7 @@ readonly \
     TEMP_DIR_STORAGE_TEXT \
     TEMP_DIR_TASK \
     WAIT_BOX_CONTROL \
+    WAIT_BOX_CONTROL_KDE \
     WAIT_BOX_FIFO
 
 # -----------------------------------------------------------------------------
@@ -299,7 +301,10 @@ _display_list_box() {
             _xdg_open_item_location "$selected_item"
         fi
     elif _command_exists "kdialog"; then
-        message=$(tr "$FIELD_SEPARATOR" " " <<<"$message")
+        columns=$(sed "s|--column=||g" <<<"$columns")
+        columns=$(tr ";" "\t" <<<"$columns")
+        message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
+        message="$columns\n\n$message"
         kdialog --title "$(_get_script_name)" --geometry 800x450 --textinputbox "" "$message" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         message=$(tr "$FIELD_SEPARATOR" " " <<<"$message")
@@ -423,13 +428,14 @@ _display_wait_box_message() {
     if ! _is_gui_session; then
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
-        if ! [[ -p "$WAIT_BOX_FIFO" ]]; then
-            mkfifo "$WAIT_BOX_FIFO"
-        fi
-
-        # Tells the script that the 'wait_box' will open if the task takes over 2 seconds.
+        # Flag to inform that the 'wait_box' will open (if the task takes over 2 seconds).
         if ! [[ -f "$WAIT_BOX_CONTROL" ]]; then
             touch "$WAIT_BOX_CONTROL"
+        fi
+
+        # Create the FIFO to use in Zenity.
+        if ! [[ -p "$WAIT_BOX_FIFO" ]]; then
+            mkfifo "$WAIT_BOX_FIFO"
         fi
 
         # shellcheck disable=SC2002
@@ -437,11 +443,33 @@ _display_wait_box_message() {
             zenity --title="$(_get_script_name)" --progress \
                 --width=400 --pulsate --auto-close --text="$message" || _exit_script
         ) &
+    elif _command_exists "kdialog"; then
+        # Flag to inform that the 'wait_box' will open (if the task takes over 2 seconds).
+        if ! [[ -f "$WAIT_BOX_CONTROL" ]]; then
+            touch "$WAIT_BOX_CONTROL"
+        fi
+
+        # Thread to open the 'wait_box'.
+        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && (
+            kdialog --title="$(_get_script_name)" --progressbar "$message" 0 >"$WAIT_BOX_CONTROL_KDE"
+        ) &
+
+        # Thread to check if the 'kdialog' was closed.
+        (
+            while [[ -f "$WAIT_BOX_CONTROL" ]] || [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
+                local dbus_ref=""
+                dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
+                if [[ -n "$dbus_ref" ]]; then
+                    qdbus "$dbus_ref" "/ProgressDialog" wasCancelled 2>/dev/null || _exit_script
+                fi
+                sleep 1
+            done
+        ) &
     fi
 }
 
 _close_wait_box() {
-    # If 'wait_box' is open (waiting for an input in the FIFO).
+    # If Zenity 'wait_box' is open (waiting for an input in the FIFO).
     if pgrep -fl "$WAIT_BOX_FIFO" &>/dev/null; then
         # Close the Zenity using the FIFO: Send a '\n' for the 'cat'.
         printf "\n" >"$WAIT_BOX_FIFO"
@@ -451,6 +479,16 @@ _close_wait_box() {
     if [[ -f "$WAIT_BOX_CONTROL" ]]; then
         rm -f -- "$WAIT_BOX_CONTROL" # Cancel the future open.
     fi
+
+    # If KDialog 'wait_box' is open.
+    while [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
+        local dbus_ref=""
+        dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
+        if [[ -n "$dbus_ref" ]]; then
+            qdbus "$dbus_ref" "/ProgressDialog" close
+            rm -f -- "$WAIT_BOX_CONTROL_KDE"
+        fi
+    done
 }
 
 _exit_script() {
