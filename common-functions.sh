@@ -19,8 +19,8 @@ TEMP_DIR_LOGS="$TEMP_DIR/logs"
 TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
 TEMP_DIR_TASK="$TEMP_DIR/task"
 WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control"         # File control to use in the 'wait_box'.
-WAIT_BOX_CONTROL_KDE="$TEMP_DIR/wait_box_control_kde" # File control to use in the 'wait_box' (using 'kdialog').
-WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"               # FIFO to use in the 'wait_box' (using 'Zenity').
+WAIT_BOX_CONTROL_KDE="$TEMP_DIR/wait_box_control_kde" # File control to use in the KDialog 'wait_box'.
+WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"               # FIFO to use in the Zenity 'wait_box'.
 
 readonly \
     FIELD_SEPARATOR \
@@ -433,11 +433,12 @@ _display_wait_box_message() {
             touch "$WAIT_BOX_CONTROL"
         fi
 
-        # Create the FIFO to use in Zenity.
+        # Create the FIFO to use in Zenity 'wait_box'.
         if ! [[ -p "$WAIT_BOX_FIFO" ]]; then
             mkfifo "$WAIT_BOX_FIFO"
         fi
 
+        # Thread to open the Zenity 'wait_box'.
         # shellcheck disable=SC2002
         sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && cat "$WAIT_BOX_FIFO" | (
             zenity --title="$(_get_script_name)" --progress \
@@ -449,12 +450,12 @@ _display_wait_box_message() {
             touch "$WAIT_BOX_CONTROL"
         fi
 
-        # Thread to open the 'wait_box'.
+        # Thread to open the KDialog 'wait_box'.
         sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && (
             kdialog --title="$(_get_script_name)" --progressbar "$message" 0 >"$WAIT_BOX_CONTROL_KDE"
         ) &
 
-        # Thread to check if the 'kdialog' was closed.
+        # Thread to check if the KDialog 'wait_box' was closed.
         (
             while [[ -f "$WAIT_BOX_CONTROL" ]] || [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
                 local dbus_ref=""
