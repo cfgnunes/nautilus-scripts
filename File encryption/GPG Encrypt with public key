@@ -18,18 +18,21 @@ _main() {
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     local users=""
-    users=$(gpg --list-public-keys --with-colons | grep "^uid" | cut -d ':' -f 10)
+    users=$(gpg --list-public-keys --with-colons | grep "^uid" | cut -d ':' -f 10 2>/dev/null)
     if [[ -z "$users" ]]; then
         _display_error_box "Failed: no public keys imported!"
         _exit_script
     fi
 
-    users=$(tr "\n" "$FIELD_SEPARATOR" <<<"$users")
     # shellcheck disable=SC2086
     if _command_exists "zenity"; then
-        TEMP_DATA_TASK=$(zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=200 --width=600 $users 2>/dev/null) || _exit_script
+        users=$(tr "\n" "$FIELD_SEPARATOR" <<<"$users")
+        TEMP_DATA_TASK=$(zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=300 --width=600 $users 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
-        TEMP_DATA_TASK=$(kdialog --title "Select a user" --combobox "Select a user from the list below." $users 2>/dev/null) || _exit_script
+        # shellcheck disable=SC2001
+        users=$(sed "s|\(.*\)|\1:\1:off|g" <<<"$users")
+        users=$(tr ":\n" "$FIELD_SEPARATOR" <<<"$users")
+        TEMP_DATA_TASK=$(kdialog --title "Select a user" --geometry "600x300" --radiolist "Select a user from the list below." $users 2>/dev/null) || _exit_script
     fi
 
     if [[ -z "$TEMP_DATA_TASK" ]]; then

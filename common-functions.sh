@@ -305,7 +305,8 @@ _display_list_box() {
         columns=$(tr ";" "\t" <<<"$columns")
         message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
         message="$columns\n\n$message"
-        kdialog --title "$(_get_script_name)" --geometry 800x450 --textinputbox "" "$message" &>/dev/null || _exit_script
+        kdialog --title "$(_get_script_name)" --geometry "800x450" \
+            --textinputbox "" "$message" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         message=$(tr "$FIELD_SEPARATOR" " " <<<"$message")
         xmessage -title "$(_get_script_name)" "$message" &>/dev/null || _exit_script
@@ -378,7 +379,8 @@ _display_text_box() {
         zenity --title "$(_get_script_name)" --text-info \
             --no-wrap --width=800 --height=450 <<<"$message" &>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
-        kdialog --title "$(_get_script_name)" --geometry 800x450 --textinputbox "" "$message" &>/dev/null || _exit_script
+        kdialog --title "$(_get_script_name)" --geometry "800x450" \
+            --textinputbox "" "$message" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "$message" &>/dev/null || _exit_script
     fi
