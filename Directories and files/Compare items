@@ -164,18 +164,19 @@ _compare() {
         # Compare the files with 'meld'.
         meld -- "$file_1_hex" "$file_2_hex"
 
+        # Convert to plain hexdump.
+        if ((size_difference == 0)); then
+            sed -i "s|^[^:]*: ||g" "$file_1_hex"
+            sed -i "s|^[^:]*: ||g" "$file_2_hex"
+        fi
+        sed -i "s|  .*||g; s| ||g" "$file_1_hex"
+        sed -i "s|  .*||g; s| ||g" "$file_2_hex"
+
         # Save the files after a possible modifications.
         local file_1_modified="$file_1_hex.bin"
         local file_2_modified="$file_2_hex.bin"
-        if ((size_difference == 0)); then
-            xxd -revert "$file_1_hex" >"$file_1_modified"
-            xxd -revert "$file_2_hex" >"$file_2_modified"
-        else
-            sed -i "s|  .*||g; s| ||g" "$file_1_hex"
-            sed -i "s|  .*||g; s| ||g" "$file_2_hex"
-            xxd -revert -plain "$file_1_hex" >"$file_1_modified"
-            xxd -revert -plain "$file_2_hex" >"$file_2_modified"
-        fi
+        xxd -revert -plain "$file_1_hex" >"$file_1_modified"
+        xxd -revert -plain "$file_2_hex" >"$file_2_modified"
         _move_temp_file_to_output "$file_1" "$file_1_modified" "$file_1"
         _move_temp_file_to_output "$file_2" "$file_2_modified" "$file_2"
         ;;
