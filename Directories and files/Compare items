@@ -128,6 +128,7 @@ _compare() {
         ;;
     "meld")
         if [[ -z "$file_3" ]]; then
+            # TODO Add a alternative tool for the KDE environment.
             meld -- "$file_1" "$file_2" &
         else
             meld -- "$file_1" "$file_2" "$file_3" &
