@@ -116,7 +116,8 @@ _check_dependencies() {
             continue
         fi
 
-        # Ignore installing the dependency if the package is already installed (packages that do not have a command).
+        # Ignore installing the dependency if the package is already installed
+        # (packages that do not have a command).
         if [[ -n "$package" ]] && [[ -z "$command" ]] && _pkg_is_package_installed "$pkg_manager_installed" "$package"; then
             continue
         fi
@@ -278,7 +279,8 @@ _display_list_box() {
         items_count=$(tr -cd "\n" <<<"$message" | wc -c)
         message_select=" Select an item to open its location:"
     else
-        # NOTE: Some versions of Zenity crash if the message is empty (Segmentation fault).
+        # NOTE: Some versions of Zenity crash if the
+        # message is empty (Segmentation fault).
         message=" "
     fi
 
@@ -502,7 +504,8 @@ _exit_script() {
     # Get the process ID (PID) of all child processes.
     child_pids=$(pstree -p "$script_pid" | grep --only-matching --perl-regexp "\(+\K[^)]+")
 
-    # NOTE: Use 'xargs' and kill to send the SIGTERM signal to all child processes, including the current script.
+    # NOTE: Use 'xargs' and kill to send the SIGTERM signal to all child
+    # processes, including the current script.
     # See the: https://www.baeldung.com/linux/safely-exit-scripts
     xargs kill <<<"$child_pids" &>/dev/null
 }
