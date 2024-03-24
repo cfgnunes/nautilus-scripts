@@ -525,10 +525,32 @@ _gdbus_notify() {
         "[]" '{"urgency": <1>}' 5000 &>/dev/null
 }
 
+_get_filename_dir() {
+    local input_filename=$1
+    local dir=""
+
+    dir=$(cd -- "$(dirname -- "$input_filename")" &>/dev/null && pwd)
+
+    printf "%s" "$dir"
+}
+
 _get_filename_extension() {
     local filename=$1
 
     grep --ignore-case --only-matching --perl-regexp "(\.tar)?\.[a-z0-9_~-]{0,15}$" <<<"$filename" || true
+}
+
+_get_filename_full_path() {
+    local input_filename=$1
+    local full_path=$input_filename
+    local dir=""
+
+    if [[ $input_filename != "/"* ]]; then
+        dir=$(_get_filename_dir "$input_filename")
+        full_path=$dir/$(basename -- "$input_filename")
+    fi
+
+    printf "%s" "$full_path"
 }
 
 _get_filename_next_suffix() {
@@ -703,28 +725,6 @@ _get_file_mime() {
     fi
 
     printf "%s" "$std_output"
-}
-
-_get_filename_dir() {
-    local input_filename=$1
-    local dir=""
-
-    dir=$(cd -- "$(dirname -- "$input_filename")" &>/dev/null && pwd)
-
-    printf "%s" "$dir"
-}
-
-_get_filename_full_path() {
-    local input_filename=$1
-    local full_path=$input_filename
-    local dir=""
-
-    if [[ $input_filename != "/"* ]]; then
-        dir=$(_get_filename_dir "$input_filename")
-        full_path=$dir/$(basename -- "$input_filename")
-    fi
-
-    printf "%s" "$full_path"
 }
 
 _get_max_procs() {
@@ -1438,10 +1438,10 @@ export -f \
     _exit_script \
     _get_file_encoding \
     _get_file_mime \
-    _get_filename_extension \
-    _get_filename_next_suffix \
     _get_filename_dir \
+    _get_filename_extension \
     _get_filename_full_path \
+    _get_filename_next_suffix \
     _get_max_procs \
     _get_output_filename \
     _get_pwd \
