@@ -844,14 +844,14 @@ _get_temp_file() {
 }
 
 _get_working_directory() {
-    local working_directory=""
-    local file_1=""
-
     # NOTE: The working directory is detected by using the directory name
     # of the first input file. Some file managers do not print the working
     # directory correctly for the scripts, so it is not precise to use the
     # 'pwd' command.
+    local file_1=""
     file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
+
+    local working_directory=""
     working_directory=$(_get_filename_dir "$file_1")
 
     printf "%s" "$working_directory"
