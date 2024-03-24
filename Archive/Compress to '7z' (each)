@@ -40,6 +40,7 @@ _main_task() {
             std_output=$(bsdtar --strip-components 1 -a -cf "$output_file" -- . 2>&1)
         fi
     else
+        cd -- "$(_get_full_dir_filename "$input_file")" || return 1
         local input_file_basename=""
         input_file_basename=$(basename -- "$input_file")
 

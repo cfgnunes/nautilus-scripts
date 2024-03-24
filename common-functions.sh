@@ -584,7 +584,7 @@ _get_filenames_filemanager() {
         # Decode the URI list.
         input_files=$(_text_uri_decode "$input_files")
     else
-        input_files=$INPUT_FILES # Standard input
+        input_files=$INPUT_FILES # Standard input.
     fi
 
     input_files=$(_str_remove_empty_tokens "$input_files")
@@ -705,13 +705,22 @@ _get_file_mime() {
     printf "%s" "$std_output"
 }
 
+_get_full_dir_filename() {
+    local input_filename=$1
+    local dir=""
+
+    dir=$(cd -- "$(dirname -- "$input_filename")" &>/dev/null && pwd)
+
+    printf "%s" "$dir"
+}
+
 _get_full_path_filename() {
     local input_filename=$1
     local full_path=$input_filename
     local dir=""
 
     if [[ $input_filename != "/"* ]]; then
-        dir=$(cd -- "$(dirname -- "$input_filename")" &>/dev/null && pwd -P)
+        dir=$(_get_full_dir_filename "$input_filename")
         full_path=$dir/$(basename -- "$input_filename")
     fi
 
@@ -735,7 +744,7 @@ _get_output_dir() {
     eval "$parameters"
 
     # Check directories available to put the 'output' dir.
-    base_dir=$(pwd)
+    base_dir=$(_get_pwd)
     [[ ! -w "$base_dir" ]] && base_dir=$HOME
     [[ ! -w "$base_dir" ]] && base_dir="/tmp"
     if [[ ! -w "$base_dir" ]]; then
@@ -805,6 +814,18 @@ _get_output_filename() {
     output_file=$(_get_filename_next_suffix "$output_file")
 
     printf "%s" "$output_file"
+}
+
+_get_pwd() {
+    local pwd=""
+    local file_1=""
+
+    # NOTE The working directory is detected by using the dirname of the first input file.
+    # Some file managers not send the pwd correctly for the scripts, so it is not precise to use the 'pwd' command.
+    file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
+    pwd=$(_get_full_dir_filename "$file_1")
+
+    printf "%s" "$pwd"
 }
 
 _get_script_name() {
@@ -1171,7 +1192,7 @@ _text_remove_home() {
 _text_remove_pwd() {
     local input_text=$1
     local string_pwd=""
-    string_pwd=$(pwd -P)
+    string_pwd=$(_get_pwd)
 
     sed "s|$string_pwd|.|g; s|\./\./|./|g" <<<"$input_text"
 }
@@ -1367,7 +1388,7 @@ _xdg_open_item_location() {
         return
     fi
 
-    dir=$(cd -- "$(dirname -- "$item")" &>/dev/null && pwd -P)
+    dir=$(_get_full_dir_filename "$item")
     if [[ -z "$dir" ]]; then
         return
     fi
@@ -1400,6 +1421,7 @@ _xdg_get_default_app() {
 export \
     FIELD_SEPARATOR \
     IGNORE_FIND_PATH \
+    INPUT_FILES \
     TEMP_DATA_TASK \
     TEMP_DIR_ITEMS_TO_REMOVE \
     TEMP_DIR_LOGS \
@@ -1418,9 +1440,11 @@ export -f \
     _get_file_mime \
     _get_filename_extension \
     _get_filename_next_suffix \
+    _get_full_dir_filename \
     _get_full_path_filename \
     _get_max_procs \
     _get_output_filename \
+    _get_pwd \
     _get_temp_dir_local \
     _get_temp_file \
     _has_string_in_list \

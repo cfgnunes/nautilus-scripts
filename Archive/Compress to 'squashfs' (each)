@@ -25,12 +25,10 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
-    local input_file_basename=""
-    input_file_basename=$(basename -- "$input_file")
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=squashfs")
-    std_output=$(mksquashfs "$input_file_basename" "$output_file" 2>&1)
+    std_output=$(mksquashfs "$input_file" "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
