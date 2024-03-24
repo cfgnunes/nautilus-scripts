@@ -820,8 +820,10 @@ _get_pwd() {
     local pwd=""
     local file_1=""
 
-    # NOTE The working directory is detected by using the dirname of the first input file.
-    # Some file managers not send the pwd correctly for the scripts, so it is not precise to use the 'pwd' command.
+    # NOTE: The working directory is detected by using the directory name
+    # of the first input file. Some file managers do not print the working
+    # directory correctly for the scripts, so it is not precise to use the
+    # 'pwd' command.
     file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
     pwd=$(_get_filename_dir "$file_1")
 
