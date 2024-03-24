@@ -55,13 +55,13 @@ bash install.sh
 
 File managers compatibility:
 
-| File manager           | Environment | Shortcuts working |
-| ---------------------- | ----------- | ----------------- |
-| GNOME Files (Nautilus) | GNOME       | Yes               |
-| Dolphin                | KDE Plasma  |                   |
-| Caja                   | MATE        | Yes               |
-| Nemo                   | Cinnamon    | Yes               |
-| Thunar                 | Xfce        |                   |
+| File manager           | Environment | Integration | Shortcuts |
+| ---------------------- | ----------- | ----------- | --------- |
+| GNOME Files (Nautilus) | GNOME       | Yes         | Yes       |
+| Dolphin                | KDE Plasma  | Yes         | No        |
+| Caja                   | MATE        | Yes         | Yes       |
+| Nemo                   | Cinnamon    | Yes         | Yes       |
+| Thunar                 | Xfce        | Yes         | No        |
 
 Most scripts have been tested on the following GNU/Linux distributions:
 
