@@ -844,7 +844,7 @@ _get_temp_file() {
 }
 
 _get_working_directory() {
-    local pwd=""
+    local working_directory=""
     local file_1=""
 
     # NOTE: The working directory is detected by using the directory name
@@ -852,9 +852,9 @@ _get_working_directory() {
     # directory correctly for the scripts, so it is not precise to use the
     # 'pwd' command.
     file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
-    pwd=$(_get_filename_dir "$file_1")
+    working_directory=$(_get_filename_dir "$file_1")
 
-    printf "%s" "$pwd"
+    printf "%s" "$working_directory"
 }
 
 _has_string_in_list() {
