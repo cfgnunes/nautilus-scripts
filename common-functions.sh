@@ -1196,10 +1196,10 @@ _text_remove_home() {
 
 _text_remove_pwd() {
     local input_text=$1
-    local string_pwd=""
-    string_pwd=$(_get_working_directory)
+    local working_directory=""
+    working_directory=$(_get_working_directory)
 
-    sed "s|$string_pwd|.|g; s|\./\./|./|g" <<<"$input_text"
+    sed "s|$working_directory|.|g; s|\./\./|./|g" <<<"$input_text"
 }
 
 _text_sort() {
