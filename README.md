@@ -55,14 +55,14 @@ bash install.sh
 
 File managers compatibility:
 
-| File manager           | Environment | Integration | Shortcuts |
-| ---------------------- | ----------- | ----------- | --------- |
-| GNOME Files (Nautilus) | GNOME       | Yes         | Yes       |
-| Dolphin                | KDE Plasma  | Yes         | No        |
-| Caja                   | MATE        | Yes         | Yes       |
-| Nemo                   | Cinnamon    | Yes         | Yes       |
-| Thunar                 | Xfce        | Yes         | No        |
-| PCManFM-Qt             | LXQt        | Yes         | No        |
+| File manager           | Environment | Menu integration | Shortcuts |
+| ---------------------- | ----------- | ---------------- | --------- |
+| GNOME Files (Nautilus) | GNOME       | Yes              | Yes       |
+| Dolphin                | KDE Plasma  | Yes              | No        |
+| Caja                   | MATE        | Yes              | Yes       |
+| Nemo                   | Cinnamon    | Yes              | Yes       |
+| Thunar                 | Xfce        | Yes              | No        |
+| PCManFM-Qt             | LXQt        | Yes              | No        |
 
 Most scripts have been tested on the following GNU/Linux distributions:
 
