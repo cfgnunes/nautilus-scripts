@@ -136,7 +136,8 @@ _check_dependencies() {
     if [[ -n "$packages_to_install" ]]; then
         local message="These packages were not found:"
         message+=$(sed "s| |\n- |g" <<<"$packages_to_install")
-        message+="\n\nWould you like to install them?"
+        message+=$'\n'$'\n'
+        message+="Would you like to install them?"
         if _display_question_box "$message"; then
             _pkg_install_packages "$pkg_manager_installed" "${packages_to_install/ /}"
         else

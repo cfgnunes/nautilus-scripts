@@ -16,12 +16,14 @@ _main() {
     # Run the main process.
     if _command_exists "gnome-terminal"; then
         gnome-terminal --working-directory="$input_files" &
+    elif _command_exists "konsole"; then
+        konsole --workdir "$input_files" &
     elif _command_exists "mate-terminal"; then
         mate-terminal --working-directory="$input_files" &
     elif _command_exists "xfce4-terminal"; then
         xfce4-terminal --default-working-directory="$input_files" &
-    elif _command_exists "konsole"; then
-        konsole --workdir "$input_files" &
+    elif _command_exists "qterminal"; then
+        qterminal --workdir "$input_files" &
     else
         _check_dependencies "command=gnome-terminal"
         gnome-terminal --working-directory="$input_files" &

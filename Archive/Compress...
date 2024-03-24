@@ -15,10 +15,16 @@ _main() {
     # shellcheck disable=SC2086
     if _command_exists "file-roller"; then
         file-roller --add -- $input_files &
-    elif _command_exists "engrampa"; then
-        engrampa --add -- $input_files &
     elif _command_exists "ark"; then
         ark --add --dialog -- $input_files &
+    elif _command_exists "engrampa"; then
+        engrampa --add -- $input_files &
+    elif _command_exists "lxqt-archiver"; then
+        lxqt-archiver --add -- $input_files &
+    elif _command_exists "arqiver"; then
+        arqiver --sa $input_files &
+    elif _command_exists "xarchiver"; then
+        xarchiver --compress=$input_files &
     else
         _check_dependencies "command=file-roller"
         file-roller --add -- $input_files &

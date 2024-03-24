@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Install the scripts for the GNOME Files (Nautilus), Caja and Nemo file managers.
+# Install the scripts for file managers.
 
 set -eu
 
@@ -114,6 +114,10 @@ _check_default_filemanager() {
         INSTALL_DIR="$HOME/.local/share/nemo/scripts"
         ACCELS_FILE="$HOME/.gnome2/accels/nemo"
         FILE_MANAGER="nemo"
+    elif _command_exists "pcmanfm-qt"; then
+        INSTALL_DIR="$HOME/.local/share/scripts"
+        ACCELS_FILE=""
+        FILE_MANAGER="pcmanfm-qt"
     elif _command_exists "thunar"; then
         INSTALL_DIR="$HOME/.local/share/scripts"
         ACCELS_FILE="$HOME/.config/Thunar/accels.scm"
@@ -138,6 +142,12 @@ _step_install_dependencies() {
     printf " > Installing dependencies...\n"
 
     local common_names=""
+    # Packages for dialogs...
+    if [[ "${XDG_CURRENT_DESKTOP,,}" == *"kde"* ]]; then
+        common_names+="kdialog "
+    else
+        common_names+="zenity "
+    fi
     # Packages for compress/decompress archives...
     common_names+="bzip2 gzip squashfs-tools tar unzip zip "
     # Packages for documents...
@@ -230,14 +240,21 @@ _step_install_scripts() {
         mv "$tmp_install_dir/scripts" "$INSTALL_DIR/User previous scripts"
     fi
 
-    # Install menus for 'Thunar' or 'Dolphin'.
-    if [[ "$FILE_MANAGER" == "thunar" ]]; then
-        printf " > Installing Thunar actions...\n"
-        _step_make_thunar_actions
-    elif [[ "$FILE_MANAGER" == "dolphin" ]]; then
+    # Install menus for specific file managers.
+    case "$FILE_MANAGER" in
+    "dolphin")
         printf " > Installing Dolphin actions...\n"
         _step_make_dolphin_actions
-    fi
+        ;;
+    "pcmanfm-qt")
+        printf " > Installing PCManFM-Qt actions...\n"
+        _step_make_pcmanfm_actions
+        ;;
+    "thunar")
+        printf " > Installing Thunar actions...\n"
+        _step_make_thunar_actions
+        ;;
+    esac
 }
 
 _step_install_shortcuts() {
@@ -274,13 +291,17 @@ _step_install_shortcuts() {
 _step_close_filemanager() {
     printf " > Closing the file manager to reload its configurations...\n"
 
-    eval "$FILE_MANAGER -q &>/dev/null" || true
+    case "$FILE_MANAGER" in
+    "nautilus" | "caja" | "nemo" | "thunar") $FILE_MANAGER -q &>/dev/null || true & ;;
+    "pcmanfm-qt") killall "$FILE_MANAGER" ;;
+    esac
 }
 
 _step_make_dolphin_actions() {
-    local dolphin_menus_dir="$HOME/.local/share/kio/servicemenus"
-    rm -rf "$dolphin_menus_dir" 2>/dev/null || true
-    mkdir --parents "$dolphin_menus_dir"
+    local desktop_menus_dir="$HOME/.local/share/kio/servicemenus"
+
+    rm -rf "$desktop_menus_dir" 2>/dev/null || true
+    mkdir --parents "$desktop_menus_dir"
 
     local filename=""
     local name_sub=""
@@ -337,7 +358,7 @@ _step_make_dolphin_actions() {
             par_max_files=$(_get_script_parameter_value "$filename" "par_max_files")
 
             local desktop_filename=""
-            desktop_filename="${dolphin_menus_dir}/${submenu} - ${name}.desktop"
+            desktop_filename="${desktop_menus_dir}/${submenu} - ${name}.desktop"
             {
                 printf "%s\n" "[Desktop Entry]"
                 printf "%s\n" "Type=Service"
@@ -358,6 +379,78 @@ _step_make_dolphin_actions() {
                 printf "\n"
                 printf "%s\n" "[Desktop Action scriptAction]"
                 printf "%s\n" "Name=$name_sub"
+                printf "%s\n" "Exec=bash \"$filename\" %F"
+            } >"$desktop_filename"
+            chmod +x "$desktop_filename"
+        done
+}
+
+_step_make_pcmanfm_actions() {
+    local desktop_menus_dir="$HOME/.local/share/file-manager/actions"
+
+    rm -rf "$desktop_menus_dir" 2>/dev/null || true
+    mkdir --parents "$desktop_menus_dir"
+
+    local filename=""
+    local name=""
+    local script_relative=""
+    local submenu=""
+
+    # Generate a '.desktop' file for each script.
+    find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*.assets/*" -print0 2>/dev/null | sort --zero-terminated |
+        while IFS= read -r -d "" filename; do
+            # shellcheck disable=SC2001
+            script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
+            name=${script_relative##*/}
+            submenu=${script_relative%%/*}
+
+            # Set the mime requirements.
+            local par_recursive=""
+            local par_select_mime=""
+            par_recursive=$(_get_script_parameter_value "$filename" "par_recursive")
+            par_select_mime=$(_get_script_parameter_value "$filename" "par_select_mime")
+
+            if [[ -z "$par_select_mime" ]]; then
+                local par_type=""
+                par_type=$(_get_script_parameter_value "$filename" "par_type")
+
+                case "$par_type" in
+                "directory") par_select_mime="inode/directory" ;;
+                "all") par_select_mime="all/all" ;;
+                "file") par_select_mime="all/allfiles" ;;
+                *) par_select_mime="all/allfiles" ;;
+                esac
+            fi
+
+            if [[ "$par_recursive" == "true" ]]; then
+                case "$par_select_mime" in
+                "inode/directory") : ;;
+                "all/all") : ;;
+                "all/allfiles") par_select_mime="all/all" ;;
+                *) par_select_mime+=";inode/directory" ;;
+                esac
+            fi
+
+            par_select_mime="$par_select_mime;"
+            # shellcheck disable=SC2001
+            par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
+
+            # Set the min/max files requirements.
+            local par_min_files=""
+            local par_max_files=""
+            par_min_files=$(_get_script_parameter_value "$filename" "par_min_files")
+            par_max_files=$(_get_script_parameter_value "$filename" "par_max_files")
+
+            local desktop_filename=""
+            desktop_filename="${desktop_menus_dir}/${submenu} - ${name}.desktop"
+            {
+                printf "%s\n" "[Desktop Entry]"
+                printf "%s\n" "Type=Action"
+                printf "%s\n" "Name=$submenu - $name"
+                printf "%s\n" "Profiles=scriptAction"
+                printf "\n"
+                printf "%s\n" "[X-Action-Profile scriptAction]"
+                printf "%s\n" "MimeTypes=$par_select_mime"
                 printf "%s\n" "Exec=bash \"$filename\" %F"
             } >"$desktop_filename"
             chmod +x "$desktop_filename"
