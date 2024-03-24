@@ -32,7 +32,7 @@ _main_task() {
         cd -- "$input_file" || return 1
         std_output=$(tar -czf "$output_file" --transform="s|^\.||g" -- . 2>&1)
     else
-        cd -- "$(_get_full_dir_filename "$input_file")" || return 1
+        cd -- "$(_get_filename_dir "$input_file")" || return 1
         local input_file_basename=""
         input_file_basename=$(basename -- "$input_file")
         std_output=$(tar -czf "$output_file" -- "$input_file_basename" 2>&1)

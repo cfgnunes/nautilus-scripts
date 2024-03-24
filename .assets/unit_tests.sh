@@ -43,7 +43,7 @@ _main() {
     _run_get_filenames_count
     _run_get_filenames_list
     _run_get_files
-    _run_get_full_path_filename
+    _run_get_filename_full_path
     _run_get_max_procs
     _run_get_output_dir
     _run_get_output_filename
@@ -320,8 +320,8 @@ _run_get_files() {
     :
 }
 
-_run_get_full_path_filename() {
-    # TODO Implement the test: '_run_get_full_path_filename'.
+_run_get_filename_full_path() {
+    # TODO Implement the test: '_run_get_filename_full_path'.
     :
 }
 
