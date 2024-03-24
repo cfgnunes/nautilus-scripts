@@ -226,6 +226,7 @@ _run_command() {
             password=$(__get_password) || exit 1
             __temp_dir_cd
             std_output=$($command_7za x -aoa -p"$password" -- "$input_file" 2>&1)
+            exit_code=$?
         fi
         ;;
     "ar") std_output=$(ar x -- "$input_file" 2>&1) ;;
@@ -239,6 +240,7 @@ _run_command() {
             password=$(__get_password) || exit 1
             __temp_dir_cd
             std_output=$(bsdtar --passphrase "$password" -xf "$input_file" 2>&1)
+            exit_code=$?
         fi
         ;;
     "bzip2") std_output=$(bzip2 -d -c -k -- "$input_file" >"$filename") ;;
@@ -271,6 +273,7 @@ _run_command() {
             password=$(__get_password) || exit 1
             __temp_dir_cd
             std_output=$(unar -force-overwrite -password "$password" -- "$input_file" 2>&1)
+            exit_code=$?
         fi
         ;;
     "unrar")
@@ -283,6 +286,7 @@ _run_command() {
             password=$(__get_password) || exit 1
             __temp_dir_cd
             std_output=$(unrar x -p"$password" -- "$input_file" 2>&1)
+            exit_code=$?
         fi
         ;;
     "unsquashfs") std_output=$(unsquashfs "$input_file" 2>&1) ;;
@@ -296,6 +300,7 @@ _run_command() {
             password=$(__get_password) || exit 1
             __temp_dir_cd
             std_output=$(unzip -P "$password" -- "$input_file" 2>&1)
+            exit_code=$?
         fi
         ;;
     "xorriso") std_output=$(xorriso -osirrox on -indev "$input_file" -- -extract / . -rollback_end 2>&1) ;;
@@ -324,17 +329,23 @@ _run_command() {
         fi
 
         if ((exit_code != 0)); then
-            std_output="Could not recognize the archive format." && false
+            std_output="Could not recognize the archive format."
         fi
         ;;
     esac
 
     # Check for result errors.
-    _check_output "$?" "$std_output" "$input_file" ""
-    exit_code=$?
-    if ((exit_code != 0)); then
-        __temp_dir_exit && __temp_dir_remove
-        exit 1
+    local exit_code_last=$?
+    if ((exit_code != 0)) || ((exit_code_last != 0)); then
+        _check_output "1" "$std_output" "$input_file" ""
+
+        # If all extracted files have zero bytes, then abort.
+        local non_zero_files=""
+        non_zero_files=$(find . -type f ! -size 0 2>/dev/null)
+        if [ -z "$non_zero_files" ]; then
+            __temp_dir_exit && __temp_dir_remove
+            exit 1
+        fi
     fi
 
     # Fix permissions of extracted files in "iso" archive format.
