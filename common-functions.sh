@@ -747,7 +747,7 @@ _get_output_dir() {
     eval "$parameters"
 
     # Check directories available to put the 'output' dir.
-    base_dir=$(_get_pwd)
+    base_dir=$(_get_working_directory)
     [[ ! -w "$base_dir" ]] && base_dir=$HOME
     [[ ! -w "$base_dir" ]] && base_dir="/tmp"
     if [[ ! -w "$base_dir" ]]; then
@@ -819,20 +819,6 @@ _get_output_filename() {
     printf "%s" "$output_file"
 }
 
-_get_pwd() {
-    local pwd=""
-    local file_1=""
-
-    # NOTE: The working directory is detected by using the directory name
-    # of the first input file. Some file managers do not print the working
-    # directory correctly for the scripts, so it is not precise to use the
-    # 'pwd' command.
-    file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
-    pwd=$(_get_filename_dir "$file_1")
-
-    printf "%s" "$pwd"
-}
-
 _get_script_name() {
     basename -- "$0"
 }
@@ -855,6 +841,20 @@ _get_temp_file() {
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
 
     printf "%s" "$temp_file"
+}
+
+_get_working_directory() {
+    local pwd=""
+    local file_1=""
+
+    # NOTE: The working directory is detected by using the directory name
+    # of the first input file. Some file managers do not print the working
+    # directory correctly for the scripts, so it is not precise to use the
+    # 'pwd' command.
+    file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
+    pwd=$(_get_filename_dir "$file_1")
+
+    printf "%s" "$pwd"
 }
 
 _has_string_in_list() {
@@ -1197,7 +1197,7 @@ _text_remove_home() {
 _text_remove_pwd() {
     local input_text=$1
     local string_pwd=""
-    string_pwd=$(_get_pwd)
+    string_pwd=$(_get_working_directory)
 
     sed "s|$string_pwd|.|g; s|\./\./|./|g" <<<"$input_text"
 }
@@ -1449,9 +1449,9 @@ export -f \
     _get_filename_next_suffix \
     _get_max_procs \
     _get_output_filename \
-    _get_pwd \
     _get_temp_dir_local \
     _get_temp_file \
+    _get_working_directory \
     _has_string_in_list \
     _is_gui_session \
     _log_write \
