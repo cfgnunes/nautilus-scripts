@@ -12,7 +12,6 @@ _main() {
     input_files=$(_get_files "par_type=all")
 
     # Run the main process.
-    # TODO Add a way to detect the default application.
     # shellcheck disable=SC2086
     if _command_exists "file-roller"; then
         file-roller --add -- $input_files &

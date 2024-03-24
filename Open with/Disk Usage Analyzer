@@ -9,12 +9,17 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _check_dependencies "command=baobab"
+    _check_dependencies ""
     input_files=$(_get_files "par_type=directory; par_max_files=1; par_get_pwd=true")
 
     # Run the main process.
-    # TODO Add a alternative tool for the KDE environment.
-    baobab -- "$input_files" &
+    if [[ "${XDG_CURRENT_DESKTOP,,}" == *"kde"* ]]; then
+        _check_dependencies "command=filelight"
+        filelight -- "$input_files" &
+    else
+        _check_dependencies "command=baobab"
+        baobab -- "$input_files" &
+    fi
 }
 
 _main "$@"

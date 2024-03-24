@@ -64,6 +64,10 @@ _compare() {
         ;;
     esac
 
+    if [[ "$command" == "meld"* ]] && [[ "${XDG_CURRENT_DESKTOP,,}" == *"kde"* ]]; then
+        command=${command//meld/kdiff3}
+    fi
+
     # Check dependencies for the command.
     local dependencies=""
     case $command in
@@ -73,6 +77,8 @@ _compare() {
         command=compare; pkg_manager=pacman; package=imagemagick |
         command=xdg-open; package=xdg-utils" ;;
     "diffpdf") dependencies="command=diffpdf" ;;
+    "kdiff3") dependencies="command=kdiff3" ;;
+    "kdiff3_hexadecimal") dependencies="command=kdiff3 | command=xxd" ;;
     "meld") dependencies="command=meld" ;;
     "meld_hexadecimal") dependencies="command=meld | command=xxd" ;;
     esac
@@ -126,19 +132,21 @@ _compare() {
 
         diffpdf -- "$file_1" "$file_2" &
         ;;
-    "meld")
+    "meld" | "kdiff3")
         if [[ -z "$file_3" ]]; then
-            # TODO Add a alternative tool for the KDE environment.
-            meld -- "$file_1" "$file_2" &
+            $command -- "$file_1" "$file_2" &
         else
-            meld -- "$file_1" "$file_2" "$file_3" &
+            $command -- "$file_1" "$file_2" "$file_3" &
         fi
         ;;
-    "meld_hexadecimal")
+    "meld_hexadecimal" | "kdiff3_hexadecimal")
         if [[ -n "$file_3" ]]; then
             _display_error_box "You must select only two files to hexadecimal compare!"
             _exit_script
         fi
+
+        # Remove the prefix '_hexadecimal'.
+        command=${command//_hexadecimal/}
 
         # Get the file sizes.
         local file_1_size=""
@@ -167,8 +175,8 @@ _compare() {
         sed -i "s|^[^:]*: ||g" "$file_1_hex"
         sed -i "s|^[^:]*: ||g" "$file_2_hex"
 
-        # Compare and edit the files with 'meld'.
-        meld -- "$file_1_hex" "$file_2_hex"
+        # Compare and edit the files.
+        $command -- "$file_1_hex" "$file_2_hex"
 
         # Convert to plain hexadecimal dump.
         sed -i "s|  .*||g; s| ||g" "$file_1_hex"

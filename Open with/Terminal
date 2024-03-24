@@ -14,7 +14,6 @@ _main() {
 
     # shellcheck disable=SC2086
     # Run the main process.
-    # TODO Add a way to detect the default terminal.
     if _command_exists "gnome-terminal"; then
         gnome-terminal --working-directory="$input_files" &
     elif _command_exists "mate-terminal"; then
