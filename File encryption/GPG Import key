@@ -15,7 +15,7 @@ _main() {
         command=gpg; pkg_manager=dnf; package=gnupg2 |
         command=gpg; pkg_manager=pacman; package=gnupg"
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=file; par_select_mime='application/pgp-keys|application/octet-stream'")
+    input_files=$(_get_files "par_type=file; par_select_mime='application/octet-stream|application/pgp-keys|text/plain'")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
