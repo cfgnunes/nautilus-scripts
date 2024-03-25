@@ -143,11 +143,15 @@ _step_install_dependencies() {
 
     local common_names=""
     # Packages for dialogs...
-    if [[ "${XDG_CURRENT_DESKTOP,,}" == *"kde"* ]]; then
+    case "${XDG_CURRENT_DESKTOP,,}" in
+    *"kde"* | *"lxqt"*)
         common_names+="kdialog "
-    else
+        ;;
+    *)
         common_names+="zenity "
-    fi
+        ;;
+    esac
+
     # Packages for compress/decompress archives...
     common_names+="bzip2 gzip squashfs-tools tar unzip zip "
     # Packages for documents...

@@ -13,13 +13,16 @@ _main() {
     input_files=$(_get_files "par_type=directory; par_max_files=1; par_get_pwd=true")
 
     # Run the main process.
-    if [[ "${XDG_CURRENT_DESKTOP,,}" == *"kde"* ]]; then
+    case "${XDG_CURRENT_DESKTOP,,}" in
+    *"kde"* | *"lxqt"*)
         _check_dependencies "command=filelight"
         filelight -- "$input_files" &
-    else
+        ;;
+    *)
         _check_dependencies "command=baobab"
         baobab -- "$input_files" &
-    fi
+        ;;
+    esac
 }
 
 _main "$@"

@@ -64,8 +64,12 @@ _compare() {
         ;;
     esac
 
-    if [[ "$command" == "meld"* ]] && [[ "${XDG_CURRENT_DESKTOP,,}" == *"kde"* ]]; then
-        command=${command//meld/kdiff3}
+    if [[ "$command" == "meld"* ]]; then
+        case "${XDG_CURRENT_DESKTOP,,}" in
+        *"kde"* | *"lxqt"*)
+            command=${command//meld/kdiff3}
+            ;;
+        esac
     fi
 
     # Check dependencies for the command.
