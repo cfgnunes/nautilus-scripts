@@ -520,11 +520,8 @@ _gdbus_notify() {
     local object_path="/org/freedesktop/Notifications"
 
     # Use 'gdbus' to send the notification.
-    gdbus call --session \
-        --dest "$interface" \
-        --object-path "$object_path" \
-        --method "$interface.$method" \
-        "$app_name" 0 "$icon" "$title" "$body" \
+    gdbus call --session --dest "$interface" --object-path "$object_path" \
+        --method "$interface.$method" "$app_name" 0 "$icon" "$title" "$body" \
         "[]" '{"urgency": <1>}' 5000 &>/dev/null
 }
 
