@@ -854,17 +854,6 @@ _get_working_directory() {
     printf "%s" "$working_directory"
 }
 
-_has_string_in_list() {
-    local string=$1
-    local list=$2
-
-    if grep -q --ignore-case --perl-regexp "($list)" <<<"$string"; then
-        return 0
-    fi
-
-    return 1
-}
-
 _is_gui_session() {
     if env | grep -q "^DISPLAY"; then
         return 0
@@ -1237,7 +1226,8 @@ _validate_file_mime() {
     if [[ -n "$par_select_mime" ]]; then
         local file_mime=""
         file_mime=$(_get_file_mime "$input_file")
-        _has_string_in_list "$file_mime" "$par_select_mime" || return
+        par_select_mime=${par_select_mime//+/\\+}
+        grep -q --ignore-case --perl-regexp "($par_select_mime)" <<<"$file_mime" || return
     fi
 
     # Create a temp file containing the name of the valid file.
@@ -1449,7 +1439,6 @@ export -f \
     _get_temp_dir_local \
     _get_temp_file \
     _get_working_directory \
-    _has_string_in_list \
     _is_gui_session \
     _log_write \
     _move_file \

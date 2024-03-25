@@ -48,7 +48,6 @@ _main() {
     _run_get_output_dir
     _run_get_output_filename
     _run_get_script_name
-    _run_has_string_in_list
     _run_install_package
     _run_is_gui_session
     _run_log_compile
@@ -347,11 +346,6 @@ _run_get_script_name() {
     expected_output="unit_tests.sh"
     output=$(_get_script_name)
     _test_equal "$expected_output" "$output" "$expected_output"
-}
-
-_run_has_string_in_list() {
-    # TODO Implement the test: '_run_has_string_in_list'.
-    :
 }
 
 _run_install_package() {
