@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _check_dependencies "command=gzip"
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=file; par_select_mime='image/svg+xml'")
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+
+    # Run the main process.
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=svgz")
+    std_output=$(gzip "$input_file" --no-name -c >"$output_file" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+}
+
+_main "$@"
