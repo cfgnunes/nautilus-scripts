@@ -1449,4 +1449,5 @@ export -f \
     _strip_filename_extension \
     _text_remove_pwd \
     _text_uri_decode \
-    _validate_file_mime
+    _validate_file_mime \
+    _xdg_open_item_location
