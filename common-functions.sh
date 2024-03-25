@@ -179,9 +179,9 @@ _command_exists() {
 
 _convert_filenames_to_text() {
     local input_files=$1
-    local nl_escaped="'\$'\\\n''"
+    local new_line="'\$'\\\n''"
 
-    input_files=$(sed -z "s|\n|$nl_escaped|g; s|$nl_escaped$||g" <<<"$input_files")
+    input_files=$(sed -z "s|\n|$new_line|g; s|$new_line$||g" <<<"$input_files")
     input_files=$(tr "$FIELD_SEPARATOR" "\n" <<<"$input_files")
 
     printf "%s" "$input_files"
@@ -189,10 +189,10 @@ _convert_filenames_to_text() {
 
 _convert_text_to_filenames() {
     local input_files=$1
-    local nl_escaped="'\$'\\\n''"
+    local new_line="'\$'\\\n''"
 
     input_files=$(tr "\n" "$FIELD_SEPARATOR" <<<"$input_files")
-    input_files=$(sed -z "s|$nl_escaped|\n|g" <<<"$input_files")
+    input_files=$(sed -z "s|$new_line|\n|g" <<<"$input_files")
 
     input_files=$(_str_remove_empty_tokens "$input_files")
     printf "%s" "$input_files"
@@ -1199,7 +1199,7 @@ _text_remove_pwd() {
     local working_directory=""
     working_directory=$(_get_working_directory)
 
-    sed "s|$working_directory|.|g; s|\./\./|./|g" <<<"$input_text"
+    sed "s|$working_directory|.|g" <<<"$input_text"
 }
 
 _text_sort() {
