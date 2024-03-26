@@ -38,11 +38,12 @@ _main_task() {
     audio_artist=$(grep " (Lead performer" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
     audio_title=$(grep " (Title" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
 
+    # Check if the values are not empty.
     if [[ -z "$audio_artist" ]]; then
-        _check_output "1" "Empty 'Artist' tag." "$input_file" "" || return 1
+        _check_output "1" "Empty 'Artist' value." "$input_file" "" || return 1
     fi
     if [[ -z "$audio_title" ]]; then
-        _check_output "1" "Empty 'Title' tag." "$input_file" "" || return 1
+        _check_output "1" "Empty 'Title' value." "$input_file" "" || return 1
     fi
 
     # Rename the file.

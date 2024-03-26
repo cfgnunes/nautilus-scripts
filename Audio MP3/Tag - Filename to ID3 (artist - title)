@@ -43,6 +43,14 @@ _main_task() {
     audio_artist=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$basename")
     audio_title=$(cut -d "$FIELD_SEPARATOR" -f 2- <<<"$basename")
 
+    # Check if the values are not empty.
+    if [[ -z "$audio_artist" ]]; then
+        _check_output "1" "Empty 'Artist' value." "$input_file" "" || return 1
+    fi
+    if [[ -z "$audio_title" ]]; then
+        _check_output "1" "Empty 'Title' value." "$input_file" "" || return 1
+    fi
+
     # Run the main process.
     std_output=$(id3v2 --artist "$audio_artist" --song "$audio_title" "$temp_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
