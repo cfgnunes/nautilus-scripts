@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "command=id3v2"
+    _check_dependencies "command=id3tag; package=libid3-tools"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_recursive=true; par_select_mime=audio/mpeg; par_skip_extension=bak")
 
@@ -47,7 +47,7 @@ _main_task() {
     audio_title=$(sed "s|[ \t]*\(\r*\)$|\1|" <<<"$audio_title")
 
     # Run the main process.
-    std_output=$(id3v2 -a "$audio_artist" -t "$audio_title" "$temp_file" 2>&1)
+    std_output=$(id3tag -a "$audio_artist" -s "$audio_title" "$temp_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Move the temporary file to the output.
