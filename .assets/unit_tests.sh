@@ -55,7 +55,7 @@ _test_equal() {
         _TOTAL_FAILED=$((_TOTAL_FAILED + 1))
     fi
     printf "\t(%s)\t" "${FUNCNAME[1]}"
-    printf "%s" "$description" | sed -z "s|\n|\\\n|g" | cat -ETv
+    printf "%s" "$description" | sed -z "s|\n|\\\n|g" | cat -A
     printf "\n"
 }
 
@@ -72,7 +72,7 @@ _test_file() {
         _TOTAL_FAILED=$((_TOTAL_FAILED + 1))
     fi
     printf "\t(%s)\t" "${FUNCNAME[1]}"
-    printf "%s" "$description" | sed -z "s|\n|\\\n|g" | cat -ETv
+    printf "%s" "$description" | sed -z "s|\n|\\\n|g" | cat -A
     printf "\n"
 }
 
