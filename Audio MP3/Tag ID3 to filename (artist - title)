@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _check_dependencies "command=id3v2"
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=file; par_recursive=true; par_select_mime=audio/mpeg; par_skip_extension=bak")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+    _display_result_box ""
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+
+    __str_remove_trailing_spaces() {
+        # shellcheck disable=SC2001
+        sed "s|^\s*||" <<<"$1"
+    }
+
+    # Run the main process.
+    std_output=$(id3v2 --list "$input_file" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    # shellcheck disable=SC2001
+    std_output=$(tr -s " _-" <<<"$std_output")
+
+    local audio_artist=""
+    local audio_title=""
+    audio_artist=$(grep " (Lead performer" <<<"$std_output" | cut -d ":" -f 2-)
+    audio_artist=$(__str_remove_trailing_spaces "$audio_artist")
+    audio_title=$(grep " (Title" <<<"$std_output" | cut -d ":" -f 2-)
+    audio_title=$(__str_remove_trailing_spaces "$audio_title")
+
+    if [[ -z "$audio_artist" ]]; then
+        _check_output "1" "Empty 'Artist' tag." "$input_file" "" || return 1
+    fi
+    if [[ -z "$audio_title" ]]; then
+        _check_output "1" "Empty 'Title' tag." "$input_file" "" || return 1
+    fi
+
+    # Rename the file.
+    local dir_file=""
+    dir_file=$(_get_filename_dir "$input_file")
+    std_output=$(_move_file "rename" "$input_file" "$dir_file/$audio_artist - $audio_title.mp3" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" ""
+
+    # Remove the temporary files on each iteration (if not removed before).
+    rm -f -- "$temp_file"
+}
+
+_main "$@"
