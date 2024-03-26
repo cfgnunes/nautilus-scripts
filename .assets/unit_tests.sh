@@ -18,63 +18,13 @@ _main() {
     printf "Running the unit tests...\n"
 
     _run_source_common_functions
-    _run_cleanup_on_exit
-    _run_check_dependencies
-    _run_check_output
-    _run_command_exists
-    _run_convert_filenames_to_text
-    _run_convert_text_to_filenames
-    _run_display_dir_selection_box
-    _run_display_file_selection_box
-    _run_display_error_box
-    _run_display_info_box
-    _run_display_password_box
-    _run_display_question_box
-    _run_display_text_box
-    _run_display_result_box
-    _run_display_wait_box
-    _run_display_wait_box_message
-    _run_close_wait_box
-    _run_exit_script
-    _run_expand_directory
-    _run_gdbus_notify
     _run_get_filename_extension
-    _run_get_filename_next_suffix
-    _run_get_filenames_count
-    _run_get_filenames_list
-    _run_get_files
-    _run_get_filename_full_path
-    _run_get_max_procs
-    _run_get_output_dir
-    _run_get_output_filename
     _run_get_script_name
-    _run_install_package
-    _run_is_gui_session
-    _run_log_compile
-    _run_log_write
     _run_move_file
-    _run_move_temp_file_to_output
-    _run_print_terminal
-    _run_run_task_parallel
-    _run_storage_text_clean
     _run_storage_text_read_all
-    _run_storage_text_write
-    _run_storage_text_write_ln
-    _run_str_human_readable_path
-    _run_str_remove_empty_tokens
     _run_strip_filename_extension
     _run_text_remove_empty_lines
-    _run_text_remove_home
-    _run_text_remove_pwd
     _run_text_sort
-    _run_text_uri_decode
-    _run_validate_conflict_filenames
-    _run_validate_file_extension
-    _run_validate_file_mime
-    _run_validate_file_mime_parallel
-    _run_validate_file_preselect
-    _run_validate_file_preselect_parallel
-    _run_validate_files_count
 
     printf "\nFinished! "
     printf "Results: %s tests, %s failed.\n" "$_TOTAL_TESTS" "$_TOTAL_FAILED"
@@ -138,106 +88,6 @@ _run_source_common_functions() {
     _test_equal "Check global variables." "$FIELD_SEPARATOR" $'\r'
 }
 
-_run_cleanup_on_exit() {
-    # TODO Implement the test: '_run_cleanup_on_exit'.
-    :
-}
-
-_run_check_dependencies() {
-    # TODO Implement the test: '_run_check_dependencies'.
-    :
-}
-
-_run_check_output() {
-    # TODO Implement the test: '_run_check_output'.
-    :
-}
-
-_run_command_exists() {
-    # TODO Implement the test: '_run_command_exists'.
-    :
-}
-
-_run_convert_filenames_to_text() {
-    # TODO Implement the test: '_run_convert_filenames_to_text'.
-    :
-}
-
-_run_convert_text_to_filenames() {
-    # TODO Implement the test: '_run_convert_text_to_filenames'.
-    :
-}
-
-_run_display_dir_selection_box() {
-    # TODO Implement the test: '_run_display_dir_selection_box'.
-    :
-}
-
-_run_display_file_selection_box() {
-    # TODO Implement the test: '_run_display_file_selection_box'.
-    :
-}
-
-_run_display_error_box() {
-    # TODO Implement the test: '_run_display_error_box'.
-    :
-}
-
-_run_display_info_box() {
-    # TODO Implement the test: '_run_display_info_box'.
-    :
-}
-
-_run_display_password_box() {
-    # TODO Implement the test: '_run_display_password_box'.
-    :
-}
-
-_run_display_question_box() {
-    # TODO Implement the test: '_run_display_question_box'.
-    :
-}
-
-_run_display_text_box() {
-    # TODO Implement the test: '_run_display_text_box'.
-    :
-}
-
-_run_display_result_box() {
-    # TODO Implement the test: '_run_display_result_box'.
-    :
-}
-
-_run_display_wait_box() {
-    # TODO Implement the test: '_run_display_wait_box'.
-    :
-}
-
-_run_display_wait_box_message() {
-    # TODO Implement the test: '_run_display_wait_box_message'.
-    :
-}
-
-_run_close_wait_box() {
-    # TODO Implement the test: '_run_close_wait_box'.
-    :
-}
-
-_run_exit_script() {
-    # TODO Implement the test: '_run_exit_script'.
-    :
-}
-
-_run_expand_directory() {
-    # TODO Implement the test: '_run_expand_directory'.
-    :
-}
-
-_run_gdbus_notify() {
-    # TODO Implement the test: '_run_gdbus_notify'.
-    :
-}
-
 _run_get_filename_extension() {
     local input=""
     local expected_output=""
@@ -294,51 +144,6 @@ _run_get_filename_extension() {
     _test_equal "$input" "$output" "$expected_output"
 }
 
-_run_get_filename_next_suffix() {
-    # TODO Implement the test: '_run_get_filename_next_suffix'.
-    :
-}
-
-_run_get_filenames_count() {
-    # TODO Implement the test: '_run_get_filenames_count'.
-    :
-}
-
-_run_get_filenames_list() {
-    # TODO Implement the test: '_run_get_filenames_list'.
-    :
-}
-
-_run_get_filemanager_list() {
-    # TODO Implement the test: '_run_get_filemanager_list'.
-    :
-}
-
-_run_get_files() {
-    # TODO Implement the test: '_run_get_files'.
-    :
-}
-
-_run_get_filename_full_path() {
-    # TODO Implement the test: '_run_get_filename_full_path'.
-    :
-}
-
-_run_get_max_procs() {
-    # TODO Implement the test: '_run_get_max_procs'.
-    :
-}
-
-_run_get_output_dir() {
-    # TODO Implement the test: '_run_get_output_dir'.
-    :
-}
-
-_run_get_output_filename() {
-    # TODO Implement the test: '_run_get_output_filename'.
-    :
-}
-
 _run_get_script_name() {
     local expected_output=""
     local output=""
@@ -346,26 +151,6 @@ _run_get_script_name() {
     expected_output="unit_tests.sh"
     output=$(_get_script_name)
     _test_equal "$expected_output" "$output" "$expected_output"
-}
-
-_run_install_package() {
-    # TODO Implement the test: '_run_install_package'.
-    :
-}
-
-_run_is_gui_session() {
-    # TODO Implement the test: '_run_is_gui_session'.
-    :
-}
-
-_run_log_compile() {
-    # TODO Implement the test: '_run_log_compile'.
-    :
-}
-
-_run_log_write() {
-    # TODO Implement the test: '_run_log_write'.
-    :
 }
 
 _run_move_file() {
@@ -418,26 +203,6 @@ _run_move_file() {
 
 }
 
-_run_move_temp_file_to_output() {
-    # TODO Implement the test: '_run_move_temp_file_to_output'.
-    :
-}
-
-_run_print_terminal() {
-    # TODO Implement the test: '_run_print_terminal'.
-    :
-}
-
-_run_run_task_parallel() {
-    # TODO Implement the test: '_run_run_task_parallel'.
-    :
-}
-
-_run_storage_text_clean() {
-    # TODO Implement the test: '_run_storage_text_clean'.
-    :
-}
-
 _run_storage_text_read_all() {
     local expected_output=""
     local output=""
@@ -448,26 +213,6 @@ _run_storage_text_read_all() {
     expected_output="Line"$'\n'"Line"
     output=$(_storage_text_read_all)
     _test_equal "Write and read the compiled temp result." "$output" "$expected_output"
-}
-
-_run_storage_text_write() {
-    # TODO Implement the test: '_run_storage_text_write'.
-    :
-}
-
-_run_storage_text_write_ln() {
-    # TODO Implement the test: '_run_storage_text_write_ln'.
-    :
-}
-
-_run_str_human_readable_path() {
-    # TODO Implement the test: '_run_str_human_readable_path'.
-    :
-}
-
-_run_str_remove_empty_tokens() {
-    # TODO Implement the test: '_run_str_remove_empty_tokens'.
-    :
 }
 
 _run_strip_filename_extension() {
@@ -572,16 +317,6 @@ _run_text_remove_empty_lines() {
     _test_equal "$input" "$output" "$expected_output"
 }
 
-_run_text_remove_home() {
-    # TODO Implement the test: '_run_text_remove_home'.
-    :
-}
-
-_run_text_remove_pwd() {
-    # TODO Implement the test: '_run_text_remove_pwd'.
-    :
-}
-
 _run_text_sort() {
     local input=""
     local expected_output=""
@@ -606,46 +341,6 @@ _run_text_sort() {
     expected_output="2"$'\n'"10"
     output=$(_text_sort "$input")
     _test_equal "$input" "$output" "$expected_output"
-}
-
-_run_text_uri_decode() {
-    # TODO Implement the test: '_run_text_uri_decode'.
-    :
-}
-
-_run_validate_conflict_filenames() {
-    # TODO Implement the test: '_run_validate_conflict_filenames'.
-    :
-}
-
-_run_validate_file_extension() {
-    # TODO Implement the test: '_run_validate_file_extension'.
-    :
-}
-
-_run_validate_file_mime() {
-    # TODO Implement the test: '_run_validate_file_mime'.
-    :
-}
-
-_run_validate_file_mime_parallel() {
-    # TODO Implement the test: '_run_validate_file_mime_parallel'.
-    :
-}
-
-_run_validate_file_preselect() {
-    # TODO Implement the test: '_run_validate_file_preselect'.
-    :
-}
-
-_run_validate_file_preselect_parallel() {
-    # TODO Implement the test: '_run_validate_file_preselect_parallel'.
-    :
-}
-
-_run_validate_files_count() {
-    # TODO Implement the test: '_run_validate_files_count'.
-    :
 }
 
 _main "$@"
