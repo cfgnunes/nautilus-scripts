@@ -25,23 +25,18 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    __str_remove_trailing_spaces() {
-        # shellcheck disable=SC2001
-        sed "s|^\s*||" <<<"$1"
-    }
-
     # Run the main process.
     std_output=$(id3v2 --list "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
     # shellcheck disable=SC2001
     std_output=$(tr -s " _-" <<<"$std_output")
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|: |$FIELD_SEPARATOR|" <<<"$std_output")
 
     local audio_artist=""
     local audio_title=""
-    audio_artist=$(grep " (Lead performer" <<<"$std_output" | cut -d ":" -f 2-)
-    audio_artist=$(__str_remove_trailing_spaces "$audio_artist")
-    audio_title=$(grep " (Title" <<<"$std_output" | cut -d ":" -f 2-)
-    audio_title=$(__str_remove_trailing_spaces "$audio_title")
+    audio_artist=$(grep " (Lead performer" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
+    audio_title=$(grep " (Title" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
 
     if [[ -z "$audio_artist" ]]; then
         _check_output "1" "Empty 'Artist' tag." "$input_file" "" || return 1

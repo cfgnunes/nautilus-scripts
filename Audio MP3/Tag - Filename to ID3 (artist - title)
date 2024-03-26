@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2001
 
 # Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
@@ -36,6 +35,7 @@ _main_task() {
     basename=$(basename -- "$input_file")
     basename=$(_strip_filename_extension "$basename")
     basename=$(tr -s " _-" <<<"$basename")
+    # shellcheck disable=SC2001
     basename=$(sed "s| - |$FIELD_SEPARATOR|" <<<"$basename")
 
     local audio_artist=""
