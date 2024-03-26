@@ -142,14 +142,17 @@ _step_install_dependencies() {
     printf " > Installing dependencies...\n"
 
     local common_names=""
+
     # Packages for dialogs...
     case "${XDG_CURRENT_DESKTOP,,}" in
-    *"kde"* | *"lxqt"*)
-        common_names+="kdialog "
-        ;;
-    *)
-        common_names+="zenity "
-        ;;
+    *"kde"* | *"lxqt"*) common_names+="kdialog " ;;
+    *) common_names+="zenity " ;;
+    esac
+
+    # Packages session type...
+    case "${XDG_SESSION_TYPE,,}" in
+    "wayland") ommon_names+="wl-clipboard " ;;
+    *) common_names+="xclip " ;;
     esac
 
     # Packages for compress/decompress archives...
@@ -164,11 +167,6 @@ _step_install_dependencies() {
     common_names+="foremost testdisk "
     # Packages for other scripts...
     common_names+="perl-base rdfind rhash wget "
-    if [ "$XDG_SESSION_TYPE" == "x11" ]; then
-        common_names+="xclip "
-    elif [ "$XDG_SESSION_TYPE" == "wayland" ]; then
-        common_names+="wl-clipboard "
-    fi
 
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then

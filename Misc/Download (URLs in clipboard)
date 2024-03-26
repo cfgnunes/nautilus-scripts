@@ -10,14 +10,14 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    if [ "$XDG_SESSION_TYPE" == "x11" ]; then
-        _check_dependencies "command=wget | command=xclip"
-    elif [ "$XDG_SESSION_TYPE" == "wayland" ]; then
-        _check_dependencies "command=wget | command=wl-paste; package=wl-clipboard"
-    else
+    case "${XDG_SESSION_TYPE,,}" in
+    "x11") _check_dependencies "command=wget | command=xclip" ;;
+    "wayland") _check_dependencies "command=wget | command=wl-paste; package=wl-clipboard" ;;
+    *)
         _display_error_box "Unknown session type!"
         _exit_script
-    fi
+        ;;
+    esac
 
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all; par_get_pwd=true")
@@ -51,9 +51,9 @@ _main_task() {
 _get_urls_from_clipboard() {
     local urls=""
 
-    if [ "$XDG_SESSION_TYPE" == "x11" ]; then
+    if [[ "${XDG_SESSION_TYPE,,}" == "x11" ]]; then
         urls=$(xclip -quiet -selection clipboard -o)
-    elif [ "$XDG_SESSION_TYPE" == "wayland" ]; then
+    elif [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
         urls=$(wl-paste)
     fi
     urls=$(grep --only-matching --perl-regexp "https?://\w+\.[^ '\"]+" <<<"$urls")

@@ -342,7 +342,7 @@ _run_command() {
         # If all extracted files have zero bytes, then abort.
         local non_zero_files=""
         non_zero_files=$(find . -type f ! -size 0 2>/dev/null)
-        if [ -z "$non_zero_files" ]; then
+        if [[ -z "$non_zero_files" ]]; then
             __temp_dir_exit && __temp_dir_remove
             exit 1
         fi
