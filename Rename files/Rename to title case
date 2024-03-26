@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2001
 
 # Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
@@ -26,16 +27,38 @@ _main_task() {
     local std_output=""
     local dir=""
     local filename=""
+    local filename_extension=""
 
     dir=$(dirname -- "$input_file")
     filename=$(basename -- "$input_file")
+    filename_extension=$(_get_filename_extension "$input_file")
 
     # Transform to title case.
-    # shellcheck disable=SC2001
-    output_file=$(sed "s|\([^ ()[]]\)\([^ ()[]]*\)|\U\1\L\2|g" <<<"$filename")
+    output_file=$(sed "s|’|'|g" <<<"$filename")
+    output_file=$(sed "s|\(\w\)\(\w*\)|\U\1\L\2|g" <<<"$output_file")
+
+    # Define the list of words to lowercase
+    local words=""
+    words="a|an|and|as|at|but|by|for|if|in|nor|of|off|on|or|per|so|the|to|up|via|yet"
+    output_file=$(sed -E "s/([ ])($words)\b/\1\L\2/gI" <<<"$output_file")
+    words="a|e|o|da|das|de|do|dos|na|no|para|pra|um|uma"
+    output_file=$(sed -E "s/([ ])($words)\b/\1\L\2/gI" <<<"$output_file")
+    output_file=$(sed -E "s|(- \w)|\U\1|g" <<<"$output_file")
+
+    # Fix some common words.
+    output_file=$(sed "s|\('\w\)|\L\1|gI" <<<"$output_file")
+    output_file=$(sed "s| \(d'\w\)| \U\1|gI" <<<"$output_file")
+    output_file=$(sed "s| \(o'\w\)| \U\1|gI" <<<"$output_file")
+    output_file=$(sed "s| o'| O'|gI" <<<"$output_file")
+    output_file=$(sed "s| '\(\w\)| '\U\1|gI" <<<"$output_file")
+    output_file=$(sed "s| no\.| No.|gI" <<<"$output_file")
+    output_file=$(sed "s|feat\.|feat\.|gI" <<<"$output_file")
+    output_file=$(sed -E "s/ (IX|IV|V?I{0,3})([,\. ])/ \U\1\2/gI" <<<"$output_file")
+
+    output_file=$(_strip_filename_extension "$output_file")
 
     # Run the main process.
-    std_output=$(_move_file "skip" "$input_file" "$dir/$output_file" 2>&1)
+    std_output=$(_move_file "skip" "$input_file" "$dir/$output_file${filename_extension,,}" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 

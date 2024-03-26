@@ -32,7 +32,7 @@ _main_task() {
 
     # Transform to sentence case.
     # shellcheck disable=SC2001
-    output_file=$(sed "s|\(.\)\(.*\)|\U\1\L\2|g" <<<"$filename")
+    output_file=$(sed "s|\(\w\)\(.*\)|\U\1\L\2|g; s|\(\.\s\s*\)\(\w\)|\1\U\2|g" <<<"$filename")
 
     # Run the main process.
     std_output=$(_move_file "skip" "$input_file" "$dir/$output_file" 2>&1)
