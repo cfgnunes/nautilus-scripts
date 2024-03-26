@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 
 # Code based on: https://unix.stackexchange.com/a/673436
-# Version: 2024-03-10
+# Version: 2024-03-26
+
+# Keyboard commands:
+#   <enter> : Confirms the current selection of options.
+#   <space> : Toggles the selection status of the currently highlighted option.
+#      <up> : Moves the highlight cursor one option up.
+#    <down> : Moves the highlight cursor one option down.
+#       <a> : Selects all available options.
+#       <z> : Deselects all available options.
+#       <q> : Terminates the process (also works with <ctrl>+<c>).
 
 _multiselect_menu() {
     local return_value=$1
@@ -28,13 +37,16 @@ _multiselect_menu() {
         IFS=";" read -rs -d "R" -p $'\E[6n' row col
         printf "%s" "${row#*[}"
     }
-    __get_keyboard_key() {
+    __get_keyboard_command() {
         local key=""
 
         IFS="" read -rs -n 1 key &>/dev/null
         case "$key" in
         "") printf "enter" ;;
-        " ") printf "space" ;;
+        " ") printf "toggle_active" ;;
+        "a") printf "select_all" ;;
+        "z") printf "select_none" ;;
+        "q") printf "quit" ;;
         $'\e')
             IFS="" read -rs -n 2 key &>/dev/null
             case "$key" in
@@ -111,18 +123,32 @@ _multiselect_menu() {
         __print_options "$active"
 
         # User key control.
-        case $(__get_keyboard_key) in
-        "space")
-            # Toggle the option.
+        case $(__get_keyboard_command) in
+        "enter")
+            __print_options -1
+            break
+            ;;
+        "toggle_active")
             if [[ ${selected[active]} == "true" ]]; then
                 selected[active]="false"
             else
                 selected[active]="true"
             fi
             ;;
-        "enter")
-            __print_options -1
-            break
+        "select_all")
+            local i=0
+            for i in "${!selected[@]}"; do
+                selected[i]="true"
+            done
+            ;;
+        "select_none")
+            local i=0
+            for i in "${!selected[@]}"; do
+                selected[i]="false"
+            done
+            ;;
+        "quit")
+            __on_ctrl_c
             ;;
         "up")
             active=$((active - 1))
