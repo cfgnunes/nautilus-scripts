@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _check_dependencies "command=id3v2"
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=file; par_recursive=true; par_select_mime=audio/mpeg; par_skip_extension=bak")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+    _display_result_box ""
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+
+    # Work on a temporary file.
+    local temp_file=""
+    temp_file=$(_get_temp_file)
+    std_output=$(cp --archive -- "$input_file" "$temp_file" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    local basename=""
+    basename=$(basename -- "$input_file")
+    basename=$(_strip_filename_extension "$basename")
+    basename=$(tr -s " -" <<<"$basename")
+
+    local audio_artist=""
+    local audio_title=""
+    audio_artist=$(grep --only-matching --perl-regexp "^[^-]*" <<<"$basename")
+    # shellcheck disable=SC2001
+    audio_artist=$(sed "s|[ \t]*\(\r*\)$|\1|" <<<"$audio_artist")
+    # shellcheck disable=SC2001
+    audio_title=$(sed "s|^[^-]*-\s*||g" <<<"$basename")
+    # shellcheck disable=SC2001
+    audio_title=$(sed "s|[ \t]*\(\r*\)$|\1|" <<<"$audio_title")
+
+    # Run the main process.
+    std_output=$(id3v2 -a "$audio_artist" -t "$audio_title" "$temp_file" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    # Move the temporary file to the output.
+    output_file=$input_file
+    _move_temp_file_to_output "$input_file" "$temp_file" "$output_file"
+
+    # Remove the temporary files on each iteration (if not removed before).
+    rm -f -- "$temp_file"
+}
+
+_main "$@"
