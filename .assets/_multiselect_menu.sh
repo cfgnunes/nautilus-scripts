@@ -4,13 +4,12 @@
 # Version: 2024-03-26
 
 # Keyboard commands:
-#   <enter> : Confirms the current selection of options.
-#   <space> : Toggles the selection status of the currently highlighted option.
-#      <up> : Moves the highlight cursor one option up.
-#    <down> : Moves the highlight cursor one option down.
-#       <a> : Selects all available options.
-#       <z> : Deselects all available options.
-#       <q> : Terminates the process (also works with <ctrl>+<c>).
+#  <enter>: Confirms the current selection of options.
+#  <space>: Toggles the selection status of the currently highlighted option.
+#  <a>: Toggles all available options.
+#  <q> or <ctrl>+<c>: Terminates the process.
+#  <up> or <left>: Moves the highlight cursor one option up.
+#  <down> or <right>: Moves the highlight cursor one option down.
 
 _multiselect_menu() {
     local return_value=$1
@@ -44,8 +43,7 @@ _multiselect_menu() {
         case "$key" in
         "") printf "enter" ;;
         " ") printf "toggle_active" ;;
-        "a") printf "select_all" ;;
-        "z") printf "select_none" ;;
+        "a") printf "toggle_all" ;;
         "q") printf "quit" ;;
         $'\e')
             IFS="" read -rs -n 2 key &>/dev/null
@@ -135,17 +133,17 @@ _multiselect_menu() {
                 selected[active]="true"
             fi
             ;;
-        "select_all")
+        "toggle_all")
             local i=0
-            for i in "${!selected[@]}"; do
-                selected[i]="true"
-            done
-            ;;
-        "select_none")
-            local i=0
-            for i in "${!selected[@]}"; do
-                selected[i]="false"
-            done
+            if [[ ${selected[active]} == "true" ]]; then
+                for i in "${!selected[@]}"; do
+                    selected[i]="false"
+                done
+            else
+                for i in "${!selected[@]}"; do
+                    selected[i]="true"
+                done
+            fi
             ;;
         "quit")
             __on_ctrl_c
