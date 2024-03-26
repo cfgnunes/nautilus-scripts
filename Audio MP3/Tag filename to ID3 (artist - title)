@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2001
 
 # Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
@@ -35,16 +36,12 @@ _main_task() {
     basename=$(basename -- "$input_file")
     basename=$(_strip_filename_extension "$basename")
     basename=$(tr -s " _-" <<<"$basename")
+    basename=$(sed "s| - |$FIELD_SEPARATOR|" <<<"$basename")
 
     local audio_artist=""
     local audio_title=""
-    audio_artist=$(grep --only-matching --perl-regexp "^[^-]*" <<<"$basename")
-    # shellcheck disable=SC2001
-    audio_artist=$(sed "s|[ \t]*\(\r*\)$|\1|" <<<"$audio_artist")
-    # shellcheck disable=SC2001
-    audio_title=$(sed "s|^[^-]*-\s*||g" <<<"$basename")
-    # shellcheck disable=SC2001
-    audio_title=$(sed "s|[ \t]*\(\r*\)$|\1|" <<<"$audio_title")
+    audio_artist=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$basename")
+    audio_title=$(cut -d "$FIELD_SEPARATOR" -f 2- <<<"$basename")
 
     # Run the main process.
     std_output=$(id3v2 --artist "$audio_artist" --song "$audio_title" "$temp_file" 2>&1)
