@@ -861,9 +861,8 @@ _get_working_directory() {
     fi
 
     # NOTE: The working directory can be detected by using the directory name
-    # of the first input file. Some file managers do not print the working
-    # directory correctly for the scripts, so it is not precise to use the
-    # 'pwd' command.
+    # of the first input file. Some file managers do not send the working
+    # directory for the scripts, so it is not precise to use the 'pwd' command.
     local file_1=""
     local file_2=""
     file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
