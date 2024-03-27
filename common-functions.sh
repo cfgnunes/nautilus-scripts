@@ -877,12 +877,14 @@ _get_working_directory() {
         file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
         file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$INPUT_FILES")
 
-        if [[ -n "$file_1" ]] && [[ -n "$file_2" ]] && [[ "$file_1" != "$file_2" ]]; then
-            working_directory=$(_get_filename_dir "$file_1")
-        elif [[ -n "$file_1" ]] && [[ -f "$file_1" ]]; then
-            working_directory=$(_get_filename_dir "$file_1")
-        elif [[ -n "$file_1" ]] && [[ -d "$file_1" ]]; then
-            working_directory=$(_get_filename_full_path "$file_1")
+        if [[ -n "$file_1" ]]; then
+            if [[ -n "$file_2" ]] && [[ "$file_1" != "$file_2" ]]; then
+                working_directory=$(_get_filename_dir "$file_1")
+            elif [[ -f "$file_1" ]]; then
+                working_directory=$(_get_filename_dir "$file_1")
+            elif [[ -d "$file_1" ]]; then
+                working_directory=$(_get_filename_full_path "$file_1")
+            fi
         else
             working_directory=$(pwd)
         fi
