@@ -525,6 +525,19 @@ _gdbus_notify() {
         "[]" '{"urgency": <1>}' 5000 &>/dev/null
 }
 
+_get_env_variable_search() {
+    local variable_search=$1
+    local variable_found=""
+
+    variable_found=$(printenv |
+        grep --only-matching -m1 ".*${variable_search}[^ =]*" |
+        grep -v "_get_env_variable_search" 2>/dev/null)
+
+    if [[ -n "$variable_found" ]] && [[ -n "${!variable_found}" ]]; then
+        printf "%s" "${!variable_found}"
+    fi
+}
+
 _get_filename_dir() {
     local input_filename=$1
     local dir=""
@@ -594,12 +607,9 @@ _get_filenames_filemanager() {
     local input_files=""
 
     # Try to use the information provided by the file manager.
-    local var_filemanager=""
-    var_filemanager=$(printenv | grep --only-matching -m 1 ".*SCRIPT_SELECTED_URIS")
+    input_files=$(_get_env_variable_search "SCRIPT_SELECTED_URIS")
 
-    if [[ -n "$var_filemanager" ]] && [[ -n "${!var_filemanager}" ]]; then
-        input_files=${!var_filemanager}
-
+    if [[ -n "$input_files" ]]; then
         # Replace '\n' with 'FIELD_SEPARATOR'.
         input_files=$(tr "\n" "$FIELD_SEPARATOR" <<<"$input_files")
 
@@ -847,35 +857,35 @@ _get_working_directory() {
     local working_directory=""
 
     # Try to use the information provided by the file manager.
-    local var_filemanager=""
-    var_filemanager=$(printenv | grep --only-matching -m 1 ".*SCRIPT_CURRENT_URI" | grep -v "var_filemanager")
+    working_directory=$(_get_env_variable_search "SCRIPT_CURRENT_URI")
 
-    if [[ -n "$var_filemanager" ]] && [[ -n "${!var_filemanager}" ]]; then
-        working_directory=${!var_filemanager}
-
-        # Decode the URI list.
-        working_directory=$(_text_uri_decode "$working_directory")
-
-        printf "%s" "$working_directory"
-        return 0
+    if [[ -n "$working_directory" ]]; then
+        # Files selected in the search screen.
+        if [[ "$working_directory" == *"search://"* ]]; then
+            working_directory=""
+        else
+            working_directory=$(_text_uri_decode "$working_directory")
+        fi
     fi
 
-    # NOTE: The working directory can be detected by using the directory name
-    # of the first input file. Some file managers do not send the working
-    # directory for the scripts, so it is not precise to use the 'pwd' command.
-    local file_1=""
-    local file_2=""
-    file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
-    file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$INPUT_FILES")
+    if [[ -z "$working_directory" ]]; then
+        # NOTE: The working directory can be detected by using the directory name
+        # of the first input file. Some file managers do not send the working
+        # directory for the scripts, so it is not precise to use the 'pwd' command.
+        local file_1=""
+        local file_2=""
+        file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
+        file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$INPUT_FILES")
 
-    if [[ -n "$file_1" ]] && [[ -n "$file_2" ]] && [[ "$file_1" != "$file_2" ]]; then
-        working_directory=$(_get_filename_dir "$file_1")
-    elif [[ -n "$file_1" ]] && [[ -f "$file_1" ]]; then
-        working_directory=$(_get_filename_dir "$file_1")
-    elif [[ -n "$file_1" ]] && [[ -d "$file_1" ]]; then
-        working_directory=$(_get_filename_full_path "$file_1")
-    else
-        working_directory=$(pwd)
+        if [[ -n "$file_1" ]] && [[ -n "$file_2" ]] && [[ "$file_1" != "$file_2" ]]; then
+            working_directory=$(_get_filename_dir "$file_1")
+        elif [[ -n "$file_1" ]] && [[ -f "$file_1" ]]; then
+            working_directory=$(_get_filename_dir "$file_1")
+        elif [[ -n "$file_1" ]] && [[ -d "$file_1" ]]; then
+            working_directory=$(_get_filename_full_path "$file_1")
+        else
+            working_directory=$(pwd)
+        fi
     fi
 
     printf "%s" "$working_directory"
@@ -1455,6 +1465,7 @@ export -f \
     _convert_text_to_filenames \
     _display_password_box \
     _exit_script \
+    _get_env_variable_search \
     _get_file_encoding \
     _get_file_mime \
     _get_filename_dir \
