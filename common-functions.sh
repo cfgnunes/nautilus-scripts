@@ -874,6 +874,8 @@ _get_working_directory() {
         working_directory=$(_get_filename_dir "$file_1")
     elif [[ -n "$file_1" ]] && [[ -d "$file_1" ]]; then
         working_directory=$(_get_filename_full_path "$file_1")
+    else
+        working_directory=$(pwd)
     fi
 
     printf "%s" "$working_directory"
