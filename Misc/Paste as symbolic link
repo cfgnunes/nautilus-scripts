@@ -21,15 +21,7 @@ _main() {
 
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all; par_get_pwd=true")
-
-    # Get the output directory.
-    local file_1=""
-    file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
-    if [[ -d "$file_1" ]] && (($(_get_filenames_count "$input_files") == 1)); then
-        output_dir=$file_1
-    else
-        output_dir=$(dirname -- "$file_1")
-    fi
+    output_dir=$(_get_working_directory)
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$(_get_urls_from_clipboard)" "$output_dir"
