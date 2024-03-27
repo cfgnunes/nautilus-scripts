@@ -592,9 +592,9 @@ _get_filenames_count() {
 
 _get_filenames_filemanager() {
     local input_files=""
-    local var_filemanager=""
 
-    # Try to use the list of input files provided by the file manager.
+    # Try to use the information provided by the file manager.
+    local var_filemanager=""
     var_filemanager=$(printenv | grep --only-matching -m 1 ".*SCRIPT_SELECTED_URIS")
 
     if [[ -n "$var_filemanager" ]] && [[ -n "${!var_filemanager}" ]]; then
@@ -844,15 +844,38 @@ _get_temp_file() {
 }
 
 _get_working_directory() {
-    # NOTE: The working directory is detected by using the directory name
+    local working_directory=""
+
+    # Try to use the information provided by the file manager.
+    local var_filemanager=""
+    var_filemanager=$(printenv | grep --only-matching -m 1 ".*SCRIPT_CURRENT_URI" | grep -v "var_filemanager")
+
+    if [[ -n "$var_filemanager" ]] && [[ -n "${!var_filemanager}" ]]; then
+        working_directory=${!var_filemanager}
+
+        # Decode the URI list.
+        working_directory=$(_text_uri_decode "$working_directory")
+
+        printf "%s" "$working_directory"
+        return 0
+    fi
+
+    # NOTE: The working directory can be detected by using the directory name
     # of the first input file. Some file managers do not print the working
     # directory correctly for the scripts, so it is not precise to use the
     # 'pwd' command.
     local file_1=""
+    local file_2=""
     file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
+    file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$INPUT_FILES")
 
-    local working_directory=""
-    working_directory=$(_get_filename_dir "$file_1")
+    if [[ -n "$file_1" ]] && [[ -n "$file_2" ]] && [[ "$file_1" != "$file_2" ]]; then
+        working_directory=$(_get_filename_dir "$file_1")
+    elif [[ -n "$file_1" ]] && [[ -f "$file_1" ]]; then
+        working_directory=$(_get_filename_dir "$file_1")
+    elif [[ -n "$file_1" ]] && [[ -d "$file_1" ]]; then
+        working_directory=$(_get_filename_full_path "$file_1")
+    fi
 
     printf "%s" "$working_directory"
 }
