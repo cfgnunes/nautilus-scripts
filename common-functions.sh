@@ -648,17 +648,13 @@ _get_files() {
     if (($(_get_filenames_count "$input_files") == 0)); then
         if [[ "$par_get_pwd" == "true" ]]; then
             # Return the current working directory if no files have been selected.
-            input_files=$(pwd)
+            input_files=$(_get_working_directory)
         else
             # Try selecting the files by opening a file selection box.
             if [[ "$par_type" == "directory" ]]; then
                 input_files=$(_display_dir_selection_box)
             else
                 input_files=$(_display_file_selection_box)
-            fi
-            if (($(_get_filenames_count "$input_files") == 0)); then
-                _display_error_box "There are no input files!"
-                _exit_script
             fi
         fi
     fi
@@ -670,6 +666,13 @@ _get_files() {
         "$par_skip_extension" \
         "$par_select_extension" \
         "$par_recursive")
+
+    # Return the current working directory if no directories have been selected.
+    if (($(_get_filenames_count "$input_files") == 0)); then
+        if [[ "$par_get_pwd" == "true" ]] && [[ "$par_type" == "directory" ]]; then
+            input_files=$(_get_working_directory)
+        fi
+    fi
 
     # Validates the mime or encoding of the file.
     input_files=$(_validate_file_mime_parallel \
