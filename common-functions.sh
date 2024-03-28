@@ -890,6 +890,11 @@ _get_working_directory() {
         fi
     fi
 
+    # Get the real directory of a symbolic link.
+    if [[ -L "$working_directory" ]]; then
+        working_directory=$(readlink -f "$working_directory")
+    fi
+
     printf "%s" "$working_directory"
 }
 
