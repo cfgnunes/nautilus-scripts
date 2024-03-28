@@ -33,6 +33,13 @@ _main() {
     std_output=$(sed "s|//|/|" <<<"$std_output")
     std_output=$(sed "s|^\(..*\)$|'\1'|" <<<"$std_output")
 
+    # Print a string in each group of duplicate files.
+    if [[ -n "$std_output" ]]; then
+        local msg_duplicate="Duplicate files:"
+        std_output="$msg_duplicate"$'\n'"$std_output"
+        std_output=$(sed -z "s|\n\n|\n\n$msg_duplicate\n|g" <<<"$std_output")
+    fi
+
     rm -f -- "$temp_file"
 
     _display_text_box "$std_output"
