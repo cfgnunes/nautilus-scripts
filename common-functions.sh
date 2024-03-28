@@ -1419,12 +1419,12 @@ _xdg_open_item_location() {
         return
     fi
 
-    if [[ -L "$item" ]]; then
-        item=$(readlink -f "$item")
-    fi
-
     if [[ "$item" == "/" ]]; then
         return
+    fi
+
+    if [[ -L "$item" ]]; then
+        item=$(readlink -f "$item")
     fi
 
     dir=$(_get_filename_dir "$item")
