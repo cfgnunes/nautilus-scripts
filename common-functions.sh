@@ -659,6 +659,11 @@ _get_files() {
         if [[ "$par_get_pwd" == "true" ]]; then
             # Return the current working directory if no files have been selected.
             input_files=$(_get_working_directory)
+
+            # Get the real directory of a symbolic link.
+            if [[ -L "$input_files" ]] && [[ "$par_type" != "directory" ]]; then
+                input_files=$(readlink -f "$input_files")
+            fi
         else
             # Try selecting the files by opening a file selection box.
             if [[ "$par_type" == "directory" ]]; then
@@ -888,11 +893,6 @@ _get_working_directory() {
         else
             working_directory=$(pwd)
         fi
-    fi
-
-    # Get the real directory of a symbolic link.
-    if [[ -L "$working_directory" ]]; then
-        working_directory=$(readlink -f "$working_directory")
     fi
 
     printf "%s" "$working_directory"
