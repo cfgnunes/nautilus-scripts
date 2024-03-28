@@ -29,14 +29,14 @@ _compare() {
     # Check if the items (directories or files) are identical.
     local diff_1_2=""
     local diff_1_3=""
-    diff_1_2=$(diff --no-dereference --brief --recursive -- "$file_1" "$file_2" 2>&1)
+    diff_1_2=$(diff --brief --recursive -- "$file_1" "$file_2" 2>&1)
     if [[ -z "$file_3" ]]; then
         if [[ -z "$diff_1_2" ]]; then
             _display_info_box "The two selected items are identical."
             _exit_script
         fi
     else
-        diff_1_3=$(diff --no-dereference --brief --recursive -- "$file_1" "$file_3" 2>&1)
+        diff_1_3=$(diff --brief --recursive -- "$file_1" "$file_3" 2>&1)
         if [[ -z "$diff_1_2" ]] && [[ -z "$diff_1_3" ]]; then
             _display_info_box "The three selected items are identical."
             _exit_script
