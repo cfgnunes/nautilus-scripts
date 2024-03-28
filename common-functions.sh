@@ -802,23 +802,23 @@ _get_output_filename() {
     # Define the extension of the 'output_file'.
     case "$par_extension_opt" in
     "append")
-        output_file+="$(_strip_filename_extension "$filename")"
+        output_file+=$(_strip_filename_extension "$filename")
         [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
-        output_file+="$(_get_filename_extension "$filename")"
+        output_file+=$(_get_filename_extension "$filename")
         output_file+=".$par_extension"
         ;;
     "preserve")
-        output_file+="$(_strip_filename_extension "$filename")"
+        output_file+=$(_strip_filename_extension "$filename")
         [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
-        output_file+="$(_get_filename_extension "$filename")"
+        output_file+=$(_get_filename_extension "$filename")
         ;;
     "replace")
-        output_file+="$(_strip_filename_extension "$filename")"
+        output_file+=$(_strip_filename_extension "$filename")
         [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
         output_file+=".$par_extension"
         ;;
     "strip")
-        output_file+="$(_strip_filename_extension "$filename")"
+        output_file+=$(_strip_filename_extension "$filename")
         [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
         ;;
     esac
@@ -1419,7 +1419,10 @@ _xdg_open_item_location() {
         return
     fi
 
-    item="$(readlink -f "$item")"
+    if [[ -L "$item" ]]; then
+        item=$(readlink -f "$item")
+    fi
+
     if [[ "$item" == "/" ]]; then
         return
     fi
