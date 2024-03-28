@@ -659,11 +659,6 @@ _get_files() {
         if [[ "$par_get_pwd" == "true" ]]; then
             # Return the current working directory if no files have been selected.
             input_files=$(_get_working_directory)
-
-            # Get the real directory of a symbolic link.
-            if [[ -L "$input_files" ]] && [[ "$par_type" != "directory" ]]; then
-                input_files=$(readlink -f "$input_files")
-            fi
         else
             # Try selecting the files by opening a file selection box.
             if [[ "$par_type" == "directory" ]]; then
@@ -1327,8 +1322,8 @@ _validate_file_preselect() {
 
     # Expand the directories with the 'find' command.
     case "$par_type" in
-    "file") find_command+=" ! -type d" ;;
-    "directory") find_command+=" -type d" ;;
+    "file") find_command+=" \( -type l -o -type f \)" ;;
+    "directory") find_command+=" \( -type l -o -type d \)" ;;
     esac
 
     if [[ -n "$par_select_extension" ]]; then
