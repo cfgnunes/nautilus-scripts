@@ -76,10 +76,6 @@ Most scripts have been tested on the following GNU/Linux distributions:
 - Xubuntu 23.10, 24.04
 - Zorin OS Core 17.1
 
-## Known issues
-
-- It doesn't support a long list of input files (Argument list too long).
-
 ## Contributing
 
 If you spot a bug or want to improve the code or even improve the content, you can do the following:
