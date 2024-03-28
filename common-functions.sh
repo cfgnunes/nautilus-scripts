@@ -413,7 +413,7 @@ _display_result_box() {
         if [[ -d "$output_dir" ]]; then
             _display_info_box "Finished! The output files are in the $(_str_human_readable_path "$output_dir") directory."
         else
-            _display_info_box "Finished, but there are no output files!"
+            _display_info_box "Finished, but there is nothing to do."
         fi
     else
         _display_info_box "Finished!"
