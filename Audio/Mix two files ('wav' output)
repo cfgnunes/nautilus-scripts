@@ -35,7 +35,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "Mixed audio.wav" "$output_dir" "par_extension_opt=preserve")
-    std_output=$(ffmpeg -y -i "$file_1" -i "$file_2" -filter_complex "amix=inputs=2:duration=longest" -- "$output_file" 2>&1)
+    std_output=$(ffmpeg -hide_banner -y -i "$file_1" -i "$file_2" -filter_complex "amix=inputs=2:duration=longest" -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "" "$output_file" || return 1
 }
 

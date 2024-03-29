@@ -31,7 +31,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=mp4")
-    std_output=$(ffmpeg -y -i "$input_file" -- "$output_file" 2>&1)
+    std_output=$(ffmpeg -hide_banner -y -i "$input_file" -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

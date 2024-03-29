@@ -33,7 +33,7 @@ _main_task() {
     temp_file=$(_get_temp_file)$(_get_filename_extension "$input_file")
 
     # Run the main process.
-    std_output=$(ffmpeg -y -i "$input_file" -map_metadata -1 -vn -c:a copy -- "$temp_file" 2>&1)
+    std_output=$(ffmpeg -hide_banner -y -i "$input_file" -map_metadata -1 -vn -c:a copy -- "$temp_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Move the temporary file to the output.
