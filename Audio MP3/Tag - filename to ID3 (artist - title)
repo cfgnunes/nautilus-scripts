@@ -34,7 +34,7 @@ _main_task() {
     local basename=""
     basename=$(basename -- "$input_file")
     basename=$(_strip_filename_extension "$basename")
-    basename=$(tr -s " _-" <<<"$basename")
+    basename=$(tr -s " " <<<"$basename")
     # shellcheck disable=SC2001
     basename=$(sed "s| - |$FIELD_SEPARATOR|" <<<"$basename")
 
