@@ -1426,13 +1426,13 @@ _xdg_open_item_location() {
     file_manager=$(_xdg_get_default_app "inode/directory")
 
     case "$file_manager" in
-    "nautilus" | "nemo" | "thunar")
-        # Open the directory of the item and select it.
-        $file_manager "$item" &
-        ;;
-    "dolphin")
+    "nautilus" | "dolphin")
         # Open the directory of the item and select it.
         $file_manager --select "$item" &
+        ;;
+    "nemo" | "thunar")
+        # Open the directory of the item and select it.
+        $file_manager "$item" &
         ;;
     *)
         # Open the directory of the item.
