@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "command=sox; | pkg_manager=apt; package=libsox-fmt-mp3"
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=file; par_recursive=true; par_select_mime=audio/mpeg; par_skip_extension=bak")
+    input_files=$(_get_files "par_type=file; par_recursive=true; par_select_mime='audio/|video/'")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
