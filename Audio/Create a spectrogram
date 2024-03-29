@@ -28,7 +28,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=png")
-    std_output=$(sox "$input_file" -n "spectrogram" -o "$output_file" 2>&1)
+    std_output=$(sox "$input_file" -n "spectrogram" -c "" -o "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
