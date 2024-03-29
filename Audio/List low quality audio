@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _check_dependencies "command=sox; | pkg_manager=apt; package=libsox-fmt-mp3"
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=file; par_recursive=true; par_select_mime=audio/mpeg; par_skip_extension=bak")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+
+    local std_output=""
+    std_output=$(_storage_text_read_all)
+    std_output=$(_text_sort "$std_output")
+
+    _display_list_box "$std_output" "--column=Status;--column=File"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local std_output=""
+
+    # Run the main process.
+    std_output=$(sox "$input_file" -n sinc "18k-22k" -m stat 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    std_output=$(grep "^Mean.*norm" <<<"$std_output")
+    std_output=$(cut -d ":" -f 2 <<<"$std_output")
+    std_output=$(tr -d " " <<<"$std_output")
+
+    local status="Good"
+    if [[ -z "$std_output" ]]; then
+        status="[error]"
+    elif [[ "$std_output" == *"0.0000"* ]]; then
+        status="[few high frequencies]"
+    fi
+
+    _storage_text_write_ln "$status$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
+}
+
+_main "$@"
