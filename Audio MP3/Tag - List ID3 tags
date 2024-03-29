@@ -33,7 +33,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(ffprobe -- "$input_file" 2>&1)
+    std_output=$(ffprobe -hide_banner -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
     # shellcheck disable=SC2001
     std_output=$(tr -s " " <<<"$std_output")
