@@ -55,6 +55,10 @@ _main_task() {
     std_output=$(id3v2 --artist "$audio_artist" --song "$audio_title" "$temp_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
+    # Strip id3v1 tags.
+    std_output=$(id3v2 --delete-v1 "$temp_file" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+
     # Move the temporary file to the output.
     output_file=$input_file
     _move_temp_file_to_output "$input_file" "$temp_file" "$output_file"
