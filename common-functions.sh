@@ -1422,12 +1422,27 @@ _xdg_open_item_location() {
         item=$(readlink -f "$item")
     fi
 
-    dir=$(_get_filename_dir "$item")
-    if [[ -z "$dir" ]]; then
-        return
-    fi
+    local file_manager=""
+    file_manager=$(_xdg_get_default_app "inode/directory")
 
-    xdg-open "$dir" &
+    case "$file_manager" in
+    "nautilus" | "nemo" | "thunar")
+        # Open the directory of the item and select it.
+        $file_manager "$item" &
+        ;;
+    "dolphin")
+        # Open the directory of the item and select it.
+        $file_manager --select "$item" &
+        ;;
+    *)
+        # Open the directory of the item.
+        dir=$(_get_filename_dir "$item")
+        if [[ -z "$dir" ]]; then
+            return
+        fi
+        $file_manager "$dir" &
+        ;;
+    esac
 }
 
 _xdg_get_default_app() {
@@ -1493,4 +1508,5 @@ export -f \
     _text_remove_pwd \
     _text_uri_decode \
     _validate_file_mime \
+    _xdg_get_default_app \
     _xdg_open_item_location
