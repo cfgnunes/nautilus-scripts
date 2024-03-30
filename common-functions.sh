@@ -525,19 +525,6 @@ _gdbus_notify() {
         "[]" '{"urgency": <1>}' 5000 &>/dev/null
 }
 
-_get_env_variable_search() {
-    local variable_search=$1
-    local variable_found=""
-
-    variable_found=$(printenv |
-        grep --only-matching -m1 ".*${variable_search}[^ =]*" |
-        grep -v "_get_env_variable_search" 2>/dev/null)
-
-    if [[ -n "$variable_found" ]] && [[ -n "${!variable_found}" ]]; then
-        printf "%s" "${!variable_found}"
-    fi
-}
-
 _get_filename_dir() {
     local input_filename=$1
     local dir=""
@@ -607,7 +594,13 @@ _get_filenames_filemanager() {
     local input_files=""
 
     # Try to use the information provided by the file manager.
-    input_files=$(_get_env_variable_search "SCRIPT_SELECTED_URIS")
+    if [[ -v "CAJA_SCRIPT_SELECTED_URIS" ]]; then
+        input_files=$CAJA_SCRIPT_SELECTED_URIS
+    elif [[ -v "NEMO_SCRIPT_SELECTED_URIS" ]]; then
+        input_files=$NEMO_SCRIPT_SELECTED_URIS
+    elif [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]]; then
+        input_files=$NAUTILUS_SCRIPT_SELECTED_URIS
+    fi
 
     if [[ -n "$input_files" ]]; then
         # Replace '\n' with 'FIELD_SEPARATOR'.
@@ -857,7 +850,13 @@ _get_working_directory() {
     local working_directory=""
 
     # Try to use the information provided by the file manager.
-    working_directory=$(_get_env_variable_search "SCRIPT_CURRENT_URI")
+    if [[ -v "CAJA_SCRIPT_CURRENT_URI" ]]; then
+        working_directory=$CAJA_SCRIPT_CURRENT_URI
+    elif [[ -v "NEMO_SCRIPT_CURRENT_URI" ]]; then
+        working_directory=$NEMO_SCRIPT_CURRENT_URI
+    elif [[ -v "NAUTILUS_SCRIPT_CURRENT_URI" ]]; then
+        working_directory=$NAUTILUS_SCRIPT_CURRENT_URI
+    fi
 
     if [[ -n "$working_directory" ]]; then
         # Files selected in the search screen.
@@ -1422,8 +1421,27 @@ _xdg_open_item_location() {
         item=$(readlink -f "$item")
     fi
 
+    # Try to detect the file manager running.
     local file_manager=""
-    file_manager=$(_xdg_get_default_app "inode/directory")
+    if [[ -v "CAJA_SCRIPT_SELECTED_URIS" ]]; then
+        file_manager="caja"
+    elif [[ -v "NEMO_SCRIPT_SELECTED_URIS" ]]; then
+        file_manager="nemo"
+    elif [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]]; then
+        file_manager="nautilus"
+    fi
+
+    # Use the default application that opens directories.
+    if [[ -z "$file_manager" ]]; then
+        file_manager=$(_xdg_get_default_app "inode/directory")
+    fi
+
+    # Reestore the working directory from path (if it was removed before).
+    if [[ $item == "./"* ]]; then
+        local working_directory=""
+        working_directory=$(_get_working_directory)
+        item=$(sed "s|^\./|$working_directory/|g" <<<"$item")
+    fi
 
     case "$file_manager" in
     "nautilus" | "dolphin")
@@ -1485,7 +1503,6 @@ export -f \
     _convert_text_to_filenames \
     _display_password_box \
     _exit_script \
-    _get_env_variable_search \
     _get_file_encoding \
     _get_file_mime \
     _get_filename_dir \
