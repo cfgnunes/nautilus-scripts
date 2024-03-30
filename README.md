@@ -1,4 +1,4 @@
-# Nautilus scripts
+# Nautilus Scripts
 
 This project is a collection of scripts designed to enhance the functionality of file managers such as [GNOME Files](https://gitlab.gnome.org/GNOME/nautilus), [Dolphin](https://github.com/KDE/dolphin), [Caja](https://github.com/mate-desktop/caja), [Nemo](https://github.com/linuxmint/nemo), and [Thunar](https://gitlab.xfce.org/xfce/thunar).
 
