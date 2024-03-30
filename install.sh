@@ -18,6 +18,7 @@ readonly SCRIPT_DIR ASSSETS_DIR
 # -----------------------------------------------------------------------------
 
 ACCELS_FILE=""
+COMPATIBLE_FILE_MANAGERS=("nautilus" "caja" "dolphin" "nemo" "pcmanfm-qt" "thunar")
 FILE_MANAGER=""
 INSTALL_DIR=""
 
@@ -33,12 +34,12 @@ _main() {
     local categories_defaults=()
     local categories_dirs=()
     local categories_selected=()
-    local menu_options=""
     local menu_defaults=()
     local menu_labels=()
+    local menu_options=""
     local menu_selected=()
 
-    _check_default_filemanager
+    _check_exist_filemanager
 
     printf "Scripts installer.\n\n"
     printf "Select the options (<SPACE> to select, <UP/DOWN> to choose):\n"
@@ -85,47 +86,67 @@ _main() {
         _multiselect_menu categories_selected categories_dirs categories_defaults
     fi
 
-    printf "\nStarting the installation...\n"
+    # Install for every file manager installed.
+    local file_manager=""
+    for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
+        if ! _command_exists "$file_manager"; then
+            continue
+        fi
 
-    # Installer steps.
-    [[ "$menu_options" == *"dependencies"* ]] && _step_install_dependencies
-    [[ "$menu_options" == *"shortcuts"* ]] && _step_install_shortcuts
-    _step_install_scripts "$menu_options" categories_selected categories_dirs
-    [[ "$menu_options" == *"reload"* ]] && _step_close_filemanager
+        printf "\nStarting the scripts for file manager: %s...\n" "$file_manager"
+
+        case "$file_manager" in
+        "nautilus")
+            INSTALL_DIR="$HOME/.local/share/nautilus/scripts"
+            ACCELS_FILE="$HOME/.config/nautilus/scripts-accels"
+            FILE_MANAGER="nautilus"
+            ;;
+        "caja")
+            INSTALL_DIR="$HOME/.config/caja/scripts"
+            ACCELS_FILE="$HOME/.config/caja/accels"
+            FILE_MANAGER="caja"
+            ;;
+        "dolphin")
+            INSTALL_DIR="$HOME/.local/share/scripts"
+            ACCELS_FILE=""
+            FILE_MANAGER="dolphin"
+            ;;
+        "nemo")
+            INSTALL_DIR="$HOME/.local/share/nemo/scripts"
+            ACCELS_FILE="$HOME/.gnome2/accels/nemo"
+            FILE_MANAGER="nemo"
+            ;;
+        "pcmanfm-qt")
+            INSTALL_DIR="$HOME/.local/share/scripts"
+            ACCELS_FILE=""
+            FILE_MANAGER="pcmanfm-qt"
+            ;;
+        "thunar")
+            INSTALL_DIR="$HOME/.local/share/scripts"
+            ACCELS_FILE="$HOME/.config/Thunar/accels.scm"
+            FILE_MANAGER="thunar"
+            ;;
+        esac
+
+        # Installer steps.
+        [[ "$menu_options" == *"dependencies"* ]] && _step_install_dependencies
+        [[ "$menu_options" == *"shortcuts"* ]] && _step_install_shortcuts
+        _step_install_scripts "$menu_options" categories_selected categories_dirs
+        [[ "$menu_options" == *"reload"* ]] && _step_close_filemanager
+    done
 
     printf "Finished!\n"
 }
 
-_check_default_filemanager() {
-    # Get the default file manager.
-    if _command_exists "nautilus"; then
-        INSTALL_DIR="$HOME/.local/share/nautilus/scripts"
-        ACCELS_FILE="$HOME/.config/nautilus/scripts-accels"
-        FILE_MANAGER="nautilus"
-    elif _command_exists "caja"; then
-        INSTALL_DIR="$HOME/.config/caja/scripts"
-        ACCELS_FILE="$HOME/.config/caja/accels"
-        FILE_MANAGER="caja"
-    elif _command_exists "dolphin"; then
-        INSTALL_DIR="$HOME/.local/share/scripts"
-        ACCELS_FILE=""
-        FILE_MANAGER="dolphin"
-    elif _command_exists "nemo"; then
-        INSTALL_DIR="$HOME/.local/share/nemo/scripts"
-        ACCELS_FILE="$HOME/.gnome2/accels/nemo"
-        FILE_MANAGER="nemo"
-    elif _command_exists "pcmanfm-qt"; then
-        INSTALL_DIR="$HOME/.local/share/scripts"
-        ACCELS_FILE=""
-        FILE_MANAGER="pcmanfm-qt"
-    elif _command_exists "thunar"; then
-        INSTALL_DIR="$HOME/.local/share/scripts"
-        ACCELS_FILE="$HOME/.config/Thunar/accels.scm"
-        FILE_MANAGER="thunar"
-    else
-        printf "Error: could not find any compatible file managers!\n"
-        exit 1
-    fi
+_check_exist_filemanager() {
+    local file_manager=""
+    for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
+        if _command_exists "$file_manager"; then
+            return
+        fi
+    done
+    printf "Error: could not find any compatible file managers!\n"
+    exit 1
 }
 
 _command_exists() {
@@ -295,7 +316,7 @@ _step_close_filemanager() {
 
     case "$FILE_MANAGER" in
     "nautilus" | "caja" | "nemo" | "thunar") $FILE_MANAGER -q &>/dev/null || true & ;;
-    "pcmanfm-qt") killall "$FILE_MANAGER" ;;
+    "pcmanfm-qt") killall "$FILE_MANAGER" &>/dev/null || true & ;;
     esac
 }
 
