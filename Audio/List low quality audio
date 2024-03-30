@@ -30,7 +30,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(sox "$input_file" -n sinc "18k-22k" -m stat 2>&1)
+    std_output=$(sox "$input_file" -n sinc "19k-22k" -m stat 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     std_output=$(grep "^Mean.*norm" <<<"$std_output")
@@ -40,7 +40,7 @@ _main_task() {
     local status="Good"
     if [[ -z "$std_output" ]]; then
         status="[error]"
-    elif [[ "$std_output" == *"0.0000"* ]]; then
+    elif [[ "$std_output" == *"0.00000"* ]]; then
         status="[few high frequencies]"
     fi
 
