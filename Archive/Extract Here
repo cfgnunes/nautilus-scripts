@@ -440,6 +440,8 @@ _run_command() {
         std_output=$(_move_file "rename" "$temp_dir_output" "$output_dir/$filename" 2>&1)
         _check_output "$?" "$std_output" "$input_file" ""
     fi
+
+    __temp_dir_remove
 }
 
 _all_commands_exists() {

@@ -61,6 +61,9 @@ _cleanup_on_exit() {
     local items_to_remove=""
     items_to_remove=$(cat -- "$TEMP_DIR_ITEMS_TO_REMOVE/"* 2>/dev/null)
 
+    # Allows the symbol "'" in filenames (inside 'xargs').
+    items_to_remove=$(sed -z "s|'|'\\\''|g" <<<"$items_to_remove")
+
     printf "%s" "$items_to_remove" | xargs \
         --no-run-if-empty \
         --delimiter="$FIELD_SEPARATOR" \
@@ -1138,10 +1141,10 @@ _run_task_parallel() {
     local input_files=$1
     local output_dir=$2
 
+    export -f _main_task
+
     # Allows the symbol "'" in filenames (inside 'xargs').
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
-
-    export -f _main_task
 
     # Execute the function '_main_task' for each file in parallel (using 'xargs').
     printf "%s" "$input_files" | xargs \
