@@ -67,14 +67,14 @@ _get_dependencies() {
             dependencies+="
                 command=bsdtar; pkg_manager=apt; package=libarchive-tools |
                 command=bsdtar; pkg_manager=dnf |
-                command=bsdtar; pkg_manager=pacman |
+                command=bsdtar; pkg_manager=pacman; package=libarchive |
                 command=bsdtar; pkg_manager=zypper"
             ;;
         "bsdtar+unar+7za")
             dependencies+="
                 command=bsdtar; pkg_manager=apt; package=libarchive-tools |
                 command=bsdtar; pkg_manager=dnf |
-                command=bsdtar; pkg_manager=pacman |
+                command=bsdtar; pkg_manager=pacman; package=libarchive |
                 command=bsdtar; pkg_manager=zypper"
             dependencies+=$'\n'
             dependencies+="
