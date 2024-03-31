@@ -66,6 +66,7 @@ _get_dependencies() {
                 pkg_manager=apt; package=texlive-xetex |
                 pkg_manager=dnf; package=texlive-scheme-basic |
                 pkg_manager=dnf; package=texlive-mdwtools |
+                pkg_manager=pacman; package=texlive-basic |
                 pkg_manager=zypper; package=texlive |
                 pkg_manager=zypper; package=texlive-mathdesign |
                 pkg_manager=zypper; package=texlive-subeqnarray"
@@ -84,6 +85,7 @@ _get_dependencies() {
                 pkg_manager=apt; package=texlive-xetex |
                 pkg_manager=dnf; package=texlive-scheme-basic |
                 pkg_manager=dnf; package=texlive-mdwtools |
+                pkg_manager=pacman; package=texlive-basic |
                 pkg_manager=zypper; package=texlive |
                 pkg_manager=zypper; package=texlive-mathdesign |
                 pkg_manager=zypper; package=texlive-subeqnarray"
