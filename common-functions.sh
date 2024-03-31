@@ -846,6 +846,13 @@ _get_temp_file() {
     printf "%s" "$temp_file"
 }
 
+_get_temp_file_dry() {
+    local temp_file=""
+    temp_file=$(mktemp --dry-run --tmpdir="$TEMP_DIR_TASK")
+
+    printf "%s" "$temp_file"
+}
+
 _get_working_directory() {
     local working_directory=""
 
@@ -1523,6 +1530,7 @@ export -f \
     _get_output_filename \
     _get_temp_dir_local \
     _get_temp_file \
+    _get_temp_file_dry \
     _get_working_directory \
     _is_gui_session \
     _log_write \

@@ -36,10 +36,10 @@ _main_task() {
     local icon_size="512"
 
     # Work on a temporary file.
-    temp_file1="$(_get_temp_file).png"
-    temp_file2="$(_get_temp_file).png"
-    temp_file3="$(_get_temp_file).png"
-    temp_file4="$(_get_temp_file).png"
+    temp_file1="$(_get_temp_file_dry).png"
+    temp_file2="$(_get_temp_file_dry).png"
+    temp_file3="$(_get_temp_file_dry).png"
+    temp_file4="$(_get_temp_file_dry).png"
 
     # Run the process (part 0) 'export svg'.
     local filename_extension=""

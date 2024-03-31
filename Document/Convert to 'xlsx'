@@ -88,7 +88,7 @@ _run_command() {
 
         # NOTE: Workaround to fix the bug 37531 in LibreOffice.
         # See the: https://bugs.documentfoundation.org/show_bug.cgi?id=37531
-        temp_file="$(_get_temp_file).bug37531"
+        temp_file=$(_get_temp_file_dry)
 
         # NOTE: LibreOffice does not support ' -- ' in the command line.
         # NOTE: LibreOffice does not support defining the output file manually.
