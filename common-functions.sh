@@ -1327,10 +1327,11 @@ _validate_file_preselect() {
     local par_recursive=$5
     local input_files_valid=""
 
-    input_files=$(sed "s|$FIELD_SEPARATOR|\" \"|g" <<<"$input_files")
+    input_files=$(sed "s|'|'\"'\"'|g" <<<"$input_files")
+    input_files=$(sed "s|$FIELD_SEPARATOR|' '|g" <<<"$input_files")
 
     # Build a 'find' command.
-    find_command="find \"$input_files\""
+    find_command="find '$input_files'"
 
     if [[ "$par_recursive" != "true" ]]; then
         find_command+=" -maxdepth 0"
