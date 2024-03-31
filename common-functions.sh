@@ -1041,6 +1041,8 @@ _pkg_get_package_manager() {
         pkg_manager="dnf"
     elif _command_exists "pacman"; then
         pkg_manager="pacman"
+    elif _command_exists "zypper"; then
+        pkg_manager="zypper"
     fi
 
     printf "%s" "$pkg_manager"
@@ -1067,6 +1069,9 @@ _pkg_install_packages() {
         ;;
     "pacman")
         pkexec bash -c "pacman -Syy; pacman --noconfirm -S $packages &>/dev/null"
+        ;;
+    "zypper")
+        pkexec bash -c "zypper refresh; zypper --non-interactive install $packages &>/dev/null"
         ;;
     esac
 
@@ -1102,6 +1107,11 @@ _pkg_is_package_installed() {
         ;;
     "pacman")
         if pacman -Q "$package" &>/dev/null; then
+            return 0
+        fi
+        ;;
+    "zypper")
+        if zypper search "$package" | grep "^i" | grep -q " $package "; then
             return 0
         fi
         ;;

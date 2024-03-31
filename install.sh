@@ -177,7 +177,7 @@ _step_install_dependencies() {
     esac
 
     # Packages for compress/decompress archives...
-    common_names+="bzip2 gzip squashfs-tools tar unzip zip "
+    common_names+="bzip2 gzip tar unzip zip "
     # Packages for documents...
     common_names+="pandoc "
     # Packages for images...
@@ -185,23 +185,27 @@ _step_install_dependencies() {
     # Packages for PDF...
     common_names+="ghostscript qpdf "
     # Packages for forensic...
-    common_names+="foremost testdisk "
+    common_names+="testdisk "
     # Packages for other scripts...
-    common_names+="perl-base rdfind rhash wget "
+    common_names+="perl-base rhash wget "
 
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
             # Distro: Ubuntu, Mint, Debian.
             sudo apt-get update || true
-            sudo apt-get -y install $common_names p7zip-full imagemagick xz-utils poppler-utils ffmpeg genisoimage
+            sudo apt-get -y install $common_names p7zip-full imagemagick xz-utils poppler-utils ffmpeg genisoimage foremost rdfind squashfs-tools
         elif _command_exists "dnf"; then
             # Distro: Fedora, Red Hat.
             sudo dnf check-update || true
-            sudo dnf -y install $common_names p7zip ImageMagick xz poppler-utils ffmpeg-free genisoimage
+            sudo dnf -y install $common_names p7zip ImageMagick xz poppler-utils ffmpeg-free genisoimage foremost rdfind squashfs-tools
         elif _command_exists "pacman"; then
             # Distro: Manjaro, Arch Linux.
             sudo pacman -Syy || true
-            sudo pacman --noconfirm -S $common_names p7zip imagemagick xz poppler poppler-glib ffmpeg
+            sudo pacman --noconfirm -S $common_names p7zip imagemagick xz poppler poppler-glib ffmpeg foremost rdfind squashfs-tools
+        elif _command_exists "zypper"; then
+            # Distro: OpenSUSE.
+            sudo zypper refresh || true
+            sudo zypper --non-interactive install $common_names p7zip ImageMagick xz poppler-tools ffmpeg squashfs
         else
             printf "Error: could not find a package manager!\n"
             exit 1
