@@ -10,7 +10,9 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "command=sox; | pkg_manager=apt; package=libsox-fmt-mp3"
+    _check_dependencies "
+        command=sox; |
+        pkg_manager=apt; package=libsox-fmt-mp3"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_recursive=true; par_select_mime='audio/|video/'")
 
