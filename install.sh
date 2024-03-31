@@ -194,22 +194,22 @@ _step_install_dependencies() {
         if _command_exists "apt-get"; then
             # Distro: Ubuntu, Mint, Debian.
             sudo apt-get update || true
-            sudo apt-get -y install $common_names p7zip-full imagemagick xz-utils poppler-utils ffmpeg genisoimage foremost rdfind squashfs-tools
+            sudo apt-get -y install $common_names p7zip-full imagemagick xz-utils poppler-utils ffmpeg genisoimage foremost testdisk rdfind squashfs-tools
         elif _command_exists "dnf"; then
             # Distro: Fedora.
             # Missing packages: findimagedupes, mp3val.
             sudo dnf check-update || true
-            sudo dnf -y install $common_names p7zip ImageMagick xz poppler-utils ffmpeg-free genisoimage foremost rdfind squashfs-tools
+            sudo dnf -y install $common_names p7zip ImageMagick xz poppler-utils ffmpeg-free genisoimage foremost testdisk rdfind squashfs-tools
         elif _command_exists "pacman"; then
             # Distro: Manjaro, Arch Linux.
             # Missing packages: findimagedupes, genisoimage, mp3val, xorriso.
             sudo pacman -Syy || true
-            sudo pacman --noconfirm -S $common_names p7zip imagemagick xz poppler poppler-glib ffmpeg foremost rdfind squashfs-tools
+            sudo pacman --noconfirm -S $common_names p7zip imagemagick xz poppler poppler-glib ffmpeg foremost testdisk rdfind squashfs-tools
         elif _command_exists "zypper"; then
             # Distro: openSUSE.
-            # Missing packages: diffpdf, findimagedupes, foremost, genisoimage, rdfind.
+            # Missing packages: diffpdf, findimagedupes, foremost, genisoimage, rdfind, ocrmypdf.
             sudo zypper refresh || true
-            sudo zypper --non-interactive install $common_names p7zip ImageMagick xz poppler-tools ffmpeg squashfs
+            sudo zypper --non-interactive install $common_names p7zip ImageMagick xz poppler-tools ffmpeg photorec squashfs
         else
             printf "Error: could not find a package manager!\n"
             exit 1

@@ -10,7 +10,11 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "command=photorec; package=testdisk"
+    _check_dependencies "
+        command=photorec; pkg_manager=apt; package=testdisk |
+        command=photorec; pkg_manager=dnf; package=testdisk |
+        command=photorec; pkg_manager=pacman; package=testdisk |
+        command=photorec; pkg_manager=zypper; package=photorec"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
