@@ -32,9 +32,15 @@ _main_task() {
     dir=$(dirname -- "$input_file")
     filename=$(basename -- "$input_file")
     filename_extension=$(_get_filename_extension "$input_file")
+    output_file=$filename
+
+    # Transform similar ' characters.
+    output_file=$(sed "s|"$'\u0060'"|'|g" <<<"$output_file") # Grave accent.
+    output_file=$(sed "s|"$'\u00b4'"|'|g" <<<"$output_file") # Acute accent.
+    output_file=$(sed "s|"$'\u2018'"|'|g" <<<"$output_file") # Left single quotation.
+    output_file=$(sed "s|"$'\u2019'"|'|g" <<<"$output_file") # Right single quotation.
 
     # Transform to title case.
-    output_file=$(sed "s|"$'\u2019'"|'|g" <<<"$filename")
     output_file=$(sed "s|\(\w\)\(\w*\)|\U\1\L\2|g" <<<"$output_file")
 
     # Words to lowercase.
