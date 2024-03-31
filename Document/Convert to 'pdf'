@@ -65,7 +65,10 @@ _get_dependencies() {
                 pkg_manager=apt; package=texlive-science |
                 pkg_manager=apt; package=texlive-xetex |
                 pkg_manager=dnf; package=texlive-scheme-basic |
-                pkg_manager=dnf; package=texlive-mdwtools"
+                pkg_manager=dnf; package=texlive-mdwtools |
+                pkg_manager=zypper; package=texlive |
+                pkg_manager=zypper; package=texlive-mathdesign |
+                pkg_manager=zypper; package=texlive-subeqnarray"
             ;;
         "libreoffice_calc") dependencies+="package=libreoffice-calc" ;;
         "libreoffice_impress") dependencies+="package=libreoffice-impress" ;;
@@ -74,8 +77,16 @@ _get_dependencies() {
             dependencies+="
                 command=pandoc |
                 pkg_manager=apt; package=texlive |
+                pkg_manager=apt; package=texlive-fonts-extra |
+                pkg_manager=apt; package=texlive-latex-extra |
+                pkg_manager=apt; package=texlive-publishers |
+                pkg_manager=apt; package=texlive-science |
+                pkg_manager=apt; package=texlive-xetex |
                 pkg_manager=dnf; package=texlive-scheme-basic |
-                pkg_manager=dnf; package=texlive-mdwtools"
+                pkg_manager=dnf; package=texlive-mdwtools |
+                pkg_manager=zypper; package=texlive |
+                pkg_manager=zypper; package=texlive-mathdesign |
+                pkg_manager=zypper; package=texlive-subeqnarray"
             ;;
         "pandoc") dependencies+="command=pandoc" ;;
         esac
