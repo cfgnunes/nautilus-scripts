@@ -383,10 +383,10 @@ _step_make_dolphin_actions() {
             par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
 
             # Set the min/max files requirements.
-            local par_min_files=""
-            local par_max_files=""
-            par_min_files=$(_get_script_parameter_value "$filename" "par_min_files")
-            par_max_files=$(_get_script_parameter_value "$filename" "par_max_files")
+            local par_min_items=""
+            local par_max_items=""
+            par_min_items=$(_get_script_parameter_value "$filename" "par_min_items")
+            par_max_items=$(_get_script_parameter_value "$filename" "par_max_items")
 
             local desktop_filename=""
             desktop_filename="${desktop_menus_dir}/${submenu} - ${name}.desktop"
@@ -397,12 +397,12 @@ _step_make_dolphin_actions() {
                 printf "%s\n" "Actions=scriptAction;"
                 printf "%s\n" "MimeType=$par_select_mime"
 
-                if [[ -n "$par_min_files" ]]; then
-                    printf "%s\n" "X-KDE-MinNumberOfUrls=$par_min_files"
+                if [[ -n "$par_min_items" ]]; then
+                    printf "%s\n" "X-KDE-MinNumberOfUrls=$par_min_items"
                 fi
 
-                if [[ -n "$par_max_files" ]]; then
-                    printf "%s\n" "X-KDE-MaxNumberOfUrls=$par_max_files"
+                if [[ -n "$par_max_items" ]]; then
+                    printf "%s\n" "X-KDE-MaxNumberOfUrls=$par_max_items"
                 fi
 
                 printf "%s\n" "Encoding=UTF-8"
@@ -467,10 +467,10 @@ _step_make_pcmanfm_actions() {
             par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
 
             # Set the min/max files requirements.
-            local par_min_files=""
-            local par_max_files=""
-            par_min_files=$(_get_script_parameter_value "$filename" "par_min_files")
-            par_max_files=$(_get_script_parameter_value "$filename" "par_max_files")
+            local par_min_items=""
+            local par_max_items=""
+            par_min_items=$(_get_script_parameter_value "$filename" "par_min_items")
+            par_max_items=$(_get_script_parameter_value "$filename" "par_max_items")
 
             local desktop_filename=""
             desktop_filename="${desktop_menus_dir}/${submenu} - ${name}.desktop"
@@ -558,12 +558,12 @@ _step_make_thunar_actions() {
                 printf "\t%s\n" "<description></description>"
 
                 # Set the min/max files requirements.
-                local par_min_files=""
-                local par_max_files=""
-                par_min_files=$(_get_script_parameter_value "$filename" "par_min_files")
-                par_max_files=$(_get_script_parameter_value "$filename" "par_max_files")
-                if [[ -n "$par_min_files" ]] && [[ -n "$par_max_files" ]]; then
-                    printf "\t%s\n" "<range>$par_min_files-$par_max_files</range>"
+                local par_min_items=""
+                local par_max_items=""
+                par_min_items=$(_get_script_parameter_value "$filename" "par_min_items")
+                par_max_items=$(_get_script_parameter_value "$filename" "par_max_items")
+                if [[ -n "$par_min_items" ]] && [[ -n "$par_max_items" ]]; then
+                    printf "\t%s\n" "<range>$par_min_items-$par_max_items</range>"
                 else
                     printf "\t%s\n" "<range></range>"
                 fi

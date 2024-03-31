@@ -10,7 +10,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
-    input_files=$(_get_files "par_type=directory; par_max_files=1; par_get_pwd=true")
+    input_files=$(_get_files "par_type=directory; par_max_items=1; par_get_pwd=true")
 
     # Run the main process.
     case "${XDG_CURRENT_DESKTOP,,}" in

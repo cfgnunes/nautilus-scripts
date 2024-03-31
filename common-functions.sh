@@ -637,8 +637,8 @@ _get_files() {
 
     # Default values for input parameters.
     local par_get_pwd="false"
-    local par_max_files=""
-    local par_min_files=""
+    local par_max_items=""
+    local par_min_items=""
     local par_recursive="false"
     local par_select_extension=""
     local par_select_mime=""
@@ -691,8 +691,8 @@ _get_files() {
         "$par_type" \
         "$par_select_extension" \
         "$par_select_mime" \
-        "$par_min_files" \
-        "$par_max_files" \
+        "$par_min_items" \
+        "$par_max_items" \
         "$par_recursive"
 
     # Sort the list by filename.
@@ -1374,8 +1374,8 @@ _validate_files_count() {
     local par_type=$2
     local par_select_extension=$3
     local par_select_mime=$4
-    local par_min_files=$5
-    local par_max_files=$6
+    local par_min_items=$5
+    local par_max_items=$6
     local par_recursive=$7
 
     # Define a term for a valid file.
@@ -1394,11 +1394,11 @@ _validate_files_count() {
     fi
 
     # Count the number of valid files.
-    local valid_files_count=0
-    valid_files_count=$(_get_filenames_count "$input_files")
+    local valid_items_count=0
+    valid_items_count=$(_get_filenames_count "$input_files")
 
     # Check if there is at least one valid file.
-    if ((valid_files_count == 0)); then
+    if ((valid_items_count == 0)); then
         if [[ "$par_recursive" == "true" ]]; then
             if [[ -n "$par_select_extension" ]]; then
                 _display_error_box "No files with extension: '.${par_select_extension//|/\' or \'.}' were found in the selection!"
@@ -1415,13 +1415,13 @@ _validate_files_count() {
         _exit_script
     fi
 
-    if [[ -n "$par_min_files" ]] && ((valid_files_count < par_min_files)); then
-        _display_error_box "You must select at least $par_min_files $valid_file_term!"
+    if [[ -n "$par_min_items" ]] && ((valid_items_count < par_min_items)); then
+        _display_error_box "You must select at least $par_min_items $valid_file_term!"
         _exit_script
     fi
 
-    if [[ -n "$par_max_files" ]] && ((valid_files_count > par_max_files)); then
-        _display_error_box "You must select up to $par_max_files $valid_file_term!"
+    if [[ -n "$par_max_items" ]] && ((valid_items_count > par_max_items)); then
+        _display_error_box "You must select up to $par_max_items $valid_file_term!"
         _exit_script
     fi
 }
