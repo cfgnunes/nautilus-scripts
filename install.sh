@@ -207,9 +207,9 @@ _step_install_dependencies() {
             sudo pacman --noconfirm -S $common_names p7zip imagemagick xz poppler cdrtools foremost testdisk rdfind squashfs-tools
         elif _command_exists "zypper"; then
             # Distro: openSUSE.
-            # Missing packages: diffpdf, findimagedupes, foremost, genisoimage, rdfind, ocrmypdf.
+            # Missing packages: diffpdf, findimagedupes, foremost, rdfind, ocrmypdf.
             sudo zypper refresh || true
-            sudo zypper --non-interactive install $common_names p7zip ImageMagick xz poppler-tools ffmpeg photorec squashfs
+            sudo zypper --non-interactive install $common_names p7zip ImageMagick xz poppler-tools mkisofs ffmpeg photorec squashfs
         else
             printf "Error: could not find a package manager!\n"
             exit 1

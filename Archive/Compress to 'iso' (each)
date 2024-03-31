@@ -10,12 +10,11 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "command=genisoimage"
     _check_dependencies "
         command=genisoimage; pkg_manager=apt |
         command=genisoimage; pkg_manager=dnf |
         command=genisoimage; pkg_manager=pacman; package=cdrtools |
-        command=genisoimage; pkg_manager=zypper "
+        command=mkisofs; pkg_manager=zypper"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
@@ -35,7 +34,11 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=iso")
-    std_output=$(genisoimage -input-charset "utf-8" -o "$output_file" -V "$volume_id" -A "" -sysid "" -J -R "$input_file" 2>&1)
+    if _command_exists "mkisofs"; then
+        std_output=$(mkisofs -input-charset "utf-8" -o "$output_file" -V "$volume_id" -A "" -sysid "" -J -R "$input_file" 2>&1)
+    elif _command_exists "genisoimage"; then
+        std_output=$(genisoimage -input-charset "utf-8" -o "$output_file" -V "$volume_id" -A "" -sysid "" -J -R "$input_file" 2>&1)
+    fi
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
