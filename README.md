@@ -4,7 +4,7 @@ This project is a collection of scripts designed to enhance the functionality of
 
 ![screenshot](.assets/screenshot.png)
 
-While numerous scripts are available for file managers on the web, many suffer from poor functionality, lack of error checking, and dependency management. Some scripts only work with files that don't have spaces in their names, among other limitations. To address these shortcomings, I have developed my own set of scripts, which offer the following advantages:
+While numerous scripts are available for file managers on the web, many suffer from poor functionality, lack of error checking, and dependency management. Some scripts only work with files that don't have special characters in their names, among other limitations. To address these shortcomings, I have developed my own set of scripts, which offer the following advantages:
 
 - **Parallel task execution**: Processes multiple files simultaneously.
 - **Progress dialog**: Displays a progress dialog and allows interruption of tasks at any time.
