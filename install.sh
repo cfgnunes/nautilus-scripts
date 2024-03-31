@@ -86,6 +86,8 @@ _main() {
         _multiselect_menu categories_selected categories_dirs categories_defaults
     fi
 
+    [[ "$menu_options" == *"dependencies"* ]] && _step_install_dependencies
+
     # Install for every file manager installed.
     local file_manager=""
     for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
@@ -93,7 +95,7 @@ _main() {
             continue
         fi
 
-        printf "\nStarting the scripts for file manager: %s...\n" "$file_manager"
+        printf "\nInstalling the scripts for file manager: '%s'.\n" "$file_manager"
 
         case "$file_manager" in
         "nautilus")
@@ -129,7 +131,6 @@ _main() {
         esac
 
         # Installer steps.
-        [[ "$menu_options" == *"dependencies"* ]] && _step_install_dependencies
         [[ "$menu_options" == *"shortcuts"* ]] && _step_install_shortcuts
         _step_install_scripts "$menu_options" categories_selected categories_dirs
         [[ "$menu_options" == *"reload"* ]] && _step_close_filemanager
@@ -160,7 +161,7 @@ _command_exists() {
 
 # shellcheck disable=SC2086
 _step_install_dependencies() {
-    printf " > Installing dependencies...\n"
+    printf "\nInstalling dependencies...\n"
 
     local common_names=""
 
