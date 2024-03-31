@@ -73,6 +73,7 @@ Most scripts have been tested on the following GNU/Linux distributions:
 - Lubuntu 22.04
 - Manjaro 23 (Gnome)
 - Mint 21 (Cinnamon and Mate)
+- openSUSE Tumbleweed 2024 (Gnome)
 - Xubuntu 23.10, 24.04
 - Zorin OS Core 17.1
 
