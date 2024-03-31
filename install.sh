@@ -195,15 +195,18 @@ _step_install_dependencies() {
             sudo apt-get update || true
             sudo apt-get -y install $common_names p7zip-full imagemagick xz-utils poppler-utils ffmpeg genisoimage foremost rdfind squashfs-tools
         elif _command_exists "dnf"; then
-            # Distro: Fedora, Red Hat.
+            # Distro: Fedora.
+            # Missing packages: findimagedupes.
             sudo dnf check-update || true
             sudo dnf -y install $common_names p7zip ImageMagick xz poppler-utils ffmpeg-free genisoimage foremost rdfind squashfs-tools
         elif _command_exists "pacman"; then
             # Distro: Manjaro, Arch Linux.
+            # Missing packages: findimagedupes, genisoimage.
             sudo pacman -Syy || true
             sudo pacman --noconfirm -S $common_names p7zip imagemagick xz poppler poppler-glib ffmpeg foremost rdfind squashfs-tools
         elif _command_exists "zypper"; then
             # Distro: OpenSUSE.
+            # Missing packages: diffpdf, findimagedupes, foremost, genisoimage, rdfind.
             sudo zypper refresh || true
             sudo zypper --non-interactive install $common_names p7zip ImageMagick xz poppler-tools ffmpeg squashfs
         else
