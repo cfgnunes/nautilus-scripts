@@ -161,7 +161,7 @@ _command_exists() {
 
 # shellcheck disable=SC2086
 _step_install_dependencies() {
-    printf "\nInstalling dependencies...\n"
+    printf "\nInstalling the dependencies...\n"
 
     local common_names=""
 
@@ -202,9 +202,9 @@ _step_install_dependencies() {
             sudo dnf -y install $common_names p7zip ImageMagick xz poppler-utils ffmpeg-free genisoimage foremost testdisk rdfind squashfs-tools
         elif _command_exists "pacman"; then
             # Distro: Manjaro, Arch Linux.
-            # Missing packages: findimagedupes, genisoimage, mp3val, xorriso.
+            # Missing packages: findimagedupes, mp3gain, mp3val.
             sudo pacman -Syy || true
-            sudo pacman --noconfirm -S $common_names p7zip imagemagick xz poppler poppler-glib ffmpeg foremost testdisk rdfind squashfs-tools
+            sudo pacman --noconfirm -S $common_names p7zip imagemagick xz poppler cdrtools foremost testdisk rdfind squashfs-tools
         elif _command_exists "zypper"; then
             # Distro: openSUSE.
             # Missing packages: diffpdf, findimagedupes, foremost, genisoimage, rdfind, ocrmypdf.

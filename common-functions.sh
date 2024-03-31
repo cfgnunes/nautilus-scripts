@@ -1111,7 +1111,7 @@ _pkg_is_package_installed() {
         fi
         ;;
     "zypper")
-        if zypper search "$package" | grep "^i" | grep -q " $package "; then
+        if zypper search --installed-only "$package" | grep -q "^i"; then
             return 0
         fi
         ;;
