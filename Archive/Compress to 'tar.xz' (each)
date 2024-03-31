@@ -14,7 +14,8 @@ _main() {
         command=tar |
         command=xz; pkg_manager=apt; package=xz-utils |
         command=xz; pkg_manager=dnf |
-        command=xz; pkg_manager=pacman"
+        command=xz; pkg_manager=pacman |
+        command=xz; pkg_manager=zypper"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all")
     output_dir=$(_get_output_dir "par_use_same_dir=true")

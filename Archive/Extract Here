@@ -55,19 +55,49 @@ _get_dependencies() {
         command=$(_get_command "$input_file" "default")
 
         case $command in
-        "7za") dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip" ;;
+        "7za")
+            dependencies+="
+            command=7za; pkg_manager=apt; package=p7zip-full |
+            command=7za; pkg_manager=dnf; package=p7zip |
+            command=7za; pkg_manager=pacman; package=p7zip |
+            command=7za; pkg_manager=zypper; package=p7zip"
+            ;;
         "ar") dependencies+="command=ar; package=binutils" ;;
-        "bsdtar") dependencies+="command=bsdtar; pkg_manager=apt; package=libarchive-tools | command=bsdtar; pkg_manager=dnf | command=bsdtar; pkg_manager=pacman" ;;
+        "bsdtar")
+            dependencies+="
+                command=bsdtar; pkg_manager=apt; package=libarchive-tools |
+                command=bsdtar; pkg_manager=dnf |
+                command=bsdtar; pkg_manager=pacman |
+                command=bsdtar; pkg_manager=zypper"
+            ;;
         "bsdtar+unar+7za")
-            dependencies+="command=bsdtar; pkg_manager=apt; package=libarchive-tools | command=bsdtar; pkg_manager=dnf | command=bsdtar; pkg_manager=pacman"
+            dependencies+="
+                command=bsdtar; pkg_manager=apt; package=libarchive-tools |
+                command=bsdtar; pkg_manager=dnf |
+                command=bsdtar; pkg_manager=pacman |
+                command=bsdtar; pkg_manager=zypper"
             dependencies+=$'\n'
-            dependencies+="command=unar; pkg_manager=apt | command=unar; pkg_manager=dnf | command=unar; pkg_manager=pacman; package=unarchiver"
+            dependencies+="
+                command=unar; pkg_manager=apt |
+                command=unar; pkg_manager=dnf |
+                command=unar; pkg_manager=pacman; package=unarchiver |
+                command=unar; pkg_manager=zypper"
             dependencies+=$'\n'
-            dependencies+="command=7za; pkg_manager=apt; package=p7zip-full | command=7za; pkg_manager=dnf; package=p7zip | command=7za; pkg_manager=pacman; package=p7zip"
+            dependencies+="
+                command=7za; pkg_manager=apt; package=p7zip-full |
+                command=7za; pkg_manager=dnf; package=p7zip |
+                command=7za; pkg_manager=pacman; package=p7zip |
+                command=7za; pkg_manager=zypper; package=p7zip"
             ;;
         "bzip2") dependencies+="command=bzip2" ;;
         "cpio") dependencies+="command=cpio" ;;
-        "gpg") dependencies+="command=gpg; pkg_manager=apt | command=gpg; pkg_manager=dnf; package=gnupg2 | command=gpg; pkg_manager=pacman; package=gnupg" ;;
+        "gpg")
+            dependencies+="
+                command=gpg; pkg_manager=apt; package=gpg |
+                command=gpg; pkg_manager=dnf; package=gnupg2 |
+                command=gpg; pkg_manager=pacman; package=gnupg |
+                command=gpg; pkg_manager=zypper; package=gpg2"
+            ;;
         "gzip") dependencies+="command=gzip" ;;
         "lha") dependencies+="command=lha; package=lhasa" ;;
         "lrzip") dependencies+="command=lrzip" ;;
@@ -81,14 +111,39 @@ _get_dependencies() {
         "tar+lz4") dependencies+="command=tar | command=lz4" ;;
         "tar+lzip") dependencies+="command=tar | command=lzip" ;;
         "tar+lzop") dependencies+="command=tar | command=lzop" ;;
-        "tar+xz") dependencies+="command=tar | command=xz; pkg_manager=apt; package=xz-utils | command=xz; pkg_manager=dnf | command=xz; pkg_manager=pacman" ;;
+        "tar+xz")
+            dependencies+="
+                command=tar |
+                command=xz; pkg_manager=apt; package=xz-utils |
+                command=xz; pkg_manager=dnf |
+                command=xz; pkg_manager=pacman |
+                command=xz; pkg_manager=zypper"
+            ;;
         "tar+zstd") dependencies+="command=tar | command=zstd" ;;
-        "unar") dependencies+="command=unar; pkg_manager=apt | command=unar; pkg_manager=dnf | command=unar; pkg_manager=pacman; package=unarchiver" ;;
+        "unar")
+            dependencies+="
+                command=unar; pkg_manager=apt |
+                command=unar; pkg_manager=dnf |
+                command=unar; pkg_manager=pacman; package=unarchiver |
+                command=unar; pkg_manager=zypper"
+            ;;
         "unrar") dependencies+="command=unrar" ;;
-        "unsquashfs") dependencies+="command=unsquashfs; package=squashfs-tools" ;;
+        "unsquashfs")
+            dependencies+="
+            command=unsquashfs; pkg_manager=apt; package=squashfs-tools |
+            command=unsquashfs; pkg_manager=dnf; package=squashfs-tools |
+            command=unsquashfs; pkg_manager=pacman; package=squashfs-tools |
+            command=unsquashfs; pkg_manager=zypper; package=squashfs"
+            ;;
         "unzip") dependencies+="command=unzip" ;;
         "xorriso") dependencies+="command=xorriso" ;;
-        "xz") dependencies+="command=xz; pkg_manager=apt; package=xz-utils | command=xz; pkg_manager=dnf | command=xz; pkg_manager=pacman" ;;
+        "xz")
+            dependencies+="
+                command=xz; pkg_manager=apt; package=xz-utils |
+                command=xz; pkg_manager=dnf |
+                command=xz; pkg_manager=pacman |
+                command=xz; pkg_manager=zypper"
+            ;;
         "zpaq") dependencies+="command=zpaq" ;;
         "zstd") dependencies+="command=zstd" ;;
         esac

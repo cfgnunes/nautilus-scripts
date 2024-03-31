@@ -13,7 +13,8 @@ _main() {
     _check_dependencies "
         command=pdfunite; pkg_manager=apt; package=poppler-utils |
         command=pdfunite; pkg_manager=dnf; package=poppler-utils |
-        command=pdfunite; pkg_manager=pacman; package=poppler-glib"
+        command=pdfunite; pkg_manager=pacman; package=poppler-glib |
+        command=pdfunite; pkg_manager=zypper; package=poppler-tools"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_mime=application/pdf; par_min_files=2; par_sort_list=true")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
