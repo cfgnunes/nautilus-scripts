@@ -53,7 +53,7 @@ _get_dependencies() {
             dependencies+="
                 command=pdftotext; pkg_manager=apt; package=poppler-utils |
                 command=pdftotext; pkg_manager=dnf; package=poppler-utils |
-                command=pdftotext; pkg_manager=pacman; package=poppler-glib |
+                command=pdftotext; pkg_manager=pacman; package=poppler |
                 command=pdftotext; pkg_manager=zypper; package=poppler-tools"
             ;;
         esac

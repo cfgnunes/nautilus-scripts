@@ -11,6 +11,11 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "command=genisoimage"
+    _check_dependencies "
+        command=genisoimage; pkg_manager=apt |
+        command=genisoimage; pkg_manager=dnf |
+        command=genisoimage; pkg_manager=pacman; package=cdrtools |
+        command=genisoimage; pkg_manager=zypper "
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
