@@ -1065,7 +1065,7 @@ _open_items_locations() {
         file_manager=$(_xdg_get_default_app "inode/directory")
     fi
 
-    # Reestore the working directory from path (if it was removed before).
+    # Restore the working directory from path (if it was removed before).
     local working_directory=""
     working_directory=$(_get_working_directory)
     items=$(sed "s|\./|$working_directory/|g" <<<"$items")
