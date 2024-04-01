@@ -45,7 +45,8 @@ _main_task() {
 
     # Words to lowercase.
     local words=""
-    words="a|an|and|as|at|but|by|for|from|if|in|nor|of|on|or|per|so|the|to|via|yet|a|e|o|da|das|de|do|dos|na|no|para|pra|um|uma"
+    words="a|an|and|as|at|but|by|for|from|if|in|nor|of|on|or|per|so|the|to|via|with|yet"
+    words+="|a|as|e|o|os|um|uns|uma|umas|com|da|das|de|desde|do|dos|em|na|nas|no|nos|ou|pra|para|pela|pelas|pelo|pelos|por|se|sob|sobre"
     output_file=$(sed -E "s/ ($words)\b/ \L\1/gI" <<<"$output_file")
 
     # Uppercase the beginning of sentences.
@@ -59,18 +60,21 @@ _main_task() {
     output_file=$(sed "s|'em |'Em |gI" <<<"$output_file")
     output_file=$(sed "s| '\(\w\)| '\U\1|gI" <<<"$output_file")
 
-    # Fix the case of specific words.
-    output_file=$(sed "s| 3d | 3D |gI" <<<"$output_file")
-    output_file=$(sed "s| ko | KO |gI" <<<"$output_file")
-    output_file=$(sed "s| no\. | No. |gI" <<<"$output_file")
+    # Fix common uppercase word abbreviations.
+    words="[0-9]\w|ac|api|sql|aka|asap|ceo|cfo|cto|dc|diy|dna|faq|isbn|ko|rpg|rpm|usa|vip"
+    words+="|bios|cmos|fifa|gba|nba|nes|nfl|nhl|rom|snes|uml"
+    output_file=$(sed -E "s/\b($words)\b/\U\1/gI" <<<"$output_file")
+
+    # Fix the some specific cases.
     output_file=$(sed "s|-in-|-in-|gI" <<<"$output_file")
-    output_file=$(sed "s|ac-dc |AC-DC |gI" <<<"$output_file")
-    output_file=$(sed "s|feat\. |feat. |gI" <<<"$output_file")
-    output_file=$(sed "s|rpg |RPG |gI" <<<"$output_file")
-    output_file=$(sed "s|rpm |RPM |gI" <<<"$output_file")
+    output_file=$(sed "s|\bphd\b|PhD|gI" <<<"$output_file")
+    output_file=$(sed "s|\bno\. |No. |gI" <<<"$output_file")
+    output_file=$(sed "s|\bfeat\. |feat. |gI" <<<"$output_file")
+    output_file=$(sed "s|\bfeaturing |featuring |gI" <<<"$output_file")
     output_file=$(sed "s|\& the |\& The |gI" <<<"$output_file")
-    output_file=$(sed "s|and the |and The |gI" <<<"$output_file")
+    output_file=$(sed "s|\band the |and The |gI" <<<"$output_file")
     output_file=$(sed "s|, the |, The |gI" <<<"$output_file")
+    output_file=$(sed "s|, a |, A |gI" <<<"$output_file")
     output_file=$(sed "s|, an |, An |gI" <<<"$output_file")
     output_file=$(sed -E "s/ (IX|IV|V?I{0,3})([,\. ])/ \U\1\2/gI" <<<"$output_file")
 
