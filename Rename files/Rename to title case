@@ -74,6 +74,9 @@ _main_task() {
     output_file=$(sed "s|, an |, An |gI" <<<"$output_file")
     output_file=$(sed -E "s/ (IX|IV|V?I{0,3})([,\. ])/ \U\1\2/gI" <<<"$output_file")
 
+    # Fix abbreviations with one letter character.
+    output_file=$(sed "s| \(\w\.\)| \U\1|gI" <<<"$output_file")
+
     # Strip the extension.
     output_file=$(_strip_filename_extension "$output_file")
 
