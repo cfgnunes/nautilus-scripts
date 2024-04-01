@@ -297,14 +297,15 @@ _display_list_box() {
         columns=$(tr ";" "$FIELD_SEPARATOR" <<<"$columns")
         message=$(tr "\n" "$FIELD_SEPARATOR" <<<"$message")
         # shellcheck disable=SC2086
-        selected_item=$(zenity --title "$(_get_script_name)" --list --editable \
+        selected_item=$(zenity --title "$(_get_script_name)" --list \
+            --editable --multiple --separator="$FIELD_SEPARATOR" \
             --width=800 --height=450 --print-column "$columns_count" \
             --text "Total of $items_count items.$message_select" \
             $columns $message 2>/dev/null) || _exit_script
 
         if ((items_count != 0)) && [[ -n "$selected_item" ]]; then
             # Open the directory of the clicked item in the list.
-            _xdg_open_item_location "$selected_item"
+            _open_items_locations "$selected_item"
         fi
     elif _command_exists "kdialog"; then
         columns=$(sed "s|--column=||g" <<<"$columns")
@@ -1041,6 +1042,74 @@ _move_temp_file_to_output() {
     return 0
 }
 
+_open_items_locations() {
+    local items=$1
+    local dir=""
+
+    if [[ -z "$items" ]]; then
+        return
+    fi
+
+    # Try to detect the file manager running.
+    local file_manager=""
+    if [[ -v "CAJA_SCRIPT_SELECTED_URIS" ]]; then
+        file_manager="caja"
+    elif [[ -v "NEMO_SCRIPT_SELECTED_URIS" ]]; then
+        file_manager="nemo"
+    elif [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]]; then
+        file_manager="nautilus"
+    fi
+
+    # Use the default application that opens directories.
+    if [[ -z "$file_manager" ]]; then
+        file_manager=$(_xdg_get_default_app "inode/directory")
+    fi
+
+    # Reestore the working directory from path (if it was removed before).
+    local working_directory=""
+    working_directory=$(_get_working_directory)
+    items=$(sed "s|\./|$working_directory/|g" <<<"$items")
+
+    # Open the location of each item.
+    local item=""
+    local items_open=""
+    for item in $items; do
+        if [[ "$item" == "/" ]]; then
+            continue
+        fi
+
+        if [[ -L "$item" ]]; then
+            item=$(readlink -f "$item")
+        fi
+        items_open+="$item$FIELD_SEPARATOR"
+
+        case "$file_manager" in
+        "nautilus" | "caja" | "dolphin" | "nemo" | "thunar") : ;;
+        *)
+            # Open the directory of the item.
+            dir=$(_get_filename_dir "$item")
+            if [[ -z "$dir" ]]; then
+                continue
+            fi
+            $file_manager "$dir" &
+            ;;
+        esac
+    done
+
+    case "$file_manager" in
+    "nautilus" | "caja" | "dolphin")
+        # Open the directory of the item and select it.
+        # shellcheck disable=SC2086
+        $file_manager --select $items_open &
+        ;;
+    "nemo" | "thunar")
+        # Open the directory of the item and select it.
+        # shellcheck disable=SC2086
+        $file_manager $items_open &
+        ;;
+    esac
+}
+
 _pkg_get_package_manager() {
     local pkg_manager=""
 
@@ -1426,64 +1495,6 @@ _validate_files_count() {
     fi
 }
 
-_xdg_open_item_location() {
-    local item=$1
-    local dir=""
-
-    if [[ -z "$item" ]]; then
-        return
-    fi
-
-    if [[ "$item" == "/" ]]; then
-        return
-    fi
-
-    if [[ -L "$item" ]]; then
-        item=$(readlink -f "$item")
-    fi
-
-    # Try to detect the file manager running.
-    local file_manager=""
-    if [[ -v "CAJA_SCRIPT_SELECTED_URIS" ]]; then
-        file_manager="caja"
-    elif [[ -v "NEMO_SCRIPT_SELECTED_URIS" ]]; then
-        file_manager="nemo"
-    elif [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]]; then
-        file_manager="nautilus"
-    fi
-
-    # Use the default application that opens directories.
-    if [[ -z "$file_manager" ]]; then
-        file_manager=$(_xdg_get_default_app "inode/directory")
-    fi
-
-    # Reestore the working directory from path (if it was removed before).
-    if [[ $item == "./"* ]]; then
-        local working_directory=""
-        working_directory=$(_get_working_directory)
-        item=$(sed "s|^\./|$working_directory/|g" <<<"$item")
-    fi
-
-    case "$file_manager" in
-    "nautilus" | "dolphin")
-        # Open the directory of the item and select it.
-        $file_manager --select "$item" &
-        ;;
-    "nemo" | "thunar")
-        # Open the directory of the item and select it.
-        $file_manager "$item" &
-        ;;
-    *)
-        # Open the directory of the item.
-        dir=$(_get_filename_dir "$item")
-        if [[ -z "$dir" ]]; then
-            return
-        fi
-        $file_manager "$dir" &
-        ;;
-    esac
-}
-
 _xdg_get_default_app() {
     local mime=$1
     local desktop_file=""
@@ -1546,6 +1557,4 @@ export -f \
     _strip_filename_extension \
     _text_remove_pwd \
     _text_uri_decode \
-    _validate_file_mime \
-    _xdg_get_default_app \
-    _xdg_open_item_location
+    _validate_file_mime

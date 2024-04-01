@@ -12,16 +12,8 @@ _main() {
     _check_dependencies "command=xdg-open; package=xdg-utils"
     input_files=$(_get_files "par_type=all; par_get_pwd=true")
 
-    # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" ""
-}
-
-_main_task() {
-    local input_file=$1
-    local output_dir=$2
-
     # Run the main process.
-    _xdg_open_item_location "$input_file"
+    _open_items_locations "$input_files"
 }
 
 _main "$@"
