@@ -7,22 +7,33 @@ source "$ROOT_DIR/common-functions.sh"
 
 _main() {
     local input_files=""
+    local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies ""
-    input_files=$(_get_files "par_type=directory; par_max_items=1; par_get_pwd=true")
-
-    # Run the main process.
     case "${XDG_CURRENT_DESKTOP,,}" in
     *"kde"* | *"lxqt"*)
         _check_dependencies "command=filelight"
-        filelight -- "$input_files" &
         ;;
     *)
         _check_dependencies "command=baobab"
-        baobab -- "$input_files" &
         ;;
     esac
+    input_files=$(_get_files "par_type=directory; par_max_items=20; par_get_pwd=true")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+
+    # Run the main process.
+    if _command_exists "baobab"; then
+        baobab -- "$input_file" &
+    elif _command_exists "filelight"; then
+        filelight -- "$input_file" &
+    fi
 }
 
 _main "$@"
