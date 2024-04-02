@@ -7,28 +7,50 @@ source "$ROOT_DIR/common-functions.sh"
 
 _main() {
     local input_files=""
+    local output_dir=""
 
     # Execute initial checks.
     _check_dependencies ""
-    input_files=$(_get_files "par_type=directory; par_max_items=1; par_get_pwd=true")
+    input_files=$(_get_files "par_type=directory; par_max_items=20; par_get_pwd=true")
 
-    # shellcheck disable=SC2086
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+
     # Run the main process.
-    if _command_exists "kgx"; then
-        kgx --working-directory="$input_files" &
+    cd "$input_file" || exit 1
+    if _command_exists "alacritty"; then
+        alacritty &
+    elif _command_exists "kitty"; then
+        kitty &
+    elif _command_exists "terminology"; then
+        terminology &
+    elif _command_exists "terminator"; then
+        terminator &
+    elif _command_exists "kgx"; then
+        kgx &
     elif _command_exists "gnome-terminal"; then
-        gnome-terminal --working-directory="$input_files" &
+        gnome-terminal &
     elif _command_exists "konsole"; then
-        konsole --workdir "$input_files" &
+        konsole &
     elif _command_exists "mate-terminal"; then
-        mate-terminal --working-directory="$input_files" &
+        mate-terminal &
     elif _command_exists "xfce4-terminal"; then
-        xfce4-terminal --default-working-directory="$input_files" &
+        xfce4-terminal &
     elif _command_exists "qterminal"; then
-        qterminal --workdir "$input_files" &
-    else
-        _check_dependencies "command=gnome-terminal"
-        gnome-terminal --working-directory="$input_files" &
+        qterminal &
+    elif _command_exists "deepin-terminal"; then
+        deepin-terminal &
+    elif _command_exists "termit"; then
+        termit "$input_files" &
+    elif _command_exists "uxterm"; then
+        uxterm &
+    elif _command_exists "xterm"; then
+        xterm &
     fi
 }
 
