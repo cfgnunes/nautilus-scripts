@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Code based on: https://unix.stackexchange.com/a/673436
-# Version: 2024-03-26
+# Version: 2024-04-01
 
 # Keyboard commands:
 #  <enter>: Confirms the current selection of options.
@@ -15,6 +15,9 @@ _multiselect_menu() {
     local return_value=$1
     local -n options=$2
     local -n defaults=$3
+
+    # Turn off echoing of characters typed on the terminal.
+    stty -echo
 
     # Helpers for console print format and control.
     __cursor_blink_on() {
@@ -109,8 +112,6 @@ _multiselect_menu() {
                 # Print the inactive option.
                 printf "$prefix %s" "$option"
             fi
-            # Avoid print chars when pressing two keys at the same time.
-            __cursor_to "$start_row"
         done
     }
 
@@ -166,6 +167,7 @@ _multiselect_menu() {
     # Set the cursor position back to normal.
     __cursor_to "$last_row"
     __cursor_blink_on
+    stty echo
 
     eval "$return_value"='("${selected[@]}")'
 
