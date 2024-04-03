@@ -46,7 +46,7 @@ _main_task() {
     elif _command_exists "deepin-terminal"; then
         deepin-terminal &
     elif _command_exists "termit"; then
-        termit "$input_files" &
+        termit &
     elif _command_exists "uxterm"; then
         uxterm &
     elif _command_exists "xterm"; then
