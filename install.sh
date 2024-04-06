@@ -653,6 +653,9 @@ _step_install_shortcuts_gnome2() {
         printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenAlternate" "")'
         # Disable the shortcut for "OpenInNewTab" (<control><shift>o).
         printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenInNewTab" "")'
+        # Disable the shortcut for "Show Hide Extra Pane" (F3).
+        printf "%s\n" '(gtk_accel_path "<Actions>/NavigationActions/Show Hide Extra Pane" "")'
+        printf "%s\n" '(gtk_accel_path "<Actions>/ShellActions/Show Hide Extra Pane" "")'
 
         local filename=""
         find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git*" ! -path "*.assets*" ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
