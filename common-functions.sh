@@ -1050,10 +1050,8 @@ _open_items_locations() {
         file_manager="nemo"
     elif [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]]; then
         file_manager="nautilus"
-    fi
-
-    # Use the default application that opens directories.
-    if [[ -z "$file_manager" ]]; then
+    else
+        # Use the default application that opens directories.
         file_manager=$(_xdg_get_default_app "inode/directory")
     fi
 
