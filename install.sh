@@ -9,21 +9,18 @@ set -eu
 # -----------------------------------------------------------------------------
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-ASSSETS_DIR="$SCRIPT_DIR/.assets"
-
-readonly SCRIPT_DIR ASSSETS_DIR
+readonly SCRIPT_DIR
 
 # -----------------------------------------------------------------------------
 # GLOBAL VARIABLES
 # -----------------------------------------------------------------------------
 
-ACCELS_FILE=""
 COMPATIBLE_FILE_MANAGERS=("nautilus" "caja" "dolphin" "nemo" "pcmanfm-qt" "thunar")
 FILE_MANAGER=""
 INSTALL_DIR=""
 
 # shellcheck disable=SC1091
-source "$ASSSETS_DIR/_multiselect_menu.sh"
+source "$SCRIPT_DIR/.assets/_multiselect_menu.sh"
 
 # -----------------------------------------------------------------------------
 # FUNCTIONS
@@ -49,18 +46,15 @@ _main() {
         "Install keyboard shortcuts."
         "Close the file manager to reload its configurations."
         "Choose script categories to install."
+        "Preserve previous scripts."
     )
     menu_defaults=(
         "true"
         "true"
         "true"
         "false"
+        "false"
     )
-
-    if [[ "$FILE_MANAGER" != "dolphin" ]] && [[ "$FILE_MANAGER" != "thunar" ]] && [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
-        menu_labels+=("Preserve previous scripts.")
-        menu_defaults+=("false")
-    fi
 
     _multiselect_menu menu_selected menu_labels menu_defaults
 
@@ -68,14 +62,12 @@ _main() {
     [[ ${menu_selected[1]} == "true" ]] && menu_options+="shortcuts,"
     [[ ${menu_selected[2]} == "true" ]] && menu_options+="reload,"
     [[ ${menu_selected[3]} == "true" ]] && menu_options+="categories,"
-    if [[ "$FILE_MANAGER" != "dolphin" ]] && [[ "$FILE_MANAGER" != "thunar" ]] && [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
-        [[ ${menu_selected[4]} == "true" ]] && menu_options+="preserve,"
-    fi
+    [[ ${menu_selected[4]} == "true" ]] && menu_options+="preserve,"
 
     # Get the categories (directories of scripts).
     local cat_dirs_find=""
     cat_dirs_find=$(find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
-        ! -path "*.git" ! -path "$ASSSETS_DIR" 2>/dev/null | sed "s|^.*/||" | sort --version-sort)
+        ! -path "*.git" ! -path "*.assets" 2>/dev/null | sed "s|^.*/||" | sort --version-sort)
 
     # Convert the output of the 'find' command to an 'array'.
     cat_dirs_find=$(tr "\n" "\r" <<<"$cat_dirs_find")
@@ -86,53 +78,47 @@ _main() {
         _multiselect_menu categories_selected categories_dirs categories_defaults
     fi
 
+    # Install the dependencies.
     [[ "$menu_options" == *"dependencies"* ]] && _step_install_dependencies
 
-    # Install for every file manager installed.
+    # Install the scripts for every file manager found.
     local file_manager=""
     for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
         if ! _command_exists "$file_manager"; then
             continue
         fi
 
-        printf "\nInstalling the scripts for file manager: '%s'.\n" "$file_manager"
-
         case "$file_manager" in
         "nautilus")
             INSTALL_DIR="$HOME/.local/share/nautilus/scripts"
-            ACCELS_FILE="$HOME/.config/nautilus/scripts-accels"
             FILE_MANAGER="nautilus"
             ;;
         "caja")
             INSTALL_DIR="$HOME/.config/caja/scripts"
-            ACCELS_FILE="$HOME/.config/caja/accels"
             FILE_MANAGER="caja"
             ;;
         "dolphin")
             INSTALL_DIR="$HOME/.local/share/scripts"
-            ACCELS_FILE=""
             FILE_MANAGER="dolphin"
             ;;
         "nemo")
             INSTALL_DIR="$HOME/.local/share/nemo/scripts"
-            ACCELS_FILE="$HOME/.gnome2/accels/nemo"
             FILE_MANAGER="nemo"
             ;;
         "pcmanfm-qt")
             INSTALL_DIR="$HOME/.local/share/scripts"
-            ACCELS_FILE=""
             FILE_MANAGER="pcmanfm-qt"
             ;;
         "thunar")
             INSTALL_DIR="$HOME/.local/share/scripts"
-            ACCELS_FILE="$HOME/.config/Thunar/accels.scm"
             FILE_MANAGER="thunar"
             ;;
         esac
 
         # Installer steps.
-        [[ "$menu_options" == *"shortcuts"* ]] && _step_install_shortcuts
+        printf "\nInstalling the scripts for file manager: '%s'.\n" "$file_manager"
         _step_install_scripts "$menu_options" categories_selected categories_dirs
+        [[ "$menu_options" == *"shortcuts"* ]] && _step_install_shortcuts
         [[ "$menu_options" == *"reload"* ]] && _step_close_filemanager
     done
 
@@ -263,7 +249,7 @@ _step_install_scripts() {
 
     # Set file permissions.
     printf " > Setting file permissions...\n"
-    find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" -exec chmod +x -- {} \;
+    find "$INSTALL_DIR" -mindepth 2 -type f -exec chmod +x -- {} \;
 
     # Restore previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then
@@ -291,32 +277,116 @@ _step_install_scripts() {
 _step_install_shortcuts() {
     printf " > Installing the keyboard shortcuts...\n"
 
-    mkdir --parents "$(dirname -- "$ACCELS_FILE")"
+    case "$FILE_MANAGER" in
+    "nautilus") _step_install_shortcuts_nautilus "$HOME/.config/nautilus/scripts-accels" ;;
+    "caja") _step_install_shortcuts_gnome2 "$HOME/.config/caja/accels" ;;
+    "nemo") _step_install_shortcuts_gnome2 "$HOME/.gnome2/accels/nemo" ;;
+    "thunar") _step_install_shortcuts_thunar "$HOME/.config/Thunar/accels.scm" ;;
+    esac
+}
 
-    # Create a backup of older shortcuts.
-    if [[ -f "$ACCELS_FILE" ]] && ! [[ -f "$ACCELS_FILE.bak" ]]; then
-        mv "$ACCELS_FILE" "$ACCELS_FILE.bak" 2>/dev/null || true
+_step_install_shortcuts_nautilus() {
+    local accels_file=$1
+    mkdir --parents "$(dirname -- "$accels_file")"
+
+    # Create a backup of older custom actions.
+    if [[ -f "$accels_file" ]] && ! [[ -f "$accels_file.bak" ]]; then
+        mv "$accels_file" "$accels_file.bak" 2>/dev/null || true
     fi
 
-    case "$FILE_MANAGER" in
-    "nautilus")
-        cp -- "$ASSSETS_DIR/accels-gnome.scm" "$ACCELS_FILE"
-        ;;
-    "caja")
-        cp -- "$ASSSETS_DIR/accels-mint.scm" "$ACCELS_FILE"
-        sed -i "s|SED_USER|$USER|g" "$ACCELS_FILE"
-        sed -i "s|SED_ACCELS_PATH|config\\\\\\\\scaja|g" "$ACCELS_FILE"
-        ;;
-    "nemo")
-        cp -- "$ASSSETS_DIR/accels-mint.scm" "$ACCELS_FILE"
-        sed -i "s|SED_USER|$USER|g" "$ACCELS_FILE"
-        sed -i "s|SED_ACCELS_PATH|local\\\\\\\\sshare\\\\\\\\snemo|g" "$ACCELS_FILE"
-        ;;
-    "thunar")
-        cp -- "$ASSSETS_DIR/accels-thunar.scm" "$ACCELS_FILE"
-        sed -i "s|SED_USER|$USER|g" "$ACCELS_FILE"
-        ;;
-    esac
+    {
+        local filename=""
+        find "$INSTALL_DIR" -mindepth 2 -type f ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
+            while IFS="" read -r -d "" filename; do
+
+                local install_keyboard_shortcut=""
+                install_keyboard_shortcut=$(_get_script_parameter_value "$filename" "install_keyboard_shortcut")
+
+                if [[ -n "$install_keyboard_shortcut" ]]; then
+                    local name=""
+                    name=$(basename -- "$filename" 2>/dev/null)
+                    printf "%s\n" "$install_keyboard_shortcut $name"
+                fi
+            done
+
+    } >"$accels_file"
+}
+
+_step_install_shortcuts_gnome2() {
+    local accels_file=$1
+    mkdir --parents "$(dirname -- "$accels_file")"
+
+    # Create a backup of older custom actions.
+    if [[ -f "$accels_file" ]] && ! [[ -f "$accels_file.bak" ]]; then
+        mv "$accels_file" "$accels_file.bak" 2>/dev/null || true
+    fi
+
+    {
+        # Disable the shortcut for "OpenAlternate" (<control><shift>o).
+        printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenAlternate" "")'
+        # Disable the shortcut for "OpenInNewTab" (<control><shift>o).
+        printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenInNewTab" "")'
+
+        local filename=""
+        find "$INSTALL_DIR" -mindepth 2 -type f ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
+            while IFS="" read -r -d "" filename; do
+
+                local install_keyboard_shortcut=""
+                install_keyboard_shortcut=$(_get_script_parameter_value "$filename" "install_keyboard_shortcut")
+                install_keyboard_shortcut=${install_keyboard_shortcut//Control/Primary}
+
+                if [[ -n "$install_keyboard_shortcut" ]]; then
+                    # shellcheck disable=SC2001
+                    filename=$(sed "s|/|\\\\\\\\s|g; s| |%20|g" <<<"$filename")
+                    printf "%s\n" '(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s'"$filename"'" "'"$install_keyboard_shortcut"'")'
+                fi
+            done
+
+    } >"$accels_file"
+}
+
+_step_install_shortcuts_thunar() {
+    local accels_file=$1
+    mkdir --parents "$(dirname -- "$accels_file")"
+
+    # Create a backup of older custom actions.
+    if [[ -f "$accels_file" ]] && ! [[ -f "$accels_file.bak" ]]; then
+        mv "$accels_file" "$accels_file.bak" 2>/dev/null || true
+    fi
+
+    {
+        # Default Thunar shortcuts.
+        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-1-1" "")'
+        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-4-4" "")'
+        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-3-3" "<Primary><Shift>f")'
+        # Disable  "<Primary><Shift>p".
+        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActionManager/open-in-new-tab" "")'
+        # Disable "<Primary><Shift>o".
+        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActionManager/open-in-new-window" "")'
+        # Disable "<Primary>e".
+        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarWindow/view-side-pane-tree" "")'
+
+        local filename=""
+        find "$INSTALL_DIR" -mindepth 2 -type f ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
+            while IFS="" read -r -d "" filename; do
+
+                local install_keyboard_shortcut=""
+                install_keyboard_shortcut=$(_get_script_parameter_value "$filename" "install_keyboard_shortcut")
+                install_keyboard_shortcut=${install_keyboard_shortcut//Control/Primary}
+
+                if [[ -n "$install_keyboard_shortcut" ]]; then
+                    local name=""
+                    local submenu=""
+                    local unique_id=""
+                    name=$(basename -- "$filename" 2>/dev/null)
+                    submenu=$(dirname -- "$filename" 2>/dev/null | sed "s|.*scripts/|Scripts/|g")
+                    unique_id=$(md5sum <<<"$submenu$name" 2>/dev/null | sed "s|[^0-9]*||g" | cut -c 1-8)
+
+                    printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-'"$unique_id"'" "'"$install_keyboard_shortcut"'")'
+                fi
+            done
+
+    } >"$accels_file"
 }
 
 _step_close_filemanager() {
@@ -332,6 +402,7 @@ _step_make_dolphin_actions() {
     local desktop_menus_dir="$HOME/.local/share/kio/servicemenus"
 
     rm -rf "$desktop_menus_dir" 2>/dev/null || true
+
     mkdir --parents "$desktop_menus_dir"
 
     local filename=""
@@ -341,7 +412,7 @@ _step_make_dolphin_actions() {
     local submenu=""
 
     # Generate a '.desktop' file for each script.
-    find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*.assets/*" -print0 2>/dev/null | sort --zero-terminated |
+    find "$INSTALL_DIR" -mindepth 2 -type f -print0 2>/dev/null | sort --zero-terminated |
         while IFS= read -r -d "" filename; do
             # shellcheck disable=SC2001
             script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
@@ -420,6 +491,7 @@ _step_make_pcmanfm_actions() {
     local desktop_menus_dir="$HOME/.local/share/file-manager/actions"
 
     rm -rf "$desktop_menus_dir" 2>/dev/null || true
+
     mkdir --parents "$desktop_menus_dir"
 
     local filename=""
@@ -428,7 +500,7 @@ _step_make_pcmanfm_actions() {
     local submenu=""
 
     # Generate a '.desktop' file for each script.
-    find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*.assets/*" -print0 2>/dev/null | sort --zero-terminated |
+    find "$INSTALL_DIR" -mindepth 2 -type f -print0 2>/dev/null | sort --zero-terminated |
         while IFS= read -r -d "" filename; do
             # shellcheck disable=SC2001
             script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
@@ -496,6 +568,8 @@ _step_make_thunar_actions() {
         mv "$menus_file" "$menus_file.bak" 2>/dev/null || true
     fi
 
+    mkdir --parents "$HOME/.config/Thunar"
+
     {
         printf "%s\n" "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
         printf "%s\n" "<actions>"
@@ -540,8 +614,8 @@ _step_make_thunar_actions() {
         local name=""
         local submenu=""
         local unique_id=""
-        find "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*.assets/*" -print0 2>/dev/null | sort --zero-terminated |
-            while IFS= read -r -d "" filename; do
+        find "$INSTALL_DIR" -mindepth 2 -type f -print0 2>/dev/null | sort --zero-terminated |
+            while IFS="" read -r -d "" filename; do
                 name=$(basename -- "$filename" 2>/dev/null)
                 submenu=$(dirname -- "$filename" 2>/dev/null | sed "s|.*scripts/|Scripts/|g")
 
