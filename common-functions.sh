@@ -1201,8 +1201,50 @@ _run_task_parallel() {
     # Allows the symbol "'" in filenames (inside 'xargs').
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
-    # Execute the function '_main_task' for each file in parallel (using 'xargs').
-    export -f _main_task
+    # Export variables to be used inside new shells (when using 'xargs').
+    export \
+        FIELD_SEPARATOR \
+        IGNORE_FIND_PATH \
+        INPUT_FILES \
+        TEMP_DATA_TASK \
+        TEMP_DIR_ITEMS_TO_REMOVE \
+        TEMP_DIR_LOGS \
+        TEMP_DIR_STORAGE_TEXT \
+        TEMP_DIR_TASK
+
+    # Export functions to be used inside new shells (when using 'xargs').
+    export -f \
+        _check_output \
+        _command_exists \
+        _convert_filenames_to_text \
+        _convert_text_to_filenames \
+        _display_password_box \
+        _exit_script \
+        _get_file_encoding \
+        _get_file_mime \
+        _get_filename_dir \
+        _get_filename_extension \
+        _get_filename_full_path \
+        _get_filename_next_suffix \
+        _get_max_procs \
+        _get_output_filename \
+        _get_temp_dir_local \
+        _get_temp_file \
+        _get_temp_file_dry \
+        _get_working_directory \
+        _is_gui_session \
+        _log_write \
+        _main_task \
+        _move_file \
+        _move_temp_file_to_output \
+        _print_terminal \
+        _storage_text_write \
+        _storage_text_write_ln \
+        _str_remove_empty_tokens \
+        _strip_filename_extension \
+        _text_remove_pwd \
+        _text_uri_decode
+
     printf "%s" "$input_files" | xargs \
         --no-run-if-empty \
         --delimiter="$FIELD_SEPARATOR" \
@@ -1361,6 +1403,12 @@ _validate_file_mime_parallel() {
     # Allows the symbol "'" in filenames (inside 'xargs').
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
+    # Export variables to be used inside new shells (when using 'xargs').
+    export TEMP_DIR_STORAGE_TEXT
+
+    # Export functions to be used inside new shells (when using 'xargs').
+    export -f _get_file_mime _storage_text_write _validate_file_mime
+
     # Execute the function '_validate_file_mime' for each file in parallel (using 'xargs').
     printf "%s" "$input_files" | xargs \
         --no-run-if-empty \
@@ -1497,51 +1545,3 @@ _xdg_get_default_app() {
 
     printf "%s" "$default_app"
 }
-
-# -----------------------------------------------------------------------------
-# EXPORTS
-# -----------------------------------------------------------------------------
-
-# Export variables to be used inside new shells (when using 'xargs').
-export \
-    FIELD_SEPARATOR \
-    IGNORE_FIND_PATH \
-    INPUT_FILES \
-    TEMP_DATA_TASK \
-    TEMP_DIR_ITEMS_TO_REMOVE \
-    TEMP_DIR_LOGS \
-    TEMP_DIR_STORAGE_TEXT \
-    TEMP_DIR_TASK
-
-# Export functions to be used inside new shells (when using 'xargs').
-export -f \
-    _check_output \
-    _command_exists \
-    _convert_filenames_to_text \
-    _convert_text_to_filenames \
-    _display_password_box \
-    _exit_script \
-    _get_file_encoding \
-    _get_file_mime \
-    _get_filename_dir \
-    _get_filename_extension \
-    _get_filename_full_path \
-    _get_filename_next_suffix \
-    _get_max_procs \
-    _get_output_filename \
-    _get_temp_dir_local \
-    _get_temp_file \
-    _get_temp_file_dry \
-    _get_working_directory \
-    _is_gui_session \
-    _log_write \
-    _move_file \
-    _move_temp_file_to_output \
-    _print_terminal \
-    _storage_text_write \
-    _storage_text_write_ln \
-    _str_remove_empty_tokens \
-    _strip_filename_extension \
-    _text_remove_pwd \
-    _text_uri_decode \
-    _validate_file_mime
