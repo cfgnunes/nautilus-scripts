@@ -1380,8 +1380,7 @@ _validate_file_mime_parallel() {
         --delimiter="$FIELD_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
-        bash -c "_validate_file_mime '{}' \
-            '$par_select_mime'"
+        bash -c "_validate_file_mime '{}' '$par_select_mime'"
 
     # Compile valid files in a single list.
     input_files=$(_storage_text_read_all)
