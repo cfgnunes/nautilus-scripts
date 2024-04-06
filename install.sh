@@ -261,24 +261,16 @@ _step_install_scripts() {
 
 _step_install_menus() {
     # Install menus for specific file managers.
+
     case "$FILE_MANAGER" in
-    "dolphin")
-        printf " > Installing Dolphin actions...\n"
-        _step_make_dolphin_actions
-        ;;
-    "pcmanfm-qt")
-        printf " > Installing PCManFM-Qt actions...\n"
-        _step_make_pcmanfm_actions
-        ;;
-    "thunar")
-        printf " > Installing Thunar actions...\n"
-        _step_make_thunar_actions
-        ;;
+    "dolphin") _step_make_dolphin_actions ;;
+    "pcmanfm-qt") _step_make_pcmanfm_actions ;;
+    "thunar") _step_make_thunar_actions ;;
     esac
 }
 
 _step_install_shortcuts() {
-    printf " > Installing the keyboard shortcuts...\n"
+    # Install keyboard shortcuts for specific file managers.
 
     case "$FILE_MANAGER" in
     "nautilus") _step_install_shortcuts_nautilus "$HOME/.config/nautilus/scripts-accels" ;;
@@ -289,6 +281,8 @@ _step_install_shortcuts() {
 }
 
 _step_install_shortcuts_nautilus() {
+    printf " > Installing the keyboard shortcuts for Nautilus...\n"
+
     local accels_file=$1
     mkdir --parents "$(dirname -- "$accels_file")"
 
@@ -318,6 +312,8 @@ _step_install_shortcuts_nautilus() {
 }
 
 _step_install_shortcuts_gnome2() {
+    printf " > Installing the keyboard shortcuts...\n"
+
     local accels_file=$1
     mkdir --parents "$(dirname -- "$accels_file")"
 
@@ -353,6 +349,8 @@ _step_install_shortcuts_gnome2() {
 }
 
 _step_install_shortcuts_thunar() {
+    printf " > Installing the keyboard shortcuts for Thunar...\n"
+
     local accels_file=$1
     mkdir --parents "$(dirname -- "$accels_file")"
 
@@ -408,10 +406,10 @@ _step_close_filemanager() {
 }
 
 _step_make_dolphin_actions() {
+    printf " > Installing Dolphin actions...\n"
+
     local desktop_menus_dir="$HOME/.local/share/kio/servicemenus"
-
     _remove_item "$desktop_menus_dir"
-
     mkdir --parents "$desktop_menus_dir"
 
     local filename=""
@@ -497,10 +495,10 @@ _step_make_dolphin_actions() {
 }
 
 _step_make_pcmanfm_actions() {
+    printf " > Installing PCManFM-Qt actions...\n"
+
     local desktop_menus_dir="$HOME/.local/share/file-manager/actions"
-
     _remove_item "$desktop_menus_dir"
-
     mkdir --parents "$desktop_menus_dir"
 
     local filename=""
@@ -570,6 +568,8 @@ _step_make_pcmanfm_actions() {
 }
 
 _step_make_thunar_actions() {
+    printf " > Installing Thunar actions...\n"
+
     local menus_file="$HOME/.config/Thunar/uca.xml"
 
     # Create a backup of older custom actions.
