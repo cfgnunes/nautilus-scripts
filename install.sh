@@ -146,6 +146,24 @@ _command_exists() {
     return 1
 }
 
+_item_create_backup() {
+    local item=$1
+
+    if [[ -e "$item" ]] && ! [[ -e "$item.bak" ]]; then
+        mv "$item" "$item.bak" 2>/dev/null || true
+    fi
+}
+
+_item_remove() {
+    local item=$1
+
+    if _command_exists "gio"; then
+        gio trash -- "$item" 2>/dev/null || true
+    else
+        rm -rf -- "$item" 2>/dev/null || true
+    fi
+}
+
 # shellcheck disable=SC2086
 _step_install_dependencies() {
     printf "\nInstalling the dependencies...\n"
@@ -229,7 +247,7 @@ _step_install_scripts() {
         mv "$INSTALL_DIR" "$tmp_install_dir" || true
     else
         printf " > Removing previous scripts...\n"
-        _remove_item "$INSTALL_DIR"
+        _item_remove "$INSTALL_DIR"
     fi
 
     printf " > Installing new scripts...\n"
@@ -287,11 +305,8 @@ _step_install_shortcuts_nautilus() {
     mkdir --parents "$(dirname -- "$accels_file")"
 
     # Create a backup of older custom actions.
-    if [[ -f "$accels_file" ]] && ! [[ -f "$accels_file.bak" ]]; then
-        mv "$accels_file" "$accels_file.bak" 2>/dev/null || true
-    else
-        _remove_item "$accels_file"
-    fi
+    _item_create_backup "$accels_file"
+    _item_remove "$accels_file"
 
     {
         local filename=""
@@ -318,11 +333,8 @@ _step_install_shortcuts_gnome2() {
     mkdir --parents "$(dirname -- "$accels_file")"
 
     # Create a backup of older custom actions.
-    if [[ -f "$accels_file" ]] && ! [[ -f "$accels_file.bak" ]]; then
-        mv "$accels_file" "$accels_file.bak" 2>/dev/null || true
-    else
-        _remove_item "$accels_file"
-    fi
+    _item_create_backup "$accels_file"
+    _item_remove "$accels_file"
 
     {
         # Disable the shortcut for "OpenAlternate" (<control><shift>o).
@@ -355,11 +367,8 @@ _step_install_shortcuts_thunar() {
     mkdir --parents "$(dirname -- "$accels_file")"
 
     # Create a backup of older custom actions.
-    if [[ -f "$accels_file" ]] && ! [[ -f "$accels_file.bak" ]]; then
-        mv "$accels_file" "$accels_file.bak" 2>/dev/null || true
-    else
-        _remove_item "$accels_file"
-    fi
+    _item_create_backup "$accels_file"
+    _item_remove "$accels_file"
 
     {
         # Default Thunar shortcuts.
@@ -409,7 +418,7 @@ _step_make_dolphin_actions() {
     printf " > Installing Dolphin actions...\n"
 
     local desktop_menus_dir="$HOME/.local/share/kio/servicemenus"
-    _remove_item "$desktop_menus_dir"
+    _item_remove "$desktop_menus_dir"
     mkdir --parents "$desktop_menus_dir"
 
     local filename=""
@@ -498,7 +507,7 @@ _step_make_pcmanfm_actions() {
     printf " > Installing PCManFM-Qt actions...\n"
 
     local desktop_menus_dir="$HOME/.local/share/file-manager/actions"
-    _remove_item "$desktop_menus_dir"
+    _item_remove "$desktop_menus_dir"
     mkdir --parents "$desktop_menus_dir"
 
     local filename=""
@@ -573,11 +582,8 @@ _step_make_thunar_actions() {
     local menus_file="$HOME/.config/Thunar/uca.xml"
 
     # Create a backup of older custom actions.
-    if [[ -f "$menus_file" ]] && ! [[ -f "$menus_file.bak" ]]; then
-        mv "$menus_file" "$menus_file.bak" 2>/dev/null || true
-    else
-        _remove_item "$menus_file"
-    fi
+    _item_create_backup "$menus_file"
+    _item_remove "$menus_file"
 
     mkdir --parents "$HOME/.config/Thunar"
 
@@ -700,16 +706,6 @@ _get_script_parameter_value() {
     local parameter=$2
 
     grep --only-matching -m 1 "$parameter=[^\";]*" "$filename" | cut -d "=" -f 2 | tr -d "'" | tr "|" ";" 2>/dev/null
-}
-
-_remove_item() {
-    local item=$1
-
-    if _command_exists "gio"; then
-        gio trash -- "$item" 2>/dev/null || true
-    else
-        rm -rf -- "$item" 2>/dev/null || true
-    fi
 }
 
 _main "$@"
