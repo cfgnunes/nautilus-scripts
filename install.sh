@@ -386,7 +386,36 @@ _step_install_menus_pcmanfm() {
     local filename=""
     local name=""
     local script_relative=""
-    local submenu=""
+
+    # Create the 'Scripts' menu.
+    {
+        printf "%s\n" "[Desktop Entry]"
+        printf "%s\n" "Type=Menu"
+        printf "%s\n" "Name=Scripts"
+        printf "%s" "ItemsList="
+        find -L "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -type d ! -path "*.git*" ! -path "*.assets*" -printf "%f;" 2>/dev/null || true
+        printf "\n"
+    } >"${desktop_menus_dir}/Scripts.desktop"
+    chmod +x "${desktop_menus_dir}/Scripts.desktop"
+
+    find -L "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -type d ! -path "*.git*" ! -path "*.assets*" -print0 2>/dev/null | sort --zero-terminated |
+        while IFS= read -r -d "" filename; do
+
+            # shellcheck disable=SC2001
+            filename=$(sed "s|^.*/||" <<<"$filename")
+
+            # Create the directory menu.
+            {
+                printf "%s\n" "[Desktop Entry]"
+                printf "%s\n" "Type=Menu"
+                printf "%s\n" "Name=$filename"
+                printf "%s" "ItemsList="
+                find -L "./$filename" -mindepth 1 -maxdepth 1 ! -path "*.git*" ! -path "*.assets*" -printf "%f;" 2>/dev/null || true
+                printf "\n"
+            } >"${desktop_menus_dir}/$filename.desktop"
+            chmod +x "${desktop_menus_dir}/$filename.desktop"
+
+        done
 
     # Generate a '.desktop' file for each script.
     find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*.assets/*" -print0 2>/dev/null | sort --zero-terminated |
@@ -394,7 +423,6 @@ _step_install_menus_pcmanfm() {
             # shellcheck disable=SC2001
             script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
             name=${script_relative##*/}
-            submenu=${script_relative%%/*}
 
             # Set the mime requirements.
             local par_recursive=""
@@ -434,11 +462,11 @@ _step_install_menus_pcmanfm() {
             par_max_items=$(_get_script_parameter_value "$filename" "par_max_items")
 
             local desktop_filename=""
-            desktop_filename="${desktop_menus_dir}/${submenu} - ${name}.desktop"
+            desktop_filename="${desktop_menus_dir}/${name}.desktop"
             {
                 printf "%s\n" "[Desktop Entry]"
                 printf "%s\n" "Type=Action"
-                printf "%s\n" "Name=$submenu - $name"
+                printf "%s\n" "Name=$name"
                 printf "%s\n" "Profiles=scriptAction"
                 printf "\n"
                 printf "%s\n" "[X-Action-Profile scriptAction]"
