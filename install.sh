@@ -268,7 +268,7 @@ _step_install_scripts() {
 
     # Set file permissions.
     printf " > Setting file permissions...\n"
-    find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*.assets/*" -exec chmod +x -- {} \;
+    find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git*" ! -path "*.assets*" -exec chmod +x -- {} \;
 
     # Restore previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then
@@ -301,7 +301,7 @@ _step_install_menus_dolphin() {
     local submenu=""
 
     # Generate a '.desktop' file for each script.
-    find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*.assets/*" -print0 2>/dev/null | sort --zero-terminated |
+    find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git*" ! -path "*.assets*" -print0 2>/dev/null | sort --zero-terminated |
         while IFS= read -r -d "" filename; do
             # shellcheck disable=SC2001
             script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
@@ -418,7 +418,7 @@ _step_install_menus_pcmanfm() {
         done
 
     # Generate a '.desktop' file for each script.
-    find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*.assets/*" -print0 2>/dev/null | sort --zero-terminated |
+    find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git*" ! -path "*.assets*" -print0 2>/dev/null | sort --zero-terminated |
         while IFS= read -r -d "" filename; do
             # shellcheck disable=SC2001
             script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
@@ -532,7 +532,7 @@ _step_install_menus_thunar() {
         local name=""
         local submenu=""
         local unique_id=""
-        find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*.assets/*" -print0 2>/dev/null | sort --zero-terminated |
+        find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git*" ! -path "*.assets*" -print0 2>/dev/null | sort --zero-terminated |
             while IFS="" read -r -d "" filename; do
                 name=$(basename -- "$filename" 2>/dev/null)
                 submenu=$(dirname -- "$filename" 2>/dev/null | sed "s|.*scripts/|Scripts/|g")
@@ -625,7 +625,7 @@ _step_install_shortcuts_nautilus() {
 
     {
         local filename=""
-        find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*.assets/*" ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
+        find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git*" ! -path "*.assets*" ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
             while IFS="" read -r -d "" filename; do
 
                 local install_keyboard_shortcut=""
@@ -658,7 +658,7 @@ _step_install_shortcuts_gnome2() {
         printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenInNewTab" "")'
 
         local filename=""
-        find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*.assets/*" ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
+        find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git*" ! -path "*.assets*" ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
             while IFS="" read -r -d "" filename; do
 
                 local install_keyboard_shortcut=""
@@ -698,7 +698,7 @@ _step_install_shortcuts_thunar() {
         printf "%s\n" '(gtk_accel_path "<Actions>/ThunarWindow/view-side-pane-tree" "")'
 
         local filename=""
-        find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git/*" ! -path "*.assets/*" ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
+        find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git*" ! -path "*.assets*" ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
             while IFS="" read -r -d "" filename; do
 
                 local install_keyboard_shortcut=""
