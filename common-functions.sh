@@ -882,19 +882,11 @@ _get_working_directory() {
         # NOTE: The working directory can be detected by using the directory name
         # of the first input file. Some file managers do not send the working
         # directory for the scripts, so it is not precise to use the 'pwd' command.
-        local file_1=""
-        local file_2=""
-        file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
-        file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$INPUT_FILES")
+        local item_1=""
+        item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
 
-        if [[ -n "$file_1" ]]; then
-            if [[ -n "$file_2" ]] && [[ "$file_1" != "$file_2" ]]; then
-                working_directory=$(_get_filename_dir "$file_1")
-            elif [[ -f "$file_1" ]]; then
-                working_directory=$(_get_filename_dir "$file_1")
-            elif [[ -d "$file_1" ]]; then
-                working_directory=$(_get_filename_full_path "$file_1")
-            fi
+        if [[ -n "$item_1" ]]; then
+            working_directory=$(_get_filename_dir "$item_1")
         else
             working_directory=$(pwd)
         fi
