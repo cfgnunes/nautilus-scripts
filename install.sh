@@ -118,6 +118,7 @@ _main() {
         # Installer steps.
         printf "\nInstalling the scripts for file manager: '%s'.\n" "$file_manager"
         _step_install_scripts "$menu_options" categories_selected categories_dirs
+        _step_install_menus
         [[ "$menu_options" == *"shortcuts"* ]] && _step_install_shortcuts
         [[ "$menu_options" == *"reload"* ]] && _step_close_filemanager
     done
@@ -249,14 +250,16 @@ _step_install_scripts() {
 
     # Set file permissions.
     printf " > Setting file permissions...\n"
-    find "$INSTALL_DIR" -mindepth 2 -type f -exec chmod +x -- {} \;
+    find -L "$INSTALL_DIR" -mindepth 2 -type f -exec chmod +x -- {} \;
 
     # Restore previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then
         printf " > Restoring previous scripts to the install directory...\n"
         mv "$tmp_install_dir/scripts" "$INSTALL_DIR/User previous scripts"
     fi
+}
 
+_step_install_menus() {
     # Install menus for specific file managers.
     case "$FILE_MANAGER" in
     "dolphin")
@@ -296,7 +299,7 @@ _step_install_shortcuts_nautilus() {
 
     {
         local filename=""
-        find "$INSTALL_DIR" -mindepth 2 -type f ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
+        find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
             while IFS="" read -r -d "" filename; do
 
                 local install_keyboard_shortcut=""
@@ -328,7 +331,7 @@ _step_install_shortcuts_gnome2() {
         printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenInNewTab" "")'
 
         local filename=""
-        find "$INSTALL_DIR" -mindepth 2 -type f ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
+        find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
             while IFS="" read -r -d "" filename; do
 
                 local install_keyboard_shortcut=""
@@ -367,7 +370,7 @@ _step_install_shortcuts_thunar() {
         printf "%s\n" '(gtk_accel_path "<Actions>/ThunarWindow/view-side-pane-tree" "")'
 
         local filename=""
-        find "$INSTALL_DIR" -mindepth 2 -type f ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
+        find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
             while IFS="" read -r -d "" filename; do
 
                 local install_keyboard_shortcut=""
@@ -412,7 +415,7 @@ _step_make_dolphin_actions() {
     local submenu=""
 
     # Generate a '.desktop' file for each script.
-    find "$INSTALL_DIR" -mindepth 2 -type f -print0 2>/dev/null | sort --zero-terminated |
+    find -L "$INSTALL_DIR" -mindepth 2 -type f -print0 2>/dev/null | sort --zero-terminated |
         while IFS= read -r -d "" filename; do
             # shellcheck disable=SC2001
             script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
@@ -500,7 +503,7 @@ _step_make_pcmanfm_actions() {
     local submenu=""
 
     # Generate a '.desktop' file for each script.
-    find "$INSTALL_DIR" -mindepth 2 -type f -print0 2>/dev/null | sort --zero-terminated |
+    find -L "$INSTALL_DIR" -mindepth 2 -type f -print0 2>/dev/null | sort --zero-terminated |
         while IFS= read -r -d "" filename; do
             # shellcheck disable=SC2001
             script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
@@ -614,7 +617,7 @@ _step_make_thunar_actions() {
         local name=""
         local submenu=""
         local unique_id=""
-        find "$INSTALL_DIR" -mindepth 2 -type f -print0 2>/dev/null | sort --zero-terminated |
+        find -L "$INSTALL_DIR" -mindepth 2 -type f -print0 2>/dev/null | sort --zero-terminated |
             while IFS="" read -r -d "" filename; do
                 name=$(basename -- "$filename" 2>/dev/null)
                 submenu=$(dirname -- "$filename" 2>/dev/null | sed "s|.*scripts/|Scripts/|g")
