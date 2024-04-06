@@ -1198,12 +1198,11 @@ _run_task_parallel() {
     local input_files=$1
     local output_dir=$2
 
-    export -f _main_task
-
     # Allows the symbol "'" in filenames (inside 'xargs').
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Execute the function '_main_task' for each file in parallel (using 'xargs').
+    export -f _main_task
     printf "%s" "$input_files" | xargs \
         --no-run-if-empty \
         --delimiter="$FIELD_SEPARATOR" \
