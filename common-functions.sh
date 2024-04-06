@@ -1538,6 +1538,7 @@ export -f \
     _log_write \
     _move_file \
     _move_temp_file_to_output \
+    _print_terminal \
     _storage_text_write \
     _storage_text_write_ln \
     _str_remove_empty_tokens \
