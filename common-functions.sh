@@ -869,13 +869,11 @@ _get_working_directory() {
         working_directory=$NAUTILUS_SCRIPT_CURRENT_URI
     fi
 
-    if [[ -n "$working_directory" ]]; then
-        # Files selected in the search screen.
-        if [[ "$working_directory" == *"search://"* ]]; then
-            working_directory=""
-        else
-            working_directory=$(_text_uri_decode "$working_directory")
-        fi
+    if [[ -n "$working_directory" ]] && [[ "$working_directory" == "file://"* ]]; then
+        working_directory=$(_text_uri_decode "$working_directory")
+    else
+        # Files selected in the search screen (or orther possible cases).
+        working_directory=""
     fi
 
     if [[ -z "$working_directory" ]]; then
