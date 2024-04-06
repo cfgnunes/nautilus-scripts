@@ -281,10 +281,297 @@ _step_install_menus() {
     # Install menus for specific file managers.
 
     case "$FILE_MANAGER" in
-    "dolphin") _step_make_dolphin_actions ;;
-    "pcmanfm-qt") _step_make_pcmanfm_actions ;;
-    "thunar") _step_make_thunar_actions ;;
+    "dolphin") _step_install_menus_dolphin ;;
+    "pcmanfm-qt") _step_install_menus_pcmanfm ;;
+    "thunar") _step_install_menus_thunar ;;
     esac
+}
+
+_step_install_menus_dolphin() {
+    printf " > Installing Dolphin actions...\n"
+
+    local desktop_menus_dir="$HOME/.local/share/kio/servicemenus"
+    _item_remove "$desktop_menus_dir"
+    mkdir --parents "$desktop_menus_dir"
+
+    local filename=""
+    local name_sub=""
+    local name=""
+    local script_relative=""
+    local submenu=""
+
+    # Generate a '.desktop' file for each script.
+    find -L "$INSTALL_DIR" -mindepth 2 -type f -print0 2>/dev/null | sort --zero-terminated |
+        while IFS= read -r -d "" filename; do
+            # shellcheck disable=SC2001
+            script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
+            name_sub=${script_relative#*/}
+            # shellcheck disable=SC2001
+            name_sub=$(sed "s|/| - |g" <<<"$name_sub")
+            name=${script_relative##*/}
+            submenu=${script_relative%%/*}
+
+            # Set the mime requirements.
+            local par_recursive=""
+            local par_select_mime=""
+            par_recursive=$(_get_script_parameter_value "$filename" "par_recursive")
+            par_select_mime=$(_get_script_parameter_value "$filename" "par_select_mime")
+
+            if [[ -z "$par_select_mime" ]]; then
+                local par_type=""
+                par_type=$(_get_script_parameter_value "$filename" "par_type")
+
+                case "$par_type" in
+                "directory") par_select_mime="inode/directory" ;;
+                "all") par_select_mime="all/all" ;;
+                "file") par_select_mime="all/allfiles" ;;
+                *) par_select_mime="all/allfiles" ;;
+                esac
+            fi
+
+            if [[ "$par_recursive" == "true" ]]; then
+                case "$par_select_mime" in
+                "inode/directory") : ;;
+                "all/all") : ;;
+                "all/allfiles") par_select_mime="all/all" ;;
+                *) par_select_mime+=";inode/directory" ;;
+                esac
+            fi
+
+            par_select_mime="$par_select_mime;"
+            # shellcheck disable=SC2001
+            par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
+
+            # Set the min/max files requirements.
+            local par_min_items=""
+            local par_max_items=""
+            par_min_items=$(_get_script_parameter_value "$filename" "par_min_items")
+            par_max_items=$(_get_script_parameter_value "$filename" "par_max_items")
+
+            local desktop_filename=""
+            desktop_filename="${desktop_menus_dir}/${submenu} - ${name}.desktop"
+            {
+                printf "%s\n" "[Desktop Entry]"
+                printf "%s\n" "Type=Service"
+                printf "%s\n" "X-KDE-ServiceTypes=KonqPopupMenu/Plugin"
+                printf "%s\n" "Actions=scriptAction;"
+                printf "%s\n" "MimeType=$par_select_mime"
+
+                if [[ -n "$par_min_items" ]]; then
+                    printf "%s\n" "X-KDE-MinNumberOfUrls=$par_min_items"
+                fi
+
+                if [[ -n "$par_max_items" ]]; then
+                    printf "%s\n" "X-KDE-MaxNumberOfUrls=$par_max_items"
+                fi
+
+                printf "%s\n" "Encoding=UTF-8"
+                printf "%s\n" "X-KDE-Submenu=$submenu"
+                printf "\n"
+                printf "%s\n" "[Desktop Action scriptAction]"
+                printf "%s\n" "Name=$name_sub"
+                printf "%s\n" "Exec=bash \"$filename\" %F"
+            } >"$desktop_filename"
+            chmod +x "$desktop_filename"
+        done
+}
+
+_step_install_menus_pcmanfm() {
+    printf " > Installing PCManFM-Qt actions...\n"
+
+    local desktop_menus_dir="$HOME/.local/share/file-manager/actions"
+    _item_remove "$desktop_menus_dir"
+    mkdir --parents "$desktop_menus_dir"
+
+    local filename=""
+    local name=""
+    local script_relative=""
+    local submenu=""
+
+    # Generate a '.desktop' file for each script.
+    find -L "$INSTALL_DIR" -mindepth 2 -type f -print0 2>/dev/null | sort --zero-terminated |
+        while IFS= read -r -d "" filename; do
+            # shellcheck disable=SC2001
+            script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
+            name=${script_relative##*/}
+            submenu=${script_relative%%/*}
+
+            # Set the mime requirements.
+            local par_recursive=""
+            local par_select_mime=""
+            par_recursive=$(_get_script_parameter_value "$filename" "par_recursive")
+            par_select_mime=$(_get_script_parameter_value "$filename" "par_select_mime")
+
+            if [[ -z "$par_select_mime" ]]; then
+                local par_type=""
+                par_type=$(_get_script_parameter_value "$filename" "par_type")
+
+                case "$par_type" in
+                "directory") par_select_mime="inode/directory" ;;
+                "all") par_select_mime="all/all" ;;
+                "file") par_select_mime="all/allfiles" ;;
+                *) par_select_mime="all/allfiles" ;;
+                esac
+            fi
+
+            if [[ "$par_recursive" == "true" ]]; then
+                case "$par_select_mime" in
+                "inode/directory") : ;;
+                "all/all") : ;;
+                "all/allfiles") par_select_mime="all/all" ;;
+                *) par_select_mime+=";inode/directory" ;;
+                esac
+            fi
+
+            par_select_mime="$par_select_mime;"
+            # shellcheck disable=SC2001
+            par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
+
+            # Set the min/max files requirements.
+            local par_min_items=""
+            local par_max_items=""
+            par_min_items=$(_get_script_parameter_value "$filename" "par_min_items")
+            par_max_items=$(_get_script_parameter_value "$filename" "par_max_items")
+
+            local desktop_filename=""
+            desktop_filename="${desktop_menus_dir}/${submenu} - ${name}.desktop"
+            {
+                printf "%s\n" "[Desktop Entry]"
+                printf "%s\n" "Type=Action"
+                printf "%s\n" "Name=$submenu - $name"
+                printf "%s\n" "Profiles=scriptAction"
+                printf "\n"
+                printf "%s\n" "[X-Action-Profile scriptAction]"
+                printf "%s\n" "MimeTypes=$par_select_mime"
+                printf "%s\n" "Exec=bash \"$filename\" %F"
+            } >"$desktop_filename"
+            chmod +x "$desktop_filename"
+        done
+}
+
+_step_install_menus_thunar() {
+    printf " > Installing Thunar actions...\n"
+
+    local menus_file="$HOME/.config/Thunar/uca.xml"
+
+    # Create a backup of older custom actions.
+    _item_create_backup "$menus_file"
+    _item_remove "$menus_file"
+
+    mkdir --parents "$HOME/.config/Thunar"
+
+    {
+        printf "%s\n" "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+        printf "%s\n" "<actions>"
+        printf "%s\n" "<action>"
+        printf "\t%s\n" "<icon>utilities-terminal</icon>"
+        printf "\t%s\n" "<name>Open Terminal Here</name>"
+        printf "\t%s\n" "<submenu></submenu>"
+        printf "\t%s\n" "<unique-id>1-1</unique-id>"
+        printf "\t%s\n" "<command>exo-open --working-directory %f --launch TerminalEmulator</command>"
+        printf "\t%s\n" "<description>Open terminal in containing directory</description>"
+        printf "\t%s\n" "<range></range>"
+        printf "\t%s\n" "<patterns>*</patterns>"
+        printf "\t%s\n" "<startup-notify/>"
+        printf "\t%s\n" "<directories/>"
+        printf "%s\n" "</action>"
+        printf "%s\n" "<action>"
+        printf "\t%s\n" "<icon>edit-find</icon>"
+        printf "\t%s\n" "<name>Find in this folder</name>"
+        printf "\t%s\n" "<submenu></submenu>"
+        printf "\t%s\n" "<unique-id>3-3</unique-id>"
+        printf "\t%s\n" "<command>catfish --path=%f</command>"
+        printf "\t%s\n" "<description>Search for files within this folder</description>"
+        printf "\t%s\n" "<range></range>"
+        printf "\t%s\n" "<patterns>*</patterns>"
+        printf "\t%s\n" "<directories/>"
+        printf "%s\n" "</action>"
+        printf "%s\n" "<action>"
+        printf "\t%s\n" "<icon>document-print</icon>"
+        printf "\t%s\n" "<name>Print file(s)</name>"
+        printf "\t%s\n" "<submenu></submenu>"
+        printf "\t%s\n" "<unique-id>4-4</unique-id>"
+        printf "\t%s\n" "<command>thunar-print %F</command>"
+        printf "\t%s\n" "<description>Send one or multiple files to the default printer</description>"
+        printf "\t%s\n" "<range></range>"
+        printf "\t%s\n" "<patterns>*.asc;*.brf;*.css;*.doc;*.docm;*.docx;*.dotm;*.dotx;*.fodg;*.fodp;*.fods;*.fodt;*.gif;*.htm;*.html;*.jpe;*.jpeg;*.jpg;*.odb;*.odf;*.odg;*.odm;*.odp;*.ods;*.odt;*.otg;*.oth;*.otp;*.ots;*.ott;*.pbm;*.pdf;*.pgm;*.png;*.pnm;*.pot;*.potm;*.potx;*.ppm;*.ppt;*.pptm;*.pptx;*.rtf;*.shtml;*.srt;*.text;*.tif;*.tiff;*.txt;*.xbm;*.xls;*.xlsb;*.xlsm;*.xlsx;*.xltm;*.xltx;*.xpm;*.xwd</patterns>"
+        printf "\t%s\n" "<image-files/>"
+        printf "\t%s\n" "<other-files/>"
+        printf "\t%s\n" "<text-files/>"
+        printf "%s\n" "</action>"
+
+        local filename=""
+        local name=""
+        local submenu=""
+        local unique_id=""
+        find -L "$INSTALL_DIR" -mindepth 2 -type f -print0 2>/dev/null | sort --zero-terminated |
+            while IFS="" read -r -d "" filename; do
+                name=$(basename -- "$filename" 2>/dev/null)
+                submenu=$(dirname -- "$filename" 2>/dev/null | sed "s|.*scripts/|Scripts/|g")
+
+                printf "%s\n" "<action>"
+                printf "\t%s\n" "<icon></icon>"
+                printf "\t%s\n" "<name>$name</name>"
+                printf "\t%s\n" "<submenu>$submenu</submenu>"
+
+                # Generate a unique id.
+                unique_id=$(md5sum <<<"$submenu$name" 2>/dev/null | sed "s|[^0-9]*||g" | cut -c 1-8)
+                printf "\t%s\n" "<unique-id>$unique_id</unique-id>"
+
+                printf "\t%s\n" "<command>bash &quot;$filename&quot; %F</command>"
+                printf "\t%s\n" "<description></description>"
+
+                # Set the min/max files requirements.
+                local par_min_items=""
+                local par_max_items=""
+                par_min_items=$(_get_script_parameter_value "$filename" "par_min_items")
+                par_max_items=$(_get_script_parameter_value "$filename" "par_max_items")
+                if [[ -n "$par_min_items" ]] && [[ -n "$par_max_items" ]]; then
+                    printf "\t%s\n" "<range>$par_min_items-$par_max_items</range>"
+                else
+                    printf "\t%s\n" "<range></range>"
+                fi
+
+                printf "\t%s\n" "<patterns>*</patterns>"
+
+                # Set the type requirements.
+                local par_recursive=""
+                local par_type=""
+                par_recursive=$(_get_script_parameter_value "$filename" "par_recursive")
+                par_type=$(_get_script_parameter_value "$filename" "par_type")
+                if [[ "$par_type" == "all" ]] || [[ "$par_type" == "directory" ]] || [[ "$par_recursive" == "true" ]]; then
+                    printf "\t%s\n" "<directories/>"
+                fi
+
+                # Set the type requirements.
+                local par_select_mime=""
+                par_select_mime=$(_get_script_parameter_value "$filename" "par_select_mime")
+
+                if [[ -n "$par_select_mime" ]]; then
+                    if [[ "$par_select_mime" == *"audio"* ]]; then
+                        printf "\t%s\n" "<audio-files/>"
+                    fi
+                    if [[ "$par_select_mime" == *"image"* ]]; then
+                        printf "\t%s\n" "<image-files/>"
+                    fi
+                    if [[ "$par_select_mime" == *"text"* ]]; then
+                        printf "\t%s\n" "<text-files/>"
+                    fi
+                    if [[ "$par_select_mime" == *"video"* ]]; then
+                        printf "\t%s\n" "<video-files/>"
+                    fi
+                else
+                    printf "\t%s\n" "<audio-files/>"
+                    printf "\t%s\n" "<image-files/>"
+                    printf "\t%s\n" "<text-files/>"
+                    printf "\t%s\n" "<video-files/>"
+                fi
+                printf "\t%s\n" "<other-files/>"
+                printf "%s\n" "</action>"
+            done
+
+        printf "%s\n" "<actions>"
+    } >"$menus_file"
 }
 
 _step_install_shortcuts() {
@@ -412,293 +699,6 @@ _step_close_filemanager() {
     "nautilus" | "caja" | "nemo" | "thunar") $FILE_MANAGER -q &>/dev/null || true & ;;
     "pcmanfm-qt") killall "$FILE_MANAGER" &>/dev/null || true & ;;
     esac
-}
-
-_step_make_dolphin_actions() {
-    printf " > Installing Dolphin actions...\n"
-
-    local desktop_menus_dir="$HOME/.local/share/kio/servicemenus"
-    _item_remove "$desktop_menus_dir"
-    mkdir --parents "$desktop_menus_dir"
-
-    local filename=""
-    local name_sub=""
-    local name=""
-    local script_relative=""
-    local submenu=""
-
-    # Generate a '.desktop' file for each script.
-    find -L "$INSTALL_DIR" -mindepth 2 -type f -print0 2>/dev/null | sort --zero-terminated |
-        while IFS= read -r -d "" filename; do
-            # shellcheck disable=SC2001
-            script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
-            name_sub=${script_relative#*/}
-            # shellcheck disable=SC2001
-            name_sub=$(sed "s|/| - |g" <<<"$name_sub")
-            name=${script_relative##*/}
-            submenu=${script_relative%%/*}
-
-            # Set the mime requirements.
-            local par_recursive=""
-            local par_select_mime=""
-            par_recursive=$(_get_script_parameter_value "$filename" "par_recursive")
-            par_select_mime=$(_get_script_parameter_value "$filename" "par_select_mime")
-
-            if [[ -z "$par_select_mime" ]]; then
-                local par_type=""
-                par_type=$(_get_script_parameter_value "$filename" "par_type")
-
-                case "$par_type" in
-                "directory") par_select_mime="inode/directory" ;;
-                "all") par_select_mime="all/all" ;;
-                "file") par_select_mime="all/allfiles" ;;
-                *) par_select_mime="all/allfiles" ;;
-                esac
-            fi
-
-            if [[ "$par_recursive" == "true" ]]; then
-                case "$par_select_mime" in
-                "inode/directory") : ;;
-                "all/all") : ;;
-                "all/allfiles") par_select_mime="all/all" ;;
-                *) par_select_mime+=";inode/directory" ;;
-                esac
-            fi
-
-            par_select_mime="$par_select_mime;"
-            # shellcheck disable=SC2001
-            par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
-
-            # Set the min/max files requirements.
-            local par_min_items=""
-            local par_max_items=""
-            par_min_items=$(_get_script_parameter_value "$filename" "par_min_items")
-            par_max_items=$(_get_script_parameter_value "$filename" "par_max_items")
-
-            local desktop_filename=""
-            desktop_filename="${desktop_menus_dir}/${submenu} - ${name}.desktop"
-            {
-                printf "%s\n" "[Desktop Entry]"
-                printf "%s\n" "Type=Service"
-                printf "%s\n" "X-KDE-ServiceTypes=KonqPopupMenu/Plugin"
-                printf "%s\n" "Actions=scriptAction;"
-                printf "%s\n" "MimeType=$par_select_mime"
-
-                if [[ -n "$par_min_items" ]]; then
-                    printf "%s\n" "X-KDE-MinNumberOfUrls=$par_min_items"
-                fi
-
-                if [[ -n "$par_max_items" ]]; then
-                    printf "%s\n" "X-KDE-MaxNumberOfUrls=$par_max_items"
-                fi
-
-                printf "%s\n" "Encoding=UTF-8"
-                printf "%s\n" "X-KDE-Submenu=$submenu"
-                printf "\n"
-                printf "%s\n" "[Desktop Action scriptAction]"
-                printf "%s\n" "Name=$name_sub"
-                printf "%s\n" "Exec=bash \"$filename\" %F"
-            } >"$desktop_filename"
-            chmod +x "$desktop_filename"
-        done
-}
-
-_step_make_pcmanfm_actions() {
-    printf " > Installing PCManFM-Qt actions...\n"
-
-    local desktop_menus_dir="$HOME/.local/share/file-manager/actions"
-    _item_remove "$desktop_menus_dir"
-    mkdir --parents "$desktop_menus_dir"
-
-    local filename=""
-    local name=""
-    local script_relative=""
-    local submenu=""
-
-    # Generate a '.desktop' file for each script.
-    find -L "$INSTALL_DIR" -mindepth 2 -type f -print0 2>/dev/null | sort --zero-terminated |
-        while IFS= read -r -d "" filename; do
-            # shellcheck disable=SC2001
-            script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
-            name=${script_relative##*/}
-            submenu=${script_relative%%/*}
-
-            # Set the mime requirements.
-            local par_recursive=""
-            local par_select_mime=""
-            par_recursive=$(_get_script_parameter_value "$filename" "par_recursive")
-            par_select_mime=$(_get_script_parameter_value "$filename" "par_select_mime")
-
-            if [[ -z "$par_select_mime" ]]; then
-                local par_type=""
-                par_type=$(_get_script_parameter_value "$filename" "par_type")
-
-                case "$par_type" in
-                "directory") par_select_mime="inode/directory" ;;
-                "all") par_select_mime="all/all" ;;
-                "file") par_select_mime="all/allfiles" ;;
-                *) par_select_mime="all/allfiles" ;;
-                esac
-            fi
-
-            if [[ "$par_recursive" == "true" ]]; then
-                case "$par_select_mime" in
-                "inode/directory") : ;;
-                "all/all") : ;;
-                "all/allfiles") par_select_mime="all/all" ;;
-                *) par_select_mime+=";inode/directory" ;;
-                esac
-            fi
-
-            par_select_mime="$par_select_mime;"
-            # shellcheck disable=SC2001
-            par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
-
-            # Set the min/max files requirements.
-            local par_min_items=""
-            local par_max_items=""
-            par_min_items=$(_get_script_parameter_value "$filename" "par_min_items")
-            par_max_items=$(_get_script_parameter_value "$filename" "par_max_items")
-
-            local desktop_filename=""
-            desktop_filename="${desktop_menus_dir}/${submenu} - ${name}.desktop"
-            {
-                printf "%s\n" "[Desktop Entry]"
-                printf "%s\n" "Type=Action"
-                printf "%s\n" "Name=$submenu - $name"
-                printf "%s\n" "Profiles=scriptAction"
-                printf "\n"
-                printf "%s\n" "[X-Action-Profile scriptAction]"
-                printf "%s\n" "MimeTypes=$par_select_mime"
-                printf "%s\n" "Exec=bash \"$filename\" %F"
-            } >"$desktop_filename"
-            chmod +x "$desktop_filename"
-        done
-}
-
-_step_make_thunar_actions() {
-    printf " > Installing Thunar actions...\n"
-
-    local menus_file="$HOME/.config/Thunar/uca.xml"
-
-    # Create a backup of older custom actions.
-    _item_create_backup "$menus_file"
-    _item_remove "$menus_file"
-
-    mkdir --parents "$HOME/.config/Thunar"
-
-    {
-        printf "%s\n" "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-        printf "%s\n" "<actions>"
-        printf "%s\n" "<action>"
-        printf "\t%s\n" "<icon>utilities-terminal</icon>"
-        printf "\t%s\n" "<name>Open Terminal Here</name>"
-        printf "\t%s\n" "<submenu></submenu>"
-        printf "\t%s\n" "<unique-id>1-1</unique-id>"
-        printf "\t%s\n" "<command>exo-open --working-directory %f --launch TerminalEmulator</command>"
-        printf "\t%s\n" "<description>Open terminal in containing directory</description>"
-        printf "\t%s\n" "<range></range>"
-        printf "\t%s\n" "<patterns>*</patterns>"
-        printf "\t%s\n" "<startup-notify/>"
-        printf "\t%s\n" "<directories/>"
-        printf "%s\n" "</action>"
-        printf "%s\n" "<action>"
-        printf "\t%s\n" "<icon>edit-find</icon>"
-        printf "\t%s\n" "<name>Find in this folder</name>"
-        printf "\t%s\n" "<submenu></submenu>"
-        printf "\t%s\n" "<unique-id>3-3</unique-id>"
-        printf "\t%s\n" "<command>catfish --path=%f</command>"
-        printf "\t%s\n" "<description>Search for files within this folder</description>"
-        printf "\t%s\n" "<range></range>"
-        printf "\t%s\n" "<patterns>*</patterns>"
-        printf "\t%s\n" "<directories/>"
-        printf "%s\n" "</action>"
-        printf "%s\n" "<action>"
-        printf "\t%s\n" "<icon>document-print</icon>"
-        printf "\t%s\n" "<name>Print file(s)</name>"
-        printf "\t%s\n" "<submenu></submenu>"
-        printf "\t%s\n" "<unique-id>4-4</unique-id>"
-        printf "\t%s\n" "<command>thunar-print %F</command>"
-        printf "\t%s\n" "<description>Send one or multiple files to the default printer</description>"
-        printf "\t%s\n" "<range></range>"
-        printf "\t%s\n" "<patterns>*.asc;*.brf;*.css;*.doc;*.docm;*.docx;*.dotm;*.dotx;*.fodg;*.fodp;*.fods;*.fodt;*.gif;*.htm;*.html;*.jpe;*.jpeg;*.jpg;*.odb;*.odf;*.odg;*.odm;*.odp;*.ods;*.odt;*.otg;*.oth;*.otp;*.ots;*.ott;*.pbm;*.pdf;*.pgm;*.png;*.pnm;*.pot;*.potm;*.potx;*.ppm;*.ppt;*.pptm;*.pptx;*.rtf;*.shtml;*.srt;*.text;*.tif;*.tiff;*.txt;*.xbm;*.xls;*.xlsb;*.xlsm;*.xlsx;*.xltm;*.xltx;*.xpm;*.xwd</patterns>"
-        printf "\t%s\n" "<image-files/>"
-        printf "\t%s\n" "<other-files/>"
-        printf "\t%s\n" "<text-files/>"
-        printf "%s\n" "</action>"
-
-        local filename=""
-        local name=""
-        local submenu=""
-        local unique_id=""
-        find -L "$INSTALL_DIR" -mindepth 2 -type f -print0 2>/dev/null | sort --zero-terminated |
-            while IFS="" read -r -d "" filename; do
-                name=$(basename -- "$filename" 2>/dev/null)
-                submenu=$(dirname -- "$filename" 2>/dev/null | sed "s|.*scripts/|Scripts/|g")
-
-                printf "%s\n" "<action>"
-                printf "\t%s\n" "<icon></icon>"
-                printf "\t%s\n" "<name>$name</name>"
-                printf "\t%s\n" "<submenu>$submenu</submenu>"
-
-                # Generate a unique id.
-                unique_id=$(md5sum <<<"$submenu$name" 2>/dev/null | sed "s|[^0-9]*||g" | cut -c 1-8)
-                printf "\t%s\n" "<unique-id>$unique_id</unique-id>"
-
-                printf "\t%s\n" "<command>bash &quot;$filename&quot; %F</command>"
-                printf "\t%s\n" "<description></description>"
-
-                # Set the min/max files requirements.
-                local par_min_items=""
-                local par_max_items=""
-                par_min_items=$(_get_script_parameter_value "$filename" "par_min_items")
-                par_max_items=$(_get_script_parameter_value "$filename" "par_max_items")
-                if [[ -n "$par_min_items" ]] && [[ -n "$par_max_items" ]]; then
-                    printf "\t%s\n" "<range>$par_min_items-$par_max_items</range>"
-                else
-                    printf "\t%s\n" "<range></range>"
-                fi
-
-                printf "\t%s\n" "<patterns>*</patterns>"
-
-                # Set the type requirements.
-                local par_recursive=""
-                local par_type=""
-                par_recursive=$(_get_script_parameter_value "$filename" "par_recursive")
-                par_type=$(_get_script_parameter_value "$filename" "par_type")
-                if [[ "$par_type" == "all" ]] || [[ "$par_type" == "directory" ]] || [[ "$par_recursive" == "true" ]]; then
-                    printf "\t%s\n" "<directories/>"
-                fi
-
-                # Set the type requirements.
-                local par_select_mime=""
-                par_select_mime=$(_get_script_parameter_value "$filename" "par_select_mime")
-
-                if [[ -n "$par_select_mime" ]]; then
-                    if [[ "$par_select_mime" == *"audio"* ]]; then
-                        printf "\t%s\n" "<audio-files/>"
-                    fi
-                    if [[ "$par_select_mime" == *"image"* ]]; then
-                        printf "\t%s\n" "<image-files/>"
-                    fi
-                    if [[ "$par_select_mime" == *"text"* ]]; then
-                        printf "\t%s\n" "<text-files/>"
-                    fi
-                    if [[ "$par_select_mime" == *"video"* ]]; then
-                        printf "\t%s\n" "<video-files/>"
-                    fi
-                else
-                    printf "\t%s\n" "<audio-files/>"
-                    printf "\t%s\n" "<image-files/>"
-                    printf "\t%s\n" "<text-files/>"
-                    printf "\t%s\n" "<video-files/>"
-                fi
-                printf "\t%s\n" "<other-files/>"
-                printf "%s\n" "</action>"
-            done
-
-        printf "%s\n" "<actions>"
-    } >"$menus_file"
 }
 
 _get_script_parameter_value() {
