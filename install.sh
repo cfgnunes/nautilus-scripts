@@ -229,7 +229,7 @@ _step_install_scripts() {
         mv "$INSTALL_DIR" "$tmp_install_dir" || true
     else
         printf " > Removing previous scripts...\n"
-        rm -rf -- "$INSTALL_DIR"
+        _remove_item "$INSTALL_DIR"
     fi
 
     printf " > Installing new scripts...\n"
@@ -295,6 +295,8 @@ _step_install_shortcuts_nautilus() {
     # Create a backup of older custom actions.
     if [[ -f "$accels_file" ]] && ! [[ -f "$accels_file.bak" ]]; then
         mv "$accels_file" "$accels_file.bak" 2>/dev/null || true
+    else
+        _remove_item "$accels_file"
     fi
 
     {
@@ -322,6 +324,8 @@ _step_install_shortcuts_gnome2() {
     # Create a backup of older custom actions.
     if [[ -f "$accels_file" ]] && ! [[ -f "$accels_file.bak" ]]; then
         mv "$accels_file" "$accels_file.bak" 2>/dev/null || true
+    else
+        _remove_item "$accels_file"
     fi
 
     {
@@ -355,6 +359,8 @@ _step_install_shortcuts_thunar() {
     # Create a backup of older custom actions.
     if [[ -f "$accels_file" ]] && ! [[ -f "$accels_file.bak" ]]; then
         mv "$accels_file" "$accels_file.bak" 2>/dev/null || true
+    else
+        _remove_item "$accels_file"
     fi
 
     {
@@ -404,7 +410,7 @@ _step_close_filemanager() {
 _step_make_dolphin_actions() {
     local desktop_menus_dir="$HOME/.local/share/kio/servicemenus"
 
-    rm -rf "$desktop_menus_dir" 2>/dev/null || true
+    _remove_item "$desktop_menus_dir"
 
     mkdir --parents "$desktop_menus_dir"
 
@@ -493,7 +499,7 @@ _step_make_dolphin_actions() {
 _step_make_pcmanfm_actions() {
     local desktop_menus_dir="$HOME/.local/share/file-manager/actions"
 
-    rm -rf "$desktop_menus_dir" 2>/dev/null || true
+    _remove_item "$desktop_menus_dir"
 
     mkdir --parents "$desktop_menus_dir"
 
@@ -569,6 +575,8 @@ _step_make_thunar_actions() {
     # Create a backup of older custom actions.
     if [[ -f "$menus_file" ]] && ! [[ -f "$menus_file.bak" ]]; then
         mv "$menus_file" "$menus_file.bak" 2>/dev/null || true
+    else
+        _remove_item "$menus_file"
     fi
 
     mkdir --parents "$HOME/.config/Thunar"
@@ -692,6 +700,16 @@ _get_script_parameter_value() {
     local parameter=$2
 
     grep --only-matching -m 1 "$parameter=[^\";]*" "$filename" | cut -d "=" -f 2 | tr -d "'" | tr "|" ";" 2>/dev/null
+}
+
+_remove_item() {
+    local item=$1
+
+    if _command_exists "gio"; then
+        gio trash -- "$item" 2>/dev/null || true
+    else
+        rm -rf -- "$item" 2>/dev/null || true
+    fi
 }
 
 _main "$@"
