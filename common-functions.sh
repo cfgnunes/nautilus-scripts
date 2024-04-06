@@ -1360,6 +1360,33 @@ _text_uri_decode() {
     printf "$uri_encoded"
 }
 
+_unset_global_variables_file_manager() {
+    # Unset some possible global variables set by the file manager.
+    unset \
+        CAJA_SCRIPT_CURRENT_URI \
+        CAJA_SCRIPT_NEXT_PANE_CURRENT_URI \
+        CAJA_SCRIPT_NEXT_PANE_SELECTED_FILE_PATHS \
+        CAJA_SCRIPT_NEXT_PANE_SELECTED_URIS \
+        CAJA_SCRIPT_SELECTED_FILE_PATHS \
+        CAJA_SCRIPT_SELECTED_URIS \
+        CAJA_SCRIPT_WINDOW_GEOMETRY \
+        NAUTILUS_SCRIPT_CURRENT_URI \
+        NAUTILUS_SCRIPT_NEXT_PANE_CURRENT_URI \
+        NAUTILUS_SCRIPT_NEXT_PANE_SELECTED_FILE_PATHS \
+        NAUTILUS_SCRIPT_NEXT_PANE_SELECTED_URIS \
+        NAUTILUS_SCRIPT_SELECTED_FILE_PATHS \
+        NAUTILUS_SCRIPT_SELECTED_URIS \
+        NAUTILUS_SCRIPT_WINDOW_GEOMETRY \
+        NEMO_SCRIPT_CURRENT_URI \
+        NEMO_SCRIPT_NEXT_PANE_CURRENT_URI \
+        NEMO_SCRIPT_NEXT_PANE_SELECTED_FILE_PATHS \
+        NEMO_SCRIPT_NEXT_PANE_SELECTED_URIS \
+        NEMO_SCRIPT_SELECTED_FILE_PATHS \
+        NEMO_SCRIPT_SELECTED_URIS \
+        NEMO_SCRIPT_WINDOW_GEOMETRY \
+        OLDPWD
+}
+
 _validate_conflict_filenames() {
     local input_files=$1
     local dup_filenames="$input_files"

@@ -14,6 +14,8 @@ _main() {
     _check_dependencies ""
     input_files=$(_get_files "par_type=all; par_max_items=20; par_get_pwd=true")
 
+    _unset_global_variables_file_manager
+
     # Check if the first file is a binary file.
     local file_1=""
     file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")

@@ -20,30 +20,7 @@ _open_terminal() {
     local input_files=$1
     local input_file=""
 
-    # Unset some possible global variables set by the file manager.
-    unset \
-        CAJA_SCRIPT_CURRENT_URI \
-        CAJA_SCRIPT_NEXT_PANE_CURRENT_URI \
-        CAJA_SCRIPT_NEXT_PANE_SELECTED_FILE_PATHS \
-        CAJA_SCRIPT_NEXT_PANE_SELECTED_URIS \
-        CAJA_SCRIPT_SELECTED_FILE_PATHS \
-        CAJA_SCRIPT_SELECTED_URIS \
-        CAJA_SCRIPT_WINDOW_GEOMETRY \
-        NAUTILUS_SCRIPT_CURRENT_URI \
-        NAUTILUS_SCRIPT_NEXT_PANE_CURRENT_URI \
-        NAUTILUS_SCRIPT_NEXT_PANE_SELECTED_FILE_PATHS \
-        NAUTILUS_SCRIPT_NEXT_PANE_SELECTED_URIS \
-        NAUTILUS_SCRIPT_SELECTED_FILE_PATHS \
-        NAUTILUS_SCRIPT_SELECTED_URIS \
-        NAUTILUS_SCRIPT_WINDOW_GEOMETRY \
-        NEMO_SCRIPT_CURRENT_URI \
-        NEMO_SCRIPT_NEXT_PANE_CURRENT_URI \
-        NEMO_SCRIPT_NEXT_PANE_SELECTED_FILE_PATHS \
-        NEMO_SCRIPT_NEXT_PANE_SELECTED_URIS \
-        NEMO_SCRIPT_SELECTED_FILE_PATHS \
-        NEMO_SCRIPT_SELECTED_URIS \
-        NEMO_SCRIPT_WINDOW_GEOMETRY
-
+    _unset_global_variables_file_manager
     for input_file in $input_files; do
         # Run the main process.
         cd "$input_file" || exit 1
