@@ -13,6 +13,7 @@ _main() {
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_max_items=1; par_select_mime=text/plain")
 
+    # Allows the symbol "'" in filenames (inside 'xargs').
     checksum_file=$(sed -z "s|'|'\\\''|g" <"$input_files")
 
     export -f _verify_checksum
