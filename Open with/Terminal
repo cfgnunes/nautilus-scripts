@@ -12,15 +12,15 @@ _main() {
     # Execute initial checks.
     _check_dependencies ""
     input_files=$(_get_files "par_type=directory; par_max_items=20; par_get_pwd=true")
+    _unset_global_variables_file_manager
 
-    _open_terminal "$input_files"
+    _open_app "$input_files"
 }
 
-_open_terminal() {
+_open_app() {
     local input_files=$1
     local input_file=""
 
-    _unset_global_variables_file_manager
     for input_file in $input_files; do
         # Run the main process.
         cd "$input_file" || exit 1

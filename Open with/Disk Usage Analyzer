@@ -8,7 +8,6 @@ source "$ROOT_DIR/common-functions.sh"
 
 _main() {
     local input_files=""
-    local output_dir=""
 
     # Execute initial checks.
     case "${XDG_CURRENT_DESKTOP,,}" in
@@ -20,21 +19,23 @@ _main() {
         ;;
     esac
     input_files=$(_get_files "par_type=directory; par_max_items=20; par_get_pwd=true")
+    _unset_global_variables_file_manager
 
-    # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" "$output_dir"
+    _open_app "$input_files"
 }
 
-_main_task() {
-    local input_file=$1
-    local output_dir=$2
+_open_app() {
+    local input_files=$1
+    local input_file=""
 
-    # Run the main process.
-    if _command_exists "baobab"; then
-        baobab -- "$input_file" &
-    elif _command_exists "filelight"; then
-        filelight -- "$input_file" &
-    fi
+    for input_file in $input_files; do
+        # Run the main process.
+        if _command_exists "baobab"; then
+            baobab -- "$input_file" &
+        elif _command_exists "filelight"; then
+            filelight -- "$input_file" &
+        fi
+    done
 }
 
 _main "$@"
