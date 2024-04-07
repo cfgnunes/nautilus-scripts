@@ -73,7 +73,7 @@ File managers compatibility:
 | Dolphin                | KDE Plasma  | Yes              | No        |
 | Nemo                   | Cinnamon    | Yes              | Yes       |
 | PCManFM-Qt             | LXQt        | Yes              | No        |
-| Thunar                 | Xfce        | Yes              | No        |
+| Thunar                 | Xfce        | Yes              | Yes       |
 
 Most scripts have been tested on the following GNU/Linux distributions:
 
