@@ -41,10 +41,10 @@ _main_task() {
     local bit_rate=""
     local sampling_rate=""
     local channels=""
-    mode=$(grep -m1 "Overall bit rate mode $FIELD_SEPARATOR" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
-    bit_rate=$(grep -m1 "Overall bit rate $FIELD_SEPARATOR" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
-    sampling_rate=$(grep -m1 "Sampling rate $FIELD_SEPARATOR" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
-    channels=$(grep -m1 "Channel(s) $FIELD_SEPARATOR" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
+    mode=$(grep -m1 "^Overall bit rate mode $FIELD_SEPARATOR" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
+    bit_rate=$(grep -m1 "^Overall bit rate $FIELD_SEPARATOR" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
+    sampling_rate=$(grep -m1 "^Sampling rate $FIELD_SEPARATOR" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
+    channels=$(grep -m1 "^Channel(s) $FIELD_SEPARATOR" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
 
     # Check if the values are not empty.
     if [[ -z "$mode" ]]; then
