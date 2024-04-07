@@ -1431,7 +1431,7 @@ _validate_file_mime_parallel() {
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Export variables to be used inside new shells (when using 'xargs').
-    export TEMP_DIR_STORAGE_TEXT
+    export FIELD_SEPARATOR TEMP_DIR_STORAGE_TEXT
 
     # Export functions to be used inside new shells (when using 'xargs').
     export -f _get_file_mime _storage_text_write _validate_file_mime
