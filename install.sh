@@ -228,9 +228,8 @@ _step_install_dependencies() {
     local imagemagick_config="/etc/ImageMagick-6/policy.xml"
     if [[ -f "$imagemagick_config" ]]; then
         printf " > Fixing write permission with PDF in ImageMagick...\n"
-        sudo sed -i 's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/' "$imagemagick_config"
-        sudo sed -i 's/1GiB/8GiB/' "$imagemagick_config"
-        sudo sed -i '/shared-secret/d' "$imagemagick_config"
+        sudo sed -i 's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/g' "$imagemagick_config"
+        sudo sed -i 's/".GiB"/"8GiB"/g' "$imagemagick_config"
     fi
 }
 
