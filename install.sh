@@ -193,7 +193,7 @@ _step_install_dependencies() {
     # Packages for forensic...
     common_names+="testdisk "
     # Packages for other scripts...
-    common_names+="perl-base rhash wget "
+    common_names+="perl-base rhash "
 
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
