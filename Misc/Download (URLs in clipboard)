@@ -10,8 +10,8 @@ _main() {
 
     # Execute initial checks.
     case "${XDG_SESSION_TYPE,,}" in
-    "x11") _check_dependencies "command=wget | command=xclip" ;;
-    "wayland") _check_dependencies "command=wget | command=wl-paste; package=wl-clipboard" ;;
+    "x11") _check_dependencies "command=axel | command=xclip" ;;
+    "wayland") _check_dependencies "command=axel | command=wl-paste; package=wl-clipboard" ;;
     *)
         _display_error_box "Unknown session type!"
         _exit_script
@@ -34,7 +34,7 @@ _main_task() {
     cd "$output_dir" || return 1
 
     # Run the main process.
-    std_output=$(wget --no-check-certificate --connect-timeout=5 -- "$input_file" 2>&1)
+    std_output=$(axel --ipv4 --insecure --num-connections=10 --timeout=5 -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
