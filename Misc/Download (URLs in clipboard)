@@ -31,11 +31,9 @@ _main_task() {
     local output_dir=$2
     local std_output=""
 
-    cd "$output_dir" || return 1
-
     # Run the main process.
-    std_output=$(axel --ipv4 --insecure --num-connections=10 --timeout=5 -- "$input_file" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    std_output=$(axel --ipv4 --insecure --num-connections=10 --timeout=5 --output="$output_dir" -- "$input_file" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "$output_dir" || return 1
 }
 
 _get_urls_from_clipboard() {
