@@ -60,6 +60,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Shift>P` | List permissions and owners   |
 | `<Control><Shift>U` | List duplicate files          |
 | `<Control><Shift>V` | Paste as symbolic link        |
+| `<Control><Shift>X` | Download (URLs in clipboard)  |
 | `<Control><Shift>Y` | List file information         |
 
 ## Compatibility
