@@ -669,6 +669,11 @@ _get_files() {
         fi
     fi
 
+    # If the items are in a remote server, translate the addresses to 'gvfs'.
+    if [[ "$input_files" == *"://"* ]]; then
+        input_files=$(sed "s|\(\w*\)://|/run/user/$UID/gvfs/\1:host=|g" <<<"$input_files")
+    fi
+
     # Pre-select the input files. Also, expand it (if 'par_recursive' is true).
     input_files=$(_validate_file_preselect \
         "$input_files" \
