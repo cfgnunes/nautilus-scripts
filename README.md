@@ -29,6 +29,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 - **Progress dialog**: Displays a progress dialog and allows interruption of tasks at any time.
 - **Status notifications**: Notifies users of dependency errors and MIME types.
 - **Dependency management**: Prompts users to install any missing dependencies.
+- **Remote file support:** Works with files stored on remote servers.
 - **Non-destructive output**: Never overwrites the input file; the output is distinct.
 - **Log file**: Produces an `Errors.log` file when a task ends with an error.
 - **Direct usage**: Direct usage without requiring input parameters.
