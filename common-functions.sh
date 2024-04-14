@@ -311,11 +311,14 @@ _display_list_box() {
         columns=$(sed "s|--column=||g" <<<"$columns")
         columns=$(tr ";" "\t" <<<"$columns")
         message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
-        message="$columns\n\n$message"
+        message="$columns"$'\n'$'\n'"$message"
         kdialog --title "$(_get_script_name)" --geometry "800x450" \
             --textinputbox "" "$message" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
-        message=$(tr "$FIELD_SEPARATOR" " " <<<"$message")
+        columns=$(sed "s|--column=||g" <<<"$columns")
+        columns=$(tr ";" "\t" <<<"$columns")
+        message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
+        message="$columns"$'\n'$'\n'"$message"
         xmessage -title "$(_get_script_name)" "$message" &>/dev/null || _exit_script
     fi
 }
