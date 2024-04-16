@@ -671,7 +671,9 @@ _get_files() {
 
     # If the items are in a remote server, translate the addresses to 'gvfs'.
     if [[ "$input_files" == *"://"* ]]; then
-        input_files=$(sed "s|\(\w*\)://|/run/user/$UID/gvfs/\1:host=|g" <<<"$input_files")
+        local working_directory=""
+        working_directory=$(_get_working_directory)
+        input_files=$(sed "s|[a-z0-9\+_-]*://[^$FIELD_SEPARATOR]*/|$working_directory/|g" <<<"$input_files")
     fi
 
     # Pre-select the input files. Also, expand it (if 'par_recursive' is true).
@@ -880,7 +882,7 @@ _get_working_directory() {
     if [[ -n "$working_directory" ]] && [[ "$working_directory" == "file://"* ]]; then
         working_directory=$(_text_uri_decode "$working_directory")
     else
-        # Files selected in the search screen (or orther possible cases).
+        # Files selected in the search screen (or other possible cases).
         working_directory=""
     fi
 
