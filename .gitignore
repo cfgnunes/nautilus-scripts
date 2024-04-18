@@ -1,6 +1,5 @@
 # Backup files
 *.bak
-*~
 
 # Log files
 *.log
@@ -10,6 +9,3 @@ Output*/
 
 # User previous scripts
 User previous scripts/
-
-# Visual Studio Code dir
-.vscode/
