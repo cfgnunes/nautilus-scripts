@@ -47,7 +47,11 @@ _get_dependencies() {
         command=$(_get_command "$input_file")
 
         case $command in
-        "libreoffice_calc") dependencies+="package=libreoffice-calc" ;;
+        "libreoffice_calc")
+            if ! _command_exists "libreoffice.calc" && ! _command_exists "libreoffice-calc"; then
+                dependencies+="package=libreoffice-calc"
+            fi
+            ;;
         "pandoc") dependencies+="command=pandoc" ;;
         esac
         dependencies+=$'\n'
@@ -81,25 +85,18 @@ _run_command() {
     # Run the main process.
     case $command in
     "libreoffice_calc")
-        local output_file_temp=""
-        local temp_file=""
-
-        output_file_temp=$(_get_output_filename "$input_file" "$TEMP_DIR_TASK" "par_extension_opt=replace; par_extension=$output_format")
-
         # NOTE: Workaround to fix the bug 37531 in LibreOffice.
         # See the: https://bugs.documentfoundation.org/show_bug.cgi?id=37531
+        local temp_file=""
         temp_file=$(_get_temp_file_dry)
 
         # NOTE: LibreOffice does not support ' -- ' in the command line.
         # NOTE: LibreOffice does not support defining the output file manually.
-        std_output=$(libreoffice --headless --convert-to "$output_format" "-env:UserInstallation=file://$temp_file" --outdir "$TEMP_DIR_TASK" "$input_file" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "$output_file_temp"
+        std_output=$(libreoffice --headless --convert-to "$output_format" "-env:UserInstallation=file://$temp_file" --outdir "$output_dir" "$input_file" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" ""
 
         # Remove the temporary file.
         rm -f -- "$temp_file"
-
-        std_output=$(_move_file "rename" "$output_file_temp" "$output_file" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" ""
         ;;
     "pandoc")
         std_output=$(pandoc --standalone -o "$output_file" -- "$input_file" 2>&1)
