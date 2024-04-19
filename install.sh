@@ -178,7 +178,7 @@ _step_install_dependencies() {
 
     # Packages session type...
     case "${XDG_SESSION_TYPE,,}" in
-    "wayland") ommon_names+="wl-clipboard " ;;
+    "wayland") common_names+="wl-clipboard " ;;
     *) common_names+="xclip " ;;
     esac
 
