@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# install_keyboard_shortcut=<Control><Shift>F
+# install_keyboard_shortcut=<Control><Shift>Y
 
 # Source the script 'common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)

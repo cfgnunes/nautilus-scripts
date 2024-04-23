@@ -55,7 +55,6 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Alt>Z`   | Compress to 'zip' (each)      |
 | `<Control><Shift>C` | Compare items                 |
 | `<Control><Shift>E` | List empty directories        |
-| `<Control><Shift>F` | List file information         |
 | `<Control><Shift>G` | Git clone (URLs in clipboard) |
 | `<Control><Shift>H` | List hidden items             |
 | `<Control><Shift>O` | Open item location            |
@@ -63,6 +62,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Shift>U` | List duplicate files          |
 | `<Control><Shift>V` | Paste as symbolic link        |
 | `<Control><Shift>X` | Download (URLs in clipboard)  |
+| `<Control><Shift>Y` | List file information         |
 
 ## Compatibility
 
