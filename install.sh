@@ -267,6 +267,7 @@ _step_install_scripts() {
 
     # Set file permissions.
     printf " > Setting file permissions...\n"
+    find -L "$INSTALL_DIR" -type f ! -path "*.git*" ! -exec chmod -x -- {} \;
     find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git*" ! -path "*.assets*" -exec chmod +x -- {} \;
 
     # Restore previous scripts.
