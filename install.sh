@@ -20,7 +20,7 @@ FILE_MANAGER=""
 INSTALL_DIR=""
 
 # shellcheck disable=SC1091
-source "$SCRIPT_DIR/.assets/_multiselect_menu.sh"
+source "$SCRIPT_DIR/.assets/multiselect-menu.sh"
 
 # -----------------------------------------------------------------------------
 # FUNCTIONS
