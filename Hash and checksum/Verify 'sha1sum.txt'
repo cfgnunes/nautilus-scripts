@@ -16,7 +16,15 @@ _main() {
     # Allows the symbol "'" in filenames (inside 'xargs').
     checksum_file=$(sed -z "s|'|'\\\''|g" <"$input_files")
 
-    export -f _verify_checksum
+    # Export variables to be used inside new shells (when using 'xargs').
+    export TEMP_DIR_STORAGE_TEXT
+
+    # Export functions to be used inside new shells (when using 'xargs').
+    export -f \
+        _storage_text_write \
+        _storage_text_write_ln \
+        _verify_checksum
+
     printf "%s" "$checksum_file" | xargs \
         --no-run-if-empty \
         --delimiter=$'\n' \
