@@ -1,4 +1,4 @@
-# File Manager Actions
+# Enhanced File Manager Actions
 
 This project is a collection of actions designed to enhance the functionality of file managers through intuitive right-click actions on files and directories.
 
