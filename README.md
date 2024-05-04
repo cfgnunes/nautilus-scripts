@@ -1,6 +1,6 @@
-# Enhanced File Manager Actions
+# Enhanced File Manager Actions for Linux
 
-This project is a collection of actions designed to enhance the functionality of file managers through intuitive right-click actions on files and directories.
+This project offers a collection of file manager actions, also known as Nautilus Scripts, meticulously crafted to enrich the functionality of file managers. With intuitive right-click actions on files and directories, it enhances the user experience seamlessly.
 
 Compatible with file managers:
 
