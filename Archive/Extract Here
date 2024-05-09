@@ -317,7 +317,7 @@ _run_command() {
     "tar+lzop") std_output=$(tar --extract --lzop --file="$input_file" 2>&1) ;;
     "tar+xz") std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
     "tar+z") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
-    "tar+zstd") std_output=$(zstd -d -c -- "$input_file" | tar xf -) ;;
+    "tar+zstd") std_output=$(zstd -f -d -c -- "$input_file" | tar xf -) ;;
     "tar") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
     "unar")
         std_output=$(unar -- "$input_file" 2>&1)
