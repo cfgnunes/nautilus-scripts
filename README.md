@@ -50,6 +50,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control>E`        | Extract Here                  |
 | `<Control><Alt>C`   | Compress...                   |
 | `<Control><Alt>G`   | Compress to 'tar.gz' (each)   |
+| `<Control><Alt>S`   | Compress to 'tar.zst' (each)  |
 | `<Control><Alt>V`   | Paste as hard link            |
 | `<Control><Alt>X`   | Compress to 'tar.xz' (each)   |
 | `<Control><Alt>Z`   | Compress to 'zip' (each)      |
