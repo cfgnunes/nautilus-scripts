@@ -64,6 +64,16 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Shift>V` | Paste as symbolic link        |
 | `<Control><Shift>X` | Download (URLs in clipboard)  |
 | `<Control><Shift>Y` | List file information         |
+| `<Control><Alt>1`   | List file mime                |
+| `<Control><Alt>2`   | List text issues              |
+| `<Control><Alt>3`   | List files with bad chars     |
+| `<Control><Alt>4`   | List encodings                |
+| `<Control><Alt>5`   | List line breaks              |
+| `<Control><Alt>6`   | List lines count              |
+| `<Control><Alt>7`   | List max line length          |
+| `<Control><Alt>8`   | List words count              |
+| `<Control><Alt>9`   | List largest directories      |
+| `<Control><Alt>0`   | List largest files            |
 
 ## Compatibility
 
