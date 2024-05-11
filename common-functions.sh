@@ -543,6 +543,8 @@ _get_filename_dir() {
 
 _get_filename_extension() {
     local filename=$1
+    filename=$(sed -E "s|.*/(\.)*||g" <<<"$filename")
+    filename=$(sed -E "s|^(\.)*||g" <<<"$filename")
 
     grep --ignore-case --only-matching --perl-regexp "(\.tar)?\.[a-z0-9_~-]{0,15}$" <<<"$filename" || true
 }
@@ -1326,8 +1328,16 @@ _str_remove_empty_tokens() {
 
 _strip_filename_extension() {
     local filename=$1
+    local extension=""
+    extension=$(_get_filename_extension "$filename")
 
-    sed -r "s|(\.tar)?\.[a-z0-9_~-]{0,15}$||i" <<<"$filename"
+    if [[ -z "$extension" ]]; then
+        printf "%s" "$filename"
+        return 0
+    fi
+
+    local len_extension=${#extension}
+    printf "%s" "${filename::-len_extension}"
 }
 
 _text_remove_empty_lines() {

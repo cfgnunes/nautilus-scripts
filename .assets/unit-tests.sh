@@ -103,6 +103,11 @@ _run_get_filename_extension() {
     output=$(_get_filename_extension "$input")
     _test_equal "$input" "$output" "$expected_output"
 
+    input=".File.txt"
+    expected_output=".txt"
+    output=$(_get_filename_extension "$input")
+    _test_equal "$input" "$output" "$expected_output"
+
     input="File.tar.gz"
     expected_output=".tar.gz"
     output=$(_get_filename_extension "$input")
@@ -125,6 +130,16 @@ _run_get_filename_extension() {
 
     input="/tmp/File.txt"
     expected_output=".txt"
+    output=$(_get_filename_extension "$input")
+    _test_equal "$input" "$output" "$expected_output"
+
+    input="/tmp/.File.txt"
+    expected_output=".txt"
+    output=$(_get_filename_extension "$input")
+    _test_equal "$input" "$output" "$expected_output"
+
+    input="/tmp/.File"
+    expected_output=""
     output=$(_get_filename_extension "$input")
     _test_equal "$input" "$output" "$expected_output"
 
@@ -230,6 +245,11 @@ _run_strip_filename_extension() {
     output=$(_strip_filename_extension "$input")
     _test_equal "$input" "$output" "$expected_output"
 
+    input=".File.txt"
+    expected_output=".File"
+    output=$(_strip_filename_extension "$input")
+    _test_equal "$input" "$output" "$expected_output"
+
     input="File.tar.gz"
     expected_output="File"
     output=$(_strip_filename_extension "$input")
@@ -252,6 +272,16 @@ _run_strip_filename_extension() {
 
     input="/tmp/File.txt"
     expected_output="/tmp/File"
+    output=$(_strip_filename_extension "$input")
+    _test_equal "$input" "$output" "$expected_output"
+
+    input="/tmp/.File.txt"
+    expected_output="/tmp/.File"
+    output=$(_strip_filename_extension "$input")
+    _test_equal "$input" "$output" "$expected_output"
+
+    input="/tmp/.File"
+    expected_output="/tmp/.File"
     output=$(_strip_filename_extension "$input")
     _test_equal "$input" "$output" "$expected_output"
 
