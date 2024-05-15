@@ -41,8 +41,8 @@ _main_task() {
     if [[ -d "$input_file" ]]; then
         local files=""
         cd -- "$input_file" || return 1
-        files=$(find . -mindepth 1 -maxdepth 1 | sed "s|^\./||g" | sort --version-sort)
-        std_output=$(printf "%s" "$files" | xargs --no-run-if-empty tar -cJf "$output_file" --)
+        files=$(find . -mindepth 1 -maxdepth 1 -printf "%p$FIELD_SEPARATOR" | sed "s|\./||g")
+        std_output=$(printf "%s" "$files" | xargs --no-run-if-empty --delimiter="$FIELD_SEPARATOR" tar -cJf "$output_file" --)
     else
         cd -- "$(_get_filename_dir "$input_file")" || return 1
         local input_file_basename=""
