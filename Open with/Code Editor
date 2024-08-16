@@ -19,7 +19,7 @@ _main() {
     local file_1=""
     file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
     if ! [[ -d "$file_1" ]]; then
-        if [[ "$(_get_file_encoding "$file_1")" == "binary" ]]; then
+        if [[ "$(_get_file_encoding "$file_1")" == "binary" ]] && [[ -s "$file_1" ]]; then
             case "${XDG_CURRENT_DESKTOP,,}" in
             *"kde"* | *"lxqt"*)
                 _check_dependencies "command=okteta"
