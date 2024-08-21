@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Code based on: https://unix.stackexchange.com/a/673436
-# Version: 2024-04-01
+# Version: 2024-08-21
 
 # Keyboard commands:
 #  <enter>: Confirms the current selection of options.
@@ -46,8 +46,8 @@ _multiselect_menu() {
         case "$key" in
         "") printf "enter" ;;
         " ") printf "toggle_active" ;;
-        "a") printf "toggle_all" ;;
-        "q") printf "quit" ;;
+        "a" | "A") printf "toggle_all" ;;
+        "q" | "Q") printf "quit" ;;
         $'\e')
             IFS="" read -rs -n 2 key &>/dev/null
             case "$key" in
