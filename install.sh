@@ -159,9 +159,8 @@ _item_remove() {
 
     if _command_exists "gio"; then
         gio trash -- "$item" 2>/dev/null || true
-    else
-        rm -rf -- "$item" 2>/dev/null || true
     fi
+    rm -rf -- "$item" 2>/dev/null || true
 }
 
 # shellcheck disable=SC2086
