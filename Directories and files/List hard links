@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local std_output=""
+
+    # Execute initial checks.
+    _check_dependencies ""
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=all; par_get_pwd=true")
+
+    # Run the main process.
+    std_output=$(find "$input_files" -type f -links +1 -printf "%i %p\n")
+    std_output=$(_text_sort "$std_output")
+    std_output=$(awk 'NR==1 {prev=$1} $1!=prev {print "\nHard links:"; prev=$1} {print $0}' <<<"$std_output")
+
+    if [[ -n "$std_output" ]]; then
+        std_output="Hard links:"$'\n'"$std_output"
+    fi
+
+    _display_text_box "$std_output"
+}
+
+_main "$@"
