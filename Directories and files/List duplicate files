@@ -24,7 +24,7 @@ _main() {
 
     # Run the main process.
     # shellcheck disable=SC2086
-    rdfind -dryrun true -outputname "$temp_file" $input_files &>/dev/null
+    rdfind -dryrun true -removeidentinode false -outputname "$temp_file" $input_files &>/dev/null
     std_output=$(grep "DUPTYPE" <"$temp_file")
     std_output=$(sed "s|DUPTYPE_FIRST_OCCURRENCE|\nDUPTYPE_FIRST_OCCURRENCE|" <<<"$std_output")
     std_output=$(cut -d ' ' -f 8- <<<"$std_output")
