@@ -127,7 +127,14 @@ _compare() {
             compare "$file_1" "$file_2" -compose src "$temp_file"
         fi
 
-        $(_xdg_get_default_app "image/png") -- "$temp_file"
+        # Get the installed image viewer.
+        local image_viewer=""
+        image_viewer=$(_xdg_get_default_app "image/jpeg")
+        if [[ "$image_viewer" == *"eog" ]]; then
+            $image_viewer --new-instance -- "$temp_file"
+        else
+            $image_viewer -- "$temp_file"
+        fi
 
         ;;
     "diffpdf")
