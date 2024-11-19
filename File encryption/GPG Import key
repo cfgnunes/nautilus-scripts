@@ -30,7 +30,7 @@ _main_task() {
     local key_id=""
 
     # Get the ID from the key.
-    key_id=$(gpg --with-colons --import-options show-only --import "$input_file" | grep "^fpr" | head -1 | cut -d ':' -f 10 2>/dev/null)
+    key_id=$(gpg --with-colons --import-options show-only --import "$input_file" | grep -m1 "^fpr" | cut -d ':' -f 10 2>/dev/null)
 
     # Import the key.
     std_output=$(gpg --batch --yes --import "$input_file" 2>&1)

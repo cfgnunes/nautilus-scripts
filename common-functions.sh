@@ -1583,7 +1583,7 @@ _xdg_get_default_app() {
 
     desktop_file=$(xdg-mime query default "$mime" 2>/dev/null)
 
-    default_app=$(grep "^Exec" "/usr/share/applications/$desktop_file" | head -n1 | sed "s|Exec=||g" | cut -d " " -f 1)
+    default_app=$(grep -m1 "^Exec" "/usr/share/applications/$desktop_file" | sed "s|Exec=||g" | cut -d " " -f 1)
 
     if [[ -z "$default_app" ]]; then
         _display_error_box "Could not find the default application to open '$mime' files!"
