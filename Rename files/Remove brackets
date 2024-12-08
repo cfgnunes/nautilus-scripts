@@ -30,7 +30,7 @@ _main_task() {
     dir=$(dirname -- "$input_file")
     filename=$(basename -- "$input_file")
 
-    # Replace gaps with dashes.
+    # Remove brackets.
     # shellcheck disable=SC2001
     output_file=$(sed 's/ *([^)]*)//g' <<<"$filename")
 
