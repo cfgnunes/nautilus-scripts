@@ -800,9 +800,8 @@ _get_files() {
     # validation of file conflicts.
     #
     # Parameters:
-    #   - $1 (parameters): contain the evaluation code for various options like
-    #     type of files to filter, recursion, file extensions, and other
-    #     selection criteria.
+    #   - $1 (parameters): A string containing key-value pairs that configure
+    #   the function's behavior. Example: 'par_type=file; par_min_items=2'.
     #
     # Parameters options:
     #   - "par_type": Specifies the type of items to filter:
@@ -812,13 +811,13 @@ _get_files() {
     #   - "par_recursive": Specifies whether to expand directories recursively:
     #       - "false" (default): Does not expand directories.
     #       - "true": Expands directories recursively.
-    #   - "par_get_pwd": If true, returns the current working directory if no files are selected.
+    #   - "par_get_pwd": If "true", returns the current working directory if no files are selected.
     #   - "par_max_items", "par_min_items": Limits the number of files.
     #   - "par_select_extension": Filters by file extension.
     #   - "par_select_mime": Filters by MIME type.
     #   - "par_skip_extension": Skips files with specific extensions.
-    #   - "par_sort_list": If true, sorts the list of files.
-    #   - "par_validate_conflict": If true, validates for filenames with the same base name.
+    #   - "par_sort_list": If "true", sorts the list of files.
+    #   - "par_validate_conflict": If "true", validates for filenames with the same base name.
 
     local parameters=$1
     local input_files=""
@@ -956,15 +955,13 @@ _get_output_dir() {
     #
     # Parameters:
     #   - $1 (parameters): A string containing key-value pairs that configure
-    #   the function's behavior. Example: 'par_use_same_dir="true"'.
+    #   the function's behavior. Example: 'par_use_same_dir=true'.
     #
-    #   - **par_use_same_dir** (in "parameters"):
-    #       - A boolean-like value ("true" or "false").
-    #       - If set to "true," the function uses the base directory (e.g.,
-    #         current working directory or an alternative with write
-    #         permissions) as the output directory.
-    #       - If "false" or not set, a new subdirectory is created for the
-    #         output.
+    # Parameters options:
+    #   - "par_use_same_dir": If set to "true", the function uses the base
+    #   directory (e.g., current working directory or an alternative with write
+    #   permissions) as the output directory. If "false" or not set, a new
+    #   subdirectory is created for the output.
 
     local parameters=$1
     local base_dir=""
