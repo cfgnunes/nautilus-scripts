@@ -2,7 +2,7 @@
 
 # Unit test script.
 
-set -eu
+set -u
 
 _TOTAL_TESTS=0
 _TOTAL_FAILED=0
