@@ -57,6 +57,10 @@ mkdir -p "$TEMP_DIR_TASK"            # Used in scripts to store its temporary fi
 # -----------------------------------------------------------------------------
 
 _cleanup_on_exit() {
+    # This function performs cleanup tasks when the script exits. It is
+    # designed to safely and efficiently remove temporary directories or files
+    # that were created during the script's execution.
+
     # Remove local temporary dirs or files.
     local items_to_remove=""
     items_to_remove=$(cat -- "$TEMP_DIR_ITEMS_TO_REMOVE/"* 2>/dev/null)
@@ -78,6 +82,17 @@ _cleanup_on_exit() {
 trap _cleanup_on_exit EXIT
 
 _check_dependencies() {
+    # This function ensures that all required dependencies are available for
+    # the scripts to run. It verifies the presence of specified commands or
+    # packages and prompts the user to install missing ones.
+    #
+    # Parameters:
+    #   - $1 (dependencies): A list of dependencies to check, formatted as a
+    #     "|" delimited string. Each dependency can specify:
+    #     - `command`: The name of a command to check for in the shell.
+    #     - `package`: The package associated with the command (if different).
+    #     - `pkg_manager`: (Optional) The specific package manager.
+
     local dependencies=$1
     local packages_to_install=""
     local pkg_manager_installed=""
@@ -151,6 +166,16 @@ _check_dependencies() {
 }
 
 _check_output() {
+    # This function validates the success of a command or process based on its
+    # exit code and output. It logs errors if the command fails or if an
+    # expected output file is missing.
+    #
+    # Parameters:
+    #   - $1 (exit_code): The exit code returned by the command or process.
+    #   - $2 (std_output): The standard output or error message from the command.
+    #   - $3 (input_file): The input file associated with the process (if applicable).
+    #   - $4 (output_file): The expected output file to verify its existence.
+
     local exit_code=$1
     local std_output=$2
     local input_file=$3
@@ -172,6 +197,11 @@ _check_output() {
 }
 
 _command_exists() {
+    # This function checks whether a given command is available on the system.
+    #
+    # Parameters:
+    #   - $1 (command_check): The name of the command to verify.
+
     local command_check=$1
 
     if command -v "$command_check" &>/dev/null; then
@@ -181,6 +211,12 @@ _command_exists() {
 }
 
 _convert_filenames_to_text() {
+    # This function processes a list of filenames to format them as
+    # newline-separated text.
+    #
+    # Parameters:
+    #   - $1 (input_files): A string containing filenames separated by the `FIELD_SEPARATOR`.
+
     local input_files=$1
     local new_line="'\$'\\\n''"
 
@@ -191,6 +227,12 @@ _convert_filenames_to_text() {
 }
 
 _convert_text_to_filenames() {
+    # This function processes a newline-separated text input to format it as a
+    # delimited string of filenames.
+    #
+    # Parameters:
+    #   - $1 (input_files): A string containing filenames separated by newlines.
+
     local input_files=$1
     local new_line="'\$'\\\n''"
 
@@ -202,6 +244,9 @@ _convert_text_to_filenames() {
 }
 
 _display_dir_selection_box() {
+    # This function presents a graphical interface to allow the user to select
+    # one or more directories.
+
     local input_files=""
 
     if _command_exists "zenity"; then
@@ -220,6 +265,9 @@ _display_dir_selection_box() {
 }
 
 _display_file_selection_box() {
+    # This function presents a graphical interface to allow the user to select
+    # one or more files.
+
     local input_files=""
 
     if _command_exists "zenity"; then
@@ -238,6 +286,12 @@ _display_file_selection_box() {
 }
 
 _display_error_box() {
+    # This function displays an error message to the user, adapting to the
+    # available environment.
+    #
+    # Parameters:
+    #   - $1 (message): The error message to display.
+
     local message=$1
 
     if ! _is_gui_session; then
@@ -254,6 +308,12 @@ _display_error_box() {
 }
 
 _display_info_box() {
+    # This function displays an information message to the user, adapting to
+    # the available environment.
+    #
+    # Parameters:
+    #   - $1 (message): The information message to display.
+
     local message=$1
 
     if ! _is_gui_session; then
@@ -270,6 +330,14 @@ _display_info_box() {
 }
 
 _display_list_box() {
+    # This function displays a list box with selectable items, adapting to the
+    # available environment.
+    #
+    # Parameters:
+    #   - $1 (message): A string containing the items to display in the list.
+    #   - $2 (columns): Column definitions for the list, typically in the
+    #     format `--column=<name>;--column=<name>`.
+
     local message=$1
     local columns=$2
     local columns_count=0
@@ -324,6 +392,12 @@ _display_list_box() {
 }
 
 _display_password_box() {
+    # This function prompts the user to enter a password, either via the
+    # terminal or a graphical dialog box.
+    #
+    # Parameters:
+    #   - $1 (message): A message to display as a prompt for the password.
+
     local message="$1"
     local password=""
 
@@ -344,6 +418,9 @@ _display_password_box() {
 }
 
 _display_password_box_define() {
+    # This function prompts the user to enter a password and ensures the
+    # password is not empty.
+
     local message="Type your password:"
     local password=""
 
@@ -359,6 +436,12 @@ _display_password_box_define() {
 }
 
 _display_question_box() {
+    # This function prompts the user with a yes/no question and returns the
+    # user's response.
+    #
+    # Parameters:
+    #   - $1 (message): The question message to display to the user.
+
     local message=$1
     local response=""
 
@@ -376,6 +459,13 @@ _display_question_box() {
 }
 
 _display_text_box() {
+    # This function displays a message to the user in a text box, either in the
+    # terminal or using a GUI dialog.
+    #
+    # Parameters:
+    #   - $1 (message): The message to display. If empty, a default message
+    #     "(Empty result)" is shown.
+
     local message=$1
     _close_wait_box
 
@@ -397,6 +487,12 @@ _display_text_box() {
 }
 
 _display_result_box() {
+    # This function displays a result summary at the end of a process,
+    # including error checking and output directory information.
+    #
+    # Parameters:
+    #   - $1 (output_dir): The directory where output files are stored or expected to be.
+
     local output_dir=$1
     _close_wait_box
 
@@ -428,6 +524,13 @@ _display_result_box() {
 }
 
 _display_wait_box() {
+    # This function displays a wait box to inform the user that a task is
+    # running and they need to wait.
+    #
+    # Parameters:
+    #   - $1 (open_delay): Optional. The delay (in seconds) before the wait box
+    #     is shown. Defaults to 2 seconds if not provided.
+
     local open_delay=${1:-"2"}
     local message="Running the task. Please, wait..."
 
@@ -435,6 +538,15 @@ _display_wait_box() {
 }
 
 _display_wait_box_message() {
+    # This function displays a wait box (progress indicator) to inform the user
+    # that a task is in progress.
+    #
+    # Parameters:
+    #   - $1 (message): The message to display inside the wait box (e.g.,
+    #     "Running the task. Please, wait...").
+    #   - $2 (open_delay): Optional. The delay (in seconds) before the wait box
+    #     is shown. Defaults to 2 seconds if not provided.
+
     local message=$1
     local open_delay=${2:-"2"}
 
@@ -480,6 +592,10 @@ _display_wait_box_message() {
 }
 
 _close_wait_box() {
+    # This function is responsible for closing any open "wait boxes" (progress
+    # indicators) that were displayed during the execution of a task. It checks
+    # for both Zenity and KDialog wait boxes and handles their closure.
+
     # Check if 'wait_box' will open.
     if [[ -f "$WAIT_BOX_CONTROL" ]]; then
         rm -f -- "$WAIT_BOX_CONTROL" # Cancel the future open.
@@ -503,6 +619,10 @@ _close_wait_box() {
 }
 
 _exit_script() {
+    # This function is responsible for safely exiting the script by terminating
+    # all child processes associated with the current script and printing an
+    # exit message to the terminal.
+
     local child_pids=""
     local script_pid=$$
 
@@ -518,6 +638,15 @@ _exit_script() {
 }
 
 _gdbus_notify() {
+    # This function sends a desktop notification using the `gdbus` tool, which
+    # interfaces with the D-Bus notification system (specifically the
+    # "org.freedesktop.Notifications" service).
+    #
+    # Parameters:
+    #   - $1 (icon): The icon to display with the notification.
+    #   - $2 (title): The title of the notification.
+    #   - $3 (body): The main message to be displayed in the notification.
+
     local icon=$1
     local title=$2
     local body=$3
@@ -533,6 +662,11 @@ _gdbus_notify() {
 }
 
 _get_filename_dir() {
+    # This function extracts the directory path from a given file path.
+    #
+    # Parameters:
+    #   - $1 (input_filename): The full path or relative path to the file.
+
     local input_filename=$1
     local dir=""
 
@@ -542,6 +676,11 @@ _get_filename_dir() {
 }
 
 _get_filename_extension() {
+    # This function extracts the file extension from a given filename.
+    #
+    # Parameters:
+    #   - $1 (filename): The input filename (can be absolute or relative).
+
     local filename=$1
     filename=$(sed -E "s|.*/(\.)*||g" <<<"$filename")
     filename=$(sed -E "s|^(\.)*||g" <<<"$filename")
@@ -550,6 +689,11 @@ _get_filename_extension() {
 }
 
 _get_filename_full_path() {
+    # This function returns the full absolute path of a given filename.
+    #
+    # Parameters:
+    #   - $1 (input_filename): The input filename or relative path.
+
     local input_filename=$1
     local full_path=$input_filename
     local dir=""
@@ -563,6 +707,15 @@ _get_filename_full_path() {
 }
 
 _get_filename_next_suffix() {
+    # This function generates a unique filename by adding a numeric suffix to
+    # the base filename if a file with the same name already exists. It ensures
+    # that the new filename does not overwrite an existing file.
+    #
+    # Parameters:
+    #   - $1 (filename): The input filename or path. This can be an absolute or
+    #   relative filename. If the input file has an extension, it will be
+    #   stripped for the purpose of generating the new filename.
+
     local filename=$1
     local filename_result=$filename
     local filename_base=""
@@ -588,6 +741,15 @@ _get_filename_next_suffix() {
 }
 
 _get_filenames_count() {
+    # This function counts the number of filenames in a string, where filenames
+    # are separated by a specific field separator. It assumes that the input
+    # string contains a list of filenames separated by the value of the
+    # variable `FIELD_SEPARATOR`.
+    #
+    # Parameters:
+    # - $1 (input_files): A string containing a list of filenames separated by
+    #   the defined `FIELD_SEPARATOR`.
+
     local input_files=$1
     local files_count=0
 
@@ -600,6 +762,11 @@ _get_filenames_count() {
 }
 
 _get_filenames_filemanager() {
+    # This function retrieves a list of selected filenames or URIs from a file
+    # manager (such as Caja, Nemo, or Nautilus) and processes the input
+    # accordingly. If no selection is detected, it falls back to using a
+    # standard input file list.
+
     local input_files=""
 
     # Try to use the information provided by the file manager.
@@ -626,20 +793,36 @@ _get_filenames_filemanager() {
 }
 
 _get_files() {
+    # This function retrieves a list of files or directories based on the
+    # provided parameters and performs various filtering, validation, and
+    # sorting operations. The input files can be filtered by type, extension,
+    # mime type, etc. It also supports recursive directory expansion and
+    # validation of file conflicts.
+    #
+    # Parameters:
+    #   - $1 (parameters): contain the evaluation code for various options like
+    #     type of files to filter, recursion, file extensions, and other
+    #     selection criteria.
+    #
+    # Parameters options:
+    #   - `par_type`: Specifies the type of items to filter:
+    #       - "file" (default): Filters files.
+    #       - "directory": Filters directories.
+    #       - "all": Includes both files and directories.
+    #   - `par_recursive`: Specifies whether to expand directories recursively:
+    #       - "false" (default): Does not expand directories.
+    #       - "true": Expands directories recursively.
+    #   - `par_get_pwd`: If true, returns the current working directory if no files are selected.
+    #   - `par_max_items`, `par_min_items`: Limits the number of files.
+    #   - `par_select_extension`: Filters by file extension.
+    #   - `par_select_mime`: Filters by MIME type.
+    #   - `par_skip_extension`: Skips files with specific extensions.
+    #   - `par_sort_list`: If true, sorts the list of files.
+    #   - `par_validate_conflict`: If true, validates for filenames with the same base name.
+
     local parameters=$1
     local input_files=""
     input_files=$(_get_filenames_filemanager)
-
-    # Parameter: "par_type"
-    # Values:
-    #   "file": Filter files (default).
-    #   "directory": Filter directories.
-    #   "all": Filter files and directories.
-    #
-    # Parameter: "par_recursive"
-    # Values:
-    #   "false": Do not expand directories (default).
-    #   "true": Expand directories.
 
     # Default values for input parameters.
     local par_get_pwd="false"
@@ -724,6 +907,11 @@ _get_files() {
 }
 
 _get_file_encoding() {
+    # This function retrieves the MIME encoding of a specified file.
+    #
+    # Parameters:
+    #   - $1 (filename): The path to the file whose encoding is to be determined.
+
     local filename=$1
     local std_output=""
 
@@ -737,6 +925,11 @@ _get_file_encoding() {
 }
 
 _get_file_mime() {
+    # This function retrieves the MIME type of a specified file.
+    #
+    # Parameters:
+    #   - $1 (filename): The path to the file whose MIME is to be determined.
+
     local filename=$1
     local std_output=""
 
@@ -750,11 +943,29 @@ _get_file_mime() {
 }
 
 _get_max_procs() {
-    # Return the maximum number of processing units available.
+    # This function returns the maximum number of processing units (CPU cores)
+    # available on the system.
+
     nproc --all 2>/dev/null
 }
 
 _get_output_dir() {
+    # This function determines and returns the appropriate output directory
+    # path based on the provided parameters and the system's available
+    # directories.
+    #
+    # Parameters:
+    #   - $1 (parameters): A string containing key-value pairs that configure
+    #   the function's behavior. Example: 'par_use_same_dir="true"'.
+    #
+    #   - **par_use_same_dir** (in `parameters`):
+    #       - A boolean-like value ("true" or "false").
+    #       - If set to "true," the function uses the base directory (e.g.,
+    #         current working directory or an alternative with write
+    #         permissions) as the output directory.
+    #       - If "false" or not set, a new subdirectory is created for the
+    #         output.
+
     local parameters=$1
     local base_dir=""
     local output_dir=""
@@ -789,6 +1000,27 @@ _get_output_dir() {
 }
 
 _get_output_filename() {
+    # This function generates the output filename based on the given input
+    # file, output directory, and a set of optional parameters. It allows for
+    # customization of the output filename by adding prefixes, suffixes, and
+    # selecting how the file extension should be handled.
+    #
+    # Parameters:
+    #   - $1 (input_file): The input file for which the output filename will be generated.
+    #   - $2 (output_dir): The directory where the output file will be placed.
+    #   - $3 (parameters): A string containing optional parameters that define
+    #     how the output filename should be constructed. It supports the
+    #     following options:
+    #     - par_extension_opt: Specifies how to handle the file extension. Options are:
+    #       - "append": Append a new extension `par_extension` to the existing file extension.
+    #       - "preserve": Keep the original file extension.
+    #       - "replace": Replace the current extension with a new one `par_extension`.
+    #       - "strip": Remove the file extension entirely.
+    #     - par_extension: The extension to use when `par_extension_opt` is set to "append" or "replace".
+    #       This value is ignored for the "preserve" and "strip" options.
+    #     - par_prefix: A string to be added as a prefix to the output filename.
+    #     - par_suffix: A string to be added as a suffix to the output filename, placed before the extension.
+
     local input_file=$1
     local output_dir=$2
     local parameters=$3
@@ -839,10 +1071,26 @@ _get_output_filename() {
 }
 
 _get_script_name() {
+    # This function returns the name of the currently executing script. It uses
+    # the `basename` command to extract the script's filename from the full
+    # path provided by `$0`.
+
     basename -- "$0"
 }
 
 _get_temp_dir_local() {
+    # This function creates a temporary directory in a specified location and
+    # returns its path. The directory is created using `mktemp`, with a custom
+    # prefix (`basename`). It also generates a temporary file to track the
+    # directory to be removed later.
+    #
+    # Parameters:
+    #   - $1 (output_dir): The directory where the temporary directory will be created.
+    #   - $2 (basename): The prefix for the temporary directory name.
+    #
+    # Output:
+    #   - The full path to the newly created temporary directory.
+
     local output_dir=$1
     local basename=$2
     local temp_dir=""
@@ -856,6 +1104,14 @@ _get_temp_dir_local() {
 }
 
 _get_temp_file() {
+    # This function creates a temporary file in a specified temporary directory
+    # and returns its path. The file is created using `mktemp`, and the
+    # directory for the temporary file is specified by the `$TEMP_DIR_TASK`
+    # variable.
+    #
+    # Output:
+    #   - The full path to the newly created temporary file.
+
     local temp_file=""
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
 
@@ -863,6 +1119,14 @@ _get_temp_file() {
 }
 
 _get_temp_file_dry() {
+    # This function simulates the creation of a temporary file in a specified
+    # directory without actually creating the file. It uses the `--dry-run`
+    # option with `mktemp`, which allows checking what the file path would be
+    # if it were to be created.
+    #
+    # Output:
+    #   - The path of the temporary file, without actually creating the file.
+
     local temp_file=""
     temp_file=$(mktemp --dry-run --tmpdir="$TEMP_DIR_TASK")
 
@@ -870,6 +1134,17 @@ _get_temp_file_dry() {
 }
 
 _get_working_directory() {
+    # This function attempts to determine the current working directory in a
+    # variety of ways, based on the available environment variables or input
+    # files. It first checks if the file manager (e.g., Caja, Nemo, or
+    # Nautilus) provides the current URI (directory) of the script. If not, it
+    # falls back to other methods. If the working directory cannot be obtained
+    # from the file manager or input files, it defaults to the current
+    # directory.
+    #
+    # Output:
+    #   - The determined working directory.
+
     local working_directory=""
 
     # Try to use the information provided by the file manager.
@@ -906,6 +1181,11 @@ _get_working_directory() {
 }
 
 _is_gui_session() {
+    # This function checks whether the script is running in a graphical user
+    # interface (GUI) session. It does so by checking if the `DISPLAY`
+    # environment variable is set, which is typically present in GUI sessions
+    # (e.g., X11 or Wayland).
+
     if env | grep -q "^DISPLAY"; then
         return 0
     fi
@@ -913,6 +1193,16 @@ _is_gui_session() {
 }
 
 _log_compile() {
+    # This function compiles all error logs from the temporary logs directory
+    # into a single log file. It checks if any error log files exist, and if
+    # so, combines them into a new log file located in the specified output
+    # directory.
+    #
+    # Parameters:
+    #   - $1 (output_dir): Optional. The directory where the compiled log file
+    #     will be saved. If not provided, the function will determine a
+    #     suitable directory.
+
     local output_dir=$1
     local log_file_output="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
     local log_files_count=""
@@ -942,6 +1232,16 @@ _log_compile() {
 }
 
 _log_write() {
+    # This function writes a log entry with a specified message and associated
+    # information (input file, output file, and terminal output) into a
+    # temporary log file.
+    #
+    # Parameters:
+    #   - $1: (message): A message to be logged.
+    #   - $2: (input_file): The path of the input file associated with the operation.
+    #   - $3: (std_output): The standard output or result from the operation that will be logged.
+    #   - $4: (output_file): The path of the output file associated with the operation.
+
     local message=$1
     local input_file=$2
     local std_output=$3
@@ -961,6 +1261,18 @@ _log_write() {
 }
 
 _move_file() {
+    # This function moves a file from the source location to the destination,
+    # with options to handle conflicts when the destination file already
+    # exists.
+    #
+    # Parameters:
+    #   - $1 (par_when_conflict): Optional, default: "skip". Defines the behavior when the destination file already exists.
+    #     - "overwrite": Overwrite the destination file.
+    #     - "rename": Rename the source file by adding a suffix to avoid conflict.
+    #     - "skip": Skip moving the file if the destination file exists (logs a warning).
+    #   - $2 (file_src): The path to the source file to be moved.
+    #   - $3 (file_dst): The destination path where the file should be moved.
+
     local par_when_conflict=${1:-"skip"}
     local file_src=$2
     local file_dst=$3
@@ -1012,6 +1324,14 @@ _move_file() {
 }
 
 _move_temp_file_to_output() {
+    # This function moves a temporary file to a specified output location,
+    # handling various conditions to ensure the move is safe and proper.
+    #
+    # Parameters:
+    #   - $1: (input_file): The path to the original input file, which may be backed up during the process.
+    #   - $2: (temp_file): The temporary file to be moved to the output location.
+    #   - $3: (output_file): The target path where the temp file should be moved.
+
     local input_file=$1
     local temp_file=$2
     local output_file=$3
@@ -1045,6 +1365,13 @@ _move_temp_file_to_output() {
 }
 
 _open_items_locations() {
+    # This function opens the locations of selected items in the appropriate
+    # file manager.
+    #
+    # Parameters:
+    #   - $1: (items): A space-separated list of file or directory paths whose
+    #   locations will be opened. Paths can be relative or absolute.
+
     local items=$1
     local dir=""
 
@@ -1111,6 +1438,17 @@ _open_items_locations() {
 }
 
 _pkg_get_package_manager() {
+    # This function detects and returns the name of the package manager
+    # available on the system.
+    #
+    # Output:
+    # - Prints the name of the detected package manager. Possible values are:
+    #   - `apt`: Indicates that `apt-get` (Debian/Ubuntu) is available.
+    #   - `dnf`: Indicates that `dnf` (Fedora/RHEL) is available.
+    #   - `pacman`: Indicates that `pacman` (Arch Linux) is available.
+    #   - `zypper`: Indicates that `zypper` (openSUSE) is available.
+    # - If no supported package manager is found, the output is an empty string.
+
     local pkg_manager=""
 
     # Check for an installed package manager.
@@ -1128,6 +1466,18 @@ _pkg_get_package_manager() {
 }
 
 _pkg_install_packages() {
+    # This function installs specified packages using the given package
+    # manager.
+    #
+    # Parameters:
+    #   - $1 (pkg_manager): The package manager to use for installation.
+    #   Supported values are:
+    #       - `apt`: For Debian/Ubuntu systems.
+    #       - `dnf`: For Fedora/RHEL systems.
+    #       - `pacman`: For Arch Linux systems.
+    #       - `zypper`: For openSUSE systems.
+    #   - $2 (packages): A space-separated list of package names to install.
+
     local pkg_manager=$1
     local packages=$2
 
@@ -1170,6 +1520,22 @@ _pkg_install_packages() {
 }
 
 _pkg_is_package_installed() {
+    # This function checks if a specific package is installed using the given
+    # package manager.
+    #
+    # Parameters:
+    #   - $1 (pkg_manager): The package manager to use for the check.
+    #   Supported values are:
+    #       - `apt`: For Debian/Ubuntu systems.
+    #       - `dnf`: For Fedora/RHEL systems.
+    #       - `pacman`: For Arch Linux systems.
+    #       - `zypper`: For openSUSE systems.
+    #   - $2 (package): The name of the package to check.
+    #
+    # Returns:
+    #   - `0` (success): If the package is installed.
+    #   - `1` (failure): If the package is not installed or an error occurs.
+
     local pkg_manager=$1
     local package=$2
 
@@ -1199,6 +1565,12 @@ _pkg_is_package_installed() {
 }
 
 _print_terminal() {
+    # This function prints a message to the terminal if the current session is
+    # not a graphical user interface (GUI) session.
+    #
+    # Parameters:
+    #   - $1 (message): The message to be printed to the terminal.
+
     local message=$1
 
     if ! _is_gui_session; then
@@ -1207,6 +1579,13 @@ _print_terminal() {
 }
 
 _run_task_parallel() {
+    # This function runs a task in parallel for a set of input files, using a
+    # specified output directory for results.
+    #
+    # Parameters:
+    #   - $1 (input_files): A field-separated list of file paths to process.
+    #   - $2 (output_dir): The directory where the output files will be stored.
+
     local input_files=$1
     local output_dir=$2
 
@@ -1266,15 +1645,24 @@ _run_task_parallel() {
 }
 
 _storage_text_clean() {
+    # This function clears all temporary text storage files.
+
     rm -f -- "$TEMP_DIR_STORAGE_TEXT/"* &>/dev/null
 }
 
 _storage_text_read_all() {
-    # Read all files.
+    # This function concatenates and outputs the content of all temporary text
+    # storage files.
+
     cat -- "$TEMP_DIR_STORAGE_TEXT/"* 2>/dev/null
 }
 
 _storage_text_write() {
+    # This function writes a given input text to temporary text storage files.
+    #
+    # Parameters:
+    #   - $1 (input_text): The text to be stored in a temporary file.
+
     local input_text=$1
     local temp_file=""
 
@@ -1288,6 +1676,9 @@ _storage_text_write() {
 }
 
 _storage_text_write_ln() {
+    # This function writes a given input text, followed by a newline character,
+    # to a temporary text storage file.
+
     local input_text=$1
 
     if [[ -z "$input_text" ]]; then
@@ -1298,6 +1689,12 @@ _storage_text_write_ln() {
 }
 
 _str_human_readable_path() {
+    # This function transforms a given file path into a more human-readable
+    # format.
+    #
+    # Parameters:
+    #   - $1 (input_path): The input file path to process.
+
     local input_path=$1
     local output_path=""
 
@@ -1319,6 +1716,12 @@ _str_human_readable_path() {
 }
 
 _str_remove_empty_tokens() {
+    # This function removes empty tokens from a string, ensuring it is compact
+    # and well-formed.
+    #
+    # Parameters:
+    #   - $1 (input_str): The input string containing tokens separated by `$FIELD_SEPARATOR`.
+
     local input_str=$1
     input_str=$(tr -s "$FIELD_SEPARATOR" <<<"$input_str")
     input_str=$(sed "s|$FIELD_SEPARATOR$||" <<<"$input_str")
@@ -1327,6 +1730,15 @@ _str_remove_empty_tokens() {
 }
 
 _strip_filename_extension() {
+    # This function removes the file extension from a given filename, if one
+    # exists.
+    #
+    # Parameters:
+    #   - $1 (filename): The filename from which to strip the extension.
+    #
+    # Returns:
+    #   - The filename without its extension.
+
     local filename=$1
     local extension=""
     extension=$(_get_filename_extension "$filename")
@@ -1347,6 +1759,23 @@ _text_remove_empty_lines() {
 }
 
 _text_remove_home() {
+    # This function replaces the user's home directory path in a given string
+    # with the tilde (`~`) symbol for brevity.
+    #
+    # Parameters:
+    #   - $1 (input_text): The input string that may contain the user's home directory path.
+    #
+    # Returns:
+    #   - The modified string with the home directory replaced by `~`, or the
+    #     original string if `$HOME` is not defined.
+    #
+    # Examples:
+    #   Input: "/home/user/documents/file.txt" (assuming $HOME is "/home/user")
+    #   Output: "~/documents/file.txt"
+    #
+    #   Input: "/etc/config" (assuming $HOME is "/home/user")
+    #   Output: "/etc/config"
+
     local input_text=$1
 
     if [[ -n "$HOME" ]]; then
@@ -1357,6 +1786,24 @@ _text_remove_home() {
 }
 
 _text_remove_pwd() {
+    # This function replaces the current working directory path in a given
+    # string with a dot (`.`) for brevity.
+    #
+    # Parameters:
+    #   - $1 (input_text): The input string that may contain the current
+    #     working directory path.
+    #
+    # Returns:
+    #   - The modified string with the working directory replaced by `.`, or
+    #     the original string if the working directory is not found.
+    #
+    # Examples:
+    #   Input: "/home/user/project/file.txt" (assuming current directory is "/home/user/project")
+    #   Output: "./file.txt"
+    #
+    #   Input: "/etc/config" (assuming current directory is "/home/user/project")
+    #   Output: "/etc/config"
+
     local input_text=$1
     local working_directory=""
     working_directory=$(_get_working_directory)
@@ -1365,12 +1812,36 @@ _text_remove_pwd() {
 }
 
 _text_sort() {
+    # This function sorts the lines of a given text input in a version-aware
+    # manner.
+    #
+    # Parameters:
+    #   - $1 (input_text): The input text to be sorted, where each line is
+    #     treated as a separate string.
+    #
+    # Returns:
+    #   - The sorted text with each line in the correct order.
+
     local input_text=$1
 
     sort --version-sort <<<"$input_text"
 }
 
 _text_uri_decode() {
+    # This function decodes a URI-encoded string by converting percent-encoded
+    # characters back to their original form.
+    #
+    # Parameters:
+    #   - $1 (uri_encoded): The URI-encoded string that needs to be decoded.
+    #
+    # Returns:
+    #   - The decoded URI string, with percent-encoded characters replaced and
+    #     the "file://" prefix removed.
+    #
+    # Example:
+    #   Input: "file:///home/user%20name/file%20name.txt"
+    #   Output: "/home/user name/file name.txt"
+
     local uri_encoded=$1
 
     uri_encoded=${uri_encoded//%/\\x}
@@ -1381,7 +1852,9 @@ _text_uri_decode() {
 }
 
 _unset_global_variables_file_manager() {
-    # Unset some possible global variables set by the file manager.
+    # This function unsets global variables that may have been set by different
+    # file managers (Caja, Nautilus, Nemo) during script execution.
+
     unset \
         CAJA_SCRIPT_CURRENT_URI \
         CAJA_SCRIPT_NEXT_PANE_CURRENT_URI \
@@ -1408,6 +1881,18 @@ _unset_global_variables_file_manager() {
 }
 
 _validate_conflict_filenames() {
+    # This function checks if there are any files with the same base name in
+    # the provided list of input files.
+    #
+    # Parameters:
+    #   - $1 (input_files): A string containing a list of file paths, where
+    #       each file path can include extensions. This list is checked for
+    #       duplicates based on the base file name (excluding extensions).
+    #
+    # Example:
+    #   - Input: "file1.txt file2.txt file1.jpg"
+    #   - Output: An error box will be displayed indicating that "file1" is duplicated.
+
     local input_files=$1
     local dup_filenames="$input_files"
 
@@ -1422,6 +1907,21 @@ _validate_conflict_filenames() {
 }
 
 _validate_file_mime() {
+    # This function validates the MIME type of a given file against a specified
+    # MIME type pattern.
+    #
+    # Parameters:
+    #   - $1  (input_file): The path to the file that is being validated. This
+    #       is the file whose MIME type will be checked.
+    #   - $2 (par_select_mime): The MIME type pattern (or regular expression)
+    #       to compare the file's MIME type against. If no MIME type pattern is
+    #       provided, no validation occurs.
+    #
+    # Example:
+    #   - Input: File path "example.txt", MIME pattern "text/plain"
+    #   - Output: If the MIME type of "example.txt" is "text/plain", the file
+    #       name will be written to storage.
+
     local input_file=$1
     local par_select_mime=$2
 
@@ -1438,6 +1938,24 @@ _validate_file_mime() {
 }
 
 _validate_file_mime_parallel() {
+    # This function validates the MIME type of a list of files in parallel,
+    # based on a specified MIME type pattern.
+    #
+    # Parameters:
+    #   - $1 (input_files): A space-separated string containing the paths of
+    #     the files to validate. These files will be checked for the MIME type
+    #     pattern.
+    #   - $2 (par_select_mime): The MIME type pattern (or regular expression)
+    #     to compare the files' MIME types against. If this parameter is empty,
+    #     the function returns the input files without any MIME type
+    #     validation.
+    #
+    # Example:
+    #   - Input: File paths "file1.txt file2.png", MIME pattern "text/plain".
+    #   - Output: If "file1.txt" has a MIME type of "text/plain", it will be
+    #     included in the output, but "file2.png" will be excluded if its MIME
+    #     type doesn't match.
+
     local input_files=$1
     local par_select_mime=$2
 
@@ -1473,6 +1991,32 @@ _validate_file_mime_parallel() {
 }
 
 _validate_file_preselect() {
+    # This function filters a list of files or directories based on various
+    # user-specified criteria, such as file type, extensions, and recursion.
+    #
+    # Parameters:
+    #   - $1 (input_files): A space-separated string containing file or
+    #     directory paths to filter. These paths are passed to the `find`
+    #     command.
+    #   - $2 (par_type): A string specifying the type of file to search for. It
+    #     can be:
+    #     - "file": To search for files and symbolic links.
+    #     - "directory": To search for directories and symbolic links.
+    #   - $3 (par_skip_extension): A string of file extensions to exclude from
+    #     the search. Only files with extensions not matching this list will be
+    #     included.
+    #   - $4 (par_select_extension): A string of file extensions to include in
+    #     the search. Only files with matching extensions will be included.
+    #   - $5 (par_recursive): A boolean string ("true" or any other value)
+    #     indicating whether to search directories recursively. If set to
+    #     "true", directories will be searched recursively; otherwise, only the
+    #     immediate directory level will be searched.
+    #
+    # Example:
+    #   - Input: "dir1 dir2", "file", "", "txt|pdf", "true"
+    #   - Output: A list of files with extensions `.txt` or `.pdf` from the
+    #     directories `dir1` and `dir2`, searched recursively.
+
     local input_files=$1
     local par_type=$2
     local par_skip_extension=$3
@@ -1520,6 +2064,35 @@ _validate_file_preselect() {
 }
 
 _validate_files_count() {
+    # This function validates the number of selected files or directories based
+    # on several criteria, such as type, extension, MIME type, and minimum or
+    # maximum item count.
+    #
+    # Parameters:
+    #   - $1 (input_files): A space-separated string containing the paths of
+    #     files or directories to be validated.
+    #   - $2 (par_type): A string indicating the type of items to validate.
+    #     Possible values:
+    #     - "file": Validate files only.
+    #     - "directory": Validate directories only.
+    #     - "all": Validate both files and directories.
+    #   - $3 (par_select_extension): A pipe-separated list of file extensions
+    #     to filter the files. Files must have one of these extensions.
+    #   - $4 (par_select_mime): A string representing MIME types to filter the
+    #     files by. Only files with matching MIME types are selected.
+    #   - $5 (par_min_items): The minimum number of valid items required. If
+    #     fewer valid items are selected, an error is displayed.
+    #   - $6 (par_max_items): The maximum number of valid items allowed. If
+    #     more valid items are selected, an error is displayed.
+    #   - $7 (par_recursive): A string indicating whether the validation should
+    #     be recursive. If "true", directories will be searched recursively.
+    #
+    # Example:
+    #   - Input: "dir1 dir2", "file", "txt|pdf", "", 1, 5, "true"
+    #   - Output: The function checks if the directories `dir1` and `dir2`
+    #     contain at least 1 and no more than 5 `.txt` or `.pdf` files,
+    #     recursively.
+
     local input_files=$1
     local par_type=$2
     local par_select_extension=$3
@@ -1577,6 +2150,18 @@ _validate_files_count() {
 }
 
 _xdg_get_default_app() {
+    # This function retrieves the default application associated with a
+    # specific MIME type on a Linux system using the `xdg-mime` command.
+    #
+    # Parameters:
+    #   - $1 (mime): The MIME type (e.g., "application/pdf", "image/png") for
+    #     which to find the default application.
+    #
+    # Example:
+    #   - Input: "application/pdf"
+    #   - Output: The function prints the default application's executable for
+    #     opening PDF files (e.g., `evince` or `okular`).
+
     local mime=$1
     local desktop_file=""
     local default_app=""
