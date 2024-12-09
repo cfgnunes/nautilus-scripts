@@ -89,9 +89,9 @@ _check_dependencies() {
     # Parameters:
     #   - $1 (dependencies): A list of dependencies to check, formatted as a
     #     "|" delimited string. Each dependency can specify:
-    #     - `command`: The name of a command to check for in the shell.
-    #     - `package`: The package associated with the command (if different).
-    #     - `pkg_manager`: (Optional) The specific package manager.
+    #     - "command": The name of a command to check for in the shell.
+    #     - "package": The package associated with the command (if different).
+    #     - "pkg_manager": (Optional) The specific package manager.
 
     local dependencies=$1
     local packages_to_install=""
@@ -215,7 +215,7 @@ _convert_filenames_to_text() {
     # newline-separated text.
     #
     # Parameters:
-    #   - $1 (input_files): A string containing filenames separated by the `FIELD_SEPARATOR`.
+    #   - $1 (input_files): A string containing filenames separated by the $FIELD_SEPARATOR.
 
     local input_files=$1
     local new_line="'\$'\\\n''"
@@ -336,7 +336,7 @@ _display_list_box() {
     # Parameters:
     #   - $1 (message): A string containing the items to display in the list.
     #   - $2 (columns): Column definitions for the list, typically in the
-    #     format `--column=<name>;--column=<name>`.
+    #     format "--column=<name>;--column=<name>".
 
     local message=$1
     local columns=$2
@@ -638,7 +638,7 @@ _exit_script() {
 }
 
 _gdbus_notify() {
-    # This function sends a desktop notification using the `gdbus` tool, which
+    # This function sends a desktop notification using the "gdbus" tool, which
     # interfaces with the D-Bus notification system (specifically the
     # "org.freedesktop.Notifications" service).
     #
@@ -744,11 +744,11 @@ _get_filenames_count() {
     # This function counts the number of filenames in a string, where filenames
     # are separated by a specific field separator. It assumes that the input
     # string contains a list of filenames separated by the value of the
-    # variable `FIELD_SEPARATOR`.
+    # variable $FIELD_SEPARATOR.
     #
     # Parameters:
     # - $1 (input_files): A string containing a list of filenames separated by
-    #   the defined `FIELD_SEPARATOR`.
+    #   the defined $FIELD_SEPARATOR.
 
     local input_files=$1
     local files_count=0
@@ -805,20 +805,20 @@ _get_files() {
     #     selection criteria.
     #
     # Parameters options:
-    #   - `par_type`: Specifies the type of items to filter:
+    #   - "par_type": Specifies the type of items to filter:
     #       - "file" (default): Filters files.
     #       - "directory": Filters directories.
     #       - "all": Includes both files and directories.
-    #   - `par_recursive`: Specifies whether to expand directories recursively:
+    #   - "par_recursive": Specifies whether to expand directories recursively:
     #       - "false" (default): Does not expand directories.
     #       - "true": Expands directories recursively.
-    #   - `par_get_pwd`: If true, returns the current working directory if no files are selected.
-    #   - `par_max_items`, `par_min_items`: Limits the number of files.
-    #   - `par_select_extension`: Filters by file extension.
-    #   - `par_select_mime`: Filters by MIME type.
-    #   - `par_skip_extension`: Skips files with specific extensions.
-    #   - `par_sort_list`: If true, sorts the list of files.
-    #   - `par_validate_conflict`: If true, validates for filenames with the same base name.
+    #   - "par_get_pwd": If true, returns the current working directory if no files are selected.
+    #   - "par_max_items", "par_min_items": Limits the number of files.
+    #   - "par_select_extension": Filters by file extension.
+    #   - "par_select_mime": Filters by MIME type.
+    #   - "par_skip_extension": Skips files with specific extensions.
+    #   - "par_sort_list": If true, sorts the list of files.
+    #   - "par_validate_conflict": If true, validates for filenames with the same base name.
 
     local parameters=$1
     local input_files=""
@@ -958,7 +958,7 @@ _get_output_dir() {
     #   - $1 (parameters): A string containing key-value pairs that configure
     #   the function's behavior. Example: 'par_use_same_dir="true"'.
     #
-    #   - **par_use_same_dir** (in `parameters`):
+    #   - **par_use_same_dir** (in "parameters"):
     #       - A boolean-like value ("true" or "false").
     #       - If set to "true," the function uses the base directory (e.g.,
     #         current working directory or an alternative with write
@@ -1012,11 +1012,11 @@ _get_output_filename() {
     #     how the output filename should be constructed. It supports the
     #     following options:
     #     - par_extension_opt: Specifies how to handle the file extension. Options are:
-    #       - "append": Append a new extension `par_extension` to the existing file extension.
+    #       - "append": Append a new extension "par_extension" to the existing file extension.
     #       - "preserve": Keep the original file extension.
-    #       - "replace": Replace the current extension with a new one `par_extension`.
+    #       - "replace": Replace the current extension with a new one "par_extension".
     #       - "strip": Remove the file extension entirely.
-    #     - par_extension: The extension to use when `par_extension_opt` is set to "append" or "replace".
+    #     - par_extension: The extension to use when "par_extension_opt" is set to "append" or "replace".
     #       This value is ignored for the "preserve" and "strip" options.
     #     - par_prefix: A string to be added as a prefix to the output filename.
     #     - par_suffix: A string to be added as a suffix to the output filename, placed before the extension.
@@ -1072,16 +1072,16 @@ _get_output_filename() {
 
 _get_script_name() {
     # This function returns the name of the currently executing script. It uses
-    # the `basename` command to extract the script's filename from the full
-    # path provided by `$0`.
+    # the "basename" command to extract the script's filename from the full
+    # path provided by "$0".
 
     basename -- "$0"
 }
 
 _get_temp_dir_local() {
     # This function creates a temporary directory in a specified location and
-    # returns its path. The directory is created using `mktemp`, with a custom
-    # prefix (`basename`). It also generates a temporary file to track the
+    # returns its path. The directory is created using "mktemp", with a custom
+    # prefix ("basename"). It also generates a temporary file to track the
     # directory to be removed later.
     #
     # Parameters:
@@ -1105,8 +1105,8 @@ _get_temp_dir_local() {
 
 _get_temp_file() {
     # This function creates a temporary file in a specified temporary directory
-    # and returns its path. The file is created using `mktemp`, and the
-    # directory for the temporary file is specified by the `$TEMP_DIR_TASK`
+    # and returns its path. The file is created using "mktemp", and the
+    # directory for the temporary file is specified by the $TEMP_DIR_TASK
     # variable.
     #
     # Output:
@@ -1120,8 +1120,8 @@ _get_temp_file() {
 
 _get_temp_file_dry() {
     # This function simulates the creation of a temporary file in a specified
-    # directory without actually creating the file. It uses the `--dry-run`
-    # option with `mktemp`, which allows checking what the file path would be
+    # directory without actually creating the file. It uses the "--dry-run"
+    # option with "mktemp", which allows checking what the file path would be
     # if it were to be created.
     #
     # Output:
@@ -1182,7 +1182,7 @@ _get_working_directory() {
 
 _is_gui_session() {
     # This function checks whether the script is running in a graphical user
-    # interface (GUI) session. It does so by checking if the `DISPLAY`
+    # interface (GUI) session. It does so by checking if the DISPLAY
     # environment variable is set, which is typically present in GUI sessions
     # (e.g., X11 or Wayland).
 
@@ -1442,12 +1442,12 @@ _pkg_get_package_manager() {
     # available on the system.
     #
     # Output:
-    # - Prints the name of the detected package manager. Possible values are:
-    #   - `apt`: Indicates that `apt-get` (Debian/Ubuntu) is available.
-    #   - `dnf`: Indicates that `dnf` (Fedora/RHEL) is available.
-    #   - `pacman`: Indicates that `pacman` (Arch Linux) is available.
-    #   - `zypper`: Indicates that `zypper` (openSUSE) is available.
-    # - If no supported package manager is found, the output is an empty string.
+    #   - Prints the name of the detected package manager. Possible values are:
+    #     - "apt": Indicates that "apt-get" (Debian/Ubuntu) is available.
+    #     - "dnf": Indicates that "dnf" (Fedora/RHEL) is available.
+    #     - "pacman": Indicates that "pacman" (Arch Linux) is available.
+    #     - "zypper": Indicates that "zypper" (openSUSE) is available.
+    #   - If no supported package manager is found, the output is an empty string.
 
     local pkg_manager=""
 
@@ -1472,10 +1472,10 @@ _pkg_install_packages() {
     # Parameters:
     #   - $1 (pkg_manager): The package manager to use for installation.
     #   Supported values are:
-    #       - `apt`: For Debian/Ubuntu systems.
-    #       - `dnf`: For Fedora/RHEL systems.
-    #       - `pacman`: For Arch Linux systems.
-    #       - `zypper`: For openSUSE systems.
+    #       - "apt": For Debian/Ubuntu systems.
+    #       - "dnf": For Fedora/RHEL systems.
+    #       - "pacman": For Arch Linux systems.
+    #       - "zypper": For openSUSE systems.
     #   - $2 (packages): A space-separated list of package names to install.
 
     local pkg_manager=$1
@@ -1526,15 +1526,15 @@ _pkg_is_package_installed() {
     # Parameters:
     #   - $1 (pkg_manager): The package manager to use for the check.
     #   Supported values are:
-    #       - `apt`: For Debian/Ubuntu systems.
-    #       - `dnf`: For Fedora/RHEL systems.
-    #       - `pacman`: For Arch Linux systems.
-    #       - `zypper`: For openSUSE systems.
+    #       - "apt": For Debian/Ubuntu systems.
+    #       - "dnf": For Fedora/RHEL systems.
+    #       - "pacman": For Arch Linux systems.
+    #       - "zypper": For openSUSE systems.
     #   - $2 (package): The name of the package to check.
     #
     # Returns:
-    #   - `0` (success): If the package is installed.
-    #   - `1` (failure): If the package is not installed or an error occurs.
+    #   - "0" (success): If the package is installed.
+    #   - "1" (failure): If the package is not installed or an error occurs.
 
     local pkg_manager=$1
     local package=$2
@@ -1720,7 +1720,7 @@ _str_remove_empty_tokens() {
     # and well-formed.
     #
     # Parameters:
-    #   - $1 (input_str): The input string containing tokens separated by `$FIELD_SEPARATOR`.
+    #   - $1 (input_str): The input string containing tokens separated by $FIELD_SEPARATOR.
 
     local input_str=$1
     input_str=$(tr -s "$FIELD_SEPARATOR" <<<"$input_str")
@@ -1760,21 +1760,21 @@ _text_remove_empty_lines() {
 
 _text_remove_home() {
     # This function replaces the user's home directory path in a given string
-    # with the tilde (`~`) symbol for brevity.
+    # with the tilde ("~") symbol for brevity.
     #
     # Parameters:
     #   - $1 (input_text): The input string that may contain the user's home directory path.
     #
     # Returns:
-    #   - The modified string with the home directory replaced by `~`, or the
-    #     original string if `$HOME` is not defined.
+    #   - The modified string with the home directory replaced by "~", or the
+    #     original string if "$HOME" is not defined.
     #
     # Examples:
-    #   Input: "/home/user/documents/file.txt" (assuming $HOME is "/home/user")
-    #   Output: "~/documents/file.txt"
+    #   - Input: "/home/user/documents/file.txt" (assuming $HOME is "/home/user")
+    #   - Output: "~/documents/file.txt"
     #
-    #   Input: "/etc/config" (assuming $HOME is "/home/user")
-    #   Output: "/etc/config"
+    #   - Input: "/etc/config" (assuming $HOME is "/home/user")
+    #   - Output: "/etc/config"
 
     local input_text=$1
 
@@ -1787,22 +1787,22 @@ _text_remove_home() {
 
 _text_remove_pwd() {
     # This function replaces the current working directory path in a given
-    # string with a dot (`.`) for brevity.
+    # string with a dot (".") for brevity.
     #
     # Parameters:
     #   - $1 (input_text): The input string that may contain the current
     #     working directory path.
     #
     # Returns:
-    #   - The modified string with the working directory replaced by `.`, or
+    #   - The modified string with the working directory replaced by ".", or
     #     the original string if the working directory is not found.
     #
     # Examples:
-    #   Input: "/home/user/project/file.txt" (assuming current directory is "/home/user/project")
-    #   Output: "./file.txt"
+    #   - Input: "/home/user/project/file.txt" (assuming current directory is "/home/user/project")
+    #   - Output: "./file.txt"
     #
-    #   Input: "/etc/config" (assuming current directory is "/home/user/project")
-    #   Output: "/etc/config"
+    #   - Input: "/etc/config" (assuming current directory is "/home/user/project")
+    #   - Output: "/etc/config"
 
     local input_text=$1
     local working_directory=""
@@ -1839,8 +1839,8 @@ _text_uri_decode() {
     #     the "file://" prefix removed.
     #
     # Example:
-    #   Input: "file:///home/user%20name/file%20name.txt"
-    #   Output: "/home/user name/file name.txt"
+    #   - Input: "file:///home/user%20name/file%20name.txt"
+    #   - Output: "/home/user name/file name.txt"
 
     local uri_encoded=$1
 
@@ -1996,7 +1996,7 @@ _validate_file_preselect() {
     #
     # Parameters:
     #   - $1 (input_files): A space-separated string containing file or
-    #     directory paths to filter. These paths are passed to the `find`
+    #     directory paths to filter. These paths are passed to the "find"
     #     command.
     #   - $2 (par_type): A string specifying the type of file to search for. It
     #     can be:
@@ -2014,8 +2014,8 @@ _validate_file_preselect() {
     #
     # Example:
     #   - Input: "dir1 dir2", "file", "", "txt|pdf", "true"
-    #   - Output: A list of files with extensions `.txt` or `.pdf` from the
-    #     directories `dir1` and `dir2`, searched recursively.
+    #   - Output: A list of files with extensions ".txt" or ".pdf" from the
+    #     directories "dir1" and "dir2", searched recursively.
 
     local input_files=$1
     local par_type=$2
@@ -2089,8 +2089,8 @@ _validate_files_count() {
     #
     # Example:
     #   - Input: "dir1 dir2", "file", "txt|pdf", "", 1, 5, "true"
-    #   - Output: The function checks if the directories `dir1` and `dir2`
-    #     contain at least 1 and no more than 5 `.txt` or `.pdf` files,
+    #   - Output: The function checks if the directories "dir1" and "dir2"
+    #     contain at least 1 and no more than 5 ".txt" or ".pdf" files,
     #     recursively.
 
     local input_files=$1
@@ -2151,7 +2151,7 @@ _validate_files_count() {
 
 _xdg_get_default_app() {
     # This function retrieves the default application associated with a
-    # specific MIME type on a Linux system using the `xdg-mime` command.
+    # specific MIME type on a Linux system using the "xdg-mime" command.
     #
     # Parameters:
     #   - $1 (mime): The MIME type (e.g., "application/pdf", "image/png") for
@@ -2160,7 +2160,7 @@ _xdg_get_default_app() {
     # Example:
     #   - Input: "application/pdf"
     #   - Output: The function prints the default application's executable for
-    #     opening PDF files (e.g., `evince` or `okular`).
+    #     opening PDF files (e.g., "evince" or "okular").
 
     local mime=$1
     local desktop_file=""
