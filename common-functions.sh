@@ -2004,10 +2004,10 @@ _validate_file_preselect() {
     #     included.
     #   - $4 (par_select_extension): A string of file extensions to include in
     #     the search. Only files with matching extensions will be included.
-    #   - $5 (par_recursive): A boolean string ("true" or any other value)
-    #     indicating whether to search directories recursively. If set to
-    #     "true", directories will be searched recursively; otherwise, only the
-    #     immediate directory level will be searched.
+    #   - $5 (par_recursive): Specifies the depth of recursion for the search:
+    #     - A numeric value: Limits the search to the specified maximum depth.
+    #     - "true": Enables full recursion with no depth limit.
+    #     - "false" (default): Limits the search to the current directory only.
     #
     # Example:
     #   - Input: "dir1 dir2", "file", "", "txt|pdf", "true"
@@ -2027,9 +2027,12 @@ _validate_file_preselect() {
     # Build a 'find' command.
     find_command="find '$input_files'"
 
-    if [[ "$par_recursive" != "true" ]]; then
-        find_command+=" -maxdepth 0"
-    fi
+    # Parse the parameter $par_recursive.
+    case $par_recursive in
+    [[:digit:]]) find_command+=" -maxdepth $par_recursive" ;;
+    true) ;;
+    *) find_command+=" -maxdepth 0" ;;
+    esac
 
     # Expand the directories with the 'find' command.
     case "$par_type" in
