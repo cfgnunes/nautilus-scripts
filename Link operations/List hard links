@@ -15,7 +15,8 @@ _main() {
     input_files=$(_get_files "par_type=all; par_get_pwd=true")
 
     # Run the main process.
-    std_output=$(find "$input_files" -type f -links +1 -printf "%i %p\n")
+    # shellcheck disable=SC2086
+    std_output=$(find $input_files -type f -links +1 -printf "%i %p\n")
     std_output=$(_text_sort "$std_output")
     std_output=$(awk 'NR==1 {prev=$1} $1!=prev {print "\nHard links:"; prev=$1} {print $0}' <<<"$std_output")
 
