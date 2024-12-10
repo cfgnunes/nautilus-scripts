@@ -21,7 +21,7 @@ _main() {
     local std_output=""
     std_output=$(_storage_text_read_all)
 
-    _display_list_box "$std_output" "--column=Char;--column=Line;--column=File"
+    _display_list_box "$std_output" "--column=Char;--column=Line;--column=File" "files with bad chars"
 }
 
 _main_task() {

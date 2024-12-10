@@ -20,7 +20,7 @@ _main() {
     std_output=$(find $input_files ! -path "$IGNORE_FIND_PATH" -regextype posix-extended -regex ".*/\.[^/]*" -printf "%p\n" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
 
-    _display_list_box "$std_output" "--column=Item"
+    _display_list_box "$std_output" "--column=Item" "hidden items"
 }
 
 _main "$@"

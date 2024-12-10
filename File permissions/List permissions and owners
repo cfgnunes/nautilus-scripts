@@ -22,7 +22,7 @@ _main() {
     std_output=$(_storage_text_read_all)
     std_output=$(_text_sort "$std_output")
 
-    _display_list_box "$std_output" "--column=Octal;--column=User;--column=Group;--column=Type;--column=File"
+    _display_list_box "$std_output" "--column=Octal;--column=User;--column=Group;--column=Type;--column=File" "items"
 }
 
 _main_task() {

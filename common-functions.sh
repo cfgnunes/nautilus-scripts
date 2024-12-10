@@ -336,10 +336,13 @@ _display_list_box() {
     # Parameters:
     #   - $1 (message): A string containing the items to display in the list.
     #   - $2 (columns): Column definitions for the list, typically in the
-    #     format "--column=<name>;--column=<name>".
+    #   format "--column=<name>;--column=<name>".
+    #   - $3 (item_name): A string representing the name of the items in the
+    #   list. If not provided, the default value is "items".
 
     local message=$1
     local columns=$2
+    local item_name=${3:-"items"}
     local columns_count=0
     local items_count=0
     local selected_item=""
@@ -348,7 +351,7 @@ _display_list_box() {
 
     if [[ -n "$message" ]]; then
         items_count=$(tr -cd "\n" <<<"$message" | wc -c)
-        message_select=" Select an item to open its location:"
+        message_select="Select an item to open its location:"
     else
         # NOTE: Some versions of Zenity crash if the
         # message is empty (Segmentation fault).
@@ -368,7 +371,7 @@ _display_list_box() {
         selected_item=$(zenity --title "$(_get_script_name)" --list \
             --editable --multiple --separator="$FIELD_SEPARATOR" \
             --width=800 --height=450 --print-column "$columns_count" \
-            --text "Total of $items_count items.$message_select" \
+            --text "Total of $items_count $item_name. $message_select" \
             $columns $message 2>/dev/null) || _exit_script
 
         if ((items_count != 0)) && [[ -n "$selected_item" ]]; then
@@ -1402,7 +1405,7 @@ _open_items_locations() {
             continue
         fi
 
-        if [[ -L "$item" ]]; then
+        if [[ -L "$item" ]] && [[ -e "$item" ]]; then
             item=$(readlink -f "$item")
         fi
         items_open+="$item$FIELD_SEPARATOR"

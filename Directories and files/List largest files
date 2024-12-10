@@ -23,7 +23,7 @@ _main() {
     std_output=$(sort -h -r <<<"$std_output") # Sort the result.
     std_output=$(head -n 15 <<<"$std_output")
 
-    _display_list_box "$std_output" "--column=Size;--column=File"
+    _display_list_box "$std_output" "--column=Size;--column=File" "largest files"
 }
 
 _main_task() {
