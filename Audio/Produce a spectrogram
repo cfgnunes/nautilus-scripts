@@ -14,7 +14,7 @@ _main() {
         command=sox |
         pkg_manager=apt; package=libsox-fmt-mp3"
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=file; par_select_mime='audio/|video/'")
+    input_files=$(_get_files "par_type=file; par_select_mime='audio/|video/'; par_validate_conflict=true")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
