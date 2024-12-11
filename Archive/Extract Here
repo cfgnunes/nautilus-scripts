@@ -430,16 +430,13 @@ _run_command() {
     if [[ "$single_root_item" == "$filename" ]] || [[ "$(_strip_filename_extension "$single_root_item")" == "$filename" ]]; then
         # For archives with "one item with the same name of the archive".
         # For example: "README.txt.tar.gz" or "README.tar.gz".
-        std_output=$(_move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$single_root_item" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" ""
+        _move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$single_root_item"
     elif [[ "$single_root_item" == "squashfs-root" ]] && [[ "$command" == "unsquashfs" ]]; then
         # For the "squashfs" archive format.
-        std_output=$(_move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$filename" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" ""
+        _move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$filename"
     else
         # For archives with "one item with a different name of the archive" or "multiple items".
-        std_output=$(_move_file "rename" "$temp_dir_output" "$output_dir/$filename" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" ""
+        _move_file "rename" "$temp_dir_output" "$output_dir/$filename"
     fi
 
     __temp_dir_remove

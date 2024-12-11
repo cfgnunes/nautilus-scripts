@@ -190,8 +190,7 @@ _run_command() {
         std_output=$(latexmk -f -pdf -interaction=nonstopmode -output-directory="$temp_dir_output" "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file_temp"
 
-        std_output=$(_move_file "rename" "$output_file_temp" "$output_file" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" ""
+        _move_file "rename" "$output_file_temp" "$output_file"
 
         # Remove the temporary directory.
         rm -rf -- "$temp_dir_output"

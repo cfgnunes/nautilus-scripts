@@ -23,7 +23,6 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local output_file=""
-    local std_output=""
 
     # Rename files.
     local file=""
@@ -39,8 +38,7 @@ _main_task() {
         new_filename=${filename^^}
 
         # Run the main process.
-        std_output=$(_move_file "skip" "$file" "$dir/$new_filename" 2>&1)
-        _check_output "$?" "$std_output" "$file" ""
+        _move_file "skip" "$file" "$dir/$new_filename"
     done
 
     # Rename directories.
@@ -57,8 +55,7 @@ _main_task() {
         new_dirname=${dirname^^}
 
         # Run the main process.
-        std_output=$(_move_file "skip" "$dir" "$parent_dir/$new_dirname" 2>&1)
-        _check_output "$?" "$std_output" "$dir" ""
+        _move_file "skip" "$dir" "$parent_dir/$new_dirname"
     done
 }
 

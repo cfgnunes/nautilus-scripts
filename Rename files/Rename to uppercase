@@ -23,7 +23,6 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local output_file=""
-    local std_output=""
     local dir=""
     local filename=""
 
@@ -34,8 +33,7 @@ _main_task() {
     output_file=${filename^^}
 
     # Run the main process.
-    std_output=$(_move_file "skip" "$input_file" "$dir/$output_file" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    _move_file "skip" "$input_file" "$dir/$output_file" || return 1
 }
 
 _main "$@"
