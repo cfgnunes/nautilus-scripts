@@ -183,7 +183,7 @@ _check_output() {
 
     # Check the 'exit_code' and log the error.
     if ((exit_code != 0)); then
-        _log_write "Error: Non-zero exit code." "$input_file" "$std_output" "$output_file"
+        _log_write "Error: Command failed with a non-zero exit code. Check the command's output for more details." "$input_file" "$std_output" "$output_file"
         return 1
     fi
 
@@ -1273,15 +1273,18 @@ _move_file() {
     # Parameters:
     #   - $1 (par_when_conflict): Optional, default: "skip". Defines the behavior when the destination file already exists.
     #     - "overwrite": Overwrite the destination file.
-    #     - "rename": Rename the source file by adding a suffix to avoid conflict.
-    #     - "skip": Skip moving the file if the destination file exists (logs a warning).
+    #     - "rename": Rename the source file to avoid conflicts by adding a suffix to the destination filename.
+    #     - "skip": Skip moving the file if the destination file exists (logs a error).
     #   - $2 (file_src): The path to the source file to be moved.
     #   - $3 (file_dst): The destination path where the file should be moved.
+    #
+    # Returns:
+    #   - "0" (success): If the operation is successful or if the source and destination are the same file.
+    #   - "1" (failure): If any required parameters are missing, if the move fails, or if an invalid conflict parameter is provided.
 
     local par_when_conflict=${1:-"skip"}
     local file_src=$2
     local file_dst=$3
-    local exit_code=0
 
     # Check for empty parameters.
     if [[ -z "$file_src" ]] || [[ -z "$file_dst" ]]; then
@@ -1312,11 +1315,7 @@ _move_file() {
         mv -n -- "$file_src" "$file_dst"
         ;;
     "skip")
-        # Skip, do not move the file.
-        if [[ -e "$file_dst" ]]; then
-            _log_write "Warning: Cannot move file. The destination file already exists." "$file_src" "" "$file_dst"
-            return 1
-        fi
+        # Do not move the file if the destination file already exists.
         mv -n -- "$file_src" "$file_dst"
         ;;
     *)
@@ -1325,8 +1324,16 @@ _move_file() {
         ;;
     esac
 
-    exit_code=$?
-    return "$exit_code"
+    if [[ -e "$file_src" ]]; then
+        if [[ -e "$file_dst" ]]; then
+            _log_write "Error moving file: The destination file already exists." "$file_src" "" "$file_dst"
+        else
+            _log_write "Error moving file: Unable to move." "$file_src" "" "$file_dst"
+        fi
+        return 1
+    fi
+
+    return 0
 }
 
 _move_temp_file_to_output() {
@@ -1898,13 +1905,16 @@ _validate_conflict_filenames() {
     #   - Output: An error box will be displayed indicating that "file1" is duplicated.
 
     local input_files=$1
-    local dup_filenames="$input_files"
+    local dup_files=""
 
-    dup_filenames=$(_convert_filenames_to_text "$dup_filenames")
-    dup_filenames=$(_strip_filename_extension "$dup_filenames")
-    dup_filenames=$(uniq -d <<<"$dup_filenames")
+    dup_files=$(_convert_filenames_to_text "$input_files")
+    dup_files=$(_text_sort "$dup_files")
 
-    if [[ -n "$dup_filenames" ]]; then
+    # Remove file extensions and find any duplicate base names.
+    dup_files=$(printf "%s" "$dup_files" | sed "s|\.[^ ]*$||" | uniq -d)
+
+    # If duplicates are found, display an error and exit the script.
+    if [[ -n "$dup_files" ]]; then
         _display_error_box "There are selected files with the same base name!"
         _exit_script
     fi
