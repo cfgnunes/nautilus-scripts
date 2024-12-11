@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+
+    # Execute initial checks.
+    _check_dependencies ""
+    if ! _display_question_box "Are you sure you want to proceed with flattening the nested directory?\nThis will move all files to the top-level directory."; then
+        _exit_script
+    fi
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=directory; par_max_items=1")
+
+    # Run the main process.
+    _flatten_directory "$input_files"
+
+    _display_result_box ""
+}
+
+_flatten_directory() {
+    local directory="$1"
+    local undo_script="undo-flatten.sh"
+    local temp_file=""
+    local filename=""
+    local exit_code=0
+
+    temp_file=$(_get_temp_file)
+    (
+        cd "$directory" || true
+
+        # Make 'undo' file.
+        if ! [ -f "$undo_script" ]; then
+            printf "%s\n\n" "#!/usr/bin/env bash" >"$undo_script"
+        fi
+
+        # Make a list of files to move.
+        find . -type f ! -name "$undo_script" >>"$temp_file"
+
+        # Make a backup of directory tree.
+        find . -type d | grep "/" | xargs -I{} printf "%s\n" "mkdir -p -- \"{}\"" >>"$undo_script"
+
+        while read -r full_path_filename; do
+            filename=$(basename "$full_path_filename")
+
+            # Move all selected files to local folder.
+            _move_file "skip" "$full_path_filename" "$filename"
+            exit_code=$?
+
+            if ((exit_code == 0)); then
+                # Print 'mv' command in Undo script.
+                echo "mv -n -- \"$filename\" \"$full_path_filename\"" >>"$undo_script"
+            fi
+        done <"$temp_file"
+
+        # Set the 'undo' file as executable.
+        chmod +x -- "$undo_script"
+
+        # Remove empty directories.
+        find . -type d -empty -delete
+    )
+
+    # Remove the temporary files.
+    rm -f -- "$temp_file"
+}
+
+_main "$@"
