@@ -10,11 +10,13 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
+    input_files=$(_get_files "par_type=directory; par_max_items=1")
+
     if ! _display_question_box "Are you sure you want to proceed with flattening the nested directory?\nThis will move all files to the top-level directory."; then
         _exit_script
     fi
+
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=directory; par_max_items=1")
 
     # Run the main process.
     _flatten_directory "$input_files"
