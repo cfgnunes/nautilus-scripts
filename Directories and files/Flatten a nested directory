@@ -12,7 +12,7 @@ _main() {
     _check_dependencies ""
     input_files=$(_get_files "par_type=directory; par_max_items=1")
 
-    if ! _display_question_box "Are you sure you want to proceed with flattening the nested directory?\nThis will move all files to the top-level directory."; then
+    if ! _display_question_box "Are you sure you want to proceed with flattening the selected directory?\nThis action will move all files to the root of the directory."; then
         _exit_script
     fi
 
@@ -26,48 +26,81 @@ _main() {
 
 _flatten_directory() {
     local directory="$1"
-    local undo_script="undo-flatten.sh"
+    local undo_script=""
     local temp_file=""
     local filename=""
     local exit_code=0
 
+    # Create a temporary file to store the list of files to move.
     temp_file=$(_get_temp_file)
+
+    # Create an "undo script" to reverse the flattening operation.
+    undo_script=$(_make_undo_script "$directory")
+
     (
-        cd "$directory" || true
+        cd "$directory" || return 1
 
-        # Make 'undo' file.
-        if ! [ -f "$undo_script" ]; then
-            printf "%s\n\n" "#!/usr/bin/env bash" >"$undo_script"
-        fi
+        # Generate a list of all files (not directories) in the current directory and its subdirectories.
+        find . -not -type d >>"$temp_file"
 
-        # Make a list of files to move.
-        find . -type f ! -name "$undo_script" >>"$temp_file"
-
-        # Make a backup of directory tree.
+        # For each directory, add a command to the "undo script" to recreate the directory structure.
         find . -type d | grep "/" | xargs -I{} printf "%s\n" "mkdir -p -- \"{}\"" >>"$undo_script"
 
+        # Loop through each file in the list and move it to the root directory.
         while read -r full_path_filename; do
-            filename=$(basename "$full_path_filename")
+            # Get the file's name (basename) for moving it to the root directory.
+            filename="./$(basename "$full_path_filename")"
 
-            # Move all selected files to local folder.
+            # Move the file to the root directory.
             _move_file "skip" "$full_path_filename" "$filename"
             exit_code=$?
 
-            if ((exit_code == 0)); then
+            # If the file was moved successfully and the name was changed, add to the "undo script".
+            if ((exit_code == 0)) && [[ "$filename" != "$full_path_filename" ]]; then
                 # Print 'mv' command in Undo script.
-                echo "mv -n -- \"$filename\" \"$full_path_filename\"" >>"$undo_script"
+                printf "%s\n" "mv -n -- \"$filename\" \"$full_path_filename\"" >>"$undo_script"
             fi
         done <"$temp_file"
 
-        # Set the 'undo' file as executable.
-        chmod +x -- "$undo_script"
-
-        # Remove empty directories.
+        # Remove any empty directories that remain after moving the files.
         find . -type d -empty -delete
     )
 
     # Remove the temporary files.
     rm -f -- "$temp_file"
+}
+
+_make_undo_script() {
+    local output_dir=$1
+    local undo_script_name="undo-flatten.sh"
+
+    # Generate a file name for the undo script.
+    local output_file=""
+    output_file=$(_get_output_filename "$undo_script_name" "$output_dir" "par_extension_opt=preserve")
+
+    # Create the undo script with a header and usage instructions.
+    {
+        printf "%s\n" "#!/usr/bin/env bash"
+        printf "\n"
+        printf "%s\n" "# This script is automatically generated to reverse the directory flattening"
+        printf "%s\n" "# process. It restores the original directory structure and moves files back to"
+        printf "%s\n" "# their respective subdirectories."
+        printf "%s\n" "#"
+        printf "%s\n" "# Usage: Run this script in the root of the directory where the flattening was"
+        printf "%s\n" "# performed."
+        printf "%s\n" "#"
+        printf "%s\n" "# Example: ./$undo_script_name"
+        printf "%s\n" "#"
+        printf "%s\n" "# Note: This script assumes no additional changes were made to the directory"
+        printf "%s\n" "# structure after the flattening operation."
+        printf "\n"
+    } >"$output_file"
+
+    # Make the "undo script" executable.
+    chmod +x -- "$output_file"
+
+    # Return the path of the generated "undo script".
+    printf "%s" "$output_file"
 }
 
 _main "$@"
