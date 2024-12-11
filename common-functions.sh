@@ -1253,10 +1253,15 @@ _log_write() {
     {
         printf "[%s]\n" "$(date "+%Y-%m-%d %H:%M:%S")"
         printf " > Input file: %s\n" "$input_file"
-        printf " > Output file: %s\n" "$output_file"
+        if [[ -n "$output_file" ]]; then
+            printf " > Output file: %s\n" "$output_file"
+        fi
         printf " > %s\n" "$message"
-        printf " > Terminal output:\n"
-        printf "%s\n\n" "$std_output"
+        if [[ -n "$std_output" ]]; then
+            printf " > Standard output:\n"
+            printf "%s\n" "$std_output"
+        fi
+        printf "\n"
     } >"$log_temp_file"
 }
 
@@ -1298,17 +1303,21 @@ _move_file() {
 
     # Process the parameter "when_conflict": what to do when the 'file_dst' already exists.
     case "$par_when_conflict" in
-    "overwrite") : ;;
+    "overwrite")
+        mv -f -- "$file_src" "$file_dst"
+        ;;
     "rename")
         # Rename the file (add a suffix).
         file_dst=$(_get_filename_next_suffix "$file_dst")
+        mv -n -- "$file_src" "$file_dst"
         ;;
     "skip")
         # Skip, do not move the file.
         if [[ -e "$file_dst" ]]; then
-            _log_write "Warning: The file already exists." "$file_src" "" "$file_dst"
-            return 0
+            _log_write "Warning: Cannot move file. The destination file already exists." "$file_src" "" "$file_dst"
+            return 1
         fi
+        mv -n -- "$file_src" "$file_dst"
         ;;
     *)
         _display_error_box "Wrong parameter '$par_when_conflict' in '${FUNCNAME[1]}'!"
@@ -1316,10 +1325,7 @@ _move_file() {
         ;;
     esac
 
-    # Move the file.
-    mv -f -- "$file_src" "$file_dst"
     exit_code=$?
-
     return "$exit_code"
 }
 
@@ -1349,13 +1355,11 @@ _move_temp_file_to_output() {
 
     # If 'input_file' equals 'output_file', create a backup of the 'input_file'.
     if [[ "$input_file" == "$output_file" ]]; then
-        std_output=$(_move_file "rename" "$input_file" "$input_file.bak" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "$input_file.bak" || return 1
+        _move_file "rename" "$input_file" "$input_file.bak" || return 1
     fi
 
     # Move the 'temp_file' to 'output_file'.
-    std_output=$(_move_file "rename" "$temp_file" "$output_file" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+    _move_file "rename" "$temp_file" "$output_file" || return 1
 
     # Preserve the same permissions of 'input_file'.
     std_output=$(chmod --reference="$input_file" -- "$output_file" 2>&1)
