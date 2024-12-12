@@ -41,7 +41,7 @@ _flatten_directory() {
         cd "$directory" || return 1
 
         # Generate a list of all files (not directories) in the current directory and its subdirectories.
-        find . -not -type d >>"$temp_file"
+        find . -mindepth 2 -not -type d >>"$temp_file"
 
         # For each directory, add a command to the "undo script" to recreate the directory structure.
         find . -type d | grep "/" | xargs -I{} printf "%s\n" "mkdir -p -- \"{}\"" >>"$undo_script"
@@ -56,7 +56,7 @@ _flatten_directory() {
             exit_code=$?
 
             # If the file was moved successfully and the name was changed, add to the "undo script".
-            if ((exit_code == 0)) && [[ "$filename" != "$full_path_filename" ]]; then
+            if ((exit_code == 0)); then
                 # Print 'mv' command in Undo script.
                 printf "%s\n" "mv -n -- \"$filename\" \"$full_path_filename\"" >>"$undo_script"
             fi
