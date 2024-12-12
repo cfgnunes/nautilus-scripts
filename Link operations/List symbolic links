@@ -16,11 +16,11 @@ _main() {
 
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(find $input_files -xtype l)
+    std_output=$(find $input_files -type l)
 
     std_output=$(_text_remove_pwd "$std_output")
 
-    _display_list_box "$std_output" "--column=Link" "broken links" "false"
+    _display_list_box "$std_output" "--column=Link" "symbolic links" "false"
 }
 
 _main "$@"

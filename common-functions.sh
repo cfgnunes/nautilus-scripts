@@ -339,10 +339,15 @@ _display_list_box() {
     #   format "--column=<name>;--column=<name>".
     #   - $3 (item_name): A string representing the name of the items in the
     #   list. If not provided, the default value is "items".
+    #   - $4 (resolve_links): A boolean-like string ("true" or "false")
+    #   indicating whether symbolic links in item paths should be resolved to
+    #   their target locations when opening the item's location. Defaults to
+    #   "true".
 
     local message=$1
     local columns=$2
     local item_name=${3:-"items"}
+    local resolve_links=${4:-"true"}
     local columns_count=0
     local items_count=0
     local selected_item=""
@@ -376,7 +381,7 @@ _display_list_box() {
 
         if ((items_count != 0)) && [[ -n "$selected_item" ]]; then
             # Open the directory of the clicked item in the list.
-            _open_items_locations "$selected_item"
+            _open_items_locations "$selected_item" "$resolve_links"
         fi
     elif _command_exists "kdialog"; then
         columns=$(sed "s|--column=||g" <<<"$columns")
@@ -1382,8 +1387,12 @@ _open_items_locations() {
     # Parameters:
     #   - $1: (items): A space-separated list of file or directory paths whose
     #   locations will be opened. Paths can be relative or absolute.
+    #   - $2: (resolve_links): A boolean-like string ("true" or "false")
+    #   indicating whether symbolic links in the provided paths should be
+    #   resolved to their target locations before opening.
 
     local items=$1
+    local resolve_links=$2
     local dir=""
 
     if [[ -z "$items" ]]; then
@@ -1416,7 +1425,7 @@ _open_items_locations() {
             continue
         fi
 
-        if [[ -L "$item" ]] && [[ -e "$item" ]]; then
+        if [[ "$resolve_links" == "true" ]] && [[ -L "$item" ]]; then
             item=$(readlink -f "$item")
         fi
         items_open+="$item$FIELD_SEPARATOR"
@@ -1925,7 +1934,7 @@ _validate_file_mime() {
     # MIME type pattern.
     #
     # Parameters:
-    #   - $1  (input_file): The path to the file that is being validated. This
+    #   - $1 (input_file): The path to the file that is being validated. This
     #       is the file whose MIME type will be checked.
     #   - $2 (par_select_mime): The MIME type pattern (or regular expression)
     #       to compare the file's MIME type against. If no MIME type pattern is
