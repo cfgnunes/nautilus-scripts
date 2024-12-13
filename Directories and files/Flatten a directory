@@ -38,13 +38,13 @@ _flatten_directory() {
     undo_script=$(_make_undo_script "$directory")
 
     (
-        cd "$directory" || return 1
+        cd -- "$directory" || return 1
 
         # Generate a list of all files (not directories) in the current directory and its subdirectories.
-        find . -mindepth 2 -not -type d >>"$temp_file"
+        find . -mindepth 2 -not -type d 2>/dev/null >>"$temp_file"
 
         # For each directory, add a command to the "undo script" to recreate the directory structure.
-        find . -type d | grep "/" | xargs -I{} printf "%s\n" "mkdir -p -- \"{}\"" >>"$undo_script"
+        find . -type d 2>/dev/null | grep "/" | xargs -I{} printf "%s\n" "mkdir -p -- \"{}\"" >>"$undo_script"
 
         # Loop through each file in the list and move it to the root directory.
         while read -r full_path_filename; do
@@ -63,7 +63,7 @@ _flatten_directory() {
         done <"$temp_file"
 
         # Remove any empty directories that remain after moving the files.
-        find . -type d -empty -delete
+        find . -type d -empty -delete 2>/dev/null
     )
 
     # Remove the temporary files.
