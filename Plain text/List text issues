@@ -58,7 +58,7 @@ _main_task() {
 
     # Run the checker 'trailing spaces' (for Mac files).
     if [[ "$file_information" == *"with CR line"* ]] || [[ "$file_information" == *"with CR, LF line"* ]]; then
-        if cat -A "$input_file" 2>/dev/null | grep --quiet -m1 " ^M"; then
+        if cat -A -- "$input_file" 2>/dev/null | grep --quiet -m1 " ^M"; then
             [[ "$issues" != *"trailing spaces"* ]] && issues+="[trailing spaces]"
         fi
     fi

@@ -571,7 +571,7 @@ _display_wait_box_message() {
 
         # Thread to open the Zenity 'wait_box'.
         # shellcheck disable=SC2002
-        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && cat "$WAIT_BOX_FIFO" | (
+        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && cat -- "$WAIT_BOX_FIFO" | (
             zenity --title="$(_get_script_name)" --progress \
                 --width=400 --pulsate --auto-close --text="$message" || _exit_script
         ) &
