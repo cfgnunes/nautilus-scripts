@@ -17,11 +17,12 @@ _main() {
     # Run the main process.
     # shellcheck disable=SC2086
     std_output=$(find $input_files -type f -links +1 -printf "%i %p\n" 2>/dev/null)
+    std_output=$(_text_remove_pwd "$std_output")
     std_output=$(_text_sort "$std_output")
-    std_output=$(awk 'NR==1 {prev=$1} $1!=prev {print "\nHard links:"; prev=$1} {print $0}' <<<"$std_output")
+    std_output=$(awk 'NR==1 {prev=$1} $1!=prev {print "\nHard links (for the same file):"; prev=$1} {print $0}' <<<"$std_output")
 
     if [[ -n "$std_output" ]]; then
-        std_output="Hard links:"$'\n'"$std_output"
+        std_output="Hard links (for the same file):"$'\n'"$std_output"
     fi
 
     _display_text_box "$std_output"
