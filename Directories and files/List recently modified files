@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local std_output=""
+
+    # Execute initial checks.
+    _check_dependencies ""
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=all; par_get_pwd=true")
+
+    # Run the main process.
+    # shellcheck disable=SC2086
+    std_output=$(find $input_files -type f ! -path "$IGNORE_FIND_PATH" -printf "%TY-%Tm-%Td$FIELD_SEPARATOR%TT$FIELD_SEPARATOR%p\n" 2>/dev/null)
+    std_output=$(_text_remove_pwd "$std_output")
+    std_output=$(sort -k1,1r -k2,2r <<<"$std_output") # Sort the result.
+    std_output=$(head -n 15 <<<"$std_output")
+
+    _display_list_box "$std_output" "--column=Date;--column=Time;--column=File" "files" "false"
+}
+
+_main "$@"
