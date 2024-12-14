@@ -34,6 +34,7 @@ _main_task() {
 
     # Run the main process.
     std_output=$(pdfinfo -- "$input_file" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Save the result only for 'encrypted' PDFs.
     if [[ "$std_output" == *"yes ("* ]]; then
