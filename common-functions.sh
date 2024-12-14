@@ -183,7 +183,7 @@ _check_output() {
 
     # Check the 'exit_code' and log the error.
     if ((exit_code != 0)); then
-        _log_write "Error: Command failed with a non-zero exit code. Check the command's output for more details." "$input_file" "$std_output" "$output_file"
+        _log_write "Error: Command failed with a non-zero exit code. Check the command's standard output for more details." "$input_file" "$std_output" "$output_file"
         return 1
     fi
 
@@ -1257,7 +1257,9 @@ _log_write() {
 
     {
         printf "[%s]\n" "$(date "+%Y-%m-%d %H:%M:%S")"
-        printf " > Input file: %s\n" "$input_file"
+        if [[ -n "$input_file" ]]; then
+            printf " > Input file: %s\n" "$input_file"
+        fi
         if [[ -n "$output_file" ]]; then
             printf " > Output file: %s\n" "$output_file"
         fi
