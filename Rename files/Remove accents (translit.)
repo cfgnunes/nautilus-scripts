@@ -31,6 +31,7 @@ _main_task() {
 
     # Remove accents (transliterate).
     output_file=$(iconv -f utf8 -t ascii//TRANSLIT <<<"$filename")
+    _check_output "$?" "$output_file" "$input_file" "" || return 1
 
     # Run the main process.
     _move_file "skip" "$input_file" "$dir/$output_file" || return 1
