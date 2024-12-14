@@ -42,7 +42,7 @@ _main_task() {
     std_output=$(sed "s|$FIELD_SEPARATOR.*with CR, LF line.*|$FIELD_SEPARATOR CR+LF (mac)|" <<<"$std_output")
     std_output=$(sed "s|$FIELD_SEPARATOR.*no line.*|$FIELD_SEPARATOR (no line)|" <<<"$std_output")
     std_output=$(sed "s|$FIELD_SEPARATOR.*text.*|$FIELD_SEPARATOR LF (unix)|" <<<"$std_output")
-    std_output=$(sed "s|\(.*\)$FIELD_SEPARATOR\s*\(.*\)|\2$FIELD_SEPARATOR\1|" <<<"$std_output")
+    std_output=$(sed "s|\(.*\)$FIELD_SEPARATOR\s*\(.*\)|\2$FIELD_SEPARATOR\1|g" <<<"$std_output")
     std_output=$(grep "(windows)\|(unix)\|(mac)\|(no line)" <<<"$std_output")
 
     _storage_text_write_ln "$std_output"
