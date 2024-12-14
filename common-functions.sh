@@ -353,6 +353,7 @@ _display_list_box() {
     local selected_item=""
     local message_select=""
     _close_wait_box
+    _logs_consolidate ""
 
     if [[ -n "$message" ]]; then
         items_count=$(tr -cd "\n" <<<"$message" | wc -c)
@@ -476,6 +477,7 @@ _display_text_box() {
 
     local message=$1
     _close_wait_box
+    _logs_consolidate ""
 
     if [[ -z "$message" ]]; then
         message="(Empty result)"
@@ -499,19 +501,12 @@ _display_result_box() {
     # including error checking and output directory information.
     #
     # Parameters:
-    #   - $1 (output_dir): The directory where output files are stored or expected to be.
+    #   - $1 (output_dir): The directory where output files are stored or
+    #     expected to be.
 
     local output_dir=$1
     _close_wait_box
-
-    local error_log_file=""
-    error_log_file=$(_log_compile "$output_dir")
-
-    # Check if there was some error.
-    if [[ -f "$error_log_file" ]]; then
-        _display_error_box "Finished with errors! See the $(_str_human_readable_path "$error_log_file") for details."
-        _exit_script
-    fi
+    _logs_consolidate "$output_dir"
 
     # If 'output_dir' parameter is defined.
     if [[ -n "$output_dir" ]]; then
@@ -1197,45 +1192,6 @@ _is_gui_session() {
     return 1
 }
 
-_log_compile() {
-    # This function compiles all error logs from the temporary logs directory
-    # into a single log file. It checks if any error log files exist, and if
-    # so, combines them into a new log file located in the specified output
-    # directory.
-    #
-    # Parameters:
-    #   - $1 (output_dir): Optional. The directory where the compiled log file
-    #     will be saved. If not provided, the function will determine a
-    #     suitable directory.
-
-    local output_dir=$1
-    local log_file_output="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
-    local log_files_count=""
-
-    # Do nothing if there are no error log files.
-    log_files_count="$(find "$TEMP_DIR_LOGS" -type f 2>/dev/null | wc -l)"
-    if ((log_files_count == 0)); then
-        return 1
-    fi
-
-    if [[ -z "$output_dir" ]]; then
-        output_dir=$(_get_output_dir "par_use_same_dir=true")
-    fi
-    log_file_output="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
-
-    # If the file already exists, add a suffix.
-    log_file_output=$(_get_filename_next_suffix "$log_file_output")
-
-    # Compile log errors in a single file.
-    {
-        printf "Script: '%s'.\n" "$(_get_script_name)"
-        printf "Total errors: %s.\n\n" "$log_files_count"
-        cat -- "$TEMP_DIR_LOGS/"* 2>/dev/null
-    } >"$log_file_output"
-
-    printf "%s" "$log_file_output"
-}
-
 _log_write() {
     # This function writes a log entry with a specified message and associated
     # information (input file, output file, and terminal output) into a
@@ -1270,6 +1226,45 @@ _log_write() {
         fi
         printf "\n"
     } >"$log_temp_file"
+}
+
+_logs_consolidate() {
+    # This function gathers all error logs from a temporary directory and
+    # compiles them into a single consolidated log file. If any error logs are
+    # found, it displays an error message indicating the location of the
+    # consolidated log file and terminates the script.
+    #
+    # Parameters:
+    #   $1 (output_dir): Optional. The directory where the consolidated log
+    #   file will be saved. If not specified, a default directory is used.
+
+    local output_dir=$1
+    local log_file_output="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
+    local log_files_count=""
+
+    # Do nothing if there are no error log files.
+    log_files_count="$(find "$TEMP_DIR_LOGS" -type f 2>/dev/null | wc -l)"
+    if ((log_files_count == 0)); then
+        return 0
+    fi
+
+    if [[ -z "$output_dir" ]]; then
+        output_dir=$(_get_output_dir "par_use_same_dir=true")
+    fi
+    log_file_output="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
+
+    # If the file already exists, add a suffix.
+    log_file_output=$(_get_filename_next_suffix "$log_file_output")
+
+    # Compile log errors in a single file.
+    {
+        printf "Script: '%s'.\n" "$(_get_script_name)"
+        printf "Total errors: %s.\n\n" "$log_files_count"
+        cat -- "$TEMP_DIR_LOGS/"* 2>/dev/null
+    } >"$log_file_output"
+
+    _display_error_box "Finished with errors! See the $(_str_human_readable_path "$log_file_output") for details."
+    _exit_script
 }
 
 _move_file() {
