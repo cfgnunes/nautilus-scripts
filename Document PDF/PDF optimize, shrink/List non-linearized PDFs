@@ -33,7 +33,7 @@ _main_task() {
     local temp_file=""
 
     # Save the result only for 'not linearized (not optimized)' PDFs.
-    if pdfinfo "$input_file" | grep "Optimized:" | grep --quiet "no"; then
+    if pdfinfo "$input_file" | grep --ignore-case "Optimized:" | grep --quiet --ignore-case "no"; then
         _storage_text_write_ln "$(_text_remove_pwd "$input_file")"
     fi
 }

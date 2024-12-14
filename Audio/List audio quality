@@ -35,7 +35,7 @@ _main_task() {
     std_output=$(sox "$input_file" -n remix 1 sinc "19k-20k" -m stat 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
-    std_output=$(grep "^Mean.*norm" <<<"$std_output")
+    std_output=$(grep --ignore-case "^Mean.*norm" <<<"$std_output")
     std_output=$(cut -d ":" -f 2 <<<"$std_output")
     std_output=$(tr -d " " <<<"$std_output")
 
@@ -50,7 +50,7 @@ _main_task() {
         std_output=$(sox "$input_file" -n remix 1 sinc "17k-18k" -m stat 2>&1)
         _check_output "$?" "$std_output" "$input_file" "" || return 1
 
-        std_output=$(grep "^Mean.*norm" <<<"$std_output")
+        std_output=$(grep --ignore-case "^Mean.*norm" <<<"$std_output")
         std_output=$(cut -d ":" -f 2 <<<"$std_output")
         std_output=$(tr -d " " <<<"$std_output")
 
