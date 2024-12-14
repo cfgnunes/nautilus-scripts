@@ -100,7 +100,7 @@ _run_command() {
         ;;
     "pandoc")
         std_output=$(pandoc --standalone -o "$output_file" -- "$input_file" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "$output_file"
+        _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     esac
 }

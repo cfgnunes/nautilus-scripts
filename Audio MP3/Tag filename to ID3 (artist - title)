@@ -29,7 +29,7 @@ _main_task() {
     local temp_file=""
     temp_file=$(_get_temp_file)
     std_output=$(cp --archive -- "$input_file" "$temp_file" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    _check_output "$?" "$std_output" "$input_file" "$temp_file" || return 1
 
     local basename=""
     basename=$(basename -- "$input_file")
@@ -53,11 +53,11 @@ _main_task() {
 
     # Run the main process.
     std_output=$(id3v2 --artist "$audio_artist" --song "$audio_title" "$temp_file" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    _check_output "$?" "$std_output" "$input_file" "$temp_file" || return 1
 
     # Strip id3v1 tags.
     std_output=$(id3v2 --delete-v1 "$temp_file" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    _check_output "$?" "$std_output" "$input_file" "$temp_file" || return 1
 
     # Move the temporary file to the output.
     output_file=$input_file

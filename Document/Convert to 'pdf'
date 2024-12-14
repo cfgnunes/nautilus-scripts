@@ -181,16 +181,17 @@ _run_command() {
         # Use a local temporary directory to work.
         local filename=""
         local temp_dir_output=""
+        local temp_file=""
         filename=$(basename -- "$input_file")             # Remove the path.
         filename=$(_strip_filename_extension "$filename") # Remove the extension.
         temp_dir_output=$(_get_temp_dir_local "$output_dir" "$filename")
 
-        output_file_temp=$(_get_output_filename "$input_file" "$temp_dir_output" "par_extension_opt=replace; par_extension=$output_format")
+        temp_file=$(_get_output_filename "$input_file" "$temp_dir_output" "par_extension_opt=replace; par_extension=$output_format")
 
         std_output=$(latexmk -f -pdf -interaction=nonstopmode -output-directory="$temp_dir_output" "$input_file" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "$output_file_temp"
+        _check_output "$?" "$std_output" "$input_file" "$temp_file" || return 1
 
-        _move_file "rename" "$output_file_temp" "$output_file"
+        _move_file "rename" "$temp_file" "$output_file" || return 1
 
         # Remove the temporary directory.
         rm -rf -- "$temp_dir_output"
@@ -211,11 +212,11 @@ _run_command() {
         ;;
     "pandoc_latex")
         std_output=$(pandoc -V "geometry:margin=1.5cm" -V "geometry:a4paper" -V "fontfamily:charter" --standalone -o "$output_file" -- "$input_file" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "$output_file"
+        _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "pandoc")
         std_output=$(pandoc --standalone -o "$output_file" -- "$input_file" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "$output_file"
+        _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     esac
 }

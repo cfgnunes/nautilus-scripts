@@ -35,7 +35,7 @@ _main_task() {
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve")
     std_output=$(ocrmypdf --l "$TEMP_DATA_TASK" --output-type pdfa --skip-text --jobs "$(_get_max_procs)" -- "$input_file" "$output_file" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
 _main "$@"

@@ -49,10 +49,7 @@ _main_task() {
     # Rename the file.
     local dir_file=""
     dir_file=$(_get_filename_dir "$input_file")
-    _move_file "rename" "$input_file" "$dir_file/$tag_artist - $tag_title.mp3"
-
-    # Remove the temporary files on each iteration (if not removed before).
-    rm -f -- "$temp_file"
+    _move_file "rename" "$input_file" "$dir_file/$tag_artist - $tag_title.mp3" || return 1
 }
 
 _main "$@"

@@ -46,7 +46,7 @@ _main_task() {
     # Work on a temporary file.
     temp_file=$(_get_temp_file)
     std_output=$(cp --archive -- "$input_file" "$temp_file" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    _check_output "$?" "$std_output" "$input_file" "$temp_file" || return 1
 
     # Run the main process.
     __key_remove "$temp_file" "font-stretch"
