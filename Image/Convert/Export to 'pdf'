@@ -90,7 +90,7 @@ _run_command() {
     "inkscape")
         local inkscape_version=""
         local inkscape_version_old="1.0"
-        inkscape_version=$(inkscape --version | cut -d " " -f 2)
+        inkscape_version=$(inkscape --version 2>/dev/null | cut -d " " -f 2)
         if [[ "$inkscape_version" == $(echo -e "$inkscape_version\n$inkscape_version_old" | sort -V | head -n1) ]]; then
             # Old Inkscape version.
             std_output=$(inkscape --without-gui --export-area-drawing --file="$input_file" --export-pdf="$output_file" 2>&1)

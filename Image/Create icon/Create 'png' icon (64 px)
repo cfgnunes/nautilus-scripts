@@ -49,7 +49,7 @@ _main_task() {
 
         local inkscape_version=""
         local inkscape_version_old="1.0"
-        inkscape_version=$(inkscape --version | cut -d " " -f 2)
+        inkscape_version=$(inkscape --version 2>/dev/null | cut -d " " -f 2)
         if [[ "$inkscape_version" == $(echo -e "$inkscape_version\n$inkscape_version_old" | sort -V | head -n1) ]]; then
             # Old Inkscape version.
             std_output=$(inkscape --without-gui --export-area-drawing --file="$input_file" --export-height=$((icon_size * 2)) --export-png="$temp_file4" 2>&1)
@@ -67,15 +67,15 @@ _main_task() {
     # Run the process (part 1) 'get information of the image'.
     local first_pixel_color=""
     first_pixel_color=$(convert "$input_file_proc" -format "%[pixel:p{0,0}]" "info:" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    _check_output "$?" "$first_pixel_color" "$input_file" "" || return 1
 
     local last_pixel=""
     last_pixel=$(identify -format "%[fx:w-1],0" "$input_file_proc" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    _check_output "$?" "$last_pixel" "$input_file" "" || return 1
 
     local last_pixel_color=""
-    last_pixel_color=$(convert "$input_file_proc" -format "%[pixel:p{$last_pixel}]" "info:")
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    last_pixel_color=$(convert "$input_file_proc" -format "%[pixel:p{$last_pixel}]" "info:" 2>&1)
+    _check_output "$?" "$last_pixel_color" "$input_file" "" || return 1
 
     if [[ "$first_pixel_color" == "$last_pixel_color" ]]; then
         # Run the process (part 2) 'automatic crop the content'.

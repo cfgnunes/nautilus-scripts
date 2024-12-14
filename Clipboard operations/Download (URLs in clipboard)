@@ -41,9 +41,9 @@ _get_urls_from_clipboard() {
     local urls=""
 
     if [[ "${XDG_SESSION_TYPE,,}" == "x11" ]]; then
-        urls=$(xclip -quiet -selection clipboard -o)
+        urls=$(xclip -quiet -selection clipboard -o 2>/dev/null)
     elif [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        urls=$(wl-paste)
+        urls=$(wl-paste 2>/dev/null)
     fi
     urls=$(grep --only-matching --perl-regexp "https?://\w+\.[^ '\"]+" <<<"$urls")
     urls=$(sort -u <<<"$urls")

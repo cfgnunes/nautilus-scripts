@@ -99,9 +99,7 @@ _compare() {
         fi
 
         # Check if both images have the same pixel values.
-        local pixel_error=""
-        pixel_error=$(compare -metric AE -- "$file_1" "$file_2" null: 2>&1)
-        if [[ "$pixel_error" == "0" ]]; then
+        if compare -metric AE -- "$file_1" "$file_2" null: &>/dev/null; then
             _display_info_box "The two selected images are identical (same pixel values)."
             _exit_script
         fi
@@ -109,8 +107,10 @@ _compare() {
         # Get image dimensions.
         local dimensions_1=""
         local dimensions_2=""
-        dimensions_1=$(identify -format "%wx%h" "$file_1")
-        dimensions_2=$(identify -format "%wx%h" "$file_2")
+        dimensions_1=$(identify -format "%wx%h" "$file_1" 2>&1)
+        _check_output "$?" "$dimensions_1" "$file_1" "" || return 1
+        dimensions_2=$(identify -format "%wx%h" "$file_2" 2>&1)
+        _check_output "$?" "$dimensions_2" "$file_2" "" || return 1
 
         # Compare two images using a visual diff with the 'convert' command.
         local temp_file=""
@@ -124,7 +124,7 @@ _compare() {
                 -channel RGB -combine "$temp_file"
         else
             # Compare images with different dimensions.
-            compare "$file_1" "$file_2" -compose src "$temp_file"
+            compare -- "$file_1" "$file_2" -compose src "$temp_file"
         fi
 
         # Get the installed image viewer.
