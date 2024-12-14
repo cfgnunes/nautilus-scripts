@@ -1191,7 +1191,7 @@ _is_gui_session() {
     # environment variable is set, which is typically present in GUI sessions
     # (e.g., X11 or Wayland).
 
-    if env | grep -q "^DISPLAY"; then
+    if env | grep --quiet "^DISPLAY"; then
         return 0
     fi
     return 1
@@ -1568,7 +1568,7 @@ _pkg_is_package_installed() {
         fi
         ;;
     "dnf")
-        if dnf list installed | grep -q "$package"; then
+        if dnf list installed | grep --quiet "$package"; then
             return 0
         fi
         ;;
@@ -1578,7 +1578,7 @@ _pkg_is_package_installed() {
         fi
         ;;
     "zypper")
-        if zypper search --installed-only "$package" | grep -q "^i"; then
+        if zypper search --installed-only "$package" | grep --quiet "^i"; then
             return 0
         fi
         ;;
@@ -1955,7 +1955,7 @@ _validate_file_mime() {
         local file_mime=""
         file_mime=$(_get_file_mime "$input_file")
         par_select_mime=${par_select_mime//+/\\+}
-        grep -q --ignore-case --perl-regexp "($par_select_mime)" <<<"$file_mime" || return
+        grep --quiet --ignore-case --perl-regexp "($par_select_mime)" <<<"$file_mime" || return
     fi
 
     # Create a temp file containing the name of the valid file.

@@ -276,7 +276,7 @@ _run_command() {
         std_output=$($command_7za x -aoa -p"null" -- "$input_file" 2>&1)
         exit_code=$?
 
-        if ((exit_code != 0)) && grep -i -q "wrong password" <<<"$std_output"; then
+        if ((exit_code != 0)) && grep --quiet --ignore-case "wrong password" <<<"$std_output"; then
             local password=""
             __temp_dir_exit && __temp_dir_remove
             password=$(__get_password) || exit 1
@@ -290,7 +290,7 @@ _run_command() {
         std_output=$(bsdtar --passphrase "null" -xf "$input_file" 2>&1)
         exit_code=$?
 
-        if ((exit_code != 0)) && grep -i -q "incorrect passphrase" <<<"$std_output"; then
+        if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect passphrase" <<<"$std_output"; then
             local password=""
             __temp_dir_exit && __temp_dir_remove
             password=$(__get_password) || exit 1
@@ -323,7 +323,7 @@ _run_command() {
         std_output=$(unar -- "$input_file" 2>&1)
         exit_code=$?
 
-        if ((exit_code != 0)) && grep -i -q "requires a password" <<<"$std_output"; then
+        if ((exit_code != 0)) && grep --quiet --ignore-case "requires a password" <<<"$std_output"; then
             local password=""
             __temp_dir_exit && __temp_dir_remove
             password=$(__get_password) || exit 1
@@ -336,7 +336,7 @@ _run_command() {
         std_output=$(unrar x -p"null" -- "$input_file" 2>&1)
         exit_code=$?
 
-        if ((exit_code != 0)) && grep -i -q "incorrect password for" <<<"$std_output"; then
+        if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect password for" <<<"$std_output"; then
             local password=""
             __temp_dir_exit && __temp_dir_remove
             password=$(__get_password) || exit 1
@@ -350,7 +350,7 @@ _run_command() {
         std_output=$(unzip -P "null" -- "$input_file" 2>&1)
         exit_code=$?
 
-        if ((exit_code != 0)) && grep -i -q "incorrect password" <<<"$std_output"; then
+        if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect password" <<<"$std_output"; then
             local password=""
             __temp_dir_exit && __temp_dir_remove
             password=$(__get_password) || exit 1
