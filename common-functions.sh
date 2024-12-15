@@ -1403,13 +1403,13 @@ _open_items_locations() {
 
     local items=$1
     local resolve_links=$2
-    local dir=""
 
+    # Exit if no items are provided.
     if [[ -z "$items" ]]; then
         return
     fi
 
-    # Try to detect the file manager running.
+    # Detect the currently running file manager.
     local file_manager=""
     if [[ -v "CAJA_SCRIPT_SELECTED_URIS" ]]; then
         file_manager="caja"
@@ -1418,51 +1418,59 @@ _open_items_locations() {
     elif [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]]; then
         file_manager="nautilus"
     else
-        # Use the default application that opens directories.
-        file_manager=$(_xdg_get_default_app "inode/directory")
+        file_manager=$(pgrep -o -l "caja|dolphin|nautilus|nemo|pcmanfm|pcmanfm-qt|thunar" | cut -f 2 -d " ")
+
+        # If no file manager is detected, fall back to the system default.
+        if [[ -z "$file_manager" ]]; then
+            file_manager=$(_xdg_get_default_app "inode/directory")
+        fi
     fi
 
-    # Restore the working directory from path (if it was removed before).
+    # Restore absolute paths for items if relative paths are used.
     local working_directory=""
     working_directory=$(_get_working_directory)
     items=$(sed "s|\./|$working_directory/|g" <<<"$items")
 
-    # Open the location of each item.
+    # Prepare items to be opened by the file manager.
     local item=""
     local items_open=""
     for item in $items; do
+        # Skip the root directory ("/") since opening it is redundant.
         if [[ "$item" == "/" ]]; then
             continue
         fi
 
+        # Resolve symbolic links to their target locations if requested.
         if [[ "$resolve_links" == "true" ]] && [[ -L "$item" ]]; then
             item=$(readlink -f "$item")
         fi
         items_open+="$item$FIELD_SEPARATOR"
+    done
 
-        case "$file_manager" in
-        "nautilus" | "caja" | "dolphin" | "nemo" | "thunar") : ;;
-        *)
+    # Open the items using the detected file manager.
+    case "$file_manager" in
+    "nautilus" | "caja" | "dolphin")
+        # Open the directory of each item and select it.
+        # shellcheck disable=SC2086
+        $file_manager --select $items_open &
+        ;;
+    "nemo" | "thunar")
+        # Open the directory of each item (selection not supported).
+        # shellcheck disable=SC2086
+        $file_manager $items_open &
+        ;;
+    *)
+        # For other file managers (e.g., "pcmanfm-qt"), open the directory of
+        # each item.
+        local dir=""
+        for item in $items_open; do
             # Open the directory of the item.
             dir=$(_get_filename_dir "$item")
             if [[ -z "$dir" ]]; then
                 continue
             fi
             $file_manager "$dir" &
-            ;;
-        esac
-    done
-
-    case "$file_manager" in
-    "nautilus" | "caja" | "dolphin")
-        # Open the directory of the item and select it.
-        # shellcheck disable=SC2086
-        $file_manager --select $items_open &
-        ;;
-    "nemo" | "thunar")
-        # Open the directory of the item and select it.
-        # shellcheck disable=SC2086
-        $file_manager $items_open &
+        done
         ;;
     esac
 }
