@@ -46,7 +46,7 @@ _open_app() {
             if _command_exists "$app"; then
                 # Special handling for some apps.
                 if [[ "$app" == "ptyxis" ]]; then
-                    ptyxis --new-window &
+                    $app --new-window &
                 else
                     $app &
                 fi
