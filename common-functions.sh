@@ -1537,7 +1537,7 @@ _pkg_install_packages() {
         pkexec bash -c "apt-get update; apt-get -y install $packages &>/dev/null"
         ;;
     "dnf")
-        pkexec bash -c "dnf check-update; dnf --skip-broken -y install $packages &>/dev/null"
+        pkexec bash -c "dnf check-update; dnf -y install $packages &>/dev/null"
         ;;
     "pacman")
         pkexec bash -c "pacman -Syy; pacman --noconfirm -S $packages &>/dev/null"
