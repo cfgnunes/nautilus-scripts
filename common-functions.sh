@@ -92,12 +92,8 @@ _check_dependencies() {
     #     - "command": The name of a command to check for in the shell.
     #     - "package": The package associated with the command (if different).
     #     - "pkg_manager": Optional. The specific package manager.
-    #     - "wait_installer": Optional. The duration (in seconds) to wait
-    #       after installing the packages, allowing any setup processes to
-    #       complete.
     #
-    # Examples:
-    #   - _check_dependencies "command=clamscan; package=clamav; wait_installer=20"
+    # Example:
     #   - _check_dependencies "
     #       command=ffmpeg; pkg_manager=apt; package=ffmpeg |
     #       command=ffmpeg; pkg_manager=dnf; package=ffmpeg-free |
@@ -132,7 +128,6 @@ _check_dependencies() {
         local command=""
         local package=""
         local pkg_manager=""
-        local wait_installer=""
 
         # Evaluate the values parameters from the 'dependency' variable.
         eval "$dependency"
@@ -171,7 +166,7 @@ _check_dependencies() {
         message+=$'\n'$'\n'
         message+="Would you like to install them?"
         if _display_question_box "$message"; then
-            _pkg_install_packages "$pkg_manager_installed" "${packages_to_install/ /}" "$wait_installer"
+            _pkg_install_packages "$pkg_manager_installed" "${packages_to_install/ /}"
         else
             _exit_script
         fi
@@ -1515,14 +1510,9 @@ _pkg_install_packages() {
     #       - "pacman": For Arch Linux systems.
     #       - "zypper": For openSUSE systems.
     #   - $2 (packages): A space-separated list of package names to install.
-    #   - $3 (wait_installer): An optional duration (in seconds) to wait after
-    #     the installation command completes. This can be useful if subsequent
-    #     commands depend on package indexing or setup processes that need time
-    #     to finalize (such as ClamAV). If not provided, no delay is applied.
 
     local pkg_manager=$1
     local packages=$2
-    local wait_installer=$3
 
     _display_wait_box_message "Installing the packages. Please, wait..."
 
@@ -1546,8 +1536,6 @@ _pkg_install_packages() {
         pkexec bash -c "zypper refresh; zypper --non-interactive install $packages &>/dev/null"
         ;;
     esac
-
-    [[ -n "$wait_installer" ]] && sleep "$wait_installer"
 
     _close_wait_box
 
