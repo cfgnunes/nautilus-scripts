@@ -90,13 +90,13 @@ File managers compatibility:
 
 Most scripts have been tested on the following GNU/Linux distributions:
 
-- Ubuntu 18.04, 20.04, 22.04, 24.04
+- Ubuntu 18.04, 20.04, 22.04, 24.04, 24.10
 - Debian 12 (Gnome and KDE)
-- Fedora Workstation 39, 40
+- Fedora Workstation 39, 40, 41
 - Kubuntu 22.04, 24.04
 - Lubuntu 22.04, 24.04
 - Manjaro 23 (Gnome)
-- Mint 21 (Cinnamon and Mate)
+- Mint 21, 22 (Cinnamon, MATE and Xfce)
 - openSUSE Tumbleweed 2024 (Gnome)
 - Xubuntu 23.10, 24.04
 - Zorin OS Core 17.1
