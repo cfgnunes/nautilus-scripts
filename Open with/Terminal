@@ -19,40 +19,40 @@ _main() {
 
 _open_app() {
     local input_files=$1
-    local input_file=""
+    local apps=("alacritty"
+        "kitty"
+        "terminology"
+        "terminator"
+        "kgx"
+        "ptyxis"
+        "gnome-terminal"
+        "konsole"
+        "mate-terminal"
+        "xfce4-terminal"
+        "qterminal"
+        "deepin-terminal"
+        "termit"
+        "uxterm"
+        "xterm")
 
+    # Iterate over each input file (directory).
+    local input_file=""
     for input_file in $input_files; do
-        # Run the main process.
         cd "$input_file" || exit 1
-        if _command_exists "alacritty"; then
-            alacritty &
-        elif _command_exists "kitty"; then
-            kitty &
-        elif _command_exists "terminology"; then
-            terminology &
-        elif _command_exists "terminator"; then
-            terminator &
-        elif _command_exists "kgx"; then
-            kgx &
-        elif _command_exists "gnome-terminal"; then
-            gnome-terminal &
-        elif _command_exists "konsole"; then
-            konsole &
-        elif _command_exists "mate-terminal"; then
-            mate-terminal &
-        elif _command_exists "xfce4-terminal"; then
-            xfce4-terminal &
-        elif _command_exists "qterminal"; then
-            qterminal &
-        elif _command_exists "deepin-terminal"; then
-            deepin-terminal &
-        elif _command_exists "termit"; then
-            termit &
-        elif _command_exists "uxterm"; then
-            uxterm &
-        elif _command_exists "xterm"; then
-            xterm &
-        fi
+
+        # Try each app in the list.
+        local app=""
+        for app in "${apps[@]}"; do
+            if _command_exists "$app"; then
+                # Special handling for some apps.
+                if [[ "$app" == "ptyxis" ]]; then
+                    ptyxis --new-window &
+                else
+                    $app &
+                fi
+                break
+            fi
+        done
     done
 }
 
