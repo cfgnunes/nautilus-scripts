@@ -204,7 +204,10 @@ _step_install_dependencies() {
             # Distro: Fedora.
             # Missing packages: findimagedupes, mp3val.
             sudo dnf check-update || true
-            sudo dnf -y install $common_names p7zip ImageMagick xz poppler-utils ffmpeg-free genisoimage foremost testdisk rdfind squashfs-tools
+            sudo dnf -y install $common_names p7zip ImageMagick xz poppler-utils genisoimage foremost testdisk rdfind squashfs-tools
+            if ! _command_exists "ffmpeg"; then
+                sudo dnf -y install ffmpeg-free
+            fi
         elif _command_exists "pacman"; then
             # Distro: Manjaro, Arch Linux.
             # Missing packages: findimagedupes, mp3gain, mp3val.
