@@ -95,7 +95,7 @@ Most scripts have been tested on the following GNU/Linux distributions:
 - Fedora Workstation 39, 40, 41
 - Kubuntu 22.04, 24.04
 - Lubuntu 22.04, 24.04
-- Manjaro 23 (Gnome)
+- Manjaro 23, 24 (Gnome)
 - Mint 21, 22 (Cinnamon, MATE and Xfce)
 - openSUSE Tumbleweed 2024 (Gnome)
 - Xubuntu 23.10, 24.04
