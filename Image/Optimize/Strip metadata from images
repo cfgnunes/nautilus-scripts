@@ -11,10 +11,10 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "
-        command=convert; pkg_manager=apt; package=imagemagick |
-        command=convert; pkg_manager=dnf; package=ImageMagick |
-        command=convert; pkg_manager=pacman; package=imagemagick |
-        command=convert; pkg_manager=zypper; package=ImageMagick"
+        command=exiftool; pkg_manager=apt; package=libimage-exiftool-perl |
+        command=exiftool; pkg_manager=dnf; package=perl-Image-ExifTool |
+        command=exiftool; pkg_manager=pacman; package=perl-image-exiftool |
+        command=exiftool; pkg_manager=zypper; package=exiftool"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_mime=image/")
     output_dir=$(_get_output_dir "par_use_same_dir=false")
@@ -32,7 +32,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve")
-    std_output=$(convert "$input_file" -strip "$output_file" 2>&1)
+    std_output=$(exiftool -all= -o "$output_dir" "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
