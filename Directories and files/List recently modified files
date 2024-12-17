@@ -19,7 +19,7 @@ _main() {
     std_output=$(find $input_files -type f ! -path "$IGNORE_FIND_PATH" -printf "%TY-%Tm-%Td$FIELD_SEPARATOR%TT$FIELD_SEPARATOR%p\n" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
     std_output=$(sort -k1,1r -k2,2r <<<"$std_output") # Sort the result.
-    std_output=$(head -n 15 <<<"$std_output")
+    std_output=$(head -n 50 <<<"$std_output")
 
     _display_list_box "$std_output" "--column=Date;--column=Time;--column=File" "files" "false"
 }
