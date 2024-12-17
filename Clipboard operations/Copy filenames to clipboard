@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# install_keyboard_shortcut=<Control><Shift>H
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local output_dir=""
+
+    # Execute initial checks.
+    case "${XDG_SESSION_TYPE,,}" in
+    "x11") _check_dependencies "command=xclip" ;;
+    "wayland") _check_dependencies "command=wl-copy; package=wl-clipboard" ;;
+    *)
+        _display_error_box "Unknown session type!"
+        _exit_script
+        ;;
+    esac
+
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=all; par_get_pwd=true")
+
+    # shellcheck disable=SC2086
+    input_files=$(basename --multiple -- $input_files)
+
+    # Run the main process.
+    if [[ "${XDG_SESSION_TYPE,,}" == "x11" ]]; then
+        xclip -selection clipboard -i <<<"$input_files" 2>/dev/null
+    elif [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        wl-copy "$input_files"$'\n' 2>/dev/null
+    fi
+
+    _display_result_box ""
+}
+
+_main "$@"
