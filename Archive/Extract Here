@@ -409,13 +409,18 @@ _run_command() {
         chmod --recursive u+rw -- .
     fi
 
-    # Check if the archive has just one item (single file/directory compressed).
+    # Get the list of root items (files or directories) in the 'temp_dir_output' directory.
+    local root_items=""
+    root_items=$(find . -mindepth 1 -maxdepth 1 2>/dev/null)
+
+    # Count the number of items (using word count to count lines, similar to the original wc -l).
     local count_root_items=""
+    count_root_items=$(wc -l <<<"$root_items")
+
+    # Check if the 'temp_dir_output' has just one item.
     local single_root_item=""
-    count_root_items=$(find . -mindepth 1 -maxdepth 1 2>/dev/null | wc -l)
     if ((count_root_items == 1)); then
-        single_root_item=$(find . -mindepth 1 -maxdepth 1 2>/dev/null)
-        single_root_item="${single_root_item#./}"
+        single_root_item="${root_items#./}"
     fi
 
     # Check if the 'temp_dir_output' is empty.
