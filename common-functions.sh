@@ -1188,6 +1188,24 @@ _get_working_directory() {
     printf "%s" "$working_directory"
 }
 
+_is_directory_empty() {
+    # This function checks if a given directory is empty.
+    #
+    # Parameters:
+    #   - $1 (directory): The path of the directory to check.
+    #
+    # Returns:
+    #   - "0" (true): If the directory is empty.
+    #   - "1" (false): If the directory contains any files or subdirectories.
+
+    local directory=$1
+
+    if ! find "$directory" -mindepth 1 -maxdepth 1 -print -quit | grep -q .; then
+        return 0
+    fi
+    return 1
+}
+
 _is_gui_session() {
     # This function checks whether the script is running in a graphical user
     # interface (GUI) session. It does so by checking if the DISPLAY
@@ -1289,8 +1307,8 @@ _move_file() {
     #   - $3 (file_dst): The destination path where the file should be moved.
     #
     # Returns:
-    #   - "0" (success): If the operation is successful or if the source and destination are the same file.
-    #   - "1" (failure): If any required parameters are missing, if the move fails, or if an invalid conflict parameter is provided.
+    #   - "0" (true): If the operation is successful or if the source and destination are the same file.
+    #   - "1" (false): If any required parameters are missing, if the move fails, or if an invalid conflict parameter is provided.
 
     local par_when_conflict=${1:-"skip"}
     local file_src=$2
@@ -1566,8 +1584,8 @@ _pkg_is_package_installed() {
     #   - $2 (package): The name of the package to check.
     #
     # Returns:
-    #   - "0" (success): If the package is installed.
-    #   - "1" (failure): If the package is not installed or an error occurs.
+    #   - "0" (true): If the package is installed.
+    #   - "1" (false): If the package is not installed or an error occurs.
 
     local pkg_manager=$1
     local package=$2
@@ -1656,6 +1674,7 @@ _run_task_parallel() {
         _get_temp_file \
         _get_temp_file_dry \
         _get_working_directory \
+        _is_directory_empty \
         _is_gui_session \
         _log_write \
         _main_task \
