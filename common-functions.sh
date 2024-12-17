@@ -1579,7 +1579,7 @@ _pkg_is_package_installed() {
         fi
         ;;
     "dnf")
-        if dnf list installed | grep --quiet "$package"; then
+        if dnf repoquery --installed | grep --quiet "$package"; then
             return 0
         fi
         ;;
