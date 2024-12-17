@@ -197,11 +197,11 @@ _step_install_dependencies() {
 
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
-            # Distro: Ubuntu, Mint, Debian.
+            # Package manager "apt": For Debian/Ubuntu systems.
             sudo apt-get update || true
             sudo apt-get -y install $common_names p7zip-full imagemagick xz-utils poppler-utils ffmpeg genisoimage foremost testdisk rdfind squashfs-tools libimage-exiftool-perl
         elif _command_exists "dnf"; then
-            # Distro: Fedora.
+            # Package manager "dnf": For Fedora/RHEL systems.
             # Missing packages: findimagedupes, mp3val.
             sudo dnf check-update || true
             sudo dnf -y install $common_names p7zip ImageMagick xz poppler-utils genisoimage foremost testdisk rdfind squashfs-tools perl-Image-ExifTool
@@ -209,12 +209,12 @@ _step_install_dependencies() {
                 sudo dnf -y install ffmpeg-free
             fi
         elif _command_exists "pacman"; then
-            # Distro: Manjaro, Arch Linux.
+            # Package manager "pacman": For Arch Linux systems.
             # Missing packages: findimagedupes, mp3gain, mp3val.
             sudo pacman -Syy || true
             sudo pacman --noconfirm -S $common_names p7zip imagemagick xz poppler cdrtools foremost testdisk rdfind squashfs-tools perl-image-exiftool
         elif _command_exists "zypper"; then
-            # Distro: openSUSE.
+            # Package manager "zypper": For openSUSE systems.
             # Missing packages: diffpdf, findimagedupes, foremost, rdfind, ocrmypdf.
             sudo zypper refresh || true
             sudo zypper --non-interactive install $common_names p7zip ImageMagick xz poppler-tools mkisofs ffmpeg photorec squashfs exiftool
@@ -534,8 +534,8 @@ _step_install_menus_thunar() {
         local unique_id=""
         find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git*" ! -path "*.assets*" -print0 2>/dev/null | sort --zero-terminated |
             while IFS="" read -r -d "" filename; do
-                name=$(basename -- "$filename" 2>/dev/null)
-                submenu=$(dirname -- "$filename" 2>/dev/null | sed "s|.*scripts/|Scripts/|g")
+                name=$(basename -- "$filename")
+                submenu=$(dirname -- "$filename" | sed "s|.*scripts/|Scripts/|g")
 
                 printf "%s\n" "<action>"
                 printf "\t%s\n" "<icon></icon>"
@@ -633,7 +633,7 @@ _step_install_shortcuts_nautilus() {
 
                 if [[ -n "$install_keyboard_shortcut" ]]; then
                     local name=""
-                    name=$(basename -- "$filename" 2>/dev/null)
+                    name=$(basename -- "$filename")
                     printf "%s\n" "$install_keyboard_shortcut $name"
                 fi
             done
@@ -712,8 +712,8 @@ _step_install_shortcuts_thunar() {
                     local name=""
                     local submenu=""
                     local unique_id=""
-                    name=$(basename -- "$filename" 2>/dev/null)
-                    submenu=$(dirname -- "$filename" 2>/dev/null | sed "s|.*scripts/|Scripts/|g")
+                    name=$(basename -- "$filename")
+                    submenu=$(dirname -- "$filename" | sed "s|.*scripts/|Scripts/|g")
                     unique_id=$(md5sum <<<"$submenu$name" 2>/dev/null | sed "s|[^0-9]*||g" | cut -c 1-8)
 
                     printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-'"$unique_id"'" "'"$install_keyboard_shortcut"'")'
