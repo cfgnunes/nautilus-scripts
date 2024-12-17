@@ -30,14 +30,26 @@ _main_task() {
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=tar.zst")
     if [[ -d "$input_file" ]]; then
-        local files=""
+        # Check if the directory is empty.
+        if _is_directory_empty "$input_file"; then
+            _log_write "Error: The directory is empty." "$input_file" "" "$output_file"
+            return 1
+        fi
+
+        # Change to the directory to perform compression.
         cd -- "$input_file" || return 1
+
+        local files=""
         files=$(find . -mindepth 1 -maxdepth 1 -printf "%p$FIELD_SEPARATOR" 2>/dev/null | sed "s|\./||g")
         std_output=$(printf "%s" "$files" | xargs --no-run-if-empty --delimiter="$FIELD_SEPARATOR" tar --zstd -cf "$output_file" --)
     else
+        # If the input is a file, change to its parent directory.
         cd -- "$(_get_filename_dir "$input_file")" || return 1
+
+        # Extract the base name of the input file for compression.
         local input_file_basename=""
         input_file_basename=$(basename -- "$input_file")
+
         std_output=$(tar --zstd -cf "$output_file" -- "$input_file_basename" 2>&1)
     fi
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1

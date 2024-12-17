@@ -33,18 +33,30 @@ _main_task() {
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=7z")
     if [[ -d "$input_file" ]]; then
+        # Check if the directory is empty.
+        if _is_directory_empty "$input_file"; then
+            _log_write "Error: The directory is empty." "$input_file" "" "$output_file"
+            return 1
+        fi
+
+        # Change to the directory to perform compression.
         cd -- "$input_file" || return 1
 
+        # Check for available compression tools and compress the directory accordingly.
         if _command_exists "7za"; then
             std_output=$(7za a -mx9 "$output_file" -- . 2>&1)
         elif _command_exists "bsdtar"; then
             std_output=$(bsdtar --strip-components 1 -a -cf "$output_file" -- . 2>&1)
         fi
     else
+        # If the input is a file, change to its parent directory.
         cd -- "$(_get_filename_dir "$input_file")" || return 1
+
+        # Extract the base name of the input file for compression.
         local input_file_basename=""
         input_file_basename=$(basename -- "$input_file")
 
+        # Check for available compression tools and compress the file accordingly.
         if _command_exists "7za"; then
             std_output=$(7za a -mx9 "$output_file" -- "$input_file_basename" 2>&1)
         elif _command_exists "bsdtar"; then
