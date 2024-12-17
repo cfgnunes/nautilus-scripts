@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _check_dependencies ""
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=file; par_select_mime='text/|application/json'")
+    output_dir=$(_get_output_dir "par_use_same_dir=false")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+    local temp_file=""
+
+    # Work on a temporary file.
+    temp_file=$(_get_temp_file)
+
+    # Run the main process.
+    std_output=$(unexpand --tabs=8 -- "$input_file" >"$temp_file")
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+
+    # Move the temporary file to the output.
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve")
+    _move_temp_file_to_output "$input_file" "$temp_file" "$output_file"
+
+    # Remove the temporary files on each iteration (if not removed before).
+    rm -f -- "$temp_file"
+}
+
+_main "$@"
