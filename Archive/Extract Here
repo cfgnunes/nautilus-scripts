@@ -61,7 +61,7 @@ _get_dependencies() {
             command=7za; pkg_manager=apt; package=p7zip-full |
             command=7za; pkg_manager=dnf; package=p7zip |
             command=7za; pkg_manager=pacman; package=p7zip |
-            command=7za; pkg_manager=zypper; package=p7zip"
+            command=7za; pkg_manager=zypper; package=7zip"
             ;;
         "ar") dependencies+="command=ar; package=binutils" ;;
         "bsdtar")
@@ -88,7 +88,7 @@ _get_dependencies() {
                 command=7za; pkg_manager=apt; package=p7zip-full |
                 command=7za; pkg_manager=dnf; package=p7zip |
                 command=7za; pkg_manager=pacman; package=p7zip |
-                command=7za; pkg_manager=zypper; package=p7zip"
+                command=7za; pkg_manager=zypper; package=7zip"
             ;;
         "bzip2") dependencies+="command=bzip2" ;;
         "cpio") dependencies+="command=cpio" ;;
