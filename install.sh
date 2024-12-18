@@ -168,110 +168,110 @@ _item_remove() {
 _step_install_dependencies() {
     printf "\nInstalling the dependencies...\n"
 
-    local common_names=""
+    local packages=""
 
     # Packages for dialogs...
     case "${XDG_CURRENT_DESKTOP,,}" in
-    *"kde"* | *"lxqt"*) _command_exists "kdialog" || common_names+="kdialog " ;;
-    *) _command_exists "zenity" || common_names+="zenity " ;;
+    *"kde"* | *"lxqt"*) _command_exists "kdialog" || packages+="kdialog " ;;
+    *) _command_exists "zenity" || packages+="zenity " ;;
     esac
 
     # Packages session type...
     case "${XDG_SESSION_TYPE,,}" in
-    "wayland") _command_exists "wl-copy" || common_names+="wl-clipboard " ;;
-    *) _command_exists "xclip" || common_names+="xclip " ;;
+    "wayland") _command_exists "wl-copy" || packages+="wl-clipboard " ;;
+    *) _command_exists "xclip" || packages+="xclip " ;;
     esac
 
     # Packages for compress/decompress archives...
-    _command_exists "bzip2" || common_names+="bzip2 "
-    _command_exists "gzip" || common_names+="gzip "
-    _command_exists "tar" || common_names+="tar "
-    _command_exists "unzip" || common_names+="unzip "
-    _command_exists "zip" || common_names+="zip "
+    _command_exists "bzip2" || packages+="bzip2 "
+    _command_exists "gzip" || packages+="gzip "
+    _command_exists "tar" || packages+="tar "
+    _command_exists "unzip" || packages+="unzip "
+    _command_exists "zip" || packages+="zip "
     # Packages for images...
-    _command_exists "optipng" || common_names+="optipng "
+    _command_exists "optipng" || packages+="optipng "
     # Packages for PDF...
-    _command_exists "gs" || common_names+="ghostscript "
-    _command_exists "qpdf" || common_names+="qpdf "
+    _command_exists "gs" || packages+="ghostscript "
+    _command_exists "qpdf" || packages+="qpdf "
     # Packages for security...
-    _command_exists "photorec" || common_names+="testdisk "
+    _command_exists "photorec" || packages+="testdisk "
     # Packages for other scripts...
-    _command_exists "perl" || common_names+="perl-base "
-    _command_exists "rhash" || common_names+="rhash "
+    _command_exists "perl" || packages+="perl-base "
+    _command_exists "rhash" || packages+="rhash "
 
     if _command_exists "sudo"; then
         if _command_exists "apt-get"; then
             # Package manager "apt": For Debian/Ubuntu systems.
-            _command_exists "pandoc" || common_names+="pandoc "
-            _command_exists "7za" || common_names+="p7zip-full "
-            _command_exists "convert" || common_names+="imagemagick "
-            _command_exists "xz" || common_names+="xz-utils "
-            _command_exists "pdfinfo" || common_names+="poppler-utils "
-            _command_exists "ffmpeg" || common_names+="ffmpeg "
-            _command_exists "genisoimage" || common_names+="genisoimage "
-            _command_exists "foremost" || common_names+="foremost "
-            _command_exists "photorec" || common_names+="testdisk "
-            _command_exists "rdfind" || common_names+="rdfind "
-            _command_exists "unsquashfs" || common_names+="squashfs-tools "
-            _command_exists "exiftool" || common_names+="libimage-exiftool-perl "
-            if [[ -n "$common_names" ]]; then
+            _command_exists "pandoc" || packages+="pandoc "
+            _command_exists "7za" || packages+="p7zip-full "
+            _command_exists "convert" || packages+="imagemagick "
+            _command_exists "xz" || packages+="xz-utils "
+            _command_exists "pdfinfo" || packages+="poppler-utils "
+            _command_exists "ffmpeg" || packages+="ffmpeg "
+            _command_exists "genisoimage" || packages+="genisoimage "
+            _command_exists "foremost" || packages+="foremost "
+            _command_exists "photorec" || packages+="testdisk "
+            _command_exists "rdfind" || packages+="rdfind "
+            _command_exists "unsquashfs" || packages+="squashfs-tools "
+            _command_exists "exiftool" || packages+="libimage-exiftool-perl "
+            if [[ -n "$packages" ]]; then
                 sudo apt-get update || true
-                sudo apt-get -y install $common_names
+                sudo apt-get -y install $packages
             fi
         elif _command_exists "dnf"; then
             # Package manager "dnf": For Fedora/RHEL systems.
             # Missing packages: findimagedupes, mp3val.
-            _command_exists "pandoc" || common_names+="pandoc "
-            _command_exists "7za" || common_names+="p7zip "
-            _command_exists "convert" || common_names+="ImageMagick "
-            _command_exists "xz" || common_names+="xz "
-            _command_exists "pdfinfo" || common_names+="poppler-utils "
-            _command_exists "ffmpeg" || common_names+="ffmpeg-free "
-            _command_exists "genisoimage" || common_names+="genisoimage "
-            _command_exists "foremost" || common_names+="foremost "
-            _command_exists "photorec" || common_names+="testdisk "
-            _command_exists "rdfind" || common_names+="rdfind "
-            _command_exists "unsquashfs" || common_names+="squashfs-tools "
-            _command_exists "exiftool" || common_names+="perl-Image-ExifTool "
-            if [[ -n "$common_names" ]]; then
+            _command_exists "pandoc" || packages+="pandoc "
+            _command_exists "7za" || packages+="p7zip "
+            _command_exists "convert" || packages+="ImageMagick "
+            _command_exists "xz" || packages+="xz "
+            _command_exists "pdfinfo" || packages+="poppler-utils "
+            _command_exists "ffmpeg" || packages+="ffmpeg-free "
+            _command_exists "genisoimage" || packages+="genisoimage "
+            _command_exists "foremost" || packages+="foremost "
+            _command_exists "photorec" || packages+="testdisk "
+            _command_exists "rdfind" || packages+="rdfind "
+            _command_exists "unsquashfs" || packages+="squashfs-tools "
+            _command_exists "exiftool" || packages+="perl-Image-ExifTool "
+            if [[ -n "$packages" ]]; then
                 sudo dnf check-update || true
-                sudo dnf -y install $common_names
+                sudo dnf -y install $packages
             fi
         elif _command_exists "pacman"; then
             # Package manager "pacman": For Arch Linux systems.
             # Missing packages: findimagedupes, mp3gain, mp3val.
-            _command_exists "pandoc" || common_names+="pandoc "
-            _command_exists "7za" || common_names+="p7zip "
-            _command_exists "convert" || common_names+="imagemagick "
-            _command_exists "xz" || common_names+="xz "
-            _command_exists "pdfinfo" || common_names+="poppler "
-            _command_exists "genisoimage" || common_names+="cdrtools "
-            _command_exists "foremost" || common_names+="foremost "
-            _command_exists "photorec" || common_names+="testdisk "
-            _command_exists "rdfind" || common_names+="rdfind "
-            _command_exists "unsquashfs" || common_names+="squashfs-tools "
-            _command_exists "exiftool" || common_names+="perl-image-exiftool "
-            if [[ -n "$common_names" ]]; then
+            _command_exists "pandoc" || packages+="pandoc "
+            _command_exists "7za" || packages+="p7zip "
+            _command_exists "convert" || packages+="imagemagick "
+            _command_exists "xz" || packages+="xz "
+            _command_exists "pdfinfo" || packages+="poppler "
+            _command_exists "genisoimage" || packages+="cdrtools "
+            _command_exists "foremost" || packages+="foremost "
+            _command_exists "photorec" || packages+="testdisk "
+            _command_exists "rdfind" || packages+="rdfind "
+            _command_exists "unsquashfs" || packages+="squashfs-tools "
+            _command_exists "exiftool" || packages+="perl-image-exiftool "
+            if [[ -n "$packages" ]]; then
                 sudo pacman -Syy || true
-                #sudo pacman --noconfirm --needed -S $common_names
-                sudo pacman --noconfirm -S $common_names
+                #sudo pacman --noconfirm --needed -S $packages
+                sudo pacman --noconfirm -S $packages
             fi
         elif _command_exists "zypper"; then
             # Package manager "zypper": For openSUSE systems.
             # Missing packages: diffpdf, findimagedupes, foremost, rdfind, ocrmypdf.
-            _command_exists "pandoc" || common_names+="pandoc-cli "
-            _command_exists "7za" || common_names+="7zip "
-            _command_exists "convert" || common_names+="ImageMagick "
-            _command_exists "xz" || common_names+="xz "
-            _command_exists "pdfinfo" || common_names+="poppler-tools "
-            _command_exists "ffmpeg" || common_names+="ffmpeg "
-            _command_exists "mkisofs" || common_names+="mkisofs "
-            _command_exists "photorec" || common_names+="photorec "
-            _command_exists "unsquashfs" || common_names+="squashfs "
-            _command_exists "exiftool" || common_names+="exiftool "
-            if [[ -n "$common_names" ]]; then
+            _command_exists "pandoc" || packages+="pandoc-cli "
+            _command_exists "7za" || packages+="7zip "
+            _command_exists "convert" || packages+="ImageMagick "
+            _command_exists "xz" || packages+="xz "
+            _command_exists "pdfinfo" || packages+="poppler-tools "
+            _command_exists "ffmpeg" || packages+="ffmpeg "
+            _command_exists "mkisofs" || packages+="mkisofs "
+            _command_exists "photorec" || packages+="photorec "
+            _command_exists "unsquashfs" || packages+="squashfs "
+            _command_exists "exiftool" || packages+="exiftool "
+            if [[ -n "$packages" ]]; then
                 sudo zypper refresh || true
-                sudo zypper --non-interactive install $common_names
+                sudo zypper --non-interactive install $packages
             fi
         else
             printf "Error: could not find a package manager!\n"
