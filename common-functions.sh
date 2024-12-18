@@ -77,7 +77,10 @@ _cleanup_on_exit() {
 
     # Remove the main temporary dir.
     rm -rf -- "$TEMP_DIR" &>/dev/null
-    _print_terminal "End of the script."
+
+    if ! _is_gui_session; then
+        printf "End of the script.\n" >&2
+    fi
 }
 trap _cleanup_on_exit EXIT
 
@@ -303,7 +306,7 @@ _display_error_box() {
     local message=$1
 
     if ! _is_gui_session; then
-        printf "Error: %s\n" "$message"
+        printf "Error: %s\n" "$message" >&2
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-error" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
@@ -325,7 +328,7 @@ _display_info_box() {
     local message=$1
 
     if ! _is_gui_session; then
-        printf "Info: %s\n" "$message"
+        printf "Info: %s\n" "$message" >&2
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-information" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
@@ -365,27 +368,33 @@ _display_list_box() {
 
     if [[ -n "$message" ]]; then
         items_count=$(tr -cd "\n" <<<"$message" | wc -c)
-        message_select="Select an item to open its location:"
-    else
-        # NOTE: Some versions of Zenity crash if the
-        # message is empty (Segmentation fault).
-        message=" "
+        message_select=" Select an item to open its location:"
     fi
 
     # Count the number of columns.
     columns_count=$(grep --only-matching "column=" <<<"$columns" | wc -l)
 
     if ! _is_gui_session; then
-        message=$(tr "$FIELD_SEPARATOR" " " <<<"$message")
-        printf "%s\n" "$message"
+        if [[ -z "$message" ]]; then
+            message="(Empty result)"
+            printf "%s\n" "$message" >&2
+        else
+            message=$(tr "$FIELD_SEPARATOR" " " <<<"$message")
+            printf "%s\n" "$message"
+        fi
     elif _command_exists "zenity"; then
+        if [[ -z "$message" ]]; then
+            # NOTE: Some versions of Zenity crash if the
+            # message is empty (Segmentation fault).
+            message=" "
+        fi
         columns=$(tr ";" "$FIELD_SEPARATOR" <<<"$columns")
         message=$(tr "\n" "$FIELD_SEPARATOR" <<<"$message")
         # shellcheck disable=SC2086
         selected_item=$(zenity --title "$(_get_script_name)" --list \
             --editable --multiple --separator="$FIELD_SEPARATOR" \
             --width=800 --height=450 --print-column "$columns_count" \
-            --text "Total of $items_count $item_name. $message_select" \
+            --text "Total of $items_count $item_name.$message_select" \
             $columns $message 2>/dev/null) || _exit_script
 
         if ((items_count != 0)) && [[ -n "$selected_item" ]]; then
@@ -563,7 +572,7 @@ _display_wait_box_message() {
 
     if ! _is_gui_session; then
         # For non-GUI sessions, simply print the message to the console.
-        printf "%s\n" "$message"
+        printf "%s\n" "$message" >&2
 
     # Check if the Zenity is available.
     elif _command_exists "zenity"; then
@@ -653,7 +662,9 @@ _exit_script() {
     local child_pids=""
     local script_pid=$$
 
-    _print_terminal "Exiting the script..."
+    if ! _is_gui_session; then
+        printf "Exiting the script...\n" >&2
+    fi
 
     # Get the process ID (PID) of all child processes.
     child_pids=$(pstree -p "$script_pid" | grep --only-matching --perl-regexp "\(+\K[^)]+")
@@ -1631,20 +1642,6 @@ _pkg_is_package_installed() {
     return 1
 }
 
-_print_terminal() {
-    # This function prints a message to the terminal if the current session is
-    # not a graphical user interface (GUI) session.
-    #
-    # Parameters:
-    #   - $1 (message): The message to be printed to the terminal.
-
-    local message=$1
-
-    if ! _is_gui_session; then
-        printf "%s\n" "$message"
-    fi
-}
-
 _run_task_parallel() {
     # This function runs a task in parallel for a set of input files, using a
     # specified output directory for results.
@@ -1696,7 +1693,6 @@ _run_task_parallel() {
         _main_task \
         _move_file \
         _move_temp_file_to_output \
-        _print_terminal \
         _storage_text_write \
         _storage_text_write_ln \
         _str_remove_empty_tokens \
