@@ -393,7 +393,7 @@ _display_list_box() {
         # shellcheck disable=SC2086
         selected_item=$(zenity --title "$(_get_script_name)" --list \
             --editable --multiple --separator="$FIELD_SEPARATOR" \
-            --width=900 --height=600 --print-column "$columns_count" \
+            --width=900 --height=550 --print-column "$columns_count" \
             --text "Total of $items_count $item_name.$message_select" \
             $columns $message 2>/dev/null) || _exit_script
 
@@ -406,7 +406,7 @@ _display_list_box() {
         columns=$(tr ";" "\t" <<<"$columns")
         message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
         message="$columns"$'\n'$'\n'"$message"
-        kdialog --title "$(_get_script_name)" --geometry "900x600" \
+        kdialog --title "$(_get_script_name)" --geometry "900x550" \
             --textinputbox "" "$message" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         columns=$(sed "s|--column=||g" <<<"$columns")
@@ -504,9 +504,9 @@ _display_text_box() {
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --text-info \
-            --no-wrap --width=900 --height=600 <<<"$message" &>/dev/null || _exit_script
+            --no-wrap --width=900 --height=550 <<<"$message" &>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
-        kdialog --title "$(_get_script_name)" --geometry "900x600" \
+        kdialog --title "$(_get_script_name)" --geometry "900x550" \
             --textinputbox "" "$message" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "$message" &>/dev/null || _exit_script
