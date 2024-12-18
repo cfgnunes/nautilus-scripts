@@ -174,9 +174,9 @@ _step_install_dependencies() {
     case "${XDG_CURRENT_DESKTOP,,}" in
     *"kde"* | *"lxqt"*)
         _command_exists "kdialog" || packages+="kdialog "
-        _command_exists "qdbus" || packages+="kdialog "
+        _command_exists "qdbus" || packages+="qtchooser "
         ;;
-    *) _command_exists "zenity" || packages+="qtchooser " ;;
+    *) _command_exists "zenity" || packages+="zenity " ;;
     esac
 
     # Packages session type...
