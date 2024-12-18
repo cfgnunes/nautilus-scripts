@@ -562,37 +562,53 @@ _display_wait_box_message() {
     local open_delay=${2:-"2"}
 
     if ! _is_gui_session; then
+        # For non-GUI sessions, simply print the message to the console.
         printf "%s\n" "$message"
+
+    # Check if the Zenity is available.
     elif _command_exists "zenity"; then
-        # Flag to inform that the 'wait_box' will open (if the task takes over 2 seconds).
+        # Control flag to inform that the Zenity 'wait_box' will open
+        # (if the task takes over 2 seconds).
         touch "$WAIT_BOX_CONTROL"
 
-        # Create the FIFO to use in Zenity 'wait_box'.
+        # Create the FIFO for communication with Zenity 'wait_box'.
         if ! [[ -p "$WAIT_BOX_FIFO" ]]; then
             mkfifo "$WAIT_BOX_FIFO"
         fi
 
-        # Thread to open the Zenity 'wait_box'.
+        # Launch a background thread for Zenity 'wait_box':
+        #   - Waits for the specified delay.
+        #   - Opens the Zenity 'wait_box' if the control flag still exists.
+        #   - If Zenity 'wait_box' fails or is cancelled, exit the script.
         # shellcheck disable=SC2002
         sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && cat -- "$WAIT_BOX_FIFO" | (
             zenity --title="$(_get_script_name)" --progress \
                 --width=400 --pulsate --auto-close --text="$message" || _exit_script
         ) &
+
+    # Check if the KDialog is available.
     elif _command_exists "kdialog"; then
-        # Flag to inform that the 'wait_box' will open (if the task takes over 2 seconds).
+        # Flag to inform that the KDialog 'wait_box' will open
+        # (if the task takes over 2 seconds).
         touch "$WAIT_BOX_CONTROL"
 
-        # Thread to open the KDialog 'wait_box'.
+        # Launch a background thread for KDialog 'wait_box':
+        #   - Waits for the specified delay.
+        #   - Opens the KDialog 'wait_box' if the control flag still exists.
         sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && kdialog \
             --title="$(_get_script_name)" --progressbar "$message" 0 >"$WAIT_BOX_CONTROL_KDE" &
 
-        # Thread to check if the KDialog 'wait_box' was closed.
+        # Launch another background thread to monitor the KDialog 'wait_box':
+        #   - Periodically checks if the dialog has been closed or cancelled.
+        #   - If KDialog 'wait_box' is cancelled, exit the script.
         (
             while [[ -f "$WAIT_BOX_CONTROL" ]] || [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
                 if [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; then
+                    # Extract the D-Bus reference for the KDialog instance.
                     local dbus_ref=""
                     dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
                     if [[ -n "$dbus_ref" ]]; then
+                        # Check if the user has cancelled the wait box.
                         qdbus "$dbus_ref" "/ProgressDialog" "wasCancelled" 2>/dev/null || _exit_script
                     fi
                 fi
