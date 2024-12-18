@@ -596,7 +596,7 @@ _display_wait_box_message() {
         ) &
 
     # Check if the KDialog is available.
-    elif _command_exists "kdialog"; then
+    elif _command_exists "kdialog" && _command_exists "qdbus"; then
         # Control flag to inform that a 'wait_box' will open
         # (if the task takes over 2 seconds).
         touch "$WAIT_BOX_CONTROL"
