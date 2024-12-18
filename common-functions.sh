@@ -567,7 +567,7 @@ _display_wait_box_message() {
 
     # Check if the Zenity is available.
     elif _command_exists "zenity"; then
-        # Control flag to inform that the Zenity 'wait_box' will open
+        # Control flag to inform that a 'wait_box' will open
         # (if the task takes over 2 seconds).
         touch "$WAIT_BOX_CONTROL"
 
@@ -588,7 +588,7 @@ _display_wait_box_message() {
 
     # Check if the KDialog is available.
     elif _command_exists "kdialog"; then
-        # Flag to inform that the KDialog 'wait_box' will open
+        # Control flag to inform that a 'wait_box' will open
         # (if the task takes over 2 seconds).
         touch "$WAIT_BOX_CONTROL"
 
