@@ -188,6 +188,9 @@ _step_install_dependencies() {
     _command_exists "tar" || packages+="tar "
     _command_exists "unzip" || packages+="unzip "
     _command_exists "zip" || packages+="zip "
+    if ! _command_exists "genisoimage" && ! _command_exists "mkisofs"; then
+        _command_exists "xorriso" || packages+="xorriso "
+    fi
     # Packages for images...
     _command_exists "optipng" || packages+="optipng "
     # Packages for PDF...

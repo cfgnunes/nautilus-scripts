@@ -10,13 +10,11 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "
-        command=genisoimage; pkg_manager=apt |
-        command=genisoimage; pkg_manager=dnf |
-        command=genisoimage; pkg_manager=pacman; package=cdrtools |
-        command=mkisofs; pkg_manager=zypper"
+    if ! _command_exists "genisoimage" && ! _command_exists "mkisofs"; then
+        _check_dependencies "command=xorriso"
+    fi
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=all; par_validate_conflict=true")
+    input_files=$(_get_files "par_type=directory; par_validate_conflict=true")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
@@ -34,10 +32,12 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=iso")
-    if _command_exists "mkisofs"; then
-        std_output=$(mkisofs -input-charset "utf-8" -o "$output_file" -V "$volume_id" -A "" -sysid "" -J -R "$input_file" 2>&1)
+    if _command_exists "xorriso"; then
+        std_output=$(xorriso -outdev "$output_file" -volid "$volume_id" -joliet on -rockridge on -map "$input_file" / -charset "utf-8" 2>&1)
     elif _command_exists "genisoimage"; then
         std_output=$(genisoimage -input-charset "utf-8" -o "$output_file" -V "$volume_id" -A "" -sysid "" -J -R "$input_file" 2>&1)
+    elif _command_exists "mkisofs"; then
+        std_output=$(mkisofs -input-charset "utf-8" -o "$output_file" -V "$volume_id" -A "" -sysid "" -J -R "$input_file" 2>&1)
     fi
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
