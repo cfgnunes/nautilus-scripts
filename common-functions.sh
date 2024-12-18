@@ -310,7 +310,7 @@ _display_error_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-error" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --error --width=300 --text "$message" &>/dev/null
+        zenity --title "$(_get_script_name)" --error --width=400 --text "$message" &>/dev/null
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --error "$message" &>/dev/null
     elif _command_exists "xmessage"; then
@@ -332,7 +332,7 @@ _display_info_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-information" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --info --width=300 --text "$message" &>/dev/null
+        zenity --title "$(_get_script_name)" --info --width=400 --text "$message" &>/dev/null
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --msgbox "$message" &>/dev/null
     elif _command_exists "xmessage"; then
@@ -393,7 +393,7 @@ _display_list_box() {
         # shellcheck disable=SC2086
         selected_item=$(zenity --title "$(_get_script_name)" --list \
             --editable --multiple --separator="$FIELD_SEPARATOR" \
-            --width=800 --height=450 --print-column "$columns_count" \
+            --width=900 --height=600 --print-column "$columns_count" \
             --text "Total of $items_count $item_name.$message_select" \
             $columns $message 2>/dev/null) || _exit_script
 
@@ -406,7 +406,7 @@ _display_list_box() {
         columns=$(tr ";" "\t" <<<"$columns")
         message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
         message="$columns"$'\n'$'\n'"$message"
-        kdialog --title "$(_get_script_name)" --geometry "800x450" \
+        kdialog --title "$(_get_script_name)" --geometry "900x600" \
             --textinputbox "" "$message" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         columns=$(sed "s|--column=||g" <<<"$columns")
@@ -475,7 +475,7 @@ _display_question_box() {
         read -r -p "$message [Y/n] " response
         [[ ${response,,} == *"n"* ]] && return 1
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --question --width=300 --text="$message" &>/dev/null || return 1
+        zenity --title "$(_get_script_name)" --question --width=400 --text="$message" &>/dev/null || return 1
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --yesno "$message" &>/dev/null || return 1
     elif _command_exists "xmessage"; then
@@ -504,9 +504,9 @@ _display_text_box() {
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --text-info \
-            --no-wrap --width=800 --height=450 <<<"$message" &>/dev/null || _exit_script
+            --no-wrap --width=900 --height=600 <<<"$message" &>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
-        kdialog --title "$(_get_script_name)" --geometry "800x450" \
+        kdialog --title "$(_get_script_name)" --geometry "900x600" \
             --textinputbox "" "$message" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "$message" &>/dev/null || _exit_script
