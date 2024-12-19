@@ -625,7 +625,7 @@ _display_wait_box_message() {
                         $qdbus_command "$dbus_ref" "/ProgressDialog" "wasCancelled" 2>/dev/null || _exit_script
                     fi
                 fi
-                sleep 1
+                sleep 0.2
             done
         ) &
     fi
@@ -657,9 +657,11 @@ _close_wait_box() {
         local dbus_ref=""
         dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
         if [[ -n "$dbus_ref" ]]; then
+            # Close the KDialog 'wait_box'.
             $qdbus_command "$dbus_ref" "/ProgressDialog" "close" 2>/dev/null
             rm -f -- "$WAIT_BOX_CONTROL_KDE"
         fi
+        sleep 0.2
     done
 }
 
