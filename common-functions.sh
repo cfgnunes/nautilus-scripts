@@ -597,6 +597,7 @@ _display_wait_box_message() {
 
     # Check if the KDialog is available.
     elif _command_exists "kdialog"; then
+        _get_qdbus_command || return 0
         # Control flag to inform that a 'wait_box' will open
         # (if the task takes over 2 seconds).
         touch "$WAIT_BOX_CONTROL"
@@ -611,8 +612,6 @@ _display_wait_box_message() {
         #   - Periodically checks if the dialog has been closed or cancelled.
         #   - If KDialog 'wait_box' is cancelled, exit the script.
         (
-            local qdbus_command=""
-            qdbus_command=$(compgen -c | grep -E -m1 '^qdbus')
             while [[ -f "$WAIT_BOX_CONTROL" ]] || [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
                 if [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; then
                     # Extract the D-Bus reference for the KDialog instance.
@@ -620,7 +619,7 @@ _display_wait_box_message() {
                     dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
                     if [[ -n "$dbus_ref" ]]; then
                         # Check if the user has cancelled the wait box.
-                        $qdbus_command "$dbus_ref" "/ProgressDialog" "wasCancelled" 2>/dev/null || _exit_script
+                        $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" "wasCancelled" 2>/dev/null || _exit_script
                     fi
                 fi
                 sleep 0.2
@@ -646,15 +645,13 @@ _close_wait_box() {
     fi
 
     # Check if KDialog 'wait_box' is open.
-    local qdbus_command=""
-    qdbus_command=$(compgen -c | grep -E -m1 '^qdbus')
     while [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
         # Extract the D-Bus reference for the KDialog instance.
         local dbus_ref=""
         dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
         if [[ -n "$dbus_ref" ]]; then
             # Close the KDialog 'wait_box'.
-            $qdbus_command "$dbus_ref" "/ProgressDialog" "close" 2>/dev/null
+            $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" "close" 2>/dev/null
             rm -f -- "$WAIT_BOX_CONTROL_KDE"
         fi
         sleep 0.2
@@ -1112,6 +1109,11 @@ _get_output_filename() {
     output_file=$(_get_filename_next_suffix "$output_file")
 
     printf "%s" "$output_file"
+}
+
+_get_qdbus_command() {
+    compgen -c | grep --perl-regexp -m1 "^qdbus" || return 1
+    return 0
 }
 
 _get_script_name() {

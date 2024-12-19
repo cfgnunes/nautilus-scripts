@@ -173,14 +173,7 @@ _step_install_dependencies() {
     # Packages for dialogs...
     if ! _command_exists "zenity" && ! _command_exists "kdialog"; then
         case "${XDG_CURRENT_DESKTOP,,}" in
-        *"kde"* | *"lxqt"*)
-            _command_exists "kdialog" || packages+="kdialog "
-            local qdbus_command=""
-            qdbus_command=$(compgen -c | grep -E -m1 '^qdbus')
-            if [[ -z "$qdbus_command" ]]; then
-                packages+="qtchooser "
-            fi
-            ;;
+        *"kde"* | *"lxqt"*) _command_exists "kdialog" || packages+="kdialog " ;;
         *) _command_exists "zenity" || packages+="zenity " ;;
         esac
     fi
@@ -225,6 +218,9 @@ _step_install_dependencies() {
             _command_exists "rdfind" || packages+="rdfind "
             _command_exists "unsquashfs" || packages+="squashfs-tools "
             _command_exists "exiftool" || packages+="libimage-exiftool-perl "
+            if _command_exists "kdialog"; then
+                compgen -c | grep --quiet --perl-regexp -m1 "^qdbus" || packages+="qtchooser qdbus-qt5 "
+            fi
             if [[ -n "$packages" ]]; then
                 sudo apt-get update || true
                 sudo apt-get -y install $packages
