@@ -1167,6 +1167,14 @@ _get_output_filename() {
 }
 
 _get_qdbus_command() {
+    # This function retrieves the first command matching the pattern "qdbus".
+    # The command may vary depending on the Linux distribution and could be
+    # "qdbus", "qdbus-qt6", "qdbus6", or similar variations.
+    #
+    # Returns:
+    #   - "0" (true): If a command matching the pattern "qdbus" is found.
+    #   - "1" (false): If no command matching the pattern "qdbus" is found.
+
     compgen -c | grep --perl-regexp -m1 "^qdbus" || return 1
     return 0
 }
