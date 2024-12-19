@@ -616,6 +616,7 @@ _display_wait_box_message() {
         # Create the FIFO for communication with Zenity 'wait_box'.
         if ! [[ -p "$WAIT_BOX_FIFO" ]]; then
             mkfifo "$WAIT_BOX_FIFO"
+            printf "0\n" >"$WAIT_BOX_FIFO" &
         fi
 
         # Launch a background thread for Zenity 'wait_box':
@@ -623,7 +624,7 @@ _display_wait_box_message() {
         #   - Opens the Zenity 'wait_box' if the control flag still exists.
         #   - If Zenity 'wait_box' fails or is cancelled, exit the script.
         # shellcheck disable=SC2002
-        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && cat -- "$WAIT_BOX_FIFO" | (
+        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && tail -f -- "$WAIT_BOX_FIFO" | (
             zenity --title="$(_get_script_name)" --progress \
                 --width=400 --pulsate --auto-close --text="$message" || _exit_script
         ) &
@@ -637,6 +638,7 @@ _display_wait_box_message() {
         # Create the FIFO for communication with Yad 'wait_box'.
         if ! [[ -p "$WAIT_BOX_FIFO" ]]; then
             mkfifo "$WAIT_BOX_FIFO"
+            printf "0\n" >"$WAIT_BOX_FIFO" &
         fi
 
         # Launch a background thread for Yad 'wait_box':
@@ -644,10 +646,10 @@ _display_wait_box_message() {
         #   - Opens the Yad 'wait_box' if the control flag still exists.
         #   - If Yad 'wait_box' fails or is cancelled, exit the script.
         # shellcheck disable=SC2002
-        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && cat -- "$WAIT_BOX_FIFO" | (
+        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && tail -f -- "$WAIT_BOX_FIFO" | (
             yad --title="$(_get_script_name)" --progress \
                 --width=400 --pulsate --auto-close --button=Cancel:1 \
-                --text="$message" || _exit_script # FIXME: Yad dialog is not pulsating.
+                --text="$message" || _exit_script
         ) &
 
     # Check if the KDialog is available.
@@ -693,10 +695,10 @@ _close_wait_box() {
         rm -f -- "$WAIT_BOX_CONTROL" # Cancel the future open.
     fi
 
-    # Check if Zenity 'wait_box' is open (waiting for an input in the FIFO).
+    # Check if Zenity/Yad 'wait_box' is open (waiting for an input in the FIFO).
     if pgrep -fl "$WAIT_BOX_FIFO" &>/dev/null; then
-        # Close the Zenity using the FIFO: Send a '\n' for the 'cat'.
-        printf "\n" >"$WAIT_BOX_FIFO"
+        # Close the Zenity/Yad using the FIFO.
+        printf "100\n" >"$WAIT_BOX_FIFO"
     fi
 
     # Check if KDialog 'wait_box' is open.
