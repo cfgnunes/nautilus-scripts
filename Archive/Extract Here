@@ -91,6 +91,7 @@ _get_dependencies() {
                 command=7za; pkg_manager=zypper; package=7zip"
             ;;
         "bzip2") dependencies+="command=bzip2" ;;
+        "cabextract") dependencies+="command=cabextract" ;;
         "cpio") dependencies+="command=cpio" ;;
         "gpg")
             dependencies+="
@@ -179,7 +180,7 @@ _get_command() {
     *.arc) preferred_commands="unar" ;;
     *.arj) preferred_commands="unar" ;;
     *.bz | *.bz2) preferred_commands="bzip2 unar 7za" ;;
-    *.cab) preferred_commands="unar" ;;
+    *.cab) preferred_commands="cabextract bsdtar unar" ;;
     *.cpio) preferred_commands="cpio unar bsdtar" ;;
     *.deb | *.udeb) preferred_commands="ar" ;;
     *.gpg | *.asc | *.pgp) preferred_commands="gpg" ;;
@@ -300,6 +301,7 @@ _run_command() {
         fi
         ;;
     "bzip2") std_output=$(bzip2 -d -c -k -- "$input_file" >"$filename") ;;
+    "cabextract") std_output=$(cabextract "$input_file" 2>&1) ;;
     "cpio") std_output=$(cpio -idv <"$input_file" 2>&1) ;;
     "gpg") std_output=$(gpg --batch --yes --decrypt --output "$filename" -- "$input_file" 2>&1) ;;
     "gzip") std_output=$(gzip -d -c -k -- "$input_file" >"$filename") ;;
