@@ -175,7 +175,9 @@ _step_install_dependencies() {
         case "${XDG_CURRENT_DESKTOP,,}" in
         *"kde"* | *"lxqt"*)
             _command_exists "kdialog" || packages+="kdialog "
-            if ! _command_exists "qdbus" && ! _command_exists "qdbus-qt6"; then
+            local qdbus_command=""
+            qdbus_command=$(compgen -c | grep -E -m1 '^qdbus')
+            if [[ -z "$qdbus_command" ]]; then
                 packages+="qtchooser "
             fi
             ;;

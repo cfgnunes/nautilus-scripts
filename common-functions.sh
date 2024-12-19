@@ -611,10 +611,8 @@ _display_wait_box_message() {
         #   - Periodically checks if the dialog has been closed or cancelled.
         #   - If KDialog 'wait_box' is cancelled, exit the script.
         (
-            local qdbus_command="qdbus"
-            if _command_exists "qdbus-qt6"; then
-                qdbus_command="qdbus-qt6"
-            fi
+            local qdbus_command=""
+            qdbus_command=$(compgen -c | grep -E -m1 '^qdbus')
             while [[ -f "$WAIT_BOX_CONTROL" ]] || [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
                 if [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; then
                     # Extract the D-Bus reference for the KDialog instance.
@@ -648,10 +646,8 @@ _close_wait_box() {
     fi
 
     # Check if KDialog 'wait_box' is open.
-    local qdbus_command="qdbus"
-    if _command_exists "qdbus-qt6"; then
-        qdbus_command="qdbus-qt6"
-    fi
+    local qdbus_command=""
+    qdbus_command=$(compgen -c | grep -E -m1 '^qdbus')
     while [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
         # Extract the D-Bus reference for the KDialog instance.
         local dbus_ref=""
