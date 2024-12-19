@@ -171,11 +171,8 @@ _step_install_dependencies() {
     local packages=""
 
     # Packages for dialogs...
-    if ! _command_exists "zenity" && ! _command_exists "yad" && ! _command_exists "kdialog"; then
-        case "${XDG_CURRENT_DESKTOP,,}" in
-        *"kde"* | *"lxqt"*) _command_exists "kdialog" || packages+="kdialog " ;;
-        *) _command_exists "zenity" || packages+="zenity " ;;
-        esac
+    if ! _command_exists "zenity" && ! _command_exists "kdialog"; then
+        packages+="zenity "
     fi
 
     # Packages session type...
