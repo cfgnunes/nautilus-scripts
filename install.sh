@@ -786,7 +786,7 @@ _step_close_filemanager() {
 
     case "$FILE_MANAGER" in
     "nautilus" | "caja" | "nemo" | "thunar") $FILE_MANAGER -q &>/dev/null || true & ;;
-    "pcmanfm-qt") killall "$FILE_MANAGER" &>/dev/null || true & ;;
+    "pcmanfm-qt") killall "$FILE_MANAGER" &>/dev/null || true & ;; # FIXME: Restore desktop after kill PCManFM-Qt.
     esac
 }
 

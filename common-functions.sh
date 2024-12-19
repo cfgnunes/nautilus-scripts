@@ -647,7 +647,7 @@ _display_wait_box_message() {
         sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && cat -- "$WAIT_BOX_FIFO" | (
             yad --title="$(_get_script_name)" --progress \
                 --width=400 --pulsate --auto-close --button=Cancel:1 \
-                --text="$message" || _exit_script
+                --text="$message" || _exit_script # FIXME: Yad dialog is not pulsating.
         ) &
 
     # Check if the KDialog is available.
