@@ -258,7 +258,6 @@ _step_install_dependencies() {
             _command_exists "exiftool" || packages+="perl-image-exiftool "
             if [[ -n "$packages" ]]; then
                 sudo pacman -Syy || true
-                #sudo pacman --noconfirm --needed -S $packages
                 sudo pacman --noconfirm -S $packages
             fi
         elif _command_exists "zypper"; then
