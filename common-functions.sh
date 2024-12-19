@@ -431,11 +431,11 @@ _display_password_box() {
     if ! _is_gui_session; then
         read -r -p "$message " password >&2
     elif _command_exists "zenity"; then
-        sleep 0.1 # Avoid 'wait_box' open before.
+        sleep 0.2 # Avoid 'wait_box' open before.
         password=$(zenity --title="Password" --entry --hide-text \
             --width=400 --text "$message" 2>/dev/null) || return 1
     elif _command_exists "kdialog"; then
-        sleep 0.1 # Avoid 'wait_box' open before.
+        sleep 0.2 # Avoid 'wait_box' open before.
         password=$(kdialog --title "Password" \
             --password "$message" 2>/dev/null) || return 1
     fi
@@ -611,9 +611,9 @@ _display_wait_box_message() {
         #   - Periodically checks if the dialog has been closed or cancelled.
         #   - If KDialog 'wait_box' is cancelled, exit the script.
         (
-            local qdbus_command="qdbus-qt6"
-            if command -v "qdbus" &>/dev/null; then
-                qdbus_command="qdbus"
+            local qdbus_command="qdbus"
+            if _command_exists "qdbus-qt6"; then
+                qdbus_command="qdbus-qt6"
             fi
             while [[ -f "$WAIT_BOX_CONTROL" ]] || [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
                 if [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; then
@@ -648,11 +648,12 @@ _close_wait_box() {
     fi
 
     # Check if KDialog 'wait_box' is open.
-    local qdbus_command="qdbus-qt6"
-    if command -v "qdbus" &>/dev/null; then
-        qdbus_command="qdbus"
+    local qdbus_command="qdbus"
+    if _command_exists "qdbus-qt6"; then
+        qdbus_command="qdbus-qt6"
     fi
     while [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
+        # Extract the D-Bus reference for the KDialog instance.
         local dbus_ref=""
         dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
         if [[ -n "$dbus_ref" ]]; then
