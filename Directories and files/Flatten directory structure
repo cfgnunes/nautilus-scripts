@@ -12,7 +12,7 @@ _main() {
     _check_dependencies ""
     input_files=$(_get_files "par_type=directory; par_max_items=1")
 
-    if ! _display_question_box "Are you sure you want to proceed with flattening the selected directory?\nThis action will move all files to the root of the directory."; then
+    if ! _display_question_box "You want to proceed with flattening the selected directory?\nThis action will move all files to the root of the directory."; then
         _exit_script
     fi
 
