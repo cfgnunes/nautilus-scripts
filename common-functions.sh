@@ -596,7 +596,7 @@ _display_wait_box_message() {
         ) &
 
     # Check if the KDialog is available.
-    elif _command_exists "kdialog" && _command_exists "qdbus"; then
+    elif _command_exists "kdialog"; then
         # Control flag to inform that a 'wait_box' will open
         # (if the task takes over 2 seconds).
         touch "$WAIT_BOX_CONTROL"
@@ -611,6 +611,10 @@ _display_wait_box_message() {
         #   - Periodically checks if the dialog has been closed or cancelled.
         #   - If KDialog 'wait_box' is cancelled, exit the script.
         (
+            local qdbus_command="qdbus-qt6"
+            if command -v "qdbus" &>/dev/null; then
+                qdbus_command="qdbus"
+            fi
             while [[ -f "$WAIT_BOX_CONTROL" ]] || [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
                 if [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; then
                     # Extract the D-Bus reference for the KDialog instance.
@@ -618,7 +622,7 @@ _display_wait_box_message() {
                     dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
                     if [[ -n "$dbus_ref" ]]; then
                         # Check if the user has cancelled the wait box.
-                        qdbus "$dbus_ref" "/ProgressDialog" "wasCancelled" 2>/dev/null || _exit_script
+                        $qdbus_command "$dbus_ref" "/ProgressDialog" "wasCancelled" 2>/dev/null || _exit_script
                     fi
                 fi
                 sleep 1
@@ -644,11 +648,15 @@ _close_wait_box() {
     fi
 
     # Check if KDialog 'wait_box' is open.
+    local qdbus_command="qdbus-qt6"
+    if command -v "qdbus" &>/dev/null; then
+        qdbus_command="qdbus"
+    fi
     while [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
         local dbus_ref=""
         dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
         if [[ -n "$dbus_ref" ]]; then
-            qdbus "$dbus_ref" "/ProgressDialog" "close" 2>/dev/null
+            $qdbus_command "$dbus_ref" "/ProgressDialog" "close" 2>/dev/null
             rm -f -- "$WAIT_BOX_CONTROL_KDE"
         fi
     done
@@ -658,6 +666,8 @@ _exit_script() {
     # This function is responsible for safely exiting the script by terminating
     # all child processes associated with the current script and printing an
     # exit message to the terminal.
+
+    _close_wait_box
 
     local child_pids=""
     local script_pid=$$

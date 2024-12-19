@@ -171,13 +171,17 @@ _step_install_dependencies() {
     local packages=""
 
     # Packages for dialogs...
-    case "${XDG_CURRENT_DESKTOP,,}" in
-    *"kde"* | *"lxqt"*)
-        _command_exists "kdialog" || packages+="kdialog "
-        _command_exists "qdbus" || packages+="qtchooser "
-        ;;
-    *) _command_exists "zenity" || packages+="zenity " ;;
-    esac
+    if ! _command_exists "zenity" && ! _command_exists "kdialog"; then
+        case "${XDG_CURRENT_DESKTOP,,}" in
+        *"kde"* | *"lxqt"*)
+            _command_exists "kdialog" || packages+="kdialog "
+            if ! _command_exists "qdbus" && ! _command_exists "qdbus-qt6"; then
+                packages+="qtchooser "
+            fi
+            ;;
+        *) _command_exists "zenity" || packages+="zenity " ;;
+        esac
+    fi
 
     # Packages session type...
     case "${XDG_SESSION_TYPE,,}" in
