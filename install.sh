@@ -216,7 +216,12 @@ _step_install_dependencies() {
             _command_exists "unsquashfs" || packages+="squashfs-tools "
             _command_exists "exiftool" || packages+="libimage-exiftool-perl "
             if _command_exists "kdialog"; then
-                compgen -c | grep --quiet --perl-regexp -m1 "^qdbus" || packages+="qtchooser qdbus-qt5 "
+                if ! dpkg -s "qtchooser" &>/dev/null; then
+                    packages+="qtchooser "
+                fi
+                if ! dpkg -s "qdbus-qt5" &>/dev/null; then
+                    packages+="qdbus-qt5 "
+                fi
             fi
             if [[ -n "$packages" ]]; then
                 sudo apt-get update || true
