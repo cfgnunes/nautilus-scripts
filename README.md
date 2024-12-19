@@ -93,6 +93,8 @@ Most scripts have been tested on the following GNU/Linux distributions:
 - Ubuntu 18.04, 20.04, 22.04, 24.04, 24.10
 - Debian 12 (Gnome and KDE)
 - Fedora Workstation 39, 40, 41
+- EndeavourOS 2024
+- KDE neon 2024
 - Kubuntu 22.04, 24.04
 - Lubuntu 22.04, 24.04
 - Manjaro 23, 24 (Gnome)
