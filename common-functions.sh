@@ -263,6 +263,9 @@ _display_dir_selection_box() {
     if _command_exists "zenity"; then
         input_files=$(zenity --title "$(_get_script_name)" --file-selection --multiple \
             --directory --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
+    elif _command_exists "yad"; then
+        input_files=$(yad --title "$(_get_script_name)" --file-selection --multiple \
+            --directory --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
         input_files=$(kdialog --title "$(_get_script_name)" \
             --getexistingdirectory 2>/dev/null) || _exit_script
@@ -283,6 +286,9 @@ _display_file_selection_box() {
 
     if _command_exists "zenity"; then
         input_files=$(zenity --title "$(_get_script_name)" --file-selection --multiple \
+            --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
+    elif _command_exists "yad"; then
+        input_files=$(yad --title "$(_get_script_name)" --file-selection --multiple \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
         input_files=$(kdialog --title "$(_get_script_name)" \
@@ -311,6 +317,8 @@ _display_error_box() {
         _gdbus_notify "dialog-error" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --error --width=400 --text "$message" &>/dev/null
+    elif _command_exists "yad"; then
+        yad --title "$(_get_script_name)" --error --width=400 --text "$message" &>/dev/null
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --error "$message" &>/dev/null
     elif _command_exists "xmessage"; then
@@ -333,6 +341,8 @@ _display_info_box() {
         _gdbus_notify "dialog-information" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --info --width=400 --text "$message" &>/dev/null
+    elif _command_exists "yad"; then
+        yad --title "$(_get_script_name)" --info --width=400 --text "$message" &>/dev/null
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --msgbox "$message" &>/dev/null
     elif _command_exists "xmessage"; then
@@ -401,6 +411,20 @@ _display_list_box() {
             # Open the directory of the clicked item in the list.
             _open_items_locations "$selected_item" "$resolve_links"
         fi
+    elif _command_exists "yad"; then
+        columns=$(tr ";" "$FIELD_SEPARATOR" <<<"$columns")
+        message=$(tr "\n" "$FIELD_SEPARATOR" <<<"$message")
+        # shellcheck disable=SC2086
+        selected_item=$(yad --title "$(_get_script_name)" --list \
+            --editable --multiple --separator="$FIELD_SEPARATOR" \
+            --width=900 --height=550 --print-column "$columns_count" \
+            --text "Total of $items_count $item_name.$message_select" \
+            $columns $message 2>/dev/null) || _exit_script
+
+        if ((items_count != 0)) && [[ -n "$selected_item" ]]; then
+            # Open the directory of the clicked item in the list.
+            _open_items_locations "$selected_item" "$resolve_links"
+        fi
     elif _command_exists "kdialog"; then
         columns=$(sed "s|--column=||g" <<<"$columns")
         columns=$(tr ";" "\t" <<<"$columns")
@@ -433,6 +457,10 @@ _display_password_box() {
     elif _command_exists "zenity"; then
         sleep 0.2 # Avoid 'wait_box' open before.
         password=$(zenity --title="Password" --entry --hide-text \
+            --width=400 --text "$message" 2>/dev/null) || return 1
+    elif _command_exists "yad"; then
+        sleep 0.2 # Avoid 'wait_box' open before.
+        password=$(yad --title="Password" --entry --hide-text \
             --width=400 --text "$message" 2>/dev/null) || return 1
     elif _command_exists "kdialog"; then
         sleep 0.2 # Avoid 'wait_box' open before.
@@ -476,6 +504,8 @@ _display_question_box() {
         [[ ${response,,} == *"n"* ]] && return 1
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --question --width=400 --text="$message" &>/dev/null || return 1
+    elif _command_exists "yad"; then
+        yad --title "$(_get_script_name)" --question --width=400 --text="$message" &>/dev/null || return 1
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --yesno "$message" &>/dev/null || return 1
     elif _command_exists "xmessage"; then
@@ -504,6 +534,9 @@ _display_text_box() {
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --text-info \
+            --no-wrap --width=900 --height=550 <<<"$message" &>/dev/null || _exit_script
+    elif _command_exists "yad"; then
+        yad --title "$(_get_script_name)" --text-info \
             --no-wrap --width=900 --height=550 <<<"$message" &>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --geometry "900x550" \
@@ -593,6 +626,28 @@ _display_wait_box_message() {
         sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && cat -- "$WAIT_BOX_FIFO" | (
             zenity --title="$(_get_script_name)" --progress \
                 --width=400 --pulsate --auto-close --text="$message" || _exit_script
+        ) &
+
+    # Check if the Yad is available.
+    elif _command_exists "yad"; then
+        # Control flag to inform that a 'wait_box' will open
+        # (if the task takes over 2 seconds).
+        touch "$WAIT_BOX_CONTROL"
+
+        # Create the FIFO for communication with Yad 'wait_box'.
+        if ! [[ -p "$WAIT_BOX_FIFO" ]]; then
+            mkfifo "$WAIT_BOX_FIFO"
+        fi
+
+        # Launch a background thread for Yad 'wait_box':
+        #   - Waits for the specified delay.
+        #   - Opens the Yad 'wait_box' if the control flag still exists.
+        #   - If Yad 'wait_box' fails or is cancelled, exit the script.
+        # shellcheck disable=SC2002
+        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && cat -- "$WAIT_BOX_FIFO" | (
+            yad --title="$(_get_script_name)" --progress \
+                --width=400 --pulsate --auto-close --button=Cancel:1 \
+                --text="$message" || _exit_script
         ) &
 
     # Check if the KDialog is available.
