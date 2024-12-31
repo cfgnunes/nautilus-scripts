@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _check_dependencies "
+        command=gpg; pkg_manager=apt; package=gpg |
+        command=gpg; pkg_manager=dnf; package=gnupg2 |
+        command=gpg; pkg_manager=pacman; package=gnupg |
+        command=gpg; pkg_manager=zypper; package=gpg2"
+    input_files=$(_get_files "par_type=file")
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
+
+    local users=""
+    users=$(gpg --list-public-keys --with-colons | grep --ignore-case "^uid" | cut -d ':' -f 10 2>/dev/null)
+    if [[ -z "$users" ]]; then
+        _display_error_box "Failed: no public keys imported!"
+        _exit_script
+    fi
+
+    # shellcheck disable=SC2086
+    if _command_exists "zenity"; then
+        zenity_user_list=()
+        IFS=$'\n'
+        for user in $users; do
+          zenity_user_list+=(FALSE "${user[@]}")
+        done
+
+        TEMP_DATA_TASK=$(zenity --list --checklist --title="Select users" --text="Select users from the list below." --column="Select" --column="User" "${zenity_user_list[@]}" --height=600 --width=600 --separator="#")
+    elif _command_exists "kdialog"; then
+        _display_error_box "Only available for zenity..."
+        _exit_script
+    fi
+
+    if [[ -z "$TEMP_DATA_TASK" ]]; then
+        _display_error_box "Failed: you must select at least one user!"
+        _exit_script
+    fi
+
+    _display_wait_box "2"
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+
+    # Run the main process.
+    IFS=$' \t\n'
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=append; par_extension=gpg")
+    IFS='#'
+    recipients=()
+    for user in $TEMP_DATA_TASK; do
+        recipients+=("--recipient=$user")
+    done
+    IFS=$' \t\n'
+    command=(gpg --batch --yes --encrypt 
+      "${recipients[@]}"
+      --for-your-eyes-only
+      --s2k-count 1015808
+      --s2k-digest-algo SHA256
+      --compress-algo zlib
+      --cipher-algo AES256
+      --output "$output_file"
+      "$input_file"
+    )
+    "${command[@]}"
+
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+}
+
+_main "$@"
