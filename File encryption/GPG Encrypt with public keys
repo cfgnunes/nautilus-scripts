@@ -30,7 +30,7 @@ _main() {
         zenity_user_list=()
         IFS=$'\n'
         for user in $users; do
-          zenity_user_list+=(FALSE "${user[@]}")
+            zenity_user_list+=(FALSE "${user[@]}")
         done
 
         TEMP_DATA_TASK=$(zenity --list --checklist --title="Select users" --text="Select users from the list below." --column="Select" --column="User" "${zenity_user_list[@]}" --height=600 --width=600 --separator="#")
@@ -66,15 +66,15 @@ _main_task() {
         recipients+=("--recipient=$user")
     done
     IFS=$' \t\n'
-    command=(gpg --batch --yes --encrypt 
-      "${recipients[@]}"
-      --for-your-eyes-only
-      --s2k-count 1015808
-      --s2k-digest-algo SHA256
-      --compress-algo zlib
-      --cipher-algo AES256
-      --output "$output_file"
-      "$input_file"
+    command=(gpg --batch --yes --encrypt
+        "${recipients[@]}"
+        --for-your-eyes-only
+        --s2k-count 1015808
+        --s2k-digest-algo SHA256
+        --compress-algo zlib
+        --cipher-algo AES256
+        --output "$output_file"
+        "$input_file"
     )
     "${command[@]}"
 
