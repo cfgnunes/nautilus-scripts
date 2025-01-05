@@ -66,7 +66,10 @@ _main_task() {
         recipients+=("--recipient=$user")
     done
     IFS=$' \t\n'
-    command=(gpg --batch --yes --encrypt
+    command=(gpg
+        --batch
+        --yes
+        --encrypt
         "${recipients[@]}"
         --for-your-eyes-only
         --s2k-count 1015808
