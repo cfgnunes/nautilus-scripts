@@ -13,10 +13,6 @@ _main() {
     _check_dependencies ""
     input_files=$(_get_files "par_type=file")
 
-    local std_output=""
-    std_output=$(_convert_filenames_to_text "$input_files")
-    std_output=$(_text_remove_pwd "$std_output")
-
     if ! _display_question_box "You want to permanently remove the selected files?"; then
         _exit_script
     fi
