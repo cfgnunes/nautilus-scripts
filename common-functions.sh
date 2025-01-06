@@ -291,16 +291,16 @@ _display_dir_selection_box() {
 
 _display_file_selection_box() {
     # This function presents a graphical interface to allow the user to select
-    # one or more files.
+    # a file.
 
     local input_files=""
 
     if _command_exists "zenity"; then
-        input_files=$(zenity --title "$(_get_script_name)" --file-selection --multiple \
+        input_files=$(zenity --title "$(_get_script_name)" --file-selection \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
         input_files=$(kdialog --title "$(_get_script_name)" \
-            --getopenfilename --multiple 2>/dev/null) || _exit_script
+            --getopenfilename 2>/dev/null) || _exit_script
         # Use parameter expansion to remove the last space.
         input_files=${input_files% }
         input_files=${input_files// \//$FIELD_SEPARATOR/}
