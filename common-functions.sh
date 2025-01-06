@@ -817,15 +817,15 @@ _get_filenames_filemanager() {
 
     if [[ -n "$input_files" ]]; then
         # Replace '\n' with 'FIELD_SEPARATOR'.
-        input_files=$(tr "\n" "$FIELD_SEPARATOR" <<<"$input_files")
+        input_files=$(_convert_text_to_delimited_string "$input_files")
 
         # Decode the URI list.
         input_files=$(_text_uri_decode "$input_files")
     else
         input_files=$INPUT_FILES # Standard input.
+        input_files=$(_str_remove_empty_tokens "$input_files")
     fi
 
-    input_files=$(_str_remove_empty_tokens "$input_files")
     printf "%s" "$input_files"
 }
 

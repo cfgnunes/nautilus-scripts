@@ -27,8 +27,7 @@ _main() {
 
     # shellcheck disable=SC2086
     if _command_exists "zenity"; then
-        users=$(tr "\n" "$FIELD_SEPARATOR" <<<"$users")
-        users=$(_str_remove_empty_tokens "$users")
+        users=$(_convert_text_to_delimited_string "$users")
         local zenity_user_list=()
         local user=""
 
