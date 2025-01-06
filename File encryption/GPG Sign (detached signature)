@@ -67,7 +67,13 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=append; par_extension=sig")
-    std_output=$(gpg --batch --yes --detach-sign --local-user "$TEMP_DATA_TASK" --output "$output_file" -- "$input_file" 2>&1)
+    std_output=$(gpg \
+        --batch \
+        --yes \
+        --detach-sign \
+        --local-user "$TEMP_DATA_TASK" \
+        --output "$output_file" \
+        -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
