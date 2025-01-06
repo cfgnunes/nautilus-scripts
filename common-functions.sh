@@ -790,27 +790,6 @@ _get_filename_next_suffix() {
     printf "%s" "$filename_result"
 }
 
-_get_filenames_count() {
-    # This function counts the number of filenames in a string, where filenames
-    # are separated by a specific field separator. It assumes that the input
-    # string contains a list of filenames separated by the value of the
-    # variable $FIELD_SEPARATOR.
-    #
-    # Parameters:
-    # - $1 (input_files): A string containing a list of filenames separated by
-    #   the defined $FIELD_SEPARATOR.
-
-    local input_files=$1
-    local files_count=0
-
-    if [[ -n "$input_files" ]]; then
-        files_count=$(tr -cd "$FIELD_SEPARATOR" <<<"$input_files" | wc -c)
-        files_count=$((files_count + 1))
-    fi
-
-    printf "%s" "$files_count"
-}
-
 _get_filenames_filemanager() {
     # This function retrieves a list of selected filenames or URIs from a file
     # manager (such as Caja, Nemo, or Nautilus) and processes the input
@@ -889,7 +868,7 @@ _get_files() {
     eval "$parameters"
 
     # Check if there are input files.
-    if (($(_get_filenames_count "$input_files") == 0)); then
+    if (($(_get_items_count "$input_files") == 0)); then
         if [[ "$par_get_pwd" == "true" ]]; then
             # Return the current working directory if no files have been selected.
             input_files=$(_get_working_directory)
@@ -919,7 +898,7 @@ _get_files() {
         "$par_recursive")
 
     # Return the current working directory if no directories have been selected.
-    if (($(_get_filenames_count "$input_files") == 0)); then
+    if (($(_get_items_count "$input_files") == 0)); then
         if [[ "$par_get_pwd" == "true" ]] && [[ "$par_type" == "directory" ]]; then
             input_files=$(_get_working_directory)
         fi
@@ -989,6 +968,27 @@ _get_file_mime() {
     fi
 
     printf "%s" "$std_output"
+}
+
+_get_items_count() {
+    # This function counts the number of items in a string, where items are
+    # separated by a specific field separator. It assumes that the input string
+    # contains a list of items separated by the value of the variable
+    # $FIELD_SEPARATOR.
+    #
+    # Parameters:
+    # - $1 (input_files): A string containing a list of items separated by
+    #   the defined $FIELD_SEPARATOR.
+
+    local input_files=$1
+    local files_count=0
+
+    if [[ -n "$input_files" ]]; then
+        files_count=$(tr -cd "$FIELD_SEPARATOR" <<<"$input_files" | wc -c)
+        files_count=$((files_count + 1))
+    fi
+
+    printf "%s" "$files_count"
 }
 
 _get_max_procs() {
@@ -2213,7 +2213,7 @@ _validate_files_count() {
 
     # Count the number of valid files.
     local valid_items_count=0
-    valid_items_count=$(_get_filenames_count "$input_files")
+    valid_items_count=$(_get_items_count "$input_files")
 
     # Check if there is at least one valid file.
     if ((valid_items_count == 0)); then
