@@ -15,6 +15,7 @@ _main() {
         command=gpg; pkg_manager=dnf; package=gnupg2 |
         command=gpg; pkg_manager=pacman; package=gnupg |
         command=gpg; pkg_manager=zypper; package=gpg2"
+    _display_wait_box "0"
     input_files=$(_get_files "par_type=file")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
@@ -64,8 +65,6 @@ _main() {
         _display_error_box "Failed: you must select a user!"
         _exit_script
     fi
-
-    _display_wait_box "2"
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
