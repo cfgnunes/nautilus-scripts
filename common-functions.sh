@@ -289,14 +289,21 @@ _display_dir_selection_box() {
     printf "%s" "$input_files"
 }
 
+# shellcheck disable=SC2120
 _display_file_selection_box() {
     # This function presents a graphical interface to allow the user to select
     # a file.
+    #
+    # Parameters:
+    #   - $1 (file_filter): Optional. File filter pattern to restrict the types
+    #     of files shown.
 
+    local file_filter=${1:-""}
     local input_files=""
 
     if _command_exists "zenity"; then
         input_files=$(zenity --title "$(_get_script_name)" --file-selection \
+            ${file_filter:+--file-filter="$file_filter"} \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
         input_files=$(kdialog --title "$(_get_script_name)" \
