@@ -78,6 +78,7 @@ _main_task() {
         recipients+=("--recipient=$user")
     done
     IFS=$' \t\n'
+    local command=()
     command=(gpg
         --batch
         --yes
@@ -89,10 +90,8 @@ _main_task() {
         --compress-algo zlib
         --cipher-algo AES256
         --output "$output_file"
-        "$input_file"
-    )
-    "${command[@]}"
-
+        -- "$input_file")
+    std_output=$("${command[@]}" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
