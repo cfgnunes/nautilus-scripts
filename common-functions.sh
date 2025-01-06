@@ -227,37 +227,45 @@ _command_exists() {
     return 1
 }
 
-_convert_filenames_to_text() {
-    # This function processes a list of filenames to format them as
+_convert_delimited_string_to_text() {
+    # This function converts a delimited string of items into
     # newline-separated text.
     #
     # Parameters:
-    #   - $1 (input_files): A string containing filenames separated by the $FIELD_SEPARATOR.
+    #   - $1 (input_items): A string containing items separated by the
+    #   '$FIELD_SEPARATOR' variable.
+    #
+    # Returns:
+    #   - A string containing the items separated by newlines.
 
-    local input_files=$1
+    local input_items=$1
     local new_line="'\$'\\\n''"
 
-    input_files=$(sed -z "s|\n|$new_line|g; s|$new_line$||g" <<<"$input_files")
-    input_files=$(tr "$FIELD_SEPARATOR" "\n" <<<"$input_files")
+    input_items=$(sed -z "s|\n|$new_line|g; s|$new_line$||g" <<<"$input_items")
+    input_items=$(tr "$FIELD_SEPARATOR" "\n" <<<"$input_items")
 
-    printf "%s" "$input_files"
+    printf "%s" "$input_items"
 }
 
-_convert_text_to_filenames() {
-    # This function processes a newline-separated text input to format it as a
-    # delimited string of filenames.
+_convert_text_to_delimited_string() {
+    # This function converts newline-separated text into a delimited string of
+    # items.
     #
     # Parameters:
-    #   - $1 (input_files): A string containing filenames separated by newlines.
+    #   - $1 (input_items): A string containing items separated by newlines.
+    #
+    # Returns:
+    #   - A string containing the items separated by the '$FIELD_SEPARATOR'
+    #   variable.
 
-    local input_files=$1
+    local input_items=$1
     local new_line="'\$'\\\n''"
 
-    input_files=$(tr "\n" "$FIELD_SEPARATOR" <<<"$input_files")
-    input_files=$(sed -z "s|$new_line|\n|g" <<<"$input_files")
+    input_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$input_items")
+    input_items=$(sed -z "s|$new_line|\n|g" <<<"$input_items")
 
-    input_files=$(_str_remove_empty_tokens "$input_files")
-    printf "%s" "$input_files"
+    input_items=$(_str_remove_empty_tokens "$input_items")
+    printf "%s" "$input_items"
 }
 
 _display_dir_selection_box() {
@@ -921,9 +929,9 @@ _get_files() {
 
     # Sort the list by filename.
     if [[ "$par_sort_list" == "true" ]]; then
-        input_files=$(_convert_filenames_to_text "$input_files")
+        input_files=$(_convert_delimited_string_to_text "$input_files")
         input_files=$(_text_sort "$input_files")
-        input_files=$(_convert_text_to_filenames "$input_files")
+        input_files=$(_convert_text_to_delimited_string "$input_files")
     fi
 
     # Validates filenames with the same base name.
@@ -1696,8 +1704,8 @@ _run_task_parallel() {
     export -f \
         _check_output \
         _command_exists \
-        _convert_filenames_to_text \
-        _convert_text_to_filenames \
+        _convert_delimited_string_to_text \
+        _convert_text_to_delimited_string \
         _display_password_box \
         _exit_script \
         _get_file_encoding \
@@ -1985,7 +1993,7 @@ _validate_conflict_filenames() {
     local input_files=$1
     local dup_files=""
 
-    dup_files=$(_convert_filenames_to_text "$input_files")
+    dup_files=$(_convert_delimited_string_to_text "$input_files")
     dup_files=$(_text_sort "$dup_files")
 
     # Remove file extensions and find any duplicate base names.

@@ -61,7 +61,7 @@ _get_urls_from_clipboard() {
         _exit_script
     fi
 
-    urls=$(_convert_text_to_filenames "$urls")
+    urls=$(_convert_text_to_delimited_string "$urls")
     urls=$(_text_uri_decode "$urls")
 
     printf "%s" "$urls"

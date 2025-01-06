@@ -35,7 +35,7 @@ _main_task() {
     input_files="file '$input_files'"
     # shellcheck disable=SC2001
     input_files=$(sed "s|$FIELD_SEPARATOR|'${FIELD_SEPARATOR}file '|g" <<<"$input_files")
-    _convert_filenames_to_text "$input_files" >"$temp_file"
+    _convert_delimited_string_to_text "$input_files" >"$temp_file"
 
     # Run the main process.
     output_file=$(_get_output_filename "Concatenated video.mp4" "$output_dir" "par_extension_opt=preserve")

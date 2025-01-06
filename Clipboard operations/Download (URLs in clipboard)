@@ -53,7 +53,7 @@ _get_urls_from_clipboard() {
         _exit_script
     fi
 
-    _convert_text_to_filenames "$urls"
+    _convert_text_to_delimited_string "$urls"
 }
 
 _get_working_directory_alternative() {
