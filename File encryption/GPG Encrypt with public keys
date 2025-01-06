@@ -77,7 +77,7 @@ _main_task() {
     for user in $TEMP_DATA_TASK; do
         recipients+=("--recipient=$user")
     done
-    IFS=$' \t\n'
+
     local command=()
     command=(gpg
         --batch
