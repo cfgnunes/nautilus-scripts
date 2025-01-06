@@ -28,14 +28,28 @@ _main() {
     # shellcheck disable=SC2086
     if _command_exists "zenity"; then
         users=$(tr "\n" "$FIELD_SEPARATOR" <<<"$users")
+        users=$(_str_remove_empty_tokens "$users")
+        local zenity_user_list=()
+        local user=""
+
+        for user in $users; do
+            if (($(_get_items_count "$users") == 1)); then
+                zenity_user_list+=(TRUE "${user[@]}")
+            else
+                zenity_user_list+=(FALSE "${user[@]}")
+            fi
+        done
+
         TEMP_DATA_TASK=$(zenity \
             --list \
+            --radiolist \
             --title="Select a user" \
             --text="Select a user from the list below." \
-            --column="User" \
+            --column="Select" \
+            --column="User" "${zenity_user_list[@]}" \
             --width="$GUI_BOX_WIDTH" \
             --height="$GUI_BOX_HEIGHT" \
-            $users 2>/dev/null) || _exit_script
+            --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
         # shellcheck disable=SC2001
         users=$(sed "s|\(.*\)|\1:\1:off|g" <<<"$users")
