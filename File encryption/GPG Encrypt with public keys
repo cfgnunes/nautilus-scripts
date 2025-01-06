@@ -27,8 +27,9 @@ _main() {
 
     # shellcheck disable=SC2086
     if _command_exists "zenity"; then
-        zenity_user_list=()
-        IFS=$'\n'
+        users=$(tr "\n" "$FIELD_SEPARATOR" <<<"$users")
+        local zenity_user_list=()
+        local user=""
         for user in $users; do
             zenity_user_list+=(FALSE "${user[@]}")
         done
@@ -37,12 +38,12 @@ _main() {
             --list \
             --checklist \
             --title="Select users" \
-            --text="Select users from the list below." \
+            --text="Select one or more users from the list below." \
             --column="Select" \
             --column="User" "${zenity_user_list[@]}" \
             --width="$GUI_BOX_WIDTH" \
             --height="$GUI_BOX_HEIGHT" \
-            --separator="#" 2>/dev/null) || _exit_script
+            --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
         # TODO: Implement...
         _display_error_box "Only available for zenity..."
@@ -68,10 +69,11 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    IFS=$' \t\n'
+    IFS=$FIELD_SEPARATOR
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=append; par_extension=gpg")
-    IFS='#'
-    recipients=()
+
+    local recipients=()
+    local user=""
     for user in $TEMP_DATA_TASK; do
         recipients+=("--recipient=$user")
     done
