@@ -13,6 +13,7 @@ _main() {
     _check_dependencies ""
     _display_wait_box "0"
     input_files=$(_get_files "par_type=file")
+    sleep 0.2 # Avoid 'wait_box' open before.
     output_dir=$(_display_dir_selection_box)
 
     # Execute the function '_main_task' for each file in parallel.
