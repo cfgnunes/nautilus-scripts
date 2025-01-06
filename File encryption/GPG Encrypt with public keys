@@ -33,8 +33,18 @@ _main() {
             zenity_user_list+=(FALSE "${user[@]}")
         done
 
-        TEMP_DATA_TASK=$(zenity --list --checklist --title="Select users" --text="Select users from the list below." --column="Select" --column="User" "${zenity_user_list[@]}" --height=600 --width=600 --separator="#")
+        TEMP_DATA_TASK=$(zenity \
+            --list \
+            --checklist \
+            --title="Select users" \
+            --text="Select users from the list below." \
+            --column="Select" \
+            --column="User" "${zenity_user_list[@]}" \
+            --width="$GUI_BOX_WIDTH" \
+            --height="$GUI_BOX_HEIGHT" \
+            --separator="#" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
+        # TODO: Implement...
         _display_error_box "Only available for zenity..."
         _exit_script
     fi

@@ -28,12 +28,23 @@ _main() {
     # shellcheck disable=SC2086
     if _command_exists "zenity"; then
         users=$(tr "\n" "$FIELD_SEPARATOR" <<<"$users")
-        TEMP_DATA_TASK=$(zenity --list --title="Select a user" --text="Select a user from the list below." --column="User" --height=300 --width=600 $users 2>/dev/null) || _exit_script
+        TEMP_DATA_TASK=$(zenity \
+            --list \
+            --title="Select a user" \
+            --text="Select a user from the list below." \
+            --column="User" \
+            --width="$GUI_BOX_WIDTH" \
+            --height="$GUI_BOX_HEIGHT" \
+            $users 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
         # shellcheck disable=SC2001
         users=$(sed "s|\(.*\)|\1:\1:off|g" <<<"$users")
         users=$(tr ":\n" "$FIELD_SEPARATOR" <<<"$users")
-        TEMP_DATA_TASK=$(kdialog --title "Select a user" --geometry "600x300" --radiolist "Select a user from the list below." $users 2>/dev/null) || _exit_script
+        TEMP_DATA_TASK=$(kdialog \
+            --title "Select a user" \
+            --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
+            --radiolist "Select a user from the list below." \
+            $users 2>/dev/null) || _exit_script
     fi
 
     if [[ -z "$TEMP_DATA_TASK" ]]; then
