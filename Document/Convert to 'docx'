@@ -11,7 +11,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
-    input_files=$(_get_files "par_type=file; par_validate_conflict=true")
+    input_files=$(_get_files "par_type=file; par_validate_conflict=true; par_select_extension='csv|doc|epub|fb2|fodf|fodg|fodp|fods|fodt|gfm|htm|html|json|markdown|md|odf|odg|odp|ods|odt|opml|org|ppt|pptx|rst|rtf|tex|txt|xls|xlsx'")
 
     local dependencies=""
     dependencies=$(_get_dependencies "$input_files")
