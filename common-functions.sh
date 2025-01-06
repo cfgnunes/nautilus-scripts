@@ -10,6 +10,9 @@ set -u
 # -----------------------------------------------------------------------------
 
 FIELD_SEPARATOR=$'\r'          # The main field separator. Used, for example, in 'loops' to iterate over files.
+GUI_BOX_HEIGHT=550             # Height of the GUI dialog boxes.
+GUI_BOX_WIDTH=900              # Width of the GUI dialog boxes.
+GUI_INFO_WIDTH=400             # Width of the GUI small dialog boxes.
 IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
 PREFIX_ERROR_LOG_FILE="Errors" # Name of 'error' directory.
 PREFIX_OUTPUT_DIR="Output"     # Name of 'output' directory.
@@ -18,12 +21,15 @@ TEMP_DIR_ITEMS_TO_REMOVE="$TEMP_DIR/items_to_remove"
 TEMP_DIR_LOGS="$TEMP_DIR/logs"
 TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
 TEMP_DIR_TASK="$TEMP_DIR/task"
-WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control"         # File control to use in the 'wait_box'.
 WAIT_BOX_CONTROL_KDE="$TEMP_DIR/wait_box_control_kde" # File control to use in the KDialog 'wait_box'.
+WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control"         # File control to use in the 'wait_box'.
 WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"               # FIFO to use in the Zenity 'wait_box'.
 
 readonly \
     FIELD_SEPARATOR \
+    GUI_BOX_HEIGHT \
+    GUI_BOX_WIDTH \
+    GUI_INFO_WIDTH \
     IGNORE_FIND_PATH \
     PREFIX_ERROR_LOG_FILE \
     PREFIX_OUTPUT_DIR \
@@ -310,7 +316,7 @@ _display_error_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-error" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --error --width=400 --text "$message" &>/dev/null
+        zenity --title "$(_get_script_name)" --error --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --error "$message" &>/dev/null
     elif _command_exists "xmessage"; then
@@ -332,7 +338,7 @@ _display_info_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-information" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --info --width=400 --text "$message" &>/dev/null
+        zenity --title "$(_get_script_name)" --info --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --msgbox "$message" &>/dev/null
     elif _command_exists "xmessage"; then
@@ -393,7 +399,7 @@ _display_list_box() {
         # shellcheck disable=SC2086
         selected_item=$(zenity --title "$(_get_script_name)" --list \
             --editable --multiple --separator="$FIELD_SEPARATOR" \
-            --width=900 --height=550 --print-column "$columns_count" \
+            --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" --print-column "$columns_count" \
             --text "Total of $items_count $item_name.$message_select" \
             $columns $message 2>/dev/null) || _exit_script
 
@@ -406,7 +412,7 @@ _display_list_box() {
         columns=$(tr ";" "\t" <<<"$columns")
         message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
         message="$columns"$'\n'$'\n'"$message"
-        kdialog --title "$(_get_script_name)" --geometry "900x550" \
+        kdialog --title "$(_get_script_name)" --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
             --textinputbox "" "$message" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         columns=$(sed "s|--column=||g" <<<"$columns")
@@ -433,7 +439,7 @@ _display_password_box() {
     elif _command_exists "zenity"; then
         sleep 0.2 # Avoid 'wait_box' open before.
         password=$(zenity --title="Password" --entry --hide-text \
-            --width=400 --text "$message" 2>/dev/null) || return 1
+            --width="$GUI_INFO_WIDTH" --text "$message" 2>/dev/null) || return 1
     elif _command_exists "kdialog"; then
         sleep 0.2 # Avoid 'wait_box' open before.
         password=$(kdialog --title "Password" \
@@ -475,7 +481,7 @@ _display_question_box() {
         read -r -p "$message [Y/n] " response
         [[ ${response,,} == *"n"* ]] && return 1
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --question --width=400 --text="$message" &>/dev/null || return 1
+        zenity --title "$(_get_script_name)" --question --width="$GUI_INFO_WIDTH" --text="$message" &>/dev/null || return 1
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --yesno "$message" &>/dev/null || return 1
     elif _command_exists "xmessage"; then
@@ -504,9 +510,9 @@ _display_text_box() {
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --text-info \
-            --no-wrap --width=900 --height=550 <<<"$message" &>/dev/null || _exit_script
+            --no-wrap --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" <<<"$message" &>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
-        kdialog --title "$(_get_script_name)" --geometry "900x550" \
+        kdialog --title "$(_get_script_name)" --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
             --textinputbox "" "$message" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "$message" &>/dev/null || _exit_script
@@ -592,7 +598,7 @@ _display_wait_box_message() {
         # shellcheck disable=SC2002
         sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && tail -f -- "$WAIT_BOX_FIFO" | (
             zenity --title="$(_get_script_name)" --progress \
-                --width=400 --pulsate --auto-close --text="$message" || _exit_script
+                --width="$GUI_INFO_WIDTH" --pulsate --auto-close --text="$message" || _exit_script
         ) &
 
     # Check if the KDialog is available.
