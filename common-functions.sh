@@ -9,7 +9,7 @@ set -u
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
-FIELD_SEPARATOR=$'\r'          # The main field separator. Used, for example, in 'loops' to iterate over files.
+FIELD_SEPARATOR=$'\r'          # The main field separator.
 GUI_BOX_HEIGHT=550             # Height of the GUI dialog boxes.
 GUI_BOX_WIDTH=900              # Width of the GUI dialog boxes.
 GUI_INFO_WIDTH=400             # Width of the GUI small dialog boxes.
@@ -21,9 +21,9 @@ TEMP_DIR_ITEMS_TO_REMOVE="$TEMP_DIR/items_to_remove"
 TEMP_DIR_LOGS="$TEMP_DIR/logs"
 TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
 TEMP_DIR_TASK="$TEMP_DIR/task"
-WAIT_BOX_CONTROL_KDE="$TEMP_DIR/wait_box_control_kde" # File control to use in the KDialog 'wait_box'.
-WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control"         # File control to use in the 'wait_box'.
-WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"               # FIFO to use in the Zenity 'wait_box'.
+WAIT_BOX_CONTROL_KDE="$TEMP_DIR/wait_box_control_kde" # To use in the KDialog 'wait_box'.
+WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control"         # To use in the 'wait_box'.
+WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"               # To use in the Zenity 'wait_box'.
 
 readonly \
     FIELD_SEPARATOR \
@@ -53,10 +53,11 @@ TEMP_DATA_TASK=""
 # BUILD THE STRUCTURE OF THE 'TEMP_DIR'
 # -----------------------------------------------------------------------------
 
-mkdir -p "$TEMP_DIR_ITEMS_TO_REMOVE" # Used to store the path of temporary files or directories to be removed after exit.
-mkdir -p "$TEMP_DIR_LOGS"            # Used to store 'error logs'.
-mkdir -p "$TEMP_DIR_STORAGE_TEXT"    # Used to store the output text from parallel processes.
-mkdir -p "$TEMP_DIR_TASK"            # Used in scripts to store its temporary files.
+# Store the path of temporary items to be removed after exit.
+mkdir -p "$TEMP_DIR_ITEMS_TO_REMOVE"
+mkdir -p "$TEMP_DIR_LOGS"         # Store 'error logs'.
+mkdir -p "$TEMP_DIR_STORAGE_TEXT" # Store the output text files from parallel processes.
+mkdir -p "$TEMP_DIR_TASK"         # Used in scripts to store its temporary files.
 
 # -----------------------------------------------------------------------------
 # FUNCTIONS
@@ -147,13 +148,15 @@ _check_dependencies() {
         fi
 
         # Ignore installing the dependency if the installed package managers differ.
-        if [[ -n "$pkg_manager" ]] && [[ "$pkg_manager_installed" != "$pkg_manager" ]]; then
+        if [[ -n "$pkg_manager" ]] &&
+            [[ "$pkg_manager_installed" != "$pkg_manager" ]]; then
             continue
         fi
 
         # Ignore installing the dependency if the package is already installed
         # (packages that do not have a command).
-        if [[ -n "$package" ]] && [[ -z "$command" ]] && _pkg_is_package_installed "$pkg_manager_installed" "$package"; then
+        if [[ -n "$package" ]] && [[ -z "$command" ]] &&
+            _pkg_is_package_installed "$pkg_manager_installed" "$package"; then
             continue
         fi
 
@@ -200,13 +203,15 @@ _check_output() {
 
     # Check the 'exit_code' and log the error.
     if ((exit_code != 0)); then
-        _log_write "Error: Command failed with a non-zero exit code. Check the command's standard output for more details." "$input_file" "$std_output" "$output_file"
+        _log_write "Error: Command failed with a non-zero exit code. Check the command's standard output for more details." \
+            "$input_file" "$std_output" "$output_file"
         return 1
     fi
 
     # Check if the output file exists.
     if [[ -n "$output_file" ]] && ! [[ -e "$output_file" ]]; then
-        _log_write "Error: The output file does not exist." "$input_file" "$std_output" "$output_file"
+        _log_write "Error: The output file does not exist." \
+            "$input_file" "$std_output" "$output_file"
         return 1
     fi
 
@@ -275,8 +280,9 @@ _display_dir_selection_box() {
     local input_files=""
 
     if _command_exists "zenity"; then
-        input_files=$(zenity --title "$(_get_script_name)" --file-selection --multiple \
-            --directory --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
+        input_files=$(zenity --title "$(_get_script_name)" \
+            --file-selection --multiple --directory \
+            --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
         input_files=$(kdialog --title "$(_get_script_name)" \
             --getexistingdirectory 2>/dev/null) || _exit_script
@@ -302,7 +308,8 @@ _display_file_selection_box() {
     local input_files=""
 
     if _command_exists "zenity"; then
-        input_files=$(zenity --title "$(_get_script_name)" --file-selection \
+        input_files=$(zenity --title "$(_get_script_name)" \
+            --file-selection \
             ${file_filter:+--file-filter="$file_filter"} \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
@@ -331,7 +338,8 @@ _display_error_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-error" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --error --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
+        zenity --title "$(_get_script_name)" --error \
+            --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --error "$message" &>/dev/null
     elif _command_exists "xmessage"; then
@@ -353,7 +361,8 @@ _display_info_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-information" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --info --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
+        zenity --title "$(_get_script_name)" --info \
+            --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --msgbox "$message" &>/dev/null
     elif _command_exists "xmessage"; then
@@ -414,7 +423,8 @@ _display_list_box() {
         # shellcheck disable=SC2086
         selected_item=$(zenity --title "$(_get_script_name)" --list \
             --editable --multiple --separator="$FIELD_SEPARATOR" \
-            --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" --print-column "$columns_count" \
+            --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+            --print-column "$columns_count" \
             --text "Total of $items_count $item_name.$message_select" \
             $columns $message 2>/dev/null) || _exit_script
 
@@ -427,14 +437,16 @@ _display_list_box() {
         columns=$(tr ";" "\t" <<<"$columns")
         message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
         message="$columns"$'\n'$'\n'"$message"
-        kdialog --title "$(_get_script_name)" --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
+        kdialog --title "$(_get_script_name)" \
+            --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
             --textinputbox "" "$message" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         columns=$(sed "s|--column=||g" <<<"$columns")
         columns=$(tr ";" "\t" <<<"$columns")
         message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
         message="$columns"$'\n'$'\n'"$message"
-        xmessage -title "$(_get_script_name)" "$message" &>/dev/null || _exit_script
+        xmessage -title "$(_get_script_name)" \
+            "$message" &>/dev/null || _exit_script
     fi
 }
 
@@ -453,8 +465,9 @@ _display_password_box() {
         read -r -p "$message " password >&2
     elif _command_exists "zenity"; then
         sleep 0.2 # Avoid 'wait_box' open before.
-        password=$(zenity --title="Password" --entry --hide-text \
-            --width="$GUI_INFO_WIDTH" --text "$message" 2>/dev/null) || return 1
+        password=$(zenity \
+            --title="Password" --entry --hide-text --width="$GUI_INFO_WIDTH" \
+            --text "$message" 2>/dev/null) || return 1
     elif _command_exists "kdialog"; then
         sleep 0.2 # Avoid 'wait_box' open before.
         password=$(kdialog --title "Password" \
@@ -496,11 +509,14 @@ _display_question_box() {
         read -r -p "$message [Y/n] " response
         [[ ${response,,} == *"n"* ]] && return 1
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --question --width="$GUI_INFO_WIDTH" --text="$message" &>/dev/null || return 1
+        zenity --title "$(_get_script_name)" --question \
+            --width="$GUI_INFO_WIDTH" --text="$message" &>/dev/null || return 1
     elif _command_exists "kdialog"; then
-        kdialog --title "$(_get_script_name)" --yesno "$message" &>/dev/null || return 1
+        kdialog --title "$(_get_script_name)" \
+            --yesno "$message" &>/dev/null || return 1
     elif _command_exists "xmessage"; then
-        xmessage -title "$(_get_script_name)" -buttons "Yes:0,No:1" "$message" &>/dev/null || return 1
+        xmessage -title "$(_get_script_name)" \
+            -buttons "Yes:0,No:1" "$message" &>/dev/null || return 1
     fi
     return 0
 }
@@ -524,13 +540,17 @@ _display_text_box() {
     if ! _is_gui_session; then
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --text-info \
-            --no-wrap --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" <<<"$message" &>/dev/null || _exit_script
+        zenity --title "$(_get_script_name)" --text-info --no-wrap \
+            --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+            <<<"$message" &>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
-        kdialog --title "$(_get_script_name)" --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
-            --textinputbox "" "$message" &>/dev/null || _exit_script
+        kdialog --title "$(_get_script_name)" \
+            --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
+            --textinputbox "" \
+            "$message" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
-        xmessage -title "$(_get_script_name)" "$message" &>/dev/null || _exit_script
+        xmessage -title "$(_get_script_name)" \
+            "$message" &>/dev/null || _exit_script
     fi
 }
 
@@ -611,10 +631,11 @@ _display_wait_box_message() {
         #   - Opens the Zenity 'wait_box' if the control flag still exists.
         #   - If Zenity 'wait_box' fails or is cancelled, exit the script.
         # shellcheck disable=SC2002
-        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && tail -f -- "$WAIT_BOX_FIFO" | (
-            zenity --title="$(_get_script_name)" --progress \
-                --width="$GUI_INFO_WIDTH" --pulsate --auto-close --text="$message" || _exit_script
-        ) &
+        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] &&
+            tail -f -- "$WAIT_BOX_FIFO" | (zenity \
+                --title="$(_get_script_name)" --progress \
+                --width="$GUI_INFO_WIDTH" \
+                --pulsate --auto-close --text="$message" || _exit_script) &
 
     # Check if the KDialog is available.
     elif _command_exists "kdialog"; then
@@ -626,21 +647,24 @@ _display_wait_box_message() {
         # Launch a background thread for KDialog 'wait_box':
         #   - Waits for the specified delay.
         #   - Opens the KDialog 'wait_box' if the control flag still exists.
-        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] && kdialog \
-            --title="$(_get_script_name)" --progressbar "$message" 0 >"$WAIT_BOX_CONTROL_KDE" &
+        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] &&
+            kdialog --title="$(_get_script_name)" \
+                --progressbar "$message" 0 >"$WAIT_BOX_CONTROL_KDE" &
 
         # Launch another background thread to monitor the KDialog 'wait_box':
         #   - Periodically checks if the dialog has been closed or cancelled.
         #   - If KDialog 'wait_box' is cancelled, exit the script.
         (
-            while [[ -f "$WAIT_BOX_CONTROL" ]] || [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
+            while [[ -f "$WAIT_BOX_CONTROL" ]] ||
+                [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
                 if [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; then
                     # Extract the D-Bus reference for the KDialog instance.
                     local dbus_ref=""
                     dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
                     if [[ -n "$dbus_ref" ]]; then
                         # Check if the user has cancelled the wait box.
-                        $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" "wasCancelled" 2>/dev/null || _exit_script
+                        $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" \
+                            "wasCancelled" 2>/dev/null || _exit_script
                     fi
                 fi
                 sleep 0.2
@@ -672,7 +696,8 @@ _close_wait_box() {
         dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
         if [[ -n "$dbus_ref" ]]; then
             # Close the KDialog 'wait_box'.
-            $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" "close" 2>/dev/null
+            $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" \
+                "close" 2>/dev/null
             rm -f -- "$WAIT_BOX_CONTROL_KDE"
         fi
         sleep 0.2
@@ -750,7 +775,8 @@ _get_filename_extension() {
     filename=$(sed -E "s|.*/(\.)*||g" <<<"$filename")
     filename=$(sed -E "s|^(\.)*||g" <<<"$filename")
 
-    grep --ignore-case --only-matching --perl-regexp "(\.tar)?\.[a-z0-9_~-]{0,15}$" <<<"$filename" || true
+    grep --ignore-case --only-matching --perl-regexp \
+        "(\.tar)?\.[a-z0-9_~-]{0,15}$" <<<"$filename" || true
 }
 
 _get_filename_full_path() {
@@ -855,13 +881,15 @@ _get_files() {
     #   - "par_recursive": Specifies whether to expand directories recursively:
     #       - "false" (default): Does not expand directories.
     #       - "true": Expands directories recursively.
-    #   - "par_get_pwd": If "true", returns the current working directory if no files are selected.
+    #   - "par_get_pwd": If "true", returns the current working directory if no
+    #     files are selected.
     #   - "par_max_items", "par_min_items": Limits the number of files.
     #   - "par_select_extension": Filters by file extension.
     #   - "par_select_mime": Filters by MIME type.
     #   - "par_skip_extension": Skips files with specific extensions.
     #   - "par_sort_list": If "true", sorts the list of files.
-    #   - "par_validate_conflict": If "true", validates for filenames with the same base name.
+    #   - "par_validate_conflict": If "true", validates for filenames with the
+    #     same base name.
 
     local parameters=$1
     local input_files=""
@@ -914,7 +942,8 @@ _get_files() {
 
     # Return the current working directory if no directories have been selected.
     if (($(_get_items_count "$input_files") == 0)); then
-        if [[ "$par_get_pwd" == "true" ]] && [[ "$par_type" == "directory" ]]; then
+        if [[ "$par_get_pwd" == "true" ]] &&
+            [[ "$par_type" == "directory" ]]; then
             input_files=$(_get_working_directory)
         fi
     fi
@@ -1074,14 +1103,18 @@ _get_output_filename() {
     #     how the output filename should be constructed. It supports the
     #     following options:
     #     - par_extension_opt: Specifies how to handle the file extension. Options are:
-    #       - "append": Append a new extension "par_extension" to the existing file extension.
+    #       - "append": Append a new extension "par_extension" to the existing
+    #         file extension.
     #       - "preserve": Keep the original file extension.
-    #       - "replace": Replace the current extension with a new one "par_extension".
+    #       - "replace": Replace the current extension with a new one
+    #         "par_extension".
     #       - "strip": Remove the file extension entirely.
-    #     - par_extension: The extension to use when "par_extension_opt" is set to "append" or "replace".
-    #       This value is ignored for the "preserve" and "strip" options.
+    #     - par_extension: The extension to use when "par_extension_opt" is set
+    #       to "append" or "replace". This value is ignored for the "preserve"
+    #       and "strip" options.
     #     - par_prefix: A string to be added as a prefix to the output filename.
-    #     - par_suffix: A string to be added as a suffix to the output filename, placed before the extension.
+    #     - par_suffix: A string to be added as a suffix to the output
+    #       filename, placed before the extension.
 
     local input_file=$1
     local output_dir=$2
@@ -1292,9 +1325,12 @@ _log_write() {
     #
     # Parameters:
     #   - $1: (message): A message to be logged.
-    #   - $2: (input_file): The path of the input file associated with the operation.
-    #   - $3: (std_output): The standard output or result from the operation that will be logged.
-    #   - $4: (output_file): The path of the output file associated with the operation.
+    #   - $2: (input_file): The path of the input file associated with the
+    #     operation.
+    #   - $3: (std_output): The standard output or result from the operation
+    #     that will be logged.
+    #   - $4: (output_file): The path of the output file associated with the
+    #     operation.
 
     local message=$1
     local input_file=$2
@@ -1366,16 +1402,21 @@ _move_file() {
     # exists.
     #
     # Parameters:
-    #   - $1 (par_when_conflict): Optional, default: "skip". Defines the behavior when the destination file already exists.
+    #   - $1 (par_when_conflict): Optional, default: "skip". Defines the
+    #     behavior when the destination file already exists.
     #     - "overwrite": Overwrite the destination file.
-    #     - "rename": Rename the source file to avoid conflicts by adding a suffix to the destination filename.
-    #     - "skip": Skip moving the file if the destination file exists (logs a error).
+    #     - "rename": Rename the source file to avoid conflicts by adding a
+    #       suffix to the destination filename.
+    #     - "skip": Skip moving the file if the destination file exists (logs a
+    #       error).
     #   - $2 (file_src): The path to the source file to be moved.
     #   - $3 (file_dst): The destination path where the file should be moved.
     #
     # Returns:
-    #   - "0" (true): If the operation is successful or if the source and destination are the same file.
-    #   - "1" (false): If any required parameters are missing, if the move fails, or if an invalid conflict parameter is provided.
+    #   - "0" (true): If the operation is successful or if the source and
+    #     destination are the same file.
+    #   - "1" (false): If any required parameters are missing, if the move
+    #     fails, or if an invalid conflict parameter is provided.
 
     local par_when_conflict=${1:-"skip"}
     local file_src=$2
@@ -1387,10 +1428,12 @@ _move_file() {
     fi
 
     # Add the './' prefix in the path.
-    if ! [[ "$file_src" == "/"* ]] && ! [[ "$file_src" == "./"* ]] && ! [[ "$file_src" == "." ]]; then
+    if ! [[ "$file_src" == "/"* ]] &&
+        ! [[ "$file_src" == "./"* ]] && ! [[ "$file_src" == "." ]]; then
         file_src="./$file_src"
     fi
-    if ! [[ "$file_dst" == "/"* ]] && ! [[ "$file_dst" == "./"* ]] && ! [[ "$file_dst" == "." ]]; then
+    if ! [[ "$file_dst" == "/"* ]] &&
+        ! [[ "$file_dst" == "./"* ]] && ! [[ "$file_dst" == "." ]]; then
         file_dst="./$file_dst"
     fi
 
@@ -1399,7 +1442,8 @@ _move_file() {
         return 0
     fi
 
-    # Process the parameter "when_conflict": what to do when the 'file_dst' already exists.
+    # Process the parameter "when_conflict": what to do when the 'file_dst'
+    # already exists.
     case "$par_when_conflict" in
     "overwrite")
         mv -f -- "$file_src" "$file_dst"
@@ -1421,9 +1465,11 @@ _move_file() {
 
     if [[ -e "$file_src" ]]; then
         if [[ -e "$file_dst" ]]; then
-            _log_write "Error moving file: The destination file already exists." "$file_src" "" "$file_dst"
+            _log_write "Error moving file: The destination file already exists." \
+                "$file_src" "" "$file_dst"
         else
-            _log_write "Error moving file: Unable to move." "$file_src" "" "$file_dst"
+            _log_write "Error moving file: Unable to move." \
+                "$file_src" "" "$file_dst"
         fi
         return 1
     fi
@@ -1436,9 +1482,12 @@ _move_temp_file_to_output() {
     # handling various conditions to ensure the move is safe and proper.
     #
     # Parameters:
-    #   - $1: (input_file): The path to the original input file, which may be backed up during the process.
-    #   - $2: (temp_file): The temporary file to be moved to the output location.
-    #   - $3: (output_file): The target path where the temp file should be moved.
+    #   - $1: (input_file): The path to the original input file, which may be
+    #     backed up during the process.
+    #   - $2: (temp_file): The temporary file to be moved to the output
+    #     location.
+    #   - $3: (output_file): The target path where the temp file should be
+    #     moved.
 
     local input_file=$1
     local temp_file=$2
@@ -1455,7 +1504,7 @@ _move_temp_file_to_output() {
         return 1
     fi
 
-    # If 'input_file' equals 'output_file', create a backup of the 'input_file'.
+    # If 'input_file' equals 'output_file', create a backup of 'input_file'.
     if [[ "$input_file" == "$output_file" ]]; then
         _move_file "rename" "$input_file" "$input_file.bak" || return 1
     fi
@@ -1565,7 +1614,8 @@ _pkg_get_package_manager() {
     #     - "dnf": Indicates that "dnf" (Fedora/RHEL) is available.
     #     - "pacman": Indicates that "pacman" (Arch Linux) is available.
     #     - "zypper": Indicates that "zypper" (openSUSE) is available.
-    #   - If no supported package manager is found, the output is an empty string.
+    #   - If no supported package manager is found, the output is an empty
+    #     string.
 
     local pkg_manager=""
 
@@ -1824,7 +1874,8 @@ _str_remove_empty_tokens() {
     # and well-formed.
     #
     # Parameters:
-    #   - $1 (input_str): The input string containing tokens separated by $FIELD_SEPARATOR.
+    #   - $1 (input_str): The input string containing tokens separated by
+    #     $FIELD_SEPARATOR.
 
     local input_str=$1
     input_str=$(tr -s "$FIELD_SEPARATOR" <<<"$input_str")
@@ -1867,14 +1918,16 @@ _text_remove_home() {
     # with the tilde ("~") symbol for brevity.
     #
     # Parameters:
-    #   - $1 (input_text): The input string that may contain the user's home directory path.
+    #   - $1 (input_text): The input string that may contain the user's home
+    #     directory path.
     #
     # Returns:
     #   - The modified string with the home directory replaced by "~", or the
     #     original string if "$HOME" is not defined.
     #
     # Examples:
-    #   - Input: "/home/user/documents/file.txt" (assuming $HOME is "/home/user")
+    #   - Input: "/home/user/documents/file.txt" (assuming $HOME is
+    #     "/home/user")
     #   - Output: "~/documents/file.txt"
     #
     #   - Input: "/etc/config" (assuming $HOME is "/home/user")
@@ -1902,10 +1955,12 @@ _text_remove_pwd() {
     #     the original string if the working directory is not found.
     #
     # Examples:
-    #   - Input: "/home/user/project/file.txt" (assuming current directory is "/home/user/project")
+    #   - Input: "/home/user/project/file.txt" (assuming current directory is
+    #     "/home/user/project")
     #   - Output: "./file.txt"
     #
-    #   - Input: "/etc/config" (assuming current directory is "/home/user/project")
+    #   - Input: "/etc/config" (assuming current directory is
+    #     "/home/user/project")
     #   - Output: "/etc/config"
 
     local input_text=$1
@@ -1995,7 +2050,8 @@ _validate_conflict_filenames() {
     #
     # Example:
     #   - Input: "file1.txt file2.txt file1.jpg"
-    #   - Output: An error box will be displayed indicating that "file1" is duplicated.
+    #   - Output: An error box will be displayed indicating that "file1" is
+    #     duplicated.
 
     local input_files=$1
     local dup_files=""
@@ -2037,7 +2093,8 @@ _validate_file_mime() {
         local file_mime=""
         file_mime=$(_get_file_mime "$input_file")
         par_select_mime=${par_select_mime//+/\\+}
-        grep --quiet --ignore-case --perl-regexp "($par_select_mime)" <<<"$file_mime" || return
+        grep --quiet --ignore-case --perl-regexp \
+            "($par_select_mime)" <<<"$file_mime" || return
     fi
 
     # Create a temp file containing the name of the valid file.
@@ -2081,7 +2138,8 @@ _validate_file_mime_parallel() {
     # Export functions to be used inside new shells (when using 'xargs').
     export -f _get_file_mime _storage_text_write _validate_file_mime
 
-    # Execute the function '_validate_file_mime' for each file in parallel (using 'xargs').
+    # Execute the function '_validate_file_mime' for each file in parallel
+    # (using 'xargs').
     printf "%s" "$input_files" | xargs \
         --no-run-if-empty \
         --delimiter="$FIELD_SEPARATOR" \
