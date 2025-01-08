@@ -50,12 +50,22 @@ _main_task() {
         local inkscape_version=""
         local inkscape_version_old="1.0"
         inkscape_version=$(inkscape --version 2>/dev/null | cut -d " " -f 2)
-        if [[ "$inkscape_version" == $(echo -e "$inkscape_version\n$inkscape_version_old" | sort -V | head -n1) ]]; then
+        if [[ "$inkscape_version" == $(echo -e "$inkscape_version\n$inkscape_version_old" |
+            sort -V | head -n1) ]]; then
             # Old Inkscape version.
-            std_output=$(inkscape --without-gui --export-area-drawing --file="$input_file" --export-height=$((icon_size * 2)) --export-png="$temp_file4" 2>&1)
+            std_output=$(inkscape \
+                --without-gui \
+                --export-area-drawing \
+                --file="$input_file" \
+                --export-height=$((icon_size * 2)) \
+                --export-png="$temp_file4" 2>&1)
         else
             # New Inkscape version.
-            std_output=$(inkscape --export-area-drawing --export-height=$((icon_size * 2)) --export-filename="$temp_file4" -- "$input_file" 2>&1)
+            std_output=$(inkscape \
+                --export-area-drawing \
+                --export-height=$((icon_size * 2)) \
+                --export-filename="$temp_file4" \
+                -- "$input_file" 2>&1)
         fi
         _check_output "$?" "$std_output" "$input_file" "$temp_file4" || return 1
 
@@ -83,19 +93,41 @@ _main_task() {
         _check_output "$?" "$std_output" "$input_file" "$temp_file1" || return 1
 
         # Run the process (part 3) 'extend to square'.
-        std_output=$(convert "$temp_file1" -set option:distort:viewport "%[fx:max(w,h)]x%[fx:max(w,h)]+%[fx:(w-max(w,h))/2]+%[fx:(h-max(w,h))/2]" -virtual-pixel transparent -filter point -distort SRT 0 -bordercolor "$first_pixel_color" -border 1 -fill "$first_pixel_color" -draw "color 0,0 floodfill" -shave 1 -draw "color 0,0 floodfill" +repage "$temp_file2" 2>&1)
+        std_output=$(convert "$temp_file1" \
+            -set option:distort:viewport "%[fx:max(w,h)]x%[fx:max(w,h)]+%[fx:(w-max(w,h))/2]+%[fx:(h-max(w,h))/2]" \
+            -virtual-pixel transparent -filter point -distort SRT 0 -bordercolor "$first_pixel_color" \
+            -border 1 \
+            -fill "$first_pixel_color" \
+            -draw "color 0,0 floodfill" \
+            -shave 1 \
+            -draw "color 0,0 floodfill" +repage \
+            "$temp_file2" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$temp_file2" || return 1
 
         # Run the process (part 4) 'extend 14%' to add a border.
         local factor="1.14"
-        std_output=$(convert "$temp_file2" -set option:distort:viewport "%[fx:(w*$factor)]x%[fx:(h*$factor)]+%[fx:(w-(w*$factor))/2]+%[fx:(h-(h*$factor))/2]" -virtual-pixel transparent -filter point -distort SRT 0 -bordercolor "$first_pixel_color" -border 1 -fill "$first_pixel_color" -draw "color 0,0 floodfill" -shave 1 -draw "color 0,0 floodfill" +repage "$temp_file3" 2>&1)
+        std_output=$(convert "$temp_file2" \
+            -set option:distort:viewport "%[fx:(w*$factor)]x%[fx:(h*$factor)]+%[fx:(w-(w*$factor))/2]+%[fx:(h-(h*$factor))/2]" \
+            -virtual-pixel transparent \
+            -filter point \
+            -distort SRT 0 \
+            -bordercolor "$first_pixel_color" \
+            -border 1 \
+            -fill "$first_pixel_color" \
+            -draw "color 0,0 floodfill" \
+            -shave 1 \
+            -draw "color 0,0 floodfill" +repage "$temp_file3" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$temp_file3" || return 1
 
         input_file_proc=$temp_file3
     fi
 
     # Run the process (part 5) 'resize and crop the final image' to add a border.
-    std_output=$(convert "$input_file_proc" -resize "${icon_size}x${icon_size}^" -gravity center -crop ${icon_size}x${icon_size}+0+0 -strip +repage "$temp_file4" 2>&1)
+    std_output=$(convert "$input_file_proc" \
+        -resize "${icon_size}x${icon_size}^" \
+        -gravity center \
+        -crop ${icon_size}x${icon_size}+0+0 \
+        -strip +repage "$temp_file4" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$temp_file4" || return 1
 
     # Move the temporary file to the output.
