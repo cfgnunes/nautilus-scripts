@@ -147,7 +147,8 @@ _check_dependencies() {
             continue
         fi
 
-        # Ignore installing the dependency if the installed package managers differ.
+        # Ignore installing the dependency if the installed
+        # package managers differ.
         if [[ -n "$pkg_manager" ]] &&
             [[ "$pkg_manager_installed" != "$pkg_manager" ]]; then
             continue
@@ -160,7 +161,8 @@ _check_dependencies() {
             continue
         fi
 
-        # If the package is not specified, use the command name as the package name.
+        # If the package is not specified, use the command name as
+        # the package name.
         if [[ -z "$package" ]] && [[ -n "$command" ]]; then
             package=$command
         fi
@@ -719,7 +721,8 @@ _exit_script() {
     fi
 
     # Get the process ID (PID) of all child processes.
-    child_pids=$(pstree -p "$script_pid" | grep --only-matching --perl-regexp "\(+\K[^)]+")
+    child_pids=$(pstree -p "$script_pid" |
+        grep --only-matching --perl-regexp "\(+\K[^)]+")
 
     # NOTE: Use 'xargs' and kill to send the SIGTERM signal to all child
     # processes, including the current script.
@@ -913,7 +916,8 @@ _get_files() {
     # Check if there are input files.
     if (($(_get_items_count "$input_files") == 0)); then
         if [[ "$par_get_pwd" == "true" ]]; then
-            # Return the current working directory if no files have been selected.
+            # Return the current working directory if no files have been
+            # selected.
             input_files=$(_get_working_directory)
         else
             # Try selecting the files by opening a file selection box.
@@ -929,7 +933,9 @@ _get_files() {
     if [[ "$input_files" == *"://"* ]]; then
         local working_directory=""
         working_directory=$(_get_working_directory)
-        input_files=$(sed "s|[a-z0-9\+_-]*://[^$FIELD_SEPARATOR]*/|$working_directory/|g" <<<"$input_files")
+        input_files=$(sed \
+            "s|[a-z0-9\+_-]*://[^$FIELD_SEPARATOR]*/|$working_directory/|g" \
+            <<<"$input_files")
     fi
 
     # Pre-select the input files. Also, expand it (if 'par_recursive' is true).
@@ -940,7 +946,8 @@ _get_files() {
         "$par_select_extension" \
         "$par_recursive")
 
-    # Return the current working directory if no directories have been selected.
+    # Return the current working directory if no directories have been
+    # selected.
     if (($(_get_items_count "$input_files") == 0)); then
         if [[ "$par_get_pwd" == "true" ]] &&
             [[ "$par_type" == "directory" ]]; then
@@ -982,12 +989,14 @@ _get_file_encoding() {
     # This function retrieves the MIME encoding of a specified file.
     #
     # Parameters:
-    #   - $1 (filename): The path to the file whose encoding is to be determined.
+    #   - $1 (filename): The path to the file whose encoding is to be
+    #     determined.
 
     local filename=$1
     local std_output=""
 
-    std_output=$(file --dereference --brief --mime-encoding -- "$filename" 2>/dev/null)
+    std_output=$(file --dereference --brief --mime-encoding \
+        -- "$filename" 2>/dev/null)
 
     if [[ "$std_output" == "cannot"* ]]; then
         return
@@ -1005,7 +1014,8 @@ _get_file_mime() {
     local filename=$1
     local std_output=""
 
-    std_output=$(file --dereference --brief --mime-type -- "$filename" 2>/dev/null)
+    std_output=$(file --dereference --brief --mime-type \
+        -- "$filename" 2>/dev/null)
 
     if [[ "$std_output" == "cannot"* ]]; then
         return
@@ -1097,12 +1107,14 @@ _get_output_filename() {
     # selecting how the file extension should be handled.
     #
     # Parameters:
-    #   - $1 (input_file): The input file for which the output filename will be generated.
+    #   - $1 (input_file): The input file for which the output filename will be
+    #     generated.
     #   - $2 (output_dir): The directory where the output file will be placed.
     #   - $3 (parameters): A string containing optional parameters that define
     #     how the output filename should be constructed. It supports the
     #     following options:
-    #     - par_extension_opt: Specifies how to handle the file extension. Options are:
+    #     - par_extension_opt: Specifies how to handle the file extension.
+    #       Options are:
     #       - "append": Append a new extension "par_extension" to the existing
     #         file extension.
     #       - "preserve": Keep the original file extension.
@@ -1112,8 +1124,8 @@ _get_output_filename() {
     #     - par_extension: The extension to use when "par_extension_opt" is set
     #       to "append" or "replace". This value is ignored for the "preserve"
     #       and "strip" options.
-    #     - par_prefix: A string to be added as a prefix to the output filename.
-    #     - par_suffix: A string to be added as a suffix to the output
+    #     - par_prefix: A string to be added as prefix to the output filename.
+    #     - par_suffix: A string to be added as suffix to the output
     #       filename, placed before the extension.
 
     local input_file=$1
@@ -1193,7 +1205,8 @@ _get_temp_dir_local() {
     # directory to be removed later.
     #
     # Parameters:
-    #   - $1 (output_dir): The directory where the temporary directory will be created.
+    #   - $1 (output_dir): The directory where the temporary directory will be
+    #     created.
     #   - $2 (basename): The prefix for the temporary directory name.
     #
     # Output:
@@ -1202,7 +1215,8 @@ _get_temp_dir_local() {
     local output_dir=$1
     local basename=$2
     local temp_dir=""
-    temp_dir=$(mktemp --directory --tmpdir="$output_dir" "$basename.XXXXXXXX.tmp")
+    temp_dir=$(mktemp --directory \
+        --tmpdir="$output_dir" "$basename.XXXXXXXX.tmp")
 
     # Remember to remove this directory after exit.
     item_to_remove=$(mktemp --tmpdir="$TEMP_DIR_ITEMS_TO_REMOVE")
@@ -1264,7 +1278,8 @@ _get_working_directory() {
         working_directory=$NAUTILUS_SCRIPT_CURRENT_URI
     fi
 
-    if [[ -n "$working_directory" ]] && [[ "$working_directory" == "file://"* ]]; then
+    if [[ -n "$working_directory" ]] &&
+        [[ "$working_directory" == "file://"* ]]; then
         working_directory=$(_text_uri_decode "$working_directory")
     else
         # Files selected in the search screen (or other possible cases).
@@ -1272,9 +1287,10 @@ _get_working_directory() {
     fi
 
     if [[ -z "$working_directory" ]]; then
-        # NOTE: The working directory can be detected by using the directory name
-        # of the first input file. Some file managers do not send the working
-        # directory for the scripts, so it is not precise to use the 'pwd' command.
+        # NOTE: The working directory can be detected by using the directory
+        # name of the first input file. Some file managers do not send the
+        # working directory for the scripts, so it is not precise to use the
+        # 'pwd' command.
         local item_1=""
         item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
 
@@ -1300,7 +1316,8 @@ _is_directory_empty() {
 
     local directory=$1
 
-    if ! find "$directory" -mindepth 1 -maxdepth 1 -print -quit | grep -q .; then
+    if ! find "$directory" -mindepth 1 -maxdepth 1 -print -quit |
+        grep -q .; then
         return 0
     fi
     return 1
@@ -1547,7 +1564,9 @@ _open_items_locations() {
     elif [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]]; then
         file_manager="nautilus"
     else
-        file_manager=$(pgrep -o -l "caja|dolphin|nautilus|nemo|pcmanfm|pcmanfm-qt|thunar" | cut -f 2 -d " ")
+        file_manager=$(pgrep -o -l \
+            "caja|dolphin|nautilus|nemo|pcmanfm|pcmanfm-qt|thunar" |
+            cut -f 2 -d " ")
 
         # If no file manager is detected, fall back to the system default.
         if [[ -z "$file_manager" ]]; then
@@ -2333,7 +2352,8 @@ _xdg_get_default_app() {
 
     desktop_file=$(xdg-mime query default "$mime" 2>/dev/null)
 
-    default_app=$(grep -m1 "^Exec" "/usr/share/applications/$desktop_file" | sed "s|Exec=||g" | cut -d " " -f 1)
+    default_app=$(grep -m1 "^Exec" "/usr/share/applications/$desktop_file" |
+        sed "s|Exec=||g" | cut -d " " -f 1)
 
     if [[ -z "$default_app" ]]; then
         _display_error_box "Could not find the default application to open '$mime' files!"
