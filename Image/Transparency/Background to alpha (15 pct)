@@ -36,7 +36,22 @@ _main_task() {
     _check_output "$?" "$first_pixel_color" "$input_file" "" || return 1
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=png")
-    std_output=$(convert "$input_file" -alpha off -bordercolor "$first_pixel_color" -border 1 \( +clone -fuzz 15% -fill none -floodfill +0+0 "$first_pixel_color" -alpha extract -geometry 200% -blur 0x0.5 -morphology erode square:1 -geometry 50% \) -compose CopyOpacity -composite -shave 1 "$output_file" 2>&1)
+    std_output=$(convert "$input_file" \
+        -alpha off \
+        -bordercolor "$first_pixel_color" \
+        -border 1 \( +clone \
+        -fuzz 15% \
+        -fill none \
+        -floodfill +0+0 "$first_pixel_color" \
+        -alpha extract \
+        -geometry 200% \
+        -blur 0x0.5 \
+        -morphology erode square:1 \
+        -geometry 50% \) \
+        -compose CopyOpacity \
+        -composite \
+        -shave 1 \
+        "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
