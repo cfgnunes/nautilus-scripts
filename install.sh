@@ -373,8 +373,8 @@ _step_install_menus_dolphin() {
 
     # Generate a '.desktop' file for each script.
     find -L "$INSTALL_DIR" -mindepth 2 -type f \
-        ! -path "*.git*" ! -path "*.assets*" -print0 2>/dev/null |
-        sort --zero-terminated |
+        ! -path "*.git*" ! -path "*.assets*" \
+        -print0 2>/dev/null | sort --zero-terminated |
         while IFS= read -r -d "" filename; do
             # shellcheck disable=SC2001
             script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
@@ -463,8 +463,8 @@ _step_install_menus_pcmanfm() {
         printf "%s\n" "Name=Scripts"
         printf "%s" "ItemsList="
         find -L "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -type d \
-            ! -path "*.git*" ! -path "*.assets*" -printf "%f\n" 2>/dev/null |
-            sort | tr $'\n' ";" || true
+            ! -path "*.git*" ! -path "*.assets*" \
+            -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";" || true
         printf "\n"
     } >"${desktop_menus_dir}/Scripts.desktop"
     chmod +x "${desktop_menus_dir}/Scripts.desktop"
@@ -474,8 +474,8 @@ _step_install_menus_pcmanfm() {
     local name=""
     local dir_items=""
     find -L "$INSTALL_DIR" -mindepth 1 -type d \
-        ! -path "*.git*" ! -path "*.assets*" -print0 2>/dev/null |
-        sort --zero-terminated |
+        ! -path "*.git*" ! -path "*.assets*" \
+        -print0 2>/dev/null | sort --zero-terminated |
         while IFS= read -r -d "" filename; do
             name=${filename##*/}
             dir_items=$(find -L "$filename" -mindepth 1 -maxdepth 1 \
@@ -748,7 +748,10 @@ _step_install_shortcuts_gnome2() {
         printf "%s\n" '(gtk_accel_path "<Actions>/ShellActions/Show Hide Extra Pane" "")'
 
         local filename=""
-        find -L "$INSTALL_DIR" -mindepth 2 -type f ! -path "*.git*" ! -path "*.assets*" ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null | sort --zero-terminated |
+        find -L "$INSTALL_DIR" -mindepth 2 -type f \
+            ! -path "*.git*" ! -path "*.assets*" \
+            ! -path "$INSTALL_DIR/User previous scripts" \
+            -print0 2>/dev/null | sort --zero-terminated |
             while IFS="" read -r -d "" filename; do
 
                 local install_keyboard_shortcut=""
@@ -791,8 +794,8 @@ _step_install_shortcuts_thunar() {
         local filename=""
         find -L "$INSTALL_DIR" -mindepth 2 -type f \
             ! -path "*.git*" ! -path "*.assets*" \
-            ! -path "$INSTALL_DIR/User previous scripts" -print0 2>/dev/null |
-            sort --zero-terminated |
+            ! -path "$INSTALL_DIR/User previous scripts" \
+            -print0 2>/dev/null | sort --zero-terminated |
             while IFS="" read -r -d "" filename; do
 
                 local install_keyboard_shortcut=""
