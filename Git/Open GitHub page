@@ -1,0 +1,37 @@
+#!/bin/bash
+
+__DEBUG_LOG_FILE="$(basename "${BASH_SOURCE[0]}").log"
+# shellcheck source=scripts/_debug_output
+# source ~/scripts/_debug_output
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<< "$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+
+    # Execute initial checks.
+    _check_dependencies ""
+    input_files=$(_get_files "par_type=directory; par_max_items=20; par_get_pwd=true")
+    _unset_global_variables_file_manager
+
+    _open_git_hub_page "$input_files"
+}
+
+_open_git_hub_page() {
+    local input_files=$1
+    # Iterate over each input file (directory).
+    local input_file=""
+    for input_file in $input_files; do
+        url=$(git -C "$input_file" remote get-url origin 2>/dev/null | sed 's/.git$//')
+        if [[ -n "$url" ]]; then
+          xdg-open "$url"
+      else
+          _display_error_box "Error: Not a Git repository or no remote URL found."
+      fi
+    done
+}
+
+_main "$@"
