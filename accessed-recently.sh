@@ -5,6 +5,7 @@
 # The folder serves as a shortcut to quickly access frequently used scripts.
 
 ACCESSED_LINKS_PATH="$ROOT_DIR/Accessed recently"
+readonly ACCESSED_LINKS_PATH
 
 _clean_up_accessed_files() {
     # This function Cleans up the "Accessed recently" folder by:
@@ -49,42 +50,53 @@ _clean_up_accessed_files() {
 
 _link_file_to_accessed() {
     # This function creates a symbolic link to the specified file in the "Accessed recently" folder.
+    #
+    # Parameters:
+    #   - $1 (file): The path to the file that will be linked in the "Accessed recently" folder.
 
-    local directory="$ACCESSED_LINKS_PATH"
     local file="$1"
 
-    pushd "$directory" &>/dev/null || true
+    pushd "$ACCESSED_LINKS_PATH" &>/dev/null || return
 
     # Create a symbolic link to the specified file in the directory.
     ln -s "$file" .
 
-    popd &>/dev/null || true
-    _clean_up_accessed_files
+    popd &>/dev/null || return
 }
 
-# Identify the script being executed to potentially add it to the "Accessed recently" folder.
-SCRIPT_NAME=$(basename -- "$(realpath -e "$0")")
-SCRIPT_MATCHES=$(find "$ROOT_DIR" -path "$ACCESSED_LINKS_PATH" -prune -o -type f -name "$SCRIPT_NAME" -print)
+_update_accessed_recently_history() {
+    local script_name=""
+    local script_matches=""
+    local match_count=0
+    local script_to_link_full_path=""
 
-if [ -z "$SCRIPT_MATCHES" ]; then
-    MATCH_COUNT=0
-else
-    MATCH_COUNT=$(echo "$SCRIPT_MATCHES" | wc -l)
-fi
+    # Identify the script being executed to potentially add it to the "Accessed recently" folder.
+    script_name=$(basename -- "$(realpath -e "$0")")
+    script_matches=$(find "$ROOT_DIR" -path "$ACCESSED_LINKS_PATH" -prune -o -type f -name "$script_name" -print)
 
-# If exactly one match is found, store its full path for linking.
-if [[ $MATCH_COUNT == 1 ]]; then
-    SCRIPT_TO_LINK_FULL_PATH="$SCRIPT_MATCHES"
-else
-    _display_error_box "Can't find [ $SCRIPT_NAME ] location to link in accessed"
-fi
+    if [ -z "$script_matches" ]; then
+        match_count=0
+    else
+        match_count=$(echo "$script_matches" | wc -l)
+    fi
 
-# Ensure the "Accessed recently" directory exists, creating it if necessary.
-if [[ ! -d $ACCESSED_LINKS_PATH ]]; then
-    mkdir -p "$ACCESSED_LINKS_PATH"
-fi
+    # If exactly one match is found, store its full path for linking.
+    if [[ $match_count == 1 ]]; then
+        script_to_link_full_path="$script_matches"
+    else
+        _display_error_box "Can't find [ $script_name ] location to link in accessed"
+    fi
 
-# If the script's full path is determined and it exists, link it to the folder.
-if [[ -n $SCRIPT_TO_LINK_FULL_PATH ]] && [[ -f $SCRIPT_TO_LINK_FULL_PATH ]]; then
-    _link_file_to_accessed "$SCRIPT_TO_LINK_FULL_PATH"
-fi
+    # Ensure the "Accessed recently" directory exists, creating it if necessary.
+    if [[ ! -d $ACCESSED_LINKS_PATH ]]; then
+        mkdir -p "$ACCESSED_LINKS_PATH"
+    fi
+
+    # If the script's full path is determined and it exists, link it to the folder.
+    if [[ -n $script_to_link_full_path ]] && [[ -f $script_to_link_full_path ]]; then
+        _link_file_to_accessed "$script_to_link_full_path"
+        _clean_up_accessed_files
+    fi
+}
+
+_update_accessed_recently_history
