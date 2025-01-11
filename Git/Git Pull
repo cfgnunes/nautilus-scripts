@@ -1,55 +1,37 @@
-#!/bin/bash
-
-__DEBUG_LOG_FILE="$(basename "${BASH_SOURCE[0]}").log"
-# shellcheck source=scripts/_debug_output
-# source ~/scripts/_debug_output
+#!/usr/bin/env bash
 
 # Source the script 'common-functions.sh'.
-SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<< "$SCRIPT_DIR")
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
-
-is_git_repo() {
-    # Try to get the current Git branch name
-    local folder
-    folder="$1"
-    local branch
-    branch=$(git -C "$folder" rev-parse --abbrev-ref HEAD 2>/dev/null)
-
-    # Check if the command succeeded
-    if [[ $? -eq 0 ]]; then
-        # If in a Git repository, print the branch name
-        _display_info_box "$folder is part of a Git repository on branch: $branch"
-        return 0
-    else
-        # If not in a Git repository
-        _display_info_box "$folder is NOT part of a Git repository."
-        return 1
-    fi
-}
 
 _main() {
     local input_files=""
+    local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies ""
-    input_files=$(_get_files "par_type=directory; par_max_items=1; par_get_pwd=true")
-    _unset_global_variables_file_manager
+    _check_dependencies "command=git"
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=directory; par_get_pwd=true")
 
-    _git_pull "$input_files"
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+
+    _display_result_box ""
 }
 
-_git_pull() {
-    local input_files=$1
-    # Iterate over each input file (directory).
-    local input_file=""
-    for input_file in $input_files; do
-        if is_git_repo "$input_file"; then
-            cd -- "$input_file" || return 1
-            std_output=$(git pull)
-            _display_text_box "$std_output"
-        fi
-    done
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local std_output=""
+
+    # Check if the current directory is a GIT repository.
+    std_output=$(git -C "$input_file" rev-parse --abbrev-ref HEAD 2>/dev/null)
+    _check_output "$?" "The directory '$input_file' is not a GIT repository." "$input_file" "" || return 1
+
+    cd -- "$input_file" || return 1
+    std_output=$(git pull --all --tags --prune)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
 _main "$@"
