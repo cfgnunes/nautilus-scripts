@@ -1345,7 +1345,7 @@ _is_directory_empty() {
     local directory=$1
 
     if ! find "$directory" -mindepth 1 -maxdepth 1 -print -quit |
-        grep -q .; then
+        grep --quiet .; then
         return 0
     fi
     return 1
