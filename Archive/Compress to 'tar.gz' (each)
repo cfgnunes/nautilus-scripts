@@ -37,14 +37,14 @@ _main_task() {
         fi
 
         # Change to the directory to perform compression.
-        cd -- "$input_file" || return 1
+        _directory_push "$input_file" || return 1
 
         local files=""
         files=$(find . -mindepth 1 -maxdepth 1 -printf "%p$FIELD_SEPARATOR" 2>/dev/null | sed "s|\./||g")
         std_output=$(printf "%s" "$files" | xargs --no-run-if-empty --delimiter="$FIELD_SEPARATOR" tar -czf "$output_file" --)
     else
         # If the input is a file, change to its parent directory.
-        cd -- "$(_get_filename_dir "$input_file")" || return 1
+        _directory_push "$(_get_filename_dir "$input_file")" || return 1
 
         # Extract the base name of the input file for compression.
         local input_file_basename=""
@@ -53,6 +53,7 @@ _main_task() {
         std_output=$(tar -czf "$output_file" -- "$input_file_basename" 2>&1)
     fi
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+    _directory_pop || return 1
 }
 
 _main "$@"

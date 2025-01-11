@@ -30,13 +30,15 @@ _main_task() {
     _check_output "$?" "The directory '$input_file' is not a Git repository." \
         "$input_file" "" || return 1
 
-    cd -- "$top_level" || return 1
+    _directory_push "$top_level" || return 1
 
     # Run the main process.
     # git gc: Cleanup unnecessary files and optimize the local repository.
     # --prune: prune loose objects older than date.
     std_output=$(git gc --prune=all)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    _directory_pop || return 1
 }
 
 _main "$@"

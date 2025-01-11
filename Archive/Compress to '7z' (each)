@@ -40,7 +40,7 @@ _main_task() {
         fi
 
         # Change to the directory to perform compression.
-        cd -- "$input_file" || return 1
+        _directory_push "$input_file" || return 1
 
         # Check for available compression tools and compress the directory accordingly.
         if _command_exists "7za"; then
@@ -50,7 +50,7 @@ _main_task() {
         fi
     else
         # If the input is a file, change to its parent directory.
-        cd -- "$(_get_filename_dir "$input_file")" || return 1
+        _directory_push "$(_get_filename_dir "$input_file")" || return 1
 
         # Extract the base name of the input file for compression.
         local input_file_basename=""

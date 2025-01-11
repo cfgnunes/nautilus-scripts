@@ -37,34 +37,34 @@ _flatten_directory() {
     # Create an "undo script" to reverse the flattening operation.
     undo_script=$(_make_undo_script "$directory")
 
-    (
-        cd -- "$directory" || return 1
+    _directory_push "$directory" || return 1
 
-        # Generate a list of all files (not directories) in the current directory and its subdirectories.
-        find . -mindepth 2 -not -type d 2>/dev/null >>"$temp_file"
+    # Generate a list of all files (not directories) in the current directory and its subdirectories.
+    find . -mindepth 2 -not -type d 2>/dev/null >>"$temp_file"
 
-        # For each directory, add a command to the "undo script" to recreate the directory structure.
-        find . -type d 2>/dev/null | grep "/" | xargs -I{} printf "%s\n" "mkdir -p -- \"{}\"" >>"$undo_script"
+    # For each directory, add a command to the "undo script" to recreate the directory structure.
+    find . -type d 2>/dev/null | grep "/" | xargs -I{} printf "%s\n" "mkdir -p -- \"{}\"" >>"$undo_script"
 
-        # Loop through each file in the list and move it to the root directory.
-        while read -r full_path_filename; do
-            # Get the file's name (basename) for moving it to the root directory.
-            filename="./$(basename "$full_path_filename")"
+    # Loop through each file in the list and move it to the root directory.
+    while read -r full_path_filename; do
+        # Get the file's name (basename) for moving it to the root directory.
+        filename="./$(basename "$full_path_filename")"
 
-            # Move the file to the root directory.
-            _move_file "skip" "$full_path_filename" "$filename"
-            exit_code=$?
+        # Move the file to the root directory.
+        _move_file "skip" "$full_path_filename" "$filename"
+        exit_code=$?
 
-            # If the file was moved successfully and the name was changed, add to the "undo script".
-            if ((exit_code == 0)); then
-                # Print 'mv' command in Undo script.
-                printf "%s\n" "mv -n -- \"$filename\" \"$full_path_filename\"" >>"$undo_script"
-            fi
-        done <"$temp_file"
+        # If the file was moved successfully and the name was changed, add to the "undo script".
+        if ((exit_code == 0)); then
+            # Print 'mv' command in Undo script.
+            printf "%s\n" "mv -n -- \"$filename\" \"$full_path_filename\"" >>"$undo_script"
+        fi
+    done <"$temp_file"
 
-        # Remove any empty directories that remain after moving the files.
-        find . -type d -empty -delete 2>/dev/null
-    )
+    # Remove any empty directories that remain after moving the files.
+    find . -type d -empty -delete 2>/dev/null
+
+    _directory_pop || return 1
 
     # Remove the temporary files.
     rm -f -- "$temp_file"

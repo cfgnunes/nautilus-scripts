@@ -32,11 +32,12 @@ _main_task() {
     local output_dir=$2
     local std_output=""
 
-    cd -- "$output_dir" 2>/dev/null || return 1
+    _directory_push "$output_dir" 2>/dev/null || return 1
 
     # Run the main process.
     std_output=$(git clone -q -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
+    _directory_pop || return 1
 }
 
 _get_urls_from_clipboard() {

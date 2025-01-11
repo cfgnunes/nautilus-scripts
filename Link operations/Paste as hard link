@@ -32,16 +32,18 @@ _main_task() {
     local output_dir=$2
     local std_output=""
 
-    cd -- "$output_dir" 2>/dev/null || return 1
-
     if ! [[ -e "$input_file" ]]; then
         return 1
     fi
+
+    _directory_push "$output_dir" 2>/dev/null || return 1
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve")
     std_output=$(cp -Ral -- "$input_file" "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+
+    _directory_pop || return 1
 }
 
 _get_urls_from_clipboard() {

@@ -30,7 +30,7 @@ _main_task() {
     _check_output "$?" "The directory '$input_file' is not a Git repository." \
         "$input_file" "" || return 1
 
-    cd -- "$top_level" || return 1
+    _directory_push "$top_level" || return 1
 
     # Run the main process.
     # git clean: Remove untracked files from the working tree.
@@ -39,6 +39,8 @@ _main_task() {
     # -f: removes untracked files.
     std_output=$(git clean -xdf)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    _directory_pop || return 1
 }
 
 _main "$@"
