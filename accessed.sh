@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ACCESSED_LINKS_PATH="$ROOT_DIR/Accessed"
+ACCESSED_LINKS_PATH="$ROOT_DIR/Accessed recently"
 
 _clean_up_accessed_files() {
     local directory="$ACCESSED_LINKS_PATH"
@@ -10,7 +10,7 @@ _clean_up_accessed_files() {
     while IFS= read -r -d '' file; do
         local link_target
         link_target=$(readlink "$file")
-        if [[ -n $link_target   ]]; then
+        if [[ -n $link_target ]]; then
             set +u
             if [[ -n ${file_map[$link_target]} ]]; then
                 # _display_info_box "Removing duplicate link $file"
