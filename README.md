@@ -80,14 +80,14 @@ While numerous scripts are available for file managers on the web, many suffer f
 
 File managers compatibility:
 
-| File manager           | Environment | Menu integration | Menu "Accessed recently" | Shortcuts |
-| ---------------------- | ----------- | ---------------- | ------------------------ | --------- |
-| GNOME Files (Nautilus) | GNOME       | Yes              | Yes                      | Yes       |
-| Caja                   | MATE        | Yes              | Yes                      | Yes       |
-| Nemo                   | Cinnamon    | Yes              | Yes                      | Yes       |
-| Dolphin                | KDE Plasma  | Yes              | No                       | No        |
-| PCManFM-Qt             | LXQt        | Yes              | No                       | No        |
-| Thunar                 | Xfce        | Yes              | No                       | Yes       |
+| File manager           | Environment | Menu integration | Menu "Accessed recently" | Keyboard shortcuts |
+| ---------------------- | ----------- | ---------------- | ------------------------ | ------------------ |
+| GNOME Files (Nautilus) | GNOME       | Yes              | Yes                      | Yes                |
+| Caja                   | MATE        | Yes              | Yes                      | Yes                |
+| Nemo                   | Cinnamon    | Yes              | Yes                      | Yes                |
+| Dolphin                | KDE Plasma  | Yes              | No                       | No                 |
+| PCManFM-Qt             | LXQt        | Yes              | No                       | No                 |
+| Thunar                 | Xfce        | Yes              | No                       | Yes                |
 
 Most scripts have been tested on the following GNU/Linux distributions:
 
