@@ -73,12 +73,12 @@ _link_file_to_accessed() {
 
     local file="$1"
 
-    pushd "$ACCESSED_RECENTLY_DIR" &>/dev/null || return
+    _directory_push "$ACCESSED_RECENTLY_DIR" || return 1
 
     # Create a symbolic link to the specified file in the directory.
     ln -s "$file" .
 
-    popd &>/dev/null || return
+    _directory_pop || return 1
 }
 
 _update_accessed_recently_history() {

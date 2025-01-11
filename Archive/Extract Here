@@ -254,13 +254,13 @@ _run_command() {
     filename=$(basename -- "$input_file")             # Remove the path.
     filename=$(_strip_filename_extension "$filename") # Remove the extension.
 
-    __temp_dir_cd() {
+    __temp_dir_push() {
         temp_dir_output=$(_get_temp_dir_local "$output_dir" "$filename")
-        pushd "$temp_dir_output" &>/dev/null || true
+        _directory_push "$temp_dir_output" || return 1
     }
-    __temp_dir_exit() {
+    __temp_dir_pop() {
         # Exit the temporary directory.
-        popd &>/dev/null || true
+        _directory_pop || return 1
     }
     __temp_dir_remove() {
         rm -rf -- "$temp_dir_output" &>/dev/null
@@ -270,7 +270,7 @@ _run_command() {
     }
 
     # Use a local temporary directory to work.
-    __temp_dir_cd
+    __temp_dir_push || return 1
 
     case "$command" in
     "7za")
@@ -279,9 +279,9 @@ _run_command() {
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "wrong password" <<<"$std_output"; then
             local password=""
-            __temp_dir_exit && __temp_dir_remove
+            __temp_dir_pop && __temp_dir_remove
             password=$(__get_password) || return 1
-            __temp_dir_cd
+            __temp_dir_push || return 1
             std_output=$($command_7za x -aoa -p"$password" -- "$input_file" 2>&1)
             exit_code=$?
         fi
@@ -293,9 +293,9 @@ _run_command() {
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect passphrase" <<<"$std_output"; then
             local password=""
-            __temp_dir_exit && __temp_dir_remove
+            __temp_dir_pop && __temp_dir_remove
             password=$(__get_password) || return 1
-            __temp_dir_cd
+            __temp_dir_push || return 1
             std_output=$(bsdtar --passphrase "$password" -xf "$input_file" 2>&1)
             exit_code=$?
         fi
@@ -327,9 +327,9 @@ _run_command() {
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "requires a password" <<<"$std_output"; then
             local password=""
-            __temp_dir_exit && __temp_dir_remove
+            __temp_dir_pop && __temp_dir_remove
             password=$(__get_password) || return 1
-            __temp_dir_cd
+            __temp_dir_push || return 1
             std_output=$(unar -force-overwrite -password "$password" -- "$input_file" 2>&1)
             exit_code=$?
         fi
@@ -340,9 +340,9 @@ _run_command() {
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect password for" <<<"$std_output"; then
             local password=""
-            __temp_dir_exit && __temp_dir_remove
+            __temp_dir_pop && __temp_dir_remove
             password=$(__get_password) || return 1
-            __temp_dir_cd
+            __temp_dir_push || return 1
             std_output=$(unrar x -p"$password" -- "$input_file" 2>&1)
             exit_code=$?
         fi
@@ -354,9 +354,9 @@ _run_command() {
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect password" <<<"$std_output"; then
             local password=""
-            __temp_dir_exit && __temp_dir_remove
+            __temp_dir_pop && __temp_dir_remove
             password=$(__get_password) || return 1
-            __temp_dir_cd
+            __temp_dir_push || return 1
             std_output=$(unzip -P "$password" -- "$input_file" 2>&1)
             exit_code=$?
         fi
@@ -401,7 +401,7 @@ _run_command() {
         local non_zero_files=""
         non_zero_files=$(find . -type f ! -size 0 2>/dev/null)
         if [[ -z "$non_zero_files" ]]; then
-            __temp_dir_exit && __temp_dir_remove
+            __temp_dir_pop && __temp_dir_remove
             return 1
         fi
     fi
@@ -427,11 +427,11 @@ _run_command() {
 
     # Check if the 'temp_dir_output' is empty.
     if ((count_root_items == 0)); then
-        __temp_dir_exit && __temp_dir_remove
+        __temp_dir_pop && __temp_dir_remove
         return 1
     fi
 
-    __temp_dir_exit
+    __temp_dir_pop || return 1
 
     # Move the items to the correct directory.
     if [[ "$single_root_item" == "$filename" ]] || [[ "$(_strip_filename_extension "$single_root_item")" == "$filename" ]]; then

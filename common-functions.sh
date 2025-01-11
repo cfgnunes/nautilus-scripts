@@ -254,6 +254,34 @@ _convert_delimited_string_to_text() {
     printf "%s" "$input_items"
 }
 
+_directory_pop() {
+    # This function pops the top directory off the directory stack and changes
+    # to the previous directory.
+
+    popd &>/dev/null || {
+        _log_write "Error: Could not pop a directory." "" "" ""
+        return 1
+    }
+    return 0
+}
+
+_directory_push() {
+    # This function pushes the specified directory onto the directory stack and
+    # changes to it.
+    #
+    # Parameters:
+    #   - $1 (directory): The target directory to push onto the directory stack
+    #     and navigate to.
+
+    local directory=$1
+
+    pushd "$directory" &>/dev/null || {
+        _log_write "Error: Could not push the directory '$directory'." "" "" ""
+        return 1
+    }
+    return 0
+}
+
 _convert_text_to_delimited_string() {
     # This function converts newline-separated text into a delimited string of
     # items.
@@ -1785,6 +1813,8 @@ _run_task_parallel() {
         _command_exists \
         _convert_delimited_string_to_text \
         _convert_text_to_delimited_string \
+        _directory_pop \
+        _directory_push \
         _display_password_box \
         _exit_script \
         _get_file_encoding \
