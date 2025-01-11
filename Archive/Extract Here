@@ -280,7 +280,7 @@ _run_command() {
         if ((exit_code != 0)) && grep --quiet --ignore-case "wrong password" <<<"$std_output"; then
             local password=""
             __temp_dir_exit && __temp_dir_remove
-            password=$(__get_password) || exit 1
+            password=$(__get_password) || return 1
             __temp_dir_cd
             std_output=$($command_7za x -aoa -p"$password" -- "$input_file" 2>&1)
             exit_code=$?
@@ -294,7 +294,7 @@ _run_command() {
         if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect passphrase" <<<"$std_output"; then
             local password=""
             __temp_dir_exit && __temp_dir_remove
-            password=$(__get_password) || exit 1
+            password=$(__get_password) || return 1
             __temp_dir_cd
             std_output=$(bsdtar --passphrase "$password" -xf "$input_file" 2>&1)
             exit_code=$?
@@ -328,7 +328,7 @@ _run_command() {
         if ((exit_code != 0)) && grep --quiet --ignore-case "requires a password" <<<"$std_output"; then
             local password=""
             __temp_dir_exit && __temp_dir_remove
-            password=$(__get_password) || exit 1
+            password=$(__get_password) || return 1
             __temp_dir_cd
             std_output=$(unar -force-overwrite -password "$password" -- "$input_file" 2>&1)
             exit_code=$?
@@ -341,7 +341,7 @@ _run_command() {
         if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect password for" <<<"$std_output"; then
             local password=""
             __temp_dir_exit && __temp_dir_remove
-            password=$(__get_password) || exit 1
+            password=$(__get_password) || return 1
             __temp_dir_cd
             std_output=$(unrar x -p"$password" -- "$input_file" 2>&1)
             exit_code=$?
@@ -355,7 +355,7 @@ _run_command() {
         if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect password" <<<"$std_output"; then
             local password=""
             __temp_dir_exit && __temp_dir_remove
-            password=$(__get_password) || exit 1
+            password=$(__get_password) || return 1
             __temp_dir_cd
             std_output=$(unzip -P "$password" -- "$input_file" 2>&1)
             exit_code=$?
