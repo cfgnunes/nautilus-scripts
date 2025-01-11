@@ -53,15 +53,12 @@ _link_file_to_accessed() {
     local directory="$ACCESSED_LINKS_PATH"
     local file="$1"
 
-    pushd "$directory" || {
-        _display_error_box "${FUNCNAME[0]}: Can't access folder"
-        exit
-    }
+    pushd "$directory" &>/dev/null || true
 
     # Create a symbolic link to the specified file in the directory.
     ln -s "$file" .
 
-    popd || _display_error_box "${FUNCNAME[0]}: Can't popd"
+    popd &>/dev/null || true
     _clean_up_accessed_files
 }
 
