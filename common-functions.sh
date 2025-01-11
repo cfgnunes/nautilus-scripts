@@ -2030,7 +2030,7 @@ _text_uri_decode() {
 }
 
 _unset_global_variables_file_manager() {
-    # This function unsets global variables that may have been set by different
+    # This function unset global variables that may have been set by different
     # file managers (Caja, Nautilus, Nemo) during script execution.
 
     unset \
