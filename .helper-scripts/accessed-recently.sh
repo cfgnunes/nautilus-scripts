@@ -26,6 +26,7 @@ _clean_up_accessed_files() {
     # - Renaming the links with zero-padded numeric prefixes for easy sorting.
 
     local file=""
+    local files=()
     declare -A file_map
 
     # Read all symbolic links in the directory.
@@ -39,7 +40,7 @@ _clean_up_accessed_files() {
                 rm -f "$file"
             else
                 file_map["$link_target"]="$file"
-                local files+=("$file")
+                files+=("$file")
             fi
             set -u
         fi
