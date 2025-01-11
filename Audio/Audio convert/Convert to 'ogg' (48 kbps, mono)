@@ -32,7 +32,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=ogg")
-    std_output=$(ffmpeg -hide_banner -y -i "$input_file" -vn -ac 2 -- "$output_file" 2>&1)
+    std_output=$(ffmpeg -hide_banner -y -i "$input_file" -vn -c:a libvorbis -b:a 48k -ac 1 -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
