@@ -1341,12 +1341,12 @@ _log_write() {
     # temporary log file.
     #
     # Parameters:
-    #   - $1: (message): A message to be logged.
-    #   - $2: (input_file): The path of the input file associated with the
+    #   - $1 (message): A message to be logged.
+    #   - $2 (input_file): The path of the input file associated with the
     #     operation.
-    #   - $3: (std_output): The standard output or result from the operation
+    #   - $3 (std_output): The standard output or result from the operation
     #     that will be logged.
-    #   - $4: (output_file): The path of the output file associated with the
+    #   - $4 (output_file): The path of the output file associated with the
     #     operation.
 
     local message=$1
@@ -1499,11 +1499,11 @@ _move_temp_file_to_output() {
     # handling various conditions to ensure the move is safe and proper.
     #
     # Parameters:
-    #   - $1: (input_file): The path to the original input file, which may be
+    #   - $1 (input_file): The path to the original input file, which may be
     #     backed up during the process.
-    #   - $2: (temp_file): The temporary file to be moved to the output
+    #   - $2 (temp_file): The temporary file to be moved to the output
     #     location.
-    #   - $3: (output_file): The target path where the temp file should be
+    #   - $3 (output_file): The target path where the temp file should be
     #     moved.
 
     local input_file=$1
@@ -1541,9 +1541,9 @@ _open_items_locations() {
     # file manager.
     #
     # Parameters:
-    #   - $1: (items): A space-separated list of file or directory paths whose
+    #   - $1 (items): A space-separated list of file or directory paths whose
     #   locations will be opened. Paths can be relative or absolute.
-    #   - $2: (resolve_links): A boolean-like string ("true" or "false")
+    #   - $2 (resolve_links): A boolean-like string ("true" or "false")
     #   indicating whether symbolic links in the provided paths should be
     #   resolved to their target locations before opening.
 
