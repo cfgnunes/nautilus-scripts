@@ -20,6 +20,17 @@ _main() {
 }
 
 _convert_git_to_web_url() {
+    # This function converts a Git remote URL into a web-compatible URL for
+    # browser access.
+    #
+    # Parameters:
+    #   - $1 (git_url): The Git remote URL to convert. It can be in various
+    #     formats, such as:
+    #        - HTTPS (e.g., https://github.com/user/repo.git)
+    #        - SSH (e.g., git@github.com:user/repo.git or
+    #          ssh://git@github.com/user/repo.git)
+    #        - Git protocol (e.g., git://github.com/user/repo.git)
+
     local git_url="$1"
     local web_url=""
 
@@ -45,6 +56,12 @@ _convert_git_to_web_url() {
 }
 
 _open_repository_website() {
+    # This function opens the website corresponding to the remote Git
+    # repository for one or more directories.
+    #
+    # Parameters:
+    #   - $1 (input_file): A space-separated list of directories to process.
+
     local input_files=$1
     local input_file=""
 
@@ -53,11 +70,18 @@ _open_repository_website() {
         local git_url=""
         local web_url=""
 
+        # Retrieve the URL of the remote 'origin' repository for the Git
+        # repository.
         git_url=$(git -C "$input_file" remote get-url origin 2>/dev/null)
-        _check_output "$?" "The directory '$input_file' is not a Git repository." "$input_file" "" || continue
+        _check_output "$?" \
+            "The directory '$input_file' is not a Git repository." \
+            "$input_file" "" || continue
 
+        # Convert the Git remote URL into a web-compatible URL
+        # (e.g., from SSH/HTTPS Git URL to a browser-accessible URL).
         web_url=$(_convert_git_to_web_url "$git_url")
 
+        # If a valid web URL was generated, open it in the default web browser.
         if [[ -n "$web_url" ]]; then
             xdg-open "$web_url"
         else
