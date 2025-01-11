@@ -21,24 +21,20 @@ _convert_git_to_web_url() {
     local git_url="$1"
     local web_url=""
 
-    # Validate input.
-    if [[ ! "$git_url" =~ ^(https|git|ssh):// ]] && [[ ! "$git_url" =~ ^git@ ]]; then
-        echo "Invalid Git URL format."
-        return 1
-    fi
+    git_url=${git_url//@ssh\./@}
 
     if [[ "$git_url" =~ ^https:// ]]; then
         # HTTPS URL, replace `.git` if present
         web_url="${git_url%.git}"
     elif [[ "$git_url" =~ ^git@ ]]; then
         # SSH URL (e.g., git@github.com:user/repo.git)
-        web_url=$(echo "$git_url" | sed -E 's/^git@([^:]+):/https:\/\/\1\//;s/\.git$//')
+        web_url=$(sed -E 's/^git@([^:]+):/https:\/\/\1\//;s/\.git$//' <<<"$git_url")
     elif [[ "$git_url" =~ ^git:// ]]; then
         # Git protocol URL (e.g., git://github.com/user/repo.git)
-        web_url=$(echo "$git_url" | sed -E 's/^git:\/\//https:\/\//;s/\.git$//')
+        web_url=$(sed -E 's/^git:\/\//https:\/\//;s/\.git$//' <<<"$git_url")
     elif [[ "$git_url" =~ ^ssh:// ]]; then
         # SSH URL (e.g., ssh://git@github.com/user/repo.git)
-        web_url=$(echo "$git_url" | sed -E 's/^ssh:\/\/git@([^/]+)\//https:\/\/\1\//;s/\.git$//')
+        web_url=$(sed -E 's/^ssh:\/\/git@([^/]+)\//https:\/\/\1\//;s/\.git$//' <<<"$git_url")
     else
         return 1
     fi
@@ -56,6 +52,7 @@ _open_repository_website() {
         local web_url=""
         git_url=$(git -C "$input_file" remote get-url origin 2>/dev/null)
         web_url=$(_convert_git_to_web_url "$git_url")
+
         if [[ -n "$web_url" ]]; then
             xdg-open "$web_url"
         fi
