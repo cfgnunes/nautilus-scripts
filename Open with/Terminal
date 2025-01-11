@@ -40,7 +40,7 @@ _open_app() {
     # Iterate over each input file (directory).
     local input_file=""
     for input_file in $input_files; do
-        cd "$input_file" || exit 1
+        cd -- "$input_file" 2>/dev/null || continue
 
         # Try each app in the list.
         local app=""

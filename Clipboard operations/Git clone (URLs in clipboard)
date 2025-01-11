@@ -32,7 +32,7 @@ _main_task() {
     local output_dir=$2
     local std_output=""
 
-    cd "$output_dir" || return 1
+    cd -- "$output_dir" 2>/dev/null || return 1
 
     # Run the main process.
     std_output=$(git clone -q -- "$input_file" 2>&1)
