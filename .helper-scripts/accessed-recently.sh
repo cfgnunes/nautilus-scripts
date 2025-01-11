@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# This script manages an "Accessed recently" folder within the "scripts" directory.
+# This script manages an "Accessed recently" directory within the scripts directory.
 # It creates symbolic links to maintain a list of the 10 most recently accessed scripts.
-# The folder serves as a shortcut to quickly access frequently used scripts.
+# The directory serves as a shortcut to quickly access frequently used scripts.
 
 # -----------------------------------------------------------------------------
 # CONSTANTS
@@ -20,9 +20,9 @@ readonly \
 # -----------------------------------------------------------------------------
 
 _clean_up_accessed_files() {
-    # This function Cleans up the "Accessed recently" folder by:
+    # This function Cleans up the '$ACCESSED_RECENTLY_DIR' directory by:
     # - Removing duplicate symbolic links.
-    # - Keeping only the 'NUM_LINKS_TO_KEEP' most recently accessed files.
+    # - Keeping only the '$NUM_LINKS_TO_KEEP' most recently accessed files.
     # - Renaming the links with zero-padded numeric prefixes for easy sorting.
 
     local file=""
@@ -46,7 +46,7 @@ _clean_up_accessed_files() {
         fi
     done < <(find "$ACCESSED_RECENTLY_DIR" -maxdepth 1 -type l -printf '%T@ %p\0' | sort -r -z -n | cut -z -d " " -f2-)
 
-    # Delete all but the most recent 'NUM_LINKS_TO_KEEP' symbolic links.
+    # Delete all but the most recent '$NUM_LINKS_TO_KEEP' symbolic links.
     for ((i = NUM_LINKS_TO_KEEP; i < ${#files[@]}; i++)); do
         rm -f "${files[$i]}"
     done
@@ -60,10 +60,12 @@ _clean_up_accessed_files() {
 }
 
 _link_file_to_accessed() {
-    # This function creates a symbolic link to the specified file in the "Accessed recently" folder.
+    # This function creates a symbolic link to the specified file in the '$ACCESSED_RECENTLY_DIR'
+    # directory.
     #
     # Parameters:
-    #   - $1 (file): The path to the file that will be linked in the "Accessed recently" folder.
+    #   - $1 (file): The path to the file that will be linked in the '$ACCESSED_RECENTLY_DIR'
+    #     directory.
 
     local file="$1"
 
@@ -76,6 +78,10 @@ _link_file_to_accessed() {
 }
 
 _update_accessed_recently_history() {
+    # This function updates the history of recently accessed scripts. It ensures that the script
+    # currently being executed is properly tracked and linked within the '$ACCESSED_RECENTLY_DIR'
+    # directory.
+
     local script_name=""
     local script_matches=""
     local match_count=0
@@ -86,7 +92,8 @@ _update_accessed_recently_history() {
         mkdir -p "$ACCESSED_RECENTLY_DIR"
     fi
 
-    # Identify the script being executed to potentially add it to the '$ACCESSED_RECENTLY_DIR' folder.
+    # Identify the script being executed to potentially add it
+    # to the '$ACCESSED_RECENTLY_DIR' directory.
     script_name=$(basename -- "$(realpath -e "$0")")
     script_matches=$(find "$ROOT_DIR" -path "$ACCESSED_RECENTLY_DIR" -prune -o -type f -name "$script_name" -print)
 
@@ -101,7 +108,7 @@ _update_accessed_recently_history() {
         script_to_link_full_path="$script_matches"
     fi
 
-    # If the script's full path is determined and it exists, link it to the folder.
+    # If the script's full path is determined and it exists, link it to the directory.
     if [[ -n $script_to_link_full_path ]] && [[ -f $script_to_link_full_path ]]; then
         _link_file_to_accessed "$script_to_link_full_path"
         _clean_up_accessed_files
