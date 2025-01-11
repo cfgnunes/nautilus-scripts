@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# This script manages an "Accessed recently" directory within the scripts directory.
+# This script manages an "Accessed recently" directory within the scripts' directory.
 # It creates symbolic links to maintain a list of the 10 most recently accessed scripts.
 # The directory serves as a shortcut to quickly access frequently used scripts.
 
