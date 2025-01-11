@@ -8,7 +8,6 @@ set -eu
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
-SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 COMPATIBLE_FILE_MANAGERS=(
     "nautilus"
     "caja"
@@ -16,6 +15,7 @@ COMPATIBLE_FILE_MANAGERS=(
     "nemo"
     "pcmanfm-qt"
     "thunar")
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
 readonly \
     COMPATIBLE_FILE_MANAGERS \
