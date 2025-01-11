@@ -25,9 +25,9 @@ _main_task() {
     local output_dir=$2
     local std_output=""
 
-    # Check if the current directory is a GIT repository.
+    # Check if the current directory is a Git repository.
     top_level=$(git -C "$input_file" rev-parse --show-toplevel 2>/dev/null)
-    _check_output "$?" "The directory '$input_file' is not a GIT repository." "$input_file" "" || return 1
+    _check_output "$?" "The directory '$input_file' is not a Git repository." "$input_file" "" || return 1
 
     cd -- "$top_level" || return 1
 
