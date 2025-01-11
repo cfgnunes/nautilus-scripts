@@ -19,7 +19,8 @@ _main() {
 
 _open_app() {
     local input_files=$1
-    local apps=("alacritty"
+    local apps=(
+        "alacritty"
         "kitty"
         "terminology"
         "terminator"
@@ -33,7 +34,8 @@ _open_app() {
         "deepin-terminal"
         "termit"
         "uxterm"
-        "xterm")
+        "xterm"
+    )
 
     # Iterate over each input file (directory).
     local input_file=""
