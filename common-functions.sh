@@ -2368,4 +2368,4 @@ _xdg_get_default_app() {
 # -----------------------------------------------------------------------------
 
 #shellcheck source=accessed-recently.sh
-source "$ROOT_DIR/accessed-recently.sh"
+source "$ROOT_DIR/.helper-scripts/accessed-recently.sh"

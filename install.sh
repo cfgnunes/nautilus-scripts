@@ -26,7 +26,7 @@ FILE_MANAGER=""
 INSTALL_DIR=""
 
 # shellcheck disable=SC1091
-source "$SCRIPT_DIR/.assets/multiselect-menu.sh"
+source "$SCRIPT_DIR/.helper-scripts/multiselect-menu.sh"
 
 # -----------------------------------------------------------------------------
 # FUNCTIONS
@@ -323,7 +323,6 @@ _step_install_scripts() {
     mkdir --parents "$INSTALL_DIR"
 
     # Copy the script files.
-    cp -- "$SCRIPT_DIR/accessed-recently.sh" "$INSTALL_DIR"
     cp -- "$SCRIPT_DIR/common-functions.sh" "$INSTALL_DIR"
     local i=0
     for i in "${!_categories_dirs[@]}"; do
