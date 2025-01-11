@@ -58,7 +58,7 @@ _clean_up_accessed_files() {
     # for sorted display.
     local count=1
     for file in "${files[@]}"; do
-        mv "$file" "$ACCESSED_RECENTLY_DIR/$(printf '%02d' $count) $(basename "$file" | sed 's/^\([0-9]\{2\} \)*//')"
+        mv "$file" "$ACCESSED_RECENTLY_DIR/$(printf '%02d' $count) $(basename "$file" | sed 's|^\([0-9]\{2\} \)*||')"
         ((count++))
     done
 }
