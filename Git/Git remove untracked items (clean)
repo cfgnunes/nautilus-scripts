@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _check_dependencies "command=git"
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=directory; par_get_pwd=true")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+
+    _display_result_box ""
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local std_output=""
+
+    # Check if the current directory is a GIT repository.
+    std_output=$(git -C "$input_file" rev-parse --abbrev-ref HEAD 2>/dev/null)
+    _check_output "$?" "The directory '$input_file' is not a GIT repository." "$input_file" "" || return 1
+
+    cd -- "$input_file" || return 1
+
+    # Run the main process.
+    # git clean: Remove untracked files from the working tree.
+    # -x: removes ignored files.
+    # -d: removes untracked folders.
+    # -f: removes untracked files.
+    std_output=$(git clean -xdf)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+}
+
+_main "$@"
