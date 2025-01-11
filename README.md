@@ -39,6 +39,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 - **Easy adaptation**: Scripts can be easily copied and adapted for other purposes.
 - **Bash implementation**: All scripts are implemented in Bash. So, the scripts work well in the shell (without a graphical interface) and file managers.
 - **Shell script validation**: All scripts have been checked using [ShellCheck](https://github.com/koalaman/shellcheck).
+- **Easy access to recent scripts**: Includes a feature to quickly access recently used scripts, saving time and streamlining workflows.
 
 ## Keyboard Shortcuts
 
