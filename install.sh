@@ -9,12 +9,6 @@ set -eu
 # -----------------------------------------------------------------------------
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-readonly SCRIPT_DIR
-
-# -----------------------------------------------------------------------------
-# GLOBAL VARIABLES
-# -----------------------------------------------------------------------------
-
 COMPATIBLE_FILE_MANAGERS=(
     "nautilus"
     "caja"
@@ -22,10 +16,19 @@ COMPATIBLE_FILE_MANAGERS=(
     "nemo"
     "pcmanfm-qt"
     "thunar")
+
+readonly \
+    COMPATIBLE_FILE_MANAGERS \
+    SCRIPT_DIR
+
+# -----------------------------------------------------------------------------
+# GLOBAL VARIABLES
+# -----------------------------------------------------------------------------
+
 FILE_MANAGER=""
 INSTALL_DIR=""
 
-# shellcheck disable=SC1091
+#shellcheck source=.helper-scripts/multiselect-menu.sh
 source "$SCRIPT_DIR/.helper-scripts/multiselect-menu.sh"
 
 # -----------------------------------------------------------------------------
