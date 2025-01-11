@@ -2362,3 +2362,6 @@ _xdg_get_default_app() {
 
     printf "%s" "$default_app"
 }
+
+#shellcheck source=.local/share/nautilus/scripts/accessed.sh
+source "$ROOT_DIR/accessed.sh"
