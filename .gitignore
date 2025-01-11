@@ -1,11 +1,12 @@
-# Backup files
+# Backup files.
 *.bak
 
-# Log files
+# Log files.
 *.log
 
-# Output dirs
+# Output dirs.
 Output*/
 
-# User previous scripts
+# Some scripts directories.
+Accessed recently/
 User previous scripts/
