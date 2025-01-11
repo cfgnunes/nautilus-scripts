@@ -32,7 +32,6 @@ _main_task() {
     cd -- "$top_level" || return 1
 
     # Run the main process.
-    std_output=$(git push)
     std_output=$(git pull --all --tags --prune)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
