@@ -9,12 +9,14 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _check_dependencies "command=git"
+    _check_dependencies "command=git | command=xdg-open; package=xdg-utils"
     _display_wait_box "2"
 
     input_files=$(_get_files "par_type=directory; par_max_items=20; par_get_pwd=true")
 
     _open_repository_website "$input_files"
+
+    _display_result_box ""
 }
 
 _convert_git_to_web_url() {
@@ -50,11 +52,16 @@ _open_repository_website() {
     for input_file in $input_files; do
         local git_url=""
         local web_url=""
+
         git_url=$(git -C "$input_file" remote get-url origin 2>/dev/null)
+        _check_output "$?" "The directory '$input_file' is not a Git repository." "$input_file" "" || continue
+
         web_url=$(_convert_git_to_web_url "$git_url")
 
         if [[ -n "$web_url" ]]; then
             xdg-open "$web_url"
+        else
+            _log_write "Error: No remote URL found." "$input_file" "" ""
         fi
     done
 }
