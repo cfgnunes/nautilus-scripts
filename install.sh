@@ -323,6 +323,7 @@ _step_install_scripts() {
     mkdir --parents "$INSTALL_DIR"
 
     # Copy the script files.
+    cp -- "$SCRIPT_DIR/accessed-recently.sh" "$INSTALL_DIR"
     cp -- "$SCRIPT_DIR/common-functions.sh" "$INSTALL_DIR"
     local i=0
     for i in "${!_categories_dirs[@]}"; do
