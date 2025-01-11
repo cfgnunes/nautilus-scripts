@@ -1768,6 +1768,9 @@ _run_task_parallel() {
     # Export variables to be used inside new shells (when using 'xargs').
     export \
         FIELD_SEPARATOR \
+        GUI_BOX_HEIGHT \
+        GUI_BOX_WIDTH \
+        GUI_INFO_WIDTH \
         IGNORE_FIND_PATH \
         INPUT_FILES \
         TEMP_DATA_TASK \
