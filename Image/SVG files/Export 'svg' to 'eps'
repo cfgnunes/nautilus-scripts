@@ -29,10 +29,11 @@ _main_task() {
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=eps")
 
-    local inkscape_version=""
-    local inkscape_version_old="1.0"
-    inkscape_version=$(inkscape --version 2>/dev/null | cut -d " " -f 2)
-    if [[ "$inkscape_version" == $(echo -e "$inkscape_version\n$inkscape_version_old" | sort --version-sort | head -n 1) ]]; then
+    local inkscape_ver=""
+    local inkscape_ver_old="1.0"
+    inkscape_ver=$(inkscape --version 2>/dev/null | cut -d " " -f 2)
+    if [[ "$inkscape_ver" == $(echo -e "$inkscape_ver\n$inkscape_ver_old" |
+        sort --version-sort | head -n 1) ]]; then
         # Old Inkscape version.
         std_output=$(inkscape --without-gui --export-area-drawing --file="$input_file" --export-eps="$output_file" 2>&1)
     else
