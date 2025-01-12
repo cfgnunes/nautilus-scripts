@@ -4,8 +4,10 @@
 
 set -u
 
-_TOTAL_TESTS=0
-_TOTAL_FAILED=0
+# -----------------------------------------------------------------------------
+# CONSTANTS
+# -----------------------------------------------------------------------------
+
 _TEMP_DIR_TEST="/tmp/unit-test"
 _TEMP_FILE1="$_TEMP_DIR_TEST/file1"
 _TEMP_FILE2="$_TEMP_DIR_TEST/file2"
@@ -13,6 +15,26 @@ _TEMP_FILE3="$_TEMP_DIR_TEST/file3"
 _TEMP_FILE1_CONTENT="File 1 test."
 _TEMP_FILE2_CONTENT="File 2 test."
 _TEMP_FILE3_CONTENT="File 3 test."
+
+readonly \
+    _TEMP_DIR_TEST \
+    _TEMP_FILE1 \
+    _TEMP_FILE2 \
+    _TEMP_FILE3 \
+    _TEMP_FILE1_CONTENT \
+    _TEMP_FILE2_CONTENT \
+    _TEMP_FILE3_CONTENT
+
+# -----------------------------------------------------------------------------
+# GLOBAL VARIABLES
+# -----------------------------------------------------------------------------
+
+_TOTAL_TESTS=0
+_TOTAL_FAILED=0
+
+# -----------------------------------------------------------------------------
+# FUNCTIONS
+# -----------------------------------------------------------------------------
 
 _main() {
     printf "Running the unit tests...\n"
@@ -83,6 +105,7 @@ _run_source_common_functions() {
     # Source the script 'common-functions.sh'.
     SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
     ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+    ROOT_DIR=${ROOT_DIR//".helper-scripts"/}
     source "$ROOT_DIR/common-functions.sh"
 
     _test_equal "Check global variables." "$FIELD_SEPARATOR" $'\r'
