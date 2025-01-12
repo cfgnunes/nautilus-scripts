@@ -89,20 +89,20 @@ _recent_scripts_update() {
     script_matches=$(find "$ROOT_DIR" -path "$ACCESSED_RECENTLY_DIR" \
         -prune -o -type f -name "$script_name" -print)
 
-    if [ -z "$script_matches" ]; then
+    if [[ -z "$script_matches" ]]; then
         match_count=0
     else
         match_count=$(echo "$script_matches" | wc -l)
     fi
 
     # If exactly one match is found, store its full path for linking.
-    if [[ $match_count == 1 ]]; then
+    if ((match_count == 1)); then
         script_to_link="$script_matches"
     fi
 
     # If the script's full path is determined and it exists,
     # link it to the directory.
-    if [[ -n $script_to_link ]] && [[ -f $script_to_link ]]; then
+    if [[ -n "$script_to_link" ]] && [[ -e "$script_to_link" ]]; then
         _recent_scripts_add "$script_to_link"
         _recent_scripts_organize
     fi
