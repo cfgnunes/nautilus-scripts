@@ -881,7 +881,7 @@ _get_filenames_filemanager() {
     fi
 
     if [[ -n "$input_files" ]]; then
-        # Replace '\n' with 'FIELD_SEPARATOR'.
+        # Replace '\n' with '$FIELD_SEPARATOR'.
         input_files=$(_convert_text_to_delimited_string "$input_files")
 
         # Decode the URI list.
