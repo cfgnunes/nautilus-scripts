@@ -33,6 +33,9 @@ _main_task() {
     _directory_push "$top_level" || return 1
 
     # Run the main process.
+    std_output=$(git reflog expire --expire=now --all 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+
     # git gc: Cleanup unnecessary files and optimize the local repository.
     # --prune: prune loose objects older than date.
     std_output=$(git gc --prune=all 2>&1)
