@@ -19,6 +19,7 @@ _main() {
 
 _compare() {
     local input_files=$1
+    local num_files_compare=2
 
     local file_1=""
     local file_2=""
@@ -26,6 +27,99 @@ _compare() {
     file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
     file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$input_files")
     file_3=$(cut -d "$FIELD_SEPARATOR" -f 3 <<<"$input_files")
+
+    _compare_identical "$file_1" "$file_2" "$file_3"
+
+    if [[ -n "$file_3" ]]; then
+        num_files_compare=3
+    fi
+
+    # Define the command to execute according to file MIME type.
+    local command=""
+    command=$(_get_command "$file_1" "$num_files_compare" "available")
+
+    # If there is an available command, skip the dependency check.
+    if [[ -z "$command" ]]; then
+        command=$(_get_command "$file_1" "$num_files_compare" "default")
+
+        # Check dependencies for the command.
+        local dependencies=""
+        dependencies=$(_get_dependencies "$command")
+        _check_dependencies "$dependencies"
+    fi
+
+    # Run the main process.
+    case $command in
+    "code") $command --diff -- "$file_1" "$file_2" & ;;
+    "compare") _compare_imagemagick "$file_1" "$file_2" ;;
+    "diffpdf") diffpdf -- "$file_1" "$file_2" & ;;
+    "meld" | "kdiff3")
+        if ((num_files_compare == 2)); then
+            $command -- "$file_1" "$file_2" &
+        else
+            $command -- "$file_1" "$file_2" "$file_3" &
+        fi
+        ;;
+    *"_hex") _compare_hexa "$command" "$file_1" "$file_2" "$file_3" ;;
+    esac
+}
+
+_compare_hexa() {
+    local command=$1
+    local file_1=$2
+    local file_2=$3
+    local file_3=$4
+
+    # Remove the prefix '_hex'.
+    command=${command//_hex/}
+
+    # Get the file sizes.
+    local file_1_size=""
+    local file_2_size=""
+    local size_difference=0
+    file_1_size=$(_get_file_size "$file_1")
+    file_2_size=$(_get_file_size "$file_2")
+    size_difference=$(_get_difference "$file_1_size" "$file_2_size")
+
+    # If the files have different sizes,
+    # compute a column width for better comparison.
+    local cols=24
+    if ((size_difference != 0)); then
+        cols=$(_get_hex_ideal_cols "$size_difference")
+    fi
+
+    # Convert files to hexadecimal text view.
+    local file_1_hex=""
+    local file_2_hex=""
+    file_1_hex="$TEMP_DIR_TASK/$(basename -- "$file_1")"
+    file_2_hex="$TEMP_DIR_TASK/$(basename -- "$file_2")"
+    xxd -c "$cols" "$file_1" "$file_1_hex"
+    xxd -c "$cols" "$file_2" "$file_2_hex"
+
+    # Remove the addresses for better comparison.
+    sed -i "s|^[^:]*: ||g" "$file_1_hex"
+    sed -i "s|^[^:]*: ||g" "$file_2_hex"
+
+    # Compare and edit the files.
+    $command -- "$file_1_hex" "$file_2_hex"
+
+    # Convert to plain hexadecimal dump.
+    sed -i "s|  .*||g; s| ||g" "$file_1_hex"
+    sed -i "s|  .*||g; s| ||g" "$file_2_hex"
+
+    # Save the files after possible modifications.
+    local file_1_modified="$file_1_hex.bin"
+    local file_2_modified="$file_2_hex.bin"
+    xxd -revert -plain "$file_1_hex" "$file_1_modified"
+    xxd -revert -plain "$file_2_hex" "$file_2_modified"
+    _move_temp_file_to_output "$file_1" "$file_1_modified" "$file_1"
+    _move_temp_file_to_output "$file_2" "$file_2_modified" "$file_2"
+}
+
+_compare_identical() {
+    local file_1=$1
+    local file_2=$2
+    local file_3=$3
 
     # Check if the items (directories or files) are identical.
     local diff_1_2=""
@@ -43,28 +137,127 @@ _compare() {
             _exit_script
         fi
     fi
+}
 
-    # Define the command to execute according to file MIME type.
+_compare_imagemagick() {
+    local file_1=$1
+    local file_2=$2
+
+    # Check if both images have the same pixel values.
+    if compare -metric AE -- "$file_1" "$file_2" null: &>/dev/null; then
+        _display_info_box "The two selected images has same pixel values."
+        _exit_script
+    fi
+
+    # Get image dimensions.
+    local dimensions_1=""
+    local dimensions_2=""
+    dimensions_1=$(identify -format "%wx%h" "$file_1" 2>&1)
+    _check_output "$?" "$dimensions_1" "$file_1" "" || return 1
+    dimensions_2=$(identify -format "%wx%h" "$file_2" 2>&1)
+    _check_output "$?" "$dimensions_2" "$file_2" "" || return 1
+
+    # Compare two images using a visual diff with the 'convert' command.
+    local temp_file=""
+    temp_file="$(_get_temp_file_dry).png"
+    if [[ "$dimensions_1" == "$dimensions_2" ]]; then
+        # Compare images with the same dimensions.
+        convert \
+            '(' "$file_1" -flatten -grayscale Rec709Luminance ')' \
+            '(' "$file_2" -flatten -grayscale Rec709Luminance ')' \
+            '(' -clone 0-1 -compose darken -composite ')' \
+            -channel RGB -combine "$temp_file"
+    else
+        # Compare images with different dimensions.
+        compare -- "$file_1" "$file_2" -compose src "$temp_file"
+    fi
+
+    # Get the installed image viewer.
+    local image_viewer=""
+    image_viewer=$(_xdg_get_default_app "image/jpeg")
+    if [[ "$image_viewer" == *"eog" ]]; then
+        $image_viewer --new-instance -- "$temp_file"
+    else
+        $image_viewer -- "$temp_file"
+    fi
+}
+
+_get_command() {
+    local input_file=$1
+    local num_files_compare=$2
+    local command_status=$3
+    local preferred_commands=""
     local command=""
-    local file_1_mime=""
-    file_1_mime=$(_get_file_mime "$file_1")
-    case $file_1_mime in
-    "application/pdf") command="diffpdf" ;;
-    "inode/directory") command="meld" ;;
-    "inode/x-empty") command="meld" ;;
-    "image/"*) command="compare" ;;
-    "text/"*) command="meld" ;;
-    *)
-        local file_1_encoding=""
-        file_1_encoding=$(_get_file_encoding "$file_1")
-        if [[ "$file_1_encoding" == "binary" ]]; then
-            command="meld_hexadecimal"
-        else
-            command="meld"
-        fi
-        ;;
-    esac
 
+    # Determine the MIME type of the input file.
+    local file_mime=""
+    file_mime=$(_get_file_mime "$input_file")
+
+    if ((num_files_compare == 2)); then
+        case $file_mime in
+        "application/pdf") preferred_commands="diffpdf" ;;
+        "inode/directory") preferred_commands="meld" ;;
+        "inode/x-empty") preferred_commands="code meld" ;;
+        "image/"*) preferred_commands="compare" ;;
+        "text/"*) preferred_commands="code meld" ;;
+        *)
+            local file_encoding=""
+            file_encoding=$(_get_file_encoding "$input_file")
+            if [[ "$file_encoding" == "binary" ]]; then
+                preferred_commands="meld_hex"
+            else
+                preferred_commands="code meld"
+            fi
+            ;;
+        esac
+    elif ((num_files_compare == 3)); then
+        case $file_mime in
+        "application/pdf")
+            _display_error_box "You must select only two PDFs to compare!"
+            _exit_script
+            ;;
+        "inode/directory") preferred_commands="meld" ;;
+        "inode/x-empty") preferred_commands="meld" ;;
+        "image/"*)
+            _display_error_box "You must select only two images to compare!"
+            _exit_script
+            ;;
+        "text/"*) preferred_commands="meld" ;;
+        *)
+            local file_encoding=""
+            file_encoding=$(_get_file_encoding "$input_file")
+            if [[ "$file_encoding" == "binary" ]]; then
+                _display_error_box "You must select only two binary files to compare!"
+                _exit_script
+            else
+                preferred_commands="meld"
+            fi
+            ;;
+        esac
+    fi
+    # Get the available command in the system.
+    preferred_commands=$(tr " " "$FIELD_SEPARATOR" <<<"$preferred_commands")
+    local preferred_command=""
+    for preferred_command in $preferred_commands; do
+        if [[ "$command_status" == "default" ]]; then
+            # The default command is the first command of preferred commands.
+            command=$preferred_command
+            break
+        elif [[ "$command_status" == "available" ]]; then
+            # Get the available command in the system.
+            if _command_exists "$preferred_command"; then
+                command=$preferred_command
+                break
+            fi
+        fi
+    done
+
+    # Only use VSCode if its installed.
+    if [[ "$command" == "code" ]] && [[ "$command_status" == "default" ]]; then
+        command="meld"
+    fi
+
+    # Adjust the selected command for KDE or LXQt desktop environments.
     if [[ "$command" == "meld"* ]]; then
         case "${XDG_CURRENT_DESKTOP,,}" in
         *"kde"* | *"lxqt"*)
@@ -73,8 +266,13 @@ _compare() {
         esac
     fi
 
-    # Check dependencies for the command.
+    printf "%s" "$command"
+}
+
+_get_dependencies() {
+    local command=$1
     local dependencies=""
+
     case $command in
     "compare") dependencies="
         command=compare; pkg_manager=apt; package=imagemagick |
@@ -84,129 +282,13 @@ _compare() {
         command=xdg-open; package=xdg-utils" ;;
     "diffpdf") dependencies="command=diffpdf" ;;
     "kdiff3") dependencies="command=kdiff3" ;;
-    "kdiff3_hexadecimal") dependencies="command=kdiff3 | command=xxd" ;;
+    "kdiff3_hex") dependencies="command=kdiff3 | command=xxd" ;;
     "meld") dependencies="command=meld" ;;
-    "meld_hexadecimal") dependencies="command=meld | command=xxd" ;;
-    esac
-    _check_dependencies "$dependencies"
-
-    # Run the main process.
-    case $command in
-    "compare")
-        if [[ -n "$file_3" ]]; then
-            _display_error_box "You must select only two image files to compare!"
-            _exit_script
-        fi
-
-        # Check if both images have the same pixel values.
-        if compare -metric AE -- "$file_1" "$file_2" null: &>/dev/null; then
-            _display_info_box "The two selected images are identical (same pixel values)."
-            _exit_script
-        fi
-
-        # Get image dimensions.
-        local dimensions_1=""
-        local dimensions_2=""
-        dimensions_1=$(identify -format "%wx%h" "$file_1" 2>&1)
-        _check_output "$?" "$dimensions_1" "$file_1" "" || return 1
-        dimensions_2=$(identify -format "%wx%h" "$file_2" 2>&1)
-        _check_output "$?" "$dimensions_2" "$file_2" "" || return 1
-
-        # Compare two images using a visual diff with the 'convert' command.
-        local temp_file=""
-        temp_file="$(_get_temp_file_dry).png"
-        if [[ "$dimensions_1" == "$dimensions_2" ]]; then
-            # Compare images with the same dimensions.
-            convert \
-                '(' "$file_1" -flatten -grayscale Rec709Luminance ')' \
-                '(' "$file_2" -flatten -grayscale Rec709Luminance ')' \
-                '(' -clone 0-1 -compose darken -composite ')' \
-                -channel RGB -combine "$temp_file"
-        else
-            # Compare images with different dimensions.
-            compare -- "$file_1" "$file_2" -compose src "$temp_file"
-        fi
-
-        # Get the installed image viewer.
-        local image_viewer=""
-        image_viewer=$(_xdg_get_default_app "image/jpeg")
-        if [[ "$image_viewer" == *"eog" ]]; then
-            $image_viewer --new-instance -- "$temp_file"
-        else
-            $image_viewer -- "$temp_file"
-        fi
-
-        ;;
-    "diffpdf")
-        if [[ -n "$file_3" ]]; then
-            _display_error_box "You must select only two PDFs to compare!"
-            _exit_script
-        fi
-
-        diffpdf -- "$file_1" "$file_2" &
-        ;;
-    "meld" | "kdiff3")
-        if [[ -z "$file_3" ]]; then
-            $command -- "$file_1" "$file_2" &
-        else
-            $command -- "$file_1" "$file_2" "$file_3" &
-        fi
-        ;;
-    "meld_hexadecimal" | "kdiff3_hexadecimal")
-        if [[ -n "$file_3" ]]; then
-            _display_error_box "You must select only two files to hexadecimal compare!"
-            _exit_script
-        fi
-
-        # Remove the prefix '_hexadecimal'.
-        command=${command//_hexadecimal/}
-
-        # Get the file sizes.
-        local file_1_size=""
-        local file_2_size=""
-        local size_difference=0
-        file_1_size=$(_get_file_size "$file_1")
-        file_2_size=$(_get_file_size "$file_2")
-        size_difference=$(_get_difference "$file_1_size" "$file_2_size")
-
-        # If the files have different sizes,
-        # compute a column width for better comparison.
-        local cols=24
-        if ((size_difference != 0)); then
-            cols=$(_get_ideal_cols "$size_difference")
-        fi
-
-        # Convert files to hexadecimal text view.
-        local file_1_hex=""
-        local file_2_hex=""
-        file_1_hex="$TEMP_DIR_TASK/$(basename -- "$file_1")"
-        file_2_hex="$TEMP_DIR_TASK/$(basename -- "$file_2")"
-        xxd -c "$cols" "$file_1" "$file_1_hex"
-        xxd -c "$cols" "$file_2" "$file_2_hex"
-
-        # Remove the addresses for better comparison.
-        sed -i "s|^[^:]*: ||g" "$file_1_hex"
-        sed -i "s|^[^:]*: ||g" "$file_2_hex"
-
-        # Compare and edit the files.
-        $command -- "$file_1_hex" "$file_2_hex"
-
-        # Convert to plain hexadecimal dump.
-        sed -i "s|  .*||g; s| ||g" "$file_1_hex"
-        sed -i "s|  .*||g; s| ||g" "$file_2_hex"
-
-        # Save the files after possible modifications.
-        local file_1_modified="$file_1_hex.bin"
-        local file_2_modified="$file_2_hex.bin"
-        xxd -revert -plain "$file_1_hex" "$file_1_modified"
-        xxd -revert -plain "$file_2_hex" "$file_2_modified"
-        _move_temp_file_to_output "$file_1" "$file_1_modified" "$file_1"
-        _move_temp_file_to_output "$file_2" "$file_2_modified" "$file_2"
-        ;;
+    "meld_hex") dependencies="command=meld | command=xxd" ;;
     esac
 }
 
-_get_ideal_cols() {
+_get_hex_ideal_cols() {
     local size_difference=$1
     local cols=24
 
