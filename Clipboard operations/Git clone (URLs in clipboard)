@@ -49,7 +49,7 @@ _get_urls_from_clipboard() {
         urls=$(wl-paste 2>/dev/null)
     fi
     urls=$(grep --only-matching --perl-regexp "((git|ssh|http(s)?)|(git@[\w\.]+))(.*)(\.git)" <<<"$urls")
-    urls=$(sort -u <<<"$urls")
+    urls=$(sort --unique <<<"$urls")
 
     if [[ -z "$urls" ]]; then
         _display_error_box "There are no valid Git URLs in the clipboard!"

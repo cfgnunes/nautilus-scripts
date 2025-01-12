@@ -20,7 +20,7 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    std_output=$(sort -h -r <<<"$std_output")
+    std_output=$(sort --numeric-sort --reverse <<<"$std_output")
 
     _display_list_box "$std_output" "--column=Count;--column=File" "files"
 }

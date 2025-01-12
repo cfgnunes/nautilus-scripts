@@ -30,7 +30,7 @@ _recent_scripts_organize() {
 
     local files=""
     files=$(find "$ACCESSED_RECENTLY_DIR" -maxdepth 1 -type l -print0 |
-        sort -z -n | tr "\0" "$FIELD_SEPARATOR")
+        sort --zero-terminated --numeric-sort | tr "\0" "$FIELD_SEPARATOR")
 
     # Process the files, keeping only the '$NUM_LINKS_TO_KEEP' most recent.
     local count=1

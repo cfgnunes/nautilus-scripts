@@ -56,7 +56,7 @@ _get_urls_from_clipboard() {
     fi
     urls=$(grep --only-matching --perl-regexp "^(file://|('\")?/)(.*)" <<<"$urls")
     urls=$(sed "s|^['\"]||g; s|['\"]$||g" <<<"$urls")
-    urls=$(sort -u <<<"$urls")
+    urls=$(sort --unique <<<"$urls")
 
     if [[ -z "$urls" ]]; then
         _display_error_box "There are no valid paths in the clipboard!"
