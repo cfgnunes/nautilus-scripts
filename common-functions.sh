@@ -853,10 +853,10 @@ _get_filename_next_suffix() {
 
     # Avoid overwriting a file. If there is a file with the same name,
     # try to add a suffix, as 'file (1)', 'file (2)', ...
-    local suffix=0
+    local count=1
     while [[ -e "$filename_result" ]]; do
-        suffix=$((suffix + 1))
-        filename_result="$filename_base ($suffix)$filename_extension"
+        filename_result="$filename_base ($count)$filename_extension"
+        ((count++))
     done
 
     printf "%s" "$filename_result"
@@ -1067,7 +1067,7 @@ _get_items_count() {
 
     if [[ -n "$input_files" ]]; then
         files_count=$(tr -cd "$FIELD_SEPARATOR" <<<"$input_files" | wc -c)
-        files_count=$((files_count + 1))
+        ((files_count++))
     fi
 
     printf "%s" "$files_count"
