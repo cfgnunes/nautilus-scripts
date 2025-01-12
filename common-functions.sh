@@ -806,8 +806,9 @@ _get_filename_extension() {
     filename=$(sed -E "s|.*/(\.)*||g" <<<"$filename")
     filename=$(sed -E "s|^(\.)*||g" <<<"$filename")
 
-    grep --ignore-case --only-matching --perl-regexp \
-        "(\.tar)?\.[a-z0-9_~-]{0,15}$" <<<"$filename" || true
+    printf "%s" "$filename" |
+        grep --ignore-case --only-matching --perl-regexp \
+            "(\.tar)?\.[a-z0-9_~-]{0,15}$" || true
 }
 
 _get_filename_full_path() {
