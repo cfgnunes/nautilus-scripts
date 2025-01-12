@@ -32,7 +32,7 @@ _main_task() {
     local output_dir=$2
     local std_output=""
 
-    if ! [[ -e "$input_file" ]]; then
+    if [[ ! -e "$input_file" ]]; then
         return 1
     fi
 

@@ -211,7 +211,7 @@ _check_output() {
     fi
 
     # Check if the output file exists.
-    if [[ -n "$output_file" ]] && ! [[ -e "$output_file" ]]; then
+    if [[ -n "$output_file" ]] && [[ ! -e "$output_file" ]]; then
         _log_write "Error: The output file does not exist." \
             "$input_file" "$std_output" "$output_file"
         return 1
@@ -652,7 +652,7 @@ _display_wait_box_message() {
         touch "$WAIT_BOX_CONTROL"
 
         # Create the FIFO for communication with Zenity 'wait_box'.
-        if ! [[ -p "$WAIT_BOX_FIFO" ]]; then
+        if [[ ! -p "$WAIT_BOX_FIFO" ]]; then
             mkfifo "$WAIT_BOX_FIFO"
         fi
 
@@ -1473,12 +1473,12 @@ _move_file() {
     fi
 
     # Add the './' prefix in the path.
-    if ! [[ "$file_src" == "/"* ]] &&
-        ! [[ "$file_src" == "./"* ]] && ! [[ "$file_src" == "." ]]; then
+    if [[ ! "$file_src" == "/"* ]] &&
+        [[ ! "$file_src" == "./"* ]] && [[ ! "$file_src" == "." ]]; then
         file_src="./$file_src"
     fi
-    if ! [[ "$file_dst" == "/"* ]] &&
-        ! [[ "$file_dst" == "./"* ]] && ! [[ "$file_dst" == "." ]]; then
+    if [[ ! "$file_dst" == "/"* ]] &&
+        [[ ! "$file_dst" == "./"* ]] && [[ ! "$file_dst" == "." ]]; then
         file_dst="./$file_dst"
     fi
 

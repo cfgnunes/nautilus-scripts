@@ -159,7 +159,7 @@ _command_exists() {
 _item_create_backup() {
     local item=$1
 
-    if [[ -e "$item" ]] && ! [[ -e "$item.bak" ]]; then
+    if [[ -e "$item" ]] && [[ ! -e "$item.bak" ]]; then
         mv "$item" "$item.bak" 2>/dev/null || true
     fi
 }
