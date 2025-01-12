@@ -970,7 +970,7 @@ _get_files() {
     # list of files. In this case, just select a single directory. Then, the
     # scripts operate on the files within the selected directory. This
     # addresses the GNOME error: "Could not start application: Failed to
-    # execute child process "/bin/sh" (Argument list too long)"
+    # execute child process "/bin/sh" (Argument list too long)".
     local initial_items_count=0
     initial_items_count=$(_get_items_count "$input_files")
     if ((initial_items_count == 1)) &&
