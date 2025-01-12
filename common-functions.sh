@@ -966,6 +966,20 @@ _get_files() {
             <<<"$input_files")
     fi
 
+    # This workaround allows the scripts to handle cases with a large input
+    # list of files. In this case, just select a single directory. Then, the
+    # scripts operate on the files within the selected directory. This
+    # addresses the GNOME error: "Could not start application: Failed to
+    # execute child process "/bin/sh" (Argument list too long)"
+    local initial_items_count=0
+    initial_items_count=$(_get_items_count "$input_files")
+    if ((initial_items_count == 1)) &&
+        [[ -d "$input_files" ]] && [[ "${input_files,,}" == *"batch" ]]; then
+        input_files=$(find "$input_files" \
+            -mindepth 1 -maxdepth 1 ! -path "$IGNORE_FIND_PATH" \
+            -printf "%p$FIELD_SEPARATOR")
+    fi
+
     # Pre-select the input files. Also, expand it (if 'par_recursive' is true).
     input_files=$(_validate_file_preselect \
         "$input_files" \
@@ -2109,9 +2123,10 @@ _validate_conflict_filenames() {
     local dup_files=""
 
     dup_files=$(printf "%s" "$input_files" | tr "$FIELD_SEPARATOR" "\0" |
-        sed --null-data "s|\.[^ ]*$||" |        # Remove file extensions.
-        sort --zero-terminated --version-sort | # Sort files.
-        uniq --zero-terminated --repeated)      # Find duplicate base names.
+        sed --regexp-extended --null-data \
+            "s|(\.tar)?\.[a-z0-9_~-]{0,15}$||I" | # Remove file extensions.
+        sort --zero-terminated --version-sort |   # Sort files.
+        uniq --zero-terminated --repeated)        # Find duplicate base names.
 
     # If duplicates are found, display an error and exit the script.
     if [[ -n "$dup_files" ]]; then

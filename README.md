@@ -104,6 +104,20 @@ Most scripts have been tested on the following GNU/Linux distributions:
 - Xubuntu 23.10, 24.04
 - Zorin OS Core 17.1
 
+## Handling Large Input Lists
+
+This project includes a functionality specifically designed to manage scenarios where input lists are too large for processing (e.g., 100,000 input files). Excessively large input lists can lead to errors like:
+
+`Could not start application: Failed to execute child process "/bin/sh" (Argument list too long)`
+
+In some cases, the scripts may fail to run. To avoid such issues, follow these steps:
+
+1. Create a directory with a name that includes the word `batch`;
+2. Place all the files you want to process into this directory.
+3. Execute the desired script in this directory.
+
+The scripts will automatically recognize the batch directory as a special input and process all the files it contains. This method prevents errors caused by excessively large argument lists and ensures efficient execution.
+
 ## Contributing
 
 If you spot a bug or want to improve the code or even improve the content, you can do the following:
