@@ -46,13 +46,13 @@ _test_equal() {
     local description=$1
     local value1=$2
     local value2=$3
-    _TOTAL_TESTS=$((_TOTAL_TESTS + 1))
+    ((_TOTAL_TESTS++))
 
     if [[ "$value1" == "$value2" ]]; then
         printf " > [PASS]"
     else
         printf " > [FAILED]"
-        _TOTAL_FAILED=$((_TOTAL_FAILED + 1))
+        ((_TOTAL_FAILED++))
     fi
     printf "\t(%s)\t" "${FUNCNAME[1]}"
     printf "%s" "$description" | sed -z "s|\n|\\\n|g" | cat -A
@@ -63,13 +63,13 @@ _test_file() {
     local description=$1
     local file=$2
 
-    _TOTAL_TESTS=$((_TOTAL_TESTS + 1))
+    ((_TOTAL_TESTS++))
 
     if [[ -f "$file" ]]; then
         printf " > [PASS]"
     else
         printf " > [FAILED]"
-        _TOTAL_FAILED=$((_TOTAL_FAILED + 1))
+        ((_TOTAL_FAILED++))
     fi
     printf "\t(%s)\t" "${FUNCNAME[1]}"
     printf "%s" "$description" | sed -z "s|\n|\\\n|g" | cat -A

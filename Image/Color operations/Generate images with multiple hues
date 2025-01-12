@@ -31,12 +31,12 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    local suffix=1
+    local count=1
     for ((i = 100 + 30; i < 300; i += 30)); do
-        output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($suffix)'")
+        output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($count)'")
         std_output=$(convert "$input_file" -define modulate:colorspace=HSB -modulate "100,100,$i" "$output_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
-        suffix=$((suffix + 1))
+        ((count++))
     done
 }
 
