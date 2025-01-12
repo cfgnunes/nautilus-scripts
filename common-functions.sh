@@ -2108,11 +2108,10 @@ _validate_conflict_filenames() {
     local input_files=$1
     local dup_files=""
 
-    dup_files=$(_convert_delimited_string_to_text "$input_files")
-    dup_files=$(_text_sort "$dup_files")
-
-    # Remove file extensions and find any duplicate base names.
-    dup_files=$(printf "%s" "$dup_files" | sed "s|\.[^ ]*$||" | uniq -d)
+    dup_files=$(printf "%s" "$input_files" | tr "$FIELD_SEPARATOR" "\0" |
+        sed --null-data "s|\.[^ ]*$||" |        # Remove file extensions.
+        sort --zero-terminated --version-sort | # Sort files.
+        uniq --zero-terminated --repeated)      # Find duplicate base names.
 
     # If duplicates are found, display an error and exit the script.
     if [[ -n "$dup_files" ]]; then
