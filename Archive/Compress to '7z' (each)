@@ -64,6 +64,7 @@ _main_task() {
         fi
     fi
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+    _directory_pop || return 1
 }
 
 _main "$@"
