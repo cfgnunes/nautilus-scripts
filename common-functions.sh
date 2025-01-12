@@ -1491,16 +1491,16 @@ _move_file() {
     # already exists.
     case "$par_when_conflict" in
     "overwrite")
-        mv -f -- "$file_src" "$file_dst"
+        mv -f -- "$file_src" "$file_dst" 2>/dev/null
         ;;
     "rename")
         # Rename the file (add a suffix).
         file_dst=$(_get_filename_next_suffix "$file_dst")
-        mv -n -- "$file_src" "$file_dst"
+        mv -n -- "$file_src" "$file_dst" 2>/dev/null
         ;;
     "skip")
         # Do not move the file if the destination file already exists.
-        mv -n -- "$file_src" "$file_dst"
+        mv -n -- "$file_src" "$file_dst" 2>/dev/null
         ;;
     *)
         _display_error_box "Wrong parameter '$par_when_conflict' in '${FUNCNAME[1]}'!"
