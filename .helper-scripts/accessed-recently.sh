@@ -20,76 +20,62 @@ readonly \
 # FUNCTIONS
 # -----------------------------------------------------------------------------
 
-_clean_up_accessed_files() {
-    # This function Cleans up the '$ACCESSED_RECENTLY_DIR' directory by:
-    # - Removing duplicate symbolic links.
-    # - Keeping only the '$NUM_LINKS_TO_KEEP' most recently accessed files.
-    # - Renaming the links with zero-padded numeric prefixes for easy sorting.
+_recent_scripts_organize() {
+    # This function organizes the directory containing recently accessed
+    # scripts ('$ACCESSED_RECENTLY_DIR'). This function manages symbolic links
+    # in the directory by:
+    # 1. Keeping only the '$NUM_LINKS_TO_KEEP' most recently accessed scripts.
+    # 2. Renaming retained links with numeric prefixes (e.g., "01", "02") for
+    #    easy sorting.
 
-    local file=""
-    local files=()
-    declare -A file_map
+    local files=""
+    files=$(find "$ACCESSED_RECENTLY_DIR" -maxdepth 1 -type l -print0 |
+        sort -z -n | tr "\0" "$FIELD_SEPARATOR")
 
-    # Read all symbolic links in the directory.
-    while IFS= read -r -d '' file; do
-        local link_target=""
-        link_target=$(readlink "$file")
-        if [[ -n $link_target ]]; then
-            set +u
-            if [[ -n ${file_map[$link_target]} ]]; then
-                # Remove duplicate symbolic link pointing to the same target.
-                rm -f "$file"
-            else
-                file_map["$link_target"]="$file"
-                files+=("$file")
-            fi
-            set -u
-        fi
-    done < <(find "$ACCESSED_RECENTLY_DIR" \
-        -maxdepth 1 -type l -printf '%T@ %p\0' |
-        sort -r -z -n | cut -z -d " " -f2-)
-
-    # Delete all but the most recent '$NUM_LINKS_TO_KEEP' symbolic links.
-    for ((i = NUM_LINKS_TO_KEEP; i < ${#files[@]}; i++)); do
-        rm -f "${files[$i]}"
-    done
-
-    # Rename remaining files with zero-padded numeric prefixes
-    # for sorted display.
+    # Process the files, keeping only the '$NUM_LINKS_TO_KEEP' most recent.
     local count=1
-    for file in "${files[@]}"; do
-        mv "$file" "$ACCESSED_RECENTLY_DIR/$(printf '%02d' $count) $(basename "$file" | sed 's|^\([0-9]\{2\} \)*||')"
-        ((count++))
+    local file=""
+    for file in $files; do
+        if ((count <= NUM_LINKS_TO_KEEP)); then
+            # Rename the link with a numeric prefix for ordering.
+            mv -f -- "$file" "$ACCESSED_RECENTLY_DIR/$(printf '%02d' "$count") $(basename "$file" | sed 's|^\([0-9]\{2\} \)*||')"
+            ((count++))
+        else
+            # Remove excess links.
+            rm -f -- "$file"
+        fi
     done
 }
 
-_link_file_to_accessed() {
-    # This function creates a symbolic link to the specified file in the
-    # '$ACCESSED_RECENTLY_DIR' directory.
+_recent_scripts_add() {
+    # This function adds a script to the history of recently accessed scripts
+    # ('$ACCESSED_RECENTLY_DIR').
     #
     # Parameters:
-    #   - $1 (file): The path to the file that will be linked in the
-    #     '$ACCESSED_RECENTLY_DIR' directory.
+    #   - $1 (file): The full path to the script to be linked.
 
     local file="$1"
 
     _directory_push "$ACCESSED_RECENTLY_DIR" || return 1
 
-    # Create a symbolic link to the specified file in the directory.
-    ln -s "$file" .
+    # Remove any existing links pointing to the same script.
+    find "$ACCESSED_RECENTLY_DIR" -lname "$file" -exec rm -f -- "{}" +
+
+    # Create a new symbolic link with a "00" prefix.
+    ln -s -- "$file" "00 $(basename -- "$file")"
 
     _directory_pop || return 1
 }
 
-_update_accessed_recently_history() {
-    # This function updates the history of recently accessed scripts. It
-    # ensures that the script currently being executed is properly tracked and
-    # linked within the '$ACCESSED_RECENTLY_DIR' directory.
+_recent_scripts_update() {
+    # This function updates the history of recently accessed scripts, ensuring
+    # the current script is tracked. It ensures the current script is properly
+    # linked within the '$ACCESSED_RECENTLY_DIR'.
 
-    local script_name=""
-    local script_matches=""
     local match_count=0
-    local script_to_link_full_path=""
+    local script_matches=""
+    local script_name=""
+    local script_to_link=""
 
     # Ensure the '$ACCESSED_RECENTLY_DIR' directory exists,
     # creating it if necessary.
@@ -111,16 +97,15 @@ _update_accessed_recently_history() {
 
     # If exactly one match is found, store its full path for linking.
     if [[ $match_count == 1 ]]; then
-        script_to_link_full_path="$script_matches"
+        script_to_link="$script_matches"
     fi
 
     # If the script's full path is determined and it exists,
     # link it to the directory.
-    if [[ -n $script_to_link_full_path ]] &&
-        [[ -f $script_to_link_full_path ]]; then
-        _link_file_to_accessed "$script_to_link_full_path"
-        _clean_up_accessed_files
+    if [[ -n $script_to_link ]] && [[ -f $script_to_link ]]; then
+        _recent_scripts_add "$script_to_link"
+        _recent_scripts_organize
     fi
 }
 
-_update_accessed_recently_history
+_recent_scripts_update
