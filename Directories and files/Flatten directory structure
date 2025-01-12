@@ -48,7 +48,7 @@ _flatten_directory() {
     # Loop through each file in the list and move it to the root directory.
     while read -r full_path_filename; do
         # Get the file's name (basename) for moving it to the root directory.
-        filename="./$(basename "$full_path_filename")"
+        filename="./$(basename -- "$full_path_filename")"
 
         # Move the file to the root directory.
         _move_file "skip" "$full_path_filename" "$filename"
