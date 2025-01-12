@@ -26,9 +26,9 @@ _main_task() {
     local std_output=""
 
     # Check if the current directory is a Git repository.
-    top_level=$(git -C "$input_file" rev-parse --show-toplevel 2>/dev/null)
-    _check_output "$?" "The directory '$input_file' is not a Git repository." \
-        "$input_file" "" || return 1
+    local top_level=""
+    top_level=$(git -C "$input_file" rev-parse --show-toplevel 2>&1)
+    _check_output "$?" "$top_level" "$input_file" "" || return 1
 
     _directory_push "$top_level" || return 1
 
@@ -38,7 +38,7 @@ _main_task() {
     # --tags: Fetch all tags from the remote.
     # --prune: Before fetching, remove any remote-tracking references that no longer exist on the remote.
     # --prune-tags: Before fetching, remove any local tags that no longer exist on the remote.
-    std_output=$(git fetch --all --tags --prune --prune-tags --force)
+    std_output=$(git fetch --all --tags --prune --prune-tags --force 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     _directory_pop || return 1

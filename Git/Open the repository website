@@ -67,18 +67,22 @@ _open_repository_website() {
 
     # Iterate over each input file (directory).
     for input_file in $input_files; do
-        local git_url=""
-        local web_url=""
+
+        # Check if the current directory is a Git repository.
+        local top_level=""
+        top_level=$(git -C "$input_file" rev-parse --show-toplevel 2>&1)
+        _check_output "$?" "$top_level" "$input_file" "" || continue
 
         # Retrieve the URL of the remote 'origin' repository for the Git
         # repository.
+        local git_url=""
         git_url=$(git -C "$input_file" remote get-url origin 2>/dev/null)
-        _check_output "$?" \
-            "The directory '$input_file' is not a Git repository." \
+        _check_output "$?" "Could not get the url from the Git repository." \
             "$input_file" "" || continue
 
         # Convert the Git remote URL into a web-compatible URL
         # (e.g., from SSH/HTTPS Git URL to a browser-accessible URL).
+        local web_url=""
         web_url=$(_convert_git_to_web_url "$git_url")
 
         # If a valid web URL was generated, open it in the default web browser.
