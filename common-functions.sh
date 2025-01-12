@@ -1000,9 +1000,9 @@ _get_files() {
 
     # Sort the list by filename.
     if [[ "$par_sort_list" == "true" ]]; then
-        input_files=$(_convert_delimited_string_to_text "$input_files")
-        input_files=$(_text_sort "$input_files")
-        input_files=$(_convert_text_to_delimited_string "$input_files")
+        input_files=$(printf "%s" "$input_files" | tr "$FIELD_SEPARATOR" "\0" |
+            sort --zero-terminated --version-sort | tr "\0" "$FIELD_SEPARATOR")
+        input_files=$(_str_remove_empty_tokens "$input_files")
     fi
 
     # Validates filenames with the same base name.
@@ -2269,11 +2269,11 @@ _validate_file_preselect() {
 
     find_command+=" ! -path \"$IGNORE_FIND_PATH\""
     # shellcheck disable=SC2089
-    find_command+=" -printf \"%p\v\""
+    find_command+=" -print0"
 
     # shellcheck disable=SC2086
-    input_files_valid=$(eval $find_command 2>/dev/null)
-    input_files_valid=$(tr "\v" "$FIELD_SEPARATOR" <<<"$input_files_valid")
+    input_files_valid=$(eval $find_command 2>/dev/null |
+        tr "\0" "$FIELD_SEPARATOR")
     input_files_valid=$(_str_remove_empty_tokens "$input_files_valid")
 
     # Create a temp file containing the name of the valid file.
