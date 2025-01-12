@@ -33,11 +33,12 @@ _main_task() {
     _directory_push "$top_level" || return 1
 
     # Run the main process.
-    # git pull: Fetch from and integrate with another repository or a local branch.
+    # git fetch: Download objects and refs from another repository.
     # --all: Fetch all remotes.
     # --tags: Fetch all tags from the remote.
     # --prune: Before fetching, remove any remote-tracking references that no longer exist on the remote.
-    std_output=$(git pull --all --tags --prune)
+    # --prune-tags: Before fetching, remove any local tags that no longer exist on the remote.
+    std_output=$(git fetch --all --tags --prune --prune-tags --force)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     _directory_pop || return 1
