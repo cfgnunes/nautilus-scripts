@@ -51,8 +51,20 @@ _compare() {
     # Run the main process.
     case $command in
     "code") $command --diff -- "$file_1" "$file_2" & ;;
-    "compare") _compare_imagemagick "$file_1" "$file_2" ;;
-    "diffpdf") diffpdf -- "$file_1" "$file_2" & ;;
+    "compare")
+        if ((num_files_compare > 2)); then
+            _display_error_box "You must select only two images to compare!"
+            _exit_script
+        fi
+        _compare_imagemagick "$file_1" "$file_2"
+        ;;
+    "diffpdf")
+        if ((num_files_compare > 2)); then
+            _display_error_box "You must select only two PDFs to compare!"
+            _exit_script
+        fi
+        diffpdf -- "$file_1" "$file_2" &
+        ;;
     "meld" | "kdiff3")
         if ((num_files_compare == 2)); then
             $command -- "$file_1" "$file_2" &
@@ -60,7 +72,13 @@ _compare() {
             $command -- "$file_1" "$file_2" "$file_3" &
         fi
         ;;
-    *"_hex") _compare_hexa "$command" "$file_1" "$file_2" "$file_3" ;;
+    *"_hex")
+        if ((num_files_compare > 2)); then
+            _display_error_box "You must select only two binary files to compare!"
+            _exit_script
+        fi
+        _compare_hexa "$command" "$file_1" "$file_2" "$file_3"
+        ;;
     esac
 }
 
@@ -193,48 +211,23 @@ _get_command() {
     local file_mime=""
     file_mime=$(_get_file_mime "$input_file")
 
-    if ((num_files_compare == 2)); then
-        case $file_mime in
-        "application/pdf") preferred_commands="diffpdf" ;;
-        "inode/directory") preferred_commands="meld" ;;
-        "inode/x-empty") preferred_commands="code meld" ;;
-        "image/"*) preferred_commands="compare" ;;
-        "text/"*) preferred_commands="code meld" ;;
-        *)
-            local file_encoding=""
-            file_encoding=$(_get_file_encoding "$input_file")
-            if [[ "$file_encoding" == "binary" ]]; then
-                preferred_commands="meld_hex"
-            else
-                preferred_commands="code meld"
-            fi
-            ;;
-        esac
-    elif ((num_files_compare == 3)); then
-        case $file_mime in
-        "application/pdf")
-            _display_error_box "You must select only two PDFs to compare!"
-            _exit_script
-            ;;
-        "inode/directory") preferred_commands="meld" ;;
-        "inode/x-empty") preferred_commands="meld" ;;
-        "image/"*)
-            _display_error_box "You must select only two images to compare!"
-            _exit_script
-            ;;
-        "text/"*) preferred_commands="meld" ;;
-        *)
-            local file_encoding=""
-            file_encoding=$(_get_file_encoding "$input_file")
-            if [[ "$file_encoding" == "binary" ]]; then
-                _display_error_box "You must select only two binary files to compare!"
-                _exit_script
-            else
-                preferred_commands="meld"
-            fi
-            ;;
-        esac
-    fi
+    case $file_mime in
+    "application/pdf") preferred_commands="diffpdf" ;;
+    "inode/directory") preferred_commands="meld" ;;
+    "inode/x-empty") preferred_commands="code meld" ;;
+    "image/"*) preferred_commands="compare" ;;
+    "text/"*) preferred_commands="code meld" ;;
+    *)
+        local file_encoding=""
+        file_encoding=$(_get_file_encoding "$input_file")
+        if [[ "$file_encoding" == "binary" ]]; then
+            preferred_commands="meld_hex"
+        else
+            preferred_commands="code meld"
+        fi
+        ;;
+    esac
+
     # Get the available command in the system.
     preferred_commands=$(tr " " "$FIELD_SEPARATOR" <<<"$preferred_commands")
     local preferred_command=""
@@ -254,6 +247,11 @@ _get_command() {
 
     # Only use VSCode if its installed.
     if [[ "$command" == "code" ]] && [[ "$command_status" == "default" ]]; then
+        command="meld"
+    fi
+
+    # VSCode does not support three files comparison.
+    if [[ "$command" == "code" ]] && ((num_files_compare > 2)); then
         command="meld"
     fi
 
