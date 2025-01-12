@@ -2124,6 +2124,7 @@ _validate_conflict_filenames() {
     local dup_files=""
 
     dup_files=$(printf "%s" "$input_files" | tr "$FIELD_SEPARATOR" "\0" |
+        sed --null-data "s|/\.|//|" | # Ignore hidden files without extension.
         sed --regexp-extended --null-data \
             "s|(\.tar)?\.[a-z0-9_~-]{0,15}$||I" | # Remove file extensions.
         sort --zero-terminated --version-sort |   # Sort files.
