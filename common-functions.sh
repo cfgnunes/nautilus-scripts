@@ -21,9 +21,9 @@ TEMP_DIR_ITEMS_TO_REMOVE="$TEMP_DIR/items_to_remove"
 TEMP_DIR_LOGS="$TEMP_DIR/logs"
 TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
 TEMP_DIR_TASK="$TEMP_DIR/task"
-WAIT_BOX_CONTROL_KDE="$TEMP_DIR/wait_box_control_kde" # To use in the KDialog 'wait_box'.
-WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control"         # To use in the 'wait_box'.
-WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"               # To use in the Zenity 'wait_box'.
+WAIT_BOX_CONTROL_KDE="$TEMP_DIR/wait_box_control_kde"
+WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control"
+WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"
 
 readonly \
     FIELD_SEPARATOR \
@@ -56,8 +56,8 @@ TEMP_DATA_TASK=""
 # Store the path of temporary items to be removed after exit.
 mkdir -p "$TEMP_DIR_ITEMS_TO_REMOVE"
 mkdir -p "$TEMP_DIR_LOGS"         # Store 'error logs'.
-mkdir -p "$TEMP_DIR_STORAGE_TEXT" # Store the output text files from parallel processes.
-mkdir -p "$TEMP_DIR_TASK"         # Used in scripts to store its temporary files.
+mkdir -p "$TEMP_DIR_STORAGE_TEXT" # Store the output from parallel processes.
+mkdir -p "$TEMP_DIR_TASK"         # Store temporary files of scripts.
 
 # -----------------------------------------------------------------------------
 # FUNCTIONS
@@ -180,7 +180,8 @@ _check_dependencies() {
         message+=$'\n'$'\n'
         message+="Would you like to install them?"
         if _display_question_box "$message"; then
-            _pkg_install_packages "$pkg_manager_installed" "${packages_to_install/ /}"
+            _pkg_install_packages \
+                "$pkg_manager_installed" "${packages_to_install/ /}"
         else
             _exit_script
         fi
@@ -194,8 +195,8 @@ _check_output() {
     #
     # Parameters:
     #   - $1 (exit_code): The exit code returned by the command or process.
-    #   - $2 (std_output): The standard output or error message from the command.
-    #   - $3 (input_file): The input file associated with the process (if applicable).
+    #   - $2 (std_output): The standard output or error from the command.
+    #   - $3 (input_file): The input file associated (if applicable).
     #   - $4 (output_file): The expected output file to verify its existence.
 
     local exit_code=$1
@@ -205,14 +206,14 @@ _check_output() {
 
     # Check the 'exit_code' and log the error.
     if ((exit_code != 0)); then
-        _log_write "Error: Command failed with a non-zero exit code. Check the command's standard output for more details." \
+        _log_error "Command failed with a non-zero exit code." \
             "$input_file" "$std_output" "$output_file"
         return 1
     fi
 
     # Check if the output file exists.
     if [[ -n "$output_file" ]] && [[ ! -e "$output_file" ]]; then
-        _log_write "Error: The output file does not exist." \
+        _log_error "The output file does not exist." \
             "$input_file" "$std_output" "$output_file"
         return 1
     fi
@@ -259,7 +260,7 @@ _directory_pop() {
     # to the previous directory.
 
     popd &>/dev/null || {
-        _log_write "Error: Could not pop a directory." "" "" ""
+        _log_error "Could not pop a directory." "" "" ""
         return 1
     }
     return 0
@@ -276,7 +277,7 @@ _directory_push() {
     local directory=$1
 
     pushd "$directory" &>/dev/null || {
-        _log_write "Error: Could not push the directory '$directory'." "" "" ""
+        _log_error "Could not push the directory '$directory'." "" "" ""
         return 1
     }
     return 0
@@ -605,7 +606,10 @@ _display_result_box() {
 
         # Check if the output directory still exists.
         if [[ -d "$output_dir" ]]; then
-            _display_info_box "Finished! The output files are in the $(_str_human_readable_path "$output_dir") directory."
+            local dir_label=""
+            dir_label=$(_str_human_readable_path "$output_dir")
+            _display_info_box \
+                "Finished! The output files are in the $dir_label directory."
         else
             _display_info_box "Finished, but there is nothing to do."
         fi
@@ -1378,13 +1382,13 @@ _is_gui_session() {
     return 1
 }
 
-_log_write() {
-    # This function writes a log entry with a specified message and associated
-    # information (input file, output file, and terminal output) into a
-    # temporary log file.
+_log_error() {
+    # This function writes an error log entry with a specified message,
+    # including details such as the input file, output file, and terminal
+    # output. The entry is saved to a temporary log file.
     #
     # Parameters:
-    #   - $1 (message): A message to be logged.
+    #   - $1 (message): The error message to be logged.
     #   - $2 (input_file): The path of the input file associated with the
     #     operation.
     #   - $3 (std_output): The standard output or result from the operation
@@ -1408,7 +1412,7 @@ _log_write() {
         if [[ -n "$output_file" ]]; then
             printf " > Output file: %s\n" "$output_file"
         fi
-        printf " > %s\n" "$message"
+        printf " > %s\n" "Error: $message"
         if [[ -n "$std_output" ]]; then
             printf " > Standard output:\n"
             printf "%s\n" "$std_output"
@@ -1452,7 +1456,10 @@ _logs_consolidate() {
         cat -- "$TEMP_DIR_LOGS/"* 2>/dev/null
     } >"$log_file_output"
 
-    _display_error_box "Finished with errors! See the $(_str_human_readable_path "$log_file_output") for details."
+    local log_file=""
+    log_file=$(_str_human_readable_path "$log_file_output")
+    _display_error_box "Finished with errors! See the $log_file for details."
+
     _exit_script
 }
 
@@ -1517,18 +1524,14 @@ _move_file() {
         # Do not move the file if the destination file already exists.
         mv -n -- "$file_src" "$file_dst" 2>/dev/null
         ;;
-    *)
-        _display_error_box "Wrong parameter '$par_when_conflict' in '${FUNCNAME[1]}'!"
-        _exit_script
-        ;;
     esac
 
     if [[ -e "$file_src" ]]; then
         if [[ -e "$file_dst" ]]; then
-            _log_write "Error moving file: The destination file already exists." \
+            _log_error "The destination file already exists." \
                 "$file_src" "" "$file_dst"
         else
-            _log_write "Error moving file: Unable to move." \
+            _log_error "Unable to move." \
                 "$file_src" "" "$file_dst"
         fi
         return 1
@@ -1715,22 +1718,27 @@ _pkg_install_packages() {
 
     # Install the packages.
     if ! _command_exists "pkexec"; then
-        _display_error_box "Could not run the installer with administrator permission!"
+        _display_error_box \
+            "Could not run the installer with administrator permission!"
         _exit_script
     fi
 
     case "$pkg_manager" in
     "apt")
-        pkexec bash -c "apt-get update; apt-get -y install $packages &>/dev/null"
+        pkexec bash -c \
+            "apt-get update; apt-get -y install $packages &>/dev/null"
         ;;
     "dnf")
-        pkexec bash -c "dnf check-update; dnf -y install $packages &>/dev/null"
+        pkexec bash -c \
+            "dnf check-update; dnf -y install $packages &>/dev/null"
         ;;
     "pacman")
-        pkexec bash -c "pacman -Syy; pacman --noconfirm -S $packages &>/dev/null"
+        pkexec bash -c \
+            "pacman -Syy; pacman --noconfirm -S $packages &>/dev/null"
         ;;
     "zypper")
-        pkexec bash -c "zypper refresh; zypper --non-interactive install $packages &>/dev/null"
+        pkexec bash -c \
+            "zypper refresh; zypper --non-interactive install $packages &>/dev/null"
         ;;
     esac
 
@@ -1846,7 +1854,7 @@ _run_task_parallel() {
         _get_working_directory \
         _is_directory_empty \
         _is_gui_session \
-        _log_write \
+        _log_error \
         _main_task \
         _move_file \
         _move_temp_file_to_output \
@@ -2334,50 +2342,60 @@ _validate_files_count() {
     local par_max_items=$6
     local par_recursive=$7
 
-    # Define a term for a valid file.
-    local valid_file_term="valid files"
+    # Define a label for a valid file.
+    local valid_file_label="valid files"
     if [[ "$par_type" == "directory" ]]; then
-        valid_file_term="directories"
+        valid_file_label="directories"
     elif [[ -n "$par_select_mime" ]]; then
-        valid_file_term="$par_select_mime"
-        valid_file_term=$(sed "s|\|| or |g" <<<"$par_select_mime")
-        valid_file_term=$(sed "s|/$||g; s|/ | |g" <<<"$valid_file_term")
-        valid_file_term+=" files"
+        valid_file_label="$par_select_mime"
+        valid_file_label=$(sed "s|\|| or |g" <<<"$par_select_mime")
+        valid_file_label=$(sed "s|/$||g; s|/ | |g" <<<"$valid_file_label")
+        valid_file_label+=" files"
     elif [[ "$par_type" == "file" ]]; then
-        valid_file_term="files"
+        valid_file_label="files"
     elif [[ "$par_type" == "all" ]]; then
-        valid_file_term="files or directories"
+        valid_file_label="files or directories"
     fi
 
     # Count the number of valid files.
     local valid_items_count=0
     valid_items_count=$(_get_items_count "$input_files")
 
+    # Define a label for the extension.
+    local extension_label=""
+    if [[ -n "$par_select_extension" ]]; then
+        extension_label="'.${par_select_extension//|/\' or \'.}'"
+    fi
+
     # Check if there is at least one valid file.
     if ((valid_items_count == 0)); then
         if [[ "$par_recursive" == "true" ]]; then
             if [[ -n "$par_select_extension" ]]; then
-                _display_error_box "No files with extension: '.${par_select_extension//|/\' or \'.}' were found in the selection!"
+                _display_error_box \
+                    "No files with extension: $extension_label were selected!"
             else
-                _display_error_box "No $valid_file_term were found in the selection!"
+                _display_error_box "No $valid_file_label were selected!"
             fi
         else
             if [[ -n "$par_select_extension" ]]; then
-                _display_error_box "You must select files with extension: '.${par_select_extension//|/\' or \'.}'!"
+                _display_error_box \
+                    "You must select files with extension: $extension_label!"
             else
-                _display_error_box "You must select $valid_file_term!"
+                _display_error_box "You must select $valid_file_label!"
             fi
         fi
         _exit_script
     fi
 
     if [[ -n "$par_min_items" ]] && ((valid_items_count < par_min_items)); then
-        _display_error_box "You must select at least $par_min_items $valid_file_term!"
+        _display_error_box \
+            "You must select at least $par_min_items $valid_file_label!"
         _exit_script
     fi
 
     if [[ -n "$par_max_items" ]] && ((valid_items_count > par_max_items)); then
-        _display_error_box "You must select up to $par_max_items $valid_file_term!"
+        _display_error_box \
+            "You must select up to $par_max_items $valid_file_label!"
         _exit_script
     fi
 }
@@ -2405,7 +2423,8 @@ _xdg_get_default_app() {
         sed "s|Exec=||g" | cut -d " " -f 1)
 
     if [[ -z "$default_app" ]]; then
-        _display_error_box "Could not find the default application to open '$mime' files!"
+        _display_error_box \
+            "Could not find the default application to open '$mime' files!"
         _exit_script
     fi
 

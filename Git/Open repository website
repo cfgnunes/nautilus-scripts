@@ -89,7 +89,7 @@ _open_repository_website() {
         if [[ -n "$web_url" ]]; then
             xdg-open "$web_url"
         else
-            _log_write "Error: No remote URL found." "$input_file" "" ""
+            _log_error "No remote URL found." "$input_file" "" ""
         fi
     done
 }

@@ -48,7 +48,7 @@ _main() {
     _check_exist_filemanager
 
     printf "Scripts installer.\n\n"
-    printf "Select the options (<SPACE> to select, <UP/DOWN> to choose):\n"
+    printf "Select the options (<SPACE> to check):\n"
 
     menu_labels=(
         "Install basic dependencies."
@@ -84,7 +84,7 @@ _main() {
     IFS=$'\r' read -r -a categories_dirs <<<"$cat_dirs_find"
 
     if [[ "$menu_options" == *"categories"* ]]; then
-        printf "\nChoose the categories (<SPACE> to select, <UP/DOWN> to choose):\n"
+        printf "\nSelect the categories (<SPACE> to check):\n"
         _multiselect_menu categories_selected categories_dirs categories_defaults
     fi
 
@@ -239,7 +239,6 @@ _step_install_dependencies() {
             fi
         elif _command_exists "dnf"; then
             # Package manager "dnf": For Fedora/RHEL systems.
-            # Missing packages: findimagedupes, mp3val.
             _command_exists "pandoc" || packages+="pandoc "
             _command_exists "7za" || packages+="p7zip "
             _command_exists "convert" || packages+="ImageMagick "
@@ -257,7 +256,6 @@ _step_install_dependencies() {
             fi
         elif _command_exists "pacman"; then
             # Package manager "pacman": For Arch Linux systems.
-            # Missing packages: findimagedupes, mp3gain, mp3val.
             _command_exists "pandoc" || packages+="pandoc "
             _command_exists "7za" || packages+="p7zip "
             _command_exists "convert" || packages+="imagemagick "
@@ -274,7 +272,6 @@ _step_install_dependencies() {
             fi
         elif _command_exists "zypper"; then
             # Package manager "zypper": For openSUSE systems.
-            # Missing packages: diffpdf, findimagedupes, foremost, rdfind, ocrmypdf.
             _command_exists "pandoc" || packages+="pandoc-cli "
             _command_exists "7za" || packages+="7zip "
             _command_exists "convert" || packages+="ImageMagick "
@@ -301,7 +298,9 @@ _step_install_dependencies() {
     local imagemagick_config="/etc/ImageMagick-6/policy.xml"
     if [[ -f "$imagemagick_config" ]]; then
         printf " > Fixing write permission with PDF in ImageMagick...\n"
-        sudo sed -i 's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/g' "$imagemagick_config"
+        sudo sed -i \
+            's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/g' \
+            "$imagemagick_config"
         sudo sed -i 's/".GiB"/"8GiB"/g' "$imagemagick_config"
     fi
 }
@@ -390,12 +389,12 @@ _step_install_menus_dolphin() {
             # Set the mime requirements.
             local par_recursive=""
             local par_select_mime=""
-            par_recursive=$(_get_script_parameter_value "$filename" "par_recursive")
-            par_select_mime=$(_get_script_parameter_value "$filename" "par_select_mime")
+            par_recursive=$(_get_par_value "$filename" "par_recursive")
+            par_select_mime=$(_get_par_value "$filename" "par_select_mime")
 
             if [[ -z "$par_select_mime" ]]; then
                 local par_type=""
-                par_type=$(_get_script_parameter_value "$filename" "par_type")
+                par_type=$(_get_par_value "$filename" "par_type")
 
                 case "$par_type" in
                 "directory") par_select_mime="inode/directory" ;;
@@ -421,8 +420,8 @@ _step_install_menus_dolphin() {
             # Set the min/max files requirements.
             local par_min_items=""
             local par_max_items=""
-            par_min_items=$(_get_script_parameter_value "$filename" "par_min_items")
-            par_max_items=$(_get_script_parameter_value "$filename" "par_max_items")
+            par_min_items=$(_get_par_value "$filename" "par_min_items")
+            par_max_items=$(_get_par_value "$filename" "par_max_items")
 
             local desktop_filename=""
             desktop_filename="${desktop_menus_dir}/${submenu} - ${name}.desktop"
@@ -508,12 +507,12 @@ _step_install_menus_pcmanfm() {
             # Set the mime requirements.
             local par_recursive=""
             local par_select_mime=""
-            par_recursive=$(_get_script_parameter_value "$filename" "par_recursive")
-            par_select_mime=$(_get_script_parameter_value "$filename" "par_select_mime")
+            par_recursive=$(_get_par_value "$filename" "par_recursive")
+            par_select_mime=$(_get_par_value "$filename" "par_select_mime")
 
             if [[ -z "$par_select_mime" ]]; then
                 local par_type=""
-                par_type=$(_get_script_parameter_value "$filename" "par_type")
+                par_type=$(_get_par_value "$filename" "par_type")
 
                 case "$par_type" in
                 "directory") par_select_mime="inode/directory" ;;
@@ -539,8 +538,8 @@ _step_install_menus_pcmanfm() {
             # Set the min/max files requirements.
             local par_min_items=""
             local par_max_items=""
-            par_min_items=$(_get_script_parameter_value "$filename" "par_min_items")
-            par_max_items=$(_get_script_parameter_value "$filename" "par_max_items")
+            par_min_items=$(_get_par_value "$filename" "par_min_items")
+            par_max_items=$(_get_par_value "$filename" "par_max_items")
 
             local desktop_filename=""
             desktop_filename="${desktop_menus_dir}/${name}.desktop"
@@ -636,8 +635,8 @@ _step_install_menus_thunar() {
                 # Set the min/max files requirements.
                 local par_min_items=""
                 local par_max_items=""
-                par_min_items=$(_get_script_parameter_value "$filename" "par_min_items")
-                par_max_items=$(_get_script_parameter_value "$filename" "par_max_items")
+                par_min_items=$(_get_par_value "$filename" "par_min_items")
+                par_max_items=$(_get_par_value "$filename" "par_max_items")
                 if [[ -n "$par_min_items" ]] && [[ -n "$par_max_items" ]]; then
                     printf "\t%s\n" "<range>$par_min_items-$par_max_items</range>"
                 else
@@ -649,8 +648,8 @@ _step_install_menus_thunar() {
                 # Set the type requirements.
                 local par_recursive=""
                 local par_type=""
-                par_recursive=$(_get_script_parameter_value "$filename" "par_recursive")
-                par_type=$(_get_script_parameter_value "$filename" "par_type")
+                par_recursive=$(_get_par_value "$filename" "par_recursive")
+                par_type=$(_get_par_value "$filename" "par_type")
                 if [[ "$par_type" == "all" ]] ||
                     [[ "$par_type" == "directory" ]] ||
                     [[ "$par_recursive" == "true" ]]; then
@@ -659,7 +658,7 @@ _step_install_menus_thunar() {
 
                 # Set the type requirements.
                 local par_select_mime=""
-                par_select_mime=$(_get_script_parameter_value "$filename" "par_select_mime")
+                par_select_mime=$(_get_par_value "$filename" "par_select_mime")
 
                 if [[ -n "$par_select_mime" ]]; then
                     if [[ "$par_select_mime" == *"audio"* ]]; then
@@ -692,10 +691,18 @@ _step_install_shortcuts() {
     # Install keyboard shortcuts for specific file managers.
 
     case "$FILE_MANAGER" in
-    "nautilus") _step_install_shortcuts_nautilus "$HOME/.config/nautilus/scripts-accels" ;;
-    "caja") _step_install_shortcuts_gnome2 "$HOME/.config/caja/accels" ;;
-    "nemo") _step_install_shortcuts_gnome2 "$HOME/.gnome2/accels/nemo" ;;
-    "thunar") _step_install_shortcuts_thunar "$HOME/.config/Thunar/accels.scm" ;;
+    "nautilus")
+        _step_install_shortcuts_nautilus "$HOME/.config/nautilus/scripts-accels"
+        ;;
+    "caja")
+        _step_install_shortcuts_gnome2 "$HOME/.config/caja/accels"
+        ;;
+    "nemo")
+        _step_install_shortcuts_gnome2 "$HOME/.gnome2/accels/nemo"
+        ;;
+    "thunar")
+        _step_install_shortcuts_thunar "$HOME/.config/Thunar/accels.scm"
+        ;;
     esac
 }
 
@@ -717,14 +724,14 @@ _step_install_shortcuts_nautilus() {
             -print0 2>/dev/null | sort --zero-terminated |
             while IFS="" read -r -d "" filename; do
 
-                local install_keyboard_shortcut=""
-                install_keyboard_shortcut=$(_get_script_parameter_value \
+                local keyboard_shortcut=""
+                keyboard_shortcut=$(_get_par_value \
                     "$filename" "install_keyboard_shortcut")
 
-                if [[ -n "$install_keyboard_shortcut" ]]; then
+                if [[ -n "$keyboard_shortcut" ]]; then
                     local name=""
                     name=$(basename -- "$filename")
-                    printf "%s\n" "$install_keyboard_shortcut $name"
+                    printf "%s\n" "$keyboard_shortcut $name"
                 fi
             done
 
@@ -757,15 +764,15 @@ _step_install_shortcuts_gnome2() {
             -print0 2>/dev/null | sort --zero-terminated |
             while IFS="" read -r -d "" filename; do
 
-                local install_keyboard_shortcut=""
-                install_keyboard_shortcut=$(_get_script_parameter_value \
+                local keyboard_shortcut=""
+                keyboard_shortcut=$(_get_par_value \
                     "$filename" "install_keyboard_shortcut")
-                install_keyboard_shortcut=${install_keyboard_shortcut//Control/Primary}
+                keyboard_shortcut=${keyboard_shortcut//Control/Primary}
 
-                if [[ -n "$install_keyboard_shortcut" ]]; then
+                if [[ -n "$keyboard_shortcut" ]]; then
                     # shellcheck disable=SC2001
                     filename=$(sed "s|/|\\\\\\\\s|g; s| |%20|g" <<<"$filename")
-                    printf "%s\n" '(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s'"$filename"'" "'"$install_keyboard_shortcut"'")'
+                    printf "%s\n" '(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s'"$filename"'" "'"$keyboard_shortcut"'")'
                 fi
             done
 
@@ -801,12 +808,12 @@ _step_install_shortcuts_thunar() {
             -print0 2>/dev/null | sort --zero-terminated |
             while IFS="" read -r -d "" filename; do
 
-                local install_keyboard_shortcut=""
-                install_keyboard_shortcut=$(_get_script_parameter_value \
+                local keyboard_shortcut=""
+                keyboard_shortcut=$(_get_par_value \
                     "$filename" "install_keyboard_shortcut")
-                install_keyboard_shortcut=${install_keyboard_shortcut//Control/Primary}
+                keyboard_shortcut=${keyboard_shortcut//Control/Primary}
 
-                if [[ -n "$install_keyboard_shortcut" ]]; then
+                if [[ -n "$keyboard_shortcut" ]]; then
                     local name=""
                     local submenu=""
                     local unique_id=""
@@ -815,7 +822,7 @@ _step_install_shortcuts_thunar() {
                     unique_id=$(md5sum <<<"$submenu$name" 2>/dev/null |
                         sed "s|[^0-9]*||g" | cut -c 1-8)
 
-                    printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-'"$unique_id"'" "'"$install_keyboard_shortcut"'")'
+                    printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-'"$unique_id"'" "'"$keyboard_shortcut"'")'
                 fi
             done
 
@@ -826,12 +833,17 @@ _step_close_filemanager() {
     printf " > Closing the file manager to reload its configurations...\n"
 
     case "$FILE_MANAGER" in
-    "nautilus" | "caja" | "nemo" | "thunar") $FILE_MANAGER -q &>/dev/null || true & ;;
-    "pcmanfm-qt") killall "$FILE_MANAGER" &>/dev/null || true & ;; # FIXME: Restore desktop after kill PCManFM-Qt.
+    "nautilus" | "caja" | "nemo" | "thunar")
+        $FILE_MANAGER -q &>/dev/null || true &
+        ;;
+    "pcmanfm-qt")
+        # FIXME: Restore desktop after kill PCManFM-Qt.
+        killall "$FILE_MANAGER" &>/dev/null || true &
+        ;;
     esac
 }
 
-_get_script_parameter_value() {
+_get_par_value() {
     local filename=$1
     local parameter=$2
 
