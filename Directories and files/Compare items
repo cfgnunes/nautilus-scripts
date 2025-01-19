@@ -59,7 +59,6 @@ _compare() {
 
     # Execute the appropriate command based on the determined type.
     case $command in
-    "code") $command --diff -- "$file_1" "$file_2" & ;;
     "compare")
         # Use ImageMagick's compare tool for image files.
         if ((num_files_compare > 2)); then
@@ -260,9 +259,9 @@ _get_command() {
     case $file_mime in
     "application/pdf") preferred_commands="diffpdf" ;;
     "inode/directory") preferred_commands="meld" ;;
-    "inode/x-empty") preferred_commands="code meld" ;;
+    "inode/x-empty") preferred_commands="meld" ;;
     "image/"*) preferred_commands="compare" ;;
-    "text/"*) preferred_commands="code meld" ;;
+    "text/"*) preferred_commands="meld" ;;
     *)
         # For unknown MIME types, determine the file encoding.
         local file_encoding=""
@@ -272,7 +271,7 @@ _get_command() {
             preferred_commands="meld_hex"
         else
             # Default to text comparison.
-            preferred_commands="code meld"
+            preferred_commands="meld"
         fi
         ;;
     esac
@@ -295,16 +294,6 @@ _get_command() {
             fi
         fi
     done
-
-    # If VSCode is the default command but not installed, fall back to 'meld'.
-    if [[ "$command" == "code" ]] && [[ "$command_status" == "default" ]]; then
-        command="meld"
-    fi
-
-    # Adjust for VSCode's limitation: it doesn't support comparing three files.
-    if [[ "$command" == "code" ]] && ((num_files_compare > 2)); then
-        command="meld"
-    fi
 
     # Adjust the selected command for KDE or LXQt desktop environments.
     if [[ "$command" == "meld"* ]]; then
