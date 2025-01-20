@@ -96,7 +96,7 @@ _main_task() {
     # Delete local branches that no longer exist on the remote repository.
     for branch in $merged_branches; do
         if ! grep --quiet "$branch" <<<"$remote_branches"; then
-            std_output=$(git branch -d "$branch" 2>&1)
+            std_output=$(git branch --delete --force "$branch" 2>&1)
             _check_output "$?" "$std_output" "$input_file" "" || return 1
         fi
     done
