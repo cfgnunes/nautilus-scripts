@@ -408,7 +408,7 @@ _run_command() {
         std_output=$(unrar x -p"null" -- "$input_file" 2>&1)
         exit_code=$?
 
-        if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect password for" <<<"$std_output"; then
+        if ((exit_code != 0)) && grep --quiet --ignore-case "password" <<<"$std_output"; then
             local password=""
             __temp_dir_pop && __temp_dir_remove
             password=$(__get_password) || return 1
