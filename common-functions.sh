@@ -1191,32 +1191,44 @@ _get_output_filename() {
     eval "$parameters"
 
     filename=$(basename -- "$input_file")
+
+    # Start constructing the output file path with the output directory.
     output_file="$output_dir/"
     [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
 
-    # Define the extension of the 'output_file'.
-    case "$par_extension_opt" in
-    "append")
-        output_file+=$(_strip_filename_extension "$filename")
-        [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
-        output_file+=$(_get_filename_extension "$filename")
+    if [[ -d "$input_file" ]]; then
+        # Handle case where input_file is a directory.
+        output_file+=$filename
         output_file+=".$par_extension"
-        ;;
-    "preserve")
-        output_file+=$(_strip_filename_extension "$filename")
-        [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
-        output_file+=$(_get_filename_extension "$filename")
-        ;;
-    "replace")
-        output_file+=$(_strip_filename_extension "$filename")
-        [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
-        output_file+=".$par_extension"
-        ;;
-    "strip")
-        output_file+=$(_strip_filename_extension "$filename")
-        [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
-        ;;
-    esac
+    else
+        # Handle case where input_file is a regular file.
+        case "$par_extension_opt" in
+        "append")
+            # Append the new extension to the existing one.
+            output_file+=$(_strip_filename_extension "$filename")
+            [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
+            output_file+=$(_get_filename_extension "$filename")
+            output_file+=".$par_extension"
+            ;;
+        "preserve")
+            # Preserve the original extension.
+            output_file+=$(_strip_filename_extension "$filename")
+            [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
+            output_file+=$(_get_filename_extension "$filename")
+            ;;
+        "replace")
+            # Replace the existing extension with the new one.
+            output_file+=$(_strip_filename_extension "$filename")
+            [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
+            output_file+=".$par_extension"
+            ;;
+        "strip")
+            # Remove the extension.
+            output_file+=$(_strip_filename_extension "$filename")
+            [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
+            ;;
+        esac
+    fi
 
     # If the file already exists, add a suffix.
     output_file=$(_get_filename_next_suffix "$output_file")
