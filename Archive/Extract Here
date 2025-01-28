@@ -530,10 +530,10 @@ _run_command() {
 _all_commands_exists() {
     local commands=$1
 
-    local command=""
     local commands_array=()
     IFS=" " read -r -a commands_array <<<"$commands"
 
+    local command=""
     for command in "${commands_array[@]}"; do
         if ! _command_exists "$command"; then
             return 1
