@@ -42,20 +42,14 @@ _compare() {
         num_files_compare=3
     fi
 
-    # Determine the command to execute based on the MIME type and availability.
+    # Determine the command to execute.
     local command=""
-    command=$(_get_command "$file_1" "$num_files_compare" "available")
+    command=$(_get_command "$file_1" "$num_files_compare")
 
-    # If no available command is found, fall back to a default command and
-    # check dependencies.
-    if [[ -z "$command" ]]; then
-        command=$(_get_command "$file_1" "$num_files_compare" "default")
-
-        # Check dependencies required for the default command.
-        local dependencies=""
-        dependencies=$(_get_dependencies "$command")
-        _check_dependencies "$dependencies"
-    fi
+    # Check dependencies required for the command.
+    local dependencies=""
+    dependencies=$(_get_dependencies "$command")
+    _check_dependencies "$dependencies"
 
     # Execute the appropriate command based on the determined type.
     case $command in
@@ -247,8 +241,6 @@ _get_command() {
 
     local input_file=$1        # The file to analyze for MIME type or encoding.
     local num_files_compare=$2 # The number of files to compare (2 or 3).
-    local command_status=$3    # Select "default" or "available" commands.
-    local preferred_commands=()
     local command=""
 
     # Determine the MIME type of the input file.
@@ -257,40 +249,24 @@ _get_command() {
 
     # Select preferred commands based on the file MIME type.
     case $file_mime in
-    "application/pdf") preferred_commands=("diffpdf") ;;
-    "inode/directory") preferred_commands=("meld") ;;
-    "inode/x-empty") preferred_commands=("meld") ;;
-    "image/"*) preferred_commands=("compare") ;;
-    "text/"*) preferred_commands=("meld") ;;
+    "application/pdf") command="diffpdf" ;;
+    "inode/directory") command="meld" ;;
+    "inode/x-empty") command="meld" ;;
+    "image/"*) command="compare" ;;
+    "text/"*) command="meld" ;;
     *)
         # For unknown MIME types, determine the file encoding.
         local file_encoding=""
         file_encoding=$(_get_file_encoding "$input_file")
         if [[ "$file_encoding" == "binary" ]]; then
             # Binary file comparison.
-            preferred_commands=("meld_hex")
+            command="meld_hex"
         else
             # Default to text comparison.
-            preferred_commands=("meld")
+            command="meld"
         fi
         ;;
     esac
-
-    # Determine the command to use based on the command status.
-    if [[ "$command_status" == "default" ]]; then
-        # Use the first preferred command as the default.
-        command=${preferred_commands[0]}
-    elif [[ "$command_status" == "available" ]]; then
-        # Find the first available command on the system.
-        local preferred_command=""
-        for preferred_command in "${preferred_commands[@]}"; do
-            # Use the first available command.
-            if _command_exists "$preferred_command"; then
-                command=$preferred_command
-                break
-            fi
-        done
-    fi
 
     # Adjust the selected command for KDE or LXQt desktop environments.
     if [[ "$command" == "meld"* ]]; then
