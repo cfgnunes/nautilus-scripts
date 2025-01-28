@@ -615,7 +615,7 @@ _step_install_menus_thunar() {
         find -L "$INSTALL_DIR" -mindepth 2 -type f \
             ! -path "*.git*" ! -path "*.assets*" \
             -print0 2>/dev/null | sort --zero-terminated |
-            while IFS="" read -r -d "" filename; do
+            while IFS= read -r -d "" filename; do
                 name=$(basename -- "$filename")
                 submenu=$(dirname -- "$filename" | sed "s|.*scripts/|Scripts/|g")
 
@@ -722,7 +722,7 @@ _step_install_shortcuts_nautilus() {
             ! -path "*.git*" ! -path "*.assets*" \
             ! -path "$INSTALL_DIR/User previous scripts" \
             -print0 2>/dev/null | sort --zero-terminated |
-            while IFS="" read -r -d "" filename; do
+            while IFS= read -r -d "" filename; do
 
                 local keyboard_shortcut=""
                 keyboard_shortcut=$(_get_par_value \
@@ -762,7 +762,7 @@ _step_install_shortcuts_gnome2() {
             ! -path "*.git*" ! -path "*.assets*" \
             ! -path "$INSTALL_DIR/User previous scripts" \
             -print0 2>/dev/null | sort --zero-terminated |
-            while IFS="" read -r -d "" filename; do
+            while IFS= read -r -d "" filename; do
 
                 local keyboard_shortcut=""
                 keyboard_shortcut=$(_get_par_value \
@@ -806,7 +806,7 @@ _step_install_shortcuts_thunar() {
             ! -path "*.git*" ! -path "*.assets*" \
             ! -path "$INSTALL_DIR/User previous scripts" \
             -print0 2>/dev/null | sort --zero-terminated |
-            while IFS="" read -r -d "" filename; do
+            while IFS= read -r -d "" filename; do
 
                 local keyboard_shortcut=""
                 keyboard_shortcut=$(_get_par_value \
