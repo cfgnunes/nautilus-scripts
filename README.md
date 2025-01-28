@@ -112,7 +112,7 @@ This project includes a functionality specifically designed to manage scenarios 
 
 In some cases, the scripts may fail to run. To avoid such issues, follow these steps:
 
-1. Create a directory with a name that includes the word `batch`;
+1. Create a single directory with a name that includes the word `batch`;
 2. Place all the files you want to process into this directory.
 3. Execute the desired script in this directory.
 

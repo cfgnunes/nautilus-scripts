@@ -762,6 +762,76 @@ _exit_script() {
     xargs kill <<<"$child_pids" &>/dev/null
 }
 
+_find_filtered_files() {
+    # This function filters a list of files or directories based on various
+    # user-specified criteria, such as file type, extensions, and recursion.
+    #
+    # Parameters:
+    #   - $1 (input_files): A space-separated string containing file or
+    #     directory paths to filter. These paths are passed to the "find"
+    #     command.
+    #   - $2 (par_type): A string specifying the type of file to search for. It
+    #     can be:
+    #     - "file": To search for files and symbolic links.
+    #     - "directory": To search for directories and symbolic links.
+    #   - $3 (par_skip_extension): A string of file extensions to exclude from
+    #     the search. Only files with extensions not matching this list will be
+    #     included.
+    #   - $4 (par_select_extension): A string of file extensions to include in
+    #     the search. Only files with matching extensions will be included.
+    #
+    # Example:
+    #   - Input: "dir1 dir2", "file", "", "txt|pdf", "true"
+    #   - Output: A list of files with extensions ".txt" or ".pdf" from the
+    #     directories "dir1" and "dir2", searched recursively.
+
+    local input_files=$1
+    local par_type=$2
+    local par_skip_extension=$3
+    local par_select_extension=$4
+    local par_find_parameters=$5
+    local filtered_files=""
+    local find_command=""
+
+    input_files=$(sed "s|'|'\"'\"'|g" <<<"$input_files")
+    input_files=$(sed "s|$FIELD_SEPARATOR|' '|g" <<<"$input_files")
+
+    # Build a 'find' command.
+    find_command="find '$input_files'"
+
+    if [[ -n "$par_find_parameters" ]]; then
+        find_command+=" $par_find_parameters"
+    fi
+
+    # Expand the directories with the 'find' command.
+    case "$par_type" in
+    "file") find_command+=" \( -type l -o -type f \)" ;;
+    "directory") find_command+=" \( -type l -o -type d \)" ;;
+    esac
+
+    if [[ -n "$par_select_extension" ]]; then
+        find_command+=" -regextype posix-extended "
+        find_command+=" -regex \".*\.($par_select_extension)$\""
+    fi
+
+    if [[ -n "$par_skip_extension" ]]; then
+        find_command+=" -regextype posix-extended "
+        find_command+=" ! -regex \".*\.($par_skip_extension)$\""
+    fi
+
+    find_command+=" ! -path \"$IGNORE_FIND_PATH\""
+    # shellcheck disable=SC2089
+    find_command+=" -print0"
+
+    # shellcheck disable=SC2086
+    filtered_files=$(eval $find_command 2>/dev/null |
+        tr "\0" "$FIELD_SEPARATOR")
+    filtered_files=$(_str_remove_empty_tokens "$filtered_files")
+
+    # Return the filtered files.
+    printf "%s" "$filtered_files"
+}
+
 _gdbus_notify() {
     # This function sends a desktop notification using the "gdbus" tool, which
     # interfaces with the D-Bus notification system (specifically the
@@ -971,27 +1041,32 @@ _get_files() {
             <<<"$input_files")
     fi
 
-    # This workaround allows the scripts to handle cases with a large input
-    # list of files. In this case, just select a single directory. Then, the
-    # scripts operate on the files within the selected directory. This
-    # addresses the GNOME error: "Could not start application: Failed to
-    # execute child process "/bin/sh" (Argument list too long)".
     local initial_items_count=0
     initial_items_count=$(_get_items_count "$input_files")
-    if ((initial_items_count == 1)) &&
-        [[ -d "$input_files" ]] && [[ "${input_files,,}" == *"batch" ]]; then
-        input_files=$(find "$input_files" \
-            -mindepth 1 -maxdepth 1 ! -path "$IGNORE_FIND_PATH" \
-            -printf "%p$FIELD_SEPARATOR")
+
+    local find_parameters=""
+    if ((initial_items_count == 1)) && [[ -d "$input_files" ]] &&
+        [[ "$par_recursive" == "false" ]] &&
+        printf "%s" "$(basename -- "$input_files")" |
+        grep --quiet --ignore-case --word-regexp "batch"; then
+        # This workaround allows the scripts to handle cases with a large input
+        # list of files. In this case, just select a single directory  with a
+        # name that includes the word 'batch'. Then, the scripts operate on the
+        # files within the selected directory. This addresses the GNOME error:
+        # "Could not start application: Failed to execute child process
+        # "/bin/sh" (Argument list too long)".
+        find_parameters="-mindepth 1 -maxdepth 1"
+    elif [[ "$par_recursive" == "false" ]]; then
+        find_parameters="-maxdepth 0"
     fi
 
-    # Pre-select the input files. Also, expand it (if 'par_recursive' is true).
-    input_files=$(_validate_file_preselect \
+    # Pre-select the input files.
+    input_files=$(_find_filtered_files \
         "$input_files" \
         "$par_type" \
         "$par_skip_extension" \
         "$par_select_extension" \
-        "$par_recursive")
+        "$find_parameters")
 
     # Return the current working directory if no directories have been
     # selected.
@@ -2241,79 +2316,6 @@ _validate_file_mime_parallel() {
 
     input_files=$(_str_remove_empty_tokens "$input_files")
     printf "%s" "$input_files"
-}
-
-_validate_file_preselect() {
-    # This function filters a list of files or directories based on various
-    # user-specified criteria, such as file type, extensions, and recursion.
-    #
-    # Parameters:
-    #   - $1 (input_files): A space-separated string containing file or
-    #     directory paths to filter. These paths are passed to the "find"
-    #     command.
-    #   - $2 (par_type): A string specifying the type of file to search for. It
-    #     can be:
-    #     - "file": To search for files and symbolic links.
-    #     - "directory": To search for directories and symbolic links.
-    #   - $3 (par_skip_extension): A string of file extensions to exclude from
-    #     the search. Only files with extensions not matching this list will be
-    #     included.
-    #   - $4 (par_select_extension): A string of file extensions to include in
-    #     the search. Only files with matching extensions will be included.
-    #   - $5 (par_recursive): A boolean string ("true" or any other value)
-    #     indicating whether to search directories recursively. If set to
-    #     "true", directories will be searched recursively; otherwise, only the
-    #     immediate directory level will be searched.
-    #
-    # Example:
-    #   - Input: "dir1 dir2", "file", "", "txt|pdf", "true"
-    #   - Output: A list of files with extensions ".txt" or ".pdf" from the
-    #     directories "dir1" and "dir2", searched recursively.
-
-    local input_files=$1
-    local par_type=$2
-    local par_skip_extension=$3
-    local par_select_extension=$4
-    local par_recursive=$5
-    local input_files_valid=""
-
-    input_files=$(sed "s|'|'\"'\"'|g" <<<"$input_files")
-    input_files=$(sed "s|$FIELD_SEPARATOR|' '|g" <<<"$input_files")
-
-    # Build a 'find' command.
-    find_command="find '$input_files'"
-
-    if [[ "$par_recursive" != "true" ]]; then
-        find_command+=" -maxdepth 0"
-    fi
-
-    # Expand the directories with the 'find' command.
-    case "$par_type" in
-    "file") find_command+=" \( -type l -o -type f \)" ;;
-    "directory") find_command+=" \( -type l -o -type d \)" ;;
-    esac
-
-    if [[ -n "$par_select_extension" ]]; then
-        find_command+=" -regextype posix-extended "
-        find_command+=" -regex \".*\.($par_select_extension)$\""
-    fi
-
-    if [[ -n "$par_skip_extension" ]]; then
-        find_command+=" -regextype posix-extended "
-        find_command+=" ! -regex \".*\.($par_skip_extension)$\""
-    fi
-
-    find_command+=" ! -path \"$IGNORE_FIND_PATH\""
-    # shellcheck disable=SC2089
-    find_command+=" -print0"
-
-    # shellcheck disable=SC2086
-    input_files_valid=$(eval $find_command 2>/dev/null |
-        tr "\0" "$FIELD_SEPARATOR")
-    input_files_valid=$(_str_remove_empty_tokens "$input_files_valid")
-
-    # Create a temp file containing the name of the valid file.
-    printf "%s" "$input_files_valid"
 }
 
 _validate_files_count() {
