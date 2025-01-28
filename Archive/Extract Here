@@ -14,15 +14,31 @@ _main() {
     _check_dependencies ""
     input_files=$(_get_files "par_type=file")
 
-    local dependencies=""
-    dependencies=$(_get_dependencies "$input_files")
-    _check_dependencies "$dependencies"
-    _display_wait_box "0"
+    # Export variables to be used inside new shells (when using 'xargs').
+    export TEMP_DIR_STORAGE_TEXT
 
+    # Export functions to be used inside new shells (when using 'xargs').
     export -f \
         _all_commands_exists \
         _get_command \
+        _get_dependencies \
+        _storage_text_write \
+        _storage_text_write_ln \
         _run_command
+
+    # Check the dependencies for each file in parallel.
+    printf "%s" "$input_files" | xargs \
+        --no-run-if-empty \
+        --delimiter="$FIELD_SEPARATOR" \
+        --max-procs="$(_get_max_procs)" \
+        --replace="{}" \
+        bash -c "_get_dependencies '{}'"
+
+    local dependencies+=""
+    dependencies=$(_storage_text_read_all)
+
+    _check_dependencies "$dependencies"
+    _display_wait_box "0"
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -40,219 +56,263 @@ _main_task() {
 }
 
 _get_dependencies() {
-    local input_files=$1
+    local input_file=$1
     local dependencies=""
 
-    # Check dependencies for each file.
-    local input_file=""
-    for input_file in $input_files; do
-        local command=""
-        command=$(_get_command "$input_file" "available")
+    local command=""
+    command=$(_get_command "$input_file" "available")
 
-        # If there is an available command, skip the dependency.
-        if [[ -n "$command" ]]; then
-            continue
-        fi
+    # If there is an available command, skip the dependency.
+    if [[ -n "$command" ]]; then
+        return
+    fi
 
-        command=$(_get_command "$input_file" "default")
+    command=$(_get_command "$input_file" "default")
 
-        case $command in
-        "7za")
-            dependencies+="
+    case $command in
+    "7za")
+        dependencies+="
             command=7za; pkg_manager=apt; package=p7zip-full |
             command=7za; pkg_manager=dnf; package=p7zip |
             command=7za; pkg_manager=pacman; package=p7zip |
             command=7za; pkg_manager=zypper; package=7zip"
-            ;;
-        "ar") dependencies+="command=ar; package=binutils" ;;
-        "bsdtar")
-            dependencies+="
+        ;;
+    "ar") dependencies+="command=ar; package=binutils" ;;
+    "bsdtar")
+        dependencies+="
                 command=bsdtar; pkg_manager=apt; package=libarchive-tools |
                 command=bsdtar; pkg_manager=dnf |
                 command=bsdtar; pkg_manager=pacman; package=libarchive |
                 command=bsdtar; pkg_manager=zypper"
-            ;;
-        "bsdtar+unar+7za")
-            dependencies+="
+        ;;
+    "bsdtar+unar+7za")
+        dependencies+="
                 command=bsdtar; pkg_manager=apt; package=libarchive-tools |
                 command=bsdtar; pkg_manager=dnf |
                 command=bsdtar; pkg_manager=pacman; package=libarchive |
                 command=bsdtar; pkg_manager=zypper"
-            dependencies+=$'\n'
-            dependencies+="
+        dependencies+=$'\n'
+        dependencies+="
                 command=unar; pkg_manager=apt |
                 command=unar; pkg_manager=dnf |
                 command=unar; pkg_manager=pacman; package=unarchiver |
                 command=unar; pkg_manager=zypper"
-            dependencies+=$'\n'
-            dependencies+="
+        dependencies+=$'\n'
+        dependencies+="
                 command=7za; pkg_manager=apt; package=p7zip-full |
                 command=7za; pkg_manager=dnf; package=p7zip |
                 command=7za; pkg_manager=pacman; package=p7zip |
                 command=7za; pkg_manager=zypper; package=7zip"
-            ;;
-        "bzip2") dependencies+="command=bzip2" ;;
-        "cabextract") dependencies+="command=cabextract" ;;
-        "cpio") dependencies+="command=cpio" ;;
-        "gpg")
-            dependencies+="
+        ;;
+    "bzip2") dependencies+="command=bzip2" ;;
+    "cabextract") dependencies+="command=cabextract" ;;
+    "cpio") dependencies+="command=cpio" ;;
+    "gpg")
+        dependencies+="
                 command=gpg; pkg_manager=apt; package=gpg |
                 command=gpg; pkg_manager=dnf; package=gnupg2 |
                 command=gpg; pkg_manager=pacman; package=gnupg |
                 command=gpg; pkg_manager=zypper; package=gpg2"
-            ;;
-        "gzip") dependencies+="command=gzip" ;;
-        "lha") dependencies+="command=lha; package=lhasa" ;;
-        "lrzip") dependencies+="command=lrzip" ;;
-        "lz4") dependencies+="command=lz4" ;;
-        "lzip") dependencies+="command=lzip" ;;
-        "lzop") dependencies+="command=lzop" ;;
-        "tar") dependencies+="command=tar" ;;
-        "tar+bzip2") dependencies+="command=tar | command=bzip2" ;;
-        "tar+gzip") dependencies+="command=tar | command=gzip" ;;
-        "tar+lrzip") dependencies+="command=lrztar; package=lrzip" ;;
-        "tar+lz4") dependencies+="command=tar | command=lz4" ;;
-        "tar+lzip") dependencies+="command=tar | command=lzip" ;;
-        "tar+lzop") dependencies+="command=tar | command=lzop" ;;
-        "tar+xz")
-            dependencies+="
+        ;;
+    "gzip") dependencies+="command=gzip" ;;
+    "lha") dependencies+="command=lha; package=lhasa" ;;
+    "lrzip") dependencies+="command=lrzip" ;;
+    "lz4") dependencies+="command=lz4" ;;
+    "lzip") dependencies+="command=lzip" ;;
+    "lzop") dependencies+="command=lzop" ;;
+    "tar") dependencies+="command=tar" ;;
+    "tar+bzip2") dependencies+="command=tar | command=bzip2" ;;
+    "tar+gzip") dependencies+="command=tar | command=gzip" ;;
+    "tar+lrzip") dependencies+="command=lrztar; package=lrzip" ;;
+    "tar+lz4") dependencies+="command=tar | command=lz4" ;;
+    "tar+lzip") dependencies+="command=tar | command=lzip" ;;
+    "tar+lzop") dependencies+="command=tar | command=lzop" ;;
+    "tar+xz")
+        dependencies+="
                 command=tar |
                 command=xz; pkg_manager=apt; package=xz-utils |
                 command=xz; pkg_manager=dnf |
                 command=xz; pkg_manager=pacman |
                 command=xz; pkg_manager=zypper"
-            ;;
-        "tar+zstd") dependencies+="command=tar | command=zstd" ;;
-        "unar")
-            dependencies+="
+        ;;
+    "tar+zstd") dependencies+="command=tar | command=zstd" ;;
+    "unar")
+        dependencies+="
                 command=unar; pkg_manager=apt |
                 command=unar; pkg_manager=dnf |
                 command=unar; pkg_manager=pacman; package=unarchiver |
                 command=unar; pkg_manager=zypper"
-            ;;
-        "unrar") dependencies+="command=unrar" ;;
-        "unsquashfs")
-            dependencies+="
+        ;;
+    "unrar") dependencies+="command=unrar" ;;
+    "unsquashfs")
+        dependencies+="
             command=unsquashfs; pkg_manager=apt; package=squashfs-tools |
             command=unsquashfs; pkg_manager=dnf; package=squashfs-tools |
             command=unsquashfs; pkg_manager=pacman; package=squashfs-tools |
             command=unsquashfs; pkg_manager=zypper; package=squashfs"
-            ;;
-        "unzip") dependencies+="command=unzip" ;;
-        "xorriso") dependencies+="command=xorriso" ;;
-        "xz")
-            dependencies+="
+        ;;
+    "unzip") dependencies+="command=unzip" ;;
+    "xorriso") dependencies+="command=xorriso" ;;
+    "xz")
+        dependencies+="
                 command=xz; pkg_manager=apt; package=xz-utils |
                 command=xz; pkg_manager=dnf |
                 command=xz; pkg_manager=pacman |
                 command=xz; pkg_manager=zypper"
-            ;;
-        "zpaq") dependencies+="command=zpaq" ;;
-        "zstd") dependencies+="command=zstd" ;;
-        esac
-        dependencies+=$'\n'
-    done
+        ;;
+    "zpaq") dependencies+="command=zpaq" ;;
+    "zstd") dependencies+="command=zstd" ;;
+    esac
 
-    printf "%s" "$dependencies"
+    _storage_text_write_ln "$dependencies"
 }
 
 _get_command() {
     local input_file=$1
     local command_status=$2
-    local preferred_commands=""
+    local pref_commands=()
     local command=""
 
-    # Determine the preferred commands based on the file extension.
+    # Define the preferred commands for each type of archive.
+    local _cmds_7z=("7za" "unar" "bsdtar")
+    local _cmds_ace=("unar")
+    local _cmds_alz=("unar")
+    local _cmds_ar=("ar" "bsdtar")
+    local _cmds_arc=("unar")
+    local _cmds_arj=("unar")
+    local _cmds_bz=("bzip2" "unar" "7za")
+    local _cmds_cab=("cabextract" "bsdtar" "unar")
+    local _cmds_cpio=("cpio" "unar" "bsdtar")
+    local _cmds_deb=("ar")
+    local _cmds_gpg=("gpg")
+    local _cmds_gz=("gzip" "unar" "7za")
+    local _cmds_iso=("xorriso" "bsdtar")
+    local _cmds_lrz=("lrzip")
+    local _cmds_lz=("lzip")
+    local _cmds_lz4=("lz4")
+    local _cmds_lzh=("lha" "unar")
+    local _cmds_lzma=("xz" "unar")
+    local _cmds_lzo=("lzop")
+    local _cmds_msi=("unar")
+    local _cmds_pak=("unar")
+    local _cmds_rar=("unrar" "unar" "bsdtar")
+    local _cmds_sit=("unar")
+    local _cmds_sqsh=("unsquashfs")
+    local _cmds_tar_bz=("tar+bzip2" "unar" "7za")
+    local _cmds_tar_gz=("tar+gzip" "unar" "7za")
+    local _cmds_tar_lrz=("tar+lrzip")
+    local _cmds_tar_lz=("tar+lzip")
+    local _cmds_tar_lz4=("tar+lz4")
+    local _cmds_tar_lzma=("tar+lzma" "unar" "7za")
+    local _cmds_tar_lzo=("tar+lzop")
+    local _cmds_tar_xz=("tar+xz" "unar" "7za")
+    local _cmds_tar_z=("tar+gzip" "unar" "7za")
+    local _cmds_tar_zst=("tar+zstd")
+    local _cmds_tar=("tar" "bsdtar" "unar" "7za")
+    local _cmds_xar=("unar" "bsdtar")
+    local _cmds_xz=("xz" "unar" "7za")
+    local _cmds_z=("gzip" "unar")
+    local _cmds_zip=("7za" "bsdtar" "unar" "unzip")
+    local _cmds_zoo=("unar")
+    local _cmds_zpaq=("zpaq")
+    local _cmds_zstd=("zstd")
+    local _cmds_unknown_file=("bsdtar+unar+7za")
+
+    # Determine the preferred commands based on the filename extension.
     case "${input_file,,}" in
-    *.tar.bz | *.tbz | *.tar.bz2 | *.tbz2 | *.tb2) preferred_commands="tar+bzip2 unar 7za" ;;
-    *.tar.gz | *.tgz) preferred_commands="tar+gzip unar 7za" ;;
-    *.tar.lrz | *.tlrz) preferred_commands="tar+lrzip" ;;
-    *.tar.lz) preferred_commands="tar+lzip" ;;
-    *.tar.lz4) preferred_commands="tar+lz4" ;;
-    *.tar.lzma | *.tlz) preferred_commands="tar+lzma unar 7za" ;;
-    *.tar.lzo | *.tzo) preferred_commands="tar+lzop" ;;
-    *.tar.xz | *.txz) preferred_commands="tar+xz unar 7za" ;;
-    *.tar.z | *.taz) preferred_commands="tar+gzip unar 7za" ;;
-    *.tar.zst | *.tzst) preferred_commands="tar+zstd" ;;
-    *.7z) preferred_commands="7za unar bsdtar" ;;
-    *.ace) preferred_commands="unar" ;;
-    *.alz) preferred_commands="unar" ;;
-    *.ar) preferred_commands="ar bsdtar" ;;
-    *.arc) preferred_commands="unar" ;;
-    *.arj) preferred_commands="unar" ;;
-    *.bz | *.bz2) preferred_commands="bzip2 unar 7za" ;;
-    *.cab) preferred_commands="cabextract bsdtar unar" ;;
-    *.cpio) preferred_commands="cpio unar bsdtar" ;;
-    *.deb | *.udeb) preferred_commands="ar" ;;
-    *.gpg | *.asc | *.pgp) preferred_commands="gpg" ;;
-    *.gz) preferred_commands="gzip unar 7za" ;;
-    *.iso) preferred_commands="xorriso bsdtar" ;;
-    *.lrz) preferred_commands="lrzip" ;;
-    *.lz) preferred_commands="lzip" ;;
-    *.lz4) preferred_commands="lz4" ;;
-    *.lzh | *.lzs | *.lha) preferred_commands="lha unar" ;;
-    *.lzma) preferred_commands="xz unar" ;;
-    *.lzo) preferred_commands="lzop" ;;
-    *.msi) preferred_commands="unar" ;;
-    *.pak) preferred_commands="unar" ;;
-    *.rar) preferred_commands="unrar unar bsdtar" ;;
-    *.sit) preferred_commands="unar" ;;
-    *.sqsh | *.squashfs | *.sfs) preferred_commands="unsquashfs" ;;
-    *.tar | *.gtar | *.gem) preferred_commands="tar bsdtar unar 7za" ;;
-    *.xar) preferred_commands="unar bsdtar" ;;
-    *.xz) preferred_commands="xz unar 7za" ;;
-    *.z) preferred_commands="gzip unar" ;;
-    *.zip) preferred_commands="7za bsdtar unar unzip" ;;
-    *.zoo) preferred_commands="unar" ;;
-    *.zpaq) preferred_commands="zpaq" ;;
-    *.zst) preferred_commands="zstd" ;;
+    *.tar.bz | *.tbz) pref_commands=("${_cmds_tar_bz[@]}") ;;
+    *.tar.bz2 | *.tbz2 | *.tb2) pref_commands=("${_cmds_tar_bz[@]}") ;;
+    *.tar.gz | *.tgz) pref_commands=("${_cmds_tar_gz[@]}") ;;
+    *.tar.lrz | *.tlrz) pref_commands=("${_cmds_tar_lrz[@]}") ;;
+    *.tar.lz) pref_commands=("${_cmds_tar_lz[@]}") ;;
+    *.tar.lz4) pref_commands=("${_cmds_tar_lz4[@]}") ;;
+    *.tar.lzma | *.tlz) pref_commands=("${_cmds_tar_lzma[@]}") ;;
+    *.tar.lzo | *.tzo) pref_commands=("${_cmds_tar_lzo[@]}") ;;
+    *.tar.xz | *.txz) pref_commands=("${_cmds_tar_xz[@]}") ;;
+    *.tar.z | *.taz) pref_commands=("${_cmds_tar_z[@]}") ;;
+    *.tar.zst | *.tzst) pref_commands=("${_cmds_tar_zst[@]}") ;;
+    *.7z) pref_commands=("${_cmds_7z[@]}") ;;
+    *.ace) pref_commands=("${_cmds_ace[@]}") ;;
+    *.alz) pref_commands=("${_cmds_alz[@]}") ;;
+    *.ar) pref_commands=("${_cmds_ar[@]}") ;;
+    *.arc) pref_commands=("${_cmds_arc[@]}") ;;
+    *.arj) pref_commands=("${_cmds_arj[@]}") ;;
+    *.bz | *.bz2) pref_commands=("${_cmds_bz[@]}") ;;
+    *.cab) pref_commands=("${_cmds_cab[@]}") ;;
+    *.cpio) pref_commands=("${_cmds_cpio[@]}") ;;
+    *.deb | *.udeb) pref_commands=("${_cmds_deb[@]}") ;;
+    *.gpg | *.asc | *.pgp) pref_commands=("${_cmds_gpg[@]}") ;;
+    *.gz) pref_commands=("${_cmds_gz[@]}") ;;
+    *.iso) pref_commands=("${_cmds_iso[@]}") ;;
+    *.lrz) pref_commands=("${_cmds_lrz[@]}") ;;
+    *.lz) pref_commands=("${_cmds_lz[@]}") ;;
+    *.lz4) pref_commands=("${_cmds_lz4[@]}") ;;
+    *.lzh | *.lzs | *.lha) pref_commands=("${_cmds_lzh[@]}") ;;
+    *.lzma) pref_commands=("${_cmds_lzma[@]}") ;;
+    *.lzo) pref_commands=("${_cmds_lzo[@]}") ;;
+    *.msi) pref_commands=("${_cmds_msi[@]}") ;;
+    *.pak) pref_commands=("${_cmds_pak[@]}") ;;
+    *.rar) pref_commands=("${_cmds_rar[@]}") ;;
+    *.sit) pref_commands=("${_cmds_sit[@]}") ;;
+    *.sqsh | *.squashfs | *.sfs) pref_commands=("${_cmds_sqsh[@]}") ;;
+    *.tar | *.gtar | *.gem) pref_commands=("${_cmds_tar[@]}") ;;
+    *.xar) pref_commands=("${_cmds_xar[@]}") ;;
+    *.xz) pref_commands=("${_cmds_xz[@]}") ;;
+    *.z) pref_commands=("${_cmds_z[@]}") ;;
+    *.zip) pref_commands=("${_cmds_zip[@]}") ;;
+    *.zoo) pref_commands=("${_cmds_zoo[@]}") ;;
+    *.zpaq) pref_commands=("${_cmds_zpaq[@]}") ;;
+    *.zst) pref_commands=("${_cmds_zstd[@]}") ;;
     *)
-        # For unknown extensions, determine the MIME type.
-        # NOTE: See the file: /usr/share/mime/packages/freedesktop.org.xml
+        # For unknown extension, determine the preferred commands based on the
+        # MIME type.
         local file_mime=""
         file_mime=$(_get_file_mime "$input_file")
 
+        # NOTE: See the file: /usr/share/mime/packages/freedesktop.org.xml
         case "${file_mime,,}" in
-        "application/x-7z-compressed") preferred_commands="7za unar bsdtar" ;;              # *.7z
-        "application/x-ace") preferred_commands="unar" ;;                                   # *.ace
-        "application/x-alz") preferred_commands="unar" ;;                                   # *.alz
-        "application/x-archive") preferred_commands="ar bsdtar" ;;                          # *.ar
-        "application/x-arc") preferred_commands="unar" ;;                                   # *.arc
-        "application/x-arj") preferred_commands="unar" ;;                                   # *.arj
-        "application/bzip2") preferred_commands="bzip2 unar 7za" ;;                         # *.bz | *.bz2
-        "application/x-bzip") preferred_commands="bzip2 unar 7za" ;;                        # *.bz | *.bz2
-        "application/x-bzip2") preferred_commands="bzip2 unar 7za" ;;                       # *.bz | *.bz2
-        "application/vnd.ms-cab-compressed") preferred_commands="cabextract bsdtar unar" ;; # *.cab
-        "application/x-cpio") preferred_commands="cpio unar bsdtar" ;;                      # *.cpio
-        "application/vnd.debian.binary-package") preferred_commands="ar" ;;                 # *.deb | *.udeb
-        "application/pgp-encrypted") preferred_commands="gpg" ;;                            # *.gpg | *.asc | *.pgp
-        "application/gzip") preferred_commands="gzip unar 7za" ;;                           # *.gz
-        "application/x-gzip") preferred_commands="gzip unar 7za" ;;                         # *.gz
-        "application/x-iso9660-image") preferred_commands="xorriso bsdtar" ;;               # *.iso
-        "application/x-lrzip") preferred_commands="lrzip" ;;                                # *.lrz
-        "application/x-lzip") preferred_commands="lzip" ;;                                  # *.lz
-        "application/x-lz4") preferred_commands="lz4" ;;                                    # *.lz4
-        "application/x-lha") preferred_commands="lha unar" ;;                               # *.lzh | *.lzs | *.lha
-        "application/x-lzh-compressed") preferred_commands="lha unar" ;;                    # *.lzh | *.lzs | *.lha
-        "application/x-lzma") preferred_commands="xz unar" ;;                               # *.lzma
-        "application/x-lzop") preferred_commands="lzop" ;;                                  # *.lzo
-        "application/x-msi") preferred_commands="unar" ;;                                   # *.msi
-        "application/x-pak") preferred_commands="unar" ;;                                   # *.pak
-        "application/vnd.rar") preferred_commands="unrar unar bsdtar" ;;                    # *.rar
-        "application/x-rar-compressed") preferred_commands="unrar unar bsdtar" ;;           # *.rar
-        "application/x-rar") preferred_commands="unrar unar bsdtar" ;;                      # *.rar
-        "application/stuffit") preferred_commands="unar" ;;                                 # *.sit
-        "application/x-sit") preferred_commands="unar" ;;                                   # *.sit
-        "application/x-stuffit") preferred_commands="unar" ;;                               # *.sit
-        "application/vnd.squashfs") preferred_commands="unsquashfs" ;;                      # *.sqsh | *.squashfs | *.sfs
-        "application/x-xar") preferred_commands="unar bsdtar" ;;                            # *.xar
-        "application/x-xz") preferred_commands="xz unar 7za" ;;                             # *.xz
-        "application/x-compress") preferred_commands="gzip unar" ;;                         # *.z
-        "application/x-zip-compressed") preferred_commands="7za bsdtar unar unzip" ;;       # *.zip
-        "application/x-zip") preferred_commands="7za bsdtar unar unzip" ;;                  # *.zip
-        "application/zip") preferred_commands="7za bsdtar unar unzip" ;;                    # *.zip
-        "application/x-zoo") preferred_commands="unar" ;;                                   # *.zoo
-        "application/zstd") preferred_commands="zstd" ;;                                    # *.zstd
+        "application/pgp-encrypted") pref_commands=("${_cmds_gpg[@]}") ;;
+        "application/vnd.debian.binary-package") pref_commands=("${_cmds_deb[@]}") ;;
+        "application/vnd.ms-cab-compressed") pref_commands=("${_cmds_cab[@]}") ;;
+        "application/vnd.squashfs") pref_commands=("${_cmds_sqsh[@]}") ;;
+        "application/x-7z-compressed") pref_commands=("${_cmds_7z[@]}") ;;
+        "application/x-ace") pref_commands=("${_cmds_ace[@]}") ;;
+        "application/x-alz") pref_commands=("${_cmds_alz[@]}") ;;
+        "application/x-arc") pref_commands=("${_cmds_arc[@]}") ;;
+        "application/x-archive") pref_commands=("${_cmds_ar[@]}") ;;
+        "application/x-arj") pref_commands=("${_cmds_arj[@]}") ;;
+        "application/x-bzip-compressed-tar") pref_commands=("${_cmds_tar_bz[@]}") ;;
+        "application/x-bzip") pref_commands=("${_cmds_bz[@]}") ;;
+        "application/x-bzip2" | "application/bzip2") pref_commands=("${_cmds_bz[@]}") ;;
+        "application/x-compress") pref_commands=("${_cmds_z[@]}") ;;
+        "application/x-compressed-tar") pref_commands=("${_cmds_tar_gz[@]}") ;;
+        "application/x-cpio") pref_commands=("${_cmds_cpio[@]}") ;;
+        "application/x-gzip" | "application/gzip") pref_commands=("${_cmds_gz[@]}") ;;
+        "application/x-iso9660-image") pref_commands=("${_cmds_iso[@]}") ;;
+        "application/x-lha" | "application/x-lzh-compressed") pref_commands=("${_cmds_lzh[@]}") ;;
+        "application/x-lrzip-compressed-tar") pref_commands=("${_cmds_tar_lrz[@]}") ;;
+        "application/x-lrzip") pref_commands=("${_cmds_lrz[@]}") ;;
+        "application/x-lz4-compressed-tar") pref_commands=("${_cmds_tar_lz4[@]}") ;;
+        "application/x-lz4") pref_commands=("${_cmds_lz4[@]}") ;;
+        "application/x-lzip-compressed-tar") pref_commands=("${_cmds_tar_lz[@]}") ;;
+        "application/x-lzip") pref_commands=("${_cmds_lz[@]}") ;;
+        "application/x-lzma-compressed-tar") pref_commands=("${_cmds_tar_lzma[@]}") ;;
+        "application/x-lzma") pref_commands=("${_cmds_lzma[@]}") ;;
+        "application/x-lzop") pref_commands=("${_cmds_lzo[@]}") ;;
+        "application/x-msi") pref_commands=("${_cmds_msi[@]}") ;;
+        "application/x-pak") pref_commands=("${_cmds_pak[@]}") ;;
+        "application/x-rar" | "application/x-rar-compressed" | "application/vnd.rar") pref_commands=("${_cmds_rar[@]}") ;;
+        "application/x-sit" | "application/x-stuffit" | "application/stuffit") pref_commands=("${_cmds_sit[@]}") ;;
+        "application/x-tar") pref_commands=("${_cmds_tar[@]}") ;;
+        "application/x-tarz") pref_commands=("${_cmds_tar_z[@]}") ;;
+        "application/x-tzo") pref_commands=("${_cmds_tar_lzo[@]}") ;;
+        "application/x-xar") pref_commands=("${_cmds_xar[@]}") ;;
+        "application/x-xz-compressed-tar") pref_commands=("${_cmds_tar_xz[@]}") ;;
+        "application/x-xz") pref_commands=("${_cmds_xz[@]}") ;;
+        "application/x-zip" | "application/x-zip-compressed" | "application/zip") pref_commands=("${_cmds_zip[@]}") ;;
+        "application/x-zoo") pref_commands=("${_cmds_zoo[@]}") ;;
+        "application/x-zstd-compressed-tar") pref_commands=("${_cmds_tar_zst[@]}") ;;
+        "application/zstd") pref_commands=("${_cmds_zstd[@]}") ;;
         "application/octet-stream")
             # For generic binary files, try further identification.
             local file_information=""
@@ -260,42 +320,38 @@ _get_command() {
                 -- "$input_file" 2>/dev/null)
 
             case "${file_information,,}" in
-            "gpg "* | "pgp "*) preferred_commands="gpg" ;;
+            "gpg "* | "pgp "*) pref_commands=("${_cmds_gpg[@]}") ;;
             *)
                 # Default extractor chain for unknown binary files.
-                preferred_commands="bsdtar+unar+7za"
+                pref_commands=("${_cmds_unknown_file[@]}")
                 ;;
             esac
             ;;
         *)
-            # Default extractor chain for unrecognized MIME types.
-            preferred_commands="bsdtar+unar+7za"
+            # Default extractor chain for unknown files.
+            pref_commands=("${_cmds_unknown_file[@]}")
             ;;
         esac
         ;;
     esac
 
-    # Convert the preferred commands string to an array.
-    local preferred_commands_array=()
-    IFS=" " read -r -a preferred_commands_array <<<"$preferred_commands"
-
     # Determine the command to use based on the command status.
     if [[ "$command_status" == "default" ]]; then
         # Use the first preferred command as the default.
-        command=${preferred_commands_array[0]}
+        command=${pref_commands[0]}
     elif [[ "$command_status" == "available" ]]; then
         # Find the first available command on the system.
-        local preferred_command=""
-        for preferred_command in "${preferred_commands_array[@]}"; do
-            if [[ "$preferred_command" == *"+"* ]]; then
+        local pref_command=""
+        for pref_command in "${pref_commands[@]}"; do
+            if [[ "$pref_command" == *"+"* ]]; then
                 # Check if all commands in a composite command exist.
-                if _all_commands_exists "${preferred_command//+/ }"; then
-                    command=$preferred_command
+                if _all_commands_exists "${pref_command//+/ }"; then
+                    command=$pref_command
                     break
                 fi
-            elif _command_exists "$preferred_command"; then
+            elif _command_exists "$pref_command"; then
                 # Use the first available command.
-                command=$preferred_command
+                command=$pref_command
                 break
             fi
         done
