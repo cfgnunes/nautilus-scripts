@@ -42,6 +42,7 @@ _get_dependencies() {
     local dependencies=""
 
     # Check dependencies for each file.
+    local input_file=""
     for input_file in $input_files; do
         local command=""
         command=$(_get_command "$input_file")

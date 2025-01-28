@@ -32,8 +32,8 @@ _main() {
     if _command_exists "zenity"; then
         users=$(_convert_text_to_delimited_string "$users")
         local zenity_user_list=()
-        local user=""
 
+        local user=""
         for user in $users; do
             if (($(_get_items_count "$users") == 1)); then
                 zenity_user_list+=(TRUE "${user[@]}")

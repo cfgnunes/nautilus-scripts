@@ -63,9 +63,9 @@ _open_repository_website() {
     #   - $1 (input_file): A space-separated list of directories to process.
 
     local input_files=$1
-    local input_file=""
 
     # Iterate over each input file (directory).
+    local input_file=""
     for input_file in $input_files; do
 
         # Check if the current directory is a Git repository.

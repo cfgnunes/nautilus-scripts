@@ -26,8 +26,8 @@ _main() {
 
 _open_app() {
     local input_files=$1
-    local input_file=""
 
+    local input_file=""
     for input_file in $input_files; do
         # Run the main process.
         if _command_exists "baobab"; then

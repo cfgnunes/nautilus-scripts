@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Code based on: https://unix.stackexchange.com/a/673436
-# Version: 2024-08-21
+# Version: 2025-01-27
 
 # Keyboard commands:
 #  <enter>: Confirms the current selection of options.
@@ -70,10 +70,10 @@ _multiselect_menu() {
 
     # Process the 'defaults' parameter.
     local selected=()
-    local i=0
-    for i in "${!options[@]}"; do
-        if [[ -v "defaults[i]" ]]; then
-            if [[ ${defaults[i]} == "false" ]]; then
+    local index_defaults=0
+    for index_defaults in "${!options[@]}"; do
+        if [[ -v "defaults[index_defaults]" ]]; then
+            if [[ ${defaults[index_defaults]} == "false" ]]; then
                 selected+=("false")
             else
                 selected+=("true")
@@ -94,18 +94,18 @@ _multiselect_menu() {
     __print_options() {
         local index_active=$1
 
-        local i=0
-        for i in "${!options[@]}"; do
+        local index_option=0
+        for index_option in "${!options[@]}"; do
             # Set the prefix "[ ]" or "[*]".
             local prefix="[ ]"
-            if [[ ${selected[i]} == "true" ]]; then
+            if [[ ${selected[index_option]} == "true" ]]; then
                 prefix="[\e[1;32m*\e[0m]"
             fi
 
             # Print the prefix with the option in the menu.
-            __cursor_to "$((start_row + i))"
-            local option="${options[i]}"
-            if ((i == index_active)); then
+            __cursor_to "$((start_row + index_option))"
+            local option="${options[index_option]}"
+            if ((index_option == index_active)); then
                 # Print the active option.
                 printf "$prefix \e[7m%s\e[27m" "$option"
             else
@@ -135,14 +135,14 @@ _multiselect_menu() {
             fi
             ;;
         "toggle_all")
-            local i=0
+            local index_selected=0
             if [[ ${selected[active]} == "true" ]]; then
-                for i in "${!selected[@]}"; do
-                    selected[i]="false"
+                for index_selected in "${!selected[@]}"; do
+                    selected[index_selected]="false"
                 done
             else
-                for i in "${!selected[@]}"; do
-                    selected[i]="true"
+                for index_selected in "${!selected[@]}"; do
+                    selected[index_selected]="true"
                 done
             fi
             ;;

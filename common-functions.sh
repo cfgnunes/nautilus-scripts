@@ -1638,8 +1638,8 @@ _open_items_locations() {
     items=$(sed "s|\./|$working_directory/|g" <<<"$items")
 
     # Prepare items to be opened by the file manager.
-    local item=""
     local items_open=""
+    local item=""
     for item in $items; do
         # Skip the root directory ("/") since opening it is redundant.
         if [[ "$item" == "/" ]]; then
