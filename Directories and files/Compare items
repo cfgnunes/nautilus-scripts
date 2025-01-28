@@ -248,7 +248,7 @@ _get_command() {
     local input_file=$1        # The file to analyze for MIME type or encoding.
     local num_files_compare=$2 # The number of files to compare (2 or 3).
     local command_status=$3    # Select "default" or "available" commands.
-    local preferred_commands=""
+    local preferred_commands=()
     local command=""
 
     # Determine the MIME type of the input file.
@@ -257,43 +257,40 @@ _get_command() {
 
     # Select preferred commands based on the file MIME type.
     case $file_mime in
-    "application/pdf") preferred_commands="diffpdf" ;;
-    "inode/directory") preferred_commands="meld" ;;
-    "inode/x-empty") preferred_commands="meld" ;;
-    "image/"*) preferred_commands="compare" ;;
-    "text/"*) preferred_commands="meld" ;;
+    "application/pdf") preferred_commands=("diffpdf") ;;
+    "inode/directory") preferred_commands=("meld") ;;
+    "inode/x-empty") preferred_commands=("meld") ;;
+    "image/"*) preferred_commands=("compare") ;;
+    "text/"*) preferred_commands=("meld") ;;
     *)
         # For unknown MIME types, determine the file encoding.
         local file_encoding=""
         file_encoding=$(_get_file_encoding "$input_file")
         if [[ "$file_encoding" == "binary" ]]; then
             # Binary file comparison.
-            preferred_commands="meld_hex"
+            preferred_commands=("meld_hex")
         else
             # Default to text comparison.
-            preferred_commands="meld"
+            preferred_commands=("meld")
         fi
         ;;
     esac
 
-    # Convert preferred commands into a format for iteration.
-    preferred_commands=$(tr " " "$FIELD_SEPARATOR" <<<"$preferred_commands")
-
-    # Select the appropriate command based on availability or default.
-    local preferred_command=""
-    for preferred_command in $preferred_commands; do
-        if [[ "$command_status" == "default" ]]; then
-            # Select the first preferred command as the default.
-            command=$preferred_command
-            break
-        elif [[ "$command_status" == "available" ]]; then
-            # Select the first command available on the system.
+    # Determine the command to use based on the command status.
+    if [[ "$command_status" == "default" ]]; then
+        # Use the first preferred command as the default.
+        command=${preferred_commands[0]}
+    elif [[ "$command_status" == "available" ]]; then
+        # Find the first available command on the system.
+        local preferred_command=""
+        for preferred_command in "${preferred_commands[@]}"; do
+            # Use the first available command.
             if _command_exists "$preferred_command"; then
                 command=$preferred_command
                 break
             fi
-        fi
-    done
+        done
+    fi
 
     # Adjust the selected command for KDE or LXQt desktop environments.
     if [[ "$command" == "meld"* ]]; then
