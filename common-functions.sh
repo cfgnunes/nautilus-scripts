@@ -72,7 +72,7 @@ _cleanup_on_exit() {
     local items_to_remove=""
     items_to_remove=$(cat -- "$TEMP_DIR_ITEMS_TO_REMOVE/"* 2>/dev/null)
 
-    # Allows the symbol "'" in filenames (inside 'xargs').
+    # Allows the symbol "'" in filenames (inside 'xargs' with 'bash -c').
     items_to_remove=$(sed -z "s|'|'\\\''|g" <<<"$items_to_remove")
 
     printf "%s" "$items_to_remove" | xargs \
@@ -1900,7 +1900,7 @@ _run_task_parallel() {
     local input_files=$1
     local output_dir=$2
 
-    # Allows the symbol "'" in filenames (inside 'xargs').
+    # Allows the symbol "'" in filenames (inside 'xargs' with 'bash -c').
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Export variables to be used inside new shells (when using 'xargs').
@@ -2292,7 +2292,7 @@ _validate_file_mime_parallel() {
         return
     fi
 
-    # Allows the symbol "'" in filenames (inside 'xargs').
+    # Allows the symbol "'" in filenames (inside 'xargs' with 'bash -c').
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Export variables to be used inside new shells (when using 'xargs').
