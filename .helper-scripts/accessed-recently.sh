@@ -25,8 +25,8 @@ _recent_scripts_organize() {
     # scripts ('$ACCESSED_RECENTLY_DIR'). This function manages symbolic links
     # in the directory by:
     # 1. Keeping only the '$NUM_LINKS_TO_KEEP' most recently accessed scripts.
-    # 2. Renaming retained links with numeric prefixes (e.g., "01", "02") for
-    #    easy sorting.
+    # 2. Renaming retained links with numeric prefixes (e.g., "01", "02") to
+    #    maintain chronological order.
 
     local files=""
     files=$(find "$ACCESSED_RECENTLY_DIR" -maxdepth 1 -type l -print0 |
@@ -48,64 +48,28 @@ _recent_scripts_organize() {
 }
 
 _recent_scripts_add() {
-    # This function adds a script to the history of recently accessed scripts
-    # ('$ACCESSED_RECENTLY_DIR').
-    #
-    # Parameters:
-    #   - $1 (file): The full path to the script to be linked.
+    # This function adds the running script to the history of recently accessed
+    # scripts ('$ACCESSED_RECENTLY_DIR').
 
-    local file="$1"
+    local running_script=""
+    running_script=$(realpath -e "$0")
 
-    _directory_push "$ACCESSED_RECENTLY_DIR" || return 1
-
-    # Remove any existing links pointing to the same script.
-    find "$ACCESSED_RECENTLY_DIR" -lname "$file" -exec rm -f -- "{}" +
-
-    # Create a new symbolic link with a "00" prefix.
-    ln -s -- "$file" "00 $(basename -- "$file")"
-
-    _directory_pop || return 1
-}
-
-_recent_scripts_update() {
-    # This function updates the history of recently accessed scripts, ensuring
-    # the current script is tracked. It ensures the current script is properly
-    # linked within the '$ACCESSED_RECENTLY_DIR'.
-
-    local match_count=0
-    local script_matches=""
-    local script_name=""
-    local script_to_link=""
-
-    # Ensure the '$ACCESSED_RECENTLY_DIR' directory exists,
-    # creating it if necessary.
+    # Create '$ACCESSED_RECENTLY_DIR' if it does not exist.
     if [[ ! -d $ACCESSED_RECENTLY_DIR ]]; then
         mkdir -p "$ACCESSED_RECENTLY_DIR"
     fi
 
-    # Identify the script being executed to potentially add it to the
-    # '$ACCESSED_RECENTLY_DIR' directory.
-    script_name=$(basename -- "$(realpath -e "$0")")
-    script_matches=$(find "$ROOT_DIR" -path "$ACCESSED_RECENTLY_DIR" \
-        -prune -o -type f -name "$script_name" -print)
+    _directory_push "$ACCESSED_RECENTLY_DIR" || return 1
 
-    if [[ -z "$script_matches" ]]; then
-        match_count=0
-    else
-        match_count=$(echo "$script_matches" | wc -l)
-    fi
+    # Remove any existing links pointing to the same script.
+    find "$ACCESSED_RECENTLY_DIR" -lname "$running_script" \
+        -exec rm -f -- "{}" +
 
-    # If exactly one match is found, store its full path for linking.
-    if ((match_count == 1)); then
-        script_to_link="$script_matches"
-    fi
+    # Create a new symbolic link with a "00" prefix.
+    ln -s -- "$running_script" "00 $(basename -- "$running_script")"
 
-    # If the script's full path is determined and it exists,
-    # link it to the directory.
-    if [[ -n "$script_to_link" ]] && [[ -e "$script_to_link" ]]; then
-        _recent_scripts_add "$script_to_link"
-        _recent_scripts_organize
-    fi
+    _directory_pop || return 1
 }
 
-_recent_scripts_update
+_recent_scripts_add
+_recent_scripts_organize
