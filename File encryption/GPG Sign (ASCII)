@@ -20,7 +20,7 @@ _main() {
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     local users=""
-    users=$(gpg --list-secret-keys --with-colons | grep --ignore-case "^uid" | cut -d ':' -f 10 2>/dev/null)
+    users=$(gpg --list-secret-keys --with-colons 2>/dev/null | grep --ignore-case "^uid" | cut -d ':' -f 10)
     if [[ -z "$users" ]]; then
         _display_error_box "Failed: no secret keys imported!"
         _exit_script
