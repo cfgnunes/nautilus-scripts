@@ -25,7 +25,7 @@ _main() {
 }
 
 _flatten_directory() {
-    local directory="$1"
+    local directory=$1
     local undo_script=""
     local temp_file=""
     local filename=""

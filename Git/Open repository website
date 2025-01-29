@@ -31,7 +31,7 @@ _convert_git_to_web_url() {
     #          ssh://git@github.com/user/repo.git)
     #        - Git protocol (e.g., git://github.com/user/repo.git)
 
-    local git_url="$1"
+    local git_url=$1
     local web_url=""
 
     git_url=${git_url//@ssh\./@}

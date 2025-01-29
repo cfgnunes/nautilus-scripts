@@ -488,7 +488,7 @@ _display_password_box() {
     # Parameters:
     #   - $1 (message): A message to display as a prompt for the password.
 
-    local message="$1"
+    local message=$1
     local password=""
 
     # Ask the user for the 'password'.
