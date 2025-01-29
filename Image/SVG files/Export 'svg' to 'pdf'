@@ -32,8 +32,9 @@ _main_task() {
     local inkscape_ver=""
     local inkscape_ver_old="1.0"
     inkscape_ver=$(inkscape --version 2>/dev/null | cut -d " " -f 2)
-    if [[ "$inkscape_ver" == $(echo -e "$inkscape_ver\n$inkscape_ver_old" |
-        sort --version-sort | head -n 1) ]]; then
+    if printf "%s\n%s" "$inkscape_ver" "$inkscape_ver_old" |
+        sort --version-sort | head -n 1 |
+        grep --quiet --line-regexp "$inkscape_ver"; then
         # Old Inkscape version.
         std_output=$(inkscape --without-gui --export-area-drawing --file="$input_file" --export-pdf="$output_file" 2>&1)
     else

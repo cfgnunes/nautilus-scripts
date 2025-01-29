@@ -52,7 +52,7 @@ _convert_git_to_web_url() {
         return 1
     fi
 
-    echo "$web_url"
+    printf "%s" "$web_url"
 }
 
 _open_repository_website() {
