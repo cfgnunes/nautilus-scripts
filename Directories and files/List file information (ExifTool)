@@ -37,7 +37,7 @@ _main_task() {
 
     # FORMAT THE OUTPUT:
     # Prepend the filename.
-    std_output="--> File: \"$input_file\""$'\n'"$std_output"
+    std_output="File: \"$input_file\""$'\n'"$std_output"
     # Remove any extra spaces before colons ":".
     # shellcheck disable=SC2001
     std_output=$(sed "s| \+: |: |g" <<<"$std_output")

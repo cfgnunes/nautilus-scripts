@@ -47,7 +47,7 @@ _main_task() {
 
     # FORMAT THE OUTPUT:
     # Prepend the Git repository.
-    std_output="--> Git repository: \"$top_level\""$'\n'"$std_output"
+    std_output="Git repository: \"$top_level\""$'\n'"$std_output"
 
     _storage_text_write_ln "$std_output"$'\n'
 }

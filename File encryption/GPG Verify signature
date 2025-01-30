@@ -34,7 +34,7 @@ _main_task() {
     # Run the main process.
     std_output=$(gpg --yes --verify -- "$input_file" 2>&1)
 
-    _storage_text_write_ln "--> File: \"$(_text_remove_pwd "$input_file")\""$'\n'"$std_output"$'\n'
+    _storage_text_write_ln "File: \"$(_text_remove_pwd "$input_file")\""$'\n'"$std_output"$'\n'
 }
 
 _main "$@"
