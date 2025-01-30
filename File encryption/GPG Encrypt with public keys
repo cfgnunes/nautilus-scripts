@@ -36,9 +36,9 @@ _main() {
         local user=""
         for user in $users; do
             if (($(_get_items_count "$users") == 1)); then
-                zenity_user_list+=(TRUE "${user[@]}")
+                zenity_user_list+=(TRUE "$user")
             else
-                zenity_user_list+=(FALSE "${user[@]}")
+                zenity_user_list+=(FALSE "$user")
             fi
         done
 
