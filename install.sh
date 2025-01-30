@@ -76,8 +76,8 @@ _main() {
     # Get the categories (directories of scripts).
     readarray -d "" categories_dirs < <(
         find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
-            ! -path "*.git" ! -path "*.assets" ! -path "*.helper-scripts" \
-            -print0 2>/dev/null | sed -z "s|^.*/||" |
+            ! -path "*.[a-z]*" -print0 2>/dev/null |
+            sed -z "s|^.*/||" |
             sort --zero-terminated --version-sort
     )
 
@@ -340,8 +340,7 @@ _step_install_scripts() {
     printf " > Setting file permissions...\n"
     find -L "$INSTALL_DIR" -type f ! -path "*.git*" ! -exec chmod -x -- {} \;
     find -L "$INSTALL_DIR" -mindepth 2 -type f \
-        ! -path "*.git*" ! -path "*.assets*" ! -path "*.helper-scripts" \
-        -exec chmod +x -- {} \;
+        ! -path "*.[a-z]*" -exec chmod +x -- {} \;
 
     # Restore previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then
@@ -375,8 +374,8 @@ _step_install_menus_dolphin() {
 
     # Generate a '.desktop' file for each script.
     find -L "$INSTALL_DIR" -mindepth 2 -type f \
-        ! -path "*.git*" ! -path "*.assets*" ! -path "*.helper-scripts" \
-        -print0 2>/dev/null | sort --zero-terminated |
+        ! -path "*.[a-z]*" -print0 2>/dev/null |
+        sort --zero-terminated |
         while IFS= read -r -d "" filename; do
             # shellcheck disable=SC2001
             script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
@@ -465,8 +464,8 @@ _step_install_menus_pcmanfm() {
         printf "%s\n" "Name=Scripts"
         printf "%s" "ItemsList="
         find -L "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -type d \
-            ! -path "*.git*" ! -path "*.assets*" ! -path "*.helper-scripts" \
-            -print0 2>/dev/null | sort --zero-terminated | tr $'\0' ";" || true
+            ! -path "*.[a-z]*" -print0 2>/dev/null |
+            sort --zero-terminated | tr $'\0' ";" || true
         printf "\n"
     } >"${desktop_menus_dir}/Scripts.desktop"
     chmod +x "${desktop_menus_dir}/Scripts.desktop"
@@ -476,15 +475,13 @@ _step_install_menus_pcmanfm() {
     local name=""
     local dir_items=""
     find -L "$INSTALL_DIR" -mindepth 1 -type d \
-        ! -path "*.git*" ! -path "*.assets*" ! -path "*.helper-scripts" \
-        -print0 2>/dev/null | sort --zero-terminated |
+        ! -path "*.[a-z]*" -print0 2>/dev/null |
+        sort --zero-terminated |
         while IFS= read -r -d "" filename; do
             name=${filename##*/}
             dir_items=$(find -L "$filename" -mindepth 1 -maxdepth 1 \
-                ! -path "*.git*" ! -path "*.assets*" ! \
-                -path "*.helper-scripts" \
-                -print0 2>/dev/null | sort --zero-terminated |
-                tr $'\0' ";" || true)
+                ! -path "*.[a-z]*" -print0 2>/dev/null |
+                sort --zero-terminated | tr $'\0' ";" || true)
             if [[ -z "$dir_items" ]]; then
                 continue
             fi
@@ -501,8 +498,8 @@ _step_install_menus_pcmanfm() {
 
     # Create a '.desktop' file for each script.
     find -L "$INSTALL_DIR" -mindepth 2 -type f \
-        ! -path "*.git*" ! -path "*.assets*" ! -path "*.helper-scripts" \
-        -print0 2>/dev/null | sort --zero-terminated |
+        ! -path "*.[a-z]*" -print0 2>/dev/null |
+        sort --zero-terminated |
         while IFS= read -r -d "" filename; do
             name=${filename##*/}
 
@@ -615,8 +612,8 @@ _step_install_menus_thunar() {
         local submenu=""
         local unique_id=""
         find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            ! -path "*.git*" ! -path "*.assets*" ! -path "*.helper-scripts" \
-            -print0 2>/dev/null | sort --zero-terminated |
+            ! -path "*.[a-z]*" -print0 2>/dev/null |
+            sort --zero-terminated |
             while IFS= read -r -d "" filename; do
                 name=$(basename -- "$filename")
                 submenu=$(dirname -- "$filename" | sed "s|.*scripts/|Scripts/|g")
@@ -721,9 +718,9 @@ _step_install_shortcuts_nautilus() {
     {
         local filename=""
         find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            ! -path "*.git*" ! -path "*.assets*" ! -path "*.helper-scripts" \
             ! -path "$INSTALL_DIR/User previous scripts" \
-            -print0 2>/dev/null | sort --zero-terminated |
+            ! -path "*.[a-z]*" -print0 2>/dev/null |
+            sort --zero-terminated |
             while IFS= read -r -d "" filename; do
 
                 local keyboard_shortcut=""
@@ -761,9 +758,9 @@ _step_install_shortcuts_gnome2() {
 
         local filename=""
         find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            ! -path "*.git*" ! -path "*.assets*" ! -path "*.helper-scripts" \
             ! -path "$INSTALL_DIR/User previous scripts" \
-            -print0 2>/dev/null | sort --zero-terminated |
+            ! -path "*.[a-z]*" -print0 2>/dev/null |
+            sort --zero-terminated |
             while IFS= read -r -d "" filename; do
 
                 local keyboard_shortcut=""
@@ -805,9 +802,9 @@ _step_install_shortcuts_thunar() {
 
         local filename=""
         find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            ! -path "*.git*" ! -path "*.assets*" ! -path "*.helper-scripts" \
             ! -path "$INSTALL_DIR/User previous scripts" \
-            -print0 2>/dev/null | sort --zero-terminated |
+            ! -path "*.[a-z]*" -print0 2>/dev/null |
+            sort --zero-terminated |
             while IFS= read -r -d "" filename; do
 
                 local keyboard_shortcut=""
