@@ -33,6 +33,10 @@ _main_task() {
 
     # Run the main process.
     std_output=$(sha256sum -- "$input_file" 2>/dev/null)
+    if [[ -z "$std_output" ]]; then
+        return
+    fi
+
     std_output=$(_text_remove_pwd "$std_output")
 
     # shellcheck disable=SC2001
