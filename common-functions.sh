@@ -1275,8 +1275,15 @@ _get_output_filename() {
 
     if [[ -d "$input_file" ]]; then
         # Handle case where input_file is a directory.
-        output_file+=$filename
-        output_file+=".$par_extension"
+        case "$par_extension_opt" in
+        "append" | "replace")
+            output_file+=$filename
+            output_file+=".$par_extension"
+            ;;
+        "preserve" | "strip")
+            output_file+=$filename
+            ;;
+        esac
     else
         # Handle case where input_file is a regular file.
         case "$par_extension_opt" in
