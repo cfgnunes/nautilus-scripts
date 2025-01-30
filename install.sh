@@ -76,6 +76,8 @@ _main() {
     # Get the categories (directories of scripts).
     readarray -d "" categories_dirs < <(
         find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
+            ! -path "*User previous scripts*" \
+            ! -path "*Accessed recently*" \
             ! -path "*.assets*" \
             ! -path "*.git*" \
             ! -path "*.helper-scripts*" \
@@ -343,6 +345,7 @@ _step_install_scripts() {
     printf " > Setting file permissions...\n"
     find -L "$INSTALL_DIR" -type f ! -path "*.git*" ! -exec chmod -x -- {} \;
     find -L "$INSTALL_DIR" -mindepth 2 -type f \
+        ! -path "*Accessed recently*" \
         ! -path "*.assets*" \
         ! -path "*.git*" \
         ! -path "*.helper-scripts*" \
@@ -380,6 +383,7 @@ _step_install_menus_dolphin() {
 
     # Generate a '.desktop' file for each script.
     find -L "$INSTALL_DIR" -mindepth 2 -type f \
+        ! -path "*Accessed recently*" \
         ! -path "*.assets*" \
         ! -path "*.git*" \
         ! -path "*.helper-scripts*" \
@@ -473,6 +477,7 @@ _step_install_menus_pcmanfm() {
         printf "%s\n" "Name=Scripts"
         printf "%s" "ItemsList="
         find -L "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -type d \
+            ! -path "*Accessed recently*" \
             ! -path "*.assets*" \
             ! -path "*.git*" \
             ! -path "*.helper-scripts*" \
@@ -487,6 +492,7 @@ _step_install_menus_pcmanfm() {
     local name=""
     local dir_items=""
     find -L "$INSTALL_DIR" -mindepth 1 -type d \
+        ! -path "*Accessed recently*" \
         ! -path "*.assets*" \
         ! -path "*.git*" \
         ! -path "*.helper-scripts*" \
@@ -495,6 +501,7 @@ _step_install_menus_pcmanfm() {
         while IFS= read -r -d "" filename; do
             name=${filename##*/}
             dir_items=$(find -L "$filename" -mindepth 1 -maxdepth 1 \
+                ! -path "*Accessed recently*" \
                 ! -path "*.assets*" \
                 ! -path "*.git*" \
                 ! -path "*.helper-scripts*" \
@@ -516,6 +523,7 @@ _step_install_menus_pcmanfm() {
 
     # Create a '.desktop' file for each script.
     find -L "$INSTALL_DIR" -mindepth 2 -type f \
+        ! -path "*Accessed recently*" \
         ! -path "*.assets*" \
         ! -path "*.git*" \
         ! -path "*.helper-scripts*" \
@@ -633,6 +641,7 @@ _step_install_menus_thunar() {
         local submenu=""
         local unique_id=""
         find -L "$INSTALL_DIR" -mindepth 2 -type f \
+            ! -path "*Accessed recently*" \
             ! -path "*.assets*" \
             ! -path "*.git*" \
             ! -path "*.helper-scripts*" \
@@ -742,7 +751,8 @@ _step_install_shortcuts_nautilus() {
     {
         local filename=""
         find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            ! -path "$INSTALL_DIR/User previous scripts" \
+            ! -path "*User previous scripts*" \
+            ! -path "*Accessed recently*" \
             ! -path "*.assets*" \
             ! -path "*.git*" \
             ! -path "*.helper-scripts*" \
@@ -785,7 +795,8 @@ _step_install_shortcuts_gnome2() {
 
         local filename=""
         find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            ! -path "$INSTALL_DIR/User previous scripts" \
+            ! -path "*User previous scripts*" \
+            ! -path "*Accessed recently*" \
             ! -path "*.assets*" \
             ! -path "*.git*" \
             ! -path "*.helper-scripts*" \
@@ -832,7 +843,8 @@ _step_install_shortcuts_thunar() {
 
         local filename=""
         find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            ! -path "$INSTALL_DIR/User previous scripts" \
+            ! -path "*User previous scripts*" \
+            ! -path "*Accessed recently*" \
             ! -path "*.assets*" \
             ! -path "*.git*" \
             ! -path "*.helper-scripts*" \
