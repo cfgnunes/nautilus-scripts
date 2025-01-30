@@ -779,6 +779,8 @@ _find_filtered_files() {
     #     included.
     #   - $4 (par_select_extension): A string of file extensions to include in
     #     the search. Only files with matching extensions will be included.
+    #   - $5 (par_find_parameters): Optional. Additional parameters to be
+    #     passed directly to the "find" command.
     #
     # Example:
     #   - Input: "dir1 dir2", "file", "", "txt|pdf", "true"
