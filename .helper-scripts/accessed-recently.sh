@@ -28,23 +28,23 @@ _recent_scripts_organize() {
     # 2. Renaming retained links with numeric prefixes (e.g., "01", "02") to
     #    maintain chronological order.
 
-    local files=()
-    readarray -d "" files < <(
+    local links=()
+    readarray -d "" links < <(
         find "$ACCESSED_RECENTLY_DIR" -maxdepth 1 -type l -print0 |
             sort --zero-terminated --numeric-sort
     )
 
-    # Process the files, keeping only the '$NUM_LINKS_TO_KEEP' most recent.
+    # Process the links, keeping only the '$NUM_LINKS_TO_KEEP' most recent.
     local count=1
-    local file=""
-    for file in "${files[@]}"; do
+    local link=""
+    for link in "${links[@]}"; do
         if ((count <= NUM_LINKS_TO_KEEP)); then
             # Rename the link with a numeric prefix for ordering.
-            mv -f -- "$file" "$ACCESSED_RECENTLY_DIR/$(printf '%02d' "$count") $(basename "$file" | sed --regexp-extended 's|^[0-9]{2} ||')" 2>/dev/null
+            mv -f -- "$link" "$ACCESSED_RECENTLY_DIR/$(printf '%02d' "$count") $(basename "$link" | sed --regexp-extended 's|^[0-9]{2} ||')" 2>/dev/null
             ((count++))
         else
             # Remove excess links.
-            rm -f -- "$file"
+            rm -f -- "$link"
         fi
     done
 }
