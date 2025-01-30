@@ -39,9 +39,9 @@ _main_task() {
         # Change to the directory to perform compression.
         _directory_push "$input_file" || return 1
 
-        local files=""
-        files=$(find . -mindepth 1 -maxdepth 1 -printf "%p$FIELD_SEPARATOR" 2>/dev/null | sed "s|\./||g")
-        std_output=$(printf "%s" "$files" | xargs --no-run-if-empty --delimiter="$FIELD_SEPARATOR" tar --zstd -cf "$output_file" --)
+        std_output=$(find . -mindepth 1 -maxdepth 1 -print0 2>/dev/null |
+            sed "s|\./||g" |
+            xargs --no-run-if-empty --null tar --zstd -cf "$output_file" --)
     else
         # If the input is a file, change to its parent directory.
         _directory_push "$(_get_filename_dir "$input_file")" || return 1
