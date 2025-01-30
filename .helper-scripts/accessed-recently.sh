@@ -30,7 +30,7 @@ _recent_scripts_organize() {
 
     local links=()
     readarray -d "" links < <(
-        find "$ACCESSED_RECENTLY_DIR" -maxdepth 1 -type l -print0 |
+        find "$ACCESSED_RECENTLY_DIR" -maxdepth 1 -type l -print0 2>/dev/null |
             sort --zero-terminated --numeric-sort
     )
 
