@@ -481,8 +481,7 @@ _step_install_menus_pcmanfm() {
             ! -path "*.assets*" \
             ! -path "*.git*" \
             ! -path "*.helper-scripts*" \
-            -print0 2>/dev/null |
-            sort --zero-terminated | tr $'\0' ";" || true
+            -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";" || true
         printf "\n"
     } >"${desktop_menus_dir}/Scripts.desktop"
     chmod +x "${desktop_menus_dir}/Scripts.desktop"
@@ -505,8 +504,7 @@ _step_install_menus_pcmanfm() {
                 ! -path "*.assets*" \
                 ! -path "*.git*" \
                 ! -path "*.helper-scripts*" \
-                -print0 2>/dev/null |
-                sort --zero-terminated | tr $'\0' ";" || true)
+                -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";" || true)
             if [[ -z "$dir_items" ]]; then
                 continue
             fi
