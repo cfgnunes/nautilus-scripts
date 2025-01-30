@@ -297,6 +297,8 @@ _get_dependencies() {
     "meld") dependencies="command=meld" ;;
     "meld_hex") dependencies="command=meld | command=xxd" ;;
     esac
+
+    printf "%s" "$dependencies"
 }
 
 _get_hex_ideal_cols() {

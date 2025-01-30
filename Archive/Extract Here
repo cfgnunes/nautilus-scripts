@@ -20,6 +20,7 @@ _main() {
     # Export functions to be used inside new shells (when using 'xargs').
     export -f \
         _all_commands_exists \
+        _command_exists \
         _get_command \
         _get_dependencies \
         _storage_text_write \
