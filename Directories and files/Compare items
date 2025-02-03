@@ -137,8 +137,8 @@ _compare_hexa() {
     # Save the files after possible modifications.
     local file_1_modified="$file_1_hex.bin"
     local file_2_modified="$file_2_hex.bin"
-    xxd -revert -plain "$file_1_hex" "$file_1_modified"
-    xxd -revert -plain "$file_2_hex" "$file_2_modified"
+    xxd -revert -p "$file_1_hex" "$file_1_modified"
+    xxd -revert -p "$file_2_hex" "$file_2_modified"
 
     # Move the modified files to their original locations, replacing the
     # originals.
