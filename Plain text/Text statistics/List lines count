@@ -13,7 +13,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies ""
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=file; par_recursive=true; par_get_pwd=true; par_select_mime='text/|application/json'")
+    input_files=$(_get_files "par_type=file; par_recursive=true; par_get_pwd=true; par_skip_encoding='binary'; par_skip_extension='pdf|svg'")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"

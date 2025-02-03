@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "command=iconv; package=libc-bin"
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=file; par_select_mime='text/|application/json'")
+    input_files=$(_get_files "par_type=file; par_skip_encoding='binary'; par_skip_extension='pdf|svg'")
     output_dir=$(_get_output_dir "par_use_same_dir=false")
 
     # Execute the function '_main_task' for each file in parallel.

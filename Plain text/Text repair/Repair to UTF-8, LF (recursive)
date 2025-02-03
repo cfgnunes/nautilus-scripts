@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "command=iconv; package=libc-bin | command=perl; package=perl-base"
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=file; par_recursive=true; par_select_mime='text/|application/json'; par_skip_extension=bak")
+    input_files=$(_get_files "par_type=file; par_recursive=true; par_skip_encoding='binary'; par_skip_extension='pdf|svg'; par_skip_extension=bak")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
