@@ -995,6 +995,7 @@ _get_files() {
     #   - "par_select_extension": Filters by file extension.
     #   - "par_select_mime": Filters by MIME type.
     #   - "par_skip_extension": Skips files with specific extensions.
+    #   - "par_skip_encoding": Skips files with specific encodings.
     #   - "par_sort_list": If "true", sorts the list of files.
     #   - "par_validate_conflict": If "true", validates for filenames with the
     #     same base name.
@@ -1010,6 +1011,7 @@ _get_files() {
     local par_recursive="false"
     local par_select_extension=""
     local par_select_mime=""
+    local par_skip_encoding=""
     local par_skip_extension=""
     local par_sort_list="false"
     local par_type="file"
@@ -1080,9 +1082,12 @@ _get_files() {
     fi
 
     # Validates the mime or encoding of the file.
-    input_files=$(_validate_file_mime_parallel \
-        "$input_files" \
-        "$par_select_mime")
+    if [[ -n "$par_select_mime" ]] || [[ -n "$par_skip_encoding" ]]; then
+        input_files=$(_validate_file_mime_parallel \
+            "$input_files" \
+            "$par_select_mime" \
+            "$par_skip_encoding")
+    fi
 
     # Validates the number of valid files.
     _validate_files_count \
@@ -2242,25 +2247,26 @@ _validate_conflict_filenames() {
 }
 
 _validate_file_mime() {
-    # This function validates the MIME type of a given file against a specified
-    # MIME type pattern.
+    # This function validates the MIME type and optionally the encoding of a
+    # given file. It checks whether the file's MIME type matches a specified
+    # pattern (regex) and, if provided, whether the file's encoding matches
+    # another specified pattern.
     #
     # Parameters:
     #   - $1 (input_file): The path to the file that is being validated. This
     #       is the file whose MIME type will be checked.
-    #   - $2 (par_select_mime): The MIME type pattern (or regular expression)
-    #       to compare the file's MIME type against. If no MIME type pattern is
-    #       provided, no validation occurs.
-    #
-    # Example:
-    #   - Input: File path "example.txt", MIME pattern "text/plain"
-    #   - Output: If the MIME type of "example.txt" is "text/plain", the file
-    #       name will be written to storage.
+    #   - $2 (par_select_mime): A MIME type pattern (or regular expression)
+    #       used to validate the file's MIME type. If this parameter is empty,
+    #       MIME type validation is skipped.
+    #   - $3 (par_skip_encoding): An optional encoding pattern (or regular
+    #       expression) used to validate the file's encoding. If this parameter
+    #       is empty, encoding validation is skipped.
 
     local input_file=$1
     local par_select_mime=$2
+    local par_skip_encoding=$3
 
-    # Validation for files (mime).
+    # Validate MIME type if a pattern is provided.
     if [[ -n "$par_select_mime" ]]; then
         local file_mime=""
         file_mime=$(_get_file_mime "$input_file")
@@ -2269,22 +2275,36 @@ _validate_file_mime() {
             "($par_select_mime)" <<<"$file_mime" || return
     fi
 
+    # Validate encoding if a pattern is provided.
+    if [[ -n "$par_skip_encoding" ]]; then
+        local file_encoding=""
+        file_encoding=$(_get_file_encoding "$input_file")
+        par_skip_encoding=${par_skip_encoding//+/\\+}
+        grep --quiet --ignore-case --perl-regexp \
+            "($par_skip_encoding)" <<<"$file_encoding" && return
+    fi
+
     # Create a temp file containing the name of the valid file.
     _storage_text_write "$input_file$FIELD_SEPARATOR"
 }
 
 _validate_file_mime_parallel() {
-    # This function validates the MIME type of a list of files in parallel,
-    # based on a specified MIME type pattern.
+    # This function validates the MIME types of multiple files in parallel,
+    # based on a specified MIME type pattern. It processes a list of file paths
+    # concurrently using `xargs` and calls the `_validate_file_mime` function
+    # for each file.
     #
     # Parameters:
     #   - $1 (input_files): A space-separated string containing the paths of
     #     the files to validate. These files will be checked for the MIME type
     #     pattern.
     #   - $2 (par_select_mime): The MIME type pattern (or regular expression)
-    #     to compare the files' MIME types against. If this parameter is empty,
-    #     the function returns the input files without any MIME type
-    #     validation.
+    #       used to validate the files' MIME types. If this parameter is empty,
+    #       no MIME type validation is performed, and all input files are
+    #       returned as valid.
+    #   - $3 (par_skip_encoding): An optional encoding pattern (or regular
+    #       expression) used to validate the files' encodings. If this
+    #       parameter is empty, no encoding validation is performed.
     #
     # Example:
     #   - Input: File paths "file1.txt file2.png", MIME pattern "text/plain".
@@ -2294,12 +2314,7 @@ _validate_file_mime_parallel() {
 
     local input_files=$1
     local par_select_mime=$2
-
-    # Return the 'input_files' if all parameters are empty.
-    if [[ -z "$par_select_mime" ]]; then
-        printf "%s" "$input_files"
-        return
-    fi
+    local par_skip_encoding=$3
 
     # Allows the symbol "'" in filenames (inside 'xargs' with 'bash -c').
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
@@ -2308,7 +2323,11 @@ _validate_file_mime_parallel() {
     export FIELD_SEPARATOR TEMP_DIR_STORAGE_TEXT
 
     # Export functions to be used inside new shells (when using 'xargs').
-    export -f _get_file_mime _storage_text_write _validate_file_mime
+    export -f \
+        _get_file_encoding \
+        _get_file_mime \
+        _storage_text_write \
+        _validate_file_mime
 
     # Execute the function '_validate_file_mime' for each file in parallel
     # (using 'xargs').
@@ -2317,7 +2336,8 @@ _validate_file_mime_parallel() {
         --delimiter="$FIELD_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
-        bash -c "_validate_file_mime '{}' '$par_select_mime'"
+        bash -c \
+        "_validate_file_mime '{}' '$par_select_mime' '$par_skip_encoding'"
 
     # Compile valid files in a single list.
     input_files=$(_storage_text_read_all)
