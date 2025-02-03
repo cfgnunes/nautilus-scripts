@@ -14,7 +14,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies ""
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=file; par_recursive=true; par_get_pwd=true; par_select_mime='text/|application/json'")
+    input_files=$(_get_files "par_type=file; par_recursive=true; par_get_pwd=true; par_skip_encoding='binary'; par_skip_extension='pdf|svg'")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -32,20 +32,22 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(file --dereference --separator "$FIELD_SEPARATOR" --no-pad -- "$input_file")
-    std_output=$(_text_remove_pwd "$std_output")
-    std_output=$(sed "s|$FIELD_SEPARATOR.*with CRLF, CR, LF line.*|$FIELD_SEPARATOR CRLF+CR+LF (windows)|" <<<"$std_output")
-    std_output=$(sed "s|$FIELD_SEPARATOR.*with CRLF, LF line.*|$FIELD_SEPARATOR CRLF+LF (windows)|" <<<"$std_output")
-    std_output=$(sed "s|$FIELD_SEPARATOR.*with CRLF, CR line.*|$FIELD_SEPARATOR CRLF+CR (windows)|" <<<"$std_output")
-    std_output=$(sed "s|$FIELD_SEPARATOR.*with CRLF line.*|$FIELD_SEPARATOR CRLF (windows)|" <<<"$std_output")
-    std_output=$(sed "s|$FIELD_SEPARATOR.*with CR line.*|$FIELD_SEPARATOR CR (mac)|" <<<"$std_output")
-    std_output=$(sed "s|$FIELD_SEPARATOR.*with CR, LF line.*|$FIELD_SEPARATOR CR+LF (mac)|" <<<"$std_output")
-    std_output=$(sed "s|$FIELD_SEPARATOR.*no line.*|$FIELD_SEPARATOR (no line)|" <<<"$std_output")
-    std_output=$(sed "s|$FIELD_SEPARATOR.*text.*|$FIELD_SEPARATOR LF (unix)|" <<<"$std_output")
-    std_output=$(sed "s|\(.*\)$FIELD_SEPARATOR\s*\(.*\)|\2$FIELD_SEPARATOR\1|g" <<<"$std_output")
-    std_output=$(grep "(windows)\|(unix)\|(mac)\|(no line)" <<<"$std_output")
+    std_output=$(xxd -p -- "$input_file" | tr -d "\n")
+    if [[ -z "$std_output" ]]; then
+        return
+    fi
 
-    _storage_text_write_ln "$std_output"
+    if [[ "$std_output" == *"0d0a"* ]]; then
+        std_output="CRLF (Windows)"
+    elif [[ "$std_output" == *"0a"* ]]; then
+        std_output="LF (Unix/Linux)"
+    elif [[ "$std_output" == *"0d"* ]]; then
+        std_output="CR (Mac OS Classic)"
+    else
+        std_output="(no line breaks)"
+    fi
+
+    _storage_text_write_ln "${std_output}${FIELD_SEPARATOR}${input_file}"
 }
 
 _main "$@"

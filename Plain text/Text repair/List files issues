@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies ""
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=file; par_recursive=true; par_get_pwd=true; par_select_mime='text/|application/json'")
+    input_files=$(_get_files "par_type=file; par_recursive=true; par_get_pwd=true; par_skip_encoding='binary'; par_skip_extension='pdf|svg'")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" ""
@@ -28,11 +28,11 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local file_encoding=""
-    local file_information=""
+    local xxd_output=""
     local issues=""
 
     file_encoding=$(_get_file_encoding "$input_file")
-    file_information=$(file --dereference --separator "$FIELD_SEPARATOR" --no-pad -- "$input_file" | sed "s|\(.*\)$FIELD_SEPARATOR ||")
+    xxd_output=$(xxd -p -- "$input_file" | tr -d "\n")
 
     # Run the checker 'non UTF-8 encoding'.
     if [[ "${file_encoding,,}" != *"us-ascii"* ]] && [[ "${file_encoding,,}" != *"utf-8"* ]]; then
@@ -47,7 +47,7 @@ _main_task() {
     fi
 
     # Run the checker 'non-LF line break'.
-    if [[ "$file_information" == *"with CR"* ]]; then
+    if [[ "$xxd_output" == *"0d"* ]]; then
         issues+="[non-LF line break]"
     fi
 
@@ -57,7 +57,7 @@ _main_task() {
     fi
 
     # Run the checker 'trailing spaces' (for Mac files).
-    if [[ "$file_information" == *"with CR line"* ]] || [[ "$file_information" == *"with CR, LF line"* ]]; then
+    if [[ "$xxd_output" == *"0d"* ]]; then
         if cat -A -- "$input_file" 2>/dev/null | grep --quiet -m1 " ^M"; then
             [[ "$issues" != *"trailing spaces"* ]] && issues+="[trailing spaces]"
         fi
@@ -74,10 +74,10 @@ _main_task() {
     fi
 
     # Run the checker 'missing line at the end'.
-    if ! tail -c 1 "$input_file" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet -m1 "0d\|0a"; then
+    if ! tail -c 1 "$input_file" | xxd -p | grep --quiet -m1 "0d\|0a"; then
         issues+="[missing line at the end]"
     else
-        if tail -c 3 "$input_file" | hexdump -e '16/1 "%02x" "\n"' | grep --quiet -m1 "..0d0d\|..0a0a\|0a0d0a"; then
+        if tail -c 3 "$input_file" | xxd -p | grep --quiet -m1 "..0d0d\|..0a0a\|0a0d0a"; then
             # Run the checker 'has many line breaks at the end'.
             issues+="[extra lines at the end]"
         fi
