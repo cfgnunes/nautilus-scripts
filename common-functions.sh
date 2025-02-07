@@ -1745,6 +1745,9 @@ _open_items_locations() {
         items_open+="$item$FIELD_SEPARATOR"
     done
 
+    # Remove the trailing field separator.
+    items_open=$(_str_remove_empty_tokens "$items_open")
+
     # Open the items using the detected file manager.
     case "$file_manager" in
     "nautilus" | "caja" | "dolphin")
