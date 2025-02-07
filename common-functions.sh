@@ -199,6 +199,10 @@ _check_output() {
     #   - $2 (std_output): The standard output or error from the command.
     #   - $3 (input_file): The input file associated (if applicable).
     #   - $4 (output_file): The expected output file to verify its existence.
+    #
+    # Returns:
+    #   - "0" (true): If the command was successful and the output file exists.
+    #   - "1" (false): If the command failed or the output file does not exist.
 
     local exit_code=$1
     local std_output=$2
@@ -227,6 +231,10 @@ _command_exists() {
     #
     # Parameters:
     #   - $1 (command_check): The name of the command to verify.
+    #
+    # Returns:
+    #   - "0" (true): If the command is available.
+    #   - "1" (false): If the command is not available.
 
     local command_check=$1
 
@@ -259,6 +267,10 @@ _convert_delimited_string_to_text() {
 _directory_pop() {
     # This function pops the top directory off the directory stack and changes
     # to the previous directory.
+    #
+    # Returns:
+    #   - "0" (true): If the directory was successfully popped and changed.
+    #   - "1" (false): If there was an error popping the directory.
 
     popd &>/dev/null || {
         _log_error "Could not pop a directory." "" "" ""
@@ -274,6 +286,10 @@ _directory_push() {
     # Parameters:
     #   - $1 (directory): The target directory to push onto the directory stack
     #     and navigate to.
+    #
+    # Returns:
+    #   - "0" (true): If the directory was successfully pushed and changed.
+    #   - "1" (false): If there was an error pushing the directory.
 
     local directory=$1
 
@@ -1479,6 +1495,10 @@ _is_gui_session() {
     # interface (GUI) session. It does so by checking if the DISPLAY
     # environment variable is set, which is typically present in GUI sessions
     # (e.g., X11 or Wayland).
+    #
+    # Returns:
+    #   - "0" (true): If is a GUI session.
+    #   - "1" (false): If is not a GUI session.
 
     if env | grep --quiet "^DISPLAY"; then
         return 0
