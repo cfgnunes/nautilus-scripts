@@ -2232,18 +2232,23 @@ _validate_conflict_filenames() {
     #     duplicated.
 
     local input_files=$1
-    local dup_files=""
+    local filenames=""
 
-    dup_files=$(printf "%s" "$input_files" | tr "$FIELD_SEPARATOR" "\0" |
+    filenames=$(printf "%s" "$input_files" | tr "$FIELD_SEPARATOR" "\0" |
         sed --null-data "s|/\.|//|" | # Ignore hidden files without extension.
         sed --regexp-extended --null-data \
             "s|(\.tar)?\.[a-z0-9_~-]{0,15}$||I" | # Remove file extensions.
         sort --zero-terminated --version-sort |   # Sort files.
-        uniq --zero-terminated --repeated)        # Find duplicate base names.
+        uniq --zero-terminated --repeated |       # Find duplicate base names.
+        tr "\0" "$FIELD_SEPARATOR")
 
     # If duplicates are found, display an error and exit the script.
-    if [[ -n "$dup_files" ]]; then
-        _display_error_box "There are selected files with the same base name!"
+    if [[ -n "$filenames" ]]; then
+        local basenames=""
+        # shellcheck disable=SC2086
+        basenames=$(basename --multiple -- $filenames)
+        _display_error_box \
+            "There are selected files with the same base name:\n$basenames"
         _exit_script
     fi
 }
