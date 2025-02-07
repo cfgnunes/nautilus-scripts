@@ -72,7 +72,8 @@ _cleanup_on_exit() {
     local items_to_remove=""
     items_to_remove=$(cat -- "$TEMP_DIR_ITEMS_TO_REMOVE/"* 2>/dev/null)
 
-    # Allows the symbol "'" in filenames (inside 'xargs' with 'bash -c').
+    # Escape single quotes in filenames to handle them correctly in 'xargs'
+    # with 'bash -c'.
     items_to_remove=$(sed -z "s|'|'\\\''|g" <<<"$items_to_remove")
 
     printf "%s" "$items_to_remove" | xargs \
@@ -1916,9 +1917,6 @@ _run_task_parallel() {
     local input_files=$1
     local output_dir=$2
 
-    # Allows the symbol "'" in filenames (inside 'xargs' with 'bash -c').
-    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
-
     # Export variables to be used inside new shells (when using 'xargs').
     export \
         FIELD_SEPARATOR \
@@ -1967,6 +1965,10 @@ _run_task_parallel() {
         _strip_filename_extension \
         _text_remove_pwd \
         _text_uri_decode
+
+    # Escape single quotes in filenames to handle them correctly in 'xargs'
+    # with 'bash -c'.
+    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     printf "%s" "$input_files" | xargs \
         --no-run-if-empty \
@@ -2323,9 +2325,6 @@ _validate_file_mime_parallel() {
     local par_select_mime=$2
     local par_skip_encoding=$3
 
-    # Allows the symbol "'" in filenames (inside 'xargs' with 'bash -c').
-    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
-
     # Export variables to be used inside new shells (when using 'xargs').
     export FIELD_SEPARATOR TEMP_DIR_STORAGE_TEXT
 
@@ -2335,6 +2334,10 @@ _validate_file_mime_parallel() {
         _get_file_mime \
         _storage_text_write \
         _validate_file_mime
+
+    # Escape single quotes in filenames to handle them correctly in 'xargs'
+    # with 'bash -c'.
+    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
     # Execute the function '_validate_file_mime' for each file in parallel
     # (using 'xargs').
