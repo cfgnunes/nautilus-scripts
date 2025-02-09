@@ -2170,7 +2170,11 @@ _text_remove_pwd() {
     local working_directory=""
     working_directory=$(_get_working_directory)
 
-    sed "s|$working_directory|.|g" <<<"$input_text"
+    if [[ "$working_directory" != "/" ]]; then
+        sed "s|$working_directory|.|" <<<"$input_text"
+    else
+        printf "%s" "$input_text"
+    fi
 }
 
 _text_sort() {
