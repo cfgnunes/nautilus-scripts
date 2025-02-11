@@ -55,8 +55,17 @@ _recent_scripts_add() {
     # This function adds the running script to the history of recently accessed
     # scripts ('$ACCESSED_RECENTLY_DIR').
 
-    local running_script=""
-    running_script=$(realpath -e "$0")
+    local running_script=$0
+    if [[ "$0" != "/"* ]]; then
+        # If $0 is a relative path, resolve it relative to the current working
+        # directory.
+        running_script="$SCRIPT_DIR/"$(basename -- "$0")
+    fi
+
+    # Resolve symbolic links to their target locations.
+    if [[ -L "$running_script" ]]; then
+        running_script=$(readlink -f "$running_script")
+    fi
 
     # Create '$ACCESSED_RECENTLY_DIR' if it does not exist.
     if [[ ! -d $ACCESSED_RECENTLY_DIR ]]; then
