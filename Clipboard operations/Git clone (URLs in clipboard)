@@ -10,14 +10,12 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    case "${XDG_SESSION_TYPE,,}" in
-    "x11") _check_dependencies "command=git | command=xclip" ;;
-    "wayland") _check_dependencies "command=git | command=wl-paste; package=wl-clipboard" ;;
-    *)
-        _display_error_box "Unknown session type!"
-        _exit_script
-        ;;
-    esac
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        _check_dependencies "command=git | command=wl-paste; package=wl-clipboard"
+    else
+        _check_dependencies "command=git | command=xclip"
+    fi
 
     _display_wait_box "2"
     output_dir=$(_get_working_directory_alternative)

@@ -9,14 +9,12 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    case "${XDG_SESSION_TYPE,,}" in
-    "x11") _check_dependencies "command=xclip" ;;
-    "wayland") _check_dependencies "command=wl-copy; package=wl-clipboard" ;;
-    *)
-        _display_error_box "Unknown session type!"
-        _exit_script
-        ;;
-    esac
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        _check_dependencies "command=wl-copy; package=wl-clipboard"
+    else
+        _check_dependencies "command=xclip"
+    fi
 
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all; par_get_pwd=true")

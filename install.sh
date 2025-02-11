@@ -192,10 +192,12 @@ _step_install_dependencies() {
     fi
 
     # Packages session type...
-    case "${XDG_SESSION_TYPE,,}" in
-    "wayland") _command_exists "wl-copy" || packages+="wl-clipboard " ;;
-    *) _command_exists "xclip" || packages+="xclip " ;;
-    esac
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        _command_exists "wl-copy" || packages+="wl-clipboard "
+    else
+        _command_exists "xclip" || packages+="xclip "
+    fi
 
     # Packages for compress/decompress archives...
     _command_exists "bzip2" || packages+="bzip2 "
