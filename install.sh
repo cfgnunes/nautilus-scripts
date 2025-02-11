@@ -74,7 +74,10 @@ _main() {
     [[ ${menu_selected[4]} == "true" ]] && menu_options+="preserve,"
 
     # Get the categories (directories of scripts).
-    readarray -d "" categories_dirs < <(
+    local dir=""
+    while IFS= read -r -d $'\0' dir; do
+        categories_dirs+=("$dir")
+    done < <(
         find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
             ! -path "*User previous scripts*" \
             ! -path "*Accessed recently*" \

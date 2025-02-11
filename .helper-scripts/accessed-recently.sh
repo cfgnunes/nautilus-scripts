@@ -29,14 +29,16 @@ _recent_scripts_organize() {
     #    maintain chronological order.
 
     local links=()
-    readarray -d "" links < <(
+    local link=""
+    while IFS= read -r -d $'\0' link; do
+        links+=("$link")
+    done < <(
         find "$ACCESSED_RECENTLY_DIR" -maxdepth 1 -type l -print0 2>/dev/null |
             sort --zero-terminated --numeric-sort
     )
 
     # Process the links, keeping only the '$NUM_LINKS_TO_KEEP' most recent.
     local count=1
-    local link=""
     for link in "${links[@]}"; do
         if ((count <= NUM_LINKS_TO_KEEP)); then
             # Rename the link with a numeric prefix for ordering.
