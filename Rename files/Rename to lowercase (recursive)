@@ -11,6 +11,11 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
+
+    if ! _display_question_box "This operation will rename the selected\nfiles and directories recursively.\n\nDo you want to continue?"; then
+        _exit_script
+    fi
+
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all")
 

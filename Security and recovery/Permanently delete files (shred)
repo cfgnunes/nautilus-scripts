@@ -11,13 +11,13 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
-    input_files=$(_get_files "par_type=file")
 
-    if ! _display_question_box "You want to permanently remove the selected files?"; then
+    if ! _display_question_box "This operation will permanently delete the selected files.\n\nDo you want to continue?"; then
         _exit_script
     fi
 
     _display_wait_box "2"
+    input_files=$(_get_files "par_type=file")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
