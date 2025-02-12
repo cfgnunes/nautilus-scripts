@@ -94,15 +94,15 @@ Most scripts have been tested on the following GNU/Linux distributions:
 - Ubuntu 16.04, 18.04, 20.04, 22.04, 24.04
 - Debian 12 (Gnome and KDE)
 - Fedora Workstation 39, 40, 41
-- EndeavourOS 2024
+- EndeavourOS 2024, 2025
 - KDE neon 2024
 - Kubuntu 22.04, 24.04
 - Lubuntu 22.04, 24.04
 - Manjaro 23, 24 (Gnome)
 - Mint 21, 22 (Cinnamon, MATE and Xfce)
-- openSUSE Tumbleweed 2024 (Gnome)
+- openSUSE Tumbleweed 2024, 2025 (Gnome)
 - Xubuntu 23.10, 24.04
-- Zorin OS Core 17.1
+- Zorin OS Core 17.1, 17.2
 
 ## Handling Large Input Lists
 
