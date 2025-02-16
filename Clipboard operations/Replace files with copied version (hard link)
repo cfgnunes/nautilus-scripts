@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+# install_keyboard_shortcut=<Control><Shift>X
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local output_dir=""
+
+    # Execute initial checks.
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        _check_dependencies "command=axel | command=wl-paste; package=wl-clipboard"
+    else
+        _check_dependencies "command=axel | command=xclip"
+    fi
+
+    TEMP_DATA_TASK=$(_get_urls_from_clipboard) || _exit_script
+
+    if ! _display_question_box "This action will replace the selected files\nwith the copied file of the same name.\n\nDo you want to continue?"; then
+        _exit_script
+    fi
+
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=file; par_skip_extension=bak")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=$input_file
+    local std_output=""
+
+    local basename_input_file=""
+    basename_input_file=$(basename -- "$input_file")
+
+    # Run the main process.
+    local clipboard_file=""
+    for clipboard_file in $TEMP_DATA_TASK; do
+        if [[ "$basename_input_file" == "$(basename -- "$clipboard_file")" ]] &&
+            [[ "$input_file" != "$clipboard_file" ]]; then
+
+            # Skip files if the content is the same.
+            if cmp --silent -- "$input_file" "$clipboard_file"; then
+                continue
+            fi
+
+            # Rename the 'input_file' to 'input_file.bak'.
+            _move_file "rename" "$input_file" "$input_file.bak"
+
+            # Copy the 'clipboard_file' to the 'output_file'.
+            std_output=$(cp --archive --link -- "$clipboard_file" "$output_file" 2>&1)
+            _check_output "$?" "$std_output" "$clipboard_file" "$output_file" || return 1
+            break
+        fi
+    done
+}
+
+_get_urls_from_clipboard() {
+    local urls=""
+
+    if [[ "${XDG_SESSION_TYPE,,}" == "x11" ]]; then
+        urls=$(xclip -quiet -selection clipboard -o 2>/dev/null)
+    elif [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        urls=$(wl-paste 2>/dev/null)
+    fi
+    urls=$(grep --only-matching --perl-regexp "^(file://|('\")?/)(.*)" <<<"$urls")
+    urls=$(sed "s|^['\"]||g; s|['\"]$||g" <<<"$urls")
+    urls=$(sort --unique <<<"$urls")
+
+    if [[ -z "$urls" ]]; then
+        _display_error_box "There are no valid paths in the clipboard!"
+        _exit_script
+    fi
+
+    urls=$(_convert_text_to_delimited_string "$urls")
+    urls=$(_text_uri_decode "$urls")
+    printf "%s" "$urls"
+}
+
+_main "$@"
