@@ -46,6 +46,10 @@ _main_task() {
         if [[ "$basename_input_file" == "$(basename -- "$clipboard_file")" ]] &&
             [[ "$input_file" != "$clipboard_file" ]]; then
 
+            if [[ ! -f "$clipboard_file" ]]; then
+                continue
+            fi
+
             # Skip files if the content is the same.
             if cmp --silent -- "$input_file" "$clipboard_file"; then
                 continue
