@@ -37,6 +37,8 @@ _main_task() {
     local output_file=$input_file
     local std_output=""
 
+    IFS=$FIELD_SEPARATOR
+
     local basename_input_file=""
     basename_input_file=$(basename -- "$input_file")
 
