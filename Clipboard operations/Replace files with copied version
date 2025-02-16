@@ -37,15 +37,18 @@ _main_task() {
     local output_file=$input_file
     local std_output=""
 
+    local basename_input_file=""
+    basename_input_file=$(basename -- "$input_file")
+
     # Run the main process.
     local clipboard_file=""
     for clipboard_file in $TEMP_DATA_TASK; do
-        if [[ "$(basename -- "$input_file")" == "$(basename -- "$clipboard_file")" ]] &&
+        if [[ "$basename_input_file" == "$(basename -- "$clipboard_file")" ]] &&
             [[ "$input_file" != "$clipboard_file" ]]; then
 
-            # Skip files if the content of 'input_file' is equal to the 'clipboard_file'.
+            # Skip files if the content is the same.
             if cmp --silent -- "$input_file" "$clipboard_file"; then
-                break
+                continue
             fi
 
             # Rename the 'input_file' to 'input_file.bak'.
