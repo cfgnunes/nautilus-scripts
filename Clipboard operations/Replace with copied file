@@ -52,11 +52,6 @@ _main_task() {
                 continue
             fi
 
-            # Skip files if the content is the same.
-            if cmp --silent -- "$input_file" "$clipboard_file"; then
-                continue
-            fi
-
             # Rename the 'input_file' to 'input_file.bak'.
             _move_file "rename" "$input_file" "$input_file.bak"
 
