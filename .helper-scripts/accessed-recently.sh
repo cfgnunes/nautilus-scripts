@@ -31,7 +31,13 @@ _recent_scripts_organize() {
     local links=()
     local link=""
     while IFS= read -r -d $'\0' link; do
-        links+=("$link")
+        # Check if the link is broken.
+        if [[ ! -e "$link" ]]; then
+            # Remove broken links.
+            rm -f -- "$link"
+        else
+            links+=("$link")
+        fi
     done < <(
         find "$ACCESSED_RECENTLY_DIR" -maxdepth 1 -type l -print0 2>/dev/null |
             sort --zero-terminated --numeric-sort
