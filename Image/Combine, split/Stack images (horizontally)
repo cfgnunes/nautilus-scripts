@@ -30,7 +30,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file=$(_get_output_filename "Concatenated images.png" "$output_dir" "par_extension_opt=preserve")
+    output_file=$(_get_output_filename "Stacked images (horizontal).png" "$output_dir" "par_extension_opt=preserve")
     # shellcheck disable=SC2086
     std_output=$(convert $input_files +append +repage "$output_file" 2>&1)
     _check_output "$?" "$std_output" "" "$output_file" || return 1
