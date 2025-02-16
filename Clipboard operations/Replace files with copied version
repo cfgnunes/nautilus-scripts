@@ -19,7 +19,7 @@ _main() {
 
     TEMP_DATA_TASK=$(_get_urls_from_clipboard) || _exit_script
 
-    if ! _display_question_box "This operation will replace the selected files\nwith the copied file of the same name.\n\nDo you want to continue?"; then
+    if ! _display_question_box "This action will replace the selected files\nwith the copied file of the same name.\n\nDo you want to continue?"; then
         _exit_script
     fi
 
