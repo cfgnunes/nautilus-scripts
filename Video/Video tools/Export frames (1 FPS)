@@ -7,7 +7,7 @@ source "$ROOT_DIR/common-functions.sh"
 
 _main() {
     local input_files=""
-    local output_dir="Output/"
+    local output_dir=""
 
     # Execute initial checks.
     _check_dependencies "
@@ -31,8 +31,9 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file="Output/frame_%03d.png"
+    output_file=$(_get_output_filename "Frame %05d.png" "$output_dir" "par_extension_opt=preserve")
     std_output=$(ffmpeg -hide_banner -y -i "$input_file" -r 1 -- "$output_file" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
 _main "$@"
