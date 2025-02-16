@@ -41,10 +41,11 @@ _main_task() {
 _get_urls_from_clipboard() {
     local urls=""
 
-    if [[ "${XDG_SESSION_TYPE,,}" == "x11" ]]; then
-        urls=$(xclip -quiet -selection clipboard -o 2>/dev/null)
-    elif [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
         urls=$(wl-paste 2>/dev/null)
+    else
+        urls=$(xclip -quiet -selection clipboard -o 2>/dev/null)
     fi
     urls=$(grep --only-matching --perl-regexp "((git|ssh|http(s)?)|(git@[\w\.]+))(.*)(\.git)" <<<"$urls")
     urls=$(sort --unique <<<"$urls")
