@@ -19,6 +19,8 @@ _main() {
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all; par_get_pwd=true")
 
+    input_files=$(_convert_delimited_string_to_text "$input_files")
+
     # Run the main process.
     if [[ "${XDG_SESSION_TYPE,,}" == "x11" ]]; then
         xclip -selection clipboard -i <<<"$input_files" 2>/dev/null
