@@ -9,6 +9,8 @@ set -u
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
+ACCESSED_RECENTLY_DIR="$ROOT_DIR/Accessed recently"
+ACCESSED_RECENTLY_LINKS_TO_KEEP=10
 FIELD_SEPARATOR=$'\r'          # The main field separator.
 GUI_BOX_HEIGHT=550             # Height of the GUI dialog boxes.
 GUI_BOX_WIDTH=900              # Width of the GUI dialog boxes.
@@ -26,6 +28,8 @@ WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control"
 WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"
 
 readonly \
+    ACCESSED_RECENTLY_DIR \
+    ACCESSED_RECENTLY_LINKS_TO_KEEP \
     FIELD_SEPARATOR \
     GUI_BOX_HEIGHT \
     GUI_BOX_WIDTH \
@@ -250,7 +254,7 @@ _convert_delimited_string_to_text() {
     #
     # Parameters:
     #   - $1 (input_items): A string containing items separated by the
-    #   '$FIELD_SEPARATOR' variable.
+    #   'FIELD_SEPARATOR' variable.
     #
     # Returns:
     #   - A string containing the items separated by newlines.
@@ -308,7 +312,7 @@ _convert_text_to_delimited_string() {
     #   - $1 (input_items): A string containing items separated by newlines.
     #
     # Returns:
-    #   - A string containing the items separated by the '$FIELD_SEPARATOR'
+    #   - A string containing the items separated by the 'FIELD_SEPARATOR'
     #   variable.
 
     local input_items=$1
@@ -976,7 +980,7 @@ _get_filenames_filemanager() {
     fi
 
     if [[ -n "$input_files" ]]; then
-        # Replace '\n' with '$FIELD_SEPARATOR'.
+        # Replace '\n' with 'FIELD_SEPARATOR'.
         input_files=$(_convert_text_to_delimited_string "$input_files")
 
         # Decode the URI list.
@@ -1929,6 +1933,83 @@ _pkg_is_package_installed() {
     return 1
 }
 
+_recent_scripts_organize() {
+    # This function organizes the directory containing recently accessed
+    # scripts ('ACCESSED_RECENTLY_DIR'). This function manages symbolic links
+    # in the directory by:
+    # 1. Keeping only the 'ACCESSED_RECENTLY_LINKS_TO_KEEP' most recently
+    #    accessed scripts.
+    # 2. Renaming retained links with numeric prefixes (e.g., "01", "02") to
+    #    maintain chronological order.
+
+    local links=()
+    local link=""
+    while IFS= read -r -d $'\0' link; do
+        # Check if the link is broken.
+        if [[ ! -e "$link" ]]; then
+            # Remove broken links.
+            rm -f -- "$link"
+        else
+            links+=("$link")
+        fi
+    done < <(
+        find "$ACCESSED_RECENTLY_DIR" -maxdepth 1 -type l -print0 2>/dev/null |
+            sort --zero-terminated --numeric-sort
+    )
+
+    # Process the links, keeping only the 'ACCESSED_RECENTLY_LINKS_TO_KEEP'
+    # most recent.
+    local count=1
+    local link_name=""
+    for link in "${links[@]}"; do
+        if ((count <= ACCESSED_RECENTLY_LINKS_TO_KEEP)); then
+            # Rename the link with a numeric prefix for ordering.
+            link_name=$(basename "$link" |
+                sed --regexp-extended 's|^.?[0-9]{2} ||')
+            mv -f -- "$link" \
+                "$ACCESSED_RECENTLY_DIR/$(printf '%02d' "$count") $link_name" \
+                2>/dev/null
+            ((count++))
+        else
+            # Remove excess links.
+            rm -f -- "$link"
+        fi
+    done
+}
+
+_recent_scripts_add() {
+    # This function adds the running script to the history of recently accessed
+    # scripts ('ACCESSED_RECENTLY_DIR').
+
+    local running_script=$0
+    if [[ "$0" != "/"* ]]; then
+        # If $0 is a relative path, resolve it relative to the current working
+        # directory.
+        running_script="$SCRIPT_DIR/"$(basename -- "$0")
+    fi
+
+    # Resolve symbolic links to their target locations.
+    if [[ -L "$running_script" ]]; then
+        running_script=$(readlink -f "$running_script")
+    fi
+
+    # Create 'ACCESSED_RECENTLY_DIR' if it does not exist.
+    if [[ ! -d $ACCESSED_RECENTLY_DIR ]]; then
+        mkdir -p "$ACCESSED_RECENTLY_DIR"
+    fi
+
+    _directory_push "$ACCESSED_RECENTLY_DIR" || return 1
+
+    # Remove any existing links pointing to the same script.
+    find "$ACCESSED_RECENTLY_DIR" -lname "$running_script" \
+        -exec rm -f -- "{}" +
+
+    # Create a new symbolic link with a ".00" prefix.
+    ln -s -- "$running_script" ".00 $(basename -- "$running_script")"
+
+    _directory_pop || return 1
+}
+
 _run_task_parallel() {
     # This function runs a task in parallel for a set of input files, using a
     # specified output directory for results.
@@ -2242,8 +2323,7 @@ _unset_global_variables_file_manager() {
         NEMO_SCRIPT_NEXT_PANE_SELECTED_URIS \
         NEMO_SCRIPT_SELECTED_FILE_PATHS \
         NEMO_SCRIPT_SELECTED_URIS \
-        NEMO_SCRIPT_WINDOW_GEOMETRY \
-        OLDPWD
+        NEMO_SCRIPT_WINDOW_GEOMETRY
 }
 
 _validate_conflict_filenames() {
@@ -2511,11 +2591,6 @@ _xdg_get_default_app() {
     printf "%s" "$default_app"
 }
 
-# -----------------------------------------------------------------------------
-# INCLUDE HELPER SCRIPTS
-# -----------------------------------------------------------------------------
-
-if [[ -f "$ROOT_DIR/.helper-scripts/accessed-recently.sh" ]]; then
-    #shellcheck source=.helper-scripts/accessed-recently.sh
-    source "$ROOT_DIR/.helper-scripts/accessed-recently.sh"
-fi
+# Execute functions to organize the recently accessed scripts.
+_recent_scripts_add
+_recent_scripts_organize
