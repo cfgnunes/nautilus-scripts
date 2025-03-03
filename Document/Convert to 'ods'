@@ -49,7 +49,9 @@ _get_dependencies() {
 
         case $command in
         "libreoffice_calc")
-            if ! _command_exists "libreoffice.calc" && ! _command_exists "libreoffice-calc"; then
+            if ! _command_exists "libreoffice.calc" &&
+                ! _command_exists "localc" &&
+                ! _command_exists "libreoffice-calc"; then
                 dependencies+="package=libreoffice-calc"
             fi
             ;;

@@ -80,17 +80,23 @@ _get_dependencies() {
                 pkg_manager=zypper; package=texlive-subeqnarray"
             ;;
         "libreoffice_calc")
-            if ! _command_exists "libreoffice.calc" && ! _command_exists "libreoffice-calc"; then
+            if ! _command_exists "libreoffice.calc" &&
+                ! _command_exists "localc" &&
+                ! _command_exists "libreoffice-calc"; then
                 dependencies+="package=libreoffice-calc"
             fi
             ;;
         "libreoffice_impress")
-            if ! _command_exists "libreoffice.impress" && ! _command_exists "libreoffice-impress"; then
+            if ! _command_exists "libreoffice.impress" &&
+                ! _command_exists "loimpress" &&
+                ! _command_exists "libreoffice-impress"; then
                 dependencies+="package=libreoffice-impress"
             fi
             ;;
         "libreoffice_writer")
-            if ! _command_exists "libreoffice.writer" && ! _command_exists "libreoffice-writer"; then
+            if ! _command_exists "libreoffice.writer" &&
+                ! _command_exists "lowriter" &&
+                ! _command_exists "libreoffice-writer"; then
                 dependencies+="package=libreoffice-writer"
             fi
             ;;

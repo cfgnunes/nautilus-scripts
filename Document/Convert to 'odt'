@@ -49,7 +49,9 @@ _get_dependencies() {
 
         case $command in
         "libreoffice_writer")
-            if ! _command_exists "libreoffice.writer" && ! _command_exists "libreoffice-writer"; then
+            if ! _command_exists "libreoffice.writer" &&
+                ! _command_exists "lowriter" &&
+                ! _command_exists "libreoffice-writer"; then
                 dependencies+="package=libreoffice-writer"
             fi
             ;;

@@ -49,7 +49,9 @@ _get_dependencies() {
 
         case $command in
         "libreoffice_impress")
-            if ! _command_exists "libreoffice.impress" && ! _command_exists "libreoffice-impress"; then
+            if ! _command_exists "libreoffice.impress" &&
+                ! _command_exists "loimpress" &&
+                ! _command_exists "libreoffice-impress"; then
                 dependencies+="package=libreoffice-impress"
             fi
             ;;
