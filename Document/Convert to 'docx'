@@ -52,7 +52,7 @@ _get_dependencies() {
             if ! _command_exists "libreoffice.writer" &&
                 ! _command_exists "lowriter" &&
                 ! _command_exists "libreoffice-writer"; then
-                dependencies+="package=libreoffice-writer"
+                dependencies+="pkg_manager=apt; package=libreoffice-writer | pkg_manager=dnf; package=libreoffice-writer | pkg_manager=pacman; package=libreoffice | pkg_manager=zypper; package=libreoffice-writer"
             fi
             ;;
         "pandoc") dependencies+="command=pandoc" ;;

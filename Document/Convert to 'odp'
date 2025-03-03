@@ -52,7 +52,7 @@ _get_dependencies() {
             if ! _command_exists "libreoffice.impress" &&
                 ! _command_exists "loimpress" &&
                 ! _command_exists "libreoffice-impress"; then
-                dependencies+="package=libreoffice-impress"
+                dependencies+="pkg_manager=apt; package=libreoffice-impress | pkg_manager=dnf; package=libreoffice-impress | pkg_manager=pacman; package=libreoffice | pkg_manager=zypper; package=libreoffice-impress"
             fi
             ;;
         "pandoc") dependencies+="command=pandoc" ;;
