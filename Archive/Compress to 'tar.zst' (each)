@@ -40,7 +40,7 @@ _main_task() {
         _directory_push "$input_file" || return 1
 
         std_output=$(find . -mindepth 1 -maxdepth 1 -print0 2>/dev/null |
-            sed "s|\./||g" |
+            sed -z "s|\./||g" |
             xargs --no-run-if-empty --null tar --zstd -cf "$output_file" --)
     else
         # If the input is a file, change to its parent directory.
