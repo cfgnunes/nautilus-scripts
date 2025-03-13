@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local std_output=""
+
+    # Execute initial checks.
+    _check_dependencies ""
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=all; par_min_items=2; par_max_items=2; par_sort_list=true")
+
+    # Extract the two file or directory paths from the input.
+    local file_1=""
+    local file_2=""
+    file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
+    file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$input_files")
+
+    # Append a trailing slash if the path is a directory to ensure proper comparison.
+    [[ -d "$file_1" ]] && file_1+="/"
+    [[ -d "$file_2" ]] && file_2+="/"
+
+    # Run the main process.
+    std_output=$(diff --no-dereference --brief --recursive -- "$file_1" "$file_2" 2>&1)
+
+    # FORMAT THE OUTPUT:
+    # Remove any occurrence of the current working directory.
+    std_output=$(_text_remove_pwd "$std_output")
+    # Sort the text.
+    std_output=$(_text_sort "$std_output")
+    # If no differences are found, set a default message.
+    if [[ -z "$std_output" ]]; then
+        std_output="(No differences)"
+    fi
+
+    _display_text_box "$std_output"
+}
+
+_main "$@"
