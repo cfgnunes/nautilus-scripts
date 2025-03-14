@@ -26,7 +26,7 @@ _main() {
     std_output=$(_text_sort "$std_output")
     # shellcheck disable=SC2001
     std_output=$(sed "s|\(.*\)$FIELD_SEPARATOR\(.*\)|\2  \1|g" <<<"$std_output")
-    printf "%s" "$std_output" >"$output_file"
+    printf "%s\n" "$std_output" >"$output_file"
 
     _display_result_box "$output_dir"
 }
