@@ -220,7 +220,7 @@ _run_command() {
         rm -f -- "$temp_file"
         ;;
     "pandoc_latex")
-        std_output=$(pandoc -V "geometry:margin=1.5cm" -V "geometry:a4paper" -V "fontfamily:charter" --standalone -o "$output_file" -- "$input_file" 2>&1)
+        std_output=$(pandoc -V "geometry:margin=1.5cm" -V "geometry:a4paper" -V "fontfamily:charter,inconsolata" --standalone -o "$output_file" -- "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "pandoc")
