@@ -1,0 +1,135 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local output_dir=""
+
+    # Execute initial checks.
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        _check_dependencies "command=wl-paste; package=wl-clipboard"
+    else
+        _check_dependencies "command=xclip; package=xclip"
+    fi
+
+    output_dir=$(_get_working_directory_alternative)
+
+    # Check if clipboard contains an image
+    if ! _check_clipboard_for_image; then
+        _display_error_box "No image found in clipboard!"
+        _exit_script
+    fi
+
+    # Ask user for filename
+    local filename
+    filename=$(_get_filename_from_user)
+    if [[ -z "$filename" ]]; then
+        _exit_script
+    fi
+
+    _display_wait_box "2"
+
+    # Save the image to file
+    _save_image_from_clipboard "$output_dir/$filename"
+    
+    _display_result_box "$output_dir"
+}
+
+_check_clipboard_for_image() {
+    local has_image=1
+    
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] && [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        # Check if wl-paste can detect an image type
+        if wl-paste --list-types 2>/dev/null | grep -q "image/"; then
+            has_image=0
+        fi
+    else
+        # For X11, check if xclip has image data
+        if xclip -selection clipboard -t TARGETS -o 2>/dev/null | grep -q "image/"; then
+            has_image=0
+        fi
+    fi
+    
+    return $has_image
+}
+
+_get_filename_from_user() {
+    local filename
+    local timestamp
+    timestamp=$(date +"%Y%m%d_%H%M%S")
+    local default_filename="image_${timestamp}.png"
+    
+    # Use zenity to get filename from user
+    filename=$(zenity --entry \
+        --title="Save Image" \
+        --text="Enter filename for the clipboard image:" \
+        --entry-text="$default_filename" 2>/dev/null)
+    
+    # Return the filename (will be empty if user cancelled)
+    echo "$filename"
+}
+
+_save_image_from_clipboard() {
+    local output_file=$1
+    local std_output=""
+    
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] && [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        # In Wayland, save image from wl-paste
+        std_output=$(wl-paste --no-newline --type image/png > "$output_file" 2>&1)
+    else
+        # In X11, save image from xclip
+        std_output=$(xclip -selection clipboard -t image/png -o > "$output_file" 2>&1)
+    fi
+    
+    _check_output "$?" "$std_output" "clipboard" "$output_file" || return 1
+}
+
+_get_working_directory_alternative() {
+    local working_directory=""
+
+    # Try to use the information provided by the file manager.
+    if [[ -v "CAJA_SCRIPT_CURRENT_URI" ]]; then
+        working_directory=$CAJA_SCRIPT_CURRENT_URI
+    elif [[ -v "NEMO_SCRIPT_CURRENT_URI" ]]; then
+        working_directory=$NEMO_SCRIPT_CURRENT_URI
+    elif [[ -v "NAUTILUS_SCRIPT_CURRENT_URI" ]]; then
+        working_directory=$NAUTILUS_SCRIPT_CURRENT_URI
+    fi
+
+    if [[ -n "$working_directory" ]] && [[ "$working_directory" == "file://"* ]]; then
+        working_directory=$(_text_uri_decode "$working_directory")
+    else
+        # Files selected in the search screen (or orther possible cases).
+        working_directory=""
+    fi
+
+    if [[ -z "$working_directory" ]]; then
+        # NOTE: The working directory can be detected by using the directory name
+        # of the first input file. Some file managers do not send the working
+        # directory for the scripts, so it is not precise to use the 'pwd' command.
+        local item_1=""
+        local item_2=""
+        item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
+        item_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$INPUT_FILES")
+
+        if [[ -n "$item_1" ]]; then
+            if [[ -n "$item_2" ]] && [[ "$item_1" != "$item_2" ]]; then
+                working_directory=$(_get_filename_dir "$item_1")
+            elif [[ -f "$item_1" ]]; then
+                working_directory=$(_get_filename_dir "$item_1")
+            elif [[ -d "$item_1" ]]; then
+                working_directory=$(_get_filename_full_path "$item_1")
+            fi
+        else
+            working_directory=$(pwd)
+        fi
+    fi
+
+    printf "%s" "$working_directory"
+}
+
+_main "$@"
