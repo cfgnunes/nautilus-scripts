@@ -20,46 +20,74 @@ _main() {
     output_dir=$(_get_working_directory_alternative)
 
     # Save the clipboard to file.
-    _save_file_from_clipboard
+    _save_file_from_clipboard "$output_dir"
 
     _display_result_box "$output_dir"
 }
 
 _save_file_from_clipboard() {
+    local output_dir=$1
+    local file_type=""
     local output_file=""
     local std_output=""
 
     if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
         [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
 
-        if wl-paste --list-types 2>/dev/null | grep -q "image/png"; then
+        file_type=$(wl-paste --list-types 2>/dev/null)
+
+        case "$file_type" in
+        *"image/png"*)
             output_file=$(_get_output_filename "Clipboard.png" \
                 "$output_dir" "par_extension_opt=preserve")
 
             std_output=$(wl-paste --no-newline --type "image/png" \
                 >"$output_file" 2>&1)
-        else
+            ;;
+        *"text/html"*)
+            output_file=$(_get_output_filename "Clipboard.html" \
+                "$output_dir" "par_extension_opt=preserve")
+
+            std_output=$(wl-paste --no-newline --type "text/html" \
+                >"$output_file" 2>&1)
+            ;;
+        *"text/plain"*)
             output_file=$(_get_output_filename "Clipboard.txt" \
                 "$output_dir" "par_extension_opt=preserve")
 
             std_output=$(wl-paste --no-newline --type "text/plain" \
                 >"$output_file" 2>&1)
-        fi
+            ;;
+        esac
+
     else
-        if xclip -selection clipboard -t TARGETS -o 2>/dev/null |
-            grep -q "image/png"; then
+
+        file_type=$(xclip -selection clipboard -t TARGETS -o 2>/dev/null)
+
+        case "$file_type" in
+        *"image/png"*)
             output_file=$(_get_output_filename "Clipboard.png" \
                 "$output_dir" "par_extension_opt=preserve")
 
             std_output=$(xclip -selection clipboard -t "image/png" -o \
                 >"$output_file" 2>&1)
-        else
+            ;;
+        *"text/html"*)
+            output_file=$(_get_output_filename "Clipboard.html" \
+                "$output_dir" "par_extension_opt=preserve")
+
+            std_output=$(xclip -selection clipboard -t "text/html" -o \
+                >"$output_file" 2>&1)
+            ;;
+        *"text/plain"*)
             output_file=$(_get_output_filename "Clipboard.txt" \
                 "$output_dir" "par_extension_opt=preserve")
 
             std_output=$(xclip -selection clipboard -t "text/plain" -o \
                 >"$output_file" 2>&1)
-        fi
+            ;;
+        esac
+
     fi
 
     _check_output "$?" "$std_output" "" "$output_file" || return 1
