@@ -16,76 +16,58 @@ _main() {
         _check_dependencies "command=xclip; package=xclip"
     fi
 
+    _display_wait_box "2"
     output_dir=$(_get_working_directory_alternative)
 
-    # Check if clipboard contains an image
-    if ! _check_clipboard_for_image; then
-        _display_error_box "No image found in clipboard!"
-        _exit_script
-    fi
+    output_file=$(_get_output_filename "Clipboard image.png" "$output_dir" "par_extension_opt=preserve")
+    # Save the image to file.
+    _save_image_from_clipboard "$output_file"
 
-    # Ask user for filename
-    local filename
-    filename=$(_get_filename_from_user)
-    if [[ -z "$filename" ]]; then
-        _exit_script
-    fi
-
-    _display_wait_box "2"
-
-    # Save the image to file
-    _save_image_from_clipboard "$output_dir/$filename"
-    
     _display_result_box "$output_dir"
 }
 
 _check_clipboard_for_image() {
     local has_image=1
-    
-    if [[ -n "${XDG_SESSION_TYPE+x}" ]] && [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        # Check if wl-paste can detect an image type
+
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        # Check if wl-paste can detect an image type.
         if wl-paste --list-types 2>/dev/null | grep -q "image/"; then
             has_image=0
         fi
     else
-        # For X11, check if xclip has image data
-        if xclip -selection clipboard -t TARGETS -o 2>/dev/null | grep -q "image/"; then
+        # For X11, check if xclip has image data.
+        if xclip -selection clipboard -t TARGETS -o 2>/dev/null |
+            grep -q "image/"; then
             has_image=0
         fi
     fi
-    
-    return $has_image
-}
 
-_get_filename_from_user() {
-    local filename
-    local timestamp
-    timestamp=$(date +"%Y%m%d_%H%M%S")
-    local default_filename="image_${timestamp}.png"
-    
-    # Use zenity to get filename from user
-    filename=$(zenity --entry \
-        --title="Save Image" \
-        --text="Enter filename for the clipboard image:" \
-        --entry-text="$default_filename" 2>/dev/null)
-    
-    # Return the filename (will be empty if user cancelled)
-    echo "$filename"
+    return "$has_image"
 }
 
 _save_image_from_clipboard() {
     local output_file=$1
     local std_output=""
-    
-    if [[ -n "${XDG_SESSION_TYPE+x}" ]] && [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        # In Wayland, save image from wl-paste
-        std_output=$(wl-paste --no-newline --type image/png > "$output_file" 2>&1)
-    else
-        # In X11, save image from xclip
-        std_output=$(xclip -selection clipboard -t image/png -o > "$output_file" 2>&1)
+
+    # Check if clipboard contains an image.
+    if ! _check_clipboard_for_image; then
+        _display_error_box "No image found in clipboard!"
+        _exit_script
     fi
-    
-    _check_output "$?" "$std_output" "clipboard" "$output_file" || return 1
+
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        # In Wayland, save image from wl-paste.
+        std_output=$(wl-paste --no-newline --type "image/png" \
+            >"$output_file" 2>&1)
+    else
+        # In X11, save image from xclip.
+        std_output=$(xclip -selection clipboard -t "image/png" -o \
+            >"$output_file" 2>&1)
+    fi
+
+    _check_output "$?" "$std_output" "" "$output_file" || return 1
 }
 
 _get_working_directory_alternative() {
