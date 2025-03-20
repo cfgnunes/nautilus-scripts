@@ -19,7 +19,7 @@ _main() {
     _display_wait_box "2"
     output_dir=$(_get_working_directory_alternative)
 
-    # Save the image to file.
+    # Save the clipboard to file.
     _save_file_from_clipboard
 
     _display_result_box "$output_dir"
