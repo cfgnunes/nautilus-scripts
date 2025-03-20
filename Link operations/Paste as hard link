@@ -88,9 +88,10 @@ _get_working_directory_alternative() {
     fi
 
     if [[ -z "$working_directory" ]]; then
-        # NOTE: The working directory can be detected by using the directory name
-        # of the first input file. Some file managers do not send the working
-        # directory for the scripts, so it is not precise to use the 'pwd' command.
+        # NOTE: The working directory can be detected by using the directory
+        # name of the first input file. Some file managers do not send the
+        # working directory for the scripts, so it is not precise to use the
+        # 'pwd' command.
         local item_1=""
         local item_2=""
         item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
