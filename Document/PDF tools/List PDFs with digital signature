@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+
+    # Execute initial checks.
+    _check_dependencies "
+        command=pdfsig; pkg_manager=apt; package=poppler-utils |
+        command=pdfsig; pkg_manager=dnf; package=poppler-utils |
+        command=pdfsig; pkg_manager=pacman; package=poppler |
+        command=pdfsig; pkg_manager=zypper; package=poppler-tools"
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=file; par_recursive=true; par_get_pwd=true; par_select_mime=application/pdf")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" ""
+
+    local std_output=""
+    std_output=$(_storage_text_read_all)
+    std_output=$(_text_sort "$std_output")
+
+    _display_list_box "$std_output" "--column=Signature;--column=File" "PDFs"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local std_output=""
+
+    # Run the main process.
+    std_output=$(pdfsig "$input_file")
+
+    if [[ "$std_output" == *"Signature is Valid"* ]]; then
+        _storage_text_write_ln "Valid$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
+    elif [[ "$std_output" == *"Signature is Invalid"* ]]; then
+        _storage_text_write_ln "Invalid$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
+    fi
+}
+
+_main "$@"
