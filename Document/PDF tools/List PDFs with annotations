@@ -28,7 +28,7 @@ _main_task() {
     local output_dir=$2
 
     # Run the main process.
-    if grep -z -m1 --quiet "/Subtype\s*\(/Caret\|/Circle\|/FileAttachment\|/FreeText\|/Highlight\|/Ink\|/Line\|/Movie\|/Polygon\|/PolyLine\|/Popup\|/Printermark\|/Screen\|/Sound\|/Square\|/Squiggly\|/Stamp\|/StrikeOut\|/Text\|/Underline\|/Watermark\)" "$input_file"; then
+    if grep -z -a -m1 --quiet "/Subtype\s*\(/Caret\|/Circle\|/FileAttachment\|/FreeText\|/Highlight\|/Ink\|/Line\|/Movie\|/Polygon\|/PolyLine\|/Popup\|/Printermark\|/Screen\|/Sound\|/Square\|/Squiggly\|/Stamp\|/StrikeOut\|/Text\|/Underline\|/Watermark\)" "$input_file"; then
         _storage_text_write_ln "$(_text_remove_pwd "$input_file")"
     fi
 }
