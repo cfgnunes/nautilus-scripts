@@ -33,7 +33,7 @@ _main_task() {
     local temp_file=""
 
     # Save the result only for 'without fonts' PDFs.
-    if ! pdffonts "$input_file" | sed -n 3p | grep --quiet "."; then
+    if ! pdffonts -- "$input_file" | sed -n 3p | grep --quiet "."; then
         _storage_text_write_ln "$(_text_remove_pwd "$input_file")"
     fi
 }
