@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "command=qpdf"
     _display_wait_box "0"
-    input_files=$(_get_files "par_type=file; par_select_mime=application/pdf")
+    input_files=$(_get_files "par_type=file; par_select_extension=pdf")
     output_dir=$(_get_output_dir "par_use_same_dir=false")
 
     sleep 0.2 # Avoid 'wait_box' open before.

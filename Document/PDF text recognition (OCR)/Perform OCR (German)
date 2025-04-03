@@ -18,7 +18,7 @@ _main() {
         pkg_manager=pacman; package=tesseract-data-$TEMP_DATA_TASK |
         pkg_manager=zypper; package=tesseract-ocr-traineddata-$TEMP_DATA_TASK"
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=file; par_select_mime=application/pdf")
+    input_files=$(_get_files "par_type=file; par_select_extension=pdf")
     output_dir=$(_get_output_dir "par_use_same_dir=false")
 
     # Execute the function '_main_task' for each file in parallel.
