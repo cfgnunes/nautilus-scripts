@@ -52,7 +52,10 @@ _main_task() {
     local remote_branches=""
     remote_branches=$(git branch --remotes --no-color --format="%(refname:short)" 2>&1)
     _check_output "$?" "$remote_branches" "$input_file" "" || return 1
-    remote_branches=$(printf "%s" "$remote_branches" | grep -v "/HEAD" | sed "s|^origin/||")
+    remote_branches=$(printf "%s" "$remote_branches" |
+        grep -v "^origin$" |
+        grep -v "/HEAD" |
+        sed "s|^origin/||")
 
     local branch=""
     for branch in $remote_branches; do
