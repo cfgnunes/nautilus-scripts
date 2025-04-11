@@ -36,7 +36,7 @@ _main_task() {
     _directory_push "$top_level" || return 1
 
     # Run the main process.
-    std_output=$(git branch --all 2>&1)
+    std_output=$(git branch --all --no-color 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     _directory_pop || return 1
