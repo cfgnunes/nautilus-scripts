@@ -57,13 +57,13 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Alt>Z`   | Compress to 'zip' (each)      |
 | `<Control><Shift>C` | Compare items                 |
 | `<Control><Shift>E` | List empty directories        |
-| `<Control><Shift>G` | Git clone (URLs in clipboard) |
+| `<Control><Shift>G` | Git clone URLs from clipboard |
 | `<Control><Shift>H` | List hidden items             |
 | `<Control><Shift>O` | Open item location            |
 | `<Control><Shift>P` | List permissions and owners   |
 | `<Control><Shift>U` | List duplicate files          |
 | `<Control><Shift>V` | Paste as symbolic link        |
-| `<Control><Shift>X` | Download (URLs in clipboard)  |
+| `<Control><Shift>X` | Download URLs from clipboard  |
 | `<Control><Shift>Y` | List file information         |
 | `<Control><Alt>1`   | List file mime                |
 | `<Control><Alt>2`   | List files issues             |
