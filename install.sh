@@ -216,10 +216,25 @@ _step_install_dependencies() {
     # Packages for security...
     _command_exists "photorec" || packages+="testdisk "
     # Packages for other scripts...
-    _command_exists "perl" || packages+="perl-base "
     _command_exists "rhash" || packages+="rhash "
 
-    if _command_exists "sudo"; then
+    if _command_exists "guix"; then
+        # Package manager "guix": For Guix systems (no root required)
+        _command_exists "pandoc" || packages+="pandoc "
+        _command_exists "7za" || packages+="p7zip "
+        _command_exists "convert" || packages+="imagemagick "
+        _command_exists "xz" || packages+="xz "
+        _command_exists "pdfinfo" || packages+="poppler "
+        _command_exists "ffmpeg" || packages+="ffmpeg "
+        _command_exists "photorec" || packages+="testdisk "
+        _command_exists "rdfind" || packages+="rdfind "
+        _command_exists "unsquashfs" || packages+="squashfs-tools "
+        _command_exists "exiftool" || packages+="perl-image-exiftool "
+        _command_exists "perl" || packages+="perl "
+        if [[ -n "$packages" ]]; then
+            guix install $packages
+        fi
+    elif _command_exists "sudo"; then
         if _command_exists "apt-get"; then
             # Package manager "apt": For Debian/Ubuntu systems.
             _command_exists "pandoc" || packages+="pandoc "
@@ -233,6 +248,7 @@ _step_install_dependencies() {
             _command_exists "rdfind" || packages+="rdfind "
             _command_exists "unsquashfs" || packages+="squashfs-tools "
             _command_exists "exiftool" || packages+="libimage-exiftool-perl "
+            _command_exists "perl" || packages+="perl-base "
             if _command_exists "kdialog"; then
                 if ! dpkg -s "qtchooser" &>/dev/null; then
                     packages+="qtchooser "
@@ -258,6 +274,7 @@ _step_install_dependencies() {
             _command_exists "rdfind" || packages+="rdfind "
             _command_exists "unsquashfs" || packages+="squashfs-tools "
             _command_exists "exiftool" || packages+="perl-Image-ExifTool "
+            _command_exists "perl" || packages+="perl-base "
             if [[ -n "$packages" ]]; then
                 sudo dnf check-update || true
                 sudo dnf -y install $packages
@@ -274,6 +291,7 @@ _step_install_dependencies() {
             _command_exists "rdfind" || packages+="rdfind "
             _command_exists "unsquashfs" || packages+="squashfs-tools "
             _command_exists "exiftool" || packages+="perl-image-exiftool "
+            _command_exists "perl" || packages+="perl-base "
             if [[ -n "$packages" ]]; then
                 sudo pacman -Syy || true
                 sudo pacman --noconfirm -S $packages
@@ -289,6 +307,7 @@ _step_install_dependencies() {
             _command_exists "photorec" || packages+="photorec "
             _command_exists "unsquashfs" || packages+="squashfs "
             _command_exists "exiftool" || packages+="exiftool "
+            _command_exists "perl" || packages+="perl-base "
             if [[ -n "$packages" ]]; then
                 sudo zypper refresh || true
                 sudo zypper --non-interactive install $packages
