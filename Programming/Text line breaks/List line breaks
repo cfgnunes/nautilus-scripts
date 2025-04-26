@@ -32,16 +32,16 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(xxd -p -- "$input_file" | tr -d "\n")
+    std_output=$(xxd -p -c 1 -- "$input_file" | tr "\n" "-")
     if [[ -z "$std_output" ]]; then
         return
     fi
 
-    if [[ "$std_output" == *"0d0a"* ]]; then
+    if [[ "$std_output" == *"0d-0a-"* ]]; then
         std_output="CRLF (Windows)"
-    elif [[ "$std_output" == *"0a"* ]]; then
+    elif [[ "$std_output" == *"0a-"* ]]; then
         std_output="LF (Unix/Linux)"
-    elif [[ "$std_output" == *"0d"* ]]; then
+    elif [[ "$std_output" == *"0d-"* ]]; then
         std_output="CR (Mac OS Classic)"
     else
         std_output="(no line breaks)"
