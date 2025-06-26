@@ -74,20 +74,20 @@ _main() {
     [[ ${menu_selected[4]} == "true" ]] && menu_options+="preserve,"
 
     # Get the categories (directories of scripts).
-    local dir=""
-    while IFS= read -r -d $'\0' dir; do
-        categories_dirs+=("$dir")
-    done < <(
-        find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
-            ! -path "*User previous scripts*" \
-            ! -path "*Accessed recently*" \
-            ! -path "*.assets*" \
-            ! -path "*.git*" \
-            ! -path "*.helper-scripts*" \
-            -print0 2>/dev/null |
-            sed -z "s|^.*/||" |
-            sort --zero-terminated --version-sort
-    )
+    local cat_dirs_find=""
+
+    cat_dirs_find=$(find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
+        ! -path "*User previous scripts*" \
+        ! -path "*Accessed recently*" \
+        ! -path "*.assets*" \
+        ! -path "*.git*" \
+        ! -path "*.helper-scripts*" \
+        2>/dev/null |
+        sed "s|^.*/||" | sort --version-sort)
+
+    # Convert the output of the 'find' command to an 'array'.
+    cat_dirs_find=$(tr "\n" "\r" <<<"$cat_dirs_find")
+    IFS=$'\r' read -r -a categories_dirs <<<"$cat_dirs_find"
 
     if [[ "$menu_options" == *"categories"* ]]; then
         printf "\nSelect the categories (<SPACE> to check):\n"
