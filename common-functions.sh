@@ -1824,6 +1824,8 @@ _pkg_get_package_manager() {
         pkg_manager="pacman"
     elif _command_exists "zypper"; then
         pkg_manager="zypper"
+    elif _command_exists "nix"; then
+        pkg_manager="nix"
     fi
 
     printf "%s" "$pkg_manager"
