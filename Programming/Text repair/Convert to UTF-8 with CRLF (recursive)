@@ -36,7 +36,7 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "$temp_file1" || return 1
 
     # Run the process (part 2) 'convert line breaks to Windows'.
-    std_output=$(perl -pe "s/\r\n|\n|\r/\r\n/g" "$temp_file1" >"$temp_file2")
+    perl -pe "s/\r\n|\n|\r/\r\n/g" "$temp_file1" >"$temp_file2" 2>/dev/null
     _check_output "$?" "$std_output" "$input_file" "$temp_file2" || return 1
 
     # Run the process (part 3) 'remove trailing spaces'.

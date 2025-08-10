@@ -428,15 +428,15 @@ _run_command() {
             exit_code=$?
         fi
         ;;
-    "bzip2") std_output=$(bzip2 -d -c -k -- "$input_file" >"$filename") ;;
+    "bzip2") bzip2 -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
     "cabextract") std_output=$(cabextract "$input_file" 2>&1) ;;
     "cpio") std_output=$(cpio -idv <"$input_file" 2>&1) ;;
     "gpg") std_output=$(gpg --batch --yes --decrypt --output "$filename" -- "$input_file" 2>&1) ;;
-    "gzip") std_output=$(gzip -d -c -k -- "$input_file" >"$filename") ;;
+    "gzip") gzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
     "lha") std_output=$(lha -e "$input_file" 2>&1) ;;
     "lrzip") std_output=$(lrzip -d -o "$temp_dir_output/$filename" -- "$input_file" 2>&1) ;;
-    "lz4") std_output=$(lz4 -d -c -- "$input_file" >"$filename") ;;
-    "lzip") std_output=$(lzip -d -c -k -- "$input_file" >"$filename") ;;
+    "lz4") lz4 -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
+    "lzip") lzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
     "lzop") std_output=$(lzop -d -- "$input_file" 2>&1) ;;
     "tar+bzip2") std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1) ;;
     "tar+gzip") std_output=$(tar --extract --gzip --file="$input_file" 2>&1) ;;
@@ -490,9 +490,9 @@ _run_command() {
         fi
         ;;
     "xorriso") std_output=$(xorriso -osirrox on -indev "$input_file" -- -extract / . -rollback_end 2>&1) ;;
-    "xz") std_output=$(xz -d -c -k -- "$input_file" >"$filename") ;;
+    "xz") xz -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
     "zpaq") std_output=$(zpaq x "$input_file" 2>&1) ;;
-    "zstd") std_output=$(zstd -d -c -- "$input_file" >"$filename") ;;
+    "zstd") zstd -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
     "bsdtar+unar+7za")
         exit_code=1
         # Default extractor chain for unrecognized files.

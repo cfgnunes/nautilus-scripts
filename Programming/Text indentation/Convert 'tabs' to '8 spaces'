@@ -31,7 +31,7 @@ _main_task() {
     temp_file=$(_get_temp_file)
 
     # Run the main process.
-    std_output=$(expand --tabs=8 -- "$input_file" >"$temp_file")
+    expand --tabs=8 -- "$input_file" >"$temp_file" 2>/dev/null
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     # Move the temporary file to the output.
