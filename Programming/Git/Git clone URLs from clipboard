@@ -47,6 +47,15 @@ _get_urls_from_clipboard() {
     else
         urls=$(xclip -quiet -selection clipboard -o 2>/dev/null)
     fi
+
+    # If the URL is like: https://<host>/<user>/<repo>
+    # convert it to git@<host>:<user>/<repo>.git
+    urls=$(sed -E 's#https://([^/]+)/([^/]+)/([^ ]+)#git@\1:\2/\3.git#g' <<<"$urls")
+
+    # Ensure the URL always ends with .git (if missing).
+    urls=$(sed -E 's#(\.git)?$#.git#' <<<"$urls")
+
+    # Keep only valid Git URLs.
     urls=$(grep --only-matching --perl-regexp "((git|ssh|http(s)?)|(git@[\w\.]+))(.*)(\.git)" <<<"$urls")
     urls=$(sort --unique <<<"$urls")
 
