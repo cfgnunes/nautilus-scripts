@@ -21,7 +21,7 @@ _main() {
     output_dir=$(_get_working_directory_alternative)
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$(_get_urls_from_clipboard)" "$output_dir"
+    _run_task_parallel "$(_get_uris_from_clipboard)" "$output_dir"
     _display_result_box "$output_dir"
 }
 
@@ -42,7 +42,7 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
-_get_urls_from_clipboard() {
+_get_uris_from_clipboard() {
     local urls=""
 
     if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&

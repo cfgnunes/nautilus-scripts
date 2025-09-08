@@ -16,7 +16,7 @@ _main() {
         _check_dependencies "command=axel | command=xclip"
     fi
 
-    TEMP_DATA_TASK=$(_get_urls_from_clipboard) || _exit_script
+    TEMP_DATA_TASK=$(_get_uris_from_clipboard) || _exit_script
 
     if ! _display_question_box "This action will replace the selected files\nwith the copied file of the same name.\n\nDo you want to continue?"; then
         _exit_script
@@ -62,7 +62,7 @@ _main_task() {
     done
 }
 
-_get_urls_from_clipboard() {
+_get_uris_from_clipboard() {
     local urls=""
 
     if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
