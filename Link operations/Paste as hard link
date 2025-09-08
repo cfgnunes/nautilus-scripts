@@ -44,15 +44,19 @@ _main_task() {
     _directory_pop || return 1
 }
 
+_get_clipboard_content() {
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        wl-paste 2>/dev/null
+    else
+        xclip -quiet -selection clipboard -o 2>/dev/null
+    fi
+}
+
 _get_uris_from_clipboard() {
     local urls=""
 
-    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
-        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        urls=$(wl-paste 2>/dev/null)
-    else
-        urls=$(xclip -quiet -selection clipboard -o 2>/dev/null)
-    fi
+    urls=$(_get_clipboard_content)
     urls=$(grep --only-matching --perl-regexp "^(file://|('\")?/)(.*)" <<<"$urls")
     urls=$(sed "s|^['\"]||g; s|['\"]$||g" <<<"$urls")
     urls=$(sort --unique <<<"$urls")
