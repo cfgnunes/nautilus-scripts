@@ -51,6 +51,9 @@ readonly \
 
 IFS=$FIELD_SEPARATOR
 INPUT_FILES=$*
+
+# Variable used to share data between specific parallel task functions
+# (e.g., passwords, configuration values).
 TEMP_DATA_TASK=""
 
 # -----------------------------------------------------------------------------
