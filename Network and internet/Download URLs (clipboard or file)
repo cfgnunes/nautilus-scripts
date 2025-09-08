@@ -7,6 +7,7 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
 _main() {
+    local input_files=""
     local output_dir=""
 
     # Execute initial checks.
@@ -18,10 +19,11 @@ _main() {
     fi
 
     _display_wait_box "2"
+    input_files=$(_get_files "par_type=all; par_get_pwd=true")
     output_dir=$(_get_working_directory_alternative)
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$(_get_urls_from_clipboard)" "$output_dir"
+    _run_task_parallel "$(_prepare_input "$input_files")" "$output_dir"
     _display_result_box "$output_dir"
 }
 
@@ -35,20 +37,59 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
-_get_urls_from_clipboard() {
-    local urls=""
+_get_clipboard_content() {
+    local data=""
 
     if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
         [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        urls=$(wl-paste 2>/dev/null)
+        data=$(wl-paste 2>/dev/null)
     else
-        urls=$(xclip -quiet -selection clipboard -o 2>/dev/null)
+        data=$(xclip -quiet -selection clipboard -o 2>/dev/null)
     fi
+
+    printf "%s" "$data"
+}
+
+_filter_urls() {
+    local content=$1
+    local urls=""
+
+    if [[ -z "$content" ]]; then
+        return
+    fi
+
+    urls=$content
     urls=$(grep --only-matching --perl-regexp "https?://\w+\.[^ '\"]+" <<<"$urls")
     urls=$(sort --unique <<<"$urls")
 
+    printf "%s" "$urls"
+}
+
+_prepare_input() {
+    local input_files=$1
+    local item_1=""
+    local file_content=""
+    local clipboard_content=""
+    local urls=""
+
+    # Check if the input is a file or a directory. If it is a directory,
+    # get the URLs from the clipboard.
+    item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
+    if ! [[ -d "$item_1" ]]; then
+        # shellcheck disable=SC2086
+        file_content=$(cat -- $input_files 2>/dev/null)
+        urls=$(_filter_urls "$file_content")
+    fi
+
+    # If there are no valid URLs in the file(s),
+    # get the URLs from the clipboard.
     if [[ -z "$urls" ]]; then
-        _display_error_box "There are no valid URLs in the clipboard!"
+        clipboard_content=$(_get_clipboard_content)
+        urls=$(_filter_urls "$clipboard_content")
+    fi
+
+    if [[ -z "$urls" ]]; then
+        _display_error_box "There are no valid URLs in the clipboard or in the selected file(s)!"
         _exit_script
     fi
 

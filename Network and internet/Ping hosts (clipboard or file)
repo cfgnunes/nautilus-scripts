@@ -6,6 +6,7 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/common-functions.sh"
 
 _main() {
+    local input_files=""
     local output_dir=""
 
     # Execute initial checks.
@@ -17,10 +18,10 @@ _main() {
     fi
 
     _display_wait_box "2"
-    output_dir=$(_get_working_directory_alternative)
+    input_files=$(_get_files "par_type=all; par_get_pwd=true")
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$(_get_ips_from_clipboard)" "$output_dir"
+    _run_task_parallel "$(_prepare_input "$input_files")" "$output_dir"
 
     local std_output=""
     std_output=$(_storage_text_read_all)
@@ -46,71 +47,63 @@ _main_task() {
     _storage_text_write_ln "$std_output"$'\n'
 }
 
-_get_ips_from_clipboard() {
-    local clip=""
-    local ips=""
+_get_clipboard_content() {
+    local data=""
 
     if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
         [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        clip=$(wl-paste 2>/dev/null)
+        data=$(wl-paste 2>/dev/null)
     else
-        clip=$(xclip -quiet -selection clipboard -o 2>/dev/null)
+        data=$(xclip -quiet -selection clipboard -o 2>/dev/null)
     fi
 
-    ips=$(grep --only-matching --perl-regexp '\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b' <<<"$clip")
+    printf "%s" "$data"
+}
+
+_filter_ips() {
+    local content=$1
+    local ips=""
+
+    if [[ -z "$content" ]]; then
+        return
+    fi
+
+    ips=$content
+    ips=$(grep --only-matching --perl-regexp '\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b' <<<"$content")
     ips=$(sort --unique <<<"$ips")
 
+    printf "%s" "$ips"
+}
+
+_prepare_input() {
+    local input_files=$1
+    local item_1=""
+    local file_content=""
+    local clipboard_content=""
+    local ips=""
+
+    # Check if the input is a file or a directory. If it is a directory,
+    # get the IPs from the clipboard.
+    item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
+    if ! [[ -d "$item_1" ]]; then
+        # shellcheck disable=SC2086
+        file_content=$(cat -- $input_files 2>/dev/null)
+        ips=$(_filter_ips "$file_content")
+    fi
+
+    # If there are no valid IPs in the file(s),
+    # get the IPs from the clipboard.
     if [[ -z "$ips" ]]; then
-        _display_error_box "There are no valid IPs in the clipboard!"
+        clipboard_content=$(_get_clipboard_content)
+        ips=$(_filter_ips "$clipboard_content")
+    fi
+
+    if [[ -z "$ips" ]]; then
+        _display_error_box "There are no valid IPs in the clipboard or in the selected file(s)!"
         _exit_script
     fi
 
     _convert_text_to_delimited_string "$ips"
-}
-
-_get_working_directory_alternative() {
-    local working_directory=""
-
-    # Try to use the information provided by the file manager.
-    if [[ -v "CAJA_SCRIPT_CURRENT_URI" ]]; then
-        working_directory=$CAJA_SCRIPT_CURRENT_URI
-    elif [[ -v "NEMO_SCRIPT_CURRENT_URI" ]]; then
-        working_directory=$NEMO_SCRIPT_CURRENT_URI
-    elif [[ -v "NAUTILUS_SCRIPT_CURRENT_URI" ]]; then
-        working_directory=$NAUTILUS_SCRIPT_CURRENT_URI
-    fi
-
-    if [[ -n "$working_directory" ]] && [[ "$working_directory" == "file://"* ]]; then
-        working_directory=$(_text_uri_decode "$working_directory")
-    else
-        # Files selected in the search screen (or orther possible cases).
-        working_directory=""
-    fi
-
-    if [[ -z "$working_directory" ]]; then
-        # NOTE: The working directory can be detected by using the directory
-        # name of the first input file. Some file managers do not send the
-        # working directory for the scripts, so it is not precise to use the
-        # 'pwd' command.
-        local item_1=""
-        local item_2=""
-        item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
-        item_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$INPUT_FILES")
-
-        if [[ -n "$item_1" ]]; then
-            if [[ -n "$item_2" ]] && [[ "$item_1" != "$item_2" ]]; then
-                working_directory=$(_get_filename_dir "$item_1")
-            elif [[ -f "$item_1" ]]; then
-                working_directory=$(_get_filename_dir "$item_1")
-            elif [[ -d "$item_1" ]]; then
-                working_directory=$(_get_filename_full_path "$item_1")
-            fi
-        else
-            working_directory=$(pwd)
-        fi
-    fi
-
-    printf "%s" "$working_directory"
 }
 
 _main "$@"
