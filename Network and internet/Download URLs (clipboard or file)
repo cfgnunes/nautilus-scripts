@@ -38,16 +38,12 @@ _main_task() {
 }
 
 _get_clipboard_content() {
-    local data=""
-
     if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
         [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        data=$(wl-paste 2>/dev/null)
+        wl-paste 2>/dev/null
     else
-        data=$(xclip -quiet -selection clipboard -o 2>/dev/null)
+        xclip -quiet -selection clipboard -o 2>/dev/null
     fi
-
-    printf "%s" "$data"
 }
 
 _filter_urls() {
