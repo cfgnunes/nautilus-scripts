@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies ""
+    _check_dependencies "command=xdg-user-dir; package=xdg-utils"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all")
     output_dir=$(_get_desktop_dir)
