@@ -166,7 +166,7 @@ _item_create_backup() {
     local item=$1
 
     if [[ -e "$item" ]] && [[ ! -e "$item.bak" ]]; then
-        mv "$item" "$item.bak" 2>/dev/null || true
+        mv -- "$item" "$item.bak" 2>/dev/null || true
     fi
 }
 
@@ -343,7 +343,7 @@ _step_install_scripts() {
     if [[ "$menu_options" == *"preserve"* ]]; then
         printf " > Preserving previous scripts to a temporary directory...\n"
         tmp_install_dir=$(mktemp -d)
-        mv "$INSTALL_DIR" "$tmp_install_dir" || true
+        mv -- "$INSTALL_DIR" "$tmp_install_dir" || true
     else
         printf " > Removing previous scripts...\n"
         _item_remove "$INSTALL_DIR"
@@ -379,7 +379,7 @@ _step_install_scripts() {
     # Restore previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then
         printf " > Restoring previous scripts to the install directory...\n"
-        mv "$tmp_install_dir/scripts" "$INSTALL_DIR/User previous scripts"
+        mv -- "$tmp_install_dir/scripts" "$INSTALL_DIR/User previous scripts"
     fi
 }
 
