@@ -2095,9 +2095,12 @@ _storage_text_clean() {
 
 _storage_text_read_all() {
     # This function concatenates and outputs the content of all temporary text
-    # storage files.
+    # storage files, from largest to smallest.
 
-    cat -- "$TEMP_DIR_STORAGE_TEXT/"* 2>/dev/null
+    find "$TEMP_DIR_STORAGE_TEXT" -type f -printf "%s %p\n" 2>/dev/null |
+        sort -n -r |
+        cut -d " " -f 2 - |
+        xargs -r cat --
 }
 
 _storage_text_write() {
