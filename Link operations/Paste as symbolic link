@@ -21,7 +21,7 @@ _main() {
     output_dir=$(_get_working_directory_alternative)
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$(_get_uris_from_clipboard)" "$output_dir"
+    _run_task_parallel "$(_get_uris)" "$output_dir"
     _display_result_box "$output_dir"
 }
 
@@ -51,23 +51,23 @@ _get_clipboard_content() {
     fi
 }
 
-_get_uris_from_clipboard() {
-    local urls=""
+_get_uris() {
+    local uris=""
 
-    urls=$(_get_clipboard_content)
-    urls=$(grep --only-matching --perl-regexp "^(file://|('\")?/)(.*)" <<<"$urls")
-    urls=$(sed "s|^['\"]||g; s|['\"]$||g" <<<"$urls")
-    urls=$(sort --unique <<<"$urls")
+    uris=$(_get_clipboard_content)
+    uris=$(grep --only-matching --perl-regexp "^(file://|('\")?/)(.*)" <<<"$uris")
+    uris=$(sed "s|^['\"]||g; s|['\"]$||g" <<<"$uris")
+    uris=$(sort --unique <<<"$uris")
 
-    if [[ -z "$urls" ]]; then
+    if [[ -z "$uris" ]]; then
         _display_error_box "There are no valid paths in the clipboard!"
         _exit_script
     fi
 
-    urls=$(_convert_text_to_delimited_string "$urls")
-    urls=$(_text_uri_decode "$urls")
+    uris=$(_convert_text_to_delimited_string "$uris")
+    uris=$(_text_uri_decode "$uris")
 
-    printf "%s" "$urls"
+    printf "%s" "$uris"
 }
 
 _get_working_directory_alternative() {

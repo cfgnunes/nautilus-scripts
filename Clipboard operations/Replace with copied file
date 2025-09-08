@@ -16,7 +16,7 @@ _main() {
         _check_dependencies "command=axel | command=xclip"
     fi
 
-    TEMP_DATA_TASK=$(_get_uris_from_clipboard) || _exit_script
+    TEMP_DATA_TASK=$(_get_uris) || _exit_script
 
     if ! _display_question_box "This action will replace the selected files\nwith the copied file of the same name.\n\nDo you want to continue?"; then
         _exit_script
@@ -71,23 +71,23 @@ _get_clipboard_content() {
     fi
 }
 
-_get_uris_from_clipboard() {
-    local urls=""
+_get_uris() {
+    local uris=""
 
-    urls=$(_get_clipboard_content)
-    urls=$(grep --only-matching --perl-regexp "^(file://|('\")?/)(.*)" <<<"$urls")
-    urls=$(sed "s|^['\"]||g; s|['\"]$||g" <<<"$urls")
-    urls=$(sort --unique <<<"$urls")
+    uris=$(_get_clipboard_content)
+    uris=$(grep --only-matching --perl-regexp "^(file://|('\")?/)(.*)" <<<"$uris")
+    uris=$(sed "s|^['\"]||g; s|['\"]$||g" <<<"$uris")
+    uris=$(sort --unique <<<"$uris")
 
-    if [[ -z "$urls" ]]; then
+    if [[ -z "$uris" ]]; then
         _display_error_box "There are no valid paths in the clipboard!"
         _exit_script
     fi
 
-    urls=$(_convert_text_to_delimited_string "$urls")
-    urls=$(_text_uri_decode "$urls")
+    uris=$(_convert_text_to_delimited_string "$uris")
+    uris=$(_text_uri_decode "$uris")
 
-    printf "%s" "$urls"
+    printf "%s" "$uris"
 }
 
 _main "$@"
