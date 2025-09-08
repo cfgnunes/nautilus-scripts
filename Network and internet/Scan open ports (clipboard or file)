@@ -1,0 +1,119 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local output_dir=""
+
+    # Execute initial checks.
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        _check_dependencies "command=nmap | command=wl-paste; package=wl-clipboard"
+    else
+        _check_dependencies "command=nmap | command=xclip"
+    fi
+
+    _display_wait_box "2"
+    output_dir=$(_get_working_directory_alternative)
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$(_get_ips_from_clipboard)" "$output_dir"
+
+    local std_output=""
+    std_output=$(_storage_text_read_all)
+
+    # Replace 3+ consecutive newlines with 2 newlines.
+    std_output=$(sed -z "s|\n\{3,\}|\n\n|g" <<<"$std_output")
+
+    _display_text_box "$std_output"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local std_output=""
+
+    # Run the main process.
+    std_output=$(LC_ALL=C nmap -n -Pn -T4 --max-retries 1 --open --host-timeout 6s "$input_file" 2>/dev/null)
+
+    # shellcheck disable=SC2001
+    std_output=$(grep --extended-regexp "^[0-9]+/(tcp|udp)\b" <<<"$std_output" || true)
+
+    if [[ -z "$std_output" ]]; then
+        std_output="(no open ports)"
+    fi
+
+    _storage_text_write_ln "IP: $input_file"$'\n'"$std_output"$'\n'
+}
+
+_get_ips_from_clipboard() {
+    local clip=""
+    local ips=""
+
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        clip=$(wl-paste 2>/dev/null)
+    else
+        clip=$(xclip -quiet -selection clipboard -o 2>/dev/null)
+    fi
+
+    ips=$(grep --only-matching --perl-regexp '\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b' <<<"$clip")
+    ips=$(sort --unique <<<"$ips")
+
+    if [[ -z "$ips" ]]; then
+        _display_error_box "There are no valid IPs in the clipboard!"
+        _exit_script
+    fi
+
+    _convert_text_to_delimited_string "$ips"
+}
+
+_get_working_directory_alternative() {
+    local working_directory=""
+
+    # Try to use the information provided by the file manager.
+    if [[ -v "CAJA_SCRIPT_CURRENT_URI" ]]; then
+        working_directory=$CAJA_SCRIPT_CURRENT_URI
+    elif [[ -v "NEMO_SCRIPT_CURRENT_URI" ]]; then
+        working_directory=$NEMO_SCRIPT_CURRENT_URI
+    elif [[ -v "NAUTILUS_SCRIPT_CURRENT_URI" ]]; then
+        working_directory=$NAUTILUS_SCRIPT_CURRENT_URI
+    fi
+
+    if [[ -n "$working_directory" ]] && [[ "$working_directory" == "file://"* ]]; then
+        working_directory=$(_text_uri_decode "$working_directory")
+    else
+        # Files selected in the search screen (or orther possible cases).
+        working_directory=""
+    fi
+
+    if [[ -z "$working_directory" ]]; then
+        # NOTE: The working directory can be detected by using the directory
+        # name of the first input file. Some file managers do not send the
+        # working directory for the scripts, so it is not precise to use the
+        # 'pwd' command.
+        local item_1=""
+        local item_2=""
+        item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
+        item_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$INPUT_FILES")
+
+        if [[ -n "$item_1" ]]; then
+            if [[ -n "$item_2" ]] && [[ "$item_1" != "$item_2" ]]; then
+                working_directory=$(_get_filename_dir "$item_1")
+            elif [[ -f "$item_1" ]]; then
+                working_directory=$(_get_filename_dir "$item_1")
+            elif [[ -d "$item_1" ]]; then
+                working_directory=$(_get_filename_full_path "$item_1")
+            fi
+        else
+            working_directory=$(pwd)
+        fi
+    fi
+
+    printf "%s" "$working_directory"
+}
+
+_main "$@"
