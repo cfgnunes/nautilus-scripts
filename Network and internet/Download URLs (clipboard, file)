@@ -55,7 +55,8 @@ _filter_urls() {
     fi
 
     urls=$content
-    urls=$(grep --only-matching --perl-regexp "https?://\w+\.[^ '\"]+" <<<"$urls")
+    urls=$(grep --only-matching --perl-regexp \
+        "(https?://(?:[0-9]{1,3}\.){3}[0-9]{1,3}(?::[0-9]+)?(?:/[^[:space:]'\"\)\]\>]*)?|https?://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:/[^[:space:]'\"\)\]\>]*)?|(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})" <<<"$urls")
     urls=$(sort --unique <<<"$urls")
 
     printf "%s" "$urls"

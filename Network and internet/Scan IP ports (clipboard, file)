@@ -26,9 +26,6 @@ _main() {
     local std_output=""
     std_output=$(_storage_text_read_all)
 
-    # Replace 3+ consecutive newlines with 2 newlines.
-    std_output=$(sed -z "s|\n\{3,\}|\n\n|g" <<<"$std_output")
-
     _display_text_box "$std_output"
 }
 

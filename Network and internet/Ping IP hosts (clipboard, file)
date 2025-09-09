@@ -26,9 +26,6 @@ _main() {
     local std_output=""
     std_output=$(_storage_text_read_all)
 
-    # Replace 3+ consecutive newlines with 2 newlines.
-    std_output=$(sed -z "s|\n\{3,\}|\n\n|g" <<<"$std_output")
-
     _display_text_box "$std_output"
 }
 
@@ -41,6 +38,7 @@ _main_task() {
     std_output=$(LC_ALL=C ping -n -c 3 -W 1 -- "$input_file" 2>/dev/null)
 
     std_output=$(grep -v ".*statistics.*" <<<"$std_output")
+
     # Replace 2+ consecutive newlines with 1 newlines.
     std_output=$(sed -z "s|\n\{2,\}|\n|g" <<<"$std_output")
 
