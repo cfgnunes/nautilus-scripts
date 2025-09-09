@@ -40,7 +40,7 @@ _main_task() {
     _directory_pop || return 1
 }
 
-_get_clipboard_content() {
+_get_clipboard_data() {
     if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
         [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
         wl-paste 2>/dev/null
@@ -50,55 +50,54 @@ _get_clipboard_content() {
 }
 
 _filter_git_urls() {
-    local content=$1
+    local data=$1
 
-    if [[ -z "$content" ]]; then
+    if [[ -z "$data" ]]; then
         return
     fi
 
     # If the URL is like: https://<host>/<user>/<repo>
     # convert it to git@<host>:<user>/<repo>.git
-    content=$(sed -E 's#https://([^/]+)/([^/]+)/([^ ]+)#git@\1:\2/\3.git#g' <<<"$content")
+    data=$(sed -E 's#https://([^/]+)/([^/]+)/([^ ]+)#git@\1:\2/\3.git#g' <<<"$data")
 
     # Ensure the URL always ends with .git (if missing).
-    content=$(sed -E 's#(\.git)?$#.git#' <<<"$content")
+    data=$(sed -E 's#(\.git)?$#.git#' <<<"$data")
 
     # Keep only valid Git URLs.
-    content=$(grep --only-matching --perl-regexp "((git|ssh|http(s)?)|(git@[\w\.]+))(.*)(\.git)" <<<"$content")
-    urls=$(sort --unique <<<"$content")
+    data=$(grep --only-matching --perl-regexp "((git|ssh|http(s)?)|(git@[\w\.]+))(.*)(\.git)" <<<"$data")
+    data=$(sort --unique <<<"$data")
 
-    printf "%s" "$content"
+    printf "%s" "$data"
 }
 
 _prepare_input() {
     local input_files=$1
     local item_1=""
-    local file_content=""
-    local clipboard_content=""
-    local urls=""
+    local file_data=""
+    local clipboard_data=""
 
     # Check if the input is a file or a directory. If it is a directory,
     # get the URLs from the clipboard.
     item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
     if ! [[ -d "$item_1" ]]; then
         # shellcheck disable=SC2086
-        file_content=$(cat -- $input_files 2>/dev/null)
-        content=$(_filter_git_urls "$file_content")
+        file_data=$(cat -- $input_files 2>/dev/null)
+        data=$(_filter_git_urls "$file_data")
     fi
 
     # If there are no valid URLs in the file(s),
     # get the URLs from the clipboard.
-    if [[ -z "$content" ]]; then
-        clipboard_content=$(_get_clipboard_content)
-        content=$(_filter_git_urls "$clipboard_content")
+    if [[ -z "$data" ]]; then
+        clipboard_data=$(_get_clipboard_data)
+        data=$(_filter_git_urls "$clipboard_data")
     fi
 
-    if [[ -z "$content" ]]; then
+    if [[ -z "$data" ]]; then
         _display_error_box "There are no valid Git URLs in the clipboard or in the selected file(s)!"
         _exit_script
     fi
 
-    _convert_text_to_delimited_string "$content"
+    _convert_text_to_delimited_string "$data"
 }
 
 _get_working_directory_alternative() {

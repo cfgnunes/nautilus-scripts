@@ -45,7 +45,7 @@ _main_task() {
     _storage_text_write_ln "$std_output"$'\n'
 }
 
-_get_clipboard_content() {
+_get_clipboard_data() {
     if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
         [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
         wl-paste 2>/dev/null
@@ -55,23 +55,23 @@ _get_clipboard_content() {
 }
 
 _filter_ips() {
-    local content=$1
+    local data=$1
 
-    if [[ -z "$content" ]]; then
+    if [[ -z "$data" ]]; then
         return
     fi
 
-    content=$(grep --only-matching --perl-regexp '\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b' <<<"$content")
-    content=$(sort --unique <<<"$content")
+    data=$(grep --only-matching --perl-regexp '\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b' <<<"$data")
+    data=$(sort --unique <<<"$data")
 
-    printf "%s" "$content"
+    printf "%s" "$data"
 }
 
 _prepare_input() {
     local input_files=$1
     local item_1=""
-    local file_content=""
-    local clipboard_content=""
+    local file_data=""
+    local clipboard_data=""
     local ips=""
 
     # Check if the input is a file or a directory. If it is a directory,
@@ -79,15 +79,15 @@ _prepare_input() {
     item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
     if ! [[ -d "$item_1" ]]; then
         # shellcheck disable=SC2086
-        file_content=$(cat -- $input_files 2>/dev/null)
-        ips=$(_filter_ips "$file_content")
+        file_data=$(cat -- $input_files 2>/dev/null)
+        ips=$(_filter_ips "$file_data")
     fi
 
     # If there are no valid IPs in the file(s),
     # get the IPs from the clipboard.
     if [[ -z "$ips" ]]; then
-        clipboard_content=$(_get_clipboard_content)
-        ips=$(_filter_ips "$clipboard_content")
+        clipboard_data=$(_get_clipboard_data)
+        ips=$(_filter_ips "$clipboard_data")
     fi
 
     if [[ -z "$ips" ]]; then
