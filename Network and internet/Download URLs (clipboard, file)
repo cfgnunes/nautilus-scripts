@@ -48,18 +48,16 @@ _get_clipboard_content() {
 
 _filter_urls() {
     local content=$1
-    local urls=""
 
     if [[ -z "$content" ]]; then
         return
     fi
 
-    urls=$content
-    urls=$(grep --only-matching --perl-regexp \
-        "(https?://(?:[0-9]{1,3}\.){3}[0-9]{1,3}(?::[0-9]+)?(?:/[^[:space:]'\"\)\]\>]*)?|https?://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:/[^[:space:]'\"\)\]\>]*)?|(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})" <<<"$urls")
-    urls=$(sort --unique <<<"$urls")
+    content=$(grep --only-matching --perl-regexp \
+        "(https?://(?:[0-9]{1,3}\.){3}[0-9]{1,3}(?::[0-9]+)?(?:/[^[:space:]'\"\)\]\>]*)?|https?://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:/[^[:space:]'\"\)\]\>]*)?|(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})" <<<"$content")
+    content=$(sort --unique <<<"$content")
 
-    printf "%s" "$urls"
+    printf "%s" "$content"
 }
 
 _prepare_input() {

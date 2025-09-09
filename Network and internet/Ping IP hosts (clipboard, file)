@@ -56,17 +56,15 @@ _get_clipboard_content() {
 
 _filter_ips() {
     local content=$1
-    local ips=""
 
     if [[ -z "$content" ]]; then
         return
     fi
 
-    ips=$content
-    ips=$(grep --only-matching --perl-regexp '\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b' <<<"$ips")
-    ips=$(sort --unique <<<"$ips")
+    content=$(grep --only-matching --perl-regexp '\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b' <<<"$content")
+    content=$(sort --unique <<<"$content")
 
-    printf "%s" "$ips"
+    printf "%s" "$content"
 }
 
 _prepare_input() {

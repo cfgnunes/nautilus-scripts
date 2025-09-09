@@ -51,25 +51,23 @@ _get_clipboard_content() {
 
 _filter_git_urls() {
     local content=$1
-    local urls=""
 
     if [[ -z "$content" ]]; then
         return
     fi
 
-    urls=$content
     # If the URL is like: https://<host>/<user>/<repo>
     # convert it to git@<host>:<user>/<repo>.git
-    urls=$(sed -E 's#https://([^/]+)/([^/]+)/([^ ]+)#git@\1:\2/\3.git#g' <<<"$urls")
+    content=$(sed -E 's#https://([^/]+)/([^/]+)/([^ ]+)#git@\1:\2/\3.git#g' <<<"$content")
 
     # Ensure the URL always ends with .git (if missing).
-    urls=$(sed -E 's#(\.git)?$#.git#' <<<"$urls")
+    content=$(sed -E 's#(\.git)?$#.git#' <<<"$content")
 
     # Keep only valid Git URLs.
-    urls=$(grep --only-matching --perl-regexp "((git|ssh|http(s)?)|(git@[\w\.]+))(.*)(\.git)" <<<"$urls")
-    urls=$(sort --unique <<<"$urls")
+    content=$(grep --only-matching --perl-regexp "((git|ssh|http(s)?)|(git@[\w\.]+))(.*)(\.git)" <<<"$content")
+    urls=$(sort --unique <<<"$content")
 
-    printf "%s" "$urls"
+    printf "%s" "$content"
 }
 
 _prepare_input() {
@@ -85,22 +83,22 @@ _prepare_input() {
     if ! [[ -d "$item_1" ]]; then
         # shellcheck disable=SC2086
         file_content=$(cat -- $input_files 2>/dev/null)
-        urls=$(_filter_git_urls "$file_content")
+        content=$(_filter_git_urls "$file_content")
     fi
 
     # If there are no valid URLs in the file(s),
     # get the URLs from the clipboard.
-    if [[ -z "$urls" ]]; then
+    if [[ -z "$content" ]]; then
         clipboard_content=$(_get_clipboard_content)
-        urls=$(_filter_git_urls "$clipboard_content")
+        content=$(_filter_git_urls "$clipboard_content")
     fi
 
-    if [[ -z "$urls" ]]; then
+    if [[ -z "$content" ]]; then
         _display_error_box "There are no valid Git URLs in the clipboard or in the selected file(s)!"
         _exit_script
     fi
 
-    _convert_text_to_delimited_string "$urls"
+    _convert_text_to_delimited_string "$content"
 }
 
 _get_working_directory_alternative() {
