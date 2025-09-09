@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        _check_dependencies "command=curl | command=wl-paste; package=wl-clipboard"
+    else
+        _check_dependencies "command=curl | command=xclip"
+    fi
+
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=all; par_get_pwd=true")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$(_prepare_input "$input_files")" "$output_dir"
+
+    local std_output=""
+    std_output=$(_storage_text_read_all)
+    std_output=$(_text_sort "$std_output")
+
+    _display_list_box "$std_output" "--column=Status;--column=URL" "URLs"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local std_output=""
+
+    # Run the main process.
+    std_output=$(LC_ALL=C curl --max-time 6 --connect-timeout 3 -o /dev/null -s -w "%{http_code}\n" "$input_file" 2>/dev/null)
+
+    _storage_text_write_ln "$std_output$FIELD_SEPARATOR$input_file"
+}
+
+_get_clipboard_content() {
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        wl-paste 2>/dev/null
+    else
+        xclip -quiet -selection clipboard -o 2>/dev/null
+    fi
+}
+
+_filter_urls() {
+    local content=$1
+    local urls=""
+
+    if [[ -z "$content" ]]; then
+        return
+    fi
+
+    urls=$content
+    urls=$(grep --only-matching --perl-regexp \
+        "(https?://(?:[0-9]{1,3}\.){3}[0-9]{1,3}(?::[0-9]+)?(?:/[^[:space:]'\"\)\]\>]*)?|https?://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:/[^[:space:]'\"\)\]\>]*)?|(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})" <<<"$urls")
+    urls=$(sort --unique <<<"$urls")
+
+    printf "%s" "$urls"
+}
+
+_prepare_input() {
+    local input_files=$1
+    local item_1=""
+    local file_content=""
+    local clipboard_content=""
+    local urls=""
+
+    # Check if the input is a file or a directory. If it is a directory,
+    # get the URLs from the clipboard.
+    item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
+    if ! [[ -d "$item_1" ]]; then
+        # shellcheck disable=SC2086
+        file_content=$(cat -- $input_files 2>/dev/null)
+        urls=$(_filter_urls "$file_content")
+    fi
+
+    # If there are no valid URLs in the file(s),
+    # get the URLs from the clipboard.
+    if [[ -z "$urls" ]]; then
+        clipboard_content=$(_get_clipboard_content)
+        urls=$(_filter_urls "$clipboard_content")
+    fi
+
+    if [[ -z "$urls" ]]; then
+        _display_error_box "There are no valid URLs in the clipboard or in the selected file(s)!"
+        _exit_script
+    fi
+
+    _convert_text_to_delimited_string "$urls"
+}
+
+_main "$@"
