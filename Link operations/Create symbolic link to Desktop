@@ -37,11 +37,11 @@ _get_desktop_dir() {
 
     # Get the path of the Desktop directory.
     desktop_dir=$(xdg-user-dir DESKTOP 2>/dev/null)
-    if ! [[ -d "$desktop_dir" ]]; then
+    if [[ ! -d "$desktop_dir" ]]; then
         desktop_dir="$HOME/Desktop"
     fi
 
-    if ! [[ -d "$desktop_dir" ]]; then
+    if [[ ! -d "$desktop_dir" ]]; then
         _display_error_box "Could not find the Desktop directory."
         _exit_script
     fi
