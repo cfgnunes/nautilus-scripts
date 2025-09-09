@@ -1064,10 +1064,10 @@ _get_files() {
 
     # If the items are in a remote server, translate the addresses to 'gvfs'.
     if [[ "$input_files" == *"://"* ]]; then
-        local working_directory=""
-        working_directory=$(_get_working_directory)
+        local working_dir=""
+        working_dir=$(_get_working_directory)
         input_files=$(sed \
-            "s|[a-z0-9\+_-]*://[^$FIELD_SEPARATOR]*/|$working_directory/|g" \
+            "s|[a-z0-9\+_-]*://[^$FIELD_SEPARATOR]*/|$working_dir/|g" \
             <<<"$input_files")
     fi
 
@@ -1441,26 +1441,29 @@ _get_working_directory() {
     # Output:
     #   - The determined working directory.
 
-    local working_directory=""
+    local working_dir=""
 
     # Try to use the information provided by the file manager.
     if [[ -v "CAJA_SCRIPT_CURRENT_URI" ]]; then
-        working_directory=$CAJA_SCRIPT_CURRENT_URI
+        working_dir=$CAJA_SCRIPT_CURRENT_URI
     elif [[ -v "NEMO_SCRIPT_CURRENT_URI" ]]; then
-        working_directory=$NEMO_SCRIPT_CURRENT_URI
+        working_dir=$NEMO_SCRIPT_CURRENT_URI
     elif [[ -v "NAUTILUS_SCRIPT_CURRENT_URI" ]]; then
-        working_directory=$NAUTILUS_SCRIPT_CURRENT_URI
+        working_dir=$NAUTILUS_SCRIPT_CURRENT_URI
     fi
 
-    if [[ -n "$working_directory" ]] &&
-        [[ "$working_directory" == "file://"* ]]; then
-        working_directory=$(_text_uri_decode "$working_directory")
+    # If the working directory is a URI, decode it.
+    if [[ -n "$working_dir" ]] && [[ "$working_dir" == "file://"* ]]; then
+        # Decode the URI to get the directory path.
+        working_dir=$(_text_uri_decode "$working_dir")
     else
         # Files selected in the search screen (or other possible cases).
-        working_directory=""
+        working_dir=""
     fi
 
-    if [[ -z "$working_directory" ]]; then
+    # If the working directory is still not set, try to get it from the input
+    # files.
+    if [[ -z "$working_dir" ]]; then
         # NOTE: The working directory can be detected by using the directory
         # name of the first input file. Some file managers do not send the
         # working directory for the scripts, so it is not precise to use the
@@ -1469,13 +1472,13 @@ _get_working_directory() {
         item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
 
         if [[ -n "$item_1" ]]; then
-            working_directory=$(_get_filename_dir "$item_1")
+            working_dir=$(_get_filename_dir "$item_1")
         else
-            working_directory=$(pwd)
+            working_dir=$(pwd)
         fi
     fi
 
-    printf "%s" "$working_directory"
+    printf "%s" "$working_dir"
 }
 
 _is_directory_empty() {
@@ -1752,9 +1755,9 @@ _open_items_locations() {
     fi
 
     # Restore absolute paths for items if relative paths are used.
-    local working_directory=""
-    working_directory=$(_get_working_directory)
-    items=$(sed "s|\./|$working_directory/|g" <<<"$items")
+    local working_dir=""
+    working_dir=$(_get_working_directory)
+    items=$(sed "s|\./|$working_dir/|g" <<<"$items")
 
     # Prepare items to be opened by the file manager.
     local items_open=""
@@ -2256,11 +2259,11 @@ _text_remove_pwd() {
     #   - Output: "/etc/config"
 
     local input_text=$1
-    local working_directory=""
-    working_directory=$(_get_working_directory)
+    local working_dir=""
+    working_dir=$(_get_working_directory)
 
-    if [[ "$working_directory" != "/" ]]; then
-        sed "s|$working_directory|.|" <<<"$input_text"
+    if [[ "$working_dir" != "/" ]]; then
+        sed "s|$working_dir|.|" <<<"$input_text"
     else
         printf "%s" "$input_text"
     fi
