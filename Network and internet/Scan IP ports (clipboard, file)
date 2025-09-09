@@ -56,7 +56,7 @@ _get_clipboard_data() {
     fi
 }
 
-_filter_ips() {
+_extract_ips() {
     local data=$1
 
     if [[ -z "$data" ]]; then
@@ -82,14 +82,14 @@ _prepare_input() {
     if ! [[ -d "$item_1" ]]; then
         # shellcheck disable=SC2086
         file_data=$(cat -- $input_files 2>/dev/null)
-        ips=$(_filter_ips "$file_data")
+        ips=$(_extract_ips "$file_data")
     fi
 
     # If there are no valid IPs in the file(s),
     # get the IPs from the clipboard.
     if [[ -z "$ips" ]]; then
         clipboard_data=$(_get_clipboard_data)
-        ips=$(_filter_ips "$clipboard_data")
+        ips=$(_extract_ips "$clipboard_data")
     fi
 
     if [[ -z "$ips" ]]; then

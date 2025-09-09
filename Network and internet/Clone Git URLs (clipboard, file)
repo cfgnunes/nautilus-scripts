@@ -49,7 +49,7 @@ _get_clipboard_data() {
     fi
 }
 
-_filter_git_urls() {
+_extract_git_urls() {
     local data=$1
 
     if [[ -z "$data" ]]; then
@@ -82,14 +82,14 @@ _prepare_input() {
     if ! [[ -d "$item_1" ]]; then
         # shellcheck disable=SC2086
         file_data=$(cat -- $input_files 2>/dev/null)
-        data=$(_filter_git_urls "$file_data")
+        data=$(_extract_git_urls "$file_data")
     fi
 
     # If there are no valid URLs in the file(s),
     # get the URLs from the clipboard.
     if [[ -z "$data" ]]; then
         clipboard_data=$(_get_clipboard_data)
-        data=$(_filter_git_urls "$clipboard_data")
+        data=$(_extract_git_urls "$clipboard_data")
     fi
 
     if [[ -z "$data" ]]; then

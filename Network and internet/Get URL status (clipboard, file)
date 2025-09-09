@@ -50,7 +50,7 @@ _get_clipboard_data() {
     fi
 }
 
-_filter_urls() {
+_extract_urls() {
     local data=$1
 
     if [[ -z "$data" ]]; then
@@ -77,14 +77,14 @@ _prepare_input() {
     if ! [[ -d "$item_1" ]]; then
         # shellcheck disable=SC2086
         file_data=$(cat -- $input_files 2>/dev/null)
-        urls=$(_filter_urls "$file_data")
+        urls=$(_extract_urls "$file_data")
     fi
 
     # If there are no valid URLs in the file(s),
     # get the URLs from the clipboard.
     if [[ -z "$urls" ]]; then
         clipboard_data=$(_get_clipboard_data)
-        urls=$(_filter_urls "$clipboard_data")
+        urls=$(_extract_urls "$clipboard_data")
     fi
 
     if [[ -z "$urls" ]]; then
