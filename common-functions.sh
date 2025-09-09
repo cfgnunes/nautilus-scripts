@@ -1457,23 +1457,22 @@ _get_working_directory() {
         # Decode the URI to get the directory path.
         working_dir=$(_text_uri_decode "$working_dir")
     else
-        # Files selected in the search screen (or other possible cases).
-        working_dir=""
-    fi
-
-    # If the working directory is still not set, try to get it from the input
-    # files.
-    if [[ -z "$working_dir" ]]; then
-        # NOTE: The working directory can be detected by using the directory
-        # name of the first input file. Some file managers do not send the
-        # working directory for the scripts, so it is not precise to use the
-        # 'pwd' command.
+        # Cases:
+        # - Files selected in the search screen;
+        # - Files opened remotely (sftp, smb);
+        # - File managers that don't set current directory variables;
+        #
+        # Strategy: Derive directory from first selected file's path. Using
+        # 'pwd' command is unreliable as it reflects the shell's working
+        # directory, not necessarily the file manager's current view.
         local item_1=""
         item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
 
         if [[ -n "$item_1" ]]; then
+            # Get the directory name of the first input file.
             working_dir=$(_get_filename_dir "$item_1")
         else
+            # As a last resort, use the 'pwd' command.
             working_dir=$(pwd)
         fi
     fi
