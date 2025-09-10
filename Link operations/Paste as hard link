@@ -44,7 +44,7 @@ _main_task() {
     _directory_pop || return 1
 }
 
-_get_clipboard_content() {
+_get_clipboard_data() {
     if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
         [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
         wl-paste 2>/dev/null
@@ -56,7 +56,7 @@ _get_clipboard_content() {
 _get_uris() {
     local uris=""
 
-    uris=$(_get_clipboard_content)
+    uris=$(_get_clipboard_data)
     uris=$(grep --only-matching --perl-regexp "^(file://|('\")?/)(.*)" <<<"$uris")
     uris=$(sed "s|^['\"]||g; s|['\"]$||g" <<<"$uris")
     uris=$(sort --unique <<<"$uris")
