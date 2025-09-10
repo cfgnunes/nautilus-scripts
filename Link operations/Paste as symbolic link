@@ -18,7 +18,7 @@ _main() {
     fi
 
     _display_wait_box "2"
-    output_dir=$(_get_working_directory_alternative)
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$(_get_uris)" "$output_dir"
@@ -68,51 +68,6 @@ _get_uris() {
     uris=$(_text_uri_decode "$uris")
 
     printf "%s" "$uris"
-}
-
-_get_working_directory_alternative() {
-    local working_directory=""
-
-    # Try to use the information provided by the file manager.
-    if [[ -v "CAJA_SCRIPT_CURRENT_URI" ]]; then
-        working_directory=$CAJA_SCRIPT_CURRENT_URI
-    elif [[ -v "NEMO_SCRIPT_CURRENT_URI" ]]; then
-        working_directory=$NEMO_SCRIPT_CURRENT_URI
-    elif [[ -v "NAUTILUS_SCRIPT_CURRENT_URI" ]]; then
-        working_directory=$NAUTILUS_SCRIPT_CURRENT_URI
-    fi
-
-    if [[ -n "$working_directory" ]] && [[ "$working_directory" == "file://"* ]]; then
-        working_directory=$(_text_uri_decode "$working_directory")
-    else
-        # Files selected in the search screen (or orther possible cases).
-        working_directory=""
-    fi
-
-    if [[ -z "$working_directory" ]]; then
-        # NOTE: The working directory can be detected by using the directory
-        # name of the first input file. Some file managers do not send the
-        # working directory for the scripts, so it is not precise to use the
-        # 'pwd' command.
-        local item_1=""
-        local item_2=""
-        item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
-        item_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$INPUT_FILES")
-
-        if [[ -n "$item_1" ]]; then
-            if [[ -n "$item_2" ]] && [[ "$item_1" != "$item_2" ]]; then
-                working_directory=$(_get_filename_dir "$item_1")
-            elif [[ -f "$item_1" ]]; then
-                working_directory=$(_get_filename_dir "$item_1")
-            elif [[ -d "$item_1" ]]; then
-                working_directory=$(_get_filename_full_path "$item_1")
-            fi
-        else
-            working_directory=$(pwd)
-        fi
-    fi
-
-    printf "%s" "$working_directory"
 }
 
 _main "$@"
