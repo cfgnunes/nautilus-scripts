@@ -42,15 +42,6 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
-_get_clipboard_data() {
-    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
-        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        wl-paste 2>/dev/null
-    else
-        xclip -quiet -selection clipboard -o 2>/dev/null
-    fi
-}
-
 _get_uris() {
     local uris=""
 

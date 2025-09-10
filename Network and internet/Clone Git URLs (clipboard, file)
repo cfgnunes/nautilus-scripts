@@ -39,15 +39,6 @@ _main_task() {
     _directory_pop || return 1
 }
 
-_get_clipboard_data() {
-    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
-        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        wl-paste 2>/dev/null
-    else
-        xclip -quiet -selection clipboard -o 2>/dev/null
-    fi
-}
-
 _extract_git_urls() {
     local data=$1
 

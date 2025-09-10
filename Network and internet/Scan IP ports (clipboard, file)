@@ -47,15 +47,6 @@ _main_task() {
     _storage_text_write_ln "IP: $input_file"$'\n'"$std_output"$'\n'
 }
 
-_get_clipboard_data() {
-    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
-        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        wl-paste 2>/dev/null
-    else
-        xclip -quiet -selection clipboard -o 2>/dev/null
-    fi
-}
-
 _extract_ips() {
     local data=$1
 

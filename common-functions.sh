@@ -884,6 +884,17 @@ _gdbus_notify() {
         "[]" '{"urgency": <1>}' 5000 &>/dev/null
 }
 
+_get_clipboard_data() {
+    # This function retrieves the current content of the clipboard.
+
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        wl-paste 2>/dev/null
+    else
+        xclip -quiet -selection clipboard -o 2>/dev/null
+    fi
+}
+
 _get_filename_dir() {
     # This function extracts the directory path from a given file path.
     #

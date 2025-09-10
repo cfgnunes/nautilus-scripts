@@ -41,15 +41,6 @@ _main_task() {
     _storage_text_write_ln "$std_output$FIELD_SEPARATOR$input_file"
 }
 
-_get_clipboard_data() {
-    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
-        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        wl-paste 2>/dev/null
-    else
-        xclip -quiet -selection clipboard -o 2>/dev/null
-    fi
-}
-
 _extract_urls() {
     # This function extracts unique URLs or domain-like strings from input
     # text. It matches three main types:
