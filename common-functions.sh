@@ -1223,7 +1223,6 @@ _get_output_dir() {
     #   subdirectory is created for the output.
 
     local parameters=$1
-    local base_dir=""
     local output_dir=""
 
     # Default values for input parameters.
@@ -1233,20 +1232,20 @@ _get_output_dir() {
     eval "$parameters"
 
     # Check directories available to put the 'output' dir.
-    base_dir=$(_get_working_directory)
-    [[ ! -w "$base_dir" ]] && base_dir=$HOME
-    [[ ! -w "$base_dir" ]] && base_dir="/tmp"
-    if [[ ! -w "$base_dir" ]]; then
+    output_dir=$(_get_working_directory)
+    [[ ! -w "$output_dir" ]] && output_dir=$HOME
+    [[ ! -w "$output_dir" ]] && output_dir="/tmp"
+    if [[ ! -w "$output_dir" ]]; then
         _display_error_box "Could not find a directory with write permissions!"
         _exit_script
     fi
 
     if [[ "$par_use_same_dir" == "true" ]]; then
-        printf "%s" "$base_dir"
+        printf "%s" "$output_dir"
         return
     fi
 
-    output_dir="$base_dir/$PREFIX_OUTPUT_DIR"
+    output_dir="$output_dir/$PREFIX_OUTPUT_DIR"
 
     # If the file already exists, add a suffix.
     output_dir=$(_get_filename_next_suffix "$output_dir")
@@ -1462,7 +1461,7 @@ _get_working_directory() {
         # - Files opened remotely (sftp, smb);
         # - File managers that don't set current directory variables;
         #
-        # Strategy: Derive directory from first selected file's path. Using
+        # Strategy: Get the directory from first selected file's path. Using
         # 'pwd' command is unreliable as it reflects the shell's working
         # directory, not necessarily the file manager's current view.
         local item_1=""
