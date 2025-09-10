@@ -186,12 +186,12 @@ _step_install_dependencies() {
 
     local packages=""
 
-    # Packages for dialogs...
+    # Packages for dialogs.
     if ! _command_exists "zenity" && ! _command_exists "kdialog"; then
         packages+="zenity "
     fi
 
-    # Packages session type...
+    # Packages session type.
     if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
         [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
         _command_exists "wl-copy" || packages+="wl-clipboard "
@@ -199,7 +199,7 @@ _step_install_dependencies() {
         _command_exists "xclip" || packages+="xclip "
     fi
 
-    # Packages for compress/decompress archives...
+    # Packages for compress/decompress archives.
     _command_exists "bzip2" || packages+="bzip2 "
     _command_exists "gzip" || packages+="gzip "
     _command_exists "tar" || packages+="tar "
@@ -208,14 +208,14 @@ _step_install_dependencies() {
     if ! _command_exists "genisoimage" && ! _command_exists "mkisofs"; then
         _command_exists "xorriso" || packages+="xorriso "
     fi
-    # Packages for images...
+    # Packages for images.
     _command_exists "optipng" || packages+="optipng "
-    # Packages for PDF...
+    # Packages for PDF.
     _command_exists "gs" || packages+="ghostscript "
     _command_exists "qpdf" || packages+="qpdf "
-    # Packages for security...
+    # Packages for security.
     _command_exists "photorec" || packages+="testdisk "
-    # Packages for other scripts...
+    # Packages for other scripts.
     _command_exists "rhash" || packages+="rhash "
 
     if _command_exists "guix"; then
