@@ -38,11 +38,12 @@ readonly \
     PREFIX_ERROR_LOG_FILE \
     PREFIX_OUTPUT_DIR \
     TEMP_DIR \
+    TEMP_DIR_ITEMS_TO_REMOVE \
     TEMP_DIR_LOGS \
     TEMP_DIR_STORAGE_TEXT \
     TEMP_DIR_TASK \
-    WAIT_BOX_CONTROL \
     WAIT_BOX_CONTROL_KDE \
+    WAIT_BOX_CONTROL \
     WAIT_BOX_FIFO
 
 # -----------------------------------------------------------------------------
