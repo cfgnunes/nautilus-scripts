@@ -31,9 +31,10 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
+    local timeout_value="5"
 
     # Run the main process.
-    std_output=$(axel --ipv4 --insecure --num-connections=10 --timeout=5 --output="$output_dir" -- "$input_file" 2>&1)
+    std_output=$(axel --ipv4 --insecure --num-connections=10 --timeout="$timeout_value" --output="$output_dir" -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 

@@ -36,11 +36,12 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
+    local timeout_value="5"
 
     # Run the main process.
-    std_output=$(LC_ALL=C curl --max-time 6 --connect-timeout 3 -s -I "$input_file" 2>/dev/null)
+    std_output=$(LC_ALL=C curl --max-time "$timeout_value" --connect-timeout 3 -s -I "$input_file" 2>/dev/null)
 
-    _storage_text_write_ln "URL: $input_file"$'\n'"$std_output"
+    _storage_text_write_ln "🔍 URL: $input_file"$'\n'"$std_output"
 }
 
 _extract_urls() {
