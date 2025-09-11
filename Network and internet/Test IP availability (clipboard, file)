@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        _check_dependencies "command=nmap | command=wl-paste; package=wl-clipboard"
+    else
+        _check_dependencies "command=nmap | command=xclip"
+    fi
+
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=all; par_get_pwd=true")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$(_prepare_input "$input_files")" "$output_dir"
+
+    local std_output=""
+    std_output=$(_storage_text_read_all)
+    std_output=$(_text_sort "$std_output")
+
+    _display_list_box "$std_output" "--column=Status;--column=IP" "IPs"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local std_output=""
+    local str_online="🟢 Online"
+    local str_offline="🔴 Offline"
+
+    local host="$input_file"
+    local timeout_value="3"
+
+    # Strategy: Nmap host discovery (no port scan).
+    if [[ -z "$std_output" ]]; then
+        if LC_ALL=C nmap -sn --host-timeout "$timeout_value"s "$host" 2>/dev/null |
+            grep -q "Host is up"; then
+            std_output=$str_online
+        fi
+    fi
+
+    # Strategy: Nmap port scan (SYN scan on top 20 ports).
+    if [[ -z "$std_output" ]]; then
+        if LC_ALL=C nmap -T4 -Pn --top-ports 20 --host-timeout "$timeout_value"s "$host" 2>/dev/null |
+            grep -q "open"; then
+            std_output=$str_online
+        fi
+    fi
+
+    # Strategy: ICMP Echo Request (fast but often filtered by firewalls).
+    if [[ -z "$std_output" ]]; then
+        if ping -c 3 -W "$timeout_value" "$host" &>/dev/null; then
+            std_output=$str_online
+        fi
+    fi
+
+    # Notify if the host is offline.
+    if [[ -z "$std_output" ]]; then
+        std_output=$str_offline
+    fi
+
+    _storage_text_write_ln "$std_output$FIELD_SEPARATOR$input_file"
+}
+
+_extract_ips() {
+    local data=$1
+
+    if [[ -z "$data" ]]; then
+        return
+    fi
+
+    data=$(grep --only-matching --perl-regexp '\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b' <<<"$data")
+    data=$(sort --unique <<<"$data")
+
+    printf "%s" "$data"
+}
+
+_prepare_input() {
+    local input_files=$1
+    local item_1=""
+    local file_data=""
+    local clipboard_data=""
+    local ips=""
+
+    # Check if the input is a file or a directory. If it is a directory,
+    # get the IPs from the clipboard.
+    item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
+    if [[ ! -d "$item_1" ]]; then
+        # shellcheck disable=SC2086
+        file_data=$(cat -- $input_files 2>/dev/null)
+        ips=$(_extract_ips "$file_data")
+    fi
+
+    # If there are no valid IPs in the file(s),
+    # get the IPs from the clipboard.
+    if [[ -z "$ips" ]]; then
+        clipboard_data=$(_get_clipboard_data)
+        ips=$(_extract_ips "$clipboard_data")
+    fi
+
+    if [[ -z "$ips" ]]; then
+        _display_error_box "There are no valid IPs in the clipboard or in the selected file(s)!"
+        _exit_script
+    fi
+
+    _convert_text_to_delimited_string "$ips"
+}
+
+_main "$@"
