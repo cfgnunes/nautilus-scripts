@@ -37,7 +37,7 @@ _main_task() {
     if [[ "$std_output" == *"Signature #"* ]]; then
         # FORMAT THE OUTPUT:
         # Prepend the filename.
-        std_output="File: \"$input_file\""$'\n'"$std_output"
+        std_output="🔍 File: \"$input_file\""$'\n'"$std_output"
         # Remove irrelevant information.
         std_output=$(grep --ignore-case -v "^Digital Signature Info of: " <<<"$std_output")
 

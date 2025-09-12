@@ -29,7 +29,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(rhash --printf="File: \"%p\"\nCRC32: %c\nMD5: %m\nSHA-1: %h\nSHA-224: %{sha-224}\nSHA-256: %{sha-256}\nSHA-384: %{sha-384}\nSHA-512: %{sha-512}\n " -- "$input_file" 2>/dev/null)
+    std_output=$(rhash --printf="🔍 File: \"%p\"\nCRC32: %c\nMD5: %m\nSHA-1: %h\nSHA-224: %{sha-224}\nSHA-256: %{sha-256}\nSHA-384: %{sha-384}\nSHA-512: %{sha-512}\n " -- "$input_file" 2>/dev/null)
     if [[ -z "$std_output" ]]; then
         return
     fi
