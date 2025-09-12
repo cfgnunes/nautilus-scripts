@@ -25,9 +25,8 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    std_output=$(_text_sort "$std_output")
 
-    _display_list_box "$std_output" "--column=Status;--column=IP" "IPs"
+    _display_text_box "$std_output"
 }
 
 _main_task() {
@@ -68,7 +67,7 @@ _main_task() {
         std_output=$str_offline
     fi
 
-    _storage_text_write_ln "$std_output$FIELD_SEPARATOR$input_file"
+    _storage_text_write_ln "🔍 IP: $input_file"$'\n'"$std_output"$'\n'
 }
 
 _extract_ips() {

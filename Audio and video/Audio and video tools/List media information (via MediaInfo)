@@ -37,13 +37,12 @@ _main_task() {
     # Remove any extra spaces before colons ":".
     # shellcheck disable=SC2001
     std_output=$(sed "s| \+: |: |g" <<<"$std_output")
-    # Replace 2+ consecutive newlines with 1 newline.
-    # shellcheck disable=SC2001
-    std_output=$(sed -z "s|\n\{2,\}|\n|g" <<<"$std_output")
     # Remove irrelevant information.
     std_output=$(grep --ignore-case -v "^Complete name: " <<<"$std_output")
     # Remove any occurrence of the current working directory.
     std_output=$(_text_remove_pwd "$std_output")
+
+    std_output=$(_text_remove_empty_lines "$std_output")
 
     _storage_text_write_ln "$std_output"$'\n'
 }

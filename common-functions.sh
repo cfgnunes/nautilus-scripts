@@ -2085,6 +2085,7 @@ _run_task_parallel() {
         _storage_text_write_ln \
         _str_remove_empty_tokens \
         _strip_filename_extension \
+        _text_remove_empty_lines \
         _text_remove_pwd \
         _text_uri_decode
 
