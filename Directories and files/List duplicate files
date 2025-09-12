@@ -37,12 +37,11 @@ _main() {
     std_output=$(grep -v "/\.git/" <<<"$std_output")
     # Remove leading empty lines. Replace 3+ consecutive newlines with 2 newlines.
     std_output=$(sed -z "s|^\n*\([^\n]\)|\1|g; s|\n\{3,\}|\n\n|g" <<<"$std_output")
-    # Remove any occurrence of the current working directory.
-    std_output=$(_text_remove_pwd "$std_output")
     # Replace double slashes "//" with a single slash "/".
     std_output=$(sed "s|//|/|" <<<"$std_output")
     # Wrap each file path in double quotes for clarity.
     std_output=$(sed "s|^\(..*\)$|\"\1\"|" <<<"$std_output")
+    std_output=$(_text_remove_pwd "$std_output")
 
     # Add a "Duplicate files:" header to each group of duplicate files.
     if [[ -n "$std_output" ]]; then

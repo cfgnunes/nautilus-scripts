@@ -34,12 +34,11 @@ _main_task() {
     std_output=$(file --separator "$FIELD_SEPARATOR" --no-pad -- "$input_file")
 
     # FORMAT THE OUTPUT:
-    # Remove any occurrence of the current working directory.
-    std_output=$(_text_remove_pwd "$std_output")
     # Swap the fields: make the second field (file type) appear first.
     # Wrap each file path in double quotes for clarity.
     # shellcheck disable=SC2001
     std_output=$(sed "s|\(.*\)$FIELD_SEPARATOR *\(.*\)|\2: \"\1\"|g" <<<"$std_output")
+    std_output=$(_text_remove_pwd "$std_output")
 
     _storage_text_write_ln "$std_output"
 }

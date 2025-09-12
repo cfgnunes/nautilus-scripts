@@ -51,8 +51,6 @@ _main_task() {
 
     # Prepend the filename.
     std_output="$status File: \"$input_file\""$'\n'"$std_output"
-
-    # Remove any occurrence of the current working directory.
     std_output=$(_text_remove_pwd "$std_output")
 
     _storage_text_write_ln "$std_output"$'\n'
