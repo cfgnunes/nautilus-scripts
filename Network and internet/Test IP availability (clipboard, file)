@@ -33,8 +33,8 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
-    local str_online="🟢 Online"
-    local str_offline="🔴 Offline"
+    local str_online="Online"
+    local status="🟢"
 
     local host="$input_file"
     local timeout_value="3"
@@ -42,7 +42,7 @@ _main_task() {
     # Strategy: Nmap host discovery (no port scan).
     if [[ -z "$std_output" ]]; then
         if LC_ALL=C nmap -sn --host-timeout "$timeout_value"s "$host" 2>/dev/null |
-            grep -q "Host is up"; then
+            grep --quiet --ignore-case "Host is up"; then
             std_output=$str_online
         fi
     fi
@@ -50,7 +50,7 @@ _main_task() {
     # Strategy: Nmap port scan (SYN scan on top 20 ports).
     if [[ -z "$std_output" ]]; then
         if LC_ALL=C nmap -T4 -Pn --top-ports 20 --host-timeout "$timeout_value"s "$host" 2>/dev/null |
-            grep -q "open"; then
+            grep --quiet --ignore-case "open"; then
             std_output=$str_online
         fi
     fi
@@ -64,10 +64,11 @@ _main_task() {
 
     # Notify if the host is offline.
     if [[ -z "$std_output" ]]; then
-        std_output=$str_offline
+        std_output="Offline"
+        status="🔴"
     fi
 
-    _storage_text_write_ln "🔍 IP: $input_file"$'\n'"$std_output"$'\n'
+    _storage_text_write_ln "$status IP: $input_file"$'\n'"$std_output"$'\n'
 }
 
 _extract_ips() {

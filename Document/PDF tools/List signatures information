@@ -30,16 +30,22 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
+    local status="🔴"
 
     # Run the main process.
     std_output=$(pdfsig -- "$input_file")
 
     if [[ "$std_output" == *"Signature #"* ]]; then
         # FORMAT THE OUTPUT:
-        # Prepend the filename.
-        std_output="🔍 File: \"$input_file\""$'\n'"$std_output"
         # Remove irrelevant information.
         std_output=$(grep --ignore-case -v "^Digital Signature Info of: " <<<"$std_output")
+
+        if grep --quiet --ignore-case "Signature is Valid" <<<"$std_output"; then
+            status="🟢"
+        fi
+
+        # Prepend the filename.
+        std_output="$status File: \"$input_file\""$'\n'"$std_output"
 
         _storage_text_write_ln "$std_output"$'\n'
     fi

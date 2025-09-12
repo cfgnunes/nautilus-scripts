@@ -34,6 +34,7 @@ _main_task() {
     local output_dir=$2
     local std_output=""
     local timeout_value="5"
+    local status="🟢"
 
     # Run the main process.
     std_output=$(LC_ALL=C nmap -n -Pn -T4 --max-retries 1 --open --host-timeout "$timeout_value"s "$input_file" 2>/dev/null)
@@ -42,13 +43,11 @@ _main_task() {
     std_output=$(grep --extended-regexp "^[0-9]+/(tcp|udp)\b" <<<"$std_output" || true)
 
     if [[ -z "$std_output" ]]; then
-        std_output="🔴 None"
-    else
-        # shellcheck disable=SC2001
-        std_output=$(sed 's|^|🟢 |' <<<"$std_output")
+        std_output="(None)"
+        status="🔴"
     fi
 
-    _storage_text_write_ln "🔍 IP: $input_file"$'\n'"$std_output"$'\n'
+    _storage_text_write_ln "$status IP: $input_file"$'\n'"$std_output"$'\n'
 }
 
 _extract_ips() {
