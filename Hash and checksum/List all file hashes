@@ -27,14 +27,18 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
+    local status="🟢"
 
     # Run the main process.
-    std_output=$(rhash --printf="🔍 File: \"%p\"\nCRC32: %c\nMD5: %m\nSHA-1: %h\nSHA-224: %{sha-224}\nSHA-256: %{sha-256}\nSHA-384: %{sha-384}\nSHA-512: %{sha-512}\n " -- "$input_file" 2>/dev/null)
+    std_output=$(rhash --printf="CRC32: %c\nMD5: %m\nSHA-1: %h\nSHA-224: %{sha-224}\nSHA-256: %{sha-256}\nSHA-384: %{sha-384}\nSHA-512: %{sha-512}\n " -- "$input_file" 2>/dev/null)
+
     if [[ -z "$std_output" ]]; then
-        return
+        status="🔴"
     fi
 
     # FORMAT THE OUTPUT:
+    # Prepend the filename.
+    std_output="$status File: \"$input_file\""$'\n'"$std_output"
     # Remove any occurrence of the current working directory.
     std_output=$(_text_remove_pwd "$std_output")
 

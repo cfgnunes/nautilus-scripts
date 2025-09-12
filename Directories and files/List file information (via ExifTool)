@@ -31,6 +31,7 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
+    local status="🟢"
 
     # Run the main process.
     std_output=$(exiftool -- "$input_file" 2>/dev/null)
@@ -44,8 +45,12 @@ _main_task() {
     std_output=$(grep --ignore-case -v "^File name: " <<<"$std_output")
     std_output=$(grep --ignore-case -v "^Directory: " <<<"$std_output")
 
+    if grep --quiet --ignore-case "^Error:" <<<"$std_output"; then
+        status="🔴"
+    fi
+
     # Prepend the filename.
-    std_output="🔍 File: \"$input_file\""$'\n'"$std_output"
+    std_output="$status File: \"$input_file\""$'\n'"$std_output"
 
     # Remove any occurrence of the current working directory.
     std_output=$(_text_remove_pwd "$std_output")
