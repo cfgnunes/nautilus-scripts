@@ -23,7 +23,7 @@ _main() {
     # shellcheck disable=SC2001
     std_output=$(sed "s|\(.*\)$FIELD_SEPARATOR\(.*\)|\2$FIELD_SEPARATOR\1|g" <<<"$std_output")
 
-    _display_list_box "$std_output" "--column=CRC32;--column=File" "files"
+    _display_list_box "$std_output" "par_columns='--column:CRC32,--column:File'; par_item_name=files"
 }
 
 _main_task() {

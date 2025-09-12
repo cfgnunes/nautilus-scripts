@@ -435,7 +435,7 @@ _display_list_box() {
     # Parameters:
     #   - $1 (message): A string containing the items to display in the list.
     #   - $2 (columns): Column definitions for the list, typically in the
-    #   format "--column=<name>;--column=<name>".
+    #   format "--column:<name>,--column:<name>".
     #   - $3 (item_name): A string representing the name of the items in the
     #   list. If not provided, the default value is "items".
     #   - $4 (resolve_links): A boolean-like string ("true" or "false")
@@ -444,68 +444,131 @@ _display_list_box() {
     #   "true".
 
     local message=$1
-    local columns=$2
-    local item_name=${3:-"items"}
-    local resolve_links=${4:-"true"}
-    local columns_count=0
-    local items_count=0
-    local selected_item=""
-    local message_select=""
+    local parameters=$2
+
+    # Default values for input parameters.
+    local par_columns=""
+    local par_item_name="items"
+    local par_action="open_location"
+    local par_resolve_links="true"
+
+    # Evaluate the values from the 'parameters' variable.
+    eval "$parameters"
+
+    if [[ -n "$par_columns" ]]; then
+        par_columns=$(tr ":" "=" <<<"$par_columns")
+    fi
+
     _close_wait_box
     _logs_consolidate ""
 
+    if ! _is_gui_session; then
+        _display_list_box_terminal "$message"
+    elif _command_exists "zenity"; then
+        _display_list_box_zenity "$message" "$par_columns" \
+            "$par_item_name" "$par_action" "$par_resolve_links"
+    elif _command_exists "kdialog"; then
+        _display_list_box_kdialog "$message" "$par_columns"
+    elif _command_exists "xmessage"; then
+        _display_list_box_xmessage "$message" "$par_columns"
+    fi
+}
+
+_display_list_box_terminal() {
+    local message=$1
+
+    if [[ -z "$message" ]]; then
+        message="(Empty result)"
+        printf "%s\n" "$message" >&2
+    else
+        message=$(tr "$FIELD_SEPARATOR" " " <<<"$message")
+        printf "%s\n" "$message"
+    fi
+}
+
+_display_list_box_zenity() {
+    local message=$1
+    local par_columns=$2
+    local par_item_name=$3
+    local par_action=$4
+    local par_resolve_links=$5
+
+    local columns_count=0
+    local items_count=0
+    local selected_items=""
+    local message_select=""
+
+    if [[ -n "$par_columns" ]]; then
+        # Count the number of columns.
+        columns_count=$(grep --only-matching "column=" <<<"$par_columns" | wc -l)
+    fi
+
     if [[ -n "$message" ]]; then
         items_count=$(tr -cd "\n" <<<"$message" | wc -c)
-        message_select=" Select an item to open its location:"
     fi
 
-    # Count the number of columns.
-    columns_count=$(grep --only-matching "column=" <<<"$columns" | wc -l)
-
-    if ! _is_gui_session; then
-        if [[ -z "$message" ]]; then
-            message="(Empty result)"
-            printf "%s\n" "$message" >&2
-        else
-            message=$(tr "$FIELD_SEPARATOR" " " <<<"$message")
-            printf "%s\n" "$message"
-        fi
-    elif _command_exists "zenity"; then
-        if [[ -z "$message" ]]; then
-            # NOTE: Some versions of Zenity crash if the
-            # message is empty (Segmentation fault).
-            message=" "
-        fi
-        columns=$(tr ";" "$FIELD_SEPARATOR" <<<"$columns")
-        message=$(tr "\n" "$FIELD_SEPARATOR" <<<"$message")
-        # shellcheck disable=SC2086
-        selected_item=$(zenity --title "$(_get_script_name)" --list \
-            --editable --multiple --separator="$FIELD_SEPARATOR" \
-            --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-            --print-column "$columns_count" \
-            --text "Total of $items_count $item_name.$message_select" \
-            $columns $message 2>/dev/null) || _exit_script
-
-        if ((items_count != 0)) && [[ -n "$selected_item" ]]; then
-            # Open the directory of the clicked item in the list.
-            _open_items_locations "$selected_item" "$resolve_links"
-        fi
-    elif _command_exists "kdialog"; then
-        columns=$(sed "s|--column=||g" <<<"$columns")
-        columns=$(tr ";" "\t" <<<"$columns")
-        message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
-        message="$columns"$'\n'$'\n'"$message"
-        kdialog --title "$(_get_script_name)" \
-            --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
-            --textinputbox "" "$message" &>/dev/null || _exit_script
-    elif _command_exists "xmessage"; then
-        columns=$(sed "s|--column=||g" <<<"$columns")
-        columns=$(tr ";" "\t" <<<"$columns")
-        message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
-        message="$columns"$'\n'$'\n'"$message"
-        xmessage -title "$(_get_script_name)" \
-            "$message" &>/dev/null || _exit_script
+    # Set the selection message based on the action and item count.
+    if ((items_count != 0)); then
+        case "$par_action" in
+        "open_file") message_select=" Select files to open:" ;;
+        "open_location") message_select=" Select items to open their locations:" ;;
+        "open_url") message_select=" Select URLs to open them:" ;;
+        "delete_item") message_select=" Select items to delete them:" ;;
+        esac
     fi
+
+    if [[ -z "$message" ]]; then
+        # NOTE: Some versions of Zenity crash if the
+        # message is empty (Segmentation fault).
+        message=" "
+    fi
+
+    par_columns=$(tr "," "$FIELD_SEPARATOR" <<<"$par_columns")
+    message=$(tr "\n" "$FIELD_SEPARATOR" <<<"$message")
+    # shellcheck disable=SC2086
+    selected_items=$(zenity --title "$(_get_script_name)" --list \
+        --editable --multiple --separator="$FIELD_SEPARATOR" \
+        --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+        --print-column "$columns_count" \
+        --text "Total of $items_count $par_item_name.$message_select" \
+        $par_columns $message 2>/dev/null) || _exit_script
+
+    # Open the selected items.
+    if ((items_count != 0)) && [[ -n "$selected_items" ]]; then
+        case "$par_action" in
+        "open_file") xdg-open "$selected_items" ;;
+        "open_location")
+            _open_items_locations "$selected_items" "$par_resolve_links"
+            ;;
+        "open_url") _open_urls "$selected_items" ;;
+        "delete_item") _delete_items "$selected_items" ;;
+        esac
+    fi
+}
+
+_display_list_box_kdialog() {
+    local message=$1
+    local par_columns=$2
+
+    par_columns=$(sed "s|--column:||g" <<<"$par_columns")
+    par_columns=$(tr "," "\t" <<<"$par_columns")
+    message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
+    message="$par_columns"$'\n'$'\n'"$message"
+    kdialog --title "$(_get_script_name)" \
+        --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
+        --textinputbox "" "$message" &>/dev/null || _exit_script
+}
+
+_display_list_box_xmessage() {
+    local message=$1
+    local par_columns=$2
+
+    par_columns=$(sed "s|--column:||g" <<<"$par_columns")
+    par_columns=$(tr "," "\t" <<<"$par_columns")
+    message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
+    message="$par_columns"$'\n'$'\n'"$message"
+    xmessage -title "$(_get_script_name)" \
+        "$message" &>/dev/null || _exit_script
 }
 
 _display_password_box() {
@@ -1738,7 +1801,7 @@ _open_items_locations() {
     #   resolved to their target locations before opening.
 
     local items=$1
-    local resolve_links=$2
+    local par_resolve_links=$2
 
     # Exit if no items are provided.
     if [[ -z "$items" ]]; then
@@ -1779,7 +1842,7 @@ _open_items_locations() {
         fi
 
         # Resolve symbolic links to their target locations if requested.
-        if [[ "$resolve_links" == "true" ]] && [[ -L "$item" ]]; then
+        if [[ "$par_resolve_links" == "true" ]] && [[ -L "$item" ]]; then
             item=$(readlink -f "$item")
         fi
         items_open+="$item$FIELD_SEPARATOR"
@@ -1814,6 +1877,31 @@ _open_items_locations() {
         done
         ;;
     esac
+}
+
+_open_urls() {
+    # This function opens a list of URLs in the system's default web browser.
+    #
+    # Parameters:
+    #   - $1 (urls): A space-separated list of URLs to be opened. Each URL
+    #     should be a valid web address (e.g., "http://example.com").
+
+    local urls=$1
+    local url=""
+
+    # Exit if no URLs are provided.
+    if [[ -z "$urls" ]]; then
+        return
+    fi
+
+    for url in $urls; do
+        # Ensure the URL starts with "http://" or "https://".
+        if [[ ! "$url" =~ ^https?:// ]]; then
+            url="https://$url"
+        fi
+
+        xdg-open "$url" &>/dev/null &
+    done
 }
 
 _pkg_get_package_manager() {
@@ -1949,6 +2037,28 @@ _pkg_is_package_installed() {
         ;;
     esac
     return 1
+}
+
+_delete_items() {
+    # This function deletes specified files or directories, either by moving
+    # them to the trash (if supported) or by permanently deleting them.
+
+    local items=$1
+    local warning_message=""
+    warning_message="This action will delete the selected files."
+    warning_message="$warning_message\n\nDo you want to continue?"
+
+    if ! _display_question_box "$warning_message"; then
+        return
+    fi
+
+    if _command_exists "gio"; then
+        # shellcheck disable=SC2086
+        gio trash -- $items 2>/dev/null || true
+    else
+        # shellcheck disable=SC2086
+        rm -rf -- $items 2>/dev/null || true
+    fi
 }
 
 _recent_scripts_organize() {

@@ -19,7 +19,7 @@ _main() {
     std_output=$(find $input_files -type l ! -path "$IGNORE_FIND_PATH" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
 
-    _display_list_box "$std_output" "--column=Link" "symbolic links" "false"
+    _display_list_box "$std_output" "par_columns='--column:Link'; par_item_name='symbolic links'; par_resolve_links=false"
 }
 
 _main "$@"
