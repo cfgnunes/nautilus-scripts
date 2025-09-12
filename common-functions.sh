@@ -2167,7 +2167,7 @@ _str_human_readable_path() {
     elif [[ "$output_path" == "~" ]]; then
         output_path="home"
     elif [[ "$output_path" == "" ]]; then
-        output_path="(none)"
+        output_path="(None)"
     else
         output_path="'$output_path'"
     fi

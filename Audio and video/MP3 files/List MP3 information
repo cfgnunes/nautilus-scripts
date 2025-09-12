@@ -48,20 +48,20 @@ _main_task() {
 
     # Check if the values are not empty.
     if [[ -z "$mode" ]]; then
-        mode="(empty)"
+        mode="(Empty)"
     elif [[ "${mode,,}" == "constant" ]]; then
         mode="CBR"
     elif [[ "${mode,,}" == "variable" ]]; then
         mode="VBR"
     fi
     if [[ -z "$bit_rate" ]]; then
-        bit_rate="(empty)"
+        bit_rate="(Empty)"
     fi
     if [[ -z "$sampling_rate" ]]; then
-        sampling_rate="(empty)"
+        sampling_rate="(Empty)"
     fi
     if [[ -z "$channels" ]]; then
-        channels="(empty)"
+        channels="(Empty)"
     fi
 
     _storage_text_write_ln "$mode$FIELD_SEPARATOR$bit_rate$FIELD_SEPARATOR$sampling_rate$FIELD_SEPARATOR$channels$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
