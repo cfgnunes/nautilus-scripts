@@ -395,18 +395,10 @@ _display_error_box() {
     #   - $1 (message): The error message to display.
 
     local message=$1
-    local show_banners=""
-
-    # Check if GNOME 'show-banners' setting is enabled (Do Not Disturb).
-    if _command_exists "gsettings"; then
-        show_banners=$(gsettings get \
-            org.gnome.desktop.notifications show-banners 2>/dev/null)
-    fi
 
     if ! _is_gui_session; then
         printf "Error: %s\n" "$message" >&2
-    elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]] &&
-        [[ "$show_banners" != "false" ]]; then
+    elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-error" "$(_get_script_name)" "$message"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --error \
