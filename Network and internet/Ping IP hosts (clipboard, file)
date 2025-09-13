@@ -20,6 +20,9 @@ _main() {
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all; par_get_pwd=true")
 
+    # Export functions to be used inside new shells (when using 'xargs').
+    export -f _resolve_host
+
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$(_prepare_input "$input_files")" "$output_dir"
 
@@ -35,6 +38,7 @@ _main_task() {
     local std_output=""
     local timeout_value="5"
     local status="🟢"
+    local hostname=""
 
     # Run the main process.
     std_output=$(LC_ALL=C ping -n -c 3 -W "$timeout_value" -- "$input_file" 2>/dev/null)
@@ -50,9 +54,14 @@ _main_task() {
         status="🔴"
     fi
 
+    hostname=$(_resolve_host "$input_file")
+    if [[ -n "$hostname" ]]; then
+        hostname=" ($hostname)"
+    fi
+
     std_output=$(_text_remove_empty_lines "$std_output")
 
-    _storage_text_write_ln "$status IP: $input_file"$'\n'"$std_output"$'\n'
+    _storage_text_write_ln "$status IP: $input_file$hostname"$'\n'"$std_output"$'\n'
 }
 
 _extract_ips() {
@@ -97,6 +106,31 @@ _prepare_input() {
     fi
 
     _convert_text_to_delimited_string "$ips"
+}
+
+_resolve_host() {
+    local ip=$1
+    local hostname=""
+
+    # Try local resolution (via /etc/hosts, NSS, etc.).
+    hostname=$(getent hosts "$ip" | awk '{print $2}' | head -n1)
+
+    if [[ -n "$hostname" ]]; then
+        printf "%s" "$hostname"
+        return 0
+    fi
+
+    # If not found locally, try online resolution.
+    if _command_exists "host"; then
+        hostname=$(host "$ip" | awk '/domain name pointer/ {print $5}')
+    elif _command_exists "dig"; then
+        hostname=$(dig -x "$ip" +short)
+    fi
+
+    # shellcheck disable=SC2001
+    hostname=$(sed "s|\.$||" <<<"$hostname")
+
+    printf "%s" "$hostname"
 }
 
 _main "$@"
