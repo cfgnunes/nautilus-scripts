@@ -399,7 +399,7 @@ _display_error_box() {
     if ! _is_gui_session; then
         printf "Error: %s\n" "$message" >&2
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
-        _gdbus_notify "dialog-error" "$(_get_script_name)" "$message"
+        _gdbus_notify "dialog-error" "$(_get_script_name)" "$message" "2"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --error \
             --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
@@ -422,7 +422,7 @@ _display_info_box() {
     if ! _is_gui_session; then
         printf "Info: %s\n" "$message" >&2
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
-        _gdbus_notify "dialog-information" "$(_get_script_name)" "$message"
+        _gdbus_notify "dialog-information" "$(_get_script_name)" "$message" "1"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --info \
             --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
@@ -952,10 +952,12 @@ _gdbus_notify() {
     #   - $1 (icon): The icon to display with the notification.
     #   - $2 (title): The title of the notification.
     #   - $3 (body): The main message to be displayed in the notification.
+    #   - $4 (priority): Optional. The priority level of the notification.
 
     local icon=$1
     local title=$2
     local body=$3
+    local priority=${4:-1} # Default priority is 1 (normal).
     local app_name=$title
     local method="Notify"
     local interface="org.freedesktop.Notifications"
@@ -964,7 +966,7 @@ _gdbus_notify() {
     # Use 'gdbus' to send the notification.
     gdbus call --session --dest "$interface" --object-path "$object_path" \
         --method "$interface.$method" "$app_name" 0 "$icon" "$title" "$body" \
-        "[]" '{"urgency": <1>}' 5000 &>/dev/null
+        "[]" "{\"urgency\": <$priority>}" 5000 &>/dev/null
 }
 
 _get_clipboard_data() {
