@@ -37,7 +37,11 @@ _main_task() {
     local timeout_value="5"
 
     # Run the main process.
-    std_output=$(LC_ALL=C curl --max-time "$timeout_value" --connect-timeout 3 -o /dev/null -s -w "%{http_code}\n" "$input_file" 2>/dev/null)
+    std_output=$(LC_ALL=C curl --max-time "$timeout_value" --connect-timeout 3 -o /dev/null -s -w "%{http_code}" "$input_file" 2>/dev/null)
+
+    if [[ -z "$std_output" ]]; then
+        return
+    fi
 
     _storage_text_write_ln "$std_output$FIELD_SEPARATOR$input_file"
 }
