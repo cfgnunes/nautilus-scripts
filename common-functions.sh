@@ -473,10 +473,6 @@ _display_list_box() {
     # Evaluate the values from the 'parameters' variable.
     eval "$parameters"
 
-    if [[ -n "$par_columns" ]]; then
-        par_columns=$(tr ":" "=" <<<"$par_columns")
-    fi
-
     _close_wait_box
     _logs_consolidate ""
 
@@ -518,6 +514,7 @@ _display_list_box_zenity() {
     local header_label=""
 
     if [[ -n "$par_columns" ]]; then
+        par_columns=$(tr ":" "=" <<<"$par_columns")
         # Count the number of columns.
         columns_count=$(grep --only-matching "column=" <<<"$par_columns" | wc -l)
     fi
@@ -785,7 +782,7 @@ _display_wait_box_message() {
 
     # Check if the KDialog is available.
     elif _command_exists "kdialog"; then
-        _get_qdbus_command || return 0
+        _get_qdbus_command &>/dev/null || return 0
         # Control flag to inform that a 'wait_box' will open
         # (if the task takes over 2 seconds).
         touch "$WAIT_BOX_CONTROL"
@@ -810,7 +807,7 @@ _display_wait_box_message() {
                     if [[ -n "$dbus_ref" ]]; then
                         # Check if the user has cancelled the wait box.
                         $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" \
-                            "wasCancelled" 2>/dev/null || _exit_script
+                            "wasCancelled" &>/dev/null || _exit_script
                     fi
                 fi
                 sleep 0.2
