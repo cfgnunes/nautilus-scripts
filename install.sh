@@ -170,13 +170,15 @@ _item_create_backup() {
     fi
 }
 
-_item_remove() {
-    local item=$1
+_delete_items() {
+    local items=$1
 
     if _command_exists "gio"; then
-        gio trash -- "$item" 2>/dev/null || true
+        # shellcheck disable=SC2086
+        gio trash -- $items 2>/dev/null || true
     else
-        rm -rf -- "$item" 2>/dev/null || true
+        # shellcheck disable=SC2086
+        rm -rf -- $items 2>/dev/null || true
     fi
 }
 
@@ -346,7 +348,7 @@ _step_install_scripts() {
         mv -- "$INSTALL_DIR" "$tmp_install_dir" || true
     else
         printf " > Removing previous scripts...\n"
-        _item_remove "$INSTALL_DIR"
+        _delete_items "$INSTALL_DIR"
     fi
 
     printf " > Installing new scripts...\n"
@@ -397,7 +399,7 @@ _step_install_menus_dolphin() {
     printf " > Installing Dolphin actions...\n"
 
     local desktop_menus_dir="$HOME/.local/share/kio/servicemenus"
-    _item_remove "$desktop_menus_dir"
+    _delete_items "$desktop_menus_dir"
     mkdir --parents "$desktop_menus_dir"
 
     local filename=""
@@ -492,7 +494,7 @@ _step_install_menus_pcmanfm() {
     printf " > Installing PCManFM-Qt actions...\n"
 
     local desktop_menus_dir="$HOME/.local/share/file-manager/actions"
-    _item_remove "$desktop_menus_dir"
+    _delete_items "$desktop_menus_dir"
     mkdir --parents "$desktop_menus_dir"
 
     # Create the 'Scripts.desktop' menu.
@@ -615,7 +617,7 @@ _step_install_menus_thunar() {
 
     # Create a backup of older custom actions.
     _item_create_backup "$menus_file"
-    _item_remove "$menus_file"
+    _delete_items "$menus_file"
 
     mkdir --parents "$HOME/.config/Thunar"
 
@@ -769,7 +771,7 @@ _step_install_shortcuts_nautilus() {
 
     # Create a backup of older custom actions.
     _item_create_backup "$accels_file"
-    _item_remove "$accels_file"
+    _delete_items "$accels_file"
 
     {
         local filename=""
@@ -805,7 +807,7 @@ _step_install_shortcuts_gnome2() {
 
     # Create a backup of older custom actions.
     _item_create_backup "$accels_file"
-    _item_remove "$accels_file"
+    _delete_items "$accels_file"
 
     {
         # Disable the shortcut for "OpenAlternate" (<control><shift>o).
@@ -850,7 +852,7 @@ _step_install_shortcuts_thunar() {
 
     # Create a backup of older custom actions.
     _item_create_backup "$accels_file"
-    _item_remove "$accels_file"
+    _delete_items "$accels_file"
 
     {
         # Default Thunar shortcuts.
