@@ -2062,7 +2062,7 @@ _delete_items() {
 
     local items=$1
     local warning_message=""
-    warning_message="This action will delete the selected files."
+    warning_message="This action will delete the selected items."
     warning_message="$warning_message\n\nDo you want to continue?"
 
     if ! _display_question_box "$warning_message"; then
@@ -2075,6 +2075,22 @@ _delete_items() {
     else
         # shellcheck disable=SC2086
         rm -rf -- $items 2>/dev/null || true
+    fi
+
+    # Verify if all items were deleted.
+    local failed_items=""
+    for item in $items; do
+        if [[ -e "$item" ]]; then
+            failed_items+="$item"$'\n'
+        fi
+    done
+
+    if [[ -n "$failed_items" ]]; then
+        _log_error "Some items could not be deleted." \
+            "" "$failed_items" ""
+        _logs_consolidate ""
+    else
+        _display_info_box "All selected items were successfully deleted!"
     fi
 }
 
