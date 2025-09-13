@@ -76,19 +76,13 @@ _extract_ips() {
 
 _prepare_input() {
     local input_files=$1
-    local item_1=""
     local file_data=""
     local clipboard_data=""
     local ips=""
 
-    # Check if the input is a file or a directory. If it is a directory,
-    # get the IPs from the clipboard.
-    item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
-    if [[ ! -d "$item_1" ]]; then
-        # shellcheck disable=SC2086
-        file_data=$(cat -- $input_files 2>/dev/null)
-        ips=$(_extract_ips "$file_data")
-    fi
+    # shellcheck disable=SC2086
+    file_data=$(cat -- $input_files 2>/dev/null)
+    ips=$(_extract_ips "$file_data")
 
     # If there are no valid IPs in the file(s),
     # get the IPs from the clipboard.
