@@ -510,6 +510,7 @@ _display_list_box_zenity() {
     local items_count=0
     local selected_items=""
     local message_select=""
+    local header_label=""
 
     if [[ -n "$par_columns" ]]; then
         # Count the number of columns.
@@ -521,13 +522,16 @@ _display_list_box_zenity() {
     fi
 
     # Set the selection message based on the action and item count.
-    if ((items_count != 0)); then
+    if ((items_count > 0)); then
         case "$par_action" in
-        "open_file") message_select=" Select files to open:" ;;
-        "open_location") message_select=" Select items to open their locations:" ;;
-        "open_url") message_select=" Select URLs to open them:" ;;
-        "delete_item") message_select=" Select items to delete them:" ;;
+        "open_file") message_select="Select files to open:" ;;
+        "open_location") message_select="Select items to open their locations:" ;;
+        "open_url") message_select="Select URLs to open them:" ;;
+        "delete_item") message_select="Select items to delete them:" ;;
         esac
+        header_label="Total of $items_count $par_item_name. $message_select"
+    else
+        header_label="No $par_item_name."
     fi
 
     if [[ -z "$message" ]]; then
@@ -543,11 +547,11 @@ _display_list_box_zenity() {
         --editable --multiple --separator="$FIELD_SEPARATOR" \
         --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
         --print-column "$columns_count" \
-        --text "Total of $items_count $par_item_name.$message_select" \
+        --text "$header_label" \
         $par_columns $message 2>/dev/null) || _exit_script
 
     # Open the selected items.
-    if ((items_count != 0)) && [[ -n "$selected_items" ]]; then
+    if ((items_count > 0)) && [[ -n "$selected_items" ]]; then
         case "$par_action" in
         "open_file") xdg-open "$selected_items" ;;
         "open_location")
