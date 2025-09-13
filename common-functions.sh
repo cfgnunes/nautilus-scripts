@@ -448,7 +448,7 @@ _display_list_box() {
     #   - "par_item_name": A string representing the name of the items in the
     #   list. If not provided, the default value is "items".
     #   - "par_action": The action to perform on the selected items. Possible
-    #   values include (the default action is "open_location"):
+    #   values include:
     #       - "open_file": Opens the selected files with the default
     #         application.
     #       - "open_location": Opens the file manager at the location of the
@@ -467,7 +467,7 @@ _display_list_box() {
     # Default values for input parameters.
     local par_columns=""
     local par_item_name="items"
-    local par_action="open_location"
+    local par_action=""
     local par_resolve_links="true"
 
     # Evaluate the values from the 'parameters' variable.

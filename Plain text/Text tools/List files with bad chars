@@ -21,7 +21,7 @@ _main() {
     local std_output=""
     std_output=$(_storage_text_read_all)
 
-    _display_list_box "$std_output" "par_columns='--column:Char,--column:Line,--column:File'; par_item_name='files with bad chars'"
+    _display_list_box "$std_output" "par_columns='--column:Char,--column:Line,--column:File'; par_item_name='files with bad chars'; par_action=open_location"
 }
 
 _main_task() {

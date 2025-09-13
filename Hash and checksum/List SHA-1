@@ -23,7 +23,7 @@ _main() {
     # shellcheck disable=SC2001
     std_output=$(sed "s|\(.*\)$FIELD_SEPARATOR\(.*\)|\2$FIELD_SEPARATOR\1|g" <<<"$std_output")
 
-    _display_list_box "$std_output" "par_columns='--column:SHA-1,--column:File'; par_item_name=files"
+    _display_list_box "$std_output" "par_columns='--column:SHA-1,--column:File'; par_item_name=files; par_action=open_location"
 }
 
 _main_task() {
