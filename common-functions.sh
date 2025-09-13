@@ -434,11 +434,24 @@ _display_list_box() {
     #
     # Parameters:
     #   - $1 (message): A string containing the items to display in the list.
-    #   - $2 (columns): Column definitions for the list, typically in the
+    #   - $1 (parameters): A string containing key-value pairs that configure
+    #   the function's behavior. Example: 'par_item_name=files'.
+    #
+    # Parameters options:
+    #   - "par_columns": Column definitions for the list, typically in the
     #   format "--column:<name>,--column:<name>".
-    #   - $3 (item_name): A string representing the name of the items in the
+    #   - "par_item_name": A string representing the name of the items in the
     #   list. If not provided, the default value is "items".
-    #   - $4 (resolve_links): A boolean-like string ("true" or "false")
+    #   - "par_action": The action to perform on the selected items. Possible
+    #   values include (the default action is "open_location"):
+    #       - "open_file": Opens the selected files with the default
+    #         application.
+    #       - "open_location": Opens the file manager at the location of the
+    #         selected items.
+    #       - "open_url": Opens the selected URLs in the default web browser.
+    #       - "delete_item": Deletes the selected items after user
+    #     confirmation.
+    #   - "par_resolve_links": A boolean-like string ("true" or "false")
     #   indicating whether symbolic links in item paths should be resolved to
     #   their target locations when opening the item's location. Defaults to
     #   "true".
