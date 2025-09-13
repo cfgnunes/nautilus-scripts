@@ -63,15 +63,42 @@ _main_task() {
 
 _extract_ips() {
     local data=$1
+    local output=""
+    local ip=""
+    local base=""
+    local start=""
+    local end=""
 
     if [[ -z "$data" ]]; then
         return
     fi
 
-    data=$(grep --only-matching --perl-regexp '\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b' <<<"$data")
-    data=$(sort --unique <<<"$data")
+    # Extract:
+    #   - Single IPs
+    #   - IP ranges (192.168.1.1-254)
+    #   (CIDR notation like 192.168.1.0/24 is ignored)
+    data=$(grep -oP '\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)(?:-\d{1,3})?\b' <<<"$data")
 
-    printf "%s" "$data"
+    # Expand IP ranges.
+    while read -r ip; do
+        # Case: IP range (e.g., 192.168.1.1-254).
+        if [[ "$ip" =~ ^([0-9]+\.[0-9]+\.[0-9]+)\.([0-9]+)-([0-9]+)$ ]]; then
+            base="${BASH_REMATCH[1]}"
+            start="${BASH_REMATCH[2]}"
+            end="${BASH_REMATCH[3]}"
+            for ((i = start; i <= end; i++)); do
+                output+="$base.$i"$'\n'
+            done
+        # Case: Single IP.
+        else
+            output+="$ip"$'\n'
+        fi
+    done <<<"$data"
+
+    output=$(sort --unique <<<"$output")
+    output=$(_text_remove_empty_lines "$output")
+
+    printf "%s" "$output"
 }
 
 _prepare_input() {
