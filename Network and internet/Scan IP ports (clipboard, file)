@@ -138,6 +138,15 @@ _resolve_host() {
         return 0
     fi
 
+    # Try SSH config files.
+    hostname=$(grep -i -r -h -B3 "Hostname .*$ip" "$HOME/.ssh/" 2>/dev/null |
+        grep -i "Host " | awk '{print $2}' | head -n 1)
+
+    if [[ -n "$hostname" ]]; then
+        printf "%s" "$hostname"
+        return 0
+    fi
+
     # If not found locally, try online resolution.
     if _command_exists "host"; then
         hostname=$(host "$ip" | awk '/domain name pointer/ {print $5}')
