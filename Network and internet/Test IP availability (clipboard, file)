@@ -30,7 +30,7 @@ _main() {
     std_output=$(_storage_text_read_all)
     std_output=$(sort --version-sort --reverse <<<"$std_output")
 
-    _display_text_box "$std_output"
+    _display_list_box "$std_output" "par_columns='--column:Status,--column:Response,--column:IP,--column:Hostname'; par_item_name=IPs"
 }
 
 _main_task() {
@@ -74,11 +74,11 @@ _main_task() {
     fi
 
     hostname=$(_resolve_host "$input_file")
-    if [[ -n "$hostname" ]]; then
-        hostname=" ($hostname)"
+    if [[ -z "$hostname" ]]; then
+        hostname="(Unknown)"
     fi
 
-    _storage_text_write_ln "$status IP: $input_file$hostname - $std_output"
+    _storage_text_write_ln "$status$FIELD_SEPARATOR$std_output$FIELD_SEPARATOR$input_file$FIELD_SEPARATOR$hostname"
 }
 
 _extract_ips() {
