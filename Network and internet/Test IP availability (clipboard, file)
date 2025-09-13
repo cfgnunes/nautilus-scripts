@@ -28,6 +28,7 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
+    std_output=$(sort --version-sort --reverse <<<"$std_output")
 
     _display_text_box "$std_output"
 }
@@ -77,7 +78,7 @@ _main_task() {
         hostname=" ($hostname)"
     fi
 
-    _storage_text_write_ln "$status IP: $input_file$hostname"$'\n'"$std_output"$'\n'
+    _storage_text_write_ln "$status IP: $input_file$hostname - $std_output"
 }
 
 _extract_ips() {
