@@ -37,11 +37,11 @@ _main_task() {
     local output_dir=$2
     local std_output=""
     local timeout_value="5"
-    local status="🟢"
+    local status="🟡"
     local hostname=""
 
     # Run the main process.
-    std_output=$(LC_ALL=C nmap -n -Pn -T4 --max-retries 1 --open --host-timeout "$timeout_value"s "$input_file" 2>/dev/null)
+    std_output=$(LC_ALL=C nmap -n -Pn -T4 --max-retries 1 --host-timeout "$timeout_value"s "$input_file" 2>/dev/null)
 
     # shellcheck disable=SC2001
     std_output=$(grep --extended-regexp "^[0-9]+/(tcp|udp)\b" <<<"$std_output" || true)
@@ -49,6 +49,8 @@ _main_task() {
     if [[ -z "$std_output" ]]; then
         std_output="(None)"
         status="🔴"
+    elif [[ "$std_output" == *" open "* ]]; then
+        status="🟢"
     fi
 
     hostname=$(_resolve_host "$input_file")
