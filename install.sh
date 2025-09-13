@@ -210,13 +210,9 @@ _step_install_dependencies() {
     if ! _command_exists "genisoimage" && ! _command_exists "mkisofs"; then
         _command_exists "xorriso" || packages+="xorriso "
     fi
-    # Packages for images.
-    _command_exists "optipng" || packages+="optipng "
     # Packages for PDF.
     _command_exists "gs" || packages+="ghostscript "
     _command_exists "qpdf" || packages+="qpdf "
-    # Packages for security.
-    _command_exists "photorec" || packages+="testdisk "
     # Packages for other scripts.
     _command_exists "rhash" || packages+="rhash "
 
@@ -228,7 +224,6 @@ _step_install_dependencies() {
         _command_exists "xz" || packages+="xz "
         _command_exists "pdfinfo" || packages+="poppler "
         _command_exists "ffmpeg" || packages+="ffmpeg "
-        _command_exists "photorec" || packages+="testdisk "
         _command_exists "rdfind" || packages+="rdfind "
         _command_exists "unsquashfs" || packages+="squashfs-tools "
         _command_exists "exiftool" || packages+="perl-image-exiftool "
@@ -245,8 +240,6 @@ _step_install_dependencies() {
             _command_exists "xz" || packages+="xz-utils "
             _command_exists "pdfinfo" || packages+="poppler-utils "
             _command_exists "ffmpeg" || packages+="ffmpeg "
-            _command_exists "foremost" || packages+="foremost "
-            _command_exists "photorec" || packages+="testdisk "
             _command_exists "rdfind" || packages+="rdfind "
             _command_exists "unsquashfs" || packages+="squashfs-tools "
             _command_exists "exiftool" || packages+="libimage-exiftool-perl "
@@ -271,8 +264,6 @@ _step_install_dependencies() {
             _command_exists "xz" || packages+="xz "
             _command_exists "pdfinfo" || packages+="poppler-utils "
             _command_exists "ffmpeg" || packages+="ffmpeg-free "
-            _command_exists "foremost" || packages+="foremost "
-            _command_exists "photorec" || packages+="testdisk "
             _command_exists "rdfind" || packages+="rdfind "
             _command_exists "unsquashfs" || packages+="squashfs-tools "
             _command_exists "exiftool" || packages+="perl-Image-ExifTool "
@@ -288,8 +279,6 @@ _step_install_dependencies() {
             _command_exists "convert" || packages+="imagemagick "
             _command_exists "xz" || packages+="xz "
             _command_exists "pdfinfo" || packages+="poppler "
-            _command_exists "foremost" || packages+="foremost "
-            _command_exists "photorec" || packages+="testdisk "
             _command_exists "rdfind" || packages+="rdfind "
             _command_exists "unsquashfs" || packages+="squashfs-tools "
             _command_exists "exiftool" || packages+="perl-image-exiftool "
@@ -306,7 +295,6 @@ _step_install_dependencies() {
             _command_exists "xz" || packages+="xz "
             _command_exists "pdfinfo" || packages+="poppler-tools "
             _command_exists "ffmpeg" || packages+="ffmpeg "
-            _command_exists "photorec" || packages+="photorec "
             _command_exists "unsquashfs" || packages+="squashfs "
             _command_exists "exiftool" || packages+="exiftool "
             _command_exists "perl" || packages+="perl-base "
