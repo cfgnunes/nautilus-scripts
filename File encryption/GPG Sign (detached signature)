@@ -23,8 +23,18 @@ _main() {
     users=$(gpg --list-secret-keys --with-colons 2>/dev/null |
         grep --ignore-case "^uid" | cut -d ':' -f 10)
     if [[ -z "$users" ]]; then
-        _display_error_box "Failed: no secret keys imported!"
-        _exit_script
+        local message="No secret keys were found.\nDo you want to import a key now?"
+        if _display_question_box "$message"; then
+            _import_key
+            users=$(gpg --list-secret-keys --with-colons 2>/dev/null |
+                grep --ignore-case "^uid" | cut -d ':' -f 10)
+            if [[ -z "$users" ]]; then
+                _display_error_box "Failed to import the secret key!"
+                _exit_script
+            fi
+        else
+            _exit_script
+        fi
     fi
 
     sleep 0.2 # Avoid 'wait_box' open before.
@@ -90,6 +100,32 @@ _main_task() {
         --output "$output_file" \
         -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+}
+
+_import_key() {
+    local input_file=""
+    local std_output=""
+    local key_id=""
+
+    input_file=$(_display_file_selection_box \
+        "Key files | *.asc *.gpg *.pgp" \
+        "Choose a key file to import.")
+
+    if [[ -z "$input_file" ]]; then
+        _exit_script
+    fi
+
+    # Get the ID from the key.
+    key_id=$(gpg --with-colons --import-options show-only --import "$input_file" |
+        grep -m1 "^fpr" | cut -d ':' -f 10 2>/dev/null)
+
+    # Import the key.
+    std_output=$(gpg --batch --yes --import "$input_file" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    # Set the trust level to 'ultimate'.
+    std_output=$(printf "%s\n" "$key_id:6:" | gpg --batch --yes --import-ownertrust 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
 _main "$@"
