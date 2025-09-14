@@ -2,7 +2,7 @@
 
 # Install the scripts for file managers.
 
-set -eu
+set -u
 
 # -----------------------------------------------------------------------------
 # CONSTANTS
@@ -166,7 +166,7 @@ _item_create_backup() {
     local item=$1
 
     if [[ -e "$item" ]] && [[ ! -e "$item.bak" ]]; then
-        mv -- "$item" "$item.bak" 2>/dev/null || true
+        mv -- "$item" "$item.bak" 2>/dev/null
     fi
 }
 
@@ -175,10 +175,10 @@ _delete_items() {
 
     if _command_exists "gio"; then
         # shellcheck disable=SC2086
-        gio trash -- $items 2>/dev/null || true
+        gio trash -- $items 2>/dev/null
     else
         # shellcheck disable=SC2086
-        rm -rf -- $items 2>/dev/null || true
+        rm -rf -- $items 2>/dev/null
     fi
 }
 
@@ -245,7 +245,7 @@ _step_install_dependencies() {
                 fi
             fi
             if [[ -n "$packages" ]]; then
-                sudo apt-get update || true
+                sudo apt-get update
                 sudo apt-get -y install $packages
             fi
         elif _command_exists "dnf"; then
@@ -259,7 +259,7 @@ _step_install_dependencies() {
             _command_exists "exiftool" || packages+="perl-Image-ExifTool "
             _command_exists "perl" || packages+="perl-base "
             if [[ -n "$packages" ]]; then
-                sudo dnf check-update || true
+                sudo dnf check-update
                 sudo dnf -y install $packages
             fi
         elif _command_exists "pacman"; then
@@ -272,7 +272,7 @@ _step_install_dependencies() {
             _command_exists "exiftool" || packages+="perl-image-exiftool "
             _command_exists "perl" || packages+="perl-base "
             if [[ -n "$packages" ]]; then
-                sudo pacman -Syy || true
+                sudo pacman -Syy
                 sudo pacman --noconfirm -S $packages
             fi
         elif _command_exists "zypper"; then
@@ -286,7 +286,7 @@ _step_install_dependencies() {
             _command_exists "exiftool" || packages+="exiftool "
             _command_exists "perl" || packages+="perl-base "
             if [[ -n "$packages" ]]; then
-                sudo zypper refresh || true
+                sudo zypper refresh
                 sudo zypper --non-interactive install $packages
             fi
         else
@@ -300,7 +300,7 @@ _step_install_dependencies() {
 
     # Fix permissions in ImageMagick to write PDF files.
     local imagemagick_policy=""
-    imagemagick_policy=$(find /etc/ImageMagick-[0-9]*/policy.xml 2>/dev/null) || true
+    imagemagick_policy=$(find /etc/ImageMagick-[0-9]*/policy.xml 2>/dev/null)
     if [[ -f "$imagemagick_policy" ]]; then
         printf " > Fixing write permission with PDF in ImageMagick...\n"
         sudo sed -i \
@@ -320,7 +320,7 @@ _step_install_scripts() {
     if [[ "$menu_options" == *"preserve"* ]]; then
         printf " > Preserving previous scripts to a temporary directory...\n"
         tmp_install_dir=$(mktemp -d)
-        mv -- "$INSTALL_DIR" "$tmp_install_dir" || true
+        mv -- "$INSTALL_DIR" "$tmp_install_dir"
     else
         printf " > Removing previous scripts...\n"
         _delete_items "$INSTALL_DIR"
@@ -483,7 +483,7 @@ _step_install_menus_pcmanfm() {
             ! -path "*/.assets*" \
             ! -path "*/.git*" \
             ! -path "*/.helper-scripts*" \
-            -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";" || true
+            -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";"
         printf "\n"
     } >"${desktop_menus_dir}/Scripts.desktop"
     chmod +x "${desktop_menus_dir}/Scripts.desktop"
@@ -506,7 +506,7 @@ _step_install_menus_pcmanfm() {
                 ! -path "*/.assets*" \
                 ! -path "*/.git*" \
                 ! -path "*/.helper-scripts*" \
-                -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";" || true)
+                -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";")
             if [[ -z "$dir_items" ]]; then
                 continue
             fi
@@ -878,11 +878,11 @@ _step_close_filemanager() {
 
     case "$FILE_MANAGER" in
     "nautilus" | "caja" | "nemo" | "thunar")
-        $FILE_MANAGER -q &>/dev/null || true &
+        $FILE_MANAGER -q &>/dev/null &
         ;;
     "pcmanfm-qt")
         # FIXME: Restore desktop after kill PCManFM-Qt.
-        killall "$FILE_MANAGER" &>/dev/null || true &
+        killall "$FILE_MANAGER" &>/dev/null &
         ;;
     esac
 }

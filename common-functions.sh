@@ -1006,7 +1006,7 @@ _get_filename_extension() {
 
     printf "%s" "$filename" |
         grep --ignore-case --only-matching --perl-regexp \
-            "(\.tar)?\.[a-z0-9_~-]{0,15}$" || true
+            "(\.tar)?\.[a-z0-9_~-]{0,15}$"
 }
 
 _get_filename_full_path() {
@@ -2075,10 +2075,10 @@ _delete_items() {
 
     if _command_exists "gio"; then
         # shellcheck disable=SC2086
-        gio trash -- $items 2>/dev/null || true
+        gio trash -- $items 2>/dev/null
     else
         # shellcheck disable=SC2086
-        rm -rf -- $items 2>/dev/null || true
+        rm -rf -- $items 2>/dev/null
     fi
 
     # Verify if all items were deleted.
@@ -2363,7 +2363,7 @@ _strip_filename_extension() {
 _text_remove_empty_lines() {
     local input_text=$1
 
-    grep -v "^\s*$" <<<"$input_text" || true
+    grep -v "^\s*$" <<<"$input_text"
 }
 
 _text_remove_home() {

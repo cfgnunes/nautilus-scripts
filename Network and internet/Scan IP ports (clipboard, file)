@@ -44,7 +44,7 @@ _main_task() {
     std_output=$(LC_ALL=C nmap -n -Pn -T4 --max-retries 1 --host-timeout "$timeout_value"s "$input_file" 2>/dev/null)
 
     # shellcheck disable=SC2001
-    std_output=$(grep --extended-regexp "^[0-9]+/(tcp|udp)\b" <<<"$std_output" || true)
+    std_output=$(grep --extended-regexp "^[0-9]+/(tcp|udp)\b" <<<"$std_output")
 
     if [[ -z "$std_output" ]]; then
         std_output="(None)"
