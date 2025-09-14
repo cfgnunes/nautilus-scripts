@@ -300,7 +300,7 @@ _step_install_dependencies() {
 
     # Fix permissions in ImageMagick to write PDF files.
     local imagemagick_policy=""
-    imagemagick_policy=$(find /etc/ImageMagick-[0-9]*/policy.xml 2>/dev/null)
+    imagemagick_policy=$(find /etc/ImageMagick-[0-9]*/policy.xml 2>/dev/null) || true
     if [[ -f "$imagemagick_policy" ]]; then
         printf " > Fixing write permission with PDF in ImageMagick...\n"
         sudo sed -i \
