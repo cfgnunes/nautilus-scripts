@@ -207,25 +207,19 @@ _step_install_dependencies() {
     _command_exists "tar" || packages+="tar "
     _command_exists "unzip" || packages+="unzip "
     _command_exists "zip" || packages+="zip "
-    if ! _command_exists "genisoimage" && ! _command_exists "mkisofs"; then
-        _command_exists "xorriso" || packages+="xorriso "
-    fi
+
     # Packages for PDF.
     _command_exists "gs" || packages+="ghostscript "
     _command_exists "qpdf" || packages+="qpdf "
-    # Packages for other scripts.
-    _command_exists "rhash" || packages+="rhash "
 
     if _command_exists "guix"; then
-        # Package manager "guix": For Guix systems (no root required)
+        # Package manager "guix": For Guix systems (no root required).
         _command_exists "pandoc" || packages+="pandoc "
         _command_exists "7za" || packages+="p7zip "
         _command_exists "convert" || packages+="imagemagick "
         _command_exists "xz" || packages+="xz "
         _command_exists "pdfinfo" || packages+="poppler "
         _command_exists "ffmpeg" || packages+="ffmpeg "
-        _command_exists "rdfind" || packages+="rdfind "
-        _command_exists "unsquashfs" || packages+="squashfs-tools "
         _command_exists "exiftool" || packages+="perl-image-exiftool "
         _command_exists "perl" || packages+="perl "
         if [[ -n "$packages" ]]; then
@@ -240,8 +234,6 @@ _step_install_dependencies() {
             _command_exists "xz" || packages+="xz-utils "
             _command_exists "pdfinfo" || packages+="poppler-utils "
             _command_exists "ffmpeg" || packages+="ffmpeg "
-            _command_exists "rdfind" || packages+="rdfind "
-            _command_exists "unsquashfs" || packages+="squashfs-tools "
             _command_exists "exiftool" || packages+="libimage-exiftool-perl "
             _command_exists "perl" || packages+="perl-base "
             if _command_exists "kdialog"; then
@@ -264,8 +256,6 @@ _step_install_dependencies() {
             _command_exists "xz" || packages+="xz "
             _command_exists "pdfinfo" || packages+="poppler-utils "
             _command_exists "ffmpeg" || packages+="ffmpeg-free "
-            _command_exists "rdfind" || packages+="rdfind "
-            _command_exists "unsquashfs" || packages+="squashfs-tools "
             _command_exists "exiftool" || packages+="perl-Image-ExifTool "
             _command_exists "perl" || packages+="perl-base "
             if [[ -n "$packages" ]]; then
@@ -279,8 +269,6 @@ _step_install_dependencies() {
             _command_exists "convert" || packages+="imagemagick "
             _command_exists "xz" || packages+="xz "
             _command_exists "pdfinfo" || packages+="poppler "
-            _command_exists "rdfind" || packages+="rdfind "
-            _command_exists "unsquashfs" || packages+="squashfs-tools "
             _command_exists "exiftool" || packages+="perl-image-exiftool "
             _command_exists "perl" || packages+="perl-base "
             if [[ -n "$packages" ]]; then
@@ -295,7 +283,6 @@ _step_install_dependencies() {
             _command_exists "xz" || packages+="xz "
             _command_exists "pdfinfo" || packages+="poppler-tools "
             _command_exists "ffmpeg" || packages+="ffmpeg "
-            _command_exists "unsquashfs" || packages+="squashfs "
             _command_exists "exiftool" || packages+="exiftool "
             _command_exists "perl" || packages+="perl-base "
             if [[ -n "$packages" ]]; then
