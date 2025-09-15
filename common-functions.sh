@@ -460,6 +460,9 @@ _display_list_box() {
     #   indicating whether symbolic links in item paths should be resolved to
     #   their target locations when opening the item's location. Defaults to
     #   "true".
+    #   - "par_checkbox": A boolean-like string ("true" or "false") indicating
+    #   the list should include checkboxes for item selection. Defaults to
+    #   "false".
 
     local message=$1
     local parameters=$2
@@ -469,6 +472,7 @@ _display_list_box() {
     local par_item_name="items"
     local par_action=""
     local par_resolve_links="true"
+    local par_checkbox="false"
 
     # Evaluate the values from the 'parameters' variable.
     eval "$parameters"
@@ -477,19 +481,25 @@ _display_list_box() {
     _logs_consolidate ""
 
     if ! _is_gui_session; then
-        _display_list_box_terminal "$message"
+        _display_list_box_terminal "$message" "$par_checkbox"
     elif _command_exists "zenity"; then
         _display_list_box_zenity "$message" "$par_columns" \
-            "$par_item_name" "$par_action" "$par_resolve_links"
+            "$par_item_name" "$par_action" "$par_resolve_links" "$par_checkbox"
     elif _command_exists "kdialog"; then
-        _display_list_box_kdialog "$message" "$par_columns"
+        _display_list_box_kdialog "$message" "$par_columns" "$par_checkbox"
     elif _command_exists "xmessage"; then
-        _display_list_box_xmessage "$message" "$par_columns"
+        _display_list_box_xmessage "$message" "$par_columns" "$par_checkbox"
     fi
 }
 
 _display_list_box_terminal() {
     local message=$1
+    local par_checkbox=$2
+
+    if [[ "$par_checkbox" == "true" ]]; then
+        message=$(sed "s|^FALSE$FIELD_SEPARATOR||g" <<<"$message")
+        message=$(sed "s|^TRUE$FIELD_SEPARATOR||g" <<<"$message")
+    fi
 
     if [[ -z "$message" ]]; then
         message="(Empty result)"
@@ -506,6 +516,7 @@ _display_list_box_zenity() {
     local par_item_name=$3
     local par_action=$4
     local par_resolve_links=$5
+    local par_checkbox=$6
 
     local columns_count=0
     local items_count=0
@@ -513,10 +524,17 @@ _display_list_box_zenity() {
     local message_select=""
     local header_label=""
 
+    if [[ "$par_checkbox" == "true" ]]; then
+        par_columns="--column=Select$FIELD_SEPARATOR$par_columns"
+        par_columns="--checklist$FIELD_SEPARATOR$par_columns"
+    fi
+
     if [[ -n "$par_columns" ]]; then
         par_columns=$(tr ":" "=" <<<"$par_columns")
         # Count the number of columns.
-        columns_count=$(grep --only-matching "column=" <<<"$par_columns" | wc -l)
+        columns_count=$(
+            grep --only-matching "column=" <<<"$par_columns" | wc -l
+        )
     fi
 
     if [[ -n "$message" ]]; then
@@ -526,10 +544,18 @@ _display_list_box_zenity() {
     # Set the selection message based on the action and item count.
     if ((items_count > 0)); then
         case "$par_action" in
-        "open_file") message_select="Select files to open:" ;;
-        "open_location") message_select="Select items to open their locations:" ;;
-        "open_url") message_select="Select URLs to open them:" ;;
-        "delete_item") message_select="Select items to delete them:" ;;
+        "open_file")
+            message_select="Select files to open:"
+            ;;
+        "open_location")
+            message_select="Select items to open their locations:"
+            ;;
+        "open_url")
+            message_select="Select URLs to open them:"
+            ;;
+        "delete_item")
+            message_select="Select items to delete them:"
+            ;;
         esac
         header_label="Total of $items_count $par_item_name. $message_select"
     else
@@ -568,6 +594,12 @@ _display_list_box_zenity() {
 _display_list_box_kdialog() {
     local message=$1
     local par_columns=$2
+    local par_checkbox=$3
+
+    if [[ "$par_checkbox" == "true" ]]; then
+        message=$(sed "s|^FALSE$FIELD_SEPARATOR||g" <<<"$message")
+        message=$(sed "s|^TRUE$FIELD_SEPARATOR||g" <<<"$message")
+    fi
 
     par_columns=$(sed "s|--column:||g" <<<"$par_columns")
     par_columns=$(tr "," "\t" <<<"$par_columns")
@@ -581,6 +613,12 @@ _display_list_box_kdialog() {
 _display_list_box_xmessage() {
     local message=$1
     local par_columns=$2
+    local par_checkbox=$3
+
+    if [[ "$par_checkbox" == "true" ]]; then
+        message=$(sed "s|^FALSE$FIELD_SEPARATOR||g" <<<"$message")
+        message=$(sed "s|^TRUE$FIELD_SEPARATOR||g" <<<"$message")
+    fi
 
     par_columns=$(sed "s|--column:||g" <<<"$par_columns")
     par_columns=$(tr "," "\t" <<<"$par_columns")
