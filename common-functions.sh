@@ -1324,14 +1324,14 @@ _get_items_count() {
     #   the defined $FIELD_SEPARATOR.
 
     local input_files=$1
-    local files_count=0
+    local items_count=0
 
     if [[ -n "$input_files" ]]; then
-        files_count=$(tr -cd "$FIELD_SEPARATOR" <<<"$input_files" | wc -c)
-        ((files_count++))
+        items_count=$(tr -cd "$FIELD_SEPARATOR" <<<"$input_files" | wc -c)
+        ((items_count++))
     fi
 
-    printf "%s" "$files_count"
+    printf "%s" "$items_count"
 }
 
 _get_max_procs() {
