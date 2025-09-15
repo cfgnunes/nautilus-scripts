@@ -2106,7 +2106,7 @@ _delete_items() {
     local warning_message=""
     local items_count=""
     items_count=$(_get_items_count "$items")
-    warning_message="This action will delete the selected $items_count items."
+    warning_message="This action will delete the $items_count selected items."
     warning_message="$warning_message\n\nDo you want to continue?"
 
     if ! _display_question_box "$warning_message"; then
