@@ -570,6 +570,10 @@ _display_list_box_zenity() {
 
     par_columns=$(tr "," "$FIELD_SEPARATOR" <<<"$par_columns")
     message=$(tr "\n" "$FIELD_SEPARATOR" <<<"$message")
+
+    # Avoid leading '-' in the variable to use in command line.
+    message=$(sed "s|$FIELD_SEPARATOR-|$FIELD_SEPARATOR|g" <<<"$message")
+
     # shellcheck disable=SC2086
     selected_items=$(zenity --title "$(_get_script_name)" --list \
         --editable --multiple --separator="$FIELD_SEPARATOR" \
