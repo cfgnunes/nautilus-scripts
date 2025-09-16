@@ -103,7 +103,7 @@ _run_command() {
         local temp_file=""
         temp_file=$(_get_temp_file_dry)
 
-        # NOTE: LibreOffice does not support ' -- ' in the command line.
+        # NOTE: LibreOffice does not support '--' in the command line.
         # NOTE: LibreOffice does not support defining the output file manually.
         std_output=$(libreoffice --headless --convert-to "$output_format" "-env:UserInstallation=file://$temp_file" --outdir "$output_dir" "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" ""
