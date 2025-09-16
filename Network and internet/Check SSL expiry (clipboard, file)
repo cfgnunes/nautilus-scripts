@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+
+# Source the script 'common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+        _check_dependencies "command=openssl | command=wl-paste; package=wl-clipboard"
+    else
+        _check_dependencies "command=openssl | command=xclip"
+    fi
+
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=all; par_get_pwd=true")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$(_prepare_input "$input_files")" "$output_dir"
+
+    local std_output=""
+    std_output=$(_storage_text_read_all)
+    std_output=$(sort --version-sort --unique <<<"$std_output")
+
+    _display_list_box "$std_output" "par_columns='--column:Status,--column:Days left,--column:URL'; par_item_name=URLs; par_action=open_url"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local days_left=""
+    local end_date_epoch=""
+    local end_date=""
+    local host=""
+    local now_epoch=""
+    local status=""
+    local timeout_value="3"
+
+    # Remove the port from the host if specified.
+    input_file=$(sed -E 's#^(https?://[^:/]+)(:[0-9]+)?(/.*)?$#\1\3#' <<<"$input_file")
+
+    # Extract hostname and port from the input URL (default port: 443).
+    host=$(sed -E 's#^https?://##; s#/.*##' <<<"$input_file")
+
+    # Retrieve the remote SSL certificate and extract its expiration date.
+    end_date=$(timeout "$timeout_value" bash -c \
+        "echo | openssl s_client -servername \"$host\" \
+        -connect \"$host:443\" 2>/dev/null \
+        | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2")
+
+    if [[ -n "$end_date" ]]; then
+        # Convert expiration date to epoch and calculate days remaining.
+        end_date_epoch=$(date -d "$end_date" +%s)
+        now_epoch=$(date +%s)
+        days_left=$(((end_date_epoch - now_epoch) / 86400))
+    else
+        days_left="(not found)"
+    fi
+
+    if ((days_left < 0)); then
+        days_left="0"
+    fi
+
+    # Set status based on days remaining.
+    if ((days_left > 30)); then
+        status="🟢"
+    elif ((days_left > 0)); then
+        status="🟠"
+    else
+        status="🔴"
+    fi
+
+    _storage_text_write_ln "$status$FIELD_SEPARATOR$days_left$FIELD_SEPARATOR$host"
+}
+
+_extract_urls() {
+    # This function extracts unique URLs or domain-like strings from input
+    # text. It matches three main types:
+    #  - URLs with IP addresses (with optional port and path)
+    #  - URLs with domain names (with optional port, path, or subdomains)
+    #  - Plain domain names, with or without "www."
+    #
+    # Example matches:
+    #  - http://192.168.0.1:8080/api
+    #  - https://example.com/path
+    #  - www.google.com
+    #  - example.org
+    #
+    # The function sorts and deduplicates the matches before printing.
+
+    local data=${1,,}
+    local re_ip="https?://(?:[0-9]{1,3}\.){3}[0-9]{1,3}"
+    local re_port_path="(?::[0-9]+)?(?:/[^[:space:]'\"\)\]\>]*)?"
+    local re_domain="https?://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+    local re_plain="(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+
+    if [[ -z "$data" ]]; then
+        return
+    fi
+
+    data=$(grep --only-matching --perl-regexp \
+        "($re_ip$re_port_path|$re_domain$re_port_path|$re_plain)" <<<"$data")
+    data=$(sort --unique <<<"$data")
+
+    printf "%s" "$data"
+}
+
+_prepare_input() {
+    local input_files=$1
+    local file_data=""
+    local clipboard_data=""
+    local urls=""
+
+    # shellcheck disable=SC2086
+    file_data=$(cat -- $input_files 2>/dev/null)
+    urls=$(_extract_urls "$file_data")
+
+    # If there are no valid URLs in the file(s),
+    # get the URLs from the clipboard.
+    if [[ -z "$urls" ]]; then
+        clipboard_data=$(_get_clipboard_data)
+        urls=$(_extract_urls "$clipboard_data")
+    fi
+
+    if [[ -z "$urls" ]]; then
+        _display_error_box "There are no valid URLs in the clipboard or in the selected file(s)!"
+        _exit_script
+    fi
+
+    _convert_text_to_delimited_string "$urls"
+}
+
+_main "$@"
