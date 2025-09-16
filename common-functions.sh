@@ -599,6 +599,7 @@ _display_list_box_kdialog() {
     local message=$1
     local par_columns=$2
     local par_checkbox=$3
+    local temp_file=""
 
     if [[ "$par_checkbox" == "true" ]]; then
         message=$(sed "s|^FALSE$FIELD_SEPARATOR||g" <<<"$message")
@@ -609,9 +610,13 @@ _display_list_box_kdialog() {
     par_columns=$(tr "," "\t" <<<"$par_columns")
     message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
     message="$par_columns"$'\n'$'\n'"$message"
+
+    temp_file="$TEMP_DIR/display_text_box_kdialog"
+    printf "%s" "$message" >"$temp_file"
     kdialog --title "$(_get_script_name)" \
         --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
-        --textinputbox "" "$message" &>/dev/null || _exit_script
+        --textinputbox "" \
+        --textbox "$temp_file" &>/dev/null || _exit_script
 }
 
 _display_list_box_xmessage() {
@@ -712,6 +717,8 @@ _display_text_box() {
     #     "(Empty result)" is shown.
 
     local message=$1
+    local temp_file=""
+
     _close_wait_box
     _logs_consolidate ""
 
@@ -726,10 +733,12 @@ _display_text_box() {
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             <<<"$message" &>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
+        temp_file="$TEMP_DIR/display_text_box_kdialog"
+        printf "%s" "$message" >"$temp_file"
         kdialog --title "$(_get_script_name)" \
             --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
             --textinputbox "" \
-            "$message" &>/dev/null || _exit_script
+            --textbox "$temp_file" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" \
             "$message" &>/dev/null || _exit_script
@@ -834,7 +843,8 @@ _display_wait_box_message() {
         #   - Opens the KDialog 'wait_box' if the control flag still exists.
         sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] &&
             kdialog --title="$(_get_script_name)" \
-                --progressbar "$message" 0 >"$WAIT_BOX_CONTROL_KDE" &
+                --progressbar "$message" 0 >"$WAIT_BOX_CONTROL_KDE" \
+                2>/dev/null &
 
         # Launch another background thread to monitor the KDialog 'wait_box':
         #   - Periodically checks if the dialog has been closed or cancelled.
