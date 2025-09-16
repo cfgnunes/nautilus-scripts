@@ -28,7 +28,8 @@ TEMP_DIR_ITEMS_TO_REMOVE="$TEMP_DIR/items_to_remove"
 TEMP_DIR_LOGS="$TEMP_DIR/logs"
 TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
 TEMP_DIR_TASK="$TEMP_DIR/task"
-WAIT_BOX_CONTROL_KDE="$TEMP_DIR/wait_box_control_kde"
+TEMP_TEXT_BOX_KDIALOG="$TEMP_DIR/text_box_kdialog"
+WAIT_BOX_CONTROL_KDIALOG="$TEMP_DIR/wait_box_control_kdialog"
 WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control"
 WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"
 
@@ -47,7 +48,8 @@ readonly \
     TEMP_DIR_LOGS \
     TEMP_DIR_STORAGE_TEXT \
     TEMP_DIR_TASK \
-    WAIT_BOX_CONTROL_KDE \
+    TEMP_TEXT_BOX_KDIALOG \
+    WAIT_BOX_CONTROL_KDIALOG \
     WAIT_BOX_CONTROL \
     WAIT_BOX_FIFO
 
@@ -602,7 +604,6 @@ _display_list_box_kdialog() {
     local message=$1
     local par_columns=$2
     local par_checkbox=$3
-    local temp_file=""
 
     if [[ "$par_checkbox" == "true" ]]; then
         message=$(sed "s|^FALSE$FIELD_SEPARATOR||g" <<<"$message")
@@ -614,12 +615,11 @@ _display_list_box_kdialog() {
     message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
     message="$par_columns"$'\n'$'\n'"$message"
 
-    temp_file="$TEMP_DIR/display_text_box_kdialog"
-    printf "%s" "$message" >"$temp_file"
+    printf "%s" "$message" >"$TEMP_TEXT_BOX_KDIALOG"
     kdialog --title "$(_get_script_name)" \
         --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
         --textinputbox "" \
-        --textbox "$temp_file" &>/dev/null || _exit_script
+        --textbox "$TEMP_TEXT_BOX_KDIALOG" &>/dev/null || _exit_script
 }
 
 _display_list_box_xmessage() {
@@ -720,7 +720,6 @@ _display_text_box() {
     #     "(Empty result)" is shown.
 
     local message=$1
-    local temp_file=""
 
     _close_wait_box
     _logs_consolidate ""
@@ -736,12 +735,11 @@ _display_text_box() {
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             <<<"$message" &>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
-        temp_file="$TEMP_DIR/display_text_box_kdialog"
-        printf "%s" "$message" >"$temp_file"
+        printf "%s" "$message" >"$TEMP_TEXT_BOX_KDIALOG"
         kdialog --title "$(_get_script_name)" \
             --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
             --textinputbox "" \
-            --textbox "$temp_file" &>/dev/null || _exit_script
+            --textbox "$TEMP_TEXT_BOX_KDIALOG" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" \
             "$message" &>/dev/null || _exit_script
@@ -846,7 +844,7 @@ _display_wait_box_message() {
         #   - Opens the KDialog 'wait_box' if the control flag still exists.
         sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] &&
             kdialog --title="$(_get_script_name)" \
-                --progressbar "$message" 0 >"$WAIT_BOX_CONTROL_KDE" \
+                --progressbar "$message" 0 >"$WAIT_BOX_CONTROL_KDIALOG" \
                 2>/dev/null &
 
         # Launch another background thread to monitor the KDialog 'wait_box':
@@ -854,11 +852,11 @@ _display_wait_box_message() {
         #   - If KDialog 'wait_box' is cancelled, exit the script.
         (
             while [[ -f "$WAIT_BOX_CONTROL" ]] ||
-                [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
-                if [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; then
+                [[ -f "$WAIT_BOX_CONTROL_KDIALOG" ]]; do
+                if [[ -f "$WAIT_BOX_CONTROL_KDIALOG" ]]; then
                     # Extract the D-Bus reference for the KDialog instance.
                     local dbus_ref=""
-                    dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
+                    dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDIALOG")
                     if [[ -n "$dbus_ref" ]]; then
                         # Check if the user has cancelled the wait box.
                         $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" \
@@ -888,15 +886,15 @@ _close_wait_box() {
     fi
 
     # Check if KDialog 'wait_box' is open.
-    while [[ -f "$WAIT_BOX_CONTROL_KDE" ]]; do
+    while [[ -f "$WAIT_BOX_CONTROL_KDIALOG" ]]; do
         # Extract the D-Bus reference for the KDialog instance.
         local dbus_ref=""
-        dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDE")
+        dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDIALOG")
         if [[ -n "$dbus_ref" ]]; then
             # Close the KDialog 'wait_box'.
             $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" \
                 "close" 2>/dev/null
-            rm -f -- "$WAIT_BOX_CONTROL_KDE"
+            rm -f -- "$WAIT_BOX_CONTROL_KDIALOG"
         fi
         sleep 0.2
     done
@@ -2255,7 +2253,8 @@ _run_task_parallel() {
         TEMP_DIR_ITEMS_TO_REMOVE \
         TEMP_DIR_LOGS \
         TEMP_DIR_STORAGE_TEXT \
-        TEMP_DIR_TASK
+        TEMP_DIR_TASK \
+        TEMP_TEXT_BOX_KDIALOG
 
     # Export functions to be used inside new shells (when using 'xargs').
     export -f \
