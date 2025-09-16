@@ -1507,7 +1507,7 @@ _get_qdbus_command() {
     #   - "0" (true): If a command matching the pattern "qdbus" is found.
     #   - "1" (false): If no command matching the pattern "qdbus" is found.
 
-    compgen -c | grep --perl-regexp -m1 "^qdbus" || return 1
+    compgen -c | grep --perl-regexp -m1 "^qdbus[0-9]*(-qt[0-9])?$" || return 1
     return 0
 }
 
