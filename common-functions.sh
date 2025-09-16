@@ -960,12 +960,12 @@ _find_filtered_files() {
 
     if [[ -n "$par_select_extension" ]]; then
         find_command+=" -regextype posix-extended "
-        find_command+=" -regex \".*\.($par_select_extension)$\""
+        find_command+=" -iregex \".*\.($par_select_extension)$\""
     fi
 
     if [[ -n "$par_skip_extension" ]]; then
         find_command+=" -regextype posix-extended "
-        find_command+=" ! -regex \".*\.($par_skip_extension)$\""
+        find_command+=" ! -iregex \".*\.($par_skip_extension)$\""
     fi
 
     find_command+=" ! -path \"$IGNORE_FIND_PATH\""
