@@ -28,7 +28,7 @@ TEMP_DIR_ITEMS_TO_REMOVE="$TEMP_DIR/items_to_remove"
 TEMP_DIR_LOGS="$TEMP_DIR/logs"
 TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
 TEMP_DIR_TASK="$TEMP_DIR/task"
-TEMP_TEXT_BOX_KDIALOG="$TEMP_DIR/text_box_kdialog"
+TEMP_TEXT_BOX="$TEMP_DIR/text_box"
 WAIT_BOX_CONTROL_KDIALOG="$TEMP_DIR/wait_box_control_kdialog"
 WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control"
 WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"
@@ -48,7 +48,7 @@ readonly \
     TEMP_DIR_LOGS \
     TEMP_DIR_STORAGE_TEXT \
     TEMP_DIR_TASK \
-    TEMP_TEXT_BOX_KDIALOG \
+    TEMP_TEXT_BOX \
     WAIT_BOX_CONTROL_KDIALOG \
     WAIT_BOX_CONTROL \
     WAIT_BOX_FIFO
@@ -615,11 +615,11 @@ _display_list_box_kdialog() {
     message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
     message="$par_columns"$'\n'$'\n'"$message"
 
-    printf "%s" "$message" >"$TEMP_TEXT_BOX_KDIALOG"
+    printf "%s" "$message" >"$TEMP_TEXT_BOX"
     kdialog --title "$(_get_script_name)" \
         --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
         --textinputbox "" \
-        --textbox "$TEMP_TEXT_BOX_KDIALOG" &>/dev/null || _exit_script
+        --textbox "$TEMP_TEXT_BOX" &>/dev/null || _exit_script
 }
 
 _display_list_box_xmessage() {
@@ -636,8 +636,10 @@ _display_list_box_xmessage() {
     par_columns=$(tr "," "\t" <<<"$par_columns")
     message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
     message="$par_columns"$'\n'$'\n'"$message"
+
+    printf "%s" "$message" >"$TEMP_TEXT_BOX"
     xmessage -title "$(_get_script_name)" \
-        "$message" &>/dev/null || _exit_script
+        -file "$TEMP_TEXT_BOX" &>/dev/null || _exit_script
 }
 
 _display_password_box() {
@@ -735,14 +737,15 @@ _display_text_box() {
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             <<<"$message" &>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
-        printf "%s" "$message" >"$TEMP_TEXT_BOX_KDIALOG"
+        printf "%s" "$message" >"$TEMP_TEXT_BOX"
         kdialog --title "$(_get_script_name)" \
             --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
             --textinputbox "" \
-            --textbox "$TEMP_TEXT_BOX_KDIALOG" &>/dev/null || _exit_script
+            --textbox "$TEMP_TEXT_BOX" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
+        printf "%s" "$message" >"$TEMP_TEXT_BOX"
         xmessage -title "$(_get_script_name)" \
-            "$message" &>/dev/null || _exit_script
+            -file "$TEMP_TEXT_BOX" &>/dev/null || _exit_script
     fi
 }
 
@@ -2254,7 +2257,7 @@ _run_task_parallel() {
         TEMP_DIR_LOGS \
         TEMP_DIR_STORAGE_TEXT \
         TEMP_DIR_TASK \
-        TEMP_TEXT_BOX_KDIALOG
+        TEMP_TEXT_BOX
 
     # Export functions to be used inside new shells (when using 'xargs').
     export -f \
