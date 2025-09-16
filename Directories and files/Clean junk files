@@ -30,6 +30,7 @@ _main() {
         -type d -iname ".TemporaryItems" -o \
         -type d -iname ".trash" -o \
         -type d -iname "*.tmp" -o \
+        -type d -iname "latex.out" -o \
         -type f -iname "._*" -o \
         -type f -iname ".*.swo" -o \
         -type f -iname ".*.swp" -o \
@@ -57,7 +58,6 @@ _main() {
         -type f -iname "condaenv.*.requirements.txt" -o \
         -type f -iname "desktop.ini" -o \
         -type f -iname "ehthumbs.db" -o \
-        -type f -iname "latex.out" -o \
         -type f -iname "npm-debug.log*" -o \
         -type f -iname "Thumbs.db" -o \
         -type f -iname "yarn-*.log*" \
