@@ -81,6 +81,9 @@ _cleanup_on_exit() {
     # designed to safely and efficiently remove temporary directories or files
     # that were created during the script's execution.
 
+    # Wait a moment to ensure all processes have completed.
+    sleep 2
+
     # Remove local temporary dirs or files.
     local items_to_remove=""
     items_to_remove=$(cat -- "$TEMP_DIR_ITEMS_TO_REMOVE/"* 2>/dev/null)
