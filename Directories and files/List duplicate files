@@ -20,10 +20,10 @@ _main() {
     # Work on a temporary file.
     temp_file=$(_get_temp_file)
 
-    # NOTE: The 'rdfind' does not support ' -- ' in the command line.
 
     # Run the main process.
     # shellcheck disable=SC2086
+    # NOTE: The 'rdfind' does not support ' -- ' in the command line.
     rdfind -dryrun true -removeidentinode false -outputname "$temp_file" $input_files &>/dev/null
 
     # FORMAT THE OUTPUT:

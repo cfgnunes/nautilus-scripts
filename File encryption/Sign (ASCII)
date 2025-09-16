@@ -39,7 +39,6 @@ _main() {
 
     sleep 0.2 # Avoid 'wait_box' open before.
 
-    # shellcheck disable=SC2086
     if _command_exists "zenity"; then
         users=$(_convert_text_to_delimited_string "$users")
         local zenity_user_list=()
@@ -67,11 +66,12 @@ _main() {
         # shellcheck disable=SC2001
         users=$(sed "s|\(.*\)|\1:\1:off|g" <<<"$users")
         users=$(tr ":\n" "$FIELD_SEPARATOR" <<<"$users")
+        # shellcheck disable=SC2086
         TEMP_DATA_TASK=$(kdialog \
             --title "Select a user" \
             --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
             --radiolist "Select a user from the list below." \
-            $users 2>/dev/null) || _exit_script
+            -- $users 2>/dev/null) || _exit_script
     fi
 
     if [[ -z "$TEMP_DATA_TASK" ]]; then
