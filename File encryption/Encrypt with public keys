@@ -39,7 +39,7 @@ _main() {
 
     sleep 0.2 # Avoid 'wait_box' open before.
 
-    if _command_exists "szenity"; then
+    if _command_exists "zenity"; then
         users=$(_convert_text_to_delimited_string "$users")
         local zenity_user_list=()
 
