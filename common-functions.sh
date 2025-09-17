@@ -550,19 +550,19 @@ _display_list_box_zenity() {
     if ((items_count > 0)); then
         case "$par_action" in
         "open_file")
-            message_select="Select files to open:"
+            message_select="Select the ones to open:"
             ;;
         "open_location")
-            message_select="Select items to open their locations:"
+            message_select="Select the ones to open in the file manager:"
             ;;
         "open_url")
-            message_select="Select URLs to open them:"
+            message_select="Select the ones to open in the web browser:"
             ;;
         "delete_item")
-            message_select="Select items to delete them:"
+            message_select="Select the ones to delete:"
             ;;
         esac
-        header_label="Total of $items_count $par_item_name. $message_select"
+        header_label="$items_count $par_item_name. $message_select"
     else
         header_label="No $par_item_name."
     fi
