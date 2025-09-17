@@ -583,13 +583,38 @@ _display_list_box_zenity() {
     # Avoid leading '-' in the variable to use in command line.
     message=$(sed "s|$FIELD_SEPARATOR-|$FIELD_SEPARATOR|g" <<<"$message")
 
-    # shellcheck disable=SC2086
-    selected_items=$(zenity --title "$(_get_script_name)" --list \
-        --editable --multiple --separator="$FIELD_SEPARATOR" \
-        --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-        --print-column "$columns_count" \
-        --text "$header_label" \
-        $par_columns $message 2>/dev/null) || _exit_script
+    # Get the system limit for arguments.
+    local arg_max=""
+    local msg_size=""
+    local safet_margin=65536 # Reserve space for extra args.
+    arg_max=$(getconf ARG_MAX)
+    msg_size=$(printf "%s" "$message" | wc -c)
+
+    if ((msg_size > arg_max - safet_margin)); then
+        # Alternative strategy: use stdin instead of passing arguments directly
+        # This avoids the "Argument list too long" error when '$message' is too
+        # large.
+        # shellcheck disable=SC2086
+        selected_items=$(
+            zenity --title "$(_get_script_name)" --list \
+                --editable --multiple --separator="$FIELD_SEPARATOR" \
+                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+                --print-column "$columns_count" \
+                --text "$header_label" \
+                $par_columns <<<"$message" 2>/dev/null
+        ) || _exit_script
+    else
+        # Default strategy: pass '$message' directly as arguments (fast).
+        # shellcheck disable=SC2086
+        selected_items=$(
+            zenity --title "$(_get_script_name)" --list \
+                --editable --multiple --separator="$FIELD_SEPARATOR" \
+                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+                --print-column "$columns_count" \
+                --text "$header_label" \
+                $par_columns $message 2>/dev/null
+        ) || _exit_script
+    fi
 
     # Open the selected items.
     if ((items_count > 0)) && [[ -n "$selected_items" ]]; then
@@ -725,9 +750,10 @@ _display_text_box() {
     if ! _is_gui_session; then
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
+        printf "%s" "$message" >"$TEMP_TEXT_BOX"
         zenity --title "$(_get_script_name)" --text-info --no-wrap \
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-            <<<"$message" &>/dev/null || _exit_script
+            --filename="$TEMP_TEXT_BOX" &>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
         printf "%s" "$message" >"$TEMP_TEXT_BOX"
         kdialog --title "$(_get_script_name)" \
