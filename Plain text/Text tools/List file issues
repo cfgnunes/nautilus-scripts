@@ -21,7 +21,7 @@ _main() {
     std_output=$(_storage_text_read_all)
     std_output=$(_text_sort "$std_output")
 
-    _display_list_box "$std_output" "par_columns='--column:Issues,--column:File'; par_item_name=files; par_action=open_location"
+    _display_list_box "$std_output" "par_columns='--column:Issues,--column:File'; par_item_name=files; par_action=open_location; par_checkbox=true"
 }
 
 _main_task() {

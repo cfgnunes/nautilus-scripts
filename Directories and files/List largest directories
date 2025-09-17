@@ -23,7 +23,7 @@ _main() {
     std_output=$(sort -h --reverse <<<"$std_output") # Sort the result.
     std_output=$(head -n 15 <<<"$std_output")
 
-    _display_list_box "$std_output" "par_columns='--column:Size,--column:File'; par_item_name='largest directories'; par_action=open_location"
+    _display_list_box "$std_output" "par_columns='--column:Size,--column:File'; par_item_name='largest directories'; par_action=open_location; par_checkbox=true"
 }
 
 _main_task() {
