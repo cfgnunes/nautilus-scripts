@@ -587,7 +587,7 @@ _display_list_box_zenity() {
     local arg_max=""
     local msg_size=""
     local safet_margin=65536 # Reserve space for extra args.
-    arg_max=$(getconf ARG_MAX)
+    arg_max=$(getconf "ARG_MAX")
     msg_size=$(printf "%s" "$message" | wc -c)
 
     if ((msg_size > arg_max - safet_margin)); then
