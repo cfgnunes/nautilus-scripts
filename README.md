@@ -60,19 +60,19 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Shift>G` | Clone Git URLs (clipboard, file) |
 | `<Control><Shift>X` | Download URLs (clipboard, file)  |
 | `<Control><Shift>O` | Open item location               |
-| `<Control><Shift>E` | List empty directories           |
-| `<Control><Shift>H` | List hidden items                |
+| `<Control><Shift>E` | Find empty directories           |
+| `<Control><Shift>H` | Find hidden items                |
 | `<Control><Shift>P` | List permissions and owners      |
-| `<Control><Shift>U` | List duplicate files             |
+| `<Control><Shift>U` | Find duplicate files             |
 | `<Control><Shift>Y` | List file information            |
-| `<Control><Alt>1`   | List file mime                   |
-| `<Control><Alt>2`   | List files issues                |
+| `<Control><Alt>1`   | List file MIME types             |
+| `<Control><Alt>2`   | List file issues                 |
 | `<Control><Alt>3`   | List files with bad chars        |
 | `<Control><Alt>4`   | List encodings                   |
 | `<Control><Alt>5`   | List line breaks                 |
-| `<Control><Alt>6`   | List lines count                 |
+| `<Control><Alt>6`   | List line count                  |
 | `<Control><Alt>7`   | List max line length             |
-| `<Control><Alt>8`   | List words count                 |
+| `<Control><Alt>8`   | List word count                  |
 | `<Control><Alt>9`   | List largest directories         |
 | `<Control><Alt>0`   | List largest files               |
 
