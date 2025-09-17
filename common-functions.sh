@@ -478,6 +478,7 @@ _display_list_box() {
     local par_action=""
     local par_resolve_links="true"
     local par_checkbox="false"
+    local par_checkbox_value="false"
 
     # Evaluate the values from the 'parameters' variable.
     eval "$parameters"
@@ -486,25 +487,20 @@ _display_list_box() {
     _logs_consolidate ""
 
     if ! _is_gui_session; then
-        _display_list_box_terminal "$message" "$par_checkbox"
+        _display_list_box_terminal "$message"
     elif _command_exists "zenity"; then
         _display_list_box_zenity "$message" "$par_columns" \
-            "$par_item_name" "$par_action" "$par_resolve_links" "$par_checkbox"
+            "$par_item_name" "$par_action" "$par_resolve_links" \
+            "$par_checkbox" "$par_checkbox_value"
     elif _command_exists "kdialog"; then
-        _display_list_box_kdialog "$message" "$par_columns" "$par_checkbox"
+        _display_list_box_kdialog "$message" "$par_columns"
     elif _command_exists "xmessage"; then
-        _display_list_box_xmessage "$message" "$par_columns" "$par_checkbox"
+        _display_list_box_xmessage "$message" "$par_columns"
     fi
 }
 
 _display_list_box_terminal() {
     local message=$1
-    local par_checkbox=$2
-
-    if [[ "$par_checkbox" == "true" ]]; then
-        message=$(sed "s|^FALSE$FIELD_SEPARATOR||g" <<<"$message")
-        message=$(sed "s|^TRUE$FIELD_SEPARATOR||g" <<<"$message")
-    fi
 
     if [[ -z "$message" ]]; then
         message="(Empty result)"
@@ -522,6 +518,7 @@ _display_list_box_zenity() {
     local par_action=$4
     local par_resolve_links=$5
     local par_checkbox=$6
+    local par_checkbox_value=$7
 
     local columns_count=0
     local items_count=0
@@ -529,9 +526,16 @@ _display_list_box_zenity() {
     local message_select=""
     local header_label=""
 
+    # Transform to uppercase.
+    par_checkbox_value=${par_checkbox_value^^}
+
     if [[ "$par_checkbox" == "true" ]]; then
         par_columns="--column=Select$FIELD_SEPARATOR$par_columns"
         par_columns="--checklist$FIELD_SEPARATOR$par_columns"
+
+        # Add the prefix 'TRUE/FALSE' in each item.
+        message=$(sed "s|^\(.*\)$|$par_checkbox_value$FIELD_SEPARATOR\1|" \
+            <<<"$message")
     fi
 
     if [[ -n "$par_columns" ]]; then
@@ -603,12 +607,6 @@ _display_list_box_zenity() {
 _display_list_box_kdialog() {
     local message=$1
     local par_columns=$2
-    local par_checkbox=$3
-
-    if [[ "$par_checkbox" == "true" ]]; then
-        message=$(sed "s|^FALSE$FIELD_SEPARATOR||g" <<<"$message")
-        message=$(sed "s|^TRUE$FIELD_SEPARATOR||g" <<<"$message")
-    fi
 
     par_columns=$(sed "s|--column:||g" <<<"$par_columns")
     par_columns=$(tr "," "\t" <<<"$par_columns")
@@ -625,12 +623,6 @@ _display_list_box_kdialog() {
 _display_list_box_xmessage() {
     local message=$1
     local par_columns=$2
-    local par_checkbox=$3
-
-    if [[ "$par_checkbox" == "true" ]]; then
-        message=$(sed "s|^FALSE$FIELD_SEPARATOR||g" <<<"$message")
-        message=$(sed "s|^TRUE$FIELD_SEPARATOR||g" <<<"$message")
-    fi
 
     par_columns=$(sed "s|--column:||g" <<<"$par_columns")
     par_columns=$(tr "," "\t" <<<"$par_columns")
@@ -2174,6 +2166,7 @@ _delete_items() {
 
     # Verify if all items were deleted.
     local failed_items=""
+    local item=""
     for item in $items; do
         if [[ -e "$item" ]]; then
             failed_items+="$item"$'\n'
