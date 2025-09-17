@@ -62,8 +62,8 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Shift>O` | Open item location               |
 | `<Control><Shift>E` | Find empty directories           |
 | `<Control><Shift>H` | Find hidden items                |
-| `<Control><Shift>P` | List permissions and owners      |
 | `<Control><Shift>U` | Find duplicate files             |
+| `<Control><Shift>P` | List permissions and owners      |
 | `<Control><Shift>Y` | List file information            |
 | `<Control><Alt>1`   | List file MIME types             |
 | `<Control><Alt>2`   | List file issues                 |
