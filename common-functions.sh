@@ -809,6 +809,9 @@ _display_wait_box_message() {
     local message=$1
     local open_delay=${2:-"2"}
 
+    # Avoid open more than one 'wait_box'.
+    [[ -f "$WAIT_BOX_CONTROL" ]] && return 0
+
     if ! _is_gui_session; then
         # For non-GUI sessions, simply print the message to the console.
         printf "%s\n" "$message" >&2
@@ -817,7 +820,7 @@ _display_wait_box_message() {
     elif _command_exists "zenity"; then
         # Control flag to inform that a 'wait_box' will open
         # (if the task takes over 2 seconds).
-        touch "$WAIT_BOX_CONTROL"
+        echo "zenity" >"$WAIT_BOX_CONTROL"
 
         # Create the FIFO for communication with Zenity 'wait_box'.
         if [[ ! -p "$WAIT_BOX_FIFO" ]]; then
@@ -840,32 +843,47 @@ _display_wait_box_message() {
         _get_qdbus_command &>/dev/null || return 0
         # Control flag to inform that a 'wait_box' will open
         # (if the task takes over 2 seconds).
-        touch "$WAIT_BOX_CONTROL"
+        echo "kdialog" >"$WAIT_BOX_CONTROL"
 
-        # Launch a background thread for KDialog 'wait_box':
+        # Launch the "background thread 1", for KDialog 'wait_box':
         #   - Waits for the specified delay.
         #   - Opens the KDialog 'wait_box' if the control flag still exists.
-        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] &&
+        (
+            sleep "$open_delay"
+
+            # Check if the 'wait_box' should open.
+            if [[ ! -f "$WAIT_BOX_CONTROL" ]]; then
+                return 0
+            fi
+
             kdialog --title="$(_get_script_name)" \
                 --progressbar "$message" 0 >"$WAIT_BOX_CONTROL_KDIALOG" \
-                2>/dev/null &
+                2>/dev/null
+        ) &
 
-        # Launch another background thread to monitor the KDialog 'wait_box':
-        #   - Periodically checks if the dialog has been closed or cancelled.
+        # Launch the "background thread 2", to monitor the KDialog 'wait_box':
+        #   - Periodically checks if the dialog has been closed/cancelled.
         #   - If KDialog 'wait_box' is cancelled, exit the script.
         (
+            sleep "$open_delay"
+            # Wait the 'wait_box' finish to write the output file.
+            sleep 0.2
             while [[ -f "$WAIT_BOX_CONTROL" ]] ||
                 [[ -f "$WAIT_BOX_CONTROL_KDIALOG" ]]; do
-                if [[ -f "$WAIT_BOX_CONTROL_KDIALOG" ]]; then
-                    # Extract the D-Bus reference for the KDialog instance.
-                    local dbus_ref=""
-                    dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDIALOG")
-                    if [[ -n "$dbus_ref" ]]; then
-                        # Check if the user has cancelled the wait box.
-                        $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" \
-                            "wasCancelled" &>/dev/null || _exit_script
-                    fi
+                # Extract the D-Bus reference for the KDialog instance.
+                local dbus_ref=""
+                dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDIALOG")
+
+                # Check if the user has cancelled the wait box.
+                local std_output=""
+                std_output=$($(_get_qdbus_command) "$dbus_ref" \
+                    "/ProgressDialog" "wasCancelled" 2>&1)
+
+                if [[ "${std_output,,}" == *"does not exist"* ]]; then
+                    _exit_script
                 fi
+
+                # Short delay to avoid high CPU usage in the loop.
                 sleep 0.2
             done
         ) &
@@ -877,30 +895,45 @@ _close_wait_box() {
     # indicators) that were displayed during the execution of a task. It checks
     # for both Zenity and KDialog wait boxes and handles their closure.
 
-    # Check if 'wait_box' will open.
+    local wait_box_type=""
+
+    # Check if 'wait_box' is opened or will open.
     if [[ -f "$WAIT_BOX_CONTROL" ]]; then
-        rm -f -- "$WAIT_BOX_CONTROL" # Cancel the future open.
-    fi
+        wait_box_type=$(cat -- "$WAIT_BOX_CONTROL" 2>/dev/null)
 
-    # Check if Zenity 'wait_box' is open (waiting for an input in the FIFO).
-    if pgrep -fl "$WAIT_BOX_FIFO" &>/dev/null; then
-        # Close the Zenity using the FIFO.
-        printf "100\n" >"$WAIT_BOX_FIFO"
-    fi
+        # Cancel the future open of any 'wait_box'.
+        rm -f -- "$WAIT_BOX_CONTROL"
 
-    # Check if KDialog 'wait_box' is open.
-    while [[ -f "$WAIT_BOX_CONTROL_KDIALOG" ]]; do
-        # Extract the D-Bus reference for the KDialog instance.
-        local dbus_ref=""
-        dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDIALOG")
-        if [[ -n "$dbus_ref" ]]; then
-            # Close the KDialog 'wait_box'.
-            $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" \
-                "close" 2>/dev/null
-            rm -f -- "$WAIT_BOX_CONTROL_KDIALOG"
+        if [[ "$wait_box_type" == "zenity" ]]; then # Zenity 'wait_box'.
+            # Check if Zenity 'wait_box' is open,
+            # (waiting for an input in the FIFO).
+            if pgrep -fl "$WAIT_BOX_FIFO" &>/dev/null; then
+                # Close the Zenity using the FIFO.
+                printf "100\n" >"$WAIT_BOX_FIFO"
+            fi
+
+        elif [[ "$wait_box_type" == "kdialog" ]]; then # KDialog 'wait_box'.
+            # Wait the 'wait_box' finish to write the output file.
+            sleep 0.3
+
+            if [[ -f "$WAIT_BOX_CONTROL_KDIALOG" ]]; then
+                # Extract the D-Bus reference for the KDialog instance.
+                local dbus_ref=""
+                dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDIALOG")
+
+                # Stop the loop of "background thread 2".
+                rm -f -- "$WAIT_BOX_CONTROL_KDIALOG"
+
+                # Wait the "background thread 2" main loop stop
+                # before close the KDialog 'wait_box'.
+                sleep 0.3
+
+                # Close the KDialog 'wait_box'.
+                $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" \
+                    "close" &>/dev/null
+            fi
         fi
-        sleep 0.2
-    done
+    fi
 }
 
 _exit_script() {
