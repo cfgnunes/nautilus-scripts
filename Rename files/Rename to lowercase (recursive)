@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies ""
 
-    if ! _display_question_box "This action will rename the selected\nfiles and directories recursively.\n\nDo you want to continue?"; then
+    if ! _display_question_box "This action will rename the selected\nfiles and directories recursively.\n\nWould you like to continue?"; then
         _exit_script
     fi
 
