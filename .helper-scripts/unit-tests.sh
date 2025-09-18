@@ -90,7 +90,7 @@ _main() {
     __run_move_file
     __run_move_temp_file_to_output
     __run_open_items_locations
-    __run_pkg_get_package_manager
+    __run_pkg_get_available_package_manager
     __run_pkg_install_packages
     __run_pkg_is_package_installed
     __run_recent_scripts_add
@@ -554,7 +554,7 @@ __run_open_items_locations() {
     printf ""
 }
 
-__run_pkg_get_package_manager() {
+__run_pkg_get_available_package_manager() {
     # TODO: Implement the test.
     printf ""
 }

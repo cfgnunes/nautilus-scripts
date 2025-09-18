@@ -230,7 +230,7 @@ _step_install_dependencies() {
         fi
     elif _command_exists "sudo"; then
         if _command_exists "apt-get"; then
-            # Package manager "apt": For Debian/Ubuntu systems.
+            # Package manager "apt-get": For Debian/Ubuntu systems.
             _command_exists "pandoc" || packages+="pandoc "
             _command_exists "7za" || packages+="p7zip-full "
             _command_exists "convert" || packages+="imagemagick "

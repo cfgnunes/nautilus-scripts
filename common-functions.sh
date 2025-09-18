@@ -131,21 +131,23 @@ _check_dependencies() {
 
     local dependencies=$1
     local packages_to_install=""
-    local pkg_manager_installed=""
+    local pkg_manager_available=""
 
     [[ -z "$dependencies" ]] && return
 
     # Skip duplicated dependencies in the input list.
     dependencies=$(tr "|" "\n" <<<"$dependencies")
-    dependencies=$(tr -d " " <<<"$dependencies")
+    dependencies=$(tr -s " " <<<"$dependencies")
+    dependencies=$(sed "s|; |;|g" <<<"$dependencies")
+    dependencies=$(sed "s|^ ||g" <<<"$dependencies")
     dependencies=$(sort --unique <<<"$dependencies")
     dependencies=$(_text_remove_empty_lines "$dependencies")
 
     [[ -z "$dependencies" ]] && return
 
-    # Get the name of the installed package manager.
-    pkg_manager_installed=$(_pkg_get_package_manager)
-    if [[ -z "$pkg_manager_installed" ]]; then
+    # Get the name of the available package manager.
+    pkg_manager_available=$(_pkg_get_available_package_manager)
+    if [[ -z "$pkg_manager_available" ]]; then
         _display_error_box "Could not find a package manager!"
         _exit_script
     fi
@@ -157,9 +159,18 @@ _check_dependencies() {
         local command=""
         local package=""
         local pkg_manager=""
+        local post_install=""
 
         # Evaluate the values parameters from the 'dependency' variable.
         eval "$dependency"
+
+        # Lowercase the 'pkg_manager' name.
+        pkg_manager=${pkg_manager,,}
+
+        # Fix 'apt' to 'apt-get'
+        if [[ "$pkg_manager" == "apt" ]]; then
+            pkg_manager="apt-get"
+        fi
 
         # Ignore installing the dependency if there is a command in the shell.
         if [[ -n "$command" ]] && _command_exists "$command"; then
@@ -169,14 +180,14 @@ _check_dependencies() {
         # Ignore installing the dependency if the installed
         # package managers differ.
         if [[ -n "$pkg_manager" ]] &&
-            [[ "$pkg_manager_installed" != "$pkg_manager" ]]; then
+            [[ "$pkg_manager_available" != "$pkg_manager" ]]; then
             continue
         fi
 
         # Ignore installing the dependency if the package is already installed
         # (packages that do not have a command).
         if [[ -n "$package" ]] && [[ -z "$command" ]] &&
-            _pkg_is_package_installed "$pkg_manager_installed" "$package"; then
+            _pkg_is_package_installed "$pkg_manager_available" "$package"; then
             continue
         fi
 
@@ -200,7 +211,8 @@ _check_dependencies() {
         message+="Would you like to install them?"
         if _display_question_box "$message"; then
             _pkg_install_packages \
-                "$pkg_manager_installed" "${packages_to_install/ /}"
+                "$pkg_manager_available" "${packages_to_install/ /}" \
+                "$post_install"
         else
             _exit_script
         fi
@@ -2035,33 +2047,31 @@ _open_urls() {
     done
 }
 
-_pkg_get_package_manager() {
+_pkg_get_available_package_manager() {
     # This function detects and returns the name of the package manager
     # available on the system.
     #
     # Output:
     #   - Prints the name of the detected package manager. Possible values are:
-    #     - "apt": Indicates that "apt-get" (Debian/Ubuntu) is available.
-    #     - "dnf": Indicates that "dnf" (Fedora/RHEL) is available.
-    #     - "pacman": Indicates that "pacman" (Arch Linux) is available.
-    #     - "zypper": Indicates that "zypper" (openSUSE) is available.
+    #       - "apt-get" : For Debian/Ubuntu systems.
+    #       - "dnf"     : For Fedora/RHEL systems.
+    #       - "pacman"  : For Arch Linux systems.
+    #       - "zypper"  : For openSUSE systems.
+    #       - "nix"     : For Nix-based systems.
+    #       - "guix"    : For GNU Guix systems.
     #   - If no supported package manager is found, the output is an empty
     #     string.
 
     local pkg_manager=""
 
     # Check for an installed package manager.
-    if _command_exists "apt-get"; then
-        pkg_manager="apt"
-    elif _command_exists "dnf"; then
-        pkg_manager="dnf"
-    elif _command_exists "pacman"; then
-        pkg_manager="pacman"
-    elif _command_exists "zypper"; then
-        pkg_manager="zypper"
-    elif _command_exists "nix"; then
-        pkg_manager="nix"
-    fi
+    local candidate=""
+    for candidate in apt-get dnf pacman zypper nix guix; do
+        if _command_exists "$candidate"; then
+            pkg_manager="$candidate"
+            break
+        fi
+    done
 
     printf "%s" "$pkg_manager"
 }
@@ -2073,14 +2083,18 @@ _pkg_install_packages() {
     # Parameters:
     #   - $1 (pkg_manager): The package manager to use for installation.
     #   Supported values are:
-    #       - "apt": For Debian/Ubuntu systems.
-    #       - "dnf": For Fedora/RHEL systems.
-    #       - "pacman": For Arch Linux systems.
-    #       - "zypper": For openSUSE systems.
+    #       - "apt-get" : For Debian/Ubuntu systems.
+    #       - "dnf"     : For Fedora/RHEL systems.
+    #       - "pacman"  : For Arch Linux systems.
+    #       - "zypper"  : For openSUSE systems.
+    #       - "nix"     : For Nix-based systems.
+    #       - "guix"    : For GNU Guix systems.
     #   - $2 (packages): A space-separated list of package names to install.
 
     local pkg_manager=$1
     local packages=$2
+    local post_install=$3
+    local cmd_install=""
 
     _display_wait_box_message "Installing the packages. Please, wait..."
 
@@ -2092,23 +2106,38 @@ _pkg_install_packages() {
     fi
 
     case "$pkg_manager" in
-    "apt")
-        pkexec bash -c \
-            "apt-get update; apt-get -y install $packages &>/dev/null"
+    "apt-get")
+        cmd_install="apt-get update;"
+        cmd_install+="apt-get -y install $packages &>/dev/null"
         ;;
     "dnf")
-        pkexec bash -c \
-            "dnf check-update; dnf -y install $packages &>/dev/null"
+        cmd_install="dnf check-update;"
+        cmd_install+="dnf -y install $packages &>/dev/null"
         ;;
     "pacman")
-        pkexec bash -c \
-            "pacman -Syy; pacman --noconfirm -S $packages &>/dev/null"
+        cmd_install="pacman -Syy;"
+        cmd_install+="pacman --noconfirm -S $packages &>/dev/null"
         ;;
     "zypper")
-        pkexec bash -c \
-            "zypper refresh; zypper --non-interactive install $packages &>/dev/null"
+        cmd_install="zypper refresh;"
+        cmd_install+="zypper --non-interactive install $packages &>/dev/null"
+        ;;
+    "nix")
+        # Nix does not require root for installing user packages.
+        bash -c \
+            "nix-env -iA nixpkgs.$packages &>/dev/null"
+        ;;
+    "guix")
+        cmd_install="guix package -i $packages &>/dev/null"
         ;;
     esac
+
+    if [[ -n "$pkg_manager" ]]; then
+        if [[ -n "$post_install" ]]; then
+            cmd_install+=";$post_install"
+        fi
+        pkexec bash -c "$cmd_install"
+    fi
 
     _close_wait_box
 
@@ -2132,10 +2161,12 @@ _pkg_is_package_installed() {
     # Parameters:
     #   - $1 (pkg_manager): The package manager to use for the check.
     #   Supported values are:
-    #       - "apt": For Debian/Ubuntu systems.
-    #       - "dnf": For Fedora/RHEL systems.
-    #       - "pacman": For Arch Linux systems.
-    #       - "zypper": For openSUSE systems.
+    #       - "apt-get" : For Debian/Ubuntu systems.
+    #       - "dnf"     : For Fedora/RHEL systems.
+    #       - "pacman"  : For Arch Linux systems.
+    #       - "zypper"  : For openSUSE systems.
+    #       - "nix"     : For Nix-based systems.
+    #       - "guix"    : For GNU Guix systems.
     #   - $2 (package): The name of the package to check.
     #
     # Returns:
@@ -2146,7 +2177,7 @@ _pkg_is_package_installed() {
     local package=$2
 
     case "$pkg_manager" in
-    "apt")
+    "apt-get")
         if dpkg -s "$package" &>/dev/null; then
             return 0
         fi
@@ -2163,6 +2194,16 @@ _pkg_is_package_installed() {
         ;;
     "zypper")
         if zypper search --installed-only "$package" | grep --quiet "^i"; then
+            return 0
+        fi
+        ;;
+    "nix")
+        if nix-env -q "$package" &>/dev/null; then
+            return 0
+        fi
+        ;;
+    "guix")
+        if guix package -I "$package" &>/dev/null; then
             return 0
         fi
         ;;
