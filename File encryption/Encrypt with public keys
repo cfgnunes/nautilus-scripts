@@ -19,6 +19,8 @@ _main() {
     input_files=$(_get_files "par_type=file")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
+    sleep 0.2 # Avoid 'wait_box' open before.
+
     local users=""
     users=$(gpg --list-public-keys --with-colons 2>/dev/null |
         grep --ignore-case "^uid" | cut -d ':' -f 10)
@@ -36,8 +38,6 @@ _main() {
             _exit_script
         fi
     fi
-
-    sleep 0.2 # Avoid 'wait_box' open before.
 
     if _command_exists "zenity"; then
         users=$(_convert_text_to_delimited_string "$users")

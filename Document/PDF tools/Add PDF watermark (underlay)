@@ -16,6 +16,7 @@ _main() {
     output_dir=$(_get_output_dir "par_use_same_dir=false")
 
     sleep 0.2 # Avoid 'wait_box' open before.
+
     TEMP_DATA_TASK=$(_display_file_selection_box \
         "PDF files | *.pdf" \
         "Choose an PDF to use as the watermark")
