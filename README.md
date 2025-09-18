@@ -57,7 +57,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Alt>V`   | Paste as hard link               |
 | `<Control><Shift>V` | Paste as symbolic link           |
 | `<Control><Shift>C` | Compare items                    |
-| `<Control><Shift>G` | Clone Git URLs (clipboard, file) |
+| `<Control><Shift>G` | Git Clone URLs (clipboard, file) |
 | `<Control><Shift>X` | Download URLs (clipboard, file)  |
 | `<Control><Shift>O` | Open item location               |
 | `<Control><Shift>E` | Find empty directories           |
