@@ -581,7 +581,7 @@ _display_list_box_zenity() {
             message_select="Select the ones to delete:"
             ;;
         esac
-        header_label="$items_count $par_item_name. $message_select"
+        header_label="Total: $items_count $par_item_name. $message_select"
     else
         header_label="No $par_item_name."
     fi
