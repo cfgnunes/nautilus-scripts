@@ -1582,11 +1582,28 @@ _get_qdbus_command() {
 }
 
 _get_script_name() {
-    # This function returns the name of the currently executing script. It uses
-    # the "basename" command to extract the script's filename from the full
-    # path provided by "$0".
+    # This function returns the name of the currently executing script.
+    #
+    # If the script is a symbolic link and its name starts with two digits
+    # followed by a space (e.g., "01 My Script"), used in naming of 'Accessed
+    # recently' directory, that prefix is removed. Otherwise, it just returns
+    # the regular basename.
 
-    basename -- "$0"
+    local output=""
+    local script_path=""
+
+    script_path="$0"
+    output="$(basename -- "$script_path")"
+
+    # Check if is a symbolic link.
+    if [[ -L "$script_path" ]]; then
+        # Match "dd " (two digits + space) at the beginning.
+        if [[ "$output" =~ ^([0-9]{2})\ (.*)$ ]]; then
+            output="${BASH_REMATCH[2]}"
+        fi
+    fi
+
+    printf "%s" "$output"
 }
 
 _get_temp_dir_local() {
