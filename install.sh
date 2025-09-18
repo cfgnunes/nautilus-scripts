@@ -173,11 +173,14 @@ _item_create_backup() {
 _delete_items() {
     local items=$1
 
+    # shellcheck disable=SC2086
     if _command_exists "gio"; then
-        # shellcheck disable=SC2086
         gio trash -- $items 2>/dev/null
+    elif _command_exists "kioclient"; then
+        kioclient move -- $items trash:/ 2>/dev/null
+    elif _command_exists "gvfs-trash"; then
+        gvfs-trash -- $items 2>/dev/null
     else
-        # shellcheck disable=SC2086
         rm -rf -- $items 2>/dev/null
     fi
 }
