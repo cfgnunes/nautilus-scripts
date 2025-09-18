@@ -532,10 +532,6 @@ _display_list_box_zenity() {
     if [[ "$par_checkbox" == "true" ]]; then
         par_columns="--column=Select$FIELD_SEPARATOR$par_columns"
         par_columns="--checklist$FIELD_SEPARATOR$par_columns"
-
-        # Add the prefix 'TRUE/FALSE' in each item.
-        message=$(sed "s|^\(.*\)$|$par_checkbox_value$FIELD_SEPARATOR\1|" \
-            <<<"$message")
     fi
 
     if [[ -n "$par_columns" ]]; then
@@ -552,6 +548,13 @@ _display_list_box_zenity() {
 
     # Set the selection message based on the action and item count.
     if ((items_count > 0)); then
+
+        # Add the prefix 'TRUE/FALSE' in each item.
+        if [[ "$par_checkbox" == "true" ]]; then
+            message=$(sed "s|^\(.*\)$|$par_checkbox_value$FIELD_SEPARATOR\1|" \
+                <<<"$message")
+        fi
+
         case "$par_action" in
         "open_file")
             message_select="Select the ones to open:"
