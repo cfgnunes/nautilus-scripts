@@ -31,15 +31,17 @@ While numerous scripts are available for file managers on the web, many suffer f
 - **Dependency management**: Prompts users to install any missing dependencies.
 - **Remote file support:** Works with files stored on remote servers.
 - **Non-destructive output**: Never overwrites the input file; the output is distinct.
-- **Log file**: Produces an `Errors.log` file when a task ends with an error.
+- **Log file**: Produces an `Errors.log` file when a task finishes with an error.
 - **Direct usage**: Direct usage without requiring input parameters.
-- **Keyboard shortcuts**: Provides keyboard shortcuts for the scripts.
-- **File manager compatibility**: Designed for major file managers like GNOME Files (Nautilus), Dolphin, Caja, Nemo and Thunar.
+- **Keyboard shortcuts**: Provides keyboard shortcuts for some scripts.
+- **File manager compatibility**: Designed for major file managers like GNOME Files (Nautilus), Dolphin, Caja, Nemo, PCManFM-Qt and Thunar.
 - **Distro compatibility**: Designed to work on major GNU/Linux distributions, such as Ubuntu, Mint, Debian, Fedora, and Manjaro.
 - **Easy adaptation**: Scripts can be easily copied and adapted for other purposes.
 - **Bash implementation**: All scripts are implemented in Bash. So, the scripts work well in the shell (without a graphical interface) and file managers.
 - **Shell script validation**: All scripts have been checked using [ShellCheck](https://github.com/koalaman/shellcheck).
 - **Easy access to recent scripts**: Includes a menu, `Accessed recently`, to quickly access recently used scripts, saving time and streamlining workflows.
+
+**Design philosophy:** Fewer clicks, dependencies, and verbose notifications, with a simple and intuitive directory structure.
 
 ## Keyboard Shortcuts
 
@@ -81,14 +83,14 @@ While numerous scripts are available for file managers on the web, many suffer f
 
 File managers compatibility:
 
-| File manager           | Environment | Menu integration | Menu "Accessed recently" | Keyboard shortcuts |
-| ---------------------- | ----------- | ---------------- | ------------------------ | ------------------ |
-| GNOME Files (Nautilus) | GNOME       | Yes              | Yes                      | Yes                |
-| Caja                   | MATE        | Yes              | Yes                      | Yes                |
-| Nemo                   | Cinnamon    | Yes              | Yes                      | Yes                |
-| Dolphin                | KDE Plasma  | Yes              | No                       | No                 |
-| PCManFM-Qt             | LXQt        | Yes              | No                       | No                 |
-| Thunar                 | Xfce        | Yes              | No                       | Yes                |
+| File manager           | Environment | Menu integration | Keyboard shortcuts | Menu "Accessed recently" |
+| ---------------------- | ----------- | ---------------- | ------------------ | ------------------------ |
+| GNOME Files (Nautilus) | GNOME       | 🟢                | 🟢                  | 🟢                        |
+| Caja                   | MATE        | 🟢                | 🟢                  | 🟢                        |
+| Nemo                   | Cinnamon    | 🟢                | 🟢                  | 🟢                        |
+| Thunar                 | Xfce        | 🟢                | 🟢                  | 🔴                        |
+| Dolphin                | KDE Plasma  | 🟢                | 🔴                  | 🔴                        |
+| PCManFM-Qt             | LXQt        | 🟢                | 🔴                  | 🔴                        |
 
 Most scripts have been tested on the following GNU/Linux distributions:
 
