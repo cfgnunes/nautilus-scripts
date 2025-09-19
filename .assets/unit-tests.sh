@@ -183,7 +183,7 @@ __run_source_common_functions() {
     # Source the script 'common-functions.sh'.
     SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
     ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
-    ROOT_DIR=${ROOT_DIR//".helper-scripts"/}
+    ROOT_DIR=${ROOT_DIR//".assets"/}
     source "$ROOT_DIR/common-functions.sh"
 
     __test_equal "Check global variables." "$FIELD_SEPARATOR" $'\r'

@@ -28,8 +28,8 @@ readonly \
 FILE_MANAGER=""
 INSTALL_DIR=""
 
-#shellcheck source=.helper-scripts/multiselect-menu.sh
-source "$SCRIPT_DIR/.helper-scripts/multiselect-menu.sh"
+#shellcheck source=.assets/multiselect-menu.sh
+source "$SCRIPT_DIR/.assets/multiselect-menu.sh"
 
 # -----------------------------------------------------------------------------
 # FUNCTIONS
@@ -83,7 +83,6 @@ _main() {
             ! -path "*/Accessed recently*" \
             ! -path "*/.assets*" \
             ! -path "*/.git*" \
-            ! -path "*/.helper-scripts*" \
             -print0 2>/dev/null |
             sed -z "s|^.*/||" |
             sort --zero-terminated --version-sort
@@ -334,7 +333,6 @@ _step_install_scripts() {
 
     # Copy the script files.
     cp -- "$SCRIPT_DIR/common-functions.sh" "$INSTALL_DIR"
-    cp -r -- "$SCRIPT_DIR/.helper-scripts" "$INSTALL_DIR"
     local i=0
     for i in "${!_categories_dirs[@]}"; do
         if [[ -v "_categories_selected[i]" ]]; then
@@ -353,7 +351,6 @@ _step_install_scripts() {
         ! -path "*/Accessed recently*" \
         ! -path "*/.assets*" \
         ! -path "*/.git*" \
-        ! -path "*/.helper-scripts*" \
         -exec chmod +x -- {} \;
 
     # Restore previous scripts.
@@ -391,7 +388,6 @@ _step_install_menus_dolphin() {
         ! -path "*/Accessed recently*" \
         ! -path "*/.assets*" \
         ! -path "*/.git*" \
-        ! -path "*/.helper-scripts*" \
         -print0 2>/dev/null |
         sort --zero-terminated |
         while IFS= read -r -d "" filename; do
@@ -485,7 +481,6 @@ _step_install_menus_pcmanfm() {
             ! -path "*/Accessed recently*" \
             ! -path "*/.assets*" \
             ! -path "*/.git*" \
-            ! -path "*/.helper-scripts*" \
             -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";"
         printf "\n"
     } >"${desktop_menus_dir}/Scripts.desktop"
@@ -499,7 +494,6 @@ _step_install_menus_pcmanfm() {
         ! -path "*/Accessed recently*" \
         ! -path "*/.assets*" \
         ! -path "*/.git*" \
-        ! -path "*/.helper-scripts*" \
         -print0 2>/dev/null |
         sort --zero-terminated |
         while IFS= read -r -d "" filename; do
@@ -508,7 +502,6 @@ _step_install_menus_pcmanfm() {
                 ! -path "*/Accessed recently*" \
                 ! -path "*/.assets*" \
                 ! -path "*/.git*" \
-                ! -path "*/.helper-scripts*" \
                 -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";")
             if [[ -z "$dir_items" ]]; then
                 continue
@@ -529,7 +522,6 @@ _step_install_menus_pcmanfm() {
         ! -path "*/Accessed recently*" \
         ! -path "*/.assets*" \
         ! -path "*/.git*" \
-        ! -path "*/.helper-scripts*" \
         -print0 2>/dev/null |
         sort --zero-terminated |
         while IFS= read -r -d "" filename; do
@@ -647,7 +639,6 @@ _step_install_menus_thunar() {
             ! -path "*/Accessed recently*" \
             ! -path "*/.assets*" \
             ! -path "*/.git*" \
-            ! -path "*/.helper-scripts*" \
             -print0 2>/dev/null |
             sort --zero-terminated |
             while IFS= read -r -d "" filename; do
@@ -758,7 +749,6 @@ _step_install_shortcuts_nautilus() {
             ! -path "*/Accessed recently*" \
             ! -path "*/.assets*" \
             ! -path "*/.git*" \
-            ! -path "*/.helper-scripts*" \
             -print0 2>/dev/null |
             sort --zero-terminated |
             while IFS= read -r -d "" filename; do
@@ -802,7 +792,6 @@ _step_install_shortcuts_gnome2() {
             ! -path "*/Accessed recently*" \
             ! -path "*/.assets*" \
             ! -path "*/.git*" \
-            ! -path "*/.helper-scripts*" \
             -print0 2>/dev/null |
             sort --zero-terminated |
             while IFS= read -r -d "" filename; do
@@ -850,7 +839,6 @@ _step_install_shortcuts_thunar() {
             ! -path "*/Accessed recently*" \
             ! -path "*/.assets*" \
             ! -path "*/.git*" \
-            ! -path "*/.helper-scripts*" \
             -print0 2>/dev/null |
             sort --zero-terminated |
             while IFS= read -r -d "" filename; do
