@@ -108,9 +108,10 @@ In some cases, the scripts may fail to run. To avoid such issues, follow these s
 
 1. Create a single directory with a name that includes the word `batch`;
 2. Place all the files you want to process into this directory;
-3. Execute the desired script in this directory.
+3. Execute the desired script using this directory as the input.
 
-The scripts will automatically recognize the batch directory as a special input and process all the files it contains. This method prevents errors caused by excessively large argument lists and ensures efficient execution.
+When batch mode is detected, the script will recognize the directory as a special case and process each file inside it individually, instead of treating the entire directory as a single input.
+This approach prevents errors caused by excessively long argument lists and ensures reliable execution.
 
 ## Contributing
 

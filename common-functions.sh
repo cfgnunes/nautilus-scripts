@@ -1303,6 +1303,15 @@ _get_files() {
         # files within the selected directory. This addresses the GNOME error:
         # "Could not start application: Failed to execute child process
         # "/bin/sh" (Argument list too long)".
+
+        local batch_message=""
+        batch_message+="Batch mode detected: Each file inside this"
+        batch_message+="directory will be processed individually."
+        batch_message+="\n\nWould you like to continue?"
+        if ! _display_question_box "$batch_message"; then
+            _exit_script
+        fi
+
         find_parameters="-mindepth 1 -maxdepth 1"
     elif [[ "$par_recursive" == "false" ]]; then
         find_parameters="-maxdepth 0"
