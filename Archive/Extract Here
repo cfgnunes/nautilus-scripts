@@ -39,7 +39,7 @@ _main() {
     dependencies=$(_storage_text_read_all)
 
     _check_dependencies "$dependencies"
-    _display_wait_box "0"
+    _display_wait_box "2"
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"

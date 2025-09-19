@@ -28,6 +28,7 @@ TEMP_DIR_ITEMS_TO_REMOVE="$TEMP_DIR/items_to_remove"
 TEMP_DIR_LOGS="$TEMP_DIR/logs"
 TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
 TEMP_DIR_TASK="$TEMP_DIR/task"
+TEMP_DISPLAY_LOCK="$TEMP_DIR/display_lock"
 TEMP_TEXT_BOX="$TEMP_DIR/text_box"
 WAIT_BOX_CONTROL_KDIALOG="$TEMP_DIR/wait_box_control_kdialog"
 WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control"
@@ -82,9 +83,6 @@ _cleanup_on_exit() {
     # This function performs cleanup tasks when the script exits. It is
     # designed to safely and efficiently remove temporary directories or files
     # that were created during the script's execution.
-
-    # Wait a moment to ensure all processes have completed.
-    sleep 2
 
     # Remove local temporary dirs or files.
     local items_to_remove=""
@@ -357,6 +355,7 @@ _display_dir_selection_box() {
 
     local input_files=""
 
+    _display_lock
     if _command_exists "zenity"; then
         input_files=$(zenity --title "$(_get_script_name)" \
             --file-selection --multiple --directory \
@@ -368,6 +367,7 @@ _display_dir_selection_box() {
         input_files=${input_files% }
         input_files=${input_files// \//$FIELD_SEPARATOR/}
     fi
+    _display_unlock
 
     input_files=$(_str_remove_empty_tokens "$input_files")
     printf "%s" "$input_files"
@@ -387,6 +387,7 @@ _display_file_selection_box() {
     local title=${2:-"$(_get_script_name)"}
     local input_files=""
 
+    _display_lock
     if _command_exists "zenity"; then
         input_files=$(zenity --title "$title" \
             --file-selection \
@@ -399,6 +400,7 @@ _display_file_selection_box() {
         input_files=${input_files% }
         input_files=${input_files// \//$FIELD_SEPARATOR/}
     fi
+    _display_unlock
 
     input_files=$(_str_remove_empty_tokens "$input_files")
     printf "%s" "$input_files"
@@ -413,6 +415,7 @@ _display_error_box() {
 
     local message=$1
 
+    _display_lock
     if ! _is_gui_session; then
         printf "Error: %s\n" "$message" >&2
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
@@ -425,6 +428,7 @@ _display_error_box() {
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "Error: $message" &>/dev/null
     fi
+    _display_unlock
 }
 
 _display_info_box() {
@@ -436,6 +440,7 @@ _display_info_box() {
 
     local message=$1
 
+    _display_lock
     if ! _is_gui_session; then
         printf "Info: %s\n" "$message" >&2
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
@@ -448,6 +453,7 @@ _display_info_box() {
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "Info: $message" &>/dev/null
     fi
+    _display_unlock
 }
 
 _display_list_box() {
@@ -498,6 +504,7 @@ _display_list_box() {
     _close_wait_box
     _logs_consolidate ""
 
+    _display_lock
     if ! _is_gui_session; then
         _display_list_box_terminal "$message"
     elif _command_exists "zenity"; then
@@ -509,6 +516,7 @@ _display_list_box() {
     elif _command_exists "xmessage"; then
         _display_list_box_xmessage "$message" "$par_columns"
     fi
+    _display_unlock
 }
 
 _display_list_box_terminal() {
@@ -684,19 +692,19 @@ _display_password_box() {
     local message=$1
     local password=""
 
+    _display_lock
     # Ask the user for the 'password'.
     if ! _is_gui_session; then
         read -r -p "$message " password >&2
     elif _command_exists "zenity"; then
-        sleep 0.2 # Avoid 'wait_box' open before.
         password=$(zenity \
             --title="Password" --entry --hide-text --width="$GUI_INFO_WIDTH" \
             --text "$message" 2>/dev/null) || return 1
     elif _command_exists "kdialog"; then
-        sleep 0.2 # Avoid 'wait_box' open before.
         password=$(kdialog --title "Password" \
             --password "$message" 2>/dev/null) || return 1
     fi
+    _display_unlock
 
     printf "%s" "$password"
 }
@@ -729,6 +737,7 @@ _display_question_box() {
     local message=$1
     local response=""
 
+    _display_lock
     if ! _is_gui_session; then
         read -r -p "$message [Y/n] " response
         [[ ${response,,} == *"n"* ]] && return 1
@@ -742,6 +751,8 @@ _display_question_box() {
         xmessage -title "$(_get_script_name)" \
             -buttons "Yes:0,No:1" "$message" &>/dev/null || return 1
     fi
+    _display_unlock
+
     return 0
 }
 
@@ -762,6 +773,7 @@ _display_text_box() {
         message="(Empty result)"
     fi
 
+    _display_lock
     if ! _is_gui_session; then
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
@@ -780,6 +792,7 @@ _display_text_box() {
         xmessage -title "$(_get_script_name)" \
             -file "$TEMP_TEXT_BOX" &>/dev/null || _exit_script
     fi
+    _display_unlock
 }
 
 _display_result_box() {
@@ -865,11 +878,30 @@ _display_wait_box_message() {
         #   - Opens the Zenity 'wait_box' if the control flag still exists.
         #   - If Zenity 'wait_box' fails or is cancelled, exit the script.
         # shellcheck disable=SC2002
-        sleep "$open_delay" && [[ -f "$WAIT_BOX_CONTROL" ]] &&
+        (
+            sleep "$open_delay"
+
+            # Check if the 'wait_box' should open.
+            if [[ ! -f "$WAIT_BOX_CONTROL" ]]; then
+                return 0
+            fi
+
+            # Wait another window close.
+            while [[ -f "$TEMP_DISPLAY_LOCK" ]]; do
+                # Short delay to avoid high CPU usage in the loop.
+                sleep 0.5
+            done
+
+            # Check if the task has already finished.
+            if [[ ! -d "$TEMP_DIR" ]] || [[ ! -f "$WAIT_BOX_CONTROL" ]]; then
+                return 0
+            fi
+
             tail -f -- "$WAIT_BOX_FIFO" | (zenity \
                 --title="$(_get_script_name)" --progress \
                 --width="$GUI_INFO_WIDTH" \
-                --pulsate --auto-close --text="$message" || _exit_script) &
+                --pulsate --auto-close --text="$message" || _exit_script)
+        ) &
 
     # Check if the KDialog is available.
     elif _command_exists "kdialog"; then
@@ -886,6 +918,17 @@ _display_wait_box_message() {
 
             # Check if the 'wait_box' should open.
             if [[ ! -f "$WAIT_BOX_CONTROL" ]]; then
+                return 0
+            fi
+
+            # Wait another window close.
+            while [[ -f "$TEMP_DISPLAY_LOCK" ]]; do
+                # Short delay to avoid high CPU usage in the loop.
+                sleep 0.5
+            done
+
+            # Check if the task has already finished.
+            if [[ ! -d "$TEMP_DIR" ]] || [[ ! -f "$WAIT_BOX_CONTROL" ]]; then
                 return 0
             fi
 
@@ -967,6 +1010,14 @@ _close_wait_box() {
             fi
         fi
     fi
+}
+
+_display_lock() {
+    touch -- "$TEMP_DISPLAY_LOCK"
+}
+
+_display_unlock() {
+    rm -f -- "$TEMP_DISPLAY_LOCK"
 }
 
 _exit_script() {

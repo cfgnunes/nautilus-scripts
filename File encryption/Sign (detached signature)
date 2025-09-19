@@ -15,11 +15,9 @@ _main() {
         command=gpg; pkg_manager=dnf; package=gnupg2 |
         command=gpg; pkg_manager=pacman; package=gnupg |
         command=gpg; pkg_manager=zypper; package=gpg2"
-    _display_wait_box "0"
+    _display_wait_box "2"
     input_files=$(_get_files "par_type=file")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
-
-    sleep 0.2 # Avoid 'wait_box' open before.
 
     local users=""
     users=$(gpg --list-secret-keys --with-colons 2>/dev/null |
