@@ -1357,7 +1357,7 @@ _get_files() {
 
         local batch_message=""
         batch_message+="Batch mode detected: Each file inside this"
-        batch_message+="directory will be processed individually."
+        batch_message+=" directory will be processed individually."
         batch_message+="\n\nWould you like to continue?"
         if ! _display_question_box "$batch_message"; then
             _exit_script
