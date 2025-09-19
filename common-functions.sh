@@ -1586,9 +1586,9 @@ _get_script_name() {
     # the "basename" command to extract the script's filename from the full
     # path provided by "$0".
     #
-    # If the script tarts with two digits
-    # followed by a space (e.g., "01 My Script"), used in naming of 'Accessed
-    # recently' directory, that prefix is removed.
+    # If the script starts with two digits followed by a space (e.g., "01 My
+    # Script"), used in naming of 'Accessed recently' directory, that prefix is
+    # removed.
 
     local output=""
     output=$(basename -- "$0")
