@@ -37,6 +37,7 @@ _main() {
         fi
     fi
 
+    _display_lock
     if _command_exists "zenity"; then
         users=$(_convert_text_to_delimited_string "$users")
         local zenity_user_list=()
@@ -73,6 +74,7 @@ _main() {
             -- $users 2>/dev/null) || _exit_script
         TEMP_DATA_TASK=$(_convert_text_to_delimited_string "$TEMP_DATA_TASK")
     fi
+    _display_unlock
 
     if [[ -z "$TEMP_DATA_TASK" ]]; then
         _display_error_box "Failed: you must select at least one user!"

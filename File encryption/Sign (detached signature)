@@ -37,6 +37,7 @@ _main() {
         fi
     fi
 
+    _display_lock
     if _command_exists "zenity"; then
         users=$(_convert_text_to_delimited_string "$users")
         local zenity_user_list=()
@@ -71,6 +72,7 @@ _main() {
             --radiolist "Select a user from the list below." \
             -- $users 2>/dev/null) || _exit_script
     fi
+    _display_unlock
 
     if [[ -z "$TEMP_DATA_TASK" ]]; then
         _display_error_box "Failed: you must select a user!"
