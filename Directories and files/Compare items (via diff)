@@ -25,7 +25,7 @@ _main() {
     [[ -d "$file_2" ]] && file_2+="/"
 
     # Run the main process.
-    std_output=$(diff --no-dereference --brief --recursive -- "$file_1" "$file_2" 2>&1)
+    std_output=$(diff --no-dereference --brief --recursive --exclude=".git" -- "$file_1" "$file_2" 2>&1)
 
     # FORMAT THE OUTPUT:
     std_output=$(_text_remove_pwd "$std_output")
