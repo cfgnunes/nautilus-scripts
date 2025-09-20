@@ -97,7 +97,7 @@ _main() {
         _multiselect_menu categories_selected categories_dirs categories_defaults
     fi
 
-    # Install the dependencies.
+    # Install basic dependencies.
     [[ "$menu_options" == *"dependencies"* ]] && _step_install_dependencies
 
     # Install the scripts for every file manager found.
@@ -190,7 +190,7 @@ _delete_items() {
 
 # shellcheck disable=SC2086
 _step_install_dependencies() {
-    printf "\nInstalling the dependencies...\n"
+    printf "\nInstalling basic dependencies...\n"
 
     local packages=""
 
