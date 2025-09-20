@@ -194,6 +194,17 @@ _step_install_dependencies() {
 
     local packages=""
 
+    # Basic packages to run the script "common-functions.sh".
+    _command_exists "bash" || packages+="bash "
+    _command_exists "basename" || packages+="coreutils "
+    _command_exists "find" || packages+="findutils "
+    _command_exists "grep" || packages+="grep "
+    _command_exists "sed" || packages+="sed "
+    _command_exists "awk" || packages+="gawk "
+    _command_exists "mktemp" || packages+="util-linux "
+    _command_exists "xdg-open" || packages+="xdg-utils "
+    _command_exists "file" || packages+="file "
+
     # Packages for dialogs.
     if ! _command_exists "zenity" && ! _command_exists "kdialog"; then
         packages+="zenity "
@@ -207,6 +218,9 @@ _step_install_dependencies() {
     elif _command_exists "sudo"; then
         if _command_exists "apt-get"; then
             # Package manager "apt-get": For Debian/Ubuntu systems.
+            _command_exists "pgrep" || packages+="procps "
+            _command_exists "pkexec" || packages+="policykit-1 "
+
             if _command_exists "kdialog"; then
                 if ! dpkg -s "qtchooser" &>/dev/null; then
                     packages+="qtchooser "
@@ -221,18 +235,27 @@ _step_install_dependencies() {
             fi
         elif _command_exists "dnf"; then
             # Package manager "dnf": For Fedora/RHEL systems.
+            _command_exists "pgrep" || packages+="procps-ng "
+            _command_exists "pkexec" || packages+="polkit "
+
             if [[ -n "$packages" ]]; then
                 sudo dnf check-update
                 sudo dnf -y install $packages
             fi
         elif _command_exists "pacman"; then
             # Package manager "pacman": For Arch Linux systems.
+            _command_exists "pgrep" || packages+="procps-ng "
+            _command_exists "pkexec" || packages+="polkit "
+
             if [[ -n "$packages" ]]; then
                 sudo pacman -Syy
                 sudo pacman --noconfirm -S $packages
             fi
         elif _command_exists "zypper"; then
             # Package manager "zypper": For openSUSE systems.
+            _command_exists "pgrep" || packages+="procps-ng "
+            _command_exists "pkexec" || packages+="polkit "
+
             if [[ -n "$packages" ]]; then
                 sudo zypper refresh
                 sudo zypper --non-interactive install $packages
