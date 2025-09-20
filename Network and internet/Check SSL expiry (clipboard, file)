@@ -27,7 +27,7 @@ _main() {
     std_output=$(_storage_text_read_all)
     std_output=$(sort --version-sort --unique <<<"$std_output")
 
-    _display_list_box "$std_output" "par_columns='--column:Status,--column:Days left,--column:URL'; par_item_name=URLs; par_action=open_url"
+    _display_list_box "$std_output" "par_columns='--column:Days left,--column:URL'; par_item_name=URLs; par_action=open_url"
 }
 
 _main_task() {
@@ -68,14 +68,14 @@ _main_task() {
 
     # Set status based on days remaining.
     if ((days_left > 30)); then
-        status="🟢"
+        status="🟢 $days_left"
     elif ((days_left > 0)); then
-        status="🟠"
+        status="🟠 $days_left"
     else
-        status="🔴"
+        status="🔴 $days_left"
     fi
 
-    _storage_text_write_ln "$status$FIELD_SEPARATOR$days_left$FIELD_SEPARATOR$host"
+    _storage_text_write_ln "$status$FIELD_SEPARATOR$host"
 }
 
 _extract_urls() {

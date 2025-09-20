@@ -30,47 +30,45 @@ _main() {
     std_output=$(_storage_text_read_all)
     std_output=$(sort --version-sort --reverse <<<"$std_output")
 
-    _display_list_box "$std_output" "par_columns='--column:Status,--column:Response,--column:IP,--column:Hostname'; par_item_name=IPs"
+    _display_list_box "$std_output" "par_columns='--column:Status,--column:IP,--column:Hostname'; par_item_name=IPs"
 }
 
 _main_task() {
     local input_file=$1
     local output_dir=$2
-    local std_output=""
-    local str_online="Online"
-    local status="🟢"
+    local str_online="🟢 Online"
+    local status=""
     local hostname=""
 
     local host="$input_file"
     local timeout_value="3"
 
     # Strategy: Nmap host discovery (no port scan).
-    if [[ -z "$std_output" ]]; then
+    if [[ -z "$status" ]]; then
         if LC_ALL=C nmap -sn --host-timeout "$timeout_value"s "$host" 2>/dev/null |
             grep --quiet --ignore-case "Host is up"; then
-            std_output=$str_online
+            status=$str_online
         fi
     fi
 
     # Strategy: Nmap port scan (SYN scan on top 20 ports).
-    if [[ -z "$std_output" ]]; then
+    if [[ -z "$status" ]]; then
         if LC_ALL=C nmap -T4 -Pn --top-ports 20 --host-timeout "$timeout_value"s "$host" 2>/dev/null |
             grep --quiet --ignore-case "open"; then
-            std_output=$str_online
+            status=$str_online
         fi
     fi
 
     # Strategy: ICMP Echo Request (fast but often filtered by firewalls).
-    if [[ -z "$std_output" ]]; then
+    if [[ -z "$status" ]]; then
         if ping -c 3 -W "$timeout_value" "$host" &>/dev/null; then
-            std_output=$str_online
+            status=$str_online
         fi
     fi
 
     # Notify if the host is offline.
-    if [[ -z "$std_output" ]]; then
-        std_output="Offline"
-        status="🔴"
+    if [[ -z "$status" ]]; then
+        status="🔴 Offline"
     fi
 
     hostname=$(_resolve_host "$input_file")
@@ -78,7 +76,7 @@ _main_task() {
         hostname="(unknown)"
     fi
 
-    _storage_text_write_ln "$status$FIELD_SEPARATOR$std_output$FIELD_SEPARATOR$input_file$FIELD_SEPARATOR$hostname"
+    _storage_text_write_ln "$status$FIELD_SEPARATOR$input_file$FIELD_SEPARATOR$hostname"
 }
 
 _extract_ips() {
