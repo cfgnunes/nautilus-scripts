@@ -8,6 +8,12 @@ set -u
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
+IGNORE_FIND_PATHS=(
+    ! -path "*/Accessed recently*"
+    ! -path "*/.assets*"
+    ! -path "*/.git*"
+)
+
 COMPATIBLE_FILE_MANAGERS=(
     "nautilus"
     "caja"
@@ -19,6 +25,7 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
 readonly \
     COMPATIBLE_FILE_MANAGERS \
+    IGNORE_FIND_PATHS \
     SCRIPT_DIR
 
 # -----------------------------------------------------------------------------
@@ -51,11 +58,11 @@ _main() {
     printf "Select the options (<SPACE> to check):\n"
 
     menu_labels=(
-        "Install basic dependencies."
-        "Install keyboard shortcuts."
-        "Close the file manager to reload its configurations."
-        "Choose script categories to install."
-        "Preserve previous scripts."
+        "Install basic dependencies (requires sudo)"
+        "Install keyboard shortcuts"
+        "Close the file manager to reload its configurations"
+        "Choose script categories to install"
+        "Preserve previous scripts"
     )
     menu_defaults=(
         "true"
@@ -79,10 +86,7 @@ _main() {
         categories_dirs+=("$dir")
     done < <(
         find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
-            ! -path "*/User previous scripts*" \
-            ! -path "*/Accessed recently*" \
-            ! -path "*/.assets*" \
-            ! -path "*/.git*" \
+            "${IGNORE_FIND_PATHS[@]}" \
             -print0 2>/dev/null |
             sed -z "s|^.*/||" |
             sort --zero-terminated --version-sort
@@ -346,11 +350,11 @@ _step_install_scripts() {
 
     # Set file permissions.
     printf " > Setting file permissions...\n"
-    find -L "$INSTALL_DIR" -type f ! -path "*/.git*" ! -exec chmod -x -- {} \;
+    find -L "$INSTALL_DIR" -type f ! \
+        "${IGNORE_FIND_PATHS[@]}" \
+        ! -exec chmod -x -- {} \;
     find -L "$INSTALL_DIR" -mindepth 2 -type f \
-        ! -path "*/Accessed recently*" \
-        ! -path "*/.assets*" \
-        ! -path "*/.git*" \
+        "${IGNORE_FIND_PATHS[@]}" \
         -exec chmod +x -- {} \;
 
     # Restore previous scripts.
@@ -385,9 +389,7 @@ _step_install_menus_dolphin() {
 
     # Generate a '.desktop' file for each script.
     find -L "$INSTALL_DIR" -mindepth 2 -type f \
-        ! -path "*/Accessed recently*" \
-        ! -path "*/.assets*" \
-        ! -path "*/.git*" \
+        "${IGNORE_FIND_PATHS[@]}" \
         -print0 2>/dev/null |
         sort --zero-terminated |
         while IFS= read -r -d "" filename; do
@@ -478,9 +480,7 @@ _step_install_menus_pcmanfm() {
         printf "%s\n" "Name=Scripts"
         printf "%s" "ItemsList="
         find -L "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -type d \
-            ! -path "*/Accessed recently*" \
-            ! -path "*/.assets*" \
-            ! -path "*/.git*" \
+            "${IGNORE_FIND_PATHS[@]}" \
             -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";"
         printf "\n"
     } >"${desktop_menus_dir}/Scripts.desktop"
@@ -491,17 +491,13 @@ _step_install_menus_pcmanfm() {
     local name=""
     local dir_items=""
     find -L "$INSTALL_DIR" -mindepth 1 -type d \
-        ! -path "*/Accessed recently*" \
-        ! -path "*/.assets*" \
-        ! -path "*/.git*" \
+        "${IGNORE_FIND_PATHS[@]}" \
         -print0 2>/dev/null |
         sort --zero-terminated |
         while IFS= read -r -d "" filename; do
             name=${filename##*/}
             dir_items=$(find -L "$filename" -mindepth 1 -maxdepth 1 \
-                ! -path "*/Accessed recently*" \
-                ! -path "*/.assets*" \
-                ! -path "*/.git*" \
+                "${IGNORE_FIND_PATHS[@]}" \
                 -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";")
             if [[ -z "$dir_items" ]]; then
                 continue
@@ -519,9 +515,7 @@ _step_install_menus_pcmanfm() {
 
     # Create a '.desktop' file for each script.
     find -L "$INSTALL_DIR" -mindepth 2 -type f \
-        ! -path "*/Accessed recently*" \
-        ! -path "*/.assets*" \
-        ! -path "*/.git*" \
+        "${IGNORE_FIND_PATHS[@]}" \
         -print0 2>/dev/null |
         sort --zero-terminated |
         while IFS= read -r -d "" filename; do
@@ -636,9 +630,7 @@ _step_install_menus_thunar() {
         local submenu=""
         local unique_id=""
         find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            ! -path "*/Accessed recently*" \
-            ! -path "*/.assets*" \
-            ! -path "*/.git*" \
+            "${IGNORE_FIND_PATHS[@]}" \
             -print0 2>/dev/null |
             sort --zero-terminated |
             while IFS= read -r -d "" filename; do
@@ -745,10 +737,7 @@ _step_install_shortcuts_nautilus() {
     {
         local filename=""
         find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            ! -path "*/User previous scripts*" \
-            ! -path "*/Accessed recently*" \
-            ! -path "*/.assets*" \
-            ! -path "*/.git*" \
+            "${IGNORE_FIND_PATHS[@]}" \
             -print0 2>/dev/null |
             sort --zero-terminated |
             while IFS= read -r -d "" filename; do
@@ -788,10 +777,7 @@ _step_install_shortcuts_gnome2() {
 
         local filename=""
         find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            ! -path "*/User previous scripts*" \
-            ! -path "*/Accessed recently*" \
-            ! -path "*/.assets*" \
-            ! -path "*/.git*" \
+            "${IGNORE_FIND_PATHS[@]}" \
             -print0 2>/dev/null |
             sort --zero-terminated |
             while IFS= read -r -d "" filename; do
@@ -835,10 +821,7 @@ _step_install_shortcuts_thunar() {
 
         local filename=""
         find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            ! -path "*/User previous scripts*" \
-            ! -path "*/Accessed recently*" \
-            ! -path "*/.assets*" \
-            ! -path "*/.git*" \
+            "${IGNORE_FIND_PATHS[@]}" \
             -print0 2>/dev/null |
             sort --zero-terminated |
             while IFS= read -r -d "" filename; do
