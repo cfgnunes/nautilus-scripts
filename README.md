@@ -86,7 +86,7 @@ File managers compatibility:
 Most scripts have been tested on the following GNU/Linux distributions:
 
 - Ubuntu 16.04, 18.04, 20.04, 22.04, 24.04
-- Debian 12 (Gnome and KDE)
+- Debian 12, 13 (Gnome and KDE)
 - Fedora Workstation 39, 40, 41, 42
 - EndeavourOS 2024, 2025
 - KDE neon 2024, 2025
