@@ -2647,7 +2647,7 @@ _text_remove_pwd() {
     working_dir=$(_get_working_directory)
 
     if [[ "$working_dir" != "/" ]]; then
-        sed "s|$working_dir|.|" <<<"$input_text"
+        sed "s|$working_dir|.|g" <<<"$input_text"
     else
         printf "%s" "$input_text"
     fi
