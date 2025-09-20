@@ -199,49 +199,14 @@ _step_install_dependencies() {
         packages+="zenity "
     fi
 
-    # Packages session type.
-    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
-        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        _command_exists "wl-copy" || packages+="wl-clipboard "
-    else
-        _command_exists "xclip" || packages+="xclip "
-    fi
-
-    # Packages for compress/decompress archives.
-    _command_exists "bzip2" || packages+="bzip2 "
-    _command_exists "gzip" || packages+="gzip "
-    _command_exists "tar" || packages+="tar "
-    _command_exists "unzip" || packages+="unzip "
-    _command_exists "zip" || packages+="zip "
-
-    # Packages for PDF.
-    _command_exists "gs" || packages+="ghostscript "
-    _command_exists "qpdf" || packages+="qpdf "
-
     if _command_exists "guix"; then
         # Package manager "guix": For Guix systems (no root required).
-        _command_exists "pandoc" || packages+="pandoc "
-        _command_exists "7za" || packages+="p7zip "
-        _command_exists "convert" || packages+="imagemagick "
-        _command_exists "xz" || packages+="xz "
-        _command_exists "pdfinfo" || packages+="poppler "
-        _command_exists "ffmpeg" || packages+="ffmpeg "
-        _command_exists "exiftool" || packages+="perl-image-exiftool "
-        _command_exists "perl" || packages+="perl "
         if [[ -n "$packages" ]]; then
             guix install $packages
         fi
     elif _command_exists "sudo"; then
         if _command_exists "apt-get"; then
             # Package manager "apt-get": For Debian/Ubuntu systems.
-            _command_exists "pandoc" || packages+="pandoc "
-            _command_exists "7za" || packages+="p7zip-full "
-            _command_exists "convert" || packages+="imagemagick "
-            _command_exists "xz" || packages+="xz-utils "
-            _command_exists "pdfinfo" || packages+="poppler-utils "
-            _command_exists "ffmpeg" || packages+="ffmpeg "
-            _command_exists "exiftool" || packages+="libimage-exiftool-perl "
-            _command_exists "perl" || packages+="perl-base "
             if _command_exists "kdialog"; then
                 if ! dpkg -s "qtchooser" &>/dev/null; then
                     packages+="qtchooser "
@@ -256,41 +221,18 @@ _step_install_dependencies() {
             fi
         elif _command_exists "dnf"; then
             # Package manager "dnf": For Fedora/RHEL systems.
-            _command_exists "pandoc" || packages+="pandoc "
-            _command_exists "7za" || packages+="p7zip "
-            _command_exists "convert" || packages+="ImageMagick "
-            _command_exists "xz" || packages+="xz "
-            _command_exists "pdfinfo" || packages+="poppler-utils "
-            _command_exists "ffmpeg" || packages+="ffmpeg-free "
-            _command_exists "exiftool" || packages+="perl-Image-ExifTool "
-            _command_exists "perl" || packages+="perl-base "
             if [[ -n "$packages" ]]; then
                 sudo dnf check-update
                 sudo dnf -y install $packages
             fi
         elif _command_exists "pacman"; then
             # Package manager "pacman": For Arch Linux systems.
-            _command_exists "pandoc" || packages+="pandoc "
-            _command_exists "7za" || packages+="p7zip "
-            _command_exists "convert" || packages+="imagemagick "
-            _command_exists "xz" || packages+="xz "
-            _command_exists "pdfinfo" || packages+="poppler "
-            _command_exists "exiftool" || packages+="perl-image-exiftool "
-            _command_exists "perl" || packages+="perl-base "
             if [[ -n "$packages" ]]; then
                 sudo pacman -Syy
                 sudo pacman --noconfirm -S $packages
             fi
         elif _command_exists "zypper"; then
             # Package manager "zypper": For openSUSE systems.
-            _command_exists "pandoc" || packages+="pandoc-cli "
-            _command_exists "7za" || packages+="7zip "
-            _command_exists "convert" || packages+="ImageMagick "
-            _command_exists "xz" || packages+="xz "
-            _command_exists "pdfinfo" || packages+="poppler-tools "
-            _command_exists "ffmpeg" || packages+="ffmpeg "
-            _command_exists "exiftool" || packages+="exiftool "
-            _command_exists "perl" || packages+="perl-base "
             if [[ -n "$packages" ]]; then
                 sudo zypper refresh
                 sudo zypper --non-interactive install $packages
