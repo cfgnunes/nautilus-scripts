@@ -66,7 +66,7 @@ _main_task() {
         fi
     fi
 
-    _storage_text_write_ln "$status$FIELD_SEPARATOR$description$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
+    _storage_text_write_ln "$status$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
 }
 
 _main "$@"
