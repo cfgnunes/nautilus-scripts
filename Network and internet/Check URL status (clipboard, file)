@@ -10,10 +10,9 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies_clipboard "command=curl"
-
+    _check_dependencies "command=curl"
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=all; par_get_pwd=true")
+    input_files=$(_get_files "par_type=file")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$(_prepare_input "$input_files")" "$output_dir"
@@ -92,22 +91,14 @@ _extract_urls() {
 _prepare_input() {
     local input_files=$1
     local file_data=""
-    local clipboard_data=""
     local urls=""
 
     # shellcheck disable=SC2086
     file_data=$(cat -- $input_files 2>/dev/null)
     urls=$(_extract_urls "$file_data")
 
-    # If there are no valid URLs in the file(s),
-    # get the URLs from the clipboard.
     if [[ -z "$urls" ]]; then
-        clipboard_data=$(_get_clipboard_data)
-        urls=$(_extract_urls "$clipboard_data")
-    fi
-
-    if [[ -z "$urls" ]]; then
-        _display_error_box "There are no valid URLs in the clipboard or in the selected file(s)!"
+        _display_error_box "There are no valid URLs in the selected file(s)!"
         _exit_script
     fi
 

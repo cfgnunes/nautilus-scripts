@@ -10,10 +10,9 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies_clipboard "command=nmap"
-
+    _check_dependencies "command=nmap"
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=all; par_get_pwd=true")
+    input_files=$(_get_files "par_type=file")
 
     # Export functions to be used inside new shells (when using 'xargs').
     export -f _resolve_host
@@ -117,22 +116,14 @@ _extract_ips() {
 _prepare_input() {
     local input_files=$1
     local file_data=""
-    local clipboard_data=""
     local ips=""
 
     # shellcheck disable=SC2086
     file_data=$(cat -- $input_files 2>/dev/null)
     ips=$(_extract_ips "$file_data")
 
-    # If there are no valid IPs in the file(s),
-    # get the IPs from the clipboard.
     if [[ -z "$ips" ]]; then
-        clipboard_data=$(_get_clipboard_data)
-        ips=$(_extract_ips "$clipboard_data")
-    fi
-
-    if [[ -z "$ips" ]]; then
-        _display_error_box "There are no valid IPs in the clipboard or in the selected file(s)!"
+        _display_error_box "There are no valid IPs in the selected file(s)!"
         _exit_script
     fi
 
