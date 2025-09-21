@@ -22,7 +22,7 @@ _compare() {
     # commands. It supports two or three files depending on the command and
     # file type.
 
-    local input_files=$1      # Input files separated by 'FIELD_SEPARATOR'.
+    local input_files=$1      # Input files separated by '$FIELD_SEPARATOR'.
     local num_files_compare=2 # Default number of files to compare.
 
     local file_1="" # First file in the input.

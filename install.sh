@@ -194,7 +194,7 @@ _step_install_dependencies() {
 
     local packages=""
 
-    # Basic packages to run the script "common-functions.sh".
+    # Basic packages to run the script 'common-functions.sh'.
     _command_exists "bash" || packages+="bash "
     _command_exists "basename" || packages+="coreutils "
     _command_exists "find" || packages+="findutils "
@@ -211,13 +211,13 @@ _step_install_dependencies() {
     fi
 
     if _command_exists "guix"; then
-        # Package manager "guix": For Guix systems (no root required).
+        # Package manager 'guix': For Guix systems (no root required).
         if [[ -n "$packages" ]]; then
             guix install $packages
         fi
     elif _command_exists "sudo"; then
         if _command_exists "apt-get"; then
-            # Package manager "apt-get": For Debian/Ubuntu systems.
+            # Package manager 'apt-get': For Debian/Ubuntu systems.
             _command_exists "pgrep" || packages+="procps "
             _command_exists "pkexec" || packages+="policykit-1 "
 
@@ -234,7 +234,7 @@ _step_install_dependencies() {
                 sudo apt-get -y install $packages
             fi
         elif _command_exists "dnf"; then
-            # Package manager "dnf": For Fedora/RHEL systems.
+            # Package manager 'dnf': For Fedora/RHEL systems.
             _command_exists "pgrep" || packages+="procps-ng "
             _command_exists "pkexec" || packages+="polkit "
 
@@ -243,7 +243,7 @@ _step_install_dependencies() {
                 sudo dnf -y install $packages
             fi
         elif _command_exists "pacman"; then
-            # Package manager "pacman": For Arch Linux systems.
+            # Package manager 'pacman': For Arch Linux systems.
             _command_exists "pgrep" || packages+="procps-ng "
             _command_exists "pkexec" || packages+="polkit "
 
@@ -252,7 +252,7 @@ _step_install_dependencies() {
                 sudo pacman --noconfirm -S $packages
             fi
         elif _command_exists "zypper"; then
-            # Package manager "zypper": For openSUSE systems.
+            # Package manager 'zypper': For openSUSE systems.
             _command_exists "pgrep" || packages+="procps-ng "
             _command_exists "pkexec" || packages+="polkit "
 
@@ -732,11 +732,11 @@ _step_install_shortcuts_gnome2() {
     _delete_items "$accels_file"
 
     {
-        # Disable the shortcut for "OpenAlternate" (<control><shift>o).
+        # Disable the shortcut for 'OpenAlternate' (<control><shift>o).
         printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenAlternate" "")'
-        # Disable the shortcut for "OpenInNewTab" (<control><shift>o).
+        # Disable the shortcut for 'OpenInNewTab' (<control><shift>o).
         printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenInNewTab" "")'
-        # Disable the shortcut for "Show Hide Extra Pane" (F3).
+        # Disable the shortcut for 'Show Hide Extra Pane' (F3).
         printf "%s\n" '(gtk_accel_path "<Actions>/NavigationActions/Show Hide Extra Pane" "")'
         printf "%s\n" '(gtk_accel_path "<Actions>/ShellActions/Show Hide Extra Pane" "")'
 

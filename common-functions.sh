@@ -66,7 +66,7 @@ INPUT_FILES=$*
 TEMP_DATA_TASK=""
 
 # -----------------------------------------------------------------------------
-# BUILD THE STRUCTURE OF THE 'TEMP_DIR'
+# BUILD THE STRUCTURE OF THE '$TEMP_DIR'
 # -----------------------------------------------------------------------------
 
 # Store the path of temporary items to be removed after exit.
@@ -161,10 +161,10 @@ _check_dependencies() {
         local pkg_manager=""
         local post_install=""
 
-        # Evaluate the values parameters from the 'dependency' variable.
+        # Evaluate the values parameters from the '$dependency' variable.
         eval "$dependency"
 
-        # Lowercase the 'pkg_manager' name.
+        # Lowercase the '$pkg_manager' name.
         pkg_manager=${pkg_manager,,}
 
         # Fix 'apt' to 'apt-get'
@@ -239,7 +239,7 @@ _check_output() {
     local input_file=$3
     local output_file=$4
 
-    # Check the 'exit_code' and log the error.
+    # Check the '$exit_code' and log the error.
     if ((exit_code != 0)); then
         _log_error "Command failed with a non-zero exit code." \
             "$input_file" "$std_output" "$output_file"
@@ -280,7 +280,7 @@ _convert_delimited_string_to_text() {
     #
     # Parameters:
     #   - $1 (input_items): A string containing items separated by the
-    #   'FIELD_SEPARATOR' variable.
+    #   '$FIELD_SEPARATOR' variable.
     #
     # Returns:
     #   - A string containing the items separated by newlines.
@@ -338,7 +338,7 @@ _convert_text_to_delimited_string() {
     #   - $1 (input_items): A string containing items separated by newlines.
     #
     # Returns:
-    #   - A string containing the items separated by the 'FIELD_SEPARATOR'
+    #   - A string containing the items separated by the '$FIELD_SEPARATOR'
     #   variable.
 
     local input_items=$1
@@ -471,7 +471,7 @@ _display_list_box() {
     #   - "par_columns": Column definitions for the list, typically in the
     #   format "--column:<name>,--column:<name>".
     #   - "par_item_name": A string representing the name of the items in the
-    #   list. If not provided, the default value is "items".
+    #   list. If not provided, the default value is 'items'.
     #   - "par_action": The action to perform on the selected items. Possible
     #   values include:
     #       - "open_file": Opens the selected files with the default
@@ -481,16 +481,16 @@ _display_list_box() {
     #       - "open_url": Opens the selected URLs in the default web browser.
     #       - "delete_item": Deletes the selected items after user
     #     confirmation.
-    #   - "par_resolve_links": A boolean-like string ("true" or "false")
+    #   - "par_resolve_links": A boolean-like string ('true' or 'false')
     #   indicating whether symbolic links in item paths should be resolved to
     #   their target locations when opening the item's location. Defaults to
-    #   "true".
-    #   - "par_checkbox": A boolean-like string ("true" or "false") indicating
+    #   'true'.
+    #   - "par_checkbox": A boolean-like string ('true' or 'false') indicating
     #   the list should include checkboxes for item selection. Defaults to
-    #   "false".
-    #   - "par_checkbox_value": A boolean-like string ("true" or "false")
+    #   'false'.
+    #   - "par_checkbox_value": A boolean-like string ('true' or 'false')
     #   defining the default state of the checkboxes (checked or unchecked)
-    #   when the list is initially displayed. Defaults to "false".
+    #   when the list is initially displayed. Defaults to 'false'.
 
     local message=$1
     local parameters=$2
@@ -503,7 +503,7 @@ _display_list_box() {
     local par_checkbox="false"
     local par_checkbox_value="false"
 
-    # Evaluate the values from the 'parameters' variable.
+    # Evaluate the values from the '$parameters' variable.
     eval "$parameters"
 
     _close_wait_box
@@ -698,7 +698,7 @@ _display_password_box() {
     local password=""
 
     _display_lock
-    # Ask the user for the 'password'.
+    # Ask the user for the password.
     if ! _is_gui_session; then
         read -r -p "$message " password >&2
     elif _command_exists "zenity"; then
@@ -723,7 +723,7 @@ _display_password_box_define() {
 
     password=$(_display_password_box "$message") || return 1
 
-    # Check if the 'password' is not empty.
+    # Check if '$password' is not empty.
     if [[ -z "$password" ]]; then
         _display_error_box "The password can not be empty!"
         return 1
@@ -767,7 +767,7 @@ _display_text_box() {
     #
     # Parameters:
     #   - $1 (message): The message to display. If empty, a default message
-    #     "(Empty result)" is shown.
+    #     '(Empty result)' is shown.
 
     local message=$1
 
@@ -812,7 +812,7 @@ _display_result_box() {
     _close_wait_box
     _logs_consolidate "$output_dir"
 
-    # If 'output_dir' parameter is defined.
+    # If '$output_dir' parameter is defined.
     if [[ -n "$output_dir" ]]; then
         # Try to remove the output directory (if it is empty).
         if [[ "$output_dir" == *"/$PREFIX_OUTPUT_DIR"* ]]; then
@@ -860,7 +860,7 @@ _display_wait_box_message() {
     local message=$1
     local open_delay=${2:-"2"}
 
-    # Avoid open more than one 'wait_box'.
+    # Avoid open more than one 'wait box'.
     [[ -f "$WAIT_BOX_CONTROL" ]] && return 0
 
     if ! _is_gui_session; then
@@ -869,24 +869,24 @@ _display_wait_box_message() {
 
     # Check if the Zenity is available.
     elif _command_exists "zenity"; then
-        # Control flag to inform that a 'wait_box' will open
+        # Control flag to inform that a 'wait box' will open
         # (if the task takes over 2 seconds).
         echo "zenity" >"$WAIT_BOX_CONTROL"
 
-        # Create the FIFO for communication with Zenity 'wait_box'.
+        # Create the FIFO for communication with Zenity 'wait box'.
         if [[ ! -p "$WAIT_BOX_FIFO" ]]; then
             mkfifo "$WAIT_BOX_FIFO"
         fi
 
-        # Launch a background thread for Zenity 'wait_box':
+        # Launch a background thread for Zenity 'wait box':
         #   - Waits for the specified delay.
-        #   - Opens the Zenity 'wait_box' if the control flag still exists.
-        #   - If Zenity 'wait_box' fails or is cancelled, exit the script.
+        #   - Opens the Zenity 'wait box' if the control flag still exists.
+        #   - If Zenity 'wait box' fails or is cancelled, exit the script.
         # shellcheck disable=SC2002
         (
             sleep "$open_delay"
 
-            # Check if the 'wait_box' should open.
+            # Check if the 'wait box' should open.
             if [[ ! -f "$WAIT_BOX_CONTROL" ]]; then
                 return 0
             fi
@@ -911,17 +911,17 @@ _display_wait_box_message() {
     # Check if the KDialog is available.
     elif _command_exists "kdialog"; then
         _get_qdbus_command &>/dev/null || return 0
-        # Control flag to inform that a 'wait_box' will open
+        # Control flag to inform that a 'wait box' will open
         # (if the task takes over 2 seconds).
         echo "kdialog" >"$WAIT_BOX_CONTROL"
 
-        # Launch the "background thread 1", for KDialog 'wait_box':
+        # Launch the "background thread 1", for KDialog 'wait box':
         #   - Waits for the specified delay.
-        #   - Opens the KDialog 'wait_box' if the control flag still exists.
+        #   - Opens the KDialog 'wait box' if the control flag still exists.
         (
             sleep "$open_delay"
 
-            # Check if the 'wait_box' should open.
+            # Check if the 'wait box' should open.
             if [[ ! -f "$WAIT_BOX_CONTROL" ]]; then
                 return 0
             fi
@@ -942,12 +942,12 @@ _display_wait_box_message() {
                 2>/dev/null
         ) &
 
-        # Launch the "background thread 2", to monitor the KDialog 'wait_box':
+        # Launch the "background thread 2", to monitor the KDialog 'wait box':
         #   - Periodically checks if the dialog has been closed/cancelled.
-        #   - If KDialog 'wait_box' is cancelled, exit the script.
+        #   - If KDialog 'wait box' is cancelled, exit the script.
         (
             sleep "$open_delay"
-            # Wait the 'wait_box' finish to write the output file.
+            # Wait the 'wait box' finish to write the output file.
             sleep 0.2
             while [[ -f "$WAIT_BOX_CONTROL" ]] ||
                 [[ -f "$WAIT_BOX_CONTROL_KDIALOG" ]]; do
@@ -972,29 +972,29 @@ _display_wait_box_message() {
 }
 
 _close_wait_box() {
-    # This function is responsible for closing any open "wait boxes" (progress
+    # This function is responsible for closing any open 'wait box' (progress
     # indicators) that were displayed during the execution of a task. It checks
     # for both Zenity and KDialog wait boxes and handles their closure.
 
     local wait_box_type=""
 
-    # Check if 'wait_box' is opened or will open.
+    # Check if 'wait box' is opened or will open.
     if [[ -f "$WAIT_BOX_CONTROL" ]]; then
         wait_box_type=$(cat -- "$WAIT_BOX_CONTROL" 2>/dev/null)
 
-        # Cancel the future open of any 'wait_box'.
+        # Cancel the future open of any 'wait box'.
         rm -f -- "$WAIT_BOX_CONTROL"
 
-        if [[ "$wait_box_type" == "zenity" ]]; then # Zenity 'wait_box'.
-            # Check if Zenity 'wait_box' is open,
+        if [[ "$wait_box_type" == "zenity" ]]; then # Zenity 'wait box'.
+            # Check if Zenity 'wait box' is open,
             # (waiting for an input in the FIFO).
             if pgrep -fl "$WAIT_BOX_FIFO" &>/dev/null; then
                 # Close the Zenity using the FIFO.
                 printf "100\n" >"$WAIT_BOX_FIFO"
             fi
 
-        elif [[ "$wait_box_type" == "kdialog" ]]; then # KDialog 'wait_box'.
-            # Wait the 'wait_box' finish to write the output file.
+        elif [[ "$wait_box_type" == "kdialog" ]]; then # KDialog 'wait box'.
+            # Wait the 'wait box' finish to write the output file.
             sleep 0.3
 
             if [[ -f "$WAIT_BOX_CONTROL_KDIALOG" ]]; then
@@ -1006,10 +1006,10 @@ _close_wait_box() {
                 rm -f -- "$WAIT_BOX_CONTROL_KDIALOG"
 
                 # Wait the "background thread 2" main loop stop
-                # before close the KDialog 'wait_box'.
+                # before close the KDialog 'wait box'.
                 sleep 0.3
 
-                # Close the KDialog 'wait_box'.
+                # Close the KDialog 'wait box'.
                 $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" \
                     "close" &>/dev/null
             fi
@@ -1062,7 +1062,7 @@ _find_filtered_files() {
     #
     # Parameters:
     #   - $1 (input_files): A space-separated string containing file or
-    #     directory paths to filter. These paths are passed to the "find"
+    #     directory paths to filter. These paths are passed to the 'find'
     #     command.
     #   - $2 (par_type): A string specifying the type of file to search for. It
     #     can be:
@@ -1074,7 +1074,7 @@ _find_filtered_files() {
     #   - $4 (par_select_extension): A string of file extensions to include in
     #     the search. Only files with matching extensions will be included.
     #   - $5 (par_find_parameters): Optional. Additional parameters to be
-    #     passed directly to the "find" command.
+    #     passed directly to the 'find' command.
     #
     # Example:
     #   - Input: "dir1 dir2", "file", "", "txt|pdf", "true"
@@ -1129,9 +1129,9 @@ _find_filtered_files() {
 }
 
 _gdbus_notify() {
-    # This function sends a desktop notification using the "gdbus" tool, which
+    # This function sends a desktop notification using the 'gdbus' tool, which
     # interfaces with the D-Bus notification system (specifically the
-    # "org.freedesktop.Notifications" service).
+    # 'org.freedesktop.Notifications' service).
     #
     # Parameters:
     #   - $1 (icon): The icon to display with the notification.
@@ -1264,7 +1264,7 @@ _get_filenames_filemanager() {
     fi
 
     if [[ -n "$input_files" ]]; then
-        # Replace '\n' with 'FIELD_SEPARATOR'.
+        # Replace '\n' with '$FIELD_SEPARATOR'.
         input_files=$(_convert_text_to_delimited_string "$input_files")
 
         # Decode the URI list.
@@ -1296,15 +1296,15 @@ _get_files() {
     #   - "par_recursive": Specifies whether to expand directories recursively:
     #       - "false" (default): Does not expand directories.
     #       - "true": Expands directories recursively.
-    #   - "par_get_pwd": If "true", returns the current working directory if no
+    #   - "par_get_pwd": If 'true', returns the current working directory if no
     #     files are selected.
     #   - "par_max_items", "par_min_items": Limits the number of files.
     #   - "par_select_extension": Filters by file extension.
     #   - "par_select_mime": Filters by MIME type.
     #   - "par_skip_extension": Skips files with specific extensions.
     #   - "par_skip_encoding": Skips files with specific encodings.
-    #   - "par_sort_list": If "true", sorts the list of files.
-    #   - "par_validate_conflict": If "true", validates for filenames with the
+    #   - "par_sort_list": If 'true', sorts the list of files.
+    #   - "par_validate_conflict": If 'true', validates for filenames with the
     #     same base name.
 
     local parameters=$1
@@ -1324,7 +1324,7 @@ _get_files() {
     local par_type="file"
     local par_validate_conflict=""
 
-    # Evaluate the values from the 'parameters' variable.
+    # Evaluate the values from the '$parameters' variable.
     eval "$parameters"
 
     # Check if there are input files.
@@ -1473,11 +1473,11 @@ _get_items_count() {
     # This function counts the number of items in a string, where items are
     # separated by a specific field separator. It assumes that the input string
     # contains a list of items separated by the value of the variable
-    # $FIELD_SEPARATOR.
+    # '$FIELD_SEPARATOR'.
     #
     # Parameters:
     # - $1 (input_files): A string containing a list of items separated by
-    #   the defined $FIELD_SEPARATOR.
+    #   the defined '$FIELD_SEPARATOR'.
 
     local input_files=$1
     local items_count=0
@@ -1507,9 +1507,9 @@ _get_output_dir() {
     #   the function's behavior. Example: 'par_use_same_dir=true'.
     #
     # Parameters options:
-    #   - "par_use_same_dir": If set to "true", the function uses the base
+    #   - "par_use_same_dir": If set to 'true', the function uses the base
     #   directory (e.g., current working directory or an alternative with write
-    #   permissions) as the output directory. If "false" or not set, a new
+    #   permissions) as the output directory. If 'false' or not set, a new
     #   subdirectory is created for the output.
 
     local parameters=$1
@@ -1518,10 +1518,10 @@ _get_output_dir() {
     # Default values for input parameters.
     local par_use_same_dir=""
 
-    # Evaluate the values from the 'parameters' variable.
+    # Evaluate the values from the '$parameters' variable.
     eval "$parameters"
 
-    # Check directories available to put the 'output' dir.
+    # Check directories available to put the output dir.
     output_dir=$(_get_working_directory)
     [[ ! -w "$output_dir" ]] && output_dir=$HOME
     [[ ! -w "$output_dir" ]] && output_dir="/tmp"
@@ -1559,15 +1559,15 @@ _get_output_filename() {
     #     following options:
     #     - par_extension_opt: Specifies how to handle the file extension.
     #       Options are:
-    #       - "append": Append a new extension "par_extension" to the existing
+    #       - "append": Append a new extension 'par_extension' to the existing
     #         file extension.
     #       - "preserve": Keep the original file extension.
     #       - "replace": Replace the current extension with a new one
-    #         "par_extension".
+    #         'par_extension'.
     #       - "strip": Remove the file extension entirely.
-    #     - par_extension: The extension to use when "par_extension_opt" is set
-    #       to "append" or "replace". This value is ignored for the "preserve"
-    #       and "strip" options.
+    #     - par_extension: The extension to use when 'par_extension_opt' is set
+    #       to 'append' or 'replace'. This value is ignored for the 'preserve'
+    #       and 'strip' options.
     #     - par_prefix: A string to be added as prefix to the output filename.
     #     - par_suffix: A string to be added as suffix to the output
     #       filename, placed before the extension.
@@ -1584,7 +1584,7 @@ _get_output_filename() {
     local par_prefix=""
     local par_suffix=""
 
-    # Evaluate the values from the 'parameters' variable.
+    # Evaluate the values from the '$parameters' variable.
     eval "$parameters"
 
     filename=$(basename -- "$input_file")
@@ -1641,9 +1641,9 @@ _get_output_filename() {
 }
 
 _get_qdbus_command() {
-    # This function retrieves the first command matching the pattern "qdbus".
+    # This function retrieves the first command matching the pattern 'qdbus'.
     # The command may vary depending on the Linux distribution and could be
-    # "qdbus", "qdbus-qt6", "qdbus6", or similar variations.
+    # 'qdbus', 'qdbus-qt6', 'qdbus6', or similar variations.
     #
     # Returns:
     #   - "0" (true): If a command matching the pattern "qdbus" is found.
@@ -1655,8 +1655,8 @@ _get_qdbus_command() {
 
 _get_script_name() {
     # This function returns the name of the currently executing script. It uses
-    # the "basename" command to extract the script's filename from the full
-    # path provided by "$0".
+    # the 'basename' command to extract the script's filename from the full
+    # path provided by '$0'.
     #
     # If the script starts with two digits followed by a space (e.g., "01 My
     # Script"), used in naming of 'Accessed recently' directory, that prefix is
@@ -1665,14 +1665,14 @@ _get_script_name() {
     local output=""
     output=$(basename -- "$0")
 
-    # Remove "dd " (two digits + space) at the beginning.
+    # Remove 'dd ' (two digits + space) at the beginning.
     sed "s|^[0-9]\{2\} ||" <<<"$output"
 }
 
 _get_temp_dir_local() {
     # This function creates a temporary directory in a specified location and
-    # returns its path. The directory is created using "mktemp", with a custom
-    # prefix ("basename"). It also generates a temporary file to track the
+    # returns its path. The directory is created using 'mktemp', with a custom
+    # prefix (basename). It also generates a temporary file to track the
     # directory to be removed later.
     #
     # Parameters:
@@ -1698,8 +1698,8 @@ _get_temp_dir_local() {
 
 _get_temp_file() {
     # This function creates a temporary file in a specified temporary directory
-    # and returns its path. The file is created using "mktemp", and the
-    # directory for the temporary file is specified by the $TEMP_DIR_TASK
+    # and returns its path. The file is created using 'mktemp', and the
+    # directory for the temporary file is specified by the '$TEMP_DIR_TASK'
     # variable.
     #
     # Output:
@@ -1713,8 +1713,8 @@ _get_temp_file() {
 
 _get_temp_file_dry() {
     # This function simulates the creation of a temporary file in a specified
-    # directory without actually creating the file. It uses the "--dry-run"
-    # option with "mktemp", which allows checking what the file path would be
+    # directory without actually creating the file. It uses the '--dry-run'
+    # option with 'mktemp', which allows checking what the file path would be
     # if it were to be created.
     #
     # Output:
@@ -1939,8 +1939,8 @@ _move_file() {
         return 0
     fi
 
-    # Process the parameter "when_conflict": what to do when the 'file_dst'
-    # already exists.
+    # Process the parameter '$par_when_conflict': what to do when the
+    # '$file_dst' already exists.
     case "$par_when_conflict" in
     "overwrite")
         mv -f -- "$file_src" "$file_dst" 2>/dev/null
@@ -1992,20 +1992,20 @@ _move_temp_file_to_output() {
         return 1
     fi
 
-    # Skip files if the content of 'temp_file' is equal to the 'input_file'.
+    # Skip files if the content of '$temp_file' is equal to the '$input_file'.
     if cmp --silent -- "$temp_file" "$input_file"; then
         return 1
     fi
 
-    # If 'input_file' equals 'output_file', create a backup of 'input_file'.
+    # If '$input_file' equals '$output_file', create a backup of '$input_file'.
     if [[ "$input_file" == "$output_file" ]]; then
         _move_file "rename" "$input_file" "$input_file.bak" || return 1
     fi
 
-    # Move the 'temp_file' to 'output_file'.
+    # Move the '$temp_file' to '$output_file'.
     _move_file "rename" "$temp_file" "$output_file" || return 1
 
-    # Preserve the same permissions of 'input_file'.
+    # Preserve the same permissions of '$input_file'.
     std_output=$(chmod --reference="$input_file" -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
@@ -2019,7 +2019,7 @@ _open_items_locations() {
     # Parameters:
     #   - $1 (items): A space-separated list of file or directory paths whose
     #   locations will be opened. Paths can be relative or absolute.
-    #   - $2 (resolve_links): A boolean-like string ("true" or "false")
+    #   - $2 (resolve_links): A boolean-like string ('true' or 'false')
     #   indicating whether symbolic links in the provided paths should be
     #   resolved to their target locations before opening.
 
@@ -2087,7 +2087,7 @@ _open_items_locations() {
         $file_manager $items_open &
         ;;
     *)
-        # For other file managers (e.g., "pcmanfm-qt"), open the directory of
+        # For other file managers (e.g., 'pcmanfm-qt'), open the directory of
         # each item.
         local dir=""
         for item in $items_open; do
@@ -2339,9 +2339,9 @@ _delete_items() {
 
 _recent_scripts_organize() {
     # This function organizes the directory containing recently accessed
-    # scripts ('ACCESSED_RECENTLY_DIR'). This function manages symbolic links
+    # scripts ('$ACCESSED_RECENTLY_DIR'). This function manages symbolic links
     # in the directory by:
-    # 1. Keeping only the 'ACCESSED_RECENTLY_LINKS_TO_KEEP' most recently
+    # 1. Keeping only the '$ACCESSED_RECENTLY_LINKS_TO_KEEP' most recently
     #    accessed scripts.
     # 2. Renaming retained links with numeric prefixes (e.g., "01", "02") to
     #    maintain chronological order.
@@ -2361,7 +2361,7 @@ _recent_scripts_organize() {
             sort --zero-terminated --numeric-sort
     )
 
-    # Process the links, keeping only the 'ACCESSED_RECENTLY_LINKS_TO_KEEP'
+    # Process the links, keeping only the '$ACCESSED_RECENTLY_LINKS_TO_KEEP'
     # most recent.
     local count=1
     local link_name=""
@@ -2383,12 +2383,12 @@ _recent_scripts_organize() {
 
 _recent_scripts_add() {
     # This function adds the running script to the history of recently accessed
-    # scripts ('ACCESSED_RECENTLY_DIR').
+    # scripts ('$ACCESSED_RECENTLY_DIR').
 
     local running_script=$0
     if [[ "$0" != "/"* ]]; then
-        # If $0 is a relative path, resolve it relative to the current working
-        # directory.
+        # If '$0' is a relative path, resolve it relative to the current
+        # working directory.
         running_script="$SCRIPT_DIR/"$(basename -- "$0")
     fi
 
@@ -2397,7 +2397,7 @@ _recent_scripts_add() {
         running_script=$(readlink -f "$running_script")
     fi
 
-    # Create 'ACCESSED_RECENTLY_DIR' if it does not exist.
+    # Create '$ACCESSED_RECENTLY_DIR' if it does not exist.
     if [[ ! -d $ACCESSED_RECENTLY_DIR ]]; then
         mkdir -p "$ACCESSED_RECENTLY_DIR"
     fi
@@ -2568,7 +2568,7 @@ _str_remove_empty_tokens() {
     #
     # Parameters:
     #   - $1 (input_str): The input string containing tokens separated by
-    #     $FIELD_SEPARATOR.
+    #     '$FIELD_SEPARATOR'.
 
     local input_str=$1
     input_str=$(tr -s "$FIELD_SEPARATOR" <<<"$input_str")
@@ -2616,14 +2616,14 @@ _text_remove_home() {
     #
     # Returns:
     #   - The modified string with the home directory replaced by "~", or the
-    #     original string if "$HOME" is not defined.
+    #     original string if '$HOME' is not defined.
     #
     # Examples:
-    #   - Input: "/home/user/documents/file.txt" (assuming $HOME is
+    #   - Input: "/home/user/documents/file.txt" (assuming '$HOME' is
     #     "/home/user")
     #   - Output: "~/documents/file.txt"
     #
-    #   - Input: "/etc/config" (assuming $HOME is "/home/user")
+    #   - Input: "/etc/config" (assuming '$HOME' is "/home/user")
     #   - Output: "/etc/config"
 
     local input_text=$1
@@ -2637,7 +2637,7 @@ _text_remove_home() {
 
 _text_remove_pwd() {
     # This function replaces the current working directory path in a given
-    # string with a dot (".") for brevity.
+    # string with a dot ('.') for brevity.
     #
     # Parameters:
     #   - $1 (input_text): The input string that may contain the current
@@ -2895,7 +2895,7 @@ _validate_files_count() {
     #   - $6 (par_max_items): The maximum number of valid items allowed. If
     #     more valid items are selected, an error is displayed.
     #   - $7 (par_recursive): A string indicating whether the validation should
-    #     be recursive. If "true", directories will be searched recursively.
+    #     be recursive. If 'true', directories will be searched recursively.
     #
     # Example:
     #   - Input: "dir1 dir2", "file", "txt|pdf", "", 1, 5, "true"
@@ -2971,7 +2971,7 @@ _validate_files_count() {
 
 _xdg_get_default_app() {
     # This function retrieves the default application associated with a
-    # specific MIME type on a Linux system using the "xdg-mime" command.
+    # specific MIME type on a Linux system using the 'xdg-mime' command.
     #
     # Parameters:
     #   - $1 (mime): The MIME type (e.g., "application/pdf", "image/png") for
@@ -2980,7 +2980,7 @@ _xdg_get_default_app() {
     # Example:
     #   - Input: "application/pdf"
     #   - Output: The function prints the default application's executable for
-    #     opening PDF files (e.g., "evince" or "okular").
+    #     opening PDF files (e.g., 'evince' or 'okular').
 
     local mime=$1
     local desktop_file=""
