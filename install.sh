@@ -24,15 +24,15 @@ IGNORE_FIND_PATHS=(
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
-STR_ERROR="[\\e[31mERROR\\e[0m]"
-STR_INFO="[\\e[32mINFO\\e[0m]"
+MSG_ERROR="[\\e[31mERROR\\e[0m]"
+MSG_INFO="[\\e[32mINFO\\e[0m]"
 
 readonly \
     COMPATIBLE_FILE_MANAGERS \
     IGNORE_FIND_PATHS \
-    SCRIPT_DIR \
-    STR_ERROR \
-    STR_INFO
+    MSG_ERROR \
+    MSG_INFO \
+    SCRIPT_DIR
 
 # -----------------------------------------------------------------------------
 # GLOBAL VARIABLES
@@ -192,7 +192,7 @@ _check_exist_filemanager() {
             return
         fi
     done
-    echo -e "$STR_ERROR Could not find any compatible file managers!"
+    echo -e "$MSG_ERROR Could not find any compatible file managers!"
     exit 1
 }
 
@@ -301,11 +301,11 @@ _step_install_dependencies() {
                 sudo zypper --non-interactive install $packages
             fi
         else
-            echo -e "$STR_ERROR Could not find a package manager!"
+            echo -e "$MSG_ERROR Could not find a package manager!"
             exit 1
         fi
     else
-        echo -e "$STR_ERROR Could not run as administrator!"
+        echo -e "$MSG_ERROR Could not run as administrator!"
         exit 1
     fi
 
@@ -313,7 +313,7 @@ _step_install_dependencies() {
     local imagemagick_policy=""
     imagemagick_policy=$(find /etc/ImageMagick-[0-9]*/policy.xml 2>/dev/null)
     if [[ -f "$imagemagick_policy" ]]; then
-        echo -e "$STR_INFO Fixing write permission with PDF in ImageMagick..."
+        echo -e "$MSG_INFO Fixing write permission with PDF in ImageMagick..."
         sudo sed -i \
             's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/g' \
             "$imagemagick_policy"
@@ -328,11 +328,11 @@ _step_install_scripts() {
 
     # 'Remove' previous scripts.
     if [[ "$menu_options" == *"remove"* ]]; then
-        echo -e "$STR_INFO Removing previous scripts..."
+        echo -e "$MSG_INFO Removing previous scripts..."
         _delete_items "$INSTALL_DIR"
     fi
 
-    echo -e "$STR_INFO Installing new scripts..."
+    echo -e "$MSG_INFO Installing new scripts..."
     $SUDO_CMD_USER mkdir --parents "$INSTALL_DIR"
 
     # Copy the script files.
@@ -349,7 +349,7 @@ _step_install_scripts() {
     done
 
     # Set file permissions.
-    echo -e "$STR_INFO Setting file permissions..."
+    echo -e "$MSG_INFO Setting file permissions..."
     $SUDO_CMD chown -R "$INSTALL_OWNER:$INSTALL_GROUP" -- "$INSTALL_DIR"
     $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" \
@@ -367,7 +367,7 @@ _step_install_menus() {
 }
 
 _step_install_menus_dolphin() {
-    echo -e "$STR_INFO Installing Dolphin actions..."
+    echo -e "$MSG_INFO Installing Dolphin actions..."
 
     local desktop_menus_dir="$INSTALL_HOME/.local/share/kio/servicemenus"
     _delete_items "$desktop_menus_dir"
@@ -460,7 +460,7 @@ _step_install_menus_dolphin() {
 }
 
 _step_install_menus_pcmanfm() {
-    echo -e "$STR_INFO Installing PCManFM-Qt actions..."
+    echo -e "$MSG_INFO Installing PCManFM-Qt actions..."
 
     local desktop_menus_dir="$INSTALL_HOME/.local/share/file-manager/actions"
     _delete_items "$desktop_menus_dir"
@@ -571,7 +571,7 @@ _step_install_menus_pcmanfm() {
 }
 
 _step_install_menus_thunar() {
-    echo -e "$STR_INFO Installing Thunar actions..."
+    echo -e "$MSG_INFO Installing Thunar actions..."
 
     local menus_file="$INSTALL_HOME/.config/Thunar/uca.xml"
 
@@ -722,7 +722,7 @@ _step_install_shortcuts() {
 }
 
 _step_install_shortcuts_nautilus() {
-    echo -e "$STR_INFO Installing the keyboard shortcuts for Nautilus..."
+    echo -e "$MSG_INFO Installing the keyboard shortcuts for Nautilus..."
 
     local accels_file=$1
     $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
@@ -755,7 +755,7 @@ _step_install_shortcuts_nautilus() {
 }
 
 _step_install_shortcuts_gnome2() {
-    echo -e "$STR_INFO Installing the keyboard shortcuts..."
+    echo -e "$MSG_INFO Installing the keyboard shortcuts..."
 
     local accels_file=$1
     $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
@@ -797,7 +797,7 @@ _step_install_shortcuts_gnome2() {
 }
 
 _step_install_shortcuts_thunar() {
-    echo -e "$STR_INFO Installing the keyboard shortcuts for Thunar..."
+    echo -e "$MSG_INFO Installing the keyboard shortcuts for Thunar..."
 
     local accels_file=$1
     $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
@@ -848,7 +848,7 @@ _step_install_shortcuts_thunar() {
 }
 
 _step_close_filemanager() {
-    echo -e "$STR_INFO Closing the file manager '$FILE_MANAGER' to reload its configurations..."
+    echo -e "$MSG_INFO Closing the file manager '$FILE_MANAGER' to reload its configurations..."
 
     case "$FILE_MANAGER" in
     "nautilus" | "caja" | "nemo" | "thunar")
