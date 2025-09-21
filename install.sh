@@ -877,7 +877,7 @@ _step_close_filemanager() {
 
 _get_user_homes() {
     getent passwd |
-        grep -v "/nologin\|/false\|/sbin\|/sync" |
+        grep --extended-regexp "/(bash|sh|zsh|csh|ksh|tcsh|fish|dash)$" |
         cut -d ":" -f 6 |
         sort --unique
 }
