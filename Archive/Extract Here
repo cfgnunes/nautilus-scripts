@@ -73,7 +73,7 @@ _get_dependencies() {
     case $command in
     "7za")
         dependencies+="
-            command=7za; pkg_manager=apt; package=p7zip-full |
+            command=7za; pkg_manager=apt; package=p7zip |
             command=7za; pkg_manager=dnf; package=p7zip |
             command=7za; pkg_manager=pacman; package=p7zip |
             command=7za; pkg_manager=zypper; package=7zip"
@@ -100,7 +100,7 @@ _get_dependencies() {
                 command=unar; pkg_manager=zypper"
         dependencies+=$'\n'
         dependencies+="
-                command=7za; pkg_manager=apt; package=p7zip-full |
+                command=7za; pkg_manager=apt; package=p7zip |
                 command=7za; pkg_manager=dnf; package=p7zip |
                 command=7za; pkg_manager=pacman; package=p7zip |
                 command=7za; pkg_manager=zypper; package=7zip"
