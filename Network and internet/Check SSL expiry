@@ -21,7 +21,7 @@ _main() {
     std_output=$(_storage_text_read_all)
     std_output=$(sort --version-sort --unique <<<"$std_output")
 
-    _display_list_box "$std_output" "par_columns='--column:Days left,--column:URL'; par_item_name=URLs; par_action=open_url"
+    _display_list_box "$std_output" "par_columns='--column:Days left,--column:URL'; par_item_name=URLs; par_action=open_url; par_checkbox=true"
 }
 
 _main_task() {
