@@ -9,12 +9,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
-        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        _check_dependencies "command=wl-paste; package=wl-clipboard"
-    else
-        _check_dependencies "command=xclip; package=xclip"
-    fi
+    _check_dependencies_clipboard
 
     _display_wait_box "2"
     output_dir=$(_get_output_dir "par_use_same_dir=true")
@@ -31,7 +26,7 @@ _save_file_from_clipboard() {
     local output_file=""
     local std_output=""
 
-    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
+    if [[ -n "${XDG_SESSION_TYPE:-}" ]] &&
         [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
 
         file_type=$(wl-paste --list-types 2>/dev/null)

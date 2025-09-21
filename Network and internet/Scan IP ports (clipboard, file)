@@ -10,12 +10,8 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
-        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        _check_dependencies "command=nmap | command=wl-paste; package=wl-clipboard"
-    else
-        _check_dependencies "command=nmap | command=xclip"
-    fi
+    _check_dependencies_clipboard
+    _check_dependencies "command=nmap"
 
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all; par_get_pwd=true")

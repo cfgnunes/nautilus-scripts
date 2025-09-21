@@ -9,12 +9,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
-        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        _check_dependencies "command=wl-copy; package=wl-clipboard"
-    else
-        _check_dependencies "command=xclip"
-    fi
+    _check_dependencies_clipboard
 
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all; par_get_pwd=true")
@@ -23,12 +18,7 @@ _main() {
     input_files=$(basename --multiple -- $input_files)
 
     # Run the main process.
-    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
-        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        wl-copy "$input_files"$'\n' 2>/dev/null
-    else
-        xclip -selection clipboard -i <<<"$input_files" 2>/dev/null
-    fi
+    _set_clipboard_data "$input_files"
 
     _display_result_box ""
 }

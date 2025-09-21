@@ -219,6 +219,21 @@ _check_dependencies() {
     fi
 }
 
+_check_dependencies_clipboard() {
+    # This function checks the required dependencies for clipboard operations
+    # based on the current session type (Wayland or X11).
+
+    case "${XDG_SESSION_TYPE:-}" in
+    wayland) _check_dependencies "command=wl-paste; package=wl-clipboard" ;;
+    x11) _check_dependencies "command=xclip" ;;
+    *)
+        _display_error_box \
+            "Your session type is not supported for clipboard operations."
+        _exit_script
+        ;;
+    esac
+}
+
 _check_output() {
     # This function validates the success of a command or process based on its
     # exit code and output. It logs errors if the command fails or if an
@@ -1155,14 +1170,13 @@ _gdbus_notify() {
 }
 
 _get_clipboard_data() {
-    # This function retrieves the current content of the clipboard.
+    # This function retrieves the current content of the clipboard, adapting
+    # the method according to the session type.
 
-    if [[ -n "${XDG_SESSION_TYPE+x}" ]] &&
-        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
-        wl-paste 2>/dev/null
-    else
-        xclip -quiet -selection clipboard -o 2>/dev/null
-    fi
+    case "${XDG_SESSION_TYPE:-}" in
+    wayland) wl-paste 2>/dev/null ;;
+    x11) xclip -quiet -selection clipboard -o 2>/dev/null ;;
+    esac
 }
 
 _get_filename_dir() {
@@ -2486,6 +2500,21 @@ _run_task_parallel() {
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
         bash -c "_main_task '{}' '$output_dir'"
+}
+
+_set_clipboard_data() {
+    # This function sets the content of the clipboard with the provided input
+    # data, adapting the method according to the session type.
+    #
+    # Parameters:
+    #   - $1 (input_data): The text string to be copied into the clipboard.
+
+    local input_data=$1
+
+    case "${XDG_SESSION_TYPE:-}" in
+    wayland) wl-copy "$input_data"$'\n' 2>/dev/null ;;
+    x11) xclip -selection clipboard -i <<<"$input_data" 2>/dev/null ;;
+    esac
 }
 
 _storage_text_clean() {
