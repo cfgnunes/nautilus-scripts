@@ -61,9 +61,9 @@ source "$SCRIPT_DIR/.assets/multiselect-menu.sh"
 
 # shellcheck disable=SC2034
 _main() {
-    local categories_defaults=()
-    local categories_dirs=()
-    local categories_selected=()
+    local cat_defaults=()
+    local cat_dirs=()
+    local cat_selected=()
     local menu_defaults=()
     local menu_labels=()
     local menu_options=""
@@ -108,7 +108,7 @@ _main() {
     # Collect all available script categories (directories).
     local dir=""
     while IFS= read -r -d $'\0' dir; do
-        categories_dirs+=("$dir")
+        cat_dirs+=("$dir")
     done < <(
         find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
             "${IGNORE_FIND_PATHS[@]}" \
@@ -121,7 +121,7 @@ _main() {
     if [[ "$menu_options" == *"categories"* ]]; then
         echo
         echo "Select the categories (<SPACE> to check):"
-        _multiselect_menu categories_selected categories_dirs categories_defaults
+        _multiselect_menu cat_selected cat_dirs cat_defaults
     fi
 
     # Step 1: Install basic dependencies.
@@ -196,7 +196,7 @@ _main() {
             # Perform installation steps.
             echo
             echo "Installing the scripts (directory '$install_home', file manager '$file_manager'):"
-            _step_install_scripts "$menu_options" categories_selected categories_dirs
+            _step_install_scripts "$menu_options" cat_selected cat_dirs
             _step_install_menus
             [[ "$menu_options" == *"shortcuts"* ]] && _step_install_shortcuts
         done
@@ -355,8 +355,8 @@ _step_install_dependencies() {
 
 _step_install_scripts() {
     local menu_options=$1
-    local -n _categories_selected=$2
-    local -n _categories_dirs=$3
+    local -n _cat_selected=$2
+    local -n _cat_dirs=$3
 
     # Install scripts into the target directory.
     # Steps:
@@ -379,13 +379,13 @@ _step_install_scripts() {
     # Copy scripts by category. If the user selected specific categories, only
     # those are installed. Otherwise, all categories are copied by default.
     local i=0
-    for i in "${!_categories_dirs[@]}"; do
-        if [[ -v "_categories_selected[i]" ]]; then
-            if [[ ${_categories_selected[i]} == "true" ]]; then
-                $SUDO_CMD cp -r -- "$SCRIPT_DIR/${_categories_dirs[i]}" "$INSTALL_DIR"
+    for i in "${!_cat_dirs[@]}"; do
+        if [[ -v "_cat_selected[i]" ]]; then
+            if [[ ${_cat_selected[i]} == "true" ]]; then
+                $SUDO_CMD cp -r -- "$SCRIPT_DIR/${_cat_dirs[i]}" "$INSTALL_DIR"
             fi
         else
-            $SUDO_CMD cp -r -- "$SCRIPT_DIR/${_categories_dirs[i]}" "$INSTALL_DIR"
+            $SUDO_CMD cp -r -- "$SCRIPT_DIR/${_cat_dirs[i]}" "$INSTALL_DIR"
         fi
     done
 
@@ -413,9 +413,9 @@ _step_install_menus() {
 _step_install_menus_dolphin() {
     echo -e "$MSG_INFO Installing Dolphin actions..."
 
-    local desktop_menus_dir="$INSTALL_HOME/.local/share/kio/servicemenus"
-    _delete_items "$desktop_menus_dir"
-    $SUDO_CMD_USER mkdir --parents "$desktop_menus_dir"
+    local action_menus_dir="$INSTALL_HOME/.local/share/kio/servicemenus"
+    _delete_items "$action_menus_dir"
+    $SUDO_CMD_USER mkdir --parents "$action_menus_dir"
 
     local filename=""
     local name_sub=""
@@ -474,8 +474,8 @@ _step_install_menus_dolphin() {
             par_min_items=$(_get_par_value "$filename" "par_min_items")
             par_max_items=$(_get_par_value "$filename" "par_max_items")
 
-            local desktop_filename=""
-            desktop_filename="${desktop_menus_dir}/${submenu} - ${name}.desktop"
+            local action_file=""
+            action_file="${action_menus_dir}/${submenu} - ${name}.desktop"
             {
                 printf "%s\n" "[Desktop Entry]"
                 printf "%s\n" "Type=Service"
@@ -497,18 +497,18 @@ _step_install_menus_dolphin() {
                 printf "%s\n" "[Desktop Action scriptAction]"
                 printf "%s\n" "Name=$name_sub"
                 printf "%s\n" "Exec=bash \"$filename\" %F"
-            } | $SUDO_CMD tee "$desktop_filename" >/dev/null
-            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$desktop_filename"
-            $SUDO_CMD chmod +x "$desktop_filename"
+            } | $SUDO_CMD tee "$action_file" >/dev/null
+            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$action_file"
+            $SUDO_CMD chmod +x "$action_file"
         done
 }
 
 _step_install_menus_pcmanfm() {
     echo -e "$MSG_INFO Installing PCManFM-Qt actions..."
 
-    local desktop_menus_dir="$INSTALL_HOME/.local/share/file-manager/actions"
-    _delete_items "$desktop_menus_dir"
-    $SUDO_CMD_USER mkdir --parents "$desktop_menus_dir"
+    local action_menus_dir="$INSTALL_HOME/.local/share/file-manager/actions"
+    _delete_items "$action_menus_dir"
+    $SUDO_CMD_USER mkdir --parents "$action_menus_dir"
 
     # Create the 'Scripts.desktop' menu.
     {
@@ -520,9 +520,10 @@ _step_install_menus_pcmanfm() {
             "${IGNORE_FIND_PATHS[@]}" \
             -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";"
         printf "\n"
-    } | $SUDO_CMD tee "${desktop_menus_dir}/Scripts.desktop" >/dev/null
-    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "${desktop_menus_dir}/Scripts.desktop"
-    $SUDO_CMD chmod +x "${desktop_menus_dir}/Scripts.desktop"
+    } | $SUDO_CMD tee "${action_menus_dir}/Scripts.desktop" >/dev/null
+    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- \
+        "${action_menus_dir}/Scripts.desktop"
+    $SUDO_CMD chmod +x "${action_menus_dir}/Scripts.desktop"
 
     # Create a '.desktop' file for each directory (for sub-menus).
     local filename=""
@@ -547,9 +548,10 @@ _step_install_menus_pcmanfm() {
                 printf "%s\n" "Name=$name"
                 printf "%s\n" "ItemsList=$dir_items"
 
-            } | $SUDO_CMD tee "${desktop_menus_dir}/$name.desktop" >/dev/null
-            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "${desktop_menus_dir}/$name.desktop"
-            $SUDO_CMD chmod +x "${desktop_menus_dir}/$name.desktop"
+            } | $SUDO_CMD tee "${action_menus_dir}/$name.desktop" >/dev/null
+            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- \
+                "${action_menus_dir}/$name.desktop"
+            $SUDO_CMD chmod +x "${action_menus_dir}/$name.desktop"
         done
 
     # Create a '.desktop' file for each script.
@@ -597,8 +599,8 @@ _step_install_menus_pcmanfm() {
             par_min_items=$(_get_par_value "$filename" "par_min_items")
             par_max_items=$(_get_par_value "$filename" "par_max_items")
 
-            local desktop_filename=""
-            desktop_filename="${desktop_menus_dir}/${name}.desktop"
+            local action_file=""
+            action_file="${action_menus_dir}/${name}.desktop"
             {
                 printf "%s\n" "[Desktop Entry]"
                 printf "%s\n" "Type=Action"
@@ -608,9 +610,9 @@ _step_install_menus_pcmanfm() {
                 printf "%s\n" "[X-Action-Profile scriptAction]"
                 printf "%s\n" "MimeTypes=$par_select_mime"
                 printf "%s\n" "Exec=bash \"$filename\" %F"
-            } | $SUDO_CMD tee "$desktop_filename" >/dev/null
-            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$desktop_filename"
-            $SUDO_CMD chmod +x "$desktop_filename"
+            } | $SUDO_CMD tee "$action_file" >/dev/null
+            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$action_file"
+            $SUDO_CMD chmod +x "$action_file"
         done
 }
 
@@ -675,7 +677,8 @@ _step_install_menus_thunar() {
             sort --zero-terminated |
             while IFS= read -r -d "" filename; do
                 name=$(basename -- "$filename")
-                submenu=$(dirname -- "$filename" | sed "s|.*scripts/|Scripts/|g")
+                submenu=$(dirname -- "$filename" |
+                    sed "s|.*scripts/|Scripts/|g")
 
                 printf "%s\n" "<action>"
                 printf "\t%s\n" "<icon></icon>"
@@ -751,16 +754,20 @@ _step_install_shortcuts() {
 
     case "$FILE_MANAGER" in
     "nautilus")
-        _step_install_shortcuts_nautilus "$INSTALL_HOME/.config/nautilus/scripts-accels"
+        _step_install_shortcuts_nautilus \
+            "$INSTALL_HOME/.config/nautilus/scripts-accels"
         ;;
     "caja")
-        _step_install_shortcuts_gnome2 "$INSTALL_HOME/.config/caja/accels"
+        _step_install_shortcuts_gnome2 \
+            "$INSTALL_HOME/.config/caja/accels"
         ;;
     "nemo")
-        _step_install_shortcuts_gnome2 "$INSTALL_HOME/.gnome2/accels/nemo"
+        _step_install_shortcuts_gnome2 \
+            "$INSTALL_HOME/.gnome2/accels/nemo"
         ;;
     "thunar")
-        _step_install_shortcuts_thunar "$INSTALL_HOME/.config/Thunar/accels.scm"
+        _step_install_shortcuts_thunar \
+            "$INSTALL_HOME/.config/Thunar/accels.scm"
         ;;
     esac
 }
@@ -892,6 +899,10 @@ _step_install_shortcuts_thunar() {
 }
 
 _step_close_filemanager() {
+    # This function closes the current file manager so that it reloads its
+    # configurations. For most file managers, the `-q` option is used to quit
+    # gracefully.
+
     echo -e "$MSG_INFO Closing the file manager '$FILE_MANAGER' to reload its configurations..."
 
     case "$FILE_MANAGER" in
@@ -906,6 +917,10 @@ _step_close_filemanager() {
 }
 
 _get_user_homes() {
+    # This function returns the list of home directories for users who can log
+    # in. It filters '/etc/passwd' entries for accounts with valid login
+    # shells.
+
     getent passwd |
         grep --extended-regexp "/(bash|sh|zsh|csh|ksh|tcsh|fish|dash)$" |
         cut -d ":" -f 6 |
@@ -913,6 +928,11 @@ _get_user_homes() {
 }
 
 _get_par_value() {
+    # This function extracts the value of a given parameter from a script file.
+    # It searches for "parameter=value" inside the file, then returns only the
+    # value. Quotes are removed and '|' characters are replaced with ';' for
+    # consistency.
+
     local filename=$1
     local parameter=$2
 
