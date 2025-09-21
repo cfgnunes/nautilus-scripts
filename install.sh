@@ -45,7 +45,7 @@ readonly \
 
 FILE_MANAGER=""  # Current file manager being processed.
 INSTALL_DIR=""   # Target installation directory for scripts.
-INSTALL_HOME=""  # User’s home directory where scripts will be installed.
+INSTALL_HOME=""  # User's home directory where scripts will be installed.
 INSTALL_OWNER="" # Owner of the installation directory.
 INSTALL_GROUP="" # Group of the installation directory.
 SUDO_CMD=""      # Command prefix for elevated operations.
