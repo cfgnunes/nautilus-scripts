@@ -134,38 +134,38 @@ _main() {
             continue
         fi
 
-        case "$file_manager" in
-        "nautilus")
-            INSTALL_DIR="$INSTALL_HOME/.local/share/nautilus/scripts"
-            FILE_MANAGER="nautilus"
-            ;;
-        "caja")
-            INSTALL_DIR="$INSTALL_HOME/.config/caja/scripts"
-            FILE_MANAGER="caja"
-            ;;
-        "dolphin")
-            INSTALL_DIR="$INSTALL_HOME/.local/share/scripts"
-            FILE_MANAGER="dolphin"
-            ;;
-        "nemo")
-            INSTALL_DIR="$INSTALL_HOME/.local/share/nemo/scripts"
-            FILE_MANAGER="nemo"
-            ;;
-        "pcmanfm-qt")
-            INSTALL_DIR="$INSTALL_HOME/.local/share/scripts"
-            FILE_MANAGER="pcmanfm-qt"
-            ;;
-        "thunar")
-            INSTALL_DIR="$INSTALL_HOME/.local/share/scripts"
-            FILE_MANAGER="thunar"
-            ;;
-        esac
-
         # Install the scripts for each user.
         for install_home in $install_home_list; do
             INSTALL_HOME=$install_home
             INSTALL_OWNER=$($SUDO_CMD stat -c "%U" "$INSTALL_HOME")
             INSTALL_GROUP=$($SUDO_CMD stat -c "%G" "$INSTALL_HOME")
+
+            case "$file_manager" in
+            "nautilus")
+                INSTALL_DIR="$INSTALL_HOME/.local/share/nautilus/scripts"
+                FILE_MANAGER="nautilus"
+                ;;
+            "caja")
+                INSTALL_DIR="$INSTALL_HOME/.config/caja/scripts"
+                FILE_MANAGER="caja"
+                ;;
+            "dolphin")
+                INSTALL_DIR="$INSTALL_HOME/.local/share/scripts"
+                FILE_MANAGER="dolphin"
+                ;;
+            "nemo")
+                INSTALL_DIR="$INSTALL_HOME/.local/share/nemo/scripts"
+                FILE_MANAGER="nemo"
+                ;;
+            "pcmanfm-qt")
+                INSTALL_DIR="$INSTALL_HOME/.local/share/scripts"
+                FILE_MANAGER="pcmanfm-qt"
+                ;;
+            "thunar")
+                INSTALL_DIR="$INSTALL_HOME/.local/share/scripts"
+                FILE_MANAGER="thunar"
+                ;;
+            esac
 
             # Installer steps.
             echo
@@ -177,6 +177,7 @@ _main() {
 
         [[ "$menu_options" == *"reload"* ]] && _step_close_filemanager
     done
+    echo
     echo "Finished!"
 }
 
@@ -350,8 +351,7 @@ _step_install_scripts() {
 
     # Set file permissions.
     echo -e "$STR_INFO Setting file permissions..."
-    $SUDO_CMD find -L "$INSTALL_DIR" \
-        ! -exec chown "$INSTALL_OWNER:$INSTALL_GROUP" -- {} \;
+    $SUDO_CMD chown -R "$INSTALL_OWNER:$INSTALL_GROUP" -- "$INSTALL_DIR"
     $SUDO_CMD find -L "$INSTALL_DIR" -type f ! \
         "${IGNORE_FIND_PATHS[@]}" \
         ! -exec chmod -x -- {} \;
