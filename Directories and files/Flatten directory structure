@@ -34,7 +34,7 @@ _flatten_directory() {
     # Create a temporary file to store the list of files to move.
     temp_file=$(_get_temp_file)
 
-    # Create an "undo script" to reverse the flattening operation.
+    # Create an 'undo script' to reverse the flattening operation.
     undo_script=$(_make_undo_script "$directory")
 
     _directory_push "$directory" || return 1
@@ -42,7 +42,7 @@ _flatten_directory() {
     # Generate a list of all files (not directories) in the current directory and its subdirectories.
     find . -mindepth 2 -not -type d 2>/dev/null >>"$temp_file"
 
-    # For each directory, add a command to the "undo script" to recreate the directory structure.
+    # For each directory, add a command to the 'undo script' to recreate the directory structure.
     find . -type d 2>/dev/null | grep "/" | xargs -I{} printf "%s\n" "mkdir -p -- \"{}\"" >>"$undo_script"
 
     # Loop through each file in the list and move it to the root directory.
@@ -54,7 +54,7 @@ _flatten_directory() {
         _move_file "skip" "$full_path_filename" "$filename"
         exit_code=$?
 
-        # If the file was moved successfully and the name was changed, add to the "undo script".
+        # If the file was moved successfully and the name was changed, add to the 'undo script'.
         if ((exit_code == 0)); then
             # Print 'mv' command in Undo script.
             printf "%s\n" "mv -n -- \"$filename\" \"$full_path_filename\"" >>"$undo_script"
@@ -96,10 +96,10 @@ _make_undo_script() {
         printf "\n"
     } >"$output_file"
 
-    # Make the "undo script" executable.
+    # Make the 'undo script' executable.
     chmod +x -- "$output_file"
 
-    # Return the path of the generated "undo script".
+    # Return the path of the generated 'undo script'.
     printf "%s" "$output_file"
 }
 
