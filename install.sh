@@ -69,12 +69,12 @@ _main() {
     echo "Select the options (<SPACE> to check):"
 
     menu_labels=(
-        "Install basic dependencies (requires sudo)"
+        "Install basic dependencies (requires 'sudo')"
         "Install keyboard shortcuts"
         "Close the file manager to reload its configurations"
         "Choose script categories to install"
         "Preserve previous scripts"
-        "Install for all users (requires sudo)"
+        "Install for all users (requires 'sudo')"
     )
     menu_defaults=(
         "true"
