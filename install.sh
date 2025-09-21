@@ -876,7 +876,10 @@ _step_close_filemanager() {
 }
 
 _get_user_homes() {
-    getent passwd | grep -v "/nologin\|/false\|/sync" | cut -d: -f6
+    getent passwd |
+        grep -v "/nologin\|/false\|/sbin\|/sync" |
+        cut -d ":" -f 6 |
+        sort --unique
 }
 
 _get_par_value() {
