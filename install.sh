@@ -44,6 +44,7 @@ INSTALL_HOME=""
 INSTALL_OWNER=""
 INSTALL_GROUP=""
 SUDO_CMD=""
+SUDO_CMD_USER=""
 
 #shellcheck source=.assets/multiselect-menu.sh
 source "$SCRIPT_DIR/.assets/multiselect-menu.sh"
@@ -98,7 +99,7 @@ _main() {
     while IFS= read -r -d $'\0' dir; do
         categories_dirs+=("$dir")
     done < <(
-        $SUDO_CMD find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
+        find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
             "${IGNORE_FIND_PATHS[@]}" \
             -print0 2>/dev/null |
             sed -z "s|^.*/||" |
@@ -116,6 +117,8 @@ _main() {
 
     local install_home_list=""
     if [[ "$menu_options" == *"allusers"* ]]; then
+        SUDO_CMD="sudo"
+
         install_home_list=$(_get_user_homes)
         if [[ -d "/etc/skel" ]]; then
             install_home_list+=$'\n'
@@ -138,7 +141,7 @@ _main() {
             INSTALL_OWNER=$($SUDO_CMD stat -c "%U" "$INSTALL_HOME")
             INSTALL_GROUP=$($SUDO_CMD stat -c "%G" "$INSTALL_HOME")
             if [[ "$menu_options" == *"allusers"* ]]; then
-                SUDO_CMD="sudo -u $INSTALL_OWNER -g $INSTALL_GROUP"
+                SUDO_CMD_USER="sudo -u $INSTALL_OWNER -g $INSTALL_GROUP"
             fi
 
             case "$file_manager" in
@@ -335,7 +338,7 @@ _step_install_scripts() {
     fi
 
     echo -e "$STR_INFO Installing new scripts..."
-    $SUDO_CMD mkdir --parents "$INSTALL_DIR"
+    $SUDO_CMD_USER mkdir --parents "$INSTALL_DIR"
 
     # Copy the script files.
     $SUDO_CMD cp -- "$SCRIPT_DIR/common-functions.sh" "$INSTALL_DIR"
@@ -382,7 +385,7 @@ _step_install_menus_dolphin() {
 
     local desktop_menus_dir="$INSTALL_HOME/.local/share/kio/servicemenus"
     _delete_items "$desktop_menus_dir"
-    $SUDO_CMD mkdir --parents "$desktop_menus_dir"
+    $SUDO_CMD_USER mkdir --parents "$desktop_menus_dir"
 
     local filename=""
     local name_sub=""
@@ -475,7 +478,7 @@ _step_install_menus_pcmanfm() {
 
     local desktop_menus_dir="$INSTALL_HOME/.local/share/file-manager/actions"
     _delete_items "$desktop_menus_dir"
-    $SUDO_CMD mkdir --parents "$desktop_menus_dir"
+    $SUDO_CMD_USER mkdir --parents "$desktop_menus_dir"
 
     # Create the 'Scripts.desktop' menu.
     {
@@ -590,7 +593,7 @@ _step_install_menus_thunar() {
     _item_create_backup "$menus_file"
     _delete_items "$menus_file"
 
-    $SUDO_CMD mkdir --parents "$INSTALL_HOME/.config/Thunar"
+    $SUDO_CMD_USER mkdir --parents "$INSTALL_HOME/.config/Thunar"
 
     {
         printf "%s\n" "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
@@ -736,7 +739,7 @@ _step_install_shortcuts_nautilus() {
     echo -e "$STR_INFO Installing the keyboard shortcuts for Nautilus..."
 
     local accels_file=$1
-    $SUDO_CMD mkdir --parents "$(dirname -- "$accels_file")"
+    $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
 
     # Create a backup of older custom actions.
     _item_create_backup "$accels_file"
@@ -769,7 +772,7 @@ _step_install_shortcuts_gnome2() {
     echo -e "$STR_INFO Installing the keyboard shortcuts..."
 
     local accels_file=$1
-    $SUDO_CMD mkdir --parents "$(dirname -- "$accels_file")"
+    $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
 
     # Create a backup of older custom actions.
     _item_create_backup "$accels_file"
@@ -811,7 +814,7 @@ _step_install_shortcuts_thunar() {
     echo -e "$STR_INFO Installing the keyboard shortcuts for Thunar..."
 
     local accels_file=$1
-    $SUDO_CMD mkdir --parents "$(dirname -- "$accels_file")"
+    $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
 
     # Create a backup of older custom actions.
     _item_create_backup "$accels_file"
