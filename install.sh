@@ -195,7 +195,8 @@ _main() {
 
             # Perform installation steps.
             echo
-            echo "Installing the scripts (directory '$install_home', file manager '$file_manager'):"
+            echo -n "Installing the scripts "
+            echo "(directory '$install_home', file manager '$file_manager'):"
             _step_install_scripts "$menu_options" cat_selected cat_dirs
             _step_install_menus
             [[ "$menu_options" == *"shortcuts"* ]] && _step_install_shortcuts
