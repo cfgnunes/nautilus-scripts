@@ -8,6 +8,8 @@ set -u
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
+# List of supported file managers. The script will only run if at least one is
+# available.
 COMPATIBLE_FILE_MANAGERS=(
     "nautilus"
     "caja"
@@ -16,6 +18,7 @@ COMPATIBLE_FILE_MANAGERS=(
     "pcmanfm-qt"
     "thunar")
 
+# Directories to be ignored during install.
 IGNORE_FIND_PATHS=(
     ! -path "*/Accessed recently*"
     ! -path "*/.assets*"
@@ -24,9 +27,11 @@ IGNORE_FIND_PATHS=(
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
+# Colored status messages for logging.
 MSG_ERROR="[\\e[31mERROR\\e[0m]"
 MSG_INFO="[\\e[32mINFO\\e[0m]"
 
+# Mark constants as read-only to prevent accidental modification.
 readonly \
     COMPATIBLE_FILE_MANAGERS \
     IGNORE_FIND_PATHS \
@@ -38,14 +43,15 @@ readonly \
 # GLOBAL VARIABLES
 # -----------------------------------------------------------------------------
 
-FILE_MANAGER=""
-INSTALL_DIR=""
-INSTALL_HOME=""
-INSTALL_OWNER=""
-INSTALL_GROUP=""
-SUDO_CMD=""
-SUDO_CMD_USER=""
+FILE_MANAGER=""  # Current file manager being processed.
+INSTALL_DIR=""   # Target installation directory for scripts.
+INSTALL_HOME=""  # User’s home directory where scripts will be installed.
+INSTALL_OWNER="" # Owner of the installation directory.
+INSTALL_GROUP="" # Group of the installation directory.
+SUDO_CMD=""      # Command prefix for elevated operations.
+SUDO_CMD_USER="" # Command prefix for running as target user.
 
+# Import helper script for interactive multi-selection menus.
 #shellcheck source=.assets/multiselect-menu.sh
 source "$SCRIPT_DIR/.assets/multiselect-menu.sh"
 
@@ -68,6 +74,7 @@ _main() {
     echo "Scripts installer."
     echo "Select the options (<SPACE> to check):"
 
+    # Available options presented in the interactive menu.
     menu_labels=(
         "Install basic dependencies (requires 'sudo')"
         "Install keyboard shortcuts"
@@ -76,6 +83,8 @@ _main() {
         "Choose script categories to install"
         "Install for all users (requires 'sudo')"
     )
+
+    # Default states for the menu options.
     menu_defaults=(
         "true"
         "true"
@@ -85,8 +94,10 @@ _main() {
         "false"
     )
 
+    # Display the interactive menu and capture user selections.
     _multiselect_menu menu_selected menu_labels menu_defaults
 
+    # Map menu selections into a comma-separated string of options.
     [[ ${menu_selected[0]} == "true" ]] && menu_options+="dependencies,"
     [[ ${menu_selected[1]} == "true" ]] && menu_options+="shortcuts,"
     [[ ${menu_selected[2]} == "true" ]] && menu_options+="reload,"
@@ -94,7 +105,7 @@ _main() {
     [[ ${menu_selected[4]} == "true" ]] && menu_options+="categories,"
     [[ ${menu_selected[5]} == "true" ]] && menu_options+="allusers,"
 
-    # Get the categories (directories of scripts).
+    # Collect all available script categories (directories).
     local dir=""
     while IFS= read -r -d $'\0' dir; do
         categories_dirs+=("$dir")
@@ -106,20 +117,30 @@ _main() {
             sort --zero-terminated --version-sort
     )
 
+    # If requested, let the user select which categories to install.
     if [[ "$menu_options" == *"categories"* ]]; then
         echo
         echo "Select the categories (<SPACE> to check):"
         _multiselect_menu categories_selected categories_dirs categories_defaults
     fi
 
-    # Install basic dependencies.
+    # Step 1: Install basic dependencies.
     [[ "$menu_options" == *"dependencies"* ]] && _step_install_dependencies
 
+    # Step 2: Determine target home directories (single user or all users).
     local install_home_list=""
     if [[ "$menu_options" == *"allusers"* ]]; then
         SUDO_CMD="sudo"
 
+        # Get the list of all user home directories currently available on the
+        # system.
         install_home_list=$(_get_user_homes)
+
+        # Also include the system skeleton directory '/etc/skel'. This
+        # directory contains default configuration files that are copied into
+        # the home directory of 'new users' when they are created. By
+        # installing scripts here, all future accounts will automatically
+        # inherit the same setup.
         if [[ -d "/etc/skel" ]]; then
             install_home_list+=$'\n'
             install_home_list+="/etc/skel"
@@ -128,14 +149,14 @@ _main() {
         install_home_list=$HOME
     fi
 
-    # Install the scripts for each file manager found.
+    # Step 3: Install scripts for each detected file manager.
     local file_manager=""
     for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
         if ! _command_exists "$file_manager"; then
             continue
         fi
 
-        # Install the scripts for each user.
+        # Install scripts for each user home.
         for install_home in $install_home_list; do
             INSTALL_HOME=$install_home
             INSTALL_OWNER=$($SUDO_CMD stat -c "%U" "$INSTALL_HOME")
@@ -144,6 +165,7 @@ _main() {
                 SUDO_CMD_USER="sudo -u $INSTALL_OWNER -g $INSTALL_GROUP"
             fi
 
+            # Map file manager to its respective scripts directory.
             case "$file_manager" in
             "nautilus")
                 INSTALL_DIR="$INSTALL_HOME/.local/share/nautilus/scripts"
@@ -171,7 +193,7 @@ _main() {
                 ;;
             esac
 
-            # Installer steps.
+            # Perform installation steps.
             echo
             echo "Installing the scripts (directory '$install_home', file manager '$file_manager'):"
             _step_install_scripts "$menu_options" categories_selected categories_dirs
@@ -179,6 +201,7 @@ _main() {
             [[ "$menu_options" == *"shortcuts"* ]] && _step_install_shortcuts
         done
 
+        # Reload file manager to apply changes, if selected.
         [[ "$menu_options" == *"reload"* ]] && _step_close_filemanager
     done
     echo
@@ -186,6 +209,9 @@ _main() {
 }
 
 _check_exist_filemanager() {
+    # This function checks if at least one compatible file manager exists in
+    # the system.
+
     local file_manager=""
     for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
         if _command_exists "$file_manager"; then
@@ -197,6 +223,8 @@ _check_exist_filemanager() {
 }
 
 _command_exists() {
+    # This function verifies whether a command exists in PATH.
+
     local command_check=$1
 
     if command -v "$command_check" &>/dev/null; then
@@ -206,6 +234,8 @@ _command_exists() {
 }
 
 _item_create_backup() {
+    # This function creates a backup of a file (append .bak) if it exists.
+
     local item=$1
 
     if [[ -e "$item" ]] && [[ ! -e "$item.bak" ]]; then
@@ -214,6 +244,8 @@ _item_create_backup() {
 }
 
 _delete_items() {
+    # This function deletes or trash items, using the best available method.
+
     local items=$1
 
     # shellcheck disable=SC2086
@@ -326,7 +358,13 @@ _step_install_scripts() {
     local -n _categories_selected=$2
     local -n _categories_dirs=$3
 
-    # 'Remove' previous scripts.
+    # Install scripts into the target directory.
+    # Steps:
+    #   1. Optionally remove any previously installed scripts.
+    #   2. Copy common and category-specific script files.
+    #   3. Set proper ownership and permissions.
+
+    # Remove previous scripts if requested.
     if [[ "$menu_options" == *"remove"* ]]; then
         echo -e "$MSG_INFO Removing previous scripts..."
         _delete_items "$INSTALL_DIR"
@@ -335,8 +373,11 @@ _step_install_scripts() {
     echo -e "$MSG_INFO Installing new scripts..."
     $SUDO_CMD_USER mkdir --parents "$INSTALL_DIR"
 
-    # Copy the script files.
+    # Always copy the 'common-functions.sh' file.
     $SUDO_CMD cp -- "$SCRIPT_DIR/common-functions.sh" "$INSTALL_DIR"
+
+    # Copy scripts by category. If the user selected specific categories, only
+    # those are installed. Otherwise, all categories are copied by default.
     local i=0
     for i in "${!_categories_dirs[@]}"; do
         if [[ -v "_categories_selected[i]" ]]; then
@@ -348,7 +389,8 @@ _step_install_scripts() {
         fi
     done
 
-    # Set file permissions.
+    # Adjust ownership and permissions. Ensures all files belong to the correct
+    # user/group and are executable.
     echo -e "$MSG_INFO Setting file permissions..."
     $SUDO_CMD chown -R "$INSTALL_OWNER:$INSTALL_GROUP" -- "$INSTALL_DIR"
     $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
@@ -357,7 +399,9 @@ _step_install_scripts() {
 }
 
 _step_install_menus() {
-    # Install menus for specific file managers.
+    # This function install custom context menus for supported file managers.
+    # Delegates to the appropriate function depending on the detected file
+    # manager.
 
     case "$FILE_MANAGER" in
     "dolphin") _step_install_menus_dolphin ;;
