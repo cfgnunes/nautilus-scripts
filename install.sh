@@ -72,15 +72,15 @@ _main() {
         "Install basic dependencies (requires 'sudo')"
         "Install keyboard shortcuts"
         "Close the file manager to reload its configurations"
+        "Remove previous scripts"
         "Choose script categories to install"
-        "Preserve previous scripts"
         "Install for all users (requires 'sudo')"
     )
     menu_defaults=(
         "true"
         "true"
         "true"
-        "false"
+        "true"
         "false"
         "false"
     )
@@ -90,8 +90,8 @@ _main() {
     [[ ${menu_selected[0]} == "true" ]] && menu_options+="dependencies,"
     [[ ${menu_selected[1]} == "true" ]] && menu_options+="shortcuts,"
     [[ ${menu_selected[2]} == "true" ]] && menu_options+="reload,"
-    [[ ${menu_selected[3]} == "true" ]] && menu_options+="categories,"
-    [[ ${menu_selected[4]} == "true" ]] && menu_options+="preserve,"
+    [[ ${menu_selected[3]} == "true" ]] && menu_options+="remove,"
+    [[ ${menu_selected[4]} == "true" ]] && menu_options+="categories,"
     [[ ${menu_selected[5]} == "true" ]] && menu_options+="allusers,"
 
     # Get the categories (directories of scripts).
@@ -182,7 +182,7 @@ _main() {
         [[ "$menu_options" == *"reload"* ]] && _step_close_filemanager
     done
     echo
-    echo "Finished!"
+    echo "Done!"
 }
 
 _check_exist_filemanager() {
@@ -325,14 +325,9 @@ _step_install_scripts() {
     local menu_options=$1
     local -n _categories_selected=$2
     local -n _categories_dirs=$3
-    local tmp_install_dir=""
 
-    # 'Preserve' or 'Remove' previous scripts.
-    if [[ "$menu_options" == *"preserve"* ]]; then
-        echo -e "$STR_INFO Preserving previous scripts to a temporary directory..."
-        tmp_install_dir=$(mktemp -d)
-        $SUDO_CMD mv -- "$INSTALL_DIR" "$tmp_install_dir"
-    else
+    # 'Remove' previous scripts.
+    if [[ "$menu_options" == *"remove"* ]]; then
         echo -e "$STR_INFO Removing previous scripts..."
         _delete_items "$INSTALL_DIR"
     fi
@@ -356,18 +351,9 @@ _step_install_scripts() {
     # Set file permissions.
     echo -e "$STR_INFO Setting file permissions..."
     $SUDO_CMD chown -R "$INSTALL_OWNER:$INSTALL_GROUP" -- "$INSTALL_DIR"
-    $SUDO_CMD find -L "$INSTALL_DIR" -type f ! \
-        "${IGNORE_FIND_PATHS[@]}" \
-        ! -exec chmod -x -- {} \;
     $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" \
         -exec chmod +x -- {} \;
-
-    # Restore previous scripts.
-    if [[ "$menu_options" == *"preserve"* ]]; then
-        echo -e "$STR_INFO Restoring previous scripts to the install directory..."
-        $SUDO_CMD mv -- "$tmp_install_dir/scripts" "$INSTALL_DIR/User previous scripts"
-    fi
 }
 
 _step_install_menus() {
