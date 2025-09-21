@@ -115,7 +115,7 @@ _check_dependencies() {
     #
     # Parameters:
     #   - $1 (dependencies): A list of dependencies to check, formatted as a
-    #     "|" delimited string. Each dependency can specify:
+    #     '|' or '\n' delimited string. Each dependency can specify:
     #     - "command": The name of a command to check for in the shell.
     #     - "package": The package associated with the command (if different).
     #     - "pkg_manager": Optional. The specific package manager.
@@ -228,10 +228,11 @@ _check_dependencies_clipboard() {
     #     which will be extended with the clipboard-related dependencies.
 
     local dependencies=$1
+    dependencies+=$'\n'
 
     case "${XDG_SESSION_TYPE:-}" in
-    wayland) dependencies+=" | command=wl-paste; package=wl-clipboard" ;;
-    x11) dependencies+=" | command=xclip" ;;
+    wayland) dependencies+="command=wl-paste; package=wl-clipboard" ;;
+    x11) dependencies+="command=xclip" ;;
     *)
         _display_error_box \
             "Your session type is not supported for clipboard operations."
