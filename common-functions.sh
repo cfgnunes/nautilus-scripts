@@ -1844,17 +1844,17 @@ _is_qt_desktop() {
     #   - "1" (false): Otherwise.
 
     local qt_desktops=("kde" "lxqt" "tde" "trinity" "razor" "lumina")
-    local current=""
+    local current_desktop=""
 
     if [[ -z "${XDG_CURRENT_DESKTOP:-}" ]]; then
         return 1
     fi
 
-    current=${XDG_CURRENT_DESKTOP,,}
+    current_desktop=${XDG_CURRENT_DESKTOP,,}
 
     local qt_desktop=""
     for qt_desktop in "${qt_desktops[@]}"; do
-        if [[ "$current" == *"$qt_desktop"* ]]; then
+        if [[ "$current_desktop" == *"$qt_desktop"* ]]; then
             return 0
         fi
     done
