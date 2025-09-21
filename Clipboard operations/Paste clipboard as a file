@@ -25,8 +25,7 @@ _save_file_from_clipboard() {
     local output_file=""
     local std_output=""
 
-    if [[ -n "${XDG_SESSION_TYPE:-}" ]] &&
-        [[ "${XDG_SESSION_TYPE,,}" == "wayland" ]]; then
+    if [[ "${XDG_SESSION_TYPE:-}" == "wayland" ]]; then
 
         file_type=$(wl-paste --list-types 2>/dev/null)
 
