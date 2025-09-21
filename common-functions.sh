@@ -1852,14 +1852,12 @@ _is_qt_desktop() {
 
     current=${XDG_CURRENT_DESKTOP,,}
 
-    if [[ -n "$current" ]]; then
-        local qt_desktop=""
-        for qt_desktop in "${qt_desktops[@]}"; do
-            if [[ "$current" == *"$qt_desktop"* ]]; then
-                return 0
-            fi
-        done
-    fi
+    local qt_desktop=""
+    for qt_desktop in "${qt_desktops[@]}"; do
+        if [[ "$current" == *"$qt_desktop"* ]]; then
+            return 0
+        fi
+    done
 
     return 1
 }
