@@ -117,6 +117,10 @@ _main() {
     local install_home_list=""
     if [[ "$menu_options" == *"allusers"* ]]; then
         install_home_list=$(_get_user_homes)
+        if [[ -d "/etc/skel" ]]; then
+            install_home_list+=$'\n'
+            install_home_list+="/etc/skel"
+        fi
         SUDO_CMD="sudo"
     else
         install_home_list=$HOME
