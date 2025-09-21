@@ -269,12 +269,8 @@ _get_command() {
     esac
 
     # Adjust the selected command for KDE or LXQt desktop environments.
-    if [[ "$command" == "meld"* ]]; then
-        case "${XDG_CURRENT_DESKTOP,,}" in
-        *"kde"* | *"lxqt"*)
-            command=${command//meld/kdiff3}
-            ;;
-        esac
+    if [[ "$command" == "meld"* ]] && _is_qt_desktop; then
+        command=${command//meld/kdiff3}
     fi
 
     printf "%s" "$command"

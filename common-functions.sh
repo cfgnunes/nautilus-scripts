@@ -1835,6 +1835,35 @@ _is_gui_session() {
     return 1
 }
 
+_is_qt_desktop() {
+    # This function determines whether the current desktop environment
+    # (as specified by the XDG_CURRENT_DESKTOP variable) is Qt-based.
+    #
+    # Returns:
+    #   - "0" (true): If the desktop is Qt-based.
+    #   - "1" (false): Otherwise.
+
+    local qt_desktops=("kde" "lxqt" "tde" "trinity" "razor" "lumina")
+    local current=""
+
+    if [[ -z "${XDG_CURRENT_DESKTOP:-}" ]]; then
+        return 1
+    fi
+
+    current=${XDG_CURRENT_DESKTOP,,}
+
+    if [[ -n "$current" ]]; then
+        local qt_desktop=""
+        for qt_desktop in "${qt_desktops[@]}"; do
+            if [[ "$current" == *"$qt_desktop"* ]]; then
+                return 0
+            fi
+        done
+    fi
+
+    return 1
+}
+
 _log_error() {
     # This function writes an error log entry with a specified message,
     # including details such as the input file, output file, and terminal

@@ -20,16 +20,13 @@ _main() {
     file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
     if [[ ! -d "$file_1" ]]; then
         if [[ "$(_get_file_encoding "$file_1")" == "binary" ]] && [[ -s "$file_1" ]]; then
-            case "${XDG_CURRENT_DESKTOP,,}" in
-            *"kde"* | *"lxqt"*)
+            if _is_qt_desktop; then
                 _check_dependencies "command=okteta"
                 okteta -- $input_files &
-                ;;
-            *)
+            else
                 _check_dependencies "command=ghex"
                 ghex -- $input_files &
-                ;;
-            esac
+            fi
             exit 0
         fi
     fi

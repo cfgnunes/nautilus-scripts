@@ -10,14 +10,11 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    case "${XDG_CURRENT_DESKTOP,,}" in
-    *"kde"* | *"lxqt"*)
+    if _is_qt_desktop; then
         _check_dependencies "command=filelight"
-        ;;
-    *)
+    else
         _check_dependencies "command=baobab"
-        ;;
-    esac
+    fi
     input_files=$(_get_files "par_type=directory; par_max_items=20; par_get_pwd=true")
     _unset_global_variables_file_manager
 
