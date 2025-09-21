@@ -8,12 +8,6 @@ set -u
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
-IGNORE_FIND_PATHS=(
-    ! -path "*/Accessed recently*"
-    ! -path "*/.assets*"
-    ! -path "*/.git*"
-)
-
 COMPATIBLE_FILE_MANAGERS=(
     "nautilus"
     "caja"
@@ -21,12 +15,24 @@ COMPATIBLE_FILE_MANAGERS=(
     "nemo"
     "pcmanfm-qt"
     "thunar")
+
+IGNORE_FIND_PATHS=(
+    ! -path "*/Accessed recently*"
+    ! -path "*/.assets*"
+    ! -path "*/.git*"
+)
+
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+
+STR_ERROR="[\\e[31mERROR\\e[0m]"
+STR_INFO="[\\e[32mINFO\\e[0m]"
 
 readonly \
     COMPATIBLE_FILE_MANAGERS \
     IGNORE_FIND_PATHS \
-    SCRIPT_DIR
+    SCRIPT_DIR \
+    STR_ERROR \
+    STR_INFO
 
 # -----------------------------------------------------------------------------
 # GLOBAL VARIABLES
@@ -34,6 +40,10 @@ readonly \
 
 FILE_MANAGER=""
 INSTALL_DIR=""
+INSTALL_HOME=""
+INSTALL_OWNER=""
+INSTALL_GROUP=""
+SUDO_CMD=""
 
 #shellcheck source=.assets/multiselect-menu.sh
 source "$SCRIPT_DIR/.assets/multiselect-menu.sh"
@@ -54,8 +64,8 @@ _main() {
 
     _check_exist_filemanager
 
-    printf "Scripts installer.\n\n"
-    printf "Select the options (<SPACE> to check):\n"
+    echo "Scripts installer."
+    echo "Select the options (<SPACE> to check):"
 
     menu_labels=(
         "Install basic dependencies (requires sudo)"
@@ -63,11 +73,13 @@ _main() {
         "Close the file manager to reload its configurations"
         "Choose script categories to install"
         "Preserve previous scripts"
+        "Install for all users (requires sudo)"
     )
     menu_defaults=(
         "true"
         "true"
         "true"
+        "false"
         "false"
         "false"
     )
@@ -79,13 +91,14 @@ _main() {
     [[ ${menu_selected[2]} == "true" ]] && menu_options+="reload,"
     [[ ${menu_selected[3]} == "true" ]] && menu_options+="categories,"
     [[ ${menu_selected[4]} == "true" ]] && menu_options+="preserve,"
+    [[ ${menu_selected[5]} == "true" ]] && menu_options+="allusers,"
 
     # Get the categories (directories of scripts).
     local dir=""
     while IFS= read -r -d $'\0' dir; do
         categories_dirs+=("$dir")
     done < <(
-        find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
+        $SUDO_CMD find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
             "${IGNORE_FIND_PATHS[@]}" \
             -print0 2>/dev/null |
             sed -z "s|^.*/||" |
@@ -93,14 +106,24 @@ _main() {
     )
 
     if [[ "$menu_options" == *"categories"* ]]; then
-        printf "\nSelect the categories (<SPACE> to check):\n"
+        echo
+        echo "Select the categories (<SPACE> to check):"
         _multiselect_menu categories_selected categories_dirs categories_defaults
     fi
 
     # Install basic dependencies.
     [[ "$menu_options" == *"dependencies"* ]] && _step_install_dependencies
 
-    # Install the scripts for every file manager found.
+    local install_home_list=""
+    if [[ "$menu_options" == *"allusers"* ]]; then
+        install_home_list=$(_get_user_homes)
+        SUDO_CMD="sudo"
+    else
+        install_home_list=$HOME
+        SUDO_CMD=""
+    fi
+
+    # Install the scripts for each file manager found.
     local file_manager=""
     for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
         if ! _command_exists "$file_manager"; then
@@ -109,40 +132,48 @@ _main() {
 
         case "$file_manager" in
         "nautilus")
-            INSTALL_DIR="$HOME/.local/share/nautilus/scripts"
+            INSTALL_DIR="$INSTALL_HOME/.local/share/nautilus/scripts"
             FILE_MANAGER="nautilus"
             ;;
         "caja")
-            INSTALL_DIR="$HOME/.config/caja/scripts"
+            INSTALL_DIR="$INSTALL_HOME/.config/caja/scripts"
             FILE_MANAGER="caja"
             ;;
         "dolphin")
-            INSTALL_DIR="$HOME/.local/share/scripts"
+            INSTALL_DIR="$INSTALL_HOME/.local/share/scripts"
             FILE_MANAGER="dolphin"
             ;;
         "nemo")
-            INSTALL_DIR="$HOME/.local/share/nemo/scripts"
+            INSTALL_DIR="$INSTALL_HOME/.local/share/nemo/scripts"
             FILE_MANAGER="nemo"
             ;;
         "pcmanfm-qt")
-            INSTALL_DIR="$HOME/.local/share/scripts"
+            INSTALL_DIR="$INSTALL_HOME/.local/share/scripts"
             FILE_MANAGER="pcmanfm-qt"
             ;;
         "thunar")
-            INSTALL_DIR="$HOME/.local/share/scripts"
+            INSTALL_DIR="$INSTALL_HOME/.local/share/scripts"
             FILE_MANAGER="thunar"
             ;;
         esac
 
-        # Installer steps.
-        printf "\nInstalling the scripts for file manager: '%s'.\n" "$file_manager"
-        _step_install_scripts "$menu_options" categories_selected categories_dirs
-        _step_install_menus
-        [[ "$menu_options" == *"shortcuts"* ]] && _step_install_shortcuts
+        # Install the scripts for each user.
+        for install_home in $install_home_list; do
+            INSTALL_HOME=$install_home
+            INSTALL_OWNER=$($SUDO_CMD stat -c "%U" "$INSTALL_HOME")
+            INSTALL_GROUP=$($SUDO_CMD stat -c "%G" "$INSTALL_HOME")
+
+            # Installer steps.
+            echo
+            echo "Installing the scripts (directory '$install_home', file manager '$file_manager'):"
+            _step_install_scripts "$menu_options" categories_selected categories_dirs
+            _step_install_menus
+            [[ "$menu_options" == *"shortcuts"* ]] && _step_install_shortcuts
+        done
+
         [[ "$menu_options" == *"reload"* ]] && _step_close_filemanager
     done
-
-    printf "Finished!\n"
+    echo "Finished!"
 }
 
 _check_exist_filemanager() {
@@ -152,7 +183,7 @@ _check_exist_filemanager() {
             return
         fi
     done
-    printf "Error: could not find any compatible file managers!\n"
+    echo -e "$STR_ERROR Could not find any compatible file managers!"
     exit 1
 }
 
@@ -169,7 +200,7 @@ _item_create_backup() {
     local item=$1
 
     if [[ -e "$item" ]] && [[ ! -e "$item.bak" ]]; then
-        mv -- "$item" "$item.bak" 2>/dev/null
+        $SUDO_CMD mv -- "$item" "$item.bak" 2>/dev/null
     fi
 }
 
@@ -178,13 +209,13 @@ _delete_items() {
 
     # shellcheck disable=SC2086
     if _command_exists "gio"; then
-        gio trash -- $items 2>/dev/null
+        $SUDO_CMD gio trash -- $items 2>/dev/null
     elif _command_exists "kioclient"; then
-        kioclient move -- $items trash:/ 2>/dev/null
+        $SUDO_CMD kioclient move -- $items trash:/ 2>/dev/null
     elif _command_exists "gvfs-trash"; then
-        gvfs-trash -- $items 2>/dev/null
+        $SUDO_CMD gvfs-trash -- $items 2>/dev/null
     else
-        rm -rf -- $items 2>/dev/null
+        $SUDO_CMD rm -rf -- $items 2>/dev/null
     fi
 }
 
@@ -261,11 +292,11 @@ _step_install_dependencies() {
                 sudo zypper --non-interactive install $packages
             fi
         else
-            printf "Error: could not find a package manager!\n"
+            echo -e "$STR_ERROR Could not find a package manager!"
             exit 1
         fi
     else
-        printf "Error: could not run as administrator!\n"
+        echo -e "$STR_ERROR Could not run as administrator!"
         exit 1
     fi
 
@@ -273,7 +304,7 @@ _step_install_dependencies() {
     local imagemagick_policy=""
     imagemagick_policy=$(find /etc/ImageMagick-[0-9]*/policy.xml 2>/dev/null)
     if [[ -f "$imagemagick_policy" ]]; then
-        printf " > Fixing write permission with PDF in ImageMagick...\n"
+        echo -e "$STR_INFO Fixing write permission with PDF in ImageMagick..."
         sudo sed -i \
             's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/g' \
             "$imagemagick_policy"
@@ -289,43 +320,43 @@ _step_install_scripts() {
 
     # 'Preserve' or 'Remove' previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then
-        printf " > Preserving previous scripts to a temporary directory...\n"
+        echo -e "$STR_INFO Preserving previous scripts to a temporary directory..."
         tmp_install_dir=$(mktemp -d)
-        mv -- "$INSTALL_DIR" "$tmp_install_dir"
+        $SUDO_CMD mv -- "$INSTALL_DIR" "$tmp_install_dir"
     else
-        printf " > Removing previous scripts...\n"
+        echo -e "$STR_INFO Removing previous scripts..."
         _delete_items "$INSTALL_DIR"
     fi
 
-    printf " > Installing new scripts...\n"
-    mkdir --parents "$INSTALL_DIR"
+    echo -e "$STR_INFO Installing new scripts..."
+    $SUDO_CMD mkdir --parents "$INSTALL_DIR"
 
     # Copy the script files.
-    cp -- "$SCRIPT_DIR/common-functions.sh" "$INSTALL_DIR"
+    $SUDO_CMD cp -- "$SCRIPT_DIR/common-functions.sh" "$INSTALL_DIR"
     local i=0
     for i in "${!_categories_dirs[@]}"; do
         if [[ -v "_categories_selected[i]" ]]; then
             if [[ ${_categories_selected[i]} == "true" ]]; then
-                cp -r -- "$SCRIPT_DIR/${_categories_dirs[i]}" "$INSTALL_DIR"
+                $SUDO_CMD cp -r -- "$SCRIPT_DIR/${_categories_dirs[i]}" "$INSTALL_DIR"
             fi
         else
-            cp -r -- "$SCRIPT_DIR/${_categories_dirs[i]}" "$INSTALL_DIR"
+            $SUDO_CMD cp -r -- "$SCRIPT_DIR/${_categories_dirs[i]}" "$INSTALL_DIR"
         fi
     done
 
     # Set file permissions.
-    printf " > Setting file permissions...\n"
-    find -L "$INSTALL_DIR" -type f ! \
+    echo -e "$STR_INFO Setting file permissions..."
+    $SUDO_CMD find -L "$INSTALL_DIR" -type f ! \
         "${IGNORE_FIND_PATHS[@]}" \
         ! -exec chmod -x -- {} \;
-    find -L "$INSTALL_DIR" -mindepth 2 -type f \
+    $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" \
         -exec chmod +x -- {} \;
 
     # Restore previous scripts.
     if [[ "$menu_options" == *"preserve"* ]]; then
-        printf " > Restoring previous scripts to the install directory...\n"
-        mv -- "$tmp_install_dir/scripts" "$INSTALL_DIR/User previous scripts"
+        echo -e "$STR_INFO Restoring previous scripts to the install directory..."
+        $SUDO_CMD mv -- "$tmp_install_dir/scripts" "$INSTALL_DIR/User previous scripts"
     fi
 }
 
@@ -340,11 +371,11 @@ _step_install_menus() {
 }
 
 _step_install_menus_dolphin() {
-    printf " > Installing Dolphin actions...\n"
+    echo -e "$STR_INFO Installing Dolphin actions..."
 
-    local desktop_menus_dir="$HOME/.local/share/kio/servicemenus"
+    local desktop_menus_dir="$INSTALL_HOME/.local/share/kio/servicemenus"
     _delete_items "$desktop_menus_dir"
-    mkdir --parents "$desktop_menus_dir"
+    $SUDO_CMD mkdir --parents "$desktop_menus_dir"
 
     local filename=""
     local name_sub=""
@@ -353,7 +384,7 @@ _step_install_menus_dolphin() {
     local submenu=""
 
     # Generate a '.desktop' file for each script.
-    find -L "$INSTALL_DIR" -mindepth 2 -type f \
+    $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" \
         -print0 2>/dev/null |
         sort --zero-terminated |
@@ -426,17 +457,17 @@ _step_install_menus_dolphin() {
                 printf "%s\n" "[Desktop Action scriptAction]"
                 printf "%s\n" "Name=$name_sub"
                 printf "%s\n" "Exec=bash \"$filename\" %F"
-            } >"$desktop_filename"
-            chmod +x "$desktop_filename"
+            } | $SUDO_CMD tee "$desktop_filename" >/dev/null
+            $SUDO_CMD chmod +x "$desktop_filename"
         done
 }
 
 _step_install_menus_pcmanfm() {
-    printf " > Installing PCManFM-Qt actions...\n"
+    echo -e "$STR_INFO Installing PCManFM-Qt actions..."
 
-    local desktop_menus_dir="$HOME/.local/share/file-manager/actions"
+    local desktop_menus_dir="$INSTALL_HOME/.local/share/file-manager/actions"
     _delete_items "$desktop_menus_dir"
-    mkdir --parents "$desktop_menus_dir"
+    $SUDO_CMD mkdir --parents "$desktop_menus_dir"
 
     # Create the 'Scripts.desktop' menu.
     {
@@ -444,24 +475,24 @@ _step_install_menus_pcmanfm() {
         printf "%s\n" "Type=Menu"
         printf "%s\n" "Name=Scripts"
         printf "%s" "ItemsList="
-        find -L "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -type d \
+        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -type d \
             "${IGNORE_FIND_PATHS[@]}" \
             -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";"
         printf "\n"
-    } >"${desktop_menus_dir}/Scripts.desktop"
-    chmod +x "${desktop_menus_dir}/Scripts.desktop"
+    } | $SUDO_CMD tee "${desktop_menus_dir}/Scripts.desktop" >/dev/null
+    $SUDO_CMD chmod +x "${desktop_menus_dir}/Scripts.desktop"
 
     # Create a '.desktop' file for each directory (for sub-menus).
     local filename=""
     local name=""
     local dir_items=""
-    find -L "$INSTALL_DIR" -mindepth 1 -type d \
+    $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 1 -type d \
         "${IGNORE_FIND_PATHS[@]}" \
         -print0 2>/dev/null |
         sort --zero-terminated |
         while IFS= read -r -d "" filename; do
             name=${filename##*/}
-            dir_items=$(find -L "$filename" -mindepth 1 -maxdepth 1 \
+            dir_items=$($SUDO_CMD find -L "$filename" -mindepth 1 -maxdepth 1 \
                 "${IGNORE_FIND_PATHS[@]}" \
                 -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";")
             if [[ -z "$dir_items" ]]; then
@@ -474,12 +505,12 @@ _step_install_menus_pcmanfm() {
                 printf "%s\n" "Name=$name"
                 printf "%s\n" "ItemsList=$dir_items"
 
-            } >"${desktop_menus_dir}/$name.desktop"
-            chmod +x "${desktop_menus_dir}/$name.desktop"
+            } | $SUDO_CMD tee "${desktop_menus_dir}/$name.desktop" >/dev/null
+            $SUDO_CMD chmod +x "${desktop_menus_dir}/$name.desktop"
         done
 
     # Create a '.desktop' file for each script.
-    find -L "$INSTALL_DIR" -mindepth 2 -type f \
+    $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" \
         -print0 2>/dev/null |
         sort --zero-terminated |
@@ -534,21 +565,21 @@ _step_install_menus_pcmanfm() {
                 printf "%s\n" "[X-Action-Profile scriptAction]"
                 printf "%s\n" "MimeTypes=$par_select_mime"
                 printf "%s\n" "Exec=bash \"$filename\" %F"
-            } >"$desktop_filename"
-            chmod +x "$desktop_filename"
+            } | $SUDO_CMD tee "$desktop_filename" >/dev/null
+            $SUDO_CMD chmod +x "$desktop_filename"
         done
 }
 
 _step_install_menus_thunar() {
-    printf " > Installing Thunar actions...\n"
+    echo -e "$STR_INFO Installing Thunar actions..."
 
-    local menus_file="$HOME/.config/Thunar/uca.xml"
+    local menus_file="$INSTALL_HOME/.config/Thunar/uca.xml"
 
     # Create a backup of older custom actions.
     _item_create_backup "$menus_file"
     _delete_items "$menus_file"
 
-    mkdir --parents "$HOME/.config/Thunar"
+    $SUDO_CMD mkdir --parents "$INSTALL_HOME/.config/Thunar"
 
     {
         printf "%s\n" "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
@@ -594,7 +625,7 @@ _step_install_menus_thunar() {
         local name=""
         local submenu=""
         local unique_id=""
-        find -L "$INSTALL_DIR" -mindepth 2 -type f \
+        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
             "${IGNORE_FIND_PATHS[@]}" \
             -print0 2>/dev/null |
             sort --zero-terminated |
@@ -667,7 +698,7 @@ _step_install_menus_thunar() {
             done
 
         printf "%s\n" "<actions>"
-    } >"$menus_file"
+    } | $SUDO_CMD tee "$menus_file" >/dev/null
 }
 
 _step_install_shortcuts() {
@@ -675,25 +706,25 @@ _step_install_shortcuts() {
 
     case "$FILE_MANAGER" in
     "nautilus")
-        _step_install_shortcuts_nautilus "$HOME/.config/nautilus/scripts-accels"
+        _step_install_shortcuts_nautilus "$INSTALL_HOME/.config/nautilus/scripts-accels"
         ;;
     "caja")
-        _step_install_shortcuts_gnome2 "$HOME/.config/caja/accels"
+        _step_install_shortcuts_gnome2 "$INSTALL_HOME/.config/caja/accels"
         ;;
     "nemo")
-        _step_install_shortcuts_gnome2 "$HOME/.gnome2/accels/nemo"
+        _step_install_shortcuts_gnome2 "$INSTALL_HOME/.gnome2/accels/nemo"
         ;;
     "thunar")
-        _step_install_shortcuts_thunar "$HOME/.config/Thunar/accels.scm"
+        _step_install_shortcuts_thunar "$INSTALL_HOME/.config/Thunar/accels.scm"
         ;;
     esac
 }
 
 _step_install_shortcuts_nautilus() {
-    printf " > Installing the keyboard shortcuts for Nautilus...\n"
+    echo -e "$STR_INFO Installing the keyboard shortcuts for Nautilus..."
 
     local accels_file=$1
-    mkdir --parents "$(dirname -- "$accels_file")"
+    $SUDO_CMD mkdir --parents "$(dirname -- "$accels_file")"
 
     # Create a backup of older custom actions.
     _item_create_backup "$accels_file"
@@ -701,7 +732,7 @@ _step_install_shortcuts_nautilus() {
 
     {
         local filename=""
-        find -L "$INSTALL_DIR" -mindepth 2 -type f \
+        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
             "${IGNORE_FIND_PATHS[@]}" \
             -print0 2>/dev/null |
             sort --zero-terminated |
@@ -718,14 +749,14 @@ _step_install_shortcuts_nautilus() {
                 fi
             done
 
-    } >"$accels_file"
+    } | $SUDO_CMD tee "$accels_file" >/dev/null
 }
 
 _step_install_shortcuts_gnome2() {
-    printf " > Installing the keyboard shortcuts...\n"
+    echo -e "$STR_INFO Installing the keyboard shortcuts..."
 
     local accels_file=$1
-    mkdir --parents "$(dirname -- "$accels_file")"
+    $SUDO_CMD mkdir --parents "$(dirname -- "$accels_file")"
 
     # Create a backup of older custom actions.
     _item_create_backup "$accels_file"
@@ -741,7 +772,7 @@ _step_install_shortcuts_gnome2() {
         printf "%s\n" '(gtk_accel_path "<Actions>/ShellActions/Show Hide Extra Pane" "")'
 
         local filename=""
-        find -L "$INSTALL_DIR" -mindepth 2 -type f \
+        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
             "${IGNORE_FIND_PATHS[@]}" \
             -print0 2>/dev/null |
             sort --zero-terminated |
@@ -759,14 +790,14 @@ _step_install_shortcuts_gnome2() {
                 fi
             done
 
-    } >"$accels_file"
+    } | $SUDO_CMD tee "$accels_file" >/dev/null
 }
 
 _step_install_shortcuts_thunar() {
-    printf " > Installing the keyboard shortcuts for Thunar...\n"
+    echo -e "$STR_INFO Installing the keyboard shortcuts for Thunar..."
 
     local accels_file=$1
-    mkdir --parents "$(dirname -- "$accels_file")"
+    $SUDO_CMD mkdir --parents "$(dirname -- "$accels_file")"
 
     # Create a backup of older custom actions.
     _item_create_backup "$accels_file"
@@ -785,7 +816,7 @@ _step_install_shortcuts_thunar() {
         printf "%s\n" '(gtk_accel_path "<Actions>/ThunarWindow/view-side-pane-tree" "")'
 
         local filename=""
-        find -L "$INSTALL_DIR" -mindepth 2 -type f \
+        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
             "${IGNORE_FIND_PATHS[@]}" \
             -print0 2>/dev/null |
             sort --zero-terminated |
@@ -809,11 +840,11 @@ _step_install_shortcuts_thunar() {
                 fi
             done
 
-    } >"$accels_file"
+    } | $SUDO_CMD tee "$accels_file" >/dev/null
 }
 
 _step_close_filemanager() {
-    printf " > Closing the file manager to reload its configurations...\n"
+    echo -e "$STR_INFO Closing the file manager '$FILE_MANAGER' to reload its configurations..."
 
     case "$FILE_MANAGER" in
     "nautilus" | "caja" | "nemo" | "thunar")
@@ -826,11 +857,15 @@ _step_close_filemanager() {
     esac
 }
 
+_get_user_homes() {
+    getent passwd | grep -v "/nologin\|/false\|/sync" | cut -d: -f6
+}
+
 _get_par_value() {
     local filename=$1
     local parameter=$2
 
-    grep --only-matching -m 1 "$parameter=[^\";]*" "$filename" |
+    $SUDO_CMD grep --only-matching -m 1 "$parameter=[^\";]*" "$filename" |
         cut -d "=" -f 2 | tr -d "'" | tr "|" ";" 2>/dev/null
 }
 
