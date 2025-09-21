@@ -711,7 +711,7 @@ _step_install_menus_thunar() {
                 printf "%s\n" "</action>"
             done
 
-        printf "%s\n" "<actions>"
+        printf "%s\n" "</actions>"
     } | $SUDO_CMD tee "$menus_file" >/dev/null
     $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menus_file"
 }
