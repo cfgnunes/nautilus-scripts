@@ -10,8 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies_clipboard
-    _check_dependencies "command=curl"
+    _check_dependencies_clipboard "command=curl"
 
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all; par_get_pwd=true")

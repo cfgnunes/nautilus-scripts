@@ -220,18 +220,26 @@ _check_dependencies() {
 }
 
 _check_dependencies_clipboard() {
-    # This function checks the required dependencies for clipboard operations
-    # based on the current session type (Wayland or X11).
+    # This function checks the required dependencies for performing clipboard
+    # operations, based on the current session type (Wayland or X11).
+    #
+    # Parameters:
+    #   - $1 (dependencies): A string containing the initial dependencies list,
+    #     which will be extended with the clipboard-related dependencies.
+
+    local dependencies=$1
 
     case "${XDG_SESSION_TYPE:-}" in
-    wayland) _check_dependencies "command=wl-paste; package=wl-clipboard" ;;
-    x11) _check_dependencies "command=xclip" ;;
+    wayland) dependencies+=" | command=wl-paste; package=wl-clipboard" ;;
+    x11) dependencies+=" | command=xclip" ;;
     *)
         _display_error_box \
             "Your session type is not supported for clipboard operations."
         _exit_script
         ;;
     esac
+
+    _check_dependencies "$dependencies"
 }
 
 _check_output() {
