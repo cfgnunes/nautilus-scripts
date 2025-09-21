@@ -231,8 +231,8 @@ _check_dependencies_clipboard() {
     dependencies+=$'\n'
 
     case "${XDG_SESSION_TYPE:-}" in
-    wayland) dependencies+="command=wl-paste; package=wl-clipboard" ;;
-    x11) dependencies+="command=xclip" ;;
+    "wayland") dependencies+="command=wl-paste; package=wl-clipboard" ;;
+    "x11") dependencies+="command=xclip" ;;
     *)
         _display_error_box \
             "Your session type is not supported for clipboard operations."
@@ -1183,8 +1183,8 @@ _get_clipboard_data() {
     # the method according to the session type.
 
     case "${XDG_SESSION_TYPE:-}" in
-    wayland) wl-paste 2>/dev/null ;;
-    x11) xclip -quiet -selection clipboard -o 2>/dev/null ;;
+    "wayland") wl-paste 2>/dev/null ;;
+    "x11") xclip -quiet -selection clipboard -o 2>/dev/null ;;
     esac
 }
 
@@ -2521,8 +2521,8 @@ _set_clipboard_data() {
     local input_data=$1
 
     case "${XDG_SESSION_TYPE:-}" in
-    wayland) wl-copy "$input_data"$'\n' 2>/dev/null ;;
-    x11) xclip -selection clipboard -i <<<"$input_data" 2>/dev/null ;;
+    "wayland") wl-copy "$input_data"$'\n' 2>/dev/null ;;
+    "x11") xclip -selection clipboard -i <<<"$input_data" 2>/dev/null ;;
     esac
 }
 
