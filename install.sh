@@ -346,6 +346,8 @@ _step_install_scripts() {
 
     # Set file permissions.
     echo -e "$STR_INFO Setting file permissions..."
+    $SUDO_CMD find -L "$INSTALL_DIR" \
+        ! -exec chown "$INSTALL_OWNER:$INSTALL_GROUP" -- {} \;
     $SUDO_CMD find -L "$INSTALL_DIR" -type f ! \
         "${IGNORE_FIND_PATHS[@]}" \
         ! -exec chmod -x -- {} \;
@@ -458,6 +460,7 @@ _step_install_menus_dolphin() {
                 printf "%s\n" "Name=$name_sub"
                 printf "%s\n" "Exec=bash \"$filename\" %F"
             } | $SUDO_CMD tee "$desktop_filename" >/dev/null
+            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$desktop_filename"
             $SUDO_CMD chmod +x "$desktop_filename"
         done
 }
@@ -480,6 +483,7 @@ _step_install_menus_pcmanfm() {
             -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";"
         printf "\n"
     } | $SUDO_CMD tee "${desktop_menus_dir}/Scripts.desktop" >/dev/null
+    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "${desktop_menus_dir}/Scripts.desktop"
     $SUDO_CMD chmod +x "${desktop_menus_dir}/Scripts.desktop"
 
     # Create a '.desktop' file for each directory (for sub-menus).
@@ -506,6 +510,7 @@ _step_install_menus_pcmanfm() {
                 printf "%s\n" "ItemsList=$dir_items"
 
             } | $SUDO_CMD tee "${desktop_menus_dir}/$name.desktop" >/dev/null
+            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "${desktop_menus_dir}/$name.desktop"
             $SUDO_CMD chmod +x "${desktop_menus_dir}/$name.desktop"
         done
 
@@ -566,6 +571,7 @@ _step_install_menus_pcmanfm() {
                 printf "%s\n" "MimeTypes=$par_select_mime"
                 printf "%s\n" "Exec=bash \"$filename\" %F"
             } | $SUDO_CMD tee "$desktop_filename" >/dev/null
+            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$desktop_filename"
             $SUDO_CMD chmod +x "$desktop_filename"
         done
 }
@@ -699,6 +705,7 @@ _step_install_menus_thunar() {
 
         printf "%s\n" "<actions>"
     } | $SUDO_CMD tee "$menus_file" >/dev/null
+    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menus_file"
 }
 
 _step_install_shortcuts() {
@@ -750,6 +757,7 @@ _step_install_shortcuts_nautilus() {
             done
 
     } | $SUDO_CMD tee "$accels_file" >/dev/null
+    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
 }
 
 _step_install_shortcuts_gnome2() {
@@ -791,6 +799,7 @@ _step_install_shortcuts_gnome2() {
             done
 
     } | $SUDO_CMD tee "$accels_file" >/dev/null
+    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
 }
 
 _step_install_shortcuts_thunar() {
@@ -841,6 +850,7 @@ _step_install_shortcuts_thunar() {
             done
 
     } | $SUDO_CMD tee "$accels_file" >/dev/null
+    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
 }
 
 _step_close_filemanager() {
