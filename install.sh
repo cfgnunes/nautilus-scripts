@@ -218,11 +218,11 @@ _delete_items() {
 
     # shellcheck disable=SC2086
     if _command_exists "gio"; then
-        $SUDO_CMD gio trash -- $items 2>/dev/null
+        $SUDO_CMD_USER gio trash -- $items 2>/dev/null
     elif _command_exists "kioclient"; then
-        $SUDO_CMD kioclient move -- $items trash:/ 2>/dev/null
+        $SUDO_CMD_USER kioclient move -- $items trash:/ 2>/dev/null
     elif _command_exists "gvfs-trash"; then
-        $SUDO_CMD gvfs-trash -- $items 2>/dev/null
+        $SUDO_CMD_USER gvfs-trash -- $items 2>/dev/null
     else
         $SUDO_CMD rm -rf -- $items 2>/dev/null
     fi
