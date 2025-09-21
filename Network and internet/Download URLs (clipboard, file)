@@ -12,7 +12,6 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies_clipboard "command=axel"
-
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all; par_get_pwd=true")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
