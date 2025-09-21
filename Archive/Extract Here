@@ -110,7 +110,7 @@ _get_dependencies() {
     "cpio") dependencies+="command=cpio" ;;
     "gpg")
         dependencies+="
-                command=gpg; pkg_manager=apt; package=gpg |
+                command=gpg; pkg_manager=apt; package=gnupg |
                 command=gpg; pkg_manager=dnf; package=gnupg2 |
                 command=gpg; pkg_manager=pacman; package=gnupg |
                 command=gpg; pkg_manager=zypper; package=gpg2"
