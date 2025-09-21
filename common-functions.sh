@@ -119,6 +119,8 @@ _check_dependencies() {
     #     - "command": The name of a command to check for in the shell.
     #     - "package": The package associated with the command (if different).
     #     - "pkg_manager": Optional. The specific package manager.
+    #     - "post_install": Optional. A command to be executed right after the
+    #     installation.
     #
     # Example:
     #   - _check_dependencies "
@@ -486,6 +488,9 @@ _display_list_box() {
     #   - "par_checkbox": A boolean-like string ("true" or "false") indicating
     #   the list should include checkboxes for item selection. Defaults to
     #   "false".
+    #   - "par_checkbox_value": A boolean-like string ("true" or "false")
+    #   defining the default state of the checkboxes (checked or unchecked)
+    #   when the list is initially displayed. Defaults to "false".
 
     local message=$1
     local parameters=$2
@@ -1013,10 +1018,17 @@ _close_wait_box() {
 }
 
 _display_lock() {
+    # This function creates a temporary lock file used to indicate that the
+    # wait box should not be opened at this time. In this case,
+    # '_display_wait_box' will wait until '_display_unlock' is executed.
+
     touch -- "$TEMP_DISPLAY_LOCK"
 }
 
 _display_unlock() {
+    # This function removes the temporary lock file created by '_display_lock'.
+    # By doing so, it signals that the wait box can now be displayed.
+
     rm -f -- "$TEMP_DISPLAY_LOCK"
 }
 
@@ -2158,6 +2170,8 @@ _pkg_install_packages() {
     #       - "nix"     : For Nix-based systems.
     #       - "guix"    : For GNU Guix systems.
     #   - $2 (packages): A space-separated list of package names to install.
+    #   - $3 (post_install): An optional command to be executed right after the
+    #     installation.
 
     local pkg_manager=$1
     local packages=$2
