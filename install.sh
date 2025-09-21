@@ -121,10 +121,8 @@ _main() {
             install_home_list+=$'\n'
             install_home_list+="/etc/skel"
         fi
-        SUDO_CMD="sudo"
     else
         install_home_list=$HOME
-        SUDO_CMD=""
     fi
 
     # Install the scripts for each file manager found.
@@ -139,6 +137,9 @@ _main() {
             INSTALL_HOME=$install_home
             INSTALL_OWNER=$($SUDO_CMD stat -c "%U" "$INSTALL_HOME")
             INSTALL_GROUP=$($SUDO_CMD stat -c "%G" "$INSTALL_HOME")
+            if [[ "$menu_options" == *"allusers"* ]]; then
+                SUDO_CMD="sudo -u $INSTALL_OWNER -g $INSTALL_GROUP"
+            fi
 
             case "$file_manager" in
             "nautilus")
