@@ -2136,7 +2136,7 @@ _pkg_get_available_package_manager() {
     local candidate=""
     for candidate in apt-get dnf pacman zypper nix guix; do
         if _command_exists "$candidate"; then
-            pkg_manager="$candidate"
+            pkg_manager=$candidate
             break
         fi
     done
