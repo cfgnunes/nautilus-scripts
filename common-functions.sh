@@ -1367,6 +1367,7 @@ _get_files() {
 
     # Check if there are input files.
     if (($(_get_items_count "$input_files") == 0)); then
+        # Detect if running in a supported file manager context.
         if [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]] ||
             [[ -v "NEMO_SCRIPT_SELECTED_URIS" ]] ||
             [[ -v "CAJA_SCRIPT_SELECTED_URIS" ]]; then
@@ -1379,7 +1380,7 @@ _get_files() {
         fi
     fi
 
-    # Try selecting the files by opening a file selection box.
+    # If still no files available, prompt user with selection dialog.
     if (($(_get_items_count "$input_files") == 0)); then
         if [[ "$par_type" == "directory" ]]; then
             input_files=$(_display_dir_selection_box)
@@ -1389,10 +1390,13 @@ _get_files() {
         fi
     fi
 
-    # If the items are in a remote server, translate the addresses to 'gvfs'.
+    # Handle remote file URIs (http://, ftp://, etc.) by translating to local
+    # 'gvfs' paths.
     if [[ "$input_files" == *"://"* ]]; then
         local working_dir=""
         working_dir=$(_get_working_directory)
+
+        # Convert remote URIs to local 'gvfs' paths for processing.
         input_files=$(sed \
             "s|[a-z0-9\+_-]*://[^$FIELD_SEPARATOR]*/|$working_dir/|g" \
             <<<"$input_files")
@@ -1423,6 +1427,7 @@ _get_files() {
 
         find_parameters="-mindepth 1 -maxdepth 1"
     elif [[ "$par_recursive" == "false" ]]; then
+        # Default non-recursive mode: process only explicitly selected items.
         find_parameters="-maxdepth 0"
     fi
 
@@ -1434,6 +1439,23 @@ _get_files() {
         "$par_select_extension" \
         "$find_parameters")
 
+    # Handle the case where a file is selected in the file manager, but
+    # 'par_type=directory'. This is particularly useful for scripts like 'Open
+    # with Terminal' where a file is selected, but the intention is to open the
+    # working directory.
+    if (($(_get_items_count "$input_files") == 0)); then
+        # Detect if running in a supported file manager context.
+        if [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]] ||
+            [[ -v "NEMO_SCRIPT_SELECTED_URIS" ]] ||
+            [[ -v "CAJA_SCRIPT_SELECTED_URIS" ]]; then
+            if [[ "$par_type" == "directory" ]]; then
+                # Return the current working directory if no files have been
+                # selected.
+                input_files=$(_get_working_directory)
+            fi
+        fi
+    fi
+
     # Validates the mime or encoding of the file.
     if [[ -n "$par_select_mime" ]] || [[ -n "$par_skip_encoding" ]]; then
         input_files=$(_validate_file_mime_parallel \
@@ -1442,7 +1464,7 @@ _get_files() {
             "$par_skip_encoding")
     fi
 
-    # Validates the number of valid files.
+    # Validate that the final file count meets requirements.
     _validate_files_count \
         "$input_files" \
         "$par_type" \
@@ -1452,18 +1474,19 @@ _get_files() {
         "$par_max_items" \
         "$par_recursive"
 
-    # Sort the list by filename.
+    # Sort file list if requested.
     if [[ "$par_sort_list" == "true" ]]; then
         input_files=$(printf "%s" "$input_files" | tr "$FIELD_SEPARATOR" "\0" |
             sort --zero-terminated --version-sort | tr "\0" "$FIELD_SEPARATOR")
         input_files=$(_str_remove_empty_tokens "$input_files")
     fi
 
-    # Validates filenames with the same base name.
+    # Check for filename conflicts (files with same base name).
     if [[ "$par_validate_conflict" == "true" ]]; then
         _validate_conflict_filenames "$input_files"
     fi
 
+    # Return the final processed file list.
     printf "%s" "$input_files"
 }
 
