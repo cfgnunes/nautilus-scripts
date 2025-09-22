@@ -649,7 +649,7 @@ _display_list_box_zenity() {
         # shellcheck disable=SC2086
         selected_items=$(
             zenity --title "$(_get_script_name)" --list \
-                --multiple --separator="$FIELD_SEPARATOR" \
+                --editable --multiple --separator="$FIELD_SEPARATOR" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" \
                 --text "$header_label" \
@@ -660,7 +660,7 @@ _display_list_box_zenity() {
         # shellcheck disable=SC2086
         selected_items=$(
             zenity --title "$(_get_script_name)" --list \
-                --multiple --separator="$FIELD_SEPARATOR" \
+                --editable --multiple --separator="$FIELD_SEPARATOR" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" \
                 --text "$header_label" \
