@@ -79,13 +79,15 @@ _main() {
         "Install basic dependencies (requires 'sudo')"
         "Install keyboard shortcuts"
         "Close the file manager to reload its configurations"
-        "Remove previous scripts"
-        "Choose script categories to install"
+        "Remove previously installed scripts"
+        "Install application menu shortcuts"
         "Install for all users (requires 'sudo')"
+        "Choose which script categories to install"
     )
 
     # Default states for the menu options.
     menu_defaults=(
+        "true"
         "true"
         "true"
         "true"
@@ -102,8 +104,9 @@ _main() {
     [[ ${menu_selected[1]} == "true" ]] && menu_options+="shortcuts,"
     [[ ${menu_selected[2]} == "true" ]] && menu_options+="reload,"
     [[ ${menu_selected[3]} == "true" ]] && menu_options+="remove,"
-    [[ ${menu_selected[4]} == "true" ]] && menu_options+="categories,"
+    [[ ${menu_selected[4]} == "true" ]] && menu_options+="appmenu,"
     [[ ${menu_selected[5]} == "true" ]] && menu_options+="allusers,"
+    [[ ${menu_selected[6]} == "true" ]] && menu_options+="categories,"
 
     # Collect all available script categories (directories).
     local dir=""
@@ -199,12 +202,16 @@ _main() {
             echo "(directory '$install_home', file manager '$file_manager'):"
             _step_install_scripts "$menu_options" cat_selected cat_dirs
             _step_install_menus
-            [[ "$menu_options" == *"shortcuts"* ]] && _step_install_shortcuts
+            [[ "$menu_options" == *"shortcuts"* ]] && _step_install_accels
         done
 
         # Reload file manager to apply changes, if selected.
         [[ "$menu_options" == *"reload"* ]] && _step_close_filemanager
     done
+
+    # Install application menu shortcuts.
+    [[ "$menu_options" == *"appmenu"* ]] && _step_install_application_shortcuts
+
     echo
     echo "Done!"
 }
@@ -263,7 +270,8 @@ _delete_items() {
 
 # shellcheck disable=SC2086
 _step_install_dependencies() {
-    printf "\nInstalling basic dependencies...\n"
+    echo
+    echo "Installing basic dependencies:"
 
     local packages=""
 
@@ -399,6 +407,220 @@ _step_install_scripts() {
         -exec chmod +x -- {} \;
 }
 
+_step_install_accels() {
+    # Install keyboard shortcuts (accels) for specific file managers.
+
+    case "$FILE_MANAGER" in
+    "nautilus")
+        _step_install_accels_nautilus \
+            "$INSTALL_HOME/.config/nautilus/scripts-accels"
+        ;;
+    "caja")
+        _step_install_accels_gnome2 \
+            "$INSTALL_HOME/.config/caja/accels"
+        ;;
+    "nemo")
+        _step_install_accels_gnome2 \
+            "$INSTALL_HOME/.gnome2/accels/nemo"
+        ;;
+    "thunar")
+        _step_install_accels_thunar \
+            "$INSTALL_HOME/.config/Thunar/accels.scm"
+        ;;
+    esac
+}
+
+_step_install_accels_nautilus() {
+    echo -e "$MSG_INFO Installing keyboard shortcuts for Nautilus..."
+
+    local accels_file=$1
+    $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
+
+    # Create a backup of older custom actions.
+    _item_create_backup "$accels_file"
+    _delete_items "$accels_file"
+
+    {
+        local filename=""
+        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+            "${IGNORE_FIND_PATHS[@]}" \
+            -print0 2>/dev/null |
+            sort --zero-terminated |
+            while IFS= read -r -d "" filename; do
+
+                local keyboard_shortcut=""
+                keyboard_shortcut=$(_get_par_value \
+                    "$filename" "install_keyboard_shortcut")
+
+                if [[ -n "$keyboard_shortcut" ]]; then
+                    local name=""
+                    name=$(basename -- "$filename")
+                    printf "%s\n" "$keyboard_shortcut $name"
+                fi
+            done
+
+    } | $SUDO_CMD tee "$accels_file" >/dev/null
+    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
+}
+
+_step_install_accels_gnome2() {
+    echo -e "$MSG_INFO Installing keyboard shortcuts..."
+
+    local accels_file=$1
+    $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
+
+    # Create a backup of older custom actions.
+    _item_create_backup "$accels_file"
+    _delete_items "$accels_file"
+
+    {
+        # Disable the shortcut for 'OpenAlternate' (<control><shift>o).
+        printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenAlternate" "")'
+        # Disable the shortcut for 'OpenInNewTab' (<control><shift>o).
+        printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenInNewTab" "")'
+        # Disable the shortcut for 'Show Hide Extra Pane' (F3).
+        printf "%s\n" '(gtk_accel_path "<Actions>/NavigationActions/Show Hide Extra Pane" "")'
+        printf "%s\n" '(gtk_accel_path "<Actions>/ShellActions/Show Hide Extra Pane" "")'
+
+        local filename=""
+        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+            "${IGNORE_FIND_PATHS[@]}" \
+            -print0 2>/dev/null |
+            sort --zero-terminated |
+            while IFS= read -r -d "" filename; do
+
+                local keyboard_shortcut=""
+                keyboard_shortcut=$(_get_par_value \
+                    "$filename" "install_keyboard_shortcut")
+                keyboard_shortcut=${keyboard_shortcut//Control/Primary}
+
+                if [[ -n "$keyboard_shortcut" ]]; then
+                    # shellcheck disable=SC2001
+                    filename=$(sed "s|/|\\\\\\\\s|g; s| |%20|g" <<<"$filename")
+                    printf "%s\n" '(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s'"$filename"'" "'"$keyboard_shortcut"'")'
+                fi
+            done
+
+    } | $SUDO_CMD tee "$accels_file" >/dev/null
+    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
+}
+
+_step_install_accels_thunar() {
+    echo -e "$MSG_INFO Installing keyboard shortcuts for Thunar..."
+
+    local accels_file=$1
+    $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
+
+    # Create a backup of older custom actions.
+    _item_create_backup "$accels_file"
+    _delete_items "$accels_file"
+
+    {
+        # Default Thunar shortcuts.
+        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-1-1" "")'
+        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-4-4" "")'
+        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-3-3" "")'
+        # Disable  "<Primary><Shift>p".
+        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActionManager/open-in-new-tab" "")'
+        # Disable "<Primary><Shift>o".
+        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActionManager/open-in-new-window" "")'
+        # Disable "<Primary>e".
+        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarWindow/view-side-pane-tree" "")'
+
+        local filename=""
+        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+            "${IGNORE_FIND_PATHS[@]}" \
+            -print0 2>/dev/null |
+            sort --zero-terminated |
+            while IFS= read -r -d "" filename; do
+
+                local keyboard_shortcut=""
+                keyboard_shortcut=$(_get_par_value \
+                    "$filename" "install_keyboard_shortcut")
+                keyboard_shortcut=${keyboard_shortcut//Control/Primary}
+
+                if [[ -n "$keyboard_shortcut" ]]; then
+                    local name=""
+                    local submenu=""
+                    local unique_id=""
+                    name=$(basename -- "$filename")
+                    submenu=$(dirname -- "$filename" | sed "s|.*scripts/|Scripts/|g")
+                    unique_id=$(md5sum <<<"$submenu$name" 2>/dev/null |
+                        sed "s|[^0-9]*||g" | cut -c 1-8)
+
+                    printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-'"$unique_id"'" "'"$keyboard_shortcut"'")'
+                fi
+            done
+
+    } | $SUDO_CMD tee "$accels_file" >/dev/null
+    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
+}
+
+_step_install_application_shortcuts() {
+    echo
+    echo "Installing application menu shortcuts:"
+
+    echo -e "$MSG_INFO Creating '.desktop' files..."
+
+    local menus_dir="$INSTALL_HOME/.local/share/applications"
+
+    $SUDO_CMD_USER mkdir --parents "$menus_dir"
+
+    local filename=""
+    local name_sub=""
+    local name=""
+    local script_relative=""
+    local submenu=""
+
+    # Create a '.desktop' file for each script.
+    $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+        "${IGNORE_FIND_PATHS[@]}" \
+        -print0 2>/dev/null |
+        sort --zero-terminated |
+        while IFS= read -r -d "" filename; do
+            # shellcheck disable=SC2001
+            script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
+            name=${script_relative##*/}
+            submenu=${script_relative%/*}
+            # shellcheck disable=SC2001
+            submenu=$(sed "s|/| - |g" <<<"$submenu")
+
+            local menu_file=""
+            menu_file=$name
+            menu_file=$(tr -cd "[:alnum:]- " <<<"$menu_file")
+            menu_file=$(tr " " "-" <<<"$menu_file")
+            menu_file=${menu_file,,}
+            menu_file="${menus_dir}/script-$menu_file.desktop"
+
+            {
+                printf "%s\n" "[Desktop Entry]"
+                printf "%s\n" "Categories=Scripts;"
+                printf "%s\n" "Exec=\"$filename\""
+                printf "%s\n" "Name=$name"
+                printf "%s\n" "GenericName=$submenu - $name"
+                printf "%s\n" "Comment=$submenu"
+                #printf "%s\n" "Icon="
+                printf "%s\n" "Terminal=false"
+                printf "%s\n" "Type=Application"
+            } | $SUDO_CMD tee "$menu_file" >/dev/null
+            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menu_file"
+            $SUDO_CMD chmod +x "$menu_file"
+        done
+
+    gsettings set org.gnome.desktop.app-folders folder-children "['Scripts']"
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ name 'Scripts'
+
+    local list_scripts=""
+    list_scripts=$(
+        find "$HOME/.local/share/applications" \
+            -maxdepth 1 -type f -name "script-*.desktop" \
+            -printf "'%f', " |
+            sed 's/, $//; s/^/[/' | sed 's/$/]/'
+    )
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ apps "$list_scripts"
+
+}
+
 _step_install_menus() {
     # This function install custom context menus for supported file managers.
     # Delegates to the appropriate function depending on the detected file
@@ -414,9 +636,10 @@ _step_install_menus() {
 _step_install_menus_dolphin() {
     echo -e "$MSG_INFO Installing Dolphin actions..."
 
-    local action_menus_dir="$INSTALL_HOME/.local/share/kio/servicemenus"
-    _delete_items "$action_menus_dir"
-    $SUDO_CMD_USER mkdir --parents "$action_menus_dir"
+    local menus_dir="$INSTALL_HOME/.local/share/kio/servicemenus"
+
+    _delete_items "$menus_dir"
+    $SUDO_CMD_USER mkdir --parents "$menus_dir"
 
     local filename=""
     local name_sub=""
@@ -424,7 +647,7 @@ _step_install_menus_dolphin() {
     local script_relative=""
     local submenu=""
 
-    # Generate a '.desktop' file for each script.
+    # Create a '.desktop' file for each script.
     $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" \
         -print0 2>/dev/null |
@@ -438,7 +661,7 @@ _step_install_menus_dolphin() {
             name=${script_relative##*/}
             submenu=${script_relative%%/*}
 
-            # Set the mime requirements.
+            # Set the 'MIME' requirements.
             local par_recursive=""
             local par_select_mime=""
             par_recursive=$(_get_par_value "$filename" "par_recursive")
@@ -475,8 +698,8 @@ _step_install_menus_dolphin() {
             par_min_items=$(_get_par_value "$filename" "par_min_items")
             par_max_items=$(_get_par_value "$filename" "par_max_items")
 
-            local action_file=""
-            action_file="${action_menus_dir}/${submenu} - ${name}.desktop"
+            local menu_file=""
+            menu_file="${menus_dir}/${submenu} - ${name}.desktop"
             {
                 printf "%s\n" "[Desktop Entry]"
                 printf "%s\n" "Type=Service"
@@ -498,20 +721,21 @@ _step_install_menus_dolphin() {
                 printf "%s\n" "[Desktop Action scriptAction]"
                 printf "%s\n" "Name=$name_sub"
                 printf "%s\n" "Exec=bash \"$filename\" %F"
-            } | $SUDO_CMD tee "$action_file" >/dev/null
-            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$action_file"
-            $SUDO_CMD chmod +x "$action_file"
+            } | $SUDO_CMD tee "$menu_file" >/dev/null
+            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menu_file"
+            $SUDO_CMD chmod +x "$menu_file"
         done
 }
 
 _step_install_menus_pcmanfm() {
     echo -e "$MSG_INFO Installing PCManFM-Qt actions..."
 
-    local action_menus_dir="$INSTALL_HOME/.local/share/file-manager/actions"
-    _delete_items "$action_menus_dir"
-    $SUDO_CMD_USER mkdir --parents "$action_menus_dir"
+    local menus_dir="$INSTALL_HOME/.local/share/file-manager/actions"
 
-    # Create the 'Scripts.desktop' menu.
+    _delete_items "$menus_dir"
+    $SUDO_CMD_USER mkdir --parents "$menus_dir"
+
+    # Create the 'Scripts.desktop' for the categories (main menu).
     {
         printf "%s\n" "[Desktop Entry]"
         printf "%s\n" "Type=Menu"
@@ -521,12 +745,12 @@ _step_install_menus_pcmanfm() {
             "${IGNORE_FIND_PATHS[@]}" \
             -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";"
         printf "\n"
-    } | $SUDO_CMD tee "${action_menus_dir}/Scripts.desktop" >/dev/null
+    } | $SUDO_CMD tee "${menus_dir}/Scripts.desktop" >/dev/null
     $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- \
-        "${action_menus_dir}/Scripts.desktop"
-    $SUDO_CMD chmod +x "${action_menus_dir}/Scripts.desktop"
+        "${menus_dir}/Scripts.desktop"
+    $SUDO_CMD chmod +x "${menus_dir}/Scripts.desktop"
 
-    # Create a '.desktop' file for each directory (for sub-menus).
+    # Create a '.desktop' file for each sub-category (sub-menus).
     local filename=""
     local name=""
     local dir_items=""
@@ -549,10 +773,10 @@ _step_install_menus_pcmanfm() {
                 printf "%s\n" "Name=$name"
                 printf "%s\n" "ItemsList=$dir_items"
 
-            } | $SUDO_CMD tee "${action_menus_dir}/$name.desktop" >/dev/null
+            } | $SUDO_CMD tee "${menus_dir}/$name.desktop" >/dev/null
             $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- \
-                "${action_menus_dir}/$name.desktop"
-            $SUDO_CMD chmod +x "${action_menus_dir}/$name.desktop"
+                "${menus_dir}/$name.desktop"
+            $SUDO_CMD chmod +x "${menus_dir}/$name.desktop"
         done
 
     # Create a '.desktop' file for each script.
@@ -600,8 +824,8 @@ _step_install_menus_pcmanfm() {
             par_min_items=$(_get_par_value "$filename" "par_min_items")
             par_max_items=$(_get_par_value "$filename" "par_max_items")
 
-            local action_file=""
-            action_file="${action_menus_dir}/${name}.desktop"
+            local menu_file=""
+            menu_file="${menus_dir}/${name}.desktop"
             {
                 printf "%s\n" "[Desktop Entry]"
                 printf "%s\n" "Type=Action"
@@ -611,9 +835,9 @@ _step_install_menus_pcmanfm() {
                 printf "%s\n" "[X-Action-Profile scriptAction]"
                 printf "%s\n" "MimeTypes=$par_select_mime"
                 printf "%s\n" "Exec=bash \"$filename\" %F"
-            } | $SUDO_CMD tee "$action_file" >/dev/null
-            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$action_file"
-            $SUDO_CMD chmod +x "$action_file"
+            } | $SUDO_CMD tee "$menu_file" >/dev/null
+            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menu_file"
+            $SUDO_CMD chmod +x "$menu_file"
         done
 }
 
@@ -628,6 +852,7 @@ _step_install_menus_thunar() {
 
     $SUDO_CMD_USER mkdir --parents "$INSTALL_HOME/.config/Thunar"
 
+    # Create the file "~/.config/Thunar/uca.xml".
     {
         printf "%s\n" "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
         printf "%s\n" "<actions>"
@@ -748,155 +973,6 @@ _step_install_menus_thunar() {
         printf "%s\n" "</actions>"
     } | $SUDO_CMD tee "$menus_file" >/dev/null
     $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menus_file"
-}
-
-_step_install_shortcuts() {
-    # Install keyboard shortcuts for specific file managers.
-
-    case "$FILE_MANAGER" in
-    "nautilus")
-        _step_install_shortcuts_nautilus \
-            "$INSTALL_HOME/.config/nautilus/scripts-accels"
-        ;;
-    "caja")
-        _step_install_shortcuts_gnome2 \
-            "$INSTALL_HOME/.config/caja/accels"
-        ;;
-    "nemo")
-        _step_install_shortcuts_gnome2 \
-            "$INSTALL_HOME/.gnome2/accels/nemo"
-        ;;
-    "thunar")
-        _step_install_shortcuts_thunar \
-            "$INSTALL_HOME/.config/Thunar/accels.scm"
-        ;;
-    esac
-}
-
-_step_install_shortcuts_nautilus() {
-    echo -e "$MSG_INFO Installing the keyboard shortcuts for Nautilus..."
-
-    local accels_file=$1
-    $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
-
-    # Create a backup of older custom actions.
-    _item_create_backup "$accels_file"
-    _delete_items "$accels_file"
-
-    {
-        local filename=""
-        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            "${IGNORE_FIND_PATHS[@]}" \
-            -print0 2>/dev/null |
-            sort --zero-terminated |
-            while IFS= read -r -d "" filename; do
-
-                local keyboard_shortcut=""
-                keyboard_shortcut=$(_get_par_value \
-                    "$filename" "install_keyboard_shortcut")
-
-                if [[ -n "$keyboard_shortcut" ]]; then
-                    local name=""
-                    name=$(basename -- "$filename")
-                    printf "%s\n" "$keyboard_shortcut $name"
-                fi
-            done
-
-    } | $SUDO_CMD tee "$accels_file" >/dev/null
-    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
-}
-
-_step_install_shortcuts_gnome2() {
-    echo -e "$MSG_INFO Installing the keyboard shortcuts..."
-
-    local accels_file=$1
-    $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
-
-    # Create a backup of older custom actions.
-    _item_create_backup "$accels_file"
-    _delete_items "$accels_file"
-
-    {
-        # Disable the shortcut for 'OpenAlternate' (<control><shift>o).
-        printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenAlternate" "")'
-        # Disable the shortcut for 'OpenInNewTab' (<control><shift>o).
-        printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenInNewTab" "")'
-        # Disable the shortcut for 'Show Hide Extra Pane' (F3).
-        printf "%s\n" '(gtk_accel_path "<Actions>/NavigationActions/Show Hide Extra Pane" "")'
-        printf "%s\n" '(gtk_accel_path "<Actions>/ShellActions/Show Hide Extra Pane" "")'
-
-        local filename=""
-        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            "${IGNORE_FIND_PATHS[@]}" \
-            -print0 2>/dev/null |
-            sort --zero-terminated |
-            while IFS= read -r -d "" filename; do
-
-                local keyboard_shortcut=""
-                keyboard_shortcut=$(_get_par_value \
-                    "$filename" "install_keyboard_shortcut")
-                keyboard_shortcut=${keyboard_shortcut//Control/Primary}
-
-                if [[ -n "$keyboard_shortcut" ]]; then
-                    # shellcheck disable=SC2001
-                    filename=$(sed "s|/|\\\\\\\\s|g; s| |%20|g" <<<"$filename")
-                    printf "%s\n" '(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s'"$filename"'" "'"$keyboard_shortcut"'")'
-                fi
-            done
-
-    } | $SUDO_CMD tee "$accels_file" >/dev/null
-    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
-}
-
-_step_install_shortcuts_thunar() {
-    echo -e "$MSG_INFO Installing the keyboard shortcuts for Thunar..."
-
-    local accels_file=$1
-    $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
-
-    # Create a backup of older custom actions.
-    _item_create_backup "$accels_file"
-    _delete_items "$accels_file"
-
-    {
-        # Default Thunar shortcuts.
-        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-1-1" "")'
-        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-4-4" "")'
-        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-3-3" "")'
-        # Disable  "<Primary><Shift>p".
-        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActionManager/open-in-new-tab" "")'
-        # Disable "<Primary><Shift>o".
-        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActionManager/open-in-new-window" "")'
-        # Disable "<Primary>e".
-        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarWindow/view-side-pane-tree" "")'
-
-        local filename=""
-        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            "${IGNORE_FIND_PATHS[@]}" \
-            -print0 2>/dev/null |
-            sort --zero-terminated |
-            while IFS= read -r -d "" filename; do
-
-                local keyboard_shortcut=""
-                keyboard_shortcut=$(_get_par_value \
-                    "$filename" "install_keyboard_shortcut")
-                keyboard_shortcut=${keyboard_shortcut//Control/Primary}
-
-                if [[ -n "$keyboard_shortcut" ]]; then
-                    local name=""
-                    local submenu=""
-                    local unique_id=""
-                    name=$(basename -- "$filename")
-                    submenu=$(dirname -- "$filename" | sed "s|.*scripts/|Scripts/|g")
-                    unique_id=$(md5sum <<<"$submenu$name" 2>/dev/null |
-                        sed "s|[^0-9]*||g" | cut -c 1-8)
-
-                    printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-'"$unique_id"'" "'"$keyboard_shortcut"'")'
-                fi
-            done
-
-    } | $SUDO_CMD tee "$accels_file" >/dev/null
-    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
 }
 
 _step_close_filemanager() {
