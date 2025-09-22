@@ -416,7 +416,7 @@ _display_file_selection_box() {
     _display_lock
     if _command_exists "zenity"; then
         input_files=$(zenity --title "$title" \
-            --file-selection \
+            --file-selection --multiple \
             ${file_filter:+--file-filter="$file_filter"} \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
