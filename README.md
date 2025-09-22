@@ -36,39 +36,39 @@ While numerous scripts are available for file managers on the web, many suffer f
 
 ## Keyboard Shortcuts
 
-| Key                 | Action                           |
-| ------------------- | -------------------------------- |
-| `F3`                | Code Editor                      |
-| `F4`                | Terminal                         |
-| `F7`                | Disk Usage Analyzer              |
-| `<Control>E`        | Extract Here                     |
-| `<Control><Alt>C`   | Compress...                      |
-| `<Control><Alt>G`   | Compress to 'tar.gz' (each)      |
-| `<Control><Alt>X`   | Compress to 'tar.xz' (each)      |
-| `<Control><Alt>S`   | Compress to 'tar.zst' (each)     |
-| `<Control><Alt>Z`   | Compress to 'zip' (each)         |
-| `<Control><Alt>V`   | Paste as hard link               |
-| `<Control><Shift>V` | Paste as symbolic link           |
-| `<Control><Shift>C` | Compare items                    |
-| `<Control><Shift>G` | Git clone URLs (clipboard, file) |
-| `<Control><Shift>R` | Git reset and pull               |
-| `<Control><Shift>X` | Download URLs (clipboard, file)  |
-| `<Control><Shift>O` | Open item location               |
-| `<Control><Shift>E` | Find empty directories           |
-| `<Control><Shift>H` | Find hidden items                |
-| `<Control><Shift>U` | Find duplicate files             |
-| `<Control><Shift>P` | List permissions and owners      |
-| `<Control><Shift>Y` | List file information            |
-| `<Control><Alt>1`   | List file MIME types             |
-| `<Control><Alt>2`   | List file issues                 |
-| `<Control><Alt>3`   | List files with bad chars        |
-| `<Control><Alt>4`   | List encodings                   |
-| `<Control><Alt>5`   | List line breaks                 |
-| `<Control><Alt>6`   | List line count                  |
-| `<Control><Alt>7`   | List max line length             |
-| `<Control><Alt>8`   | List word count                  |
-| `<Control><Alt>9`   | List largest directories         |
-| `<Control><Alt>0`   | List largest files               |
+| Key                 | Action                            |
+| ------------------- | --------------------------------- |
+| `F3`                | Code Editor                       |
+| `F4`                | Terminal                          |
+| `F7`                | Disk Usage Analyzer               |
+| `<Control>E`        | Extract Here                      |
+| `<Control><Alt>C`   | Compress...                       |
+| `<Control><Alt>G`   | Compress to 'tar.gz' (each)       |
+| `<Control><Alt>X`   | Compress to 'tar.xz' (each)       |
+| `<Control><Alt>S`   | Compress to 'tar.zst' (each)      |
+| `<Control><Alt>Z`   | Compress to 'zip' (each)          |
+| `<Control><Alt>V`   | Paste as hard link                |
+| `<Control><Shift>V` | Paste as symbolic link            |
+| `<Control><Shift>C` | Compare items                     |
+| `<Control><Shift>G` | Git: Clone URLs (clipboard, file) |
+| `<Control><Shift>R` | Git: Reset and pull               |
+| `<Control><Shift>X` | URL: Download (clipboard, file)   |
+| `<Control><Shift>O` | Open item location                |
+| `<Control><Shift>E` | Find empty directories            |
+| `<Control><Shift>H` | Find hidden items                 |
+| `<Control><Shift>U` | Find duplicate files              |
+| `<Control><Shift>P` | List permissions and owners       |
+| `<Control><Shift>Y` | List file information             |
+| `<Control><Alt>1`   | List file MIME types              |
+| `<Control><Alt>2`   | Text: List file issues            |
+| `<Control><Alt>3`   | Text: List files with bad chars   |
+| `<Control><Alt>4`   | Text: List encodings              |
+| `<Control><Alt>5`   | Text: List line breaks            |
+| `<Control><Alt>6`   | Text: List line count             |
+| `<Control><Alt>7`   | Text: List max line length        |
+| `<Control><Alt>8`   | Text: List word count             |
+| `<Control><Alt>9`   | List largest directories          |
+| `<Control><Alt>0`   | List largest files                |
 
 ## Compatibility
 
