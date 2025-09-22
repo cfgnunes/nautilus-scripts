@@ -11,7 +11,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies_clipboard ""
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=all; par_recursive=true; par_get_pwd=true")
+    input_files=$(_get_files "par_type=all; par_recursive=true")
 
     # shellcheck disable=SC2086
     input_files=$(basename --multiple -- $input_files)

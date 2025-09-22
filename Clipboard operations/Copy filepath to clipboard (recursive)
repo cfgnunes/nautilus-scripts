@@ -11,7 +11,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies_clipboard ""
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=all; par_recursive=true; par_get_pwd=true")
+    input_files=$(_get_files "par_type=all; par_recursive=true")
 
     input_files=$(_convert_delimited_string_to_text "$input_files")
 

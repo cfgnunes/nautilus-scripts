@@ -12,7 +12,7 @@ _main() {
     _check_dependencies "command=git | command=xdg-open; package=xdg-utils"
     _display_wait_box "2"
 
-    input_files=$(_get_files "par_type=directory; par_max_items=20; par_get_pwd=true")
+    input_files=$(_get_files "par_type=directory; par_max_items=20")
 
     _open_repository_website "$input_files"
 
