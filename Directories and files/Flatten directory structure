@@ -10,13 +10,12 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=directory; par_max_items=1")
 
     if ! _display_question_box "This action will move all files from subdirectories\nto the root of the selected directory.\n\nWould you like to continue?"; then
         _exit_script
     fi
-
-    _display_wait_box "2"
-    input_files=$(_get_files "par_type=directory; par_max_items=1")
 
     # Run the main process.
     _flatten_directory "$input_files"

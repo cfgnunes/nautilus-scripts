@@ -11,13 +11,12 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
+    _display_wait_box "2"
+    input_files=$(_get_files "par_type=all")
 
     if ! _display_question_box "This action will set permissions recursively.\n\nWould you like to continue?"; then
         _exit_script
     fi
-
-    _display_wait_box "2"
-    input_files=$(_get_files "par_type=all")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
