@@ -1328,8 +1328,6 @@ _get_files() {
     #   - "par_recursive": Specifies whether to expand directories recursively:
     #       - "false" (default): Does not expand directories.
     #       - "true": Expands directories recursively.
-    #   - "par_get_pwd": If 'true', returns the current working directory if no
-    #     files are selected.
     #   - "par_max_items", "par_min_items": Limits the number of files.
     #   - "par_select_extension": Filters by file extension.
     #   - "par_select_mime": Filters by MIME type.
@@ -1344,7 +1342,6 @@ _get_files() {
     input_files=$(_get_filenames_filemanager)
 
     # Default values for input parameters.
-    local par_get_pwd="false"
     local par_max_items=""
     local par_min_items=""
     local par_recursive="false"
@@ -1361,18 +1358,25 @@ _get_files() {
 
     # Check if there are input files.
     if (($(_get_items_count "$input_files") == 0)); then
-        if [[ "$par_get_pwd" == "true" ]]; then
-            # Return the current working directory if no files have been
-            # selected.
-            input_files=$(_get_working_directory)
-        else
-            # Try selecting the files by opening a file selection box.
-            if [[ "$par_type" == "directory" ]]; then
-                input_files=$(_display_dir_selection_box)
-            else
-                input_files=$(_display_file_selection_box \
-                    "" "Select the input files" "true")
+        if [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]] ||
+            [[ -v "NEMO_SCRIPT_SELECTED_URIS" ]] ||
+            [[ -v "CAJA_SCRIPT_SELECTED_URIS" ]]; then
+            if [[ "$par_type" != "file" ]] ||
+                [[ "$par_recursive" == "true" ]]; then
+                # Return the current working directory if no files have been
+                # selected.
+                input_files=$(_get_working_directory)
             fi
+        fi
+    fi
+
+    # Try selecting the files by opening a file selection box.
+    if (($(_get_items_count "$input_files") == 0)); then
+        if [[ "$par_type" == "directory" ]]; then
+            input_files=$(_display_dir_selection_box)
+        else
+            input_files=$(_display_file_selection_box \
+                "" "Select the input files" "true")
         fi
     fi
 
@@ -1420,15 +1424,6 @@ _get_files() {
         "$par_skip_extension" \
         "$par_select_extension" \
         "$find_parameters")
-
-    # Return the current working directory if no directories have been
-    # selected.
-    if (($(_get_items_count "$input_files") == 0)); then
-        if [[ "$par_get_pwd" == "true" ]] &&
-            [[ "$par_type" == "directory" ]]; then
-            input_files=$(_get_working_directory)
-        fi
-    fi
 
     # Validates the mime or encoding of the file.
     if [[ -n "$par_select_mime" ]] || [[ -n "$par_skip_encoding" ]]; then

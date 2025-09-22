@@ -11,7 +11,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
-    input_files=$(_get_files "par_type=directory; par_max_items=20; par_get_pwd=true")
+    input_files=$(_get_files "par_type=directory; par_max_items=20")
     _unset_global_variables_file_manager
 
     _open_app "$input_files"

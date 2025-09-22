@@ -11,7 +11,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "command=xdg-open; package=xdg-utils"
-    input_files=$(_get_files "par_type=all; par_max_items=20; par_get_pwd=true")
+    input_files=$(_get_files "par_type=all; par_max_items=20")
 
     # Run the main process.
     _open_items_locations "$input_files" "true"

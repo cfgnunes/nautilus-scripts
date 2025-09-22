@@ -15,7 +15,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "command=rdfind"
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=all; par_get_pwd=true")
+    input_files=$(_get_files "par_type=all")
 
     # Work on a temporary file.
     temp_file=$(_get_temp_file)

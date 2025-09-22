@@ -15,7 +15,7 @@ _main() {
     else
         _check_dependencies "command=baobab"
     fi
-    input_files=$(_get_files "par_type=directory; par_max_items=20; par_get_pwd=true")
+    input_files=$(_get_files "par_type=directory; par_max_items=20")
     _unset_global_variables_file_manager
 
     _open_app "$input_files"

@@ -12,7 +12,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
-    input_files=$(_get_files "par_type=all; par_max_items=20; par_get_pwd=true")
+    input_files=$(_get_files "par_type=all; par_max_items=20")
     _unset_global_variables_file_manager
 
     # Check if the first file is a binary file.
