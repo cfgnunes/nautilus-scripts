@@ -34,6 +34,9 @@ WAIT_BOX_CONTROL_KDIALOG="$TEMP_DIR/wait_box_control_kdialog"
 WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control"
 WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"
 
+MSG_ERROR="[\\e[31mERROR\\e[0m]"
+MSG_INFO="[\\e[32mINFO\\e[0m]"
+
 readonly \
     ACCESSED_RECENTLY_DIR \
     ACCESSED_RECENTLY_LINKS_TO_KEEP \
@@ -103,7 +106,7 @@ _cleanup_on_exit() {
     rm -rf -- "$TEMP_DIR" &>/dev/null
 
     if ! _is_gui_session; then
-        printf "End of the script.\n" >&2
+        echo -e "$MSG_INFO Temporary files cleaned." >&2
     fi
 }
 trap _cleanup_on_exit EXIT
@@ -382,7 +385,9 @@ _display_dir_selection_box() {
     local input_files=""
 
     _display_lock
-    if _command_exists "zenity"; then
+    if ! _is_gui_session; then
+        input_files=$(_get_working_directory)
+    elif _command_exists "zenity"; then
         input_files=$(zenity --title "$(_get_script_name)" \
             --file-selection --multiple --directory \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
@@ -417,13 +422,15 @@ _display_file_selection_box() {
     local input_files=""
     local multiple_flag=""
 
-    # Add --multiple only if explicitly enabled
-    if [[ "$multiple" == "true" ]]; then
-        multiple_flag="--multiple"
-    fi
-
     _display_lock
-    if _command_exists "zenity"; then
+    if ! _is_gui_session; then
+        return 0
+    elif _command_exists "zenity"; then
+        # Add --multiple only if explicitly enabled
+        if [[ "$multiple" == "true" ]]; then
+            multiple_flag="--multiple"
+        fi
+
         input_files=$(zenity --title "$title" \
             --file-selection "$multiple_flag" \
             ${file_filter:+--file-filter="$file_filter"} \
@@ -452,7 +459,7 @@ _display_error_box() {
 
     _display_lock
     if ! _is_gui_session; then
-        printf "Error: %s\n" "$message" >&2
+        echo -e "$MSG_ERROR $message" >&2
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-error" "$(_get_script_name)" "$message" "2"
     elif _command_exists "zenity"; then
@@ -477,7 +484,7 @@ _display_info_box() {
 
     _display_lock
     if ! _is_gui_session; then
-        printf "Info: %s\n" "$message" >&2
+        echo -e "$MSG_INFO $message" >&2
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-information" "$(_get_script_name)" "$message" "1"
     elif _command_exists "zenity"; then
@@ -898,7 +905,7 @@ _display_wait_box_message() {
 
     if ! _is_gui_session; then
         # For non-GUI sessions, simply print the message to the console.
-        printf "%s\n" "$message" >&2
+        echo -e "$MSG_INFO $message" >&2
 
     # Check if the Zenity is available.
     elif _command_exists "zenity"; then
@@ -1076,7 +1083,7 @@ _exit_script() {
     local script_pid=$$
 
     if ! _is_gui_session; then
-        printf "Exiting the script...\n" >&2
+        echo -e "$MSG_INFO Exiting the script." >&2
     fi
 
     # Get the process ID (PID) of all child processes.
