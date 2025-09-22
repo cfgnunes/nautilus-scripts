@@ -1382,12 +1382,12 @@ _get_files() {
 
     # If still no files available, prompt user with selection dialog.
     if (($(_get_items_count "$input_files") == 0)); then
-        if [[ "$par_type" == "directory" ]] ||
+        if [[ "$par_type" != "file" ]] ||
             [[ "$par_recursive" == "true" ]]; then
             input_files=$(_display_dir_selection_box)
         else
             input_files=$(_display_file_selection_box \
-                "" "Select the input files" "true")
+                "" "$(_get_script_name)" "true")
         fi
     fi
 
