@@ -571,6 +571,7 @@ _step_install_application_shortcuts() {
     local name=""
     local script_relative=""
     local submenu=""
+    local filename_prefix="_script-"
 
     # Create a '.desktop' file for each script.
     $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
@@ -590,7 +591,7 @@ _step_install_application_shortcuts() {
             menu_file=$(tr -cd "[:alnum:]- " <<<"$menu_file")
             menu_file=$(tr " " "-" <<<"$menu_file")
             menu_file=${menu_file,,}
-            menu_file="${menus_dir}/script-$menu_file.desktop"
+            menu_file="${menus_dir}/$filename_prefix$menu_file.desktop"
 
             {
                 printf "%s\n" "[Desktop Entry]"
@@ -598,7 +599,7 @@ _step_install_application_shortcuts() {
                 printf "%s\n" "Exec=\"$filename\""
                 printf "%s\n" "Name=$name"
                 printf "%s\n" "GenericName=$submenu - $name"
-                printf "%s\n" "Comment=$submenu"
+                #printf "%s\n" "Comment=$submenu"
                 #printf "%s\n" "Icon="
                 printf "%s\n" "Terminal=false"
                 printf "%s\n" "Type=Application"
@@ -613,7 +614,7 @@ _step_install_application_shortcuts() {
     local list_scripts=""
     list_scripts=$(
         find "$HOME/.local/share/applications" \
-            -maxdepth 1 -type f -name "script-*.desktop" \
+            -maxdepth 1 -type f -name "$filename_prefix*.desktop" \
             -printf "'%f', " |
             sed 's/, $//; s/^/[/' | sed 's/$/]/'
     )
