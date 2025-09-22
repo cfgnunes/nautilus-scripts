@@ -459,6 +459,7 @@ _display_error_box() {
 
     _display_lock
     if ! _is_gui_session; then
+        # For non-GUI sessions, simply print the message to the console.
         echo -e "$MSG_ERROR $message" >&2
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-error" "$(_get_script_name)" "$message" "2"
@@ -484,6 +485,7 @@ _display_info_box() {
 
     _display_lock
     if ! _is_gui_session; then
+        # For non-GUI sessions, simply print the message to the console.
         echo -e "$MSG_INFO $message" >&2
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-information" "$(_get_script_name)" "$message" "1"
