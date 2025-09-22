@@ -408,15 +408,24 @@ _display_file_selection_box() {
     #   - $1 (file_filter): Optional. File filter pattern to restrict the types
     #     of files shown.
     #   - $2 (title): Optional. Title of the window.
+    #   - $3 (multiple): Optional. Accepts "true" or "false". If "true", allows
+    #     multiple file selection (only applies for Zenity).
 
     local file_filter=${1:-""}
     local title=${2:-"$(_get_script_name)"}
+    local multiple=${3:-"false"}
     local input_files=""
+    local multiple_flag=""
+
+    # Add --multiple only if explicitly enabled
+    if [[ "$multiple" == "true" ]]; then
+        multiple_flag="--multiple"
+    fi
 
     _display_lock
     if _command_exists "zenity"; then
         input_files=$(zenity --title "$title" \
-            --file-selection --multiple \
+            --file-selection "$multiple_flag" \
             ${file_filter:+--file-filter="$file_filter"} \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
@@ -1361,7 +1370,8 @@ _get_files() {
             if [[ "$par_type" == "directory" ]]; then
                 input_files=$(_display_dir_selection_box)
             else
-                input_files=$(_display_file_selection_box)
+                input_files=$(_display_file_selection_box \
+                    "" "Select the input files" "true")
             fi
         fi
     fi
