@@ -620,7 +620,7 @@ _step_install_application_shortcuts() {
             {
                 printf "%s\n" "[Desktop Entry]"
                 printf "%s\n" "Categories=Scripts;"
-                printf "%s\n" "Exec=\"$filename\""
+                printf "%s\n" "Exec=\"$filename\" %F"
                 printf "%s\n" "Name=$name"
                 printf "%s\n" "GenericName=$submenu - $name"
                 #printf "%s\n" "Comment=$submenu"
