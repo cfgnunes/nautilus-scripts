@@ -30,7 +30,6 @@ _main() {
 _main_task() {
     local input_file=$1
     local output_dir=$2
-    local temp_file=""
 
     # Save the result only for 'without fonts' PDFs.
     if ! pdffonts -- "$input_file" | sed -n 3p | grep --quiet "."; then

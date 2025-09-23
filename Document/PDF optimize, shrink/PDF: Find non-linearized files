@@ -30,7 +30,6 @@ _main() {
 _main_task() {
     local input_file=$1
     local output_dir=$2
-    local temp_file=""
 
     # Save the result only for 'not linearized (not optimized)' PDFs.
     if pdfinfo -- "$input_file" | grep --ignore-case "Optimized:" | grep --quiet --ignore-case "no"; then
