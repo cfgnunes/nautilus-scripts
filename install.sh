@@ -380,7 +380,7 @@ _step_install_dependencies() {
             exit 1
         fi
     else
-        echo -e "$MSG_ERROR Could not run as administrator!"
+        echo -e "$MSG_ERROR Could not find the 'sudo' command!"
         exit 1
     fi
 
