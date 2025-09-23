@@ -18,7 +18,8 @@ COMPATIBLE_FILE_MANAGERS=(
     "pcmanfm-qt"
     "thunar")
 
-IGNORE_DESKTOP_SHORTCUTS=(
+# Application desktop shortcuts to be ignored during install.
+IGNORE_APPLICATION_SHORTCUTS=(
     ! -iname "Code Editor"
     ! -iname "Disk Usage Analyzer"
     ! -iname "Terminal"
@@ -596,7 +597,7 @@ _step_install_application_shortcuts() {
     # Create a '.desktop' file for each script.
     $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" \
-        "${IGNORE_DESKTOP_SHORTCUTS[@]}" \
+        "${IGNORE_APPLICATION_SHORTCUTS[@]}" \
         -print0 2>/dev/null |
         sort --zero-terminated |
         while IFS= read -r -d "" filename; do
