@@ -211,8 +211,10 @@ _main() {
 
             # Perform installation steps.
             echo
-            echo -n "Installing the scripts "
-            echo "(directory '$install_home', file manager '$file_manager'):"
+            echo "Installing the scripts:"
+            echo -e "$MSG_INFO User: $INSTALL_OWNER"
+            echo -e "$MSG_INFO Directory: $install_home"
+            echo -e "$MSG_INFO File manager: $file_manager"
             _step_install_scripts "$menu_options" cat_selected cat_dirs
             _step_install_menus
             [[ "$menu_options" == *"accels"* ]] && _step_install_accels
@@ -225,8 +227,8 @@ _main() {
 
         # Install application menu shortcuts.
         echo
-        echo -n "Installing application menu shortcuts "
-        echo "(directory '$install_home'):"
+        echo "Installing application menu shortcuts:"
+        echo -e "$MSG_INFO User: $INSTALL_OWNER"
         [[ "$menu_options" == *"appmenu"* ]] && _step_install_application_shortcuts
     done
 
