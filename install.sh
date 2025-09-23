@@ -557,21 +557,27 @@ _step_install_accels_thunar() {
 }
 
 _step_install_application_shortcuts() {
-    echo
-    echo "Installing application menu shortcuts:"
-
-    echo -e "$MSG_INFO Creating '.desktop' files..."
-
-    local menus_dir="$INSTALL_HOME/.local/share/applications"
-
-    $SUDO_CMD_USER mkdir --parents "$menus_dir"
-
     local filename=""
     local name_sub=""
     local name=""
     local script_relative=""
     local submenu=""
     local filename_prefix="_script-"
+    local menus_dir="$INSTALL_HOME/.local/share/applications"
+
+    echo
+    echo "Installing application menu shortcuts:"
+
+    echo -e "$MSG_INFO Creating '.desktop' files..."
+
+    # Remove previously installed '.desktop' files.
+    local file=""
+    for file in "$menus_dir/$filename_prefix"*.desktop; do
+        [[ -e "$file" ]] || continue
+        _delete_items "$file"
+    done
+
+    $SUDO_CMD_USER mkdir --parents "$menus_dir"
 
     # Create a '.desktop' file for each script.
     $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
@@ -608,18 +614,21 @@ _step_install_application_shortcuts() {
             $SUDO_CMD chmod +x "$menu_file"
         done
 
-    gsettings set org.gnome.desktop.app-folders folder-children "['Scripts']"
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ name 'Scripts'
+    # Configure the "Scripts" application folder in GNOME.
+    if _command_exists "gsettings" && gsettings list-schemas |
+        grep --quiet '^org.gnome.desktop.app-folders$'; then
+        gsettings set org.gnome.desktop.app-folders folder-children "['Scripts']"
+        gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ name 'Scripts'
 
-    local list_scripts=""
-    list_scripts=$(
-        find "$HOME/.local/share/applications" \
-            -maxdepth 1 -type f -name "$filename_prefix*.desktop" \
-            -printf "'%f', " |
-            sed 's/, $//; s/^/[/' | sed 's/$/]/'
-    )
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ apps "$list_scripts"
-
+        local list_scripts=""
+        list_scripts=$(
+            find "$HOME/.local/share/applications" \
+                -maxdepth 1 -type f -name "$filename_prefix*.desktop" \
+                -printf "'%f', " |
+                sed 's/, $//; s/^/[/' | sed 's/$/]/'
+        )
+        gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ apps "$list_scripts"
+    fi
 }
 
 _step_install_menus() {
