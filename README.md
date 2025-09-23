@@ -43,10 +43,10 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `F7`                | Disk Usage Analyzer               |
 | `<Control>E`        | Extract Here                      |
 | `<Control><Alt>C`   | Compress...                       |
-| `<Control><Alt>G`   | Compress to 'tar.gz' (each)       |
-| `<Control><Alt>X`   | Compress to 'tar.xz' (each)       |
-| `<Control><Alt>S`   | Compress to 'tar.zst' (each)      |
-| `<Control><Alt>Z`   | Compress to 'zip' (each)          |
+| `<Control><Alt>G`   | Compress to .tar.gz (each)        |
+| `<Control><Alt>X`   | Compress to .tar.xz (each)        |
+| `<Control><Alt>S`   | Compress to .tar.zst (each)       |
+| `<Control><Alt>Z`   | Compress to .zip (each)           |
 | `<Control><Alt>V`   | Paste as hard link                |
 | `<Control><Shift>V` | Paste as symbolic link            |
 | `<Control><Shift>C` | Compare items                     |
@@ -58,8 +58,8 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Shift>H` | Find hidden items                 |
 | `<Control><Shift>U` | Find duplicate files              |
 | `<Control><Shift>P` | List permissions and owners       |
-| `<Control><Shift>Y` | List file information             |
-| `<Control><Alt>1`   | List file MIME types              |
+| `<Control><Shift>Y` | Show files information            |
+| `<Control><Alt>1`   | Show files MIME types             |
 | `<Control><Alt>2`   | Text: List file issues            |
 | `<Control><Alt>3`   | Text: List files with bad chars   |
 | `<Control><Alt>4`   | Text: List encodings              |
