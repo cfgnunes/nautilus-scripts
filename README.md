@@ -41,7 +41,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `F3`                | Code Editor                       |
 | `F4`                | Terminal                          |
 | `F7`                | Disk Usage Analyzer               |
-| `<Control>E`        | Extract Here                      |
+| `<Control>E`        | Extract here                      |
 | `<Control><Alt>C`   | Compress...                       |
 | `<Control><Alt>G`   | Compress to .tar.gz (each)        |
 | `<Control><Alt>X`   | Compress to .tar.xz (each)        |
