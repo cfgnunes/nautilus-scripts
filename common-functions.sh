@@ -1936,7 +1936,7 @@ _is_directory_empty() {
 
 _is_gui_session() {
     # This function checks whether the script is running in a graphical user
-    # interface (GUI) session. It does so by checking if the DISPLAY
+    # interface (GUI) session. It does so by checking if the 'DISPLAY'
     # environment variable is set, which is typically present in GUI sessions
     # (e.g., X11 or Wayland).
     #
@@ -1944,7 +1944,7 @@ _is_gui_session() {
     #   - "0" (true): If is a GUI session.
     #   - "1" (false): If is not a GUI session.
 
-    if env | grep --quiet "^DISPLAY"; then
+    if [[ -v "DISPLAY" ]]; then
         return 0
     fi
     return 1
