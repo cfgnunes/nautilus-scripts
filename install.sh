@@ -88,12 +88,12 @@ _main() {
 
     # Available options presented in the interactive menu.
     menu_labels=(
-        "Install basic dependencies (requires 'sudo')"
+        "Install basic dependencies (may require 'sudo')"
         "Install keyboard shortcuts"
         "Close the file manager to reload its configurations"
         "Remove previously installed scripts"
         "Install application menu shortcuts"
-        "Install for all users (requires 'sudo')"
+        "Install for all users (may require 'sudo')"
         "Choose which script categories to install"
     )
 
