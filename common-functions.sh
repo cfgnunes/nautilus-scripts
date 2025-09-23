@@ -1206,15 +1206,10 @@ _get_available_file_manager() {
     #   2. If none is found, iterates through a predefined list of common file
     #      managers and returns the first one that is installed.
 
+    local app=""
     local app_available=""
     app_available=$(_xdg_get_default_app "inode/directory" "true")
 
-    if [[ -n "$app_available" ]]; then
-        printf "%s" "$app_available"
-        return 0
-    fi
-
-    # Fallback: check a list of known file managers.
     local apps=(
         "nautilus"
         "dolphin"
@@ -1223,9 +1218,20 @@ _get_available_file_manager() {
         "thunar"
         "pcmanfm-qt"
         "pcmanfm"
+        "spacefm"
+        "ranger"
+        "vifm"
     )
 
-    local app=""
+    # Validate if the detected default application is a known file manager.
+    for app in "${apps[@]}"; do
+        if [[ "$app_available" == *"$app" ]]; then
+            printf "%s" "$app"
+            return 0
+        fi
+    done
+
+    # If no valid default found, search for the first installed file manager.
     for app in "${apps[@]}"; do
         if _command_exists "$app"; then
             printf "%s" "$app"
@@ -1233,6 +1239,7 @@ _get_available_file_manager() {
         fi
     done
 
+    # No file manager found.
     return 1
 }
 
@@ -3124,7 +3131,7 @@ _xdg_get_default_app() {
         fi
     fi
 
-    # Search possible locations for '.desktop' file
+    # Search possible locations for '.desktop' file.
     local search_paths=(
         "/usr/local/share/applications"
         "/usr/share/applications"
@@ -3137,7 +3144,7 @@ _xdg_get_default_app() {
         fi
     done
 
-    # Extract Exec line, normalize to get only the binary
+    # Extract Exec line, normalize to get only the binary.
     default_app=$(grep -m1 "^Exec=" "$desktop_path" |
         sed "s|Exec=||" |
         cut -d " " -f 1)
