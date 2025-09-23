@@ -101,7 +101,7 @@ _main() {
 
     # Map menu selections into a comma-separated string of options.
     [[ ${menu_selected[0]} == "true" ]] && menu_options+="dependencies,"
-    [[ ${menu_selected[1]} == "true" ]] && menu_options+="shortcuts,"
+    [[ ${menu_selected[1]} == "true" ]] && menu_options+="accels,"
     [[ ${menu_selected[2]} == "true" ]] && menu_options+="reload,"
     [[ ${menu_selected[3]} == "true" ]] && menu_options+="remove,"
     [[ ${menu_selected[4]} == "true" ]] && menu_options+="appmenu,"
@@ -152,20 +152,20 @@ _main() {
         install_home_list=$HOME
     fi
 
-    # Step 3: Install scripts for each detected file manager.
-    local file_manager=""
-    for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
-        if ! _command_exists "$file_manager"; then
-            continue
+    # Step 3: Install scripts for each user home.
+    for install_home in $install_home_list; do
+        INSTALL_HOME=$install_home
+        INSTALL_OWNER=$($SUDO_CMD stat -c "%U" "$INSTALL_HOME")
+        INSTALL_GROUP=$($SUDO_CMD stat -c "%G" "$INSTALL_HOME")
+        if [[ "$menu_options" == *"allusers"* ]]; then
+            SUDO_CMD_USER="sudo -u $INSTALL_OWNER -g $INSTALL_GROUP"
         fi
 
-        # Install scripts for each user home.
-        for install_home in $install_home_list; do
-            INSTALL_HOME=$install_home
-            INSTALL_OWNER=$($SUDO_CMD stat -c "%U" "$INSTALL_HOME")
-            INSTALL_GROUP=$($SUDO_CMD stat -c "%G" "$INSTALL_HOME")
-            if [[ "$menu_options" == *"allusers"* ]]; then
-                SUDO_CMD_USER="sudo -u $INSTALL_OWNER -g $INSTALL_GROUP"
+        # Install scripts for each detected file manager.
+        local file_manager=""
+        for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
+            if ! _command_exists "$file_manager"; then
+                continue
             fi
 
             # Map file manager to its respective scripts directory.
@@ -202,15 +202,20 @@ _main() {
             echo "(directory '$install_home', file manager '$file_manager'):"
             _step_install_scripts "$menu_options" cat_selected cat_dirs
             _step_install_menus
-            [[ "$menu_options" == *"shortcuts"* ]] && _step_install_accels
+            [[ "$menu_options" == *"accels"* ]] && _step_install_accels
+
+            # Reload file manager to apply changes, if selected.
+            if [[ "$USER" == "$INSTALL_OWNER" ]]; then
+                [[ "$menu_options" == *"reload"* ]] && _step_close_filemanager
+            fi
         done
 
-        # Reload file manager to apply changes, if selected.
-        [[ "$menu_options" == *"reload"* ]] && _step_close_filemanager
+        # Install application menu shortcuts.
+        echo
+        echo -n "Installing application menu shortcuts "
+        echo "(directory '$install_home'):"
+        [[ "$menu_options" == *"appmenu"* ]] && _step_install_application_shortcuts
     done
-
-    # Install application menu shortcuts.
-    [[ "$menu_options" == *"appmenu"* ]] && _step_install_application_shortcuts
 
     echo
     echo "Done!"
@@ -565,9 +570,6 @@ _step_install_application_shortcuts() {
     local filename_prefix="_script-"
     local menus_dir="$INSTALL_HOME/.local/share/applications"
 
-    echo
-    echo "Installing application menu shortcuts:"
-
     echo -e "$MSG_INFO Creating '.desktop' files..."
 
     # Remove previously installed '.desktop' files.
@@ -617,8 +619,8 @@ _step_install_application_shortcuts() {
     # Configure the "Scripts" application folder in GNOME.
     if _command_exists "gsettings" && $SUDO_CMD_USER gsettings list-schemas |
         grep --quiet '^org.gnome.desktop.app-folders$'; then
-        $SUDO_CMD_USER gsettings set org.gnome.desktop.app-folders folder-children "['Scripts']"
-        $SUDO_CMD_USER gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ name 'Scripts'
+        $SUDO_CMD_USER gsettings set org.gnome.desktop.app-folders folder-children "['Scripts']" 2>/dev/null
+        $SUDO_CMD_USER gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ name 'Scripts' 2>/dev/null
 
         local list_scripts=""
         list_scripts=$(
@@ -627,7 +629,7 @@ _step_install_application_shortcuts() {
                 -printf "'%f', " |
                 sed 's/, $//; s/^/[/' | sed 's/$/]/'
         )
-        $SUDO_CMD_USER gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ apps "$list_scripts"
+        $SUDO_CMD_USER gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ apps "$list_scripts" 2>/dev/null
     fi
 }
 
