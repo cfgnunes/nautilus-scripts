@@ -205,7 +205,7 @@ _main() {
             "unknown")
                 _check_exist_filemanager && continue
 
-                if [[ -z "${XDG_CURRENT_DESKTOP:-}" ]]; then
+                if [[ ! -v "DISPLAY" ]]; then
                     echo -e "$MSG_ERROR Could not find any compatible file managers!"
                     exit 1
                 fi
