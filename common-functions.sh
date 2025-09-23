@@ -1218,12 +1218,10 @@ _get_available_file_manager() {
         "thunar"
         "pcmanfm-qt"
         "pcmanfm"
-        "spacefm"
-        "ranger"
-        "vifm"
     )
 
-    # Validate if the detected default application is a known file manager.
+    # Step 1: Validate if the detected default application matches
+    # one of the known file managers.
     for app in "${apps[@]}"; do
         if [[ "$app_available" == *"$app" ]]; then
             printf "%s" "$app"
@@ -1231,7 +1229,8 @@ _get_available_file_manager() {
         fi
     done
 
-    # If no valid default found, search for the first installed file manager.
+    # Step 2: If no valid default found, check which file managers
+    # from the list are installed on the system and return the first match.
     for app in "${apps[@]}"; do
         if _command_exists "$app"; then
             printf "%s" "$app"
@@ -1239,7 +1238,14 @@ _get_available_file_manager() {
         fi
     done
 
-    # No file manager found.
+    # Step 3: If 'xdg-mime' returned something but it's not in the
+    # predefined list, return it anyway as a last attempt.
+    if [[ -n "$app_available" ]]; then
+        printf "%s" "$app_available"
+        return 0
+    fi
+
+    # Step 4: No file manager found. return error code 1.
     return 1
 }
 
