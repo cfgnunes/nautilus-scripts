@@ -85,18 +85,23 @@ File managers compatibility:
 
 Most scripts have been tested on the following GNU/Linux distributions:
 
-- Ubuntu 14.04, 16.04, 18.04, 20.04, 22.04, 24.04
-- Debian 12, 13 (Gnome and KDE)
-- Fedora Workstation 39, 40, 41, 42
-- EndeavourOS 2024, 2025
-- KDE neon 2024, 2025
-- Kubuntu 22.04, 24.04
-- Lubuntu 22.04, 24.04
-- Manjaro 23, 24, 25 (Gnome)
-- Mint 21, 22 (Cinnamon, MATE and Xfce)
-- openSUSE Tumbleweed 2024, 2025 (Gnome)
-- Xubuntu 23.10, 24.04
-- Zorin OS Core 17.1, 17.2
+- Debian/Ubuntu
+  - Ubuntu 14.04, 16.04, 18.04, 20.04, 22.04, 24.04
+  - Debian 12, 13 (Gnome and KDE)
+  - Kubuntu 22.04, 24.04
+  - Lubuntu 22.04, 24.04
+  - Xubuntu 23.10, 24.04
+  - KDE neon 2024, 2025
+  - Mint 21, 22 (Cinnamon, MATE and Xfce)
+  - Zorin OS Core 17.1, 17.2
+- Fedora
+  - Workstation 39, 40, 41, 42
+- Arch Linux
+  - CachyOS
+  - EndeavourOS
+  - Manjaro 23, 24, 25 (Gnome)
+- openSUSE
+  - Tumbleweed 2024, 2025 (Gnome)
 
 ## Handling large input lists
 
