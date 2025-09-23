@@ -16,14 +16,15 @@ COMPATIBLE_FILE_MANAGERS=(
     "dolphin"
     "nemo"
     "pcmanfm-qt"
-    "thunar")
+    "thunar"
+    "unknown")
 
 # Application shortcuts to be ignored during install.
 IGNORE_APPLICATION_SHORTCUTS=(
     ! -iname "Code Editor"
     ! -iname "Disk Usage Analyzer"
     ! -iname "Terminal"
-    ! -iname "Extract Here"
+    ! -iname "Extract here"
     ! -iname "Create hard link here"
     ! -iname "Create symbolic link here"
     ! -iname "Paste as hard link"
@@ -81,8 +82,6 @@ _main() {
     local menu_labels=()
     local menu_options=""
     local menu_selected=()
-
-    _check_exist_filemanager
 
     echo "Scripts installer."
     echo "Select the options (<SPACE> to check):"
@@ -177,35 +176,40 @@ _main() {
         # Install scripts for each detected file manager.
         local file_manager=""
         for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
-            if ! _command_exists "$file_manager"; then
+            FILE_MANAGER=$file_manager
+
+            if [[ "$FILE_MANAGER" != "unknown" ]] &&
+                ! _command_exists "$FILE_MANAGER"; then
                 continue
             fi
 
-            # Map file manager to its respective scripts directory.
-            case "$file_manager" in
+            case "$FILE_MANAGER" in
             "nautilus")
                 INSTALL_DIR="$INSTALL_HOME/.local/share/nautilus/scripts"
-                FILE_MANAGER="nautilus"
                 ;;
             "caja")
                 INSTALL_DIR="$INSTALL_HOME/.config/caja/scripts"
-                FILE_MANAGER="caja"
                 ;;
             "dolphin")
                 INSTALL_DIR="$INSTALL_HOME/.local/share/scripts"
-                FILE_MANAGER="dolphin"
                 ;;
             "nemo")
                 INSTALL_DIR="$INSTALL_HOME/.local/share/nemo/scripts"
-                FILE_MANAGER="nemo"
                 ;;
             "pcmanfm-qt")
                 INSTALL_DIR="$INSTALL_HOME/.local/share/scripts"
-                FILE_MANAGER="pcmanfm-qt"
                 ;;
             "thunar")
                 INSTALL_DIR="$INSTALL_HOME/.local/share/scripts"
-                FILE_MANAGER="thunar"
+                ;;
+            "unknown")
+                _check_exist_filemanager && continue
+
+                if [[ -z "${XDG_CURRENT_DESKTOP:-}" ]]; then
+                    echo -e "$MSG_ERROR Could not find any compatible file managers!"
+                    exit 1
+                fi
+                INSTALL_DIR="$INSTALL_HOME/.local/share/scripts"
                 ;;
             esac
 
@@ -213,8 +217,8 @@ _main() {
             echo
             echo "Installing the scripts:"
             echo -e "$MSG_INFO User: $INSTALL_OWNER"
-            echo -e "$MSG_INFO Directory: $install_home"
-            echo -e "$MSG_INFO File manager: $file_manager"
+            echo -e "$MSG_INFO Directory: $INSTALL_HOME"
+            echo -e "$MSG_INFO File manager: $FILE_MANAGER"
             _step_install_scripts "$menu_options" cat_selected cat_dirs
             _step_install_menus
             [[ "$menu_options" == *"accels"* ]] && _step_install_accels
@@ -238,20 +242,31 @@ _main() {
 
 _check_exist_filemanager() {
     # This function checks if at least one compatible file manager exists in
-    # the system.
+    # the system by iterating through a predefined list of supported file
+    # managers defined in '$COMPATIBLE_FILE_MANAGERS'.
+    #
+    # Returns:
+    #   - "0" (true): If at least one compatible file manager is found.
+    #   - "1" (false): If no compatible file manager is found.
 
     local file_manager=""
     for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
         if _command_exists "$file_manager"; then
-            return
+            return 0
         fi
     done
-    echo -e "$MSG_ERROR Could not find any compatible file managers!"
-    exit 1
+    return 1
 }
 
 _command_exists() {
-    # This function verifies whether a command exists in PATH.
+    # This function checks whether a given command is available on the system.
+    #
+    # Parameters:
+    #   - $1 (command_check): The name of the command to verify.
+    #
+    # Returns:
+    #   - "0" (true): If the command is available.
+    #   - "1" (false): If the command is not available.
 
     local command_check=$1
 
@@ -307,8 +322,10 @@ _step_install_dependencies() {
     _command_exists "file" || packages+="file "
 
     # Packages for dialogs.
-    if ! _command_exists "zenity" && ! _command_exists "kdialog"; then
-        packages+="zenity "
+    if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
+        if ! _command_exists "zenity" && ! _command_exists "kdialog"; then
+            packages+="zenity "
+        fi
     fi
 
     if _command_exists "guix"; then
@@ -322,14 +339,6 @@ _step_install_dependencies() {
             _command_exists "pgrep" || packages+="procps "
             _command_exists "pkexec" || packages+="policykit-1 "
 
-            if _command_exists "kdialog"; then
-                if ! dpkg -s "qtchooser" &>/dev/null; then
-                    packages+="qtchooser "
-                fi
-                if ! dpkg -s "qdbus-qt5" &>/dev/null; then
-                    packages+="qdbus-qt5 "
-                fi
-            fi
             if [[ -n "$packages" ]]; then
                 sudo apt-get update
                 sudo apt-get -y install $packages
@@ -579,7 +588,6 @@ _step_install_accels_thunar() {
 _step_install_application_shortcuts() {
     local filename=""
     local menu_file=""
-    local name_sub=""
     local name=""
     local script_relative=""
     local submenu=""
@@ -671,7 +679,6 @@ _step_install_menus_dolphin() {
     $SUDO_CMD_USER mkdir --parents "$menus_dir"
 
     local filename=""
-    local name_sub=""
     local name=""
     local script_relative=""
     local submenu=""
@@ -684,9 +691,6 @@ _step_install_menus_dolphin() {
         while IFS= read -r -d "" filename; do
             # shellcheck disable=SC2001
             script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
-            name_sub=${script_relative#*/}
-            # shellcheck disable=SC2001
-            name_sub=$(sed "s|/| - |g" <<<"$name_sub")
             name=${script_relative##*/}
             submenu=${script_relative%%/*}
 
@@ -728,7 +732,7 @@ _step_install_menus_dolphin() {
             par_max_items=$(_get_par_value "$filename" "par_max_items")
 
             local menu_file=""
-            menu_file="${menus_dir}/${submenu} - ${name}.desktop"
+            menu_file="${menus_dir}/${name}.desktop"
             {
                 printf "%s\n" "[Desktop Entry]"
                 printf "%s\n" "Type=Service"
@@ -748,7 +752,7 @@ _step_install_menus_dolphin() {
                 printf "%s\n" "X-KDE-Submenu=$submenu"
                 printf "\n"
                 printf "%s\n" "[Desktop Action scriptAction]"
-                printf "%s\n" "Name=$name_sub"
+                printf "%s\n" "Name=$name"
                 printf "%s\n" "Exec=bash \"$filename\" %F"
             } | $SUDO_CMD tee "$menu_file" >/dev/null
             $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menu_file"
@@ -816,7 +820,7 @@ _step_install_menus_pcmanfm() {
         while IFS= read -r -d "" filename; do
             name=${filename##*/}
 
-            # Set the mime requirements.
+            # Set the 'MIME' requirements.
             local par_recursive=""
             local par_select_mime=""
             par_recursive=$(_get_par_value "$filename" "par_recursive")
@@ -846,12 +850,6 @@ _step_install_menus_pcmanfm() {
             par_select_mime="$par_select_mime;"
             # shellcheck disable=SC2001
             par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
-
-            # Set the min/max files requirements.
-            local par_min_items=""
-            local par_max_items=""
-            par_min_items=$(_get_par_value "$filename" "par_min_items")
-            par_max_items=$(_get_par_value "$filename" "par_max_items")
 
             local menu_file=""
             menu_file="${menus_dir}/${name}.desktop"
@@ -972,7 +970,7 @@ _step_install_menus_thunar() {
                     printf "\t%s\n" "<directories/>"
                 fi
 
-                # Set the type requirements.
+                # Set the 'MIME' requirements.
                 local par_select_mime=""
                 par_select_mime=$(_get_par_value "$filename" "par_select_mime")
 
@@ -1009,13 +1007,13 @@ _step_close_filemanager() {
     # configurations. For most file managers, the `-q` option is used to quit
     # gracefully.
 
-    echo -e "$MSG_INFO Closing the file manager '$FILE_MANAGER' to reload its configurations..."
-
     case "$FILE_MANAGER" in
     "nautilus" | "caja" | "nemo" | "thunar")
+        echo -e "$MSG_INFO Closing the file manager '$FILE_MANAGER' to reload its configurations..."
         $FILE_MANAGER -q &>/dev/null &
         ;;
     "pcmanfm-qt")
+        echo -e "$MSG_INFO Closing the file manager '$FILE_MANAGER' to reload its configurations..."
         # FIXME: Restore desktop after kill PCManFM-Qt.
         killall "$FILE_MANAGER" &>/dev/null &
         ;;
