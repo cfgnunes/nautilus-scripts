@@ -357,6 +357,11 @@ _step_install_dependencies() {
             _command_exists "pgrep" || packages+="procps-ng "
             _command_exists "pkexec" || packages+="polkit "
 
+            # FIXME: Force update GTK4 packages on Arch Linux.
+            if [[ "$packages" == *"zenity"* ]]; then
+                packages+="gtk4 zlib glib2 "
+            fi
+
             if [[ -n "$packages" ]]; then
                 sudo pacman -Syy
                 sudo pacman --noconfirm -S $packages
@@ -631,9 +636,9 @@ _step_install_application_shortcuts() {
                 printf "%s\n" "Categories=Scripts;"
                 printf "%s\n" "Exec=\"$filename\" %F"
                 printf "%s\n" "Name=$name"
-                printf "%s\n" "GenericName=$submenu - $name"
+                #printf "%s\n" "GenericName=$submenu - $name"
                 #printf "%s\n" "Comment=$submenu"
-                #printf "%s\n" "Icon="
+                printf "%s\n" "Icon=applications-system"
                 printf "%s\n" "Terminal=false"
                 printf "%s\n" "Type=Application"
             } | $SUDO_CMD tee "$menu_file" >/dev/null
