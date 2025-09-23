@@ -24,7 +24,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 - **Non-destructive output**: Never overwrites the input file; the output is distinct.
 - **Log file**: Produces an `Errors.log` file when a task finishes with an error.
 - **Direct usage**: Direct usage without requiring input parameters.
-- **Keyboard shortcuts**: Provides keyboard shortcuts for some scripts.
+- **Keyboard accelerators**: Provides keyboard shortcuts for some scripts.
 - **File manager compatibility**: Designed for major file managers like GNOME Files (Nautilus), Dolphin, Caja, Nemo, PCManFM-Qt and Thunar.
 - **Distro compatibility**: Designed to work on major GNU/Linux distributions, such as Ubuntu, Mint, Debian, Fedora, and Manjaro.
 - **Easy adaptation**: Scripts can be easily copied and adapted for other purposes.
@@ -34,7 +34,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 
 **Design philosophy:** Fewer clicks, dependencies, and verbose notifications, with a simple and intuitive directory structure.
 
-## Keyboard Shortcuts
+## Keyboard accelerators
 
 | Key                 | Action                            |
 | ------------------- | --------------------------------- |
@@ -74,14 +74,14 @@ While numerous scripts are available for file managers on the web, many suffer f
 
 File managers compatibility:
 
-| File manager           | Environment | Menu integration | Keyboard shortcuts | Menu "Accessed recently" |
-| ---------------------- | ----------- | ---------------- | ------------------ | ------------------------ |
-| GNOME Files (Nautilus) | GNOME       | 🟢                | 🟢                  | 🟢                        |
-| Caja                   | MATE        | 🟢                | 🟢                  | 🟢                        |
-| Nemo                   | Cinnamon    | 🟢                | 🟢                  | 🟢                        |
-| Thunar                 | Xfce        | 🟢                | 🟢                  | 🔴                        |
-| Dolphin                | KDE Plasma  | 🟢                | 🔴                  | 🔴                        |
-| PCManFM-Qt             | LXQt        | 🟢                | 🔴                  | 🔴                        |
+| File manager           | Environment | Menu integration | Application shortcuts | Keyboard accelerators | Menu "Accessed recently" |
+| ---------------------- | ----------- | ---------------- | --------------------- | --------------------- | ------------------------ |
+| GNOME Files (Nautilus) | GNOME       | 🟢                | 🟢                     | 🟢                     | 🟢                        |
+| Caja                   | MATE        | 🟢                | 🟢                     | 🟢                     | 🟢                        |
+| Nemo                   | Cinnamon    | 🟢                | 🟢                     | 🟢                     | 🟢                        |
+| Thunar                 | Xfce        | 🟢                | 🟢                     | 🟢                     | 🔴                        |
+| Dolphin                | KDE Plasma  | 🟢                | 🟢                     | 🔴                     | 🔴                        |
+| PCManFM-Qt             | LXQt        | 🟢                | 🟢                     | 🔴                     | 🔴                        |
 
 Most scripts have been tested on the following GNU/Linux distributions:
 
@@ -97,7 +97,7 @@ Most scripts have been tested on the following GNU/Linux distributions:
 - Xubuntu 23.10, 24.04
 - Zorin OS Core 17.1, 17.2
 
-## Handling Large Input Lists
+## Handling large input lists
 
 This project includes a functionality specifically designed to manage scenarios where input lists are too large for processing (e.g., 100,000 input files). Excessively large input lists can lead to errors like:
 

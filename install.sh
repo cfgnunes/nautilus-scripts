@@ -18,7 +18,7 @@ COMPATIBLE_FILE_MANAGERS=(
     "pcmanfm-qt"
     "thunar")
 
-# Application desktop shortcuts to be ignored during install.
+# Application shortcuts to be ignored during install.
 IGNORE_APPLICATION_SHORTCUTS=(
     ! -iname "Code Editor"
     ! -iname "Disk Usage Analyzer"
