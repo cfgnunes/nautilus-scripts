@@ -149,7 +149,7 @@ _check_dependencies() {
     [[ -z "$dependencies" ]] && return
 
     # Get the name of the available package manager.
-    pkg_manager_available=$(_pkg_get_available_package_manager)
+    pkg_manager_available=$(_get_available_package_manager)
     if [[ -z "$pkg_manager_available" ]]; then
         _display_error_box "Could not find a package manager!"
         _exit_script
@@ -1196,6 +1196,70 @@ _gdbus_notify() {
         "[]" "{\"urgency\": <$urgency>}" 5000 &>/dev/null
 }
 
+_get_available_file_manager() {
+    # This function detects the default or an available file manager on the
+    # system.
+    #
+    # Behavior:
+    #   1. Attempts to get the system's default file manager using
+    #      '_xdg_get_default_app' for the 'inode/directory' MIME type.
+    #   2. If none is found, iterates through a predefined list of common file
+    #      managers and returns the first one that is installed.
+
+    local app_available=""
+    app_available=$(_xdg_get_default_app "inode/directory" "true")
+
+    if [[ -n "$app_available" ]]; then
+        printf "%s" "$app_available"
+        return 0
+    fi
+
+    # Fallback: check a list of known file managers.
+    local apps=(
+        "nautilus"
+        "dolphin"
+        "nemo"
+        "caja"
+        "thunar"
+        "pcmanfm-qt"
+        "pcmanfm"
+    )
+
+    local app=""
+    for app in "${apps[@]}"; do
+        if _command_exists "$app"; then
+            printf "%s" "$app"
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+_get_available_package_manager() {
+    # This function detects and returns the name of the package manager
+    # available on the system.
+
+    local apps=(
+        "apt-get"
+        "dnf"
+        "pacman"
+        "zypper"
+        "nix"
+        "guix"
+    )
+
+    local app=""
+    for app in "${apps[@]}"; do
+        if _command_exists "$app"; then
+            printf "%s" "$app"
+            return 0
+        fi
+    done
+
+    return 1
+}
+
 _get_clipboard_data() {
     # This function retrieves the current content of the clipboard, adapting
     # the method according to the session type.
@@ -1296,12 +1360,12 @@ _get_filenames_filemanager() {
     local input_files=""
 
     # Try to use the information provided by the file manager.
-    if [[ -v "CAJA_SCRIPT_SELECTED_URIS" ]]; then
-        input_files=$CAJA_SCRIPT_SELECTED_URIS
+    if [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]]; then
+        input_files=$NAUTILUS_SCRIPT_SELECTED_URIS
     elif [[ -v "NEMO_SCRIPT_SELECTED_URIS" ]]; then
         input_files=$NEMO_SCRIPT_SELECTED_URIS
-    elif [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]]; then
-        input_files=$NAUTILUS_SCRIPT_SELECTED_URIS
+    elif [[ -v "CAJA_SCRIPT_SELECTED_URIS" ]]; then
+        input_files=$CAJA_SCRIPT_SELECTED_URIS
     fi
 
     if [[ -n "$input_files" ]]; then
@@ -1802,12 +1866,12 @@ _get_working_directory() {
     local working_dir=""
 
     # Try to use the information provided by the file manager.
-    if [[ -v "CAJA_SCRIPT_CURRENT_URI" ]]; then
-        working_dir=$CAJA_SCRIPT_CURRENT_URI
+    if [[ -v "NAUTILUS_SCRIPT_CURRENT_URI" ]]; then
+        working_dir=$NAUTILUS_SCRIPT_CURRENT_URI
     elif [[ -v "NEMO_SCRIPT_CURRENT_URI" ]]; then
         working_dir=$NEMO_SCRIPT_CURRENT_URI
-    elif [[ -v "NAUTILUS_SCRIPT_CURRENT_URI" ]]; then
-        working_dir=$NAUTILUS_SCRIPT_CURRENT_URI
+    elif [[ -v "CAJA_SCRIPT_CURRENT_URI" ]]; then
+        working_dir=$CAJA_SCRIPT_CURRENT_URI
     fi
 
     # If the working directory is a URI, decode it.
@@ -2119,24 +2183,8 @@ _open_items_locations() {
         return
     fi
 
-    # Detect the currently running file manager.
     local file_manager=""
-    if [[ -v "CAJA_SCRIPT_SELECTED_URIS" ]]; then
-        file_manager="caja"
-    elif [[ -v "NEMO_SCRIPT_SELECTED_URIS" ]]; then
-        file_manager="nemo"
-    elif [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]]; then
-        file_manager="nautilus"
-    else
-        file_manager=$(pgrep -o -l \
-            "caja|dolphin|nautilus|nemo|pcmanfm|pcmanfm-qt|thunar" |
-            cut -f 2 -d " ")
-
-        # If no file manager is detected, fall back to the system default.
-        if [[ -z "$file_manager" ]]; then
-            file_manager=$(_xdg_get_default_app "inode/directory")
-        fi
-    fi
+    file_manager=$(_get_available_file_manager)
 
     # Restore absolute paths for items if relative paths are used.
     local working_dir=""
@@ -2213,35 +2261,6 @@ _open_urls() {
 
         xdg-open "$url" &>/dev/null &
     done
-}
-
-_pkg_get_available_package_manager() {
-    # This function detects and returns the name of the package manager
-    # available on the system.
-    #
-    # Output:
-    #   - Prints the name of the detected package manager. Possible values are:
-    #       - "apt-get" : For Debian/Ubuntu systems.
-    #       - "dnf"     : For Fedora/RHEL systems.
-    #       - "pacman"  : For Arch Linux systems.
-    #       - "zypper"  : For openSUSE systems.
-    #       - "nix"     : For Nix-based systems.
-    #       - "guix"    : For GNU Guix systems.
-    #   - If no supported package manager is found, the output is an empty
-    #     string.
-
-    local pkg_manager=""
-
-    # Check for an installed package manager.
-    local candidate=""
-    for candidate in apt-get dnf pacman zypper nix guix; do
-        if _command_exists "$candidate"; then
-            pkg_manager=$candidate
-            break
-        fi
-    done
-
-    printf "%s" "$pkg_manager"
 }
 
 _pkg_install_packages() {
@@ -3077,27 +3096,60 @@ _xdg_get_default_app() {
     # specific MIME type on a Linux system using the 'xdg-mime' command.
     #
     # Parameters:
-    #   - $1 (mime): The MIME type (e.g., "application/pdf", "image/png") for
+    #   - $1 (mime): The MIME type (e.g., 'application/pdf', 'image/png') for
     #     which to find the default application.
+    #   - $2 (quiet, optional): If set to 'true', the function will return 1 on
+    #     errors without displaying any dialog or exiting. Default is 'false'.
     #
     # Example:
-    #   - Input: "application/pdf"
+    #   - Input: 'application/pdf'
     #   - Output: The function prints the default application's executable for
     #     opening PDF files (e.g., 'evince' or 'okular').
 
     local mime=$1
+    local quiet=${2:-"false"}
     local desktop_file=""
+    local desktop_path=""
     local default_app=""
 
+    # Get '.desktop' file from xdg-mime.
     desktop_file=$(xdg-mime query default "$mime" 2>/dev/null)
+    if [[ -z "$desktop_file" ]]; then
+        if [[ "$quiet" == "true" ]]; then
+            return 1
+        else
+            _display_error_box \
+                "No default application set for MIME type '$mime'"
+            _exit_script
+        fi
+    fi
 
-    default_app=$(grep -m1 "^Exec" "/usr/share/applications/$desktop_file" |
-        sed "s|Exec=||g" | cut -d " " -f 1)
+    # Search possible locations for '.desktop' file
+    local search_paths=(
+        "/usr/local/share/applications"
+        "/usr/share/applications"
+    )
+
+    for path in "${search_paths[@]}"; do
+        if [[ -f "$path/$desktop_file" ]]; then
+            desktop_path="$path/$desktop_file"
+            break
+        fi
+    done
+
+    # Extract Exec line, normalize to get only the binary
+    default_app=$(grep -m1 "^Exec=" "$desktop_path" |
+        sed "s|Exec=||" |
+        cut -d " " -f 1)
 
     if [[ -z "$default_app" ]]; then
-        _display_error_box \
-            "Could not find the default application to open '$mime' files!"
-        _exit_script
+        if [[ "$quiet" == "true" ]]; then
+            return 1
+        else
+            _display_error_box \
+                "Could not extract executable from '$desktop_path'"
+            _exit_script
+        fi
     fi
 
     printf "%s" "$default_app"
