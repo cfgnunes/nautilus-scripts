@@ -574,7 +574,7 @@ _step_install_application_shortcuts() {
     local file=""
     for file in "$menus_dir/$filename_prefix"*.desktop; do
         [[ -e "$file" ]] || continue
-        _delete_items "$file"
+        $SUDO_CMD rm -f "$file"
     done
 
     $SUDO_CMD_USER mkdir --parents "$menus_dir"
@@ -615,19 +615,19 @@ _step_install_application_shortcuts() {
         done
 
     # Configure the "Scripts" application folder in GNOME.
-    if _command_exists "gsettings" && gsettings list-schemas |
+    if _command_exists "gsettings" && $SUDO_CMD_USER gsettings list-schemas |
         grep --quiet '^org.gnome.desktop.app-folders$'; then
-        gsettings set org.gnome.desktop.app-folders folder-children "['Scripts']"
-        gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ name 'Scripts'
+        $SUDO_CMD_USER gsettings set org.gnome.desktop.app-folders folder-children "['Scripts']"
+        $SUDO_CMD_USER gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ name 'Scripts'
 
         local list_scripts=""
         list_scripts=$(
-            find "$HOME/.local/share/applications" \
+            $SUDO_CMD find "$HOME/.local/share/applications" \
                 -maxdepth 1 -type f -name "$filename_prefix*.desktop" \
                 -printf "'%f', " |
                 sed 's/, $//; s/^/[/' | sed 's/$/]/'
         )
-        gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ apps "$list_scripts"
+        $SUDO_CMD_USER gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ apps "$list_scripts"
     fi
 }
 
