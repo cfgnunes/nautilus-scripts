@@ -578,6 +578,7 @@ _step_install_accels_thunar() {
 
 _step_install_application_shortcuts() {
     local filename=""
+    local menu_file=""
     local name_sub=""
     local name=""
     local script_relative=""
@@ -610,10 +611,10 @@ _step_install_application_shortcuts() {
             # shellcheck disable=SC2001
             submenu=$(sed "s|/| - |g" <<<"$submenu")
 
-            local menu_file=""
             menu_file=$name
             menu_file=$(tr -cd "[:alnum:]- " <<<"$menu_file")
             menu_file=$(tr " " "-" <<<"$menu_file")
+            menu_file=$(tr -s "-" <<<"$menu_file")
             menu_file=${menu_file,,}
             menu_file="${menus_dir}/$filename_prefix$menu_file.desktop"
 
