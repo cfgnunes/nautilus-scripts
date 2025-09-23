@@ -638,7 +638,7 @@ _step_install_application_shortcuts() {
                 printf "%s\n" "Name=$name"
                 #printf "%s\n" "GenericName=$submenu - $name"
                 #printf "%s\n" "Comment=$submenu"
-                printf "%s\n" "Icon=applications-system"
+                printf "%s\n" "Icon=application-x-executable"
                 printf "%s\n" "Terminal=false"
                 printf "%s\n" "Type=Application"
             } | $SUDO_CMD tee "$menu_file" >/dev/null
