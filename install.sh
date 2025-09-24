@@ -602,11 +602,7 @@ _step_install_application_shortcuts() {
     echo -e "$MSG_INFO Creating '.desktop' files..."
 
     # Remove previously installed '.desktop' files.
-    local file=""
-    for file in "$menus_dir/$filename_prefix"*.desktop; do
-        [[ -e "$file" ]] || continue
-        $SUDO_CMD rm -f "$file"
-    done
+    $SUDO_CMD rm -f -- "$menus_dir/$filename_prefix"*.desktop
 
     $SUDO_CMD_USER mkdir --parents "$menus_dir"
 
@@ -647,19 +643,31 @@ _step_install_application_shortcuts() {
         done
 
     # Configure the "Scripts" application folder in GNOME.
-    if _command_exists "gsettings" && $SUDO_CMD_USER gsettings list-schemas |
+    if _command_exists "gsettings" && gsettings list-schemas |
         grep --quiet '^org.gnome.desktop.app-folders$'; then
-        $SUDO_CMD_USER gsettings set org.gnome.desktop.app-folders folder-children "['Scripts']" 2>/dev/null
-        $SUDO_CMD_USER gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ name 'Scripts' 2>/dev/null
+
+        local gsettings_user="gsettings"
+        if _command_exists "machinectl" && [[ "$USER" != "$INSTALL_OWNER" ]]; then
+            gsettings_user="sudo machinectl --quiet shell $INSTALL_OWNER@ $(which "gsettings")"
+        fi
+
+        $gsettings_user set \
+            org.gnome.desktop.app-folders folder-children \
+            "['Scripts']" &>/dev/null
+        $gsettings_user set \
+            org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ \
+            name 'Scripts' &>/dev/null
 
         local list_scripts=""
         list_scripts=$(
-            $SUDO_CMD find "$HOME/.local/share/applications" \
+            $SUDO_CMD find "$INSTALL_HOME/.local/share/applications" \
                 -maxdepth 1 -type f -name "$filename_prefix*.desktop" \
                 -printf "'%f', " |
                 sed 's/, $//; s/^/[/' | sed 's/$/]/'
         )
-        $SUDO_CMD_USER gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ apps "$list_scripts" 2>/dev/null
+        $gsettings_user set \
+            org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ \
+            apps "$list_scripts" &>/dev/null
     fi
 }
 
