@@ -8,6 +8,8 @@ set -u
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
+APP_SHORTCUT_PREFIX="_script-"
+
 # List of supported file managers. The script will only run if at least one is
 # available.
 COMPATIBLE_FILE_MANAGERS=(
@@ -47,6 +49,7 @@ MSG_INFO="[\\e[32mINFO\\e[0m]"
 
 # Mark constants as read-only to prevent accidental modification.
 readonly \
+    APP_SHORTCUT_PREFIX \
     COMPATIBLE_FILE_MANAGERS \
     IGNORE_FIND_PATHS \
     MSG_ERROR \
@@ -233,7 +236,11 @@ _main() {
         echo
         echo "Installing application menu shortcuts:"
         echo -e "$MSG_INFO User: $INSTALL_OWNER"
-        [[ "$menu_options" == *"appmenu"* ]] && _step_install_application_shortcuts
+
+        if [[ "$menu_options" == *"appmenu"* ]]; then
+            _step_install_application_shortcuts
+            _step_create_gnome_application_folder
+        fi
     done
 
     echo
@@ -596,13 +603,12 @@ _step_install_application_shortcuts() {
     local name=""
     local script_relative=""
     local submenu=""
-    local filename_prefix="_script-"
     local menus_dir="$INSTALL_HOME/.local/share/applications"
 
     echo -e "$MSG_INFO Creating '.desktop' files..."
 
     # Remove previously installed '.desktop' files.
-    $SUDO_CMD rm -f -- "$menus_dir/$filename_prefix"*.desktop
+    $SUDO_CMD rm -f -- "$menus_dir/$APP_SHORTCUT_PREFIX"*.desktop
 
     $SUDO_CMD_USER mkdir --parents "$menus_dir"
 
@@ -625,7 +631,7 @@ _step_install_application_shortcuts() {
             menu_file=$(tr " " "-" <<<"$menu_file")
             menu_file=$(tr -s "-" <<<"$menu_file")
             menu_file=${menu_file,,}
-            menu_file="${menus_dir}/$filename_prefix$menu_file.desktop"
+            menu_file="${menus_dir}/$APP_SHORTCUT_PREFIX$menu_file.desktop"
 
             {
                 printf "%s\n" "[Desktop Entry]"
@@ -641,34 +647,6 @@ _step_install_application_shortcuts() {
             $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menu_file"
             $SUDO_CMD chmod +x "$menu_file"
         done
-
-    # Configure the "Scripts" application folder in GNOME.
-    if _command_exists "gsettings" && gsettings list-schemas |
-        grep --quiet '^org.gnome.desktop.app-folders$'; then
-
-        local gsettings_user="gsettings"
-        if _command_exists "machinectl" && [[ "$USER" != "$INSTALL_OWNER" ]]; then
-            gsettings_user="sudo machinectl --quiet shell $INSTALL_OWNER@ $(which "gsettings")"
-        fi
-
-        $gsettings_user set \
-            org.gnome.desktop.app-folders folder-children \
-            "['Scripts']" &>/dev/null
-        $gsettings_user set \
-            org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ \
-            name 'Scripts' &>/dev/null
-
-        local list_scripts=""
-        list_scripts=$(
-            $SUDO_CMD find "$INSTALL_HOME/.local/share/applications" \
-                -maxdepth 1 -type f -name "$filename_prefix*.desktop" \
-                -printf "'%f', " |
-                sed 's/, $//; s/^/[/' | sed 's/$/]/'
-        )
-        $gsettings_user set \
-            org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Scripts/ \
-            apps "$list_scripts" &>/dev/null
-    fi
 }
 
 _step_install_menus() {
@@ -1031,6 +1009,45 @@ _step_close_filemanager() {
         killall "$FILE_MANAGER" &>/dev/null &
         ;;
     esac
+}
+
+_step_create_gnome_application_folder() {
+    local folder_name="Scripts"
+
+    # Configure the "Scripts" application folder in GNOME.
+    if _command_exists "gsettings" && gsettings list-schemas |
+        grep --quiet '^org.gnome.desktop.app-folders$'; then
+
+        echo -e "$MSG_INFO Creating '$folder_name' GNOME application folder..."
+
+        local gsettings_user="gsettings"
+        if _command_exists "machinectl" && [[ "$USER" != "$INSTALL_OWNER" ]]; then
+            gsettings_user="sudo machinectl --quiet shell $INSTALL_OWNER@ $(which "gsettings")"
+        fi
+
+        local current_folders=""
+        current_folders=$($gsettings_user get org.gnome.desktop.app-folders folder-children)
+        if [[ "$current_folders" != *"'$folder_name'"* ]]; then
+            # shellcheck disable=SC2001
+            $gsettings_user set \
+                org.gnome.desktop.app-folders folder-children "$(sed "s/]/,'$folder_name']/" <<<"$current_folders")" &>/dev/null
+        fi
+
+        $gsettings_user set \
+            org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
+            name "$folder_name" &>/dev/null
+
+        local list_scripts=""
+        list_scripts=$(
+            $SUDO_CMD find "$INSTALL_HOME/.local/share/applications" \
+                -maxdepth 1 -type f -name "$APP_SHORTCUT_PREFIX*.desktop" \
+                -printf "'%f', " |
+                sed 's/, $//; s/^/[/' | sed 's/$/]/'
+        )
+        $gsettings_user set \
+            org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
+            apps "$list_scripts" &>/dev/null
+    fi
 }
 
 _get_user_homes() {
