@@ -134,7 +134,7 @@ _check_dependencies() {
 
     local dependencies=$1
     local packages_to_install=""
-    local pkg_manager_available=""
+    local available_pkg_manager=""
 
     [[ -z "$dependencies" ]] && return
 
@@ -149,8 +149,16 @@ _check_dependencies() {
     [[ -z "$dependencies" ]] && return
 
     # Get the name of the available package manager.
-    pkg_manager_available=$(_get_available_package_manager)
-    if [[ -z "$pkg_manager_available" ]]; then
+    local apps=(
+        "apt-get"
+        "dnf"
+        "pacman"
+        "zypper"
+        "nix"
+        "guix"
+    )
+    available_pkg_manager=$(_get_available_app "apps")
+    if [[ -z "$available_pkg_manager" ]]; then
         _display_error_box "Could not find a package manager!"
         _exit_script
     fi
@@ -183,14 +191,14 @@ _check_dependencies() {
         # Ignore installing the dependency if the installed
         # package managers differ.
         if [[ -n "$pkg_manager" ]] &&
-            [[ "$pkg_manager_available" != "$pkg_manager" ]]; then
+            [[ "$available_pkg_manager" != "$pkg_manager" ]]; then
             continue
         fi
 
         # Ignore installing the dependency if the package is already installed
         # (packages that do not have a command).
         if [[ -n "$package" ]] && [[ -z "$command" ]] &&
-            _pkg_is_package_installed "$pkg_manager_available" "$package"; then
+            _pkg_is_package_installed "$available_pkg_manager" "$package"; then
             continue
         fi
 
@@ -214,7 +222,7 @@ _check_dependencies() {
         message+="Would you like to install them?"
         if _display_question_box "$message"; then
             _pkg_install_packages \
-                "$pkg_manager_available" "${packages_to_install/ /}" \
+                "$available_pkg_manager" "${packages_to_install/ /}" \
                 "$post_install"
         else
             _exit_script
@@ -1196,6 +1204,28 @@ _gdbus_notify() {
         "[]" "{\"urgency\": <$urgency>}" 5000 &>/dev/null
 }
 
+_get_available_app() {
+    # This function iterates through a list of applications and returns the
+    # first one that is available. It relies on the helper function
+    # '_command_exists' to check for the existence of each command.
+    #
+    # Parameters:
+    #   - $1 (_apps): An array of application names to check, in order of
+    #     preference.
+
+    local -n _apps=$1
+
+    local app=""
+    for app in "${_apps[@]}"; do
+        if _command_exists "$app"; then
+            printf "%s" "$app"
+            return 0
+        fi
+    done
+
+    return 1
+}
+
 _get_available_file_manager() {
     # This function detects the default or an available file manager on the
     # system.
@@ -1207,8 +1237,9 @@ _get_available_file_manager() {
     #      managers and returns the first one that is installed.
 
     local app=""
-    local app_available=""
-    app_available=$(_xdg_get_default_app "inode/directory" "true")
+    local available_app=""
+    local default_app=""
+    default_app=$(_xdg_get_default_app "inode/directory" "true")
 
     local apps=(
         "nautilus"
@@ -1223,7 +1254,7 @@ _get_available_file_manager() {
     # Step 1: Validate if the detected default application matches one of the
     # known file managers.
     for app in "${apps[@]}"; do
-        if [[ "$app_available" == *"$app" ]]; then
+        if [[ "$default_app" == *"$app" ]]; then
             printf "%s" "$app"
             return 0
         fi
@@ -1231,45 +1262,20 @@ _get_available_file_manager() {
 
     # Step 2: If no valid default found, check which file managers from the
     # list are installed on the system and return the first match.
-    for app in "${apps[@]}"; do
-        if _command_exists "$app"; then
-            printf "%s" "$app"
-            return 0
-        fi
-    done
+    available_app=$(_get_available_app "apps")
+    if [[ -n "$available_app" ]]; then
+        printf "%s" "$available_app"
+        return 0
+    fi
 
     # Step 3: If 'xdg-mime' returned something but it's not in the predefined
     # list, return it anyway as a last attempt.
-    if [[ -n "$app_available" ]]; then
-        printf "%s" "$app_available"
+    if [[ -n "$default_app" ]]; then
+        printf "%s" "$default_app"
         return 0
     fi
 
     # Step 4: No file manager found. return error code 1.
-    return 1
-}
-
-_get_available_package_manager() {
-    # This function detects and returns the name of the package manager
-    # available on the system.
-
-    local apps=(
-        "apt-get"
-        "dnf"
-        "pacman"
-        "zypper"
-        "nix"
-        "guix"
-    )
-
-    local app=""
-    for app in "${apps[@]}"; do
-        if _command_exists "$app"; then
-            printf "%s" "$app"
-            return 0
-        fi
-    done
-
     return 1
 }
 

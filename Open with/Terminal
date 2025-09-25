@@ -19,42 +19,37 @@ _main() {
 
 _open_app() {
     local input_files=$1
+    local available_app=""
     local apps=(
-        "alacritty"
-        "kitty"
-        "terminology"
-        "terminator"
-        "kgx"
         "ptyxis"
         "gnome-terminal"
+        "kgx"
         "konsole"
-        "mate-terminal"
         "xfce4-terminal"
+        "mate-terminal"
+        "xterm"
+        "kitty"
+        "alacritty"
+        "terminator"
         "qterminal"
         "deepin-terminal"
-        "termit"
+        "terminology"
         "uxterm"
-        "xterm"
+        "termit"
     )
+    available_app=$(_get_available_app "apps")
 
     # Iterate over each input file (directory).
     local input_file=""
     for input_file in $input_files; do
         _directory_push "$input_file" 2>/dev/null || continue
 
-        # Try each app in the list.
-        local app=""
-        for app in "${apps[@]}"; do
-            if _command_exists "$app"; then
-                # Special handling for some apps.
-                if [[ "$app" == "ptyxis" ]]; then
-                    $app --new-window &
-                else
-                    $app &
-                fi
-                break
-            fi
-        done
+        # Special handling for some apps.
+        if [[ "$available_app" == "ptyxis" ]]; then
+            $available_app --new-window &
+        else
+            $available_app &
+        fi
 
         _directory_pop || continue
     done
