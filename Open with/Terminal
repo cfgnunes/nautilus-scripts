@@ -42,7 +42,7 @@ _open_app() {
     # Iterate over each input file (directory).
     local input_file=""
     for input_file in $input_files; do
-        _directory_push "$input_file" 2>/dev/null || continue
+        _directory_push "$input_file" || continue
 
         # Special handling for some apps.
         if [[ "$available_app" == "ptyxis" ]]; then

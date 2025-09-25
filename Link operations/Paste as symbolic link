@@ -28,7 +28,7 @@ _main_task() {
         return 1
     fi
 
-    _directory_push "$output_dir" 2>/dev/null || return 1
+    _directory_push "$output_dir" || return 1
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve")
