@@ -223,6 +223,7 @@ _compare_imagemagick() {
 
     # Determine the default image viewer to display the visual diff.
     local image_viewer=""
+    _check_dependencies "command=xdg-open; package=xdg-utils"
     image_viewer=$(_xdg_get_default_app "image/jpeg")
 
     # Open the visual diff with the default image viewer.
