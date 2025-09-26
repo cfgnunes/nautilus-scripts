@@ -16,7 +16,7 @@ _main() {
 
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(find $input_files \
+    std_output=$(find -L $input_files \
         ! -path "$IGNORE_FIND_PATH" \
         \( \
         -type d -iname "__pycache__" -o \
