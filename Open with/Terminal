@@ -42,16 +42,14 @@ _open_app() {
     # Iterate over each input file (directory).
     local input_file=""
     for input_file in $input_files; do
-        _directory_push "$input_file" || continue
-
         # Special handling for some apps.
         if [[ "$available_app" == "ptyxis" ]]; then
-            $available_app --new-window &
+            $available_app --new-window --working-directory "$input_file" &
         else
+            _directory_push "$input_file" || continue
             $available_app &
+            _directory_pop || continue
         fi
-
-        _directory_pop || continue
     done
 }
 
