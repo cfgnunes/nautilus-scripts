@@ -32,6 +32,7 @@ TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
 TEMP_DIR_TASK="$TEMP_DIR/task"
 
 # Temporary files.
+TEMP_CONTROL_BATCH_ENABLED="$TEMP_DIR/control_batch_enabled"
 TEMP_CONTROL_DISPLAY_LOCKED="$TEMP_DIR/control_display_locked"
 TEMP_CONTROL_WAIT_BOX="$TEMP_DIR/control_wait_box"
 TEMP_CONTROL_WAIT_BOX_FIFO="$TEMP_DIR/control_wait_box_fifo"
@@ -1513,7 +1514,7 @@ _get_files() {
         if ! _display_question_box "$batch_message"; then
             _exit_script
         fi
-
+        touch -- "$TEMP_CONTROL_BATCH_ENABLED"
         find_parameters="-mindepth 1 -maxdepth 1"
     elif [[ "$par_recursive" == "false" ]]; then
         # Default non-recursive mode: process only explicitly selected items.
@@ -1679,7 +1680,8 @@ _get_output_dir() {
         _exit_script
     fi
 
-    if [[ "$par_use_same_dir" == "true" ]]; then
+    if [[ "$par_use_same_dir" == "true" ]] &&
+        [[ ! -f "$TEMP_CONTROL_BATCH_ENABLED" ]]; then
         printf "%s" "$output_dir"
         return
     fi
