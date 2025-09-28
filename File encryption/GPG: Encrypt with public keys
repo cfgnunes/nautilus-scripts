@@ -17,7 +17,6 @@ _main() {
         command=gpg; pkg_manager=zypper; package=gpg2"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file")
-    output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     local users=""
     users=$(gpg --list-public-keys --with-colons 2>/dev/null |
@@ -80,6 +79,9 @@ _main() {
         _display_error_box "Failed: you must select at least one user!"
         _exit_script
     fi
+
+    # Check output directory only after displaying dialog boxes to the user.
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
