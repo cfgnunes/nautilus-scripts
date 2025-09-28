@@ -33,7 +33,7 @@ _main_task() {
     local transpose="transpose=1"
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(rotated)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(90 deg)'")
     std_output=$(ffmpeg -hide_banner -y -i "$input_file" -vf "$transpose" "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
