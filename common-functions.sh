@@ -2567,6 +2567,7 @@ _run_task_parallel() {
         GUI_INFO_WIDTH \
         IGNORE_FIND_PATH \
         INPUT_FILES \
+        TEMP_CONTROL_DISPLAY_LOCKED \
         TEMP_DATA_TASK \
         TEMP_DATA_TEXT_BOX \
         TEMP_DIR_ITEMS_TO_REMOVE \
@@ -2582,6 +2583,8 @@ _run_task_parallel() {
         _convert_text_to_delimited_string \
         _directory_pop \
         _directory_push \
+        _display_lock \
+        _display_unlock \
         _display_password_box \
         _exit_script \
         _get_file_encoding \
