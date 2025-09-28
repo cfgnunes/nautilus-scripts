@@ -23,16 +23,20 @@ GUI_INFO_WIDTH=400             # Width of the GUI small dialog boxes.
 IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
 PREFIX_ERROR_LOG_FILE="Errors" # Name of 'error' directory.
 PREFIX_OUTPUT_DIR="Output"     # Name of 'output' directory.
-TEMP_DIR=$(mktemp --directory) # Temp directories for use in scripts.
+
+# Temporary directories.
+TEMP_DIR=$(mktemp --directory)
 TEMP_DIR_ITEMS_TO_REMOVE="$TEMP_DIR/items_to_remove"
 TEMP_DIR_LOGS="$TEMP_DIR/logs"
 TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
 TEMP_DIR_TASK="$TEMP_DIR/task"
-TEMP_DISPLAY_LOCK="$TEMP_DIR/display_lock"
-TEMP_TEXT_BOX="$TEMP_DIR/text_box"
-WAIT_BOX_CONTROL_KDIALOG="$TEMP_DIR/wait_box_control_kdialog"
-WAIT_BOX_CONTROL="$TEMP_DIR/wait_box_control"
-WAIT_BOX_FIFO="$TEMP_DIR/wait_box_fifo"
+
+# Temporary files.
+TEMP_CONTROL_DISPLAY_LOCKED="$TEMP_DIR/control_display_locked"
+TEMP_CONTROL_WAIT_BOX="$TEMP_DIR/control_wait_box"
+TEMP_CONTROL_WAIT_BOX_FIFO="$TEMP_DIR/control_wait_box_fifo"
+TEMP_CONTROL_WAIT_BOX_KDIALOG="$TEMP_DIR/control_wait_box_kdialog"
+TEMP_DATA_TEXT_BOX="$TEMP_DIR/data_text_box"
 
 MSG_ERROR="[\\e[31mERROR\\e[0m]"
 MSG_INFO="[\\e[32mINFO\\e[0m]"
@@ -47,15 +51,16 @@ readonly \
     IGNORE_FIND_PATH \
     PREFIX_ERROR_LOG_FILE \
     PREFIX_OUTPUT_DIR \
+    TEMP_CONTROL_DISPLAY_LOCKED \
+    TEMP_CONTROL_WAIT_BOX \
+    TEMP_CONTROL_WAIT_BOX_FIFO \
+    TEMP_CONTROL_WAIT_BOX_KDIALOG \
+    TEMP_DATA_TEXT_BOX \
     TEMP_DIR \
     TEMP_DIR_ITEMS_TO_REMOVE \
     TEMP_DIR_LOGS \
     TEMP_DIR_STORAGE_TEXT \
-    TEMP_DIR_TASK \
-    TEMP_TEXT_BOX \
-    WAIT_BOX_CONTROL_KDIALOG \
-    WAIT_BOX_CONTROL \
-    WAIT_BOX_FIFO
+    TEMP_DIR_TASK
 
 # -----------------------------------------------------------------------------
 # GLOBAL VARIABLES
@@ -716,11 +721,11 @@ _display_list_box_kdialog() {
     message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
     message="$par_columns"$'\n'$'\n'"$message"
 
-    printf "%s" "$message" >"$TEMP_TEXT_BOX"
+    printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
     kdialog --title "$(_get_script_name)" \
         --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
         --textinputbox "" \
-        --textbox "$TEMP_TEXT_BOX" &>/dev/null || _exit_script
+        --textbox "$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
 }
 
 _display_list_box_xmessage() {
@@ -732,9 +737,9 @@ _display_list_box_xmessage() {
     message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
     message="$par_columns"$'\n'$'\n'"$message"
 
-    printf "%s" "$message" >"$TEMP_TEXT_BOX"
+    printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
     xmessage -title "$(_get_script_name)" \
-        -file "$TEMP_TEXT_BOX" &>/dev/null || _exit_script
+        -file "$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
 }
 
 _display_password_box() {
@@ -832,20 +837,20 @@ _display_text_box() {
     if ! _is_gui_session; then
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
-        printf "%s" "$message" >"$TEMP_TEXT_BOX"
+        printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
         zenity --title "$(_get_script_name)" --text-info --no-wrap \
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-            --filename="$TEMP_TEXT_BOX" &>/dev/null || _exit_script
+            --filename="$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
-        printf "%s" "$message" >"$TEMP_TEXT_BOX"
+        printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
         kdialog --title "$(_get_script_name)" \
             --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
             --textinputbox "" \
-            --textbox "$TEMP_TEXT_BOX" &>/dev/null || _exit_script
+            --textbox "$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
-        printf "%s" "$message" >"$TEMP_TEXT_BOX"
+        printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
         xmessage -title "$(_get_script_name)" \
-            -file "$TEMP_TEXT_BOX" &>/dev/null || _exit_script
+            -file "$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
     fi
     _display_unlock
 }
@@ -911,7 +916,7 @@ _display_wait_box_message() {
     local open_delay=${2:-"2"}
 
     # Avoid open more than one 'wait box'.
-    [[ -f "$WAIT_BOX_CONTROL" ]] && return 0
+    [[ -f "$TEMP_CONTROL_WAIT_BOX" ]] && return 0
 
     if ! _is_gui_session; then
         # For non-GUI sessions, simply print the message to the console.
@@ -921,11 +926,11 @@ _display_wait_box_message() {
     elif _command_exists "zenity"; then
         # Control flag to inform that a 'wait box' will open
         # (if the task takes over 2 seconds).
-        echo "zenity" >"$WAIT_BOX_CONTROL"
+        echo "zenity" >"$TEMP_CONTROL_WAIT_BOX"
 
         # Create the FIFO for communication with Zenity 'wait box'.
-        if [[ ! -p "$WAIT_BOX_FIFO" ]]; then
-            mkfifo "$WAIT_BOX_FIFO"
+        if [[ ! -p "$TEMP_CONTROL_WAIT_BOX_FIFO" ]]; then
+            mkfifo "$TEMP_CONTROL_WAIT_BOX_FIFO"
         fi
 
         # Launch a background thread for Zenity 'wait box':
@@ -937,22 +942,22 @@ _display_wait_box_message() {
             sleep "$open_delay"
 
             # Check if the 'wait box' should open.
-            if [[ ! -f "$WAIT_BOX_CONTROL" ]]; then
+            if [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]]; then
                 return 0
             fi
 
             # Wait another window close.
-            while [[ -f "$TEMP_DISPLAY_LOCK" ]]; do
+            while [[ -f "$TEMP_CONTROL_DISPLAY_LOCKED" ]]; do
                 # Short delay to avoid high CPU usage in the loop.
                 sleep 0.5
             done
 
             # Check if the task has already finished.
-            if [[ ! -d "$TEMP_DIR" ]] || [[ ! -f "$WAIT_BOX_CONTROL" ]]; then
+            if [[ ! -d "$TEMP_DIR" ]] || [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]]; then
                 return 0
             fi
 
-            tail -f -- "$WAIT_BOX_FIFO" | (zenity \
+            tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (zenity \
                 --title="$(_get_script_name)" --progress \
                 --width="$GUI_INFO_WIDTH" \
                 --pulsate --auto-close --text="$message" || _exit_script)
@@ -963,7 +968,7 @@ _display_wait_box_message() {
         _get_qdbus_command &>/dev/null || return 0
         # Control flag to inform that a 'wait box' will open
         # (if the task takes over 2 seconds).
-        echo "kdialog" >"$WAIT_BOX_CONTROL"
+        echo "kdialog" >"$TEMP_CONTROL_WAIT_BOX"
 
         # Launch the "background thread 1", for KDialog 'wait box':
         #   - Waits for the specified delay.
@@ -972,23 +977,23 @@ _display_wait_box_message() {
             sleep "$open_delay"
 
             # Check if the 'wait box' should open.
-            if [[ ! -f "$WAIT_BOX_CONTROL" ]]; then
+            if [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]]; then
                 return 0
             fi
 
             # Wait another window close.
-            while [[ -f "$TEMP_DISPLAY_LOCK" ]]; do
+            while [[ -f "$TEMP_CONTROL_DISPLAY_LOCKED" ]]; do
                 # Short delay to avoid high CPU usage in the loop.
                 sleep 0.5
             done
 
             # Check if the task has already finished.
-            if [[ ! -d "$TEMP_DIR" ]] || [[ ! -f "$WAIT_BOX_CONTROL" ]]; then
+            if [[ ! -d "$TEMP_DIR" ]] || [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]]; then
                 return 0
             fi
 
             kdialog --title="$(_get_script_name)" \
-                --progressbar "$message" 0 >"$WAIT_BOX_CONTROL_KDIALOG" \
+                --progressbar "$message" 0 >"$TEMP_CONTROL_WAIT_BOX_KDIALOG" \
                 2>/dev/null
         ) &
 
@@ -999,11 +1004,11 @@ _display_wait_box_message() {
             sleep "$open_delay"
             # Wait the 'wait box' finish to write the output file.
             sleep 0.2
-            while [[ -f "$WAIT_BOX_CONTROL" ]] ||
-                [[ -f "$WAIT_BOX_CONTROL_KDIALOG" ]]; do
+            while [[ -f "$TEMP_CONTROL_WAIT_BOX" ]] ||
+                [[ -f "$TEMP_CONTROL_WAIT_BOX_KDIALOG" ]]; do
                 # Extract the D-Bus reference for the KDialog instance.
                 local dbus_ref=""
-                dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDIALOG")
+                dbus_ref=$(cut -d " " -f 1 <"$TEMP_CONTROL_WAIT_BOX_KDIALOG")
 
                 # Check if the user has cancelled the wait box.
                 local std_output=""
@@ -1029,31 +1034,31 @@ _close_wait_box() {
     local wait_box_type=""
 
     # Check if 'wait box' is opened or will open.
-    if [[ -f "$WAIT_BOX_CONTROL" ]]; then
-        wait_box_type=$(cat -- "$WAIT_BOX_CONTROL" 2>/dev/null)
+    if [[ -f "$TEMP_CONTROL_WAIT_BOX" ]]; then
+        wait_box_type=$(cat -- "$TEMP_CONTROL_WAIT_BOX" 2>/dev/null)
 
         # Cancel the future open of any 'wait box'.
-        rm -f -- "$WAIT_BOX_CONTROL"
+        rm -f -- "$TEMP_CONTROL_WAIT_BOX"
 
         if [[ "$wait_box_type" == "zenity" ]]; then # Zenity 'wait box'.
             # Check if Zenity 'wait box' is open,
             # (waiting for an input in the FIFO).
-            if pgrep -fl "$WAIT_BOX_FIFO" &>/dev/null; then
+            if pgrep -fl "$TEMP_CONTROL_WAIT_BOX_FIFO" &>/dev/null; then
                 # Close the Zenity using the FIFO.
-                printf "100\n" >"$WAIT_BOX_FIFO"
+                printf "100\n" >"$TEMP_CONTROL_WAIT_BOX_FIFO"
             fi
 
         elif [[ "$wait_box_type" == "kdialog" ]]; then # KDialog 'wait box'.
             # Wait the 'wait box' finish to write the output file.
             sleep 0.3
 
-            if [[ -f "$WAIT_BOX_CONTROL_KDIALOG" ]]; then
+            if [[ -f "$TEMP_CONTROL_WAIT_BOX_KDIALOG" ]]; then
                 # Extract the D-Bus reference for the KDialog instance.
                 local dbus_ref=""
-                dbus_ref=$(cut -d " " -f 1 <"$WAIT_BOX_CONTROL_KDIALOG")
+                dbus_ref=$(cut -d " " -f 1 <"$TEMP_CONTROL_WAIT_BOX_KDIALOG")
 
                 # Stop the loop of "background thread 2".
-                rm -f -- "$WAIT_BOX_CONTROL_KDIALOG"
+                rm -f -- "$TEMP_CONTROL_WAIT_BOX_KDIALOG"
 
                 # Wait the "background thread 2" main loop stop
                 # before close the KDialog 'wait box'.
@@ -1072,14 +1077,14 @@ _display_lock() {
     # wait box should not be opened at this time. In this case,
     # '_display_wait_box' will wait until '_display_unlock' is executed.
 
-    touch -- "$TEMP_DISPLAY_LOCK"
+    touch -- "$TEMP_CONTROL_DISPLAY_LOCKED"
 }
 
 _display_unlock() {
     # This function removes the temporary lock file created by '_display_lock'.
     # By doing so, it signals that the wait box can now be displayed.
 
-    rm -f -- "$TEMP_DISPLAY_LOCK"
+    rm -f -- "$TEMP_CONTROL_DISPLAY_LOCKED"
 }
 
 _exit_script() {
@@ -2560,11 +2565,11 @@ _run_task_parallel() {
         IGNORE_FIND_PATH \
         INPUT_FILES \
         TEMP_DATA_TASK \
+        TEMP_DATA_TEXT_BOX \
         TEMP_DIR_ITEMS_TO_REMOVE \
         TEMP_DIR_LOGS \
         TEMP_DIR_STORAGE_TEXT \
-        TEMP_DIR_TASK \
-        TEMP_TEXT_BOX
+        TEMP_DIR_TASK
 
     # Export functions to be used inside new shells (when using 'xargs').
     export -f \
