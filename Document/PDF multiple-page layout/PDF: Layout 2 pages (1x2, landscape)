@@ -17,7 +17,7 @@ _main() {
         command=pdfjam; pkg_manager=zypper; package=texlive-pdfjam-bin"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_extension=pdf")
-    output_dir=$(_get_output_dir "par_use_same_dir=false")
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -29,10 +29,11 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+    local layout="1x2"
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve")
-    std_output=$(pdfjam --nup "1x2" --landscape --outfile "$output_file" -- "$input_file" 2>&1)
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(landscape, $layout)'")
+    std_output=$(pdfjam --nup "$layout" --landscape --outfile "$output_file" -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

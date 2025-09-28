@@ -19,7 +19,7 @@ _main() {
         pkg_manager=zypper; package=tesseract-ocr-traineddata-$TEMP_DATA_TASK"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_extension=pdf")
-    output_dir=$(_get_output_dir "par_use_same_dir=false")
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -33,7 +33,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(OCR)'")
     std_output=$(ocrmypdf --l "$TEMP_DATA_TASK" --output-type pdfa --skip-text --jobs "$(_get_max_procs)" -- "$input_file" "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }

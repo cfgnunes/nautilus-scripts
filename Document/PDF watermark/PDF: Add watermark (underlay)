@@ -13,7 +13,7 @@ _main() {
     _check_dependencies "command=qpdf"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_extension=pdf")
-    output_dir=$(_get_output_dir "par_use_same_dir=false")
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     TEMP_DATA_TASK=$(_display_file_selection_box \
         "PDF files | *.pdf" \
@@ -31,7 +31,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(watermark)'")
     # NOTE: Older 'qpdf' versions do not support '--' in the command line.
     std_output=$(qpdf --underlay "$TEMP_DATA_TASK" --repeat=1 -- "$input_file" "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
