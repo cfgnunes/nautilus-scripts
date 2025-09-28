@@ -39,8 +39,9 @@ TEMP_CONTROL_WAIT_BOX_FIFO="$TEMP_DIR/control_wait_box_fifo"
 TEMP_CONTROL_WAIT_BOX_KDIALOG="$TEMP_DIR/control_wait_box_kdialog"
 TEMP_DATA_TEXT_BOX="$TEMP_DIR/data_text_box"
 
-MSG_ERROR="[\\e[31mERROR\\e[0m]"
-MSG_INFO="[\\e[32mINFO\\e[0m]"
+# Message tags for displaying status messages on terminal.
+MSG_ERROR="[\033[0;31mFAILED\033[0m]"
+MSG_INFO="[\033[0;32m INFO \033[0m]"
 
 readonly \
     ACCESSED_RECENTLY_DIR \
