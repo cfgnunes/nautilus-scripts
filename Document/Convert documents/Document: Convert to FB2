@@ -13,7 +13,7 @@ _main() {
     _check_dependencies "command=pandoc"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_validate_conflict=true; par_select_extension='csv|docx|epub|gfm|htm|html|json|latex|markdown|md|odt|opml|org|rst'")
-    output_dir=$(_get_output_dir "par_use_same_dir=false")
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"

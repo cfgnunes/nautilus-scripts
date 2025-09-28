@@ -17,7 +17,7 @@ _main() {
     dependencies=$(_get_dependencies "$input_files")
     _check_dependencies "$dependencies"
     _display_wait_box "2"
-    output_dir=$(_get_output_dir "par_use_same_dir=false")
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     export -f _get_command _run_command
 
