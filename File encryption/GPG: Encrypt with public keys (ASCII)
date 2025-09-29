@@ -115,9 +115,7 @@ _get_users() {
             fi
         done
 
-        TEMP_DATA_TASK=$(zenity \
-            --list \
-            --checklist \
+        TEMP_DATA_TASK=$(zenity --list --checklist \
             --title="Select users" \
             --text="Select one or more users from the list below." \
             --column="Select" \

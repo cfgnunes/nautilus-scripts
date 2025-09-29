@@ -403,8 +403,8 @@ _display_dir_selection_box() {
     if ! _is_gui_session; then
         input_files=$(_get_working_directory)
     elif _command_exists "zenity"; then
-        input_files=$(zenity --title "$(_get_script_name)" \
-            --file-selection --multiple --directory \
+        input_files=$(zenity --file-selection --multiple --directory \
+            --title "$(_get_script_name)" \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
         input_files=$(kdialog --title "$(_get_script_name)" \
@@ -446,8 +446,8 @@ _display_file_selection_box() {
             multiple_flag="--multiple"
         fi
 
-        input_files=$(zenity --title "$title" \
-            --file-selection "$multiple_flag" \
+        input_files=$(zenity --file-selection \
+            --title "$title" "$multiple_flag" \
             ${file_filter:+--file-filter="$file_filter"} \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
@@ -479,7 +479,7 @@ _display_error_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-error" "$(_get_script_name)" "$message" "2"
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --error \
+        zenity --error --title "$(_get_script_name)" \
             --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --error "$message" &>/dev/null
@@ -505,7 +505,7 @@ _display_info_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _gdbus_notify "dialog-information" "$(_get_script_name)" "$message" "1"
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --info \
+        zenity --info --title "$(_get_script_name)" \
             --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --msgbox "$message" &>/dev/null
@@ -681,7 +681,7 @@ _display_list_box_zenity() {
         # large.
         # shellcheck disable=SC2086
         selected_items=$(
-            zenity --title "$(_get_script_name)" --list \
+            zenity --list --title "$(_get_script_name)" \
                 --editable --multiple --separator="$FIELD_SEPARATOR" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" \
@@ -692,7 +692,7 @@ _display_list_box_zenity() {
         # Default strategy: pass '$message' directly as arguments (fast).
         # shellcheck disable=SC2086
         selected_items=$(
-            zenity --title "$(_get_script_name)" --list \
+            zenity --list --title "$(_get_script_name)" \
                 --editable --multiple --separator="$FIELD_SEPARATOR" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" \
@@ -759,8 +759,8 @@ _display_password_box() {
     if ! _is_gui_session; then
         read -r -p "$message " password >&2
     elif _command_exists "zenity"; then
-        password=$(zenity \
-            --title="Password" --entry --hide-text --width="$GUI_INFO_WIDTH" \
+        password=$(zenity --entry --hide-text \
+            --title="Password" --width="$GUI_INFO_WIDTH" \
             --text "$message" 2>/dev/null) || return 1
     elif _command_exists "kdialog"; then
         password=$(kdialog --title "Password" \
@@ -804,7 +804,7 @@ _display_question_box() {
         read -r -p "$message [Y/n] " response
         [[ ${response,,} == *"n"* ]] && return 1
     elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --question \
+        zenity --question --title "$(_get_script_name)" \
             --width="$GUI_INFO_WIDTH" --text="$message" &>/dev/null || return 1
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" \
@@ -840,7 +840,7 @@ _display_text_box() {
         printf "%s\n" "$message"
     elif _command_exists "zenity"; then
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
-        zenity --title "$(_get_script_name)" --text-info --no-wrap \
+        zenity --text-info --no-wrap --title "$(_get_script_name)" \
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --filename="$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
@@ -959,8 +959,8 @@ _display_wait_box_message() {
                 return 0
             fi
 
-            tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (zenity \
-                --title="$(_get_script_name)" --progress \
+            tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (zenity --progress \
+                --title="$(_get_script_name)" \
                 --width="$GUI_INFO_WIDTH" \
                 --pulsate --auto-close --text="$message" || _exit_script)
         ) &
