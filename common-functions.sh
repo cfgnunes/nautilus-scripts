@@ -763,7 +763,9 @@ _display_password_box() {
     _display_lock
     # Ask the user for the password.
     if ! _is_gui_session; then
-        read -r -p "$message " password >&2
+        echo -e -n "$MSG_INFO $message " >&2
+        read -r -s password </dev/tty
+        echo >&2
     elif _command_exists "zenity"; then
         password=$(zenity \
             --title="Password" --entry --hide-text --width="$GUI_INFO_WIDTH" \
@@ -807,8 +809,10 @@ _display_question_box() {
 
     _display_lock
     if ! _is_gui_session; then
-        read -r -p "$message [Y/n] " response
-        [[ ${response,,} == *"n"* ]] && return 1
+        echo -e -n "$message [y/N] " >&2
+        read -r response </dev/tty
+        echo >&2
+        [[ ${response,,} != *"y"* ]] && return 1
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --question \
             --width="$GUI_INFO_WIDTH" --text="$message" &>/dev/null || return 1
