@@ -18,6 +18,61 @@ _main() {
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file")
 
+    _get_user
+
+    # Check output directory only after displaying dialog boxes to the user.
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+
+    # Run the main process.
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=append; par_extension=gpg")
+    std_output=$(gpg \
+        --batch \
+        --yes \
+        --sign \
+        --local-user "$TEMP_DATA_TASK" \
+        --output "$output_file" \
+        -- "$input_file" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+}
+
+_import_key() {
+    local input_file=""
+    local std_output=""
+    local key_id=""
+
+    input_file=$(_display_file_selection_box \
+        "Key files | *.asc *.gpg *.pgp" \
+        "Choose a key file to import.")
+
+    if [[ -z "$input_file" ]]; then
+        _exit_script
+    fi
+
+    # Get the ID from the key.
+    key_id=$(gpg --with-colons --import-options show-only --import "$input_file" |
+        grep -m1 "^fpr" | cut -d ':' -f 10 2>/dev/null)
+
+    # Import the key.
+    std_output=$(gpg --batch --yes --import "$input_file" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    # Set the trust level to 'ultimate'.
+    std_output=$(printf "%s\n" "$key_id:6:" | gpg --batch --yes --import-ownertrust 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+}
+
+_get_user() {
     local users=""
     users=$(gpg --list-secret-keys --with-colons 2>/dev/null |
         grep --ignore-case "^uid" | cut -d ':' -f 10)
@@ -77,57 +132,6 @@ _main() {
         _display_error_box "Failed: you must select a user!"
         _exit_script
     fi
-
-    # Check output directory only after displaying dialog boxes to the user.
-    output_dir=$(_get_output_dir "par_use_same_dir=true")
-
-    # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" "$output_dir"
-    _display_result_box "$output_dir"
-}
-
-_main_task() {
-    local input_file=$1
-    local output_dir=$2
-    local output_file=""
-    local std_output=""
-
-    # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=append; par_extension=gpg")
-    std_output=$(gpg \
-        --batch \
-        --yes \
-        --sign \
-        --local-user "$TEMP_DATA_TASK" \
-        --output "$output_file" \
-        -- "$input_file" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
-}
-
-_import_key() {
-    local input_file=""
-    local std_output=""
-    local key_id=""
-
-    input_file=$(_display_file_selection_box \
-        "Key files | *.asc *.gpg *.pgp" \
-        "Choose a key file to import.")
-
-    if [[ -z "$input_file" ]]; then
-        _exit_script
-    fi
-
-    # Get the ID from the key.
-    key_id=$(gpg --with-colons --import-options show-only --import "$input_file" |
-        grep -m1 "^fpr" | cut -d ':' -f 10 2>/dev/null)
-
-    # Import the key.
-    std_output=$(gpg --batch --yes --import "$input_file" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
-
-    # Set the trust level to 'ultimate'.
-    std_output=$(printf "%s\n" "$key_id:6:" | gpg --batch --yes --import-ownertrust 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
 _main "$@"
