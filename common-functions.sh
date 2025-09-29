@@ -14,7 +14,7 @@ set -u
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
-DEBUG="false"
+ENABLE_DEBUG="false"
 
 ACCESSED_RECENTLY_DIR="$ROOT_DIR/Accessed recently"
 ACCESSED_RECENTLY_LINKS_TO_KEEP=10
@@ -48,7 +48,7 @@ MSG_INFO="[\033[0;32m INFO \033[0m]"
 readonly \
     ACCESSED_RECENTLY_DIR \
     ACCESSED_RECENTLY_LINKS_TO_KEEP \
-    DEBUG \
+    ENABLE_DEBUG \
     FIELD_SEPARATOR \
     GUI_BOX_HEIGHT \
     GUI_BOX_WIDTH \
@@ -115,7 +115,7 @@ _cleanup_on_exit() {
     # Remove the main temporary dir.
     rm -rf -- "$TEMP_DIR" &>/dev/null
 
-    if [[ "$DEBUG" == "true" ]]; then
+    if [[ "$ENABLE_DEBUG" == "true" ]]; then
         echo -e "$MSG_INFO Temporary files cleaned." >&2
     fi
     if ! _is_gui_session; then
@@ -1109,7 +1109,7 @@ _exit_script() {
     local child_pids=""
     local script_pid=$$
 
-    if [[ "$DEBUG" == "true" ]]; then
+    if [[ "$ENABLE_DEBUG" == "true" ]]; then
         echo -e "$MSG_INFO Exiting the script." >&2
     fi
 
@@ -2572,7 +2572,7 @@ _run_task_parallel() {
 
     # Export variables to be used inside new shells (when using 'xargs').
     export \
-        DEBUG \
+        ENABLE_DEBUG \
         FIELD_SEPARATOR \
         GUI_BOX_HEIGHT \
         GUI_BOX_WIDTH \
