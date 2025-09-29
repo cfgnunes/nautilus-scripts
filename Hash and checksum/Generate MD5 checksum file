@@ -13,13 +13,20 @@ _main() {
     _check_dependencies ""
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_recursive=true")
+
+    local output_file=""
+    local output_options=""
+    output_options+="md5sum.txt"$'\n'
+    output_options+="checksums.md5"$'\n'
+    output_options+="MD5SUMS"$'\n'
+    output_file=$(_select_output_filename "$output_options")
+
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
 
-    local output_file=""
-    output_file=$(_get_output_filename "md5sum.txt" "$output_dir" "par_extension_opt=preserve")
+    output_file=$(_get_output_filename "$output_file" "$output_dir" "par_extension_opt=preserve")
 
     local std_output=""
     std_output=$(_storage_text_read_all)
@@ -48,6 +55,57 @@ _main_task() {
     std_output=$(sed "s|\([^ ]*\)\s*\(.*\)|\2$FIELD_SEPARATOR\1|g" <<<"$std_output")
 
     _storage_text_write_ln "$std_output"
+}
+
+_select_output_filename() {
+    local options=$1
+    local output_file=""
+
+    _display_lock
+    if _command_exists "zenity"; then
+        options=$(_convert_text_to_delimited_string "$options")
+        local zenity_options=()
+
+        local option=""
+        local first_option="true"
+        for option in $options; do
+            if [[ "$first_option" == "true" ]]; then
+                zenity_options+=(TRUE "$option")
+                first_option="false"
+            else
+                zenity_options+=(FALSE "$option")
+            fi
+        done
+
+        output_file=$(zenity \
+            --list \
+            --radiolist \
+            --title="Select output checksum file" \
+            --text="Select output checksum file from the list below." \
+            --column="Select" \
+            --column="Filename" "${zenity_options[@]}" \
+            --width="$GUI_BOX_WIDTH" \
+            --height="$GUI_BOX_HEIGHT" \
+            --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
+    elif _command_exists "kdialog"; then
+        # shellcheck disable=SC2001
+        options=$(sed "s|\(.*\)|\1:\1:off|g" <<<"$options")
+        options=$(tr ":\n" "$FIELD_SEPARATOR" <<<"$options")
+        # shellcheck disable=SC2086
+        output_file=$(kdialog \
+            --title "Select output checksum file" \
+            --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
+            --radiolist "Select output checksum file from the list below." \
+            -- $options 2>/dev/null) || _exit_script
+    fi
+    _display_unlock
+
+    if [[ -z "$output_file" ]]; then
+        _display_error_box "Failed: you must select an output checksum file!"
+        _exit_script
+    fi
+
+    printf "%s" "$output_file"
 }
 
 _main "$@"
