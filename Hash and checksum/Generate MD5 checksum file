@@ -16,6 +16,13 @@ _main() {
 
     local output_file=""
     local output_options=""
+    if (($(_get_items_count "$input_files") == 1)); then
+        local file_1=""
+        file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
+        file_1=$(basename -- "$file_1")
+        output_options+=$file_1
+        output_options+=".md5"$'\n'
+    fi
     output_options+="md5sum.txt"$'\n'
     output_options+="checksums.md5"$'\n'
     output_options+="MD5SUMS"$'\n'
@@ -66,8 +73,8 @@ _select_output_filename() {
         options=$(_convert_text_to_delimited_string "$options")
         local zenity_options=()
 
-        local option=""
         local first_option="true"
+        local option=""
         for option in $options; do
             if [[ "$first_option" == "true" ]]; then
                 zenity_options+=(TRUE "$option")
@@ -77,9 +84,7 @@ _select_output_filename() {
             fi
         done
 
-        output_file=$(zenity \
-            --list \
-            --radiolist \
+        output_file=$(zenity --list --radiolist \
             --title="Select output checksum file" \
             --text="Select output checksum file from the list below." \
             --column="Select" \
