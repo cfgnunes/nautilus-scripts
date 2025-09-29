@@ -96,10 +96,12 @@ _get_user() {
         users=$(_convert_text_to_delimited_string "$users")
         local zenity_user_list=()
 
+        local first_option="true"
         local user=""
         for user in $users; do
-            if (($(_get_items_count "$users") == 1)); then
+            if [[ "$first_option" == "true" ]]; then
                 zenity_user_list+=(TRUE "$user")
+                first_option="false"
             else
                 zenity_user_list+=(FALSE "$user")
             fi
