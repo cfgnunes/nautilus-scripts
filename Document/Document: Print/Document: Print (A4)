@@ -10,7 +10,11 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "command=lp; package=cups-client"
+    _check_dependencies "
+        command=lp; pkg_manager=apt; package=cups-client |
+        command=lp; pkg_manager=dnf; package=cups-client |
+        command=lp; pkg_manager=pacman; package=cups |
+        command=lp; pkg_manager=zypper; package=cups"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file")
 
