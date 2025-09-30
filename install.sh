@@ -344,7 +344,6 @@ _step_install_dependencies() {
     _command_exists "grep" || packages+="grep "
     _command_exists "sed" || packages+="sed "
     _command_exists "awk" || packages+="gawk "
-    _command_exists "mktemp" || packages+="util-linux "
     _command_exists "xdg-open" || packages+="xdg-utils "
     _command_exists "file" || packages+="file "
 
