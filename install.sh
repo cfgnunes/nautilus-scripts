@@ -44,8 +44,8 @@ IGNORE_FIND_PATHS=(
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
 # Colored status messages for logging.
-MSG_ERROR="[\\e[31mERROR\\e[0m]"
-MSG_INFO="[\\e[32mINFO\\e[0m]"
+MSG_ERROR="[\033[0;31mFAILED\033[0m]"
+MSG_INFO="[\033[0;32m INFO \033[0m]"
 
 # Mark constants as read-only to prevent accidental modification.
 readonly \
@@ -85,9 +85,21 @@ _main() {
     local menu_labels=()
     local menu_options=""
     local menu_selected=()
+    local interactive_install="true"
 
-    echo "Scripts installer."
-    echo "Select the options (<SPACE> to check):"
+    # Read parammeters from command line.
+    if [[ $# -gt 0 ]]; then
+        case "$1" in
+        "-n" | "--non-interactive")
+            interactive_install="false"
+            ;;
+        *)
+            echo "Usage: $0 [-n|--non-interactive]" >&2
+            echo "Run the installation in non-interactive mode (no prompts will be shown)." >&2
+            exit 1
+            ;;
+        esac
+    fi
 
     # Available options presented in the interactive menu.
     menu_labels=(
@@ -111,8 +123,16 @@ _main() {
         "false"
     )
 
-    # Display the interactive menu and capture user selections.
-    _multiselect_menu menu_selected menu_labels menu_defaults
+    if [[ "$interactive_install" == "true" ]]; then
+        echo "Scripts installer."
+        echo "Select the options (<SPACE> to check):"
+
+        # Display the interactive menu and capture user selections.
+        _multiselect_menu menu_selected menu_labels menu_defaults
+    else
+        echo "Running the installer in non-interactive mode..."
+        menu_selected=("${menu_defaults[@]}")
+    fi
 
     # Map menu selections into a comma-separated string of options.
     [[ ${menu_selected[0]} == "true" ]] && menu_options+="dependencies,"
