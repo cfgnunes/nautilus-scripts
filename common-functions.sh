@@ -165,6 +165,7 @@ _check_dependencies() {
     local apps=(
         "apt-get"
         "dnf"
+        "rpm-ostree"
         "pacman"
         "zypper"
         "nix"
@@ -2341,6 +2342,9 @@ _pkg_install_packages() {
         cmd_install="dnf check-update;"
         cmd_install+="dnf -y install $packages &>/dev/null"
         ;;
+    "rpm-ostree")
+        cmd_install+="rpm-ostree install --apply-live $packages &>/dev/null"
+        ;;
     "pacman")
         cmd_install="pacman -Syy;"
         cmd_install+="pacman --noconfirm -S $packages &>/dev/null"
@@ -2411,6 +2415,11 @@ _pkg_is_package_installed() {
         ;;
     "dnf")
         if dnf repoquery --installed | grep --quiet "$package"; then
+            return 0
+        fi
+        ;;
+    "rpm-ostree")
+        if rpm -qa | grep --quiet "$package"; then
             return 0
         fi
         ;;
