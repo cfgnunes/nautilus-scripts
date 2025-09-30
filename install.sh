@@ -363,7 +363,7 @@ _step_install_dependencies() {
         if _command_exists "apt-get"; then
             # Package manager 'apt-get': For Debian/Ubuntu systems.
             _command_exists "pgrep" || packages+="procps "
-            _command_exists "pkexec" || packages+="policykit-1 "
+            _command_exists "pkexec" || packages+="pkexec "
 
             if [[ -n "$packages" ]]; then
                 sudo apt-get update
