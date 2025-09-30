@@ -171,11 +171,6 @@ _check_dependencies() {
         "nix"
         "guix"
     )
-    available_pkg_manager=$(_get_available_app "apps")
-    if [[ -z "$available_pkg_manager" ]]; then
-        _display_error_box "Could not find a package manager!"
-        _exit_script
-    fi
 
     # Check all dependencies.
     dependencies=$(tr "\n" "$FIELD_SEPARATOR" <<<"$dependencies")
@@ -189,6 +184,11 @@ _check_dependencies() {
         # Evaluate the values parameters from the '$dependency' variable.
         eval "$dependency"
 
+        # Ignore installing the dependency if there is a command in the shell.
+        if [[ -n "$command" ]] && _command_exists "$command"; then
+            continue
+        fi
+
         # Lowercase the '$pkg_manager' name.
         pkg_manager=${pkg_manager,,}
 
@@ -197,9 +197,14 @@ _check_dependencies() {
             pkg_manager="apt-get"
         fi
 
-        # Ignore installing the dependency if there is a command in the shell.
-        if [[ -n "$command" ]] && _command_exists "$command"; then
-            continue
+        # Ensure an available package manager is defined.
+        if [[ -z "$available_pkg_manager" ]]; then
+            available_pkg_manager=$(_get_available_app "apps")
+            # Display error and exit if no package manager is available.
+            if [[ -z "$available_pkg_manager" ]]; then
+                _display_error_box "Could not find a package manager!"
+                _exit_script
+            fi
         fi
 
         # Ignore installing the dependency if the installed
