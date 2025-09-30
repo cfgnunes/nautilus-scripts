@@ -11,7 +11,7 @@ _main() {
 
     # Execute initial checks.
     _command_exists "bsdtar" || _check_dependencies "
-        command=7za; pkg_manager=apt; package=p7zip |
+        command=7za; pkg_manager=apt; package=p7zip-full |
         command=7za; pkg_manager=dnf; package=p7zip |
         command=7za; pkg_manager=pacman; package=p7zip |
         command=7za; pkg_manager=zypper; package=7zip"
