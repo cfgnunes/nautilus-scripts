@@ -2326,51 +2326,52 @@ _pkg_install_packages() {
     local packages=$2
     local post_install=$3
     local cmd_install=""
+    local admin_cmd="pkexec"
 
     _display_wait_box_message "Installing the packages. Please, wait..."
 
-    # Install the packages.
-    if ! _command_exists "pkexec"; then
-        _display_error_box \
-            "Could not run the installer with administrator permission!"
-        _exit_script
-    fi
-
     case "$pkg_manager" in
     "apt-get")
-        cmd_install="apt-get update;"
+        cmd_install+="apt-get update;"
         cmd_install+="apt-get -y install $packages &>/dev/null"
         ;;
     "dnf")
-        cmd_install="dnf check-update;"
+        cmd_install+="dnf check-update;"
         cmd_install+="dnf -y install $packages &>/dev/null"
         ;;
     "rpm-ostree")
         cmd_install+="rpm-ostree install --apply-live $packages &>/dev/null"
         ;;
     "pacman")
-        cmd_install="pacman -Syy;"
+        cmd_install+="pacman -Syy;"
         cmd_install+="pacman --noconfirm -S $packages &>/dev/null"
         ;;
     "zypper")
-        cmd_install="zypper refresh;"
+        cmd_install+="zypper refresh;"
         cmd_install+="zypper --non-interactive install $packages &>/dev/null"
         ;;
     "nix")
+        cmd_install+="nix-env -iA nixpkgs.$packages &>/dev/null"
         # Nix does not require root for installing user packages.
-        bash -c \
-            "nix-env -iA nixpkgs.$packages &>/dev/null"
+        admin_cmd=""
         ;;
     "guix")
         cmd_install="guix package -i $packages &>/dev/null"
         ;;
     esac
 
+    # Install the packages.
+    if [[ -n "$admin_cmd" ]] && ! _command_exists "$admin_cmd"; then
+        _display_error_box \
+            "Could not run the installer with administrator permission!"
+        _exit_script
+    fi
+
     if [[ -n "$pkg_manager" ]]; then
         if [[ -n "$post_install" ]]; then
             cmd_install+=";$post_install"
         fi
-        pkexec bash -c "$cmd_install"
+        $admin_cmd bash -c "$cmd_install"
     fi
 
     _close_wait_box
