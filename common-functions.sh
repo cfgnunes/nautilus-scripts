@@ -151,7 +151,7 @@ _check_dependencies() {
 
     [[ -z "$dependencies" ]] && return
 
-    # Skip duplicated dependencies in the input list.
+    # Remove duplicated dependencies in the input list.
     dependencies=$(tr "|" "\n" <<<"$dependencies")
     dependencies=$(tr -s " " <<<"$dependencies")
     dependencies=$(sed "s|; |;|g" <<<"$dependencies")
@@ -161,7 +161,7 @@ _check_dependencies() {
 
     [[ -z "$dependencies" ]] && return
 
-    # Get the name of the available package manager.
+    # List of supported package managers to check for availability.
     local apps=(
         "apt-get"
         "dnf"
@@ -184,20 +184,13 @@ _check_dependencies() {
         # Evaluate the values parameters from the '$dependency' variable.
         eval "$dependency"
 
-        # Ignore installing the dependency if there is a command in the shell.
+        # Ignore installing the dependency,
+        # if exists the command in the shell.
         if [[ -n "$command" ]] && _command_exists "$command"; then
             continue
         fi
 
-        # Lowercase the '$pkg_manager' name.
-        pkg_manager=${pkg_manager,,}
-
-        # Fix 'apt' to 'apt-get'
-        if [[ "$pkg_manager" == "apt" ]]; then
-            pkg_manager="apt-get"
-        fi
-
-        # Ensure an available package manager is defined.
+        # Detect and validate the first available package manager.
         if [[ -z "$available_pkg_manager" ]]; then
             available_pkg_manager=$(_get_available_app "apps")
             # Display error and exit if no package manager is available.
@@ -205,6 +198,11 @@ _check_dependencies() {
                 _display_error_box "Could not find a package manager!"
                 _exit_script
             fi
+        fi
+
+        # Map 'apt' to 'apt-get' for consistency.
+        if [[ "$pkg_manager" == "apt" ]]; then
+            pkg_manager="apt-get"
         fi
 
         # Ignore installing the dependency if the installed
@@ -215,14 +213,14 @@ _check_dependencies() {
         fi
 
         # Ignore installing the dependency if the package is already installed
-        # (packages that do not have a command).
+        # (packages that do not have a shell command).
         if [[ -n "$package" ]] && [[ -z "$command" ]] &&
             _pkg_is_package_installed "$available_pkg_manager" "$package"; then
             continue
         fi
 
-        # If the package is not specified, use the command name as
-        # the package name.
+        # If the package is not specified,
+        # use the command name as the package name.
         if [[ -z "$package" ]] && [[ -n "$command" ]]; then
             package=$command
         fi
@@ -240,9 +238,8 @@ _check_dependencies() {
         message+=$'\n'$'\n'
         message+="Would you like to install them?"
         if _display_question_box "$message"; then
-            _pkg_install_packages \
-                "$available_pkg_manager" "${packages_to_install/ /}" \
-                "$post_install"
+            _pkg_install_packages "$available_pkg_manager" \
+                "${packages_to_install/ /}" "$post_install"
         else
             _exit_script
         fi
@@ -1259,7 +1256,6 @@ _get_available_file_manager() {
     #   2. If none is found, iterates through a predefined list of common file
     #      managers and returns the first one that is installed.
 
-    local app=""
     local available_app=""
     local default_app=""
     default_app=$(_xdg_get_default_app "inode/directory" "true")
@@ -1276,6 +1272,7 @@ _get_available_file_manager() {
 
     # Step 1: Validate if the detected default application matches one of the
     # known file managers.
+    local app=""
     for app in "${apps[@]}"; do
         if [[ "$default_app" == *"$app" ]]; then
             printf "%s" "$app"
