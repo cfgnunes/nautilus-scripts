@@ -165,6 +165,7 @@ _check_dependencies() {
     local apps=(
         "apt-get"
         "dnf"
+        "rpm-ostree"
         "pacman"
         "zypper"
         "nix"
@@ -2308,12 +2309,13 @@ _pkg_install_packages() {
     # Parameters:
     #   - $1 (pkg_manager): The package manager to use for installation.
     #   Supported values are:
-    #       - "apt-get" : For Debian/Ubuntu systems.
-    #       - "dnf"     : For Fedora/RHEL systems.
-    #       - "pacman"  : For Arch Linux systems.
-    #       - "zypper"  : For openSUSE systems.
-    #       - "nix"     : For Nix-based systems.
-    #       - "guix"    : For GNU Guix systems.
+    #       - "apt-get"     : For Debian/Ubuntu systems.
+    #       - "dnf"         : For Fedora/RHEL systems.
+    #       - "rpm-ostree"  : For Fedora Atomic systems.
+    #       - "pacman"      : For Arch Linux systems.
+    #       - "zypper"      : For openSUSE systems.
+    #       - "nix"         : For Nix-based systems.
+    #       - "guix"        : For GNU Guix systems.
     #   - $2 (packages): A space-separated list of package names to install.
     #   - $3 (post_install): An optional command to be executed right after the
     #     installation.
@@ -2340,6 +2342,9 @@ _pkg_install_packages() {
     "dnf")
         cmd_install="dnf check-update;"
         cmd_install+="dnf -y install $packages &>/dev/null"
+        ;;
+    "rpm-ostree")
+        cmd_install+="rpm-ostree install --apply-live $packages &>/dev/null"
         ;;
     "pacman")
         cmd_install="pacman -Syy;"
@@ -2388,12 +2393,13 @@ _pkg_is_package_installed() {
     # Parameters:
     #   - $1 (pkg_manager): The package manager to use for the check.
     #   Supported values are:
-    #       - "apt-get" : For Debian/Ubuntu systems.
-    #       - "dnf"     : For Fedora/RHEL systems.
-    #       - "pacman"  : For Arch Linux systems.
-    #       - "zypper"  : For openSUSE systems.
-    #       - "nix"     : For Nix-based systems.
-    #       - "guix"    : For GNU Guix systems.
+    #       - "apt-get"     : For Debian/Ubuntu systems.
+    #       - "dnf"         : For Fedora/RHEL systems.
+    #       - "rpm-ostree"  : For Fedora Atomic systems.
+    #       - "pacman"      : For Arch Linux systems.
+    #       - "zypper"      : For openSUSE systems.
+    #       - "nix"         : For Nix-based systems.
+    #       - "guix"        : For GNU Guix systems.
     #   - $2 (package): The name of the package to check.
     #
     # Returns:
@@ -2411,6 +2417,11 @@ _pkg_is_package_installed() {
         ;;
     "dnf")
         if dnf repoquery --installed | grep --quiet "$package"; then
+            return 0
+        fi
+        ;;
+    "rpm-ostree")
+        if rpm -qa | grep --quiet "$package"; then
             return 0
         fi
         ;;
