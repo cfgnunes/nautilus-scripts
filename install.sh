@@ -398,7 +398,7 @@ _step_install_dependencies() {
             _command_exists "pgrep" || packages+="procps "
             _command_exists "pkexec" || packages+="polkit "
 
-            # FIXME: Force update GTK4 packages on Arch Linux.
+            # NOTE: Force update GTK4 packages on Arch Linux.
             if [[ "$packages" == *"zenity"* ]]; then
                 packages+="gtk4 zlib glib2 "
             fi
