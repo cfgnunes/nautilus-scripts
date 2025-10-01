@@ -201,10 +201,12 @@ _check_dependencies() {
             fi
         fi
 
-        # Map 'apt' to 'apt-get' for consistency.
-        if [[ "$pkg_manager" == "apt" ]]; then
-            pkg_manager="apt-get"
-        fi
+        # Map some equivalent package managers.
+        case "$pkg_manager:$available_pkg_manager" in
+        "apt:apt-get" | "dnf:rpm-ostree")
+            pkg_manager=$available_pkg_manager
+            ;;
+        esac
 
         # Ignore installing the dependency if the installed
         # package managers differ.
