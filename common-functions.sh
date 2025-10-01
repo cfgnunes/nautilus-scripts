@@ -240,12 +240,11 @@ _check_dependencies() {
         message+=$(sed "s| |\n- |g" <<<"$packages_to_install")
         message+=$'\n'$'\n'
         message+="Would you like to install them?"
-        if _display_question_box "$message"; then
-            _pkg_install_packages "$available_pkg_manager" \
-                "${packages_to_install/ /}" "$post_install"
-        else
+        if ! _display_question_box "$message"; then
             _exit_script
         fi
+        _pkg_install_packages "$available_pkg_manager" \
+            "${packages_to_install/ /}" "$post_install"
     fi
 }
 

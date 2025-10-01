@@ -88,15 +88,14 @@ _get_users() {
         grep --ignore-case "^uid" | cut -d ':' -f 10)
     if [[ -z "$users" ]]; then
         local message="No public keys were found.\n\nWould you like to import a key now?"
-        if _display_question_box "$message"; then
-            _import_key
-            users=$(gpg --list-public-keys --with-colons 2>/dev/null |
-                grep --ignore-case "^uid" | cut -d ':' -f 10)
-            if [[ -z "$users" ]]; then
-                _display_error_box "Failed to import the public key!"
-                _exit_script
-            fi
-        else
+        if ! _display_question_box "$message"; then
+            _exit_script
+        fi
+        _import_key
+        users=$(gpg --list-public-keys --with-colons 2>/dev/null |
+            grep --ignore-case "^uid" | cut -d ':' -f 10)
+        if [[ -z "$users" ]]; then
+            _display_error_box "Failed to import the public key!"
             _exit_script
         fi
     fi
