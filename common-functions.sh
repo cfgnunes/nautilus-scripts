@@ -164,8 +164,8 @@ _check_dependencies() {
     # List of supported package managers to check for availability.
     local apps=(
         "apt-get"
-        "dnf"
         "rpm-ostree"
+        "dnf"
         "pacman"
         "zypper"
         "nix"
