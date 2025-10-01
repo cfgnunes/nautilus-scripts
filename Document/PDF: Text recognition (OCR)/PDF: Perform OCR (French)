@@ -11,6 +11,7 @@ _main() {
 
     # Execute initial checks.
     TEMP_DATA_TASK="fra"
+    # NOTE: 'ocrmypdf' from 'pkg_manager=nix' already includes language packages.
     _check_dependencies "
         command=ocrmypdf |
         pkg_manager=apt; package=tesseract-ocr-$TEMP_DATA_TASK |
