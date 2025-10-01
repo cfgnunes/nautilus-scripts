@@ -10,8 +10,7 @@ set -u
 
 APP_SHORTCUT_PREFIX="_script-"
 
-# List of supported file managers. The script will only run if at least one is
-# available.
+# List of supported file managers.
 COMPATIBLE_FILE_MANAGERS=(
     "nautilus"
     "caja"
