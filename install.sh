@@ -357,9 +357,23 @@ _step_install_dependencies() {
     if _command_exists "guix"; then
         _command_exists "pgrep" || packages+="procps "
 
-        # Package manager 'guix': For Guix systems (no root required).
+        # Package manager 'guix': no root required.
         if [[ -n "$packages" ]]; then
             guix install $packages
+        fi
+    elif _command_exists "nix"; then
+        _command_exists "pgrep" || packages+="procps "
+
+        local nix_channel="nixos"
+        packages="$nix_channel.$packages"
+        # shellcheck disable=SC2001
+        packages=$(sed "s| $||g" <<<"$packages")
+        # shellcheck disable=SC2001
+        packages=$(sed "s| | $nix_channel.|g" <<<"$packages")
+
+        # Package manager 'nix': no root required.
+        if [[ -n "$packages" ]]; then
+            nix-env -iA $packages
         fi
     elif _command_exists "sudo"; then
         if _command_exists "apt-get"; then
