@@ -380,7 +380,7 @@ _step_install_dependencies() {
             fi
         elif _command_exists "pacman"; then
             # Package manager 'pacman': For Arch Linux systems.
-            _command_exists "pgrep" || packages+="procps-ng "
+            _command_exists "pgrep" || packages+="procps "
             _command_exists "pkexec" || packages+="polkit "
 
             # FIXME: Force update GTK4 packages on Arch Linux.
