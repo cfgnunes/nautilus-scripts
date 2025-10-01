@@ -404,8 +404,10 @@ _step_install_dependencies() {
                 sudo zypper --non-interactive install $packages
             fi
         else
-            echo -e "$MSG_ERROR Could not find a package manager!"
-            exit 1
+            if [[ -n "$packages" ]]; then
+                echo -e "$MSG_ERROR Could not find a package manager!"
+                exit 1
+            fi
         fi
     else
         echo -e "$MSG_ERROR Could not find the 'sudo' command!"
