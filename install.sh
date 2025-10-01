@@ -337,14 +337,15 @@ _step_install_dependencies() {
     local packages=""
 
     # Basic packages to run the script 'common-functions.sh'.
-    _command_exists "bash" || packages+="bash "
+    _command_exists "awk" || packages+="gawk "
     _command_exists "basename" || packages+="coreutils "
+    _command_exists "bash" || packages+="bash "
+    _command_exists "file" || packages+="file "
     _command_exists "find" || packages+="findutils "
     _command_exists "grep" || packages+="grep "
+    _command_exists "pstree" || packages+="psmisc "
     _command_exists "sed" || packages+="sed "
-    _command_exists "awk" || packages+="gawk "
     _command_exists "xdg-open" || packages+="xdg-utils "
-    _command_exists "file" || packages+="file "
 
     # Packages for dialogs.
     if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
