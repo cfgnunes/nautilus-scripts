@@ -163,13 +163,13 @@ _check_dependencies() {
 
     # List of supported package managers to check for availability.
     local apps=(
+        "guix"
         "apt-get"
         "rpm-ostree"
         "dnf"
         "pacman"
         "zypper"
         "nix"
-        "guix"
     )
 
     # Check all dependencies.
