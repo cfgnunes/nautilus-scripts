@@ -53,6 +53,7 @@ _get_dependencies() {
                 command=convert; pkg_manager=apt; package=imagemagick |
                 command=convert; pkg_manager=dnf; package=ImageMagick |
                 command=convert; pkg_manager=pacman; package=imagemagick |
+                command=convert; pkg_manager=nix; package=imagemagick |
                 command=convert; pkg_manager=zypper; package=ImageMagick"
             ;;
         "inkscape") dependencies+="command=inkscape" ;;
@@ -83,21 +84,36 @@ _get_dependencies() {
             if ! _command_exists "libreoffice.calc" &&
                 ! _command_exists "localc" &&
                 ! _command_exists "libreoffice-calc"; then
-                dependencies+="pkg_manager=apt; package=libreoffice-calc | pkg_manager=dnf; package=libreoffice-calc | pkg_manager=pacman; package=libreoffice | pkg_manager=zypper; package=libreoffice-calc"
+                dependencies+="
+                    pkg_manager=apt; package=libreoffice-calc |
+                    pkg_manager=dnf; package=libreoffice-calc |
+                    pkg_manager=pacman; package=libreoffice |
+                    pkg_manager=nix; package=libreoffice |
+                    pkg_manager=zypper; package=libreoffice-calc"
             fi
             ;;
         "libreoffice_impress")
             if ! _command_exists "libreoffice.impress" &&
                 ! _command_exists "loimpress" &&
                 ! _command_exists "libreoffice-impress"; then
-                dependencies+="pkg_manager=apt; package=libreoffice-impress | pkg_manager=dnf; package=libreoffice-impress | pkg_manager=pacman; package=libreoffice | pkg_manager=zypper; package=libreoffice-impress"
+                dependencies+="
+                    pkg_manager=apt; package=libreoffice-impress |
+                    pkg_manager=dnf; package=libreoffice-impress |
+                    pkg_manager=pacman; package=libreoffice |
+                    pkg_manager=nix; package=libreoffice |
+                    pkg_manager=zypper; package=libreoffice-impress"
             fi
             ;;
         "libreoffice_writer")
             if ! _command_exists "libreoffice.writer" &&
                 ! _command_exists "lowriter" &&
                 ! _command_exists "libreoffice-writer"; then
-                dependencies+="pkg_manager=apt; package=libreoffice-writer | pkg_manager=dnf; package=libreoffice-writer | pkg_manager=pacman; package=libreoffice | pkg_manager=zypper; package=libreoffice-writer"
+                dependencies+="
+                    pkg_manager=apt; package=libreoffice-writer |
+                    pkg_manager=dnf; package=libreoffice-writer |
+                    pkg_manager=pacman; package=libreoffice |
+                    pkg_manager=nix; package=libreoffice |
+                    pkg_manager=zypper; package=libreoffice-writer"
             fi
             ;;
         "pandoc_latex")

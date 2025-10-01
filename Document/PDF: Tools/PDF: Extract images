@@ -14,6 +14,7 @@ _main() {
         command=pdfimages; pkg_manager=apt; package=poppler-utils |
         command=pdfimages; pkg_manager=dnf; package=poppler-utils |
         command=pdfimages; pkg_manager=pacman; package=poppler |
+        command=pdfimages; pkg_manager=nix; package=poppler-utils |
         command=pdfimages; pkg_manager=zypper; package=poppler-tools"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_extension=pdf")

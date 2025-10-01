@@ -52,7 +52,12 @@ _get_dependencies() {
             if ! _command_exists "libreoffice.writer" &&
                 ! _command_exists "lowriter" &&
                 ! _command_exists "libreoffice-writer"; then
-                dependencies+="pkg_manager=apt; package=libreoffice-writer | pkg_manager=dnf; package=libreoffice-writer | pkg_manager=pacman; package=libreoffice | pkg_manager=zypper; package=libreoffice-writer"
+                dependencies+="
+                    pkg_manager=apt; package=libreoffice-writer |
+                    pkg_manager=dnf; package=libreoffice-writer |
+                    pkg_manager=pacman; package=libreoffice |
+                    pkg_manager=nix; package=libreoffice |
+                    pkg_manager=zypper; package=libreoffice-writer"
             fi
             ;;
         "pandoc") dependencies+="command=pandoc" ;;
@@ -61,6 +66,7 @@ _get_dependencies() {
                 command=pdftotext; pkg_manager=apt; package=poppler-utils |
                 command=pdftotext; pkg_manager=dnf; package=poppler-utils |
                 command=pdftotext; pkg_manager=pacman; package=poppler |
+                command=pdftotext; pkg_manager=nix; package=poppler-utils |
                 command=pdftotext; pkg_manager=zypper; package=poppler-tools"
             ;;
         esac

@@ -14,6 +14,7 @@ _main() {
         command=mksquashfs; pkg_manager=apt; package=squashfs-tools |
         command=mksquashfs; pkg_manager=dnf; package=squashfs-tools |
         command=mksquashfs; pkg_manager=pacman; package=squashfs-tools |
+        command=mksquashfs; pkg_manager=nix; package=squashfsTools |
         command=mksquashfs; pkg_manager=zypper; package=squashfs"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all; par_validate_conflict=true")

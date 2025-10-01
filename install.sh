@@ -353,26 +353,31 @@ _step_install_dependencies() {
         fi
     fi
 
-    if _command_exists "guix"; then
+    if _command_exists "nix"; then
+        _command_exists "pgrep" || packages+="procps "
+
+        # Package manager 'nix': no root required.
+        if [[ -n "$packages" ]]; then
+            local nix_channel="nixpkgs"
+            local nix_packages=""
+            if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
+                nix_channel="nixos"
+            fi
+
+            nix_packages="$nix_channel.$packages"
+            # shellcheck disable=SC2001
+            nix_packages=$(sed "s| $||g" <<<"$nix_packages")
+            # shellcheck disable=SC2001
+            nix_packages=$(sed "s| | $nix_channel.|g" <<<"$nix_packages")
+
+            nix-env -iA $nix_packages
+        fi
+    elif _command_exists "guix"; then
         _command_exists "pgrep" || packages+="procps "
 
         # Package manager 'guix': no root required.
         if [[ -n "$packages" ]]; then
             guix install $packages
-        fi
-    elif _command_exists "nix"; then
-        _command_exists "pgrep" || packages+="procps "
-
-        local nix_channel="nixos"
-        packages="$nix_channel.$packages"
-        # shellcheck disable=SC2001
-        packages=$(sed "s| $||g" <<<"$packages")
-        # shellcheck disable=SC2001
-        packages=$(sed "s| | $nix_channel.|g" <<<"$packages")
-
-        # Package manager 'nix': no root required.
-        if [[ -n "$packages" ]]; then
-            nix-env -iA $packages
         fi
     elif _command_exists "sudo"; then
         if _command_exists "apt-get"; then

@@ -14,6 +14,7 @@ _main() {
         command=ffmpeg; pkg_manager=apt; package=ffmpeg |
         command=ffmpeg; pkg_manager=dnf; package=ffmpeg-free |
         command=ffmpeg; pkg_manager=pacman; package=ffmpeg |
+        command=ffmpeg; pkg_manager=nix; package=ffmpeg |
         command=ffmpeg; pkg_manager=zypper; package=ffmpeg"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_mime='audio/|video/'; par_validate_conflict=true")

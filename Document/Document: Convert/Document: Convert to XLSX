@@ -52,7 +52,12 @@ _get_dependencies() {
             if ! _command_exists "libreoffice.calc" &&
                 ! _command_exists "localc" &&
                 ! _command_exists "libreoffice-calc"; then
-                dependencies+="pkg_manager=apt; package=libreoffice-calc | pkg_manager=dnf; package=libreoffice-calc | pkg_manager=pacman; package=libreoffice | pkg_manager=zypper; package=libreoffice-calc"
+                dependencies+="
+                    pkg_manager=apt; package=libreoffice-calc |
+                    pkg_manager=dnf; package=libreoffice-calc |
+                    pkg_manager=pacman; package=libreoffice |
+                    pkg_manager=nix; package=libreoffice |
+                    pkg_manager=zypper; package=libreoffice-calc"
             fi
             ;;
         "pandoc") dependencies+="command=pandoc" ;;

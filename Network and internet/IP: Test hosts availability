@@ -14,6 +14,7 @@ _main() {
         command=ping; pkg_manager=apt; package=iputils-ping |
         command=ping; pkg_manager=dnf; package=iputils |
         command=ping; pkg_manager=pacman; package=iputils |
+        command=ping; pkg_manager=nix; package=iputils |
         command=ping; pkg_manager=zypper; package=iputils"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file")

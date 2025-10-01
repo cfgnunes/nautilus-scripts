@@ -143,6 +143,7 @@ _check_dependencies() {
     #       command=ffmpeg; pkg_manager=apt; package=ffmpeg |
     #       command=ffmpeg; pkg_manager=dnf; package=ffmpeg-free |
     #       command=ffmpeg; pkg_manager=pacman; package=ffmpeg |
+    #       command=ffmpeg; pkg_manager=nix; package=ffmpeg |
     #       command=ffmpeg; pkg_manager=zypper; package=ffmpeg"
 
     local dependencies=$1
@@ -163,13 +164,13 @@ _check_dependencies() {
 
     # List of supported package managers to check for availability.
     local apps=(
+        "nix"
         "guix"
         "apt-get"
         "rpm-ostree"
         "dnf"
         "pacman"
         "zypper"
-        "nix"
     )
 
     # Check all dependencies.
@@ -2351,7 +2352,19 @@ _pkg_install_packages() {
         cmd_install+="zypper --non-interactive install $packages &>/dev/null"
         ;;
     "nix")
-        cmd_install+="nix-env -iA nixpkgs.$packages &>/dev/null"
+        local nix_channel="nixpkgs"
+        local nix_packages=""
+        if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
+            nix_channel="nixos"
+        fi
+
+        nix_packages="$nix_channel.$packages"
+        # shellcheck disable=SC2001
+        nix_packages=$(sed "s| $||g" <<<"$nix_packages")
+        # shellcheck disable=SC2001
+        nix_packages=$(sed "s| | $nix_channel.|g" <<<"$nix_packages")
+
+        cmd_install+="nix-env -iA $nix_packages &>/dev/null"
         # Nix does not require root for installing user packages.
         admin_cmd=""
         ;;
@@ -2439,7 +2452,7 @@ _pkg_is_package_installed() {
         fi
         ;;
     "nix")
-        if nix-env -q "$package" &>/dev/null; then
+        if nix-env -q | grep --quiet "$package"; then
             return 0
         fi
         ;;

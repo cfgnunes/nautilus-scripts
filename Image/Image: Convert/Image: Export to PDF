@@ -53,6 +53,7 @@ _get_dependencies() {
                 command=convert; pkg_manager=apt; package=imagemagick |
                 command=convert; pkg_manager=dnf; package=ImageMagick |
                 command=convert; pkg_manager=pacman; package=imagemagick |
+        command=convert; pkg_manager=nix; package=imagemagick |
                 command=convert; pkg_manager=zypper; package=ImageMagick"
             ;;
         "inkscape") dependencies+="command=inkscape" ;;

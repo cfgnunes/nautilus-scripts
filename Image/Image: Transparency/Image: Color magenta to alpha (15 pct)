@@ -14,6 +14,7 @@ _main() {
         command=convert; pkg_manager=apt; package=imagemagick |
         command=convert; pkg_manager=dnf; package=ImageMagick |
         command=convert; pkg_manager=pacman; package=imagemagick |
+        command=convert; pkg_manager=nix; package=imagemagick |
         command=convert; pkg_manager=zypper; package=ImageMagick"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_mime=image/; par_validate_conflict=true")

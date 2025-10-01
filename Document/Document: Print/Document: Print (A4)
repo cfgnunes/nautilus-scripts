@@ -14,6 +14,7 @@ _main() {
         command=lp; pkg_manager=apt; package=cups-client |
         command=lp; pkg_manager=dnf; package=cups-client |
         command=lp; pkg_manager=pacman; package=cups |
+        command=lp; pkg_manager=nix; package=cups |
         command=lp; pkg_manager=zypper; package=cups"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file")

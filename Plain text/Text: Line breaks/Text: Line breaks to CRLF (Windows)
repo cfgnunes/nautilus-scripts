@@ -10,7 +10,12 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "command=perl; package=perl-base"
+    _check_dependencies "
+        command=perl; pkg_manager=apt; package=perl-base |
+        command=perl; pkg_manager=dnf; package=perl-base |
+        command=perl; pkg_manager=pacman; package=perl-base |
+        command=perl; pkg_manager=nix; package=perl |
+        command=perl; pkg_manager=zypper; package=perl-base"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_skip_encoding='binary'; par_skip_extension='pdf|svg'")
     output_dir=$(_get_output_dir "par_use_same_dir=false")

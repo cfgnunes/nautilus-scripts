@@ -286,6 +286,7 @@ _get_dependencies() {
         command=compare; pkg_manager=apt; package=imagemagick |
         command=compare; pkg_manager=dnf; package=ImageMagick |
         command=compare; pkg_manager=pacman; package=imagemagick |
+        command=compare; pkg_manager=nix; package=imagemagick |
         command=compare; pkg_manager=zypper; package=ImageMagick |
         command=xdg-open; package=xdg-utils" ;;
     "diffpdf") dependencies="command=diffpdf" ;;

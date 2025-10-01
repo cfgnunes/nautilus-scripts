@@ -14,6 +14,7 @@ _main() {
         command=gpg; pkg_manager=apt; package=gnupg |
         command=gpg; pkg_manager=dnf; package=gnupg2 |
         command=gpg; pkg_manager=pacman; package=gnupg |
+        command=gpg; pkg_manager=nix; package=gnupg |
         command=gpg; pkg_manager=zypper; package=gpg2"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_mime='application/octet-stream|application/pgp-keys|text/plain'")
