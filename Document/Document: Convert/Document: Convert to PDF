@@ -58,6 +58,7 @@ _get_dependencies() {
         "inkscape") dependencies+="command=inkscape" ;;
         "latexmk")
             dependencies+="
+                command=latexmk |
                 pkg_manager=apt; package=texlive |
                 pkg_manager=apt; package=texlive-fonts-extra |
                 pkg_manager=apt; package=texlive-latex-extra |
