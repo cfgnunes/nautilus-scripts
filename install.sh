@@ -355,6 +355,8 @@ _step_install_dependencies() {
     fi
 
     if _command_exists "guix"; then
+        _command_exists "pgrep" || packages+="procps "
+
         # Package manager 'guix': For Guix systems (no root required).
         if [[ -n "$packages" ]]; then
             guix install $packages
