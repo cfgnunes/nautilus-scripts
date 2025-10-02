@@ -130,13 +130,17 @@ _check_dependencies() {
     # packages and prompts the user to install missing ones.
     #
     # Parameters:
-    #   - $1 (dependencies): A list of dependencies to check, formatted as a
-    #     '|' or '\n' delimited string. Each dependency can specify:
-    #     - "command": Optional. The name of the command to check in the shell.
-    #     - "package": Optional. The package of the command (if different).
-    #     - "pkg_manager": Optional. The specific package manager.
-    #     - "post_install": Optional. A command to be executed right after the
-    #     installation.
+    #   - $1 (dependencies): A string of key-value pairs that describe the
+    #     dependencies to check. The list can be '|' or '\n' delimited.
+    #
+    # Supported dependency keys:
+    #   - "command":        Optional. The shell command to check.
+    #   - "package":        Optional. The corresponding package name.
+    #   - "pkg_manager":    Optional. The specific package manager.
+    #   - "post_install":   Optional. A command to run immediately after
+    #                       installation.
+    #   - "package_check":  Optional. The package name used for verification
+    #                       after installation (may differ from "package").
     #
     # Examples:
     #   - _check_dependencies "
@@ -167,7 +171,8 @@ _check_dependencies() {
 
     [[ -z "$dependencies" ]] && return
 
-    # List of supported package managers to check for availability.
+    # The function will attempt to detect the first available package manager
+    # from this list. Once one is found, it will be used consistently.
     local apps=(
         "nix"
         "guix"
@@ -191,8 +196,7 @@ _check_dependencies() {
         # Evaluate the values parameters from the '$dependency' variable.
         eval "$dependency"
 
-        # Ignore installing the dependency,
-        # if exists the command in the shell.
+        # Skip installation if the command already exists in the system.
         if [[ -n "$command" ]] && _command_exists "$command"; then
             continue
         fi
