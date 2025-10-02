@@ -23,6 +23,7 @@ _main() {
     input_files=$(_get_files "par_type=file; par_select_extension=pdf")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
+    # Special handling for Nix environments.
     if _command_exists "nix-shell"; then
         local add_path=""
         # shellcheck disable=SC2016
