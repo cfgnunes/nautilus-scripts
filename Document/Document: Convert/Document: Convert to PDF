@@ -60,21 +60,27 @@ _get_dependencies() {
         "latexmk")
             dependencies+="
                 command=latexmk; pkg_manager=apt; package=latexmk |
+                command=latexmk; pkg_manager=dnf; package=latexmk |
+                pkg_manager=pacman; package=texlive-binextra"
+            dependencies+=$'\n'
+            dependencies+="
                 pkg_manager=apt; package=texlive |
                 pkg_manager=apt; package=texlive-fonts-extra |
                 pkg_manager=apt; package=texlive-latex-extra |
                 pkg_manager=apt; package=texlive-publishers |
                 pkg_manager=apt; package=texlive-science |
                 pkg_manager=apt; package=texlive-xetex |
-                command=latexmk; pkg_manager=dnf; package=latexmk |
-                pkg_manager=dnf; package=texlive-scheme-basic |
-                pkg_manager=dnf; package=texlive-mdwtools |
+                pkg_manager=dnf; package=texlive-base |
+                pkg_manager=dnf; package=texlive-collection-fontsextra |
+                pkg_manager=dnf; package=texlive-collection-latexextra |
+                pkg_manager=dnf; package=texlive-collection-publishers |
+                pkg_manager=dnf; package=texlive-collection-mathscience |
+                pkg_manager=dnf; package=texlive-collection-xetex |
                 pkg_manager=pacman; package=texlive-basic |
-                pkg_manager=pacman; package=texlive-binextra |
                 pkg_manager=pacman; package=texlive-fontsextra |
                 pkg_manager=pacman; package=texlive-latexextra |
-                pkg_manager=pacman; package=texlive-mathscience |
                 pkg_manager=pacman; package=texlive-publishers |
+                pkg_manager=pacman; package=texlive-mathscience |
                 pkg_manager=pacman; package=texlive-xetex |
                 pkg_manager=zypper; package=texlive |
                 pkg_manager=zypper; package=texlive-mathdesign |
@@ -117,22 +123,26 @@ _get_dependencies() {
             fi
             ;;
         "pandoc_latex")
+            dependencies+="command=pandoc"
+            dependencies+=$'\n'
             dependencies+="
-                command=pandoc |
                 pkg_manager=apt; package=texlive |
                 pkg_manager=apt; package=texlive-fonts-extra |
                 pkg_manager=apt; package=texlive-latex-extra |
                 pkg_manager=apt; package=texlive-publishers |
                 pkg_manager=apt; package=texlive-science |
                 pkg_manager=apt; package=texlive-xetex |
-                pkg_manager=dnf; package=texlive-scheme-basic |
-                pkg_manager=dnf; package=texlive-mdwtools |
+                pkg_manager=dnf; package=texlive-base |
+                pkg_manager=dnf; package=texlive-collection-fontsextra |
+                pkg_manager=dnf; package=texlive-collection-latexextra |
+                pkg_manager=dnf; package=texlive-collection-publishers |
+                pkg_manager=dnf; package=texlive-collection-mathscience |
+                pkg_manager=dnf; package=texlive-collection-xetex |
                 pkg_manager=pacman; package=texlive-basic |
-                pkg_manager=pacman; package=texlive-binextra |
                 pkg_manager=pacman; package=texlive-fontsextra |
                 pkg_manager=pacman; package=texlive-latexextra |
-                pkg_manager=pacman; package=texlive-mathscience |
                 pkg_manager=pacman; package=texlive-publishers |
+                pkg_manager=pacman; package=texlive-mathscience |
                 pkg_manager=pacman; package=texlive-xetex |
                 pkg_manager=zypper; package=texlive |
                 pkg_manager=zypper; package=texlive-mathdesign |
