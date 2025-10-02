@@ -86,6 +86,13 @@ _main() {
     local menu_selected=()
     local interactive_install="true"
 
+    # Prevent running the installer with sudo/root.
+    if [[ "$(id -u)" -eq 0 ]]; then
+        echo -e "$MSG_ERROR Do NOT run this script with 'sudo'!"
+        echo "Run it as: 'bash install.sh'"
+        exit 1
+    fi
+
     # Read parammeters from command line.
     if [[ $# -gt 0 ]]; then
         case "$1" in
