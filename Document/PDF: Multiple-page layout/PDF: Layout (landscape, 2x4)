@@ -13,7 +13,9 @@ _main() {
     _check_dependencies "
         command=pdfjam; pkg_manager=apt; package=texlive-extra-utils |
         command=pdfjam; pkg_manager=dnf; package=texlive-pdfjam |
+        command=pdfjam; pkg_manager=pacman; package=texlive-basic |
         command=pdfjam; pkg_manager=pacman; package=texlive-binextra |
+        command=pdfjam; pkg_manager=pacman; package=texlive-latexextra |
         command=pdfjam; pkg_manager=nix; package=texliveSmall; par_package_check=texlive |
         command=pdfjam; pkg_manager=nix; package=texlivePackages.pdfjam; par_package_check=pdfjam |
         command=pdfjam; pkg_manager=zypper; package=texlive-pdfjam-bin"
