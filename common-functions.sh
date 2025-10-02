@@ -175,7 +175,6 @@ _check_dependencies() {
     # from this list. Once one is found, it will be used consistently.
     local apps=(
         "nix"
-        "guix"
         "apt-get"
         "rpm-ostree"
         "dnf"
@@ -2353,7 +2352,6 @@ _pkg_install_packages() {
     #       - "pacman"      : For Arch Linux systems.
     #       - "zypper"      : For openSUSE systems.
     #       - "nix"         : For Nix-based systems.
-    #       - "guix"        : For GNU Guix systems.
     #   - $2 (packages): A space-separated list of package names to install.
     #   - $3 (post_install): An optional command to be executed right after the
     #     installation.
@@ -2403,9 +2401,6 @@ _pkg_install_packages() {
         # Nix does not require root for installing user packages.
         admin_cmd=""
         ;;
-    "guix")
-        cmd_install="guix package -i $packages &>/dev/null"
-        ;;
     esac
 
     # Install the packages.
@@ -2438,7 +2433,6 @@ _pkg_is_package_installed() {
     #       - "pacman"      : For Arch Linux systems.
     #       - "zypper"      : For openSUSE systems.
     #       - "nix"         : For Nix-based systems.
-    #       - "guix"        : For GNU Guix systems.
     #   - $2 (package): The name of the package to check.
     #
     # Returns:
@@ -2476,11 +2470,6 @@ _pkg_is_package_installed() {
         ;;
     "nix")
         if nix-env -q | grep --quiet "$package"; then
-            return 0
-        fi
-        ;;
-    "guix")
-        if guix package -I "$package" &>/dev/null; then
             return 0
         fi
         ;;
