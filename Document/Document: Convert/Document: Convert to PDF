@@ -66,6 +66,7 @@ _get_dependencies() {
                 pkg_manager=apt; package=texlive-publishers |
                 pkg_manager=apt; package=texlive-science |
                 pkg_manager=apt; package=texlive-xetex |
+                command=latexmk; pkg_manager=dnf; package=latexmk |
                 pkg_manager=dnf; package=texlive-scheme-basic |
                 pkg_manager=dnf; package=texlive-mdwtools |
                 pkg_manager=pacman; package=texlive-basic |
