@@ -152,6 +152,7 @@ _check_dependencies() {
 
     local dependencies=$1
     local packages_to_install=""
+    local packages_to_check=""
     local available_pkg_manager=""
 
     [[ -z "$dependencies" ]] && return
@@ -185,6 +186,7 @@ _check_dependencies() {
         local package=""
         local pkg_manager=""
         local post_install=""
+        local package_check=""
 
         # Evaluate the values parameters from the '$dependency' variable.
         eval "$dependency"
@@ -205,6 +207,12 @@ _check_dependencies() {
             fi
         fi
 
+        # Some systems use different names when installing and installed, such
+        # nix packages.
+        if [[ -z "$package_check" ]]; then
+            package_check="$package"
+        fi
+
         # Map some equivalent package managers.
         case "$pkg_manager:$available_pkg_manager" in
         "apt:apt-get" | "dnf:rpm-ostree")
@@ -222,7 +230,8 @@ _check_dependencies() {
         # Ignore installing the dependency if the package is already installed
         # (packages that do not have a shell command).
         if [[ -n "$package" ]] && [[ -z "$command" ]] &&
-            _pkg_is_package_installed "$available_pkg_manager" "$package"; then
+            _pkg_is_package_installed \
+                "$available_pkg_manager" "$package_check"; then
             continue
         fi
 
@@ -235,12 +244,17 @@ _check_dependencies() {
         # Add the package to the list to install.
         if [[ -n "$package" ]]; then
             packages_to_install+=" $package"
+            packages_to_check+=" $package_check"
         fi
     done
+    # Remove the first space added.
+    packages_to_install=$(sed "s|^ ||g" <<<"$packages_to_install")
+    packages_to_check=$(sed "s|^ ||g" <<<"$packages_to_check")
 
     # Ask the user to install the packages.
     if [[ -n "$packages_to_install" ]]; then
-        local message="These packages were not found:"
+        local message="These packages were not found:"$'\n'
+        message+="- "
         message+=$(sed "s| |\n- |g" <<<"$packages_to_install")
         message+=$'\n'$'\n'
         message+="Would you like to install them?"
@@ -248,7 +262,19 @@ _check_dependencies() {
             _exit_script
         fi
         _pkg_install_packages "$available_pkg_manager" \
-            "${packages_to_install/ /}" "$post_install"
+            "$packages_to_install" "$post_install"
+
+        # Check if all packages were installed.
+        packages_to_check=$(tr " " "$FIELD_SEPARATOR" <<<"$packages_to_check")
+        for package_check in $packages_to_check; do
+            if ! _pkg_is_package_installed \
+                "$available_pkg_manager" "$package_check"; then
+                _display_error_box \
+                    "Could not install the package '$package_check'!"
+                _exit_script
+            fi
+        done
+        _display_info_box "The packages have been successfully installed!"
     fi
 }
 
@@ -2393,18 +2419,6 @@ _pkg_install_packages() {
     fi
 
     _close_wait_box
-
-    # Check if all packages were installed.
-    packages=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
-    local package=""
-    for package in $packages; do
-        if ! _pkg_is_package_installed "$pkg_manager" "$package"; then
-            _display_error_box "Could not install the package '$package'!"
-            _exit_script
-        fi
-    done
-
-    _display_info_box "The packages have been successfully installed!"
 }
 
 _pkg_is_package_installed() {
