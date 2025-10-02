@@ -62,6 +62,7 @@ _get_dependencies() {
                 command=latexmk; pkg_manager=apt; package=latexmk |
                 command=latexmk; pkg_manager=dnf; package=latexmk |
                 pkg_manager=pacman; package=texlive-binextra |
+                pkg_manager=nix; package=texlivePackages.latexmk; par_package_check=latexmk |
                 command=latexmk; pkg_manager=zypper; package=texlive-latexmk"
             dependencies+=$'\n'
             dependencies+="
@@ -83,6 +84,7 @@ _get_dependencies() {
                 pkg_manager=pacman; package=texlive-publishers |
                 pkg_manager=pacman; package=texlive-mathscience |
                 pkg_manager=pacman; package=texlive-xetex |
+                pkg_manager=nix; package=texliveFull; par_package_check=texlive |
                 pkg_manager=zypper; texlive-collection-basic |
                 pkg_manager=zypper; texlive-collection-fontsextra |
                 pkg_manager=zypper; texlive-collection-latexextra |
@@ -148,6 +150,7 @@ _get_dependencies() {
                 pkg_manager=pacman; package=texlive-publishers |
                 pkg_manager=pacman; package=texlive-mathscience |
                 pkg_manager=pacman; package=texlive-xetex |
+                pkg_manager=nix; package=texliveFull; par_package_check=texlive |
                 pkg_manager=zypper; texlive-collection-basic |
                 pkg_manager=zypper; texlive-collection-fontsextra |
                 pkg_manager=zypper; texlive-collection-latexextra |
