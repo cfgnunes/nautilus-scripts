@@ -15,6 +15,7 @@ _main() {
         pkg_manager=apt; package=tesseract-ocr-$TEMP_DATA_TASK |
         pkg_manager=dnf; package=tesseract-langpack-$TEMP_DATA_TASK |
         pkg_manager=pacman; package=tesseract-data-$TEMP_DATA_TASK |
+        pkg_manager=nix; package=tesseract |
         pkg_manager=zypper; package=tesseract-ocr-traineddata-$TEMP_DATA_TASK"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_mime=image/; par_validate_conflict=true")
