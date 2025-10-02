@@ -399,6 +399,14 @@ _step_install_dependencies() {
                 sudo apt-get update
                 sudo apt-get -y install $packages
             fi
+        elif _command_exists "rpm-ostree"; then
+            # Package manager 'rpm-ostree': For Fedora/RHEL atomic systems.
+            _command_exists "pgrep" || packages+="procps-ng "
+            _command_exists "pkexec" || packages+="polkit "
+
+            if [[ -n "$packages" ]]; then
+                sudo rpm-ostree install --apply-live $packages
+            fi
         elif _command_exists "dnf"; then
             # Package manager 'dnf': For Fedora/RHEL systems.
             _command_exists "pgrep" || packages+="procps-ng "
