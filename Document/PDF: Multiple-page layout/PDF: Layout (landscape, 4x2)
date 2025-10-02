@@ -14,8 +14,8 @@ _main() {
         command=pdfjam; pkg_manager=apt; package=texlive-extra-utils |
         command=pdfjam; pkg_manager=dnf; package=texlive-pdfjam |
         command=pdfjam; pkg_manager=pacman; package=texlive-binextra |
-        command=latex; pkg_manager=nix; package=texliveSmall |
-        command=latex; pkg_manager=nix; package=texlivePackages.pdfjam |
+        pkg_manager=nix; package=texliveSmall; package_check=texlive |
+        pkg_manager=nix; package=texlivePackages.pdfjam; package_check=pdfjam |
         command=pdfjam; pkg_manager=zypper; package=texlive-pdfjam-bin"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_extension=pdf")
