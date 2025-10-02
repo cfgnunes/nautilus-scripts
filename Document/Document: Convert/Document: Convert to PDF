@@ -72,7 +72,6 @@ _get_dependencies() {
                 pkg_manager=pacman; package=texlive-basic |
                 pkg_manager=pacman; package=texlive-binextra |
                 pkg_manager=pacman; package=texlive-fontsextra |
-                pkg_manager=pacman; package=texlive-latex |
                 pkg_manager=pacman; package=texlive-latexextra |
                 pkg_manager=pacman; package=texlive-mathscience |
                 pkg_manager=pacman; package=texlive-publishers |
@@ -131,7 +130,6 @@ _get_dependencies() {
                 pkg_manager=pacman; package=texlive-basic |
                 pkg_manager=pacman; package=texlive-binextra |
                 pkg_manager=pacman; package=texlive-fontsextra |
-                pkg_manager=pacman; package=texlive-latex |
                 pkg_manager=pacman; package=texlive-latexextra |
                 pkg_manager=pacman; package=texlive-mathscience |
                 pkg_manager=pacman; package=texlive-publishers |
