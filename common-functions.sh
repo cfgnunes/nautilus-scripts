@@ -367,7 +367,7 @@ _convert_delimited_string_to_text() {
     #
     # Parameters:
     #   - $1 (input_items): A string containing items separated by the
-    #   '$FIELD_SEPARATOR' variable.
+    #     '$FIELD_SEPARATOR' variable.
     #
     # Returns:
     #   - A string containing the items separated by newlines.
@@ -567,7 +567,7 @@ _display_list_box() {
     # Parameters:
     #   - $1 (message): A string containing the items to display in the list.
     #   - $1 (parameters): A string containing key-value pairs that configure
-    #   the function's behavior. Example: 'par_item_name=files'.
+    #     the function's behavior. Example: 'par_item_name=files'.
     #
     # Parameters options:
     #   - "par_columns": Column definitions for the list, typically in the
@@ -1399,8 +1399,8 @@ _get_filename_next_suffix() {
     #
     # Parameters:
     #   - $1 (filename): The input filename or path. This can be an absolute or
-    #   relative filename. If the input file has an extension, it will be
-    #   stripped for the purpose of generating the new filename.
+    #     relative filename. If the input file has an extension, it will be
+    #     stripped for the purpose of generating the new filename.
 
     local filename=$1
     local filename_result=$filename
@@ -1466,7 +1466,7 @@ _get_files() {
     #
     # Parameters:
     #   - $1 (parameters): A string containing key-value pairs that configure
-    #   the function's behavior. Example: 'par_type=file; par_min_items=2'.
+    #     the function's behavior. Example: 'par_type=file; par_min_items=2'.
     #
     # Parameters options:
     #   - "par_type": Specifies the type of items to filter:
@@ -1704,7 +1704,7 @@ _get_output_dir() {
     #
     # Parameters:
     #   - $1 (parameters): A string containing key-value pairs that configure
-    #   the function's behavior. Example: 'par_use_same_dir=true'.
+    #     the function's behavior. Example: 'par_use_same_dir=true'.
     #
     # Parameters options:
     #   - "par_use_same_dir": If set to 'true', the function uses the base
@@ -2955,8 +2955,8 @@ _validate_conflict_filenames() {
     #
     # Parameters:
     #   - $1 (input_files): A string containing a list of file paths, where
-    #       each file path can include extensions. This list is checked for
-    #       duplicates based on the base file name (excluding extensions).
+    #     each file path can include extensions. This list is checked for
+    #     duplicates based on the base file name (excluding extensions).
     #
     # Example:
     #   - Input: "file1.txt file2.txt file1.jpg"
@@ -2993,13 +2993,13 @@ _validate_file_mime() {
     #
     # Parameters:
     #   - $1 (input_file): The path to the file that is being validated. This
-    #       is the file whose MIME type will be checked.
+    #     is the file whose MIME type will be checked.
     #   - $2 (par_select_mime): A MIME type pattern (or regular expression)
-    #       used to validate the file's MIME type. If this parameter is empty,
-    #       MIME type validation is skipped.
+    #     used to validate the file's MIME type. If this parameter is empty,
+    #     MIME type validation is skipped.
     #   - $3 (par_skip_encoding): An optional encoding pattern (or regular
-    #       expression) used to validate the file's encoding. If this parameter
-    #       is empty, encoding validation is skipped.
+    #     expression) used to validate the file's encoding. If this parameter
+    #     is empty, encoding validation is skipped.
 
     local input_file=$1
     local par_select_mime=$2
@@ -3038,12 +3038,12 @@ _validate_file_mime_parallel() {
     #     the files to validate. These files will be checked for the MIME type
     #     pattern.
     #   - $2 (par_select_mime): The MIME type pattern (or regular expression)
-    #       used to validate the files' MIME types. If this parameter is empty,
-    #       no MIME type validation is performed, and all input files are
-    #       returned as valid.
+    #     used to validate the files' MIME types. If this parameter is empty,
+    #     no MIME type validation is performed, and all input files are
+    #     returned as valid.
     #   - $3 (par_skip_encoding): An optional encoding pattern (or regular
-    #       expression) used to validate the files' encodings. If this
-    #       parameter is empty, no encoding validation is performed.
+    #     expression) used to validate the files' encodings. If this parameter
+    #     is empty, no encoding validation is performed.
     #
     # Example:
     #   - Input: File paths "file1.txt file2.png", MIME pattern "text/plain".
