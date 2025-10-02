@@ -14,6 +14,8 @@ _main() {
         command=pdfjam; pkg_manager=apt; package=texlive-extra-utils |
         command=pdfjam; pkg_manager=dnf; package=texlive-pdfjam |
         command=pdfjam; pkg_manager=pacman; package=texlive-binextra |
+        command=latex; pkg_manager=nix; package=texliveSmall |
+        command=latex; pkg_manager=nix; package=texlivePackages.pdfjam |
         command=pdfjam; pkg_manager=zypper; package=texlive-pdfjam-bin"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_extension=pdf")
@@ -30,6 +32,11 @@ _main_task() {
     local output_file=""
     local std_output=""
     local layout="4x2"
+
+    if _command_exists "nix-shell"; then
+        # shellcheck disable=SC2016
+        PATH=$(nix-shell -p texlivePackages.pdfjam --run 'echo $PATH')
+    fi
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(landscape, $layout)'")
