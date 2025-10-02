@@ -132,19 +132,23 @@ _check_dependencies() {
     # Parameters:
     #   - $1 (dependencies): A list of dependencies to check, formatted as a
     #     '|' or '\n' delimited string. Each dependency can specify:
-    #     - "command": The name of a command to check for in the shell.
-    #     - "package": The package associated with the command (if different).
+    #     - "command": Optional. The name of the command to check in the shell.
+    #     - "package": Optional. The package of the command (if different).
     #     - "pkg_manager": Optional. The specific package manager.
     #     - "post_install": Optional. A command to be executed right after the
     #     installation.
     #
-    # Example:
+    # Examples:
     #   - _check_dependencies "
     #       command=ffmpeg; pkg_manager=apt; package=ffmpeg |
     #       command=ffmpeg; pkg_manager=dnf; package=ffmpeg-free |
     #       command=ffmpeg; pkg_manager=pacman; package=ffmpeg |
     #       command=ffmpeg; pkg_manager=nix; package=ffmpeg |
     #       command=ffmpeg; pkg_manager=zypper; package=ffmpeg"
+    #
+    #   - _check_dependencies "command=zip"
+    #
+    #   - _check_dependencies "pkg_manager=apt; package=tesseract-ocr-eng"
 
     local dependencies=$1
     local packages_to_install=""
