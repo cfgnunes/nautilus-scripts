@@ -2353,8 +2353,8 @@ _pkg_install_packages() {
         cmd_install+="zypper --non-interactive install $packages &>/dev/null"
         ;;
     "nix")
-        local nix_channel="nixpkgs"
         local nix_packages=""
+        local nix_channel="nixpkgs"
         if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
             nix_channel="nixos"
         fi

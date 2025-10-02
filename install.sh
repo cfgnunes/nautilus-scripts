@@ -354,13 +354,13 @@ _step_install_dependencies() {
         fi
     fi
 
-    if _command_exists "nix"; then
+    if _command_exists "nix-env"; then
         _command_exists "pgrep" || packages+="procps "
 
         # Package manager 'nix': no root required.
         if [[ -n "$packages" ]]; then
-            local nix_channel="nixpkgs"
             local nix_packages=""
+            local nix_channel="nixpkgs"
             if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
                 nix_channel="nixos"
             fi
