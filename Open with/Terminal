@@ -14,6 +14,7 @@ _main() {
     input_files=$(_get_files "par_type=directory; par_max_items=20")
     _unset_global_variables_file_manager
 
+    # Run the main process.
     _open_app "$input_files"
 }
 

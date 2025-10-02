@@ -34,6 +34,7 @@ _main_task() {
     key_id=$(gpg --with-colons --import-options show-only --import "$input_file" |
         grep -m1 "^fpr" | cut -d ':' -f 10 2>/dev/null)
 
+    # Run the main process.
     # Import the key.
     std_output=$(gpg --batch --yes --import "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1

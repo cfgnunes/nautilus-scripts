@@ -13,7 +13,7 @@ _main() {
     _display_wait_box "2"
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
-    # Save the clipboard to file.
+    # Run the main process.
     _save_file_from_clipboard "$output_dir"
 
     _display_result_box "$output_dir"

@@ -30,6 +30,7 @@ _main() {
     # with 'bash -c'.
     checksum_file=$(sed -z "s|'|'\\\''|g" <"$input_files")
 
+    # Execute the function '_verify_checksum' for each file in parallel.
     printf "%s" "$checksum_file" | xargs \
         --no-run-if-empty \
         --delimiter=$'\n' \
@@ -69,6 +70,7 @@ _verify_checksum() {
         return 1
     fi
 
+    # Run the main process.
     current_output=$(sha512sum -- "$saved_file_decoded" 2>/dev/null)
     current_checksum=$(printf "%s" "$current_output" | cut -d " " -f1)
 

@@ -42,7 +42,7 @@ _main_task() {
     temp_file3="$(_get_temp_file_dry).png"
     temp_file4="$(_get_temp_file_dry).png"
 
-    # Run the process (part 0) 'export svg'.
+    # Run the main process (part 0) 'export svg'.
     local filename_extension=""
     local input_file_proc=""
     filename_extension=$(_get_filename_extension "$input_file")
@@ -75,7 +75,7 @@ _main_task() {
         input_file_proc=$input_file
     fi
 
-    # Run the process (part 1) 'get information of the image'.
+    # Run the main process (part 1) 'get information of the image'.
     local first_pixel_color=""
     first_pixel_color=$(convert "$input_file_proc" -format "%[pixel:p{0,0}]" "info:" 2>&1)
     _check_output "$?" "$first_pixel_color" "$input_file" "" || return 1
@@ -89,11 +89,11 @@ _main_task() {
     _check_output "$?" "$last_pixel_color" "$input_file" "" || return 1
 
     if [[ "$first_pixel_color" == "$last_pixel_color" ]]; then
-        # Run the process (part 2) 'automatic crop the content'.
+        # Run the main process (part 2) 'automatic crop the content'.
         std_output=$(convert "$input_file_proc" -trim +repage "$temp_file1" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$temp_file1" || return 1
 
-        # Run the process (part 3) 'extend to square'.
+        # Run the main process (part 3) 'extend to square'.
         std_output=$(convert "$temp_file1" \
             -set option:distort:viewport "%[fx:max(w,h)]x%[fx:max(w,h)]+%[fx:(w-max(w,h))/2]+%[fx:(h-max(w,h))/2]" \
             -virtual-pixel transparent -filter point -distort SRT 0 -bordercolor "$first_pixel_color" \
@@ -105,7 +105,7 @@ _main_task() {
             "$temp_file2" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$temp_file2" || return 1
 
-        # Run the process (part 4) 'extend 14%' to add a border.
+        # Run the main process (part 4) 'extend 14%' to add a border.
         local factor="1.14"
         std_output=$(convert "$temp_file2" \
             -set option:distort:viewport "%[fx:(w*$factor)]x%[fx:(h*$factor)]+%[fx:(w-(w*$factor))/2]+%[fx:(h-(h*$factor))/2]" \
@@ -123,7 +123,7 @@ _main_task() {
         input_file_proc=$temp_file3
     fi
 
-    # Run the process (part 5) 'resize and crop the final image' to add a border.
+    # Run the main process (part 5) 'resize and crop the final image' to add a border.
     std_output=$(convert "$input_file_proc" \
         -resize "${icon_size}x${icon_size}^" \
         -gravity center \

@@ -41,18 +41,18 @@ _main_task() {
     temp_file1=$(_get_temp_file)
     temp_file2=$(_get_temp_file)
 
-    # Run the process (part 1) 'convert encoding to utf-8'.
+    # Run the main process (part 1) 'convert encoding to utf-8'.
     std_output=$(iconv -f "$(_get_file_encoding "$input_file")" "$input_file" -t utf-8 -o "$temp_file1")
     _check_output "$?" "$std_output" "$input_file" "$temp_file1" || return 1
 
-    # Run the process (part 2) 'convert line breaks to Windows'.
+    # Run the main process (part 2) 'convert line breaks to Windows'.
     perl -pe "s/\r\n|\n|\r/\r\n/g" "$temp_file1" >"$temp_file2" 2>/dev/null
     _check_output "$?" "$std_output" "$input_file" "$temp_file2" || return 1
 
-    # Run the process (part 3) 'remove trailing spaces'.
+    # Run the main process (part 3) 'remove trailing spaces'.
     sed -i "s|[ \t]*\(\r*\)$|\1|" "$temp_file2"
 
-    # Run the process (part 4) 'remove the empty line in EOF'.
+    # Run the main process (part 4) 'remove the empty line in EOF'.
     printf "\n" >>"$temp_file2"
     sed -i ':Loop;N;$!bLoop;s|\n*$||g' "$temp_file2"
 

@@ -41,6 +41,7 @@ _main_task() {
     # Extract hostname and port from the input URL (default port: 443).
     host=$(sed -E 's#^https?://##; s#/.*##' <<<"$input_file")
 
+    # Run the main process.
     # Retrieve the remote SSL certificate and extract its expiration date.
     end_date=$(timeout "$timeout_value" bash -c \
         "echo | openssl s_client -servername \"$host\" \
