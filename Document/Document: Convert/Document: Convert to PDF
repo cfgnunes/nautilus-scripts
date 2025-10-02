@@ -83,7 +83,7 @@ _get_dependencies() {
                 pkg_manager=pacman; package=texlive-publishers |
                 pkg_manager=pacman; package=texlive-mathscience |
                 pkg_manager=pacman; package=texlive-xetex |
-                pkg_manager=zypper; texlive_collection_basic |
+                pkg_manager=zypper; texlive-collection-basic |
                 pkg_manager=zypper; texlive-collection-fontsextra |
                 pkg_manager=zypper; texlive-collection-latexextra |
                 pkg_manager=zypper; texlive-collection-publishers |
@@ -148,7 +148,7 @@ _get_dependencies() {
                 pkg_manager=pacman; package=texlive-publishers |
                 pkg_manager=pacman; package=texlive-mathscience |
                 pkg_manager=pacman; package=texlive-xetex |
-                pkg_manager=zypper; texlive_collection_basic |
+                pkg_manager=zypper; texlive-collection-basic |
                 pkg_manager=zypper; texlive-collection-fontsextra |
                 pkg_manager=zypper; texlive-collection-latexextra |
                 pkg_manager=zypper; texlive-collection-publishers |
