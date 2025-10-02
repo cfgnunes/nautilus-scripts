@@ -61,7 +61,8 @@ _get_dependencies() {
             dependencies+="
                 command=latexmk; pkg_manager=apt; package=latexmk |
                 command=latexmk; pkg_manager=dnf; package=latexmk |
-                pkg_manager=pacman; package=texlive-binextra"
+                pkg_manager=pacman; package=texlive-binextra |
+                command=latexmk; pkg_manager=zypper; package=texlive-latexmk"
             dependencies+=$'\n'
             dependencies+="
                 pkg_manager=apt; package=texlive |
@@ -82,9 +83,12 @@ _get_dependencies() {
                 pkg_manager=pacman; package=texlive-publishers |
                 pkg_manager=pacman; package=texlive-mathscience |
                 pkg_manager=pacman; package=texlive-xetex |
-                pkg_manager=zypper; package=texlive |
-                pkg_manager=zypper; package=texlive-mathdesign |
-                pkg_manager=zypper; package=texlive-subeqnarray"
+                pkg_manager=zypper; texlive_collection_basic |
+                pkg_manager=zypper; texlive-collection-fontsextra |
+                pkg_manager=zypper; texlive-collection-latexextra |
+                pkg_manager=zypper; texlive-collection-publishers |
+                pkg_manager=zypper; texlive-collection-mathscience |
+                pkg_manager=zypper; texlive-collection-xetex"
             ;;
         "libreoffice_calc")
             if ! _command_exists "libreoffice.calc" &&
@@ -144,9 +148,12 @@ _get_dependencies() {
                 pkg_manager=pacman; package=texlive-publishers |
                 pkg_manager=pacman; package=texlive-mathscience |
                 pkg_manager=pacman; package=texlive-xetex |
-                pkg_manager=zypper; package=texlive |
-                pkg_manager=zypper; package=texlive-mathdesign |
-                pkg_manager=zypper; package=texlive-subeqnarray"
+                pkg_manager=zypper; texlive_collection_basic |
+                pkg_manager=zypper; texlive-collection-fontsextra |
+                pkg_manager=zypper; texlive-collection-latexextra |
+                pkg_manager=zypper; texlive-collection-publishers |
+                pkg_manager=zypper; texlive-collection-mathscience |
+                pkg_manager=zypper; texlive-collection-xetex"
             ;;
         "pandoc") dependencies+="command=pandoc" ;;
         esac
