@@ -88,8 +88,10 @@ _main() {
 
     # Prevent running the installer with sudo/root.
     if [[ "$(id -u)" -eq 0 ]]; then
+        local script_name=""
+        script_name=$(basename "$0")
         echo -e "$MSG_ERROR Do NOT run this script with 'sudo'!"
-        echo "Run it as: 'bash install.sh'"
+        echo "Run it as: 'bash $script_name'"
         exit 1
     fi
 
