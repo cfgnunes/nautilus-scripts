@@ -158,7 +158,7 @@ _get_dependencies() {
             command=unsquashfs; pkg_manager=apt; package=squashfs-tools |
             command=unsquashfs; pkg_manager=dnf; package=squashfs-tools |
             command=unsquashfs; pkg_manager=pacman; package=squashfs-tools |
-            command=unsquashfs; pkg_manager=nix; package=squashfsTools; package_check=squashfs |
+            command=unsquashfs; pkg_manager=nix; package=squashfsTools; par_package_check=squashfs |
             command=unsquashfs; pkg_manager=zypper; package=squashfs"
         ;;
     "unzip") dependencies+="command=unzip" ;;

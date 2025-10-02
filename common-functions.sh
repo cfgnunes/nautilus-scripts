@@ -139,7 +139,7 @@ _check_dependencies() {
     #   - "pkg_manager":    Optional. The specific package manager.
     #   - "post_install":   Optional. A command to run immediately after
     #                       installation.
-    #   - "package_check":  Optional. The package name used for verification
+    #   - "par_package_check": Optional. The package name used for verification
     #                       after installation (may differ from "package").
     #
     # Examples:
@@ -191,7 +191,7 @@ _check_dependencies() {
         local package=""
         local pkg_manager=""
         local post_install=""
-        local package_check=""
+        local par_package_check=""
 
         # Evaluate the values parameters from the '$dependency' variable.
         eval "$dependency"
@@ -213,8 +213,8 @@ _check_dependencies() {
 
         # Some systems use different names when installing and installed, such
         # nix packages.
-        if [[ -z "$package_check" ]]; then
-            package_check="$package"
+        if [[ -z "$par_package_check" ]]; then
+            par_package_check="$package"
         fi
 
         # Map some equivalent package managers.
@@ -235,7 +235,7 @@ _check_dependencies() {
         # (packages that do not have a shell command).
         if [[ -n "$package" ]] && [[ -z "$command" ]] &&
             _pkg_is_package_installed \
-                "$available_pkg_manager" "$package_check"; then
+                "$available_pkg_manager" "$par_package_check"; then
             continue
         fi
 
@@ -248,7 +248,7 @@ _check_dependencies() {
         # Add the package to the list to install.
         if [[ -n "$package" ]]; then
             packages_to_install+=" $package"
-            packages_to_check+=" $package_check"
+            packages_to_check+=" $par_package_check"
         fi
     done
     # Remove the first space added.
@@ -270,11 +270,11 @@ _check_dependencies() {
 
         # Check if all packages were installed.
         packages_to_check=$(tr " " "$FIELD_SEPARATOR" <<<"$packages_to_check")
-        for package_check in $packages_to_check; do
+        for par_package_check in $packages_to_check; do
             if ! _pkg_is_package_installed \
-                "$available_pkg_manager" "$package_check"; then
+                "$available_pkg_manager" "$par_package_check"; then
                 _display_error_box \
-                    "Could not install the package '$package_check'!"
+                    "Could not install the package '$par_package_check'!"
                 _exit_script
             fi
         done
