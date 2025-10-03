@@ -1100,7 +1100,7 @@ _close_wait_box() {
 
     # Check if 'wait box' is opened or will open.
     if [[ -f "$TEMP_CONTROL_WAIT_BOX" ]]; then
-        wait_box_type=$(cat -- "$TEMP_CONTROL_WAIT_BOX" 2>/dev/null)
+        wait_box_type=$(<"$TEMP_CONTROL_WAIT_BOX")
 
         # Cancel the future open of any 'wait box'.
         rm -f -- "$TEMP_CONTROL_WAIT_BOX"
