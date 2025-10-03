@@ -267,20 +267,29 @@ _check_dependencies() {
         _pkg_install_packages "$available_pkg_manager" \
             "$packages_to_install" "$post_install"
 
-        # Check if all packages were installed.
+        # Iterate over each package to check installation status.
         packages_to_check=$(tr " " "$FIELD_SEPARATOR" <<<"$packages_to_check")
         for par_package_check in $packages_to_check; do
             if ! _pkg_is_package_installed \
                 "$available_pkg_manager" "$par_package_check"; then
-                if command -v rpm-ostree &>/dev/null && rpm-ostree status --json | jq -r '.deployments[0].packages[]' | grep -Fxq "$par_package_check"; then
-                     _display_info_box \
-                         "The package '$par_package_check' is installed but you need to reboot to use it"
-                    _exit_script
-                else
-                    _display_error_box \
-                        "Could not install the package '$par_package_check'!"
+
+                # Special case for 'rpm-ostree': If the package appears in the
+                # rpm-ostree deployment list, it means it is installed but
+                # requires a system reboot to take effect.
+                if [[ "$available_pkg_manager" == "rpm-ostree" ]] &&
+                    rpm-ostree status --json |
+                    jq -r ".deployments[0].packages[]" |
+                        grep -Fxq "$par_package_check"; then
+                    _display_info_box \
+                        "The package '$par_package_check' is installed but you need to reboot to use it!"
                     _exit_script
                 fi
+
+                # If the package could not be installed,
+                # show an error and stop execution.
+                _display_error_box \
+                    "Could not install the package '$par_package_check'!"
+                _exit_script
             fi
         done
         _display_info_box "The packages have been successfully installed!"
