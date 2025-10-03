@@ -272,9 +272,14 @@ _check_dependencies() {
         for par_package_check in $packages_to_check; do
             if ! _pkg_is_package_installed \
                 "$available_pkg_manager" "$par_package_check"; then
-                _display_error_box \
-                    "Could not install the package '$par_package_check'!"
-                _exit_script
+                if command -v rpm-ostree &>/dev/null && rpm-ostree status --json | jq -r '.deployments[0].packages[]' | grep -Fxq "$par_package_check"; then
+                     _display_info_box \
+                         "The package '$par_package_check' is installed but you need to reboot to use it"
+                else
+                    _display_error_box \
+                        "Could not install the package '$par_package_check'!"
+                    _exit_script
+                fi
             fi
         done
         _display_info_box "The packages have been successfully installed!"
