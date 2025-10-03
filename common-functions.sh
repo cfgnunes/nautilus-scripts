@@ -275,6 +275,7 @@ _check_dependencies() {
                 if command -v rpm-ostree &>/dev/null && rpm-ostree status --json | jq -r '.deployments[0].packages[]' | grep -Fxq "$par_package_check"; then
                      _display_info_box \
                          "The package '$par_package_check' is installed but you need to reboot to use it"
+                    _exit_script
                 else
                     _display_error_box \
                         "Could not install the package '$par_package_check'!"
