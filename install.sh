@@ -398,7 +398,7 @@ _step_install_dependencies() {
             _command_exists "pkexec" || packages+="polkit "
 
             if [[ -n "$packages" ]]; then
-                sudo rpm-ostree install --apply-live $packages
+                sudo rpm-ostree install $packages
             fi
         elif _command_exists "dnf"; then
             # Package manager 'dnf': For Fedora/RHEL systems.
