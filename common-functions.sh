@@ -2380,7 +2380,7 @@ _pkg_install_packages() {
         cmd_install+="dnf -y install $packages &>/dev/null"
         ;;
     "rpm-ostree")
-        cmd_install+="rpm-ostree install --apply-live $packages &>/dev/null"
+        cmd_install+="rpm-ostree install $packages &>/dev/null"
         ;;
     "pacman")
         cmd_install+="pacman -Syy;"
