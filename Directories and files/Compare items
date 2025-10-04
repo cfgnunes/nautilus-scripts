@@ -223,7 +223,6 @@ _compare_imagemagick() {
 
     # Determine the default image viewer to display the visual diff.
     local image_viewer=""
-    _dependencies_check_commands "xdg-open"
     image_viewer=$(_xdg_get_default_app "image/jpeg")
 
     # Open the visual diff with the default image viewer.
@@ -287,8 +286,7 @@ _get_dependencies() {
         command=compare; pkg_manager=dnf; package=ImageMagick |
         command=compare; pkg_manager=pacman; package=imagemagick |
         command=compare; pkg_manager=nix; package=imagemagick |
-        command=compare; pkg_manager=zypper; package=ImageMagick |
-        command=xdg-open; package=xdg-utils" ;;
+        command=compare; pkg_manager=zypper; package=ImageMagick" ;;
     "diffpdf") dependencies="command=diffpdf" ;;
     "kdiff3") dependencies="command=kdiff3" ;;
     "kdiff3_hex") dependencies="command=kdiff3 | command=xxd" ;;

@@ -37,7 +37,6 @@ _main() {
     elif _command_exists "geany"; then
         geany -- $input_files &
     else
-        _dependencies_check_commands "xdg-open"
         $(_xdg_get_default_app "text/plain") -- $input_files &
     fi
 }
