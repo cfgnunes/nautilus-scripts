@@ -1051,14 +1051,22 @@ _step_close_filemanager() {
     # gracefully.
 
     case "$FILE_MANAGER" in
-    "nautilus" | "caja" | "nemo" | "thunar")
+    "nautilus" | "nemo" | "thunar")
         echo -e "$MSG_INFO Closing the file manager '$FILE_MANAGER' to reload its configurations..."
-        $FILE_MANAGER -q &>/dev/null &
+        # Close the file manager.
+        $FILE_MANAGER -q &>/dev/null
+        ;;
+    "caja")
+        echo -e "$MSG_INFO Closing the file manager '$FILE_MANAGER' to reload its configurations..."
+        # Close the file manager.
+        caja -q &>/dev/null
+        # Reload Caja in background to restore desktop icons.
+        caja --force-desktop --no-default-window &>/dev/null &
         ;;
     "pcmanfm-qt")
         echo -e "$MSG_INFO Closing the file manager '$FILE_MANAGER' to reload its configurations..."
         # FIXME: Restore desktop after kill PCManFM-Qt.
-        killall "$FILE_MANAGER" &>/dev/null &
+        killall "$FILE_MANAGER" &>/dev/null
         ;;
     esac
 }
