@@ -9,7 +9,7 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _check_dependencies "command=git | command=xdg-open; package=xdg-utils"
+    _dependencies_check_commands "xdg-open,git"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=directory; par_max_items=20")
 
