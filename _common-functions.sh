@@ -145,8 +145,8 @@ _check_dependencies() {
     #                       after installation (may differ from "package").
 
     local dependencies=$1
-    local packages_to_install=""
-    local packages_to_check=""
+    local packages_install=""
+    local packages_check=""
     local available_pkg_manager=""
 
     [[ -z "$dependencies" ]] && return
@@ -236,29 +236,29 @@ _check_dependencies() {
 
         # Add the package to the list to install.
         if [[ -n "$package" ]]; then
-            packages_to_install+=" $package"
-            packages_to_check+=" $par_package_check"
+            packages_install+=" $package"
+            packages_check+=" $par_package_check"
         fi
     done
 
     # Remove the first space added.
-    packages_to_install=$(sed "s|^ ||g" <<<"$packages_to_install")
-    packages_to_check=$(sed "s|^ ||g" <<<"$packages_to_check")
+    packages_install=$(sed "s|^ ||g" <<<"$packages_install")
+    packages_check=$(sed "s|^ ||g" <<<"$packages_check")
 
     # Ask the user to install the packages.
-    if [[ -n "$packages_to_install" ]]; then
+    if [[ -n "$packages_install" ]]; then
         local message="These packages were not found:"$'\n'
         message+="- "
-        message+=$(sed "s| |\n- |g" <<<"$packages_to_install")
+        message+=$(sed "s| |\n- |g" <<<"$packages_install")
         message+=$'\n'$'\n'
         message+="Would you like to install them?"
         if ! _display_question_box "$message"; then
             _exit_script
         fi
         _deps_install_packages \
-            "$available_pkg_manager" "$packages_to_install" "$post_install"
+            "$available_pkg_manager" "$packages_install" "$post_install"
         _deps_installation_check \
-            "$available_pkg_manager" "$packages_to_check"
+            "$available_pkg_manager" "$packages_check"
     fi
 }
 
@@ -347,8 +347,8 @@ _dependencies_check_commands() {
     #     either by a comma ',' or by a newline '\n'.
 
     local commands=$1
-    local packages_to_install=""
-    local packages_to_check=""
+    local packages_install=""
+    local packages_check=""
     local available_pkg_manager=""
 
     [[ -z "$commands" ]] && return
@@ -417,29 +417,29 @@ _dependencies_check_commands() {
 
         # Add the package to the list to install.
         if [[ -n "$package" ]]; then
-            packages_to_install+=" $package"
-            packages_to_check+=" $par_package_check"
+            packages_install+=" $package"
+            packages_check+=" $par_package_check"
         fi
     done
 
     # Remove the first space added.
-    packages_to_install=$(sed "s|^ ||g" <<<"$packages_to_install")
-    packages_to_check=$(sed "s|^ ||g" <<<"$packages_to_check")
+    packages_install=$(sed "s|^ ||g" <<<"$packages_install")
+    packages_check=$(sed "s|^ ||g" <<<"$packages_check")
 
     # Ask the user to install the packages.
-    if [[ -n "$packages_to_install" ]]; then
+    if [[ -n "$packages_install" ]]; then
         local message="These packages were not found:"$'\n'
         message+="- "
-        message+=$(sed "s| |\n- |g" <<<"$packages_to_install")
+        message+=$(sed "s| |\n- |g" <<<"$packages_install")
         message+=$'\n'$'\n'
         message+="Would you like to install them?"
         if ! _display_question_box "$message"; then
             _exit_script
         fi
         _deps_install_packages \
-            "$available_pkg_manager" "$packages_to_install" "$post_install"
+            "$available_pkg_manager" "$packages_install" "$post_install"
         _deps_installation_check \
-            "$available_pkg_manager" "$packages_to_check"
+            "$available_pkg_manager" "$packages_check"
     fi
 }
 
@@ -615,16 +615,16 @@ _deps_installation_check() {
     # Parameters:
     #   - $1 (available_pkg_manager): The package manager to use for
     #     installation verification.
-    #   - $2 (packages_to_check): A space-separated string containing the names
+    #   - $2 (packages_check): A space-separated string containing the names
     #     of packages that should be checked for successful installation.
 
     local available_pkg_manager=$1
-    local packages_to_check=$2
+    local packages_check=$2
 
     # Iterate over each package to check installation status.
-    packages_to_check=$(tr " " "$FIELD_SEPARATOR" <<<"$packages_to_check")
+    packages_check=$(tr " " "$FIELD_SEPARATOR" <<<"$packages_check")
     local par_package_check=""
-    for par_package_check in $packages_to_check; do
+    for par_package_check in $packages_check; do
         if ! _deps_is_package_installed \
             "$available_pkg_manager" "$par_package_check"; then
 
