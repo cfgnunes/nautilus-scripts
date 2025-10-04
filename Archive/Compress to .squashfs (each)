@@ -10,12 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "
-        command=mksquashfs; pkg_manager=apt; package=squashfs-tools |
-        command=mksquashfs; pkg_manager=dnf; package=squashfs-tools |
-        command=mksquashfs; pkg_manager=pacman; package=squashfs-tools |
-        command=mksquashfs; pkg_manager=nix; package=squashfsTools; par_package_check=squashfs |
-        command=mksquashfs; pkg_manager=zypper; package=squashfs"
+    _dependencies_check_commands "mksquashfs"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all; par_validate_conflict=true")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
