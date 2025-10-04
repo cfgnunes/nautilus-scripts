@@ -92,6 +92,30 @@ declare -A PACKAGE_NAME=(
         *:lhasa
     "
 
+    ["localc"]="
+        apt:libreoffice-calc
+        dnf:libreoffice-calc
+        pacman:libreoffice
+        nix:libreoffice
+        zypper:libreoffice-calc
+    "
+
+    ["loimpress"]="
+        apt:libreoffice-impress
+        dnf:libreoffice-impress
+        pacman:libreoffice
+        nix:libreoffice
+        zypper:libreoffice-impress
+    "
+
+    ["lowriter"]="
+        apt:libreoffice-writer
+        dnf:libreoffice-writer
+        pacman:libreoffice
+        nix:libreoffice
+        zypper:libreoffice-writer
+    "
+
     ["lp"]="
         apt:cups-client
         dnf:cups-client
