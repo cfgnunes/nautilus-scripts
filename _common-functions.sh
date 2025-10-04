@@ -344,7 +344,7 @@ _dependencies_check_commands() {
     #
     # Parameters:
     #   - $1 (commands): A list of commands to check. The list can be delimited
-    #     either by a comma ',' or by a newline '\n'.
+    #     either by a space ' ' or by a newline '\n'.
 
     local commands=$1
     local packages_install=""
@@ -352,11 +352,12 @@ _dependencies_check_commands() {
 
     [[ -z "$commands" ]] && return
 
+    # Remove leading, trailing, and duplicate spaces.
+    commands=$(sed "s|  *| |g; s|^ *||g; s| *$||g" <<<"$commands")
+
     # Remove duplicated commands in the input list.
-    commands=$(tr -d " " <<<"$commands")
-    commands=$(tr "," "\n" <<<"$commands")
+    commands=$(tr " " "\n" <<<"$commands")
     commands=$(sort --unique <<<"$commands")
-    commands=$(_text_remove_empty_lines "$commands")
 
     [[ -z "$commands" ]] && return
 
@@ -436,14 +437,15 @@ _dependencies_check_commands_clipboard() {
     # operations, based on the current session type (Wayland or X11).
     #
     # Parameters:
-    #   - $1 (commands): A string containing the initial commands list,
+    #   - $1 (input_commands): A string containing the initial commands list,
     #     which will be extended with the clipboard-related commands.
 
-    local commands=$1
+    local input_commands=$1
+    local commands="$input_commands "
 
     case "${XDG_SESSION_TYPE:-}" in
-    "wayland") commands+=",wl-paste" ;;
-    "x11") commands+=",xclip" ;;
+    "wayland") commands+="wl-paste" ;;
+    "x11") commands+="xclip" ;;
     *)
         _display_error_box \
             "Your session type is not supported for clipboard operations."

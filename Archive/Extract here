@@ -104,16 +104,16 @@ _get_command() {
     local _cmds_rar=("unrar" "unar" "bsdtar")
     local _cmds_sit=("unar")
     local _cmds_sqsh=("unsquashfs")
-    local _cmds_tar_bz=("tar,bzip2" "unar" "7za")
-    local _cmds_tar_gz=("tar,gzip" "unar" "7za")
-    local _cmds_tar_lrz=("tar,lrzip")
-    local _cmds_tar_lz=("tar,lzip")
-    local _cmds_tar_lz4=("tar,lz4")
-    local _cmds_tar_lzma=("tar,lzma" "unar" "7za")
-    local _cmds_tar_lzo=("tar,lzop")
-    local _cmds_tar_xz=("tar,xz" "unar" "7za")
-    local _cmds_tar_z=("tar,gzip" "unar" "7za")
-    local _cmds_tar_zst=("tar,zstd")
+    local _cmds_tar_bz=("tar bzip2" "unar" "7za")
+    local _cmds_tar_gz=("tar gzip" "unar" "7za")
+    local _cmds_tar_lrz=("tar lrzip")
+    local _cmds_tar_lz=("tar lzip")
+    local _cmds_tar_lz4=("tar lz4")
+    local _cmds_tar_lzma=("tar lzma" "unar" "7za")
+    local _cmds_tar_lzo=("tar lzop")
+    local _cmds_tar_xz=("tar xz" "unar" "7za")
+    local _cmds_tar_z=("tar gzip" "unar" "7za")
+    local _cmds_tar_zst=("tar zstd")
     local _cmds_tar=("tar" "bsdtar" "unar" "7za")
     local _cmds_xar=("unar" "bsdtar")
     local _cmds_xz=("xz" "unar" "7za")
@@ -122,7 +122,7 @@ _get_command() {
     local _cmds_zoo=("unar")
     local _cmds_zpaq=("zpaq")
     local _cmds_zstd=("zstd")
-    local _cmds_unknown_file=("bsdtar,unar,7za")
+    local _cmds_unknown_file=("bsdtar unar 7za")
 
     # Determine the preferred commands based on the filename extension.
     case "${input_file,,}" in
@@ -343,16 +343,16 @@ _run_command() {
     "lz4") lz4 -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
     "lzip") lzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
     "lzop") std_output=$(lzop -d -- "$input_file" 2>&1) ;;
-    "tar,bzip2") std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1) ;;
-    "tar,gzip") std_output=$(tar --extract --gzip --file="$input_file" 2>&1) ;;
-    "tar,lrzip") std_output=$(lrztar -d "$input_file" 2>&1) ;;
-    "tar,lzip") std_output=$(tar --extract --lzip --file="$input_file" 2>&1) ;;
-    "tar,lz4") std_output=$(lz4 -d -c -- "$input_file" | tar xf -) ;;
-    "tar,lzma") std_output=$(tar --extract --lzma --file="$input_file" 2>&1) ;;
-    "tar,lzop") std_output=$(tar --extract --lzop --file="$input_file" 2>&1) ;;
-    "tar,xz") std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
-    "tar,z") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
-    "tar,zstd") std_output=$(zstd -f -d -c -- "$input_file" | tar xf -) ;;
+    "tar bzip2") std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1) ;;
+    "tar gzip") std_output=$(tar --extract --gzip --file="$input_file" 2>&1) ;;
+    "tar lrzip") std_output=$(lrztar -d "$input_file" 2>&1) ;;
+    "tar lzip") std_output=$(tar --extract --lzip --file="$input_file" 2>&1) ;;
+    "tar lz4") std_output=$(lz4 -d -c -- "$input_file" | tar xf -) ;;
+    "tar lzma") std_output=$(tar --extract --lzma --file="$input_file" 2>&1) ;;
+    "tar lzop") std_output=$(tar --extract --lzop --file="$input_file" 2>&1) ;;
+    "tar xz") std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
+    "tar z") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
+    "tar zstd") std_output=$(zstd -f -d -c -- "$input_file" | tar xf -) ;;
     "tar") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
     "unar")
         std_output=$(unar -- "$input_file" 2>&1)
@@ -398,7 +398,7 @@ _run_command() {
     "xz") xz -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
     "zpaq") std_output=$(zpaq x "$input_file" 2>&1) ;;
     "zstd") zstd -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
-    "bsdtar,unar,7za")
+    "bsdtar unar 7za")
         exit_code=1
         # Default extractor chain for unrecognized files.
         # Try to extract with 'bsdtar'.
