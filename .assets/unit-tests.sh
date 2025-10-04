@@ -179,11 +179,11 @@ __run_source_common_functions() {
     local SCRIPT_DIR=""
     local ROOT_DIR=""
 
-    # Source the script 'common-functions.sh'.
+    # Source the script '_common-functions.sh'.
     SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
     ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
     ROOT_DIR=${ROOT_DIR//".assets"/}
-    source "$ROOT_DIR/common-functions.sh"
+    source "$ROOT_DIR/_common-functions.sh"
 
     __test_equal "Check global variables." "$FIELD_SEPARATOR" $'\r'
 }

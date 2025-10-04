@@ -345,7 +345,7 @@ _step_install_dependencies() {
 
     local packages=""
 
-    # Basic packages to run the script 'common-functions.sh'.
+    # Basic packages to run the script '_common-functions.sh'.
     _command_exists "awk" || packages+="gawk "
     _command_exists "basename" || packages+="coreutils "
     _command_exists "bash" || packages+="bash "
@@ -475,8 +475,8 @@ _step_install_scripts() {
     echo -e "$MSG_INFO Installing new scripts..."
     $SUDO_CMD_USER mkdir --parents "$INSTALL_DIR"
 
-    # Always copy the 'common-functions.sh' file.
-    $SUDO_CMD cp -- "$SCRIPT_DIR/common-functions.sh" "$INSTALL_DIR"
+    # Always copy the '_common-functions.sh' file.
+    $SUDO_CMD cp -- "$SCRIPT_DIR/_common-functions.sh" "$INSTALL_DIR"
 
     # Copy scripts by category. If the user selected specific categories, only
     # those are installed. Otherwise, all categories are copied by default.
