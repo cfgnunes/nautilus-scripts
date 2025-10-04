@@ -15,7 +15,7 @@ _main() {
 
     local dependencies=""
     dependencies=$(_get_dependencies "$input_files")
-    _check_dependencies "$dependencies"
+    _dependencies_check_commands "$dependencies"
     _display_wait_box "2"
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
@@ -52,15 +52,10 @@ _get_dependencies() {
             if ! _command_exists "libreoffice.writer" &&
                 ! _command_exists "lowriter" &&
                 ! _command_exists "libreoffice-writer"; then
-                dependencies+="
-                    pkg_manager=apt; package=libreoffice-writer |
-                    pkg_manager=dnf; package=libreoffice-writer |
-                    pkg_manager=pacman; package=libreoffice |
-                    pkg_manager=nix; package=libreoffice |
-                    pkg_manager=zypper; package=libreoffice-writer"
+                dependencies+="lowriter"
             fi
             ;;
-        "pandoc") dependencies+="command=pandoc" ;;
+        "pandoc") dependencies+="pandoc" ;;
         esac
         dependencies+=$'\n'
     done
