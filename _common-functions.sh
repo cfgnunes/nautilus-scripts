@@ -459,35 +459,10 @@ _dependencies_check_commands() {
         if ! _display_question_box "$message"; then
             _exit_script
         fi
-        _deps_install_packages "$available_pkg_manager" \
-            "$packages_to_install" "$post_install"
-
-        # Iterate over each package to check installation status.
-        packages_to_check=$(tr " " "$FIELD_SEPARATOR" <<<"$packages_to_check")
-        for par_package_check in $packages_to_check; do
-            if ! _deps_is_package_installed \
-                "$available_pkg_manager" "$par_package_check"; then
-
-                # Special case for 'rpm-ostree': If the package appears in the
-                # rpm-ostree deployment list, it means it is installed but
-                # requires a system reboot to take effect.
-                if [[ "$available_pkg_manager" == "rpm-ostree" ]] &&
-                    rpm-ostree status --json |
-                    jq -r ".deployments[0].packages[]" |
-                        grep -Fxq "$par_package_check"; then
-                    _display_info_box \
-                        "The package '$par_package_check' is installed but you need to reboot to use it!"
-                    _exit_script
-                fi
-
-                # If the package could not be installed,
-                # show an error and stop execution.
-                _display_error_box \
-                    "Could not install the package '$par_package_check'!"
-                _exit_script
-            fi
-        done
-        _display_info_box "The packages have been successfully installed!"
+        _deps_install_packages \
+            "$available_pkg_manager" "$packages_to_install" "$post_install"
+        _deps_installation_check \
+            "$available_pkg_manager" "$packages_to_check"
     fi
 }
 
@@ -652,6 +627,50 @@ _deps_install_packages() {
     fi
 
     _close_wait_box
+}
+
+_deps_installation_check() {
+    # This function verifies whether the specified packages were successfully
+    # installed using the given package manager. It checks each package one by
+    # one, ensuring that all dependencies are properly installed before
+    # proceeding.
+    #
+    # Parameters:
+    #   - $1 (available_pkg_manager): The package manager to use for
+    #     installation verification.
+    #   - $2 (packages_to_check): A space-separated string containing the names
+    #     of packages that should be checked for successful installation.
+
+    local available_pkg_manager=$1
+    local packages_to_check=$2
+
+    # Iterate over each package to check installation status.
+    packages_to_check=$(tr " " "$FIELD_SEPARATOR" <<<"$packages_to_check")
+    local par_package_check=""
+    for par_package_check in $packages_to_check; do
+        if ! _deps_is_package_installed \
+            "$available_pkg_manager" "$par_package_check"; then
+
+            # Special case for 'rpm-ostree': If the package appears in the
+            # rpm-ostree deployment list, it means it is installed but
+            # requires a system reboot to take effect.
+            if [[ "$available_pkg_manager" == "rpm-ostree" ]] &&
+                rpm-ostree status --json |
+                jq -r ".deployments[0].packages[]" |
+                    grep -Fxq "$par_package_check"; then
+                _display_info_box \
+                    "The package '$par_package_check' is installed but you need to reboot to use it!"
+                _exit_script
+            fi
+
+            # If the package could not be installed,
+            # show an error and stop execution.
+            _display_error_box \
+                "Could not install the package '$par_package_check'!"
+            _exit_script
+        fi
+    done
+    _display_info_box "The packages have been successfully installed!"
 }
 
 _deps_is_package_installed() {
