@@ -10,12 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "
-        command=gpg; pkg_manager=apt; package=gnupg |
-        command=gpg; pkg_manager=dnf; package=gnupg2 |
-        command=gpg; pkg_manager=pacman; package=gnupg |
-        command=gpg; pkg_manager=nix; package=gnupg |
-        command=gpg; pkg_manager=zypper; package=gpg2"
+    _dependencies_check_commands "gpg"
     input_files=$(_get_files "par_type=file; par_select_mime='application/octet-stream|application/pgp|application/pgp-encrypted|text/plain'")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 

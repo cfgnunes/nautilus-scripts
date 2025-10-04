@@ -10,12 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "
-        command=gpg; pkg_manager=apt; package=gnupg |
-        command=gpg; pkg_manager=dnf; package=gnupg2 |
-        command=gpg; pkg_manager=pacman; package=gnupg |
-        command=gpg; pkg_manager=nix; package=gnupg |
-        command=gpg; pkg_manager=zypper; package=gpg2"
+    _dependencies_check_commands "gpg"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file")
 
