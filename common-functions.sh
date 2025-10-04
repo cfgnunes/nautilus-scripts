@@ -141,18 +141,6 @@ _check_dependencies() {
     #                       installation.
     #   - "par_package_check": Optional. The package name used for verification
     #                       after installation (may differ from "package").
-    #
-    # Examples:
-    #   - _check_dependencies "
-    #       command=ffmpeg; pkg_manager=apt; package=ffmpeg |
-    #       command=ffmpeg; pkg_manager=dnf; package=ffmpeg-free |
-    #       command=ffmpeg; pkg_manager=pacman; package=ffmpeg |
-    #       command=ffmpeg; pkg_manager=nix; package=ffmpeg |
-    #       command=ffmpeg; pkg_manager=zypper; package=ffmpeg"
-    #
-    #   - _check_dependencies "command=zip"
-    #
-    #   - _check_dependencies "pkg_manager=apt; package=tesseract-ocr-eng"
 
     local dependencies=$1
     local packages_to_install=""
@@ -250,6 +238,7 @@ _check_dependencies() {
             packages_to_check+=" $par_package_check"
         fi
     done
+
     # Remove the first space added.
     packages_to_install=$(sed "s|^ ||g" <<<"$packages_to_install")
     packages_to_check=$(sed "s|^ ||g" <<<"$packages_to_check")
