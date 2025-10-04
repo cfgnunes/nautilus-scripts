@@ -219,6 +219,28 @@ declare -A PACKAGE_NAME_CHECK=(
 
 declare -A POST_INSTALL=(
     ["clamscan"]="
-        *:'sleep 5; rm -f /var/log/clamav/freshclam.log; freshclam --quiet; sleep 5'
+        *:sleep 5; rm -f /var/log/clamav/freshclam.log; \
+            freshclam --quiet; sleep 5
+    "
+)
+
+# -----------------------------------------------------------------------------
+# META_PACKAGES
+# -----------------------------------------------------------------------------
+# This associative array defines grouped or composite packages that must be
+# installed together to provide complete functionality for a given name.
+#
+# Note:
+#   Sometimes a package does not provide a direct command by itself but is
+#   required as a complementary package to enable a specific feature or
+#   functionality.
+
+declare -A META_PACKAGES=(
+    ["sox-mp3"]="
+        apt:sox libsox-fmt-mp3
+        dnf:sox
+        pacman:sox
+        nix:sox
+        zypper:sox
     "
 )
