@@ -24,6 +24,18 @@ declare -A PACKAGE_NAME=(
         brew:p7zip
     "
 
+    ["ar"]="
+        *:binutils
+    "
+
+    ["bsdtar"]="
+        apt:libarchive-tools
+        dnf:bsdtar
+        pacman:libarchive
+        nix:libarchive
+        zypper:bsdtar
+    "
+
     ["clamscan"]="
         *:clamav
     "
@@ -76,6 +88,10 @@ declare -A PACKAGE_NAME=(
         zypper:glibc
     "
 
+    ["lha"]="
+        *:lhasa
+    "
+
     ["lp"]="
         apt:cups-client
         dnf:cups-client
@@ -122,6 +138,22 @@ declare -A PACKAGE_NAME=(
         pacman:iputils
         nix:iputils
         zypper:iputils
+    "
+
+    ["unar"]="
+        apt:unar
+        dnf:unar
+        pacman:unarchiver
+        nix:unar
+        zypper:unar
+    "
+
+    ["unsquashfs"]="
+        apt:squashfs-tools
+        dnf:squashfs-tools
+        pacman:squashfs-tools
+        nix:squashfsTools
+        zypper:squashfs
     "
 
     ["wl-paste"]="
