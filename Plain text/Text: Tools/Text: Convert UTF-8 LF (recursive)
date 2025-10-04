@@ -10,17 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "
-        command=perl; pkg_manager=apt; package=perl-base |
-        command=perl; pkg_manager=dnf; package=perl-base |
-        command=perl; pkg_manager=pacman; package=perl-base |
-        command=perl; pkg_manager=nix; package=perl |
-        command=perl; pkg_manager=zypper; package=perl-base |
-        command=iconv; pkg_manager=apt; package=libc-bin |
-        command=iconv; pkg_manager=dnf; package=glibc-common |
-        command=iconv; pkg_manager=pacman; package=glibc |
-        command=iconv; pkg_manager=nix; package=glibc |
-        command=iconv; pkg_manager=zypper; package=glibc"
+    _dependencies_check_commands "iconv,perl"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_recursive=true; par_skip_encoding='binary'; par_skip_extension='pdf|svg'; par_skip_extension=bak")
 
