@@ -546,7 +546,7 @@ _deps_get_dependency_value() {
     source "$ROOT_DIR/dependencies.conf"
 
     # Retrieve the raw value from the associative array.
-    pair_values=${array_values[$command]}
+    pair_values=${array_values[$command]:-}
     pair_values=$(tr -d " " <<<"$pair_values")
 
     # If the key does not exist or has no associated values, return failure.
@@ -571,7 +571,8 @@ _deps_get_dependency_value() {
         esac
 
         # If the package manager matches, print and exit successfully.
-        if [[ "$available_pkg_manager" == "$pkg_manager" ]]; then
+        if [[ "$pkg_manager" == "$available_pkg_manager" ]] ||
+            [[ "$pkg_manager" == "*" ]]; then
             printf "%s" "$key_value"
             return 0
         fi
