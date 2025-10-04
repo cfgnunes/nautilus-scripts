@@ -10,12 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "
-        command=exiftool; pkg_manager=apt; package=libimage-exiftool-perl |
-        command=exiftool; pkg_manager=dnf; package=perl-Image-ExifTool |
-        command=exiftool; pkg_manager=pacman; package=perl-image-exiftool |
-        command=exiftool; pkg_manager=nix; package=exiftool |
-        command=exiftool; pkg_manager=zypper; package=exiftool"
+    _dependencies_check_commands "exiftool"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_recursive=true")
 
