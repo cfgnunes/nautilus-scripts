@@ -536,7 +536,9 @@ _deps_get_dependency_value() {
 
     # Retrieve the raw value from the associative array.
     pair_values=${array_values[$command]:-}
-    pair_values=$(tr -d " " <<<"$pair_values")
+
+    # Remove leading, trailing, and duplicate spaces.
+    pair_values=$(sed "s|  *| |g; s|^ *||g; s| *$||g" <<<"$pair_values")
 
     # If the key does not exist or has no associated values, return failure.
     if [[ -z "$pair_values" ]]; then
