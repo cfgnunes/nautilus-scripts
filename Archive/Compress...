@@ -27,7 +27,7 @@ _main() {
     elif _command_exists "xarchiver"; then
         xarchiver --compress=$input_files &
     else
-        _check_dependencies "command=file-roller"
+        _dependencies_check_commands "file-roller"
         file-roller --add -- $input_files &
     fi
 }

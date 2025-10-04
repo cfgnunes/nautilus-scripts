@@ -11,9 +11,9 @@ _main() {
 
     # Execute initial checks.
     if _is_qt_desktop; then
-        _check_dependencies "command=filelight"
+        _dependencies_check_commands "filelight"
     else
-        _check_dependencies "command=baobab"
+        _dependencies_check_commands "baobab"
     fi
     input_files=$(_get_files "par_type=directory; par_max_items=20")
     _unset_global_variables_file_manager

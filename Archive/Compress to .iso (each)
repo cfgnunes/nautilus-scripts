@@ -11,7 +11,7 @@ _main() {
 
     # Execute initial checks.
     if ! _command_exists "genisoimage" && ! _command_exists "mkisofs"; then
-        _check_dependencies "command=xorriso"
+        _dependencies_check_commands "xorriso"
     fi
     _display_wait_box "2"
     input_files=$(_get_files "par_type=directory; par_validate_conflict=true")

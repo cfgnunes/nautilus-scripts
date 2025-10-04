@@ -21,10 +21,10 @@ _main() {
     if [[ ! -d "$file_1" ]]; then
         if [[ "$(_get_file_encoding "$file_1")" == "binary" ]] && [[ -s "$file_1" ]]; then
             if _is_qt_desktop; then
-                _check_dependencies "command=okteta"
+                _dependencies_check_commands "okteta"
                 okteta -- $input_files &
             else
-                _check_dependencies "command=ghex"
+                _dependencies_check_commands "ghex"
                 ghex -- $input_files &
             fi
             exit 0
