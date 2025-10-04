@@ -441,7 +441,7 @@ _dependencies_check_commands() {
             fi
         fi
 
-        # Get the values from 'dependencies.conf'.
+        # Get the values from '_dependencies.sh'.
         package=$(_deps_get_dependency_value \
             "$command" "$available_pkg_manager" "PACKAGE_NAME")
         par_package_check=$(_deps_get_dependency_value \
@@ -532,7 +532,7 @@ _deps_get_dependency_value() {
     # Source the configuration file that defines the mapping between commands,
     # packages, and package managers. This file is used by the scripts to check
     # and resolve their own dependencies.
-    source "$ROOT_DIR/dependencies.conf"
+    source "$ROOT_DIR/_dependencies.sh"
 
     # Retrieve the raw value from the associative array.
     pair_values=${array_values[$command]:-}
