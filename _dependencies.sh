@@ -64,12 +64,24 @@ declare -A PACKAGE_NAME=(
         *:gzip
     "
 
+    ["gs"]="
+        *:ghostscript
+    "
+
     ["iconv"]="
         apt:libc-bin
         dnf:glibc-common
         pacman:glibc
         nix:glibc
         zypper:glibc
+    "
+
+    ["lp"]="
+        apt:cups-client
+        dnf:cups-client
+        pacman:cups
+        nix:cups
+        zypper:cups
     "
 
     ["mksquashfs"]="
@@ -81,11 +93,19 @@ declare -A PACKAGE_NAME=(
     "
 
     ["perl"]="
-        apt:package=perl-base
-        dnf:package=perl-base
-        pacman:package=perl-base
-        nix:package=perl
-        zypper:package=perl-base
+        apt:perl-base
+        dnf:perl-base
+        pacman:perl-base
+        nix:perl
+        zypper:perl-base
+    "
+
+    ["photorec"]="
+        apt:testdisk
+        dnf:testdisk
+        pacman:testdisk
+        nix:testdisk
+        zypper:photorec
     "
 
     ["pdfinfo"]="
