@@ -90,8 +90,8 @@ _main() {
     __run_move_file
     __run_move_temp_file_to_output
     __run_open_items_locations
-    __run_pkg_install_packages
-    __run_pkg_is_package_installed
+    __run_deps_install_packages
+    __run_deps_is_package_installed
     __run_recent_scripts_add
     __run_recent_scripts_organize
     __run_run_task_parallel
@@ -553,12 +553,12 @@ __run_open_items_locations() {
     printf ""
 }
 
-__run_pkg_install_packages() {
+__run_deps_install_packages() {
     # TODO: Implement the test.
     printf ""
 }
 
-__run_pkg_is_package_installed() {
+__run_deps_is_package_installed() {
     # TODO: Implement the test.
     printf ""
 }

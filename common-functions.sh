@@ -233,7 +233,7 @@ _check_dependencies() {
         # Ignore installing the dependency if the package is already installed
         # (packages that do not have a shell command).
         if [[ -n "$package" ]] && [[ -z "$command" ]] &&
-            _pkg_is_package_installed \
+            _deps_is_package_installed \
                 "$available_pkg_manager" "$par_package_check"; then
             continue
         fi
@@ -264,13 +264,13 @@ _check_dependencies() {
         if ! _display_question_box "$message"; then
             _exit_script
         fi
-        _pkg_install_packages "$available_pkg_manager" \
+        _deps_install_packages "$available_pkg_manager" \
             "$packages_to_install" "$post_install"
 
         # Iterate over each package to check installation status.
         packages_to_check=$(tr " " "$FIELD_SEPARATOR" <<<"$packages_to_check")
         for par_package_check in $packages_to_check; do
-            if ! _pkg_is_package_installed \
+            if ! _deps_is_package_installed \
                 "$available_pkg_manager" "$par_package_check"; then
 
                 # Special case for 'rpm-ostree': If the package appears in the
@@ -395,57 +395,6 @@ _convert_delimited_string_to_text() {
     printf "%s" "$input_items"
 }
 
-_deps_get_value() {
-    # This function retrieves the value associated with a given command
-    # for a specific package manager from a provided associative array.
-    #
-    # Parameters:
-    #   - $1 (command): The command or key whose value is being queried.
-    #   - $2 (available_pkg_manager): The package manager to match.
-    #   - $3 (array_values): The name of the associative array that contains
-    #     the mappings (<package_manager>:<value> pairs).
-
-    local command=$1
-    local available_pkg_manager=$2
-    local -n array_values=$3
-    local pair_values=""
-
-    # Retrieve the raw value from the associative array.
-    pair_values=${array_values[$command]}
-    pair_values=$(tr -d " " <<<"$pair_values")
-
-    # If the key does not exist or has no associated values, return failure.
-    if [[ -z "$pair_values" ]]; then
-        return 1
-    fi
-
-    # Replace newlines with '$FIELD_SEPARATOR' for iteration.
-    pair_values=$(tr "\n" "$FIELD_SEPARATOR" <<<"$pair_values")
-
-    # Iterate over each <package_manager>:<key_value> pair.
-    local pair_value=""
-    for pair_value in $pair_values; do
-        local pkg_manager="${pair_value%%:*}"
-        local key_value="${pair_value#*:}"
-
-        # Map equivalent package managers for compatibility.
-        case "$pkg_manager:$available_pkg_manager" in
-        "apt:apt-get" | "dnf:rpm-ostree")
-            pkg_manager=$available_pkg_manager
-            ;;
-        esac
-
-        # If the package manager matches, print and exit successfully.
-        if [[ "$available_pkg_manager" == "$pkg_manager" ]]; then
-            printf "%s" "$key_value"
-            return 0
-        fi
-    done
-
-    # If no match was found, return failure.
-    return 1
-}
-
 _dependencies_check_commands() {
     # This function ensures that all required commands are available for
     # the scripts to run. It checks whether each specified command exists
@@ -509,11 +458,11 @@ _dependencies_check_commands() {
         fi
 
         # Get the values from 'dependencies.conf'.
-        package=$(_deps_get_value \
+        package=$(_deps_get_dependency_value \
             "$command" "$available_pkg_manager" "PACKAGE_NAME")
-        par_package_check=$(_deps_get_value \
+        par_package_check=$(_deps_get_dependency_value \
             "$command" "$available_pkg_manager" "PACKAGE_NAME_CHECK")
-        post_install=$(_deps_get_value \
+        post_install=$(_deps_get_dependency_value \
             "$command" "$available_pkg_manager" "POST_INSTALL")
 
         # Some systems use different names when installing and installed, such
@@ -549,13 +498,13 @@ _dependencies_check_commands() {
         if ! _display_question_box "$message"; then
             _exit_script
         fi
-        _pkg_install_packages "$available_pkg_manager" \
+        _deps_install_packages "$available_pkg_manager" \
             "$packages_to_install" "$post_install"
 
         # Iterate over each package to check installation status.
         packages_to_check=$(tr " " "$FIELD_SEPARATOR" <<<"$packages_to_check")
         for par_package_check in $packages_to_check; do
-            if ! _pkg_is_package_installed \
+            if ! _deps_is_package_installed \
                 "$available_pkg_manager" "$par_package_check"; then
 
                 # Special case for 'rpm-ostree': If the package appears in the
@@ -579,6 +528,195 @@ _dependencies_check_commands() {
         done
         _display_info_box "The packages have been successfully installed!"
     fi
+}
+
+_deps_get_dependency_value() {
+    # This function retrieves the value associated with a given command
+    # for a specific package manager from a provided associative array.
+    #
+    # Parameters:
+    #   - $1 (command): The command or key whose value is being queried.
+    #   - $2 (available_pkg_manager): The package manager to match.
+    #   - $3 (array_values): The name of the associative array that contains
+    #     the mappings (<package_manager>:<value> pairs).
+
+    local command=$1
+    local available_pkg_manager=$2
+    local -n array_values=$3
+    local pair_values=""
+
+    # Retrieve the raw value from the associative array.
+    pair_values=${array_values[$command]}
+    pair_values=$(tr -d " " <<<"$pair_values")
+
+    # If the key does not exist or has no associated values, return failure.
+    if [[ -z "$pair_values" ]]; then
+        return 1
+    fi
+
+    # Replace newlines with '$FIELD_SEPARATOR' for iteration.
+    pair_values=$(tr "\n" "$FIELD_SEPARATOR" <<<"$pair_values")
+
+    # Iterate over each <package_manager>:<key_value> pair.
+    local pair_value=""
+    for pair_value in $pair_values; do
+        local pkg_manager="${pair_value%%:*}"
+        local key_value="${pair_value#*:}"
+
+        # Map equivalent package managers for compatibility.
+        case "$pkg_manager:$available_pkg_manager" in
+        "apt:apt-get" | "dnf:rpm-ostree")
+            pkg_manager=$available_pkg_manager
+            ;;
+        esac
+
+        # If the package manager matches, print and exit successfully.
+        if [[ "$available_pkg_manager" == "$pkg_manager" ]]; then
+            printf "%s" "$key_value"
+            return 0
+        fi
+    done
+
+    # If no match was found, return failure.
+    return 1
+}
+
+_deps_install_packages() {
+    # This function installs specified packages using the given package
+    # manager.
+    #
+    # Parameters:
+    #   - $1 (pkg_manager): The package manager to use for installation.
+    #   Supported values are:
+    #       - "apt-get"     : For Debian/Ubuntu systems.
+    #       - "dnf"         : For Fedora/RHEL systems.
+    #       - "rpm-ostree"  : For Fedora Atomic systems.
+    #       - "pacman"      : For Arch Linux systems.
+    #       - "zypper"      : For openSUSE systems.
+    #       - "nix"         : For Nix-based systems.
+    #   - $2 (packages): A space-separated list of package names to install.
+    #   - $3 (post_install): An optional command to be executed right after the
+    #     installation.
+
+    local pkg_manager=$1
+    local packages=$2
+    local post_install=$3
+    local cmd_install=""
+    local admin_cmd="pkexec"
+
+    _display_wait_box_message "Installing the packages. Please, wait..."
+
+    case "$pkg_manager" in
+    "apt-get")
+        cmd_install+="apt-get update;"
+        cmd_install+="apt-get -y install $packages &>/dev/null"
+        ;;
+    "dnf")
+        cmd_install+="dnf check-update;"
+        cmd_install+="dnf -y install $packages &>/dev/null"
+        ;;
+    "rpm-ostree")
+        cmd_install+="rpm-ostree install $packages &>/dev/null"
+        ;;
+    "pacman")
+        cmd_install+="pacman -Syy;"
+        cmd_install+="pacman --noconfirm -S $packages &>/dev/null"
+        ;;
+    "zypper")
+        cmd_install+="zypper refresh;"
+        cmd_install+="zypper --non-interactive install $packages &>/dev/null"
+        ;;
+    "nix")
+        local nix_packages=""
+        local nix_channel="nixpkgs"
+        if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
+            nix_channel="nixos"
+        fi
+
+        nix_packages="$nix_channel.$packages"
+        # shellcheck disable=SC2001
+        nix_packages=$(sed "s| $||g" <<<"$nix_packages")
+        # shellcheck disable=SC2001
+        nix_packages=$(sed "s| | $nix_channel.|g" <<<"$nix_packages")
+
+        cmd_install+="nix-env -iA $nix_packages &>/dev/null"
+        # Nix does not require root for installing user packages.
+        admin_cmd=""
+        ;;
+    esac
+
+    # Install the packages.
+    if [[ -n "$admin_cmd" ]] && ! _command_exists "$admin_cmd"; then
+        _display_error_box \
+            "Could not run the installer with administrator permission!"
+        _exit_script
+    fi
+
+    if [[ -n "$pkg_manager" ]]; then
+        if [[ -n "$post_install" ]]; then
+            cmd_install+=";$post_install"
+        fi
+        $admin_cmd bash -c "$cmd_install"
+    fi
+
+    _close_wait_box
+}
+
+_deps_is_package_installed() {
+    # This function checks if a specific package is installed using the given
+    # package manager.
+    #
+    # Parameters:
+    #   - $1 (pkg_manager): The package manager to use for the check.
+    #   Supported values are:
+    #       - "apt-get"     : For Debian/Ubuntu systems.
+    #       - "dnf"         : For Fedora/RHEL systems.
+    #       - "rpm-ostree"  : For Fedora Atomic systems.
+    #       - "pacman"      : For Arch Linux systems.
+    #       - "zypper"      : For openSUSE systems.
+    #       - "nix"         : For Nix-based systems.
+    #   - $2 (package): The name of the package to check.
+    #
+    # Returns:
+    #   - "0" (true): If the package is installed.
+    #   - "1" (false): If the package is not installed or an error occurs.
+
+    local pkg_manager=$1
+    local package=$2
+
+    case "$pkg_manager" in
+    "apt-get")
+        if dpkg -s "$package" &>/dev/null; then
+            return 0
+        fi
+        ;;
+    "dnf")
+        if dnf repoquery --installed | grep --quiet "$package"; then
+            return 0
+        fi
+        ;;
+    "rpm-ostree")
+        if rpm -qa | grep --quiet "$package"; then
+            return 0
+        fi
+        ;;
+    "pacman")
+        if pacman -Q "$package" &>/dev/null; then
+            return 0
+        fi
+        ;;
+    "zypper")
+        if zypper search --installed-only "$package" | grep --quiet "^i"; then
+            return 0
+        fi
+        ;;
+    "nix")
+        if nix-env -q | grep --quiet "$package"; then
+            return 0
+        fi
+        ;;
+    esac
+    return 1
 }
 
 _directory_pop() {
@@ -2538,144 +2676,6 @@ _open_urls() {
 
         xdg-open "$url" &>/dev/null &
     done
-}
-
-_pkg_install_packages() {
-    # This function installs specified packages using the given package
-    # manager.
-    #
-    # Parameters:
-    #   - $1 (pkg_manager): The package manager to use for installation.
-    #   Supported values are:
-    #       - "apt-get"     : For Debian/Ubuntu systems.
-    #       - "dnf"         : For Fedora/RHEL systems.
-    #       - "rpm-ostree"  : For Fedora Atomic systems.
-    #       - "pacman"      : For Arch Linux systems.
-    #       - "zypper"      : For openSUSE systems.
-    #       - "nix"         : For Nix-based systems.
-    #   - $2 (packages): A space-separated list of package names to install.
-    #   - $3 (post_install): An optional command to be executed right after the
-    #     installation.
-
-    local pkg_manager=$1
-    local packages=$2
-    local post_install=$3
-    local cmd_install=""
-    local admin_cmd="pkexec"
-
-    _display_wait_box_message "Installing the packages. Please, wait..."
-
-    case "$pkg_manager" in
-    "apt-get")
-        cmd_install+="apt-get update;"
-        cmd_install+="apt-get -y install $packages &>/dev/null"
-        ;;
-    "dnf")
-        cmd_install+="dnf check-update;"
-        cmd_install+="dnf -y install $packages &>/dev/null"
-        ;;
-    "rpm-ostree")
-        cmd_install+="rpm-ostree install $packages &>/dev/null"
-        ;;
-    "pacman")
-        cmd_install+="pacman -Syy;"
-        cmd_install+="pacman --noconfirm -S $packages &>/dev/null"
-        ;;
-    "zypper")
-        cmd_install+="zypper refresh;"
-        cmd_install+="zypper --non-interactive install $packages &>/dev/null"
-        ;;
-    "nix")
-        local nix_packages=""
-        local nix_channel="nixpkgs"
-        if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
-            nix_channel="nixos"
-        fi
-
-        nix_packages="$nix_channel.$packages"
-        # shellcheck disable=SC2001
-        nix_packages=$(sed "s| $||g" <<<"$nix_packages")
-        # shellcheck disable=SC2001
-        nix_packages=$(sed "s| | $nix_channel.|g" <<<"$nix_packages")
-
-        cmd_install+="nix-env -iA $nix_packages &>/dev/null"
-        # Nix does not require root for installing user packages.
-        admin_cmd=""
-        ;;
-    esac
-
-    # Install the packages.
-    if [[ -n "$admin_cmd" ]] && ! _command_exists "$admin_cmd"; then
-        _display_error_box \
-            "Could not run the installer with administrator permission!"
-        _exit_script
-    fi
-
-    if [[ -n "$pkg_manager" ]]; then
-        if [[ -n "$post_install" ]]; then
-            cmd_install+=";$post_install"
-        fi
-        $admin_cmd bash -c "$cmd_install"
-    fi
-
-    _close_wait_box
-}
-
-_pkg_is_package_installed() {
-    # This function checks if a specific package is installed using the given
-    # package manager.
-    #
-    # Parameters:
-    #   - $1 (pkg_manager): The package manager to use for the check.
-    #   Supported values are:
-    #       - "apt-get"     : For Debian/Ubuntu systems.
-    #       - "dnf"         : For Fedora/RHEL systems.
-    #       - "rpm-ostree"  : For Fedora Atomic systems.
-    #       - "pacman"      : For Arch Linux systems.
-    #       - "zypper"      : For openSUSE systems.
-    #       - "nix"         : For Nix-based systems.
-    #   - $2 (package): The name of the package to check.
-    #
-    # Returns:
-    #   - "0" (true): If the package is installed.
-    #   - "1" (false): If the package is not installed or an error occurs.
-
-    local pkg_manager=$1
-    local package=$2
-
-    case "$pkg_manager" in
-    "apt-get")
-        if dpkg -s "$package" &>/dev/null; then
-            return 0
-        fi
-        ;;
-    "dnf")
-        if dnf repoquery --installed | grep --quiet "$package"; then
-            return 0
-        fi
-        ;;
-    "rpm-ostree")
-        if rpm -qa | grep --quiet "$package"; then
-            return 0
-        fi
-        ;;
-    "pacman")
-        if pacman -Q "$package" &>/dev/null; then
-            return 0
-        fi
-        ;;
-    "zypper")
-        if zypper search --installed-only "$package" | grep --quiet "^i"; then
-            return 0
-        fi
-        ;;
-    "nix")
-        if nix-env -q | grep --quiet "$package"; then
-            return 0
-        fi
-        ;;
-    esac
-    return 1
 }
 
 _delete_items() {
