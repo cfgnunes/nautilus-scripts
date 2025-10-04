@@ -194,22 +194,6 @@ declare -A PACKAGE_NAME=(
 )
 
 # -----------------------------------------------------------------------------
-# PACKAGE_NAME_CHECK
-# -----------------------------------------------------------------------------
-# This associative array defines exceptions for systems where the package name
-# used to install differs from the one shown when verifying installation.
-#
-# Example:
-#   - On NixOS, "mksquashfs" is installed via "squashfsTools" but appears as
-#     "squashfs" when checked.
-
-declare -A PACKAGE_NAME_CHECK=(
-    ["mksquashfs"]="
-        nix:squashfs
-    "
-)
-
-# -----------------------------------------------------------------------------
 # POST_INSTALL
 # -----------------------------------------------------------------------------
 # This associative array defines commands or actions that need to be executed

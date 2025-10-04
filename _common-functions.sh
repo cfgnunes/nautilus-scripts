@@ -348,7 +348,6 @@ _dependencies_check_commands() {
 
     local commands=$1
     local packages_install=""
-    local packages_check=""
     local available_pkg_manager=""
 
     [[ -z "$commands" ]] && return
@@ -377,7 +376,6 @@ _dependencies_check_commands() {
     local command=""
     for command in $commands; do
         local package=""
-        local par_package_check=""
         local post_install=""
 
         # Skip installation if the command already exists in the system.
@@ -398,16 +396,8 @@ _dependencies_check_commands() {
         # Get the values from '_dependencies.sh'.
         package=$(_deps_get_dependency_value \
             "$command" "$available_pkg_manager" "PACKAGE_NAME")
-        par_package_check=$(_deps_get_dependency_value \
-            "$command" "$available_pkg_manager" "PACKAGE_NAME_CHECK")
         post_install=$(_deps_get_dependency_value \
             "$command" "$available_pkg_manager" "POST_INSTALL")
-
-        # Some systems use different names when installing and installed, such
-        # nix packages.
-        if [[ -z "$par_package_check" ]]; then
-            par_package_check="$package"
-        fi
 
         # If the package is not found,
         # use the command name as the package name.
@@ -418,13 +408,11 @@ _dependencies_check_commands() {
         # Add the package to the list to install.
         if [[ -n "$package" ]]; then
             packages_install+=" $package"
-            packages_check+=" $par_package_check"
         fi
     done
 
     # Remove the first space added.
     packages_install=$(sed "s|^ ||g" <<<"$packages_install")
-    packages_check=$(sed "s|^ ||g" <<<"$packages_check")
 
     # Ask the user to install the packages.
     if [[ -n "$packages_install" ]]; then
@@ -439,7 +427,7 @@ _dependencies_check_commands() {
         _deps_install_packages \
             "$available_pkg_manager" "$packages_install" "$post_install"
         _deps_installation_check \
-            "$available_pkg_manager" "$packages_check"
+            "$available_pkg_manager" "$packages_install"
     fi
 }
 
