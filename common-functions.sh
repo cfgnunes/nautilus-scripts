@@ -395,6 +395,192 @@ _convert_delimited_string_to_text() {
     printf "%s" "$input_items"
 }
 
+_deps_get_value() {
+    # This function retrieves the value associated with a given command
+    # for a specific package manager from a provided associative array.
+    #
+    # Parameters:
+    #   - $1 (command): The command or key whose value is being queried.
+    #   - $2 (available_pkg_manager): The package manager to match.
+    #   - $3 (array_values): The name of the associative array that contains
+    #     the mappings (<package_manager>:<value> pairs).
+
+    local command=$1
+    local available_pkg_manager=$2
+    local -n array_values=$3
+    local pair_values=""
+
+    # Retrieve the raw value from the associative array.
+    pair_values=${array_values[$command]}
+    pair_values=$(tr -d " " <<<"$pair_values")
+
+    # If the key does not exist or has no associated values, return failure.
+    if [[ -z "$pair_values" ]]; then
+        return 1
+    fi
+
+    # Replace newlines with '$FIELD_SEPARATOR' for iteration.
+    pair_values=$(tr "\n" "$FIELD_SEPARATOR" <<<"$pair_values")
+
+    # Iterate over each <package_manager>:<key_value> pair.
+    local pair_value=""
+    for pair_value in $pair_values; do
+        local pkg_manager="${pair_value%%:*}"
+        local key_value="${pair_value#*:}"
+
+        # Map equivalent package managers for compatibility.
+        case "$pkg_manager:$available_pkg_manager" in
+        "apt:apt-get" | "dnf:rpm-ostree")
+            pkg_manager=$available_pkg_manager
+            ;;
+        esac
+
+        # If the package manager matches, print and exit successfully.
+        if [[ "$available_pkg_manager" == "$pkg_manager" ]]; then
+            printf "%s" "$key_value"
+            return 0
+        fi
+    done
+
+    # If no match was found, return failure.
+    return 1
+}
+
+_dependencies_check_commands() {
+    # This function ensures that all required commands are available for
+    # the scripts to run. It checks whether each specified command exists
+    # in the current environment and prompts the user to install missing ones.
+    #
+    # Parameters:
+    #   - $1 (commands): A list of commands to check. The list can be delimited
+    #     either by a comma ',' or by a newline '\n'.
+
+    local commands=$1
+    local packages_to_install=""
+    local packages_to_check=""
+    local available_pkg_manager=""
+
+    [[ -z "$commands" ]] && return
+
+    # Remove duplicated commands in the input list.
+    commands=$(tr -d " " <<<"$commands")
+    commands=$(tr "," "\n" <<<"$commands")
+    commands=$(sort --unique <<<"$commands")
+
+    [[ -z "$commands" ]] && return
+
+    # Source the configuration file that defines the mapping between commands,
+    # packages, and package managers. This file is used by the scripts to check
+    # and resolve their own dependencies.
+    source "$ROOT_DIR/dependencies.conf"
+
+    # The function will attempt to detect the first available package manager
+    # from this list. Once one is found, it will be used consistently.
+    local apps=(
+        "nix"
+        "apt-get"
+        "rpm-ostree"
+        "dnf"
+        "pacman"
+        "zypper"
+    )
+
+    # Check all commands.
+    commands=$(tr "\n" "$FIELD_SEPARATOR" <<<"$commands")
+    local command=""
+    for command in $commands; do
+        local package=""
+        local par_package_check=""
+        local post_install=""
+
+        # Skip installation if the command already exists in the system.
+        if _command_exists "$command"; then
+            continue
+        fi
+
+        # Detect and validate the first available package manager.
+        if [[ -z "$available_pkg_manager" ]]; then
+            available_pkg_manager=$(_get_available_app "apps")
+            # Display error and exit if no package manager is available.
+            if [[ -z "$available_pkg_manager" ]]; then
+                _display_error_box "Could not find a package manager!"
+                _exit_script
+            fi
+        fi
+
+        # Get the values from 'dependencies.conf'.
+        package=$(_deps_get_value \
+            "$command" "$available_pkg_manager" "PACKAGE_NAME")
+        par_package_check=$(_deps_get_value \
+            "$command" "$available_pkg_manager" "PACKAGE_NAME_CHECK")
+        post_install=$(_deps_get_value \
+            "$command" "$available_pkg_manager" "POST_INSTALL")
+
+        # Some systems use different names when installing and installed, such
+        # nix packages.
+        if [[ -z "$par_package_check" ]]; then
+            par_package_check="$package"
+        fi
+
+        # If the package is not found,
+        # use the command name as the package name.
+        if [[ -z "$package" ]] && [[ -n "$command" ]]; then
+            package=$command
+        fi
+
+        # Add the package to the list to install.
+        if [[ -n "$package" ]]; then
+            packages_to_install+=" $package"
+            packages_to_check+=" $par_package_check"
+        fi
+    done
+
+    # Remove the first space added.
+    packages_to_install=$(sed "s|^ ||g" <<<"$packages_to_install")
+    packages_to_check=$(sed "s|^ ||g" <<<"$packages_to_check")
+
+    # Ask the user to install the packages.
+    if [[ -n "$packages_to_install" ]]; then
+        local message="These packages were not found:"$'\n'
+        message+="- "
+        message+=$(sed "s| |\n- |g" <<<"$packages_to_install")
+        message+=$'\n'$'\n'
+        message+="Would you like to install them?"
+        if ! _display_question_box "$message"; then
+            _exit_script
+        fi
+        _pkg_install_packages "$available_pkg_manager" \
+            "$packages_to_install" "$post_install"
+
+        # Iterate over each package to check installation status.
+        packages_to_check=$(tr " " "$FIELD_SEPARATOR" <<<"$packages_to_check")
+        for par_package_check in $packages_to_check; do
+            if ! _pkg_is_package_installed \
+                "$available_pkg_manager" "$par_package_check"; then
+
+                # Special case for 'rpm-ostree': If the package appears in the
+                # rpm-ostree deployment list, it means it is installed but
+                # requires a system reboot to take effect.
+                if [[ "$available_pkg_manager" == "rpm-ostree" ]] &&
+                    rpm-ostree status --json |
+                    jq -r ".deployments[0].packages[]" |
+                        grep -Fxq "$par_package_check"; then
+                    _display_info_box \
+                        "The package '$par_package_check' is installed but you need to reboot to use it!"
+                    _exit_script
+                fi
+
+                # If the package could not be installed,
+                # show an error and stop execution.
+                _display_error_box \
+                    "Could not install the package '$par_package_check'!"
+                _exit_script
+            fi
+        done
+        _display_info_box "The packages have been successfully installed!"
+    fi
+}
+
 _directory_pop() {
     # This function pops the top directory off the directory stack and changes
     # to the previous directory.
