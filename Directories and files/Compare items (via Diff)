@@ -10,7 +10,7 @@ _main() {
     local std_output=""
 
     # Execute initial checks.
-    _check_dependencies ""
+    _dependencies_check_commands ""
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all; par_min_items=2; par_max_items=2; par_sort_list=true")
 

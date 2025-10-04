@@ -10,7 +10,7 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _check_dependencies ""
+    _dependencies_check_commands ""
     input_files=$(_get_files "par_type=directory; par_max_items=20")
     _unset_global_variables_file_manager
 

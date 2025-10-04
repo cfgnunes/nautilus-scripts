@@ -11,7 +11,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies ""
+    _dependencies_check_commands ""
     input_files=$(_get_files "par_type=file")
 
     # Export variables to be used inside new shells (when using 'xargs').
