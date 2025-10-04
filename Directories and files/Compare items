@@ -47,9 +47,7 @@ _compare() {
     command=$(_get_command "$file_1" "$num_files_compare")
 
     # Check dependencies required for the command.
-    local dependencies=""
-    dependencies=$(_get_dependencies "$command")
-    _check_dependencies "$dependencies"
+    _dependencies_check_commands "$command"
 
     # Execute the appropriate command based on the determined type.
     case $command in
@@ -77,7 +75,7 @@ _compare() {
             $command -- "$file_1" "$file_2" "$file_3" &
         fi
         ;;
-    *"_hex")
+    *",xxd")
         # Use a hex comparison tool for binary files.
         if ((num_files_compare > 2)); then
             _display_error_box "You must select only two binary files to compare!"
@@ -97,8 +95,8 @@ _compare_hexa() {
     local file_1=$2  # First binary file to compare.
     local file_2=$3  # Second binary file to compare.
 
-    # Remove the '_hex' suffix from the command name.
-    command=${command//_hex/}
+    # Remove the ',xxd' suffix from the command name.
+    command=${command//,xxd/}
 
     # Get the sizes of the two files to calculate differences.
     local file_1_size=""
@@ -260,7 +258,7 @@ _get_command() {
         file_encoding=$(_get_file_encoding "$input_file")
         if [[ "$file_encoding" == "binary" ]]; then
             # Binary file comparison.
-            command="meld_hex"
+            command="meld,xxd"
         else
             # Default to text comparison.
             command="meld"
@@ -274,27 +272,6 @@ _get_command() {
     fi
 
     printf "%s" "$command"
-}
-
-_get_dependencies() {
-    local command=$1
-    local dependencies=""
-
-    case $command in
-    "compare") dependencies="
-        command=compare; pkg_manager=apt; package=imagemagick |
-        command=compare; pkg_manager=dnf; package=ImageMagick |
-        command=compare; pkg_manager=pacman; package=imagemagick |
-        command=compare; pkg_manager=nix; package=imagemagick |
-        command=compare; pkg_manager=zypper; package=ImageMagick" ;;
-    "diffpdf") dependencies="command=diffpdf" ;;
-    "kdiff3") dependencies="command=kdiff3" ;;
-    "kdiff3_hex") dependencies="command=kdiff3 | command=xxd" ;;
-    "meld") dependencies="command=meld" ;;
-    "meld_hex") dependencies="command=meld | command=xxd" ;;
-    esac
-
-    printf "%s" "$dependencies"
 }
 
 _get_hex_ideal_cols() {
