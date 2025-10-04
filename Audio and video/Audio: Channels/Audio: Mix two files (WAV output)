@@ -10,12 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "
-        command=ffmpeg; pkg_manager=apt; package=ffmpeg |
-        command=ffmpeg; pkg_manager=dnf; package=ffmpeg-free |
-        command=ffmpeg; pkg_manager=pacman; package=ffmpeg |
-        command=ffmpeg; pkg_manager=nix; package=ffmpeg |
-        command=ffmpeg; pkg_manager=zypper; package=ffmpeg"
+    _dependencies_check_commands "ffmpeg"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_mime='audio/|video/'; par_min_items=2; par_max_items=2; par_sort_list=true")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
