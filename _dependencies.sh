@@ -217,6 +217,14 @@ declare -A POST_INSTALL=(
 # installed together to provide complete functionality for a given name.
 
 declare -A META_PACKAGES=(
+    ["pdfjam"]="
+        apt: texlive-extra-utils
+        dnf: texlive-pdfjam
+        pacman: texlive-basic texlive-binextra texlive-latexextra
+        nix: !texliveSmall !texlivePackages.pdfjam
+        zypper: texlive-pdfjam-bin
+    "
+
     ["sox-mp3"]="
         apt:sox libsox-fmt-mp3
         dnf:sox
