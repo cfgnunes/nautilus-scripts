@@ -418,11 +418,6 @@ _dependencies_check_commands() {
 
     [[ -z "$commands" ]] && return
 
-    # Source the configuration file that defines the mapping between commands,
-    # packages, and package managers. This file is used by the scripts to check
-    # and resolve their own dependencies.
-    source "$ROOT_DIR/dependencies.conf"
-
     # The function will attempt to detect the first available package manager
     # from this list. Once one is found, it will be used consistently.
     local apps=(
@@ -544,6 +539,11 @@ _deps_get_dependency_value() {
     local available_pkg_manager=$2
     local -n array_values=$3
     local pair_values=""
+
+    # Source the configuration file that defines the mapping between commands,
+    # packages, and package managers. This file is used by the scripts to check
+    # and resolve their own dependencies.
+    source "$ROOT_DIR/dependencies.conf"
 
     # Retrieve the raw value from the associative array.
     pair_values=${array_values[$command]}
