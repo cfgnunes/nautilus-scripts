@@ -11,7 +11,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies_clipboard "command=git"
+    _dependencies_check_commands_clipboard "git"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all")
     output_dir=$(_get_output_dir "par_use_same_dir=true")

@@ -285,30 +285,6 @@ _check_dependencies() {
     fi
 }
 
-_check_dependencies_clipboard() {
-    # This function checks the required dependencies for performing clipboard
-    # operations, based on the current session type (Wayland or X11).
-    #
-    # Parameters:
-    #   - $1 (dependencies): A string containing the initial dependencies list,
-    #     which will be extended with the clipboard-related dependencies.
-
-    local dependencies=$1
-    dependencies+=$'\n'
-
-    case "${XDG_SESSION_TYPE:-}" in
-    "wayland") dependencies+="command=wl-paste; package=wl-clipboard" ;;
-    "x11") dependencies+="command=xclip" ;;
-    *)
-        _display_error_box \
-            "Your session type is not supported for clipboard operations."
-        _exit_script
-        ;;
-    esac
-
-    _check_dependencies "$dependencies"
-}
-
 _check_output() {
     # This function validates the success of a command or process based on its
     # exit code and output. It logs errors if the command fails or if an
@@ -404,6 +380,7 @@ _dependencies_check_commands() {
     commands=$(tr -d " " <<<"$commands")
     commands=$(tr "," "\n" <<<"$commands")
     commands=$(sort --unique <<<"$commands")
+    commands=$(_text_remove_empty_lines "$commands")
 
     [[ -z "$commands" ]] && return
 
@@ -512,6 +489,29 @@ _dependencies_check_commands() {
         done
         _display_info_box "The packages have been successfully installed!"
     fi
+}
+
+_dependencies_check_commands_clipboard() {
+    # This function checks the required commands for performing clipboard
+    # operations, based on the current session type (Wayland or X11).
+    #
+    # Parameters:
+    #   - $1 (commands): A string containing the initial commands list,
+    #     which will be extended with the clipboard-related commands.
+
+    local commands=$1
+
+    case "${XDG_SESSION_TYPE:-}" in
+    "wayland") commands+=",wl-paste" ;;
+    "x11") commands+=",xclip" ;;
+    *)
+        _display_error_box \
+            "Your session type is not supported for clipboard operations."
+        _exit_script
+        ;;
+    esac
+
+    _dependencies_check_commands "$commands"
 }
 
 _deps_get_dependency_value() {

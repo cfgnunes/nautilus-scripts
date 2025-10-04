@@ -104,6 +104,10 @@ declare -A PACKAGE_NAME=(
         zypper:iputils
     "
 
+    ["wl-paste"]="
+        *:wl-clipboard
+    "
+
     ["xz"]="
         apt:xz-utils
         dnf:xz
