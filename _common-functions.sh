@@ -125,6 +125,8 @@ _cleanup_on_exit() {
 trap _cleanup_on_exit EXIT
 
 _check_dependencies() {
+    # TODO: THIS FUNCTION WILL BE REMOVED!
+
     # This function ensures that all required dependencies are available for
     # the scripts to run. It verifies the presence of specified commands or
     # packages and prompts the user to install missing ones.
