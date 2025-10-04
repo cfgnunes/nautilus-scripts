@@ -419,14 +419,14 @@ _dependencies_check_commands() {
     if [[ -n "$packages_install" ]]; then
         local message="These packages were not found:"$'\n'
         message+="- "
-        message+=$(sed "s| |\n- |g" <<<"$packages_install")
+        message+=$(sed "s| |\n- |g" <<<"${packages_install/!/}")
         message+=$'\n'$'\n'
         message+="Would you like to install them?"
         if ! _display_question_box "$message"; then
             _exit_script
         fi
         _deps_install_packages \
-            "$available_pkg_manager" "$packages_install" "$post_install"
+            "$available_pkg_manager" "${packages_install/!/}" "$post_install"
         _deps_installation_check \
             "$available_pkg_manager" "$packages_install"
     fi
@@ -610,13 +610,21 @@ _deps_installation_check() {
 
     local available_pkg_manager=$1
     local packages_check=$2
+    local show_success_message="false"
 
     # Iterate over each package to check installation status.
     packages_check=$(tr " " "$FIELD_SEPARATOR" <<<"$packages_check")
-    local par_package_check=""
-    for par_package_check in $packages_check; do
+    local package_check=""
+    for package_check in $packages_check; do
+
+        # Skip installation check for packages starting with '!'.
+        if [[ "$package_check" == "!"* ]]; then
+            continue
+        fi
+        package_check=${package_check/!/}
+
         if ! _deps_is_package_installed \
-            "$available_pkg_manager" "$par_package_check"; then
+            "$available_pkg_manager" "$package_check"; then
 
             # Special case for 'rpm-ostree': If the package appears in the
             # rpm-ostree deployment list, it means it is installed but
@@ -624,20 +632,24 @@ _deps_installation_check() {
             if [[ "$available_pkg_manager" == "rpm-ostree" ]] &&
                 rpm-ostree status --json |
                 jq -r ".deployments[0].packages[]" |
-                    grep -Fxq "$par_package_check"; then
+                    grep -Fxq "$package_check"; then
                 _display_info_box \
-                    "The package '$par_package_check' is installed but you need to reboot to use it!"
+                    "The package '$package_check' is installed but you need to reboot to use it!"
                 _exit_script
             fi
 
             # If the package could not be installed,
             # show an error and stop execution.
             _display_error_box \
-                "Could not install the package '$par_package_check'!"
+                "Could not install the package '$package_check'!"
             _exit_script
         fi
+        show_success_message="true"
     done
-    _display_info_box "The packages have been successfully installed!"
+
+    if [[ "$show_success_message" == "true" ]]; then
+        _display_info_box "The packages have been successfully installed!"
+    fi
 }
 
 _deps_is_package_installed() {

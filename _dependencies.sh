@@ -10,9 +10,11 @@
 # its corresponding package names across different package managers (values).
 #
 # Note:
-#   If the package name is the same as the command name, there is no need to
-#   include an entry in this file. Only exceptions or differing names should
-#   be explicitly listed.
+#   - If the package name is the same as the command name, there is no need to
+#     include an entry in this file. Only exceptions or differing names should
+#     be explicitly listed.
+#   - If a package name starts with an exclamation mark '!', the installation
+#     verification step for that package will be skipped.
 
 declare -A PACKAGE_NAME=(
     ["7za"]="
@@ -128,7 +130,7 @@ declare -A PACKAGE_NAME=(
         apt:squashfs-tools
         dnf:squashfs-tools
         pacman:squashfs-tools
-        nix:squashfsTools
+        nix:!squashfsTools
         zypper:squashfs
     "
 
@@ -213,11 +215,6 @@ declare -A POST_INSTALL=(
 # -----------------------------------------------------------------------------
 # This associative array defines grouped or composite packages that must be
 # installed together to provide complete functionality for a given name.
-#
-# Note:
-#   Sometimes a package does not provide a direct command by itself but is
-#   required as a complementary package to enable a specific feature or
-#   functionality.
 
 declare -A META_PACKAGES=(
     ["sox-mp3"]="
