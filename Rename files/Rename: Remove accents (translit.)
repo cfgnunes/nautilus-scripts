@@ -10,12 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "
-        command=iconv; pkg_manager=apt; package=libc-bin |
-        command=iconv; pkg_manager=dnf; package=glibc-common |
-        command=iconv; pkg_manager=pacman; package=glibc |
-        command=iconv; pkg_manager=nix; package=glibc |
-        command=iconv; pkg_manager=zypper; package=glibc"
+    _dependencies_check_commands "iconv"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all")
 
