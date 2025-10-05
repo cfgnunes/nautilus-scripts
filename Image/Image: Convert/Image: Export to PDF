@@ -15,7 +15,7 @@ _main() {
 
     local dependencies=""
     dependencies=$(_get_dependencies "$input_files")
-    _check_dependencies "$dependencies"
+    _dependencies_check_commands "$dependencies"
     _display_wait_box "2"
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
@@ -45,19 +45,7 @@ _get_dependencies() {
     local input_file=""
     for input_file in $input_files; do
         local command=""
-        command=$(_get_command "$input_file")
-
-        case $command in
-        "convert")
-            dependencies+="
-                command=convert; pkg_manager=apt; package=imagemagick |
-                command=convert; pkg_manager=dnf; package=ImageMagick |
-                command=convert; pkg_manager=pacman; package=imagemagick |
-        command=convert; pkg_manager=nix; package=imagemagick |
-                command=convert; pkg_manager=zypper; package=ImageMagick"
-            ;;
-        "inkscape") dependencies+="command=inkscape" ;;
-        esac
+        dependencies+=$(_get_command "$input_file")
         dependencies+=$'\n'
     done
 
