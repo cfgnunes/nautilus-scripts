@@ -94,8 +94,7 @@ fi
 
 # -----------------------------------------------------------------------------
 # SECTION /// [MAIN FLOW]
-# ----------------------------------------------------    # If quiet mode is enabled, automatically disable interactive mode to
-# ensure a fully silent and non-interactive installation.-------------------------
+# -----------------------------------------------------------------------------
 
 # shellcheck disable=SC2034
 _main() {
