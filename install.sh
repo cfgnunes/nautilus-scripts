@@ -1232,9 +1232,9 @@ _bootstrap_repository() {
 
     # Download and extract using available tool.
     if [[ "$downloader" == "curl" ]]; then
-        curl -fsSL "$tarball_url" | tar -xz -C "$temp_dir"
+        curl -fsSL "$tarball_url" | tar -xz -C "$temp_dir" &>/dev/null
     else
-        wget -qO- "$tarball_url" | tar -xz -C "$temp_dir"
+        wget -qO- "$tarball_url" | tar -xz -C "$temp_dir" &>/dev/null
     fi
 
     # Identify the extracted directory (matches nautilus-scripts-<version>).
