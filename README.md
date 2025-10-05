@@ -10,10 +10,18 @@ You can install in two ways:
 
 ### Option 1 - Online installation (recommended)
 
-Run the following command in your terminal:
+Run **one** of the following commands in your terminal:
+
+#### Using `curl`
 
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/cfgnunes/nautilus-scripts/HEAD/install.sh)"
+```
+
+#### Using `wget`
+
+```bash
+bash -c "$(wget -qO- https://raw.githubusercontent.com/cfgnunes/nautilus-scripts/HEAD/install.sh)"
 ```
 
 ### Option 2 - Local installation
