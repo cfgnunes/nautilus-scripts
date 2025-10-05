@@ -1335,13 +1335,13 @@ _bootstrap_repository() {
         exit 1
     fi
 
-    _echo_info "Running the installer online..."
+    _echo_info "Running the installer online:"
 
     # Create a temporary directory for the installation.
     local temp_dir=""
     temp_dir=$(mktemp -d)
 
-    _echo_info "> Downloading latest release..."
+    _echo_info "> Checking the latest release..."
 
     # Retrieve the latest release tag from GitHub,
     # (fallback to HEAD if unavailable).
