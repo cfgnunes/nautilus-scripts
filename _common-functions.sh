@@ -439,6 +439,18 @@ _dependencies_check_commands_clipboard() {
     local input_commands=$1
     local commands="$input_commands "
 
+    # Try to determine the session type.
+    local session_type="${XDG_SESSION_TYPE:-}"
+
+    # Fallback detection in case '$XDG_SESSION_TYPE' is empty.
+    if [[ -z "$session_type" ]]; then
+        if [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
+            session_type="wayland"
+        elif [[ -n "${DISPLAY:-}" ]]; then
+            session_type="x11"
+        fi
+    fi
+
     case "${XDG_SESSION_TYPE:-}" in
     "wayland") commands+="wl-paste" ;;
     "x11") commands+="xclip" ;;
