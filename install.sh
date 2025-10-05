@@ -475,8 +475,9 @@ _step_install_scripts() {
     echo -e "$MSG_INFO Installing new scripts..."
     $SUDO_CMD_USER mkdir --parents "$INSTALL_DIR"
 
-    # Always copy the '_common-functions.sh' file.
+    # Always copy the '_common-functions.sh' and the '_dependencies.sh' files.
     $SUDO_CMD cp -- "$SCRIPT_DIR/_common-functions.sh" "$INSTALL_DIR"
+    $SUDO_CMD cp -- "$SCRIPT_DIR/_dependencies.sh" "$INSTALL_DIR"
 
     # Copy scripts by category. If the user selected specific categories, only
     # those are installed. Otherwise, all categories are copied by default.
