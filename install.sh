@@ -401,78 +401,46 @@ _get_user_homes() {
 }
 
 _get_parameters_command_line() {
+    local expanded_args=()
+
+    # Expand combined short options (e.g. -ia -> -i -a).
+    while [[ $# -gt 0 ]]; do
+        if [[ "$1" =~ ^-[a-zA-Z]{2,}$ ]]; then
+            # Split combined short options (e.g. -ia -> -i -a).
+            local arg="${1#-}"
+            local i=""
+            for ((i = 0; i < ${#arg}; i++)); do
+                expanded_args+=("-${arg:i:1}")
+            done
+        else
+            expanded_args+=("$1")
+        fi
+        shift
+    done
+
+    # Replace positional parameters with expanded arguments.
+    set -- "${expanded_args[@]}"
+
     # Read parameters from command line.
     while [[ $# -gt 0 ]]; do
         case "$1" in
-        # Core behavior
-        -n | --non-interactive)
-            OPT_INTERACTIVE_INSTALL="false"
-            shift
-            ;;
-        -q | --quiet)
-            OPT_QUIET_INSTALL="true"
-            shift
-            ;;
-        # Basic dependencies
-        -i | --install-dependencies)
-            OPT_INSTALL_BASIC_DEPS="true"
-            shift
-            ;;
-        -I | --no-install-dependencies)
-            OPT_INSTALL_BASIC_DEPS="false"
-            shift
-            ;;
-        # Keyboard shortcuts
-        -k | --install-shortcuts)
-            OPT_INSTALL_ACCELS="true"
-            shift
-            ;;
-        -K | --no-install-shortcuts)
-            OPT_INSTALL_ACCELS="false"
-            shift
-            ;;
-        # Close file manager
-        -f | --close-filemanager)
-            OPT_CLOSE_FILE_MANAGER="true"
-            shift
-            ;;
-        -F | --no-close-filemanager)
-            OPT_CLOSE_FILE_MANAGER="false"
-            shift
-            ;;
-        # Remove scripts
-        -d | --remove-scripts)
-            OPT_REMOVE_SCRIPTS="true"
-            shift
-            ;;
-        -D | --no-remove-scripts)
-            OPT_REMOVE_SCRIPTS="false"
-            shift
-            ;;
-        # App shortcuts
-        -s | --install-app-shortcuts)
-            OPT_INSTALL_APP_SHORTCUTS="true"
-            shift
-            ;;
-        -S | --no-install-app-shortcuts)
-            OPT_INSTALL_APP_SHORTCUTS="false"
-            shift
-            ;;
-        # Install for all users
-        -a | --install-all-users)
-            OPT_INSTALL_FOR_ALL_USERS="true"
-            shift
-            ;;
-        -A | --no-install-all-users)
-            OPT_INSTALL_FOR_ALL_USERS="false"
-            shift
-            ;;
-
-        # Help
+        -n | --non-interactive) OPT_INTERACTIVE_INSTALL="false" ;;
+        -q | --quiet) OPT_QUIET_INSTALL="true" ;;
+        -i | --install-dependencies) OPT_INSTALL_BASIC_DEPS="true" ;;
+        -I | --no-install-dependencies) OPT_INSTALL_BASIC_DEPS="false" ;;
+        -k | --install-shortcuts) OPT_INSTALL_ACCELS="true" ;;
+        -K | --no-install-shortcuts) OPT_INSTALL_ACCELS="false" ;;
+        -f | --close-filemanager) OPT_CLOSE_FILE_MANAGER="true" ;;
+        -F | --no-close-filemanager) OPT_CLOSE_FILE_MANAGER="false" ;;
+        -d | --remove-scripts) OPT_REMOVE_SCRIPTS="true" ;;
+        -D | --no-remove-scripts) OPT_REMOVE_SCRIPTS="false" ;;
+        -s | --install-app-shortcuts) OPT_INSTALL_APP_SHORTCUTS="true" ;;
+        -S | --no-install-app-shortcuts) OPT_INSTALL_APP_SHORTCUTS="false" ;;
+        -a | --install-all-users) OPT_INSTALL_FOR_ALL_USERS="true" ;;
+        -A | --no-install-all-users) OPT_INSTALL_FOR_ALL_USERS="false" ;;
         -h | --help)
             echo "Usage: $0 [options]"
             echo
-            echo "Options:"
             echo "  -n, --non-interactive           Run without prompts."
             echo "  -q, --quiet                     Suppress all output (silent mode)."
             echo "  -i, --install-dependencies      Install basic dependencies."
@@ -491,13 +459,13 @@ _get_parameters_command_line() {
             echo
             exit 0
             ;;
-        # Unknown option
         *)
             echo "Unknown option: $1" >&2
             echo "Use --help for usage information." >&2
             exit 1
             ;;
         esac
+        shift
     done
 }
 
