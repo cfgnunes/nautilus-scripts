@@ -482,10 +482,16 @@ _dependencies_check_metapackages() {
         real_name_packages=$(_deps_get_dependency_value \
             "$package" "$available_pkg_manager" "META_PACKAGES")
 
-        if [[ -n "$real_name_packages" ]]; then
-            expanded_packages+=" $real_name_packages"
-        else
+        # Try to get the package name in PACKAGE_NAME.
+        if [[ -z "$real_name_packages" ]]; then
+            real_name_packages=$(_deps_get_dependency_value \
+                "$package" "$available_pkg_manager" "PACKAGE_NAME")
+        fi
+
+        if [[ -z "$real_name_packages" ]]; then
             expanded_packages+=" $package"
+        else
+            expanded_packages+=" $real_name_packages"
         fi
     done
     packages=$expanded_packages
