@@ -44,9 +44,9 @@ IGNORE_FIND_PATHS=(
 MSG_ERROR="[\033[0;31mFAILED\033[0m]"
 MSG_INFO="[\033[0;32m INFO \033[0m]"
 
-# If the file "_common-functions.sh" is missing, it means the installer is
-# being executed remotely (e.g., via curl). In that case, download the
-# repository and continue the installation from the extracted files.
+# Define the directory of this script. If '$BASH_SOURCE' is available,
+# use its path. Otherwise, create a temporary directory for cases like remote
+# execution via curl.
 if [[ -v "BASH_SOURCE" ]]; then
     SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 else
@@ -104,6 +104,9 @@ _main() {
         exit 1
     fi
 
+    # If the file "_common-functions.sh" is missing, it means the installer is
+    # being executed remotely (e.g., via 'curl'). In that case, download the
+    # repository and continue the installation from the extracted files.
     if [[ ! -f "$SCRIPT_DIR/_common-functions.sh" ]]; then
         _bootstrap_repository
     fi
@@ -1198,11 +1201,11 @@ _bootstrap_repository() {
     local repo_owner="cfgnunes"
     local repo_name="nautilus-scripts"
 
-    # Check if curl or wget is available.
+    # Check if 'curl' or 'wget' is available.
     local downloader=""
-    if command -v curl &>/dev/null; then
+    if _command_exists "curl"; then
         downloader="curl"
-    elif command -v wget &>/dev/null; then
+    elif _command_exists "wget"; then
         downloader="wget"
     else
         echo -e "$MSG_ERROR Neither 'curl' nor 'wget' is installed. Please install one of them to continue."
@@ -1218,11 +1221,12 @@ _bootstrap_repository() {
     # Retrieve the latest release tag from GitHub,
     # (fallback to HEAD if unavailable).
     local latest_tag=""
+    local latest_url="https://api.github.com/repos/${repo_owner}/${repo_name}/releases/latest"
     if [[ "$downloader" == "curl" ]]; then
-        latest_tag=$(curl -fsSL "https://api.github.com/repos/${repo_owner}/${repo_name}/releases/latest" |
+        latest_tag=$(curl -fsSL "$latest_url" |
             grep -Po '"tag_name": "\K.*?(?=")' || echo "HEAD")
     else
-        latest_tag=$(wget -qO- "https://api.github.com/repos/${repo_owner}/${repo_name}/releases/latest" |
+        latest_tag=$(wget -qO- "$latest_url" |
             grep -Po '"tag_name": "\K.*?(?=")' || echo "HEAD")
     fi
 
