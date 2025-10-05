@@ -353,7 +353,7 @@ _dependencies_check_commands() {
     [[ -z "$commands" ]] && return
 
     # Remove leading, trailing, and duplicate spaces.
-    commands=$(sed "s|  *| |g; s|^ *||g; s| *$||g" <<<"$commands")
+    commands=$(_str_collapse_char "$commands" " ")
 
     # Remove duplicated commands in the input list.
     commands=$(tr " " "\n" <<<"$commands")
@@ -399,8 +399,8 @@ _dependencies_check_commands() {
         fi
     done
 
-    # Remove the first space added.
-    packages_install=$(sed "s|^ ||g" <<<"$packages_install")
+    # Remove leading, trailing, and duplicate spaces.
+    packages_install=$(_str_collapse_char "$packages_install" " ")
 
     # Ask the user to install the packages.
     if [[ -n "$packages_install" ]]; then
@@ -465,7 +465,7 @@ _dependencies_check_metapackages() {
     fi
 
     # Remove leading, trailing, and duplicate spaces.
-    packages=$(sed "s|  *| |g; s|^ *||g; s| *$||g" <<<"$packages")
+    packages=$(_str_collapse_char "$packages" " ")
 
     # Remove duplicated packages in the input list.
     packages=$(tr " " "\n" <<<"$packages")
@@ -491,7 +491,7 @@ _dependencies_check_metapackages() {
     packages=$expanded_packages
 
     # Remove leading, trailing, and duplicate spaces.
-    packages=$(sed "s|  *| |g; s|^ *||g; s| *$||g" <<<"$packages")
+    packages=$(_str_collapse_char "$packages" " ")
 
     # Remove duplicated packages in the input list.
     packages=$(tr " " "\n" <<<"$packages")
@@ -577,7 +577,7 @@ _deps_get_dependency_value() {
     pair_values=${array_values[$command]:-}
 
     # Remove leading, trailing, and duplicate spaces.
-    pair_values=$(sed "s|  *| |g; s|^ *||g; s| *$||g" <<<"$pair_values")
+    pair_values=$(_str_collapse_char "$pair_values" " ")
 
     # If the key does not exist or has no associated values, return failure.
     if [[ -z "$pair_values" ]]; then
@@ -859,8 +859,7 @@ _convert_text_to_delimited_string() {
     input_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$input_items")
     input_items=$(sed -z "s|$new_line|\n|g" <<<"$input_items")
 
-    input_items=$(_str_remove_empty_tokens "$input_items")
-    printf "%s" "$input_items"
+    _str_collapse_char "$input_items" "$FIELD_SEPARATOR"
 }
 
 _display_dir_selection_box() {
@@ -885,8 +884,7 @@ _display_dir_selection_box() {
     fi
     _display_unlock
 
-    input_files=$(_str_remove_empty_tokens "$input_files")
-    printf "%s" "$input_files"
+    _str_collapse_char "$input_files" "$FIELD_SEPARATOR"
 }
 
 # shellcheck disable=SC2120
@@ -929,8 +927,7 @@ _display_file_selection_box() {
     fi
     _display_unlock
 
-    input_files=$(_str_remove_empty_tokens "$input_files")
-    printf "%s" "$input_files"
+    _str_collapse_char "$input_files" "$FIELD_SEPARATOR"
 }
 
 _display_error_box() {
@@ -1653,10 +1650,8 @@ _find_filtered_files() {
     # shellcheck disable=SC2086
     filtered_files=$(eval $find_command 2>/dev/null |
         tr "\0" "$FIELD_SEPARATOR")
-    filtered_files=$(_str_remove_empty_tokens "$filtered_files")
 
-    # Return the filtered files.
-    printf "%s" "$filtered_files"
+    _str_collapse_char "$filtered_files" "$FIELD_SEPARATOR"
 }
 
 _gdbus_notify() {
@@ -1876,7 +1871,7 @@ _get_filenames_filemanager() {
         input_files=$(_text_uri_decode "$input_files")
     else
         input_files=$INPUT_FILES # Standard input.
-        input_files=$(_str_remove_empty_tokens "$input_files")
+        input_files=$(_str_collapse_char "$input_files" "$FIELD_SEPARATOR")
     fi
 
     printf "%s" "$input_files"
@@ -2043,7 +2038,7 @@ _get_files() {
     if [[ "$par_sort_list" == "true" ]]; then
         input_files=$(printf "%s" "$input_files" | tr "$FIELD_SEPARATOR" "\0" |
             sort --zero-terminated --version-sort | tr "\0" "$FIELD_SEPARATOR")
-        input_files=$(_str_remove_empty_tokens "$input_files")
+        input_files=$(_str_collapse_char "$input_files" "$FIELD_SEPARATOR")
     fi
 
     # Check for filename conflicts (files with same base name).
@@ -2709,8 +2704,8 @@ _open_items_locations() {
         items_open+="$item$FIELD_SEPARATOR"
     done
 
-    # Remove the trailing field separator.
-    items_open=$(_str_remove_empty_tokens "$items_open")
+    # Remove leading, trailing, and duplicate field separator.
+    items_open=$(_str_collapse_char "$items_open" "$FIELD_SEPARATOR")
 
     # Open the items using the detected file manager.
     case "$file_manager" in
@@ -2946,7 +2941,7 @@ _run_task_parallel() {
         _move_temp_file_to_output \
         _storage_text_write \
         _storage_text_write_ln \
-        _str_remove_empty_tokens \
+        _str_collapse_char \
         _strip_filename_extension \
         _text_remove_empty_lines \
         _text_remove_pwd \
@@ -3053,19 +3048,22 @@ _str_human_readable_path() {
     printf "%s" "$output_path"
 }
 
-_str_remove_empty_tokens() {
-    # This function removes empty tokens from a string, ensuring it is compact
-    # and well-formed.
+_str_collapse_char() {
+    # This function collapses consecutive occurrences of a given character
+    # into a single one and removes any leading or trailing occurrences of it.
     #
     # Parameters:
-    #   - $1 (input_str): The input string containing tokens separated by
-    #     '$FIELD_SEPARATOR'.
+    #   - $1 (input_str): The input string to be processed.
+    #   - $2 (char): The character to collapse and trim from the string.
 
     local input_str=$1
-    input_str=$(tr -s "$FIELD_SEPARATOR" <<<"$input_str")
-    input_str=$(sed "s|$FIELD_SEPARATOR$||" <<<"$input_str")
+    local char=$2
 
-    printf "%s" "$input_str"
+    local sed_p1="s|$char$char*|$char|g"
+    local sed_p2="s|^$char||g"
+    local sed_p3="s|$char$||g"
+
+    sed "$sed_p1; $sed_p2; $sed_p3" <<<"$input_str"
 }
 
 _strip_filename_extension() {
@@ -3360,8 +3358,7 @@ _validate_file_mime_parallel() {
     input_files=$(_storage_text_read_all)
     _storage_text_clean
 
-    input_files=$(_str_remove_empty_tokens "$input_files")
-    printf "%s" "$input_files"
+    _str_collapse_char "$input_files" "$FIELD_SEPARATOR"
 }
 
 _validate_files_count() {
