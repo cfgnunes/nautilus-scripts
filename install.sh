@@ -5,7 +5,7 @@
 set -u
 
 # -----------------------------------------------------------------------------
-# CONSTANTS
+# SECTION: CONSTANTS
 # -----------------------------------------------------------------------------
 
 APP_SHORTCUT_PREFIX="_script-"
@@ -56,7 +56,7 @@ readonly \
     SCRIPT_DIR
 
 # -----------------------------------------------------------------------------
-# GLOBAL VARIABLES
+# SECTION: GLOBAL VARIABLES
 # -----------------------------------------------------------------------------
 
 FILE_MANAGER=""  # Current file manager being processed.
@@ -72,7 +72,7 @@ SUDO_CMD_USER="" # Command prefix for running as target user.
 source "$SCRIPT_DIR/.assets/multiselect-menu.sh"
 
 # -----------------------------------------------------------------------------
-# FUNCTIONS
+# SECTION: FUNCTIONS
 # -----------------------------------------------------------------------------
 
 # shellcheck disable=SC2034

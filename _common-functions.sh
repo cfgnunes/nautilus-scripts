@@ -11,7 +11,7 @@
 set -u
 
 # -----------------------------------------------------------------------------
-# CONSTANTS
+# SECTION: CONSTANTS
 # -----------------------------------------------------------------------------
 
 ACCESSED_RECENTLY_DIR="$ROOT_DIR/Accessed recently"
@@ -65,7 +65,7 @@ readonly \
     TEMP_DIR_TASK
 
 # -----------------------------------------------------------------------------
-# GLOBAL VARIABLES
+# SECTION: GLOBAL VARIABLES
 # -----------------------------------------------------------------------------
 
 IFS=$FIELD_SEPARATOR
@@ -76,7 +76,7 @@ INPUT_FILES=$*
 TEMP_DATA_TASK=""
 
 # -----------------------------------------------------------------------------
-# BUILD THE STRUCTURE OF THE '$TEMP_DIR'
+# SECTION: BUILD THE STRUCTURE OF THE '$TEMP_DIR'
 # -----------------------------------------------------------------------------
 
 # Store the path of temporary items to be removed after exit.
@@ -86,7 +86,7 @@ mkdir -p "$TEMP_DIR_STORAGE_TEXT" # Store the output from parallel processes.
 mkdir -p "$TEMP_DIR_TASK"         # Store temporary files of scripts.
 
 # -----------------------------------------------------------------------------
-# FUNCTIONS
+# SECTION: CORE UTILITIES FUNCTIONS
 # -----------------------------------------------------------------------------
 
 _cleanup_on_exit() {
@@ -192,6 +192,10 @@ _convert_delimited_string_to_text() {
 
     printf "%s" "$input_items"
 }
+
+# -----------------------------------------------------------------------------
+# SECTION: DEPENDENCY MANAGEMENT FUNCTIONS
+# -----------------------------------------------------------------------------
 
 _dependencies_check_commands() {
     # This function ensures that all required commands are available for
@@ -681,6 +685,10 @@ _deps_is_package_installed() {
     return 1
 }
 
+# -----------------------------------------------------------------------------
+# SECTION: DIRECTORY AND FILE MANAGEMENT FUNCTIONS
+# -----------------------------------------------------------------------------
+
 _directory_pop() {
     # This function pops the top directory off the directory stack and changes
     # to the previous directory.
@@ -736,6 +744,10 @@ _convert_text_to_delimited_string() {
 
     _str_collapse_char "$input_items" "$FIELD_SEPARATOR"
 }
+
+# -----------------------------------------------------------------------------
+# SECTION: USER INTERFACE FUNCTIONS
+# -----------------------------------------------------------------------------
 
 _display_dir_selection_box() {
     # This function presents a graphical interface to allow the user to select
@@ -1625,6 +1637,10 @@ _get_available_file_manager() {
     # Step 4: No file manager found. return error code 1.
     return 1
 }
+
+# -----------------------------------------------------------------------------
+# SECTION: CLIPBOARD MANAGEMENT
+# -----------------------------------------------------------------------------
 
 _get_clipboard_data() {
     # This function retrieves the current content of the clipboard, adapting
@@ -2850,6 +2866,10 @@ _storage_text_clean() {
     rm -f -- "$TEMP_DIR_STORAGE_TEXT/"* &>/dev/null
 }
 
+# -----------------------------------------------------------------------------
+# SECTION: STORAGE TEXT MANAGEMENT
+# -----------------------------------------------------------------------------
+
 _storage_text_read_all() {
     # This function concatenates and outputs the content of all temporary text
     # storage files, from largest to smallest.
@@ -2890,6 +2910,10 @@ _storage_text_write_ln() {
 
     _storage_text_write "$input_text"$'\n'
 }
+
+# -----------------------------------------------------------------------------
+# SECTION: STRING AND TEXT PROCESSING
+# -----------------------------------------------------------------------------
 
 _str_human_readable_path() {
     # This function transforms a given file path into a more human-readable
