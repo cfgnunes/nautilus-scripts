@@ -111,19 +111,19 @@ _main() {
         exit 1
     fi
 
-    # If the file "_common-functions.sh" is missing, it means the installer is
-    # being executed remotely (e.g., via 'curl'). In that case, download the
-    # repository and continue the installation from the extracted files.
-    if [[ ! -f "$SCRIPT_DIR/_common-functions.sh" ]]; then
-        _bootstrap_repository "$@"
-    fi
-
     _get_parameters_command_line "$@"
 
     # If quiet mode is enabled, automatically disable interactive mode to
     # ensure a fully silent and non-interactive installation.
     if [[ "$OPT_QUIET_INSTALL" == "true" ]]; then
         OPT_INTERACTIVE_INSTALL="false"
+    fi
+
+    # If the file "_common-functions.sh" is missing, it means the installer is
+    # being executed remotely (e.g., via 'curl'). In that case, download the
+    # repository and continue the installation from the extracted files.
+    if [[ ! -f "$SCRIPT_DIR/_common-functions.sh" ]]; then
+        _bootstrap_repository "$@"
     fi
 
     # Available options presented in the interactive menu.
