@@ -217,6 +217,14 @@ declare -A POST_INSTALL=(
 # installed together to provide complete functionality for a given name.
 
 declare -A META_PACKAGES=(
+    ["latexmk"]="
+        apt:    latexmk
+        dnf:    latexmk
+        pacman: texlive-binextra
+        nix:    !texlivePackages.latexmk
+        zypper: texlive-latexmk
+    "
+
     ["pdfjam"]="
         apt:    texlive-extra-utils
         dnf:    texlive-pdfjam
