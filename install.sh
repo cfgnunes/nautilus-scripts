@@ -2,11 +2,6 @@
 
 # Install the scripts for file managers.
 
-# If the file "_common-functions.sh" is missing, it means the installer is
-# being executed remotely (e.g., via curl). In that case, download the
-# repository and continue the installation from the extracted files.
-[[ ! -f "_common-functions.sh" ]] && _bootstrap_repository
-
 set -u
 
 # -----------------------------------------------------------------------------
@@ -45,11 +40,18 @@ IGNORE_FIND_PATHS=(
     ! -path "*/.git*"
 )
 
-SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-
 # Colored status messages for logging.
 MSG_ERROR="[\033[0;31mFAILED\033[0m]"
 MSG_INFO="[\033[0;32m INFO \033[0m]"
+
+# If the file "_common-functions.sh" is missing, it means the installer is
+# being executed remotely (e.g., via curl). In that case, download the
+# repository and continue the installation from the extracted files.
+if [[ -v "BASH_SOURCE" ]]; then
+    SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+else
+    SCRIPT_DIR=$(mktemp -d)
+fi
 
 # Mark constants as read-only to prevent accidental modification.
 readonly \
@@ -74,7 +76,9 @@ SUDO_CMD_USER="" # Command prefix for running as target user.
 
 # Import helper script for interactive multi-selection menus.
 #shellcheck source=.assets/multiselect-menu.sh
-source "$SCRIPT_DIR/.assets/multiselect-menu.sh"
+if [[ -f "$SCRIPT_DIR/.assets/multiselect-menu.sh" ]]; then
+    source "$SCRIPT_DIR/.assets/multiselect-menu.sh"
+fi
 
 # -----------------------------------------------------------------------------
 # SECTION /// [MAIN FLOW]
@@ -98,6 +102,10 @@ _main() {
         echo -e "$MSG_ERROR Do NOT run this script with 'sudo'!"
         echo "Run it as: 'bash $script_name'"
         exit 1
+    fi
+
+    if [[ ! -f "$SCRIPT_DIR/_common-functions.sh" ]]; then
+        _bootstrap_repository
     fi
 
     # Read parammeters from command line.
