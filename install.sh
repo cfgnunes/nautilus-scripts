@@ -72,7 +72,7 @@ SUDO_CMD_USER="" # Command prefix for running as target user.
 source "$SCRIPT_DIR/.assets/multiselect-menu.sh"
 
 # -----------------------------------------------------------------------------
-# SECTION /// [FUNCTIONS]
+# SECTION /// [MAIN FLOW]
 # -----------------------------------------------------------------------------
 
 # shellcheck disable=SC2034
@@ -275,6 +275,10 @@ _main() {
     echo "Done!"
 }
 
+# -----------------------------------------------------------------------------
+# SECTION /// [VALIDATION AND CHECKS]
+# -----------------------------------------------------------------------------
+
 _check_exist_filemanager() {
     # This function checks if at least one compatible file manager exists in
     # the system by iterating through a predefined list of supported file
@@ -311,6 +315,10 @@ _command_exists() {
     return 1
 }
 
+# -----------------------------------------------------------------------------
+# SECTION /// [BACKUP AND FILE MANAGEMENT]
+# -----------------------------------------------------------------------------
+
 _item_create_backup() {
     # This function creates a backup of a file (append .bak) if it exists.
 
@@ -337,6 +345,38 @@ _delete_items() {
         $SUDO_CMD rm -rf -- $items 2>/dev/null
     fi
 }
+
+# -----------------------------------------------------------------------------
+# SECTION /// [SYSTEM INFORMATION AND PARAMETERS]
+# -----------------------------------------------------------------------------
+
+_get_user_homes() {
+    # This function returns the list of home directories for users who can log
+    # in. It filters '/etc/passwd' entries for accounts with valid login
+    # shells.
+
+    getent passwd |
+        grep --extended-regexp "/(bash|sh|zsh|csh|ksh|tcsh|fish|dash)$" |
+        cut -d ":" -f 6 |
+        sort --unique
+}
+
+_get_par_value() {
+    # This function extracts the value of a given parameter from a script file.
+    # It searches for "parameter=value" inside the file, then returns only the
+    # value. Quotes are removed and '|' characters are replaced with ';' for
+    # consistency.
+
+    local filename=$1
+    local parameter=$2
+
+    $SUDO_CMD grep --only-matching -m 1 "$parameter=[^\";]*" "$filename" |
+        cut -d "=" -f 2 | tr -d "'" | tr "|" ";" 2>/dev/null
+}
+
+# -----------------------------------------------------------------------------
+# SECTION /// [INSTALLATION STEPS / DEPENDENCIES]
+# -----------------------------------------------------------------------------
 
 # shellcheck disable=SC2086
 _step_install_dependencies() {
@@ -508,6 +548,10 @@ _step_install_scripts() {
         -exec chmod +x -- {} \;
 }
 
+# -----------------------------------------------------------------------------
+# SECTION /// [INSTALLATION STEPS / KEYBOARD ACCELLERATORS]
+# -----------------------------------------------------------------------------
+
 _step_install_accels() {
     # Install keyboard shortcuts (accels) for specific file managers.
 
@@ -657,6 +701,10 @@ _step_install_accels_thunar() {
     $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
 }
 
+# -----------------------------------------------------------------------------
+# SECTION /// [INSTALLATION STEPS / APPLICATION SHORTCUTS]
+# -----------------------------------------------------------------------------
+
 _step_install_application_shortcuts() {
     local filename=""
     local menu_file=""
@@ -708,6 +756,49 @@ _step_install_application_shortcuts() {
             $SUDO_CMD chmod +x "$menu_file"
         done
 }
+
+_step_create_gnome_application_folder() {
+    local folder_name="Scripts"
+
+    # Configure the "Scripts" application folder in GNOME.
+    if _command_exists "gsettings" && gsettings list-schemas |
+        grep --quiet '^org.gnome.desktop.app-folders$'; then
+
+        echo -e "$MSG_INFO Creating '$folder_name' GNOME application folder..."
+
+        local gsettings_user="gsettings"
+        if _command_exists "machinectl" && [[ "$USER" != "$INSTALL_OWNER" ]]; then
+            gsettings_user="sudo machinectl --quiet shell $INSTALL_OWNER@ $(which "gsettings")"
+        fi
+
+        local current_folders=""
+        current_folders=$($gsettings_user get org.gnome.desktop.app-folders folder-children)
+        if [[ "$current_folders" != *"'$folder_name'"* ]]; then
+            # shellcheck disable=SC2001
+            $gsettings_user set \
+                org.gnome.desktop.app-folders folder-children "$(sed "s/]/,'$folder_name']/" <<<"$current_folders")" &>/dev/null
+        fi
+
+        $gsettings_user set \
+            org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
+            name "$folder_name" &>/dev/null
+
+        local list_scripts=""
+        list_scripts=$(
+            $SUDO_CMD find "$INSTALL_HOME/.local/share/applications" \
+                -maxdepth 1 -type f -name "$APP_SHORTCUT_PREFIX*.desktop" \
+                -printf "'%f', " |
+                sed 's/, $//; s/^/[/' | sed 's/$/]/'
+        )
+        $gsettings_user set \
+            org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
+            apps "$list_scripts" &>/dev/null
+    fi
+}
+
+# -----------------------------------------------------------------------------
+# SECTION /// [INSTALLATION STEPS / CONTEXT MENUS]
+# -----------------------------------------------------------------------------
 
 _step_install_menus() {
     # This function install custom context menus for supported file managers.
@@ -1053,6 +1144,10 @@ _step_install_menus_thunar() {
     $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menus_file"
 }
 
+# -----------------------------------------------------------------------------
+# SECTION /// [INSTALLATION STEPS / CLOSE FILEMANAGER]
+# -----------------------------------------------------------------------------
+
 _step_close_filemanager() {
     # This function closes the current file manager so that it reloads its
     # configurations. For most file managers, the `-q` option is used to quit
@@ -1077,69 +1172,6 @@ _step_close_filemanager() {
         killall "$FILE_MANAGER" &>/dev/null
         ;;
     esac
-}
-
-_step_create_gnome_application_folder() {
-    local folder_name="Scripts"
-
-    # Configure the "Scripts" application folder in GNOME.
-    if _command_exists "gsettings" && gsettings list-schemas |
-        grep --quiet '^org.gnome.desktop.app-folders$'; then
-
-        echo -e "$MSG_INFO Creating '$folder_name' GNOME application folder..."
-
-        local gsettings_user="gsettings"
-        if _command_exists "machinectl" && [[ "$USER" != "$INSTALL_OWNER" ]]; then
-            gsettings_user="sudo machinectl --quiet shell $INSTALL_OWNER@ $(which "gsettings")"
-        fi
-
-        local current_folders=""
-        current_folders=$($gsettings_user get org.gnome.desktop.app-folders folder-children)
-        if [[ "$current_folders" != *"'$folder_name'"* ]]; then
-            # shellcheck disable=SC2001
-            $gsettings_user set \
-                org.gnome.desktop.app-folders folder-children "$(sed "s/]/,'$folder_name']/" <<<"$current_folders")" &>/dev/null
-        fi
-
-        $gsettings_user set \
-            org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
-            name "$folder_name" &>/dev/null
-
-        local list_scripts=""
-        list_scripts=$(
-            $SUDO_CMD find "$INSTALL_HOME/.local/share/applications" \
-                -maxdepth 1 -type f -name "$APP_SHORTCUT_PREFIX*.desktop" \
-                -printf "'%f', " |
-                sed 's/, $//; s/^/[/' | sed 's/$/]/'
-        )
-        $gsettings_user set \
-            org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
-            apps "$list_scripts" &>/dev/null
-    fi
-}
-
-_get_user_homes() {
-    # This function returns the list of home directories for users who can log
-    # in. It filters '/etc/passwd' entries for accounts with valid login
-    # shells.
-
-    getent passwd |
-        grep --extended-regexp "/(bash|sh|zsh|csh|ksh|tcsh|fish|dash)$" |
-        cut -d ":" -f 6 |
-        sort --unique
-}
-
-_get_par_value() {
-    # This function extracts the value of a given parameter from a script file.
-    # It searches for "parameter=value" inside the file, then returns only the
-    # value. Quotes are removed and '|' characters are replaced with ';' for
-    # consistency.
-
-    local filename=$1
-    local parameter=$2
-
-    $SUDO_CMD grep --only-matching -m 1 "$parameter=[^\";]*" "$filename" |
-        cut -d "=" -f 2 | tr -d "'" | tr "|" ";" 2>/dev/null
 }
 
 _main "$@"
