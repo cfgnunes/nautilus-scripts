@@ -205,6 +205,7 @@ _dependencies_check_commands() {
     local commands=$1
     local packages_install=""
     local available_pkg_manager=""
+    local post_install_compiled=""
 
     [[ -z "$commands" ]] && return
 
@@ -244,6 +245,10 @@ _dependencies_check_commands() {
         post_install=$(_deps_get_dependency_value \
             "$command" "$available_pkg_manager" "POST_INSTALL")
 
+        if [[ -n "$post_install" ]]; then
+            post_install_compiled+="$post_install;"
+        fi
+
         # If package is not found, use the command name as the package name.
         if [[ -z "$package" ]] && [[ -n "$command" ]]; then
             package=$command
@@ -255,24 +260,8 @@ _dependencies_check_commands() {
         fi
     done
 
-    # Remove leading, trailing, and duplicate spaces.
-    packages_install=$(_str_collapse_char "$packages_install" " ")
-
-    # Ask the user to install the packages.
-    if [[ -n "$packages_install" ]]; then
-        local message="These packages were not found:"$'\n'
-        message+="- "
-        message+=$(sed "s| |\n- |g" <<<"${packages_install/!/}")
-        message+=$'\n'$'\n'
-        message+="Would you like to install them?"
-        if ! _display_question_box "$message"; then
-            _exit_script
-        fi
-        _deps_install_packages \
-            "$available_pkg_manager" "${packages_install/!/}" "$post_install"
-        _deps_installation_check \
-            "$available_pkg_manager" "$packages_install"
-    fi
+    _deps_install_missing_packages \
+        "$packages_install" "$available_pkg_manager" "$post_install_compiled"
 }
 
 _dependencies_check_commands_clipboard() {
@@ -311,6 +300,7 @@ _dependencies_check_metapackages() {
     local packages=$1
     local packages_install=""
     local available_pkg_manager=""
+    local post_install_compiled=""
 
     [[ -z "$packages" ]] && return
 
@@ -374,24 +364,8 @@ _dependencies_check_metapackages() {
         fi
     done
 
-    # Remove the first space added.
-    packages_install=$(sed "s|^ ||g" <<<"$packages_install")
-
-    # Ask the user to install the packages.
-    if [[ -n "$packages_install" ]]; then
-        local message="These packages were not found:"$'\n'
-        message+="- "
-        message+=$(sed "s| |\n- |g" <<<"${packages_install/!/}")
-        message+=$'\n'$'\n'
-        message+="Would you like to install them?"
-        if ! _display_question_box "$message"; then
-            _exit_script
-        fi
-        _deps_install_packages \
-            "$available_pkg_manager" "${packages_install/!/}" ""
-        _deps_installation_check \
-            "$available_pkg_manager" "$packages_install"
-    fi
+    _deps_install_missing_packages \
+        "$packages_install" "$available_pkg_manager" "$post_install_compiled"
 }
 
 _dep_get_available_package_manager() {
@@ -472,6 +446,34 @@ _deps_get_dependency_value() {
 
     # If no match was found, return failure.
     return 1
+}
+
+_deps_install_missing_packages() {
+    local packages_install=$1
+    local available_pkg_manager=$2
+    local post_install=$3
+    local packages_check=$packages_install
+
+    packages_install=$(tr -d "!" <<<"$packages_install")
+
+    # Remove leading, trailing, and duplicate spaces.
+    packages_install=$(_str_collapse_char "$packages_install" " ")
+
+    # Ask the user to install the packages.
+    if [[ -n "$packages_install" ]]; then
+        local message="These packages were not found:"$'\n'
+        message+="- "
+        message+=$(sed "s| |\n- |g" <<<"$packages_install")
+        message+=$'\n'$'\n'
+        message+="Would you like to install them?"
+        if ! _display_question_box "$message"; then
+            _exit_script
+        fi
+        _deps_install_packages \
+            "$available_pkg_manager" "$packages_install" "$post_install"
+        _deps_installation_check \
+            "$available_pkg_manager" "$packages_check"
+    fi
 }
 
 _deps_install_packages() {
@@ -580,7 +582,7 @@ _deps_installation_check() {
         if [[ "$package_check" == "!"* ]]; then
             continue
         fi
-        package_check=${package_check/!/}
+        package_check=$(tr -d "!" <<<"$package_check")
 
         if ! _deps_is_package_installed \
             "$available_pkg_manager" "$package_check"; then
@@ -645,7 +647,7 @@ _deps_is_package_installed() {
         fi
         ;;
     "rpm-ostree")
-        if rpm -qa | grep --quiet "$package"; then
+        if rpm -qa | grep --quiet --ignore-case "$package"; then
             return 0
         fi
         ;;
@@ -660,7 +662,7 @@ _deps_is_package_installed() {
         fi
         ;;
     "nix")
-        if nix-env -q | grep --quiet "$package"; then
+        if nix-env -q | grep --quiet --ignore-case "$package"; then
             return 0
         fi
         ;;
