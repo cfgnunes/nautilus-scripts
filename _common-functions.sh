@@ -14,8 +14,6 @@ set -u
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
-ENABLE_DEBUG="false"
-
 ACCESSED_RECENTLY_DIR="$ROOT_DIR/Accessed recently"
 ACCESSED_RECENTLY_LINKS_TO_KEEP=10
 FIELD_SEPARATOR=$'\r'          # The main field separator.
@@ -48,7 +46,6 @@ MSG_INFO="[\033[0;32m INFO \033[0m]"
 readonly \
     ACCESSED_RECENTLY_DIR \
     ACCESSED_RECENTLY_LINKS_TO_KEEP \
-    ENABLE_DEBUG \
     FIELD_SEPARATOR \
     GUI_BOX_HEIGHT \
     GUI_BOX_WIDTH \
@@ -115,9 +112,6 @@ _cleanup_on_exit() {
     # Remove the main temporary dir.
     rm -rf -- "$TEMP_DIR" &>/dev/null
 
-    if [[ "$ENABLE_DEBUG" == "true" ]]; then
-        echo -e "$MSG_INFO Temporary files cleaned." >&2
-    fi
     if ! _is_gui_session; then
         echo -e "$MSG_INFO End." >&2
     fi
@@ -1437,10 +1431,6 @@ _exit_script() {
 
     local child_pids=""
     local script_pid=$$
-
-    if [[ "$ENABLE_DEBUG" == "true" ]]; then
-        echo -e "$MSG_INFO Exiting the script." >&2
-    fi
 
     # Get the process ID (PID) of all child processes.
     child_pids=$(pstree -p "$script_pid" |
@@ -2762,7 +2752,6 @@ _run_task_parallel() {
 
     # Export variables to be used inside new shells (when using 'xargs').
     export \
-        ENABLE_DEBUG \
         FIELD_SEPARATOR \
         GUI_BOX_HEIGHT \
         GUI_BOX_WIDTH \
