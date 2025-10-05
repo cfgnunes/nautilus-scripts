@@ -1198,6 +1198,17 @@ _bootstrap_repository() {
     local repo_owner="cfgnunes"
     local repo_name="nautilus-scripts"
 
+    # Check if curl or wget is available.
+    local downloader=""
+    if command -v curl &>/dev/null; then
+        downloader="curl"
+    elif command -v wget &>/dev/null; then
+        downloader="wget"
+    else
+        echo -e "$MSG_ERROR Neither 'curl' nor 'wget' is installed. Please install one of them to continue."
+        exit 1
+    fi
+
     # Create a temporary directory for the installation.
     local temp_dir=""
     temp_dir=$(mktemp -d)
@@ -1207,13 +1218,24 @@ _bootstrap_repository() {
     # Retrieve the latest release tag from GitHub,
     # (fallback to HEAD if unavailable).
     local latest_tag=""
-    latest_tag=$(curl -fsSL "https://api.github.com/repos/${repo_owner}/${repo_name}/releases/latest" |
-        grep -Po '"tag_name": "\K.*?(?=")' || echo "HEAD")
+    if [[ "$downloader" == "curl" ]]; then
+        latest_tag=$(curl -fsSL "https://api.github.com/repos/${repo_owner}/${repo_name}/releases/latest" |
+            grep -Po '"tag_name": "\K.*?(?=")' || echo "HEAD")
+    else
+        latest_tag=$(wget -qO- "https://api.github.com/repos/${repo_owner}/${repo_name}/releases/latest" |
+            grep -Po '"tag_name": "\K.*?(?=")' || echo "HEAD")
+    fi
 
     # Build the URL for the corresponding tarball.
     local tarball_url="https://github.com/${repo_owner}/${repo_name}/archive/refs/tags/${latest_tag}.tar.gz"
     echo -e "$MSG_INFO Downloading ${repo_name} (${latest_tag})..."
-    curl -fsSL "$tarball_url" | tar -xz -C "$temp_dir"
+
+    # Download and extract using available tool.
+    if [[ "$downloader" == "curl" ]]; then
+        curl -fsSL "$tarball_url" | tar -xz -C "$temp_dir"
+    else
+        wget -qO- "$tarball_url" | tar -xz -C "$temp_dir"
+    fi
 
     # Identify the extracted directory (matches nautilus-scripts-<version>).
     local extracted_dir=""
