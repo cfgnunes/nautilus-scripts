@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Code based on: https://unix.stackexchange.com/a/673436
-# Version: 2025-01-27
+# Version: 2025-10-05
 
 # Keyboard commands:
 #  <enter>: Confirms the current selection of options.
@@ -21,16 +21,16 @@ _multiselect_menu() {
 
     # Helpers for console print format and control.
     __cursor_blink_on() {
-        printf "\e[?25h"
+        printf "\033[?25h"
     }
     __cursor_blink_off() {
-        printf "\e[?25l"
+        printf "\033[?25l"
     }
     __cursor_to() {
         local row=$1
         local col=${2:-1}
 
-        printf "\e[%s;%sH" "$row" "$col"
+        printf "\033[%s;%sH" "$row" "$col"
     }
     __get_cursor_row() {
         local row=""
@@ -48,7 +48,7 @@ _multiselect_menu() {
         " ") printf "toggle_active" ;;
         "a" | "A") printf "toggle_all" ;;
         "q" | "Q") printf "quit" ;;
-        $'\e')
+        $'\033')
             IFS="" read -rs -n 2 key &>/dev/null
             case "$key" in
             "[A" | "[D") printf "up" ;;
@@ -99,7 +99,7 @@ _multiselect_menu() {
             # Set the prefix "[ ]" or "[*]".
             local prefix="[ ]"
             if [[ ${selected[index_option]} == "true" ]]; then
-                prefix="[\e[1;32m*\e[0m]"
+                prefix="[\033[0;32m*\033[0m]"
             fi
 
             # Print the prefix with the option in the menu.
@@ -107,7 +107,7 @@ _multiselect_menu() {
             local option="${options[index_option]}"
             if ((index_option == index_active)); then
                 # Print the active option.
-                printf "$prefix \e[7m%s\e[27m" "$option"
+                printf "$prefix \033[7m%s\033[27m" "$option"
             else
                 # Print the inactive option.
                 printf "$prefix %s" "$option"
