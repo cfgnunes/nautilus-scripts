@@ -24,6 +24,7 @@ declare -A PACKAGE_NAME=(
         nix:    p7zip
         zypper: 7zip
         brew:   p7zip
+        guix:   p7zip
     "
 
     ["ar"]="
@@ -36,6 +37,7 @@ declare -A PACKAGE_NAME=(
         pacman: libarchive
         nix:    libarchive
         zypper: bsdtar
+        guix:   libarchive
     "
 
     ["clamscan"]="
@@ -48,6 +50,7 @@ declare -A PACKAGE_NAME=(
         pacman: imagemagick
         nix:    imagemagick
         zypper: ImageMagick
+        guix:   imagemagick
     "
 
     ["exiftool"]="
@@ -56,6 +59,7 @@ declare -A PACKAGE_NAME=(
         pacman: perl-image-exiftool
         nix:    exiftool
         zypper: exiftool
+        guix:   perl-image-exiftool
     "
 
     ["ffmpeg"]="
@@ -64,6 +68,7 @@ declare -A PACKAGE_NAME=(
         pacman: ffmpeg
         nix:    ffmpeg
         zypper: ffmpeg
+        guix:   ffmpeg
     "
 
     ["gpg"]="
@@ -72,6 +77,7 @@ declare -A PACKAGE_NAME=(
         pacman: gnupg
         nix:    gnupg
         zypper: gpg2
+        guix:   gnupg
     "
 
     ["gunzip"]="
@@ -88,6 +94,7 @@ declare -A PACKAGE_NAME=(
         pacman: glibc
         nix:    glibc
         zypper: glibc
+        guix:   glibc
     "
 
     ["lha"]="
@@ -100,6 +107,7 @@ declare -A PACKAGE_NAME=(
         pacman: libreoffice
         nix:    libreoffice
         zypper: libreoffice-calc
+        guix:   libreoffice
     "
 
     ["loimpress"]="
@@ -108,6 +116,7 @@ declare -A PACKAGE_NAME=(
         pacman: libreoffice
         nix:    libreoffice
         zypper: libreoffice-impress
+        guix:   libreoffice
     "
 
     ["lowriter"]="
@@ -116,6 +125,7 @@ declare -A PACKAGE_NAME=(
         pacman: libreoffice
         nix:    libreoffice
         zypper: libreoffice-writer
+        guix:   libreoffice
     "
 
     ["lp"]="
@@ -124,6 +134,7 @@ declare -A PACKAGE_NAME=(
         pacman: cups
         nix:    cups
         zypper: cups
+        guix:   cups
     "
 
     ["mksquashfs"]="
@@ -132,6 +143,7 @@ declare -A PACKAGE_NAME=(
         pacman: squashfs-tools
         nix:    !squashfsTools
         zypper: squashfs
+        guix:   squashfs-tools
     "
 
     ["perl"]="
@@ -140,6 +152,7 @@ declare -A PACKAGE_NAME=(
         pacman: perl-base
         nix:    perl
         zypper: perl-base
+        guix:   perl
     "
 
     ["photorec"]="
@@ -148,6 +161,7 @@ declare -A PACKAGE_NAME=(
         pacman: testdisk
         nix:    testdisk
         zypper: photorec
+        guix:   testdisk
     "
 
     ["pdfinfo"]="
@@ -156,6 +170,7 @@ declare -A PACKAGE_NAME=(
         pacman: poppler
         nix:    poppler-utils
         zypper: poppler-tools
+        guix:   poppler
     "
 
     ["ping"]="
@@ -164,6 +179,7 @@ declare -A PACKAGE_NAME=(
         pacman: iputils
         nix:    iputils
         zypper: iputils
+        guix:   iputils
     "
 
     ["unar"]="
@@ -192,6 +208,7 @@ declare -A PACKAGE_NAME=(
         pacman: xz
         nix:    xz
         zypper: xz
+        guix:   xz
     "
 )
 
@@ -239,6 +256,7 @@ declare -A META_PACKAGES=(
         pacman: sox
         nix:    sox
         zypper: sox
+        guix:   sox
     "
 
     ["tesseract-lang-$TEMP_DATA_TASK"]="
