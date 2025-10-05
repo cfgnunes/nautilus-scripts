@@ -6,9 +6,21 @@ This project offers a collection of file manager actions, also known as Nautilus
 
 ## Installing
 
-To install, just run the following command in the terminal:
+You can install in two ways:
 
-```sh
+### Option 1 - Online installation (recommended)
+
+Run the following command in your terminal:
+
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/cfgnunes/nautilus-scripts/HEAD/install.sh)"
+```
+
+### Option 2 - Local installation
+
+After cloning this repository, run the following command:
+
+```bash
 bash install.sh
 ```
 
