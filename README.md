@@ -10,7 +10,7 @@ You can install in two ways:
 
 ### Option 1 - Online installation (recommended)
 
-Run **one** of the following commands in your terminal:
+You can use either **curl** or **wget**. Choose **one** of the following commands and run it in your terminal:
 
 #### Using `curl`
 
