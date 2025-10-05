@@ -105,7 +105,7 @@ _main() {
     fi
 
     if [[ ! -f "$SCRIPT_DIR/_common-functions.sh" ]]; then
-        _bootstrap_repository "$@"
+        _bootstrap_repository
     fi
 
     # Read parammeters from command line.
@@ -1230,7 +1230,7 @@ _bootstrap_repository() {
     # Run the installer from the extracted directory.
     echo -e "$MSG_INFO Running installation from extracted directory..."
     cd "$extracted_dir" || exit 1
-    bash install.sh "$@"
+    bash install.sh
 
     rm -rf -- "$temp_dir"
     exit 0
