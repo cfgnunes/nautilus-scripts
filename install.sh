@@ -252,11 +252,6 @@ _main() {
                 ;;
             "unknown")
                 _check_exist_filemanager && continue
-
-                if [[ ! -v "DISPLAY" ]]; then
-                    _echo_error "Could not find any compatible file managers!"
-                    exit 1
-                fi
                 INSTALL_DIR="$INSTALL_HOME/.local/share/scripts"
                 ;;
             esac
