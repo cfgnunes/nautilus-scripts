@@ -571,7 +571,6 @@ _deps_installation_check() {
 
     local available_pkg_manager=$1
     local packages_check=$2
-    local show_success_message="false"
 
     # Iterate over each package to check installation status.
     packages_check=$(tr " " "$FIELD_SEPARATOR" <<<"$packages_check")
@@ -605,12 +604,7 @@ _deps_installation_check() {
                 "Could not install the package '$package_check'!"
             _exit_script
         fi
-        show_success_message="true"
     done
-
-    if [[ "$show_success_message" == "true" ]]; then
-        _display_info_box "The packages have been successfully installed!"
-    fi
 }
 
 _deps_is_package_installed() {
