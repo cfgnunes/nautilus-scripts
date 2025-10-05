@@ -10,15 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "
-        command=pdfjam; pkg_manager=apt; package=texlive-extra-utils |
-        command=pdfjam; pkg_manager=dnf; package=texlive-pdfjam |
-        pkg_manager=pacman; package=texlive-basic |
-        pkg_manager=pacman; package=texlive-binextra |
-        pkg_manager=pacman; package=texlive-latexextra |
-        pkg_manager=nix; package=texliveSmall; par_package_check=texlive |
-        pkg_manager=nix; package=texlivePackages.pdfjam; par_package_check=pdfjam |
-        command=pdfjam; pkg_manager=zypper; package=texlive-pdfjam-bin"
+    _dependencies_check_metapackages "pdfjam"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_extension=pdf")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
