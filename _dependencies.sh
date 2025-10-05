@@ -232,4 +232,12 @@ declare -A META_PACKAGES=(
         nix:sox
         zypper:sox
     "
+
+    ["tesseract-lang-$TEMP_DATA_TASK"]="
+        apt:tesseract-ocr-$TEMP_DATA_TASK
+        dnf:tesseract-langpack-$TEMP_DATA_TASK
+        pacman:tesseract-data-$TEMP_DATA_TASK
+        nix:tesseract
+        zypper:tesseract-ocr-traineddata-$TEMP_DATA_TASK
+    "
 )

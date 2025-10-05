@@ -12,12 +12,7 @@ _main() {
     # Execute initial checks.
     TEMP_DATA_TASK="spa"
     # NOTE: 'ocrmypdf' from 'pkg_manager=nix' already includes language packages.
-    _check_dependencies "
-        command=ocrmypdf |
-        pkg_manager=apt; package=tesseract-ocr-$TEMP_DATA_TASK |
-        pkg_manager=dnf; package=tesseract-langpack-$TEMP_DATA_TASK |
-        pkg_manager=pacman; package=tesseract-data-$TEMP_DATA_TASK |
-        pkg_manager=zypper; package=tesseract-ocr-traineddata-$TEMP_DATA_TASK"
+    _dependencies_check_metapackages "ocrmypdf tesseract-lang-$TEMP_DATA_TASK"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_extension=pdf")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
