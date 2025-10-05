@@ -419,7 +419,11 @@ _get_parameters_command_line() {
     done
 
     # Replace positional parameters with expanded arguments.
-    set -- "${expanded_args[@]}"
+    if ((${#expanded_args[@]})); then
+        set -- "${expanded_args[@]}"
+    else
+        set --
+    fi
 
     # Read parameters from command line.
     while [[ $# -gt 0 ]]; do
