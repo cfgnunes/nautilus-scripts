@@ -1021,9 +1021,8 @@ _get_filename_extension() {
     filename=$(sed -E "s|.*/(\.)*||g" <<<"$filename")
     filename=$(sed -E "s|^(\.)*||g" <<<"$filename")
 
-    printf "%s" "$filename" |
-        grep --ignore-case --only-matching --perl-regexp \
-            "(\.tar)?\.[a-z0-9_~-]{0,15}$"
+    grep --ignore-case --only-matching --perl-regexp \
+        "(\.tar)?\.[a-z0-9_~-]{0,15}$" <<<"$filename"
 }
 
 _strip_filename_extension() {
@@ -1256,10 +1255,7 @@ _get_temp_file() {
     # Output:
     #   - The full path to the newly created temporary file.
 
-    local temp_file=""
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_TASK")
-
-    printf "%s" "$temp_file"
+    mktemp --tmpdir="$TEMP_DIR_TASK"
 }
 
 _get_temp_file_dry() {
@@ -1271,10 +1267,7 @@ _get_temp_file_dry() {
     # Output:
     #   - The path of the temporary file, without actually creating the file.
 
-    local temp_file=""
-    temp_file=$(mktemp --dry-run --tmpdir="$TEMP_DIR_TASK")
-
-    printf "%s" "$temp_file"
+    mktemp --dry-run --tmpdir="$TEMP_DIR_TASK"
 }
 
 _get_working_directory() {
