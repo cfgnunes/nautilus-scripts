@@ -39,7 +39,7 @@ declare -A PACKAGE_NAME=(
     "
 
     ["clamscan"]="
-        *:clamav
+        *:      clamav
     "
 
     ["convert"]="
