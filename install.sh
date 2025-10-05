@@ -375,7 +375,7 @@ _get_par_value() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [INSTALLATION STEPS / DEPENDENCIES]
+# SECTION /// [INSTALLATION STEP / DEPENDENCIES]
 # -----------------------------------------------------------------------------
 
 # shellcheck disable=SC2086
@@ -549,7 +549,7 @@ _step_install_scripts() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [INSTALLATION STEPS / KEYBOARD ACCELLERATORS]
+# SECTION /// [INSTALLATION STEP / KEYBOARD ACCELLERATORS]
 # -----------------------------------------------------------------------------
 
 _step_install_accels() {
@@ -702,7 +702,7 @@ _step_install_accels_thunar() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [INSTALLATION STEPS / APPLICATION SHORTCUTS]
+# SECTION /// [INSTALLATION STEP / APPLICATION SHORTCUTS]
 # -----------------------------------------------------------------------------
 
 _step_install_application_shortcuts() {
@@ -797,7 +797,7 @@ _step_create_gnome_application_folder() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [INSTALLATION STEPS / CONTEXT MENUS]
+# SECTION /// [INSTALLATION STEP / CONTEXT MENUS]
 # -----------------------------------------------------------------------------
 
 _step_install_menus() {
@@ -1145,7 +1145,7 @@ _step_install_menus_thunar() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [INSTALLATION STEPS / CLOSE FILEMANAGER]
+# SECTION /// [INSTALLATION STEP / CLOSE FILEMANAGER]
 # -----------------------------------------------------------------------------
 
 _step_close_filemanager() {
