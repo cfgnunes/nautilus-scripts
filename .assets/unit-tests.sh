@@ -41,75 +41,14 @@ _main() {
 
     __run_source_common_functions
 
-    __run_check_dependencies
-    __run_check_output
-    __run_cleanup_on_exit
-    __run_close_wait_box
-    __run_command_exists
-    __run_convert_delimited_string_to_text
-    __run_convert_text_to_delimited_string
-    __run_directory_pop
-    __run_directory_push
-    __run_display_dir_selection_box
-    __run_display_error_box
-    __run_display_file_selection_box
-    __run_display_info_box
-    __run_display_list_box
-    __run_display_password_box
-    __run_display_password_box_define
-    __run_display_question_box
-    __run_display_result_box
-    __run_display_text_box
-    __run_display_wait_box
-    __run_display_wait_box_message
-    __run_exit_script
-    __run_find_filtered_files
-    __run_gdbus_notify
-    __run_get_file_encoding
-    __run_get_file_mime
-    __run_get_filename_dir
     __run_get_filename_extension
-    __run_get_filename_full_path
-    __run_get_filename_next_suffix
-    __run_get_filenames_filemanager
-    __run_get_files
-    __run_get_items_count
-    __run_get_max_procs
-    __run_get_output_dir
-    __run_get_output_filename
-    __run_get_qdbus_command
     __run_get_script_name
-    __run_get_temp_dir_local
-    __run_get_temp_file
-    __run_get_temp_file_dry
-    __run_get_working_directory
-    __run_is_directory_empty
-    __run_is_gui_session
     __run_log_error
-    __run_logs_consolidate
     __run_move_file
-    __run_move_temp_file_to_output
-    __run_open_items_locations
-    __run_deps_install_packages
-    __run_deps_is_package_installed
-    __run_recent_scripts_add
-    __run_recent_scripts_organize
-    __run_run_task_parallel
     __run_storage_text
-    __run_str_human_readable_path
-    __run_str_remove_empty_tokens
     __run_strip_filename_extension
     __run_text_remove_empty_lines
-    __run_text_remove_home
-    __run_text_remove_pwd
     __run_text_sort
-    __run_text_uri_decode
-    __run_unset_global_variables_file_manager
-    __run_validate_conflict_filenames
-    __run_validate_file_mime
-    __run_validate_file_mime_parallel
-    __run_validate_files_count
-    __run_xdg_get_default_app
 
     printf "\nFinished! "
     printf "Results: %s tests, %s failed.\n" "$_TOTAL_TESTS" "$_TOTAL_FAILED"
@@ -188,141 +127,6 @@ __run_source_common_functions() {
     __test_equal "Check global variables." "$FIELD_SEPARATOR" $'\r'
 }
 
-__run_check_dependencies() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_check_output() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_cleanup_on_exit() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_close_wait_box() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_command_exists() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_convert_delimited_string_to_text() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_convert_text_to_delimited_string() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_directory_pop() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_directory_push() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_display_dir_selection_box() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_display_error_box() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_display_file_selection_box() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_display_info_box() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_display_list_box() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_display_password_box() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_display_password_box_define() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_display_question_box() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_display_result_box() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_display_text_box() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_display_wait_box() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_display_wait_box_message() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_exit_script() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_find_filtered_files() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_gdbus_notify() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_get_file_encoding() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_get_file_mime() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_get_filename_dir() {
-    # TODO: Implement the test.
-    printf ""
-}
-
 __run_get_filename_extension() {
     local input=""
     local expected_output=""
@@ -394,51 +198,6 @@ __run_get_filename_extension() {
     __test_equal "$input" "$expected_output" "$output"
 }
 
-__run_get_filename_full_path() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_get_filename_next_suffix() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_get_filenames_filemanager() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_get_files() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_get_items_count() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_get_max_procs() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_get_output_dir() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_get_output_filename() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_get_qdbus_command() {
-    # TODO: Implement the test.
-    printf ""
-}
-
 __run_get_script_name() {
     local expected_output=""
     local output=""
@@ -446,36 +205,6 @@ __run_get_script_name() {
     expected_output="unit-tests.sh"
     output=$(_get_script_name)
     __test_equal "$expected_output" "$expected_output" "$output"
-}
-
-__run_get_temp_dir_local() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_get_temp_file() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_get_temp_file_dry() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_get_working_directory() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_is_directory_empty() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_is_gui_session() {
-    # TODO: Implement the test.
-    printf ""
 }
 
 __run_log_error() {
@@ -487,11 +216,6 @@ __run_log_error() {
     expected_output=" > Input file: input_file"$'\n'" > Output file: output_file"$'\n'" > Error: message"$'\n'" > Standard output:"$'\n'"std_output"
 
     __test_equal "Check the log error content." "$expected_output" "$output"
-}
-
-__run_logs_consolidate() {
-    # TODO: Implement the test.
-    printf ""
 }
 
 __run_move_file() {
@@ -543,41 +267,6 @@ __run_move_file() {
     __clean_mock_files
 }
 
-__run_move_temp_file_to_output() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_open_items_locations() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_deps_install_packages() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_deps_is_package_installed() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_recent_scripts_add() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_recent_scripts_organize() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_run_task_parallel() {
-    # TODO: Implement the test.
-    printf ""
-}
-
 __run_storage_text() {
     # Test all functions related to the storage text feature:
     # '_storage_text_clean'
@@ -605,16 +294,6 @@ __run_storage_text() {
     expected_output="LineLineLine"
     output=$(_storage_text_read_all)
     __test_equal "Write and read the compiled temp result." "$expected_output" "$output"
-}
-
-__run_str_human_readable_path() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_str_remove_empty_tokens() {
-    # TODO: Implement the test.
-    printf ""
 }
 
 __run_strip_filename_extension() {
@@ -734,16 +413,6 @@ __run_text_remove_empty_lines() {
     __test_equal "$input" "$expected_output" "$output"
 }
 
-__run_text_remove_home() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_text_remove_pwd() {
-    # TODO: Implement the test.
-    printf ""
-}
-
 __run_text_sort() {
     local input=""
     local expected_output=""
@@ -768,41 +437,6 @@ __run_text_sort() {
     expected_output="2"$'\n'"10"
     output=$(_text_sort "$input")
     __test_equal "$input" "$expected_output" "$output"
-}
-
-__run_text_uri_decode() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_unset_global_variables_file_manager() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_validate_conflict_filenames() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_validate_file_mime() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_validate_file_mime_parallel() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_validate_files_count() {
-    # TODO: Implement the test.
-    printf ""
-}
-
-__run_xdg_get_default_app() {
-    # TODO: Implement the test.
-    printf ""
 }
 
 _main "$@"
