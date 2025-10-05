@@ -382,6 +382,13 @@ _step_install_dependencies() {
 
             nix-env -iA $nix_packages
         fi
+    elif _command_exists "guix"; then
+        _command_exists "pgrep" || packages+="procps "
+
+        # Package manager 'guix': no root required.
+        if [[ -n "$packages" ]]; then
+            guix install $packages
+        fi
     elif _command_exists "sudo"; then
         if _command_exists "apt-get"; then
             # Package manager 'apt-get': For Debian/Ubuntu systems.

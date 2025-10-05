@@ -378,6 +378,7 @@ _dep_get_available_package_manager() {
         "dnf"
         "pacman"
         "zypper"
+        "guix"
     )
     available_pkg_manager=$(_get_available_app "apps")
 
@@ -489,6 +490,7 @@ _deps_install_packages() {
     #       - "pacman"      : For Arch Linux systems.
     #       - "zypper"      : For openSUSE systems.
     #       - "nix"         : For Nix-based systems.
+    #       - "guix"        : For GNU Guix systems.
     #   - $2 (packages): A space-separated list of package names to install.
     #   - $3 (post_install): An optional command to be executed right after the
     #     installation.
@@ -537,6 +539,9 @@ _deps_install_packages() {
         cmd_install+="nix-env -iA $nix_packages &>/dev/null"
         # Nix does not require root for installing user packages.
         admin_cmd=""
+        ;;
+    "guix")
+        cmd_install="guix package -i $packages &>/dev/null"
         ;;
     esac
 
@@ -620,6 +625,7 @@ _deps_is_package_installed() {
     #       - "pacman"      : For Arch Linux systems.
     #       - "zypper"      : For openSUSE systems.
     #       - "nix"         : For Nix-based systems.
+    #       - "guix"        : For GNU Guix systems.
     #   - $2 (package): The name of the package to check.
     #
     # Returns:
@@ -657,6 +663,11 @@ _deps_is_package_installed() {
         ;;
     "nix")
         if nix-env -q | grep --quiet --ignore-case "$package"; then
+            return 0
+        fi
+        ;;
+    "guix")
+        if guix package -I "$package" &>/dev/null; then
             return 0
         fi
         ;;
