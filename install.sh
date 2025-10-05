@@ -95,6 +95,11 @@ _main() {
         exit 1
     fi
 
+    # Online installer.
+    if [[ ! -f "$SCRIPT_DIR/_common-functions.sh" ]]; then
+        _bootstrap_repository
+    fi
+
     # Read parammeters from command line.
     if [[ $# -gt 0 ]]; then
         case "$1" in
@@ -1172,6 +1177,55 @@ _step_close_filemanager() {
         killall "$FILE_MANAGER" &>/dev/null
         ;;
     esac
+}
+
+# -----------------------------------------------------------------------------
+# SECTION /// [ONLINE INSTALLER]
+# -----------------------------------------------------------------------------
+
+_bootstrap_repository() {
+    # This function ensures that the repository files are available before
+    # running the installation.
+
+    local repo_owner="cfgnunes"
+    local repo_name="nautilus-scripts"
+
+    # Create a temporary directory for the installation.
+    local temp_dir=""
+    temp_dir=$(mktemp -d)
+
+    echo -e "$MSG_INFO Downloading latest release..."
+
+    # Retrieve the latest release tag from GitHub,
+    # (fallback to HEAD if unavailable).
+    local latest_tag=""
+    latest_tag=$(curl -fsSL "https://api.github.com/repos/${repo_owner}/${repo_name}/releases/latest" |
+        grep -Po '"tag_name": "\K.*?(?=")' || echo "HEAD")
+
+    # Build the URL for the corresponding tarball.
+    local tarball_url="https://github.com/${repo_owner}/${repo_name}/archive/refs/tags/${latest_tag}.tar.gz"
+    echo -e "$MSG_INFO Downloading ${repo_name} (${latest_tag})..."
+    curl -fsSL "$tarball_url" | tar -xz -C "$temp_dir"
+
+    # Identify the extracted directory (matches nautilus-scripts-<version>).
+    local extracted_dir=""
+    extracted_dir=$(
+        find "$temp_dir" -maxdepth 1 -type d -name "${repo_name}-*" | head -n 1
+    )
+
+    # Validate extracted content.
+    if [[ ! -f "$extracted_dir/install.sh" ]]; then
+        echo -e "$MSG_ERROR Could not find 'install.sh' in extracted files."
+        exit 1
+    fi
+
+    # Run the installer from the extracted directory.
+    echo -e "$MSG_INFO Running installation from extracted directory..."
+    cd "$extracted_dir" || exit 1
+    bash install.sh
+
+    rm -rf -- "$temp_dir"
+    exit 0
 }
 
 _main "$@"
