@@ -75,7 +75,7 @@ _compare() {
             $command -- "$file_1" "$file_2" "$file_3" &
         fi
         ;;
-    *" xxd")
+    *",xxd")
         # Use a hex comparison tool for binary files.
         if ((num_files_compare > 2)); then
             _display_error_box "You must select only two binary files to compare!"
@@ -95,8 +95,8 @@ _compare_hexa() {
     local file_1=$2  # First binary file to compare.
     local file_2=$3  # Second binary file to compare.
 
-    # Remove the ' xxd' suffix from the command name.
-    command=${command// xxd/}
+    # Remove the ',xxd' suffix from the command name.
+    command=${command//,xxd/}
 
     # Get the sizes of the two files to calculate differences.
     local file_1_size=""
@@ -258,7 +258,7 @@ _get_command() {
         file_encoding=$(_get_file_encoding "$input_file")
         if [[ "$file_encoding" == "binary" ]]; then
             # Binary file comparison.
-            command="meld xxd"
+            command="meld,xxd"
         else
             # Default to text comparison.
             command="meld"

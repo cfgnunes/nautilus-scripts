@@ -200,7 +200,7 @@ _dependencies_check_commands() {
     #
     # Parameters:
     #   - $1 (commands): A list of commands to check. The list can be delimited
-    #     either by a space ' ' or by a newline '\n'.
+    #     either by a space ' ', a comma ',' or by a newline '\n'.
 
     local commands=$1
     local packages_install=""
@@ -208,6 +208,8 @@ _dependencies_check_commands() {
     local post_install_compiled=""
 
     [[ -z "$commands" ]] && return
+
+    commands=$(tr "," " " <<<"$commands")
 
     # Remove leading, trailing, and duplicate spaces.
     commands=$(_str_collapse_char "$commands" " ")
