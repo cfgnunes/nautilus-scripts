@@ -2,6 +2,11 @@
 
 # Install the scripts for file managers.
 
+# If the file "_common-functions.sh" is missing, it means the installer is
+# being executed remotely (e.g., via curl). In that case, download the
+# repository and continue the installation from the extracted files.
+[[ ! -f "_common-functions.sh" ]] && _bootstrap_repository
+
 set -u
 
 # -----------------------------------------------------------------------------
@@ -93,11 +98,6 @@ _main() {
         echo -e "$MSG_ERROR Do NOT run this script with 'sudo'!"
         echo "Run it as: 'bash $script_name'"
         exit 1
-    fi
-
-    # Online installer.
-    if [[ ! -f "$SCRIPT_DIR/_common-functions.sh" ]]; then
-        _bootstrap_repository
     fi
 
     # Read parammeters from command line.
@@ -1180,7 +1180,7 @@ _step_close_filemanager() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [ONLINE INSTALLER]
+# SECTION /// [ONLINE INSTALL]
 # -----------------------------------------------------------------------------
 
 _bootstrap_repository() {
