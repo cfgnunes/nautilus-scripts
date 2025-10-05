@@ -13,8 +13,11 @@
 #   - If the package name is the same as the command name, there is no need to
 #     include an entry in this file. Only exceptions or differing names should
 #     be explicitly listed.
-#   - If a package name starts with an exclamation mark '!', the installation
-#     verification step for that package will be skipped.
+#   - If the package name contains the '~' character, it means that the part
+#     before '~' represents the package name used for installation, while the
+#     part after '~' represents the package name used for installation
+#     verification. This is useful in systems like NixOS, where the installed
+#     package name may differ from the one provided during installation.
 
 declare -A PACKAGE_NAME=(
     ["7za"]="
@@ -141,7 +144,7 @@ declare -A PACKAGE_NAME=(
         apt:    squashfs-tools
         dnf:    squashfs-tools
         pacman: squashfs-tools
-        nix:    !squashfsTools
+        nix:    squashfsTools~squashfs
         zypper: squashfs
         guix:   squashfs-tools
     "
@@ -238,7 +241,7 @@ declare -A META_PACKAGES=(
         apt:    latexmk
         dnf:    latexmk
         pacman: texlive-binextra
-        nix:    !texlivePackages.latexmk
+        nix:    texlivePackages.latexmk~latexmk
         zypper: texlive-latexmk
     "
 
@@ -246,7 +249,7 @@ declare -A META_PACKAGES=(
         apt:    texlive-extra-utils
         dnf:    texlive-pdfjam
         pacman: texlive-basic texlive-binextra texlive-latexextra
-        nix:    !texliveSmall !texlivePackages.pdfjam
+        nix:    texliveSmall~texlive texlivePackages.pdfjam~pdfjam
         zypper: texlive-pdfjam-bin
     "
 
@@ -290,7 +293,7 @@ declare -A META_PACKAGES=(
             texlive-mathscience \
             texlive-xetex
         nix: \
-            !texliveFull
+            texliveFull~texlive
         zypper: \
             texlive-collection-basic \
             texlive-collection-fontsextra \

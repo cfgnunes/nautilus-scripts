@@ -453,27 +453,33 @@ _deps_install_missing_packages() {
     local packages_install=$1
     local available_pkg_manager=$2
     local post_install=$3
-    local packages_check=$packages_install
-
-    packages_install=$(tr -d "!" <<<"$packages_install")
+    local packages_names=""
 
     # Remove leading, trailing, and duplicate spaces.
     packages_install=$(_str_collapse_char "$packages_install" " ")
 
+    # Keep only the package name before '~' for installation, used when install
+    # and check package names differ (e.g., on NixOS).
+    if [[ "$packages_install" == *"~"* ]]; then
+        packages_names=$(sed "s|~[A-Za-z0-9.-]*||g" <<<"$packages_install")
+    else
+        packages_names=$packages_install
+    fi
+
     # Ask the user to install the packages.
-    if [[ -n "$packages_install" ]]; then
+    if [[ -n "$packages_names" ]]; then
         local message="These packages were not found:"$'\n'
         message+="- "
-        message+=$(sed "s| |\n- |g" <<<"$packages_install")
+        message+=$(sed "s| |\n- |g" <<<"$packages_names")
         message+=$'\n'$'\n'
         message+="Would you like to install them?"
         if ! _display_question_box "$message"; then
             _exit_script
         fi
         _deps_install_packages \
-            "$available_pkg_manager" "$packages_install" "$post_install"
+            "$available_pkg_manager" "$packages_names" "$post_install"
         _deps_installation_check \
-            "$available_pkg_manager" "$packages_check"
+            "$available_pkg_manager" "$packages_install"
     fi
 }
 
@@ -581,34 +587,26 @@ _deps_installation_check() {
     packages_check=$(tr " " "$FIELD_SEPARATOR" <<<"$packages_check")
     local package_check=""
     for package_check in $packages_check; do
-
-        # Skip installation check for packages starting with '!'.
-        if [[ "$package_check" == "!"* ]]; then
+        if _deps_is_package_installed \
+            "$available_pkg_manager" "$package_check"; then
             continue
         fi
-        package_check=$(tr -d "!" <<<"$package_check")
 
-        if ! _deps_is_package_installed \
-            "$available_pkg_manager" "$package_check"; then
-
-            # Special case for 'rpm-ostree': If the package appears in the
-            # rpm-ostree deployment list, it means it is installed but
-            # requires a system reboot to take effect.
-            if [[ "$available_pkg_manager" == "rpm-ostree" ]] &&
-                rpm-ostree status --json |
-                jq -r ".deployments[0].packages[]" |
-                    grep -Fxq "$package_check"; then
-                _display_info_box \
-                    "The package '$package_check' is installed but you need to reboot to use it!"
-                _exit_script
-            fi
-
-            # If the package could not be installed,
-            # show an error and stop execution.
-            _display_error_box \
-                "Could not install the package '$package_check'!"
+        # Special case for 'rpm-ostree': If the package appears in the
+        # rpm-ostree deployment list, it means it is installed but requires a
+        # system reboot to take effect.
+        if [[ "$available_pkg_manager" == "rpm-ostree" ]] &&
+            rpm-ostree status --json |
+            jq -r ".deployments[0].packages[]" |
+                grep -Fxq "$package_check"; then
+            _display_info_box \
+                "The package '$package_check' is installed but you need to reboot to use it!"
             _exit_script
         fi
+
+        # If the package could not be installed, show an error and exit.
+        _display_error_box "Could not install the package '$package_check'!"
+        _exit_script
     done
 }
 
@@ -635,6 +633,12 @@ _deps_is_package_installed() {
     local pkg_manager=$1
     local package=$2
 
+    # Keep only the package name after '~' for verification, used when install
+    # and check package names differ (e.g., on NixOS).
+    if [[ "$package" == *"~"* ]]; then
+        package=$(sed "s|[A-Za-z0-9.-]*~||g" <<<"$package")
+    fi
+
     case "$pkg_manager" in
     "apt-get")
         if dpkg -s "$package" &>/dev/null; then
@@ -647,7 +651,7 @@ _deps_is_package_installed() {
         fi
         ;;
     "rpm-ostree")
-        if rpm -qa | grep --quiet --ignore-case "$package"; then
+        if rpm -qa | grep --quiet "$package"; then
             return 0
         fi
         ;;
@@ -662,7 +666,7 @@ _deps_is_package_installed() {
         fi
         ;;
     "nix")
-        if nix-env -q | grep --quiet --ignore-case "$package"; then
+        if nix-env -q | grep --quiet "$package"; then
             return 0
         fi
         ;;
