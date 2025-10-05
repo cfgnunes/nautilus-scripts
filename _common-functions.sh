@@ -361,17 +361,6 @@ _dependencies_check_commands() {
 
     [[ -z "$commands" ]] && return
 
-    # The function will attempt to detect the first available package manager
-    # from this list. Once one is found, it will be used consistently.
-    local apps=(
-        "nix"
-        "apt-get"
-        "rpm-ostree"
-        "dnf"
-        "pacman"
-        "zypper"
-    )
-
     # Check all commands.
     commands=$(tr "\n" "$FIELD_SEPARATOR" <<<"$commands")
     local command=""
@@ -386,8 +375,7 @@ _dependencies_check_commands() {
 
         # Detect and validate the first available package manager.
         if [[ -z "$available_pkg_manager" ]]; then
-            available_pkg_manager=$(_get_available_app "apps")
-            # Display error and exit if no package manager is available.
+            available_pkg_manager=$(_dep_get_available_package_manager)
             if [[ -z "$available_pkg_manager" ]]; then
                 _display_error_box "Could not find a package manager!"
                 _exit_script
@@ -400,8 +388,7 @@ _dependencies_check_commands() {
         post_install=$(_deps_get_dependency_value \
             "$command" "$available_pkg_manager" "POST_INSTALL")
 
-        # If the package is not found,
-        # use the command name as the package name.
+        # If package is not found, use the command name as the package name.
         if [[ -z "$package" ]] && [[ -n "$command" ]]; then
             package=$command
         fi
@@ -454,6 +441,116 @@ _dependencies_check_commands_clipboard() {
     esac
 
     _dependencies_check_commands "$commands"
+}
+
+_dependencies_check_metapackages() {
+    # This function ensures that all required packages are available for
+    # the scripts to run. It checks whether each specified package exists
+    # in the current environment and prompts the user to install missing ones.
+    #
+    # Parameters:
+    #   - $1 (packages): A list of packages to check. The list can be delimited
+    #     either by a space ' ' or by a newline '\n'.
+
+    local packages=$1
+    local packages_install=""
+    local available_pkg_manager=""
+
+    [[ -z "$packages" ]] && return
+
+    available_pkg_manager=$(_dep_get_available_package_manager)
+    if [[ -z "$available_pkg_manager" ]]; then
+        _display_error_box "Could not find a package manager!"
+        _exit_script
+    fi
+
+    # Remove leading, trailing, and duplicate spaces.
+    packages=$(sed "s|  *| |g; s|^ *||g; s| *$||g" <<<"$packages")
+
+    # Remove duplicated packages in the input list.
+    packages=$(tr " " "\n" <<<"$packages")
+    packages=$(sort --unique <<<"$packages")
+
+    [[ -z "$packages" ]] && return
+
+    # Expand the meta_packages
+    local expanded_packages=""
+    packages=$(tr "\n" "$FIELD_SEPARATOR" <<<"$packages")
+    local package=""
+    for package in $packages; do
+        # Get the values from '_dependencies.sh'.
+        real_name_packages=$(_deps_get_dependency_value \
+            "$package" "$available_pkg_manager" "META_PACKAGES")
+
+        if [[ -n "$real_name_packages" ]]; then
+            expanded_packages+=" $real_name_packages"
+        else
+            expanded_packages+=" $package"
+        fi
+    done
+    packages=$expanded_packages
+
+    # Remove leading, trailing, and duplicate spaces.
+    packages=$(sed "s|  *| |g; s|^ *||g; s| *$||g" <<<"$packages")
+
+    # Remove duplicated packages in the input list.
+    packages=$(tr " " "\n" <<<"$packages")
+    packages=$(sort --unique <<<"$packages")
+
+    # Check all packages.
+    packages=$(tr "\n" "$FIELD_SEPARATOR" <<<"$packages")
+    local package=""
+    for package in $packages; do
+        # Ignore installing the dependency if the package is already installed.
+        if _deps_is_package_installed "$available_pkg_manager" "$package"; then
+            continue
+        fi
+
+        # Add the package to the list to install.
+        if [[ -n "$package" ]]; then
+            packages_install+=" $package"
+        fi
+    done
+
+    # Remove the first space added.
+    packages_install=$(sed "s|^ ||g" <<<"$packages_install")
+
+    # Ask the user to install the packages.
+    if [[ -n "$packages_install" ]]; then
+        local message="These packages were not found:"$'\n'
+        message+="- "
+        message+=$(sed "s| |\n- |g" <<<"${packages_install/!/}")
+        message+=$'\n'$'\n'
+        message+="Would you like to install them?"
+        if ! _display_question_box "$message"; then
+            _exit_script
+        fi
+        _deps_install_packages \
+            "$available_pkg_manager" "${packages_install/!/}" "$post_install"
+        _deps_installation_check \
+            "$available_pkg_manager" "$packages_install"
+    fi
+}
+
+_dep_get_available_package_manager() {
+    # The function will attempt to detect the first available package manager
+    # from this list. Once one is found, it will be used consistently.
+    local apps=(
+        "nix"
+        "apt-get"
+        "rpm-ostree"
+        "dnf"
+        "pacman"
+        "zypper"
+    )
+    available_pkg_manager=$(_get_available_app "apps")
+
+    if [[ -n "$available_pkg_manager" ]]; then
+        printf "%s" "$available_pkg_manager"
+        return 0
+    fi
+
+    return 1
 }
 
 _deps_get_dependency_value() {
