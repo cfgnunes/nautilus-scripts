@@ -18,24 +18,24 @@
 
 declare -A PACKAGE_NAME=(
     ["7za"]="
-        apt:p7zip-full
-        dnf:p7zip
-        pacman:p7zip
-        nix:p7zip
-        zypper:7zip
-        brew:p7zip
+        apt:    p7zip-full
+        dnf:    p7zip
+        pacman: p7zip
+        nix:    p7zip
+        zypper: 7zip
+        brew:   p7zip
     "
 
     ["ar"]="
-        *:binutils
+        *:      binutils
     "
 
     ["bsdtar"]="
-        apt:libarchive-tools
-        dnf:bsdtar
-        pacman:libarchive
-        nix:libarchive
-        zypper:bsdtar
+        apt:    libarchive-tools
+        dnf:    bsdtar
+        pacman: libarchive
+        nix:    libarchive
+        zypper: bsdtar
     "
 
     ["clamscan"]="
@@ -43,155 +43,155 @@ declare -A PACKAGE_NAME=(
     "
 
     ["convert"]="
-        apt:imagemagick
-        dnf:ImageMagick
-        pacman:imagemagick
-        nix:imagemagick
-        zypper:ImageMagick
+        apt:    imagemagick
+        dnf:    ImageMagick
+        pacman: imagemagick
+        nix:    imagemagick
+        zypper: ImageMagick
     "
 
     ["exiftool"]="
-        apt:libimage-exiftool-perl
-        dnf:perl-Image-ExifTool
-        pacman:perl-image-exiftool
-        nix:exiftool
-        zypper:exiftool
+        apt:    libimage-exiftool-perl
+        dnf:    perl-Image-ExifTool
+        pacman: perl-image-exiftool
+        nix:    exiftool
+        zypper: exiftool
     "
 
     ["ffmpeg"]="
-        apt:ffmpeg
-        dnf:ffmpeg-free
-        pacman:ffmpeg
-        nix:ffmpeg
-        zypper:ffmpeg
+        apt:    ffmpeg
+        dnf:    ffmpeg-free
+        pacman: ffmpeg
+        nix:    ffmpeg
+        zypper: ffmpeg
     "
 
     ["gpg"]="
-        apt:gnupg
-        dnf:gnupg2
-        pacman:gnupg
-        nix:gnupg
-        zypper:gpg2
+        apt:    gnupg
+        dnf:    gnupg2
+        pacman: gnupg
+        nix:    gnupg
+        zypper: gpg2
     "
 
     ["gunzip"]="
-        *:gzip
+        *:      gzip
     "
 
     ["gs"]="
-        *:ghostscript
+        *:      ghostscript
     "
 
     ["iconv"]="
-        apt:libc-bin
-        dnf:glibc-common
-        pacman:glibc
-        nix:glibc
-        zypper:glibc
+        apt:    libc-bin
+        dnf:    glibc-common
+        pacman: glibc
+        nix:    glibc
+        zypper: glibc
     "
 
     ["lha"]="
-        *:lhasa
+        *:      lhasa
     "
 
     ["localc"]="
-        apt:libreoffice-calc
-        dnf:libreoffice-calc
-        pacman:libreoffice
-        nix:libreoffice
-        zypper:libreoffice-calc
+        apt:    libreoffice-calc
+        dnf:    libreoffice-calc
+        pacman: libreoffice
+        nix:    libreoffice
+        zypper: libreoffice-calc
     "
 
     ["loimpress"]="
-        apt:libreoffice-impress
-        dnf:libreoffice-impress
-        pacman:libreoffice
-        nix:libreoffice
-        zypper:libreoffice-impress
+        apt:    libreoffice-impress
+        dnf:    libreoffice-impress
+        pacman: libreoffice
+        nix:    libreoffice
+        zypper: libreoffice-impress
     "
 
     ["lowriter"]="
-        apt:libreoffice-writer
-        dnf:libreoffice-writer
-        pacman:libreoffice
-        nix:libreoffice
-        zypper:libreoffice-writer
+        apt:    libreoffice-writer
+        dnf:    libreoffice-writer
+        pacman: libreoffice
+        nix:    libreoffice
+        zypper: libreoffice-writer
     "
 
     ["lp"]="
-        apt:cups-client
-        dnf:cups-client
-        pacman:cups
-        nix:cups
-        zypper:cups
+        apt:    cups-client
+        dnf:    cups-client
+        pacman: cups
+        nix:    cups
+        zypper: cups
     "
 
     ["mksquashfs"]="
-        apt:squashfs-tools
-        dnf:squashfs-tools
-        pacman:squashfs-tools
-        nix:!squashfsTools
-        zypper:squashfs
+        apt:    squashfs-tools
+        dnf:    squashfs-tools
+        pacman: squashfs-tools
+        nix:    !squashfsTools
+        zypper: squashfs
     "
 
     ["perl"]="
-        apt:perl-base
-        dnf:perl-base
-        pacman:perl-base
-        nix:perl
-        zypper:perl-base
+        apt:    perl-base
+        dnf:    perl-base
+        pacman: perl-base
+        nix:    perl
+        zypper: perl-base
     "
 
     ["photorec"]="
-        apt:testdisk
-        dnf:testdisk
-        pacman:testdisk
-        nix:testdisk
-        zypper:photorec
+        apt:    testdisk
+        dnf:    testdisk
+        pacman: testdisk
+        nix:    testdisk
+        zypper: photorec
     "
 
     ["pdfinfo"]="
-        apt:poppler-utils
-        dnf:poppler-utils
-        pacman:poppler
-        nix:poppler-utils
-        zypper:poppler-tools
+        apt:    poppler-utils
+        dnf:    poppler-utils
+        pacman: poppler
+        nix:    poppler-utils
+        zypper: poppler-tools
     "
 
     ["ping"]="
-        apt:iputils-ping
-        dnf:iputils
-        pacman:iputils
-        nix:iputils
-        zypper:iputils
+        apt:    iputils-ping
+        dnf:    iputils
+        pacman: iputils
+        nix:    iputils
+        zypper: iputils
     "
 
     ["unar"]="
-        apt:unar
-        dnf:unar
-        pacman:unarchiver
-        nix:unar
-        zypper:unar
+        apt:    unar
+        dnf:    unar
+        pacman: unarchiver
+        nix:    unar
+        zypper: unar
     "
 
     ["unsquashfs"]="
-        apt:squashfs-tools
-        dnf:squashfs-tools
-        pacman:squashfs-tools
-        nix:squashfsTools
-        zypper:squashfs
+        apt:    squashfs-tools
+        dnf:    squashfs-tools
+        pacman: squashfs-tools
+        nix:    squashfsTools
+        zypper: squashfs
     "
 
     ["wl-paste"]="
-        *:wl-clipboard
+        *:      wl-clipboard
     "
 
     ["xz"]="
-        apt:xz-utils
-        dnf:xz
-        pacman:xz
-        nix:xz
-        zypper:xz
+        apt:    xz-utils
+        dnf:    xz
+        pacman: xz
+        nix:    xz
+        zypper: xz
     "
 )
 
@@ -218,26 +218,26 @@ declare -A POST_INSTALL=(
 
 declare -A META_PACKAGES=(
     ["pdfjam"]="
-        apt: texlive-extra-utils
-        dnf: texlive-pdfjam
+        apt:    texlive-extra-utils
+        dnf:    texlive-pdfjam
         pacman: texlive-basic texlive-binextra texlive-latexextra
-        nix: !texliveSmall !texlivePackages.pdfjam
+        nix:    !texliveSmall !texlivePackages.pdfjam
         zypper: texlive-pdfjam-bin
     "
 
     ["sox-mp3"]="
-        apt:sox libsox-fmt-mp3
-        dnf:sox
-        pacman:sox
-        nix:sox
-        zypper:sox
+        apt:    sox libsox-fmt-mp3
+        dnf:    sox
+        pacman: sox
+        nix:    sox
+        zypper: sox
     "
 
     ["tesseract-lang-$TEMP_DATA_TASK"]="
-        apt:tesseract-ocr-$TEMP_DATA_TASK
-        dnf:tesseract-langpack-$TEMP_DATA_TASK
-        pacman:tesseract-data-$TEMP_DATA_TASK
-        nix:tesseract
-        zypper:tesseract-ocr-traineddata-$TEMP_DATA_TASK
+        apt:    tesseract-ocr-$TEMP_DATA_TASK
+        dnf:    tesseract-langpack-$TEMP_DATA_TASK
+        pacman: tesseract-data-$TEMP_DATA_TASK
+        nix:    tesseract
+        zypper: tesseract-ocr-traineddata-$TEMP_DATA_TASK
     "
 )
