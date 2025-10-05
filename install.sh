@@ -74,6 +74,18 @@ INSTALL_GROUP="" # Group of the installation directory.
 SUDO_CMD=""      # Command prefix for elevated operations.
 SUDO_CMD_USER="" # Command prefix for running as target user.
 
+# Default main menu options.
+OPT_INSTALL_BASIC_DEPS="true"
+OPT_INSTALL_ACCELS="true"
+OPT_CLOSE_FILE_MANAGER="true"
+OPT_REMOVE_SCRIPTS="true"
+OPT_INSTALL_APP_SHORTCUTS="false"
+OPT_INSTALL_FOR_ALL_USERS="false"
+OPT_CHOOSE_CATEGORIES="false"
+# Default core options.
+OPT_INTERACTIVE_INSTALL="true"
+OPT_QUIET_INSTALL="false"
+
 # Import helper script for interactive multi-selection menus.
 #shellcheck source=.assets/multiselect-menu.sh
 if [[ -f "$SCRIPT_DIR/.assets/multiselect-menu.sh" ]]; then
@@ -82,7 +94,8 @@ fi
 
 # -----------------------------------------------------------------------------
 # SECTION /// [MAIN FLOW]
-# -----------------------------------------------------------------------------
+# ----------------------------------------------------    # If quiet mode is enabled, automatically disable interactive mode to
+# ensure a fully silent and non-interactive installation.-------------------------
 
 # shellcheck disable=SC2034
 _main() {
@@ -91,9 +104,7 @@ _main() {
     local cat_selected=()
     local menu_defaults=()
     local menu_labels=()
-    local menu_options=""
     local menu_selected=()
-    local interactive_install="true"
 
     # Prevent running the installer with sudo/root.
     if [[ "$(id -u)" -eq 0 ]]; then
@@ -111,24 +122,18 @@ _main() {
         _bootstrap_repository "$@"
     fi
 
-    # Read parammeters from command line.
-    if [[ $# -gt 0 ]]; then
-        case "$1" in
-        "-n" | "--non-interactive")
-            interactive_install="false"
-            ;;
-        *)
-            echo "Usage: $0 [-n|--non-interactive]" >&2
-            echo "Run the installation in non-interactive mode (no prompts will be shown)." >&2
-            exit 1
-            ;;
-        esac
+    _get_parameters_command_line "$@"
+
+    # If quiet mode is enabled, automatically disable interactive mode to
+    # ensure a fully silent and non-interactive installation.
+    if [[ "$OPT_QUIET_INSTALL" == "true" ]]; then
+        OPT_INTERACTIVE_INSTALL="false"
     fi
 
     # Available options presented in the interactive menu.
     menu_labels=(
         "Install basic dependencies (may require 'sudo')"
-        "Install keyboard shortcuts"
+        "Install keyboard accelerators"
         "Close the file manager to reload its configurations"
         "Remove previously installed scripts"
         "Install application menu shortcuts"
@@ -138,16 +143,16 @@ _main() {
 
     # Default states for the menu options.
     menu_defaults=(
-        "true"
-        "true"
-        "true"
-        "true"
-        "false"
-        "false"
-        "false"
+        "$OPT_INSTALL_BASIC_DEPS"
+        "$OPT_INSTALL_ACCELS"
+        "$OPT_CLOSE_FILE_MANAGER"
+        "$OPT_REMOVE_SCRIPTS"
+        "$OPT_INSTALL_APP_SHORTCUTS"
+        "$OPT_INSTALL_FOR_ALL_USERS"
+        "$OPT_CHOOSE_CATEGORIES"
     )
 
-    if [[ "$interactive_install" == "true" ]]; then
+    if [[ "$OPT_INTERACTIVE_INSTALL" == "true" ]]; then
         echo "Scripts installer."
         echo "Select the options (<SPACE> to check):"
 
@@ -159,13 +164,13 @@ _main() {
     fi
 
     # Map menu selections into a comma-separated string of options.
-    [[ ${menu_selected[0]} == "true" ]] && menu_options+="dependencies,"
-    [[ ${menu_selected[1]} == "true" ]] && menu_options+="accels,"
-    [[ ${menu_selected[2]} == "true" ]] && menu_options+="reload,"
-    [[ ${menu_selected[3]} == "true" ]] && menu_options+="remove,"
-    [[ ${menu_selected[4]} == "true" ]] && menu_options+="appmenu,"
-    [[ ${menu_selected[5]} == "true" ]] && menu_options+="allusers,"
-    [[ ${menu_selected[6]} == "true" ]] && menu_options+="categories,"
+    OPT_INSTALL_BASIC_DEPS=${menu_selected[0]}
+    OPT_INSTALL_ACCELS=${menu_selected[1]}
+    OPT_CLOSE_FILE_MANAGER=${menu_selected[2]}
+    OPT_REMOVE_SCRIPTS=${menu_selected[3]}
+    OPT_INSTALL_APP_SHORTCUTS=${menu_selected[4]}
+    OPT_INSTALL_FOR_ALL_USERS=${menu_selected[5]}
+    OPT_CHOOSE_CATEGORIES=${menu_selected[6]}
 
     # Collect all available script categories (directories).
     local dir=""
@@ -180,18 +185,18 @@ _main() {
     )
 
     # If requested, let the user select which categories to install.
-    if [[ "$menu_options" == *"categories"* ]]; then
+    if [[ "$OPT_CHOOSE_CATEGORIES" == "true" ]]; then
         echo
         echo "Select the categories (<SPACE> to check):"
         _multiselect_menu cat_selected cat_dirs cat_defaults
     fi
 
     # Step 1: Install basic dependencies.
-    [[ "$menu_options" == *"dependencies"* ]] && _step_install_dependencies
+    [[ "$OPT_INSTALL_BASIC_DEPS" == "true" ]] && _step_install_dependencies
 
     # Step 2: Determine target home directories (single user or all users).
     local install_home_list=""
-    if [[ "$menu_options" == *"allusers"* ]]; then
+    if [[ "$OPT_INSTALL_FOR_ALL_USERS" == "true" ]]; then
         SUDO_CMD="sudo"
 
         # Get the list of all user home directories currently available on the
@@ -216,7 +221,7 @@ _main() {
         INSTALL_HOME=$install_home
         INSTALL_OWNER=$($SUDO_CMD stat -c "%U" "$INSTALL_HOME")
         INSTALL_GROUP=$($SUDO_CMD stat -c "%G" "$INSTALL_HOME")
-        if [[ "$menu_options" == *"allusers"* ]]; then
+        if [[ "$OPT_INSTALL_FOR_ALL_USERS" == "true" ]]; then
             SUDO_CMD_USER="sudo -u $INSTALL_OWNER -g $INSTALL_GROUP"
         fi
 
@@ -266,13 +271,13 @@ _main() {
             echo -e "$MSG_INFO User: $INSTALL_OWNER"
             echo -e "$MSG_INFO Directory: $INSTALL_HOME"
             echo -e "$MSG_INFO File manager: $FILE_MANAGER"
-            _step_install_scripts "$menu_options" cat_selected cat_dirs
+            _step_install_scripts cat_selected cat_dirs
             _step_install_menus
-            [[ "$menu_options" == *"accels"* ]] && _step_install_accels
+            [[ "$OPT_INSTALL_ACCELS" == "true" ]] && _step_install_accels
 
             # Reload file manager to apply changes, if selected.
             if [[ "$USER" == "$INSTALL_OWNER" ]]; then
-                [[ "$menu_options" == *"reload"* ]] && _step_close_filemanager
+                [[ "$OPT_CLOSE_FILE_MANAGER" == "true" ]] && _step_close_filemanager
             fi
         done
 
@@ -281,7 +286,7 @@ _main() {
         echo "Installing application menu shortcuts:"
         echo -e "$MSG_INFO User: $INSTALL_OWNER"
 
-        if [[ "$menu_options" == *"appmenu"* ]]; then
+        if [[ "$OPT_INSTALL_APP_SHORTCUTS" == "true" ]]; then
             _step_install_application_shortcuts
             _step_create_gnome_application_folder
         fi
@@ -375,6 +380,107 @@ _get_user_homes() {
         grep --extended-regexp "/(bash|sh|zsh|csh|ksh|tcsh|fish|dash)$" |
         cut -d ":" -f 6 |
         sort --unique
+}
+
+_get_parameters_command_line() {
+    # Read parameters from command line.
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+        # Core behavior
+        -n | --non-interactive)
+            OPT_INTERACTIVE_INSTALL="false"
+            shift
+            ;;
+        -q | --quiet)
+            OPT_QUIET_INSTALL="true"
+            shift
+            ;;
+        # Basic dependencies
+        -i | --install-dependencies)
+            OPT_INSTALL_BASIC_DEPS="true"
+            shift
+            ;;
+        -I | --no-install-dependencies)
+            OPT_INSTALL_BASIC_DEPS="false"
+            shift
+            ;;
+        # Keyboard shortcuts
+        -k | --install-shortcuts)
+            OPT_INSTALL_ACCELS="true"
+            shift
+            ;;
+        -K | --no-install-shortcuts)
+            OPT_INSTALL_ACCELS="false"
+            shift
+            ;;
+        # Close file manager
+        -f | --close-filemanager)
+            OPT_CLOSE_FILE_MANAGER="true"
+            shift
+            ;;
+        -F | --no-close-filemanager)
+            OPT_CLOSE_FILE_MANAGER="false"
+            shift
+            ;;
+        # Remove scripts
+        -d | --remove-scripts)
+            OPT_REMOVE_SCRIPTS="true"
+            shift
+            ;;
+        -D | --no-remove-scripts)
+            OPT_REMOVE_SCRIPTS="false"
+            shift
+            ;;
+        # App shortcuts
+        -s | --install-app-shortcuts)
+            OPT_INSTALL_APP_SHORTCUTS="true"
+            shift
+            ;;
+        -S | --no-install-app-shortcuts)
+            OPT_INSTALL_APP_SHORTCUTS="false"
+            shift
+            ;;
+        # Install for all users
+        -a | --install-all-users)
+            OPT_INSTALL_FOR_ALL_USERS="true"
+            shift
+            ;;
+        -A | --no-install-all-users)
+            OPT_INSTALL_FOR_ALL_USERS="false"
+            shift
+            ;;
+
+        # Help
+        -h | --help)
+            echo "Usage: $0 [options]"
+            echo
+            echo "Options:"
+            echo "  -n, --non-interactive           Run without prompts."
+            echo "  -q, --quiet                     Suppress all output (silent mode)."
+            echo "  -i, --install-dependencies      Install basic dependencies."
+            echo "  -I, --no-install-dependencies   Do not install basic dependencies."
+            echo "  -k, --install-shortcuts         Install keyboard accelerators."
+            echo "  -K, --no-install-shortcuts      Do not install keyboard accelerators."
+            echo "  -f, --close-filemanager         Close file manager after install."
+            echo "  -F, --no-close-filemanager      Do not close file manager after install."
+            echo "  -d, --remove-scripts            Remove previously installed scripts."
+            echo "  -D, --no-remove-scripts         Do not remove previously installed scripts."
+            echo "  -s, --install-app-shortcuts     Install application menu shortcuts."
+            echo "  -S, --no-install-app-shortcuts  Do not install application menu shortcuts."
+            echo "  -a, --install-all-users         Install for all users."
+            echo "  -A, --no-install-all-users      Do not install for all users."
+            echo "  -h, --help                      Show this help message and exit."
+            echo
+            exit 0
+            ;;
+        # Unknown option
+        *)
+            echo "Unknown option: $1" >&2
+            echo "Use --help for usage information." >&2
+            exit 1
+            ;;
+        esac
+    done
 }
 
 _get_par_value() {
@@ -519,9 +625,8 @@ _step_install_dependencies() {
 }
 
 _step_install_scripts() {
-    local menu_options=$1
-    local -n _cat_selected=$2
-    local -n _cat_dirs=$3
+    local -n _cat_selected=$1
+    local -n _cat_dirs=$2
 
     # Install scripts into the target directory.
     # Steps:
@@ -530,7 +635,7 @@ _step_install_scripts() {
     #   3. Set proper ownership and permissions.
 
     # Remove previous scripts if requested.
-    if [[ "$menu_options" == *"remove"* ]]; then
+    if [[ "$OPT_REMOVE_SCRIPTS" == "true" ]]; then
         echo -e "$MSG_INFO Removing previous scripts..."
         _delete_items "$INSTALL_DIR"
     fi
@@ -569,7 +674,7 @@ _step_install_scripts() {
 # -----------------------------------------------------------------------------
 
 _step_install_accels() {
-    # Install keyboard shortcuts (accels) for specific file managers.
+    # Install keyboard accelerators (shortcuts) for specific file managers.
 
     case "$FILE_MANAGER" in
     "nautilus")
