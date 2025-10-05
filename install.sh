@@ -107,10 +107,7 @@ _main() {
 
     # Prevent running the installer with sudo/root.
     if [[ "$(id -u)" -eq 0 ]]; then
-        local script_name=""
-        script_name=$(basename "$0")
-        echo -e "$MSG_ERROR Do NOT run this script with 'sudo'!"
-        echo "Run it as: 'bash $script_name'"
+        _echo_error "Do NOT run this script with 'sudo'! Run with: 'bash install.sh'"
         exit 1
     fi
 
@@ -152,13 +149,13 @@ _main() {
     )
 
     if [[ "$OPT_INTERACTIVE_INSTALL" == "true" ]]; then
-        echo "Scripts installer."
-        echo "Select the options (<SPACE> to check):"
+        _echo "Scripts installer."
+        _echo "Select the options (<SPACE> to check):"
 
         # Display the interactive menu and capture user selections.
         _multiselect_menu menu_selected menu_labels menu_defaults
     else
-        echo "Running the installer in non-interactive mode..."
+        _echo_info "Running the installer in non-interactive mode..."
         menu_selected=("${menu_defaults[@]}")
     fi
 
@@ -185,8 +182,8 @@ _main() {
 
     # If requested, let the user select which categories to install.
     if [[ "$OPT_CHOOSE_CATEGORIES" == "true" ]]; then
-        echo
-        echo "Select the categories (<SPACE> to check):"
+        _echo ""
+        _echo_info "Select the categories (<SPACE> to check):"
         _multiselect_menu cat_selected cat_dirs cat_defaults
     fi
 
@@ -257,7 +254,7 @@ _main() {
                 _check_exist_filemanager && continue
 
                 if [[ ! -v "DISPLAY" ]]; then
-                    echo -e "$MSG_ERROR Could not find any compatible file managers!"
+                    _echo_error "Could not find any compatible file managers!"
                     exit 1
                 fi
                 INSTALL_DIR="$INSTALL_HOME/.local/share/scripts"
@@ -265,11 +262,11 @@ _main() {
             esac
 
             # Perform installation steps.
-            echo
-            echo "Installing the scripts:"
-            echo -e "$MSG_INFO User: $INSTALL_OWNER"
-            echo -e "$MSG_INFO Directory: $INSTALL_HOME"
-            echo -e "$MSG_INFO File manager: $FILE_MANAGER"
+            _echo ""
+            _echo_info "Installing the scripts:"
+            _echo_info "> User: $INSTALL_OWNER"
+            _echo_info "> Directory: $INSTALL_HOME"
+            _echo_info "> File manager: $FILE_MANAGER"
             _step_install_scripts cat_selected cat_dirs
             _step_install_menus
             [[ "$OPT_INSTALL_ACCELS" == "true" ]] && _step_install_accels
@@ -281,9 +278,9 @@ _main() {
         done
 
         # Install application menu shortcuts.
-        echo
-        echo "Installing application menu shortcuts:"
-        echo -e "$MSG_INFO User: $INSTALL_OWNER"
+        _echo ""
+        _echo_info "Installing application menu shortcuts:"
+        _echo_info "> User: $INSTALL_OWNER"
 
         if [[ "$OPT_INSTALL_APP_SHORTCUTS" == "true" ]]; then
             _step_install_application_shortcuts
@@ -291,8 +288,30 @@ _main() {
         fi
     done
 
-    echo
-    echo "Done!"
+    _echo ""
+    _echo_info "Done!"
+}
+
+# -----------------------------------------------------------------------------
+# SECTION /// [PRINTING]
+# -----------------------------------------------------------------------------
+
+_echo() {
+    if [[ "$OPT_QUIET_INSTALL" == "true" ]]; then
+        return
+    fi
+    echo "$1"
+}
+
+_echo_info() {
+    if [[ "$OPT_QUIET_INSTALL" == "true" ]]; then
+        return
+    fi
+    echo -e "$MSG_INFO $1"
+}
+
+_echo_error() {
+    echo -e "$MSG_ERROR $1"
 }
 
 # -----------------------------------------------------------------------------
@@ -501,8 +520,8 @@ _get_par_value() {
 
 # shellcheck disable=SC2086
 _step_install_dependencies() {
-    echo
-    echo "Installing basic dependencies:"
+    _echo ""
+    _echo_info "Installing basic dependencies:"
 
     local packages=""
 
@@ -602,12 +621,12 @@ _step_install_dependencies() {
             fi
         else
             if [[ -n "$packages" ]]; then
-                echo -e "$MSG_ERROR Could not find a package manager!"
+                _echo_error "Could not find a package manager!"
                 exit 1
             fi
         fi
     else
-        echo -e "$MSG_ERROR Could not find the 'sudo' command!"
+        _echo_error "Could not find the 'sudo' command!"
         exit 1
     fi
 
@@ -615,7 +634,7 @@ _step_install_dependencies() {
     local imagemagick_policy=""
     imagemagick_policy=$(find /etc/ImageMagick-[0-9]*/policy.xml 2>/dev/null)
     if [[ -f "$imagemagick_policy" ]]; then
-        echo -e "$MSG_INFO Fixing write permission with PDF in ImageMagick..."
+        _echo_info "> Fixing write permission with PDF in ImageMagick..."
         sudo sed -i \
             's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/g' \
             "$imagemagick_policy"
@@ -635,11 +654,11 @@ _step_install_scripts() {
 
     # Remove previous scripts if requested.
     if [[ "$OPT_REMOVE_SCRIPTS" == "true" ]]; then
-        echo -e "$MSG_INFO Removing previous scripts..."
+        _echo_info "> Removing previous scripts..."
         _delete_items "$INSTALL_DIR"
     fi
 
-    echo -e "$MSG_INFO Installing new scripts..."
+    _echo_info "> Installing new scripts..."
     $SUDO_CMD_USER mkdir --parents "$INSTALL_DIR"
 
     # Always copy the '_common-functions.sh' and the '_dependencies.sh' files.
@@ -661,7 +680,7 @@ _step_install_scripts() {
 
     # Adjust ownership and permissions. Ensures all files belong to the correct
     # user/group and are executable.
-    echo -e "$MSG_INFO Setting file permissions..."
+    _echo_info "> Setting file permissions..."
     $SUDO_CMD chown -R "$INSTALL_OWNER:$INSTALL_GROUP" -- "$INSTALL_DIR"
     $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" \
@@ -696,7 +715,7 @@ _step_install_accels() {
 }
 
 _step_install_accels_nautilus() {
-    echo -e "$MSG_INFO Installing keyboard shortcuts for Nautilus..."
+    _echo_info "> Installing keyboard shortcuts for Nautilus..."
 
     local accels_file=$1
     $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
@@ -729,7 +748,7 @@ _step_install_accels_nautilus() {
 }
 
 _step_install_accels_gnome2() {
-    echo -e "$MSG_INFO Installing keyboard shortcuts..."
+    _echo_info "> Installing keyboard shortcuts..."
 
     local accels_file=$1
     $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
@@ -771,7 +790,7 @@ _step_install_accels_gnome2() {
 }
 
 _step_install_accels_thunar() {
-    echo -e "$MSG_INFO Installing keyboard shortcuts for Thunar..."
+    _echo_info "> Installing keyboard shortcuts for Thunar..."
 
     local accels_file=$1
     $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
@@ -833,7 +852,7 @@ _step_install_application_shortcuts() {
     local submenu=""
     local menus_dir="$INSTALL_HOME/.local/share/applications"
 
-    echo -e "$MSG_INFO Creating '.desktop' files..."
+    _echo_info "> Creating '.desktop' files..."
 
     # Remove previously installed '.desktop' files.
     $SUDO_CMD rm -f -- "$menus_dir/$APP_SHORTCUT_PREFIX"*.desktop
@@ -884,7 +903,7 @@ _step_create_gnome_application_folder() {
     if _command_exists "gsettings" && gsettings list-schemas |
         grep --quiet '^org.gnome.desktop.app-folders$'; then
 
-        echo -e "$MSG_INFO Creating '$folder_name' GNOME application folder..."
+        _echo_info "> Creating '$folder_name' GNOME application folder..."
 
         local gsettings_user="gsettings"
         if _command_exists "machinectl" && [[ "$USER" != "$INSTALL_OWNER" ]]; then
@@ -933,7 +952,7 @@ _step_install_menus() {
 }
 
 _step_install_menus_dolphin() {
-    echo -e "$MSG_INFO Installing Dolphin actions..."
+    _echo_info "> Installing Dolphin actions..."
 
     local menus_dir="$INSTALL_HOME/.local/share/kio/servicemenus"
 
@@ -1023,7 +1042,7 @@ _step_install_menus_dolphin() {
 }
 
 _step_install_menus_pcmanfm() {
-    echo -e "$MSG_INFO Installing PCManFM-Qt actions..."
+    _echo_info "> Installing PCManFM-Qt actions..."
 
     local menus_dir="$INSTALL_HOME/.local/share/file-manager/actions"
 
@@ -1131,7 +1150,7 @@ _step_install_menus_pcmanfm() {
 }
 
 _step_install_menus_thunar() {
-    echo -e "$MSG_INFO Installing Thunar actions..."
+    _echo_info "> Installing Thunar actions..."
 
     local menus_file="$INSTALL_HOME/.config/Thunar/uca.xml"
 
@@ -1275,19 +1294,19 @@ _step_close_filemanager() {
 
     case "$FILE_MANAGER" in
     "nautilus" | "nemo" | "thunar")
-        echo -e "$MSG_INFO Closing the file manager '$FILE_MANAGER' to reload its configurations..."
+        _echo_info "> Closing the file manager '$FILE_MANAGER' to reload its configurations..."
         # Close the file manager.
         $FILE_MANAGER -q &>/dev/null
         ;;
     "caja")
-        echo -e "$MSG_INFO Closing the file manager '$FILE_MANAGER' to reload its configurations..."
+        _echo_info "> Closing the file manager '$FILE_MANAGER' to reload its configurations..."
         # Close the file manager.
         caja -q &>/dev/null
         # Reload Caja in background to restore desktop icons.
         caja --force-desktop --no-default-window &>/dev/null &
         ;;
     "pcmanfm-qt")
-        echo -e "$MSG_INFO Closing the file manager '$FILE_MANAGER' to reload its configurations..."
+        _echo_info "> Closing the file manager '$FILE_MANAGER' to reload its configurations..."
         # FIXME: Restore desktop after kill PCManFM-Qt.
         killall "$FILE_MANAGER" &>/dev/null
         ;;
@@ -1312,7 +1331,7 @@ _bootstrap_repository() {
     elif _command_exists "wget"; then
         downloader="wget"
     else
-        echo -e "$MSG_ERROR Neither 'curl' nor 'wget' is installed. Please install one of them to continue."
+        _echo_error "Neither 'curl' nor 'wget' is installed. Please install one of them to continue."
         exit 1
     fi
 
@@ -1320,7 +1339,7 @@ _bootstrap_repository() {
     local temp_dir=""
     temp_dir=$(mktemp -d)
 
-    echo -e "$MSG_INFO Downloading latest release..."
+    _echo_info "> Downloading latest release..."
 
     # Retrieve the latest release tag from GitHub,
     # (fallback to HEAD if unavailable).
@@ -1336,7 +1355,7 @@ _bootstrap_repository() {
 
     # Build the URL for the corresponding tarball.
     local tarball_url="https://github.com/${repo_owner}/${repo_name}/archive/refs/tags/${latest_tag}.tar.gz"
-    echo -e "$MSG_INFO Downloading ${repo_name} (${latest_tag})..."
+    _echo_info "> Downloading ${repo_name} (${latest_tag})..."
 
     # Download and extract using available tool.
     if [[ "$downloader" == "curl" ]]; then
@@ -1353,12 +1372,12 @@ _bootstrap_repository() {
 
     # Validate extracted content.
     if [[ ! -f "$extracted_dir/install.sh" ]]; then
-        echo -e "$MSG_ERROR Could not find 'install.sh' in extracted files."
+        _echo_error "Could not find 'install.sh' in extracted files."
         exit 1
     fi
 
     # Run the installer from the extracted directory.
-    echo -e "$MSG_INFO Running installation from extracted directory..."
+    _echo_info "> Running installation from extracted directory..."
     cd "$extracted_dir" || exit 1
     bash install.sh "$@"
 
