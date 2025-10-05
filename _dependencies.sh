@@ -240,4 +240,37 @@ declare -A META_PACKAGES=(
         nix:    tesseract
         zypper: tesseract-ocr-traineddata-$TEMP_DATA_TASK
     "
+
+    ["texlive"]="
+        apt: \
+            texlive \
+            texlive-fonts-extra \
+            texlive-latex-extra \
+            texlive-publishers \
+            texlive-science \
+            texlive-xetex
+        dnf: \
+            texlive-base \
+            texlive-collection-fontsextra \
+            texlive-collection-latexextra \
+            texlive-collection-publishers \
+            texlive-collection-mathscience \
+            texlive-collection-xetex
+        pacman: \
+            texlive-basic \
+            texlive-fontsextra \
+            texlive-latexextra \
+            texlive-publishers \
+            texlive-mathscience \
+            texlive-xetex
+        nix: \
+            !texliveFull
+        zypper: \
+            texlive-collection-basic \
+            texlive-collection-fontsextra \
+            texlive-collection-latexextra \
+            texlive-collection-publishers \
+            texlive-collection-mathscience \
+            texlive-collection-xetex
+    "
 )
