@@ -451,7 +451,7 @@ _dependencies_check_commands_clipboard() {
         fi
     fi
 
-    case "${XDG_SESSION_TYPE:-}" in
+    case "$session_type" in
     "wayland") commands+="wl-paste" ;;
     "x11") commands+="xclip" ;;
     *)
