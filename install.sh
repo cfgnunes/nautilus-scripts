@@ -1335,6 +1335,8 @@ _bootstrap_repository() {
         exit 1
     fi
 
+    _echo_info "Running the installer online..."
+
     # Create a temporary directory for the installation.
     local temp_dir=""
     temp_dir=$(mktemp -d)
@@ -1377,7 +1379,8 @@ _bootstrap_repository() {
     fi
 
     # Run the installer from the extracted directory.
-    _echo_info "> Running installation from extracted directory..."
+    _echo_info "> Running installation from extracted files..."
+    _echo ""
     cd "$extracted_dir" || exit 1
     bash install.sh "$@"
 
