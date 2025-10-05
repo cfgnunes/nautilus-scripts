@@ -526,7 +526,7 @@ _dependencies_check_metapackages() {
             _exit_script
         fi
         _deps_install_packages \
-            "$available_pkg_manager" "${packages_install/!/}" "$post_install"
+            "$available_pkg_manager" "${packages_install/!/}" ""
         _deps_installation_check \
             "$available_pkg_manager" "$packages_install"
     fi
