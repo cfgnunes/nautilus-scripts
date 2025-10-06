@@ -848,7 +848,7 @@ _deps_is_package_installed() {
         fi
         ;;
     "nix")
-        if nix-env -q | grep --quiet "$package"; then
+        if nix-env -q | grep --quiet --ignore-case "$package"; then
             return 0
         fi
         ;;
