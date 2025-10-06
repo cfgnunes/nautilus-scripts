@@ -403,8 +403,26 @@ _get_user_homes() {
     # in. It filters '/etc/passwd' entries for accounts with valid login
     # shells.
 
-    grep --extended-regexp "/(bash|sh|zsh|csh|ksh|tcsh|fish|dash)$" \
-        </etc/passwd | cut -d ":" -f 6 | sort --unique
+    local homes=""
+
+    homes=$(grep --extended-regexp "/(bash|sh|zsh|csh|ksh|tcsh|fish|dash)$" \
+        </etc/passwd | cut -d ":" -f 6)
+
+    # Ensure the current user's home is included, in case it's missing
+    # from '/etc/passwd'.
+    if [[ -v "HOME" ]]; then
+        homes+=$'\n'
+        homes+=$HOME
+    fi
+
+    # Remove empty lines.
+    homes=$(grep -v "^\s*$" <<<"$homes")
+
+    # Exclude the root '/' directory.
+    homes=$(grep -v "^/$" <<<"$homes")
+
+    # Sort and remove duplicates.
+    sort --unique <<<"$homes"
 }
 
 _get_parameters_command_line() {
