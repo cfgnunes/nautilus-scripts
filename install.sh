@@ -64,6 +64,9 @@ readonly \
     MSG_INFO \
     SCRIPT_DIR
 
+# Use current username if $USER is undefined.
+USER=${USER:-$(id -un)}
+
 # -----------------------------------------------------------------------------
 # SECTION /// [GLOBAL VARIABLES]
 # -----------------------------------------------------------------------------
@@ -271,7 +274,7 @@ _main() {
             [[ "$OPT_INSTALL_ACCELS" == "true" ]] && _step_install_accels
 
             # Reload file manager to apply changes, if selected.
-            if [[ "${USER:-}" == "$INSTALL_OWNER" ]]; then
+            if [[ "$USER" == "$INSTALL_OWNER" ]]; then
                 [[ "$OPT_CLOSE_FILE_MANAGER" == "true" ]] && _step_close_filemanager
             fi
             _echo_info "> Done!"
