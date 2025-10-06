@@ -2260,11 +2260,10 @@ _unset_global_variables_file_manager() {
 
 _xdg_get_default_app() {
     # This function retrieves the default application associated with a
-    # specific MIME type on a Linux system using the 'xdg-mime' command.
+    # specific MIME type using the 'xdg-mime' command.
     #
     # Parameters:
-    #   - $1 (mime): The MIME type (e.g., 'application/pdf', 'image/png') for
-    #     which to find the default application.
+    #   - $1 (mime): MIME type (e.g., 'application/pdf', 'image/png').
     #   - $2 (quiet, optional): If set to 'true', the function will return 1 on
     #     errors without displaying any dialog or exiting. Default is 'false'.
     #
@@ -2284,39 +2283,45 @@ _xdg_get_default_app() {
     if [[ -z "$desktop_file" ]]; then
         if [[ "$quiet" == "true" ]]; then
             return 1
-        else
-            _display_error_box \
-                "No default application set for MIME type '$mime'"
-            _exit_script
         fi
+        _display_error_box \
+            "No default application set for MIME type '$mime'!"
+        _exit_script
     fi
 
-    # Search possible locations for '.desktop' file.
-    local search_paths=(
-        "/usr/local/share/applications"
-        "/usr/share/applications"
-    )
+    # Get standard XDG application directories.
+    local xdg_dirs="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+    xdg_dirs+=":$HOME/.local/share"
 
-    for path in "${search_paths[@]}"; do
-        if [[ -f "$path/$desktop_file" ]]; then
-            desktop_path="$path/$desktop_file"
-            break
+    # Append the directory 'applications'.
+    xdg_dirs=$(sed "s|/:|:|g; s|:|/applications:|g; s|/$||" <<<"$xdg_dirs")
+    xdg_dirs+="/applications"
+
+    # Locate the '.desktop' file.
+    xdg_dirs=$(tr ":" "$FIELD_SEPARATOR" <<<"$xdg_dirs")
+    local xdg_dir=""
+    for xdg_dir in $xdg_dirs; do
+        desktop_path="$xdg_dir/$desktop_file"
+        if [[ -f "$desktop_path" ]]; then
+            # Extract Exec line, normalize to get only the binary.
+            default_app=$(grep -m1 "^Exec=" "$desktop_path" |
+                sed "s|Exec=||" | cut -d " " -f 1)
+
+            if _command_exists "$default_app"; then
+                break
+            else
+                default_app=""
+            fi
         fi
     done
-
-    # Extract Exec line, normalize to get only the binary.
-    default_app=$(grep -m1 "^Exec=" "$desktop_path" |
-        sed "s|Exec=||" |
-        cut -d " " -f 1)
 
     if [[ -z "$default_app" ]]; then
         if [[ "$quiet" == "true" ]]; then
             return 1
-        else
-            _display_error_box \
-                "Could not extract executable from '$desktop_path'"
-            _exit_script
         fi
+        _display_error_box \
+            "Could not find the executable to open MIME type '$mime'!"
+        _exit_script
     fi
 
     printf "%s" "$default_app"
