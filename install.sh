@@ -269,6 +269,7 @@ _main() {
             if [[ "${USER:-}" == "$INSTALL_OWNER" ]]; then
                 [[ "$OPT_CLOSE_FILE_MANAGER" == "true" ]] && _step_close_filemanager
             fi
+            _echo_info "> Done!"
         done
 
         # Install application menu shortcuts.
@@ -279,11 +280,11 @@ _main() {
 
             _step_install_application_shortcuts
             _step_create_gnome_application_folder
+            _echo_info "> Done!"
         fi
     done
 
     _echo ""
-    _echo_info "Done!"
 }
 
 # -----------------------------------------------------------------------------
@@ -591,16 +592,10 @@ _step_install_dependencies() {
         fi
     fi
 
-    # Fix permissions in ImageMagick to write PDF files.
-    local imagemagick_policy=""
-    imagemagick_policy=$(find /etc/ImageMagick-[0-9]*/policy.xml 2>/dev/null)
-    if [[ -f "$imagemagick_policy" ]]; then
-        _echo_info "> Fixing write permission with PDF in ImageMagick..."
-        $admin_cmd sed -i \
-            's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/g' \
-            "$imagemagick_policy"
-        $admin_cmd sed -i 's/".GiB"/"8GiB"/g' "$imagemagick_policy"
+    if [[ -z "$packages" ]]; then
+        _echo_info "> All dependencies already satisfied."
     fi
+    _echo_info "> Done!"
 }
 
 _step_install_scripts() {
@@ -1294,7 +1289,7 @@ _bootstrap_repository() {
         exit 1
     fi
 
-    _echo_info "Running the installer online:"
+    _echo_info "Running the online installer:"
 
     # Create a temporary directory for the installation.
     local temp_dir=""
