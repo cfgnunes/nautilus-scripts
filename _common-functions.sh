@@ -689,7 +689,7 @@ _deps_install_packages() {
         _command_exists "pkexec" && admin_cmd="pkexec"
     fi
 
-    _display_wait_box_message "Installing the packages. Please, wait..."
+    _display_wait_box_message "Installing the packages. Please, wait..." "0"
 
     case "$pkg_manager" in
     "apt-get")
@@ -901,8 +901,7 @@ _delete_items() {
     done
 
     if [[ -n "$failed_items" ]]; then
-        _log_error "Some items could not be deleted." \
-            "" "$failed_items" ""
+        _log_error "Some items could not be deleted." "" "$failed_items" ""
         _logs_consolidate ""
     else
         _display_info_box "All selected items were successfully deleted!"
