@@ -508,12 +508,8 @@ _step_install_dependencies() {
 
     # Basic packages to run the script '_common-functions.sh'.
     _command_exists "basename" || packages+="coreutils "
-    _command_exists "bash" || packages+="bash "
     _command_exists "file" || packages+="file "
-    _command_exists "find" || packages+="findutils "
-    _command_exists "grep" || packages+="grep "
     _command_exists "pstree" || packages+="psmisc "
-    _command_exists "sed" || packages+="sed "
     _command_exists "xdg-open" || packages+="xdg-utils "
 
     # Packages for dialogs.

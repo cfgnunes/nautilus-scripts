@@ -20,10 +20,6 @@
 #     package name may differ from the one provided during installation.
 
 declare -A PACKAGE_NAME=(
-    ["awk"]="
-        *:      gawk
-    "
-
     ["7za"]="
         apt:    p7zip-full
         dnf:    p7zip
