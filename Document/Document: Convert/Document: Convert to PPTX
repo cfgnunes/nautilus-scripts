@@ -15,7 +15,7 @@ _main() {
 
     local dependencies=""
     dependencies=$(_get_dependencies "$input_files")
-    _dependencies_check_commands "$dependencies"
+    _dependencies_check_metapackages "$dependencies"
     _display_wait_box "2"
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
