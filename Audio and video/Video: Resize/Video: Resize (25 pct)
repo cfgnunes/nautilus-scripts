@@ -28,7 +28,7 @@ _main_task() {
     local factor="0.25"
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(25%)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(25 pct)'")
     std_output=$(ffmpeg -hide_banner -y -i "$input_file" -filter:v "scale=iw*$factor:ih*$factor" -c:v mpeg4 -c:a copy -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
