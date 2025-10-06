@@ -1900,7 +1900,7 @@ _display_wait_box_message() {
     elif _command_exists "zenity"; then
         # Control flag to inform that a 'wait box' will open
         # (if the task takes over 2 seconds).
-        echo "zenity" >"$TEMP_CONTROL_WAIT_BOX"
+        touch -- "$TEMP_CONTROL_WAIT_BOX"
 
         # Create the FIFO for communication with Zenity 'wait box'.
         if [[ ! -p "$TEMP_CONTROL_WAIT_BOX_FIFO" ]]; then
@@ -1915,22 +1915,17 @@ _display_wait_box_message() {
         (
             sleep "$open_delay"
 
-            # Check if the 'wait box' should open.
-            if [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]]; then
-                return 0
-            fi
-
             # Wait another window close.
             while [[ -f "$TEMP_CONTROL_DISPLAY_LOCKED" ]]; do
                 # Short delay to avoid high CPU usage in the loop.
-                sleep 0.5
+                sleep 0.3
             done
 
             # Check if the task has already finished.
-            if [[ ! -d "$TEMP_DIR" ]] ||
-                [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]]; then
-                return 0
-            fi
+            [[ ! -d "$TEMP_DIR" ]] && return 0
+
+            # Check if the 'wait box' should open.
+            [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]] && return 0
 
             tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (zenity \
                 --title="$(_get_script_name)" --progress \
@@ -1943,7 +1938,7 @@ _display_wait_box_message() {
         _get_qdbus_command &>/dev/null || return 0
         # Control flag to inform that a 'wait box' will open
         # (if the task takes over 2 seconds).
-        echo "kdialog" >"$TEMP_CONTROL_WAIT_BOX"
+        touch -- "$TEMP_CONTROL_WAIT_BOX"
 
         # Launch the "background thread 1", for KDialog 'wait box':
         #   - Waits for the specified delay.
@@ -1951,22 +1946,17 @@ _display_wait_box_message() {
         (
             sleep "$open_delay"
 
-            # Check if the 'wait box' should open.
-            if [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]]; then
-                return 0
-            fi
-
             # Wait another window close.
             while [[ -f "$TEMP_CONTROL_DISPLAY_LOCKED" ]]; do
                 # Short delay to avoid high CPU usage in the loop.
-                sleep 0.5
+                sleep 0.3
             done
 
             # Check if the task has already finished.
-            if [[ ! -d "$TEMP_DIR" ]] ||
-                [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]]; then
-                return 0
-            fi
+            [[ ! -d "$TEMP_DIR" ]] && return 0
+
+            # Check if the 'wait box' should open.
+            [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]] && return 0
 
             kdialog --title="$(_get_script_name)" \
                 --progressbar "$message" 0 >"$TEMP_CONTROL_WAIT_BOX_KDIALOG" \
@@ -1979,7 +1969,8 @@ _display_wait_box_message() {
         (
             sleep "$open_delay"
             # Wait the 'wait box' finish to write the output file.
-            sleep 0.2
+            sleep 0.1
+
             while [[ -f "$TEMP_CONTROL_WAIT_BOX" ]] ||
                 [[ -f "$TEMP_CONTROL_WAIT_BOX_KDIALOG" ]]; do
                 # Extract the D-Bus reference for the KDialog instance.
@@ -1996,7 +1987,7 @@ _display_wait_box_message() {
                 fi
 
                 # Short delay to avoid high CPU usage in the loop.
-                sleep 0.2
+                sleep 0.3
             done
         ) &
     fi
@@ -2007,44 +1998,36 @@ _close_wait_box() {
     # indicators) that were displayed during the execution of a task. It checks
     # for both Zenity and KDialog wait boxes and handles their closure.
 
-    local wait_box_type=""
+    if [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]]; then
+        return 0
+    fi
+    # Cancel the future open of any 'wait box'.
+    rm -f -- "$TEMP_CONTROL_WAIT_BOX"
 
-    # Check if 'wait box' is opened or will open.
-    if [[ -f "$TEMP_CONTROL_WAIT_BOX" ]]; then
-        wait_box_type=$(<"$TEMP_CONTROL_WAIT_BOX")
+    # Wait the 'wait box' finish to write the control file.
+    sleep 0.1
 
-        # Cancel the future open of any 'wait box'.
-        rm -f -- "$TEMP_CONTROL_WAIT_BOX"
+    # Check if Zenity 'wait box' is open, (waiting for an input in the FIFO).
+    if pgrep -fl "$TEMP_CONTROL_WAIT_BOX_FIFO" &>/dev/null; then
+        # Close the Zenity using the FIFO.
+        printf "100\n" >"$TEMP_CONTROL_WAIT_BOX_FIFO"
+    fi
 
-        if [[ "$wait_box_type" == "zenity" ]]; then # Zenity 'wait box'.
-            # Check if Zenity 'wait box' is open,
-            # (waiting for an input in the FIFO).
-            if pgrep -fl "$TEMP_CONTROL_WAIT_BOX_FIFO" &>/dev/null; then
-                # Close the Zenity using the FIFO.
-                printf "100\n" >"$TEMP_CONTROL_WAIT_BOX_FIFO"
-            fi
+    if [[ -f "$TEMP_CONTROL_WAIT_BOX_KDIALOG" ]]; then
+        # Extract the D-Bus reference for the KDialog instance.
+        local dbus_ref=""
+        dbus_ref=$(cut -d " " -f 1 <"$TEMP_CONTROL_WAIT_BOX_KDIALOG")
 
-        elif [[ "$wait_box_type" == "kdialog" ]]; then # KDialog 'wait box'.
-            # Wait the 'wait box' finish to write the output file.
-            sleep 0.3
+        # Stop the loop of "background thread 2".
+        rm -f -- "$TEMP_CONTROL_WAIT_BOX_KDIALOG"
 
-            if [[ -f "$TEMP_CONTROL_WAIT_BOX_KDIALOG" ]]; then
-                # Extract the D-Bus reference for the KDialog instance.
-                local dbus_ref=""
-                dbus_ref=$(cut -d " " -f 1 <"$TEMP_CONTROL_WAIT_BOX_KDIALOG")
+        # Wait the "background thread 2" main loop stop
+        # before close the KDialog 'wait box'.
+        sleep 0.3
 
-                # Stop the loop of "background thread 2".
-                rm -f -- "$TEMP_CONTROL_WAIT_BOX_KDIALOG"
-
-                # Wait the "background thread 2" main loop stop
-                # before close the KDialog 'wait box'.
-                sleep 0.3
-
-                # Close the KDialog 'wait box'.
-                $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" \
-                    "close" &>/dev/null
-            fi
-        fi
+        # Close the KDialog 'wait box'.
+        $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" \
+            "close" &>/dev/null
     fi
 }
 
