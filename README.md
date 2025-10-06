@@ -105,7 +105,7 @@ File managers compatibility:
 
 Most scripts have been tested on the following GNU/Linux distributions:
 
-- Debian/Ubuntu
+- Ubuntu/Debian
   - Ubuntu 14.04, 16.04, 18.04, 20.04, 22.04, 24.04
   - Debian 12, 13 (Gnome and KDE)
   - Kubuntu 22.04, 24.04
@@ -122,6 +122,9 @@ Most scripts have been tested on the following GNU/Linux distributions:
   - Manjaro 23, 24, 25 (Gnome)
 - openSUSE
   - Tumbleweed 2024, 2025 (Gnome)
+- Others
+  - NixOS
+  - Termux
 
 ## Handling large input lists
 
