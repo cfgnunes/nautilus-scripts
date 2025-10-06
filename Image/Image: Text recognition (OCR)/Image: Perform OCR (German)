@@ -36,7 +36,7 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "$temp_file.txt" || return 1
 
     # Move the temporary file to the output.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=txt")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=txt; par_suffix='(OCR $TEMP_DATA_TASK)'")
     _move_temp_file_to_output "$input_file" "$temp_file.txt" "$output_file"
 
     # Remove the temporary files on each iteration (if not removed before).
