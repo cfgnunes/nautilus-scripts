@@ -219,7 +219,9 @@ _main() {
         INSTALL_HOME=$install_home
         INSTALL_OWNER=$($SUDO_CMD stat -c "%U" "$INSTALL_HOME")
         INSTALL_GROUP=$($SUDO_CMD stat -c "%G" "$INSTALL_HOME")
-        if [[ "$OPT_INSTALL_FOR_ALL_USERS" == "true" ]]; then
+
+        if [[ "$OPT_INSTALL_FOR_ALL_USERS" == "true" ]] &&
+            [[ -n "$INSTALL_OWNER" ]] && [[ -n "$INSTALL_GROUP" ]]; then
             SUDO_CMD_USER="sudo -u $INSTALL_OWNER -g $INSTALL_GROUP"
         fi
 
@@ -262,6 +264,7 @@ _main() {
             _echo ""
             _echo_info "Installing the scripts:"
             _echo_info "> User: $INSTALL_OWNER"
+            _echo_info "> Home directory: $INSTALL_HOME"
             _echo_info "> File manager: $FILE_MANAGER"
             _step_install_scripts cat_selected cat_dirs
             _step_install_menus
@@ -398,9 +401,7 @@ _get_user_homes() {
     # shells.
 
     grep --extended-regexp "/(bash|sh|zsh|csh|ksh|tcsh|fish|dash)$" \
-        </etc/passwd |
-        cut -d ":" -f 6 |
-        sort --unique
+        </etc/passwd | cut -d ":" -f 6 | sort --unique
 }
 
 _get_parameters_command_line() {
