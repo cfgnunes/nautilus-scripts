@@ -205,6 +205,15 @@ declare -A PACKAGE_NAME=(
         *:      wl-clipboard
     "
 
+    ["xorriso"]="
+        apt:    xorriso
+        dnf:    xorriso
+        pacman: xorriso
+        nix:    xorriso~libisoburn
+        zypper: xorriso
+        guix:   xorriso
+    "
+
     ["xz"]="
         apt:    xz-utils
         dnf:    xz
