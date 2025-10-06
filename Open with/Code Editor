@@ -32,13 +32,20 @@ _main() {
     fi
 
     # Run the main process.
-    if _command_exists "code"; then
-        code -- $input_files &
-    elif _command_exists "geany"; then
-        geany -- $input_files &
-    else
-        $(_xdg_get_default_app "text/plain") -- $input_files &
+    local available_app=""
+    local apps=(
+        "code"
+        "geany"
+        "gnome-text-editor"
+        "gedit"
+    )
+    available_app=$(_get_available_app "apps")
+
+    if [[ -z "$available_app" ]]; then
+        available_app=$(_xdg_get_default_app "text/plain")
     fi
+
+    $available_app -- $input_files &
 }
 
 _main "$@"
