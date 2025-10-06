@@ -76,9 +76,9 @@ SUDO_CMD_USER="" # Command prefix for running as target user.
 
 # Default main menu options.
 OPT_INSTALL_BASIC_DEPS="true"
+OPT_REMOVE_SCRIPTS="true"
 OPT_INSTALL_ACCELS="true"
 OPT_CLOSE_FILE_MANAGER="true"
-OPT_REMOVE_SCRIPTS="true"
 OPT_INSTALL_APP_SHORTCUTS="false"
 OPT_INSTALL_FOR_ALL_USERS="false"
 OPT_CHOOSE_CATEGORIES="false"
@@ -129,9 +129,9 @@ _main() {
     # Available options presented in the interactive menu.
     menu_labels=(
         "Install basic dependencies (may require 'sudo')"
+        "Remove previously installed scripts"
         "Install keyboard accelerators"
         "Close the file manager to reload its configurations"
-        "Remove previously installed scripts"
         "Install application menu shortcuts"
         "Install for all users (may require 'sudo')"
         "Choose which script categories to install"
@@ -140,9 +140,9 @@ _main() {
     # Default states for the menu options.
     menu_defaults=(
         "$OPT_INSTALL_BASIC_DEPS"
+        "$OPT_REMOVE_SCRIPTS"
         "$OPT_INSTALL_ACCELS"
         "$OPT_CLOSE_FILE_MANAGER"
-        "$OPT_REMOVE_SCRIPTS"
         "$OPT_INSTALL_APP_SHORTCUTS"
         "$OPT_INSTALL_FOR_ALL_USERS"
         "$OPT_CHOOSE_CATEGORIES"
@@ -161,9 +161,9 @@ _main() {
 
     # Map menu selections into a comma-separated string of options.
     OPT_INSTALL_BASIC_DEPS=${menu_selected[0]}
-    OPT_INSTALL_ACCELS=${menu_selected[1]}
-    OPT_CLOSE_FILE_MANAGER=${menu_selected[2]}
-    OPT_REMOVE_SCRIPTS=${menu_selected[3]}
+    OPT_REMOVE_SCRIPTS=${menu_selected[1]}
+    OPT_INSTALL_ACCELS=${menu_selected[2]}
+    OPT_CLOSE_FILE_MANAGER=${menu_selected[3]}
     OPT_INSTALL_APP_SHORTCUTS=${menu_selected[4]}
     OPT_INSTALL_FOR_ALL_USERS=${menu_selected[5]}
     OPT_CHOOSE_CATEGORIES=${menu_selected[6]}
@@ -423,37 +423,37 @@ _get_parameters_command_line() {
     # Read parameters from command line.
     while [[ $# -gt 0 ]]; do
         case "$1" in
-        -n | --non-interactive) OPT_INTERACTIVE_INSTALL="false" ;;
-        -q | --quiet) OPT_QUIET_INSTALL="true" ;;
+        -a | --install-all-users) OPT_INSTALL_FOR_ALL_USERS="true" ;;
+        -A | --no-install-all-users) OPT_INSTALL_FOR_ALL_USERS="false" ;;
+        -d | --remove-scripts) OPT_REMOVE_SCRIPTS="true" ;;
+        -D | --no-remove-scripts) OPT_REMOVE_SCRIPTS="false" ;;
+        -f | --close-filemanager) OPT_CLOSE_FILE_MANAGER="true" ;;
+        -F | --no-close-filemanager) OPT_CLOSE_FILE_MANAGER="false" ;;
         -i | --install-dependencies) OPT_INSTALL_BASIC_DEPS="true" ;;
         -I | --no-install-dependencies) OPT_INSTALL_BASIC_DEPS="false" ;;
         -k | --install-shortcuts) OPT_INSTALL_ACCELS="true" ;;
         -K | --no-install-shortcuts) OPT_INSTALL_ACCELS="false" ;;
-        -f | --close-filemanager) OPT_CLOSE_FILE_MANAGER="true" ;;
-        -F | --no-close-filemanager) OPT_CLOSE_FILE_MANAGER="false" ;;
-        -d | --remove-scripts) OPT_REMOVE_SCRIPTS="true" ;;
-        -D | --no-remove-scripts) OPT_REMOVE_SCRIPTS="false" ;;
+        -n | --non-interactive) OPT_INTERACTIVE_INSTALL="false" ;;
+        -q | --quiet) OPT_QUIET_INSTALL="true" ;;
         -s | --install-app-shortcuts) OPT_INSTALL_APP_SHORTCUTS="true" ;;
         -S | --no-install-app-shortcuts) OPT_INSTALL_APP_SHORTCUTS="false" ;;
-        -a | --install-all-users) OPT_INSTALL_FOR_ALL_USERS="true" ;;
-        -A | --no-install-all-users) OPT_INSTALL_FOR_ALL_USERS="false" ;;
         -h | --help)
             echo "Usage: $0 [options]"
             echo
-            echo "  -n, --non-interactive           Run without prompts."
-            echo "  -q, --quiet                     Suppress all output (silent mode)."
+            echo "  -a, --install-all-users         Install for all users."
+            echo "  -A, --no-install-all-users      Do not install for all users."
+            echo "  -d, --remove-scripts            Remove previously installed scripts."
+            echo "  -D, --no-remove-scripts         Do not remove previously installed scripts."
+            echo "  -f, --close-filemanager         Close file manager after install."
+            echo "  -F, --no-close-filemanager      Do not close file manager after install."
             echo "  -i, --install-dependencies      Install basic dependencies."
             echo "  -I, --no-install-dependencies   Do not install basic dependencies."
             echo "  -k, --install-shortcuts         Install keyboard accelerators."
             echo "  -K, --no-install-shortcuts      Do not install keyboard accelerators."
-            echo "  -f, --close-filemanager         Close file manager after install."
-            echo "  -F, --no-close-filemanager      Do not close file manager after install."
-            echo "  -d, --remove-scripts            Remove previously installed scripts."
-            echo "  -D, --no-remove-scripts         Do not remove previously installed scripts."
+            echo "  -n, --non-interactive           Run without prompts."
+            echo "  -q, --quiet                     Suppress all output (silent mode)."
             echo "  -s, --install-app-shortcuts     Install application menu shortcuts."
             echo "  -S, --no-install-app-shortcuts  Do not install application menu shortcuts."
-            echo "  -a, --install-all-users         Install for all users."
-            echo "  -A, --no-install-all-users      Do not install for all users."
             echo "  -h, --help                      Show this help message and exit."
             echo
             exit 0
