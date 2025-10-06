@@ -491,10 +491,10 @@ _step_install_dependencies() {
     _echo_info "Installing basic dependencies:"
 
     local packages=""
-    local sudo_cmd=""
+    local admin_cmd=""
 
     if _command_exists "sudo"; then
-        sudo_cmd="sudo"
+        admin_cmd="sudo"
     fi
 
     # Basic packages to run the script '_common-functions.sh'.
@@ -544,33 +544,29 @@ _step_install_dependencies() {
     elif _command_exists "apt-get"; then
         # Package manager 'apt-get': For Debian/Ubuntu systems.
         _command_exists "pgrep" || packages+="procps "
-        _command_exists "pkexec" || packages+="pkexec "
 
         if [[ -n "$packages" ]]; then
-            $sudo_cmd apt-get update
-            $sudo_cmd apt-get -y install $packages
+            $admin_cmd apt-get update
+            $admin_cmd apt-get -y install $packages
         fi
     elif _command_exists "rpm-ostree"; then
         # Package manager 'rpm-ostree': For Fedora/RHEL atomic systems.
         _command_exists "pgrep" || packages+="procps-ng "
-        _command_exists "pkexec" || packages+="polkit "
 
         if [[ -n "$packages" ]]; then
-            $sudo_cmd rpm-ostree install $packages
+            $admin_cmd rpm-ostree install $packages
         fi
     elif _command_exists "dnf"; then
         # Package manager 'dnf': For Fedora/RHEL systems.
         _command_exists "pgrep" || packages+="procps-ng "
-        _command_exists "pkexec" || packages+="polkit "
 
         if [[ -n "$packages" ]]; then
-            $sudo_cmd dnf check-update
-            $sudo_cmd dnf -y install $packages
+            $admin_cmd dnf check-update
+            $admin_cmd dnf -y install $packages
         fi
     elif _command_exists "pacman"; then
         # Package manager 'pacman': For Arch Linux systems.
         _command_exists "pgrep" || packages+="procps "
-        _command_exists "pkexec" || packages+="polkit "
 
         # NOTE: Force update GTK4 packages on Arch Linux.
         if [[ "$packages" == *"zenity"* ]]; then
@@ -578,17 +574,16 @@ _step_install_dependencies() {
         fi
 
         if [[ -n "$packages" ]]; then
-            $sudo_cmd pacman -Syy
-            $sudo_cmd pacman --noconfirm -S $packages
+            $admin_cmd pacman -Syy
+            $admin_cmd pacman --noconfirm -S $packages
         fi
     elif _command_exists "zypper"; then
         # Package manager 'zypper': For openSUSE systems.
         _command_exists "pgrep" || packages+="procps-ng "
-        _command_exists "pkexec" || packages+="polkit "
 
         if [[ -n "$packages" ]]; then
-            $sudo_cmd zypper refresh
-            $sudo_cmd zypper --non-interactive install $packages
+            $admin_cmd zypper refresh
+            $admin_cmd zypper --non-interactive install $packages
         fi
     else
         if [[ -n "$packages" ]]; then
@@ -602,10 +597,10 @@ _step_install_dependencies() {
     imagemagick_policy=$(find /etc/ImageMagick-[0-9]*/policy.xml 2>/dev/null)
     if [[ -f "$imagemagick_policy" ]]; then
         _echo_info "> Fixing write permission with PDF in ImageMagick..."
-        $sudo_cmd sed -i \
+        $admin_cmd sed -i \
             's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/g' \
             "$imagemagick_policy"
-        $sudo_cmd sed -i 's/".GiB"/"8GiB"/g' "$imagemagick_policy"
+        $admin_cmd sed -i 's/".GiB"/"8GiB"/g' "$imagemagick_policy"
     fi
 }
 

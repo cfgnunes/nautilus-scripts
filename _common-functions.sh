@@ -681,7 +681,13 @@ _deps_install_packages() {
     local packages=$2
     local post_install=$3
     local cmd_install=""
-    local admin_cmd="pkexec"
+    local admin_cmd=""
+
+    if ! _is_gui_session; then
+        _command_exists "sudo" && admin_cmd="sudo"
+    else
+        _command_exists "pkexec" && admin_cmd="pkexec"
+    fi
 
     _display_wait_box_message "Installing the packages. Please, wait..."
 
