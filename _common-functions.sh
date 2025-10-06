@@ -778,9 +778,8 @@ _deps_installation_check() {
         # rpm-ostree deployment list, it means it is installed but requires a
         # system reboot to take effect.
         if [[ "$available_pkg_manager" == "rpm-ostree" ]] &&
-            rpm-ostree status --json |
-            jq -r ".deployments[0].packages[]" |
-                grep -Fxq "$package_check"; then
+            rpm-ostree status --json | jq -r ".deployments[0].packages[]" |
+            grep -Fxq "$package_check"; then
             _display_info_box \
                 "The package '$package_check' is installed but you need to reboot to use it!"
             _exit_script
@@ -3124,9 +3123,7 @@ _storage_text_read_all() {
     # storage files, from largest to smallest.
 
     find "$TEMP_DIR_STORAGE_TEXT" -type f -printf "%s %p\n" 2>/dev/null |
-        sort -n -r |
-        cut -d " " -f 2 - |
-        xargs -r cat --
+        sort -n -r | cut -d " " -f 2 - | xargs -r cat --
 }
 
 _storage_text_write() {
