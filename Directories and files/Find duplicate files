@@ -31,7 +31,7 @@ _main() {
     rm -f -- "$temp_file"
 
     # Retain only the fields 2 (id) and 8 (name).
-    std_output=$(cut -d ' ' -f 2,8- <<<"$std_output")
+    std_output=$(cut -d " " -f 2,8- <<<"$std_output")
 
     # Remove the '-' before the IDs.
     std_output=$(sed "s|^-||" <<<"$std_output")

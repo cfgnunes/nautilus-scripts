@@ -27,7 +27,7 @@ _main_task() {
 
     # Get the ID from the key.
     key_id=$(gpg --with-colons --import-options show-only --import "$input_file" |
-        grep -m1 "^fpr" | cut -d ':' -f 10 2>/dev/null)
+        grep -m1 "^fpr" | cut -d ":" -f 10 2>/dev/null)
 
     # Run the main process.
     # Import the key.

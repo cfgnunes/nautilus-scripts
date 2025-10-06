@@ -57,7 +57,7 @@ _import_key() {
 
     # Get the ID from the key.
     key_id=$(gpg --with-colons --import-options show-only --import "$input_file" |
-        grep -m1 "^fpr" | cut -d ':' -f 10 2>/dev/null)
+        grep -m1 "^fpr" | cut -d ":" -f 10 2>/dev/null)
 
     # Import the key.
     std_output=$(gpg --batch --yes --import "$input_file" 2>&1)
@@ -71,7 +71,7 @@ _import_key() {
 _get_user() {
     local users=""
     users=$(gpg --list-secret-keys --with-colons 2>/dev/null |
-        grep --ignore-case "^uid" | cut -d ':' -f 10)
+        grep --ignore-case "^uid" | cut -d ":" -f 10)
     if [[ -z "$users" ]]; then
         local message="No secret keys were found.\n\nWould you like to import a key now?"
         if ! _display_question_box "$message"; then
@@ -79,7 +79,7 @@ _get_user() {
         fi
         _import_key
         users=$(gpg --list-secret-keys --with-colons 2>/dev/null |
-            grep --ignore-case "^uid" | cut -d ':' -f 10)
+            grep --ignore-case "^uid" | cut -d ":" -f 10)
         if [[ -z "$users" ]]; then
             _display_error_box "Failed to import the secret key!"
             _exit_script
