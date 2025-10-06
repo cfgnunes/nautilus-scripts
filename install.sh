@@ -183,7 +183,7 @@ _main() {
     # If requested, let the user select which categories to install.
     if [[ "$OPT_CHOOSE_CATEGORIES" == "true" ]]; then
         _echo ""
-        _echo_info "Select the categories (<SPACE> to check):"
+        _echo "Select the categories (<SPACE> to check):"
         _multiselect_menu cat_selected cat_dirs cat_defaults
     fi
 
@@ -260,7 +260,6 @@ _main() {
             _echo ""
             _echo_info "Installing the scripts:"
             _echo_info "> User: $INSTALL_OWNER"
-            _echo_info "> Directory: $INSTALL_HOME"
             _echo_info "> File manager: $FILE_MANAGER"
             _step_install_scripts cat_selected cat_dirs
             _step_install_menus
