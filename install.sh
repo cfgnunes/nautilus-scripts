@@ -368,6 +368,12 @@ _delete_items() {
 
     local items=$1
 
+    # Attempt to remove empty directories directly (rmdir only removes empty
+    # dirs, silently fails otherwise) This avoids sending empty folders to the
+    # trash and deletes them outright.
+    # shellcheck disable=SC2086
+    rmdir -- $items &>/dev/null
+
     # shellcheck disable=SC2086
     if _command_exists "gio"; then
         $SUDO_CMD_USER gio trash -- $items 2>/dev/null
