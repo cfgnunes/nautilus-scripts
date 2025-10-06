@@ -397,8 +397,8 @@ _get_user_homes() {
     # in. It filters '/etc/passwd' entries for accounts with valid login
     # shells.
 
-    getent passwd |
-        grep --extended-regexp "/(bash|sh|zsh|csh|ksh|tcsh|fish|dash)$" |
+    grep --extended-regexp "/(bash|sh|zsh|csh|ksh|tcsh|fish|dash)$" \
+        </etc/passwd |
         cut -d ":" -f 6 |
         sort --unique
 }

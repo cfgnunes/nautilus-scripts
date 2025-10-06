@@ -119,8 +119,8 @@ _resolve_host() {
     local ip=$1
     local hostname=""
 
-    # Try local resolution (via /etc/hosts, NSS, etc.).
-    hostname=$(getent hosts "$ip" | awk '{print $2}' | head -n1)
+    # Try local resolution.
+    hostname=$(grep "$ip" </etc/hosts | awk '{print $2}' | head -n1)
 
     if [[ -n "$hostname" ]]; then
         printf "%s" "$hostname"
