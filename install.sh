@@ -807,11 +807,12 @@ _step_install_application_shortcuts() {
     local name=""
     local script_relative=""
     local submenu=""
-    local menus_dir="$INSTALL_HOME/.local/share/applications"
+    local menus_dir="$INSTALL_HOME/.local/share/applications/nautilus-scripts"
 
     _echo_info "> Creating '.desktop' files..."
 
     # Remove previously installed '.desktop' files.
+    mkdir -p "$INSTALL_HOME/.local/share/applications/nautilus-scripts"
     $SUDO_CMD rm -f -- "$menus_dir/$APP_SHORTCUT_PREFIX"*.desktop
 
     $SUDO_CMD_USER mkdir --parents "$menus_dir"
