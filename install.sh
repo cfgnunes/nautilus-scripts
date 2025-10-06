@@ -273,11 +273,11 @@ _main() {
         done
 
         # Install application menu shortcuts.
-        _echo ""
-        _echo_info "Installing application menu shortcuts:"
-        _echo_info "> User: $INSTALL_OWNER"
-
         if [[ "$OPT_INSTALL_APP_SHORTCUTS" == "true" ]]; then
+            _echo ""
+            _echo_info "Installing application menu shortcuts:"
+            _echo_info "> User: $INSTALL_OWNER"
+
             _step_install_application_shortcuts
             _step_create_gnome_application_folder
         fi
@@ -616,11 +616,11 @@ _step_install_scripts() {
 
     # Remove previous scripts if requested.
     if [[ "$OPT_REMOVE_SCRIPTS" == "true" ]]; then
-        _echo_info "> Removing previous scripts..."
+        _echo_info "> Removing previously installed scripts..."
         _delete_items "$INSTALL_DIR"
     fi
 
-    _echo_info "> Installing new scripts..."
+    _echo_info "> Installing the scripts..."
     $SUDO_CMD_USER mkdir --parents "$INSTALL_DIR"
 
     # Always copy the '_common-functions.sh' and the '_dependencies.sh' files.
@@ -642,7 +642,6 @@ _step_install_scripts() {
 
     # Adjust ownership and permissions. Ensures all files belong to the correct
     # user/group and are executable.
-    _echo_info "> Setting file permissions..."
     $SUDO_CMD chown -R "$INSTALL_OWNER:$INSTALL_GROUP" -- "$INSTALL_DIR"
     $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" \
@@ -655,6 +654,8 @@ _step_install_scripts() {
 
 _step_install_accels() {
     # Install keyboard accelerators (shortcuts) for specific file managers.
+
+    _echo_info "> Installing keyboard accelerators..."
 
     case "$FILE_MANAGER" in
     "nautilus")
@@ -677,8 +678,6 @@ _step_install_accels() {
 }
 
 _step_install_accels_nautilus() {
-    _echo_info "> Installing keyboard shortcuts for Nautilus..."
-
     local accels_file=$1
     $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
 
@@ -710,8 +709,6 @@ _step_install_accels_nautilus() {
 }
 
 _step_install_accels_gnome2() {
-    _echo_info "> Installing keyboard shortcuts..."
-
     local accels_file=$1
     $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
 
@@ -752,8 +749,6 @@ _step_install_accels_gnome2() {
 }
 
 _step_install_accels_thunar() {
-    _echo_info "> Installing keyboard shortcuts for Thunar..."
-
     local accels_file=$1
     $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
 
@@ -1254,21 +1249,24 @@ _step_close_filemanager() {
     # configurations. For most file managers, the `-q` option is used to quit
     # gracefully.
 
+    if [[ -z "$FILE_MANAGER" ]]; then
+        return
+    fi
+
+    _echo_info "> Closing the file manager..."
+
     case "$FILE_MANAGER" in
     "nautilus" | "nemo" | "thunar")
-        _echo_info "> Closing the file manager '$FILE_MANAGER' to reload its configurations..."
         # Close the file manager.
         $FILE_MANAGER -q &>/dev/null
         ;;
     "caja")
-        _echo_info "> Closing the file manager '$FILE_MANAGER' to reload its configurations..."
         # Close the file manager.
         caja -q &>/dev/null
         # Reload Caja in background to restore desktop icons.
         caja --force-desktop --no-default-window &>/dev/null &
         ;;
     "pcmanfm-qt")
-        _echo_info "> Closing the file manager '$FILE_MANAGER' to reload its configurations..."
         # FIXME: Restore desktop after kill PCManFM-Qt.
         killall "$FILE_MANAGER" &>/dev/null
         ;;
