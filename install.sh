@@ -8,7 +8,9 @@ set -u
 # SECTION /// [CONSTANTS]
 # -----------------------------------------------------------------------------
 
-APP_SHORTCUT_PREFIX="_script-"
+# Defines the name of the directory where application menu shortcuts are
+# stored, located at: "$HOME/.local/share/applications/$APP_MENUS_DIR".
+APP_MENUS_DIR="nautilus-scripts"
 
 # List of supported file managers.
 COMPATIBLE_FILE_MANAGERS=(
@@ -55,7 +57,7 @@ fi
 
 # Mark constants as read-only to prevent accidental modification.
 readonly \
-    APP_SHORTCUT_PREFIX \
+    APP_MENUS_DIR \
     COMPATIBLE_FILE_MANAGERS \
     IGNORE_FIND_PATHS \
     MSG_ERROR \
@@ -807,15 +809,15 @@ _step_install_application_shortcuts() {
     local name=""
     local script_relative=""
     local submenu=""
-    local menus_dir="$INSTALL_HOME/.local/share/applications/nautilus-scripts"
+    local app_menus_path="$INSTALL_HOME/.local/share/applications/$APP_MENUS_DIR"
 
     _echo_info "> Creating '.desktop' files..."
 
     # Remove previously installed '.desktop' files.
-    mkdir -p "$INSTALL_HOME/.local/share/applications/nautilus-scripts"
-    $SUDO_CMD rm -f -- "$menus_dir/$APP_SHORTCUT_PREFIX"*.desktop
+    $SUDO_CMD rm -rf -- "$app_menus_path"
 
-    $SUDO_CMD_USER mkdir --parents "$menus_dir"
+    # Create the directory for menu entries.
+    $SUDO_CMD_USER mkdir --parents "$app_menus_path"
 
     # Create a '.desktop' file for each script.
     $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
@@ -836,7 +838,7 @@ _step_install_application_shortcuts() {
             menu_file=$(tr " " "-" <<<"$menu_file")
             menu_file=$(tr -s "-" <<<"$menu_file")
             menu_file=${menu_file,,}
-            menu_file="${menus_dir}/$APP_SHORTCUT_PREFIX$menu_file.desktop"
+            menu_file="$app_menus_path/$menu_file.desktop"
 
             {
                 printf "%s\n" "[Desktop Entry]"
@@ -881,10 +883,11 @@ _step_create_gnome_application_folder() {
             name "$folder_name" &>/dev/null
 
         local list_scripts=""
+        local app_menus_path="$INSTALL_HOME/.local/share/applications/$APP_MENUS_DIR"
         list_scripts=$(
-            $SUDO_CMD find "$INSTALL_HOME/.local/share/applications" \
-                -maxdepth 1 -type f -name "$APP_SHORTCUT_PREFIX*.desktop" \
-                -printf "'%f', " |
+            $SUDO_CMD find "$app_menus_path" \
+                -maxdepth 1 -type f -name "*.desktop" \
+                -printf "'$APP_MENUS_DIR-%f', " |
                 sed 's/, $//; s/^/[/' | sed 's/$/]/'
         )
         $gsettings_user set \
