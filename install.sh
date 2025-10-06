@@ -506,7 +506,6 @@ _step_install_dependencies() {
     fi
 
     # Basic packages to run the script '_common-functions.sh'.
-    _command_exists "awk" || packages+="gawk "
     _command_exists "basename" || packages+="coreutils "
     _command_exists "bash" || packages+="bash "
     _command_exists "file" || packages+="file "
