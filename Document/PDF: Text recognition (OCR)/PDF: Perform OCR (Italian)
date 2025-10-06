@@ -11,7 +11,6 @@ _main() {
 
     # Execute initial checks.
     TEMP_DATA_TASK="ita"
-    # NOTE: 'ocrmypdf' from 'pkg_manager=nix' already includes language packages.
     _dependencies_check_metapackages "ocrmypdf tesseract-lang-$TEMP_DATA_TASK"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_extension=pdf")
