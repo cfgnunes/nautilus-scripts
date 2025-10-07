@@ -879,42 +879,66 @@ _step_install_application_shortcuts() {
 
 _step_create_gnome_application_folder() {
     local folder_name="Scripts"
-
     # Configure the "Scripts" application folder in GNOME.
-    if _command_exists "gsettings" && gsettings list-schemas |
-        grep --quiet '^org.gnome.desktop.app-folders$'; then
 
-        _echo_info "> Creating '$folder_name' GNOME application folder..."
-
-        local gsettings_user="gsettings"
-        if _command_exists "machinectl" && [[ "$USER" != "$INSTALL_OWNER" ]]; then
-            gsettings_user="sudo machinectl --quiet shell $INSTALL_OWNER@ $(which "gsettings")"
+    # Exit if not running under a GNOME desktop environment.
+    if [[ -v "XDG_CURRENT_DESKTOP" ]]; then
+        if [[ "${XDG_CURRENT_DESKTOP,,}" != *"gnome"* ]]; then
+            return
         fi
-
-        local current_folders=""
-        current_folders=$($gsettings_user get org.gnome.desktop.app-folders folder-children)
-        if [[ "$current_folders" != *"'$folder_name'"* ]]; then
-            # shellcheck disable=SC2001
-            $gsettings_user set \
-                org.gnome.desktop.app-folders folder-children "$(sed "s/]/,'$folder_name']/" <<<"$current_folders")" &>/dev/null
-        fi
-
-        $gsettings_user set \
-            org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
-            name "$folder_name" &>/dev/null
-
-        local list_scripts=""
-        local app_menus_path="$INSTALL_HOME/.local/share/applications/$APP_MENUS_DIR"
-        list_scripts=$(
-            $SUDO_CMD find "$app_menus_path" \
-                -maxdepth 1 -type f -name "*.desktop" \
-                -printf "'$APP_MENUS_DIR-%f', " |
-                sed 's/, $//; s/^/[/' | sed 's/$/]/'
-        )
-        $gsettings_user set \
-            org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
-            apps "$list_scripts" &>/dev/null
+    else
+        return
     fi
+
+    # Check if 'gsettings' is available and the GNOME schemas are present. If
+    # not, skip folder creation.
+    if ! _command_exists "gsettings" || ! gsettings list-schemas |
+        grep --quiet '^org.gnome.desktop.app-folders$'; then
+        return
+    fi
+
+    _echo_info "> Creating '$folder_name' GNOME application folder..."
+
+    # Determine which 'gsettings' command to use:
+    # - Use 'machinectl' when modifying another user's GNOME settings.
+    # - Otherwise, use the local 'gsettings' command.
+    local gsettings_user="gsettings"
+    if _command_exists "machinectl" && [[ "$USER" != "$INSTALL_OWNER" ]]; then
+        gsettings_user="sudo machinectl --quiet shell $INSTALL_OWNER@ $(which "gsettings")"
+    fi
+
+    # Retrieve the current list of GNOME app folders.
+    # If the "Scripts" folder does not exist, append it to the list.
+    local current_folders=""
+    current_folders=$($gsettings_user get org.gnome.desktop.app-folders folder-children)
+    if [[ "$current_folders" != *"'$folder_name'"* ]]; then
+        # shellcheck disable=SC2001
+        $gsettings_user set \
+            org.gnome.desktop.app-folders folder-children "$(sed "s/]/,'$folder_name']/" <<<"$current_folders")" &>/dev/null
+    fi
+
+    # Set the display name for the new GNOME application folder.
+    $gsettings_user set \
+        org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
+        name "$folder_name" &>/dev/null
+
+    # Build a list of all .desktop files in the scripts directory to be added
+    # under this GNOME application folder.
+    local list_scripts=""
+    local app_menus_path="$INSTALL_HOME/.local/share/applications/$APP_MENUS_DIR"
+    list_scripts=$(
+        $SUDO_CMD find "$app_menus_path" \
+            -maxdepth 1 -type f -name "*.desktop" \
+            -printf "'$APP_MENUS_DIR-%f', " |
+            sed 's/, $//; s/^/[/' | sed 's/$/]/'
+    )
+
+    # Assign all found .desktop files to the "Scripts" folder in GNOME
+    # settings.
+    $gsettings_user set \
+        org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
+        apps "$list_scripts" &>/dev/null
+
 }
 
 # -----------------------------------------------------------------------------
