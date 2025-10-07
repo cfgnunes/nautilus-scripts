@@ -887,7 +887,7 @@ _step_create_gnome_application_folder() {
         _echo_info "> Creating '$folder_name' GNOME application folder..."
 
         local gsettings_user="gsettings"
-        if _command_exists "machinectl" && [[ "${USER:-}" != "$INSTALL_OWNER" ]]; then
+        if _command_exists "machinectl" && [[ "$USER" != "$INSTALL_OWNER" ]]; then
             gsettings_user="sudo machinectl --quiet shell $INSTALL_OWNER@ $(which "gsettings")"
         fi
 
