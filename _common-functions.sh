@@ -548,6 +548,7 @@ _deps_get_available_package_manager() {
     # The function will attempt to detect the first available package manager
     # from this list. Once one is found, it will be used consistently.
     local apps=(
+        "brew"
         "nix"
         "apt-get"
         "rpm-ostree"
@@ -672,6 +673,7 @@ _deps_install_packages() {
     #       - "pacman"      : For Arch Linux systems.
     #       - "zypper"      : For openSUSE systems.
     #       - "nix"         : For Nix-based systems.
+    #       - "brew"        : For Homebrew package manager.
     #       - "guix"        : For GNU Guix systems.
     #   - $2 (packages): A space-separated list of package names to install.
     #   - $3 (post_install): An optional command to be executed right after the
@@ -726,6 +728,11 @@ _deps_install_packages() {
 
         cmd_install+="nix-env -iA $nix_packages &>/dev/null"
         # Nix does not require root for installing user packages.
+        admin_cmd=""
+        ;;
+    "brew")
+        cmd_install="brew install $packages &>/dev/null"
+        # Homebrew does not require root for installing user packages.
         admin_cmd=""
         ;;
     "guix")
@@ -804,6 +811,7 @@ _deps_is_package_installed() {
     #       - "pacman"      : For Arch Linux systems.
     #       - "zypper"      : For openSUSE systems.
     #       - "nix"         : For Nix-based systems.
+    #       - "brew"        : For Homebrew package manager.
     #       - "guix"        : For GNU Guix systems.
     #   - $2 (package): The name of the package to check.
     #
@@ -848,6 +856,11 @@ _deps_is_package_installed() {
         ;;
     "nix")
         if nix-env -q | grep --quiet --ignore-case "$package"; then
+            return 0
+        fi
+        ;;
+    "brew")
+        if brew list | grep --quiet "$package"; then
             return 0
         fi
         ;;

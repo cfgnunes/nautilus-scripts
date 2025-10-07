@@ -40,6 +40,7 @@ declare -A PACKAGE_NAME=(
         pacman: libarchive
         nix:    libarchive
         zypper: bsdtar
+        brew:   libarchive
         guix:   libarchive
     "
 
@@ -53,6 +54,7 @@ declare -A PACKAGE_NAME=(
         pacman: imagemagick
         nix:    imagemagick
         zypper: ImageMagick
+        brew:   imagemagick
         guix:   imagemagick
     "
 
@@ -62,6 +64,7 @@ declare -A PACKAGE_NAME=(
         pacman: perl-image-exiftool
         nix:    exiftool
         zypper: exiftool
+        brew:   exiftool
         guix:   perl-image-exiftool
     "
 
@@ -71,6 +74,7 @@ declare -A PACKAGE_NAME=(
         pacman: ffmpeg
         nix:    ffmpeg
         zypper: ffmpeg
+        brew:   ffmpeg
         guix:   ffmpeg
     "
 
@@ -80,6 +84,7 @@ declare -A PACKAGE_NAME=(
         pacman: gnupg
         nix:    gnupg
         zypper: gpg2
+        brew:   gnupg
         guix:   gnupg
     "
 
@@ -97,6 +102,7 @@ declare -A PACKAGE_NAME=(
         pacman: glibc
         nix:    glibc
         zypper: glibc
+        brew:   glibc
         guix:   glibc
     "
 
@@ -110,6 +116,7 @@ declare -A PACKAGE_NAME=(
         pacman: libreoffice
         nix:    libreoffice
         zypper: libreoffice-calc
+        brew:   libreoffice
         guix:   libreoffice
     "
 
@@ -119,6 +126,7 @@ declare -A PACKAGE_NAME=(
         pacman: libreoffice
         nix:    libreoffice
         zypper: libreoffice-impress
+        brew:   libreoffice
         guix:   libreoffice
     "
 
@@ -128,6 +136,7 @@ declare -A PACKAGE_NAME=(
         pacman: libreoffice
         nix:    libreoffice
         zypper: libreoffice-writer
+        brew:   libreoffice
         guix:   libreoffice
     "
 
@@ -137,6 +146,7 @@ declare -A PACKAGE_NAME=(
         pacman: cups
         nix:    cups
         zypper: cups
+        brew:   cups
         guix:   cups
     "
 
@@ -146,6 +156,7 @@ declare -A PACKAGE_NAME=(
         pacman: squashfs-tools
         nix:    squashfsTools~squashfs
         zypper: squashfs
+        brew:   squashfs
         guix:   squashfs-tools
     "
 
@@ -155,6 +166,7 @@ declare -A PACKAGE_NAME=(
         pacman: perl-base
         nix:    perl
         zypper: perl-base
+        brew:   perl
         guix:   perl
     "
 
@@ -164,6 +176,7 @@ declare -A PACKAGE_NAME=(
         pacman: testdisk
         nix:    testdisk
         zypper: photorec
+        brew:   testdisk
         guix:   testdisk
     "
 
@@ -173,6 +186,7 @@ declare -A PACKAGE_NAME=(
         pacman: poppler
         nix:    poppler-utils
         zypper: poppler-tools
+        brew:   poppler
         guix:   poppler
     "
 
@@ -182,6 +196,7 @@ declare -A PACKAGE_NAME=(
         pacman: iputils
         nix:    iputils
         zypper: iputils
+        brew:   iputils
         guix:   iputils
     "
 
@@ -191,14 +206,17 @@ declare -A PACKAGE_NAME=(
         pacman: unarchiver
         nix:    unar
         zypper: unar
+        brew:   unar
     "
 
     ["unsquashfs"]="
         apt:    squashfs-tools
         dnf:    squashfs-tools
         pacman: squashfs-tools
-        nix:    squashfsTools
+        nix:    squashfsTools~squashfs
         zypper: squashfs
+        brew:   squashfs
+        guix:   squashfs-tools
     "
 
     ["wl-paste"]="
@@ -211,6 +229,7 @@ declare -A PACKAGE_NAME=(
         pacman: xorriso
         nix:    xorriso~libisoburn
         zypper: xorriso
+        brew:   xorriso
         guix:   xorriso
     "
 
@@ -220,6 +239,7 @@ declare -A PACKAGE_NAME=(
         pacman: xz
         nix:    xz
         zypper: xz
+        brew:   xz
         guix:   xz
     "
 )
@@ -268,6 +288,7 @@ declare -A META_PACKAGES=(
         pacman: sox
         nix:    sox
         zypper: sox
+        brew:   sox
         guix:   sox
     "
 
