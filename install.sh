@@ -198,7 +198,9 @@ _main() {
     # Step 2: Determine target home directories (single user or all users).
     local install_home_list=""
     if [[ "$OPT_INSTALL_FOR_ALL_USERS" == "true" ]]; then
-        SUDO_CMD="sudo"
+        if _command_exists "sudo"; then
+            SUDO_CMD="sudo"
+        fi
 
         # Get the list of all user home directories currently available on the
         # system.
@@ -225,7 +227,9 @@ _main() {
 
         if [[ "$OPT_INSTALL_FOR_ALL_USERS" == "true" ]] &&
             [[ -n "$INSTALL_OWNER" ]] && [[ -n "$INSTALL_GROUP" ]]; then
-            SUDO_CMD_USER="sudo -u $INSTALL_OWNER -g $INSTALL_GROUP"
+            if _command_exists "sudo"; then
+                SUDO_CMD_USER="sudo -u $INSTALL_OWNER -g $INSTALL_GROUP"
+            fi
         fi
 
         # Install scripts for each detected file manager.
