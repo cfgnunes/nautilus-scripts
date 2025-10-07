@@ -271,7 +271,7 @@ _main() {
             _echo ""
             _echo_info "Installing the scripts:"
             _echo_info "> User: $INSTALL_OWNER"
-            _echo_info "> Home directory: $INSTALL_HOME"
+            _echo_info "> Home dir: $INSTALL_HOME"
             _echo_info "> File manager: $FILE_MANAGER"
             _step_install_scripts cat_selected cat_dirs
             _step_install_menus
