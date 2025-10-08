@@ -302,6 +302,11 @@ _run_command() {
         _display_password_box "Enter the password for the archive '$(basename -- "$input_file")'.\nPassword:"
     }
 
+    # Ensure the input file has an absolute path before proceeding.
+    if [[ $input_file != "/"* ]]; then
+        input_file=$(readlink -f "$input_file")
+    fi
+
     # Use a local temporary directory to work.
     __temp_dir_push || return 1
 
