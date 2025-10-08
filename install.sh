@@ -92,9 +92,9 @@ OPT_INTERACTIVE_INSTALL="true"
 OPT_QUIET_INSTALL="false"
 
 # Import helper script for interactive multi-selection menus.
-#shellcheck source=.assets/multiselect-menu.sh
-if [[ -f "$SCRIPT_DIR/.assets/multiselect-menu.sh" ]]; then
-    source "$SCRIPT_DIR/.assets/multiselect-menu.sh"
+#shellcheck source=.assets/_multiselect-menu.sh
+if [[ -f "$SCRIPT_DIR/.assets/_multiselect-menu.sh" ]]; then
+    source "$SCRIPT_DIR/.assets/_multiselect-menu.sh"
 fi
 
 # -----------------------------------------------------------------------------
