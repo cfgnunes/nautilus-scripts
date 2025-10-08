@@ -495,7 +495,7 @@ _dependencies_check_metapackages() {
 
     [[ -z "$packages" ]] && return
 
-    # Expand the meta_packages
+    # Expand the 'META_PACKAGES' packages.
     local expanded_packages=""
     packages=$(tr "\n" "$FIELD_SEPARATOR" <<<"$packages")
     local package=""
@@ -705,22 +705,22 @@ _deps_install_packages() {
 
     case "$pkg_manager" in
     "apt-get")
-        cmd_install+="apt-get update;"
+        cmd_install+="apt-get update &>/dev/null;"
         cmd_install+="apt-get -y install $packages &>/dev/null"
         ;;
     "dnf")
-        cmd_install+="dnf check-update;"
+        cmd_install+="dnf check-update &>/dev/null;"
         cmd_install+="dnf -y install $packages &>/dev/null"
         ;;
     "rpm-ostree")
         cmd_install+="rpm-ostree install $packages &>/dev/null"
         ;;
     "pacman")
-        cmd_install+="pacman -Syy;"
+        cmd_install+="pacman -Syy &>/dev/null;"
         cmd_install+="pacman --noconfirm -S $packages &>/dev/null"
         ;;
     "zypper")
-        cmd_install+="zypper refresh;"
+        cmd_install+="zypper refresh &>/dev/null;"
         cmd_install+="zypper --non-interactive install $packages &>/dev/null"
         ;;
     "nix")
