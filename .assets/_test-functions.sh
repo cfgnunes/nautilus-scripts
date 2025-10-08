@@ -1,41 +1,41 @@
 #!/usr/bin/env bash
 
-# Unit test script.
+# Test all functions defined in the script '_common-functions.sh'.
 
 set -u
 
 # -----------------------------------------------------------------------------
-# CONSTANTS
+# SECTION /// [CONSTANTS]
 # -----------------------------------------------------------------------------
 
-_MOCK_DIR_BASE="/tmp"
-_MOCK_DIR_TEST="$_MOCK_DIR_BASE/test"
-_MOCK_FILE1="$_MOCK_DIR_TEST/file1"
-_MOCK_FILE2="$_MOCK_DIR_TEST/file2"
-_MOCK_FILE3="$_MOCK_DIR_TEST/file3"
-_MOCK_FILE1_CONTENT="File 1 test."
-_MOCK_FILE2_CONTENT="File 2 test."
-_MOCK_FILE3_CONTENT="File 3 test."
+_TEMP_DIR=$(mktemp --directory)
+_TEMP_DIR_TEST="$_TEMP_DIR/test"
+_TEMP_FILE1="$_TEMP_DIR_TEST/file1"
+_TEMP_FILE2="$_TEMP_DIR_TEST/file2"
+_TEMP_FILE3="$_TEMP_DIR_TEST/file3"
+_TEMP_FILE1_CONTENT="File 1 test."
+_TEMP_FILE2_CONTENT="File 2 test."
+_TEMP_FILE3_CONTENT="File 3 test."
 
 readonly \
-    _MOCK_DIR_BASE \
-    _MOCK_DIR_TEST \
-    _MOCK_FILE1 \
-    _MOCK_FILE2 \
-    _MOCK_FILE3 \
-    _MOCK_FILE1_CONTENT \
-    _MOCK_FILE2_CONTENT \
-    _MOCK_FILE3_CONTENT
+    _TEMP_DIR \
+    _TEMP_DIR_TEST \
+    _TEMP_FILE1 \
+    _TEMP_FILE2 \
+    _TEMP_FILE3 \
+    _TEMP_FILE1_CONTENT \
+    _TEMP_FILE2_CONTENT \
+    _TEMP_FILE3_CONTENT
 
 # -----------------------------------------------------------------------------
-# GLOBAL VARIABLES
+# SECTION /// [GLOBAL VARIABLES]
 # -----------------------------------------------------------------------------
 
 _TOTAL_TESTS=0
 _TOTAL_FAILED=0
 
 # -----------------------------------------------------------------------------
-# FUNCTIONS
+# SECTION /// [FUNCTIONS]
 # -----------------------------------------------------------------------------
 
 _main() {
@@ -56,16 +56,16 @@ _main() {
     printf "Results: %s tests, %s failed.\n" "$_TOTAL_TESTS" "$_TOTAL_FAILED"
 }
 
-__create_mock_files() {
-    rm -rf "$_MOCK_DIR_TEST"
-    mkdir -p "$_MOCK_DIR_TEST"
-    printf "%s" "$_MOCK_FILE1_CONTENT" >"$_MOCK_FILE1"
-    printf "%s" "$_MOCK_FILE2_CONTENT" >"$_MOCK_FILE2"
-    printf "%s" "$_MOCK_FILE3_CONTENT" >"$_MOCK_FILE3"
+__create_temp_files() {
+    rm -rf "$_TEMP_DIR_TEST"
+    mkdir -p "$_TEMP_DIR_TEST"
+    printf "%s" "$_TEMP_FILE1_CONTENT" >"$_TEMP_FILE1"
+    printf "%s" "$_TEMP_FILE2_CONTENT" >"$_TEMP_FILE2"
+    printf "%s" "$_TEMP_FILE3_CONTENT" >"$_TEMP_FILE3"
 }
 
-__clean_mock_files() {
-    rm -rf "$_MOCK_DIR_TEST"
+__clean_temp_files() {
+    rm -rf "$_TEMP_DIR_TEST"
 }
 
 __test_equal() {
@@ -76,44 +76,25 @@ __test_equal() {
     ((_TOTAL_TESTS++))
 
     if [[ "$expected_output" == "$output" ]]; then
-        printf "[\\e[32m PASS \\e[0m] "
+        printf "[\\033[32m PASS \\033[0m] "
     else
-        printf "[\\e[31mFAILED\\e[0m] "
+        printf "[\\033[31mFAILED\\033[0m] "
         ((_TOTAL_FAILED++))
     fi
-    printf "\\e[33mFunction:\\e[0m "
-    printf "%s " "${FUNCNAME[1]}"
-    printf "\\e[33mDescription:\\e[0m "
+    printf "\\033[33mFunction:\\033[0m "
+    printf "%s" "${FUNCNAME[1]}"
+    printf "\n         \\033[33mDescription:\\033[0m "
     printf "%s" "$description" | sed -z "s|\n|\\\n|g" | cat -A
     printf "\n"
 
     if [[ "$expected_output" != "$output" ]]; then
-        printf "\\e[31mExpected output:\\e[0m "
+        printf "\\033[31mExpected output:\\033[0m "
         printf "%s" "$expected_output" | sed -z "s|\n|\\\n|g" | cat -A
         printf "\n"
-        printf "         \\e[31mOutput:\\e[0m "
+        printf "         \\033[31mOutput:\\033[0m "
         printf "%s" "$output" | sed -z "s|\n|\\\n|g" | cat -A
         printf "\n"
     fi
-}
-
-__test_file() {
-    local description=$1
-    local file=$2
-
-    ((_TOTAL_TESTS++))
-
-    if [[ -f "$file" ]]; then
-        printf "[\\e[32mPASS\\e[0m] "
-    else
-        printf "[\\e[31mFAIL\\e[0m] "
-        ((_TOTAL_FAILED++))
-    fi
-    printf "\\e[33mFunction:\\e[0m "
-    printf "%s " "${FUNCNAME[1]}"
-    printf "\\e[33mDescription:\\e[0m "
-    printf "%s" "$description" | sed -z "s|\n|\\\n|g" | cat -A
-    printf "\n"
 }
 
 __run_source_common_functions() {
@@ -224,49 +205,49 @@ __run_move_file() {
     local expected_output=""
     local output=""
 
-    __create_mock_files
-    _move_file "" "$_MOCK_FILE1" "$_MOCK_FILE2"
-    expected_output=$_MOCK_FILE1_CONTENT
-    output=$(<"$_MOCK_FILE1")
+    __create_temp_files
+    _move_file "" "$_TEMP_FILE1" "$_TEMP_FILE2"
+    expected_output=$_TEMP_FILE1_CONTENT
+    output=$(<"$_TEMP_FILE1")
     __test_equal "" "$expected_output" "$output"
-    expected_output=$_MOCK_FILE2_CONTENT
-    output=$(<"$_MOCK_FILE2")
+    expected_output=$_TEMP_FILE2_CONTENT
+    output=$(<"$_TEMP_FILE2")
     __test_equal "" "$expected_output" "$output"
-    __clean_mock_files
+    __clean_temp_files
 
-    __create_mock_files
-    _move_file "rename" "$_MOCK_FILE1" "$_MOCK_FILE1"
-    expected_output=$_MOCK_FILE1_CONTENT
-    output=$(<"$_MOCK_FILE1")
+    __create_temp_files
+    _move_file "rename" "$_TEMP_FILE1" "$_TEMP_FILE1"
+    expected_output=$_TEMP_FILE1_CONTENT
+    output=$(<"$_TEMP_FILE1")
     __test_equal "skip" "$expected_output" "$output"
-    __clean_mock_files
+    __clean_temp_files
 
-    __create_mock_files
-    _move_file "skip" "$_MOCK_FILE1" "$_MOCK_FILE2"
-    expected_output=$_MOCK_FILE1_CONTENT
-    output=$(<"$_MOCK_FILE1")
+    __create_temp_files
+    _move_file "skip" "$_TEMP_FILE1" "$_TEMP_FILE2"
+    expected_output=$_TEMP_FILE1_CONTENT
+    output=$(<"$_TEMP_FILE1")
     __test_equal "skip" "$expected_output" "$output"
-    expected_output=$_MOCK_FILE2_CONTENT
-    output=$(<"$_MOCK_FILE2")
+    expected_output=$_TEMP_FILE2_CONTENT
+    output=$(<"$_TEMP_FILE2")
     __test_equal "skip" "$expected_output" "$output"
-    __clean_mock_files
+    __clean_temp_files
 
-    __create_mock_files
-    _move_file "overwrite" "$_MOCK_FILE1" "$_MOCK_FILE2"
-    expected_output=$_MOCK_FILE1_CONTENT
-    output=$(<"$_MOCK_FILE2")
+    __create_temp_files
+    _move_file "overwrite" "$_TEMP_FILE1" "$_TEMP_FILE2"
+    expected_output=$_TEMP_FILE1_CONTENT
+    output=$(<"$_TEMP_FILE2")
     __test_equal "overwrite" "$expected_output" "$output"
-    __clean_mock_files
+    __clean_temp_files
 
-    __create_mock_files
-    _move_file "rename" "$_MOCK_FILE1" "$_MOCK_FILE2"
-    expected_output=$_MOCK_FILE2_CONTENT
-    output=$(<"$_MOCK_FILE2")
+    __create_temp_files
+    _move_file "rename" "$_TEMP_FILE1" "$_TEMP_FILE2"
+    expected_output=$_TEMP_FILE2_CONTENT
+    output=$(<"$_TEMP_FILE2")
     __test_equal "rename" "$expected_output" "$output"
-    expected_output=$_MOCK_FILE1_CONTENT
-    output=$(<"$_MOCK_FILE2 (1)")
+    expected_output=$_TEMP_FILE1_CONTENT
+    output=$(<"$_TEMP_FILE2 (1)")
     __test_equal "rename" "$expected_output" "$output"
-    __clean_mock_files
+    __clean_temp_files
 }
 
 __run_storage_text() {
