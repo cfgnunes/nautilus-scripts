@@ -40,10 +40,10 @@ _main_task() {
 
     # Check if the values are not empty.
     if [[ -z "$tag_artist" ]]; then
-        _check_output "1" "Empty 'Artist' value." "$input_file" "" || return 1
+        tag_artist="(empty)"
     fi
     if [[ -z "$tag_title" ]]; then
-        _check_output "1" "Empty 'Title' value." "$input_file" "" || return 1
+        tag_title="(empty)"
     fi
 
     # Rename the file.
