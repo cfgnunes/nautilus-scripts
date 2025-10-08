@@ -52,7 +52,7 @@ MSG_INFO="[\033[0;32m INFO \033[0m]"
 if [[ -v "BASH_SOURCE" ]]; then
     SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 else
-    SCRIPT_DIR=$(mktemp -d)
+    SCRIPT_DIR="."
 fi
 
 # Mark constants as read-only to prevent accidental modification.
