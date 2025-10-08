@@ -29,7 +29,7 @@ _main_task() {
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=png; par_suffix='(alpha)'")
     std_output=$(convert "$input_file" -transparent magenta "$output_file" 2>&1)
-    _check_result "$?" "$std_output" "$input_file" "$output_file" || return 1
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
 _main "$@"
