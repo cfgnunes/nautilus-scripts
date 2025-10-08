@@ -40,19 +40,28 @@ _main_task() {
 
     local audio_artist=""
     local audio_title=""
-    audio_artist=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$basename")
-    audio_title=$(cut -d "$FIELD_SEPARATOR" -f 2- <<<"$basename")
+    if [[ "$basename" == *"$FIELD_SEPARATOR"* ]]; then
+        audio_artist=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$basename")
+        audio_title=$(cut -d "$FIELD_SEPARATOR" -f 2- <<<"$basename")
+    else
+        audio_artist=""
+        audio_title="$basename"
+    fi
+
+    local build_command="id3v2"
 
     # Check if the values are not empty.
-    if [[ -z "$audio_artist" ]]; then
-        _check_output "1" "Empty 'Artist' value." "$input_file" "" || return 1
+    if [[ -n "$audio_artist" ]]; then
+        build_command+=" --artist '$audio_artist'"
     fi
-    if [[ -z "$audio_title" ]]; then
-        _check_output "1" "Empty 'Title' value." "$input_file" "" || return 1
+    if [[ -n "$audio_title" ]]; then
+        build_command+=" --song '$audio_title'"
     fi
+    build_command+=" $temp_file"
 
     # Run the main process.
-    std_output=$(id3v2 --artist "$audio_artist" --song "$audio_title" "$temp_file" 2>&1)
+    # shellcheck disable=SC2086
+    std_output=$(eval $build_command "$temp_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$temp_file" || return 1
 
     # Strip id3v1 tags.

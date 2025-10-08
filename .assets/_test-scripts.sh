@@ -343,7 +343,7 @@ _main() {
     script_test="Audio and video/Audio: MP3 files/MP3: Tag ID3 to name (artist - title)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$_TEMP_DIR_TEST/test audio - test audio.mp3"
+    __test_file_nonempty "$_TEMP_DIR_TEST/(Empty) - test audio.mp3"
     __test_file_empty "$std_output"
 
     # Create files for testing.
