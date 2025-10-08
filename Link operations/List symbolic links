@@ -16,7 +16,7 @@ _main() {
 
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(find -L $input_files -type l ! -path "$IGNORE_FIND_PATH" 2>/dev/null)
+    std_output=$(find $input_files -type l ! -path "$IGNORE_FIND_PATH" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
     std_output=$(_text_sort "$std_output")
 
