@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Source the script '_common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/_common-functions.sh"
+
+_main() {
+    # Execute initial checks.
+    _dependencies_check_commands_clipboard ""
+    _display_wait_box "2"
+    # shellcheck disable=SC2046
+    content_file=$(cat $(_get_files "par_type=file"))
+
+    # Run the main process.
+    _set_clipboard_data "$content_file"
+
+    _display_result_box ""
+}
+
+_main "$@"
