@@ -30,9 +30,9 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local output_file=""
+    local command=""
 
     # Run the main process.
-    local command=""
     command=$(_get_command "$input_file")
     _run_command "$input_file" "$command" "$output_dir"
 }
