@@ -2375,7 +2375,7 @@ _set_clipboard_data() {
     local input_data=$1
 
     case "${XDG_SESSION_TYPE:-}" in
-    "wayland") wl-copy "$input_data"$'\n' 2>/dev/null ;;
+    "wayland") wl-copy <<<"$input_data" 2>/dev/null ;;
     "x11") xclip -selection clipboard -i <<<"$input_data" 2>/dev/null ;;
     esac
 }
