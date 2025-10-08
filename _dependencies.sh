@@ -4,10 +4,10 @@
 # This file centralizes dependency definitions for the scripts.
 
 # -----------------------------------------------------------------------------
-# PACKAGE_NAME
+# SECTION /// [PACKAGE_NAME]
 # -----------------------------------------------------------------------------
-# This associative array defines the mapping between a command name (key) and
-# its corresponding package names across different package managers (values).
+# This array defines the mapping between a command name (key) and its
+# corresponding package names across different package managers (values).
 #
 # Note:
 #   - If the package name is the same as the command name, there is no need to
@@ -261,10 +261,10 @@ declare -A PACKAGE_NAME=(
 )
 
 # -----------------------------------------------------------------------------
-# POST_INSTALL
+# SECTION /// [POST_INSTALL]
 # -----------------------------------------------------------------------------
-# This associative array defines commands or actions that need to be executed
-# after a package is installed. These actions are usually required for proper
+# This array defines commands or actions that need to be executed after a
+# package is installed. These actions are usually required for proper
 # initialization, configuration, or updates that the package manager alone does
 # not handle.
 
@@ -276,10 +276,10 @@ declare -A POST_INSTALL=(
 )
 
 # -----------------------------------------------------------------------------
-# META_PACKAGES
+# SECTION /// [META_PACKAGES]
 # -----------------------------------------------------------------------------
-# This associative array defines grouped or composite packages that must be
-# installed together to provide complete functionality for a given name.
+# This array defines grouped or composite packages that must be installed
+# together to provide complete functionality for a given name.
 
 declare -A META_PACKAGES=(
     ["latexmk"]="
