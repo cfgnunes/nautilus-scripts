@@ -31,7 +31,7 @@ _main_task() {
     first_pixel_color=$(convert "$input_file""[1x1+0+0]" -format "%[pixel:p{0,0}]" "info:" 2>&1)
     _check_output "$?" "$first_pixel_color" "$input_file" "" || return 1
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=png; par_suffix='(alpha)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=png; par_suffix='(alpha 15 pct)'")
     std_output=$(convert "$input_file" \
         -alpha off \
         -bordercolor "$first_pixel_color" \
