@@ -159,7 +159,6 @@ declare -A PACKAGE_NAME=(
     "
 
     ["mksquashfs"]="
-        apt-termux: squashfs-tools-ng
         apt:    squashfs-tools
         dnf:    squashfs-tools
         pacman: squashfs-tools
@@ -223,7 +222,6 @@ declare -A PACKAGE_NAME=(
     "
 
     ["unsquashfs"]="
-        apt-termux: squashfs-tools-ng
         apt:    squashfs-tools
         dnf:    squashfs-tools
         pacman: squashfs-tools
