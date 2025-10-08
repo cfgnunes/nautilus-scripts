@@ -1783,10 +1783,10 @@ _display_question_box() {
 
     _display_lock
     if ! _is_gui_session; then
-        echo -e -n "$message [y/N] " >&2
+        echo -e -n "$message [Y/n] " >&2
         read -r response </dev/tty
         echo >&2
-        [[ ${response,,} != *"y"* ]] && return 1
+        [[ ${response,,} == *"n"* ]] && return 1
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" --question \
             --width="$GUI_INFO_WIDTH" --text="$message" &>/dev/null || return 1
