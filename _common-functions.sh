@@ -1026,7 +1026,6 @@ _find_filtered_files() {
     fi
 
     find_command+=" ! -path \"$IGNORE_FIND_PATH\""
-    # shellcheck disable=SC2089
     find_command+=" -print0"
 
     # shellcheck disable=SC2086
