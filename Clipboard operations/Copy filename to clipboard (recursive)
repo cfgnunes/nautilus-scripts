@@ -6,6 +6,8 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/_common-functions.sh"
 
 _main() {
+    local input_files=""
+
     # Execute initial checks.
     _dependencies_check_commands_clipboard ""
     _display_wait_box "2"
