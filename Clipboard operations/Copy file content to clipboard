@@ -6,14 +6,19 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/_common-functions.sh"
 
 _main() {
+    local input_files=""
+    local content_files=""
+
     # Execute initial checks.
     _dependencies_check_commands_clipboard ""
     _display_wait_box "2"
-    # shellcheck disable=SC2046
-    content_file=$(cat $(_get_files "par_type=file"))
+    input_files=$(_get_files "par_type=file; par_skip_encoding='binary'")
+
+    # shellcheck disable=SC2086
+    content_files=$(cat -- $input_files 2>/dev/null)
 
     # Run the main process.
-    _set_clipboard_data "$content_file"
+    _set_clipboard_data "$content_files"
 
     _display_result_box ""
 }
