@@ -2303,7 +2303,9 @@ _xdg_get_default_app() {
 
     # Get standard XDG application directories.
     local xdg_dirs="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
-    xdg_dirs+=":$HOME/.local/share"
+    if [[ -n "${HOME:-}" ]]; then
+        xdg_dirs+=":$HOME/.local/share"
+    fi
 
     # Append the directory 'applications'.
     xdg_dirs=$(sed "s|/:|:|g; s|:|/applications:|g; s|/$||" <<<"$xdg_dirs")
@@ -2839,8 +2841,7 @@ _get_output_dir() {
 
     # Check directories available to put the output dir.
     output_dir=$(_get_working_directory)
-    [[ ! -w "$output_dir" ]] && output_dir=$HOME
-    [[ ! -w "$output_dir" ]] && output_dir="/tmp"
+    [[ ! -w "$output_dir" ]] && output_dir=${HOME:-/tmp}
     if [[ ! -w "$output_dir" ]]; then
         _display_error_box "Could not find a directory with write permissions!"
         _exit_script
@@ -3287,7 +3288,7 @@ _text_remove_home() {
 
     local input_text=$1
 
-    if [[ -n "$HOME" ]]; then
+    if [[ -n "${HOME:-}" ]]; then
         sed "s|$HOME|~|g" <<<"$input_text"
     else
         printf "%s" "$input_text"
