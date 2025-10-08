@@ -9,10 +9,6 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 
 unset DISPLAY
 
-# Missing:
-#   Compress...
-#   Compress to .7z with password (each)
-
 # -----------------------------------------------------------------------------
 # SECTION /// [CONSTANTS]
 # -----------------------------------------------------------------------------
@@ -20,9 +16,7 @@ unset DISPLAY
 _TEMP_DIR=$(mktemp --directory)
 _TEMP_DIR_TEST="$_TEMP_DIR/test"
 
-readonly \
-    _TEMP_DIR \
-    _TEMP_DIR_TEST
+readonly _TEMP_DIR _TEMP_DIR_TEST
 
 # -----------------------------------------------------------------------------
 # SECTION /// [GLOBAL VARIABLES]
@@ -351,9 +345,18 @@ _main() {
     input_file2="$_TEMP_DIR_TEST/test video 2.mp4"
     output_file="$_TEMP_DIR_TEST/test video"
     if command -v "ffmpeg" &>/dev/null; then
-        ffmpeg -hide_banner -y -f lavfi -i color=c=red:s=200x100:d=3:r=25 \
+        # Generate a test video (red background with a 440 Hz sine tone).
+        ffmpeg -hide_banner -y \
+            -f lavfi -i color=c=red:s=200x100:d=3:r=25 \
+            -f lavfi -i "sine=frequency=440:duration=3" \
+            -shortest -c:v libx264 -c:a aac -pix_fmt yuv420p \
             "$input_file1" &>/dev/null
-        ffmpeg -hide_banner -y -f lavfi -i color=c=blue:s=200x100:d=3:r=25 \
+
+        # Generate a test video (blue background with an 880 Hz sine tone).
+        ffmpeg -hide_banner -y \
+            -f lavfi -i color=c=blue:s=200x100:d=3:r=25 \
+            -f lavfi -i "sine=frequency=880:duration=3" \
+            -shortest -c:v libx264 -c:a aac -pix_fmt yuv420p \
             "$input_file2" &>/dev/null
     fi
 
@@ -405,11 +408,11 @@ _main() {
     __test_file_nonempty "$output_file (aspect 5:4).mp4"
     __test_file_empty "$std_output"
 
-    #script_test="Audio and video/Video: Audio track/Video: Extract audio"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    script_test="Audio and video/Video: Audio track/Video: Extract audio"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.m4a"
+    __test_file_empty "$std_output"
 
     script_test="Audio and video/Video: Audio track/Video: Remove audio"
     __echo_script "$script_test"
