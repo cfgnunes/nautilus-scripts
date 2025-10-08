@@ -21,8 +21,8 @@
 
 declare -A PACKAGE_NAME=(
     ["7za"]="
-        apt:    p7zip-full
         apt-termux: p7zip
+        apt:    p7zip-full
         dnf:    p7zip
         pacman: p7zip
         nix:    p7zip
@@ -36,8 +36,8 @@ declare -A PACKAGE_NAME=(
     "
 
     ["bsdtar"]="
-        apt:    libarchive-tools
         apt-termux: libarchive
+        apt:    libarchive-tools
         dnf:    bsdtar
         pacman: libarchive
         nix:    libarchive
@@ -51,8 +51,8 @@ declare -A PACKAGE_NAME=(
     "
 
     ["convert"]="
-        apt:    imagemagick
         apt-termux: imagemagick
+        apt:    imagemagick
         dnf:    ImageMagick
         pacman: imagemagick
         nix:    imagemagick
@@ -62,8 +62,8 @@ declare -A PACKAGE_NAME=(
     "
 
     ["exiftool"]="
-        apt:    libimage-exiftool-perl
         apt-termux: exiftool
+        apt:    libimage-exiftool-perl
         dnf:    perl-Image-ExifTool
         pacman: perl-image-exiftool
         nix:    exiftool
@@ -73,8 +73,8 @@ declare -A PACKAGE_NAME=(
     "
 
     ["ffmpeg"]="
-        apt:    ffmpeg
         apt-termux: ffmpeg
+        apt:    ffmpeg
         dnf:    ffmpeg-free
         pacman: ffmpeg
         nix:    ffmpeg
@@ -84,8 +84,8 @@ declare -A PACKAGE_NAME=(
     "
 
     ["gpg"]="
-        apt:    gnupg
         apt-termux: gnupg
+        apt:    gnupg
         dnf:    gnupg2
         pacman: gnupg
         nix:    gnupg
@@ -103,8 +103,8 @@ declare -A PACKAGE_NAME=(
     "
 
     ["iconv"]="
-        apt:    libc-bin
         apt-termux: libiconv
+        apt:    libc-bin
         dnf:    glibc-common
         pacman: glibc
         nix:    glibc
@@ -148,8 +148,8 @@ declare -A PACKAGE_NAME=(
     "
 
     ["lp"]="
-        apt:    cups-client
         apt-termux: cups
+        apt:    cups-client
         dnf:    cups-client
         pacman: cups
         nix:    cups
@@ -159,8 +159,8 @@ declare -A PACKAGE_NAME=(
     "
 
     ["mksquashfs"]="
-        apt:    squashfs-tools
         apt-termux: squashfs-tools-ng
+        apt:    squashfs-tools
         dnf:    squashfs-tools
         pacman: squashfs-tools
         nix:    squashfsTools~squashfs
@@ -170,8 +170,8 @@ declare -A PACKAGE_NAME=(
     "
 
     ["perl"]="
-        apt:    perl-base
         apt-termux: perl
+        apt:    perl-base
         dnf:    perl-base
         pacman: perl-base
         nix:    perl
@@ -191,8 +191,8 @@ declare -A PACKAGE_NAME=(
     "
 
     ["pdfinfo"]="
-        apt:    poppler-utils
         apt-termux: poppler
+        apt:    poppler-utils
         dnf:    poppler-utils
         pacman: poppler
         nix:    poppler-utils
@@ -202,8 +202,8 @@ declare -A PACKAGE_NAME=(
     "
 
     ["ping"]="
-        apt:    iputils-ping
         apt-termux: inetutils
+        apt:    iputils-ping
         dnf:    iputils
         pacman: iputils
         nix:    iputils
@@ -213,8 +213,8 @@ declare -A PACKAGE_NAME=(
     "
 
     ["unar"]="
-        apt:    unar
         apt-termux: unar
+        apt:    unar
         dnf:    unar
         pacman: unarchiver
         nix:    unar
@@ -223,8 +223,8 @@ declare -A PACKAGE_NAME=(
     "
 
     ["unsquashfs"]="
-        apt:    squashfs-tools
         apt-termux: squashfs-tools-ng
+        apt:    squashfs-tools
         dnf:    squashfs-tools
         pacman: squashfs-tools
         nix:    squashfsTools~squashfs
@@ -238,8 +238,8 @@ declare -A PACKAGE_NAME=(
     "
 
     ["xorriso"]="
-        apt:    xorriso
         apt-termux: xorriso
+        apt:    xorriso
         dnf:    xorriso
         pacman: xorriso
         nix:    xorriso~libisoburn
@@ -249,8 +249,8 @@ declare -A PACKAGE_NAME=(
     "
 
     ["xz"]="
-        apt:    xz-utils
         apt-termux: xz-utils
+        apt:    xz-utils
         dnf:    xz
         pacman: xz
         nix:    xz
@@ -283,8 +283,8 @@ declare -A POST_INSTALL=(
 
 declare -A META_PACKAGES=(
     ["latexmk"]="
-        apt:    latexmk
         apt-termux: texlive-bin
+        apt:    latexmk
         dnf:    latexmk
         pacman: texlive-binextra
         nix:    texlivePackages.latexmk~latexmk
@@ -292,8 +292,8 @@ declare -A META_PACKAGES=(
     "
 
     ["pdfjam"]="
-        apt:    texlive-extra-utils
         apt-termux: texlive-bin
+        apt:    texlive-extra-utils
         dnf:    texlive-pdfjam
         pacman: texlive-basic texlive-binextra texlive-latexextra
         nix:    texliveSmall~texlive texlivePackages.pdfjam~pdfjam
@@ -301,8 +301,8 @@ declare -A META_PACKAGES=(
     "
 
     ["sox-mp3"]="
-        apt:    sox libsox-fmt-mp3
         apt-termux: sox
+        apt:    sox libsox-fmt-mp3
         dnf:    sox
         pacman: sox
         nix:    sox
@@ -312,8 +312,8 @@ declare -A META_PACKAGES=(
     "
 
     ["tesseract-lang-$TEMP_DATA_TASK"]="
-        apt:    tesseract-ocr-$TEMP_DATA_TASK
         apt-termux: tesseract
+        apt:    tesseract-ocr-$TEMP_DATA_TASK
         dnf:    tesseract-langpack-$TEMP_DATA_TASK
         pacman: tesseract-data-$TEMP_DATA_TASK
         nix:    tesseract
@@ -321,6 +321,8 @@ declare -A META_PACKAGES=(
     "
 
     ["texlive"]="
+        apt-termux: \
+            texlive-bin
         apt: \
             texlive \
             texlive-fonts-extra \
@@ -328,8 +330,6 @@ declare -A META_PACKAGES=(
             texlive-publishers \
             texlive-science \
             texlive-xetex
-        apt-termux: \
-            texlive-bin
         dnf: \
             texlive-base \
             texlive-collection-fontsextra \
