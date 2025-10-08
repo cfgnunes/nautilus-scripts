@@ -8,7 +8,8 @@ set -u
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
-_MOCK_DIR_TEST="/tmp/unit-test"
+_MOCK_DIR_BASE="/tmp"
+_MOCK_DIR_TEST="$_MOCK_DIR_BASE/test"
 _MOCK_FILE1="$_MOCK_DIR_TEST/file1"
 _MOCK_FILE2="$_MOCK_DIR_TEST/file2"
 _MOCK_FILE3="$_MOCK_DIR_TEST/file3"
@@ -17,6 +18,7 @@ _MOCK_FILE2_CONTENT="File 2 test."
 _MOCK_FILE3_CONTENT="File 3 test."
 
 readonly \
+    _MOCK_DIR_BASE \
     _MOCK_DIR_TEST \
     _MOCK_FILE1 \
     _MOCK_FILE2 \
@@ -74,9 +76,9 @@ __test_equal() {
     ((_TOTAL_TESTS++))
 
     if [[ "$expected_output" == "$output" ]]; then
-        printf "[\\e[32mPASS\\e[0m] "
+        printf "[\\e[32m PASS \\e[0m] "
     else
-        printf "[\\e[31mFAIL\\e[0m] "
+        printf "[\\e[31mFAILED\\e[0m] "
         ((_TOTAL_FAILED++))
     fi
     printf "\\e[33mFunction:\\e[0m "
@@ -202,7 +204,7 @@ __run_get_script_name() {
     local expected_output=""
     local output=""
 
-    expected_output="unit-tests.sh"
+    expected_output="_test-functions.sh"
     output=$(_get_script_name)
     __test_equal "$expected_output" "$expected_output" "$output"
 }
