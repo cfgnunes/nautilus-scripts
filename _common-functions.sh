@@ -658,11 +658,12 @@ _deps_install_missing_packages() {
 
     # Ask the user to install the packages.
     if [[ -n "$packages_names" ]]; then
-        local message="These packages were not found:"$'\n'
+        local message="The following packages were not found:"$'\n'
         message+="- "
         message+=$(sed "s| |\n- |g" <<<"$packages_names")
         message+=$'\n'$'\n'
-        message+="Would you like to install them?"
+        message+="Would you like to install them using"
+        message+=" '$available_pkg_manager'?"
         if ! _display_question_box "$message"; then
             _exit_script
         fi
