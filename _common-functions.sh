@@ -2378,6 +2378,21 @@ _set_clipboard_data() {
     esac
 }
 
+_set_clipboard_file() {
+    # This function sets the content of the clipboard with the provided input
+    # file, adapting the method according to the session type.
+    #
+    # Parameters:
+    #   - $1 (input_file): The file to be copied into the clipboard.
+
+    local input_file=$1
+
+    case "${XDG_SESSION_TYPE:-}" in
+    "wayland") wl-copy <"$input_file" 2>/dev/null ;;
+    "x11") xclip -selection clipboard -i <"$input_file" 2>/dev/null ;;
+    esac
+}
+
 # -----------------------------------------------------------------------------
 # SECTION /// [INPUT FILES]
 # -----------------------------------------------------------------------------

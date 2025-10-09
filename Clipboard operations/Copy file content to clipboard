@@ -7,18 +7,25 @@ source "$ROOT_DIR/_common-functions.sh"
 
 _main() {
     local input_files=""
-    local content_files=""
 
     # Execute initial checks.
     _dependencies_check_commands_clipboard ""
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=file; par_skip_encoding='binary'")
-
-    # shellcheck disable=SC2086
-    content_files=$(cat -- $input_files 2>/dev/null)
+    input_files=$(_get_files "par_type=file")
 
     # Run the main process.
-    _set_clipboard_data "$content_files"
+    if (($(_get_items_count "$input_files") == 1)); then
+        # If a single file is selected (text, image, or any supported type),
+        # copy the file itself directly to the clipboard.
+        _set_clipboard_file "$input_files"
+    else
+        # If multiple text files are selected, concatenate their contents
+        # and copy the combined text to the clipboard.
+        local content_files=""
+        # shellcheck disable=SC2086
+        content_files=$(cat -- $input_files 2>/dev/null)
+        _set_clipboard_data "$content_files"
+    fi
 
     _display_result_box ""
 }
