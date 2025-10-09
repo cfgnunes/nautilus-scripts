@@ -29,7 +29,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(pdfsig -- "$input_file")
+    std_output=$(pdfsig -- "$input_file" 2>/dev/null)
 
     if [[ "$std_output" == *"Signature is Valid"* ]]; then
         _storage_text_write_ln "🟢 Valid$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
