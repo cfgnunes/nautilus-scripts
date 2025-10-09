@@ -21,7 +21,7 @@
 
 declare -A PACKAGE_NAME=(
     ["7za"]="
-        apt-termux: p7zip
+        pkg:    p7zip
         apt:    p7zip-full
         dnf:    p7zip
         pacman: p7zip
@@ -36,7 +36,7 @@ declare -A PACKAGE_NAME=(
     "
 
     ["bsdtar"]="
-        apt-termux: libarchive
+        pkg:    libarchive
         apt:    libarchive-tools
         dnf:    bsdtar
         pacman: libarchive
@@ -51,7 +51,7 @@ declare -A PACKAGE_NAME=(
     "
 
     ["convert"]="
-        apt-termux: imagemagick
+        pkg:    imagemagick
         apt:    imagemagick
         dnf:    ImageMagick
         pacman: imagemagick
@@ -62,7 +62,7 @@ declare -A PACKAGE_NAME=(
     "
 
     ["exiftool"]="
-        apt-termux: exiftool
+        pkg:    exiftool
         apt:    libimage-exiftool-perl
         dnf:    perl-Image-ExifTool
         pacman: perl-image-exiftool
@@ -73,7 +73,7 @@ declare -A PACKAGE_NAME=(
     "
 
     ["ffmpeg"]="
-        apt-termux: ffmpeg
+        apt:    ffmpeg
         apt:    ffmpeg
         dnf:    ffmpeg-free
         pacman: ffmpeg
@@ -84,7 +84,7 @@ declare -A PACKAGE_NAME=(
     "
 
     ["gpg"]="
-        apt-termux: gnupg
+        pkg:    gnupg
         apt:    gnupg
         dnf:    gnupg2
         pacman: gnupg
@@ -103,7 +103,7 @@ declare -A PACKAGE_NAME=(
     "
 
     ["iconv"]="
-        apt-termux: libiconv
+        pkg:    libiconv
         apt:    libc-bin
         dnf:    glibc-common
         pacman: glibc
@@ -148,7 +148,7 @@ declare -A PACKAGE_NAME=(
     "
 
     ["lp"]="
-        apt-termux: cups
+        pkg:    cups
         apt:    cups-client
         dnf:    cups-client
         pacman: cups
@@ -169,7 +169,7 @@ declare -A PACKAGE_NAME=(
     "
 
     ["perl"]="
-        apt-termux: perl
+        pkg:    perl
         apt:    perl-base
         dnf:    perl-base
         pacman: perl-base
@@ -190,7 +190,7 @@ declare -A PACKAGE_NAME=(
     "
 
     ["pdfinfo"]="
-        apt-termux: poppler
+        pkg:    poppler
         apt:    poppler-utils
         dnf:    poppler-utils
         pacman: poppler
@@ -201,7 +201,7 @@ declare -A PACKAGE_NAME=(
     "
 
     ["ping"]="
-        apt-termux: inetutils
+        pkg:    inetutils
         apt:    iputils-ping
         dnf:    iputils
         pacman: iputils
@@ -212,7 +212,7 @@ declare -A PACKAGE_NAME=(
     "
 
     ["unar"]="
-        apt-termux: unar
+        pkg:    unar
         apt:    unar
         dnf:    unar
         pacman: unarchiver
@@ -236,7 +236,7 @@ declare -A PACKAGE_NAME=(
     "
 
     ["xorriso"]="
-        apt-termux: xorriso
+        pkg:    xorriso
         apt:    xorriso
         dnf:    xorriso
         pacman: xorriso
@@ -247,7 +247,7 @@ declare -A PACKAGE_NAME=(
     "
 
     ["xz"]="
-        apt-termux: xz-utils
+        pkg:    xz-utils
         apt:    xz-utils
         dnf:    xz
         pacman: xz
@@ -281,7 +281,7 @@ declare -A POST_INSTALL=(
 
 declare -A META_PACKAGES=(
     ["latexmk"]="
-        apt-termux: texlive-bin
+        pkg:    texlive-bin
         apt:    latexmk
         dnf:    latexmk
         pacman: texlive-binextra
@@ -290,7 +290,7 @@ declare -A META_PACKAGES=(
     "
 
     ["pdfjam"]="
-        apt-termux: texlive-bin
+        pkg:    texlive-bin
         apt:    texlive-extra-utils
         dnf:    texlive-pdfjam
         pacman: texlive-basic texlive-binextra texlive-latexextra
@@ -299,7 +299,7 @@ declare -A META_PACKAGES=(
     "
 
     ["sox-mp3"]="
-        apt-termux: sox
+        pkg:    sox
         apt:    sox libsox-fmt-mp3
         dnf:    sox
         pacman: sox
@@ -310,7 +310,7 @@ declare -A META_PACKAGES=(
     "
 
     ["tesseract-lang-$TEMP_DATA_TASK"]="
-        apt-termux: tesseract
+        pkg:    tesseract
         apt:    tesseract-ocr-$TEMP_DATA_TASK
         dnf:    tesseract-langpack-$TEMP_DATA_TASK
         pacman: tesseract-data-$TEMP_DATA_TASK
@@ -319,7 +319,7 @@ declare -A META_PACKAGES=(
     "
 
     ["texlive"]="
-        apt-termux: \
+        pkg: \
             texlive-bin
         apt: \
             texlive \
