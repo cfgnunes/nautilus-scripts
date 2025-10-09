@@ -124,6 +124,9 @@ _main() {
         OPT_INTERACTIVE_INSTALL="false"
     fi
 
+    _echo "Enhanced File Manager Actions for Linux"
+    _echo ""
+
     # If the file "_common-functions.sh" is missing, it means the installer is
     # being executed remotely (e.g., via 'curl'). In that case, download the
     # repository and continue the installation from the extracted files.
@@ -137,7 +140,7 @@ _main() {
         "Remove previously installed scripts"
         "Install keyboard accelerators"
         "Close the file manager to reload its configurations"
-        "Install application menu shortcuts"
+        "Add shortcuts to the application menu"
         "Install for all users (may require 'sudo')"
         "Choose which script categories to install"
     )
@@ -154,7 +157,6 @@ _main() {
     )
 
     if [[ "$OPT_INTERACTIVE_INSTALL" == "true" ]]; then
-        _echo "Scripts installer."
         _echo "Select the options (<SPACE> to check):"
 
         # Display the interactive menu and capture user selections.
@@ -284,7 +286,7 @@ _main() {
             _echo_info "> Done!"
         done
 
-        # Install application menu shortcuts.
+        # Add shortcuts to the application menu.
         if [[ "$OPT_INSTALL_APP_SHORTCUTS" == "true" ]]; then
             _echo ""
             _echo_info "Installing application menu shortcuts:"
@@ -486,8 +488,8 @@ _get_parameters_command_line() {
             echo "  -K, --no-install-shortcuts      Do not install keyboard accelerators."
             echo "  -n, --non-interactive           Run without prompts."
             echo "  -q, --quiet                     Suppress all output (silent mode)."
-            echo "  -s, --install-app-shortcuts     Install application menu shortcuts."
-            echo "  -S, --no-install-app-shortcuts  Do not install application menu shortcuts."
+            echo "  -s, --install-app-shortcuts     Add shortcuts to the application menu."
+            echo "  -S, --no-install-app-shortcuts  Do not add shortcuts to the application menu."
             echo "  -h, --help                      Show this help message and exit."
             echo
             exit 0
@@ -1358,7 +1360,7 @@ _bootstrap_repository() {
         exit 1
     fi
 
-    _echo_info "Running the online installer:"
+    _echo_info "Downloading the installer package:"
 
     # Create a temporary directory for the installation.
     local temp_dir=""
