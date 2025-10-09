@@ -550,6 +550,7 @@ _deps_get_available_package_manager() {
     local apps=(
         "brew"
         "nix"
+        "pkg"
         "apt-get"
         "rpm-ostree"
         "dnf"
@@ -614,10 +615,11 @@ _deps_get_dependency_value() {
             ;;
         esac
 
-        # Special handling for Termux (Android). Even though Termux uses
-        # apt-get, its package names differs from standard Debian/Ubuntu.
-        if [[ "$pkg_manager" == "apt-termux" ]] &&
-            [[ "$available_pkg_manager" == "apt-get" ]] &&
+        # Special handling for Termux (Android). Termux has two package manager
+        # apt and pacman, so termux created a universal package manager wrapper
+        # which exist in both apt and pacman so we will check if pkg is exist or not
+        if [[ "$pkg_manager" == "pkg" ]] &&
+            [[ "$available_pkg_manager" == "pkg" ]] &&
             [[ "${HOME:-}" == *"com.termux"* ]]; then
             printf "%s" "$key_value"
             return 0
