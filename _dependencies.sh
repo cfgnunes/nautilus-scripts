@@ -267,10 +267,7 @@ declare -A PACKAGE_NAME=(
 # not handle.
 
 declare -A POST_INSTALL=(
-    ["clamscan"]="
-        *:sleep 5; rm -f /var/log/clamav/freshclam.log; \
-            freshclam --quiet; sleep 5
-    "
+    ["clamscan"]='*:sleep 5; rm -f /var/log/clamav/freshclam.log; freshclam --quiet; sleep 5'
 
     ["convert"]='*:find /etc -type f -path "/etc/ImageMagick-*/policy.xml" 2>/dev/null -exec sed -i -e "s/rights=\"none\" pattern=\"PDF\"/rights=\"read|write\" pattern=\"PDF\"/g" -e "s/name=\"disk\" value=\".GiB\"/name=\"disk\" value=\"8GiB\"/g" {} +'
 )
