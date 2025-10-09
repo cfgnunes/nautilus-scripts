@@ -56,7 +56,7 @@ _main_task() {
 
     # Move the temporary file to the output.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(font Times)'")
-    _move_temp_file_to_output "$input_file" "$temp_file" "$output_file"
+    _move_file "safe_overwrite" "$temp_file" "$output_file"
 }
 
 _main "$@"
