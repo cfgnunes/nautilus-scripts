@@ -615,10 +615,12 @@ _deps_get_dependency_value() {
             ;;
         esac
 
-        # Special handling for Termux (Android). Termux has two package manager
-        # apt and pacman, so termux created a universal package manager wrapper
-        # which exist in both apt and pacman so we will check if pkg is exist or not
-        if [[ "$pkg_manager" == "pkg" ]] &&
+        # Special handling for Termux (Android). Termux supports two package
+        # managers: apt and pacman. To unify them, Termux provides a wrapper
+        # called 'pkg', which works across both environments. Therefore, when
+        # running under Termux, we check if 'pkg' exists and use it as the
+        # package manager.
+        if [[ "$pkg_manager" == "$available_pkg_manager" ]] &&
             [[ "$available_pkg_manager" == "pkg" ]] &&
             [[ "${HOME:-}" == *"com.termux"* ]]; then
             printf "%s" "$key_value"
@@ -685,6 +687,7 @@ _deps_install_packages() {
     #       - "zypper"      : For openSUSE systems.
     #       - "nix"         : For Nix-based systems.
     #       - "brew"        : For Homebrew package manager.
+    #       - "pkg"         : For Termux (Android).
     #       - "guix"        : For GNU Guix systems.
     #   - $2 (packages): A space-separated list of package names to install.
     #   - $3 (post_install): An optional command to be executed right after the
@@ -744,6 +747,11 @@ _deps_install_packages() {
     "brew")
         cmd_install="brew install $packages &>/dev/null"
         # Homebrew does not require root for installing user packages.
+        admin_cmd=""
+        ;;
+    "pkg")
+        cmd_install="pkg install -y $packages &>/dev/null"
+        # Termux does not require root for installing user packages.
         admin_cmd=""
         ;;
     "guix")
@@ -823,6 +831,7 @@ _deps_is_package_installed() {
     #       - "zypper"      : For openSUSE systems.
     #       - "nix"         : For Nix-based systems.
     #       - "brew"        : For Homebrew package manager.
+    #       - "pkg"         : For Termux (Android).
     #       - "guix"        : For GNU Guix systems.
     #   - $2 (package): The name of the package to check.
     #
@@ -872,6 +881,11 @@ _deps_is_package_installed() {
         ;;
     "brew")
         if brew list | grep --quiet "$package"; then
+            return 0
+        fi
+        ;;
+    "pkg")
+        if pkg list-installed 2>/dev/null | grep --quiet "^$package/"; then
             return 0
         fi
         ;;
