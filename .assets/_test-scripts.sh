@@ -14,7 +14,7 @@ unset DISPLAY
 # -----------------------------------------------------------------------------
 
 _TEMP_DIR=$(mktemp --directory)
-_TEMP_DIR_TEST="$_TEMP_DIR/test"
+_TEMP_DIR_TEST="$_TEMP_DIR/Test files"
 
 readonly _TEMP_DIR _TEMP_DIR_TEST
 
@@ -83,14 +83,15 @@ _main() {
     local input_file2=""
     local output_file=""
     local std_output="$_TEMP_DIR_TEST/std_output.txt"
+    local sample_file=""
 
     __create_temp_files
 
     # Create files for testing.
-    input_file1="$_TEMP_DIR_TEST/test file 1"
-    input_file2="$_TEMP_DIR_TEST/test file 2"
-    echo "Content of 'test file 1'." >"$input_file1"
-    echo "Content of 'test file 2'." >"$input_file2"
+    input_file1="$_TEMP_DIR_TEST/Test archive 1"
+    input_file2="$_TEMP_DIR_TEST/Test archive 2"
+    echo "Content of 'Test archive 1'." >"$input_file1"
+    echo "Content of 'Test archive 2'." >"$input_file2"
     output_file=$input_file1
 
     script_test="Archive/Compress to .7z (each)"
@@ -108,8 +109,8 @@ _main() {
     script_test="Archive/Compress to .iso (each)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$_TEMP_DIR_TEST" >"$std_output"
-    mv "$_TEMP_DIR/test.iso" "$_TEMP_DIR_TEST"
-    __test_file_nonempty "$_TEMP_DIR_TEST/test.iso"
+    mv "$_TEMP_DIR/Test files.iso" "$_TEMP_DIR_TEST"
+    __test_file_nonempty "$_TEMP_DIR_TEST/Test files.iso"
     __test_file_empty "$std_output"
 
     script_test="Archive/Compress to .squashfs (each)"
@@ -151,21 +152,90 @@ _main() {
     script_test="Archive/Extract here"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$output_file.zip" >"$std_output"
-    __test_file_nonempty "$output_file (1)"
+    __test_file_nonempty "$output_file (2)"
     __test_file_empty "$std_output"
 
     # Create files for testing.
-    input_file1="$_TEMP_DIR_TEST/test audio.mp3"
-    input_file2="$_TEMP_DIR_TEST/test audio 2.mp3"
-    output_file="$_TEMP_DIR_TEST/test audio"
+    input_file1="$_TEMP_DIR_TEST/Test image SVG 1.svg"
+    input_file2="$_TEMP_DIR_TEST/Test image SVG 2.svg"
+    output_file="$_TEMP_DIR_TEST/Test image SVG 1"
+    sample_file=$(find / -type f -iname "*.svg" -size -5M -print -quit 2>/dev/null)
+    cp -- "$sample_file" "$input_file1"
+    cp -- "$input_file1" "$input_file2"
+
+    script_test="Image/Image: SVG files/SVG: Compress to SVGZ"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.svgz"
+    __test_file_empty "$std_output"
+
+    script_test="Image/Image: SVG files/SVG: Decompress SVGZ"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$output_file.svgz" >"$std_output"
+    __test_file_nonempty "$output_file (2).svg"
+    __test_file_empty "$std_output"
+
+    script_test="Image/Image: SVG files/SVG: Export to EPS"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.eps"
+    __test_file_empty "$std_output"
+
+    script_test="Image/Image: SVG files/SVG: Export to PDF"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.pdf"
+    __test_file_empty "$std_output"
+
+    script_test="Image/Image: SVG files/SVG: Export to PNG (1024 px)"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file (1024 px).png"
+    __test_file_empty "$std_output"
+
+    script_test="Image/Image: SVG files/SVG: Export to PNG (256 px)"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file (256 px).png"
+    __test_file_empty "$std_output"
+
+    script_test="Image/Image: SVG files/SVG: Export to PNG (512 px)"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file (512 px).png"
+    __test_file_empty "$std_output"
+
+    #script_test="Image/Image: SVG files/SVG: Replace fonts to 'Charter'"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file (Charter).svg"
+    #__test_file_empty "$std_output"
+
+    #script_test="Image/Image: SVG files/SVG: Replace fonts to 'Helvetica'"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file (Helvetica).svg"
+    #__test_file_empty "$std_output"
+
+    #script_test="Image/Image: SVG files/SVG: Replace fonts to 'Times'"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file (Times).svg"
+    #__test_file_empty "$std_output"
+
+    # Create files for testing.
+    input_file1="$_TEMP_DIR_TEST/Test audio.mp3"
+    input_file2="$_TEMP_DIR_TEST/Test audio 2.mp3"
+    output_file="$_TEMP_DIR_TEST/Test audio"
     if command -v "ffmpeg" &>/dev/null; then
         ffmpeg -hide_banner -y \
             -f lavfi -i "sine=frequency=440:duration=5" \
             "$input_file1" &>/dev/null
-        ffmpeg -hide_banner -y \
-            -f lavfi -i "sine=frequency=440:duration=5" \
-            "$input_file2" &>/dev/null
+    else
+        sample_file=$(find / -type f -iname "*.mp3" -size -5M -print -quit 2>/dev/null)
+        cp -- "$sample_file" "$input_file1"
     fi
+    cp -- "$input_file1" "$input_file2"
 
     script_test="Audio and video/Audio: Channels/Audio: Mix channels to mono"
     __echo_script "$script_test"
@@ -188,19 +258,19 @@ _main() {
     script_test="Audio and video/Audio: Convert/Audio: Convert to MP3 (192 kbps)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (1).mp3"
+    __test_file_nonempty "$output_file (2).mp3"
     __test_file_empty "$std_output"
 
     script_test="Audio and video/Audio: Convert/Audio: Convert to MP3 (320 kbps)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (2).mp3"
+    __test_file_nonempty "$output_file (3).mp3"
     __test_file_empty "$std_output"
 
     script_test="Audio and video/Audio: Convert/Audio: Convert to MP3 (48 kbps, mono)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (3).mp3"
+    __test_file_nonempty "$output_file (4).mp3"
     __test_file_empty "$std_output"
 
     script_test="Audio and video/Audio: Convert/Audio: Convert to OGG (192 kbps)"
@@ -212,13 +282,13 @@ _main() {
     script_test="Audio and video/Audio: Convert/Audio: Convert to OGG (320 kbps)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (1).ogg"
+    __test_file_nonempty "$output_file (2).ogg"
     __test_file_empty "$std_output"
 
     script_test="Audio and video/Audio: Convert/Audio: Convert to OGG (48 kbps, mono)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (2).ogg"
+    __test_file_nonempty "$output_file (3).ogg"
     __test_file_empty "$std_output"
 
     script_test="Audio and video/Audio: Convert/Audio: Convert to OPUS (192 kbps)"
@@ -230,13 +300,13 @@ _main() {
     script_test="Audio and video/Audio: Convert/Audio: Convert to OPUS (320 kbps)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (1).opus"
+    __test_file_nonempty "$output_file (2).opus"
     __test_file_empty "$std_output"
 
     script_test="Audio and video/Audio: Convert/Audio: Convert to OPUS (48 kbps, mono)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (2).opus"
+    __test_file_nonempty "$output_file (3).opus"
     __test_file_empty "$std_output"
 
     script_test="Audio and video/Audio: Convert/Audio: Convert to WAV"
@@ -339,26 +409,24 @@ _main() {
     script_test="Audio and video/Audio: MP3 files/MP3: (artist - title) ID3 to Filename"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$_TEMP_DIR_TEST/(Empty) - test audio.mp3"
+    __test_file_nonempty "$_TEMP_DIR_TEST/(Empty) - Test audio.mp3"
     __test_file_empty "$std_output"
 
     # Create files for testing.
-    input_file1="$_TEMP_DIR_TEST/test video.mp4"
-    input_file2="$_TEMP_DIR_TEST/test video 2.mp4"
-    output_file="$_TEMP_DIR_TEST/test video"
+    input_file1="$_TEMP_DIR_TEST/Test video.mp4"
+    input_file2="$_TEMP_DIR_TEST/Test video 2.mp4"
+    output_file="$_TEMP_DIR_TEST/Test video"
     if command -v "ffmpeg" &>/dev/null; then
         # Generate a test video (red background with a 440 Hz sine tone).
         ffmpeg -hide_banner -y \
             -f lavfi -i color=c=red:s=200x100:d=3:r=25 \
             -f lavfi -i "sine=frequency=440:duration=3" \
             -shortest "$input_file1" &>/dev/null
-
-        # Generate a test video (blue background with an 880 Hz sine tone).
-        ffmpeg -hide_banner -y \
-            -f lavfi -i color=c=blue:s=200x100:d=3:r=25 \
-            -f lavfi -i "sine=frequency=880:duration=3" \
-            -shortest "$input_file2" &>/dev/null
+    else
+        sample_file=$(find / -type f -iname "*.mp4" -size -5M -print -quit 2>/dev/null)
+        cp -- "$sample_file" "$input_file1"
     fi
+    cp -- "$input_file1" "$input_file2"
 
     script_test="Audio and video/Video: Aspect ratio/Video: Aspect to 1:1"
     __echo_script "$script_test"
@@ -429,19 +497,19 @@ _main() {
     script_test="Audio and video/Video: Convert/Video: Convert to MKV (no re-encoding)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (1).mkv"
+    __test_file_nonempty "$output_file (2).mkv"
     __test_file_empty "$std_output"
 
     script_test="Audio and video/Video: Convert/Video: Convert to MP4"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (1).mp4"
+    __test_file_nonempty "$output_file (2).mp4"
     __test_file_empty "$std_output"
 
     script_test="Audio and video/Video: Convert/Video: Convert to MP4 (no re-encoding)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (2).mp4"
+    __test_file_nonempty "$output_file (3).mp4"
     __test_file_empty "$std_output"
 
     script_test="Audio and video/Video: Convert/Video: Export to GIF"
@@ -454,21 +522,21 @@ _main() {
     script_test="Audio and video/Video: Export frames/Video: Export frames (1 FPS)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$_TEMP_DIR_TEST/Output/test video.mp4_frame_00001.png"
+    __test_file_nonempty "$_TEMP_DIR_TEST/Output/Test video.mp4_frame_00001.png"
     __test_file_empty "$std_output"
 
     rm -rf "$_TEMP_DIR_TEST/Output"
     script_test="Audio and video/Video: Export frames/Video: Export frames (10 FPS)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$_TEMP_DIR_TEST/Output/test video.mp4_frame_00001.png"
+    __test_file_nonempty "$_TEMP_DIR_TEST/Output/Test video.mp4_frame_00001.png"
     __test_file_empty "$std_output"
 
     rm -rf "$_TEMP_DIR_TEST/Output"
     script_test="Audio and video/Video: Export frames/Video: Export frames (5 FPS)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$_TEMP_DIR_TEST/Output/test video.mp4_frame_00001.png"
+    __test_file_nonempty "$_TEMP_DIR_TEST/Output/Test video.mp4_frame_00001.png"
     __test_file_empty "$std_output"
 
     script_test="Audio and video/Video: Flip, Rotate/Video: Flip (horizontally)"
@@ -618,7 +686,7 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$_TEMP_DIR_TEST" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    mkdir "$_TEMP_DIR_TEST/empty dir"
+    mkdir "$_TEMP_DIR_TEST/Test empty dir"
     script_test="Directories and files/Find empty directories"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$_TEMP_DIR_TEST" >"$std_output"
@@ -630,7 +698,7 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$_TEMP_DIR_TEST" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    touch "$_TEMP_DIR_TEST/junk file.log"
+    touch "$_TEMP_DIR_TEST/Test junk file.log"
     script_test="Directories and files/Find junk files"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$_TEMP_DIR_TEST" >"$std_output"
@@ -754,10 +822,10 @@ _main() {
     #__test_file_empty "$std_output"
 
     # Create files for testing.
-    input_file1="$_TEMP_DIR_TEST/test file 1"
-    input_file2="$_TEMP_DIR_TEST/test file 2"
-    echo "Content of 'test file 1'." >"$input_file1"
-    echo "Content of 'test file 2'." >"$input_file2"
+    input_file1="$_TEMP_DIR_TEST/Test hash 1"
+    input_file2="$_TEMP_DIR_TEST/Test hash 2"
+    echo "Content of 'Test hash 1'." >"$input_file1"
+    echo "Content of 'Test hash 2'." >"$input_file2"
     output_file=$input_file1
 
     script_test="Hash and checksum/Compute all file hashes"
@@ -845,20 +913,20 @@ _main() {
     #__test_file_empty "$std_output"
 
     # Create files for testing.
-    input_file1="$_TEMP_DIR_TEST/test image.png"
-    input_file2="$_TEMP_DIR_TEST/test image 2.png"
-    output_file="$_TEMP_DIR_TEST/test image"
+    input_file1="$_TEMP_DIR_TEST/Test image.png"
+    input_file2="$_TEMP_DIR_TEST/Test image 2.png"
+    output_file="$_TEMP_DIR_TEST/Test image"
     if command -v "convert" &>/dev/null; then
         convert -size 200x100 xc:red "$input_file1" &>/dev/null
-        convert -size 200x100 xc:blue "$input_file2" &>/dev/null
     elif command -v "ffmpeg" &>/dev/null; then
         ffmpeg -hide_banner -y \
             -f lavfi -i color=c=red:s=200x100 -frames:v 1 \
             -update 1 "$input_file1" &>/dev/null
-        ffmpeg -hide_banner -y \
-            -f lavfi -i color=c=blue:s=200x100 -frames:v 1 \
-            -update 1 "$input_file2" &>/dev/null
+    else
+        sample_file=$(find / -type f -iname "*.png" -size -1M -print -quit 2>/dev/null)
+        cp -- "$sample_file" "$input_file1"
     fi
+    cp -- "$input_file1" "$input_file2"
 
     script_test="Image/Image: Color/Image: Colorspace to gray"
     __echo_script "$script_test"
@@ -876,7 +944,7 @@ _main() {
     script_test="Image/Image: Color/Image: Generate multiple hues"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$_TEMP_DIR_TEST/Output/test image (1).png"
+    __test_file_nonempty "$_TEMP_DIR_TEST/Output/Test image (2).png"
     __test_file_empty "$std_output"
 
     script_test="Image/Image: Combine, Split/Image: Combine into a GIF"
@@ -895,21 +963,21 @@ _main() {
     script_test="Image/Image: Combine, Split/Image: Split into 2 (horizontally)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$_TEMP_DIR_TEST/Output/test image-0.png"
+    __test_file_nonempty "$_TEMP_DIR_TEST/Output/Test image-0.png"
     __test_file_empty "$std_output"
 
     rm -rf "$_TEMP_DIR_TEST/Output"
     script_test="Image/Image: Combine, Split/Image: Split into 2 (vertically)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$_TEMP_DIR_TEST/Output/test image-0.png"
+    __test_file_nonempty "$_TEMP_DIR_TEST/Output/Test image-0.png"
     __test_file_empty "$std_output"
 
     rm -rf "$_TEMP_DIR_TEST/Output"
     script_test="Image/Image: Combine, Split/Image: Split into 4"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$_TEMP_DIR_TEST/Output/test image-0.png"
+    __test_file_nonempty "$_TEMP_DIR_TEST/Output/Test image-0.png"
     __test_file_empty "$std_output"
 
     script_test="Image/Image: Combine, Split/Image: Stack (horizontally)"
@@ -951,7 +1019,7 @@ _main() {
     script_test="Image/Image: Convert/Image: Convert to PNG"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$output_file.jpg" >"$std_output"
-    __test_file_nonempty "$output_file (1).png"
+    __test_file_nonempty "$output_file (2).png"
     __test_file_empty "$std_output"
 
     script_test="Image/Image: Convert/Image: Convert to TIF"
@@ -1077,7 +1145,7 @@ _main() {
     script_test="Image/Image: Optimize, Reduce/Image: Reduce (JPG, 500kB max)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (reduced) (1).jpg"
+    __test_file_nonempty "$output_file (reduced) (2).jpg"
     __test_file_empty "$std_output"
 
     script_test="Image/Image: Optimize, Reduce/Image: Remove metadata"
@@ -1105,66 +1173,6 @@ _main() {
     #__test_file_empty "$std_output"
 
     #script_test="Image/Image: Similarity/Image: Find similar (95 pct)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: SVG files/SVG: Compress to SVGZ"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: SVG files/SVG: Decompress SVGZ"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: SVG files/SVG: Export to EPS"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: SVG files/SVG: Export to PDF"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: SVG files/SVG: Export to PNG (1024 px)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: SVG files/SVG: Export to PNG (256 px)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: SVG files/SVG: Export to PNG (512 px)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: SVG files/SVG: Replace fonts to 'Charter'"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: SVG files/SVG: Replace fonts to 'Helvetica'"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: SVG files/SVG: Replace fonts to 'Times'"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
@@ -1245,37 +1253,37 @@ _main() {
     script_test="Image/Image: Transparency/Image: Color black to alpha"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (alpha) (1).png"
+    __test_file_nonempty "$output_file (alpha) (2).png"
     __test_file_empty "$std_output"
 
     script_test="Image/Image: Transparency/Image: Color black to alpha (15 pct)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (alpha 15 pct) (1).png"
+    __test_file_nonempty "$output_file (alpha 15 pct) (2).png"
     __test_file_empty "$std_output"
 
     script_test="Image/Image: Transparency/Image: Color magenta to alpha"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (alpha) (2).png"
+    __test_file_nonempty "$output_file (alpha) (3).png"
     __test_file_empty "$std_output"
 
     script_test="Image/Image: Transparency/Image: Color magenta to alpha (15 pct)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (alpha 15 pct) (2).png"
+    __test_file_nonempty "$output_file (alpha 15 pct) (3).png"
     __test_file_empty "$std_output"
 
     script_test="Image/Image: Transparency/Image: Color white to alpha"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (alpha) (3).png"
+    __test_file_nonempty "$output_file (alpha) (4).png"
     __test_file_empty "$std_output"
 
     script_test="Image/Image: Transparency/Image: Color white to alpha (15 pct)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (alpha 15 pct) (3).png"
+    __test_file_nonempty "$output_file (alpha 15 pct) (4).png"
     __test_file_empty "$std_output"
 
     #script_test="Image/Image: Watermark/Image: Add watermark (center)"
@@ -1320,70 +1328,87 @@ _main() {
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Document/Document: Convert/Document: Convert to DOCX"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    # Create files for testing.
+    input_file1="$_TEMP_DIR_TEST/Test document 1.odt"
+    input_file2="$_TEMP_DIR_TEST/Test document 2.odt"
+    output_file="$_TEMP_DIR_TEST/Test document 1"
+    sample_file=$(find / -type f -iname "*.odt" -size -5M -print -quit 2>/dev/null)
+    cp -- "$sample_file" "$input_file1"
+    cp -- "$input_file1" "$input_file2"
 
-    #script_test="Document/Document: Convert/Document: Convert to EPUB"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    script_test="Document/Document: Convert/Document: Convert to TXT"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.txt"
+    __test_file_empty "$std_output"
 
-    #script_test="Document/Document: Convert/Document: Convert to FB2"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    script_test="Document/Document: Convert/Document: Convert to EPUB"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.epub"
+    __test_file_empty "$std_output"
 
-    #script_test="Document/Document: Convert/Document: Convert to Markdown"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    script_test="Document/Document: Convert/Document: Convert to FB2"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.fb2"
+    __test_file_empty "$std_output"
+
+    script_test="Document/Document: Convert/Document: Convert to Markdown"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.md"
+    __test_file_empty "$std_output"
+
+    script_test="Document/Document: Convert/Document: Convert to DOCX"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.docx"
+    __test_file_empty "$std_output"
+
+    input_file1="$_TEMP_DIR_TEST/Test document 1.docx"
+    script_test="Document/Document: Convert/Document: Convert to ODT"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file (2).odt"
+    __test_file_empty "$std_output"
+
+    script_test="Document/Document: Convert/Document: Convert to ODS"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.ods"
+    __test_file_empty "$std_output"
+
+    script_test="Document/Document: Convert/Document: Convert to XLSX"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.xlsx"
+    __test_file_empty "$std_output"
+
+    script_test="Document/Document: Convert/Document: Convert to PDF"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.pdf"
+    __test_file_empty "$std_output"
+
+    # Create files for testing.
+    #input_file1="$_TEMP_DIR_TEST/Test document (presentation) 1.otp"
+    #input_file2="$_TEMP_DIR_TEST/Test document (presentation) 2.otp"
+    #output_file="$_TEMP_DIR_TEST/Test document (presentation) 1"
+    #sample_file=$(find / -type f -iname "*.otp" -size -5M -print -quit 2>/dev/null)
+    #cp -- "$sample_file" "$input_file1"
+    #cp -- "$input_file1" "$input_file2"
 
     #script_test="Document/Document: Convert/Document: Convert to ODP"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/Document: Convert/Document: Convert to ODS"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/Document: Convert/Document: Convert to ODT"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/Document: Convert/Document: Convert to PDF"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
+    #__test_file_nonempty "$output_file.odp"
     #__test_file_empty "$std_output"
 
     #script_test="Document/Document: Convert/Document: Convert to PPTX"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/Document: Convert/Document: Convert to TXT"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/Document: Convert/Document: Convert to XLSX"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
+    #__test_file_nonempty "$output_file.pptx"
     #__test_file_empty "$std_output"
 
     #script_test="Document/Document: Print/Document: Print (A4)"
@@ -1404,11 +1429,11 @@ _main() {
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    input_file1="$_TEMP_DIR_TEST/document 1.pdf"
-    input_file2="$_TEMP_DIR_TEST/document 2.pdf"
+    input_file1="$_TEMP_DIR_TEST/Test document PDF 1.pdf"
+    input_file2="$_TEMP_DIR_TEST/Test document PDF 2.pdf"
     cp -- "$_TEMP_DIR_TEST/Combined images.pdf" "$input_file1"
-    cp -- "$_TEMP_DIR_TEST/Combined images.pdf" "$input_file2"
-    output_file="$_TEMP_DIR_TEST/document 1"
+    cp -- "$input_file1" "$input_file2"
+    output_file="$_TEMP_DIR_TEST/Test document PDF 1"
 
     script_test="Document/PDF: Annotations/PDF: Find annotated files"
     __echo_script "$script_test"
@@ -1431,7 +1456,7 @@ _main() {
     script_test="Document/PDF: Combine, Split/PDF: Split into single-page files"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$_TEMP_DIR_TEST/Output/document 1.0001.pdf"
+    __test_file_nonempty "$_TEMP_DIR_TEST/Output/Test document PDF 1.0001.pdf"
     __test_file_empty "$std_output"
 
     #script_test="Document/PDF: Encrypt, Decrypt/PDF: Decrypt (remove password)"
@@ -1649,7 +1674,7 @@ _main() {
     script_test="Document/PDF: Tools/PDF: Extract images"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$_TEMP_DIR_TEST/Output/document 1-000.png"
+    __test_file_nonempty "$_TEMP_DIR_TEST/Output/Test document PDF 1-000.png"
     __test_file_empty "$std_output"
 
     script_test="Document/PDF: Tools/PDF: Remove metadata"
@@ -1811,10 +1836,10 @@ _main() {
     #__test_file_empty "$std_output"
 
     # Create files for testing.
-    input_file1="$_TEMP_DIR_TEST/test text 1.txt"
-    input_file2="$_TEMP_DIR_TEST/test text 2.txt"
-    echo "Content of 'test text 1'." >"$input_file1"
-    echo "Content of 'test text 2'." >"$input_file2"
+    input_file1="$_TEMP_DIR_TEST/Test text 1.txt"
+    input_file2="$_TEMP_DIR_TEST/Test text 2.txt"
+    echo "Content of 'Test text 1'." >"$input_file1"
+    echo "Content of 'Test text 2'." >"$input_file2"
     output_file=$input_file1
 
     script_test="Plain text/Text: Encodings/Text: Encode to ISO-8859-1"
