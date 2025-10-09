@@ -1143,8 +1143,8 @@ _get_filename_next_suffix() {
     fi
 
     # Avoid overwriting a file. If there is a file with the same name,
-    # try to add a suffix, as 'file (1)', 'file (2)', ...
-    local count=1
+    # try to add a suffix, as 'file (2)', 'file (3)', ...
+    local count=2
     while [[ -e "$filename_result" ]]; do
         filename_result="$filename_base ($count)$filename_extension"
         ((count++))

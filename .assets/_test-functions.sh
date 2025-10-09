@@ -245,7 +245,7 @@ __run_move_file() {
     output=$(<"$_TEMP_FILE2")
     __test_equal "rename" "$expected_output" "$output"
     expected_output=$_TEMP_FILE1_CONTENT
-    output=$(<"$_TEMP_FILE2 (1)")
+    output=$(<"$_TEMP_FILE2 (2)")
     __test_equal "rename" "$expected_output" "$output"
     __clean_temp_files
 }
