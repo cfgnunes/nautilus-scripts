@@ -329,12 +329,12 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Audio and video/Audio: MP3 files/MP3: Tag name to ID3 (artist - title)"
+    script_test="Audio and video/Audio: MP3 files/MP3: (artist - title) Filename to ID3"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_empty "$std_output"
 
-    script_test="Audio and video/Audio: MP3 files/MP3: Tag ID3 to name (artist - title)"
+    script_test="Audio and video/Audio: MP3 files/MP3: (artist - title) ID3 to Filename"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$_TEMP_DIR_TEST/(Empty) - test audio.mp3"
