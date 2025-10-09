@@ -296,7 +296,7 @@ _run_command() {
         _directory_pop || return 1
     }
     __temp_dir_remove() {
-        rm -rf -- "$temp_dir_output" &>/dev/null
+        rm -rf -- "$temp_dir_output" 2>/dev/null
     }
     __get_password() {
         _display_password_box "Enter the password for the archive '$(basename -- "$input_file")'.\nPassword:"
@@ -478,18 +478,15 @@ _run_command() {
         [[ "$(_strip_filename_extension "$single_root_item")" == "$filename" ]]; then
         # For archives with "one item with the same name of the archive".
         # For example: 'README.txt.tar.gz' or 'README.tar.gz'.
-        _move_file "rename" \
-            "$temp_dir_output/$single_root_item" "$output_dir/$single_root_item"
+        _move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$single_root_item"
     elif [[ "$single_root_item" == "squashfs-root" ]] &&
         [[ "$command" == "unsquashfs" ]]; then
         # For the 'squashfs' archive format.
-        _move_file "rename" \
-            "$temp_dir_output/$single_root_item" "$output_dir/$filename"
+        _move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$filename"
     else
         # For archives with "one item with a different name of the archive"
         # or "multiple items".
-        _move_file "rename" \
-            "$temp_dir_output" "$output_dir/$filename"
+        _move_file "rename" "$temp_dir_output" "$output_dir/$filename"
     fi
 
     __temp_dir_remove

@@ -29,7 +29,7 @@ TEMP_DIR=$(mktemp --directory)
 TEMP_DIR_ITEMS_TO_REMOVE="$TEMP_DIR/items_to_remove"
 TEMP_DIR_LOGS="$TEMP_DIR/logs"
 TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
-TEMP_DIR_TASK="$TEMP_DIR/task"
+TEMP_DIR_TASK="$TEMP_DIR/task" # used by '_get_temp_file' function.
 
 # Temporary files.
 TEMP_CONTROL_BATCH_ENABLED="$TEMP_DIR/control_batch_enabled"
@@ -107,10 +107,10 @@ _cleanup_on_exit() {
         --delimiter="$FIELD_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
-        bash -c "{ chmod -R u+rw -- '{}' && rm -rf -- '{}'; } &>/dev/null"
+        bash -c "{ chmod -R u+rw -- '{}' && rm -rf -- '{}'; } 2>/dev/null"
 
     # Remove the main temporary dir.
-    rm -rf -- "$TEMP_DIR" &>/dev/null
+    rm -rf -- "$TEMP_DIR" 2>/dev/null
 
     if ! _is_gui_session; then
         echo -e "$MSG_INFO End." >&2
@@ -135,7 +135,7 @@ _exit_script() {
     # NOTE: Use 'xargs' and kill to send the SIGTERM signal to all child
     # processes, including the current script.
     # See the: https://www.baeldung.com/linux/safely-exit-scripts
-    xargs kill <<<"$child_pids" &>/dev/null
+    xargs kill <<<"$child_pids" 2>/dev/null
 }
 
 _check_output() {
@@ -1301,7 +1301,7 @@ _get_temp_dir_local() {
 }
 
 _get_temp_file() {
-    # This function creates a temporary file in a specified temporary directory
+    # This function creates a temporary file in the '$TEMP_DIR_TASK' directory
     # and returns its path. The file is created using 'mktemp', and the
     # directory for the temporary file is specified by the '$TEMP_DIR_TASK'
     # variable.
@@ -1313,13 +1313,13 @@ _get_temp_file() {
 }
 
 _get_temp_file_dry() {
-    # This function simulates the creation of a temporary file in a specified
-    # directory without actually creating the file. It uses the '--dry-run'
-    # option with 'mktemp', which allows checking what the file path would be
-    # if it were to be created.
+    # This function simulates the creation of a temporary file in the
+    # '$TEMP_DIR_TASK' directory without actually creating the file. It uses
+    # the '--dry-run' option with 'mktemp', which allows checking what the file
+    # path would be if it were to be created.
     #
     # Output:
-    #   - The path of the temporary file, without actually creating the file.
+    #   - The full path of the temporary file, without actually creating it.
 
     mktemp --dry-run --tmpdir="$TEMP_DIR_TASK"
 }
@@ -3169,7 +3169,7 @@ _get_items_count() {
 _storage_text_clean() {
     # This function clears all temporary text storage files.
 
-    rm -f -- "$TEMP_DIR_STORAGE_TEXT/"* &>/dev/null
+    rm -f -- "$TEMP_DIR_STORAGE_TEXT/"* 2>/dev/null
 }
 
 _storage_text_read_all() {
