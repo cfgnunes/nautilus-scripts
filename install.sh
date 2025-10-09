@@ -1366,7 +1366,7 @@ _bootstrap_repository() {
     local temp_dir=""
     temp_dir=$(mktemp -d)
 
-    _echo_info "> Checking the latest release..."
+    _echo_info "> Checking for the latest release..."
 
     # Retrieve the latest release tag from GitHub,
     # (fallback to HEAD if unavailable).
