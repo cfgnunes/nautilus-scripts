@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _dependencies_check_commands "convert"
+    _command_exists "magick" || _dependencies_check_commands "convert"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_mime=image/")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
@@ -28,7 +28,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(grayscale)'")
-    std_output=$(convert "$input_file" -colorspace gray -type palette "$output_file" 2>&1)
+    std_output=$(_cmd_magick "$input_file" -colorspace gray -type palette "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

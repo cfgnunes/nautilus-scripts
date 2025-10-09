@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _dependencies_check_commands "convert"
+    _command_exists "magick" || _dependencies_check_commands "convert"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_select_mime=image/")
     output_dir=$(_get_output_dir "par_use_same_dir=false")
@@ -31,7 +31,7 @@ _main_task() {
     local i=0
     for ((i = 100 + 30; i < 300; i += 30)); do
         output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($count)'")
-        std_output=$(convert "$input_file" -define modulate:colorspace=HSB -modulate "100,100,$i" "$output_file" 2>&1)
+        std_output=$(_cmd_magick "$input_file" -define modulate:colorspace=HSB -modulate "100,100,$i" "$output_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ((count++))
     done
