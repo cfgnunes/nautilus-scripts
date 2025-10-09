@@ -39,8 +39,12 @@ _main_task() {
 
     local tag_artist=""
     local tag_title=""
-    tag_artist=$(grep -m1 "^Performer $FIELD_SEPARATOR" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
-    tag_title=$(grep -m1 "^Track name $FIELD_SEPARATOR" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
+    tag_artist=$(grep -m1 "^Performer" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
+    tag_title=$(grep -m1 "^Track name" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
+    if [[ -z "$tag_title" ]]; then
+        # Fallback to "Title" if "Track name" is empty.
+        tag_title=$(grep -m1 "^Title" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
+    fi
 
     # Check if the values are not empty.
     if [[ -z "$tag_artist" ]]; then
