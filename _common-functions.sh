@@ -615,8 +615,7 @@ _deps_get_dependency_value() {
         esac
 
         # Special handling for Termux (Android). Even though Termux uses
-        # apt-get, its package names differs from standard Debian/Ubuntu,
-        # so it is renamed to "apt-termux".
+        # apt-get, its package names differs from standard Debian/Ubuntu.
         if [[ "$pkg_manager" == "apt-termux" ]] &&
             [[ "$available_pkg_manager" == "apt-get" ]] &&
             [[ "${HOME:-}" == *"com.termux"* ]]; then
