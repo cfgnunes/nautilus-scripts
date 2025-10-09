@@ -25,9 +25,10 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+    local dimension=256
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=png")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=png; par_suffix='($dimension px)'")
 
     local inkscape_ver=""
     local inkscape_ver_old="1.0"
@@ -36,10 +37,10 @@ _main_task() {
         sort --version-sort | head -n 1 |
         grep --quiet --line-regexp "$inkscape_ver"; then
         # Old Inkscape version.
-        std_output=$(inkscape --without-gui --export-area-drawing --file="$input_file" --export-height=256 --export-png="$output_file" 2>&1)
+        std_output=$(inkscape --without-gui --export-area-drawing --file="$input_file" --export-height=$dimension --export-png="$output_file" 2>&1)
     else
         # New Inkscape version.
-        std_output=$(inkscape --export-area-drawing --export-height=256 --export-filename="$output_file" -- "$input_file" 2>&1)
+        std_output=$(inkscape --export-area-drawing --export-height=$dimension --export-filename="$output_file" -- "$input_file" 2>&1)
     fi
 
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
