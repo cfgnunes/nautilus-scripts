@@ -233,10 +233,10 @@ __run_move_file() {
     __clean_temp_files
 
     __create_temp_files
-    _move_file "overwrite" "$_TEMP_FILE1" "$_TEMP_FILE2"
+    _move_file "safe_overwrite" "$_TEMP_FILE1" "$_TEMP_FILE2"
     expected_output=$_TEMP_FILE1_CONTENT
     output=$(<"$_TEMP_FILE2")
-    __test_equal "overwrite" "$expected_output" "$output"
+    __test_equal "safe_overwrite" "$expected_output" "$output"
     __clean_temp_files
 
     __create_temp_files

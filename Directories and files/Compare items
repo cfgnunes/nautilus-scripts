@@ -140,8 +140,8 @@ _compare_hexa() {
 
     # Move the modified files to their original locations, replacing the
     # originals.
-    _move_temp_file_to_output "$file_1" "$file_1_modified" "$file_1"
-    _move_temp_file_to_output "$file_2" "$file_2_modified" "$file_2"
+    _move_file "safe_overwrite" "$file_1_modified" "$file_1"
+    _move_file "safe_overwrite" "$file_2_modified" "$file_2"
 }
 
 _compare_identical() {

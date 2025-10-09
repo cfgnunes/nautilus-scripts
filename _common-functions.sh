@@ -312,7 +312,6 @@ _run_task_parallel() {
         _log_error \
         _main_task \
         _move_file \
-        _move_temp_file_to_output \
         _storage_text_write \
         _storage_text_write_ln \
         _str_collapse_char \
@@ -1162,11 +1161,12 @@ _move_file() {
     # Parameters:
     #   - $1 (par_when_conflict): Optional, default: "skip". Defines the
     #     behavior when the destination file already exists.
-    #     - "overwrite": Overwrite the destination file.
     #     - "rename": Rename the source file to avoid conflicts by adding a
     #       suffix to the destination filename.
     #     - "skip": Skip moving the file if the destination file exists (logs a
     #       error).
+    #     - "safe_overwrite": Safely overwrite the destination file, preserving
+    #       its permissions and creating a backup.
     #   - $2 (file_src): The path to the source file to be moved.
     #   - $3 (file_dst): The destination path where the file should be moved.
     #
@@ -1180,8 +1180,13 @@ _move_file() {
     local file_src=$2
     local file_dst=$3
 
-    # Check for empty parameters.
+    # Ensure both source and destination are provided.
     if [[ -z "$file_src" ]] || [[ -z "$file_dst" ]]; then
+        return 1
+    fi
+
+    # Abort if the source file does not exist.
+    if [[ ! -e "$file_src" ]]; then
         return 1
     fi
 
@@ -1195,80 +1200,50 @@ _move_file() {
         file_dst="./$file_dst"
     fi
 
-    # Ignore moving to the same file.
+    # Skip moving if source and destination are the same file.
     if [[ "$file_src" == "$file_dst" ]]; then
         return 0
     fi
 
-    # Process the parameter '$par_when_conflict': what to do when the
-    # '$file_dst' already exists.
+    # Handle conflict behavior when destination already exists.
     case "$par_when_conflict" in
-    "overwrite")
-        mv -f -- "$file_src" "$file_dst" 2>/dev/null
-        ;;
     "rename")
-        # Rename the file (add a suffix).
+        # Append a numeric suffix to avoid overwriting an existing file.
         file_dst=$(_get_filename_next_suffix "$file_dst")
         mv -n -- "$file_src" "$file_dst" 2>/dev/null
         ;;
     "skip")
-        # Do not move the file if the destination file already exists.
+        # Do not overwrite if destination already exists.
+        mv -n -- "$file_src" "$file_dst" 2>/dev/null
+        ;;
+    "safe_overwrite")
+        # Safely overwrite the destination while preserving attributes and
+        # backups.
+        if [[ -e "$file_dst" ]]; then
+            # Skip empty source files (0 bytes), considered invalid or
+            # incomplete.
+            if [[ ! -s "$file_src" ]]; then
+                return 1
+            fi
+
+            # Skip if both files are identical to avoids unnecessary overwrite.
+            if cmp --silent -- "$file_src" "$file_dst"; then
+                rm -rf -- "$file_src" 2>/dev/null
+                return 1
+            fi
+
+            # Apply the same permissions from the destination to the new file.
+            chmod --reference="$file_dst" -- "$file_src" 2>/dev/null
+
+            # Create a backup of the existing destination file.
+            local file_dst_bak="$file_dst.bak"
+            file_dst_bak=$(_get_filename_next_suffix "$file_dst_bak")
+            mv -n -- "$file_dst" "$file_dst_bak" 2>/dev/null
+        fi
+        # Move the source file to the destination.
         mv -n -- "$file_src" "$file_dst" 2>/dev/null
         ;;
     esac
-
-    if [[ -e "$file_src" ]]; then
-        if [[ -e "$file_dst" ]]; then
-            _log_error "The destination file already exists." \
-                "$file_src" "" "$file_dst"
-        else
-            _log_error "Unable to move." \
-                "$file_src" "" "$file_dst"
-        fi
-        return 1
-    fi
-
-    return 0
-}
-
-_move_temp_file_to_output() {
-    # This function moves a temporary file to a specified output location,
-    # handling various conditions to ensure the move is safe and proper.
-    #
-    # Parameters:
-    #   - $1 (input_file): The path to the original input file, which may be
-    #     backed up during the process.
-    #   - $2 (temp_file): The temporary file to be moved to the output
-    #     location.
-    #   - $3 (output_file): The target path where the temp file should be
-    #     moved.
-
-    local input_file=$1
-    local temp_file=$2
-    local output_file=$3
-    local std_output=""
-
-    # Skip empty files.
-    if [[ ! -s "$temp_file" ]]; then
-        return 1
-    fi
-
-    # Skip files if the content of '$temp_file' is equal to the '$input_file'.
-    if cmp --silent -- "$temp_file" "$input_file"; then
-        return 1
-    fi
-
-    # If '$input_file' equals '$output_file', create a backup of '$input_file'.
-    if [[ "$input_file" == "$output_file" ]]; then
-        _move_file "rename" "$input_file" "$input_file.bak" || return 1
-    fi
-
-    # Move the '$temp_file' to '$output_file'.
-    _move_file "rename" "$temp_file" "$output_file" || return 1
-
-    # Preserve the same permissions of '$input_file'.
-    std_output=$(chmod --reference="$input_file" -- "$output_file" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     return 0
 }

@@ -128,7 +128,7 @@ _main_task() {
 
     # Move the temporary file to the output.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=png")
-    _move_temp_file_to_output "$input_file" "$temp_file4" "$output_file"
+    _move_file "rename" "$temp_file4" "$output_file"
 
     # Remove the temporary files on each iteration (if not removed before).
     rm -f -- "$temp_file1"
