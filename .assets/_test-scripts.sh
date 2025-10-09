@@ -159,9 +159,11 @@ _main() {
     input_file2="$_TEMP_DIR_TEST/test audio 2.mp3"
     output_file="$_TEMP_DIR_TEST/test audio"
     if command -v "ffmpeg" &>/dev/null; then
-        ffmpeg -hide_banner -y -f lavfi -i "sine=frequency=440:duration=5" \
+        ffmpeg -hide_banner -y \
+            -f lavfi -i "sine=frequency=440:duration=5" \
             "$input_file1" &>/dev/null
-        ffmpeg -hide_banner -y -f lavfi -i "sine=frequency=440:duration=5" \
+        ffmpeg -hide_banner -y \
+            -f lavfi -i "sine=frequency=440:duration=5" \
             "$input_file2" &>/dev/null
     fi
 
@@ -349,15 +351,13 @@ _main() {
         ffmpeg -hide_banner -y \
             -f lavfi -i color=c=red:s=200x100:d=3:r=25 \
             -f lavfi -i "sine=frequency=440:duration=3" \
-            -shortest -c:v libx264 -c:a aac -pix_fmt yuv420p \
-            "$input_file1" &>/dev/null
+            -shortest "$input_file1" &>/dev/null
 
         # Generate a test video (blue background with an 880 Hz sine tone).
         ffmpeg -hide_banner -y \
             -f lavfi -i color=c=blue:s=200x100:d=3:r=25 \
             -f lavfi -i "sine=frequency=880:duration=3" \
-            -shortest -c:v libx264 -c:a aac -pix_fmt yuv420p \
-            "$input_file2" &>/dev/null
+            -shortest "$input_file2" &>/dev/null
     fi
 
     script_test="Audio and video/Video: Aspect ratio/Video: Aspect to 1:1"
@@ -852,9 +852,11 @@ _main() {
         convert -size 200x100 xc:red "$input_file1" &>/dev/null
         convert -size 200x100 xc:blue "$input_file2" &>/dev/null
     elif command -v "ffmpeg" &>/dev/null; then
-        ffmpeg -hide_banner -y -f lavfi -i color=c=red:s=200x100 -frames:v 1 \
+        ffmpeg -hide_banner -y \
+            -f lavfi -i color=c=red:s=200x100 -frames:v 1 \
             -update 1 "$input_file1" &>/dev/null
-        ffmpeg -hide_banner -y -f lavfi -i color=c=blue:s=200x100 -frames:v 1 \
+        ffmpeg -hide_banner -y \
+            -f lavfi -i color=c=blue:s=200x100 -frames:v 1 \
             -update 1 "$input_file2" &>/dev/null
     fi
 
