@@ -1306,18 +1306,32 @@ _step_close_filemanager() {
 
     case "$FILE_MANAGER" in
     "nautilus" | "nemo" | "thunar")
-        # Close the file manager.
+        # These file managers support the '-q' option to quit gracefully.
         $FILE_MANAGER -q &>/dev/null
         ;;
     "caja")
-        # Close the file manager.
+        # Close Caja gracefully.
         caja -q &>/dev/null
         # Reload Caja in background to restore desktop icons.
-        caja --force-desktop --no-default-window &>/dev/null &
+        nohup caja --force-desktop --no-default-window &>/dev/null &
         ;;
     "pcmanfm-qt")
-        # FIXME: Restore desktop after kill PCManFM-Qt.
+        # NOTE: 'pcmanfm-qt' does not reload automatically after quitting.
+        # We need to capture its current launch command to restart it.
+        local session_command=""
+        session_command=$(pgrep -a "pcmanfm-qt" | head -n1 | cut -d " " -f 2-)
+
+        # Kill all existing 'pcmanfm-qt' processes.
         killall "$FILE_MANAGER" &>/dev/null
+
+        # Restart it using the same session command (if found).
+        if [[ -n "$session_command" ]]; then
+            # shellcheck disable=SC2086
+            nohup $session_command &>/dev/null &
+        else
+            # Fallback: start pcmanfm-qt with default settings.
+            nohup pcmanfm-qt --desktop &>/dev/null &
+        fi
         ;;
     esac
 }
