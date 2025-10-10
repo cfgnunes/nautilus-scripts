@@ -706,15 +706,15 @@ _deps_install_missing_packages() {
 #
 # PARAMETERS:
 #   $1 (pkg_manager): The package manager to use for installation.
-#   Supported values are:
-#        - "apt-get"     : For Debian/Ubuntu systems.
-#        - "dnf"         : For Fedora/RHEL systems.
-#        - "rpm-ostree"  : For Fedora Atomic systems.
-#        - "pacman"      : For Arch Linux systems.
-#        - "zypper"      : For openSUSE systems.
-#        - "nix"         : For Nix-based systems.
-#        - "brew"        : For Homebrew package manager.
-#        - "guix"        : For GNU Guix systems.
+#      Supported values:
+#      - "apt-get"     : For Debian/Ubuntu systems.
+#      - "dnf"         : For Fedora/RHEL systems.
+#      - "rpm-ostree"  : For Fedora Atomic systems.
+#      - "pacman"      : For Arch Linux systems.
+#      - "zypper"      : For openSUSE systems.
+#      - "nix"         : For Nix-based systems.
+#      - "brew"        : For Homebrew package manager.
+#      - "guix"        : For GNU Guix systems.
 #   $2 (packages): A space-separated list of package names to install.
 #   $3 (post_install): An optional command to be executed right after the
 #      installation.
@@ -848,15 +848,15 @@ _deps_installation_check() {
 #
 # PARAMETERS:
 #   $1 (pkg_manager): The package manager to use for the check.
-#   Supported values are:
-#        - "apt-get"     : For Debian/Ubuntu systems.
-#        - "dnf"         : For Fedora/RHEL systems.
-#        - "rpm-ostree"  : For Fedora Atomic systems.
-#        - "pacman"      : For Arch Linux systems.
-#        - "zypper"      : For openSUSE systems.
-#        - "nix"         : For Nix-based systems.
-#        - "brew"        : For Homebrew package manager.
-#        - "guix"        : For GNU Guix systems.
+#      Supported values:
+#      - "apt-get"     : For Debian/Ubuntu systems.
+#      - "dnf"         : For Fedora/RHEL systems.
+#      - "rpm-ostree"  : For Fedora Atomic systems.
+#      - "pacman"      : For Arch Linux systems.
+#      - "zypper"      : For openSUSE systems.
+#      - "nix"         : For Nix-based systems.
+#      - "brew"        : For Homebrew package manager.
+#      - "guix"        : For GNU Guix systems.
 #   $2 (package): The name of the package to check.
 #
 # RETURNS:
@@ -1017,8 +1017,8 @@ _directory_push() {
 #   $1 (input_files): A space-separated string containing file or
 #      directory paths to filter. These paths are passed to the 'find'
 #      command.
-#   $2 (par_type): A string specifying the type of file to search for. It
-#      can be:
+#   $2 (par_type): A string specifying the type of file to search for.
+#      Supported values:
 #      - "file": To search for files and symbolic links.
 #      - "directory": To search for directories and symbolic links.
 #   $3 (par_skip_extension): A string of file extensions to exclude from
@@ -1201,10 +1201,10 @@ _get_filename_next_suffix() {
 # PARAMETERS:
 #   $1 (par_when_conflict): Optional, default: "skip". Defines the
 #      behavior when the destination file already exists.
+#      Supported values:
 #      - "rename": Rename the source file to avoid conflicts by adding a
-#        suffix to the destination filename.
-#      - "skip": Skip moving the file if the destination file exists (logs a
-#        error).
+#         suffix to the destination filename.
+#      - "skip": Skip moving the file if the destination file exists.
 #      - "safe_overwrite": Safely overwrite the destination file, preserving
 #        its permissions and creating a backup.
 #   $2 (file_src): The path to the source file to be moved.
@@ -1569,14 +1569,14 @@ _display_info_box() {
 #      format "--column:<name>,--column:<name>".
 #   - "par_item_name": A string representing the name of the items in the
 #      list. If not provided, the default value is 'items'.
-#   - "par_action": The action to perform on the selected items. Possible
-#      values include:
-#       - "open_file": Opens the selected files with the default
-#         application.
-#       - "open_location": Opens the file manager at the location of the
-#         selected items.
-#       - "open_url": Opens the selected URLs in the default web browser.
-#       - "delete_item": Deletes the selected items after user
+#   - "par_action": The action to perform on the selected items.
+#      Supported values:
+#      - "open_file": Opens the selected files with the default
+#        application.
+#      - "open_location": Opens the file manager at the location of the
+#        selected items.
+#      - "open_url": Opens the selected URLs in the default web browser.
+#      - "delete_item": Deletes the selected items after user
 #     confirmation.
 #   - "par_resolve_links": A boolean-like string ('true' or 'false')
 #     indicating whether symbolic links in item paths should be resolved to
@@ -2548,13 +2548,15 @@ _get_filenames_filemanager() {
 #      the function's behavior. Example: 'par_type=file; par_min_items=2'.
 #
 # PARAMETERS OPTIONS:
-#   - "par_type": Specifies the type of items to filter:
-#       - "file" (default): Filters files.
-#       - "directory": Filters directories.
-#       - "all": Includes both files and directories.
-#   - "par_recursive": Specifies whether to expand directories recursively:
-#       - "false" (default): Does not expand directories.
-#       - "true": Expands directories recursively.
+#   - "par_type": Specifies the type of items to filter.
+#      Supported values:
+#      - "file" (default): Filters files.
+#      - "directory": Filters directories.
+#      - "all": Includes both files and directories.
+#   - "par_recursive": Specifies whether to expand directories recursively.
+#      Supported values:
+#      - "false" (default): Does not expand directories.
+#      - "true": Expands directories recursively.
 #   - "par_max_items", "par_min_items": Limits the number of files.
 #   - "par_select_extension": Filters by file extension.
 #   - "par_select_mime": Filters by MIME type.
@@ -2863,7 +2865,7 @@ _validate_file_mime_parallel() {
 #   $1 (input_files): A space-separated string containing the paths of
 #      files or directories to be validated.
 #   $2 (par_type): A string indicating the type of items to validate.
-#      Possible values:
+#      Supported values:
 #      - "file": Validate files only.
 #      - "directory": Validate directories only.
 #      - "all": Validate both files and directories.
@@ -3016,22 +3018,23 @@ _get_output_dir() {
 #      generated.
 #   $2 (output_dir): The directory where the output file will be placed.
 #   $3 (parameters): A string containing optional parameters that define
-#      how the output filename should be constructed. It supports the
-#      following options:
-#      - par_extension_opt: Specifies how to handle the file extension.
-#        Options are:
-#        - "append": Append a new extension 'par_extension' to the existing
-#          file extension.
-#        - "preserve": Keep the original file extension.
-#        - "replace": Replace the current extension with a new one
-#          'par_extension'.
-#        - "strip": Remove the file extension entirely.
-#      - par_extension: The extension to use when 'par_extension_opt' is set
-#        to 'append' or 'replace'. This value is ignored for the 'preserve'
-#        and 'strip' options.
-#      - par_prefix: A string to be added as prefix to the output filename.
-#      - par_suffix: A string to be added as suffix to the output
-#        filename, placed before the extension.
+#      how the output filename should be constructed.
+#
+# PARAMETERS OPTIONS:
+#   - "par_extension_opt": Specifies how to handle the file extension.
+#      Supported values:
+#      - "append": Append a new extension 'par_extension' to the existing
+#         file extension.
+#      - "preserve": Keep the original file extension.
+#      - "replace": Replace the current extension with a new one
+#        'par_extension'.
+#      - "strip": Remove the file extension entirely.
+#   - "par_extension": The extension to use when 'par_extension_opt' is set
+#     to 'append' or 'replace'. This value is ignored for the 'preserve'
+#     and 'strip' options.
+#   - "par_prefix": A string to be added as prefix to the output filename.
+#   - "par_suffix": A string to be added as suffix to the output
+#     filename, placed before the extension.
 _get_output_filename() {
     local input_file=$1
     local output_dir=$2
