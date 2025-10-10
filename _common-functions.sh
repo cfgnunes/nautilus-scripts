@@ -574,7 +574,6 @@ _deps_get_available_package_manager() {
     local apps=(
         "brew"
         "nix"
-        "pkg"
         "apt-get"
         "rpm-ostree"
         "dnf"
@@ -714,7 +713,6 @@ _deps_install_missing_packages() {
 #      - "zypper"      : For openSUSE systems.
 #      - "nix"         : For Nix-based systems.
 #      - "brew"        : For Homebrew package manager.
-#      - "pkg"         : For Termux (Android).
 #      - "guix"        : For GNU Guix systems.
 #   $2 (packages): A space-separated list of package names to install.
 #   $3 (post_install): An optional command to be executed right after the
@@ -774,25 +772,6 @@ _deps_install_packages() {
     "brew")
         cmd_install="brew install $packages &>/dev/null"
         # Homebrew does not require root for installing user packages.
-        admin_cmd=""
-        ;;
-    "pkg")
-        # shellcheck disable=SC1091
-        local termux_bin_dir="/data/data/com.termux/files/usr/bin"
-        local termux_pkg_manager="$termux_bin_dir/termux-setup-package-manager"
-        if [[ -f "$termux_pkg_manager" ]]; then
-            # shellcheck disable=SC1090
-            source "$termux_pkg_manager"
-        fi
-        if [[ "${TERMUX_APP_PACKAGE_MANAGER:-}" == "pacman" ]]; then
-            cmd_install+="pacman -Syy &>/dev/null;"
-            cmd_install+="pacman --noconfirm -S $packages &>/dev/null"
-        else
-            # Default to 'apt-get' as fallback in Termux.
-            cmd_install+="apt-get update &>/dev/null;"
-            cmd_install+="apt-get -y install $packages &>/dev/null"
-        fi
-        # Termux does not require root for installing user packages.
         admin_cmd=""
         ;;
     "guix")
@@ -876,7 +855,6 @@ _deps_installation_check() {
 #      - "zypper"      : For openSUSE systems.
 #      - "nix"         : For Nix-based systems.
 #      - "brew"        : For Homebrew package manager.
-#      - "pkg"         : For Termux (Android).
 #      - "guix"        : For GNU Guix systems.
 #   $2 (package): The name of the package to check.
 #
@@ -927,24 +905,6 @@ _deps_is_package_installed() {
     "brew")
         if brew list | grep --quiet "$package"; then
             return 0
-        fi
-        ;;
-    "pkg")
-        local termux_bin_dir="/data/data/com.termux/files/usr/bin"
-        local termux_pkg_manager="$termux_bin_dir/termux-setup-package-manager"
-        if [[ -f "$termux_pkg_manager" ]]; then
-            # shellcheck disable=SC1090
-            source "$termux_pkg_manager"
-        fi
-        if [[ "${TERMUX_APP_PACKAGE_MANAGER:-}" == "pacman" ]]; then
-            if pacman -Q "$package" &>/dev/null; then
-                return 0
-            fi
-        else
-            # Default to 'apt-get' as fallback in Termux.
-            if dpkg -s "$package" &>/dev/null; then
-                return 0
-            fi
         fi
         ;;
     "guix")
