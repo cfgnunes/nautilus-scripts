@@ -62,11 +62,11 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `F4`                | Terminal                          |
 | `F7`                | Disk Usage Analyzer               |
 | `<Control>E`        | Extract here                      |
-| `<Control><Alt>C`   | Compress...                       |
+| `<Control><Alt>Z`   | Compress to .zip (each)           |
 | `<Control><Alt>G`   | Compress to .tar.gz (each)        |
 | `<Control><Alt>X`   | Compress to .tar.xz (each)        |
 | `<Control><Alt>S`   | Compress to .tar.zst (each)       |
-| `<Control><Alt>Z`   | Compress to .zip (each)           |
+| `<Control><Alt>C`   | Copy filename to clipboard        |
 | `<Control><Alt>V`   | Paste as hard link                |
 | `<Control><Shift>V` | Paste as symbolic link            |
 | `<Control><Shift>C` | Compare items                     |
