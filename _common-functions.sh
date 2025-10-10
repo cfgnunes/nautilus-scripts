@@ -150,14 +150,14 @@ _exit_script() {
 # expected output file is missing.
 #
 # PARAMETERS:
-#   - $1 (exit_code): The exit code returned by the command or process.
-#   - $2 (std_output): The standard output or error from the command.
-#   - $3 (input_file): The input file associated (if applicable).
-#   - $4 (output_file): The expected output file to verify its existence.
+#   $1 (exit_code): The exit code returned by the command or process.
+#   $2 (std_output): The standard output or error from the command.
+#   $3 (input_file): The input file associated (if applicable).
+#   $4 (output_file): The expected output file to verify its existence.
 #
 # RETURNS:
-#   - "0" (true): If the command was successful and the output file exists.
-#   - "1" (false): If the command failed or the output file does not exist.
+#   "0" (true): If the command was successful and the output file exists.
+#   "1" (false): If the command failed or the output file does not exist.
 _check_output() {
     local exit_code=$1
     local std_output=$2
@@ -189,13 +189,13 @@ _check_output() {
 # output. The entry is saved to a temporary log file.
 #
 # PARAMETERS:
-#   - $1 (message): The error message to be logged.
-#   - $2 (input_file): The path of the input file associated with the
-#     operation.
-#   - $3 (std_output): The standard output or result from the operation
-#     that will be logged.
-#   - $4 (output_file): The path of the output file associated with the
-#     operation.
+#   $1 (message): The error message to be logged.
+#   $2 (input_file): The path of the input file associated with the
+#      operation.
+#   $3 (std_output): The standard output or result from the operation
+#      that will be logged.
+#   $4 (output_file): The path of the output file associated with the
+#      operation.
 _log_error() {
     local message=$1
     local input_file=$2
@@ -232,7 +232,7 @@ _log_error() {
 #
 # PARAMETERS:
 #   $1 (output_dir): Optional. The directory where the consolidated log
-#   file will be saved. If not specified, a default directory is used.
+#      file will be saved. If not specified, a default directory is used.
 _logs_consolidate() {
     local output_dir=$1
     local log_file_output="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
@@ -273,8 +273,8 @@ _logs_consolidate() {
 # specified output directory for results.
 #
 # PARAMETERS:
-#   - $1 (input_files): A field-separated list of file paths to process.
-#   - $2 (output_dir): The directory where the output files will be stored.
+#   $1 (input_files): A field-separated list of file paths to process.
+#   $2 (output_dir): The directory where the output files will be stored.
 _run_task_parallel() {
     local input_files=$1
     local output_dir=$2
@@ -355,11 +355,11 @@ _run_task_parallel() {
 # This function checks whether a given command is available on the system.
 #
 # PARAMETERS:
-#   - $1 (command_check): The name of the command to verify.
+#   $1 (command_check): The name of the command to verify.
 #
 # RETURNS:
-#   - "0" (true): If the command is available.
-#   - "1" (false): If the command is not available.
+#   "0" (true): If the command is available.
+#   "1" (false): If the command is not available.
 _command_exists() {
     local command_check=$1
 
@@ -377,8 +377,8 @@ _command_exists() {
 # in the current environment and prompts the user to install missing ones.
 #
 # PARAMETERS:
-#   - $1 (commands): A list of commands to check. The list can be delimited
-#     either by a space ' ', a comma ',' or by a newline '\n'.
+#   $1 (commands): A list of commands to check. The list can be delimited
+#      either by a space ' ', a comma ',' or by a newline '\n'.
 _dependencies_check_commands() {
     local commands=$1
     local packages_install=""
@@ -451,8 +451,8 @@ _dependencies_check_commands() {
 # operations, based on the current session type (Wayland or X11).
 #
 # PARAMETERS:
-#   - $1 (input_commands): A string containing the initial commands list,
-#     which will be extended with the clipboard-related commands.
+#   $1 (input_commands): A string containing the initial commands list,
+#      which will be extended with the clipboard-related commands.
 _dependencies_check_commands_clipboard() {
     local input_commands=$1
     local commands="$input_commands "
@@ -490,8 +490,8 @@ _dependencies_check_commands_clipboard() {
 # in the current environment and prompts the user to install missing ones.
 #
 # PARAMETERS:
-#   - $1 (packages): A list of packages to check. The list can be delimited
-#     either by a space ' ' or by a newline '\n'.
+#   $1 (packages): A list of packages to check. The list can be delimited
+#      either by a space ' ' or by a newline '\n'.
 _dependencies_check_metapackages() {
     local packages=$1
     local packages_install=""
@@ -597,10 +597,10 @@ _deps_get_available_package_manager() {
 # for a specific package manager from a provided associative array.
 #
 # PARAMETERS:
-#   - $1 (command): The command or key whose value is being queried.
-#   - $2 (available_pkg_manager): The package manager to match.
-#   - $3 (array_values): The name of the associative array that contains
-#     the mappings (<package_manager>:<value> pairs).
+#   $1 (command): The command or key whose value is being queried.
+#   $2 (available_pkg_manager): The package manager to match.
+#   $3 (array_values): The name of the associative array that contains
+#      the mappings (<package_manager>:<value> pairs).
 _deps_get_dependency_value() {
     local command=$1
     local available_pkg_manager=$2
@@ -705,19 +705,19 @@ _deps_install_missing_packages() {
 # manager.
 #
 # PARAMETERS:
-#   - $1 (pkg_manager): The package manager to use for installation.
+#   $1 (pkg_manager): The package manager to use for installation.
 #   Supported values are:
-#       - "apt-get"     : For Debian/Ubuntu systems.
-#       - "dnf"         : For Fedora/RHEL systems.
-#       - "rpm-ostree"  : For Fedora Atomic systems.
-#       - "pacman"      : For Arch Linux systems.
-#       - "zypper"      : For openSUSE systems.
-#       - "nix"         : For Nix-based systems.
-#       - "brew"        : For Homebrew package manager.
-#       - "guix"        : For GNU Guix systems.
-#   - $2 (packages): A space-separated list of package names to install.
-#   - $3 (post_install): An optional command to be executed right after the
-#     installation.
+#        - "apt-get"     : For Debian/Ubuntu systems.
+#        - "dnf"         : For Fedora/RHEL systems.
+#        - "rpm-ostree"  : For Fedora Atomic systems.
+#        - "pacman"      : For Arch Linux systems.
+#        - "zypper"      : For openSUSE systems.
+#        - "nix"         : For Nix-based systems.
+#        - "brew"        : For Homebrew package manager.
+#        - "guix"        : For GNU Guix systems.
+#   $2 (packages): A space-separated list of package names to install.
+#   $3 (post_install): An optional command to be executed right after the
+#      installation.
 _deps_install_packages() {
     local pkg_manager=$1
     local packages=$2
@@ -806,10 +806,10 @@ _deps_install_packages() {
 # proceeding.
 #
 # PARAMETERS:
-#   - $1 (available_pkg_manager): The package manager to use for
-#     installation verification.
-#   - $2 (packages_check): A space-separated string containing the names
-#     of packages that should be checked for successful installation.
+#   $1 (available_pkg_manager): The package manager to use for
+#      installation verification.
+#   $2 (packages_check): A space-separated string containing the names
+#      of packages that should be checked for successful installation.
 _deps_installation_check() {
     local available_pkg_manager=$1
     local packages_check=$2
@@ -847,21 +847,21 @@ _deps_installation_check() {
 # package manager.
 #
 # PARAMETERS:
-#   - $1 (pkg_manager): The package manager to use for the check.
+#   $1 (pkg_manager): The package manager to use for the check.
 #   Supported values are:
-#       - "apt-get"     : For Debian/Ubuntu systems.
-#       - "dnf"         : For Fedora/RHEL systems.
-#       - "rpm-ostree"  : For Fedora Atomic systems.
-#       - "pacman"      : For Arch Linux systems.
-#       - "zypper"      : For openSUSE systems.
-#       - "nix"         : For Nix-based systems.
-#       - "brew"        : For Homebrew package manager.
-#       - "guix"        : For GNU Guix systems.
-#   - $2 (package): The name of the package to check.
+#        - "apt-get"     : For Debian/Ubuntu systems.
+#        - "dnf"         : For Fedora/RHEL systems.
+#        - "rpm-ostree"  : For Fedora Atomic systems.
+#        - "pacman"      : For Arch Linux systems.
+#        - "zypper"      : For openSUSE systems.
+#        - "nix"         : For Nix-based systems.
+#        - "brew"        : For Homebrew package manager.
+#        - "guix"        : For GNU Guix systems.
+#   $2 (package): The name of the package to check.
 #
 # RETURNS:
-#   - "0" (true): If the package is installed.
-#   - "1" (false): If the package is not installed or an error occurs.
+#   "0" (true): If the package is installed.
+#   "1" (false): If the package is not installed or an error occurs.
 _deps_is_package_installed() {
     local pkg_manager=$1
     local package=$2
@@ -973,8 +973,8 @@ _delete_items() {
 # to the previous directory.
 #
 # RETURNS:
-#   - "0" (true): If the directory was successfully popped and changed.
-#   - "1" (false): If there was an error popping the directory.
+#   "0" (true): If the directory was successfully popped and changed.
+#   "1" (false): If there was an error popping the directory.
 _directory_pop() {
 
     popd &>/dev/null || {
@@ -991,12 +991,12 @@ _directory_pop() {
 # changes to it.
 #
 # PARAMETERS:
-#   - $1 (directory): The target directory to push onto the directory stack
-#     and navigate to.
+#   $1 (directory): The target directory to push onto the directory stack
+#      and navigate to.
 #
 # RETURNS:
-#   - "0" (true): If the directory was successfully pushed and changed.
-#   - "1" (false): If there was an error pushing the directory.
+#   "0" (true): If the directory was successfully pushed and changed.
+#   "1" (false): If there was an error pushing the directory.
 _directory_push() {
     local directory=$1
 
@@ -1014,20 +1014,20 @@ _directory_push() {
 # user-specified criteria, such as file type, extensions, and recursion.
 #
 # PARAMETERS:
-#   - $1 (input_files): A space-separated string containing file or
-#     directory paths to filter. These paths are passed to the 'find'
-#     command.
-#   - $2 (par_type): A string specifying the type of file to search for. It
-#     can be:
-#     - "file": To search for files and symbolic links.
-#     - "directory": To search for directories and symbolic links.
-#   - $3 (par_skip_extension): A string of file extensions to exclude from
-#     the search. Only files with extensions not matching this list will be
-#     included.
-#   - $4 (par_select_extension): A string of file extensions to include in
-#     the search. Only files with matching extensions will be included.
-#   - $5 (par_find_parameters): Optional. Additional parameters to be
-#     passed directly to the 'find' command.
+#   $1 (input_files): A space-separated string containing file or
+#      directory paths to filter. These paths are passed to the 'find'
+#      command.
+#   $2 (par_type): A string specifying the type of file to search for. It
+#      can be:
+#      - "file": To search for files and symbolic links.
+#      - "directory": To search for directories and symbolic links.
+#   $3 (par_skip_extension): A string of file extensions to exclude from
+#      the search. Only files with extensions not matching this list will be
+#      included.
+#   $4 (par_select_extension): A string of file extensions to include in
+#      the search. Only files with matching extensions will be included.
+#   $5 (par_find_parameters): Optional. Additional parameters to be
+#      passed directly to the 'find' command.
 #
 # EXAMPLE:
 #   - Input: "dir1 dir2", "file", "", "txt|pdf", "true"
@@ -1084,7 +1084,7 @@ _find_filtered_files() {
 # This function extracts the directory path from a given file path.
 #
 # PARAMETERS:
-#   - $1 (input_filename): The full path or relative path to the file.
+#   $1 (input_filename): The full path or relative path to the file.
 _get_filename_dir() {
     local input_filename=$1
     local dir=""
@@ -1100,7 +1100,7 @@ _get_filename_dir() {
 # This function extracts the file extension from a given filename.
 #
 # PARAMETERS:
-#   - $1 (filename): The input filename (can be absolute or relative).
+#   $1 (filename): The input filename (can be absolute or relative).
 _get_filename_extension() {
     local filename=$1
     filename=$(sed -E "s|.*/(\.)*||g" <<<"$filename")
@@ -1117,7 +1117,7 @@ _get_filename_extension() {
 # exists.
 #
 # PARAMETERS:
-#   - $1 (filename): The filename from which to strip the extension.
+#   $1 (filename): The filename from which to strip the extension.
 #
 # RETURNS:
 #   - The filename without its extension.
@@ -1141,7 +1141,7 @@ _strip_filename_extension() {
 # This function returns the full absolute path of a given filename.
 #
 # PARAMETERS:
-#   - $1 (input_filename): The input filename or relative path.
+#   $1 (input_filename): The input filename or relative path.
 _get_filename_full_path() {
     local input_filename=$1
     local full_path=$input_filename
@@ -1163,9 +1163,9 @@ _get_filename_full_path() {
 # that the new filename does not overwrite an existing file.
 #
 # PARAMETERS:
-#   - $1 (filename): The input filename or path. This can be an absolute or
-#     relative filename. If the input file has an extension, it will be
-#     stripped for the purpose of generating the new filename.
+#   $1 (filename): The input filename or path. This can be an absolute or
+#      relative filename. If the input file has an extension, it will be
+#      stripped for the purpose of generating the new filename.
 _get_filename_next_suffix() {
     local filename=$1
     local filename_result=$filename
@@ -1199,22 +1199,22 @@ _get_filename_next_suffix() {
 # exists.
 #
 # PARAMETERS:
-#   - $1 (par_when_conflict): Optional, default: "skip". Defines the
-#     behavior when the destination file already exists.
-#     - "rename": Rename the source file to avoid conflicts by adding a
-#       suffix to the destination filename.
-#     - "skip": Skip moving the file if the destination file exists (logs a
-#       error).
-#     - "safe_overwrite": Safely overwrite the destination file, preserving
-#       its permissions and creating a backup.
-#   - $2 (file_src): The path to the source file to be moved.
-#   - $3 (file_dst): The destination path where the file should be moved.
+#   $1 (par_when_conflict): Optional, default: "skip". Defines the
+#      behavior when the destination file already exists.
+#      - "rename": Rename the source file to avoid conflicts by adding a
+#        suffix to the destination filename.
+#      - "skip": Skip moving the file if the destination file exists (logs a
+#        error).
+#      - "safe_overwrite": Safely overwrite the destination file, preserving
+#        its permissions and creating a backup.
+#   $2 (file_src): The path to the source file to be moved.
+#   $3 (file_dst): The destination path where the file should be moved.
 #
 # RETURNS:
-#   - "0" (true): If the operation is successful or if the source and
-#     destination are the same file.
-#   - "1" (false): If any required parameters are missing, if the move
-#     fails, or if an invalid conflict parameter is provided.
+#   "0" (true): If the operation is successful or if the source and
+#       destination are the same file.
+#   "1" (false): If any required parameters are missing, if the move
+#       fails, or if an invalid conflict parameter is provided.
 _move_file() {
     local par_when_conflict=${1:-"skip"}
     local file_src=$2
@@ -1297,9 +1297,9 @@ _move_file() {
 # directory to be removed later.
 #
 # PARAMETERS:
-#   - $1 (output_dir): The directory where the temporary directory will be
-#     created.
-#   - $2 (basename): The prefix for the temporary directory name.
+#   $1 (output_dir): The directory where the temporary directory will be
+#      created.
+#   $2 (basename): The prefix for the temporary directory name.
 #
 # Output:
 #   - The full path to the newly created temporary directory.
@@ -1404,11 +1404,11 @@ _get_working_directory() {
 # This function checks if a given directory is empty.
 #
 # PARAMETERS:
-#   - $1 (directory): The path of the directory to check.
+#   $1 (directory): The path of the directory to check.
 #
 # RETURNS:
-#   - "0" (true): If the directory is empty.
-#   - "1" (false): If the directory contains any files or subdirectories.
+#   "0" (true): If the directory is empty.
+#   "1" (false): If the directory contains any files or subdirectories.
 _is_directory_empty() {
     local directory=$1
 
@@ -1458,11 +1458,11 @@ _display_dir_selection_box() {
 # a file.
 #
 # PARAMETERS:
-#   - $1 (file_filter): Optional. File filter pattern to restrict the types
-#     of files shown.
-#   - $2 (title): Optional. Title of the window.
-#   - $3 (multiple): Optional. Accepts "true" or "false". If "true", allows
-#     multiple file selection (only applies for Zenity).
+#   $1 (file_filter): Optional. File filter pattern to restrict the types
+#      of files shown.
+#   $2 (title): Optional. Title of the window.
+#   $3 (multiple): Optional. Accepts "true" or "false". If "true", allows
+#      multiple file selection (only applies for Zenity).
 _display_file_selection_box() {
     local file_filter=${1:-""}
     local title=${2:-"$(_get_script_name)"}
@@ -1502,7 +1502,7 @@ _display_file_selection_box() {
 # available environment.
 #
 # PARAMETERS:
-#   - $1 (message): The error message to display.
+#   $1 (message): The error message to display.
 _display_error_box() {
     local message=$1
 
@@ -1531,7 +1531,7 @@ _display_error_box() {
 # the available environment.
 #
 # PARAMETERS:
-#   - $1 (message): The information message to display.
+#   $1 (message): The information message to display.
 _display_info_box() {
     local message=$1
 
@@ -1560,17 +1560,17 @@ _display_info_box() {
 # available environment.
 #
 # PARAMETERS:
-#   - $1 (message): A string containing the items to display in the list.
-#   - $1 (parameters): A string containing key-value pairs that configure
-#     the function's behavior. Example: 'par_item_name=files'.
+#   $1 (message): A string containing the items to display in the list.
+#   $1 (parameters): A string containing key-value pairs that configure
+#      the function's behavior. Example: 'par_item_name=files'.
 #
 # PARAMETERS OPTIONS:
 #   - "par_columns": Column definitions for the list, typically in the
-#   format "--column:<name>,--column:<name>".
+#      format "--column:<name>,--column:<name>".
 #   - "par_item_name": A string representing the name of the items in the
-#   list. If not provided, the default value is 'items'.
+#      list. If not provided, the default value is 'items'.
 #   - "par_action": The action to perform on the selected items. Possible
-#   values include:
+#      values include:
 #       - "open_file": Opens the selected files with the default
 #         application.
 #       - "open_location": Opens the file manager at the location of the
@@ -1579,15 +1579,15 @@ _display_info_box() {
 #       - "delete_item": Deletes the selected items after user
 #     confirmation.
 #   - "par_resolve_links": A boolean-like string ('true' or 'false')
-#   indicating whether symbolic links in item paths should be resolved to
-#   their target locations when opening the item's location. Defaults to
-#   'true'.
+#     indicating whether symbolic links in item paths should be resolved to
+#     their target locations when opening the item's location. Defaults to
+#     'true'.
 #   - "par_checkbox": A boolean-like string ('true' or 'false') indicating
-#   the list should include checkboxes for item selection. Defaults to
-#   'false'.
+#     the list should include checkboxes for item selection. Defaults to
+#     'false'.
 #   - "par_checkbox_value": A boolean-like string ('true' or 'false')
-#   defining the default state of the checkboxes (checked or unchecked)
-#   when the list is initially displayed. Defaults to 'false'.
+#     defining the default state of the checkboxes (checked or unchecked)
+#     when the list is initially displayed. Defaults to 'false'.
 _display_list_box() {
     local message=$1
     local parameters=$2
@@ -1795,7 +1795,7 @@ _display_list_box_xmessage() {
 # terminal or a graphical dialog box.
 #
 # PARAMETERS:
-#   - $1 (message): A message to display as a prompt for the password.
+#   $1 (message): A message to display as a prompt for the password.
 _display_password_box() {
     local message=$1
     local password=""
@@ -1846,7 +1846,7 @@ _display_password_box_define() {
 # user's response.
 #
 # PARAMETERS:
-#   - $1 (message): The question message to display to the user.
+#   $1 (message): The question message to display to the user.
 _display_question_box() {
     local message=$1
     local response=""
@@ -1879,8 +1879,8 @@ _display_question_box() {
 # terminal or using a GUI dialog.
 #
 # PARAMETERS:
-#   - $1 (message): The message to display. If empty, a default message
-#     '(Empty result)' is shown.
+#   $1 (message): The message to display. If empty, a default message
+#      '(Empty result)' is shown.
 _display_text_box() {
     local message=$1
 
@@ -1920,8 +1920,8 @@ _display_text_box() {
 # including error checking and output directory information.
 #
 # PARAMETERS:
-#   - $1 (output_dir): The directory where output files are stored or
-#     expected to be.
+#   $1 (output_dir): The directory where output files are stored or
+#      expected to be.
 _display_result_box() {
     local output_dir=$1
     _close_wait_box
@@ -1955,8 +1955,8 @@ _display_result_box() {
 # running and they need to wait.
 #
 # PARAMETERS:
-#   - $1 (open_delay): Optional. The delay (in seconds) before the wait box
-#     is shown. Defaults to 2 seconds if not provided.
+#   $1 (open_delay): Optional. The delay (in seconds) before the wait box
+#      is shown. Defaults to 2 seconds if not provided.
 _display_wait_box() {
     local open_delay=${1:-"2"}
     local message="Running the task. Please, wait..."
@@ -1971,10 +1971,10 @@ _display_wait_box() {
 # that a task is in progress.
 #
 # PARAMETERS:
-#   - $1 (message): The message to display inside the wait box (e.g.,
-#     "Running the task. Please, wait...").
-#   - $2 (open_delay): Optional. The delay (in seconds) before the wait box
-#     is shown. Defaults to 2 seconds if not provided.
+#   $1 (message): The message to display inside the wait box (e.g.,
+#      "Running the task. Please, wait...").
+#   $2 (open_delay): Optional. The delay (in seconds) before the wait box
+#      is shown. Defaults to 2 seconds if not provided.
 _display_wait_box_message() {
     local message=$1
     local open_delay=${2:-"2"}
@@ -2151,10 +2151,10 @@ _display_unlock() {
 # 'org.freedesktop.Notifications' service).
 #
 # PARAMETERS:
-#   - $1 (icon): The icon to display with the notification.
-#   - $2 (title): The title of the notification.
-#   - $3 (body): The main message to be displayed in the notification.
-#   - $4 (urgency): Optional. The urgency level of the notification.
+#   $1 (icon): The icon to display with the notification.
+#   $2 (title): The title of the notification.
+#   $3 (body): The main message to be displayed in the notification.
+#   $4 (urgency): Optional. The urgency level of the notification.
 _display_gdbus_notify() {
     local icon=$1
     local title=$2
@@ -2179,8 +2179,8 @@ _display_gdbus_notify() {
 # 'qdbus', 'qdbus-qt6', 'qdbus6', or similar variations.
 #
 # RETURNS:
-#   - "0" (true): If a command matching the pattern "qdbus" is found.
-#   - "1" (false): If no command matching the pattern "qdbus" is found.
+#   "0" (true): If a command matching the pattern "qdbus" is found.
+#   "1" (false): If no command matching the pattern "qdbus" is found.
 _get_qdbus_command() {
     compgen -c | grep --perl-regexp -m1 "^qdbus[0-9]*(-qt[0-9])?$" || return 1
     return 0
@@ -2198,8 +2198,8 @@ _get_qdbus_command() {
 # '_command_exists' to check for the existence of each command.
 #
 # PARAMETERS:
-#   - $1 (_apps): An array of application names to check, in order of
-#     preference.
+#   $1 (_apps): An array of application names to check, in order of
+#      preference.
 _get_available_app() {
     local -n _apps=$1
 
@@ -2296,8 +2296,8 @@ _get_script_name() {
 # (e.g., X11 or Wayland).
 #
 # RETURNS:
-#   - "0" (true): If is a GUI session.
-#   - "1" (false): If is not a GUI session.
+#   "0" (true): If is a GUI session.
+#   "1" (false): If is not a GUI session.
 _is_gui_session() {
     if [[ -v "DISPLAY" ]]; then
         return 0
@@ -2312,8 +2312,8 @@ _is_gui_session() {
 # (as specified by the XDG_CURRENT_DESKTOP variable) is Qt-based.
 #
 # RETURNS:
-#   - "0" (true): If the desktop is Qt-based.
-#   - "1" (false): Otherwise.
+#   "0" (true): If the desktop is Qt-based.
+#   "1" (false): Otherwise.
 _is_qt_desktop() {
     local qt_desktops=("kde" "lxqt" "tde" "trinity" "razor" "lumina")
     local current_desktop=""
@@ -2380,9 +2380,9 @@ _unset_global_variables_file_manager() {
 # specific MIME type using the 'xdg-mime' command.
 #
 # PARAMETERS:
-#   - $1 (mime): MIME type (e.g., 'application/pdf', 'image/png').
-#   - $2 (quiet, optional): If set to 'true', the function will return 1 on
-#     errors without displaying any dialog or exiting. Default is 'false'.
+#   $1 (mime): MIME type (e.g., 'application/pdf', 'image/png').
+#   $2 (quiet, optional): If set to 'true', the function will return 1 on
+#      errors without displaying any dialog or exiting. Default is 'false'.
 #
 # EXAMPLE:
 #   - Input: 'application/pdf'
@@ -2470,7 +2470,7 @@ _get_clipboard_data() {
 # data, adapting the method according to the session type.
 #
 # PARAMETERS:
-#   - $1 (input_data): The text string to be copied into the clipboard.
+#   $1 (input_data): The text string to be copied into the clipboard.
 _set_clipboard_data() {
     local input_data=$1
 
@@ -2487,7 +2487,7 @@ _set_clipboard_data() {
 # file, adapting the method according to the session type.
 #
 # PARAMETERS:
-#   - $1 (input_file): The file to be copied into the clipboard.
+#   $1 (input_file): The file to be copied into the clipboard.
 _set_clipboard_file() {
     local input_file=$1
 
@@ -2544,8 +2544,8 @@ _get_filenames_filemanager() {
 # validation of file conflicts.
 #
 # PARAMETERS:
-#   - $1 (parameters): A string containing key-value pairs that configure
-#     the function's behavior. Example: 'par_type=file; par_min_items=2'.
+#   $1 (parameters): A string containing key-value pairs that configure
+#      the function's behavior. Example: 'par_type=file; par_min_items=2'.
 #
 # PARAMETERS OPTIONS:
 #   - "par_type": Specifies the type of items to filter:
@@ -2716,9 +2716,9 @@ _get_files() {
 # the provided list of input files.
 #
 # PARAMETERS:
-#   - $1 (input_files): A string containing a list of file paths, where
-#     each file path can include extensions. This list is checked for
-#     duplicates based on the base file name (excluding extensions).
+#   $1 (input_files): A string containing a list of file paths, where
+#      each file path can include extensions. This list is checked for
+#      duplicates based on the base file name (excluding extensions).
 #
 # EXAMPLE:
 #   - Input: "file1.txt file2.txt file1.jpg"
@@ -2756,14 +2756,14 @@ _validate_conflict_filenames() {
 # another specified pattern.
 #
 # PARAMETERS:
-#   - $1 (input_file): The path to the file that is being validated. This
-#     is the file whose MIME type will be checked.
-#   - $2 (par_select_mime): A MIME type pattern (or regular expression)
-#     used to validate the file's MIME type. If this parameter is empty,
-#     MIME type validation is skipped.
-#   - $3 (par_skip_encoding): An optional encoding pattern (or regular
-#     expression) used to validate the file's encoding. If this parameter
-#     is empty, encoding validation is skipped.
+#   $1 (input_file): The path to the file that is being validated. This
+#      is the file whose MIME type will be checked.
+#   $2 (par_select_mime): A MIME type pattern (or regular expression)
+#      used to validate the file's MIME type. If this parameter is empty,
+#      MIME type validation is skipped.
+#   $3 (par_skip_encoding): An optional encoding pattern (or regular
+#      expression) used to validate the file's encoding. If this parameter
+#      is empty, encoding validation is skipped.
 _validate_file_mime() {
     local input_file=$1
     local par_select_mime=$2
@@ -2800,16 +2800,16 @@ _validate_file_mime() {
 # for each file.
 #
 # PARAMETERS:
-#   - $1 (input_files): A space-separated string containing the paths of
-#     the files to validate. These files will be checked for the MIME type
-#     pattern.
-#   - $2 (par_select_mime): The MIME type pattern (or regular expression)
-#     used to validate the files' MIME types. If this parameter is empty,
-#     no MIME type validation is performed, and all input files are
-#     returned as valid.
-#   - $3 (par_skip_encoding): An optional encoding pattern (or regular
-#     expression) used to validate the files' encodings. If this parameter
-#     is empty, no encoding validation is performed.
+#   $1 (input_files): A space-separated string containing the paths of
+#      the files to validate. These files will be checked for the MIME type
+#      pattern.
+#   $2 (par_select_mime): The MIME type pattern (or regular expression)
+#      used to validate the files' MIME types. If this parameter is empty,
+#      no MIME type validation is performed, and all input files are
+#      returned as valid.
+#   $3 (par_skip_encoding): An optional encoding pattern (or regular
+#      expression) used to validate the files' encodings. If this parameter
+#      is empty, no encoding validation is performed.
 #
 # EXAMPLE:
 #   - Input: File paths "file1.txt file2.png", MIME pattern "text/plain".
@@ -2860,23 +2860,23 @@ _validate_file_mime_parallel() {
 # maximum item count.
 #
 # PARAMETERS:
-#   - $1 (input_files): A space-separated string containing the paths of
-#     files or directories to be validated.
-#   - $2 (par_type): A string indicating the type of items to validate.
-#     Possible values:
-#     - "file": Validate files only.
-#     - "directory": Validate directories only.
-#     - "all": Validate both files and directories.
-#   - $3 (par_select_extension): A pipe-separated list of file extensions
-#     to filter the files. Files must have one of these extensions.
-#   - $4 (par_select_mime): A string representing MIME types to filter the
-#     files by. Only files with matching MIME types are selected.
-#   - $5 (par_min_items): The minimum number of valid items required. If
-#     fewer valid items are selected, an error is displayed.
-#   - $6 (par_max_items): The maximum number of valid items allowed. If
-#     more valid items are selected, an error is displayed.
-#   - $7 (par_recursive): A string indicating whether the validation should
-#     be recursive. If 'true', directories will be searched recursively.
+#   $1 (input_files): A space-separated string containing the paths of
+#      files or directories to be validated.
+#   $2 (par_type): A string indicating the type of items to validate.
+#      Possible values:
+#      - "file": Validate files only.
+#      - "directory": Validate directories only.
+#      - "all": Validate both files and directories.
+#   $3 (par_select_extension): A pipe-separated list of file extensions
+#      to filter the files. Files must have one of these extensions.
+#   $4 (par_select_mime): A string representing MIME types to filter the
+#      files by. Only files with matching MIME types are selected.
+#   $5 (par_min_items): The minimum number of valid items required. If
+#      fewer valid items are selected, an error is displayed.
+#   $6 (par_max_items): The maximum number of valid items allowed. If
+#      more valid items are selected, an error is displayed.
+#   $7 (par_recursive): A string indicating whether the validation should
+#      be recursive. If 'true', directories will be searched recursively.
 #
 # EXAMPLE:
 #   - Input: "dir1 dir2", "file", "txt|pdf", "", 1, 5, "true"
@@ -2962,14 +2962,14 @@ _validate_files_count() {
 # directories.
 #
 # PARAMETERS:
-#   - $1 (parameters): A string containing key-value pairs that configure
-#     the function's behavior. Example: 'par_use_same_dir=true'.
+#   $1 (parameters): A string containing key-value pairs that configure
+#      the function's behavior. Example: 'par_use_same_dir=true'.
 #
 # PARAMETERS OPTIONS:
 #   - "par_use_same_dir": If set to 'true', the function uses the base
-#   directory (e.g., current working directory or an alternative with write
-#   permissions) as the output directory. If 'false' or not set, a new
-#   subdirectory is created for the output.
+#     directory (e.g., current working directory or an alternative with write
+#     permissions) as the output directory. If 'false' or not set, a new
+#     subdirectory is created for the output.
 _get_output_dir() {
     local parameters=$1
     local output_dir=""
@@ -3012,26 +3012,26 @@ _get_output_dir() {
 # selecting how the file extension should be handled.
 #
 # PARAMETERS:
-#   - $1 (input_file): The input file for which the output filename will be
-#     generated.
-#   - $2 (output_dir): The directory where the output file will be placed.
-#   - $3 (parameters): A string containing optional parameters that define
-#     how the output filename should be constructed. It supports the
-#     following options:
-#     - par_extension_opt: Specifies how to handle the file extension.
-#       Options are:
-#       - "append": Append a new extension 'par_extension' to the existing
-#         file extension.
-#       - "preserve": Keep the original file extension.
-#       - "replace": Replace the current extension with a new one
-#         'par_extension'.
-#       - "strip": Remove the file extension entirely.
-#     - par_extension: The extension to use when 'par_extension_opt' is set
-#       to 'append' or 'replace'. This value is ignored for the 'preserve'
-#       and 'strip' options.
-#     - par_prefix: A string to be added as prefix to the output filename.
-#     - par_suffix: A string to be added as suffix to the output
-#       filename, placed before the extension.
+#   $1 (input_file): The input file for which the output filename will be
+#      generated.
+#   $2 (output_dir): The directory where the output file will be placed.
+#   $3 (parameters): A string containing optional parameters that define
+#      how the output filename should be constructed. It supports the
+#      following options:
+#      - par_extension_opt: Specifies how to handle the file extension.
+#        Options are:
+#        - "append": Append a new extension 'par_extension' to the existing
+#          file extension.
+#        - "preserve": Keep the original file extension.
+#        - "replace": Replace the current extension with a new one
+#          'par_extension'.
+#        - "strip": Remove the file extension entirely.
+#      - par_extension: The extension to use when 'par_extension_opt' is set
+#        to 'append' or 'replace'. This value is ignored for the 'preserve'
+#        and 'strip' options.
+#      - par_prefix: A string to be added as prefix to the output filename.
+#      - par_suffix: A string to be added as suffix to the output
+#        filename, placed before the extension.
 _get_output_filename() {
     local input_file=$1
     local output_dir=$2
@@ -3108,11 +3108,11 @@ _get_output_filename() {
 # file manager.
 #
 # PARAMETERS:
-#   - $1 (items): A space-separated list of file or directory paths whose
-#   locations will be opened. Paths can be relative or absolute.
-#   - $2 (resolve_links): A boolean-like string ('true' or 'false')
-#   indicating whether symbolic links in the provided paths should be
-#   resolved to their target locations before opening.
+#   $1 (items): A space-separated list of file or directory paths whose
+#      locations will be opened. Paths can be relative or absolute.
+#   $2 (resolve_links): A boolean-like string ('true' or 'false')
+#      indicating whether symbolic links in the provided paths should be
+#      resolved to their target locations before opening.
 _open_items_locations() {
     local items=$1
     local par_resolve_links=$2
@@ -3184,8 +3184,8 @@ _open_items_locations() {
 # This function opens a list of URLs in the system's default web browser.
 #
 # PARAMETERS:
-#   - $1 (urls): A space-separated list of URLs to be opened. Each URL
-#     should be a valid web address (e.g., "http://example.com").
+#   $1 (urls): A space-separated list of URLs to be opened. Each URL
+#      should be a valid web address (e.g., "http://example.com").
 _open_urls() {
     local urls=$1
     local url=""
@@ -3215,8 +3215,8 @@ _open_urls() {
 # This function retrieves the MIME encoding of a specified file.
 #
 # PARAMETERS:
-#   - $1 (filename): The path to the file whose encoding is to be
-#     determined.
+#   $1 (filename): The path to the file whose encoding is to be
+#      determined.
 _get_file_encoding() {
     local filename=$1
     local std_output=""
@@ -3237,7 +3237,7 @@ _get_file_encoding() {
 # This function retrieves the MIME type of a specified file.
 #
 # PARAMETERS:
-#   - $1 (filename): The path to the file whose MIME is to be determined.
+#   $1 (filename): The path to the file whose MIME is to be determined.
 _get_file_mime() {
     local filename=$1
     local std_output=""
@@ -3303,7 +3303,7 @@ _storage_text_read_all() {
 # This function writes a given input text to temporary text storage files.
 #
 # PARAMETERS:
-#   - $1 (input_text): The text to be stored in a temporary file.
+#   $1 (input_text): The text to be stored in a temporary file.
 _storage_text_write() {
     local input_text=$1
     local temp_file=""
@@ -3343,8 +3343,8 @@ _storage_text_write_ln() {
 # newline-separated text.
 #
 # PARAMETERS:
-#   - $1 (input_items): A string containing items separated by the
-#     '$FIELD_SEPARATOR' variable.
+#   $1 (input_items): A string containing items separated by the
+#      '$FIELD_SEPARATOR' variable.
 #
 # RETURNS:
 #   - A string containing the items separated by newlines.
@@ -3365,7 +3365,7 @@ _convert_delimited_string_to_text() {
 # items.
 #
 # PARAMETERS:
-#   - $1 (input_items): A string containing items separated by newlines.
+#   $1 (input_items): A string containing items separated by newlines.
 #
 # RETURNS:
 #   - A string containing the items separated by the '$FIELD_SEPARATOR'
@@ -3387,8 +3387,8 @@ _convert_text_to_delimited_string() {
 # into a single one and removes any leading or trailing occurrences of it.
 #
 # PARAMETERS:
-#   - $1 (input_str): The input string to be processed.
-#   - $2 (char): The character to collapse and trim from the string.
+#   $1 (input_str): The input string to be processed.
+#   $2 (char): The character to collapse and trim from the string.
 _str_collapse_char() {
     local input_str=$1
     local char=$2
@@ -3407,7 +3407,7 @@ _str_collapse_char() {
 # format.
 #
 # PARAMETERS:
-#   - $1 (input_path): The input file path to process.
+#   $1 (input_path): The input file path to process.
 _str_human_readable_path() {
     local input_path=$1
     local output_path=""
@@ -3443,8 +3443,8 @@ _text_remove_empty_lines() {
 # with the tilde ("~") symbol for brevity.
 #
 # PARAMETERS:
-#   - $1 (input_text): The input string that may contain the user's home
-#     directory path.
+#   $1 (input_text): The input string that may contain the user's home
+#      directory path.
 #
 # RETURNS:
 #   - The modified string with the home directory replaced by "~", or the
@@ -3474,8 +3474,8 @@ _text_remove_home() {
 # string with a dot ('.') for brevity.
 #
 # PARAMETERS:
-#   - $1 (input_text): The input string that may contain the current
-#     working directory path.
+#   $1 (input_text): The input string that may contain the current
+#      working directory path.
 #
 # RETURNS:
 #   - The modified string with the working directory replaced by ".", or
@@ -3508,8 +3508,8 @@ _text_remove_pwd() {
 # manner.
 #
 # PARAMETERS:
-#   - $1 (input_text): The input text to be sorted, where each line is
-#     treated as a separate string.
+#   $1 (input_text): The input text to be sorted, where each line is
+#      treated as a separate string.
 #
 # RETURNS:
 #   - The sorted text with each line in the correct order.
@@ -3526,7 +3526,7 @@ _text_sort() {
 # characters back to their original form.
 #
 # PARAMETERS:
-#   - $1 (uri_encoded): The URI-encoded string that needs to be decoded.
+#   $1 (uri_encoded): The URI-encoded string that needs to be decoded.
 #
 # RETURNS:
 #   - The decoded URI string, with percent-encoded characters replaced and
