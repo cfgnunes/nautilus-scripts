@@ -573,6 +573,7 @@ _deps_get_available_package_manager() {
     local apps=(
         "brew"
         "nix"
+        "pkg"
         "apt-get"
         "rpm-ostree"
         "dnf"
@@ -643,8 +644,11 @@ _deps_get_dependency_value() {
         # standard.
         if [[ "${HOME:-}" == *"com.termux"* ]]; then
             # If the package manager matches, print and exit successfully.
-            if [[ "$pkg_manager" == "pkg" ]] ||
-                [[ "$pkg_manager" == "*" ]]; then
+            # we need to check if it's android or not as termux have proot-distro
+            # and in proot-distro it the termux's bin and shared with the proot-distro
+            # so if anyone run this on any proot-distro then there is an chance it might
+            # detect it as termux as both *"com.termux"* and pkg is availabe in proot-distro
+            if [[ "$pkg_manager" == "pkg" ]] && [[ "$(uname -o)" == "Android" ]]; then
                 printf "%s" "$key_value"
                 return 0
             fi
@@ -714,6 +718,7 @@ _deps_install_missing_packages() {
 #      - "zypper"      : For openSUSE systems.
 #      - "nix"         : For Nix-based systems.
 #      - "brew"        : For Homebrew package manager.
+#      - "pkg"         : For Termux (Android).
 #      - "guix"        : For GNU Guix systems.
 #   $2 (packages): A space-separated list of package names to install.
 #   $3 (post_install): An optional command to be executed right after the
@@ -773,6 +778,29 @@ _deps_install_packages() {
     "brew")
         cmd_install="brew install $packages &>/dev/null"
         # Homebrew does not require root for installing user packages.
+        admin_cmd=""
+        ;;
+    "pkg")
+        # shellcheck disable=SC1091
+        if [[ -f "/data/data/com.termux/files/usr/bin/termux-setup-package-manager" ]]; then
+            source "/data/data/com.termux/files/usr/bin/termux-setup-package-manager"
+        fi
+        if [[ "$TERMUX_APP_PACKAGE_MANAGER" == "apt" ]]; then
+            # if apt then use apt-get as apt doesn't made for scripting
+            if _command_exists "apt-get"; then
+                cmd_install+="apt-get update &>/dev/null;"
+                cmd_install+="apt-get -y install $packages &>/dev/null"
+            else
+                _log_error "strange apt-get isn't availabe no your system even though apt does exist"
+            fi
+        elif [[ "$TERMUX_APP_PACKAGE_MANAGER" == "pacman" ]]; then
+            cmd_install+="pacman -Syy &>/dev/null;"
+            cmd_install+="pacman --noconfirm -S $packages &>/dev/null"
+        else
+            _log_error "Failed to determine which package manager you are using in termux"
+            return 1
+        fi
+        # Termux does not require root for installing user packages.
         admin_cmd=""
         ;;
     "guix")
@@ -856,6 +884,7 @@ _deps_installation_check() {
 #      - "zypper"      : For openSUSE systems.
 #      - "nix"         : For Nix-based systems.
 #      - "brew"        : For Homebrew package manager.
+#      - "pkg"         : For Termux (Android).
 #      - "guix"        : For GNU Guix systems.
 #   $2 (package): The name of the package to check.
 #
@@ -906,6 +935,29 @@ _deps_is_package_installed() {
     "brew")
         if brew list | grep --quiet "$package"; then
             return 0
+        fi
+        ;;
+    "pkg")
+        # shellcheck disable=SC1091
+        if [[ -f "/data/data/com.termux/files/usr/bin/termux-setup-package-manager" ]]; then
+            source "/data/data/com.termux/files/usr/bin/termux-setup-package-manager"
+        fi
+        if [[ "$TERMUX_APP_PACKAGE_MANAGER" == "apt" ]]; then
+            # if apt then use apt-get as apt doesn't made for scripting
+            if _command_exists "apt-get"; then
+                if dpkg -s "$package" &>/dev/null; then
+                    return 0
+                fi
+            else
+                _log_error "strange apt-get isn't availabe no your system even though apt does exist"
+            fi
+        elif [[ "$TERMUX_APP_PACKAGE_MANAGER" == "pacman" ]]; then
+            if pacman -Q "$package" &>/dev/null; then
+                return 0
+            fi
+        else
+            _log_error "Failed to determine which package manager you are using in termux"
+            return 1
         fi
         ;;
     "guix")
