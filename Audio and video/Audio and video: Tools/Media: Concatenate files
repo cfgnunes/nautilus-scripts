@@ -42,7 +42,7 @@ _main_task() {
     _convert_delimited_string_to_text "$input_files" >"$temp_file"
 
     # Run the main process.
-    output_file=$(_get_output_filename "Concatenated video$filename_extension" "$output_dir" "par_extension_opt=preserve")
+    output_file=$(_get_output_filename "Concatenated media$filename_extension" "$output_dir" "par_extension_opt=preserve")
     std_output=$(ffmpeg -hide_banner -y -f "concat" -safe 0 -i "$temp_file" -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "" "$output_file" || return 1
 }

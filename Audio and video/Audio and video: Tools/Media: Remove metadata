@@ -26,9 +26,26 @@ _main_task() {
     local output_file=""
     local std_output=""
 
+    # Detect the MIME type of the input file (e.g., audio/mp3, video/mp4).
+    local file_mime=""
+    file_mime=$(_get_file_mime "$input_file")
+
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(no metadata)'")
-    std_output=$(ffmpeg -hide_banner -y -i "$input_file" -map_metadata -1 -map 0:a -c:a copy -- "$output_file" 2>&1)
+
+    # Run ffmpeg depending on the type of file (audio or video).
+    if [[ "$file_mime" == "audio/"* ]]; then
+        #   - Removes all metadata (-map_metadata -1)
+        #   - Keeps all audio streams (-map 0:a).
+        #   - Copies audio data without re-encoding (-c:a copy).
+        std_output=$(ffmpeg -hide_banner -y -i "$input_file" -map_metadata -1 -map 0:a -c:a copy -- "$output_file" 2>&1)
+    else
+        # For video files:
+        #   - Removes all metadata (-map_metadata -1).
+        #   - Copies both video and audio streams without re-encoding.
+        std_output=$(ffmpeg -hide_banner -y -i "$input_file" -map_metadata -1 -c:v copy -c:a copy -- "$output_file" 2>&1)
+    fi
+
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
