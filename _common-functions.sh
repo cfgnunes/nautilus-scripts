@@ -1285,6 +1285,18 @@ _move_file() {
         ;;
     esac
 
+    if [[ "$par_when_conflict" != "safe_overwrite" ]] &&
+        [[ -e "$file_src" ]]; then
+        if [[ -e "$file_dst" ]]; then
+            _log_error "The destination file already exists." \
+                "$file_src" "" "$file_dst"
+        else
+            _log_error "Unable to move." \
+                "$file_src" "" "$file_dst"
+        fi
+        return 1
+    fi
+
     return 0
 }
 
