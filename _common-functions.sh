@@ -638,18 +638,16 @@ _deps_get_dependency_value() {
             ;;
         esac
 
-        # Special handling for Termux (Android). Its package names differs from
-        # standard.
-        if [[ "${HOME:-}" == *"com.termux"* ]]; then
-            # If the package manager matches, print and exit successfully.
-            # we need to check if it's android or not as termux have proot-distro
-            # and in proot-distro it the termux's bin and shared with the proot-distro
-            # so if anyone run this on any proot-distro then there is an chance it might
-            # detect it as termux as both *"com.termux"* and pkg is availabe in proot-distro
-            if [[ "$pkg_manager" == "pkg" ]] && [[ "$(uname -o)" == "Android" ]]; then
-                printf "%s" "$key_value"
-                return 0
-            fi
+        # Special handling for Termux (Android). Since Termux (on Android) uses
+        # its own package ecosystem and may share paths with 'proot-distro'
+        # containers, we ensure it's a real Termux session by checking that
+        # '$HOME' contains "com.termux", the package manager is "pkg", and the
+        # system reports "Android".
+        if [[ "${HOME:-}" == *"com.termux"* ]] &&
+            [[ "$pkg_manager" == "pkg" ]] &&
+            [[ "$(uname -o)" == "Android" ]]; then
+            printf "%s" "$key_value"
+            return 0
         fi
 
         # If the package manager matches, print and exit successfully.
@@ -780,23 +778,19 @@ _deps_install_packages() {
         ;;
     "pkg")
         # shellcheck disable=SC1091
-        if [[ -f "/data/data/com.termux/files/usr/bin/termux-setup-package-manager" ]]; then
-            source "/data/data/com.termux/files/usr/bin/termux-setup-package-manager"
+        local termux_bin_dir="/data/data/com.termux/files/usr/bin"
+        local termux_pkg_manager="$termux_bin_dir/termux-setup-package-manager"
+        if [[ -f "$termux_pkg_manager" ]]; then
+            # shellcheck disable=SC1090
+            source "$termux_pkg_manager"
         fi
-        if [[ "$TERMUX_APP_PACKAGE_MANAGER" == "apt" ]]; then
-            # if apt then use apt-get as apt doesn't made for scripting
-            if _command_exists "apt-get"; then
-                cmd_install+="apt-get update &>/dev/null;"
-                cmd_install+="apt-get -y install $packages &>/dev/null"
-            else
-                _log_error "strange apt-get isn't availabe no your system even though apt does exist"
-            fi
-        elif [[ "$TERMUX_APP_PACKAGE_MANAGER" == "pacman" ]]; then
+        if [[ "${TERMUX_APP_PACKAGE_MANAGER:-}" == "pacman" ]]; then
             cmd_install+="pacman -Syy &>/dev/null;"
             cmd_install+="pacman --noconfirm -S $packages &>/dev/null"
         else
-            _log_error "Failed to determine which package manager you are using in termux"
-            return 1
+            # Default to 'apt-get' as fallback in Termux.
+            cmd_install+="apt-get update &>/dev/null;"
+            cmd_install+="apt-get -y install $packages &>/dev/null"
         fi
         # Termux does not require root for installing user packages.
         admin_cmd=""
@@ -936,26 +930,21 @@ _deps_is_package_installed() {
         fi
         ;;
     "pkg")
-        # shellcheck disable=SC1091
-        if [[ -f "/data/data/com.termux/files/usr/bin/termux-setup-package-manager" ]]; then
-            source "/data/data/com.termux/files/usr/bin/termux-setup-package-manager"
+        local termux_bin_dir="/data/data/com.termux/files/usr/bin"
+        local termux_pkg_manager="$termux_bin_dir/termux-setup-package-manager"
+        if [[ -f "$termux_pkg_manager" ]]; then
+            # shellcheck disable=SC1090
+            source "$termux_pkg_manager"
         fi
-        if [[ "$TERMUX_APP_PACKAGE_MANAGER" == "apt" ]]; then
-            # if apt then use apt-get as apt doesn't made for scripting
-            if _command_exists "apt-get"; then
-                if dpkg -s "$package" &>/dev/null; then
-                    return 0
-                fi
-            else
-                _log_error "strange apt-get isn't availabe no your system even though apt does exist"
-            fi
-        elif [[ "$TERMUX_APP_PACKAGE_MANAGER" == "pacman" ]]; then
+        if [[ "${TERMUX_APP_PACKAGE_MANAGER:-}" == "pacman" ]]; then
             if pacman -Q "$package" &>/dev/null; then
                 return 0
             fi
         else
-            _log_error "Failed to determine which package manager you are using in termux"
-            return 1
+            # Default to 'apt-get' as fallback in Termux.
+            if dpkg -s "$package" &>/dev/null; then
+                return 0
+            fi
         fi
         ;;
     "guix")
