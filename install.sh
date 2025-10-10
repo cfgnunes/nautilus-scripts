@@ -162,7 +162,7 @@ _main() {
         # Display the interactive menu and capture user selections.
         _multiselect_menu menu_selected menu_labels menu_defaults
     else
-        _echo_info "Running the installer in non-interactive mode..."
+        _echo_info "Installing in non-interactive mode..."
         menu_selected=("${menu_defaults[@]}")
     fi
 
