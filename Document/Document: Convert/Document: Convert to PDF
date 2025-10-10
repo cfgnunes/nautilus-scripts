@@ -48,7 +48,12 @@ _get_dependencies() {
         command=$(_get_command "$input_file")
 
         case $command in
-        "convert") dependencies+="convert" ;;
+        "convert")
+            if ! _command_exists "magick" &&
+                ! _command_exists "convert"; then
+                dependencies+="convert"
+            fi
+            ;;
         "inkscape") dependencies+="inkscape" ;;
         "latexmk") dependencies+="latexmk texlive" ;;
         "libreoffice_calc")

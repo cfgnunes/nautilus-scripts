@@ -45,7 +45,17 @@ _get_dependencies() {
     local input_file=""
     for input_file in $input_files; do
         local command=""
-        dependencies+=$(_get_command "$input_file")
+        command=$(_get_command "$input_file")
+
+        case $command in
+        "convert")
+            if ! _command_exists "magick" &&
+                ! _command_exists "convert"; then
+                dependencies+="convert"
+            fi
+            ;;
+        "inkscape") dependencies+="inkscape" ;;
+        esac
         dependencies+=$'\n'
     done
 
