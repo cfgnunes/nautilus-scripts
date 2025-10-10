@@ -682,7 +682,7 @@ _deps_install_missing_packages() {
 
     # Ask the user to install the packages.
     if [[ -n "$packages_names" ]]; then
-        local message="The following packages were not found:"$'\n'
+        local message="The following packages are missing:"$'\n'
         message+="- "
         message+=$(sed "s| |\n- |g" <<<"$packages_names")
         message+=$'\n'$'\n'
