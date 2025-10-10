@@ -80,7 +80,7 @@ _get_command() {
     local command=""
 
     # Define the preferred commands for each type of archive.
-    local _cmds_7z=("7za" "unar" "bsdtar")
+    local _cmds_7za=("7za" "unar" "bsdtar")
     local _cmds_ace=("unar")
     local _cmds_alz=("unar")
     local _cmds_ar=("ar" "bsdtar")
@@ -137,7 +137,7 @@ _get_command() {
     *.tar.xz | *.txz) pref_commands=("${_cmds_tar_xz[@]}") ;;
     *.tar.z | *.taz) pref_commands=("${_cmds_tar_z[@]}") ;;
     *.tar.zst | *.tzst) pref_commands=("${_cmds_tar_zst[@]}") ;;
-    *.7z) pref_commands=("${_cmds_7z[@]}") ;;
+    *.7z) pref_commands=("${_cmds_7za[@]}") ;;
     *.ace) pref_commands=("${_cmds_ace[@]}") ;;
     *.alz) pref_commands=("${_cmds_alz[@]}") ;;
     *.ar) pref_commands=("${_cmds_ar[@]}") ;;
@@ -181,7 +181,7 @@ _get_command() {
         "application/vnd.debian.binary-package") pref_commands=("${_cmds_deb[@]}") ;;
         "application/vnd.ms-cab-compressed") pref_commands=("${_cmds_cab[@]}") ;;
         "application/vnd.squashfs") pref_commands=("${_cmds_sqsh[@]}") ;;
-        "application/x-7z-compressed") pref_commands=("${_cmds_7z[@]}") ;;
+        "application/x-7z-compressed") pref_commands=("${_cmds_7za[@]}") ;;
         "application/x-ace") pref_commands=("${_cmds_ace[@]}") ;;
         "application/x-alz") pref_commands=("${_cmds_alz[@]}") ;;
         "application/x-arc") pref_commands=("${_cmds_arc[@]}") ;;
@@ -278,12 +278,6 @@ _run_command() {
         output_dir=$(dirname -- "$input_file")
     fi
 
-    # Try to use the command '7z' instead of '7za'.
-    local command_7za="7za"
-    if [[ "$command" == *"7za"* ]]; then
-        _command_exists "7z" && command_7za="7z"
-    fi
-
     filename=$(basename -- "$input_file")             # Remove the path.
     filename=$(_strip_filename_extension "$filename") # Remove the extension.
 
@@ -301,6 +295,13 @@ _run_command() {
     __get_password() {
         _display_password_box "Enter the password for the archive '$(basename -- "$input_file")'.\nPassword:"
     }
+    __cmd_7za() {
+        if _command_exists "7z"; then
+            7z "$@"
+        else
+            7za "$@"
+        fi
+    }
 
     # Ensure the input file has an absolute path before proceeding.
     if [[ $input_file != "/"* ]]; then
@@ -312,7 +313,7 @@ _run_command() {
 
     case "$command" in
     "7za")
-        std_output=$($command_7za x -aoa -p"null" -- "$input_file" 2>&1)
+        std_output=$(__cmd_7za x -aoa -p"null" -- "$input_file" 2>&1)
         exit_code=$?
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "wrong password" <<<"$std_output"; then
@@ -320,7 +321,7 @@ _run_command() {
             __temp_dir_pop && __temp_dir_remove
             password=$(__get_password) || return 1
             __temp_dir_push || return 1
-            std_output=$($command_7za x -aoa -p"$password" -- "$input_file" 2>&1)
+            std_output=$(__cmd_7za x -aoa -p"$password" -- "$input_file" 2>&1)
             exit_code=$?
         fi
         ;;
@@ -420,7 +421,7 @@ _run_command() {
 
         # Try to extract with '7za'.
         if ((exit_code != 0)); then
-            std_output=$($command_7za x -aoa -- "$input_file" 2>&1)
+            std_output=$(__cmd_7za x -aoa -- "$input_file" 2>&1)
             exit_code=$?
         fi
 
