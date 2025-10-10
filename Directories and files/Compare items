@@ -17,11 +17,13 @@ _main() {
     _compare "$input_files"
 }
 
+# FUNCTION: _compare
+#
+# DESCRIPTION:
+# This function compares files based on their MIME types and available
+# commands. It supports two or three files depending on the command and
+# file type.
 _compare() {
-    # This function compares files based on their MIME types and available
-    # commands. It supports two or three files depending on the command and
-    # file type.
-
     local input_files=$1      # Input files separated by '$FIELD_SEPARATOR'.
     local num_files_compare=2 # Default number of files to compare.
 
@@ -86,11 +88,13 @@ _compare() {
     esac
 }
 
+# FUNCTION: _compare_hexa
+#
+# DESCRIPTION:
+# This function compares binary files in hexadecimal format and handle
+# modifications. It converts files to hex view, compares them, and allows
+# editing or saving changes.
 _compare_hexa() {
-    # This function compares binary files in hexadecimal format and handle
-    # modifications. It converts files to hex view, compares them, and allows
-    # editing or saving changes.
-
     local command=$1 # Command to use for comparison (e.g., 'meld').
     local file_1=$2  # First binary file to compare.
     local file_2=$3  # Second binary file to compare.
@@ -144,11 +148,13 @@ _compare_hexa() {
     _move_file "safe_overwrite" "$file_2_modified" "$file_2"
 }
 
+# FUNCTION: _compare_identical
+#
+# DESCRIPTION:
+# This function checks if two or three specified items (files or
+# directories) are identical. If all selected items are identical, displays
+# a message and exits the script.
 _compare_identical() {
-    # This function checks if two or three specified items (files or
-    # directories) are identical. If all selected items are identical, displays
-    # a message and exits the script.
-
     local file_1=$1
     local file_2=$2
     local file_3=$3
@@ -179,11 +185,13 @@ _compare_identical() {
     fi
 }
 
+# FUNCTION: _compare_imagemagick
+#
+# DESCRIPTION:
+# This function compares two images using ImageMagick. If the images are
+# identical, it displays a message and exits the script. Otherwise, it
+# generates a visual diff and opens it with an image viewer.
 _compare_imagemagick() {
-    # This function compares two images using ImageMagick. If the images are
-    # identical, it displays a message and exits the script. Otherwise, it
-    # generates a visual diff and opens it with an image viewer.
-
     local file_1=$1
     local file_2=$2
 
@@ -232,11 +240,13 @@ _compare_imagemagick() {
     fi
 }
 
+# FUNCTION: _get_command
+#
+# DESCRIPTION:
+# This function determines the appropriate command for comparing files or
+# directories. The selection is based on the file type, the number of files
+# to compare, and system availability of commands.
 _get_command() {
-    # This function determines the appropriate command for comparing files or
-    # directories. The selection is based on the file type, the number of files
-    # to compare, and system availability of commands.
-
     local input_file=$1        # The file to analyze for MIME type or encoding.
     local num_files_compare=$2 # The number of files to compare (2 or 3).
     local command=""
@@ -274,11 +284,13 @@ _get_command() {
     printf "%s" "$command"
 }
 
+# FUNCTION: _get_hex_ideal_cols
+#
+# DESCRIPTION:
+# This function determines the ideal number of columns for a hexadecimal
+# display. The column width is chosen to evenly divide the size difference
+# between files, ensuring a more organized and visually coherent hex dump.
 _get_hex_ideal_cols() {
-    # This function determines the ideal number of columns for a hexadecimal
-    # display. The column width is chosen to evenly divide the size difference
-    # between files, ensuring a more organized and visually coherent hex dump.
-
     local size_difference=$1
     local cols=24 # Default column width for the hex display.
 
@@ -296,10 +308,12 @@ _get_hex_ideal_cols() {
     printf "%s" "$cols"
 }
 
+# FUNCTION: _get_difference
+#
+# DESCRIPTION:
+# This function calculates the absolute difference between two numbers. The
+# result is always a positive value, regardless of the order of the inputs.
 _get_difference() {
-    # This function calculates the absolute difference between two numbers. The
-    # result is always a positive value, regardless of the order of the inputs.
-
     local num_1=$1
     local num_2=$2
 
@@ -311,9 +325,11 @@ _get_difference() {
     fi
 }
 
+# FUNCTION: _get_file_size
+#
+# DESCRIPTION:
+# This function returns the size of a file in bytes.
 _get_file_size() {
-    # This function returns the size of a file in bytes.
-
     stat --format="%s" "$1" 2>/dev/null
 }
 

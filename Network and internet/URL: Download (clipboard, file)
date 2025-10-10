@@ -32,21 +32,23 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
+# FUNCTION: _extract_urls
+#
+# DESCRIPTION:
+# This function extracts unique URLs or domain-like strings from input text.
+# It matches three main types:
+#  - URLs with IP addresses (with optional port and path)
+#  - URLs with domain names (with optional port, path, or subdomains)
+#  - Plain domain names, with or without "www."
+#
+# Example matches:
+#  - http://192.168.0.1:8080/api
+#  - https://example.com/path
+#  - www.google.com
+#  - example.org
+#
+# The function sorts and deduplicates the matches before printing.
 _extract_urls() {
-    # This function extracts unique URLs or domain-like strings from input
-    # text. It matches three main types:
-    #  - URLs with IP addresses (with optional port and path)
-    #  - URLs with domain names (with optional port, path, or subdomains)
-    #  - Plain domain names, with or without "www."
-    #
-    # Example matches:
-    #  - http://192.168.0.1:8080/api
-    #  - https://example.com/path
-    #  - www.google.com
-    #  - example.org
-    #
-    # The function sorts and deduplicates the matches before printing.
-
     local data=${1,,}
     local re_ip="https?://(?:[0-9]{1,3}\.){3}[0-9]{1,3}"
     local re_port_path="(?::[0-9]+)?(?:/[^[:space:]'\"\)\]\>]*)?"

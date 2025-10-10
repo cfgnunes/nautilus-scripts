@@ -327,15 +327,17 @@ _echo_error() {
 # SECTION /// [VALIDATION AND CHECKS]
 # -----------------------------------------------------------------------------
 
+# FUNCTION: _check_exist_filemanager
+#
+# DESCRIPTION:
+# This function checks if at least one compatible file manager exists in
+# the system by iterating through a predefined list of supported file
+# managers defined in '$COMPATIBLE_FILE_MANAGERS'.
+#
+# RETURNS:
+#   "0" (true): If at least one compatible file manager is found.
+#   "1" (false): If no compatible file manager is found.
 _check_exist_filemanager() {
-    # This function checks if at least one compatible file manager exists in
-    # the system by iterating through a predefined list of supported file
-    # managers defined in '$COMPATIBLE_FILE_MANAGERS'.
-    #
-    # Returns:
-    #   - "0" (true): If at least one compatible file manager is found.
-    #   - "1" (false): If no compatible file manager is found.
-
     local file_manager=""
     for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
         if _command_exists "$file_manager"; then
@@ -345,16 +347,18 @@ _check_exist_filemanager() {
     return 1
 }
 
+# FUNCTION: _command_exists
+#
+# DESCRIPTION:
+# This function checks whether a given command is available on the system.
+#
+# PARAMETERS:
+#   $1 (command_check): The name of the command to verify.
+#
+# RETURNS:
+#   "0" (true): If the command is available.
+#   "1" (false): If the command is not available.
 _command_exists() {
-    # This function checks whether a given command is available on the system.
-    #
-    # Parameters:
-    #   - $1 (command_check): The name of the command to verify.
-    #
-    # Returns:
-    #   - "0" (true): If the command is available.
-    #   - "1" (false): If the command is not available.
-
     local command_check=$1
 
     if command -v "$command_check" &>/dev/null; then
@@ -367,9 +371,11 @@ _command_exists() {
 # SECTION /// [BACKUP AND FILE MANAGEMENT]
 # -----------------------------------------------------------------------------
 
+# FUNCTION: _item_create_backup
+#
+# DESCRIPTION:
+# This function creates a backup of a file (append .bak) if it exists.
 _item_create_backup() {
-    # This function creates a backup of a file (append .bak) if it exists.
-
     local item=$1
 
     if [[ -e "$item" ]] && [[ ! -e "$item.bak" ]]; then
@@ -377,9 +383,11 @@ _item_create_backup() {
     fi
 }
 
+# FUNCTION: _delete_items
+#
+# DESCRIPTION:
+# This function deletes or trash items, using the best available method.
 _delete_items() {
-    # This function deletes or trash items, using the best available method.
-
     local items=$1
 
     # Attempt to remove empty directories directly (rmdir only removes empty
@@ -404,11 +412,13 @@ _delete_items() {
 # SECTION /// [SYSTEM INFORMATION AND PARAMETERS]
 # -----------------------------------------------------------------------------
 
+# FUNCTION: _get_user_homes
+#
+# DESCRIPTION:
+# This function returns the list of home directories for users who can log
+# in. It filters '/etc/passwd' entries for accounts with valid login
+# shells.
 _get_user_homes() {
-    # This function returns the list of home directories for users who can log
-    # in. It filters '/etc/passwd' entries for accounts with valid login
-    # shells.
-
     local homes=""
 
     homes=$(grep --extended-regexp "/(bash|sh|zsh|csh|ksh|tcsh|fish|dash)$" \
@@ -504,12 +514,14 @@ _get_parameters_command_line() {
     done
 }
 
+# FUNCTION: _get_par_value
+#
+# DESCRIPTION:
+# This function extracts the value of a given parameter from a script file.
+# It searches for "parameter=value" inside the file, then returns only the
+# value. Quotes are removed and '|' characters are replaced with ';' for
+# consistency.
 _get_par_value() {
-    # This function extracts the value of a given parameter from a script file.
-    # It searches for "parameter=value" inside the file, then returns only the
-    # value. Quotes are removed and '|' characters are replaced with ';' for
-    # consistency.
-
     local filename=$1
     local parameter=$2
 
@@ -629,15 +641,17 @@ _step_install_dependencies() {
     _echo_info "> Done!"
 }
 
+# FUNCTION: _step_install_scripts
+#
+# DESCRIPTION:
+# This function installs scripts into the target directory.
+# Steps:
+#   1. Optionally remove any previously installed scripts.
+#   2. Copy common and category-specific script files.
+#   3. Set proper ownership and permissions.
 _step_install_scripts() {
     local -n _cat_selected=$1
     local -n _cat_dirs=$2
-
-    # Install scripts into the target directory.
-    # Steps:
-    #   1. Optionally remove any previously installed scripts.
-    #   2. Copy common and category-specific script files.
-    #   3. Set proper ownership and permissions.
 
     # Remove previous scripts if requested.
     if [[ "$OPT_REMOVE_SCRIPTS" == "true" ]]; then
@@ -677,8 +691,11 @@ _step_install_scripts() {
 # SECTION /// [INSTALLATION STEP / KEYBOARD ACCELLERATORS]
 # -----------------------------------------------------------------------------
 
+# FUNCTION: _step_install_accels
+#
+# DESCRIPTION:
+# Install keyboard accelerators (shortcuts) for specific file managers.
 _step_install_accels() {
-    # Install keyboard accelerators (shortcuts) for specific file managers.
 
     _echo_info "> Installing keyboard accelerators..."
 
@@ -947,10 +964,13 @@ _step_create_gnome_application_folder() {
 # SECTION /// [INSTALLATION STEP / CONTEXT MENUS]
 # -----------------------------------------------------------------------------
 
+# FUNCTION: _step_install_menus
+#
+# DESCRIPTION:
+# This function install custom context menus for supported file managers.
+# Delegates to the appropriate function depending on the detected file
+# manager.
 _step_install_menus() {
-    # This function install custom context menus for supported file managers.
-    # Delegates to the appropriate function depending on the detected file
-    # manager.
 
     case "$FILE_MANAGER" in
     "dolphin") _step_install_menus_dolphin ;;
@@ -1295,10 +1315,13 @@ _step_install_menus_thunar() {
 # SECTION /// [INSTALLATION STEP / CLOSE FILEMANAGER]
 # -----------------------------------------------------------------------------
 
+# FUNCTION: _step_close_filemanager
+#
+# DESCRIPTION:
+# This function closes the current file manager so that it reloads its
+# configurations. For most file managers, the `-q` option is used to quit
+# gracefully.
 _step_close_filemanager() {
-    # This function closes the current file manager so that it reloads its
-    # configurations. For most file managers, the `-q` option is used to quit
-    # gracefully.
 
     if [[ -z "$FILE_MANAGER" ]]; then
         return
@@ -1342,10 +1365,12 @@ _step_close_filemanager() {
 # SECTION /// [ONLINE INSTALL]
 # -----------------------------------------------------------------------------
 
+# FUNCTION: _bootstrap_repository
+#
+# DESCRIPTION:
+# This function ensures that the repository files are available before
+# running the installation.
 _bootstrap_repository() {
-    # This function ensures that the repository files are available before
-    # running the installation.
-
     local repo_owner="cfgnunes"
     local repo_name="nautilus-scripts"
 
