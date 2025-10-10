@@ -124,9 +124,6 @@ _main() {
         OPT_INTERACTIVE_INSTALL="false"
     fi
 
-    _echo "Enhanced File Manager Actions for Linux"
-    _echo ""
-
     # If the file "_common-functions.sh" is missing, it means the installer is
     # being executed remotely (e.g., via 'curl'). In that case, download the
     # repository and continue the installation from the extracted files.
@@ -155,6 +152,9 @@ _main() {
         "$OPT_INSTALL_FOR_ALL_USERS"
         "$OPT_CHOOSE_CATEGORIES"
     )
+
+    _echo "Enhanced File Manager Actions for Linux"
+    _echo ""
 
     if [[ "$OPT_INTERACTIVE_INSTALL" == "true" ]]; then
         _echo "Select the options (<SPACE> to check):"
