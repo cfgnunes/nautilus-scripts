@@ -14,7 +14,7 @@ _main() {
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all")
 
-    if ! _display_question_box "This action will set permissions recursively.\n\nWould you like to continue?"; then
+    if ! _display_question_box "This action will reset the permissions recursively.\n\nWould you like to continue?"; then
         _exit_script
     fi
 

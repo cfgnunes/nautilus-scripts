@@ -88,7 +88,7 @@ _make_undo_script() {
         printf "%s\n" "# Usage: Run this script in the root of the directory where the flattening was"
         printf "%s\n" "# performed."
         printf "%s\n" "#"
-        printf "%s\n" "# Example: ./$undo_script_name"
+        printf "%s\n" "# Example: bash $undo_script_name"
         printf "%s\n" "#"
         printf "%s\n" "# Note: This script assumes no additional changes were made to the directory"
         printf "%s\n" "# structure after the flattening operation."
