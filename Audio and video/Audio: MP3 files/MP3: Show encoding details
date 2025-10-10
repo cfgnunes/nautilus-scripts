@@ -30,29 +30,21 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(mediainfo -- "$input_file" 2>&1)
+    std_output=$(mediainfo --Inform="Audio;BitRate_Mode:%BitRate_Mode%\nBitRate:%BitRate/String%\nSamplingRate:%SamplingRate/String%\nChannel(s):%Channel(s)/String%" -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
-    # shellcheck disable=SC2001
-    std_output=$(tr -s " " <<<"$std_output")
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|: |$FIELD_SEPARATOR|" <<<"$std_output")
 
     local mode=""
     local bit_rate=""
     local sampling_rate=""
     local channels=""
-    mode=$(grep -m1 "^Overall bit rate mode $FIELD_SEPARATOR" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
-    bit_rate=$(grep -m1 "^Overall bit rate $FIELD_SEPARATOR" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
-    sampling_rate=$(grep -m1 "^Sampling rate $FIELD_SEPARATOR" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
-    channels=$(grep -m1 "^Channel(s) $FIELD_SEPARATOR" <<<"$std_output" | cut -d "$FIELD_SEPARATOR" -f 2)
+    mode=$(grep -m1 "^BitRate_Mode:" <<<"$std_output" | cut -d ":" -f 2-)
+    bit_rate=$(grep -m1 "^BitRate:" <<<"$std_output" | cut -d ":" -f 2-)
+    sampling_rate=$(grep -m1 "^SamplingRate:" <<<"$std_output" | cut -d ":" -f 2-)
+    channels=$(grep -m1 "^Channel" <<<"$std_output" | cut -d ":" -f 2-)
 
     # Check if the values are not empty.
     if [[ -z "$mode" ]]; then
         mode="(Empty)"
-    elif [[ "${mode,,}" == "constant" ]]; then
-        mode="CBR"
-    elif [[ "${mode,,}" == "variable" ]]; then
-        mode="VBR"
     fi
     if [[ -z "$bit_rate" ]]; then
         bit_rate="(Empty)"
