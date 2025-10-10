@@ -69,7 +69,9 @@ _select_output_filename() {
     local output_file=""
 
     _display_lock
-    if _command_exists "zenity"; then
+    if ! _is_gui_session; then
+        output_file=$(head -n 1 <<<"$options")
+    elif _command_exists "zenity"; then
         options=$(_convert_text_to_delimited_string "$options")
         local zenity_options=()
 
@@ -106,8 +108,7 @@ _select_output_filename() {
     _display_unlock
 
     if [[ -z "$output_file" ]]; then
-        _display_error_box "Failed: you must select an output checksum file!"
-        _exit_script
+        output_file=$(head -n 1 <<<"$options")
     fi
 
     printf "%s" "$output_file"
