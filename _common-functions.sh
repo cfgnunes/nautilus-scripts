@@ -363,10 +363,7 @@ _run_task_parallel() {
 _command_exists() {
     local command_check=$1
 
-    if command -v "$command_check" &>/dev/null; then
-        return 0
-    fi
-    return 1
+    command -v "$command_check" &>/dev/null || return 1
 }
 
 # FUNCTION: _dependencies_check_commands
@@ -568,7 +565,11 @@ _dependencies_check_metapackages() {
 #
 # DESCRIPTION:
 # The function will attempt to detect the first available package manager
-# from this list. Once one is found, it will be used consistently.
+# from a list.
+#
+# RETURNS:
+#   "0" (true): If a package manager is found.
+#   "1" (false): If no package manager is found.
 _deps_get_available_package_manager() {
     local apps=(
         "brew"
@@ -580,14 +581,7 @@ _deps_get_available_package_manager() {
         "zypper"
         "guix"
     )
-    available_pkg_manager=$(_get_available_app "apps")
-
-    if [[ -n "$available_pkg_manager" ]]; then
-        printf "%s" "$available_pkg_manager"
-        return 0
-    fi
-
-    return 1
+    _get_available_app "apps" || return 1
 }
 
 # FUNCTION: _deps_get_dependency_value
@@ -601,6 +595,10 @@ _deps_get_available_package_manager() {
 #   $2 (available_pkg_manager): The package manager to match.
 #   $3 (array_values): The name of the associative array that contains
 #      the mappings (<package_manager>:<value> pairs).
+#
+# RETURNS:
+#   "0" (true): If a matching value is found and printed.
+#   "1" (false): If no matching value is found.
 _deps_get_dependency_value() {
     local command=$1
     local available_pkg_manager=$2
@@ -976,7 +974,6 @@ _delete_items() {
 #   "0" (true): If the directory was successfully popped and changed.
 #   "1" (false): If there was an error popping the directory.
 _directory_pop() {
-
     popd &>/dev/null || {
         _log_error "Could not pop a directory." "" "" ""
         return 1
@@ -1808,6 +1805,10 @@ _display_list_box_xmessage() {
 #
 # PARAMETERS:
 #   $1 (message): A message to display as a prompt for the password.
+#
+# RETURNS:
+#   "0" (true): If the password is successfully obtained.
+#   "1" (false): If the user cancels the input or an error occurs.
 _display_password_box() {
     local message=$1
     local password=""
@@ -1836,6 +1837,10 @@ _display_password_box() {
 # DESCRIPTION:
 # This function prompts the user to enter a password and ensures the
 # password is not empty.
+#
+# RETURNS:
+#   "0" (true): If the password is successfully obtained.
+#   "1" (false): If the user cancels the input or an error occurs.
 _display_password_box_define() {
     local message="Type your password:"
     local password=""
@@ -1859,6 +1864,10 @@ _display_password_box_define() {
 #
 # PARAMETERS:
 #   $1 (message): The question message to display to the user.
+#
+# RETURNS:
+#   "0" (true): If the user responds with 'yes' or 'y'.
+#   "1" (false): If the user responds with 'no' or 'n', or if an error.
 _display_question_box() {
     local message=$1
     local response=""
@@ -2102,7 +2111,6 @@ _display_wait_box_message() {
 # indicators) that were displayed during the execution of a task. It checks
 # for both Zenity and KDialog wait boxes and handles their closure.
 _close_wait_box() {
-
     if [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]]; then
         return 0
     fi
@@ -2212,6 +2220,10 @@ _get_qdbus_command() {
 # PARAMETERS:
 #   $1 (_apps): An array of application names to check, in order of
 #      preference.
+#
+# RETURNS:
+#   "0" (true): If an available application is found, prints its name.
+#   "1" (false): If no applications from the list are found.
 _get_available_app() {
     local -n _apps=$1
 
@@ -2232,7 +2244,11 @@ _get_available_app() {
 # This function detects the default or an available file manager on the
 # system.
 #
-# Behavior:
+# RETURNS:
+#   "0" (true): If a file manager is found, prints its name.
+#   "1" (false): If no file manager is found.
+#
+# BEHAVIOR:
 #   1. Attempts to get the system's default file manager using
 #      '_xdg_get_default_app' for the 'inode/directory' MIME type.
 #   2. If none is found, iterates through a predefined list of common file
@@ -2396,6 +2412,10 @@ _unset_global_variables_file_manager() {
 #   $2 (quiet, optional): If set to 'true', the function will return 1 on
 #      errors without displaying any dialog or exiting. Default is 'false'.
 #
+# RETURNS:
+#   "0" (true): If the default application is found, prints its executable.
+#   "1" (false): If no default application is set or found.
+#
 # EXAMPLE:
 #   - Input: 'application/pdf'
 #   - Output: The function prints the default application's executable for
@@ -2468,7 +2488,6 @@ _xdg_get_default_app() {
 # This function retrieves the current content of the clipboard, adapting
 # the method according to the session type.
 _get_clipboard_data() {
-
     case "${XDG_SESSION_TYPE:-}" in
     "wayland") wl-paste 2>/dev/null ;;
     "x11") xclip -quiet -selection clipboard -o 2>/dev/null ;;
@@ -3587,6 +3606,10 @@ _cmd_magick() {
 # DESCRIPTION:
 # This function adds the running script to the history of recently accessed
 # scripts ('$ACCESSED_RECENTLY_DIR').
+#
+# RETURNS:
+#   "0" (true): If the script was added successfully.
+#   "1" (false): If there was an error adding the script.
 _recent_scripts_add() {
     local running_script=$0
     if [[ "$0" != "/"* ]]; then

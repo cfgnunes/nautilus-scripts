@@ -361,10 +361,7 @@ _check_exist_filemanager() {
 _command_exists() {
     local command_check=$1
 
-    if command -v "$command_check" &>/dev/null; then
-        return 0
-    fi
-    return 1
+    command -v "$command_check" &>/dev/null || return 1
 }
 
 # -----------------------------------------------------------------------------
@@ -696,7 +693,6 @@ _step_install_scripts() {
 # DESCRIPTION:
 # Install keyboard accelerators (shortcuts) for specific file managers.
 _step_install_accels() {
-
     _echo_info "> Installing keyboard accelerators..."
 
     case "$FILE_MANAGER" in
@@ -971,7 +967,6 @@ _step_create_gnome_application_folder() {
 # Delegates to the appropriate function depending on the detected file
 # manager.
 _step_install_menus() {
-
     case "$FILE_MANAGER" in
     "dolphin") _step_install_menus_dolphin ;;
     "pcmanfm-qt") _step_install_menus_pcmanfm ;;
@@ -1322,7 +1317,6 @@ _step_install_menus_thunar() {
 # configurations. For most file managers, the `-q` option is used to quit
 # gracefully.
 _step_close_filemanager() {
-
     if [[ -z "$FILE_MANAGER" ]]; then
         return
     fi
