@@ -79,16 +79,6 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Shift>U` | Find duplicate files              |
 | `<Control><Shift>P` | List permissions and owners       |
 | `<Control><Shift>Y` | Show files information            |
-| `<Control><Alt>1`   | Show files MIME types             |
-| `<Control><Alt>2`   | Text: List file issues            |
-| `<Control><Alt>3`   | Text: List files with bad chars   |
-| `<Control><Alt>4`   | Text: List encodings              |
-| `<Control><Alt>5`   | Text: List line breaks            |
-| `<Control><Alt>6`   | Text: List line count             |
-| `<Control><Alt>7`   | Text: List max line length        |
-| `<Control><Alt>8`   | Text: List word count             |
-| `<Control><Alt>9`   | List largest directories          |
-| `<Control><Alt>0`   | List largest files                |
 
 ## Compatibility
 
