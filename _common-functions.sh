@@ -3598,6 +3598,31 @@ _cmd_magick() {
     fi
 }
 
+# FUNCTION: _initialize_homebrew
+#
+# Initializes the Homebrew environment if it is installed in the user's local
+# directory. This function ensures Homebrew commands are available in the
+# current shell session and configures environment variables to make it run
+# quietly and without analytics.
+_initialize_homebrew() {
+    local homebrew_dir="$HOME/.local/apps/homebrew"
+    local brew_cmd="$homebrew_dir/bin/brew"
+
+    if [[ -f "$brew_cmd" ]]; then
+        # Initialize environment.
+        eval "$($brew_cmd shellenv)"
+
+        # Homebrew less verbose.
+        export HOMEBREW_VERBOSE=""
+        export HOMEBREW_NO_ANALYTICS="1"
+        export HOMEBREW_NO_AUTO_UPDATE="1"
+        export HOMEBREW_NO_COLOR="1"
+        export HOMEBREW_NO_EMOJI="1"
+        export HOMEBREW_NO_ENV_HINTS="1"
+        export HOMEBREW_NO_GITHUB_API="1"
+    fi
+}
+
 # -----------------------------------------------------------------------------
 # SECTION /// [SCRIPTS RECENT HISTORY]
 # -----------------------------------------------------------------------------
@@ -3690,3 +3715,6 @@ _recent_scripts_organize() {
 # Execute functions to organize the recently accessed scripts.
 _recent_scripts_add
 _recent_scripts_organize
+
+# Initialize Homebrew environment if available.
+_initialize_homebrew
