@@ -3605,6 +3605,9 @@ _cmd_magick() {
 # current shell session and configures environment variables to make it run
 # quietly and without analytics.
 _initialize_homebrew() {
+    # Skip initialization if Homebrew is already available in 'PATH'.
+    _command_exists "brew" && return
+
     local homebrew_dir="$HOME/.local/apps/homebrew"
     local brew_cmd="$homebrew_dir/bin/brew"
 
