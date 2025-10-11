@@ -477,6 +477,8 @@ _get_parameters_command_line() {
         case "$1" in
         -a | --install-all-users) OPT_INSTALL_FOR_ALL_USERS="true" ;;
         -A | --no-install-all-users) OPT_INSTALL_FOR_ALL_USERS="false" ;;
+        -b | --install-homebrew) OPT_INSTALL_HOMEBREW="true" ;;
+        -B | --no-install-homebrew) OPT_INSTALL_HOMEBREW="false" ;;
         -d | --remove-scripts) OPT_REMOVE_SCRIPTS="true" ;;
         -D | --no-remove-scripts) OPT_REMOVE_SCRIPTS="false" ;;
         -f | --close-filemanager) OPT_CLOSE_FILE_MANAGER="true" ;;
@@ -494,6 +496,8 @@ _get_parameters_command_line() {
             echo
             echo "  -a, --install-all-users         Install for all users."
             echo "  -A, --no-install-all-users      Do not install for all users."
+            echo "  -b, --install-homebrew          Install Homebrew."
+            echo "  -B, --no-install-homebrew       Do not install Homebrew."
             echo "  -d, --remove-scripts            Remove previously installed scripts."
             echo "  -D, --no-remove-scripts         Do not remove previously installed scripts."
             echo "  -f, --close-filemanager         Close file manager after install."
