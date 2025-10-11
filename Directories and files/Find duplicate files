@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2001
-# install_keyboard_shortcut=<Control><Shift>U
+# install_keyboard_shortcut=<Control><Alt>U
 
 # Source the script '_common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)

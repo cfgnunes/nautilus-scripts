@@ -62,23 +62,27 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `F4`                | Terminal                          |
 | `F7`                | Disk Usage Analyzer               |
 | `<Control>E`        | Extract here                      |
-| `<Control><Alt>Z`   | Compress to .zip (each)           |
 | `<Control><Alt>G`   | Compress to .tar.gz (each)        |
-| `<Control><Alt>X`   | Compress to .tar.xz (each)        |
 | `<Control><Alt>S`   | Compress to .tar.zst (each)       |
+| `<Control><Alt>X`   | Compress to .tar.xz (each)        |
+| `<Control><Alt>Z`   | Compress to .zip (each)           |
+| `<Control><Alt>I`   | Show files information            |
+| `<Control><Alt>M`   | Show media information            |
+| `<Control><Alt>H`   | Find hidden items                 |
+| `<Control><Alt>J`   | Find junk files                   |
+| `<Control><Alt>U`   | Find duplicate files              |
+| `<Control><Alt>P`   | List permissions and owners       |
+| `<Control><Alt>R`   | List recently modified files      |
 | `<Control><Alt>C`   | Copy filename to clipboard        |
 | `<Control><Alt>V`   | Paste as hard link                |
 | `<Control><Shift>V` | Paste as symbolic link            |
 | `<Control><Shift>C` | Compare items                     |
+| `<Control><Shift>O` | Open item location                |
+| `<Control><Shift>H` | Compute all file hashes           |
+| `<Control><Shift>E` | Find empty directories            |
 | `<Control><Shift>G` | Git: Clone URLs (clipboard, file) |
 | `<Control><Shift>R` | Git: Reset and pull               |
 | `<Control><Shift>X` | URL: Download (clipboard, file)   |
-| `<Control><Shift>O` | Open item location                |
-| `<Control><Shift>E` | Find empty directories            |
-| `<Control><Shift>H` | Find hidden items                 |
-| `<Control><Shift>U` | Find duplicate files              |
-| `<Control><Shift>P` | List permissions and owners       |
-| `<Control><Shift>Y` | Show files information            |
 
 ## Compatibility
 
