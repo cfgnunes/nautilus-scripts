@@ -3609,10 +3609,10 @@ _initialize_homebrew() {
     local brew_cmd="$homebrew_dir/bin/brew"
 
     if [[ -f "$brew_cmd" ]]; then
-        # Initialize environment.
+        # Load the Homebrew environment into the current shell session.
         eval "$($brew_cmd shellenv)"
 
-        # Homebrew less verbose.
+        # Configure Homebrew for non-interactive and less verbose operation.
         export HOMEBREW_VERBOSE=""
         export HOMEBREW_NO_ANALYTICS="1"
         export HOMEBREW_NO_AUTO_UPDATE="1"
