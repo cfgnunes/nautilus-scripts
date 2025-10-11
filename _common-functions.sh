@@ -587,53 +587,55 @@ _deps_get_available_package_manager() {
 # FUNCTION: _deps_get_dependency_value
 #
 # DESCRIPTION:
-# This function retrieves the value associated with a given command
-# for a specific package manager from a provided associative array.
+#   Retrieves the value associated with a specific key–subkey pair from an
+#   associative array.
 #
 # PARAMETERS:
-#   $1 (command): The command or key whose value is being queried.
-#   $2 (available_pkg_manager): The package manager to match.
-#   $3 (array_values): The name of the associative array that contains
-#      the mappings (<package_manager>:<value> pairs).
+#   $1 (key): The key whose value is being queried.
+#   $2 (pkg_manager): The package manager to match.
+#   $3 (input_array): The name of the associative array that contains
+#      the mappings (<subkey>:<value> pairs).
 #
 # RETURNS:
 #   "0" (true): If a matching value is found and printed.
 #   "1" (false): If no matching value is found.
 _deps_get_dependency_value() {
-    local command=$1
-    local available_pkg_manager=$2
-    local -n array_values=$3
-    local pair_values=""
+    local key=$1
+    local pkg_manager=$2
+    local -n input_array=$3
+    local mappings=""
 
     # Source the configuration file that defines the mapping between commands,
     # packages, and package managers. This file is used by the scripts to check
     # and resolve their own dependencies.
-    source "$ROOT_DIR/_dependencies.sh"
+    if [[ ! -v "PACKAGE_NAME" ]]; then
+        source "$ROOT_DIR/_dependencies.sh"
+    fi
 
     # Retrieve the raw value from the associative array.
-    pair_values=${array_values[$command]:-}
+    mappings=${input_array[$key]:-}
 
     # Remove leading, trailing, and duplicate spaces.
-    pair_values=$(_str_collapse_char "$pair_values" " ")
+    mappings=$(_str_collapse_char "$mappings" " ")
 
     # If the key does not exist or has no associated values, return failure.
-    if [[ -z "$pair_values" ]]; then
+    if [[ -z "$mappings" ]]; then
         return 1
     fi
 
     # Replace newlines with '$FIELD_SEPARATOR' for iteration.
-    pair_values=$(tr "\n" "$FIELD_SEPARATOR" <<<"$pair_values")
+    mappings=$(tr "\n" "$FIELD_SEPARATOR" <<<"$mappings")
 
     # Iterate over each <package_manager>:<key_value> pair.
-    local pair_value=""
-    for pair_value in $pair_values; do
-        local pkg_manager="${pair_value%%:*}"
-        local key_value="${pair_value#*:}"
+    local mapping=""
+    for mapping in $mappings; do
+        local subkey="${mapping%%:*}"
+        local value="${mapping#*:}"
 
         # Map equivalent package managers for compatibility.
-        case "$pkg_manager:$available_pkg_manager" in
+        case "$subkey:$pkg_manager" in
         "apt:apt-get" | "dnf:rpm-ostree")
-            pkg_manager=$available_pkg_manager
+            subkey=$pkg_manager
             ;;
         esac
 
@@ -642,17 +644,15 @@ _deps_get_dependency_value() {
         # containers, we ensure it's a real Termux session by checking that
         # '$HOME' contains "com.termux", the package manager is "pkg", and the
         # system reports "Android".
-        if [[ "${HOME:-}" == *"com.termux"* ]] &&
-            [[ "$pkg_manager" == "pkg" ]] &&
+        if [[ "$subkey" == "pkg" ]] && [[ "${HOME:-}" == *"com.termux"* ]] &&
             [[ "$(uname -o)" == "Android" ]]; then
-            printf "%s" "$key_value"
+            printf "%s" "$value"
             return 0
         fi
 
         # If the package manager matches, print and exit successfully.
-        if [[ "$pkg_manager" == "$available_pkg_manager" ]] ||
-            [[ "$pkg_manager" == "*" ]]; then
-            printf "%s" "$key_value"
+        if [[ "$subkey" == "$pkg_manager" ]] || [[ "$subkey" == "*" ]]; then
+            printf "%s" "$value"
             return 0
         fi
     done
