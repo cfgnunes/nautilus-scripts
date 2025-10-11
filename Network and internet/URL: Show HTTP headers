@@ -63,7 +63,7 @@ _main_task() {
 #
 # The function sorts and deduplicates the matches before printing.
 _extract_urls() {
-    local data=${1,,}
+    local data=$1
     local re_ip="https?://(?:[0-9]{1,3}\.){3}[0-9]{1,3}"
     local re_port_path="(?::[0-9]+)?(?:/[^[:space:]'\"\)\]\>]*)?"
     local re_domain="https?://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
