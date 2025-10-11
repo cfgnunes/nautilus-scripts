@@ -86,6 +86,7 @@ OPT_INSTALL_ACCELS="true"
 OPT_CLOSE_FILE_MANAGER="true"
 OPT_INSTALL_APP_SHORTCUTS="false"
 OPT_INSTALL_FOR_ALL_USERS="false"
+OPT_INSTALL_HOMEBREW="false"
 OPT_CHOOSE_CATEGORIES="false"
 # Default core options.
 OPT_INTERACTIVE_INSTALL="true"
@@ -139,6 +140,7 @@ _main() {
         "Close the file manager to reload its configurations"
         "Add shortcuts to the application menu"
         "Install for all users (may require 'sudo')"
+        "Install Homebrew (optional)"
         "Choose which script categories to install"
     )
 
@@ -150,6 +152,7 @@ _main() {
         "$OPT_CLOSE_FILE_MANAGER"
         "$OPT_INSTALL_APP_SHORTCUTS"
         "$OPT_INSTALL_FOR_ALL_USERS"
+        "$OPT_INSTALL_HOMEBREW"
         "$OPT_CHOOSE_CATEGORIES"
     )
 
@@ -157,7 +160,7 @@ _main() {
     _echo ""
 
     if [[ "$OPT_INTERACTIVE_INSTALL" == "true" ]]; then
-        _echo "Select the options (<SPACE> to check):"
+        _echo "Select the options (<SPACE> to check, <ENTER> to confirm):"
 
         # Display the interactive menu and capture user selections.
         _multiselect_menu menu_selected menu_labels menu_defaults
@@ -173,7 +176,8 @@ _main() {
     OPT_CLOSE_FILE_MANAGER=${menu_selected[3]}
     OPT_INSTALL_APP_SHORTCUTS=${menu_selected[4]}
     OPT_INSTALL_FOR_ALL_USERS=${menu_selected[5]}
-    OPT_CHOOSE_CATEGORIES=${menu_selected[6]}
+    OPT_INSTALL_HOMEBREW=${menu_selected[6]}
+    OPT_CHOOSE_CATEGORIES=${menu_selected[7]}
 
     # Collect all available script categories (directories).
     local dir=""
@@ -190,7 +194,7 @@ _main() {
     # If requested, let the user select which categories to install.
     if [[ "$OPT_CHOOSE_CATEGORIES" == "true" ]]; then
         _echo ""
-        _echo "Select the categories (<SPACE> to check):"
+        _echo "Select the categories (<SPACE> to check, <ENTER> to confirm):"
         _multiselect_menu cat_selected cat_dirs cat_defaults
     fi
 
@@ -271,7 +275,7 @@ _main() {
 
             # Perform installation steps.
             _echo ""
-            _echo_info "Installing the scripts:"
+            _echo_info "Installing new scripts:"
             _echo_info "> User: $INSTALL_OWNER"
             _echo_info "> Home dir: $INSTALL_HOME"
             _echo_info "> File manager: $FILE_MANAGER"
@@ -297,6 +301,11 @@ _main() {
             _echo_info "> Done!"
         fi
     done
+
+    # Optional: Install Homebrew.
+    if [[ "$OPT_INSTALL_HOMEBREW" == "true" ]]; then
+        _step_install_homebrew
+    fi
 
     _echo ""
 }
@@ -633,7 +642,7 @@ _step_install_dependencies() {
     fi
 
     if [[ -z "$packages" ]]; then
-        _echo_info "> All dependencies already satisfied."
+        _echo_info "> All dependencies are already satisfied."
     fi
     _echo_info "> Done!"
 }
@@ -1351,6 +1360,64 @@ _step_close_filemanager() {
         fi
         ;;
     esac
+}
+
+# -----------------------------------------------------------------------------
+# SECTION /// [INSTALLATION STEP / HOMEBREW]
+# -----------------------------------------------------------------------------
+
+# FUNCTION: _step_install_homebrew
+#
+# DESCRIPTION:
+# This function installs Homebrew if the user requested it and it is not
+# already installed.
+_step_install_homebrew() {
+
+    # Check if 'curl' or 'wget' is available.
+    local downloader=""
+    if _command_exists "curl"; then
+        downloader="curl"
+    elif _command_exists "wget"; then
+        downloader="wget"
+    else
+        _echo_error "Neither 'curl' nor 'wget' is installed. Please install one of them to continue."
+        exit 1
+    fi
+
+    _echo ""
+    _echo_info "Installing Homebrew:"
+
+    # Homebrew install directory.
+    local homebrew_dir="$HOME/.local/apps/homebrew"
+    local brew_cmd="$homebrew_dir/bin/brew"
+
+    # Check if Homebrew is already installed.
+    if [[ -e "$brew_cmd" ]]; then
+        _echo_info "> Homebrew is already installed."
+        return 0
+    fi
+
+    _echo_info "> Installing Homebrew to: ~/.local/apps/homebrew"
+    mkdir --parents "$homebrew_dir"
+
+    _echo_info "> Downloading the package..."
+
+    # Download and extract Homebrew.
+    if [[ "$downloader" == "curl" ]]; then
+        curl -fsSL https://github.com/Homebrew/brew/tarball/main |
+            tar -xz --strip-components=1 -C "$homebrew_dir"
+    else
+        wget -qO- https://github.com/Homebrew/brew/tarball/main |
+            tar -xz --strip-components=1 -C "$homebrew_dir"
+    fi
+
+    # Verify installation.
+    if [[ ! -e "$brew_cmd" ]]; then
+        _echo_error "Homebrew installation failed." >&2
+        return 1
+    fi
+
+    _echo_info "> Done!"
 }
 
 # -----------------------------------------------------------------------------
