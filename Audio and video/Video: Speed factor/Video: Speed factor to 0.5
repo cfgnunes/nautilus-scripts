@@ -25,11 +25,11 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
-    local speed_factor="0.5"
+    local factor="0.5"
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(speed $speed_factor)'")
-    std_output=$(ffmpeg -hide_banner -y -i "$input_file" -filter:v "setpts=PTS/$speed_factor" -filter:a "atempo=$speed_factor" -- "$output_file" 2>&1)
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(speed $factor)'")
+    std_output=$(ffmpeg -hide_banner -y -i "$input_file" -filter:v "setpts=PTS/$factor" -filter:a "atempo=$factor" -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

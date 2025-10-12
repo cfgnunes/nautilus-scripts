@@ -25,10 +25,12 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+    local bitrate="192"
+    local channels="2"
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=mp3")
-    std_output=$(ffmpeg -hide_banner -y -i "$input_file" -vn -c:a libmp3lame -b:a 192k -ac 2 -- "$output_file" 2>&1)
+    std_output=$(ffmpeg -hide_banner -y -i "$input_file" -vn -c:a libmp3lame -b:a "${bitrate}k" -ac "$channels" -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
