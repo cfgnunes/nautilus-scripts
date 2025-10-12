@@ -3,11 +3,6 @@
 
 # This file contains common functions that the scripts will source.
 
-# To debug scripts, run the following commands:
-#   nautilus -q
-#   unset DISPLAY
-#   nautilus
-
 set -u
 
 # -----------------------------------------------------------------------------
