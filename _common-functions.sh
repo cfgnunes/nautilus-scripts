@@ -21,8 +21,8 @@ GUI_BOX_HEIGHT=550             # Height of the GUI dialog boxes.
 GUI_BOX_WIDTH=900              # Width of the GUI dialog boxes.
 GUI_INFO_WIDTH=400             # Width of the GUI small dialog boxes.
 IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
-PREFIX_ERROR_LOG_FILE="Errors" # Name of 'error' directory.
-PREFIX_OUTPUT_DIR="Output"     # Name of 'output' directory.
+PREFIX_ERROR_LOG_FILE="Errors" # Basename of 'Error' log file.
+PREFIX_OUTPUT_DIR="Output"     # Basename of 'Output' directory.
 
 # Temporary directories.
 TEMP_DIR=$(mktemp --directory)
