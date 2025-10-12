@@ -88,7 +88,7 @@ _main() {
     mkdir --parents -- "$input_dir1"
     input_file1="$input_dir1/Test archive 1"
     input_file2="$input_dir1/Test archive 2"
-    echo "Content of 'Test archive 1'." >"$input_file1"
+    echo "Content of 'Test archive'." >"$input_file1"
     echo "Content of 'Test archive 2'." >"$input_file2"
     output_file=$input_dir1
 
@@ -1346,7 +1346,7 @@ _main() {
     # Create mock files for testing.
     input_file1="$temp_dir/Test document.txt"
     output_file="$temp_dir/Test document"
-    echo "Content of 'Test document 1'." >"$input_file1"
+    echo "Content of 'Test document'." >"$input_file1"
 
     script_test="Document/Document: Convert/Document: Convert to ODT"
     __echo_script "$script_test"
@@ -1794,14 +1794,14 @@ _main() {
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Network and internet/Git: Open repository website"
+    # TODO: Implement this test.
+    #script_test="Network and internet/Git: Reset and pull"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    # TODO: Implement this test.
-    #script_test="Network and internet/Git: Reset and pull"
+    #script_test="Network and internet/Git: Open repository website"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
@@ -1840,12 +1840,15 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    # TODO: Implement this test.
-    #script_test="Network and internet/URL: Download (clipboard, file)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    # Create mock files for testing.
+    input_file1="$temp_dir/Test internet.txt"
+    echo "https://www.rfc-editor.org/rfc/rfc2616.txt" >"$input_file1"
+
+    script_test="Network and internet/URL: Download (clipboard, file)"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$temp_dir/rfc2616.txt"
+    __test_file_empty "$std_output"
 
     script_test="Network and internet/URL: Show HTTP headers"
     __echo_script "$script_test"
@@ -1882,7 +1885,7 @@ _main() {
     input_file1="$temp_dir/Test text.txt"
     input_file2="$temp_dir/Test text 2.txt"
     output_file="$temp_dir/Test text"
-    echo "Content of 'Test text 1'." >"$input_file1"
+    echo "Content of 'Test text'." >"$input_file1"
     echo "Content of 'Test text 2'." >"$input_file2"
 
     script_test="Plain text/Text: Encodings/Text: Encode to ISO-8859-1"
@@ -1964,19 +1967,23 @@ _main() {
     __test_file_nonempty "$temp_dir/Concatenated files.txt"
     __test_file_empty "$std_output"
 
-    # TODO: Implement this test.
-    #script_test="Plain text/Text: Tools/Text: Convert UTF-8 CRLF (recursive)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file.bak"
-    #__test_file_empty "$std_output"
+    # Create mock files for testing.
+    input_file1="$temp_dir/Test text.txt"
+    output_file="$temp_dir/Test text"
+    echo "Content of 'Test text'." >"$input_file1"
+    echo "Content of 'Test text'." >>"$input_file1"
 
-    # TODO: Implement this test.
-    #script_test="Plain text/Text: Tools/Text: Convert UTF-8 LF (recursive)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file (LF).txt"
-    #__test_file_empty "$std_output"
+    script_test="Plain text/Text: Tools/Text: Convert UTF-8 CRLF (recursive)"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.txt.bak"
+    __test_file_empty "$std_output"
+
+    script_test="Plain text/Text: Tools/Text: Convert UTF-8 LF (recursive)"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.txt (2).bak"
+    __test_file_empty "$std_output"
 
     script_test="Plain text/Text: Tools/Text: List file issues"
     __echo_script "$script_test"
