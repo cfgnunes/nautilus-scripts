@@ -23,9 +23,10 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
+    local media="A4"
 
     # Run the main process.
-    std_output=$(lp -o media=A4 "$input_file" 2>&1)
+    std_output=$(lp -o media="$media" "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
