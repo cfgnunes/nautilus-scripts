@@ -691,22 +691,22 @@ _deps_install_missing_packages() {
 # FUNCTION: _deps_install_packages
 #
 # DESCRIPTION:
-#   This function installs specified packages using the corresponding
-#   package manager defined for each one. The input list must contain
-#   pairs in the format "<pkg_manager>:<package>" separated by spaces.
+# This function installs specified packages using the corresponding
+# package manager defined for each one. The input list must contain
+# pairs in the format "<pkg_manager>:<package>" separated by spaces.
 #
-#   Example:
-#     _deps_install_packages "apt-get:curl dnf:wget brew:git"
+# Example:
+# _deps_install_packages "apt-get:curl dnf:wget brew:git"
 #
-#   Supported package managers:
-#   - "apt-get"     : For Debian/Ubuntu systems.
-#   - "dnf"         : For Fedora/RHEL systems.
-#   - "rpm-ostree"  : For Fedora Atomic systems.
-#   - "pacman"      : For Arch Linux systems.
-#   - "zypper"      : For openSUSE systems.
-#   - "nix"         : For Nix-based systems.
-#   - "brew"        : For Homebrew package manager.
-#   - "guix"        : For GNU Guix systems.
+# Supported package managers:
+# - "apt-get"     : For Debian/Ubuntu systems.
+# - "dnf"         : For Fedora/RHEL systems.
+# - "rpm-ostree"  : For Fedora Atomic systems.
+# - "pacman"      : For Arch Linux systems.
+# - "zypper"      : For openSUSE systems.
+# - "nix"         : For Nix-based systems.
+# - "brew"        : For Homebrew package manager.
+# - "guix"        : For GNU Guix systems.
 #
 # PARAMETERS:
 #   $1 (pkg_list): A space-separated list of "<pkg_manager>:<package>" pairs.
@@ -809,10 +809,10 @@ _deps_install_packages() {
 # FUNCTION: _deps_installation_check
 #
 # DESCRIPTION:
-#   This function verifies whether the specified packages were successfully
-#   installed using their respective package managers. It checks each pair
-#   in the format "<pkg_manager>:<package>" one by one, ensuring that all
-#   dependencies are properly installed before proceeding.
+# This function verifies whether the specified packages were successfully
+# installed using their respective package managers. It checks each pair in the
+# format "<pkg_manager>:<package>" one by one, ensuring that all dependencies
+# are properly installed before proceeding.
 #
 # PARAMETERS:
 #   $1 (pairs_check): A space-separated list of "<pkg_manager>:<package>".
