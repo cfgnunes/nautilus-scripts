@@ -1787,19 +1787,18 @@ _main() {
     input_file1="$temp_dir/Test internet.txt"
     echo "https://github.com/cfgnunes/nautilus-scripts.git" >"$input_file1"
 
-    # TODO: Implement this test.
-    #script_test="Network and internet/Git: Clone URLs (clipboard, file)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    script_test="Network and internet/Git: Clone URLs (clipboard, file)"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$temp_dir/nautilus-scripts/README.md"
+    __test_file_empty "$std_output"
 
-    # TODO: Implement this test.
-    #script_test="Network and internet/Git: Reset and pull"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    rm -- "$temp_dir/nautilus-scripts/README.md"
+    script_test="Network and internet/Git: Reset and pull"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$temp_dir/nautilus-scripts" >"$std_output"
+    __test_file_nonempty "$temp_dir/nautilus-scripts/README.md"
+    __test_file_empty "$std_output"
 
     #script_test="Network and internet/Git: Open repository website"
     #__echo_script "$script_test"
