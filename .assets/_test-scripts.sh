@@ -745,8 +745,8 @@ _main() {
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
-    input_file1="$temp_dir/Test hash 1"
-    echo "Content of 'Test hash 1'." >"$input_file1"
+    input_file1="$temp_dir/Test hash"
+    echo "Content of 'Test hash'." >"$input_file1"
     output_file=$input_file1
 
     script_test="Hash and checksum/Compute all file hashes"
@@ -1273,9 +1273,9 @@ _main() {
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
-    input_file1="$temp_dir/Test image SVG 1.svg"
+    input_file1="$temp_dir/Test image SVG.svg"
     input_file2="$temp_dir/Test image SVG 2.svg"
-    output_file="$temp_dir/Test image SVG 1"
+    output_file="$temp_dir/Test image SVG"
     cp -- "$ROOT_DIR/.assets/screenshot.svg" "$input_file1"
     cp -- "$input_file1" "$input_file2"
 
@@ -1344,8 +1344,8 @@ _main() {
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
-    input_file1="$temp_dir/Test document 1.txt"
-    output_file="$temp_dir/Test document 1"
+    input_file1="$temp_dir/Test document.txt"
+    output_file="$temp_dir/Test document"
     echo "Content of 'Test document 1'." >"$input_file1"
 
     script_test="Document/Document: Convert/Document: Convert to ODT"
@@ -1354,7 +1354,7 @@ _main() {
     __test_file_nonempty "$output_file.odt"
     __test_file_empty "$std_output"
 
-    input_file1="$temp_dir/Test document 1.odt"
+    input_file1="$temp_dir/Test document.odt"
 
     script_test="Document/Document: Convert/Document: Convert to TXT"
     __echo_script "$script_test"
@@ -1405,9 +1405,9 @@ _main() {
     #__test_file_empty "$std_output"
 
     # Create mock files for testing.
-    #input_file1="$temp_dir/Test document (presentation) 1.otp"
+    #input_file1="$temp_dir/Test document (presentation).otp"
     #input_file2="$temp_dir/Test document (presentation) 2.otp"
-    #output_file="$temp_dir/Test document (presentation) 1"
+    #output_file="$temp_dir/Test document (presentation)"
     #sample_file=$(find / -type f -iname "*.otp" -size -5M -print -quit 2>/dev/null)
     #cp -- "$sample_file" "$input_file1"
     #cp -- "$input_file1" "$input_file2"
@@ -1447,9 +1447,9 @@ _main() {
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
-    input_file1="$temp_dir/Test document PDF 1.pdf"
+    input_file1="$temp_dir/Test document PDF.pdf"
     input_file2="$temp_dir/Test document PDF 2.pdf"
-    output_file="$temp_dir/Test document PDF 1"
+    output_file="$temp_dir/Test document PDF"
     cp -- "$temp_dir/Combined images.pdf" "$input_file1"
     cp -- "$input_file1" "$input_file2"
 
@@ -1474,7 +1474,7 @@ _main() {
     script_test="Document/PDF: Combine, Split/PDF: Split into single-page files"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/Output/Test document PDF 1.0001.pdf"
+    __test_file_nonempty "$temp_dir/Output/Test document PDF.0001.pdf"
     __test_file_empty "$std_output"
 
     #script_test="Document/PDF: Encrypt, Decrypt/PDF: Decrypt (remove password)"
@@ -1692,7 +1692,7 @@ _main() {
     script_test="Document/PDF: Tools/PDF: Extract images"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/Output/Test document PDF 1-000.png"
+    __test_file_nonempty "$temp_dir/Output/Test document PDF-000.png"
     __test_file_empty "$std_output"
 
     script_test="Document/PDF: Tools/PDF: Remove metadata"
@@ -1783,6 +1783,10 @@ _main() {
     # SECTION /// [TESTS / Network and internet]
     # -------------------------------------------------------------------------
 
+    # Create mock files for testing.
+    input_file1="$temp_dir/Test internet.txt"
+    echo "https://github.com/cfgnunes/nautilus-scripts.git" >"$input_file1"
+
     # TODO: Implement this test.
     #script_test="Network and internet/Git: Clone URLs (clipboard, file)"
     #__echo_script "$script_test"
@@ -1790,7 +1794,6 @@ _main() {
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    # TODO: Implement this test.
     #script_test="Network and internet/Git: Open repository website"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
@@ -1804,40 +1807,38 @@ _main() {
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    # TODO: Implement this test.
-    #script_test="Network and internet/IP: Ping hosts"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    # Create mock files for testing.
+    input_file1="$temp_dir/Test internet.txt"
+    echo "127.0.0.1" >"$input_file1"
 
-    # TODO: Implement this test.
-    #script_test="Network and internet/IP: Scan ports"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    script_test="Network and internet/IP: Ping hosts"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$std_output"
 
-    # TODO: Implement this test.
-    #script_test="Network and internet/IP: Test hosts availability"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    script_test="Network and internet/IP: Scan ports"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$std_output"
 
-    # TODO: Implement this test.
-    #script_test="Network and internet/URL: Check HTTP status"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    script_test="Network and internet/IP: Test hosts availability"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$std_output"
 
-    # TODO: Implement this test.
-    #script_test="Network and internet/URL: Check SSL expiry"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    # Create mock files for testing.
+    input_file1="$temp_dir/Test internet.txt"
+    echo "https://github.com/cfgnunes/nautilus-scripts.git" >"$input_file1"
+
+    script_test="Network and internet/URL: Check HTTP status"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$std_output"
+
+    script_test="Network and internet/URL: Check SSL expiry"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$std_output"
 
     # TODO: Implement this test.
     #script_test="Network and internet/URL: Download (clipboard, file)"
@@ -1846,12 +1847,10 @@ _main() {
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    # TODO: Implement this test.
-    #script_test="Network and internet/URL: List HTTP headers"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_nonempty "$std_output"
+    script_test="Network and internet/URL: Show HTTP headers"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$std_output"
 
     # -------------------------------------------------------------------------
     # SECTION /// [TESTS / Open with]
@@ -1880,9 +1879,9 @@ _main() {
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
-    input_file1="$temp_dir/Test text 1.txt"
+    input_file1="$temp_dir/Test text.txt"
     input_file2="$temp_dir/Test text 2.txt"
-    output_file="$temp_dir/Test text 1"
+    output_file="$temp_dir/Test text"
     echo "Content of 'Test text 1'." >"$input_file1"
     echo "Content of 'Test text 2'." >"$input_file2"
 
@@ -1999,78 +1998,112 @@ _main() {
     # SECTION /// [TESTS / Rename files]
     # -------------------------------------------------------------------------
 
-    # TODO: Implement this test.
-    #script_test="Rename files/Rename: Remove accents (translit.)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    # Create mock files for testing.
+    input_file1="$temp_dir/Test réname.txt"
+    output_file="$temp_dir/Test rename.txt"
+    echo "Content of 'Test'." >"$input_file1"
 
-    # TODO: Implement this test.
-    #script_test="Rename files/Rename: Remove brackets"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    script_test="Rename files/Rename: Remove accents (translit.)"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file"
+    __test_file_empty "$std_output"
 
-    # TODO: Implement this test.
-    #script_test="Rename files/Rename: Replace gaps with dashes"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    # Create mock files for testing.
+    input_file1="$temp_dir/Test rename brackets (brackets1) (brackets2).txt"
+    output_file="$temp_dir/Test rename brackets.txt"
+    echo "Content of 'Test'." >"$input_file1"
 
-    # TODO: Implement this test.
-    #script_test="Rename files/Rename: Replace gaps with spaces"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    script_test="Rename files/Rename: Remove brackets"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file"
+    __test_file_empty "$std_output"
 
-    # TODO: Implement this test.
-    #script_test="Rename files/Rename: Replace gaps with underscores"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    # Create mock files for testing.
+    input_file1="$temp_dir/Test rename.txt"
+    output_file="$temp_dir/Test-rename.txt"
+    echo "Content of 'Test'." >"$input_file1"
 
-    # TODO: Implement this test.
-    #script_test="Rename files/Rename: To lowercase"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    script_test="Rename files/Rename: Replace gaps with dashes"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file"
+    __test_file_empty "$std_output"
 
-    # TODO: Implement this test.
+    # Create mock files for testing.
+    input_file1="$temp_dir/Test-rename.txt"
+    output_file="$temp_dir/Test rename.txt"
+    echo "Content of 'Test'." >"$input_file1"
+
+    script_test="Rename files/Rename: Replace gaps with spaces"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file"
+    __test_file_empty "$std_output"
+
+    # Create mock files for testing.
+    input_file1="$temp_dir/Test rename.txt"
+    output_file="$temp_dir/Test_rename.txt"
+    echo "Content of 'Test'." >"$input_file1"
+
+    script_test="Rename files/Rename: Replace gaps with underscores"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file"
+    __test_file_empty "$std_output"
+
+    # Create mock files for testing.
+    input_file1="$temp_dir/Test rename.txt"
+    output_file="$temp_dir/test rename.txt"
+    echo "Content of 'Test'." >"$input_file1"
+
+    script_test="Rename files/Rename: To lowercase"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file"
+    __test_file_empty "$std_output"
+
     #script_test="Rename files/Rename: To lowercase (recursive)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    # TODO: Implement this test.
-    #script_test="Rename files/Rename: To sentence case"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    # Create mock files for testing.
+    input_file1="$temp_dir/test rename.txt"
+    output_file="$temp_dir/Test rename.txt"
+    echo "Content of 'Test'." >"$input_file1"
 
-    # TODO: Implement this test.
-    #script_test="Rename files/Rename: To title case"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    script_test="Rename files/Rename: To sentence case"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file"
+    __test_file_empty "$std_output"
 
-    # TODO: Implement this test.
-    #script_test="Rename files/Rename: To uppercase"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    # Create mock files for testing.
+    input_file1="$temp_dir/test rename.txt"
+    output_file="$temp_dir/Test Rename.txt"
+    echo "Content of 'Test'." >"$input_file1"
 
-    # TODO: Implement this test.
-    #script_test="Rename files/Rename: To uppercase (recursive)"
+    script_test="Rename files/Rename: To title case"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file"
+    __test_file_empty "$std_output"
+
+    # Create mock files for testing.
+    input_file1="$temp_dir/Test rename.txt"
+    output_file="$temp_dir/TEST RENAME.TXT"
+    echo "Content of 'Test'." >"$input_file1"
+
+    script_test="Rename files/Rename: To uppercase"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file"
+    __test_file_empty "$std_output"
+
+    #script_test="Rename files/Rename: To uppercase (rec4ursive)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
@@ -2098,7 +2131,6 @@ _main() {
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    # TODO: Implement this test.
     #script_test="Security and recovery/Shred files (secure delete)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
