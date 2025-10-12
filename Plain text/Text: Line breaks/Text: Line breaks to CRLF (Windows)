@@ -28,7 +28,7 @@ _main_task() {
     local temp_file=""
 
     # Work on a temporary file.
-    temp_file=$(_get_temp_file)
+    temp_file=$(_make_temp_file)
 
     # Run the main process.
     perl -pe "s/\r\n|\n|\r/\r\n/g" -- "$input_file" >"$temp_file" 2>/dev/null

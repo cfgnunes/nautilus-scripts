@@ -227,7 +227,7 @@ _compare_imagemagick() {
 
     # Create a temporary file for the visual diff output.
     local temp_file=""
-    temp_file="$(_get_temp_dir)/Compare.png"
+    temp_file="$(_make_temp_dir)/Compare.png"
 
     # Compare the images based on their dimensions.
     if [[ "$dimensions_1" == "$dimensions_2" ]]; then

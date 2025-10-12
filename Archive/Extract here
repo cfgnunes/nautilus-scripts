@@ -282,7 +282,7 @@ _run_command() {
     filename=$(_strip_filename_extension "$filename") # Remove the extension.
 
     __temp_dir_push() {
-        temp_dir_output=$(_get_temp_dir_local "$output_dir" "$filename")
+        temp_dir_output=$(_make_temp_dir_local "$output_dir" "$filename")
         _directory_push "$temp_dir_output" || return 1
     }
     __temp_dir_pop() {

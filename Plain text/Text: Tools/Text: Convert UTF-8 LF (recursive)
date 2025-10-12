@@ -28,8 +28,8 @@ _main_task() {
     local temp_file2=""
 
     # Work on a temporary file.
-    temp_file1=$(_get_temp_file)
-    temp_file2=$(_get_temp_file)
+    temp_file1=$(_make_temp_file)
+    temp_file2=$(_make_temp_file)
 
     # Run the main process (part 1) 'convert encoding to utf-8'.
     std_output=$(iconv -f "$(_get_file_encoding "$input_file")" "$input_file" -t utf-8 -o "$temp_file1")

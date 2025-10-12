@@ -106,12 +106,12 @@ _run_command() {
         local temp_output_file=""
         basename=$(basename -- "$input_file")             # Remove the path.
         basename=$(_strip_filename_extension "$basename") # Remove the extension.
-        temp_dir_local=$(_get_temp_dir_local "$output_dir" ".$basename")
+        temp_dir_local=$(_make_temp_dir_local "$output_dir" ".$basename")
 
         # NOTE: Workaround to fix the bug 37531 in LibreOffice.
         # See the: https://bugs.documentfoundation.org/show_bug.cgi?id=37531
         local temp_dir=""
-        temp_dir=$(_get_temp_dir)
+        temp_dir=$(_make_temp_dir)
 
         # NOTE: LibreOffice does not support '--' in the command line.
         # NOTE: LibreOffice does not support defining the output file manually.

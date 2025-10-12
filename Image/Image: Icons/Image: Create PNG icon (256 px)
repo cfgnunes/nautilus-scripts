@@ -41,7 +41,7 @@ _main_task() {
     }
 
     # Work on a temporary file.
-    temp_dir="$(_get_temp_dir)"
+    temp_dir="$(_make_temp_dir)"
     temp_file1="$temp_dir/file1.png"
     temp_file2="$temp_dir/file2.png"
     temp_file3="$temp_dir/file3.png"

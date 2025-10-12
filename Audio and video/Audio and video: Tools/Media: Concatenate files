@@ -35,7 +35,7 @@ _main_task() {
 
     # Create the input list for the 'ffmpeg'.
     local temp_file=""
-    temp_file=$(_get_temp_file)
+    temp_file=$(_make_temp_file)
     input_files="file '$input_files'"
     # shellcheck disable=SC2001
     input_files=$(sed "s|$FIELD_SEPARATOR|'${FIELD_SEPARATOR}file '|g" <<<"$input_files")

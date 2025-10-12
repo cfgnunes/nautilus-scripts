@@ -31,7 +31,7 @@ _flatten_directory() {
     local exit_code=0
 
     # Create a temporary file to store the list of files to move.
-    temp_file=$(_get_temp_file)
+    temp_file=$(_make_temp_file)
 
     # Create an 'undo script' to reverse the flattening operation.
     undo_script=$(_make_undo_script "$directory")

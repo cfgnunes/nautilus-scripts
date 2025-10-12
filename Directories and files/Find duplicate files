@@ -18,7 +18,7 @@ _main() {
     input_files=$(_get_files "par_type=all")
 
     # Work on a temporary file.
-    temp_file=$(_get_temp_file)
+    temp_file=$(_make_temp_file)
 
     # Run the main process.
     # shellcheck disable=SC2086

@@ -28,7 +28,7 @@ _main_task() {
     local temp_file=""
 
     # Work on a temporary file.
-    temp_file=$(_get_temp_file)
+    temp_file=$(_make_temp_file)
 
     # Run the main process.
     std_output=$(iconv -f "$(_get_file_encoding "$input_file")" "$input_file" -t iso-8859-1 -o "$temp_file")

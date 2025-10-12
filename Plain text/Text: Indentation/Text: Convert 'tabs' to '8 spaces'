@@ -28,7 +28,7 @@ _main_task() {
     local temp_file=""
 
     # Work on a temporary file.
-    temp_file=$(_get_temp_file)
+    temp_file=$(_make_temp_file)
 
     # Run the main process.
     expand --tabs=8 -- "$input_file" >"$temp_file" 2>/dev/null

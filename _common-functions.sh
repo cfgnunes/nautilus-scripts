@@ -29,7 +29,7 @@ TEMP_DIR=$(mktemp --directory)
 TEMP_DIR_ITEMS_TO_REMOVE="$TEMP_DIR/items_to_remove"
 TEMP_DIR_LOGS="$TEMP_DIR/logs"
 TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
-TEMP_DIR_TASK="$TEMP_DIR/task" # used by '_get_temp_file' function.
+TEMP_DIR_TASK="$TEMP_DIR/task" # used by '_make_temp_file' function.
 
 # Temporary files.
 TEMP_CONTROL_BATCH_ENABLED="$TEMP_DIR/control_batch_enabled"
@@ -329,9 +329,9 @@ _run_task_parallel() {
         _get_filename_next_suffix \
         _get_max_procs \
         _get_output_filename \
-        _get_temp_dir \
-        _get_temp_dir_local \
-        _get_temp_file \
+        _make_temp_dir \
+        _make_temp_dir_local \
+        _make_temp_file \
         _get_working_directory \
         _is_directory_empty \
         _is_gui_session \
@@ -1309,7 +1309,7 @@ _move_file() {
     return 0
 }
 
-# FUNCTION: _get_temp_dir
+# FUNCTION: _make_temp_dir
 #
 # DESCRIPTION:
 # This function creates a temporary directory in the '$TEMP_DIR_TASK' directory
@@ -1319,11 +1319,11 @@ _move_file() {
 #
 # Output:
 #   - The full path to the newly created temporary directory.
-_get_temp_dir() {
+_make_temp_dir() {
     mktemp --directory --tmpdir="$TEMP_DIR_TASK"
 }
 
-# FUNCTION: _get_temp_dir_local
+# FUNCTION: _make_temp_dir_local
 #
 # DESCRIPTION:
 # This function creates a temporary directory in a specified location and
@@ -1338,7 +1338,7 @@ _get_temp_dir() {
 #
 # Output:
 #   - The full path to the newly created temporary directory.
-_get_temp_dir_local() {
+_make_temp_dir_local() {
     local output_dir=$1
     local basename=$2
     local temp_dir=""
@@ -1352,7 +1352,7 @@ _get_temp_dir_local() {
     printf "%s" "$temp_dir"
 }
 
-# FUNCTION: _get_temp_file
+# FUNCTION: _make_temp_file
 #
 # DESCRIPTION:
 # This function creates a temporary file in the '$TEMP_DIR_TASK' directory
@@ -1362,7 +1362,7 @@ _get_temp_dir_local() {
 #
 # Output:
 #   - The full path to the newly created temporary file.
-_get_temp_file() {
+_make_temp_file() {
     mktemp --tmpdir="$TEMP_DIR_TASK"
 }
 
