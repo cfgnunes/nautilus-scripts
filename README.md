@@ -136,6 +136,17 @@ In some cases, the scripts may fail to run. To avoid such issues, follow these s
 When batch mode is detected, the script will recognize the directory as a special case and process each file inside it individually, instead of treating the entire directory as a single input.
 This approach prevents errors caused by excessively long argument lists and ensures reliable execution.
 
+## Acknowledgments
+
+This project was also inspired by other extraordinary projects and their authors.
+Many thanks to all of them for their great collections:
+
+- @yeKcim [Nautilus Scripts](https://github.com/yeKcim/my_nautilus_scripts)
+- [FE Nautilus Scripts](http://www.freedomenv.com/NautilusScriptsFE/nautilus_scripts_FE_desc.htm)
+- @maravento [Scripts](https://github.com/maravento/vault)
+- @btittelbach [Nautilus Scripts](https://github.com/btittelbach/nautilus-scripts)
+
+
 ## Contributing
 
 If you spot a bug or want to improve the code or even improve the content, you can do the following:
