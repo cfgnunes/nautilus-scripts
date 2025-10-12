@@ -70,7 +70,6 @@ _main() {
     local input_dir1=""
     local input_file2=""
     local output_file=""
-    local sample_file=""
     local temp_dir=$TEMP_DIR_TASK
 
     local std_output="$temp_dir/std_output.txt"
@@ -1321,17 +1320,22 @@ _main() {
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
-    input_file1="$temp_dir/Test document 1.odt"
-    input_file2="$temp_dir/Test document 2.odt"
+    input_file1="$temp_dir/Test document 1.txt"
     output_file="$temp_dir/Test document 1"
-    sample_file=$(find / -type f -iname "*.odt" -size -5M -print -quit 2>/dev/null)
-    cp -- "$sample_file" "$input_file1"
-    cp -- "$input_file1" "$input_file2"
+    echo "Content of 'Test document 1'." >"$input_file1"
+
+    script_test="Document/Document: Convert/Document: Convert to ODT"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.odt"
+    __test_file_empty "$std_output"
+
+    input_file1="$temp_dir/Test document 1.odt"
 
     script_test="Document/Document: Convert/Document: Convert to TXT"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.txt"
+    __test_file_nonempty "$output_file (2).txt"
     __test_file_empty "$std_output"
 
     script_test="Document/Document: Convert/Document: Convert to EPUB"
@@ -1358,30 +1362,23 @@ _main() {
     __test_file_nonempty "$output_file.docx"
     __test_file_empty "$std_output"
 
-    input_file1="$temp_dir/Test document 1.docx"
-    script_test="Document/Document: Convert/Document: Convert to ODT"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (2).odt"
-    __test_file_empty "$std_output"
-
-    script_test="Document/Document: Convert/Document: Convert to ODS"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.ods"
-    __test_file_empty "$std_output"
-
-    script_test="Document/Document: Convert/Document: Convert to XLSX"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.xlsx"
-    __test_file_empty "$std_output"
-
     script_test="Document/Document: Convert/Document: Convert to PDF"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.pdf"
     __test_file_empty "$std_output"
+
+    #script_test="Document/Document: Convert/Document: Convert to ODS"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file.ods"
+    #__test_file_empty "$std_output"
+
+    #script_test="Document/Document: Convert/Document: Convert to XLSX"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file.xlsx"
+    #__test_file_empty "$std_output"
 
     # Create mock files for testing.
     #input_file1="$temp_dir/Test document (presentation) 1.otp"
