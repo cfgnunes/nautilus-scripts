@@ -55,8 +55,16 @@ _get_dependencies() {
                 dependencies+="lowriter"
             fi
             ;;
-        "pandoc") dependencies+="pandoc" ;;
-        "pdftotext") dependencies+="pdfinfo" ;;
+        "pandoc")
+            if ! _command_exists "pandoc"; then
+                dependencies+="pandoc"
+            fi
+            ;;
+        "pdftotext")
+            if ! _command_exists "pdfinfo"; then
+                dependencies+="pdfinfo"
+            fi
+            ;;
         esac
         dependencies+=$'\n'
     done

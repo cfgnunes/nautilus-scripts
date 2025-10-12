@@ -55,7 +55,11 @@ _get_dependencies() {
                 dependencies+="loimpress"
             fi
             ;;
-        "pandoc") dependencies+="pandoc" ;;
+        "pandoc")
+            if ! _command_exists "pandoc"; then
+                dependencies+="pandoc"
+            fi
+            ;;
         esac
         dependencies+=$'\n'
     done

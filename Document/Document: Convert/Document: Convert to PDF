@@ -54,7 +54,11 @@ _get_dependencies() {
                 dependencies+="convert"
             fi
             ;;
-        "inkscape") dependencies+="inkscape" ;;
+        "inkscape")
+            if ! _command_exists "inkscape"; then
+                dependencies+="inkscape"
+            fi
+            ;;
         "latexmk") dependencies+="latexmk texlive" ;;
         "libreoffice_calc")
             if ! _command_exists "libreoffice.calc" &&
@@ -77,8 +81,17 @@ _get_dependencies() {
                 dependencies+="lowriter"
             fi
             ;;
-        "pandoc_latex") dependencies+="pandoc texlive" ;;
-        "pandoc") dependencies+="pandoc" ;;
+        "pandoc_latex")
+            if ! _command_exists "pandoc"; then
+                dependencies+="pandoc"
+            fi
+            dependencies+="texlive"
+            ;;
+        "pandoc")
+            if ! _command_exists "pandoc"; then
+                dependencies+="pandoc"
+            fi
+            ;;
         esac
         dependencies+=$'\n'
     done
