@@ -56,12 +56,13 @@ _extract_git_urls() {
         return
     fi
 
-    # If the URL is like: https://<host>/<user>/<repo>
-    # convert it to git@<host>:<user>/<repo>.git
-    data=$(sed -E 's#https://([^/]+)/([^/]+)/([^ ]+)#git@\1:\2/\3.git#g' <<<"$data")
+    # Convert HTTPS to SSH form.
+    data=$(sed -E 's#https://([^/]+)/([^/]+)/([^ ]+)#git@\1:\2/\3#g' <<<"$data")
 
-    # Ensure the URL always ends with .git (if missing).
-    data=$(sed -E 's#(\.git)?$#.git#' <<<"$data")
+    # Append ".git" only if missing.
+    if [[ "$data" != *.git ]]; then
+        data="${data}.git"
+    fi
 
     # Keep only valid Git URLs.
     data=$(grep --only-matching --perl-regexp "((git|ssh|http(s)?)|(git@[\w\.]+))(.*)(\.git)" <<<"$data")
