@@ -10,9 +10,6 @@
 # corresponding package names across different package managers (values).
 #
 # Note:
-#   - If the package name is the same as the command name, there is no need to
-#     include an entry in this file. Only exceptions or differing names should
-#     be explicitly listed.
 #   - If the package name contains the '~' character, it means that the part
 #     before '~' represents the package name used for installation, while the
 #     part after '~' represents the package name used for installation
