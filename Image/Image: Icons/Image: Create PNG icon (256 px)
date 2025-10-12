@@ -73,7 +73,7 @@ _main_task() {
 
     # Run the main process (part 1) 'get information of the image'.
     local first_pixel_color=""
-    first_pixel_color=$(_cmd_magick "$input_file_proc" -format "%[pixel:p{0,0}]" "info:" 2>&1)
+    first_pixel_color=$(_cmd_magick_convert "$input_file_proc" -format "%[pixel:p{0,0}]" "info:" 2>&1)
     _check_output "$?" "$first_pixel_color" "$input_file" "" || return 1
 
     local last_pixel=""
@@ -81,16 +81,16 @@ _main_task() {
     _check_output "$?" "$last_pixel" "$input_file" "" || return 1
 
     local last_pixel_color=""
-    last_pixel_color=$(_cmd_magick "$input_file_proc" -format "%[pixel:p{$last_pixel}]" "info:" 2>&1)
+    last_pixel_color=$(_cmd_magick_convert "$input_file_proc" -format "%[pixel:p{$last_pixel}]" "info:" 2>&1)
     _check_output "$?" "$last_pixel_color" "$input_file" "" || return 1
 
     if [[ "$first_pixel_color" == "$last_pixel_color" ]]; then
         # Run the main process (part 2) 'automatic crop the content'.
-        std_output=$(_cmd_magick "$input_file_proc" -trim +repage "$temp_file1" 2>&1)
+        std_output=$(_cmd_magick_convert "$input_file_proc" -trim +repage "$temp_file1" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$temp_file1" || return 1
 
         # Run the main process (part 3) 'extend to square'.
-        std_output=$(_cmd_magick "$temp_file1" \
+        std_output=$(_cmd_magick_convert "$temp_file1" \
             -set option:distort:viewport "%[fx:max(w,h)]x%[fx:max(w,h)]+%[fx:(w-max(w,h))/2]+%[fx:(h-max(w,h))/2]" \
             -virtual-pixel transparent -filter point -distort SRT 0 -bordercolor "$first_pixel_color" \
             -border 1 \
@@ -103,7 +103,7 @@ _main_task() {
 
         # Run the main process (part 4) 'extend 14%' to add a border.
         local factor="1.14"
-        std_output=$(_cmd_magick "$temp_file2" \
+        std_output=$(_cmd_magick_convert "$temp_file2" \
             -set option:distort:viewport "%[fx:(w*$factor)]x%[fx:(h*$factor)]+%[fx:(w-(w*$factor))/2]+%[fx:(h-(h*$factor))/2]" \
             -virtual-pixel transparent \
             -filter point \
@@ -120,7 +120,7 @@ _main_task() {
     fi
 
     # Run the main process (part 5) 'resize and crop the final image' to add a border.
-    std_output=$(_cmd_magick "$input_file_proc" \
+    std_output=$(_cmd_magick_convert "$input_file_proc" \
         -resize "${icon_size}x${icon_size}^" \
         -gravity center \
         -crop ${icon_size}x${icon_size}+0+0 \

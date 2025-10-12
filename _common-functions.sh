@@ -311,7 +311,7 @@ _run_task_parallel() {
     # Export functions to be used inside new shells (when using 'xargs').
     export -f \
         _check_output \
-        _cmd_magick \
+        _cmd_magick_convert \
         _command_exists \
         _convert_delimited_string_to_text \
         _convert_text_to_delimited_string \
@@ -3616,15 +3616,19 @@ _text_uri_decode() {
 # SECTION /// [EXTERNAL APPLICATION WRAPPERS]
 # -----------------------------------------------------------------------------
 
-# FUNCTION: _cmd_magick
+# FUNCTION: _cmd_magick_convert
 #
 # DESCRIPTION:
-# This function executes ImageMagick commands in a version-compatible way. In
-# ImageMagick 7+, the main executable is "magick". In ImageMagick 6 (legacy
-# version), commands such as "convert" are used directly.
-_cmd_magick() {
+# This function executes ImageMagick's "convert" command in a
+# version-compatible way. In ImageMagick 7+, the main executable is "magick",
+# so this function calls "magick convert". In ImageMagick 6 (legacy version),
+# the command "convert" is used directly.
+#
+# PARAMETERS:
+#   $@ : Arguments to be passed to the convert command.
+_cmd_magick_convert() {
     if _command_exists "magick"; then
-        magick "$@"
+        magick convert "$@"
     else
         convert "$@"
     fi

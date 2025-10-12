@@ -28,7 +28,7 @@ _main_task() {
 
     # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(50 pct)'")
-    std_output=$(_cmd_magick "$input_file" -resize 50%x50% +repage "$output_file" 2>&1)
+    std_output=$(_cmd_magick_convert "$input_file" -resize 50%x50% +repage "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

@@ -31,7 +31,7 @@ _main_task() {
     local i=0
     for ((i = 100 + 30; i < 300; i += 30)); do
         output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($count)'")
-        std_output=$(_cmd_magick "$input_file" -define modulate:colorspace=HSB -modulate "100,100,$i" "$output_file" 2>&1)
+        std_output=$(_cmd_magick_convert "$input_file" -define modulate:colorspace=HSB -modulate "100,100,$i" "$output_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ((count++))
     done
