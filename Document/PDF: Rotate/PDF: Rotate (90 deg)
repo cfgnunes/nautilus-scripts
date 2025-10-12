@@ -25,11 +25,12 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+    local value="90"
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(90 deg)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($value deg)'")
     # NOTE: Older 'qpdf' versions do not support '--' in the command line.
-    std_output=$(qpdf --rotate=90:1-z "$input_file" "$output_file" 2>&1)
+    std_output=$(qpdf --rotate="$value":1-z "$input_file" "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
