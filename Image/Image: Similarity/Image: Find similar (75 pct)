@@ -15,7 +15,7 @@ _main() {
 
     # Get the installed image viewer.
     local image_viewer=""
-    image_viewer=$(_xdg_get_default_app "image/jpeg")
+    image_viewer=$(_xdg_get_default_app "image/png")
 
     # Run the main process.
     # shellcheck disable=SC2086

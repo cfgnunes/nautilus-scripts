@@ -245,7 +245,7 @@ _compare_imagemagick() {
 
     # Determine the default image viewer to display the visual diff.
     local image_viewer=""
-    image_viewer=$(_xdg_get_default_app "image/jpeg")
+    image_viewer=$(_xdg_get_default_app "image/png")
 
     # Open the visual diff with the default image viewer.
     if [[ "$image_viewer" == *"eog" ]]; then
