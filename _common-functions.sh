@@ -437,7 +437,7 @@ _dependencies_check_commands() {
     # Remove duplicated entries.
     commands=$(tr "\n" " " <<<"$commands")
     commands=$(tr "," " " <<<"$commands")
-    commands=$(_str_sort_unique "$commands" " ")
+    commands=$(_str_sort "$commands" " " "true")
 
     # Iterate over each command.
     commands=$(tr " " "$FIELD_SEPARATOR" <<<"$commands")
@@ -504,7 +504,7 @@ _dependencies_check_metapackages() {
 
     # Remove duplicated entries.
     packages=$(tr "\n" " " <<<"$packages")
-    packages=$(_str_sort_unique "$packages" " ")
+    packages=$(_str_sort "$packages" " " "true")
 
     # Expand the 'META_PACKAGES' packages.
     packages=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
@@ -553,7 +553,7 @@ _dependencies_check_metapackages() {
         fi
     done
 
-    pairs=$(_str_sort_unique "$pairs" " ")
+    pairs=$(_str_sort "$pairs" " " "true")
 
     # Iterate over each "<pkg_manager>:<package>" pair.
     pairs=$(tr " " "$FIELD_SEPARATOR" <<<"$pairs")
@@ -2740,9 +2740,7 @@ _get_files() {
 
     # Sort file list if requested.
     if [[ "$par_sort_list" == "true" ]]; then
-        input_files=$(printf "%s" "$input_files" | tr "$FIELD_SEPARATOR" "\0" |
-            sort --zero-terminated --version-sort | tr "\0" "$FIELD_SEPARATOR")
-        input_files=$(_str_collapse_char "$input_files" "$FIELD_SEPARATOR")
+        input_files=$(_str_sort "$input_files" "$FIELD_SEPARATOR" "false")
     fi
 
     # Check for filename conflicts (files with same base name).
@@ -3446,24 +3444,27 @@ _str_collapse_char() {
     sed "$sed_p1; $sed_p2; $sed_p3" <<<"$input_str"
 }
 
-# FUNCTION: _str_sort_unique
+# FUNCTION: _str_sort
 #
 # DESCRIPTION:
-# This function sorts and removes duplicate elements from a string based on a
-# given separator.
+# This function sorts elements from a string based on a given separator.
 #
 # PARAMETERS:
 #   $1 (input_str): The input string containing elements to be sorted.
-#   $2 (char_separator): The character used to separate elements in the string.
-_str_sort_unique() {
+#   $2 (separator): The character used to separate elements in the string.
+#   $3 (unique): Optional flag ("true" or "false") to remove duplicates.
+_str_sort() {
     local input_str=$1
-    local char_separator=$2
+    local separator=$2
+    local unique=$3
 
-    input_str=$(printf "%s" "$input_str" |
-        tr "$char_separator" "\0" |
-        sort --zero-terminated --unique |
-        tr "\0" "$char_separator")
-    _str_collapse_char "$input_str" "$char_separator"
+    local unique_opt=""
+    [[ "$unique" == "true" ]] && unique_opt="--unique"
+
+    input_str=$(printf "%s" "$input_str" | tr "$separator" "\0" |
+        sort --zero-terminated --version-sort $unique_opt |
+        tr "\0" "$separator")
+    _str_collapse_char "$input_str" "$separator"
 }
 
 # FUNCTION: _str_human_readable_path
