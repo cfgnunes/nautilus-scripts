@@ -25,10 +25,11 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+    local rotate="90"
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(90 deg)'")
-    std_output=$(_cmd_magick_convert "$input_file" -transparent none -rotate 90 +repage "$output_file" 2>&1)
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($rotate deg)'")
+    std_output=$(_cmd_magick_convert "$input_file" -transparent none -rotate "$rotate" +repage "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

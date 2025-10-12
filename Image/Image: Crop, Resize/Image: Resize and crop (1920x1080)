@@ -25,10 +25,11 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+    local dimension="1920x1080"
 
     # Run the main process.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(1920x1080)'")
-    std_output=$(_cmd_magick_convert "$input_file" -resize "1920x1080^" -gravity center -crop 1920x1080+0+0 -strip +repage "$output_file" 2>&1)
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($dimension)'")
+    std_output=$(_cmd_magick_convert "$input_file" -resize "$dimension^" -gravity center -crop "$dimension+0+0" -strip +repage "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
