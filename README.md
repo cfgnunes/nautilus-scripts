@@ -138,12 +138,14 @@ This approach prevents errors caused by excessively long argument lists and ensu
 
 ## Acknowledgments
 
-This project was also inspired by other extraordinary projects and their authors. Many thanks to all of them for their excellent script collections:
+This project was also inspired by other extraordinary projects and their authors.
+Many thanks to all of them for their excellent and creative script collections:
 
-- @yeKcim [Nautilus Scripts](https://github.com/yeKcim/my_nautilus_scripts)
+- [Nautilus Scripts (by yeKcim)](https://github.com/yeKcim/my_nautilus_scripts)
+- [NaughtyLust (by Dipankar Pal)](https://github.com/deep5050/NaughtyLust)
 - [FE Nautilus Scripts](http://www.freedomenv.com/NautilusScriptsFE/nautilus_scripts_FE_desc.htm)
-- @maravento [Scripts](https://github.com/maravento/vault)
-- @btittelbach [Nautilus Scripts](https://github.com/btittelbach/nautilus-scripts)
+- [Vault (by Maravento)](https://github.com/maravento/vault)
+- [Nautilus Scripts (by Bernhard Tittelbach)](https://github.com/btittelbach/nautilus-scripts)
 
 ## Contributing
 
