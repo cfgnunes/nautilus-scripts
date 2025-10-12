@@ -335,7 +335,7 @@ declare -A PACKAGE_NAME=(
         pacman: kdiff3
         nix:    kdiff3
         zypper: kdiff3
-        guix:   kdiff3
+        guix:
         brew:
     "
 
@@ -396,13 +396,13 @@ declare -A PACKAGE_NAME=(
 
     ["lzma"]="
         pkg:    xz-utils
-        apt:    lzma
+        apt:    xz-utils
         dnf:    lzma
         pacman: xz
         nix:    xz
         zypper: lzma
-        guix:   lzma
-        brew:
+        guix:   xz
+        brew:   xz
     "
 
     ["lzop"]="
