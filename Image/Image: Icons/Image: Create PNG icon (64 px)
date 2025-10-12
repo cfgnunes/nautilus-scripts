@@ -31,6 +31,14 @@ _main_task() {
     local temp_file4=""
     local icon_size="64"
 
+    __cmd_magick_identify() {
+        if _command_exists "magick"; then
+            magick identify "$@"
+        else
+            identify "$@"
+        fi
+    }
+
     # Work on a temporary file.
     temp_file1="$(_get_temp_file_dry).png"
     temp_file2="$(_get_temp_file_dry).png"
@@ -49,6 +57,7 @@ _main_task() {
         if printf "%s\n%s" "$inkscape_ver" "$inkscape_ver_old" |
             sort --version-sort | head -n 1 |
             grep --quiet --line-regexp "$inkscape_ver"; then
+            # Old Inkscape version.
             std_output=$(inkscape \
                 --without-gui \
                 --export-area-drawing \
@@ -76,7 +85,7 @@ _main_task() {
     _check_output "$?" "$first_pixel_color" "$input_file" "" || return 1
 
     local last_pixel=""
-    last_pixel=$(identify -format "%[fx:w-1],0" "$input_file_proc" 2>&1)
+    last_pixel=$(__cmd_magick_identify -format "%[fx:w-1],0" "$input_file_proc" 2>&1)
     _check_output "$?" "$last_pixel" "$input_file" "" || return 1
 
     local last_pixel_color=""

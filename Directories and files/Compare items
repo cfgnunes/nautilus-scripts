@@ -195,8 +195,24 @@ _compare_imagemagick() {
     local file_1=$1
     local file_2=$2
 
+    __cmd_magick_compare() {
+        if _command_exists "magick"; then
+            magick compare "$@"
+        else
+            identify "$@"
+        fi
+    }
+
+    __cmd_magick_identify() {
+        if _command_exists "magick"; then
+            magick identify "$@"
+        else
+            identify "$@"
+        fi
+    }
+
     # Check if the two images have identical pixel values.
-    if compare -metric AE -- "$file_1" "$file_2" null: &>/dev/null; then
+    if __cmd_magick_compare -metric AE -- "$file_1" "$file_2" null: &>/dev/null; then
         _display_info_box "The two selected images has same pixel values."
         _exit_script
     fi
@@ -204,9 +220,9 @@ _compare_imagemagick() {
     # Retrieve the dimensions of each image (width x height format).
     local dimensions_1=""
     local dimensions_2=""
-    dimensions_1=$(identify -format "%wx%h" "$file_1" 2>&1)
+    dimensions_1=$(__cmd_magick_identify -format "%wx%h" "$file_1" 2>&1)
     _check_output "$?" "$dimensions_1" "$file_1" "" || return 1
-    dimensions_2=$(identify -format "%wx%h" "$file_2" 2>&1)
+    dimensions_2=$(__cmd_magick_identify -format "%wx%h" "$file_2" 2>&1)
     _check_output "$?" "$dimensions_2" "$file_2" "" || return 1
 
     # Create a temporary file for the visual diff output.
@@ -216,7 +232,7 @@ _compare_imagemagick() {
     # Compare the images based on their dimensions.
     if [[ "$dimensions_1" == "$dimensions_2" ]]; then
         # If dimensions are the same, use a grayscale diff for better clarity.
-        convert \
+        _cmd_magick_convert \
             '(' "$file_1" -flatten -grayscale Rec709Luminance ')' \
             '(' "$file_2" -flatten -grayscale Rec709Luminance ')' \
             '(' -clone 0-1 -compose darken -composite ')' \
@@ -224,7 +240,7 @@ _compare_imagemagick() {
     else
         # If dimensions differ, generate a visual diff highlighting
         # differences.
-        compare -- "$file_1" "$file_2" -compose src "$temp_file"
+        __cmd_magick_compare -- "$file_1" "$file_2" -compose src "$temp_file"
     fi
 
     # Determine the default image viewer to display the visual diff.
