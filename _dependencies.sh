@@ -27,12 +27,41 @@ declare -A PACKAGE_NAME=(
         pacman: p7zip
         nix:    p7zip
         zypper: 7zip
-        brew:   p7zip
         guix:   p7zip
+        brew:   p7zip
     "
 
     ["ar"]="
-        *:      binutils
+        pkg:    binutils
+        apt:    binutils
+        dnf:    binutils
+        pacman: binutils
+        nix:    binutils
+        zypper: binutils
+        guix:   binutils
+        brew:   binutils
+    "
+
+    ["axel"]="
+        pkg:    axel
+        apt:    axel
+        dnf:    axel
+        pacman: axel
+        nix:    axel
+        zypper: axel
+        guix:   axel
+        brew:   axel
+    "
+
+    ["baobab"]="
+        pkg:    baobab
+        apt:    baobab
+        dnf:    baobab
+        pacman: baobab
+        nix:    baobab
+        zypper: baobab
+        guix:   baobab
+        brew:   baobab
     "
 
     ["bsdtar"]="
@@ -42,12 +71,52 @@ declare -A PACKAGE_NAME=(
         pacman: libarchive
         nix:    libarchive
         zypper: bsdtar
-        brew:   libarchive
         guix:   libarchive
+        brew:   libarchive
+    "
+
+    ["bzip2"]="
+        pkg:    bzip2
+        apt:    bzip2
+        dnf:    bzip2
+        pacman: bzip2
+        nix:    bzip2
+        zypper: bzip2
+        guix:   bzip2
+        brew:   bzip2
+    "
+
+    ["cabextract"]="
+        pkg:    cabextract
+        apt:    cabextract
+        dnf:    cabextract
+        pacman: cabextract
+        nix:    cabextract
+        zypper: cabextract
+        guix:   cabextract
+        brew:   cabextract
     "
 
     ["clamscan"]="
-        *:      clamav
+        pkg:    clamav
+        apt:    clamav
+        dnf:    clamav
+        pacman: clamav
+        nix:    clamav
+        zypper: clamav
+        guix:   clamav
+        brew:   clamav
+    "
+
+    ["compare"]="
+        pkg:    imagemagick
+        apt:    imagemagick
+        dnf:    ImageMagick
+        pacman: imagemagick
+        nix:    imagemagick
+        zypper: ImageMagick
+        guix:   imagemagick
+        brew:   imagemagick
     "
 
     ["convert"]="
@@ -57,8 +126,41 @@ declare -A PACKAGE_NAME=(
         pacman: imagemagick
         nix:    imagemagick
         zypper: ImageMagick
-        brew:   imagemagick
         guix:   imagemagick
+        brew:   imagemagick
+    "
+
+    ["cpio"]="
+        pkg:    cpio
+        apt:    cpio
+        dnf:    cpio
+        pacman: cpio
+        nix:    cpio
+        zypper: cpio
+        guix:   cpio
+        brew:   cpio
+    "
+
+    ["curl"]="
+        pkg:    curl
+        apt:    curl
+        dnf:    curl
+        pacman: curl
+        nix:    curl
+        zypper: curl
+        guix:   curl
+        brew:   curl
+    "
+
+    ["diffpdf"]="
+        pkg:
+        apt:    diffpdf
+        dnf:    diffpdf
+        pacman: diffpdf
+        nix:    diffpdf
+        zypper:
+        guix:
+        brew:
     "
 
     ["exiftool"]="
@@ -68,19 +170,85 @@ declare -A PACKAGE_NAME=(
         pacman: perl-image-exiftool
         nix:    exiftool
         zypper: exiftool
-        brew:   exiftool
         guix:   perl-image-exiftool
+        brew:   exiftool
     "
 
     ["ffmpeg"]="
-        apt:    ffmpeg
+        pkg:    ffmpeg
         apt:    ffmpeg
         dnf:    ffmpeg-free
         pacman: ffmpeg
         nix:    ffmpeg
         zypper: ffmpeg
-        brew:   ffmpeg
         guix:   ffmpeg
+        brew:   ffmpeg
+    "
+
+    ["file-roller"]="
+        pkg:    file-roller
+        apt:    file-roller
+        dnf:    file-roller
+        pacman: file-roller
+        nix:    file-roller
+        zypper: file-roller
+        guix:   file-roller
+        brew:
+    "
+
+    ["filelight"]="
+        pkg:    filelight
+        apt:    filelight
+        dnf:    filelight
+        pacman: filelight
+        nix:    kdePackages.filelight
+        zypper: filelight
+        guix:   filelight
+        brew:
+    "
+
+    ["findimagedupes"]="
+        pkg:
+        apt:    findimagedupes
+        dnf:
+        pacman:
+        nix:
+        zypper:
+        guix:
+        brew:
+    "
+
+    ["foremost"]="
+        pkg:
+        apt:    foremost
+        dnf:    foremost
+        pacman: foremost
+        nix:    foremost
+        zypper:
+        guix:
+        brew:   foremost
+    "
+
+    ["ghex"]="
+        pkg:    ghex
+        apt:    ghex
+        dnf:    ghex
+        pacman: ghex
+        nix:    ghex
+        zypper: ghex
+        guix:   ghex
+        brew:
+    "
+
+    ["git"]="
+        pkg:    git
+        apt:    git
+        dnf:    git
+        pacman: git
+        nix:    git
+        zypper: git
+        guix:   git
+        brew:   git
     "
 
     ["gpg"]="
@@ -90,16 +258,41 @@ declare -A PACKAGE_NAME=(
         pacman: gnupg
         nix:    gnupg
         zypper: gpg2
-        brew:   gnupg
         guix:   gnupg
-    "
-
-    ["gunzip"]="
-        *:      gzip
+        brew:   gnupg
     "
 
     ["gs"]="
-        *:      ghostscript
+        pkg:    ghostscript
+        apt:    ghostscript
+        dnf:    ghostscript
+        pacman: ghostscript
+        nix:    ghostscript
+        zypper: ghostscript
+        guix:   ghostscript
+        brew:   ghostscript
+    "
+
+    ["gunzip"]="
+        pkg:    gzip
+        apt:    gzip
+        dnf:    gzip
+        pacman: gzip
+        nix:    gzip
+        zypper: gzip
+        guix:   gzip
+        brew:   gzip
+    "
+
+    ["gzip"]="
+        pkg:    gzip
+        apt:    gzip
+        dnf:    gzip
+        pacman: gzip
+        nix:    gzip
+        zypper: gzip
+        guix:   gzip
+        brew:   gzip
     "
 
     ["iconv"]="
@@ -109,42 +302,52 @@ declare -A PACKAGE_NAME=(
         pacman: glibc
         nix:    glibc
         zypper: glibc
-        brew:   glibc
         guix:   glibc
+        brew:   glibc
+    "
+
+    ["id3v2"]="
+        pkg:    id3v2
+        apt:    id3v2
+        dnf:    id3v2
+        pacman: id3v2
+        nix:    id3v2
+        zypper: id3v2
+        guix:
+        brew:   id3v2
+    "
+
+    ["inkscape"]="
+        pkg:    inkscape
+        apt:    inkscape
+        dnf:    inkscape
+        pacman: inkscape
+        nix:    inkscape
+        zypper: inkscape
+        guix:   inkscape
+        brew:
+    "
+
+    ["kdiff3"]="
+        pkg:
+        apt:    kdiff3
+        dnf:    kdiff3
+        pacman: kdiff3
+        nix:    kdiff3
+        zypper: kdiff3
+        guix:   kdiff3
+        brew:
     "
 
     ["lha"]="
-        *:      lhasa
-    "
-
-    ["localc"]="
-        apt:    libreoffice-calc
-        dnf:    libreoffice-calc
-        pacman: libreoffice
-        nix:    libreoffice
-        zypper: libreoffice-calc
-        brew:   libreoffice
-        guix:   libreoffice
-    "
-
-    ["loimpress"]="
-        apt:    libreoffice-impress
-        dnf:    libreoffice-impress
-        pacman: libreoffice
-        nix:    libreoffice
-        zypper: libreoffice-impress
-        brew:   libreoffice
-        guix:   libreoffice
-    "
-
-    ["lowriter"]="
-        apt:    libreoffice-writer
-        dnf:    libreoffice-writer
-        pacman: libreoffice
-        nix:    libreoffice
-        zypper: libreoffice-writer
-        brew:   libreoffice
-        guix:   libreoffice
+        pkg:    lhasa
+        apt:    lhasa
+        dnf:    lhasa
+        pacman: lhasa
+        nix:    lhasa
+        zypper: lhasa
+        guix:   lhasa
+        brew:   lhasa
     "
 
     ["lp"]="
@@ -154,39 +357,173 @@ declare -A PACKAGE_NAME=(
         pacman: cups
         nix:    cups
         zypper: cups
-        brew:   cups
         guix:   cups
+        brew:   cups
+    "
+
+    ["lrzip"]="
+        pkg:    lrzip
+        apt:    lrzip
+        dnf:
+        pacman: lrzip
+        nix:    lrzip
+        zypper: lrzip
+        guix:   lrzip
+        brew:   lrzip
+    "
+
+    ["lz4"]="
+        pkg:    lz4
+        apt:    lz4
+        dnf:    lz4
+        pacman: lz4
+        nix:    lz4
+        zypper: lz4
+        guix:   lz4
+        brew:   lz4
+    "
+
+    ["lzip"]="
+        pkg:    lzip
+        apt:    lzip
+        dnf:    lzip
+        pacman: lzip
+        nix:    lzip
+        zypper: lzip
+        guix:   lzip
+        brew:   lzip
+    "
+
+    ["lzma"]="
+        pkg:    xz-utils
+        apt:    lzma
+        dnf:    lzma
+        pacman: xz
+        nix:    xz
+        zypper: lzma
+        guix:   lzma
+        brew:
+    "
+
+    ["lzop"]="
+        pkg:    lzop
+        apt:    lzop
+        dnf:    lzop
+        pacman: lzop
+        nix:    lzop
+        zypper: lzop
+        guix:   lzop
+        brew:   lzop
+    "
+
+    ["mediainfo"]="
+        pkg:    mediainfo
+        apt:    mediainfo
+        dnf:    mediainfo
+        pacman: mediainfo
+        nix:    mediainfo
+        zypper: mediainfo
+        guix:   mediainfo
+        brew:   mediainfo
+    "
+
+    ["meld"]="
+        pkg:    meld
+        apt:    meld
+        dnf:    meld
+        pacman: meld
+        nix:    meld
+        zypper: meld
+        guix:   meld
+        brew:
     "
 
     ["mksquashfs"]="
+        pkg:
         apt:    squashfs-tools
         dnf:    squashfs-tools
         pacman: squashfs-tools
         nix:    squashfsTools~squashfs
         zypper: squashfs
-        brew:   squashfs
         guix:   squashfs-tools
+        brew:   squashfs
     "
 
-    ["perl"]="
-        pkg:    perl
-        apt:    perl-base
-        dnf:    perl-base
-        pacman: perl-base
-        nix:    perl
-        zypper: perl-base
-        brew:   perl
-        guix:   perl
+    ["mp3gain"]="
+        pkg:    mp3gain
+        apt:    mp3gain
+        dnf:    mp3gain
+        pacman:
+        nix:    mp3gain
+        zypper: mp3gain
+        guix:
+        brew:   mp3gain
     "
 
-    ["photorec"]="
-        apt:    testdisk
-        dnf:    testdisk
-        pacman: testdisk
-        nix:    testdisk
-        zypper: photorec
-        brew:   testdisk
-        guix:   testdisk
+    ["mp3val"]="
+        pkg:
+        apt:    mp3val
+        dnf:
+        pacman:
+        nix:    mp3val
+        zypper:
+        guix:
+        brew:   mp3val
+    "
+
+    ["nmap"]="
+        pkg:    nmap
+        apt:    nmap
+        dnf:    nmap
+        pacman: nmap
+        nix:    nmap
+        zypper: nmap
+        guix:   nmap
+        brew:   nmap
+    "
+
+    ["okteta"]="
+        pkg:
+        apt:    okteta
+        dnf:    okteta
+        pacman: okteta
+        nix:    okteta
+        zypper: okteta
+        guix:   okteta
+        brew:
+    "
+
+    ["openssl"]="
+        pkg:    openssl
+        apt:    openssl
+        dnf:    openssl
+        pacman: openssl
+        nix:    openssl
+        zypper: openssl
+        guix:   openssl
+        brew:   openssl
+    "
+
+    ["optipng"]="
+        pkg:    optipng
+        apt:    optipng
+        dnf:    optipng
+        pacman: optipng
+        nix:    optipng
+        zypper: optipng
+        guix:   optipng
+        brew:   optipng
+    "
+
+    ["pandoc"]="
+        pkg:    pandoc
+        apt:    pandoc
+        dnf:    pandoc
+        pacman: pandoc
+        nix:    pandoc
+        zypper: pandoc
+        guix:   pandoc
+        brew:   pandoc
     "
 
     ["pdfinfo"]="
@@ -196,8 +533,30 @@ declare -A PACKAGE_NAME=(
         pacman: poppler
         nix:    poppler-utils
         zypper: poppler-tools
-        brew:   poppler
         guix:   poppler
+        brew:   poppler
+    "
+
+    ["perl"]="
+        pkg:    perl
+        apt:    perl-base
+        dnf:    perl-base
+        pacman: perl-base
+        nix:    perl
+        zypper: perl-base
+        guix:   perl
+        brew:   perl
+    "
+
+    ["photorec"]="
+        pkg:    testdisk
+        apt:    testdisk
+        dnf:    testdisk
+        pacman: testdisk
+        nix:    testdisk
+        zypper: photorec
+        guix:   testdisk
+        brew:   testdisk
     "
 
     ["ping"]="
@@ -207,8 +566,52 @@ declare -A PACKAGE_NAME=(
         pacman: iputils
         nix:    iputils
         zypper: iputils
-        brew:   iputils
         guix:   iputils
+        brew:   iputils
+    "
+
+    ["qpdf"]="
+        pkg:    qpdf
+        apt:    qpdf
+        dnf:    qpdf
+        pacman: qpdf
+        nix:    qpdf
+        zypper: qpdf
+        guix:   qpdf
+        brew:   qpdf
+    "
+
+    ["rdfind"]="
+        pkg:    rdfind
+        apt:    rdfind
+        dnf:    rdfind
+        pacman: rdfind
+        nix:    rdfind
+        zypper: rdfind
+        guix:
+        brew:   rdfind
+    "
+
+    ["rhash"]="
+        pkg:    rhash
+        apt:    rhash
+        dnf:    rhash
+        pacman: rhash
+        nix:    rhash
+        zypper: rhash
+        guix:   rhash
+        brew:   rhash
+    "
+
+    ["tar"]="
+        pkg:    tar
+        apt:    tar
+        dnf:    tar
+        pacman: tar
+        nix:    gnutar
+        zypper: tar
+        guix:   tar
+        brew:   gnu-tar
     "
 
     ["unar"]="
@@ -218,21 +621,63 @@ declare -A PACKAGE_NAME=(
         pacman: unarchiver
         nix:    unar
         zypper: unar
+        guix:
         brew:   unar
     "
 
+    ["unrar"]="
+        pkg:    unrar
+        apt:    unrar
+        dnf:    unrar
+        pacman: unrar
+        nix:    unrar
+        zypper: unrar
+        guix:
+        brew:
+    "
+
     ["unsquashfs"]="
+        pkg:
         apt:    squashfs-tools
         dnf:    squashfs-tools
         pacman: squashfs-tools
         nix:    squashfsTools~squashfs
         zypper: squashfs
-        brew:   squashfs
         guix:   squashfs-tools
+        brew:   squashfs
+    "
+
+    ["unzip"]="
+        pkg:    unzip
+        apt:    unzip
+        dnf:    unzip
+        pacman: unzip
+        nix:    unzip
+        zypper: unzip
+        guix:   unzip
+        brew:   unzip
     "
 
     ["wl-paste"]="
-        *:      wl-clipboard
+        pkg:
+        apt:    wl-clipboard
+        dnf:    wl-clipboard
+        pacman: wl-clipboard
+        nix:    wl-clipboard
+        zypper: wl-clipboard
+        guix:   wl-clipboard
+        brew:
+    "
+
+    ["xclip"]="
+        pkg:    xclip
+        apt:    xclip
+        dnf:    xclip
+        pacman: xclip
+        nix:    xclip
+        zypper: xclip
+        guix:   xclip
+        brew:
     "
 
     ["xorriso"]="
@@ -242,8 +687,19 @@ declare -A PACKAGE_NAME=(
         pacman: xorriso
         nix:    xorriso~libisoburn
         zypper: xorriso
-        brew:   xorriso
         guix:   xorriso
+        brew:   xorriso
+    "
+
+    ["xxd"]="
+        pkg:    xxd
+        apt:    xxd
+        dnf:    xxd
+        pacman: xxd
+        nix:    xxd
+        zypper: xxd
+        guix:   xxd
+        brew:
     "
 
     ["xz"]="
@@ -253,8 +709,41 @@ declare -A PACKAGE_NAME=(
         pacman: xz
         nix:    xz
         zypper: xz
-        brew:   xz
         guix:   xz
+        brew:   xz
+    "
+
+    ["zip"]="
+        pkg:    zip
+        apt:    zip
+        dnf:    zip
+        pacman: zip
+        nix:    zip
+        zypper: zip
+        guix:   zip
+        brew:   zip
+    "
+
+    ["zpaq"]="
+        pkg:    zpaq
+        apt:    zpaq
+        dnf:    zpaq
+        pacman:
+        nix:    zpaq
+        zypper: zpaq
+        guix:   zpaq
+        brew:   zpaq
+    "
+
+    ["zstd"]="
+        pkg:    zstd
+        apt:    zstd
+        dnf:    zstd
+        pacman: zstd
+        nix:    zstd
+        zypper: zstd
+        guix:   zstd
+        brew:   zstd
     "
 )
 
@@ -286,6 +775,52 @@ declare -A META_PACKAGES=(
         pacman: texlive-binextra
         nix:    texlivePackages.latexmk~latexmk
         zypper: texlive-latexmk
+        guix:
+        brew:
+    "
+
+    ["localc"]="
+        pkg:
+        apt:    libreoffice-calc
+        dnf:    libreoffice-calc
+        pacman: libreoffice
+        nix:    libreoffice
+        zypper: libreoffice-calc
+        guix:   libreoffice
+        brew:
+    "
+
+    ["loimpress"]="
+        pkg:
+        apt:    libreoffice-impress
+        dnf:    libreoffice-impress
+        pacman: libreoffice
+        nix:    libreoffice
+        zypper: libreoffice-impress
+        guix:   libreoffice
+        brew:
+    "
+
+    ["lowriter"]="
+        pkg:
+        apt:    libreoffice-writer
+        dnf:    libreoffice-writer
+        pacman: libreoffice
+        nix:    libreoffice
+        zypper: libreoffice-writer
+        guix:   libreoffice
+        brew:
+    "
+
+    ["ocrmypdf"]="
+        pkg:
+        apt:    ocrmypdf
+        dnf:    ocrmypdf
+        pacman:
+        nix:    ocrmypdf
+        zypper:
+        guix:
+        brew:
     "
 
     ["pdfjam"]="
@@ -295,17 +830,19 @@ declare -A META_PACKAGES=(
         pacman: texlive-basic texlive-binextra texlive-latexextra
         nix:    texliveSmall~texlive texlivePackages.pdfjam~pdfjam
         zypper: texlive-pdfjam-bin
+        guix:
+        brew:
     "
 
-    ["sox-mp3"]="
+    ["sox"]="
         pkg:    sox
         apt:    sox libsox-fmt-mp3
         dnf:    sox
         pacman: sox
         nix:    sox
         zypper: sox
-        brew:   sox
         guix:   sox
+        brew:
     "
 
     ["tesseract-lang-$TEMP_DATA_TASK"]="
@@ -315,6 +852,8 @@ declare -A META_PACKAGES=(
         pacman: tesseract-data-$TEMP_DATA_TASK
         nix:    tesseract
         zypper: tesseract-ocr-traineddata-$TEMP_DATA_TASK
+        guix:
+        brew:
     "
 
     ["texlive"]="
@@ -350,5 +889,7 @@ declare -A META_PACKAGES=(
             texlive-collection-publishers \
             texlive-collection-mathscience \
             texlive-collection-xetex
+        guix:
+        brew:
     "
 )

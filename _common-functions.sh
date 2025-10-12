@@ -43,6 +43,18 @@ TEMP_DATA_TEXT_BOX="$TEMP_DIR/data_text_box"
 MSG_ERROR="[\033[0;31mFAILED\033[0m]"
 MSG_INFO="[\033[0;32m INFO \033[0m]"
 
+# Defines the priority order of package managers.
+PKG_MANAGER_PRIORITY=(
+    "brew"
+    "nix"
+    "apt-get"
+    "rpm-ostree"
+    "dnf"
+    "pacman"
+    "zypper"
+    "guix"
+)
+
 readonly \
     ACCESSED_RECENTLY_DIR \
     ACCESSED_RECENTLY_LINKS_TO_KEEP \
@@ -51,6 +63,7 @@ readonly \
     GUI_BOX_WIDTH \
     GUI_INFO_WIDTH \
     IGNORE_FIND_PATH \
+    PKG_MANAGER_PRIORITY \
     PREFIX_ERROR_LOG_FILE \
     PREFIX_OUTPUT_DIR \
     TEMP_CONTROL_DISPLAY_LOCKED \
@@ -366,81 +379,6 @@ _command_exists() {
     command -v "$command_check" &>/dev/null || return 1
 }
 
-# FUNCTION: _dependencies_check_commands
-#
-# DESCRIPTION:
-# This function ensures that all required commands are available for
-# the scripts to run. It checks whether each specified command exists
-# in the current environment and prompts the user to install missing ones.
-#
-# PARAMETERS:
-#   $1 (commands): A list of commands to check. The list can be delimited
-#      either by a space ' ', a comma ',' or by a newline '\n'.
-_dependencies_check_commands() {
-    local commands=$1
-    local packages_install=""
-    local available_pkg_manager=""
-    local post_install_compiled=""
-
-    [[ -z "$commands" ]] && return
-
-    commands=$(tr "," " " <<<"$commands")
-
-    # Remove leading, trailing, and duplicate spaces.
-    commands=$(_str_collapse_char "$commands" " ")
-
-    # Remove duplicated commands in the input list.
-    commands=$(tr " " "\n" <<<"$commands")
-    commands=$(sort --unique <<<"$commands")
-
-    [[ -z "$commands" ]] && return
-
-    # Check all commands.
-    commands=$(tr "\n" "$FIELD_SEPARATOR" <<<"$commands")
-    local command=""
-    for command in $commands; do
-        local package=""
-        local post_install=""
-
-        # Skip installation if the command already exists in the system.
-        if _command_exists "$command"; then
-            continue
-        fi
-
-        # Detect and validate the first available package manager.
-        if [[ -z "$available_pkg_manager" ]]; then
-            available_pkg_manager=$(_deps_get_available_package_manager)
-            if [[ -z "$available_pkg_manager" ]]; then
-                _display_error_box "Could not find a package manager!"
-                _exit_script
-            fi
-        fi
-
-        # Get the values from '_dependencies.sh'.
-        package=$(_deps_get_dependency_value \
-            "$command" "$available_pkg_manager" "PACKAGE_NAME")
-        post_install=$(_deps_get_dependency_value \
-            "$command" "$available_pkg_manager" "POST_INSTALL")
-
-        if [[ -n "$post_install" ]]; then
-            post_install_compiled+="$post_install;"
-        fi
-
-        # If package is not found, use the command name as the package name.
-        if [[ -z "$package" ]] && [[ -n "$command" ]]; then
-            package=$command
-        fi
-
-        # Add the package to the list to install.
-        if [[ -n "$package" ]]; then
-            packages_install+=" $package"
-        fi
-    done
-
-    _deps_install_missing_packages \
-        "$packages_install" "$available_pkg_manager" "$post_install_compiled"
-}
-
 # FUNCTION: _dependencies_check_commands_clipboard
 #
 # DESCRIPTION:
@@ -448,11 +386,11 @@ _dependencies_check_commands() {
 # operations, based on the current session type (Wayland or X11).
 #
 # PARAMETERS:
-#   $1 (input_commands): A string containing the initial commands list,
+#   $1 (commands): A string containing the initial commands list,
 #      which will be extended with the clipboard-related commands.
 _dependencies_check_commands_clipboard() {
-    local input_commands=$1
-    local commands="$input_commands "
+    local commands=$1
+    local commands_final="$commands "
 
     # Try to determine the session type.
     local session_type="${XDG_SESSION_TYPE:-}"
@@ -467,8 +405,8 @@ _dependencies_check_commands_clipboard() {
     fi
 
     case "$session_type" in
-    "wayland") commands+="wl-paste" ;;
-    "x11") commands+="xclip" ;;
+    "wayland") commands_final+="wl-paste" ;;
+    "x11") commands_final+="xclip" ;;
     *)
         _display_error_box \
             "Your session type is not supported for clipboard operations."
@@ -476,7 +414,75 @@ _dependencies_check_commands_clipboard() {
         ;;
     esac
 
-    _dependencies_check_commands "$commands"
+    _dependencies_check_commands "$commands_final"
+}
+
+# FUNCTION: _dependencies_check_commands
+#
+# DESCRIPTION:
+# This function ensures that all required commands are available for
+# the scripts to run. It checks whether each specified command exists
+# in the current environment and prompts the user to install missing ones.
+#
+# PARAMETERS:
+#   $1 (commands): A list of commands to check. The list can be delimited
+#      either by a space ' ', a comma ',' or by a newline '\n'.
+_dependencies_check_commands() {
+    local commands=$1
+    local packages_install=""
+    local compiled_post_install=""
+
+    [[ -z "$commands" ]] && return
+
+    # Remove duplicated entries.
+    commands=$(tr "\n" " " <<<"$commands")
+    commands=$(tr "," " " <<<"$commands")
+    commands=$(_str_sort_unique "$commands" " ")
+
+    # Iterate over each command.
+    commands=$(tr " " "$FIELD_SEPARATOR" <<<"$commands")
+    local command=""
+    for command in $commands; do
+        local package=""
+        local post_install=""
+
+        # Skip if the command already exists in the system.
+        if _command_exists "$command"; then
+            continue
+        fi
+
+        # Iterate over supported package manger.
+        local pkg_manager_found="false"
+        local pkg_manager=""
+        for pkg_manager in "${PKG_MANAGER_PRIORITY[@]}"; do
+
+            # Get the values from '_dependencies.sh'.
+            package=$(_deps_get_dependency_value \
+                "$command" "$pkg_manager" "PACKAGE_NAME")
+            post_install=$(_deps_get_dependency_value \
+                "$command" "$pkg_manager" "POST_INSTALL")
+
+            if _command_exists "$pkg_manager" && [[ -n "$package" ]]; then
+                pkg_manager_found="true"
+                break
+            fi
+        done
+        if [[ "$pkg_manager_found" == "false" ]]; then
+            _display_error_box "Could not find a package manager to install the command '$command'!"
+            _exit_script
+        fi
+
+        # Add the package to the list to install using the format:
+        # <pkg_manager>:<package>.
+        if [[ -n "$package" ]]; then
+            packages_install+=" $pkg_manager:$package"
+        fi
+        if [[ -n "$post_install" ]]; then
+            compiled_post_install+="$post_install;"
+        fi
+    done
+
+    _deps_install_missing_packages "$packages_install" "$compiled_post_install"
 }
 
 # FUNCTION: _dependencies_check_metapackages
@@ -492,96 +498,84 @@ _dependencies_check_commands_clipboard() {
 _dependencies_check_metapackages() {
     local packages=$1
     local packages_install=""
-    local available_pkg_manager=""
-    local post_install_compiled=""
+    local compiled_post_install=""
 
     [[ -z "$packages" ]] && return
 
-    available_pkg_manager=$(_deps_get_available_package_manager)
-    if [[ -z "$available_pkg_manager" ]]; then
-        _display_error_box "Could not find a package manager!"
-        _exit_script
-    fi
-
-    # Remove leading, trailing, and duplicate spaces.
-    packages=$(_str_collapse_char "$packages" " ")
-
-    # Remove duplicated packages in the input list.
-    packages=$(tr " " "\n" <<<"$packages")
-    packages=$(sort --unique <<<"$packages")
-
-    [[ -z "$packages" ]] && return
+    # Remove duplicated entries.
+    packages=$(tr "\n" " " <<<"$packages")
+    packages=$(_str_sort_unique "$packages" " ")
 
     # Expand the 'META_PACKAGES' packages.
-    local expanded_packages=""
-    packages=$(tr "\n" "$FIELD_SEPARATOR" <<<"$packages")
+    packages=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
+    local pairs=""
     local package=""
     for package in $packages; do
-        # Get the values from '_dependencies.sh'.
-        real_name_packages=$(_deps_get_dependency_value \
-            "$package" "$available_pkg_manager" "META_PACKAGES")
+        local real_name_packages=""
+        local post_install=""
 
-        # Try to get the package name in PACKAGE_NAME.
-        if [[ -z "$real_name_packages" ]]; then
+        # Iterate over supported package manger.
+        local pkg_manager_found="false"
+        local pkg_manager=""
+        for pkg_manager in "${PKG_MANAGER_PRIORITY[@]}"; do
+
+            # Get the values from '_dependencies.sh'.
             real_name_packages=$(_deps_get_dependency_value \
-                "$package" "$available_pkg_manager" "PACKAGE_NAME")
+                "$package" "$pkg_manager" "META_PACKAGES")
+            # Try to get the package name in PACKAGE_NAME.
+            if [[ -z "$real_name_packages" ]]; then
+                real_name_packages=$(_deps_get_dependency_value \
+                    "$package" "$pkg_manager" "PACKAGE_NAME")
+            fi
+            post_install=$(_deps_get_dependency_value \
+                "$package" "$pkg_manager" "POST_INSTALL")
+
+            if _command_exists "$pkg_manager" && [[ -n "$real_name_packages" ]]; then
+                pkg_manager_found="true"
+                break
+            fi
+        done
+        if [[ "$pkg_manager_found" == "false" ]]; then
+            _display_error_box "Could not find a package manager to install the package '$package'!"
+            _exit_script
         fi
 
-        if [[ -z "$real_name_packages" ]]; then
-            expanded_packages+=" $package"
-        else
-            expanded_packages+=" $real_name_packages"
+        # Add the package to the list to install using the format:
+        # <pkg_manager>:<package>.
+        if [[ -n "$real_name_packages" ]]; then
+            real_name_packages=$(sed "s|^|$pkg_manager:|g; s| | $pkg_manager:|g" <<<"$real_name_packages")
+            pairs+=" $real_name_packages"
+        fi
+        if [[ -n "$post_install" ]]; then
+            compiled_post_install+="$post_install;"
         fi
     done
-    packages=$expanded_packages
 
-    # Remove leading, trailing, and duplicate spaces.
-    packages=$(_str_collapse_char "$packages" " ")
+    pairs=$(_str_sort_unique "$pairs" " ")
 
-    # Remove duplicated packages in the input list.
-    packages=$(tr " " "\n" <<<"$packages")
-    packages=$(sort --unique <<<"$packages")
+    # Iterate over each "<pkg_manager>:<package>" pair.
+    pairs=$(tr " " "$FIELD_SEPARATOR" <<<"$pairs")
+    local pair=""
+    for pair in $pairs; do
+        local pkg_manager="${pair%%:*}"
+        local package="${pair#*:}"
 
-    # Check all packages.
-    packages=$(tr "\n" "$FIELD_SEPARATOR" <<<"$packages")
-    local package=""
-    for package in $packages; do
         # Ignore installing the dependency if the package is already installed.
-        if _deps_is_package_installed "$available_pkg_manager" "$package"; then
+        if _deps_is_package_installed "$pkg_manager" "$package"; then
             continue
         fi
 
-        # Add the package to the list to install.
+        # Add the package to the list to install using the format:
+        # <pkg_manager>:<package>.
         if [[ -n "$package" ]]; then
-            packages_install+=" $package"
+            packages_install+=" $pkg_manager:$package"
+        fi
+        if [[ -n "$post_install" ]]; then
+            compiled_post_install+="$post_install;"
         fi
     done
 
-    _deps_install_missing_packages \
-        "$packages_install" "$available_pkg_manager" "$post_install_compiled"
-}
-
-# FUNCTION: _deps_get_available_package_manager
-#
-# DESCRIPTION:
-# The function will attempt to detect the first available package manager
-# from a list.
-#
-# RETURNS:
-#   "0" (true): If a package manager is found.
-#   "1" (false): If no package manager is found.
-_deps_get_available_package_manager() {
-    local apps=(
-        "brew"
-        "nix"
-        "apt-get"
-        "rpm-ostree"
-        "dnf"
-        "pacman"
-        "zypper"
-        "guix"
-    )
-    _get_available_app "apps" || return 1
+    _deps_install_missing_packages "$packages_install" "$compiled_post_install"
 }
 
 # FUNCTION: _deps_get_dependency_value
@@ -603,7 +597,7 @@ _deps_get_dependency_value() {
     local key=$1
     local pkg_manager=$2
     local -n input_array=$3
-    local mappings=""
+    local pairs=""
 
     # Source the configuration file that defines the mapping between commands,
     # packages, and package managers. This file is used by the scripts to check
@@ -613,24 +607,28 @@ _deps_get_dependency_value() {
     fi
 
     # Retrieve the raw value from the associative array.
-    mappings=${input_array[$key]:-}
+    pairs=${input_array[$key]:-}
 
     # Remove leading, trailing, and duplicate spaces.
-    mappings=$(_str_collapse_char "$mappings" " ")
+    pairs=$(_str_collapse_char "$pairs" " ")
 
     # If the key does not exist or has no associated values, return failure.
-    if [[ -z "$mappings" ]]; then
-        return 1
+    if [[ -z "$pairs" ]]; then
+        return 0
     fi
 
     # Replace newlines with '$FIELD_SEPARATOR' for iteration.
-    mappings=$(tr "\n" "$FIELD_SEPARATOR" <<<"$mappings")
+    pairs=$(tr "\n" "$FIELD_SEPARATOR" <<<"$pairs")
 
     # Iterate over each <package_manager>:<key_value> pair.
-    local mapping=""
-    for mapping in $mappings; do
-        local subkey="${mapping%%:*}"
-        local value="${mapping#*:}"
+    local pair=""
+    for pair in $pairs; do
+        local subkey="${pair%%:*}"
+        local value="${pair#*:}"
+
+        # Remove leading, trailing, and duplicate spaces.
+        subkey=$(_str_collapse_char "$subkey" " ")
+        value=$(_str_collapse_char "$value" " ")
 
         # Map equivalent package managers for compatibility.
         case "$subkey:$pkg_manager" in
@@ -664,134 +662,144 @@ _deps_get_dependency_value() {
 # FUNCTION: _deps_install_missing_packages
 _deps_install_missing_packages() {
     local packages_install=$1
-    local available_pkg_manager=$2
-    local post_install=$3
-    local packages_names=""
+    local post_install=$2
+
+    [[ -z "$packages_install" ]] && return
 
     # Remove leading, trailing, and duplicate spaces.
     packages_install=$(_str_collapse_char "$packages_install" " ")
 
-    # Keep only the package name before '~' for installation, used when install
-    # and check package names differ (e.g., on NixOS).
-    if [[ "$packages_install" == *"~"* ]]; then
-        packages_names=$(sed "s|~[A-Za-z0-9.-]*||g" <<<"$packages_install")
-    else
-        packages_names=$packages_install
-    fi
+    # Format the package names for display.
+    local pkg_names=""
+    pkg_names=$(tr " " "\n" <<<"$packages_install")
+    pkg_names=$(sed "s|~[^\n]*||g" <<<"$pkg_names")
+    pkg_names=$(sed "s|^\([a-z-]*\):\(.*\)|- \2 (\1)|g" <<<"$pkg_names")
 
-    # Ask the user to install the packages.
-    if [[ -n "$packages_names" ]]; then
-        local message="The following packages are missing:"$'\n'
-        message+="- "
-        message+=$(sed "s| |\n- |g" <<<"$packages_names")
-        message+=$'\n'$'\n'
-        message+="Would you like to install them using"
-        message+=" '$available_pkg_manager'?"
-        if ! _display_question_box "$message"; then
-            _exit_script
-        fi
-        _deps_install_packages \
-            "$available_pkg_manager" "$packages_names" "$post_install"
-        _deps_installation_check \
-            "$available_pkg_manager" "$packages_install"
+    local message="The following packages are missing:"$'\n'
+    message+="$pkg_names"
+    message+=$'\n'$'\n'
+    message+="Would you like to install them?"
+    if ! _display_question_box "$message"; then
+        _exit_script
     fi
+    _deps_install_packages "$packages_install" "$post_install"
+    _deps_installation_check "$packages_install"
 }
 
 # FUNCTION: _deps_install_packages
 #
 # DESCRIPTION:
-# This function installs specified packages using the given package
-# manager.
+#   This function installs specified packages using the corresponding
+#   package manager defined for each one. The input list must contain
+#   pairs in the format "<pkg_manager>:<package>" separated by spaces.
+#
+#   Example:
+#     _deps_install_packages "apt-get:curl dnf:wget brew:git"
+#
+#   Supported package managers:
+#   - "apt-get"     : For Debian/Ubuntu systems.
+#   - "dnf"         : For Fedora/RHEL systems.
+#   - "rpm-ostree"  : For Fedora Atomic systems.
+#   - "pacman"      : For Arch Linux systems.
+#   - "zypper"      : For openSUSE systems.
+#   - "nix"         : For Nix-based systems.
+#   - "brew"        : For Homebrew package manager.
+#   - "guix"        : For GNU Guix systems.
 #
 # PARAMETERS:
-#   $1 (pkg_manager): The package manager to use for installation.
-#      Supported values:
-#      - "apt-get"     : For Debian/Ubuntu systems.
-#      - "dnf"         : For Fedora/RHEL systems.
-#      - "rpm-ostree"  : For Fedora Atomic systems.
-#      - "pacman"      : For Arch Linux systems.
-#      - "zypper"      : For openSUSE systems.
-#      - "nix"         : For Nix-based systems.
-#      - "brew"        : For Homebrew package manager.
-#      - "guix"        : For GNU Guix systems.
-#   $2 (packages): A space-separated list of package names to install.
-#   $3 (post_install): An optional command to be executed right after the
-#      installation.
+#   $1 (pkg_list): A space-separated list of "<pkg_manager>:<package>" pairs.
+#   $2 (post_install): Optional command executed after all installations.
 _deps_install_packages() {
-    local pkg_manager=$1
-    local packages=$2
-    local post_install=$3
-    local cmd_install=""
+    local pairs=$1
+    local post_install=$2
     local admin_cmd=""
+    local admin_cmd_available=""
+    local cmd_install=""
+    local -A pkg_map=()
 
+    # Replace spaces with '$FIELD_SEPARATOR' for iteration.
+    pairs=$(tr " " "$FIELD_SEPARATOR" <<<"$pairs")
+
+    # Build a map of <pkg_manager> -> "pkg1 pkg2 ...".
+    local pair=""
+    for pair in $pairs; do
+        local pkg_manager="${pair%%:*}"
+        local package="${pair#*:}"
+        pkg_map["$pkg_manager"]+="$package "
+    done
+
+    # Determine admin command.
     if ! _is_gui_session; then
-        _command_exists "sudo" && admin_cmd="sudo"
+        _command_exists "sudo" && admin_cmd_available="sudo"
     else
-        _command_exists "pkexec" && admin_cmd="pkexec"
+        _command_exists "pkexec" && admin_cmd_available="pkexec"
     fi
 
     _display_wait_box_message "Installing the packages. Please, wait..." "0"
 
-    case "$pkg_manager" in
-    "apt-get")
-        cmd_install+="apt-get update &>/dev/null;"
-        cmd_install+="apt-get -y install $packages &>/dev/null"
-        ;;
-    "dnf")
-        cmd_install+="dnf check-update &>/dev/null;"
-        cmd_install+="dnf -y install $packages &>/dev/null"
-        ;;
-    "rpm-ostree")
-        cmd_install+="rpm-ostree install $packages &>/dev/null"
-        ;;
-    "pacman")
-        cmd_install+="pacman -Syy &>/dev/null;"
-        cmd_install+="pacman --noconfirm -S $packages &>/dev/null"
-        ;;
-    "zypper")
-        cmd_install+="zypper refresh &>/dev/null;"
-        cmd_install+="zypper --non-interactive install $packages &>/dev/null"
-        ;;
-    "nix")
-        local nix_packages=""
-        local nix_channel="nixpkgs"
-        if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
-            nix_channel="nixos"
+    # Iterate over each detected package manager.
+    for pkg_manager in "${!pkg_map[@]}"; do
+        local packages="${pkg_map[$pkg_manager]}"
+        [[ -z "$packages" ]] && continue
+
+        cmd_install=""
+        admin_cmd="$admin_cmd_available"
+
+        case "$pkg_manager" in
+        "apt-get")
+            cmd_install+="apt-get update &>/dev/null;"
+            cmd_install+="apt-get -y install $packages &>/dev/null"
+            ;;
+        "dnf")
+            cmd_install+="dnf check-update &>/dev/null;"
+            cmd_install+="dnf -y install $packages &>/dev/null"
+            ;;
+        "rpm-ostree")
+            cmd_install+="rpm-ostree install $packages &>/dev/null"
+            ;;
+        "pacman")
+            cmd_install+="pacman -Syy &>/dev/null;"
+            cmd_install+="pacman --noconfirm -S $packages &>/dev/null"
+            ;;
+        "zypper")
+            cmd_install+="zypper refresh &>/dev/null;"
+            cmd_install+="zypper --non-interactive install $packages &>/dev/null"
+            ;;
+        "nix")
+            local nix_packages=""
+            local nix_channel="nixpkgs"
+            if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
+                nix_channel="nixos"
+            fi
+
+            nix_packages="$nix_channel.$packages"
+            # shellcheck disable=SC2001
+            nix_packages=$(sed "s| $||g" <<<"$nix_packages")
+            # shellcheck disable=SC2001
+            nix_packages=$(sed "s| | $nix_channel.|g" <<<"$nix_packages")
+
+            cmd_install+="nix-env -iA $nix_packages &>/dev/null"
+            # Nix does not require root for installing user packages.
+            admin_cmd=""
+            ;;
+        "brew")
+            cmd_install="brew install $packages &>/dev/null"
+            # Homebrew does not require root for installing user packages.
+            admin_cmd=""
+            ;;
+        "guix")
+            cmd_install="guix package -i $packages &>/dev/null"
+            ;;
+        esac
+
+        # Execute installation.
+        if [[ -n "$cmd_install" ]]; then
+            if [[ -n "$post_install" ]]; then
+                cmd_install+="; $post_install"
+            fi
+            $admin_cmd bash -c "$cmd_install"
         fi
-
-        nix_packages="$nix_channel.$packages"
-        # shellcheck disable=SC2001
-        nix_packages=$(sed "s| $||g" <<<"$nix_packages")
-        # shellcheck disable=SC2001
-        nix_packages=$(sed "s| | $nix_channel.|g" <<<"$nix_packages")
-
-        cmd_install+="nix-env -iA $nix_packages &>/dev/null"
-        # Nix does not require root for installing user packages.
-        admin_cmd=""
-        ;;
-    "brew")
-        cmd_install="brew install $packages &>/dev/null"
-        # Homebrew does not require root for installing user packages.
-        admin_cmd=""
-        ;;
-    "guix")
-        cmd_install="guix package -i $packages &>/dev/null"
-        ;;
-    esac
-
-    # Install the packages.
-    if [[ -n "$admin_cmd" ]] && ! _command_exists "$admin_cmd"; then
-        _display_error_box \
-            "Could not run the installer with administrator permission!"
-        _exit_script
-    fi
-
-    if [[ -n "$pkg_manager" ]]; then
-        if [[ -n "$post_install" ]]; then
-            cmd_install+=";$post_install"
-        fi
-        $admin_cmd bash -c "$cmd_install"
-    fi
+    done
 
     _close_wait_box
 }
@@ -799,42 +807,43 @@ _deps_install_packages() {
 # FUNCTION: _deps_installation_check
 #
 # DESCRIPTION:
-# This function verifies whether the specified packages were successfully
-# installed using the given package manager. It checks each package one by
-# one, ensuring that all dependencies are properly installed before
-# proceeding.
+#   This function verifies whether the specified packages were successfully
+#   installed using their respective package managers. It checks each pair
+#   in the format "<pkg_manager>:<package>" one by one, ensuring that all
+#   dependencies are properly installed before proceeding.
 #
 # PARAMETERS:
-#   $1 (available_pkg_manager): The package manager to use for
-#      installation verification.
-#   $2 (packages_check): A space-separated string containing the names
-#      of packages that should be checked for successful installation.
+#   $1 (pairs_check): A space-separated list of "<pkg_manager>:<package>".
 _deps_installation_check() {
-    local available_pkg_manager=$1
-    local packages_check=$2
+    local pairs=$1
 
-    # Iterate over each package to check installation status.
-    packages_check=$(tr " " "$FIELD_SEPARATOR" <<<"$packages_check")
-    local package_check=""
-    for package_check in $packages_check; do
-        if _deps_is_package_installed \
-            "$available_pkg_manager" "$package_check"; then
+    # Replace spaces with '$FIELD_SEPARATOR' for iteration.
+    pairs=$(tr " " "$FIELD_SEPARATOR" <<<"$pairs")
+
+    # Iterate over each "<pkg_manager>:<package>" pair.
+    local pair=""
+    for pair in $pairs; do
+        local pkg_manager="${pair%%:*}"
+        local package="${pair#*:}"
+
+        if _deps_is_package_installed "$pkg_manager" "$package"; then
             continue
         fi
 
         # Special case for 'rpm-ostree': If the package appears in the
         # rpm-ostree deployment list, it means it is installed but requires a
         # system reboot to take effect.
-        if [[ "$available_pkg_manager" == "rpm-ostree" ]] &&
+        if [[ "$pkg_manager" == "rpm-ostree" ]] &&
             rpm-ostree status --json | jq -r ".deployments[0].packages[]" |
-            grep -Fxq "$package_check"; then
+            grep -Fxq "$package"; then
             _display_info_box \
-                "The package '$package_check' is installed but you need to reboot to use it!"
+                "The package '$package' is installed but you need to reboot to use it!"
             _exit_script
         fi
 
         # If the package could not be installed, show an error and exit.
-        _display_error_box "Could not install the package '$package_check'!"
+        _display_error_box \
+            "Could not install the package '$package' using '$pkg_manager'!"
         _exit_script
     done
 }
@@ -3435,6 +3444,17 @@ _str_collapse_char() {
     sed "$sed_p1; $sed_p2; $sed_p3" <<<"$input_str"
 }
 
+_str_sort_unique() {
+    local input_str=$1
+    local char_separator=$2
+
+    input_str=$(printf "%s" "$input_str" |
+        tr "$char_separator" "\0" |
+        sort --zero-terminated --unique |
+        tr "\0" "$char_separator")
+    _str_collapse_char "$input_str" "$char_separator"
+}
+
 # FUNCTION: _str_human_readable_path
 #
 # DESCRIPTION:
@@ -3607,6 +3627,11 @@ _cmd_magick() {
 _initialize_homebrew() {
     # Skip initialization if Homebrew is already available in 'PATH'.
     _command_exists "brew" && return
+
+    # Skip initialization if 'curl' and 'git' are not available in 'PATH'.
+    if ! _command_exists "curl" || ! _command_exists "git"; then
+        return
+    fi
 
     local homebrew_dir="$HOME/.local/apps/homebrew"
     local brew_cmd="$homebrew_dir/bin/brew"
