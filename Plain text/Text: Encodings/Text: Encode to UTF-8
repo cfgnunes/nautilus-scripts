@@ -36,7 +36,7 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "$temp_file" || return 1
 
     # Move the temporary file to the output.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='("${encoding^^}")'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(${encoding^^})'")
     _move_file "rename" "$temp_file" "$output_file"
 }
 
