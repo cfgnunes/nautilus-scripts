@@ -26,12 +26,13 @@ _main_task() {
     local output_file=""
     local std_output=""
     local temp_file=""
+    local tabs="8"
 
     # Work on a temporary file.
     temp_file=$(_make_temp_file)
 
     # Run the main process.
-    unexpand --tabs=8 -- "$input_file" >"$temp_file" 2>/dev/null
+    unexpand --tabs="$tabs" -- "$input_file" >"$temp_file" 2>/dev/null
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     # Move the temporary file to the output.
