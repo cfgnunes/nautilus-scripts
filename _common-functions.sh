@@ -511,7 +511,7 @@ _dependencies_check_metapackages() {
     local pairs=""
     local package=""
     for package in $packages; do
-        local real_name_packages=""
+        local package_names=""
         local post_install=""
 
         # Iterate over supported package manger.
@@ -520,17 +520,18 @@ _dependencies_check_metapackages() {
         for pkg_manager in "${PKG_MANAGER_PRIORITY[@]}"; do
 
             # Get the values from '_dependencies.sh'.
-            real_name_packages=$(_deps_get_dependency_value \
+            package_names=$(_deps_get_dependency_value \
                 "$package" "$pkg_manager" "META_PACKAGES")
             # Try to get the package name in PACKAGE_NAME.
-            if [[ -z "$real_name_packages" ]]; then
-                real_name_packages=$(_deps_get_dependency_value \
+            if [[ -z "$package_names" ]]; then
+                package_names=$(_deps_get_dependency_value \
                     "$package" "$pkg_manager" "PACKAGE_NAME")
             fi
             post_install=$(_deps_get_dependency_value \
                 "$package" "$pkg_manager" "POST_INSTALL")
 
-            if _command_exists "$pkg_manager" && [[ -n "$real_name_packages" ]]; then
+            if _command_exists "$pkg_manager" &&
+                [[ -n "$package_names" ]]; then
                 pkg_manager_found="true"
                 break
             fi
@@ -542,9 +543,10 @@ _dependencies_check_metapackages() {
 
         # Add the package to the list to install using the format:
         # <pkg_manager>:<package>.
-        if [[ -n "$real_name_packages" ]]; then
-            real_name_packages=$(sed "s|^|$pkg_manager:|g; s| | $pkg_manager:|g" <<<"$real_name_packages")
-            pairs+=" $real_name_packages"
+        if [[ -n "$package_names" ]]; then
+            package_names=$(sed "s|^|$pkg_manager:|g" <<<"$package_names")
+            package_names=$(sed "s| | $pkg_manager:|g" <<<"$package_names")
+            pairs+=" $package_names"
         fi
         if [[ -n "$post_install" ]]; then
             compiled_post_install+="$post_install;"
@@ -712,9 +714,9 @@ _deps_install_missing_packages() {
 _deps_install_packages() {
     local pairs=$1
     local post_install=$2
-    local admin_cmd=""
-    local admin_cmd_available=""
-    local cmd_install=""
+    local cmd_admin=""
+    local cmd_admin_available=""
+    local cmd_inst=""
     local -A pkg_map=()
 
     # Replace spaces with '$FIELD_SEPARATOR' for iteration.
@@ -730,9 +732,9 @@ _deps_install_packages() {
 
     # Determine admin command.
     if ! _is_gui_session; then
-        _command_exists "sudo" && admin_cmd_available="sudo"
+        _command_exists "sudo" && cmd_admin_available="sudo"
     else
-        _command_exists "pkexec" && admin_cmd_available="pkexec"
+        _command_exists "pkexec" && cmd_admin_available="pkexec"
     fi
 
     _display_wait_box_message "Installing the packages. Please, wait..." "0"
@@ -742,28 +744,28 @@ _deps_install_packages() {
         local packages="${pkg_map[$pkg_manager]}"
         [[ -z "$packages" ]] && continue
 
-        cmd_install=""
-        admin_cmd="$admin_cmd_available"
+        cmd_inst=""
+        cmd_admin="$cmd_admin_available"
 
         case "$pkg_manager" in
         "apt-get")
-            cmd_install+="apt-get update &>/dev/null;"
-            cmd_install+="apt-get -y install $packages &>/dev/null"
+            cmd_inst+="apt-get update &>/dev/null;"
+            cmd_inst+="apt-get -y install $packages &>/dev/null"
             ;;
         "dnf")
-            cmd_install+="dnf check-update &>/dev/null;"
-            cmd_install+="dnf -y install $packages &>/dev/null"
+            cmd_inst+="dnf check-update &>/dev/null;"
+            cmd_inst+="dnf -y install $packages &>/dev/null"
             ;;
         "rpm-ostree")
-            cmd_install+="rpm-ostree install $packages &>/dev/null"
+            cmd_inst+="rpm-ostree install $packages &>/dev/null"
             ;;
         "pacman")
-            cmd_install+="pacman -Syy &>/dev/null;"
-            cmd_install+="pacman --noconfirm -S $packages &>/dev/null"
+            cmd_inst+="pacman -Syy &>/dev/null;"
+            cmd_inst+="pacman --noconfirm -S $packages &>/dev/null"
             ;;
         "zypper")
-            cmd_install+="zypper refresh &>/dev/null;"
-            cmd_install+="zypper --non-interactive install $packages &>/dev/null"
+            cmd_inst+="zypper refresh &>/dev/null;"
+            cmd_inst+="zypper --non-interactive install $packages &>/dev/null"
             ;;
         "nix")
             local nix_packages=""
@@ -778,26 +780,26 @@ _deps_install_packages() {
             # shellcheck disable=SC2001
             nix_packages=$(sed "s| | $nix_channel.|g" <<<"$nix_packages")
 
-            cmd_install+="nix-env -iA $nix_packages &>/dev/null"
+            cmd_inst+="nix-env -iA $nix_packages &>/dev/null"
             # Nix does not require root for installing user packages.
-            admin_cmd=""
+            cmd_admin=""
             ;;
         "brew")
-            cmd_install="brew install $packages &>/dev/null"
+            cmd_inst="brew install $packages &>/dev/null"
             # Homebrew does not require root for installing user packages.
-            admin_cmd=""
+            cmd_admin=""
             ;;
         "guix")
-            cmd_install="guix package -i $packages &>/dev/null"
+            cmd_inst="guix package -i $packages &>/dev/null"
             ;;
         esac
 
         # Execute installation.
-        if [[ -n "$cmd_install" ]]; then
+        if [[ -n "$cmd_inst" ]]; then
             if [[ -n "$post_install" ]]; then
-                cmd_install+="; $post_install"
+                cmd_inst+="; $post_install"
             fi
-            $admin_cmd bash -c "$cmd_install"
+            $cmd_admin bash -c "$cmd_inst"
         fi
     done
 
@@ -3444,6 +3446,15 @@ _str_collapse_char() {
     sed "$sed_p1; $sed_p2; $sed_p3" <<<"$input_str"
 }
 
+# FUNCTION: _str_sort_unique
+#
+# DESCRIPTION:
+# This function sorts and removes duplicate elements from a string based on a
+# given separator.
+#
+# PARAMETERS:
+#   $1 (input_str): The input string containing elements to be sorted.
+#   $2 (char_separator): The character used to separate elements in the string.
 _str_sort_unique() {
     local input_str=$1
     local char_separator=$2
