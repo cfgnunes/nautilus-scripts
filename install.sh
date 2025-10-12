@@ -1452,7 +1452,7 @@ _bootstrap_repository() {
 
     # Create a temporary directory for the installation.
     local temp_dir=""
-    temp_dir=$(mktemp -d)
+    temp_dir=$(mktemp --directory)
 
     _echo_info "> Checking for the latest release..."
 
