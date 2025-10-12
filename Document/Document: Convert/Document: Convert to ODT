@@ -105,16 +105,19 @@ _run_command() {
         # NOTE: Workaround to fix the bug 37531 in LibreOffice.
         # See the: https://bugs.documentfoundation.org/show_bug.cgi?id=37531
         local temp_dir=""
-        temp_dir=$(_get_temp_file_dry)
+        temp_dir=$(_get_temp_dir)
 
         # NOTE: LibreOffice does not support '--' in the command line.
         # NOTE: LibreOffice does not support defining the output file manually.
         std_output=$(libreoffice --headless --convert-to "$output_format" "-env:UserInstallation=file://$temp_dir" --outdir "$temp_dir_local" "$input_file" 2>&1)
 
+        # Remove the temporary directory.
+        rm -rf -- "$temp_dir"
+
         temp_output_file=$(find "$temp_dir_local" -type f -name "*.$output_format" -print -quit 2>/dev/null)
         _move_file "rename" "$temp_output_file" "$output_file"
 
-        # Remove the temporary directory.
+        # Remove the temporary directory (local directory).
         rm -rf -- "$temp_dir_local"
 
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1

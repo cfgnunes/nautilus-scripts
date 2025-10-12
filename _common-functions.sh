@@ -329,9 +329,9 @@ _run_task_parallel() {
         _get_filename_next_suffix \
         _get_max_procs \
         _get_output_filename \
+        _get_temp_dir \
         _get_temp_dir_local \
         _get_temp_file \
-        _get_temp_file_dry \
         _get_working_directory \
         _is_directory_empty \
         _is_gui_session \
@@ -1309,6 +1309,20 @@ _move_file() {
     return 0
 }
 
+# FUNCTION: _get_temp_dir
+#
+# DESCRIPTION:
+# This function creates a temporary directory in the '$TEMP_DIR_TASK' directory
+# and returns its path. The directory is created using 'mktemp', and the
+# directory for the temporary directory is specified by the '$TEMP_DIR_TASK'
+# variable.
+#
+# Output:
+#   - The full path to the newly created temporary directory.
+_get_temp_dir() {
+    mktemp --directory --tmpdir="$TEMP_DIR_TASK"
+}
+
 # FUNCTION: _get_temp_dir_local
 #
 # DESCRIPTION:
@@ -1350,20 +1364,6 @@ _get_temp_dir_local() {
 #   - The full path to the newly created temporary file.
 _get_temp_file() {
     mktemp --tmpdir="$TEMP_DIR_TASK"
-}
-
-# FUNCTION: _get_temp_file_dry
-#
-# DESCRIPTION:
-# This function simulates the creation of a temporary file in the
-# '$TEMP_DIR_TASK' directory without actually creating the file. It uses
-# the '--dry-run' option with 'mktemp', which allows checking what the file
-# path would be if it were to be created.
-#
-# Output:
-#   - The full path of the temporary file, without actually creating it.
-_get_temp_file_dry() {
-    mktemp --dry-run --tmpdir="$TEMP_DIR_TASK"
 }
 
 # FUNCTION: _get_working_directory

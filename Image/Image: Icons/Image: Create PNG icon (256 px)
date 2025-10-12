@@ -25,6 +25,7 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+    local temp_dir=""
     local temp_file1=""
     local temp_file2=""
     local temp_file3=""
@@ -40,10 +41,11 @@ _main_task() {
     }
 
     # Work on a temporary file.
-    temp_file1="$(_get_temp_file_dry).png"
-    temp_file2="$(_get_temp_file_dry).png"
-    temp_file3="$(_get_temp_file_dry).png"
-    temp_file4="$(_get_temp_file_dry).png"
+    temp_dir="$(_get_temp_dir)"
+    temp_file1="$temp_dir/file1.png"
+    temp_file2="$temp_dir/file2.png"
+    temp_file3="$temp_dir/file3.png"
+    temp_file4="$temp_dir/file4.png"
 
     # Run the main process (part 0) 'export svg'.
     local filename_extension=""
@@ -139,11 +141,8 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=png; par_suffix='(icon $icon_size px)'")
     _move_file "rename" "$temp_file4" "$output_file"
 
-    # Remove the temporary files on each iteration (if not removed before).
-    rm -f -- "$temp_file1"
-    rm -f -- "$temp_file2"
-    rm -f -- "$temp_file3"
-    rm -f -- "$temp_file4"
+    # Remove the temporary directory.
+    rm -rf -- "$temp_dir"
 }
 
 _main "$@"
