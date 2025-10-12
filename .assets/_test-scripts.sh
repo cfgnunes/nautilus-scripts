@@ -1404,14 +1404,6 @@ _main() {
     #__test_file_nonempty "$output_file.xlsx"
     #__test_file_empty "$std_output"
 
-    # Create mock files for testing.
-    #input_file1="$temp_dir/Test document (presentation).otp"
-    #input_file2="$temp_dir/Test document (presentation) 2.otp"
-    #output_file="$temp_dir/Test document (presentation)"
-    #sample_file=$(find / -type f -iname "*.otp" -size -5M -print -quit 2>/dev/null)
-    #cp -- "$sample_file" "$input_file1"
-    #cp -- "$input_file1" "$input_file2"
-
     #script_test="Document/Document: Convert/Document: Convert to ODP"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
@@ -2109,7 +2101,7 @@ _main() {
     __test_file_nonempty "$output_file"
     __test_file_empty "$std_output"
 
-    #script_test="Rename files/Rename: To uppercase (rec4ursive)"
+    #script_test="Rename files/Rename: To uppercase (recursive)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
