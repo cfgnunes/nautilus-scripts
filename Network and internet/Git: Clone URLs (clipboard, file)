@@ -26,12 +26,27 @@ _main_task() {
     local output_dir=$2
     local std_output=""
 
-    _directory_push "$output_dir" || return 1
+    __git_repo_dir_name() {
+        local repo_url=$1
+        local dir_name=""
+
+        # Remove possible trailing slash.
+        repo_url=${repo_url%/}
+
+        # Extract the part after the last slash and remove .git if present.
+        dir_name=$(basename -- "$repo_url")
+        dir_name=${dir_name%.git}
+
+        printf '%s\n' "$dir_name"
+    }
+
+    local repo_dir_name=""
+    repo_dir_name=$(__git_repo_dir_name "$input_file")
+    dir_name=$(_get_output_filename "$output_dir/$repo_dir_name" "$output_dir" "par_extension_opt=preserve")
 
     # Run the main process.
-    std_output=$(git clone -q -- "$input_file" 2>&1)
+    std_output=$(git clone -q -- "$input_file" "$dir_name" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
-    _directory_pop || return 1
 }
 
 _extract_git_urls() {
