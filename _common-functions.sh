@@ -1200,6 +1200,63 @@ _get_filename_next_suffix() {
     printf "%s" "$filename_result"
 }
 
+# FUNCTION: _make_temp_dir
+#
+# DESCRIPTION:
+# This function creates a temporary directory in the '$TEMP_DIR_TASK' directory
+# and returns its path. The directory is created using 'mktemp', and the
+# directory for the temporary directory is specified by the '$TEMP_DIR_TASK'
+# variable.
+#
+# Output:
+#   - The full path to the newly created temporary directory.
+_make_temp_dir() {
+    mktemp --directory --tmpdir="$TEMP_DIR_TASK"
+}
+
+# FUNCTION: _make_temp_dir_local
+#
+# DESCRIPTION:
+# This function creates a temporary directory in a specified location and
+# returns its path. The directory is created using 'mktemp', with a custom
+# prefix (basename). It also generates a temporary file to track the
+# directory to be removed later.
+#
+# PARAMETERS:
+#   $1 (output_dir): The directory where the temporary directory will be
+#      created.
+#   $2 (basename): The prefix for the temporary directory name.
+#
+# Output:
+#   - The full path to the newly created temporary directory.
+_make_temp_dir_local() {
+    local output_dir=$1
+    local basename=$2
+    local temp_dir=""
+    temp_dir=$(mktemp --directory \
+        --tmpdir="$output_dir" "$basename.XXXXXXXX.tmp")
+
+    # Remember to remove this directory after exit.
+    item_to_remove=$(mktemp --tmpdir="$TEMP_DIR_ITEMS_TO_REMOVE")
+    printf "%s$FIELD_SEPARATOR" "$temp_dir" >"$item_to_remove"
+
+    printf "%s" "$temp_dir"
+}
+
+# FUNCTION: _make_temp_file
+#
+# DESCRIPTION:
+# This function creates a temporary file in the '$TEMP_DIR_TASK' directory
+# and returns its path. The file is created using 'mktemp', and the
+# directory for the temporary file is specified by the '$TEMP_DIR_TASK'
+# variable.
+#
+# Output:
+#   - The full path to the newly created temporary file.
+_make_temp_file() {
+    mktemp --tmpdir="$TEMP_DIR_TASK"
+}
+
 # FUNCTION: _move_file
 #
 # DESCRIPTION:
@@ -1307,63 +1364,6 @@ _move_file() {
     fi
 
     return 0
-}
-
-# FUNCTION: _make_temp_dir
-#
-# DESCRIPTION:
-# This function creates a temporary directory in the '$TEMP_DIR_TASK' directory
-# and returns its path. The directory is created using 'mktemp', and the
-# directory for the temporary directory is specified by the '$TEMP_DIR_TASK'
-# variable.
-#
-# Output:
-#   - The full path to the newly created temporary directory.
-_make_temp_dir() {
-    mktemp --directory --tmpdir="$TEMP_DIR_TASK"
-}
-
-# FUNCTION: _make_temp_dir_local
-#
-# DESCRIPTION:
-# This function creates a temporary directory in a specified location and
-# returns its path. The directory is created using 'mktemp', with a custom
-# prefix (basename). It also generates a temporary file to track the
-# directory to be removed later.
-#
-# PARAMETERS:
-#   $1 (output_dir): The directory where the temporary directory will be
-#      created.
-#   $2 (basename): The prefix for the temporary directory name.
-#
-# Output:
-#   - The full path to the newly created temporary directory.
-_make_temp_dir_local() {
-    local output_dir=$1
-    local basename=$2
-    local temp_dir=""
-    temp_dir=$(mktemp --directory \
-        --tmpdir="$output_dir" "$basename.XXXXXXXX.tmp")
-
-    # Remember to remove this directory after exit.
-    item_to_remove=$(mktemp --tmpdir="$TEMP_DIR_ITEMS_TO_REMOVE")
-    printf "%s$FIELD_SEPARATOR" "$temp_dir" >"$item_to_remove"
-
-    printf "%s" "$temp_dir"
-}
-
-# FUNCTION: _make_temp_file
-#
-# DESCRIPTION:
-# This function creates a temporary file in the '$TEMP_DIR_TASK' directory
-# and returns its path. The file is created using 'mktemp', and the
-# directory for the temporary file is specified by the '$TEMP_DIR_TASK'
-# variable.
-#
-# Output:
-#   - The full path to the newly created temporary file.
-_make_temp_file() {
-    mktemp --tmpdir="$TEMP_DIR_TASK"
 }
 
 # FUNCTION: _get_working_directory
