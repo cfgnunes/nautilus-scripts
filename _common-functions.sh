@@ -29,7 +29,7 @@ TEMP_DIR=$(mktemp --directory)
 TEMP_DIR_ITEMS_TO_REMOVE="$TEMP_DIR/items_to_remove"
 TEMP_DIR_LOGS="$TEMP_DIR/logs"
 TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
-TEMP_DIR_TASK="$TEMP_DIR/task" # used by '_make_temp_file' function.
+TEMP_DIR_TASK="$TEMP_DIR/task"
 
 # Temporary files.
 TEMP_CONTROL_BATCH_ENABLED="$TEMP_DIR/control_batch_enabled"
@@ -92,11 +92,28 @@ TEMP_DATA_TASK=""
 # SECTION /// [BUILD THE STRUCTURE OF THE '$TEMP_DIR']
 # -----------------------------------------------------------------------------
 
-# Store the path of temporary items to be removed after exit.
+# DESCRIPTION:
+#
+#   '$TEMP_DIR_ITEMS_TO_REMOVE':
+#       This directory is used for temporary items scheduled for removal after
+#       the scripts' tasks finish executing.
+#
+#   '$TEMP_DIR_LOGS'
+#       This directory stores temporary error logs generated during
+#       the execution of the scripts.
+#
+#   '$TEMP_DIR_STORAGE_TEXT':
+#       This directory stores text files from output data produced by parallel
+#       tasks during the execution of the scripts.
+#
+#   '$TEMP_DIR_TASK':
+#       This directory is used by the '_make_temp_dir' and '_make_temp_file'
+#       functions to store temporary files created during the scripts' tasks.
+
 mkdir -p "$TEMP_DIR_ITEMS_TO_REMOVE"
-mkdir -p "$TEMP_DIR_LOGS"         # Store 'error logs'.
-mkdir -p "$TEMP_DIR_STORAGE_TEXT" # Store the output from parallel processes.
-mkdir -p "$TEMP_DIR_TASK"         # Store temporary files of scripts.
+mkdir -p "$TEMP_DIR_LOGS"
+mkdir -p "$TEMP_DIR_STORAGE_TEXT"
+mkdir -p "$TEMP_DIR_TASK"
 
 # -----------------------------------------------------------------------------
 # SECTION /// [CORE UTILITIES]
