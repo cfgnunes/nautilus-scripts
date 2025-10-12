@@ -50,7 +50,7 @@ declare -A PACKAGE_NAME=(
         nix:    axel
         zypper: axel
         guix:   axel
-        brew:   axel
+        brew:
     "
 
     ["baobab"]="
@@ -61,7 +61,7 @@ declare -A PACKAGE_NAME=(
         nix:    baobab
         zypper: baobab
         guix:   baobab
-        brew:   baobab
+        brew:
     "
 
     ["bsdtar"]="
@@ -105,7 +105,7 @@ declare -A PACKAGE_NAME=(
         nix:    clamav
         zypper: clamav
         guix:   clamav
-        brew:   clamav
+        brew:
     "
 
     ["compare"]="
@@ -116,7 +116,7 @@ declare -A PACKAGE_NAME=(
         nix:    imagemagick
         zypper: ImageMagick
         guix:   imagemagick
-        brew:   imagemagick
+        brew:
     "
 
     ["convert"]="
@@ -127,7 +127,7 @@ declare -A PACKAGE_NAME=(
         nix:    imagemagick
         zypper: ImageMagick
         guix:   imagemagick
-        brew:   imagemagick
+        brew:
     "
 
     ["cpio"]="
@@ -138,7 +138,7 @@ declare -A PACKAGE_NAME=(
         nix:    cpio
         zypper: cpio
         guix:   cpio
-        brew:   cpio
+        brew:
     "
 
     ["curl"]="
@@ -149,7 +149,7 @@ declare -A PACKAGE_NAME=(
         nix:    curl
         zypper: curl
         guix:   curl
-        brew:   curl
+        brew:
     "
 
     ["diffpdf"]="
@@ -171,7 +171,7 @@ declare -A PACKAGE_NAME=(
         nix:    exiftool
         zypper: exiftool
         guix:   perl-image-exiftool
-        brew:   exiftool
+        brew:
     "
 
     ["ffmpeg"]="
@@ -182,7 +182,7 @@ declare -A PACKAGE_NAME=(
         nix:    ffmpeg
         zypper: ffmpeg
         guix:   ffmpeg
-        brew:   ffmpeg
+        brew:
     "
 
     ["file-roller"]="
@@ -248,7 +248,7 @@ declare -A PACKAGE_NAME=(
         nix:    git
         zypper: git
         guix:   git
-        brew:   git
+        brew:
     "
 
     ["gpg"]="
@@ -259,7 +259,7 @@ declare -A PACKAGE_NAME=(
         nix:    gnupg
         zypper: gpg2
         guix:   gnupg
-        brew:   gnupg
+        brew:
     "
 
     ["gs"]="
@@ -270,7 +270,7 @@ declare -A PACKAGE_NAME=(
         nix:    ghostscript
         zypper: ghostscript
         guix:   ghostscript
-        brew:   ghostscript
+        brew:
     "
 
     ["gunzip"]="
@@ -303,7 +303,7 @@ declare -A PACKAGE_NAME=(
         nix:    glibc
         zypper: glibc
         guix:   glibc
-        brew:   glibc
+        brew:
     "
 
     ["id3v2"]="
@@ -358,7 +358,7 @@ declare -A PACKAGE_NAME=(
         nix:    cups
         zypper: cups
         guix:   cups
-        brew:   cups
+        brew:
     "
 
     ["lrzip"]="
@@ -424,7 +424,7 @@ declare -A PACKAGE_NAME=(
         nix:    mediainfo
         zypper: mediainfo
         guix:   mediainfo
-        brew:   mediainfo
+        brew:
     "
 
     ["meld"]="
@@ -457,7 +457,7 @@ declare -A PACKAGE_NAME=(
         nix:    mp3gain
         zypper: mp3gain
         guix:
-        brew:   mp3gain
+        brew:
     "
 
     ["mp3val"]="
@@ -479,7 +479,7 @@ declare -A PACKAGE_NAME=(
         nix:    nmap
         zypper: nmap
         guix:   nmap
-        brew:   nmap
+        brew:
     "
 
     ["okteta"]="
@@ -534,7 +534,7 @@ declare -A PACKAGE_NAME=(
         nix:    poppler-utils
         zypper: poppler-tools
         guix:   poppler
-        brew:   poppler
+        brew:
     "
 
     ["perl"]="
@@ -545,7 +545,7 @@ declare -A PACKAGE_NAME=(
         nix:    perl
         zypper: perl-base
         guix:   perl
-        brew:   perl
+        brew:
     "
 
     ["photorec"]="
@@ -556,7 +556,7 @@ declare -A PACKAGE_NAME=(
         nix:    testdisk
         zypper: photorec
         guix:   testdisk
-        brew:   testdisk
+        brew:
     "
 
     ["ping"]="
@@ -567,7 +567,7 @@ declare -A PACKAGE_NAME=(
         nix:    iputils
         zypper: iputils
         guix:   iputils
-        brew:   iputils
+        brew:
     "
 
     ["qpdf"]="
@@ -578,7 +578,7 @@ declare -A PACKAGE_NAME=(
         nix:    qpdf
         zypper: qpdf
         guix:   qpdf
-        brew:   qpdf
+        brew:
     "
 
     ["rdfind"]="
@@ -600,7 +600,7 @@ declare -A PACKAGE_NAME=(
         nix:    rhash
         zypper: rhash
         guix:   rhash
-        brew:   rhash
+        brew:
     "
 
     ["tar"]="
@@ -611,7 +611,7 @@ declare -A PACKAGE_NAME=(
         nix:    gnutar
         zypper: tar
         guix:   tar
-        brew:   gnu-tar
+        brew:
     "
 
     ["unar"]="
@@ -622,7 +622,7 @@ declare -A PACKAGE_NAME=(
         nix:    unar
         zypper: unar
         guix:
-        brew:   unar
+        brew:
     "
 
     ["unrar"]="
