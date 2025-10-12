@@ -1512,7 +1512,7 @@ _display_file_selection_box() {
     if ! _is_gui_session; then
         return 0
     elif _command_exists "zenity"; then
-        # Add --multiple only if explicitly enabled
+        # Add --multiple only if explicitly enabled.
         if [[ "$multiple" == "true" ]]; then
             multiple_flag="--multiple"
         fi
