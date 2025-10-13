@@ -48,6 +48,9 @@ _main() {
     __run_log_error
     __run_move_file
     __run_storage_text
+    __run_str_collapse_char
+    __run_str_sort
+    __run_get_items_count
     __run_strip_filename_extension
     __run_text_remove_empty_lines
     __run_text_sort
@@ -396,6 +399,54 @@ __run_text_remove_empty_lines() {
     __test_equal "$input" "$expected_output" "$output"
 }
 
+__run_str_sort() {
+    local input=""
+    local expected_output=""
+    local output=""
+
+    input=""
+    expected_output=""
+    output=$(_str_sort "$input" "\r" "false")
+    __test_equal "$input" "$expected_output" "$output"
+
+    input="Line1"$'\r'"Line2"
+    expected_output="Line1"$'\r'"Line2"
+    output=$(_str_sort "$input" "\r" "false")
+    __test_equal "$input" "$expected_output" "$output"
+
+    input="Line2"$'\r'"Line1"
+    expected_output="Line1"$'\r'"Line2"
+    output=$(_str_sort "$input" "\r" "false")
+    __test_equal "$input" "$expected_output" "$output"
+
+    input="10"$'\r'"2"
+    expected_output="2"$'\r'"10"
+    output=$(_str_sort "$input" "\r" "false")
+    __test_equal "$input" "$expected_output" "$output"
+
+    input="10"$'\r'"2"$'\r'"2"
+    expected_output="2"$'\r'"10"
+    output=$(_str_sort "$input" "\r" "true")
+    __test_equal "$input" "$expected_output" "$output"
+}
+
+__run_str_collapse_char() {
+    input=""
+    expected_output=""
+    output=$(_str_collapse_char "$input" "x")
+    __test_equal "$input" "$expected_output" "$output"
+
+    input="x123xx123x"
+    expected_output="123x123"
+    output=$(_str_collapse_char "$input" "x")
+    __test_equal "$input" "$expected_output" "$output"
+
+    input="xxx"
+    expected_output=""
+    output=$(_str_collapse_char "$input" "x")
+    __test_equal "$input" "$expected_output" "$output"
+}
+
 __run_text_sort() {
     local input=""
     local expected_output=""
@@ -419,6 +470,23 @@ __run_text_sort() {
     input="10"$'\n'"2"
     expected_output="2"$'\n'"10"
     output=$(_text_sort "$input")
+    __test_equal "$input" "$expected_output" "$output"
+}
+
+__run_get_items_count() {
+    input=""
+    expected_output="0"
+    output=$(_get_items_count "$input")
+    __test_equal "$input" "$expected_output" "$output"
+
+    input="${FIELD_SEPARATOR}${FIELD_SEPARATOR}"
+    expected_output="3"
+    output=$(_get_items_count "$input")
+    __test_equal "$input" "$expected_output" "$output"
+
+    input="10${FIELD_SEPARATOR}2"
+    expected_output="2"
+    output=$(_get_items_count "$input")
     __test_equal "$input" "$expected_output" "$output"
 }
 
