@@ -143,7 +143,6 @@ Many thanks to all of them for their excellent and creative script collections:
 
 - [Nautilus Scripts (by yeKcim)](https://github.com/yeKcim/my_nautilus_scripts)
 - [NaughtyLust (by Dipankar Pal)](https://github.com/deep5050/NaughtyLust)
-- [FE Nautilus Scripts](http://www.freedomenv.com/NautilusScriptsFE/nautilus_scripts_FE_desc.htm)
 - [Vault (by Maravento)](https://github.com/maravento/vault)
 - [Nautilus Scripts (by Bernhard Tittelbach)](https://github.com/btittelbach/nautilus-scripts)
 
