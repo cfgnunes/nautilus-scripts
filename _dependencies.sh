@@ -168,7 +168,7 @@ declare -A PACKAGE_NAME=(
         nix:    exiftool
         zypper: exiftool
         guix:   perl-image-exiftool
-        brew:
+        brew:   exiftool
     "
 
     ["ffmpeg"]="
