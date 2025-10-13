@@ -14,26 +14,13 @@ _main() {
     _dependencies_check_commands ""
     input_files=$(_get_files "par_type=file")
 
-    # Export variables to be used inside new shells (when using 'xargs').
-    export TEMP_DIR_STORAGE_TEXT
-
-    # Export functions to be used inside new shells (when using 'xargs').
+    # Execute the function '_get_dependencies' for each file in parallel.
     export -f \
         _all_commands_exists \
-        _command_exists \
         _get_command \
         _get_dependencies \
-        _storage_text_write \
-        _storage_text_write_ln \
         _run_command
-
-    # Execute the function '_get_dependencies' for each file in parallel.
-    printf "%s" "$input_files" | xargs \
-        --no-run-if-empty \
-        --delimiter="$FIELD_SEPARATOR" \
-        --max-procs="$(_get_max_procs)" \
-        --replace="{}" \
-        bash -c "_get_dependencies '{}'"
+    _run_function_parallel "_get_dependencies '{}'" "$input_files" "$FIELD_SEPARATOR"
 
     local dependencies=""
     dependencies=$(_storage_text_read_all)

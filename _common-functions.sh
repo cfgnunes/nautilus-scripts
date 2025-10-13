@@ -304,7 +304,33 @@ _run_task_parallel() {
     local input_files=$1
     local output_dir=$2
 
-    # Export variables to be used inside new shells (when using 'xargs').
+    # Execute the function '_main_task' for each file in parallel.
+    export -f _main_task
+    _run_function_parallel \
+        "_main_task '{}' '$output_dir'" "$input_files" "$FIELD_SEPARATOR"
+}
+
+# FUNCTION: _run_function_parallel
+#
+# DESCRIPTION:
+# This function executes a given Bash expression or command in parallel for
+# a list of input items. It uses 'xargs' to distribute execution across
+# multiple processes, allowing concurrent processing and improved performance
+# on multi-core systems.
+#
+# PARAMETERS:
+#   $1 (expression): The Bash expression or command to execute for each item.
+#      The '{}' placeholder inside the expression will be replaced by the
+#      current item being processed.
+#   $2 (items): A list of items to process, separated by the char delimiter.
+#   $3 (delimiter): The character used to separate items in the input list.
+_run_function_parallel() {
+    local expression=$1
+    local items=$2
+    local delimiter=$3
+
+    # Export necessary environment variables so they are available
+    # within each subshell created by 'xargs'.
     export \
         FIELD_SEPARATOR \
         GUI_BOX_HEIGHT \
@@ -320,7 +346,8 @@ _run_task_parallel() {
         TEMP_DIR_STORAGE_TEXT \
         TEMP_DIR_TASK
 
-    # Export functions to be used inside new shells (when using 'xargs').
+    # Export functions so they can be called inside
+    # the parallel subprocesses executed by 'bash -c'.
     export -f \
         _check_output \
         _cmd_magick_convert \
@@ -348,7 +375,6 @@ _run_task_parallel() {
         _is_directory_empty \
         _is_gui_session \
         _log_error \
-        _main_task \
         _move_file \
         _storage_text_write \
         _storage_text_write_ln \
@@ -358,17 +384,17 @@ _run_task_parallel() {
         _text_remove_pwd \
         _text_uri_decode
 
-    # Escape single quotes in filenames to handle them correctly in 'xargs'
+    # Escape single quotes in items to handle them correctly in 'xargs'
     # with 'bash -c'.
-    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
+    items=$(sed -z "s|'|'\\\''|g" <<<"$items")
 
-    # Execute the function '_main_task' for each file in parallel.
-    printf "%s" "$input_files" | xargs \
+    # Execute the given expression in parallel for each item.
+    printf "%s" "$items" | xargs \
         --no-run-if-empty \
-        --delimiter="$FIELD_SEPARATOR" \
+        --delimiter="$delimiter" \
         --max-procs="$(_get_max_procs)" \
         --replace="{}" \
-        bash -c "_main_task '{}' '$output_dir'"
+        bash -c "$expression"
 }
 
 # -----------------------------------------------------------------------------
@@ -2877,28 +2903,11 @@ _validate_file_mime_parallel() {
     local par_select_mime=$2
     local par_skip_encoding=$3
 
-    # Export variables to be used inside new shells (when using 'xargs').
-    export FIELD_SEPARATOR TEMP_DIR_STORAGE_TEXT
-
-    # Export functions to be used inside new shells (when using 'xargs').
-    export -f \
-        _get_file_encoding \
-        _get_file_mime \
-        _storage_text_write \
-        _validate_file_mime
-
-    # Escape single quotes in filenames to handle them correctly in 'xargs'
-    # with 'bash -c'.
-    input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
-
     # Execute the function '_validate_file_mime' for each file in parallel.
-    printf "%s" "$input_files" | xargs \
-        --no-run-if-empty \
-        --delimiter="$FIELD_SEPARATOR" \
-        --max-procs="$(_get_max_procs)" \
-        --replace="{}" \
-        bash -c \
-        "_validate_file_mime '{}' '$par_select_mime' '$par_skip_encoding'"
+    export -f _validate_file_mime
+    _run_function_parallel \
+        "_validate_file_mime '{}' '$par_select_mime' '$par_skip_encoding'" \
+        "$input_files" "$FIELD_SEPARATOR"
 
     # Compile valid files in a single list.
     input_files=$(_storage_text_read_all)

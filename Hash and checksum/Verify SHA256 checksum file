@@ -13,30 +13,9 @@ _main() {
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_max_items=1; par_select_mime=text/plain")
 
-    # Export variables to be used inside new shells (when using 'xargs').
-    export TEMP_DIR_STORAGE_TEXT
-
-    # Export variables to be used inside new shells (when using 'xargs').
-    export \
-        FIELD_SEPARATOR
-
-    # Export functions to be used inside new shells (when using 'xargs').
-    export -f \
-        _storage_text_write \
-        _storage_text_write_ln \
-        _verify_checksum
-
-    # Escape single quotes in filenames to handle them correctly in 'xargs'
-    # with 'bash -c'.
-    checksum_file=$(sed -z "s|'|'\\\''|g" <"$input_files")
-
     # Execute the function '_verify_checksum' for each file in parallel.
-    printf "%s" "$checksum_file" | xargs \
-        --no-run-if-empty \
-        --delimiter=$'\n' \
-        --max-procs="$(_get_max_procs)" \
-        --replace="{}" \
-        bash -c "_verify_checksum '{}'"
+    export -f _verify_checksum
+    _run_function_parallel "_verify_checksum '{}'" "$(<"$input_files")" "\n"
 
     local std_output=""
     std_output=$(_storage_text_read_all)
