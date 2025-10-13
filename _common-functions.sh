@@ -831,7 +831,8 @@ _deps_install_packages() {
             cmd_admin=""
             ;;
         "brew")
-            cmd_inst="brew install $packages &>/dev/null"
+            cmd_inst+="brew deps $packages | xargs -I{} brew install --force-bottle {};"
+            cmd_inst+="brew install --force-bottle $packages &>/dev/null"
             # Homebrew does not require root for installing user packages.
             cmd_admin=""
             ;;
@@ -843,7 +844,7 @@ _deps_install_packages() {
         # Execute installation.
         if [[ -n "$cmd_inst" ]]; then
             if [[ -n "$post_install" ]]; then
-                cmd_inst+="; $post_install"
+                cmd_inst="$cmd_inst; $post_install"
             fi
             $cmd_admin bash -c "$cmd_inst"
         fi

@@ -47,7 +47,7 @@ declare -A PACKAGE_NAME=(
         nix:    axel
         zypper: axel
         guix:   axel
-        brew:
+        brew:   axel
     "
 
     ["baobab"]="
@@ -135,7 +135,7 @@ declare -A PACKAGE_NAME=(
         nix:    cpio
         zypper: cpio
         guix:   cpio
-        brew:
+        brew:   cpio
     "
 
     ["curl"]="
@@ -443,7 +443,7 @@ declare -A PACKAGE_NAME=(
         nix:    mp3gain
         zypper: mp3gain
         guix:
-        brew:
+        brew:   mp3gain
     "
 
     ["mp3val"]="
@@ -564,7 +564,7 @@ declare -A PACKAGE_NAME=(
         nix:    qpdf
         zypper: qpdf
         guix:   qpdf
-        brew:
+        brew:   qpdf
     "
 
     ["rdfind"]="
@@ -586,7 +586,7 @@ declare -A PACKAGE_NAME=(
         nix:    rhash
         zypper: rhash
         guix:   rhash
-        brew:
+        brew:   rhash
     "
 
     ["tar"]="
