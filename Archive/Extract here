@@ -27,7 +27,7 @@ _main() {
         _storage_text_write_ln \
         _run_command
 
-    # Check the dependencies for each file in parallel.
+    # Execute the function '_get_dependencies' for each file in parallel.
     printf "%s" "$input_files" | xargs \
         --no-run-if-empty \
         --delimiter="$FIELD_SEPARATOR" \

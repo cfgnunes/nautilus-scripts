@@ -362,6 +362,7 @@ _run_task_parallel() {
     # with 'bash -c'.
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
+    # Execute the function '_main_task' for each file in parallel.
     printf "%s" "$input_files" | xargs \
         --no-run-if-empty \
         --delimiter="$FIELD_SEPARATOR" \
@@ -2890,8 +2891,7 @@ _validate_file_mime_parallel() {
     # with 'bash -c'.
     input_files=$(sed -z "s|'|'\\\''|g" <<<"$input_files")
 
-    # Execute the function '_validate_file_mime' for each file in parallel
-    # (using 'xargs').
+    # Execute the function '_validate_file_mime' for each file in parallel.
     printf "%s" "$input_files" | xargs \
         --no-run-if-empty \
         --delimiter="$FIELD_SEPARATOR" \
