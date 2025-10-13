@@ -831,14 +831,16 @@ _deps_install_packages() {
             cmd_admin=""
             ;;
         "brew")
-            # Replace spaces with '$FIELD_SEPARATOR' for iteration.
-            packages=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
-            local package=""
-            for package in $packages; do
-                cmd_inst+="brew deps $package | xargs -I{} "
-                cmd_inst+="brew install --force-bottle {} &>/dev/null;"
-                cmd_inst+="brew install --force-bottle $package &>/dev/null;"
-            done
+            # Install second-level dependencies with '--force-bottle'.
+            cmd_inst+="brew deps $packages | "
+            cmd_inst+="xargs -I{} brew deps {} | "
+            cmd_inst+="xargs -I{} brew install --force-bottle {} &>/dev/null;"
+            # Install first-level dependencies with '--force-bottle'.
+            cmd_inst+="brew deps $packages | "
+            cmd_inst+="xargs -I{} brew install --force-bottle {} &>/dev/null;"
+            # Install main packages with '--force-bottle'.
+            cmd_inst+="brew install --force-bottle $packages &>/dev/null;"
+
             # Homebrew does not require root for installing user packages.
             cmd_admin=""
             ;;

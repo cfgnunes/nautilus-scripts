@@ -828,7 +828,7 @@ declare -A META_PACKAGES=(
         nix:    sox
         zypper: sox
         guix:   sox
-        brew:   mpg123 ncurses sox
+        brew:   sox
     "
 
     ["tesseract-lang-$TEMP_DATA_TASK"]="
