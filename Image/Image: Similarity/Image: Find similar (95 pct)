@@ -9,18 +9,202 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _dependencies_check_commands "findimagedupes"
+    _command_exists "magick" || _dependencies_check_commands "convert"
     _display_wait_box "0"
     input_files=$(_get_files "par_type=file; par_recursive=true; par_select_mime=image/")
 
-    # Get the installed image viewer.
-    local image_viewer=""
-    image_viewer=$(_xdg_get_default_app "image/png")
-
-    # Run the main process.
-    # shellcheck disable=SC2086
-    findimagedupes --recurse --threshold=95% --program="$(which "$image_viewer")" -- $input_files 2>/dev/null
+    _main_task "$input_files"
     _display_result_box ""
+}
+
+# FUNCTION: _main_task
+#
+# DESCRIPTION:
+#   Main logic of the script. Generates image fingerprints, compares their
+#   similarities, removes duplicates, and displays the matching images.
+#
+# PARAMETERS:
+#   $1 (input_files): A delimited string containing the image files.
+#
+# STEPS:
+#   1. Generate fingerprints for all input images in parallel.
+#   2. Compare each pair of fingerprints using RMSE (converted to similarity).
+#   3. Group and remove duplicate images based on the similarity threshold.
+#   4. Display visually similar images using an available image viewer.
+_main_task() {
+    local input_files=$1
+    local threshold="0.95"
+    local fp_file="fp.png"
+
+    # Step 1: Compute the fingerprints.
+
+    # Execute the function '_generate_fingerprint' for each file in parallel.
+    export -f _generate_fingerprint
+    _run_function_parallel \
+        "_generate_fingerprint '{}'" "$input_files" "$FIELD_SEPARATOR"
+
+    # Step 2: Compare the fingerprints.
+
+    # Find all fingerprint images and order them by file size in descending
+    # order. Larger images tend to contain more visual details, making them
+    # more reliable as reference images for comparison.
+    local fps=""
+    fps=$(find "$TEMP_DIR_TASK" -type f -name "$fp_file" \
+        -printf "%s %p\n" 2>/dev/null | sort -r -n | awk '{print $2}' |
+        tr '\n' "$FIELD_SEPARATOR")
+
+    # Iterate over all fingerprint images in the temporary directory.
+    local fp_a=""
+    printf "%s" "$fps" | while IFS= read -r -d "$FIELD_SEPARATOR" fp_a; do
+        [[ -f "$fp_a" ]] || continue
+
+        # Store the original path of the similar image.
+        _storage_text_write_ln "\"$(cat -- "$fp_a.txt")\""
+
+        # For each fingerprint 'fp_a', compare it with every other
+        # fingerprint 'fp_b'.
+        local fp_b=""
+        printf "%s" "$fps" | while IFS= read -r -d "$FIELD_SEPARATOR" fp_b; do
+            [[ -f "$fp_b" ]] || continue
+
+            # Compute the similarity (1 - RMSE) between the two fingerprints.
+            local ssim=""
+            ssim=$(_compare_fingerprints "$fp_a" "$fp_b")
+
+            # Compare the similarity with threshold, to treat the images as
+            # duplicates or near-duplicates.
+            if [[ "$(echo "$ssim >= $threshold" | bc -l)" == "1" ]]; then
+                # Store the original path of the similar image.
+                _storage_text_write_ln "\"$(cat -- "$fp_b.txt")\""
+
+                # If the fingerprints belong to different files, remove the
+                # duplicate fingerprint.
+                if [[ "$fp_a" != "$fp_b" ]]; then
+                    rm "$fp_b"
+                fi
+            fi
+        done
+        # After comparing 'fp_a' with all others,
+        # remove its temporary fingerprint file.
+        rm "$fp_a"
+
+        # Step 3: Show the result.
+
+        local std_output=""
+        std_output=$(_storage_text_read_all)
+        std_output=$(sort --unique <<<"$std_output")
+
+        # Skip if less than two similar items.
+        local items_count=""
+        items_count=$(tr -cd "\n" <<<"$std_output" | wc -c)
+        if ((items_count < 2)); then
+            continue
+        fi
+
+        std_output=$(tr "\n" " " <<<"$std_output")
+        _storage_text_clean
+
+        # Determine the image viewer.
+        local image_viewer=""
+        local apps=(
+            "eog"
+        )
+        image_viewer=$(_get_available_app "apps")
+        if [[ -z "$image_viewer" ]]; then
+            image_viewer=$(_xdg_get_default_app "image/png")
+        fi
+
+        # Open the similar images in a viewer.
+        if [[ "$image_viewer" == *"eog" ]]; then
+            # If the viewer is Eye of GNOME (eog),
+            # ensure a new instance is opened.
+            # shellcheck disable=SC2086
+            eval $image_viewer --new-instance -- $std_output
+        else
+            # shellcheck disable=SC2086
+            eval $image_viewer -- $std_output
+        fi
+    done
+}
+
+# FUNCTION: _generate_fingerprint
+#
+# DESCRIPTION:
+#   Generates a visual fingerprint (small normalized representation)
+#   for an image file to allow fast visual similarity comparisons.
+#
+# PARAMETERS:
+#   $1 (input_file): The full path to the input image file.
+#
+# OUTPUT:
+#   - Saves the fingerprint as 'fp.png' in a temporary directory.
+#   - Saves the original file path as 'fp.png.txt' alongside the fingerprint.
+_generate_fingerprint() {
+    local input_file=$1
+    local fp_file="fp.png"
+
+    # Work on a temporary directory.
+    local temp_dir=""
+    temp_dir="$(_make_temp_dir)"
+
+    # Save the path of the original file.
+    printf "%s" "$input_file" >"$temp_dir/$fp_file.txt"
+
+    # Generate a fingerprint image using ImageMagick transformations.
+    _cmd_magick_convert "$input_file" \
+        -resize 256x256\! \
+        -modulate 100,0,100 \
+        -blur 0x2 \
+        -contrast-stretch 0.5%x0.5% \
+        -unsharp 0x1 \
+        -resize 128x128\! \
+        -depth 8 \
+        "$temp_dir/$fp_file"
+}
+
+# FUNCTION: _compare_fingerprints
+#
+# DESCRIPTION:
+#   Compares two fingerprint images using RMSE (Root Mean Square Error)
+#   and converts the result into a similarity score (0 to 1).
+#
+# PARAMETERS:
+#   $1 (fp1): Path to the first fingerprint image.
+#   $2 (fp2): Path to the second fingerprint image.
+#
+# RETURNS:
+#   Prints a numeric similarity value between 0.0 (completely different)
+#   and 1.0 (identical).
+_compare_fingerprints() {
+    local fp1=$1
+    local fp2=$2
+
+    __cmd_magick_compare() {
+        if _command_exists "magick"; then
+            magick compare "$@"
+        else
+            compare "$@"
+        fi
+    }
+
+    # Compute RMSE between two fingerprints.
+    local rmse=""
+    rmse=$(__cmd_magick_compare -metric RMSE "$fp1" "$fp2" null: 2>&1)
+
+    # Extract the numeric RMSE value.
+    local value=""
+    value=$(grep -Eo '\([0-9\.]+\)' <<<"$rmse" | tr -d '()')
+
+    # If not found, fallback to raw number.
+    if [[ -z "$value" ]]; then
+        value=$(grep -Eo '[0-9]+\.[0-9]+' <<<"$rmse" | tail -n 1)
+    fi
+
+    # Convert RMSE (error) into similarity (1 - error).
+    local similarity=""
+    similarity=$(awk -v e="$value" 'BEGIN{sim=1-e; if(sim<0) sim=0; print sim}')
+
+    printf "%s" "$similarity"
 }
 
 _main "$@"

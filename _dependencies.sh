@@ -204,17 +204,6 @@ declare -A PACKAGE_NAME=(
         brew:
     "
 
-    ["findimagedupes"]="
-        pkg:
-        apt:    findimagedupes
-        dnf:
-        pacman:
-        nix:
-        zypper:
-        guix:
-        brew:
-    "
-
     ["foremost"]="
         pkg:
         apt:    foremost
