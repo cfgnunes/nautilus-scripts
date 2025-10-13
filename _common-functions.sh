@@ -831,12 +831,8 @@ _deps_install_packages() {
             cmd_admin=""
             ;;
         "brew")
-            # Install second-level dependencies with '--force-bottle'.
-            cmd_inst+="brew deps $packages | "
-            cmd_inst+="xargs -I{} brew deps {} | "
-            cmd_inst+="xargs -I{} brew install --force-bottle {} &>/dev/null;"
-            # Install first-level dependencies with '--force-bottle'.
-            cmd_inst+="brew deps $packages | "
+            # Install the dependencies with '--force-bottle'.
+            cmd_inst+="brew deps --topological $packages | "
             cmd_inst+="xargs -I{} brew install --force-bottle {} &>/dev/null;"
             # Install main packages with '--force-bottle'.
             cmd_inst+="brew install --force-bottle $packages &>/dev/null;"
