@@ -59,7 +59,7 @@ _compare() {
             _display_error_box "You must select only two images to compare!"
             _exit_script
         fi
-        _compare_imagemagick "$file_1" "$file_2"
+        _compare_images "$file_1" "$file_2"
         ;;
     "diffpdf")
         # Use 'diffpdf' for comparing PDF files.
@@ -185,13 +185,13 @@ _compare_identical() {
     fi
 }
 
-# FUNCTION: _compare_imagemagick
+# FUNCTION: _compare_images
 #
 # DESCRIPTION:
 # This function compares two images using ImageMagick. If the images are
 # identical, it displays a message and exits the script. Otherwise, it
 # generates a visual diff and opens it with an image viewer.
-_compare_imagemagick() {
+_compare_images() {
     local file_1=$1
     local file_2=$2
 
@@ -199,7 +199,7 @@ _compare_imagemagick() {
         if _command_exists "magick"; then
             magick compare "$@"
         else
-            identify "$@"
+            compare "$@"
         fi
     }
 
@@ -245,7 +245,14 @@ _compare_imagemagick() {
 
     # Determine the default image viewer to display the visual diff.
     local image_viewer=""
-    image_viewer=$(_xdg_get_default_app "image/png")
+    local apps=(
+        "loupe"
+        "eog"
+    )
+    image_viewer=$(_get_available_app "apps")
+    if [[ -z "$image_viewer" ]]; then
+        image_viewer=$(_xdg_get_default_app "image/png")
+    fi
 
     # Open the visual diff with the default image viewer.
     if [[ "$image_viewer" == *"eog" ]]; then
