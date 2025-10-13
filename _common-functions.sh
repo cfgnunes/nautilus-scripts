@@ -485,7 +485,7 @@ _dependencies_check_commands() {
         local package=""
         local post_install=""
 
-        # Skip if the command already exists in the system.
+        # Skip the installation if the command already exists in the system.
         if _command_exists "$command"; then
             continue
         fi
@@ -601,7 +601,14 @@ _dependencies_check_metapackages() {
         local pkg_manager="${pair%%:*}"
         local package="${pair#*:}"
 
-        # Ignore installing the dependency if the package is already installed.
+        # Skip the installation if a command with the same name as the package
+        # is already available on the system. Some package names coincide with
+        # executable names.
+        if _command_exists "$package"; then
+            continue
+        fi
+
+        # Skip the installation if the package is already installed.
         if _deps_is_package_installed "$pkg_manager" "$package"; then
             continue
         fi
