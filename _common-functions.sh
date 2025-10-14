@@ -537,7 +537,6 @@ _dependencies_check_commands() {
 _dependencies_check_metapackages() {
     local packages=$1
     local packages_install=""
-    local compiled_post_install=""
 
     [[ -z "$packages" ]] && return
 
@@ -551,7 +550,6 @@ _dependencies_check_metapackages() {
     local package=""
     for package in $packages; do
         local package_names=""
-        local post_install=""
 
         # Iterate over supported package manger.
         local pkg_manager_found="false"
@@ -566,8 +564,6 @@ _dependencies_check_metapackages() {
                 package_names=$(_deps_get_dependency_value \
                     "$package" "$pkg_manager" "PACKAGE_NAME")
             fi
-            post_install=$(_deps_get_dependency_value \
-                "$package" "$pkg_manager" "POST_INSTALL")
 
             if _command_exists "$pkg_manager" &&
                 [[ -n "$package_names" ]]; then
@@ -586,9 +582,6 @@ _dependencies_check_metapackages() {
             package_names=$(sed "s|^|$pkg_manager:|g" <<<"$package_names")
             package_names=$(sed "s| | $pkg_manager:|g" <<<"$package_names")
             pairs+=" $package_names"
-        fi
-        if [[ -n "$post_install" ]]; then
-            compiled_post_install+="$post_install;"
         fi
     done
 
@@ -618,12 +611,9 @@ _dependencies_check_metapackages() {
         if [[ -n "$package" ]]; then
             packages_install+=" $pkg_manager:$package"
         fi
-        if [[ -n "$post_install" ]]; then
-            compiled_post_install+="$post_install;"
-        fi
     done
 
-    _deps_install_missing_packages "$packages_install" "$compiled_post_install"
+    _deps_install_missing_packages "$packages_install" ""
 }
 
 # FUNCTION: _deps_get_dependency_value
