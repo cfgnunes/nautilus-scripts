@@ -22,69 +22,62 @@ _main() {
 
 _save_file_from_clipboard() {
     local output_dir=$1
+
+    # Detect clipboard tool and list available types
+    local clipboard_tool=""
     local file_type=""
-    local output_file=""
-    local std_output=""
-
     if [[ "${XDG_SESSION_TYPE:-}" == "wayland" ]]; then
-
-        file_type=$(wl-paste --list-types 2>/dev/null)
-
-        case "$file_type" in
-        *"image/png"*)
-            output_file=$(_get_output_filename "Clipboard.png" \
-                "$output_dir" "par_extension_opt=preserve")
-
-            wl-paste --no-newline --type "image/png" \
-                >"$output_file" 2>/dev/null
-            ;;
-        *"text/html"*)
-            output_file=$(_get_output_filename "Clipboard.html" \
-                "$output_dir" "par_extension_opt=preserve")
-
-            wl-paste --no-newline --type "text/html" \
-                >"$output_file" 2>/dev/null
-            ;;
-        *"text/plain"*)
-            output_file=$(_get_output_filename "Clipboard.txt" \
-                "$output_dir" "par_extension_opt=preserve")
-
-            wl-paste --no-newline --type "text/plain" \
-                >"$output_file" 2>/dev/null
-            ;;
-        esac
-
+        clipboard_tool="wl-paste"
+        file_type=$($clipboard_tool --list-types 2>/dev/null)
     else
-
-        file_type=$(xclip -selection clipboard -t TARGETS -o 2>/dev/null)
-
-        case "$file_type" in
-        *"image/png"*)
-            output_file=$(_get_output_filename "Clipboard.png" \
-                "$output_dir" "par_extension_opt=preserve")
-
-            xclip -selection clipboard -t "image/png" -o \
-                >"$output_file" 2>/dev/null
-            ;;
-        *"text/html"*)
-            output_file=$(_get_output_filename "Clipboard.html" \
-                "$output_dir" "par_extension_opt=preserve")
-
-            xclip -selection clipboard -t "text/html" -o \
-                >"$output_file" 2>/dev/null
-            ;;
-        *"text/plain"*)
-            output_file=$(_get_output_filename "Clipboard.txt" \
-                "$output_dir" "par_extension_opt=preserve")
-
-            xclip -selection clipboard -t "text/plain" -o \
-                >"$output_file" 2>/dev/null
-            ;;
-        esac
-
+        clipboard_tool="xclip"
+        file_type=$($clipboard_tool -selection clipboard -t TARGETS -o 2>/dev/null)
     fi
 
-    _check_output "$?" "$std_output" "" "$output_file" || return 1
+    # Strip charset info.
+    # shellcheck disable=SC2001
+    file_type=$(sed "s|;.*||" <<<"$file_type")
+
+    # Map MIME types to file extensions.
+    declare -A mime_map=(
+        ["image/png"]="png"
+        ["image/jpeg"]="jpg"
+        ["image/webp"]="webp"
+        ["image/bmp"]="bmp"
+        ["application/pdf"]="pdf"
+        ["text/html"]="html"
+        ["text/plain"]="txt"
+        ["text/uri-list"]="uri"
+    )
+
+    local ext=""
+    local output_file=""
+    local type_found="false"
+
+    # Find first supported type.
+    local mime=""
+    for mime in "${!mime_map[@]}"; do
+        if grep -q "$mime" <<<"$file_type"; then
+            type_found="true"
+            break
+        fi
+    done
+
+    if [[ "$type_found" == "false" ]]; then
+        _display_error_box "Clipboard content type not supported."
+        return 1
+    fi
+
+    ext="${mime_map[$mime]}"
+    output_file=$(_get_output_filename "Clipboard.${ext}" "$output_dir" "par_extension_opt=preserve")
+
+    if [[ "$clipboard_tool" == "wl-paste" ]]; then
+        $clipboard_tool --no-newline --type "$mime" >"$output_file" 2>/dev/null
+    else
+        $clipboard_tool -selection clipboard -t "$mime" -o >"$output_file" 2>/dev/null
+    fi
+
+    _check_output "$?" "" "" "$output_file" || return 1
 }
 
 _main "$@"
