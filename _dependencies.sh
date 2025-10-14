@@ -866,7 +866,7 @@ declare -A DEPENDENCIES_DATA=(
 # configuration, or updates that the package manager alone does not handle.
 
 declare -A POST_INSTALL=(
-    ["clamav"]='*:rm -f /var/log/clamav/freshclam.log; sed -i '/^NotifyClamd/d' /etc/clamav/freshclam.conf; freshclam --quiet'
+    ["clamav"]='*:rm -f /var/log/clamav/freshclam.log; sed -i "/^NotifyClamd/d" /etc/clamav/freshclam.conf; freshclam --quiet'
 
     ["imagemagick"]='*:find /etc -type f -path "/etc/ImageMagick-*/policy.xml" 2>/dev/null -exec sed -i -e "s/rights=\"none\" pattern=\"PDF\"/rights=\"read|write\" pattern=\"PDF\"/g" -e "s/name=\"disk\" value=\".GiB\"/name=\"disk\" value=\"8GiB\"/g" {} +'
 )
