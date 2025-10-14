@@ -822,7 +822,7 @@ _deps_install_packages() {
             ;;
         "brew")
             # Install the dependencies with '--force-bottle'.
-            cmd_inst+="brew deps --topological $packages | "
+            cmd_inst+="brew deps --topological $packages 2>/dev/null | "
             cmd_inst+="xargs -I{} brew install --force-bottle {} &>/dev/null;"
             # Install main packages with '--force-bottle'.
             cmd_inst+="brew install --force-bottle $packages &>/dev/null;"
