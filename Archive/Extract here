@@ -11,7 +11,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _dependencies_check_commands ""
+    _check_dependencies ""
     input_files=$(_get_files "par_type=file")
 
     # Execute the function '_get_dependencies' for each file in parallel.
@@ -25,7 +25,7 @@ _main() {
     local dependencies=""
     dependencies=$(_storage_text_read_all)
 
-    _dependencies_check_commands "$dependencies"
+    _check_dependencies "$dependencies"
     _display_wait_box "2"
 
     # Execute the function '_main_task' for each file in parallel.

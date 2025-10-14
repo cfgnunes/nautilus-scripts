@@ -10,7 +10,7 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _dependencies_check_commands_clipboard ""
+    _check_dependencies_clipboard ""
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all")
 

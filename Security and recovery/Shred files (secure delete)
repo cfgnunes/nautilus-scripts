@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _dependencies_check_commands ""
+    _check_dependencies ""
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file")
 

@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _command_exists "bsdtar" || _dependencies_check_commands "7za"
+    _command_exists "bsdtar" || _check_dependencies "7za"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all; par_validate_conflict=true")
     output_dir=$(_get_output_dir "par_use_same_dir=true")

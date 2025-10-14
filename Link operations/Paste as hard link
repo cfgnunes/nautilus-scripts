@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _dependencies_check_commands_clipboard ""
+    _check_dependencies_clipboard ""
     _display_wait_box "2"
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 

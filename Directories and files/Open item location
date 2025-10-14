@@ -10,7 +10,7 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _dependencies_check_commands ""
+    _check_dependencies ""
     input_files=$(_get_files "par_type=all; par_max_items=20")
 
     # Run the main process.

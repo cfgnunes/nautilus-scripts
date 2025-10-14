@@ -4,10 +4,10 @@
 # This file centralizes dependency definitions for the scripts.
 
 # -----------------------------------------------------------------------------
-# SECTION /// [PACKAGE_NAME]
+# SECTION /// [DEPENDENCIES_DATA]
 # -----------------------------------------------------------------------------
-# This array defines the mapping between a command name (key) and its
-# corresponding package names across different package managers (values).
+# This array defines the mapping between a dependency key and its corresponding
+# package names across different package managers.
 #
 # Note:
 #   - If the package name contains the '~' character, it means that the part
@@ -16,7 +16,7 @@
 #     verification. This is useful in systems like NixOS, where the installed
 #     package name may differ from the one provided during installation.
 
-declare -A PACKAGE_NAME=(
+declare -A DEPENDENCIES_DATA=(
     ["7za"]="
         pkg:    p7zip
         apt:    p7zip-full
@@ -731,29 +731,7 @@ declare -A PACKAGE_NAME=(
         guix:   zstd
         brew:   zstd
     "
-)
 
-# -----------------------------------------------------------------------------
-# SECTION /// [POST_INSTALL]
-# -----------------------------------------------------------------------------
-# This array defines commands or actions that need to be executed after a
-# package is installed. These actions are usually required for proper
-# initialization, configuration, or updates that the package manager alone does
-# not handle.
-
-declare -A POST_INSTALL=(
-    ["clamscan"]='*:sleep 5; rm -f /var/log/clamav/freshclam.log; freshclam --quiet; sleep 5'
-
-    ["convert"]='*:find /etc -type f -path "/etc/ImageMagick-*/policy.xml" 2>/dev/null -exec sed -i -e "s/rights=\"none\" pattern=\"PDF\"/rights=\"read|write\" pattern=\"PDF\"/g" -e "s/name=\"disk\" value=\".GiB\"/name=\"disk\" value=\"8GiB\"/g" {} +'
-)
-
-# -----------------------------------------------------------------------------
-# SECTION /// [META_PACKAGES]
-# -----------------------------------------------------------------------------
-# This array defines grouped or composite packages that must be installed
-# together to provide complete functionality for a given name.
-
-declare -A META_PACKAGES=(
     ["latexmk"]="
         pkg:    texlive-bin
         apt:    latexmk
@@ -878,4 +856,17 @@ declare -A META_PACKAGES=(
         guix:
         brew:
     "
+)
+
+# -----------------------------------------------------------------------------
+# SECTION /// [POST_INSTALL]
+# -----------------------------------------------------------------------------
+# This array defines commands that need to be executed after a package is
+# installed. These commands are usually required for proper initialization,
+# configuration, or updates that the package manager alone does not handle.
+
+declare -A POST_INSTALL=(
+    ["clamav"]='*:rm -f /var/log/clamav/freshclam.log; sed -i '/^NotifyClamd/d' /etc/clamav/freshclam.conf; freshclam --quiet'
+
+    ["imagemagick"]='*:find /etc -type f -path "/etc/ImageMagick-*/policy.xml" 2>/dev/null -exec sed -i -e "s/rights=\"none\" pattern=\"PDF\"/rights=\"read|write\" pattern=\"PDF\"/g" -e "s/name=\"disk\" value=\".GiB\"/name=\"disk\" value=\"8GiB\"/g" {} +'
 )

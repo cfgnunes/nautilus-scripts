@@ -10,12 +10,12 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _dependencies_check_commands ""
+    _check_dependencies ""
     input_files=$(_get_files "par_type=file; par_validate_conflict=true; par_select_extension='bmp|csv|doc|docx|epub|fb2|fodf|fodg|fodp|fods|fodt|gfm|gif|htm|html|jpeg|jpg|json|markdown|md|odf|odg|odp|ods|odt|opml|org|png|ppt|pptx|rst|rtf|svg|svgz|tex|tif|tiff|txt|webp|xls|xlsx'")
 
     local dependencies=""
     dependencies=$(_get_dependencies "$input_files")
-    _dependencies_check_metapackages "$dependencies"
+    _check_dependencies "$dependencies"
     _display_wait_box "2"
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
@@ -49,16 +49,11 @@ _get_dependencies() {
 
         case $command in
         "convert")
-            if ! _command_exists "magick" &&
-                ! _command_exists "convert"; then
+            if ! _command_exists "magick"; then
                 dependencies+="convert"
             fi
             ;;
-        "inkscape")
-            if ! _command_exists "inkscape"; then
-                dependencies+="inkscape"
-            fi
-            ;;
+        "inkscape") dependencies+="inkscape" ;;
         "latexmk") dependencies+="latexmk texlive" ;;
         "libreoffice_calc")
             if ! _command_exists "libreoffice.calc" &&
@@ -81,17 +76,8 @@ _get_dependencies() {
                 dependencies+="lowriter"
             fi
             ;;
-        "pandoc_latex")
-            if ! _command_exists "pandoc"; then
-                dependencies+="pandoc"
-            fi
-            dependencies+="texlive"
-            ;;
-        "pandoc")
-            if ! _command_exists "pandoc"; then
-                dependencies+="pandoc"
-            fi
-            ;;
+        "pandoc_latex") dependencies+="pandoc texlive" ;;
+        "pandoc") dependencies+="pandoc" ;;
         esac
         dependencies+=$'\n'
     done

@@ -75,7 +75,7 @@ _main() {
     local std_output="$temp_dir/std_output.txt"
     touch -- "$std_output"
 
-    _dependencies_check_commands "ffmpeg"
+    _check_dependencies "ffmpeg"
 
     _open_items_locations "$std_output" "true"
 

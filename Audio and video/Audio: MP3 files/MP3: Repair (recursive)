@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _dependencies_check_commands "mp3val"
+    _check_dependencies "mp3val"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_recursive=true; par_select_mime=audio/mpeg; par_skip_extension=bak")
 

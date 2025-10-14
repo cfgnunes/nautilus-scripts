@@ -10,12 +10,12 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _dependencies_check_commands ""
+    _check_dependencies ""
     input_files=$(_get_files "par_type=file; par_validate_conflict=true; par_select_extension='csv|doc|docx|epub|fb2|fodf|fodg|fodp|fods|fodt|gfm|htm|html|json|markdown|md|odf|odg|odp|odt|opml|org|ppt|pptx|rst|rtf|tex|txt|xls|xlsx'")
 
     local dependencies=""
     dependencies=$(_get_dependencies "$input_files")
-    _dependencies_check_metapackages "$dependencies"
+    _check_dependencies "$dependencies"
     _display_wait_box "2"
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
@@ -55,11 +55,7 @@ _get_dependencies() {
                 dependencies+="localc"
             fi
             ;;
-        "pandoc")
-            if ! _command_exists "pandoc"; then
-                dependencies+="pandoc"
-            fi
-            ;;
+        "pandoc") dependencies+="pandoc" ;;
         esac
         dependencies+=$'\n'
     done
