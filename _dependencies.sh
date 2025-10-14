@@ -531,7 +531,7 @@ declare -A PACKAGE_NAME=(
         nix:    perl
         zypper: perl-base
         guix:   perl
-        brew:
+        brew:   perl
     "
 
     ["photorec"]="
@@ -542,7 +542,7 @@ declare -A PACKAGE_NAME=(
         nix:    testdisk
         zypper: photorec
         guix:   testdisk
-        brew:
+        brew:   testdisk
     "
 
     ["ping"]="
@@ -553,7 +553,7 @@ declare -A PACKAGE_NAME=(
         nix:    iputils
         zypper: iputils
         guix:   iputils
-        brew:
+        brew:   iputils
     "
 
     ["qpdf"]="
@@ -597,7 +597,7 @@ declare -A PACKAGE_NAME=(
         nix:    gnutar
         zypper: tar
         guix:   tar
-        brew:
+        brew:   gnu-tar
     "
 
     ["unar"]="
@@ -608,7 +608,7 @@ declare -A PACKAGE_NAME=(
         nix:    unar
         zypper: unar
         guix:
-        brew:
+        brew:   unar
     "
 
     ["unrar"]="
