@@ -4,7 +4,7 @@
 # This file centralizes dependency definitions for the scripts.
 
 # -----------------------------------------------------------------------------
-# SECTION /// [DEPENDENCIES_DATA]
+# SECTION /// [DEPENDENCIES_MAP]
 # -----------------------------------------------------------------------------
 # This array defines the mapping between a dependency key and its corresponding
 # package names across different package managers.
@@ -16,7 +16,7 @@
 #     verification. This is useful in systems like NixOS, where the installed
 #     package name may differ from the one provided during installation.
 
-declare -A DEPENDENCIES_DATA=(
+declare -A DEPENDENCIES_MAP=(
     ["7za"]="
         pkg:    p7zip
         apt:    p7zip-full
