@@ -23,7 +23,8 @@ _main() {
 _save_file_from_clipboard() {
     local output_dir=$1
 
-    # Detect clipboard tool and list available types
+    # Determine which clipboard tool is available (Wayland or X11) and list the
+    # available clipboard data types (MIME types).
     local clipboard_tool=""
     local file_type=""
     if [[ "${XDG_SESSION_TYPE:-}" == "wayland" ]]; then
@@ -34,11 +35,12 @@ _save_file_from_clipboard() {
         file_type=$($clipboard_tool -selection clipboard -t TARGETS -o 2>/dev/null)
     fi
 
-    # Strip charset info.
+    # Remove charset information from MIME types,
+    # (e.g., "text/plain; charset=utf-8" to "text/plain").
     # shellcheck disable=SC2001
     file_type=$(sed "s|;.*||" <<<"$file_type")
 
-    # Map MIME types to file extensions.
+    # Define a mapping between MIME types and file extensions.
     declare -A mime_map=(
         ["image/png"]="png"
         ["image/jpeg"]="jpg"
@@ -46,15 +48,15 @@ _save_file_from_clipboard() {
         ["image/bmp"]="bmp"
         ["application/pdf"]="pdf"
         ["text/html"]="html"
-        ["text/plain"]="txt"
         ["text/uri-list"]="uri"
+        ["text/plain"]="txt"
     )
 
     local ext=""
     local output_file=""
     local type_found="false"
 
-    # Find first supported type.
+    # Find the first supported MIME type in clipboard data.
     local mime=""
     for mime in "${!mime_map[@]}"; do
         if grep -q "$mime" <<<"$file_type"; then
@@ -63,21 +65,58 @@ _save_file_from_clipboard() {
         fi
     done
 
+    # If none of the supported types are found, set the extention as '.dat'.
     if [[ "$type_found" == "false" ]]; then
-        _display_error_box "Clipboard content type not supported."
-        return 1
+        ext="dat"
     fi
 
+    # Define file extension and output filename.
     ext="${mime_map[$mime]}"
-    output_file=$(_get_output_filename "Clipboard.${ext}" "$output_dir" "par_extension_opt=preserve")
+    output_file=$(_get_output_filename "Clipboard.$ext" "$output_dir" "par_extension_opt=preserve")
 
+    # Extract clipboard content and save to output file.
     if [[ "$clipboard_tool" == "wl-paste" ]]; then
         $clipboard_tool --no-newline --type "$mime" >"$output_file" 2>/dev/null
     else
         $clipboard_tool -selection clipboard -t "$mime" -o >"$output_file" 2>/dev/null
     fi
-
     _check_output "$?" "" "" "$output_file" || return 1
+
+    # If it's a text file, try to detect the programming language.
+    if [[ "$ext" == "txt" ]]; then
+        ext=$(_detect_text_language "$output_file")
+
+        # If a specific language is detected, rename the file accordingly.
+        if [[ "$ext" != "txt" ]]; then
+            _move_file "rename" "$output_file" "Clipboard.$ext"
+        fi
+    fi
+}
+
+# FUNCTION: _detect_text_language
+#
+# DESCRIPTION:
+# Infers the programming language of a text file based on its shebang line.
+#
+# PARAMETERS:
+#   $1 (file): Path to the text file to analyze.
+_detect_text_language() {
+    local file=$1
+    local ext="txt"
+
+    local first_line=""
+    first_line=$(head -n 1 "$file")
+
+    # Detect language by shebang.
+    case "$first_line" in
+    "#!"*bash*) ext="sh" ;;
+    "#!"*python*) ext="py" ;;
+    "#!"*perl*) ext="pl" ;;
+    "#!"*ruby*) ext="rb" ;;
+    "#!"*php*) ext="php" ;;
+    esac
+
+    printf "%s" "$ext"
 }
 
 _main "$@"
