@@ -1490,12 +1490,6 @@ _bootstrap_repository() {
         fi
     } 2>/dev/null
 
-    # Validate extracted content.
-    if [[ ! -f "$extracted_dir/install.sh" ]]; then
-        _echo_error "Could not find 'install.sh' in extracted files."
-        exit 1
-    fi
-
     # Identify the extracted directory (matches nautilus-scripts-<version>).
     local extracted_dir=""
     extracted_dir=$(
