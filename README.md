@@ -1,10 +1,10 @@
 # Enhanced File Manager Actions for Linux
 
-This project offers a collection of file manager actions, also known as Nautilus Scripts, designed to enhance the functionality of file managers. With intuitive right-click options for files and directories, it simplifies tasks, boosts productivity, and provides a more efficient workflow.
+This project offers a collection of file manager actions, also known as _Nautilus Scripts_, designed to enhance the functionality of file managers. With intuitive right-click options for files and directories, it simplifies tasks, boosts productivity, and provides a more efficient workflow.
 
 ![screenshot](.assets/screenshot.svg)
 
-## Installing
+## Installation
 
 You can install in two ways:
 
@@ -40,17 +40,17 @@ While numerous scripts are available for file managers on the web, many suffer f
 - **Progress dialog**: Displays a progress dialog and allows interruption of tasks at any time.
 - **Status notifications**: Notifies users of dependency errors and MIME types.
 - **Dependency management**: Prompts users to install any missing dependencies.
-- **Remote file support:** Works with files stored on remote servers.
-- **Non-destructive output**: Never overwrites the input file; the output is distinct.
-- **Log file**: Produces an `Errors.log` file when a task finishes with an error.
-- **Direct usage**: Direct usage without requiring input parameters.
 - **Keyboard accelerators**: Provides keyboard shortcuts for some scripts.
-- **File manager compatibility**: Designed for major file managers like GNOME Files (Nautilus), Dolphin, Caja, Nemo, PCManFM-Qt and Thunar.
-- **Distro compatibility**: Designed to work on major GNU/Linux distributions, such as Ubuntu, Mint, Debian, Fedora, and Manjaro.
+- **Easy access to recent scripts**: Includes a menu, _Accessed recently_, to quickly access recently used scripts, saving time and streamlining workflows.
+- **Non-destructive output**: Never overwrites the input file; the output is distinct.
+- **Direct usage**: Allows direct usage without requiring input parameters.
+- **Log file**: Produces an `Errors.log` file when a task finishes with an error.
+- **File manager compatibility**: Designed for major file managers like GNOME Files (Nautilus), Dolphin, Caja, Nemo, and Thunar.
+- **Distro compatibility**: Works on major GNU/Linux distributions, such as Ubuntu, Debian, Fedora, and Arch Linux.
+- **Remote file support:** Works with files stored on remote servers.
 - **Easy adaptation**: Scripts can be easily copied and adapted for other purposes.
 - **Bash implementation**: All scripts are implemented in Bash. So, the scripts work well in the shell (without a graphical interface) and file managers.
 - **Shell script validation**: All scripts have been checked using [ShellCheck](https://github.com/koalaman/shellcheck).
-- **Easy access to recent scripts**: Includes a menu, `Accessed recently`, to quickly access recently used scripts, saving time and streamlining workflows.
 
 **Design philosophy:** Fewer clicks, dependencies, and verbose notifications, with a simple and intuitive directory structure.
 
@@ -101,7 +101,7 @@ Most scripts have been tested on the following GNU/Linux distributions:
 
 - Ubuntu/Debian
   - Ubuntu 14.04, 16.04, 18.04, 20.04, 22.04, 24.04
-  - Debian 12, 13 (Gnome and KDE)
+  - Debian 12, 13 (GNOME and KDE)
   - Kubuntu 22.04, 24.04
   - Lubuntu 22.04, 24.04
   - Xubuntu 23.10, 24.04
@@ -113,9 +113,9 @@ Most scripts have been tested on the following GNU/Linux distributions:
 - Arch Linux
   - CachyOS
   - EndeavourOS
-  - Manjaro 23, 24, 25 (Gnome)
+  - Manjaro 23, 24, 25 (GNOME)
 - openSUSE
-  - Tumbleweed 2024, 2025 (Gnome)
+  - Tumbleweed 2024, 2025 (GNOME)
 - Others
   - NixOS
   - Termux
@@ -132,7 +132,7 @@ In some cases, the scripts may fail to run. To avoid such issues, follow these s
 2. Place all the files you want to process into this directory;
 3. Execute the desired script using this directory as the input.
 
-When batch mode is detected, the script will recognize the directory as a special case and process each file inside it individually, instead of treating the entire directory as a single input.
+When batch mode is detected, the script recognizes the directory as a special case and process each file inside it individually, instead of treating the entire directory as a single input.
 This approach prevents errors caused by excessively long argument lists and ensures reliable execution.
 
 ## Acknowledgments
