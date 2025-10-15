@@ -42,18 +42,19 @@ _save_file_from_clipboard() {
 
     # Define a mapping between MIME types and file extensions.
     declare -A mime_map=(
+        ["text/plain"]="txt"
         ["image/png"]="png"
         ["image/jpeg"]="jpg"
         ["image/webp"]="webp"
         ["image/bmp"]="bmp"
-        ["application/pdf"]="pdf"
         ["text/html"]="html"
+        ["application/pdf"]="pdf"
+        ["application/json"]="json"
+        ["text/markdown"]="md"
         ["text/uri-list"]="uri"
-        ["text/plain"]="txt"
+        ["text/x-shellscript"]="sh"
     )
 
-    local ext=""
-    local output_file=""
     local type_found="false"
 
     # Find the first supported MIME type in clipboard data.
@@ -65,14 +66,18 @@ _save_file_from_clipboard() {
         fi
     done
 
-    # If none of the supported types are found, set the extention as '.dat'.
-    if [[ "$type_found" == "false" ]]; then
-        ext="dat"
+    if [[ "$type_found" != "true" ]]; then
+        _display_error_box "Unsupported clipboard type."
+        _exit_script
     fi
 
-    # Define file extension and output filename.
+    local ext=""
     ext="${mime_map[$mime]}"
-    output_file=$(_get_output_filename "Clipboard.$ext" "$output_dir" "par_extension_opt=preserve")
+
+    # Define file extension and output filename.
+    local basename="Clipboard"
+    local output_file=""
+    output_file=$(_get_output_filename "$basename.$ext" "$output_dir" "par_extension_opt=preserve")
 
     # Extract clipboard content and save to output file.
     if [[ "$clipboard_tool" == "wl-paste" ]]; then
@@ -88,7 +93,7 @@ _save_file_from_clipboard() {
 
         # If a specific language is detected, rename the file accordingly.
         if [[ "$ext" != "txt" ]]; then
-            _move_file "rename" "$output_file" "Clipboard.$ext"
+            _move_file "rename" "$output_file" "$basename.$ext"
         fi
     fi
 }
