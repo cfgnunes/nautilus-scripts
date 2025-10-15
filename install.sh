@@ -308,6 +308,7 @@ _main() {
     fi
 
     _echo ""
+    _echo_info "Installation completed successfully!"
 }
 
 # -----------------------------------------------------------------------------
@@ -1398,7 +1399,7 @@ _step_install_homebrew() {
     # Check if Homebrew is already installed.
     if [[ -e "$brew_cmd" ]]; then
         _echo_info "> Homebrew is already installed."
-        return 0
+        return
     fi
 
     _echo_info "> Installing Homebrew to: ~/.local/apps/homebrew"
@@ -1407,18 +1408,19 @@ _step_install_homebrew() {
     _echo_info "> Downloading the package..."
 
     # Download and extract Homebrew.
-    if [[ "$downloader" == "curl" ]]; then
-        curl -fsSL https://github.com/Homebrew/brew/tarball/main |
-            tar -xz --strip-components=1 -C "$homebrew_dir"
-    else
-        wget -qO- https://github.com/Homebrew/brew/tarball/main |
-            tar -xz --strip-components=1 -C "$homebrew_dir"
-    fi
+    {
+        local url="https://github.com/Homebrew/brew/tarball/main"
+        if [[ "$downloader" == "curl" ]]; then
+            curl -fsSL "$url" | tar -xz --strip-components=1 -C "$homebrew_dir"
+        else
+            wget -qO- "$url" | tar -xz --strip-components=1 -C "$homebrew_dir"
+        fi
+    } 2>/dev/null
 
     # Verify installation.
     if [[ ! -e "$brew_cmd" ]]; then
         _echo_error "Homebrew installation failed." >&2
-        return 1
+        exit 1
     fi
 
     _echo_info "> Done!"
@@ -1459,24 +1461,39 @@ _bootstrap_repository() {
     # Retrieve the latest release tag from GitHub,
     # (fallback to HEAD if unavailable).
     local latest_tag=""
-    local latest_url="https://api.github.com/repos/${repo_owner}/${repo_name}/releases/latest"
-    if [[ "$downloader" == "curl" ]]; then
-        latest_tag=$(curl -fsSL "$latest_url" |
-            grep -Po '"tag_name": "\K.*?(?=")' || echo "HEAD")
-    else
-        latest_tag=$(wget -qO- "$latest_url" |
-            grep -Po '"tag_name": "\K.*?(?=")' || echo "HEAD")
+    {
+        local latest_url="https://api.github.com/repos/${repo_owner}/${repo_name}/releases/latest"
+        if [[ "$downloader" == "curl" ]]; then
+            latest_tag=$(curl -fsSL "$latest_url" |
+                grep -Po '"tag_name": "\K.*?(?=")')
+        else
+            latest_tag=$(wget -qO- "$latest_url" |
+                grep -Po '"tag_name": "\K.*?(?=")')
+        fi
+    } 2>/dev/null
+
+    # Validate extracted content.
+    if [[ -z "$latest_tag" ]]; then
+        _echo_error "Could not fetch latest release tag."
+        exit 1
     fi
 
-    # Build the URL for the corresponding tarball.
-    local tarball_url="https://github.com/${repo_owner}/${repo_name}/archive/refs/tags/${latest_tag}.tar.gz"
     _echo_info "> Downloading ${repo_name} (${latest_tag})..."
 
     # Download and extract using available tool.
-    if [[ "$downloader" == "curl" ]]; then
-        curl -fsSL "$tarball_url" | tar -xz -C "$temp_dir" &>/dev/null
-    else
-        wget -qO- "$tarball_url" | tar -xz -C "$temp_dir" &>/dev/null
+    {
+        local tarball_url="https://github.com/${repo_owner}/${repo_name}/archive/refs/tags/${latest_tag}.tar.gz"
+        if [[ "$downloader" == "curl" ]]; then
+            curl -fsSL "$tarball_url" | tar -xz -C "$temp_dir"
+        else
+            wget -qO- "$tarball_url" | tar -xz -C "$temp_dir"
+        fi
+    } 2>/dev/null
+
+    # Validate extracted content.
+    if [[ ! -f "$extracted_dir/install.sh" ]]; then
+        _echo_error "Could not find 'install.sh' in extracted files."
+        exit 1
     fi
 
     # Identify the extracted directory (matches nautilus-scripts-<version>).
