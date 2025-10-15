@@ -26,19 +26,14 @@ _save_file_from_clipboard() {
     # Determine which clipboard tool is available (Wayland or X11) and list the
     # available clipboard data types (MIME types).
     local clipboard_tool=""
-    local file_type=""
+    local clipboard_types=""
     if [[ "${XDG_SESSION_TYPE:-}" == "wayland" ]]; then
         clipboard_tool="wl-paste"
-        file_type=$($clipboard_tool --list-types 2>/dev/null)
+        clipboard_types=$($clipboard_tool --list-types 2>/dev/null)
     else
         clipboard_tool="xclip"
-        file_type=$($clipboard_tool -selection clipboard -t TARGETS -o 2>/dev/null)
+        clipboard_types=$($clipboard_tool -selection clipboard -t TARGETS -o 2>/dev/null)
     fi
-
-    # Remove charset information from MIME types,
-    # (e.g., "text/plain; charset=utf-8" to "text/plain").
-    # shellcheck disable=SC2001
-    file_type=$(sed "s|;.*||" <<<"$file_type")
 
     # Define a mapping between MIME types and file extensions.
     declare -A mime_map=(
@@ -55,18 +50,15 @@ _save_file_from_clipboard() {
         ["text/x-shellscript"]="sh"
     )
 
-    local type_found="false"
-
     # Find the first supported MIME type in clipboard data.
+    local supported_type=""
     local mime=""
     for mime in "${!mime_map[@]}"; do
-        if grep -q "$mime" <<<"$file_type"; then
-            type_found="true"
-            break
-        fi
+        supported_type=$(grep -m1 "$mime" 2>/dev/null <<<"$clipboard_types")
+        [[ -n "$supported_type" ]] && break
     done
 
-    if [[ "$type_found" != "true" ]]; then
+    if [[ -z "$supported_type" ]]; then
         _display_error_box "Unsupported clipboard type."
         _exit_script
     fi
@@ -81,9 +73,9 @@ _save_file_from_clipboard() {
 
     # Extract clipboard content and save to output file.
     if [[ "$clipboard_tool" == "wl-paste" ]]; then
-        $clipboard_tool --no-newline --type "$mime" >"$output_file" 2>/dev/null
+        $clipboard_tool --no-newline --type "$supported_type" >"$output_file" 2>/dev/null
     else
-        $clipboard_tool -selection clipboard -t "$mime" -o >"$output_file" 2>/dev/null
+        $clipboard_tool -selection clipboard -t "$supported_type" -o >"$output_file" 2>/dev/null
     fi
     _check_output "$?" "" "" "$output_file" || return 1
 
