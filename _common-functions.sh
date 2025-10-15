@@ -773,7 +773,8 @@ _deps_install_packages() {
 
             # Install all dependencies (recursively) using bottles.
             cmd_inst+="brew deps --topological $packages 2>/dev/null | "
-            cmd_inst+="xargs -I{} brew install --force-bottle {} &>/dev/null;"
+            cmd_inst+="xargs --no-run-if-empty -I{} "
+            cmd_inst+="brew install --force-bottle {} &>/dev/null;"
             # Install the requested packages themselves.
             cmd_inst+="brew install --force-bottle $packages &>/dev/null"
 
