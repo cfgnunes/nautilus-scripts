@@ -768,15 +768,26 @@ _deps_install_packages() {
             cmd_admin=""
             ;;
         "brew")
-            # Homebrew: use bottles (precompiled binaries) instead of compiling.
-            # Dependencies are installed first, followed by the main packages.
+            # Replace spaces with '$FIELD_SEPARATOR' for iteration.
+            packages=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
 
-            # Install all dependencies (recursively) using bottles.
-            cmd_inst+="brew deps --topological $packages 2>/dev/null | "
-            cmd_inst+="xargs --no-run-if-empty -I{} "
-            cmd_inst+="brew install --force-bottle {} &>/dev/null;"
-            # Install the requested packages themselves.
-            cmd_inst+="brew install --force-bottle $packages &>/dev/null"
+            # Homebrew: prioritize precompiled bottles instead of source
+            # builds. Dependencies are installed first, followed by the main
+            # packages.
+
+            # Each package is installed separately because installing multiple
+            # packages at once can break dependency resolution when using
+            # '--force-bottle'.
+            local pkg=""
+            for pkg in $packages; do
+                # Install all dependencies (recursively) using bottles.
+                cmd_inst+="brew deps --topological $pkg 2>/dev/null | "
+                cmd_inst+="xargs --no-run-if-empty -I{} "
+                cmd_inst+="brew install --force-bottle {} &>/dev/null;"
+                # Install the requested packages themselves.
+                cmd_inst+="brew install --force-bottle $pkg &>/dev/null;"
+            done
+            cmd_inst=$(_str_collapse_char "$cmd_inst" ";")
 
             # Homebrew runs as a non-root user.
             cmd_admin=""
