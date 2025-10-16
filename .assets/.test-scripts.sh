@@ -2,10 +2,10 @@
 
 # Test all scripts.
 
-# Source the script '_common-functions.sh'.
+# Source the script '.common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
-source "$ROOT_DIR/_common-functions.sh"
+source "$ROOT_DIR/.common-functions.sh"
 
 # Disable GUI for testing on terminal.
 unset DISPLAY

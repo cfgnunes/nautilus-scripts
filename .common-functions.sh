@@ -468,7 +468,7 @@ _check_dependencies_clipboard() {
 # PARAMETERS:
 #   $1 (dep_keys): A list of dependency keys. The list can be delimited either
 #      by a space ' ', a comma ',' or by a newline '\n'. These keys and its
-#      values are defined on file '_dependencies.sh'.
+#      values are defined on file '.dependencies.sh'.
 _check_dependencies() {
     local dep_keys=$1
 
@@ -501,7 +501,7 @@ _check_dependencies() {
                 continue
             fi
 
-            # Retrieve the package names from '_dependencies.sh'.
+            # Retrieve the package names from '.dependencies.sh'.
             package_names=$(_deps_get_dependency_value \
                 "$dep_key" "$pkg_manager" "DEPENDENCIES_MAP")
 
@@ -587,7 +587,7 @@ _deps_get_dependency_value() {
     # packages, and package managers. This file is used by the scripts to check
     # and resolve their own dependencies.
     if [[ ! -v "PACKAGE_NAME" ]]; then
-        source "$ROOT_DIR/_dependencies.sh"
+        source "$ROOT_DIR/.dependencies.sh"
     fi
 
     # Retrieve the raw value from the associative array.

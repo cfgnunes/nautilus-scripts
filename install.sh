@@ -93,9 +93,9 @@ OPT_INTERACTIVE_INSTALL="true"
 OPT_QUIET_INSTALL="false"
 
 # Import helper script for interactive multi-selection menus.
-#shellcheck source=.assets/_multiselect-menu.sh
-if [[ -f "$SCRIPT_DIR/.assets/_multiselect-menu.sh" ]]; then
-    source "$SCRIPT_DIR/.assets/_multiselect-menu.sh"
+#shellcheck source=.assets/.multiselect-menu.sh
+if [[ -f "$SCRIPT_DIR/.assets/.multiselect-menu.sh" ]]; then
+    source "$SCRIPT_DIR/.assets/.multiselect-menu.sh"
 fi
 
 # -----------------------------------------------------------------------------
@@ -125,10 +125,10 @@ _main() {
         OPT_INTERACTIVE_INSTALL="false"
     fi
 
-    # If the file "_common-functions.sh" is missing, it means the installer is
+    # If the file ".common-functions.sh" is missing, it means the installer is
     # being executed remotely (e.g., via 'curl'). In that case, download the
     # repository and continue the installation from the extracted files.
-    if [[ ! -f "$SCRIPT_DIR/_common-functions.sh" ]]; then
+    if [[ ! -f "$SCRIPT_DIR/.common-functions.sh" ]]; then
         _bootstrap_repository "$@"
     fi
 
@@ -580,7 +580,7 @@ _step_install_dependencies() {
         admin_cmd="sudo"
     fi
 
-    # Basic packages to run the script '_common-functions.sh'.
+    # Basic packages to run the script '.common-functions.sh'.
     _command_exists "basename" || packages+="coreutils "
     _command_exists "file" || packages+="file "
     _command_exists "pstree" || packages+="psmisc "
@@ -697,9 +697,9 @@ _step_install_scripts() {
     _echo_info "> Installing the scripts..."
     $SUDO_CMD_USER mkdir --parents "$INSTALL_DIR"
 
-    # Always copy the '_common-functions.sh' and the '_dependencies.sh' files.
-    $SUDO_CMD cp -- "$SCRIPT_DIR/_common-functions.sh" "$INSTALL_DIR"
-    $SUDO_CMD cp -- "$SCRIPT_DIR/_dependencies.sh" "$INSTALL_DIR"
+    # Always copy the '.common-functions.sh' and the '.dependencies.sh' files.
+    $SUDO_CMD cp -- "$SCRIPT_DIR/.common-functions.sh" "$INSTALL_DIR"
+    $SUDO_CMD cp -- "$SCRIPT_DIR/.dependencies.sh" "$INSTALL_DIR"
 
     # Copy scripts by category. If the user selected specific categories, only
     # those are installed. Otherwise, all categories are copied by default.
