@@ -25,94 +25,102 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
+    local branch=""
 
     # Check if the current directory is a Git repository.
     local top_level=""
     top_level=$(git -C "$input_file" rev-parse --show-toplevel 2>&1)
     _check_output "$?" "$top_level" "$input_file" "" || return 1
 
+    # Move into the repository directory.
     _directory_push "$top_level" || return 1
 
-    # Clean the working tree by removing untracked files, ignored files, and
-    # untracked directories.
-    # -x: removes ignored files
-    # -d: removes untracked folders
-    # -f: removes untracked files
+    # -------------------------------------------------------------------------
+    # STEP 1: Ensure repository integrity.
+    # Abort any unfinished merge or rebase to prevent conflicts.
+    # -------------------------------------------------------------------------
+    git merge --abort &>/dev/null || true
+    git rebase --abort &>/dev/null || true
+
+    # -------------------------------------------------------------------------
+    # STEP 2: Clean working directory.
+    # Remove all untracked, ignored, and temporary files/directories.
+    # -------------------------------------------------------------------------
     std_output=$(git clean -xdf 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
-    # Fetch updates from the remote repository.
-    # --all: Fetch all remotes.
-    # --tags: Fetch all tags from the remote.
-    # --prune: Before fetching, remove any remote-tracking references that no longer exist on the remote.
-    # --prune-tags: Before fetching, remove any local tags that no longer exist on the remote.
+    # Discard all local changes (reset to last committed state).
+    std_output=$(git reset --hard 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    # -------------------------------------------------------------------------
+    # STEP 3: Fetch updates from all remotes and tags.
+    # Ensures the local metadata is fully up to date.
+    # -------------------------------------------------------------------------
     std_output=$(git fetch --all --tags --prune --prune-tags --force 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
-    # Get a list of all remote branches.
-    local remote_branches=""
-    remote_branches=$(git branch --remotes --no-color --format="%(refname:short)" 2>&1)
-    _check_output "$?" "$remote_branches" "$input_file" "" || return 1
-    remote_branches=$(printf "%s" "$remote_branches" |
-        grep -v "^origin$" |
-        grep -v "/HEAD" |
-        sed "s|^origin/||")
-
-    local branch=""
-    for branch in $remote_branches; do
-        # Reset the current branch to its latest state, discarding local
-        # changes.
-        # --hard: Resets the index and working tree.
-        std_output=$(git reset --hard 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "" || return 1
-
-        # Switch to the specified branch.
-        std_output=$(git checkout "$branch" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "" || return 1
-
-        # Pull the latest changes from the remote repository for the current
-        # branch.
-        std_output=$(git pull origin "$branch" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "" || return 1
-    done
-
-    local number_remote_branches=0
-    number_remote_branches=$(wc -l <<<"$remote_branches")
-    if ((number_remote_branches > 1)); then
-        # Determine the default branch from the remote repository.
-        branch=$(git remote show origin 2>&1)
-        _check_output "$?" "$branch" "$input_file" "" || return 1
-        branch=$(printf "%s" "$branch" | grep "HEAD branch" | sed "s|.*: ||")
-
-        # Switch to the default branch.
-        std_output=$(git checkout "$branch" 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "" || return 1
+    # -------------------------------------------------------------------------
+    # STEP 4: Determine and checkout the correct branch.
+    # Tries to detect the current branch, falling back to the remote's default.
+    # -------------------------------------------------------------------------
+    branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
+    if [[ -z "$branch" ]]; then
+        branch=$(git remote show origin | grep "HEAD branch" | sed "s|.*: ||")
     fi
 
-    local skip_branches="desenv|develop|homolog|main|master|prod|ufrn"
-
-    # Identify all branches merged into the current branch.
-    local merged_branches=""
-    std_output=$(git branch --format="%(refname:short)" 2>&1)
+    # Switch to the detected branch.
+    std_output=$(git switch "$branch" 2>&1 || git checkout "$branch" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
-    merged_branches=$(grep -vE "($skip_branches)" <<<"$std_output")
 
-    # Delete local branches that no longer exist on the remote repository.
-    for branch in $merged_branches; do
-        if ! grep --quiet "$branch" <<<"$remote_branches"; then
-            std_output=$(git branch --delete --force "$branch" 2>&1)
+    # -------------------------------------------------------------------------
+    # STEP 5: Force reset to match the remote branch exactly.
+    # Ensures the local repository is identical to 'origin/<branch>'.
+    # -------------------------------------------------------------------------
+    std_output=$(git reset --hard "origin/$branch" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    # -------------------------------------------------------------------------
+    # STEP 6: Pull latest changes, ignoring conflicts.
+    # The '--strategy-option theirs' flag prefers remote changes automatically.
+    # -------------------------------------------------------------------------
+    std_output=$(git pull origin "$branch" --rebase=false --strategy-option theirs 2>&1 || true)
+    _check_output "0" "$std_output" "$input_file" "" || true
+
+    # -------------------------------------------------------------------------
+    # STEP 7: Clean up obsolete local branches.
+    # Removes branches that no longer exist in the remote repository.
+    # -------------------------------------------------------------------------
+    local skip_branches="desenv|develop|homolog|main|master|prod|ufrn"
+    local local_branches""
+    local remote_branches=""
+    local merged_branches=""
+    local merged_branch=""
+
+    remote_branches=$(git branch -r --format="%(refname:short)" | sed 's|^origin/||')
+    local_branches=$(git branch --format="%(refname:short)")
+    merged_branches=$(grep -vE "($skip_branches)" <<<"$local_branches")
+
+    # Delete branches missing from the remote.
+    for merged_branch in $merged_branches; do
+        if ! grep -q "^$merged_branch\$" <<<"$remote_branches"; then
+            std_output=$(git branch --delete --force "$merged_branch" 2>&1)
             _check_output "$?" "$std_output" "$input_file" "" || return 1
         fi
     done
 
+    # -------------------------------------------------------------------------
+    # STEP 8: Optimize repository and clean logs.
+    # -------------------------------------------------------------------------
+    # Remove old reflog entries to reduce repository size.
     std_output=$(git reflog expire --expire=now --all 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
-    # git gc: Cleanup unnecessary files and optimize the local repository.
-    # --prune: prune loose objects older than date.
+    # Run garbage collection to prune unnecessary files and optimize storage.
     std_output=$(git gc --prune=all 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
+    # Return to the previous directory.
     _directory_pop || return 1
 }
 
