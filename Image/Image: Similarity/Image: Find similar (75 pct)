@@ -48,14 +48,15 @@ _main_task() {
     # Find all fingerprint images and order them by file size in descending
     # order. Larger images tend to contain more visual details, making them
     # more reliable as reference images for comparison.
-    local fps=""
-    fps=$(find "$TEMP_DIR_TASK" -type f -name "$fp_file" \
-        -printf "%s %p\n" 2>/dev/null | sort -r -n | awk '{print $2}' |
-        tr '\n' "$FIELD_SEPARATOR")
+    __find_fps() {
+        find "$TEMP_DIR_TASK" -type f -name "$fp_file" \
+            -printf "%s %p\0" 2>/dev/null | sort --zero-terminated -r -n |
+            sed -z "s|^[0-9]* ||g"
+    }
 
     # Iterate over all fingerprint images in the temporary directory.
     local fp_a=""
-    printf "%s" "$fps" | while IFS= read -r -d "$FIELD_SEPARATOR" fp_a; do
+    while IFS= read -r -d $'\0' fp_a; do
         [[ -f "$fp_a" ]] || continue
 
         # Store the original path of the similar image.
@@ -64,7 +65,7 @@ _main_task() {
         # For each fingerprint 'fp_a', compare it with every other
         # fingerprint 'fp_b'.
         local fp_b=""
-        printf "%s" "$fps" | while IFS= read -r -d "$FIELD_SEPARATOR" fp_b; do
+        while IFS= read -r -d $'\0' fp_b; do
             [[ -f "$fp_b" ]] || continue
 
             # Compute the similarity (1 - RMSE) between the two fingerprints.
@@ -83,7 +84,8 @@ _main_task() {
                     rm "$fp_b"
                 fi
             fi
-        done
+        done < <(__find_fps)
+
         # After comparing 'fp_a' with all others,
         # remove its temporary fingerprint file.
         rm "$fp_a"
@@ -124,7 +126,7 @@ _main_task() {
             # shellcheck disable=SC2086
             eval $image_viewer -- $std_output
         fi
-    done
+    done < <(__find_fps)
 }
 
 # FUNCTION: _generate_fingerprint

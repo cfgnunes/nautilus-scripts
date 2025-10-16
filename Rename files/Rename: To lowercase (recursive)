@@ -30,8 +30,7 @@ _main_task() {
 
     # Rename files.
     local file=""
-    find "$input_file" -type f ! -path "$IGNORE_FIND_PATH" \
-        -print0 2>/dev/null | while read -r -d '' file; do
+    while IFS= read -r -d $'\0' file; do
         local dir=""
         local filename=""
         local new_filename=""
@@ -44,13 +43,12 @@ _main_task() {
 
         # Run the main process.
         _move_file "skip" "$file" "$dir/$new_filename"
-    done
+    done < <(find "$input_file" -type f ! -path "$IGNORE_FIND_PATH" \
+        -print0 2>/dev/null)
 
     # Rename directories.
     local dir=""
-    find "$input_file" -type d ! -path "$IGNORE_FIND_PATH" \
-        -print0 2>/dev/null |
-        sort --reverse --zero-terminated | while read -r -d '' dir; do
+    while IFS= read -r -d $'\0' dir; do
         local parent_dir=""
         local dirname=""
         local new_dirname=""
@@ -63,7 +61,8 @@ _main_task() {
 
         # Run the main process.
         _move_file "skip" "$dir" "$parent_dir/$new_dirname"
-    done
+    done < <(find "$input_file" -type d ! -path "$IGNORE_FIND_PATH" \
+        -print0 2>/dev/null | sort --reverse --zero-terminated)
 }
 
 _main "$@"

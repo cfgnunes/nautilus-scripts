@@ -1074,7 +1074,7 @@ _step_install_menus_pcmanfm() {
         printf "%s" "ItemsList="
         $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -type d \
             "${IGNORE_FIND_PATHS[@]}" \
-            -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";"
+            -printf "%f\0" 2>/dev/null | sort --zero-terminated | tr "\0" ";"
         printf "\n"
     } | $SUDO_CMD tee "${menus_dir}/Scripts.desktop" >/dev/null
     $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- \
@@ -1089,7 +1089,7 @@ _step_install_menus_pcmanfm() {
         name=${filename##*/}
         dir_items=$($SUDO_CMD find -L "$filename" -mindepth 1 -maxdepth 1 \
             "${IGNORE_FIND_PATHS[@]}" \
-            -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";")
+            -printf "%f\0" 2>/dev/null | sort --zero-terminated | tr "\0" ";")
         if [[ -z "$dir_items" ]]; then
             continue
         fi
