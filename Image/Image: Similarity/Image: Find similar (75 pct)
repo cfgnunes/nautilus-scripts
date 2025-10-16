@@ -150,7 +150,6 @@ _generate_fingerprint() {
         -modulate 100,0,100 \
         -blur 0x2 \
         -contrast-stretch 0.5%x0.5% \
-        -unsharp 0x1 \
         -resize 16x16\! \
         -depth 8 \
         "$temp_dir/$fp_file"
