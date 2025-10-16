@@ -1168,7 +1168,8 @@ _strip_filename_extension() {
     fi
 
     local len_extension=${#extension}
-    printf "%s" "${filename::-len_extension}"
+    filename=${filename::-len_extension}
+    printf "%s" "$filename"
 }
 
 # FUNCTION: _get_filename_full_path
