@@ -3642,12 +3642,10 @@ _initialize_homebrew() {
 
     if [[ -f "$brew_cmd" ]]; then
         # Skip initialization if 'curl' and 'git' are not available in 'PATH'.
-        if ! _command_exists "curl" || ! _command_exists "git"; then
-            return
+        if _command_exists "curl" && _command_exists "git"; then
+            # Load the Homebrew environment into the current shell session.
+            eval "$($brew_cmd shellenv)"
         fi
-
-        # Load the Homebrew environment into the current shell session.
-        eval "$($brew_cmd shellenv)"
     fi
 }
 
