@@ -4,7 +4,7 @@
 # This file centralizes dependency definitions for the scripts.
 
 # -----------------------------------------------------------------------------
-# SECTION /// [DEPENDENCIES_MAP]
+# SECTION: DEPENDENCIES_MAP ----
 # -----------------------------------------------------------------------------
 # This array defines the mapping between a dependency key and its corresponding
 # package names across different package managers.
@@ -859,7 +859,7 @@ declare -A DEPENDENCIES_MAP=(
 )
 
 # -----------------------------------------------------------------------------
-# SECTION /// [POST_INSTALL]
+# SECTION: POST_INSTALL ----
 # -----------------------------------------------------------------------------
 # This array defines commands that need to be executed after a package is
 # installed. These commands are usually required for proper initialization,

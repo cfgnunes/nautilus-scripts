@@ -6,7 +6,7 @@
 set -u
 
 # -----------------------------------------------------------------------------
-# SECTION /// [CONSTANTS]
+# SECTION: Constants ----
 # -----------------------------------------------------------------------------
 
 ACCESSED_RECENTLY_DIR="$ROOT_DIR/Accessed recently"
@@ -73,7 +73,7 @@ readonly \
     TEMP_DIR_TASK
 
 # -----------------------------------------------------------------------------
-# SECTION /// [GLOBAL VARIABLES]
+# SECTION: Global variables ----
 # -----------------------------------------------------------------------------
 
 IFS=$FIELD_SEPARATOR
@@ -84,7 +84,7 @@ INPUT_FILES=$*
 TEMP_DATA_TASK=""
 
 # -----------------------------------------------------------------------------
-# SECTION /// [BUILD THE STRUCTURE OF THE '$TEMP_DIR']
+# SECTION: Build the structure of the '$TEMP_DIR' ----
 # -----------------------------------------------------------------------------
 
 # DESCRIPTION:
@@ -111,7 +111,7 @@ mkdir -p "$TEMP_DIR_STORAGE_TEXT"
 mkdir -p "$TEMP_DIR_TASK"
 
 # -----------------------------------------------------------------------------
-# SECTION /// [CORE UTILITIES]
+# SECTION: Core utilities ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _cleanup_on_exit
@@ -398,7 +398,7 @@ _run_function_parallel() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [DEPENDENCY MANAGEMENT]
+# SECTION: Dependency management ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _command_exists
@@ -955,7 +955,7 @@ _deps_is_package_installed() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [FILE AND DIRECTORY MANAGEMENT]
+# SECTION: File and directory management ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _delete_items
@@ -1468,7 +1468,7 @@ _is_directory_empty() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [USER INTERFACE]
+# SECTION: User interface ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _display_dir_selection_box
@@ -2246,7 +2246,7 @@ _get_qdbus_command() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [SYSTEM AND ENVIRONMENT]
+# SECTION: System and environment ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _get_available_app
@@ -2500,7 +2500,7 @@ _xdg_get_default_app() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [CLIPBOARD MANAGEMENT]
+# SECTION: Clipboard management ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _get_clipboard_data
@@ -2550,7 +2550,7 @@ _set_clipboard_file() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [INPUT FILES]
+# SECTION: Input files ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _get_filenames_filemanager
@@ -2985,7 +2985,7 @@ _validate_files_count() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [OUTPUT FILES]
+# SECTION: Output files ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _get_output_dir
@@ -3241,7 +3241,7 @@ _open_urls() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [FILE IDENTIFICATION]
+# SECTION: File identification ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _get_file_encoding
@@ -3311,7 +3311,7 @@ _get_items_count() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [STORAGE TEXT MANAGEMENT]
+# SECTION: Storage text management ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _storage_text_clean
@@ -3368,7 +3368,7 @@ _storage_text_write_ln() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [STRING AND TEXT PROCESSING]
+# SECTION: String and text processing ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _convert_delimited_string_to_text
@@ -3604,7 +3604,7 @@ _text_uri_decode() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [EXTERNAL APPLICATION WRAPPERS]
+# SECTION: External application wrappers ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _cmd_magick_convert
@@ -3648,7 +3648,7 @@ _initialize_homebrew() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [SCRIPTS RECENT HISTORY]
+# SECTION: Scripts recent history ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _recent_scripts_add

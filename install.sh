@@ -5,7 +5,7 @@
 set -u
 
 # -----------------------------------------------------------------------------
-# SECTION /// [CONSTANTS]
+# SECTION: Constants ----
 # -----------------------------------------------------------------------------
 
 # Defines the name of the directory where application menu shortcuts are
@@ -68,7 +68,7 @@ readonly \
 USER=${USER:-$(id -un)}
 
 # -----------------------------------------------------------------------------
-# SECTION /// [GLOBAL VARIABLES]
+# SECTION: Global variables ----
 # -----------------------------------------------------------------------------
 
 FILE_MANAGER=""  # Current file manager being processed.
@@ -99,7 +99,7 @@ if [[ -f "$SCRIPT_DIR/.assets/_multiselect-menu.sh" ]]; then
 fi
 
 # -----------------------------------------------------------------------------
-# SECTION /// [MAIN FLOW]
+# SECTION: Main flow ----
 # -----------------------------------------------------------------------------
 
 # shellcheck disable=SC2034
@@ -308,7 +308,7 @@ _main() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [PRINTING]
+# SECTION: Printing ----
 # -----------------------------------------------------------------------------
 
 _echo() {
@@ -330,7 +330,7 @@ _echo_error() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [VALIDATION AND CHECKS]
+# SECTION: Validation and checks ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _check_exist_filemanager
@@ -371,7 +371,7 @@ _command_exists() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [FILE AND DIRECTORY MANAGEMENT]
+# SECTION: File and directory management ----
 # -----------------------------------------------------------------------------
 
 _list_scripts() {
@@ -436,7 +436,7 @@ _delete_items() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [SYSTEM INFORMATION AND PARAMETERS]
+# SECTION: System information and parameters ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _get_user_homes
@@ -561,7 +561,11 @@ _get_par_value() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [INSTALLATION STEP / DEPENDENCIES]
+# SECTION: Installation steps ----
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+## Dependencies ----
 # -----------------------------------------------------------------------------
 
 # shellcheck disable=SC2086
@@ -718,7 +722,7 @@ _step_install_scripts() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [INSTALLATION STEP / KEYBOARD ACCELLERATORS]
+## Keyboard accellerators ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _step_install_accels
@@ -855,7 +859,7 @@ _step_install_accels_thunar() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [INSTALLATION STEP / APPLICATION SHORTCUTS]
+## Application shortcuts ----
 # -----------------------------------------------------------------------------
 
 _step_install_application_shortcuts() {
@@ -972,7 +976,7 @@ _step_create_gnome_application_folder() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [INSTALLATION STEP / CONTEXT MENUS]
+## Context menus ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _step_install_menus
@@ -1312,7 +1316,7 @@ _step_install_menus_thunar() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [INSTALLATION STEP / CLOSE FILEMANAGER]
+## Close filemanager ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _step_close_filemanager
@@ -1361,7 +1365,7 @@ _step_close_filemanager() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [INSTALLATION STEP / HOMEBREW]
+## Homebrew ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _step_install_homebrew
@@ -1420,7 +1424,7 @@ _step_install_homebrew() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [ONLINE INSTALL]
+# SECTION: Online install ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _bootstrap_repository
