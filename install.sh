@@ -371,8 +371,32 @@ _command_exists() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [BACKUP AND FILE MANAGEMENT]
+# SECTION /// [FILE AND DIRECTORY MANAGEMENT]
 # -----------------------------------------------------------------------------
+
+_list_scripts() {
+    $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+        "${IGNORE_FIND_PATHS[@]}" \
+        -print0 2>/dev/null | sort --zero-terminated
+}
+
+_list_scripts_application() {
+    $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+        "${IGNORE_FIND_PATHS[@]}" "${IGNORE_APPLICATION_SHORTCUTS[@]}" \
+        -print0 2>/dev/null | sort --zero-terminated
+}
+
+_chown_file() {
+    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$1"
+}
+
+_chmod_x_file() {
+    $SUDO_CMD chmod +x -- "$1"
+}
+
+_tee_file() {
+    $SUDO_CMD tee -- "$1" >/dev/null
+}
 
 # FUNCTION: _item_create_backup
 #
@@ -690,8 +714,7 @@ _step_install_scripts() {
     # user/group and are executable.
     $SUDO_CMD chown -R "$INSTALL_OWNER:$INSTALL_GROUP" -- "$INSTALL_DIR"
     $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
-        "${IGNORE_FIND_PATHS[@]}" \
-        -exec chmod +x -- {} \;
+        "${IGNORE_FIND_PATHS[@]}" -exec chmod +x -- {} \;
 }
 
 # -----------------------------------------------------------------------------
@@ -745,12 +768,11 @@ _step_install_accels_nautilus() {
                 name=$(basename -- "$filename")
                 printf "%s\n" "$keyboard_shortcut $name"
             fi
-        done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            "${IGNORE_FIND_PATHS[@]}" \
-            -print0 2>/dev/null | sort --zero-terminated)
+        done < <(_list_scripts)
 
-    } | $SUDO_CMD tee "$accels_file" >/dev/null
-    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
+    } | _tee_file "$accels_file"
+
+    _chown_file "$accels_file"
 }
 
 _step_install_accels_gnome2() {
@@ -782,12 +804,11 @@ _step_install_accels_gnome2() {
                 filename=$(sed "s|/|\\\\\\\\s|g; s| |%20|g" <<<"$filename")
                 printf "%s\n" '(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s'"$filename"'" "'"$keyboard_shortcut"'")'
             fi
-        done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            "${IGNORE_FIND_PATHS[@]}" \
-            -print0 2>/dev/null | sort --zero-terminated)
+        done < <(_list_scripts)
 
-    } | $SUDO_CMD tee "$accels_file" >/dev/null
-    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
+    } | _tee_file "$accels_file"
+
+    _chown_file "$accels_file"
 }
 
 _step_install_accels_thunar() {
@@ -826,12 +847,11 @@ _step_install_accels_thunar() {
 
                 printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-'"$unique_id"'" "'"$keyboard_shortcut"'")'
             fi
-        done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            "${IGNORE_FIND_PATHS[@]}" \
-            -print0 2>/dev/null | sort --zero-terminated)
+        done < <(_list_scripts)
 
-    } | $SUDO_CMD tee "$accels_file" >/dev/null
-    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
+    } | _tee_file "$accels_file"
+
+    _chown_file "$accels_file"
 }
 
 # -----------------------------------------------------------------------------
@@ -880,12 +900,11 @@ _step_install_application_shortcuts() {
             printf "%s\n" "Icon=application-x-executable"
             printf "%s\n" "Terminal=false"
             printf "%s\n" "Type=Application"
-        } | $SUDO_CMD tee "$menu_file" >/dev/null
-        $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menu_file"
-        $SUDO_CMD chmod +x "$menu_file"
-    done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
-        "${IGNORE_FIND_PATHS[@]}" "${IGNORE_APPLICATION_SHORTCUTS[@]}" \
-        -print0 2>/dev/null | sort --zero-terminated)
+        } | _tee_file "$menu_file"
+
+        _chown_file "$menu_file"
+        _chmod_x_file "$menu_file"
+    done < <(_list_scripts_application)
 }
 
 _step_create_gnome_application_folder() {
@@ -1050,12 +1069,11 @@ _step_install_menus_dolphin() {
             printf "%s\n" "[Desktop Action scriptAction]"
             printf "%s\n" "Name=$name"
             printf "%s\n" "Exec=bash \"$filename\" %F"
-        } | $SUDO_CMD tee "$menu_file" >/dev/null
-        $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menu_file"
-        $SUDO_CMD chmod +x "$menu_file"
-    done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
-        "${IGNORE_FIND_PATHS[@]}" \
-        -print0 2>/dev/null | sort --zero-terminated)
+        } | _tee_file "$menu_file"
+
+        _chown_file "$menu_file"
+        _chmod_x_file "$menu_file"
+    done < <(_list_scripts)
 }
 
 _step_install_menus_pcmanfm() {
@@ -1076,10 +1094,10 @@ _step_install_menus_pcmanfm() {
             "${IGNORE_FIND_PATHS[@]}" \
             -printf "%f\0" 2>/dev/null | sort --zero-terminated | tr "\0" ";"
         printf "\n"
-    } | $SUDO_CMD tee "${menus_dir}/Scripts.desktop" >/dev/null
-    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- \
-        "${menus_dir}/Scripts.desktop"
-    $SUDO_CMD chmod +x "${menus_dir}/Scripts.desktop"
+    } | _tee_file "$menus_dir/Scripts.desktop"
+
+    _chown_file "$menus_dir/Scripts.desktop"
+    _chmod_x_file "$menus_dir/Scripts.desktop"
 
     # Create a '.desktop' file for each sub-category (sub-menus).
     local filename=""
@@ -1100,10 +1118,10 @@ _step_install_menus_pcmanfm() {
             printf "%s\n" "Name=$name"
             printf "%s\n" "ItemsList=$dir_items"
 
-        } | $SUDO_CMD tee "${menus_dir}/$name.desktop" >/dev/null
-        $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- \
-            "${menus_dir}/$name.desktop"
-        $SUDO_CMD chmod +x "${menus_dir}/$name.desktop"
+        } | _tee_file "$menus_dir/$name.desktop"
+
+        _chown_file "$menus_dir/$name.desktop"
+        _chmod_x_file "$menus_dir/$name.desktop"
     done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 1 -type d \
         "${IGNORE_FIND_PATHS[@]}" \
         -print0 2>/dev/null | sort --zero-terminated)
@@ -1154,12 +1172,11 @@ _step_install_menus_pcmanfm() {
             printf "%s\n" "[X-Action-Profile scriptAction]"
             printf "%s\n" "MimeTypes=$par_select_mime"
             printf "%s\n" "Exec=bash \"$filename\" %F"
-        } | $SUDO_CMD tee "$menu_file" >/dev/null
-        $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menu_file"
-        $SUDO_CMD chmod +x "$menu_file"
-    done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
-        "${IGNORE_FIND_PATHS[@]}" \
-        -print0 2>/dev/null | sort --zero-terminated)
+        } | _tee_file "$menu_file"
+
+        _chown_file "$menu_file"
+        _chmod_x_file "$menu_file"
+    done < <(_list_scripts)
 }
 
 _step_install_menus_thunar() {
@@ -1286,13 +1303,12 @@ _step_install_menus_thunar() {
             fi
             printf "\t%s\n" "<other-files/>"
             printf "%s\n" "</action>"
-        done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            "${IGNORE_FIND_PATHS[@]}" \
-            -print0 2>/dev/null | sort --zero-terminated)
+        done < <(_list_scripts)
 
         printf "%s\n" "</actions>"
-    } | $SUDO_CMD tee "$menus_file" >/dev/null
-    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menus_file"
+    } | _tee_file "$menus_file"
+
+    _chown_file "$menus_file"
 }
 
 # -----------------------------------------------------------------------------
