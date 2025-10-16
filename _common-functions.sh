@@ -768,6 +768,16 @@ _deps_install_packages() {
             cmd_admin=""
             ;;
         "brew")
+            # Configure Homebrew for non-interactive and less verbose
+            # operation.
+            export HOMEBREW_VERBOSE=""
+            export HOMEBREW_NO_ANALYTICS="1"
+            export HOMEBREW_NO_AUTO_UPDATE="1"
+            export HOMEBREW_NO_COLOR="1"
+            export HOMEBREW_NO_EMOJI="1"
+            export HOMEBREW_NO_ENV_HINTS="1"
+            export HOMEBREW_NO_GITHUB_API="1"
+
             # Replace spaces with '$FIELD_SEPARATOR' for iteration.
             packages=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
 
@@ -2406,28 +2416,12 @@ _get_max_procs() {
 # This function unset global variables that may have been set by different
 # file managers (Caja, Nautilus, Nemo) during script execution.
 _unset_global_variables_file_manager() {
-    unset \
-        CAJA_SCRIPT_CURRENT_URI \
-        CAJA_SCRIPT_NEXT_PANE_CURRENT_URI \
-        CAJA_SCRIPT_NEXT_PANE_SELECTED_FILE_PATHS \
-        CAJA_SCRIPT_NEXT_PANE_SELECTED_URIS \
-        CAJA_SCRIPT_SELECTED_FILE_PATHS \
-        CAJA_SCRIPT_SELECTED_URIS \
-        CAJA_SCRIPT_WINDOW_GEOMETRY \
-        NAUTILUS_SCRIPT_CURRENT_URI \
-        NAUTILUS_SCRIPT_NEXT_PANE_CURRENT_URI \
-        NAUTILUS_SCRIPT_NEXT_PANE_SELECTED_FILE_PATHS \
-        NAUTILUS_SCRIPT_NEXT_PANE_SELECTED_URIS \
-        NAUTILUS_SCRIPT_SELECTED_FILE_PATHS \
-        NAUTILUS_SCRIPT_SELECTED_URIS \
-        NAUTILUS_SCRIPT_WINDOW_GEOMETRY \
-        NEMO_SCRIPT_CURRENT_URI \
-        NEMO_SCRIPT_NEXT_PANE_CURRENT_URI \
-        NEMO_SCRIPT_NEXT_PANE_SELECTED_FILE_PATHS \
-        NEMO_SCRIPT_NEXT_PANE_SELECTED_URIS \
-        NEMO_SCRIPT_SELECTED_FILE_PATHS \
-        NEMO_SCRIPT_SELECTED_URIS \
-        NEMO_SCRIPT_WINDOW_GEOMETRY
+    local var=""
+    while IFS= read -r var; do
+        unset "$var"
+    done < <(
+        compgen -v | grep "_SCRIPT_"
+    )
 }
 
 # FUNCTION: _xdg_get_default_app
@@ -3641,28 +3635,19 @@ _cmd_magick_convert() {
 # quietly and without analytics.
 _initialize_homebrew() {
     # Skip initialization if Homebrew is already available in 'PATH'.
-    _command_exists "brew" && return
-
-    # Skip initialization if 'curl' and 'git' are not available in 'PATH'.
-    if ! _command_exists "curl" || ! _command_exists "git"; then
-        return
-    fi
+    [[ -n "${HOMEBREW_PREFIX:-}" ]] && return
 
     local homebrew_dir="$HOME/.local/apps/homebrew"
     local brew_cmd="$homebrew_dir/bin/brew"
 
     if [[ -f "$brew_cmd" ]]; then
+        # Skip initialization if 'curl' and 'git' are not available in 'PATH'.
+        if ! _command_exists "curl" || ! _command_exists "git"; then
+            return
+        fi
+
         # Load the Homebrew environment into the current shell session.
         eval "$($brew_cmd shellenv)"
-
-        # Configure Homebrew for non-interactive and less verbose operation.
-        export HOMEBREW_VERBOSE=""
-        export HOMEBREW_NO_ANALYTICS="1"
-        export HOMEBREW_NO_AUTO_UPDATE="1"
-        export HOMEBREW_NO_COLOR="1"
-        export HOMEBREW_NO_EMOJI="1"
-        export HOMEBREW_NO_ENV_HINTS="1"
-        export HOMEBREW_NO_GITHUB_API="1"
     fi
 }
 
