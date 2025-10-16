@@ -2419,9 +2419,7 @@ _unset_global_variables_file_manager() {
     local var=""
     while IFS= read -r var; do
         unset "$var"
-    done < <(
-        compgen -v | grep "_SCRIPT_"
-    )
+    done < <(compgen -v | grep "_SCRIPT_")
 }
 
 # FUNCTION: _xdg_get_default_app
@@ -3713,10 +3711,8 @@ _recent_scripts_organize() {
         else
             links+=("$link")
         fi
-    done < <(
-        find "$ACCESSED_RECENTLY_DIR" -maxdepth 1 -type l -print0 2>/dev/null |
-            sort --zero-terminated --numeric-sort
-    )
+    done < <(find "$ACCESSED_RECENTLY_DIR" -maxdepth 1 -type l \
+        -print0 2>/dev/null | sort --zero-terminated --numeric-sort)
 
     # Process the links, keeping only the '$ACCESSED_RECENTLY_LINKS_TO_KEEP'
     # most recent.

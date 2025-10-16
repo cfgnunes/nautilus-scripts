@@ -183,13 +183,9 @@ _main() {
     local dir=""
     while IFS= read -r -d $'\0' dir; do
         cat_dirs+=("$dir")
-    done < <(
-        find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
-            "${IGNORE_FIND_PATHS[@]}" \
-            -print0 2>/dev/null |
-            sed -z "s|^.*/||" |
-            sort --zero-terminated --version-sort
-    )
+    done < <(find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
+        "${IGNORE_FIND_PATHS[@]}" -print0 2>/dev/null |
+        sed -z "s|^.*/||" | sort --zero-terminated --version-sort)
 
     # If requested, let the user select which categories to install.
     if [[ "$OPT_CHOOSE_CATEGORIES" == "true" ]]; then
@@ -739,22 +735,19 @@ _step_install_accels_nautilus() {
 
     {
         local filename=""
-        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+        while IFS= read -r -d $'\0' filename; do
+            local keyboard_shortcut=""
+            keyboard_shortcut=$(_get_par_value \
+                "$filename" "install_keyboard_shortcut")
+
+            if [[ -n "$keyboard_shortcut" ]]; then
+                local name=""
+                name=$(basename -- "$filename")
+                printf "%s\n" "$keyboard_shortcut $name"
+            fi
+        done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
             "${IGNORE_FIND_PATHS[@]}" \
-            -print0 2>/dev/null |
-            sort --zero-terminated |
-            while IFS= read -r -d "" filename; do
-
-                local keyboard_shortcut=""
-                keyboard_shortcut=$(_get_par_value \
-                    "$filename" "install_keyboard_shortcut")
-
-                if [[ -n "$keyboard_shortcut" ]]; then
-                    local name=""
-                    name=$(basename -- "$filename")
-                    printf "%s\n" "$keyboard_shortcut $name"
-                fi
-            done
+            -print0 2>/dev/null | sort --zero-terminated)
 
     } | $SUDO_CMD tee "$accels_file" >/dev/null
     $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
@@ -778,23 +771,20 @@ _step_install_accels_gnome2() {
         printf "%s\n" '(gtk_accel_path "<Actions>/ShellActions/Show Hide Extra Pane" "")'
 
         local filename=""
-        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+        while IFS= read -r -d $'\0' filename; do
+            local keyboard_shortcut=""
+            keyboard_shortcut=$(_get_par_value \
+                "$filename" "install_keyboard_shortcut")
+            keyboard_shortcut=${keyboard_shortcut//Control/Primary}
+
+            if [[ -n "$keyboard_shortcut" ]]; then
+                # shellcheck disable=SC2001
+                filename=$(sed "s|/|\\\\\\\\s|g; s| |%20|g" <<<"$filename")
+                printf "%s\n" '(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s'"$filename"'" "'"$keyboard_shortcut"'")'
+            fi
+        done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
             "${IGNORE_FIND_PATHS[@]}" \
-            -print0 2>/dev/null |
-            sort --zero-terminated |
-            while IFS= read -r -d "" filename; do
-
-                local keyboard_shortcut=""
-                keyboard_shortcut=$(_get_par_value \
-                    "$filename" "install_keyboard_shortcut")
-                keyboard_shortcut=${keyboard_shortcut//Control/Primary}
-
-                if [[ -n "$keyboard_shortcut" ]]; then
-                    # shellcheck disable=SC2001
-                    filename=$(sed "s|/|\\\\\\\\s|g; s| |%20|g" <<<"$filename")
-                    printf "%s\n" '(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s'"$filename"'" "'"$keyboard_shortcut"'")'
-                fi
-            done
+            -print0 2>/dev/null | sort --zero-terminated)
 
     } | $SUDO_CMD tee "$accels_file" >/dev/null
     $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
@@ -819,29 +809,26 @@ _step_install_accels_thunar() {
         printf "%s\n" '(gtk_accel_path "<Actions>/ThunarWindow/view-side-pane-tree" "")'
 
         local filename=""
-        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+        while IFS= read -r -d $'\0' filename; do
+            local keyboard_shortcut=""
+            keyboard_shortcut=$(_get_par_value \
+                "$filename" "install_keyboard_shortcut")
+            keyboard_shortcut=${keyboard_shortcut//Control/Primary}
+
+            if [[ -n "$keyboard_shortcut" ]]; then
+                local name=""
+                local submenu=""
+                local unique_id=""
+                name=$(basename -- "$filename")
+                submenu=$(dirname -- "$filename" | sed "s|.*scripts/|Scripts/|g")
+                unique_id=$(md5sum <<<"$submenu$name" 2>/dev/null |
+                    sed "s|[^0-9]*||g" | cut -c 1-8)
+
+                printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-'"$unique_id"'" "'"$keyboard_shortcut"'")'
+            fi
+        done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
             "${IGNORE_FIND_PATHS[@]}" \
-            -print0 2>/dev/null |
-            sort --zero-terminated |
-            while IFS= read -r -d "" filename; do
-
-                local keyboard_shortcut=""
-                keyboard_shortcut=$(_get_par_value \
-                    "$filename" "install_keyboard_shortcut")
-                keyboard_shortcut=${keyboard_shortcut//Control/Primary}
-
-                if [[ -n "$keyboard_shortcut" ]]; then
-                    local name=""
-                    local submenu=""
-                    local unique_id=""
-                    name=$(basename -- "$filename")
-                    submenu=$(dirname -- "$filename" | sed "s|.*scripts/|Scripts/|g")
-                    unique_id=$(md5sum <<<"$submenu$name" 2>/dev/null |
-                        sed "s|[^0-9]*||g" | cut -c 1-8)
-
-                    printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-'"$unique_id"'" "'"$keyboard_shortcut"'")'
-                fi
-            done
+            -print0 2>/dev/null | sort --zero-terminated)
 
     } | $SUDO_CMD tee "$accels_file" >/dev/null
     $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$accels_file"
@@ -868,40 +855,37 @@ _step_install_application_shortcuts() {
     $SUDO_CMD_USER mkdir --parents "$app_menus_path"
 
     # Create a '.desktop' file for each script.
-    $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
-        "${IGNORE_FIND_PATHS[@]}" \
-        "${IGNORE_APPLICATION_SHORTCUTS[@]}" \
-        -print0 2>/dev/null |
-        sort --zero-terminated |
-        while IFS= read -r -d "" filename; do
-            # shellcheck disable=SC2001
-            script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
-            name=${script_relative##*/}
-            submenu=${script_relative%/*}
-            # shellcheck disable=SC2001
-            submenu=$(sed "s|/| - |g" <<<"$submenu")
+    while IFS= read -r -d $'\0' filename; do
+        # shellcheck disable=SC2001
+        script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
+        name=${script_relative##*/}
+        submenu=${script_relative%/*}
+        # shellcheck disable=SC2001
+        submenu=$(sed "s|/| - |g" <<<"$submenu")
 
-            menu_file=$name
-            menu_file=$(tr -cd "[:alnum:]- " <<<"$menu_file")
-            menu_file=$(tr " " "-" <<<"$menu_file")
-            menu_file=$(tr -s "-" <<<"$menu_file")
-            menu_file=${menu_file,,}
-            menu_file="$app_menus_path/$menu_file.desktop"
+        menu_file=$name
+        menu_file=$(tr -cd "[:alnum:]- " <<<"$menu_file")
+        menu_file=$(tr " " "-" <<<"$menu_file")
+        menu_file=$(tr -s "-" <<<"$menu_file")
+        menu_file=${menu_file,,}
+        menu_file="$app_menus_path/$menu_file.desktop"
 
-            {
-                printf "%s\n" "[Desktop Entry]"
-                printf "%s\n" "Categories=Scripts;"
-                printf "%s\n" "Exec=\"$filename\" %F"
-                printf "%s\n" "Name=$name"
-                #printf "%s\n" "GenericName=$submenu - $name"
-                #printf "%s\n" "Comment=$submenu"
-                printf "%s\n" "Icon=application-x-executable"
-                printf "%s\n" "Terminal=false"
-                printf "%s\n" "Type=Application"
-            } | $SUDO_CMD tee "$menu_file" >/dev/null
-            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menu_file"
-            $SUDO_CMD chmod +x "$menu_file"
-        done
+        {
+            printf "%s\n" "[Desktop Entry]"
+            printf "%s\n" "Categories=Scripts;"
+            printf "%s\n" "Exec=\"$filename\" %F"
+            printf "%s\n" "Name=$name"
+            #printf "%s\n" "GenericName=$submenu - $name"
+            #printf "%s\n" "Comment=$submenu"
+            printf "%s\n" "Icon=application-x-executable"
+            printf "%s\n" "Terminal=false"
+            printf "%s\n" "Type=Application"
+        } | $SUDO_CMD tee "$menu_file" >/dev/null
+        $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menu_file"
+        $SUDO_CMD chmod +x "$menu_file"
+    done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+        "${IGNORE_FIND_PATHS[@]}" "${IGNORE_APPLICATION_SHORTCUTS[@]}" \
+        -print0 2>/dev/null | sort --zero-terminated)
 }
 
 _step_create_gnome_application_folder() {
@@ -1000,80 +984,78 @@ _step_install_menus_dolphin() {
     local submenu=""
 
     # Create a '.desktop' file for each script.
-    $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+    while IFS= read -r -d $'\0' filename; do
+        # shellcheck disable=SC2001
+        script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
+        name=${script_relative##*/}
+        submenu=${script_relative%%/*}
+
+        # Set the 'MIME' requirements.
+        local par_recursive=""
+        local par_select_mime=""
+        par_recursive=$(_get_par_value "$filename" "par_recursive")
+        par_select_mime=$(_get_par_value "$filename" "par_select_mime")
+
+        if [[ -z "$par_select_mime" ]]; then
+            local par_type=""
+            par_type=$(_get_par_value "$filename" "par_type")
+
+            case "$par_type" in
+            "directory") par_select_mime="inode/directory" ;;
+            "all") par_select_mime="all/all" ;;
+            "file") par_select_mime="all/allfiles" ;;
+            *) par_select_mime="all/allfiles" ;;
+            esac
+        fi
+
+        if [[ "$par_recursive" == "true" ]]; then
+            case "$par_select_mime" in
+            "inode/directory") : ;;
+            "all/all") : ;;
+            "all/allfiles") par_select_mime="all/all" ;;
+            *) par_select_mime+=";inode/directory" ;;
+            esac
+        fi
+
+        par_select_mime="$par_select_mime;"
+        # shellcheck disable=SC2001
+        par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
+
+        # Set the min/max files requirements.
+        local par_min_items=""
+        local par_max_items=""
+        par_min_items=$(_get_par_value "$filename" "par_min_items")
+        par_max_items=$(_get_par_value "$filename" "par_max_items")
+
+        local menu_file=""
+        menu_file="${menus_dir}/${name}.desktop"
+        {
+            printf "%s\n" "[Desktop Entry]"
+            printf "%s\n" "Type=Service"
+            printf "%s\n" "X-KDE-ServiceTypes=KonqPopupMenu/Plugin"
+            printf "%s\n" "Actions=scriptAction;"
+            printf "%s\n" "MimeType=$par_select_mime"
+
+            if [[ -n "$par_min_items" ]]; then
+                printf "%s\n" "X-KDE-MinNumberOfUrls=$par_min_items"
+            fi
+
+            if [[ -n "$par_max_items" ]]; then
+                printf "%s\n" "X-KDE-MaxNumberOfUrls=$par_max_items"
+            fi
+
+            printf "%s\n" "Encoding=UTF-8"
+            printf "%s\n" "X-KDE-Submenu=$submenu"
+            printf "\n"
+            printf "%s\n" "[Desktop Action scriptAction]"
+            printf "%s\n" "Name=$name"
+            printf "%s\n" "Exec=bash \"$filename\" %F"
+        } | $SUDO_CMD tee "$menu_file" >/dev/null
+        $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menu_file"
+        $SUDO_CMD chmod +x "$menu_file"
+    done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" \
-        -print0 2>/dev/null |
-        sort --zero-terminated |
-        while IFS= read -r -d "" filename; do
-            # shellcheck disable=SC2001
-            script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
-            name=${script_relative##*/}
-            submenu=${script_relative%%/*}
-
-            # Set the 'MIME' requirements.
-            local par_recursive=""
-            local par_select_mime=""
-            par_recursive=$(_get_par_value "$filename" "par_recursive")
-            par_select_mime=$(_get_par_value "$filename" "par_select_mime")
-
-            if [[ -z "$par_select_mime" ]]; then
-                local par_type=""
-                par_type=$(_get_par_value "$filename" "par_type")
-
-                case "$par_type" in
-                "directory") par_select_mime="inode/directory" ;;
-                "all") par_select_mime="all/all" ;;
-                "file") par_select_mime="all/allfiles" ;;
-                *) par_select_mime="all/allfiles" ;;
-                esac
-            fi
-
-            if [[ "$par_recursive" == "true" ]]; then
-                case "$par_select_mime" in
-                "inode/directory") : ;;
-                "all/all") : ;;
-                "all/allfiles") par_select_mime="all/all" ;;
-                *) par_select_mime+=";inode/directory" ;;
-                esac
-            fi
-
-            par_select_mime="$par_select_mime;"
-            # shellcheck disable=SC2001
-            par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
-
-            # Set the min/max files requirements.
-            local par_min_items=""
-            local par_max_items=""
-            par_min_items=$(_get_par_value "$filename" "par_min_items")
-            par_max_items=$(_get_par_value "$filename" "par_max_items")
-
-            local menu_file=""
-            menu_file="${menus_dir}/${name}.desktop"
-            {
-                printf "%s\n" "[Desktop Entry]"
-                printf "%s\n" "Type=Service"
-                printf "%s\n" "X-KDE-ServiceTypes=KonqPopupMenu/Plugin"
-                printf "%s\n" "Actions=scriptAction;"
-                printf "%s\n" "MimeType=$par_select_mime"
-
-                if [[ -n "$par_min_items" ]]; then
-                    printf "%s\n" "X-KDE-MinNumberOfUrls=$par_min_items"
-                fi
-
-                if [[ -n "$par_max_items" ]]; then
-                    printf "%s\n" "X-KDE-MaxNumberOfUrls=$par_max_items"
-                fi
-
-                printf "%s\n" "Encoding=UTF-8"
-                printf "%s\n" "X-KDE-Submenu=$submenu"
-                printf "\n"
-                printf "%s\n" "[Desktop Action scriptAction]"
-                printf "%s\n" "Name=$name"
-                printf "%s\n" "Exec=bash \"$filename\" %F"
-            } | $SUDO_CMD tee "$menu_file" >/dev/null
-            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menu_file"
-            $SUDO_CMD chmod +x "$menu_file"
-        done
+        -print0 2>/dev/null | sort --zero-terminated)
 }
 
 _step_install_menus_pcmanfm() {
@@ -1103,85 +1085,81 @@ _step_install_menus_pcmanfm() {
     local filename=""
     local name=""
     local dir_items=""
-    $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 1 -type d \
+    while IFS= read -r -d $'\0' filename; do
+        name=${filename##*/}
+        dir_items=$($SUDO_CMD find -L "$filename" -mindepth 1 -maxdepth 1 \
+            "${IGNORE_FIND_PATHS[@]}" \
+            -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";")
+        if [[ -z "$dir_items" ]]; then
+            continue
+        fi
+
+        {
+            printf "%s\n" "[Desktop Entry]"
+            printf "%s\n" "Type=Menu"
+            printf "%s\n" "Name=$name"
+            printf "%s\n" "ItemsList=$dir_items"
+
+        } | $SUDO_CMD tee "${menus_dir}/$name.desktop" >/dev/null
+        $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- \
+            "${menus_dir}/$name.desktop"
+        $SUDO_CMD chmod +x "${menus_dir}/$name.desktop"
+    done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 1 -type d \
         "${IGNORE_FIND_PATHS[@]}" \
-        -print0 2>/dev/null |
-        sort --zero-terminated |
-        while IFS= read -r -d "" filename; do
-            name=${filename##*/}
-            dir_items=$($SUDO_CMD find -L "$filename" -mindepth 1 -maxdepth 1 \
-                "${IGNORE_FIND_PATHS[@]}" \
-                -printf "%f\n" 2>/dev/null | sort | tr $'\n' ";")
-            if [[ -z "$dir_items" ]]; then
-                continue
-            fi
-
-            {
-                printf "%s\n" "[Desktop Entry]"
-                printf "%s\n" "Type=Menu"
-                printf "%s\n" "Name=$name"
-                printf "%s\n" "ItemsList=$dir_items"
-
-            } | $SUDO_CMD tee "${menus_dir}/$name.desktop" >/dev/null
-            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- \
-                "${menus_dir}/$name.desktop"
-            $SUDO_CMD chmod +x "${menus_dir}/$name.desktop"
-        done
+        -print0 2>/dev/null | sort --zero-terminated)
 
     # Create a '.desktop' file for each script.
-    $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+    while IFS= read -r -d $'\0' filename; do
+        name=${filename##*/}
+
+        # Set the 'MIME' requirements.
+        local par_recursive=""
+        local par_select_mime=""
+        par_recursive=$(_get_par_value "$filename" "par_recursive")
+        par_select_mime=$(_get_par_value "$filename" "par_select_mime")
+
+        if [[ -z "$par_select_mime" ]]; then
+            local par_type=""
+            par_type=$(_get_par_value "$filename" "par_type")
+
+            case "$par_type" in
+            "directory") par_select_mime="inode/directory" ;;
+            "all") par_select_mime="all/all" ;;
+            "file") par_select_mime="all/allfiles" ;;
+            *) par_select_mime="all/allfiles" ;;
+            esac
+        fi
+
+        if [[ "$par_recursive" == "true" ]]; then
+            case "$par_select_mime" in
+            "inode/directory") : ;;
+            "all/all") : ;;
+            "all/allfiles") par_select_mime="all/all" ;;
+            *) par_select_mime+=";inode/directory" ;;
+            esac
+        fi
+
+        par_select_mime="$par_select_mime;"
+        # shellcheck disable=SC2001
+        par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
+
+        local menu_file=""
+        menu_file="${menus_dir}/${name}.desktop"
+        {
+            printf "%s\n" "[Desktop Entry]"
+            printf "%s\n" "Type=Action"
+            printf "%s\n" "Name=$name"
+            printf "%s\n" "Profiles=scriptAction"
+            printf "\n"
+            printf "%s\n" "[X-Action-Profile scriptAction]"
+            printf "%s\n" "MimeTypes=$par_select_mime"
+            printf "%s\n" "Exec=bash \"$filename\" %F"
+        } | $SUDO_CMD tee "$menu_file" >/dev/null
+        $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menu_file"
+        $SUDO_CMD chmod +x "$menu_file"
+    done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" \
-        -print0 2>/dev/null |
-        sort --zero-terminated |
-        while IFS= read -r -d "" filename; do
-            name=${filename##*/}
-
-            # Set the 'MIME' requirements.
-            local par_recursive=""
-            local par_select_mime=""
-            par_recursive=$(_get_par_value "$filename" "par_recursive")
-            par_select_mime=$(_get_par_value "$filename" "par_select_mime")
-
-            if [[ -z "$par_select_mime" ]]; then
-                local par_type=""
-                par_type=$(_get_par_value "$filename" "par_type")
-
-                case "$par_type" in
-                "directory") par_select_mime="inode/directory" ;;
-                "all") par_select_mime="all/all" ;;
-                "file") par_select_mime="all/allfiles" ;;
-                *) par_select_mime="all/allfiles" ;;
-                esac
-            fi
-
-            if [[ "$par_recursive" == "true" ]]; then
-                case "$par_select_mime" in
-                "inode/directory") : ;;
-                "all/all") : ;;
-                "all/allfiles") par_select_mime="all/all" ;;
-                *) par_select_mime+=";inode/directory" ;;
-                esac
-            fi
-
-            par_select_mime="$par_select_mime;"
-            # shellcheck disable=SC2001
-            par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
-
-            local menu_file=""
-            menu_file="${menus_dir}/${name}.desktop"
-            {
-                printf "%s\n" "[Desktop Entry]"
-                printf "%s\n" "Type=Action"
-                printf "%s\n" "Name=$name"
-                printf "%s\n" "Profiles=scriptAction"
-                printf "\n"
-                printf "%s\n" "[X-Action-Profile scriptAction]"
-                printf "%s\n" "MimeTypes=$par_select_mime"
-                printf "%s\n" "Exec=bash \"$filename\" %F"
-            } | $SUDO_CMD tee "$menu_file" >/dev/null
-            $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$menu_file"
-            $SUDO_CMD chmod +x "$menu_file"
-        done
+        -print0 2>/dev/null | sort --zero-terminated)
 }
 
 _step_install_menus_thunar() {
@@ -1240,78 +1218,77 @@ _step_install_menus_thunar() {
         local name=""
         local submenu=""
         local unique_id=""
-        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
-            "${IGNORE_FIND_PATHS[@]}" \
-            -print0 2>/dev/null |
-            sort --zero-terminated |
-            while IFS= read -r -d "" filename; do
-                name=$(basename -- "$filename")
-                submenu=$(dirname -- "$filename" |
-                    sed "s|.*scripts/|Scripts/|g")
 
-                printf "%s\n" "<action>"
-                printf "\t%s\n" "<icon></icon>"
-                printf "\t%s\n" "<name>$name</name>"
-                printf "\t%s\n" "<submenu>$submenu</submenu>"
+        while IFS= read -r -d $'\0' filename; do
+            name=$(basename -- "$filename")
+            submenu=$(dirname -- "$filename" |
+                sed "s|.*scripts/|Scripts/|g")
 
-                # Generate a unique id.
-                unique_id=$(md5sum <<<"$submenu$name" 2>/dev/null |
-                    sed "s|[^0-9]*||g" | cut -c 1-8)
-                printf "\t%s\n" "<unique-id>$unique_id</unique-id>"
+            printf "%s\n" "<action>"
+            printf "\t%s\n" "<icon></icon>"
+            printf "\t%s\n" "<name>$name</name>"
+            printf "\t%s\n" "<submenu>$submenu</submenu>"
 
-                printf "\t%s\n" "<command>bash &quot;$filename&quot; %F</command>"
-                printf "\t%s\n" "<description></description>"
+            # Generate a unique id.
+            unique_id=$(md5sum <<<"$submenu$name" 2>/dev/null |
+                sed "s|[^0-9]*||g" | cut -c 1-8)
+            printf "\t%s\n" "<unique-id>$unique_id</unique-id>"
 
-                # Set the min/max files requirements.
-                local par_min_items=""
-                local par_max_items=""
-                par_min_items=$(_get_par_value "$filename" "par_min_items")
-                par_max_items=$(_get_par_value "$filename" "par_max_items")
-                if [[ -n "$par_min_items" ]] && [[ -n "$par_max_items" ]]; then
-                    printf "\t%s\n" "<range>$par_min_items-$par_max_items</range>"
-                else
-                    printf "\t%s\n" "<range></range>"
-                fi
+            printf "\t%s\n" "<command>bash &quot;$filename&quot; %F</command>"
+            printf "\t%s\n" "<description></description>"
 
-                printf "\t%s\n" "<patterns>*</patterns>"
+            # Set the min/max files requirements.
+            local par_min_items=""
+            local par_max_items=""
+            par_min_items=$(_get_par_value "$filename" "par_min_items")
+            par_max_items=$(_get_par_value "$filename" "par_max_items")
+            if [[ -n "$par_min_items" ]] && [[ -n "$par_max_items" ]]; then
+                printf "\t%s\n" "<range>$par_min_items-$par_max_items</range>"
+            else
+                printf "\t%s\n" "<range></range>"
+            fi
 
-                # Set the type requirements.
-                local par_recursive=""
-                local par_type=""
-                par_recursive=$(_get_par_value "$filename" "par_recursive")
-                par_type=$(_get_par_value "$filename" "par_type")
-                if [[ "$par_type" == "all" ]] ||
-                    [[ "$par_type" == "directory" ]] ||
-                    [[ "$par_recursive" == "true" ]]; then
-                    printf "\t%s\n" "<directories/>"
-                fi
+            printf "\t%s\n" "<patterns>*</patterns>"
 
-                # Set the 'MIME' requirements.
-                local par_select_mime=""
-                par_select_mime=$(_get_par_value "$filename" "par_select_mime")
+            # Set the type requirements.
+            local par_recursive=""
+            local par_type=""
+            par_recursive=$(_get_par_value "$filename" "par_recursive")
+            par_type=$(_get_par_value "$filename" "par_type")
+            if [[ "$par_type" == "all" ]] ||
+                [[ "$par_type" == "directory" ]] ||
+                [[ "$par_recursive" == "true" ]]; then
+                printf "\t%s\n" "<directories/>"
+            fi
 
-                if [[ -n "$par_select_mime" ]]; then
-                    if [[ "$par_select_mime" == *"audio"* ]]; then
-                        printf "\t%s\n" "<audio-files/>"
-                    fi
-                    if [[ "$par_select_mime" == *"image"* ]]; then
-                        printf "\t%s\n" "<image-files/>"
-                    fi
-                    if [[ "$par_select_mime" == *"text"* ]]; then
-                        printf "\t%s\n" "<text-files/>"
-                    fi
-                    if [[ "$par_select_mime" == *"video"* ]]; then
-                        printf "\t%s\n" "<video-files/>"
-                    fi
-                else
+            # Set the 'MIME' requirements.
+            local par_select_mime=""
+            par_select_mime=$(_get_par_value "$filename" "par_select_mime")
+
+            if [[ -n "$par_select_mime" ]]; then
+                if [[ "$par_select_mime" == *"audio"* ]]; then
                     printf "\t%s\n" "<audio-files/>"
+                fi
+                if [[ "$par_select_mime" == *"image"* ]]; then
                     printf "\t%s\n" "<image-files/>"
+                fi
+                if [[ "$par_select_mime" == *"text"* ]]; then
                     printf "\t%s\n" "<text-files/>"
+                fi
+                if [[ "$par_select_mime" == *"video"* ]]; then
                     printf "\t%s\n" "<video-files/>"
                 fi
-                printf "\t%s\n" "<other-files/>"
-                printf "%s\n" "</action>"
-            done
+            else
+                printf "\t%s\n" "<audio-files/>"
+                printf "\t%s\n" "<image-files/>"
+                printf "\t%s\n" "<text-files/>"
+                printf "\t%s\n" "<video-files/>"
+            fi
+            printf "\t%s\n" "<other-files/>"
+            printf "%s\n" "</action>"
+        done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+            "${IGNORE_FIND_PATHS[@]}" \
+            -print0 2>/dev/null | sort --zero-terminated)
 
         printf "%s\n" "</actions>"
     } | $SUDO_CMD tee "$menus_file" >/dev/null
