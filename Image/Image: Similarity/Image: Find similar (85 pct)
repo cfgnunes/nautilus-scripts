@@ -85,8 +85,8 @@ _main_task() {
 
         local std_output=""
         std_output=$(_storage_text_read_all)
-        std_output=$(sort --unique <<<"$std_output")
         _storage_text_clean
+        std_output=$(sort --unique <<<"$std_output")
 
         # Skip if less than two similar items.
         local items_count=""

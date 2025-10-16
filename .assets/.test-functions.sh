@@ -269,9 +269,9 @@ __run_storage_text() {
 
     expected_output="Line"$'\n'"Line"$'\n'"Line"
     output=$(_storage_text_read_all)
-    __test_equal "Write/read the compiled result." "$expected_output" "$output"
-
     _storage_text_clean
+
+    __test_equal "Write/read the compiled result." "$expected_output" "$output"
 
     _storage_text_write "Line"
     _storage_text_write "Line"
