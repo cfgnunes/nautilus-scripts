@@ -8,36 +8,23 @@ source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
     local input_files=""
-    local output_dir=""
+    local std_output=""
 
     # Execute initial checks.
     _check_dependencies ""
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=file; par_recursive=true")
-
-    # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" "$output_dir"
-
-    local std_output=""
-    std_output=$(_storage_text_read_all)
-    std_output=$(sort -h --reverse <<<"$std_output") # Sort the result.
-    std_output=$(head -n 15 <<<"$std_output")
-
-    _display_list_box "$std_output" "par_columns='--column:Size,--column:File'; par_item_name='largest files'; par_action=open_location; par_checkbox=true"
-}
-
-_main_task() {
-    local input_file=$1
-    local output_dir=$2
-    local std_output=""
+    input_files=$(_get_files "par_type=all")
 
     # Run the main process.
-    std_output=$(du -h -- "$input_file" 2>/dev/null)
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|\([^ ]*\)\t\(.*\)|\1$FIELD_SEPARATOR\2|g" <<<"$std_output")
+    # shellcheck disable=SC2086
+    std_output=$(find $input_files -type f ! -path "$IGNORE_FIND_PATH" \
+        -printf "%s$FIELD_SEPARATOR%p\n" 2>/dev/null |
+        sort -n -r | head -n 15 |
+        numfmt --to=iec --suffix=B --delimiter="$FIELD_SEPARATOR" --field=1)
+
     std_output=$(_text_remove_pwd "$std_output")
 
-    _storage_text_write_ln "$std_output"
+    _display_list_box "$std_output" "par_columns='--column:Size,--column:File'; par_item_name='largest files'; par_action=open_location; par_checkbox=true"
 }
 
 _main "$@"
