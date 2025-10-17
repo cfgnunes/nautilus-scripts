@@ -23,6 +23,7 @@ PREFIX_OUTPUT_DIR="Output"     # Basename of 'Output' directory.
 TEMP_DIR=$(mktemp --directory)
 TEMP_DIR_ITEMS_TO_REMOVE="$TEMP_DIR/items_to_remove"
 TEMP_DIR_LOGS="$TEMP_DIR/logs"
+TEMP_DIR_FILENAME_LOCKS="$TEMP_DIR/filename_locks"
 TEMP_DIR_STORAGE_TEXT="$TEMP_DIR/storage_text"
 TEMP_DIR_TASK="$TEMP_DIR/task"
 
@@ -67,6 +68,7 @@ readonly \
     TEMP_CONTROL_WAIT_BOX_KDIALOG \
     TEMP_DATA_TEXT_BOX \
     TEMP_DIR \
+    TEMP_DIR_FILENAME_LOCKS \
     TEMP_DIR_ITEMS_TO_REMOVE \
     TEMP_DIR_LOGS \
     TEMP_DIR_STORAGE_TEXT \
@@ -89,6 +91,14 @@ TEMP_DATA_TASK=""
 
 # DESCRIPTION:
 #
+#   '$TEMP_DIR_FILENAME_LOCKS':
+#       This directory is used to store temporary lock directories created by
+#       the '_get_filename_next_suffix' function during concurrent executions.
+#       Each process creates a uniquely named subdirectory here (using
+#       'mkdir'), which acts as a lightweight synchronization mechanism. The
+#       idea to prevent name conflicts by race conditions when multiple
+#       processes attempt to generate filenames simultaneously.
+#
 #   '$TEMP_DIR_ITEMS_TO_REMOVE':
 #       This directory is used for temporary items scheduled for removal after
 #       the scripts' tasks finish executing.
@@ -105,6 +115,7 @@ TEMP_DATA_TASK=""
 #       This directory is used by the '_make_temp_dir' and '_make_temp_file'
 #       functions to store temporary files created during the scripts' tasks.
 
+mkdir -p "$TEMP_DIR_FILENAME_LOCKS"
 mkdir -p "$TEMP_DIR_ITEMS_TO_REMOVE"
 mkdir -p "$TEMP_DIR_LOGS"
 mkdir -p "$TEMP_DIR_STORAGE_TEXT"
@@ -341,6 +352,7 @@ _run_function_parallel() {
         TEMP_CONTROL_DISPLAY_LOCKED \
         TEMP_DATA_TASK \
         TEMP_DATA_TEXT_BOX \
+        TEMP_DIR_FILENAME_LOCKS \
         TEMP_DIR_ITEMS_TO_REMOVE \
         TEMP_DIR_LOGS \
         TEMP_DIR_STORAGE_TEXT \
@@ -1195,9 +1207,17 @@ _get_filename_full_path() {
 # FUNCTION: _get_filename_next_suffix
 #
 # DESCRIPTION:
-# This function generates a unique filename by adding a numeric suffix to
-# the base filename if a file with the same name already exists. It ensures
-# that the new filename does not overwrite an existing file.
+# This function generates a unique filename by adding a numeric suffix (e.g.
+# "file (2)", "file (3)", ...) if a file with the same name already exists.
+# This function is designed to work safely when multiple processes run
+# concurrently, preventing race conditions that could otherwise lead to
+# duplicated or overwritten files.
+#
+# HOW IT WORKS:
+# To avoid race conditions, this function uses 'mkdir' as a synchronization.
+# The command 'mkdir' is ATOMIC, meaning that only one process can successfully
+# create a directory with a given name at any instant. If another process tries
+# to create the same directory at the same time, it will fail immediately.
 #
 # PARAMETERS:
 #   $1 (filename): The input filename or path. This can be an absolute or
@@ -1220,12 +1240,34 @@ _get_filename_next_suffix() {
     # Avoid overwriting a file. If there is a file with the same name,
     # try to add a suffix, as 'file (2)', 'file (3)', ...
     local count=2
-    while [[ -e "$filename_result" ]]; do
+    local max_attempts=10000
+
+    while ((count < max_attempts)); do
+
+        # Create a temporary lock directory under '$TEMP_DIR_FILENAME_LOCKS'.
+        # The directory name mirrors the candidate filename and serves as an
+        # atomic claim for that name.
+        local filename_lock="$TEMP_DIR_FILENAME_LOCKS/"
+        filename_lock+=$(basename -- "$filename_result")
+
+        # The 'mkdir' succeeds only if the directory does NOT already exist.
+        # This makes the operation atomic:  only one process can succeed here.
+        if mkdir "$filename_lock" 2>/dev/null &&
+            [[ ! -e "$filename_result" ]]; then
+
+            # Return the chosen filename and exit.
+            printf "%s" "$filename_result"
+            return 0
+        fi
+
+        # If mkdir failed, another process of the task claimed this name,
+        # try the next suffix.
         filename_result="$filename_base ($count)$filename_extension"
         ((count++))
     done
 
-    printf "%s" "$filename_result"
+    # Fallback: if all attempts fail (very unlikely), return the original name.
+    printf "%s" "$filename"
 }
 
 # FUNCTION: _make_temp_dir
