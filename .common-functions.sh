@@ -2658,8 +2658,6 @@ _get_filenames_filemanager() {
 #   - "par_skip_extension": Skips files with specific extensions.
 #   - "par_skip_encoding": Skips files with specific encodings.
 #   - "par_sort_list": If 'true', sorts the list of files.
-#   - "par_validate_conflict": If 'true', validates for filenames with the
-#     same base name.
 _get_files() {
     local parameters=$1
     local input_files=""
@@ -2675,7 +2673,6 @@ _get_files() {
     local par_skip_extension=""
     local par_sort_list="false"
     local par_type="file"
-    local par_validate_conflict=""
 
     # Evaluate the values from the '$parameters' variable.
     eval "$parameters"
@@ -2795,51 +2792,8 @@ _get_files() {
         input_files=$(_str_sort "$input_files" "$FIELD_SEPARATOR" "false")
     fi
 
-    # Check for filename conflicts (files with same base name).
-    if [[ "$par_validate_conflict" == "true" ]]; then
-        _validate_conflict_filenames "$input_files"
-    fi
-
     # Return the final processed file list.
     printf "%s" "$input_files"
-}
-
-# FUNCTION: _validate_conflict_filenames
-#
-# DESCRIPTION:
-# This function checks if there are any files with the same base name in
-# the provided list of input files.
-#
-# PARAMETERS:
-#   $1 (input_files): A string containing a list of file paths, where
-#      each file path can include extensions. This list is checked for
-#      duplicates based on the base file name (excluding extensions).
-#
-# EXAMPLE:
-#   - Input: "file1.txt file2.txt file1.jpg"
-#   - Output: An error box will be displayed indicating that "file1" is
-#     duplicated.
-_validate_conflict_filenames() {
-    local input_files=$1
-    local filenames=""
-
-    filenames=$(printf "%s" "$input_files" | tr "$FIELD_SEPARATOR" "\0" |
-        sed -z "s|/\.|//|" | # Ignore hidden files without extension.
-        sed -z --regexp-extended \
-            "s|(\.tar)?\.[a-z0-9_~-]{0,15}$||I" | # Remove file extensions.
-        sort --zero-terminated --version-sort |   # Sort files.
-        uniq --zero-terminated --repeated |       # Find duplicate base names.
-        tr "\0" "$FIELD_SEPARATOR")
-
-    # If duplicates are found, display an error and exit the script.
-    if [[ -n "$filenames" ]]; then
-        local basenames=""
-        # shellcheck disable=SC2086
-        basenames=$(basename --multiple -- $filenames)
-        _display_error_box \
-            "There are selected files with the same base name:\n$basenames"
-        _exit_script
-    fi
 }
 
 # FUNCTION: _validate_file_mime

@@ -13,7 +13,7 @@ _main() {
     TEMP_DATA_TASK="spa"
     _check_dependencies "tesseract-lang-$TEMP_DATA_TASK"
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=file; par_select_mime=image/; par_validate_conflict=true")
+    input_files=$(_get_files "par_type=file; par_select_mime=image/")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
