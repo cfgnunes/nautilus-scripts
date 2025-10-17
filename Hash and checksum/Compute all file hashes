@@ -31,7 +31,7 @@ _main_task() {
     local status="🟢"
 
     # Run the main process.
-    std_output=$(rhash --printf="CRC32: %c\nMD5: %m\nSHA-1: %h\nSHA-224: %{sha-224}\nSHA-256: %{sha-256}\nSHA-384: %{sha-384}\nSHA-512: %{sha-512}\n " -- "$input_file" 2>/dev/null)
+    std_output=$(rhash --printf="CRC32:\t\t%{crc32}\nMD5:\t\t%{md5}\nSHA-1:\t\t%h\nSHA-256:\t%{sha-256}\nSHA-512:\t%{sha-512}\nSHA3-256:\t%{sha3-256}\nSHA3-512:\t%{sha3-512}\nBLAKE2s:\t%{blake2s}\nBLAKE2b:\t%{blake2b}\n " -- "$input_file" 2>/dev/null)
 
     if [[ -z "$std_output" ]]; then
         status="🔴"
