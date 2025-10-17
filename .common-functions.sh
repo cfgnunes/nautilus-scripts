@@ -1637,9 +1637,6 @@ _display_info_box() {
 #   - "par_checkbox_value": A boolean-like string ('true' or 'false')
 #     defining the default state of the checkboxes (checked or unchecked)
 #     when the list is initially displayed. Defaults to 'false'.
-#   - "par_editable": A boolean-like string ('true' or 'false') indicating
-#     whether the list items can be copied/edited directly by the user within
-#     the dialog interface. Defaults to 'false'.
 _display_list_box() {
     local message=$1
     local parameters=$2
@@ -1651,7 +1648,6 @@ _display_list_box() {
     local par_resolve_links="true"
     local par_checkbox="false"
     local par_checkbox_value="false"
-    local par_editable="false"
 
     # Evaluate the values from the '$parameters' variable.
     eval "$parameters"
@@ -1665,7 +1661,7 @@ _display_list_box() {
     elif _command_exists "zenity"; then
         _display_list_box_zenity "$message" "$par_columns" \
             "$par_item_name" "$par_action" "$par_resolve_links" \
-            "$par_checkbox" "$par_checkbox_value" "$par_editable"
+            "$par_checkbox" "$par_checkbox_value"
     elif _command_exists "kdialog"; then
         _display_list_box_kdialog "$message" "$par_columns"
     elif _command_exists "xmessage"; then
@@ -1696,14 +1692,12 @@ _display_list_box_zenity() {
     local par_resolve_links=$5
     local par_checkbox=$6
     local par_checkbox_value=$7
-    local par_editable=$8
 
     local columns_count=0
     local items_count=0
     local selected_items=""
     local message_select=""
     local header_label=""
-    local editable_parameter=""
 
     # Transform to uppercase.
     par_checkbox_value=${par_checkbox_value^^}
@@ -1711,10 +1705,6 @@ _display_list_box_zenity() {
     if [[ "$par_checkbox" == "true" ]]; then
         par_columns="--column=Select$FIELD_SEPARATOR$par_columns"
         par_columns="--checklist$FIELD_SEPARATOR$par_columns"
-    fi
-
-    if [[ "$par_editable" == "true" ]]; then
-        editable_parameter="--editable"
     fi
 
     if [[ -n "$par_columns" ]]; then
@@ -1782,7 +1772,7 @@ _display_list_box_zenity() {
         # large.
         # shellcheck disable=SC2086
         selected_items=$(
-            zenity --title "$(_get_script_name)" --list $editable_parameter \
+            zenity --title "$(_get_script_name)" --list \
                 --multiple --separator="$FIELD_SEPARATOR" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" \
@@ -1793,7 +1783,7 @@ _display_list_box_zenity() {
         # Default strategy: pass '$message' directly as arguments (fast).
         # shellcheck disable=SC2086
         selected_items=$(
-            zenity --title "$(_get_script_name)" --list $editable_parameter \
+            zenity --title "$(_get_script_name)" --list \
                 --multiple --separator="$FIELD_SEPARATOR" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" \
