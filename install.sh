@@ -692,6 +692,12 @@ _step_install_scripts() {
     if [[ "$OPT_REMOVE_SCRIPTS" == "true" ]]; then
         _echo_info "> Removing previously installed scripts..."
         _delete_items "$INSTALL_DIR"
+        # Also remove application menu shortcuts if they exist
+        local app_menus_path="$INSTALL_HOME/.local/share/applications/$APP_MENUS_DIR"
+        if [[ -d "$app_menus_path" ]]; then
+            _echo_info "> Removing application menu shortcuts..."
+            _delete_items "$app_menus_path"
+        fi
     fi
 
     _echo_info "> Installing the scripts..."
