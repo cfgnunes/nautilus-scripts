@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2001
 
-# This file contains common functions that the scripts will source.
+# This file contains shared functions and constants sourced by all scripts.
+
+# =============================================================================
+# PROJECT: Enhanced File Manager Actions for Linux
+# AUTHOR: Cristiano Fraga G. Nunes
+# REPOSITORY: https://github.com/cfgnunes/nautilus-scripts
+# LICENSE: MIT License
+# VERSION: 25.3.2
+# =============================================================================
 
 set -u
 
