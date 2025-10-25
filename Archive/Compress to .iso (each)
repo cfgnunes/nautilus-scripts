@@ -43,7 +43,7 @@ _main_task() {
     _directory_push "$input_file" || return 1
 
     if _command_exists "xorriso"; then
-        std_output=$(xorriso -outdev "$output_file" -volid "$volume_id" -joliet on -rockridge on -map . / -charset "utf-8" 2>&1)
+        std_output=$(xorriso -outdev "$output_file" -volid "$volume_id" -preparer_id "" -joliet on -rockridge on -map . / -charset "utf-8" 2>&1)
     elif _command_exists "genisoimage"; then
         std_output=$(genisoimage -input-charset "utf-8" -o "$output_file" -V "$volume_id" -A "" -sysid "" -J -R . 2>&1)
     elif _command_exists "mkisofs"; then
