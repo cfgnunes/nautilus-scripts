@@ -11,7 +11,9 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _command_exists "bsdtar" || _check_dependencies "zip"
+    if ! _command_exists "7za" && ! _command_exists "bsdtar"; then
+        _check_dependencies "zip"
+    fi
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
@@ -42,6 +44,8 @@ _main_task() {
         # Check for available compression tools and compress the directory accordingly.
         if _command_exists "zip"; then
             std_output=$(zip --symlinks --quiet --recurse-paths "$output_file" -- . 2>&1)
+        elif _command_exists "7za"; then
+            std_output=$(7za a "$output_file" -- . 2>&1)
         elif _command_exists "bsdtar"; then
             std_output=$(bsdtar --strip-components 1 -a -cf "$output_file" -- . 2>&1)
         fi
@@ -56,6 +60,8 @@ _main_task() {
         # Check for available compression tools and compress the file accordingly.
         if _command_exists "zip"; then
             std_output=$(zip --symlinks --quiet --recurse-paths "$output_file" -- "$input_file_basename" 2>&1)
+        elif _command_exists "7za"; then
+            std_output=$(7za a "$output_file" -- "$input_file_basename" 2>&1)
         elif _command_exists "bsdtar"; then
             std_output=$(bsdtar -a -cf "$output_file" -- "$input_file_basename" 2>&1)
         fi
