@@ -46,7 +46,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 - **Direct usage**: Allows direct usage without requiring input parameters.
 - **Log file**: Produces an `Errors.log` file when a task finishes with an error.
 - **File manager compatibility**: Designed for major file managers like GNOME Files (Nautilus), Dolphin, Caja, Nemo, and Thunar.
-- **Distro compatibility**: Works on major GNU/Linux distributions, such as Ubuntu, Debian, Fedora, and Arch Linux.
+- **Distro compatibility**: Works on major GNU/Linux distributions, such as Debian, Ubuntu, Fedora, and Arch Linux.
 - **Remote file support:** Works with files stored on remote servers.
 - **Easy adaptation**: Scripts can be easily copied and adapted for other purposes.
 - **Bash implementation**: All scripts are implemented in Bash. So, the scripts work well in the shell (without a graphical interface) and file managers.
@@ -99,15 +99,15 @@ File managers compatibility:
 
 Most scripts have been tested on the following GNU/Linux distributions:
 
-- Ubuntu/Debian
-  - Ubuntu 14.04, 16.04, 18.04, 20.04, 22.04, 24.04
+- Debian/Ubuntu
   - Debian 12, 13 (GNOME and KDE)
+  - Ubuntu 16.04, 18.04, 20.04, 22.04, 24.04
   - Kubuntu 22.04, 24.04
-  - Lubuntu 22.04, 24.04
   - Xubuntu 23.10, 24.04
+  - Lubuntu 22.04, 24.04
   - KDE neon 2024, 2025
   - Mint 21, 22 (Cinnamon, MATE and Xfce)
-  - Zorin OS Core 17.1, 17.2
+  - Zorin OS Core 17, 18
 - Fedora
   - Workstation 39, 40, 41, 42
 - Arch Linux
