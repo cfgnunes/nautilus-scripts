@@ -11,7 +11,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "zip"
+    _command_exists "bsdtar" || _check_dependencies "zip"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
@@ -38,7 +38,13 @@ _main_task() {
 
         # Change to the directory to perform compression.
         _directory_push "$input_file" || return 1
-        std_output=$(zip --symlinks --quiet --recurse-paths "$output_file" -- . 2>&1)
+
+        # Check for available compression tools and compress the directory accordingly.
+        if _command_exists "zip"; then
+            std_output=$(zip --symlinks --quiet --recurse-paths "$output_file" -- . 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar --strip-components 1 -a -cf "$output_file" -- . 2>&1)
+        fi
     else
         # If the input is a file, change to its parent directory.
         _directory_push "$(_get_filename_dir "$input_file")" || return 1
@@ -47,7 +53,12 @@ _main_task() {
         local input_file_basename=""
         input_file_basename=$(basename -- "$input_file")
 
-        std_output=$(zip --symlinks --quiet --recurse-paths "$output_file" -- "$input_file_basename" 2>&1)
+        # Check for available compression tools and compress the file accordingly.
+        if _command_exists "zip"; then
+            std_output=$(zip --symlinks --quiet --recurse-paths "$output_file" -- "$input_file_basename" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(bsdtar -a -cf "$output_file" -- "$input_file_basename" 2>&1)
+        fi
     fi
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
     _directory_pop || return 1
