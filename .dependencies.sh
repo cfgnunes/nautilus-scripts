@@ -699,17 +699,6 @@ declare -A DEPENDENCIES_MAP=(
         brew:   xz
     "
 
-    ["zip"]="
-        pkg:    zip
-        apt:    zip
-        dnf:    zip
-        pacman: zip
-        nix:    zip
-        zypper: zip
-        guix:   zip
-        brew:   zip
-    "
-
     ["zpaq"]="
         pkg:    zpaq
         apt:    zpaq

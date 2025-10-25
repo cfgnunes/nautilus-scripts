@@ -11,8 +11,8 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    if ! _command_exists "7za" && ! _command_exists "bsdtar"; then
-        _check_dependencies "zip"
+    if ! _command_exists "zip" && ! _command_exists "bsdtar"; then
+        _check_dependencies "7za"
     fi
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all")
