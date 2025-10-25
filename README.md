@@ -100,7 +100,7 @@ File managers compatibility:
 Most scripts have been tested on the following GNU/Linux distributions:
 
 - Debian/Ubuntu
-  - Debian 12, 13 (GNOME and KDE)
+  - Debian 12, 13 (GNOME, KDE and Xfce)
   - Ubuntu 16.04, 18.04, 20.04, 22.04, 24.04
   - Kubuntu 22.04, 24.04
   - Xubuntu 23.10, 24.04
