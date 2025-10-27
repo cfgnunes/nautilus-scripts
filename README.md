@@ -2,7 +2,7 @@
 
 This project offers a collection of file manager actions, also known as _Nautilus Scripts_, designed to enhance the functionality of file managers. With intuitive right-click options for files and directories, it simplifies tasks, boosts productivity, and provides a more efficient workflow.
 
-![screenshot](.assets/screenshot.svg)
+![screenshot](https://cfgnunes.github.io/nautilus-scripts/screenshot.svg)
 
 ## Installation
 
