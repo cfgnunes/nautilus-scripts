@@ -37,7 +37,7 @@ _main_task() {
     local tag_album=""
     local tag_artist=""
     local tag_title=""
-    tag_duration=$(grep -m1 "^Duration:" <<<"$std_output" | cut -d ":" -f 2-)
+    tag_duration=$(grep -m1 "^Duration:" <<<"$std_output" | cut -d ":" -f 2- | sed "s|\.[0-9][0-9]*$||")
     tag_album=$(grep -m1 "^Album:" <<<"$std_output" | cut -d ":" -f 2-)
     tag_artist=$(grep -m1 "^Performer:" <<<"$std_output" | cut -d ":" -f 2-)
     tag_title=$(grep -m1 "^Title:" <<<"$std_output" | cut -d ":" -f 2-)
