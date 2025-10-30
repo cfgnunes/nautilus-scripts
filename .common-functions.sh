@@ -1469,29 +1469,38 @@ _get_working_directory() {
         working_dir=$CAJA_SCRIPT_CURRENT_URI
     fi
 
-    # If the working directory is a URI, decode it.
-    if [[ -n "$working_dir" ]] && [[ "$working_dir" == "file://"* ]]; then
-        # Decode the URI to get the directory path.
+    case "$working_dir" in
+    "file://"*)
+        # If the working directory is a URI, decode it.
         working_dir=$(_text_uri_decode "$working_dir")
-    else
+        ;;
+    *"search://"* | "recent://"* | "trash://"*)
         # Cases:
-        # - Files selected in the search screen;
-        # - Files opened remotely (sftp, smb);
+        # - Files selected in the search screen ('x-nautilus-search://');
+        # - Files selected in other screen ('recent://', 'trash://');
+        working_dir=${HOME:-}
+        ;;
+    *)
+        # Cases:
+        # - Files opened remotely ('sftp://', 'smb://');
         # - File managers that don't set current directory variables;
         #
-        # Strategy: Get the directory from first selected file's path. Using
-        # 'pwd' command is unreliable as it reflects the shell's working
-        # directory, not necessarily the file manager's current view.
+        # Strategy: Get the directory from first selected file's path.
         local item_1=""
         item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
 
         if [[ -n "$item_1" ]]; then
             # Get the directory name of the first input file.
             working_dir=$(_get_filename_dir "$item_1")
-        else
-            # As a last resort, use the 'pwd' command.
-            working_dir=$(pwd)
         fi
+        ;;
+    esac
+
+    if [[ -z "$working_dir" ]]; then
+        # As a last resort, use the 'pwd' command. Using 'pwd' command is
+        # unreliable as it reflects the shell's working directory, not
+        # necessarily the file manager's current view.
+        working_dir=$(pwd)
     fi
 
     printf "%s" "$working_dir"
