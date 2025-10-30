@@ -2716,7 +2716,7 @@ _get_files() {
     # Check if there are input files.
     if (($(_get_items_count "$input_files") == 0)); then
         # Detect if running in a supported file manager context.
-        if compgen -v | grep --quiet -m1 "_SCRIPT_SELECTED_URIS"; then
+        if compgen -v | grep --quiet -m1 "_SCRIPT_SELECTED_URIS$"; then
             if [[ "$par_type" != "file" ]] ||
                 [[ "$par_recursive" == "true" ]]; then
                 # Return the current working directory if no files have been
@@ -2792,7 +2792,7 @@ _get_files() {
     # working directory.
     if (($(_get_items_count "$input_files") == 0)); then
         # Detect if running in a supported file manager context.
-        if compgen -v | grep --quiet -m1 "_SCRIPT_SELECTED_URIS"; then
+        if compgen -v | grep --quiet -m1 "_SCRIPT_SELECTED_URIS$"; then
             if [[ "$par_type" == "directory" ]]; then
                 # Return the current working directory if no files have been
                 # selected.
