@@ -1461,12 +1461,10 @@ _get_working_directory() {
     local working_dir=""
 
     # Try to use the information provided by the file manager.
-    if [[ -v "NAUTILUS_SCRIPT_CURRENT_URI" ]]; then
-        working_dir=$NAUTILUS_SCRIPT_CURRENT_URI
-    elif [[ -v "NEMO_SCRIPT_CURRENT_URI" ]]; then
-        working_dir=$NEMO_SCRIPT_CURRENT_URI
-    elif [[ -v "CAJA_SCRIPT_CURRENT_URI" ]]; then
-        working_dir=$CAJA_SCRIPT_CURRENT_URI
+    local var=""
+    var=$(compgen -v | grep -m1 "_SCRIPT_CURRENT_URI$")
+    if [[ -n "$var" ]]; then
+        eval "working_dir=\$$var"
     fi
 
     case "$working_dir" in
@@ -2624,12 +2622,10 @@ _get_filenames_filemanager() {
     local input_files=""
 
     # Try to use the information provided by the file manager.
-    if [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]]; then
-        input_files=$NAUTILUS_SCRIPT_SELECTED_URIS
-    elif [[ -v "NEMO_SCRIPT_SELECTED_URIS" ]]; then
-        input_files=$NEMO_SCRIPT_SELECTED_URIS
-    elif [[ -v "CAJA_SCRIPT_SELECTED_URIS" ]]; then
-        input_files=$CAJA_SCRIPT_SELECTED_URIS
+    local var=""
+    var=$(compgen -v | grep -m1 "_SCRIPT_SELECTED_URIS$")
+    if [[ -n "$var" ]]; then
+        eval "input_files=\$$var"
     fi
 
     if [[ -n "$input_files" ]]; then
@@ -2697,9 +2693,7 @@ _get_files() {
     # Check if there are input files.
     if (($(_get_items_count "$input_files") == 0)); then
         # Detect if running in a supported file manager context.
-        if [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]] ||
-            [[ -v "NEMO_SCRIPT_SELECTED_URIS" ]] ||
-            [[ -v "CAJA_SCRIPT_SELECTED_URIS" ]]; then
+        if compgen -v | grep --quiet -m1 "_SCRIPT_SELECTED_URIS"; then
             if [[ "$par_type" != "file" ]] ||
                 [[ "$par_recursive" == "true" ]]; then
                 # Return the current working directory if no files have been
@@ -2775,9 +2769,7 @@ _get_files() {
     # working directory.
     if (($(_get_items_count "$input_files") == 0)); then
         # Detect if running in a supported file manager context.
-        if [[ -v "NAUTILUS_SCRIPT_SELECTED_URIS" ]] ||
-            [[ -v "NEMO_SCRIPT_SELECTED_URIS" ]] ||
-            [[ -v "CAJA_SCRIPT_SELECTED_URIS" ]]; then
+        if compgen -v | grep --quiet -m1 "_SCRIPT_SELECTED_URIS"; then
             if [[ "$par_type" == "directory" ]]; then
                 # Return the current working directory if no files have been
                 # selected.
