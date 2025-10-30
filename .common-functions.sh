@@ -2622,18 +2622,41 @@ _get_filenames_filemanager() {
     local input_files=""
 
     # Try to use the information provided by the file manager.
+    # Common examples:
+    #   NAUTILUS_SCRIPT_SELECTED_URIS
+    #   NEMO_SCRIPT_SELECTED_URIS
+    #   CAJA_SCRIPT_SELECTED_URIS
     local var=""
     var=$(compgen -v | grep -m1 "_SCRIPT_SELECTED_URIS$")
     if [[ -n "$var" ]]; then
         eval "input_files=\$$var"
     fi
 
-    if [[ -n "$input_files" ]]; then
-        # Replace '\n' with '$FIELD_SEPARATOR'.
+    if [[ "$input_files" == "file://"* ]]; then
         input_files=$(_convert_text_to_delimited_string "$input_files")
 
-        # Decode the URI list.
+        # Decode percent-encoded URIs to readable local paths.
         input_files=$(_text_uri_decode "$input_files")
+
+    elif [[ "$input_files" == "recent://"* ]] ||
+        [[ "$input_files" == "trash://"* ]]; then
+        # If the input comes from virtual locations,
+        # such as 'recent://' or 'trash://'.
+        input_files=$(_convert_text_to_delimited_string "$input_files")
+
+        # For each virtual URI, resolve its actual file path via gio.
+        local file=""
+        local decoded_input_files=""
+        for file in $input_files; do
+            decoded_input_files+=$(gio info "$file" |
+                grep "standard::target-uri" | cut -f 4- -d " ")
+            decoded_input_files+=$FIELD_SEPARATOR
+        done
+        input_files=$decoded_input_files
+
+        # Decode percent-encoded URIs to readable local paths.
+        input_files=$(_text_uri_decode "$input_files")
+        input_files=$(_str_collapse_char "$input_files" "$FIELD_SEPARATOR")
     else
         input_files=$INPUT_FILES # Standard input.
         input_files=$(_str_collapse_char "$input_files" "$FIELD_SEPARATOR")
