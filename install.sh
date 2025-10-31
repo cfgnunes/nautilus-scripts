@@ -398,18 +398,6 @@ _tee_file() {
     $SUDO_CMD tee -- "$1" >/dev/null
 }
 
-# FUNCTION: _item_create_backup
-#
-# DESCRIPTION:
-# This function creates a backup of a file (append .bak) if it exists.
-_item_create_backup() {
-    local item=$1
-
-    if [[ -e "$item" ]] && [[ ! -e "$item.bak" ]]; then
-        $SUDO_CMD mv -- "$item" "$item.bak" 2>/dev/null
-    fi
-}
-
 # FUNCTION: _delete_items
 #
 # DESCRIPTION:
@@ -762,8 +750,6 @@ _step_install_accels_nautilus() {
     local accels_file=$1
     $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
 
-    # Create a backup of older custom actions.
-    _item_create_backup "$accels_file"
     _delete_items "$accels_file"
 
     {
@@ -789,8 +775,6 @@ _step_install_accels_gnome2() {
     local accels_file=$1
     $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
 
-    # Create a backup of older custom actions.
-    _item_create_backup "$accels_file"
     _delete_items "$accels_file"
 
     {
@@ -825,8 +809,6 @@ _step_install_accels_thunar() {
     local accels_file=$1
     $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
 
-    # Create a backup of older custom actions.
-    _item_create_backup "$accels_file"
     _delete_items "$accels_file"
 
     {
@@ -1194,8 +1176,6 @@ _step_install_menus_thunar() {
 
     local menus_file="$INSTALL_HOME/.config/Thunar/uca.xml"
 
-    # Create a backup of older custom actions.
-    _item_create_backup "$menus_file"
     _delete_items "$menus_file"
 
     $SUDO_CMD_USER mkdir --parents "$INSTALL_HOME/.config/Thunar"
