@@ -2427,7 +2427,7 @@ _get_script_name() {
 #   "0" (true): If is a GUI session.
 #   "1" (false): If is not a GUI session.
 _is_gui_session() {
-    if [[ -v "DISPLAY" ]]; then
+    if [[ -n "${DISPLAY:-}" ]]; then
         return 0
     fi
     return 1

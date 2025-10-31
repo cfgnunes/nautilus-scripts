@@ -49,7 +49,7 @@ MSG_INFO="[\033[0;32m INFO \033[0m]"
 # Define the directory of this script. If '$BASH_SOURCE' is available,
 # use its path. Otherwise, create a temporary directory for cases like remote
 # execution via curl.
-if [[ -v "BASH_SOURCE" ]]; then
+if [[ -n "${BASH_SOURCE:-}" ]]; then
     SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 else
     SCRIPT_DIR="."
@@ -441,7 +441,7 @@ _get_user_homes() {
 
     # Ensure the current user's home is included, in case it's missing
     # from '/etc/passwd'.
-    if [[ -v "HOME" ]]; then
+    if [[ -n "${HOME:-}" ]]; then
         homes+=$'\n'
         homes+=$HOME
     fi
@@ -904,7 +904,7 @@ _step_create_gnome_application_folder() {
     # Configure the "Scripts" application folder in GNOME.
 
     # Exit if not running under a GNOME desktop environment.
-    if [[ -v "XDG_CURRENT_DESKTOP" ]]; then
+    if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
         if [[ "${XDG_CURRENT_DESKTOP,,}" != *"gnome"* ]]; then
             return
         fi
