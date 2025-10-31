@@ -43,8 +43,9 @@ _main_task() {
 
         # Run the main process.
         _move_file "skip" "$file" "$dir/$new_filename"
-    done < <(find "$input_file" -type f ! -path "$IGNORE_FIND_PATH" \
-        -print0 2>/dev/null)
+    done < <(find "$input_file" \
+        ! -path "$IGNORE_FIND_PATH" \
+        -type f -print0 2>/dev/null)
 
     # Rename directories.
     local dir=""
@@ -61,8 +62,9 @@ _main_task() {
 
         # Run the main process.
         _move_file "skip" "$dir" "$parent_dir/$new_dirname"
-    done < <(find "$input_file" -type d ! -path "$IGNORE_FIND_PATH" \
-        -print0 2>/dev/null | sort --reverse --zero-terminated)
+    done < <(find "$input_file" \
+        ! -path "$IGNORE_FIND_PATH" \
+        -type d -print0 2>/dev/null | sort --reverse --zero-terminated)
 }
 
 _main "$@"

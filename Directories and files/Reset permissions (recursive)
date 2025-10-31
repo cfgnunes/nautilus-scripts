@@ -31,11 +31,11 @@ _main_task() {
 
     # Run the main process.
     new_pemission=$(printf "%04o" "$((0666 - $(umask)))")
-    std_output=$(find "$input_file" -type f ! -path "$IGNORE_FIND_PATH" -exec chmod "$new_pemission" -- {} \+ 2>&1)
+    std_output=$(find "$input_file" ! -path "$IGNORE_FIND_PATH" -type f -exec chmod "$new_pemission" -- {} \+ 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     new_pemission=$(printf "%04o" "$((0777 - $(umask)))")
-    std_output=$(find "$input_file" -type d ! -path "$IGNORE_FIND_PATH" -exec chmod "$new_pemission" -- {} \+ 2>&1)
+    std_output=$(find "$input_file" ! -path "$IGNORE_FIND_PATH" -type d -exec chmod "$new_pemission" -- {} \+ 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
