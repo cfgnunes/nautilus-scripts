@@ -43,13 +43,48 @@ _open_app() {
     # Iterate over each input file (directory).
     local input_file=""
     for input_file in $input_files; do
-        # Special handling for some apps.
-        if [[ "$available_app" == "ptyxis" ]]; then
-            $available_app --new-window --working-directory "$input_file" &
+        # Detect if it's a remote 'sftp' path.
+        if [[ "$input_file" == *"sftp:"* ]]; then
+            local remote_host=""
+            local remote_path=""
+            if [[ "$input_file" =~ ^/run/user/[0-9]+/gvfs/sftp:host=([^/]+)(/.*)?$ ]]; then
+                # Case 1: GVFS mount format,
+                # such as: /run/user/.../gvfs/sftp:host=host/path.
+                remote_host="${BASH_REMATCH[1]}"
+                remote_path="${BASH_REMATCH[2]}"
+            elif [[ "$input_file" =~ ^sftp://([^/]+)/?(.*)$ ]]; then
+                # Case 2: URI format,
+                # such as: sftp://host/path.
+                remote_host="${BASH_REMATCH[1]}"
+                remote_path="/${BASH_REMATCH[2]}"
+            fi
+
+            # Build SSH command, with optional remote path.
+            local ssh_cmd="ssh -t $remote_host \"cd $remote_path/; exec bash\""
+            case "$available_app" in
+            ptyxis)
+                $available_app --new-window -- bash -c "$ssh_cmd" &
+                ;;
+            gnome-terminal | kgx | mate-terminal)
+                $available_app -- bash -c "$ssh_cmd" &
+                ;;
+            konsole | xfce4-terminal)
+                $available_app --hold -e "$ssh_cmd" &
+                ;;
+            *)
+                # Generic fallback.
+                $available_app -e "$ssh_cmd" &
+                ;;
+            esac
         else
-            _directory_push "$input_file" || continue
-            $available_app &
-            _directory_pop || continue
+            # Local directory case.
+            if [[ "$available_app" == "ptyxis" ]]; then
+                $available_app --new-window --working-directory "$input_file" &
+            else
+                _directory_push "$input_file" || continue
+                $available_app &
+                _directory_pop || continue
+            fi
         fi
     done
 }
