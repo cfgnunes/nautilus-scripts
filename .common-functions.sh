@@ -1476,7 +1476,7 @@ _get_working_directory() {
     *"search://"* | "recent://"* | "trash://"*)
         # Cases:
         # - Files selected in the search screen ('x-nautilus-search://');
-        # - Files selected in other screen ('recent://', 'trash://');
+        # - Files selected in other screen ('recent://', 'trash://').
         working_dir=${HOME:-}
         ;;
     *"://"*)
@@ -2643,7 +2643,7 @@ _translate_to_gvfs_path() {
     host="${host_path%%/*}"
     path="${host_path#*/}"
 
-    # Special handling for SMB (different GVFS mount naming).
+    # Special handling for SMB (different GVfs mount naming).
     if [[ "$scheme" == "smb" ]]; then
         # SMB URIs have "server/share/path"
         share="${path%%/*}" # First component = share name.
@@ -2657,7 +2657,7 @@ _translate_to_gvfs_path() {
         [[ -n "$path" && "$path" != "$host_path" ]] && gvfs_path+="/${path}"
     fi
 
-    printf "%s\n" "$gvfs_path"
+    printf "%s" "$gvfs_path"
 }
 
 # FUNCTION: _get_filenames_filemanager
@@ -2689,8 +2689,7 @@ _get_filenames_filemanager() {
 
     elif [[ "$input_files" == "recent://"* ]] ||
         [[ "$input_files" == "trash://"* ]]; then
-        # If the input comes from virtual locations,
-        # such as 'recent://' or 'trash://'.
+        # If the input comes from virtual locations ('recent://', 'trash://').
         input_files=$(_convert_text_to_delimited_string "$input_files")
 
         # For each virtual URI, resolve its actual file path via 'gio'.
@@ -2707,8 +2706,10 @@ _get_filenames_filemanager() {
         input_files=$(_text_uri_decode "$input_files")
         input_files=$(_str_collapse_char "$input_files" "$FIELD_SEPARATOR")
     elif [[ "$input_files" == *"://"* ]]; then
+        # If the input comes from other GVfs location ('sftp://', 'smb://').
         input_files=$(_convert_text_to_delimited_string "$input_files")
 
+        # For each virtual URI, resolve its actual file path.
         local file=""
         local decoded_input_files=""
         for file in $input_files; do
