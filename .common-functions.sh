@@ -20,8 +20,8 @@ set -u
 ACCESSED_RECENTLY_DIR="$ROOT_DIR/Accessed recently"
 ACCESSED_RECENTLY_LINKS_TO_KEEP=10
 FIELD_SEPARATOR=$'\r'          # The main field separator.
-GUI_BOX_HEIGHT=550             # Height of the GUI dialog boxes.
-GUI_BOX_WIDTH=900              # Width of the GUI dialog boxes.
+GUI_BOX_HEIGHT=600             # Height of the GUI dialog boxes.
+GUI_BOX_WIDTH=990              # Width of the GUI dialog boxes.
 GUI_INFO_WIDTH=400             # Width of the GUI small dialog boxes.
 IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
 PREFIX_ERROR_LOG_FILE="Errors" # Basename of 'Error' log file.
