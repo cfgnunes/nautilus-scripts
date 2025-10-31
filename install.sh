@@ -49,7 +49,7 @@ MSG_INFO="[\033[0;32m INFO \033[0m]"
 # Define the directory of this script. If '$BASH_SOURCE' is available,
 # use its path. Otherwise, create a temporary directory for cases like remote
 # execution via curl.
-if [[ -n "${BASH_SOURCE:-}" ]]; then
+if [[ -n "${BASH_SOURCE[0]:-}" ]]; then
     SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 else
     SCRIPT_DIR="."
@@ -699,7 +699,7 @@ _step_install_scripts() {
     # those are installed. Otherwise, all categories are copied by default.
     local i=0
     for i in "${!_cat_dirs[@]}"; do
-        if [[ -v "_cat_selected[i]" ]]; then
+        if [[ ${_cat_selected[$i]+_} ]]; then
             if [[ ${_cat_selected[i]} == "true" ]]; then
                 $SUDO_CMD cp -r -- "$SCRIPT_DIR/${_cat_dirs[i]}" "$INSTALL_DIR"
             fi

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Code based on: https://unix.stackexchange.com/a/673436
-# Version: 2025-10-05
+# Version: 2025-10-31
 
 # Keyboard commands:
 #  <enter>: Confirms the current selection of options.
@@ -72,7 +72,7 @@ _multiselect_menu() {
     local selected=()
     local index_defaults=0
     for index_defaults in "${!options[@]}"; do
-        if [[ -v "defaults[index_defaults]" ]]; then
+        if [[ ${defaults[index_defaults]+_} ]]; then
             if [[ ${defaults[index_defaults]} == "false" ]]; then
                 selected+=("false")
             else
