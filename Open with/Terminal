@@ -81,9 +81,9 @@ _open_app() {
             if [[ "$available_app" == "ptyxis" ]]; then
                 $available_app --new-window --working-directory "$input_file" &
             else
-                _directory_push "$input_file" || continue
+                cd -- "$input_file" || continue
+                unset "OLDPWD"
                 $available_app &
-                _directory_pop || continue
             fi
         fi
     done

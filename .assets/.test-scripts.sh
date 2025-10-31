@@ -8,7 +8,7 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 # Disable GUI for testing on terminal.
-unset DISPLAY
+unset "DISPLAY"
 
 # -----------------------------------------------------------------------------
 # SECTION /// [GLOBAL VARIABLES]
