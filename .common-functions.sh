@@ -402,7 +402,8 @@ _run_function_parallel() {
         _strip_filename_extension \
         _text_remove_empty_lines \
         _text_remove_pwd \
-        _text_uri_decode
+        _text_uri_decode \
+        _translate_to_gvfs_path
 
     # Escape single quotes in items to handle them correctly in 'xargs'
     # with 'bash -c'.
@@ -1478,10 +1479,12 @@ _get_working_directory() {
         # - Files selected in other screen ('recent://', 'trash://');
         working_dir=${HOME:-}
         ;;
+    *"://"*)
+        # Case: Files opened remotely ('sftp://', 'smb://').
+        working_dir=$(_translate_to_gvfs_path "$working_dir")
+        ;;
     *)
-        # Cases:
-        # - Files opened remotely ('sftp://', 'smb://');
-        # - File managers that don't set current directory variables;
+        # Case: File managers that don't set current directory variables.
         #
         # Strategy: Get the directory from first selected file's path.
         local item_1=""
@@ -2611,6 +2614,41 @@ _set_clipboard_file() {
 # SECTION: Input files ----
 # -----------------------------------------------------------------------------
 
+# FUNCTION: _translate_to_gvfs_path
+#
+# DESCRIPTION:
+#   Converts a remote URI (such as sftp://host/path) into the corresponding
+#   GVfs-mounted path under '/run/user/<uid>/gvfs/''.
+_translate_to_gvfs_path() {
+    local uri=$1
+    local uid=""
+    local gvfs_base=""
+    local scheme=""
+    local host=""
+    local path=""
+    local gvfs_path=""
+
+    # Base GVfs mount path.
+    uid=$(id -u)
+    gvfs_base="/run/user/${uid}/gvfs"
+
+    # Extract scheme (e.g. sftp) and host.
+    scheme="${uri%%://*}"   # Part before "://".
+    host_path="${uri#*://}" # Part after "://".
+    host="${host_path%%/*}" # Host only.
+    path="${host_path#*/}"  # Rest after host.
+
+    # Compose GVfs path.
+    gvfs_path="${gvfs_base}/${scheme}:host=${host}"
+
+    # Append subpath if present.
+    if [[ -n "$path" && "$path" != "$host_path" ]]; then
+        gvfs_path+="/${path}"
+    fi
+
+    printf "%s\n" "$gvfs_path"
+}
+
 # FUNCTION: _get_filenames_filemanager
 #
 # DESCRIPTION:
@@ -2644,12 +2682,26 @@ _get_filenames_filemanager() {
         # such as 'recent://' or 'trash://'.
         input_files=$(_convert_text_to_delimited_string "$input_files")
 
-        # For each virtual URI, resolve its actual file path via gio.
+        # For each virtual URI, resolve its actual file path via 'gio'.
         local file=""
         local decoded_input_files=""
         for file in $input_files; do
             decoded_input_files+=$(gio info "$file" |
                 grep "standard::target-uri" | cut -f 4- -d " ")
+            decoded_input_files+=$FIELD_SEPARATOR
+        done
+        input_files=$decoded_input_files
+
+        # Decode percent-encoded URIs to readable local paths.
+        input_files=$(_text_uri_decode "$input_files")
+        input_files=$(_str_collapse_char "$input_files" "$FIELD_SEPARATOR")
+    elif [[ "$input_files" == *"://"* ]]; then
+        input_files=$(_convert_text_to_delimited_string "$input_files")
+
+        local file=""
+        local decoded_input_files=""
+        for file in $input_files; do
+            decoded_input_files+=$(_translate_to_gvfs_path "$file")
             decoded_input_files+=$FIELD_SEPARATOR
         done
         input_files=$decoded_input_files
@@ -2735,18 +2787,6 @@ _get_files() {
             input_files=$(_display_file_selection_box \
                 "" "$(_get_script_name)" "true")
         fi
-    fi
-
-    # Handle remote file URIs (http://, ftp://, etc.) by translating to local
-    # 'gvfs' paths.
-    if [[ "$input_files" == *"://"* ]]; then
-        local working_dir=""
-        working_dir=$(_get_working_directory)
-
-        # Convert remote URIs to local 'gvfs' paths for processing.
-        input_files=$(sed \
-            "s|[a-z0-9\+_-]*://[^$FIELD_SEPARATOR]*/|$working_dir/|g" \
-            <<<"$input_files")
     fi
 
     local find_parameters=""
