@@ -18,25 +18,22 @@ _main() {
         _exit_script
     fi
 
-    # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" "$output_dir"
-    _display_result_box ""
-}
-
-_main_task() {
-    local input_file=$1
-    local output_dir=$2
-    local std_output=""
-    local new_pemission=""
-
     # Run the main process.
     new_pemission=$(printf "%04o" "$((0666 - $(umask)))")
-    std_output=$(find "$input_file" ! -path "$IGNORE_FIND_PATH" -type f -exec chmod "$new_pemission" -- {} \+ 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    # shellcheck disable=SC2086
+    std_output=$(find $input_files \
+        ! -path "$IGNORE_FIND_PATH" \
+        -type f -exec chmod "$new_pemission" -- {} + 2>&1)
+    _check_output "$?" "$std_output" "" ""
 
     new_pemission=$(printf "%04o" "$((0777 - $(umask)))")
-    std_output=$(find "$input_file" ! -path "$IGNORE_FIND_PATH" -type d -exec chmod "$new_pemission" -- {} \+ 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    # shellcheck disable=SC2086
+    std_output=$(find $input_files \
+        ! -path "$IGNORE_FIND_PATH" \
+        -type d -exec chmod "$new_pemission" -- {} + 2>&1)
+    _check_output "$?" "$std_output" "" ""
+
+    _display_result_box ""
 }
 
 _main "$@"
