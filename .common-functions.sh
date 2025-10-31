@@ -592,7 +592,7 @@ _check_dependencies() {
 # PARAMETERS:
 #   $1 (key): The key whose value is being queried.
 #   $2 (pkg_manager): The package manager to match.
-#   $3 (input_array): The name of the associative array that contains
+#   $3 (_input_array): The name of the associative array that contains
 #      the mappings (<subkey>:<value> pairs).
 #
 # RETURNS:
@@ -601,7 +601,7 @@ _check_dependencies() {
 _deps_get_dependency_value() {
     local key=$1
     local pkg_manager=$2
-    local -n input_array=$3
+    local -n _input_array=$3
     local pairs=""
 
     # Source the configuration file that defines the mapping between commands,
@@ -612,7 +612,7 @@ _deps_get_dependency_value() {
     fi
 
     # Retrieve the raw value from the associative array.
-    pairs=${input_array[$key]:-}
+    pairs=${_input_array[$key]:-}
 
     # Remove leading, trailing, and duplicate spaces.
     pairs=$(_str_collapse_char "$pairs" " ")

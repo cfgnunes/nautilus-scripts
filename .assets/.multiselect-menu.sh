@@ -13,8 +13,8 @@
 
 _multiselect_menu() {
     local return_value=$1
-    local -n options=$2
-    local -n defaults=$3
+    local -n _options=$2
+    local -n _defaults=$3
 
     # Turn off echoing of characters typed on the terminal.
     stty -echo
@@ -71,9 +71,9 @@ _multiselect_menu() {
     # Process the 'defaults' parameter.
     local selected=()
     local index_defaults=0
-    for index_defaults in "${!options[@]}"; do
-        if [[ ${defaults[index_defaults]+_} ]]; then
-            if [[ ${defaults[index_defaults]} == "false" ]]; then
+    for index_defaults in "${!_options[@]}"; do
+        if [[ ${_defaults[index_defaults]+_} ]]; then
+            if [[ ${_defaults[index_defaults]} == "false" ]]; then
                 selected+=("false")
             else
                 selected+=("true")
@@ -88,14 +88,14 @@ _multiselect_menu() {
     local start_row=""
     local last_row=""
     last_row=$(__get_cursor_row)
-    start_row=$((last_row - ${#options[@]}))
+    start_row=$((last_row - ${#_options[@]}))
 
     # Print options by overwriting the last lines.
     __print_options() {
         local index_active=$1
 
         local index_option=0
-        for index_option in "${!options[@]}"; do
+        for index_option in "${!_options[@]}"; do
             # Set the prefix "[ ]" or "[*]".
             local prefix="[ ]"
             if [[ ${selected[index_option]} == "true" ]]; then
@@ -104,7 +104,7 @@ _multiselect_menu() {
 
             # Print the prefix with the option in the menu.
             __cursor_to "$((start_row + index_option))"
-            local option="${options[index_option]}"
+            local option="${_options[index_option]}"
             if ((index_option == index_active)); then
                 # Print the active option.
                 printf "$prefix \033[7m%s\033[27m" "$option"
@@ -152,12 +152,12 @@ _multiselect_menu() {
         "up")
             active=$((active - 1))
             if [[ $active -lt 0 ]]; then
-                active=$((${#options[@]} - 1))
+                active=$((${#_options[@]} - 1))
             fi
             ;;
         "down")
             active=$((active + 1))
-            if [[ $active -ge ${#options[@]} ]]; then
+            if [[ $active -ge ${#_options[@]} ]]; then
                 active=0
             fi
             ;;
