@@ -67,6 +67,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Alt>X`   | Compress to .tar.xz (each)        |
 | `<Control><Alt>Z`   | Compress to .zip (each)           |
 | `<Control><Alt>I`   | Show files information            |
+| `<Control><Alt>M`   | Show files MIME types             |
 | `<Control><Alt>H`   | Find hidden items                 |
 | `<Control><Alt>J`   | Find junk files                   |
 | `<Control><Alt>U`   | Find duplicate files              |
