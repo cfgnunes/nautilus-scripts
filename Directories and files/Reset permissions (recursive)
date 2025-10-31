@@ -19,21 +19,124 @@ _main() {
     fi
 
     # Run the main process.
-    new_pemission=$(printf "%04o" "$((0666 - $(umask)))")
-    # shellcheck disable=SC2086
-    std_output=$(find $input_files \
-        ! -path "$IGNORE_FIND_PATH" \
-        -type f -exec chmod "$new_pemission" -- {} + 2>&1)
-    _check_output "$?" "$std_output" "" ""
-
-    new_pemission=$(printf "%04o" "$((0777 - $(umask)))")
-    # shellcheck disable=SC2086
-    std_output=$(find $input_files \
-        ! -path "$IGNORE_FIND_PATH" \
-        -type d -exec chmod "$new_pemission" -- {} + 2>&1)
-    _check_output "$?" "$std_output" "" ""
+    _reset_permissions "$input_files"
 
     _display_result_box ""
+}
+
+_reset_permissions() {
+    local input_files=$1
+    local new_pemission=""
+    local std_output=""
+    local find_args=""
+
+    # List of sensitive directories to apply strict permissions (700).
+    local sensitive_dirs=(
+        ".gnupg"
+        ".ssh"
+    )
+
+    # List of sensitive files to apply strict permissions (600).
+    local sensitive_files=(
+        ".bash_history"
+        ".curlrc"
+        ".git-credentials"
+        ".gitconfig"
+        ".lesshsQ"
+        ".lesshst"
+        ".my.cnf"
+        ".mysql_history"
+        ".netrc"
+        ".npmrc"
+        ".pgpass"
+        ".psql_history"
+        ".pypirc"
+        ".python_history"
+        ".rhosts"
+        ".sh_history"
+        ".tokens"
+        ".viminfo"
+        ".wget-hsts"
+        ".zsh_history"
+        "authorized_keys"
+        "credentials.json"
+        "gpg.conf"
+        "id_dsa"
+        "id_ecdsa"
+        "id_ed25519"
+        "id_rsa"
+        "known_hosts"
+        "privatekey.asc"
+        "privatekey.gpg"
+        "pubring.kbx"
+        "secring.gpg"
+        "trustdb.gpg"
+    )
+
+    # Step 1: Sensitive directories first (700).
+    new_pemission="700"
+    for dir_pattern in "${sensitive_dirs[@]}"; do
+        # shellcheck disable=SC2086
+        find $input_files \
+            ! -path "$IGNORE_FIND_PATH" \
+            -type d -name "$dir_pattern" \
+            -exec chmod "$new_pemission" -- {} +
+    done
+
+    # Step 2: Files inside sensitive directories (600).
+    new_pemission="600"
+    for dir_pattern in "${sensitive_dirs[@]}"; do
+        # shellcheck disable=SC2086
+        find $input_files \
+            ! -path "$IGNORE_FIND_PATH" \
+            -type f -path "*/$dir_pattern/*" \
+            -exec chmod "$new_pemission" -- {} +
+    done
+
+    # Step 3: Directories inside sensitive directories (700).
+    new_pemission="700"
+    for dir_pattern in "${sensitive_dirs[@]}"; do
+        # shellcheck disable=SC2086
+        find $input_files \
+            ! -path "$IGNORE_FIND_PATH" \
+            -type d -path "*/$dir_pattern/*" \
+            -exec chmod "$new_pemission" -- {} +
+    done
+
+    # Step 4: Other directories (0777 - umask).
+    new_pemission=$(printf "%04o" "$((0777 - $(umask)))")
+    # shellcheck disable=SC2206
+    find_args=($input_files ! -path "$IGNORE_FIND_PATH")
+    for pattern in "${sensitive_dirs[@]}"; do
+        find_args+=(! -path "*/$pattern/*" ! -name "$pattern")
+    done
+    find_args+=(-type d -exec chmod "$new_pemission" -- {} +)
+    std_output=$(find "${find_args[@]}" 2>&1)
+    _check_output "$?" "$std_output" "" ""
+
+    # Step 5: Sensitive files (600).
+    new_pemission="600"
+    for pattern in "${sensitive_files[@]}"; do
+        # shellcheck disable=SC2086
+        find $input_files \
+            ! -path "$IGNORE_FIND_PATH" \
+            -type f -name "$pattern" \
+            -exec chmod "$new_pemission" -- {} +
+    done
+
+    # Step 6: Other files (0666 - umask).
+    new_pemission=$(printf "%04o" "$((0666 - $(umask)))")
+    # shellcheck disable=SC2206
+    find_args=($input_files ! -path "$IGNORE_FIND_PATH")
+    for pattern in "${sensitive_dirs[@]}"; do
+        find_args+=(! -path "*/$pattern/*")
+    done
+    for pattern in "${sensitive_files[@]}"; do
+        find_args+=(! -name "$pattern")
+    done
+    find_args+=(-type f -exec chmod "$new_pemission" -- {} +)
+    std_output=$(find "${find_args[@]}" 2>&1)
+    _check_output "$?" "$std_output" "" ""
 }
 
 _main "$@"
