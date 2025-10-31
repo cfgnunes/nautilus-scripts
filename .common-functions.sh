@@ -2749,12 +2749,9 @@ _get_files() {
             <<<"$input_files")
     fi
 
-    local initial_items_count=0
-    initial_items_count=$(_get_items_count "$input_files")
-
     local find_parameters=""
-    if ((initial_items_count == 1)) && [[ -d "$input_files" ]] &&
-        [[ "$par_recursive" == "false" ]] &&
+    if (($(_get_items_count "$input_files") == 1)) &&
+        [[ -d "$input_files" ]] && [[ "$par_recursive" == "false" ]] &&
         printf "%s" "$(basename -- "$input_files")" |
         grep --quiet --ignore-case --word-regexp "batch"; then
         # This workaround allows the scripts to handle cases with a large input
