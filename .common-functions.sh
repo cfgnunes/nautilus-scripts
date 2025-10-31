@@ -3762,7 +3762,7 @@ _recent_scripts_add() {
 
     # Remove any existing links pointing to the same script.
     find "$ACCESSED_RECENTLY_DIR" -lname "$running_script" \
-        -exec rm -f -- "{}" +
+        -exec rm -f -- {} +
 
     # Create a new symbolic link with a ".00" prefix.
     ln -s -- "$running_script" ".00 $(basename -- "$running_script")"

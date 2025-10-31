@@ -712,7 +712,7 @@ _step_install_scripts() {
     # user/group and are executable.
     $SUDO_CMD chown -R "$INSTALL_OWNER:$INSTALL_GROUP" -- "$INSTALL_DIR"
     $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
-        "${IGNORE_FIND_PATHS[@]}" -exec chmod +x -- {} \;
+        "${IGNORE_FIND_PATHS[@]}" -exec chmod +x -- {} +
 }
 
 # -----------------------------------------------------------------------------
