@@ -17,7 +17,8 @@ _main() {
 
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(find $input_files ! -path "$IGNORE_FIND_PATH" \
+    std_output=$(find $input_files \
+        ! -path "$IGNORE_FIND_PATH" \
         -printf "%m$FIELD_SEPARATOR%u$FIELD_SEPARATOR%g$FIELD_SEPARATOR%y$FIELD_SEPARATOR%p\n" 2>/dev/null)
 
     std_output=$(_text_remove_pwd "$std_output")

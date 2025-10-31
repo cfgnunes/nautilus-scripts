@@ -17,8 +17,9 @@ _main() {
 
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(find $input_files -type f ! -path "$IGNORE_FIND_PATH" \
-        -printf "%s$FIELD_SEPARATOR%p\n" 2>/dev/null |
+    std_output=$(find $input_files \
+        ! -path "$IGNORE_FIND_PATH" \
+        -type f -printf "%s$FIELD_SEPARATOR%p\n" 2>/dev/null |
         sort -n -r | head -n 15 |
         numfmt --to=iec --suffix=B --delimiter="$FIELD_SEPARATOR" --field=1)
 
