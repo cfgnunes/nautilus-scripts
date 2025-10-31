@@ -2656,8 +2656,10 @@ _translate_to_gvfs_path() {
         gvfs_path="${gvfs_base}/${scheme}:host=${host}"
         [[ -n "$path" && "$path" != "$host_path" ]] && gvfs_path+="/${path}"
     fi
+    gvfs_path=${gvfs_path//%/\\x}
 
-    printf "%s" "$gvfs_path"
+    # shellcheck disable=SC2059
+    printf "$gvfs_path"
 }
 
 # FUNCTION: _get_filenames_filemanager
@@ -2718,8 +2720,6 @@ _get_filenames_filemanager() {
         done
         input_files=$decoded_input_files
 
-        # Decode percent-encoded URIs to readable local paths.
-        input_files=$(_text_uri_decode "$input_files")
         input_files=$(_str_collapse_char "$input_files" "$FIELD_SEPARATOR")
     else
         input_files=$INPUT_FILES # Standard input.
