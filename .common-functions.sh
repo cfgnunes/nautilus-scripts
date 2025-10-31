@@ -2617,33 +2617,44 @@ _set_clipboard_file() {
 # FUNCTION: _translate_to_gvfs_path
 #
 # DESCRIPTION:
-#   Converts a remote URI (such as sftp://host/path) into the corresponding
-#   GVfs-mounted path under '/run/user/<uid>/gvfs/''.
+#   Converts a remote URI (such as sftp://host/path or smb://server/share/path)
+#   into the corresponding GVfs-mounted path under '/run/user/<uid>/gvfs/'.
 _translate_to_gvfs_path() {
     local uri=$1
     local uid=""
     local gvfs_base=""
     local scheme=""
     local host=""
+    local host_path=""
     local path=""
     local gvfs_path=""
+    local share=""
+    local rest=""
 
     # Base GVfs mount path.
     uid=$(id -u)
     gvfs_base="/run/user/${uid}/gvfs"
 
-    # Extract scheme (e.g. sftp) and host.
-    scheme="${uri%%://*}"   # Part before "://".
-    host_path="${uri#*://}" # Part after "://".
-    host="${host_path%%/*}" # Host only.
-    path="${host_path#*/}"  # Rest after host.
+    # Extract scheme (e.g. sftp, smb)
+    scheme="${uri%%://*}"
+    host_path="${uri#*://}"
 
-    # Compose GVfs path.
-    gvfs_path="${gvfs_base}/${scheme}:host=${host}"
+    # Extract host and path
+    host="${host_path%%/*}"
+    path="${host_path#*/}"
 
-    # Append subpath if present.
-    if [[ -n "$path" && "$path" != "$host_path" ]]; then
-        gvfs_path+="/${path}"
+    # Special handling for SMB (different GVFS mount naming).
+    if [[ "$scheme" == "smb" ]]; then
+        # SMB URIs have "server/share/path"
+        share="${path%%/*}" # First component = share name.
+        rest="${path#*/}"   # Remaining path (may be empty).
+
+        gvfs_path="${gvfs_base}/smb-share:server=${host},share=${share}"
+        [[ "$rest" != "$path" ]] && [[ -n "$rest" ]] && gvfs_path+="/${rest}"
+    else
+        # Default pattern for other protocols (e.g., 'sftp', 'ftp', etc.).
+        gvfs_path="${gvfs_base}/${scheme}:host=${host}"
+        [[ -n "$path" && "$path" != "$host_path" ]] && gvfs_path+="/${path}"
     fi
 
     printf "%s\n" "$gvfs_path"
