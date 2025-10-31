@@ -71,6 +71,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Alt>H`   | Find hidden items                 |
 | `<Control><Alt>J`   | Find junk files                   |
 | `<Control><Alt>U`   | Find duplicate files              |
+| `<Control><Alt>0`   | Find zero-byte files              |
 | `<Control><Alt>P`   | List permissions and owners       |
 | `<Control><Alt>B`   | List largest files                |
 | `<Control><Alt>R`   | List recently modified files      |
