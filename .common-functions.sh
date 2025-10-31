@@ -1078,11 +1078,11 @@ _directory_push() {
 #      Supported values:
 #      - "file": To search for files and symbolic links.
 #      - "directory": To search for directories and symbolic links.
-#   $3 (par_skip_extension): A string of file extensions to exclude from
+#   $3 (par_select_extension): A string of file extensions to include in
+#      the search. Only files with matching extensions will be included.
+#   $4 (par_skip_extension): A string of file extensions to exclude from
 #      the search. Only files with extensions not matching this list will be
 #      included.
-#   $4 (par_select_extension): A string of file extensions to include in
-#      the search. Only files with matching extensions will be included.
 #   $5 (par_find_parameters): Optional. Additional parameters to be
 #      passed directly to the 'find' command.
 #
@@ -1093,8 +1093,8 @@ _directory_push() {
 _find_filtered_files() {
     local input_files=$1
     local par_type=$2
-    local par_skip_extension=$3
-    local par_select_extension=$4
+    local par_select_extension=$3
+    local par_skip_extension=$4
     local par_find_parameters=$5
     local filtered_files=""
     local find_command=""
@@ -1104,6 +1104,8 @@ _find_filtered_files() {
 
     # Build a 'find' command.
     find_command="find '$input_files'"
+
+    find_command+=" ! -path \"$IGNORE_FIND_PATH\""
 
     if [[ -n "$par_find_parameters" ]]; then
         find_command+=" $par_find_parameters"
@@ -1115,17 +1117,17 @@ _find_filtered_files() {
     "directory") find_command+=" \( -type l -o -type d \)" ;;
     esac
 
-    if [[ -n "$par_select_extension" ]]; then
+    if [[ -n "$par_select_extension" ]] || [[ -n "$par_skip_extension" ]]; then
         find_command+=" -regextype posix-extended "
-        find_command+=" -iregex \".*\.($par_select_extension)$\""
+        if [[ -n "$par_select_extension" ]]; then
+            find_command+=" -iregex \".*\.($par_select_extension)$\""
+        fi
+
+        if [[ -n "$par_skip_extension" ]]; then
+            find_command+=" ! -iregex \".*\.($par_skip_extension)$\""
+        fi
     fi
 
-    if [[ -n "$par_skip_extension" ]]; then
-        find_command+=" -regextype posix-extended "
-        find_command+=" ! -iregex \".*\.($par_skip_extension)$\""
-    fi
-
-    find_command+=" ! -path \"$IGNORE_FIND_PATH\""
     find_command+=" -print0"
 
     # shellcheck disable=SC2086
@@ -2831,8 +2833,8 @@ _get_files() {
     input_files=$(_find_filtered_files \
         "$input_files" \
         "$par_type" \
-        "$par_skip_extension" \
         "$par_select_extension" \
+        "$par_skip_extension" \
         "$find_parameters")
 
     # Handle the case where a file is selected in the file manager, but
