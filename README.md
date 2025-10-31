@@ -75,6 +75,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Alt>P`   | List permissions and owners       |
 | `<Control><Alt>B`   | List largest files                |
 | `<Control><Alt>R`   | List recently modified files      |
+| `<Control><Alt>T`   | Text: List file issues            |
 | `<Control><Alt>C`   | Copy filename to clipboard        |
 | `<Control><Alt>V`   | Paste clipboard as a file         |
 | `<Control><Shift>V` | Paste as symbolic link            |
