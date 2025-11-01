@@ -36,14 +36,14 @@ _main_task() {
     _directory_push "$top_level" || return 1
 
     # -------------------------------------------------------------------------
-    # STEP 1: Ensure repository integrity.
+    # Step 1: Ensure repository integrity.
     # Abort any unfinished merge or rebase to prevent conflicts.
     # -------------------------------------------------------------------------
     git merge --abort &>/dev/null || true
     git rebase --abort &>/dev/null || true
 
     # -------------------------------------------------------------------------
-    # STEP 2: Clean working directory.
+    # Step 2: Clean working directory.
     # Remove all untracked, ignored, and temporary files/directories.
     # -------------------------------------------------------------------------
     std_output=$(git clean -xdf 2>&1)
@@ -54,14 +54,14 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # -------------------------------------------------------------------------
-    # STEP 3: Fetch updates from all remotes and tags.
+    # Step 3: Fetch updates from all remotes and tags.
     # Ensures the local metadata is fully up to date.
     # -------------------------------------------------------------------------
     std_output=$(git fetch --all --tags --prune --prune-tags --force 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # -------------------------------------------------------------------------
-    # STEP 4: Determine and checkout the correct branch.
+    # Step 4: Determine and checkout the correct branch.
     # Tries to detect the current branch, falling back to the remote's default.
     # -------------------------------------------------------------------------
     branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
@@ -74,21 +74,21 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # -------------------------------------------------------------------------
-    # STEP 5: Force reset to match the remote branch exactly.
+    # Step 5: Force reset to match the remote branch exactly.
     # Ensures the local repository is identical to 'origin/<branch>'.
     # -------------------------------------------------------------------------
     std_output=$(git reset --hard "origin/$branch" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # -------------------------------------------------------------------------
-    # STEP 6: Pull latest changes, ignoring conflicts.
+    # Step 6: Pull latest changes, ignoring conflicts.
     # The '--strategy-option theirs' flag prefers remote changes automatically.
     # -------------------------------------------------------------------------
     std_output=$(git pull origin "$branch" --rebase=false --strategy-option theirs 2>&1 || true)
     _check_output "0" "$std_output" "$input_file" "" || true
 
     # -------------------------------------------------------------------------
-    # STEP 7: Clean up obsolete local branches.
+    # Step 7: Clean up obsolete local branches.
     # Removes branches that no longer exist in the remote repository.
     # -------------------------------------------------------------------------
     local skip_branches="desenv|develop|homolog|main|master|prod|ufrn"
@@ -110,7 +110,7 @@ _main_task() {
     done
 
     # -------------------------------------------------------------------------
-    # STEP 8: Optimize repository and clean logs.
+    # Step 8: Optimize repository and clean logs.
     # -------------------------------------------------------------------------
     # Remove old reflog entries to reduce repository size.
     std_output=$(git reflog expire --expire=now --all 2>&1)

@@ -73,7 +73,9 @@ _reset_permissions() {
         "trustdb.gpg"
     )
 
+    # -------------------------------------------------------------------------
     # Step 1: Sensitive directories first (700).
+    # -------------------------------------------------------------------------
     new_pemission="700"
     for dir_pattern in "${sensitive_dirs[@]}"; do
         # shellcheck disable=SC2086
@@ -83,7 +85,9 @@ _reset_permissions() {
             -exec chmod "$new_pemission" -- {} +
     done
 
+    # -------------------------------------------------------------------------
     # Step 2: Files inside sensitive directories (600).
+    # -------------------------------------------------------------------------
     new_pemission="600"
     for dir_pattern in "${sensitive_dirs[@]}"; do
         # shellcheck disable=SC2086
@@ -93,7 +97,9 @@ _reset_permissions() {
             -exec chmod "$new_pemission" -- {} +
     done
 
+    # -------------------------------------------------------------------------
     # Step 3: Directories inside sensitive directories (700).
+    # -------------------------------------------------------------------------
     new_pemission="700"
     for dir_pattern in "${sensitive_dirs[@]}"; do
         # shellcheck disable=SC2086
@@ -103,7 +109,9 @@ _reset_permissions() {
             -exec chmod "$new_pemission" -- {} +
     done
 
+    # -------------------------------------------------------------------------
     # Step 4: Other directories (0777 - umask).
+    # -------------------------------------------------------------------------
     new_pemission=$(printf "%04o" "$((0777 - $(umask)))")
     # shellcheck disable=SC2206
     find_args=($input_files ! -path "$IGNORE_FIND_PATH")
@@ -114,7 +122,9 @@ _reset_permissions() {
     std_output=$(find "${find_args[@]}" 2>&1)
     _check_output "$?" "$std_output" "" ""
 
+    # -------------------------------------------------------------------------
     # Step 5: Sensitive files (600).
+    # -------------------------------------------------------------------------
     new_pemission="600"
     for pattern in "${sensitive_files[@]}"; do
         # shellcheck disable=SC2086
@@ -124,7 +134,9 @@ _reset_permissions() {
             -exec chmod "$new_pemission" -- {} +
     done
 
+    # -------------------------------------------------------------------------
     # Step 6: Other files (0666 - umask).
+    # -------------------------------------------------------------------------
     new_pemission=$(printf "%04o" "$((0666 - $(umask)))")
     # shellcheck disable=SC2206
     find_args=($input_files ! -path "$IGNORE_FIND_PATH")
