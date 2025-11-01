@@ -45,7 +45,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 - **Non-destructive output**: Never overwrites the input file; the output is distinct.
 - **Direct usage**: Allows direct usage without requiring input parameters.
 - **Log file**: Produces an `Errors.log` file when a task finishes with an error.
-- **File manager compatibility**: Designed for major file managers like GNOME Files (Nautilus), Dolphin, Caja, Nemo, and Thunar.
+- **File manager compatibility**: Designed for major file managers like GNOME Files (Nautilus), Nemo, Caja, Dolphin, and Thunar.
 - **Distro compatibility**: Works on major GNU/Linux distributions, such as Debian, Ubuntu, Fedora, and Arch Linux.
 - **Remote file support:** Works with files stored on remote servers.
 - **Easy adaptation**: Scripts can be easily copied and adapted for other purposes.
@@ -94,8 +94,8 @@ File managers compatibility:
 | File manager           | Environment | Menu integration | Application shortcuts | Keyboard accelerators | Menu "Accessed recently" |
 | ---------------------- | ----------- | ---------------- | --------------------- | --------------------- | ------------------------ |
 | GNOME Files (Nautilus) | GNOME       | 🟢                | 🟢                     | 🟢                     | 🟢                        |
-| Caja                   | MATE        | 🟢                | 🟢                     | 🟢                     | 🟢                        |
 | Nemo                   | Cinnamon    | 🟢                | 🟢                     | 🟢                     | 🟢                        |
+| Caja                   | MATE        | 🟢                | 🟢                     | 🟢                     | 🟢                        |
 | Thunar                 | Xfce        | 🟢                | 🟢                     | 🟢                     | 🔴                        |
 | Dolphin                | KDE Plasma  | 🟢                | 🟢                     | 🔴                     | 🔴                        |
 | PCManFM-Qt             | LXQt        | 🟢                | 🟢                     | 🔴                     | 🔴                        |
