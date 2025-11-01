@@ -25,7 +25,7 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
-    # 1 = 90° clockwise
+    # 1 = 90 degrees clockwise.
     local transpose="transpose=1, transpose=1"
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(180 deg)'")
