@@ -586,7 +586,7 @@ _check_dependencies() {
 # FUNCTION: _deps_get_dependency_value
 #
 # DESCRIPTION:
-#   Retrieves the value associated with a specific key–subkey pair from an
+#   Retrieves the value associated with a specific key-subkey pair from an
 #   associative array.
 #
 # PARAMETERS:
