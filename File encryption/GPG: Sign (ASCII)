@@ -108,6 +108,7 @@ _get_user() {
             --radiolist \
             --title="Select a user" \
             --text="Select a user from the list below." \
+            --print-column "2" \
             --column="Select" \
             --column="User" "${zenity_user_list[@]}" \
             --width="$GUI_BOX_WIDTH" \

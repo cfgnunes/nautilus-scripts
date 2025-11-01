@@ -115,6 +115,7 @@ _get_users() {
             --checklist \
             --title="Select users" \
             --text="Select one or more users from the list below." \
+            --print-column "2" \
             --column="Select" \
             --column="User" "${zenity_user_list[@]}" \
             --width="$GUI_BOX_WIDTH" \
