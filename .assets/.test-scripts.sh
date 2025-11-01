@@ -1896,6 +1896,12 @@ _main() {
     __test_file_nonempty "$output_file (UTF-8).txt"
     __test_file_empty "$std_output"
 
+    script_test="Plain text/Text: Encodings/Text: Transliterate to ASCII"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file (ASCII).txt"
+    __test_file_empty "$std_output"
+
     script_test="Plain text/Text: Encodings/Text: List encodings"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
