@@ -10,7 +10,7 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _check_dependencies "xxd"
+    _check_dependencies ""
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_recursive=true; par_skip_encoding='binary'; par_skip_extension='pdf|svg'")
 
@@ -28,57 +28,67 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local file_encoding=""
-    local xxd_output=""
+    local hex_dump=""
     local issues=""
 
     file_encoding=$(_get_file_encoding "$input_file")
-    xxd_output=$(xxd -p -c 1 -- "$input_file" | tr "\n" "-")
+    hex_dump=$(hexdump -v -e '/1 "%02X-" ' -- "$input_file")
 
-    # Run the checker 'non UTF-8 encoding'.
-    if [[ "${file_encoding,,}" != *"us-ascii"* ]] && [[ "${file_encoding,,}" != *"utf-8"* ]]; then
+    # Checker: 'non UTF-8 encoding'.
+    if [[ "${file_encoding,,}" != *"us-ascii"* ]] &&
+        [[ "${file_encoding,,}" != *"utf-8"* ]]; then
         issues+="[non UTF-8 encoding]"
     fi
 
-    # Run the checker 'UTF-8 with BOM'.
-    if [[ "${file_encoding,,}" == *"utf-8"* ]]; then
-        if head -c3 "$input_file" | LC_ALL=C grep --quiet --perl-regexp -m1 '\xef\xbb\xbf'; then
-            issues+="[UTF-8 with BOM]"
-        fi
+    # Checker: 'UTF-8 with BOM'.
+    if [[ "${file_encoding,,}" == *"utf-8"* ]] &&
+        [[ "$hex_dump" == "EF-BB-BF-"* ]]; then
+        issues+="[UTF-8 with BOM]"
     fi
 
-    # Run the checker 'non-LF line break'.
-    if [[ "$xxd_output" == *"0d-"* ]]; then
+    # Checker: 'non-LF line break'.
+    if [[ "$hex_dump" == *"0D-"* ]]; then
         issues+="[non-LF line break]"
     fi
 
-    # Run the checker 'trailing spaces' (for Unix and Windows files).
-    if grep --quiet --perl-regexp -m1 "[ \t]\r?$" "$input_file"; then
-        issues+="[trailing spaces]"
+    # Checker: 'trailing whitespace'.
+    if [[ "$hex_dump" == *"20-0A-"* ]] ||
+        [[ "$hex_dump" == *"20-0D-"* ]] ||
+        [[ "$hex_dump" == *"09-0A-"* ]] ||
+        [[ "$hex_dump" == *"09-0D-"* ]]; then
+        issues+="[trailing whitespace]"
     fi
 
-    # Run the checker 'trailing spaces' (for Mac files).
-    if [[ "$xxd_output" == *"0d-"* ]]; then
-        if cat -A -- "$input_file" 2>/dev/null | grep --quiet -m1 " ^M"; then
-            [[ "$issues" != *"trailing spaces"* ]] && issues+="[trailing spaces]"
-        fi
-    fi
-
-    # Run the checker 'mix tabs and spaces' (different lines).
-    if grep --quiet --perl-regexp -m1 "^\t" "$input_file" && grep --quiet --perl-regexp -m1 "^  " "$input_file"; then
+    # Checker: 'mix tabs and spaces' (same line).
+    if [[ "$hex_dump" == *"20-09-"* ]] ||
+        [[ "$hex_dump" == *"09-20-"* ]]; then
         issues+="[mix tabs and spaces]"
     fi
 
-    # Run the checker 'mix tabs and spaces' (same line).
-    if grep --quiet --perl-regexp -m1 "\t " "$input_file" || grep --quiet --perl-regexp -m1 " \t" "$input_file"; then
-        [[ "$issues" != *"mix tabs and spaces"* ]] && issues+="[mix tabs and spaces]"
+    # Checker: 'mix tabs and spaces' (different lines).
+    if [[ "$issues" != *"mix tabs and spaces"* ]]; then
+        if [[ "$hex_dump" == *"0D-20-"* ]] &&
+            [[ "$hex_dump" == *"0D-09-"* ]]; then
+            issues+="[mix tabs and spaces]"
+        fi
+    fi
+    if [[ "$issues" != *"mix tabs and spaces"* ]]; then
+        if [[ "$hex_dump" == *"0A-20-"* ]] &&
+            [[ "$hex_dump" == *"0A-09-"* ]]; then
+            issues+="[mix tabs and spaces]"
+        fi
     fi
 
-    # Run the checker 'missing line at the end'.
-    if ! tail -c 1 "$input_file" | xxd -p | grep --quiet -m1 "0d\|0a"; then
+    local eof=${hex_dump: -9}
+
+    # Checker: 'missing line at the end'.
+    if [[ "$eof" != *"0A-" ]] && [[ "$eof" != *"0D-" ]]; then
         issues+="[missing line at the end]"
     else
-        if tail -c 3 "$input_file" | xxd -p | grep --quiet -m1 "..0d0d\|..0a0a\|0a0d0a"; then
-            # Run the checker 'has many line breaks at the end'.
+        if [[ "$eof" == *"0D-0D-" ]] ||
+            [[ "$eof" == *"0A-0A-" ]] ||
+            [[ "$eof" == "0A-0D-0A-" ]]; then
+            # Checker: 'has many line breaks at the end'.
             issues+="[extra lines at the end]"
         fi
     fi
