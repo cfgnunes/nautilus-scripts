@@ -97,7 +97,7 @@ declare -A DEPENDENCIES_MAP=(
     ["cjxl"]="
         pkg:    libjxl-tools
         apt:    libjxl-tools
-        dnf:    libjxl-tools
+        dnf:    libjxl-utils
         pacman: libjxl
         nix:    libjxl
         zypper: libjxl-tools
