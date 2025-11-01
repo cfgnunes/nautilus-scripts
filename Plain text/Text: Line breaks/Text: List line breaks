@@ -11,7 +11,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "xxd"
+    _check_dependencies ""
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file; par_recursive=true; par_skip_encoding='binary'; par_skip_extension='pdf|svg'")
 
@@ -31,16 +31,16 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(xxd -p -c 1 -- "$input_file" | tr "\n" "-")
+    std_output=$(hexdump -v -e '/1 "%02X-" ' -- "$input_file")
     if [[ -z "$std_output" ]]; then
         return
     fi
 
-    if [[ "$std_output" == *"0d-0a-"* ]]; then
+    if [[ "$std_output" == *"0D-0A-"* ]]; then
         std_output="CRLF (Windows)"
-    elif [[ "$std_output" == *"0a-"* ]]; then
+    elif [[ "$std_output" == *"0A-"* ]]; then
         std_output="LF (Unix/Linux)"
-    elif [[ "$std_output" == *"0d-"* ]]; then
+    elif [[ "$std_output" == *"0D-"* ]]; then
         std_output="CR (Mac OS Classic)"
     else
         std_output="(No line breaks)"
