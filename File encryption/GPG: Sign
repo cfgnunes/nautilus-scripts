@@ -88,7 +88,7 @@ _get_user() {
     fi
 
     _display_lock
-    if _command_exists "zenity"; then
+    if _command_exists "zenity" || _command_exists "yad"; then
         users=$(_convert_text_to_delimited_string "$users")
         local zenity_user_list=()
 
@@ -103,7 +103,7 @@ _get_user() {
             fi
         done
 
-        TEMP_DATA_TASK=$(zenity \
+        TEMP_DATA_TASK=$(_cmd_zenity \
             --list \
             --radiolist \
             --title="Select a user" \

@@ -71,7 +71,7 @@ _select_output_filename() {
     _display_lock
     if ! _is_gui_session; then
         output_file=$(head -n 1 <<<"$options")
-    elif _command_exists "zenity"; then
+    elif _command_exists "zenity" || _command_exists "yad"; then
         options=$(_convert_text_to_delimited_string "$options")
         local zenity_options=()
 
@@ -86,7 +86,7 @@ _select_output_filename() {
             fi
         done
 
-        output_file=$(zenity --list --radiolist \
+        output_file=$(_cmd_zenity --list --radiolist \
             --title="Select output checksum file" \
             --text="Select output checksum file from the list below." \
             --column="Select" \
