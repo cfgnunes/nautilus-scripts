@@ -27,8 +27,9 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=tar.zst")
+
+    # Run the main process.
     if [[ -d "$input_file" ]]; then
         # Check if the directory is empty.
         if _is_directory_empty "$input_file"; then

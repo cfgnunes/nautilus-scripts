@@ -30,8 +30,9 @@ _main_task() {
     local file_mime=""
     file_mime=$(_get_file_mime "$input_file")
 
-    # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(no metadata)'")
+
+    # Run the main process.
 
     # Run ffmpeg depending on the type of file (audio or video).
     if [[ "$file_mime" == "audio/"* ]]; then

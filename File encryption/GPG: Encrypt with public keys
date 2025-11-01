@@ -38,8 +38,9 @@ _main_task() {
         recipients+=("--recipient=$user")
     done
 
-    # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=append; par_extension=gpg")
+
+    # Run the main process.
     std_output=$(gpg \
         --batch \
         --yes \

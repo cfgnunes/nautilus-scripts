@@ -27,8 +27,9 @@ _main_task() {
     local std_output=""
     local frame_rate="10"
 
-    # Run the main process.
     output_file=$(_get_output_filename "${input_file}_frame_%05d.png" "$output_dir" "par_extension_opt=preserve")
+
+    # Run the main process.
     std_output=$(ffmpeg -hide_banner -y -i "$input_file" -r "$frame_rate" -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }

@@ -31,8 +31,9 @@ _main_task() {
     XZ_OPT="-9"
     export XZ_OPT
 
-    # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=tar.xz")
+
+    # Run the main process.
     if [[ -d "$input_file" ]]; then
         # Check if the directory is empty.
         if _is_directory_empty "$input_file"; then

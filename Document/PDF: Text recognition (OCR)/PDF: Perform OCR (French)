@@ -27,8 +27,9 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(OCR $TEMP_DATA_TASK)'")
+
+    # Run the main process.
     std_output=$(ocrmypdf --l "$TEMP_DATA_TASK" --output-type pdfa --skip-text --jobs "$(_get_max_procs)" -- "$input_file" "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }

@@ -25,8 +25,9 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=strip")
+
+    # Run the main process.
     std_output=$(gpg --batch --yes --decrypt --output "$output_file" -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }

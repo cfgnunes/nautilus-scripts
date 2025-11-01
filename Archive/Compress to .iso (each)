@@ -30,8 +30,9 @@ _main_task() {
     local volume_id=""
     volume_id=$(basename -- "$input_file" | cut -c 1-32 2>/dev/null)
 
-    # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=iso")
+
+    # Run the main process.
 
     # Check if the directory is empty.
     if _is_directory_empty "$input_file"; then

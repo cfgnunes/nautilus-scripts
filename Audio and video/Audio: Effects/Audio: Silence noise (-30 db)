@@ -26,8 +26,9 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(noise gate)'")
+
+    # Run the main process.
     std_output=$(ffmpeg -hide_banner -y -i "$input_file" -filter:a "compand=attacks=0:points=-80/-115|-30.1/-80|-30/-30|20/20" -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }

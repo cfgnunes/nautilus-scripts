@@ -27,8 +27,9 @@ _main_task() {
     local std_output=""
     local dimension=512
 
-    # Run the main process.
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=png; par_suffix='($dimension px)'")
+
+    # Run the main process.
 
     local inkscape_ver=""
     local inkscape_ver_old="1.0"
