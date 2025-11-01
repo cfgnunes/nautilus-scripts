@@ -1855,6 +1855,12 @@ _display_list_box_zenity() {
         ) || _exit_script
     fi
 
+    # Fix YAD output.
+    if ! _command_exists "_zenity"; then
+        selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
+        selected_items=$(_str_collapse_char "$selected_items" "$FIELD_SEPARATOR")
+    fi
+
     # Open the selected items.
     if ((items_count > 0)) && [[ -n "$selected_items" ]]; then
         case "$par_action" in
@@ -2142,6 +2148,7 @@ _display_wait_box_message() {
             # Check if the 'wait box' should open.
             [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]] && return 0
 
+            # Fix YAD cancel button.
             local cancel_button=""
             if ! _command_exists "_zenity"; then
                 cancel_button="--button=Cancel:1"
