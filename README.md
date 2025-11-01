@@ -105,14 +105,11 @@ Most scripts have been tested on the following GNU/Linux distributions:
 - Debian/Ubuntu
   - Debian 12, 13 (GNOME, KDE and Xfce)
   - Ubuntu 16.04, 18.04, 20.04, 22.04, 24.04
-  - Kubuntu 22.04, 24.04
-  - Xubuntu 23.10, 24.04
-  - Lubuntu 22.04, 24.04
-  - KDE neon 2024, 2025
   - Mint 21, 22 (Cinnamon, MATE and Xfce)
+  - KDE neon 2024, 2025
   - Zorin OS Core 17, 18
 - Fedora
-  - Workstation 39, 40, 41, 42
+  - Workstation 39, 40, 41, 42, 43
 - Arch Linux
   - CachyOS
   - EndeavourOS
