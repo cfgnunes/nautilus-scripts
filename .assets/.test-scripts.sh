@@ -624,6 +624,11 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_nonempty "$std_output"
 
+    script_test="Directories and files/Find zero-byte files"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
+    __test_file_nonempty "$std_output"
+
     script_test="Directories and files/List recently modified files"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
@@ -1276,7 +1281,7 @@ _main() {
     input_file1="$temp_dir/Test image SVG.svg"
     input_file2="$temp_dir/Test image SVG 2.svg"
     output_file="$temp_dir/Test image SVG"
-    cp -- "$ROOT_DIR/.assets/screenshot.svg" "$input_file1"
+    cp -- "$ROOT_DIR/screenshot.svg" "$input_file1"
     cp -- "$input_file1" "$input_file2"
 
     script_test="Image/Image: SVG files/SVG: Compress to SVGZ"
