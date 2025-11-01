@@ -89,11 +89,17 @@ _select_output_filename() {
         output_file=$(_cmd_zenity --list --radiolist \
             --title="Select output checksum file" \
             --text="Select output checksum file from the list below." \
+            --print-column "2" \
             --column="Select" \
             --column="Filename" "${zenity_options[@]}" \
             --width="$GUI_BOX_WIDTH" \
             --height="$GUI_BOX_HEIGHT" \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
+        # Fix YAD output.
+        if ! _command_exists "_zenity"; then
+            output_file=$(tr "\n" "$FIELD_SEPARATOR" <<<"$output_file")
+            output_file=$(_str_collapse_char "$output_file" "$FIELD_SEPARATOR")
+        fi
     elif _command_exists "kdialog"; then
         # shellcheck disable=SC2001
         options=$(sed "s|\(.*\)|\1:\1:off|g" <<<"$options")
