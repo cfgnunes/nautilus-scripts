@@ -25,19 +25,13 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
-    local temp_file=""
     local tabs="4"
 
-    # Work on a temporary file.
-    temp_file=$(_make_temp_file)
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($tabs spaces)'")
 
     # Run the main process.
-    expand --tabs="$tabs" -- "$input_file" >"$temp_file" 2>/dev/null
+    expand --tabs="$tabs" -- "$input_file" >"$output_file" 2>/dev/null
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
-
-    # Move the temporary file to the output.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($tabs spaces)'")
-    _move_file "rename" "$temp_file" "$output_file"
 }
 
 _main "$@"

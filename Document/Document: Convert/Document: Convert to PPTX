@@ -109,7 +109,7 @@ _run_command() {
         rm -rf -- "$temp_dir"
 
         temp_output_file=$(find "$temp_dir_local" -type f -name "*.$output_format" -print -quit 2>/dev/null)
-        _move_file "rename" "$temp_output_file" "$output_file"
+        _move_file "skip" "$temp_output_file" "$output_file"
 
         # Remove the temporary directory (local directory).
         rm -rf -- "$temp_dir_local"

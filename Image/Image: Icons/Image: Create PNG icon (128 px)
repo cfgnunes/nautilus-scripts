@@ -29,8 +29,9 @@ _main_task() {
     local temp_file1=""
     local temp_file2=""
     local temp_file3=""
-    local temp_file4=""
     local icon_size="128"
+
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=png; par_suffix='(icon $icon_size px)'")
 
     __cmd_magick_identify() {
         if _command_exists "magick"; then
@@ -45,7 +46,6 @@ _main_task() {
     temp_file1="$temp_dir/file1.png"
     temp_file2="$temp_dir/file2.png"
     temp_file3="$temp_dir/file3.png"
-    temp_file4="$temp_dir/file4.png"
 
     # Run the main process (part 0) 'export svg'.
     local filename_extension=""
@@ -65,18 +65,18 @@ _main_task() {
                 --export-area-drawing \
                 --file="$input_file" \
                 --export-height=$((icon_size * 2)) \
-                --export-png="$temp_file4" 2>&1)
+                --export-png="$output_file" 2>&1)
         else
             # New Inkscape version.
             std_output=$(inkscape \
                 --export-area-drawing \
                 --export-height=$((icon_size * 2)) \
-                --export-filename="$temp_file4" \
+                --export-filename="$output_file" \
                 -- "$input_file" 2>&1)
         fi
-        _check_output "$?" "$std_output" "$input_file" "$temp_file4" || return 1
+        _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
-        input_file_proc=$temp_file4
+        input_file_proc=$output_file
     else
         input_file_proc=$input_file
     fi
@@ -134,12 +134,8 @@ _main_task() {
         -resize "${icon_size}x${icon_size}^" \
         -gravity center \
         -crop ${icon_size}x${icon_size}+0+0 \
-        -strip +repage "$temp_file4" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "$temp_file4" || return 1
-
-    # Move the temporary file to the output.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=png; par_suffix='(icon $icon_size px)'")
-    _move_file "rename" "$temp_file4" "$output_file"
+        -strip +repage "$output_file" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     # Remove the temporary directory.
     rm -rf -- "$temp_dir"

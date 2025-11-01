@@ -26,18 +26,12 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
-    local temp_file=""
 
-    # Work on a temporary file.
-    temp_file=$(_make_temp_file)
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=txt; par_suffix='(OCR $TEMP_DATA_TASK)'")
 
     # Run the main process.
-    std_output=$(tesseract "$input_file" "$temp_file" -l "$TEMP_DATA_TASK" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "$temp_file.txt" || return 1
-
-    # Move the temporary file to the output.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=txt; par_suffix='(OCR $TEMP_DATA_TASK)'")
-    _move_file "rename" "$temp_file.txt" "$output_file"
+    std_output=$(tesseract "$input_file" "$(_strip_filename_extension "$output_file")" -l "$TEMP_DATA_TASK" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
 _main "$@"

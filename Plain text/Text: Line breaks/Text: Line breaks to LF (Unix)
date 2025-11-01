@@ -25,18 +25,12 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
-    local temp_file=""
 
-    # Work on a temporary file.
-    temp_file=$(_make_temp_file)
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(LF)'")
 
     # Run the main process.
-    perl -pe "s/\r\n|\n|\r/\n/g" -- "$input_file" >"$temp_file" 2>/dev/null
-    _check_output "$?" "$std_output" "$input_file" "$temp_file" || return 1
-
-    # Move the temporary file to the output.
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(LF)'")
-    _move_file "rename" "$temp_file" "$output_file"
+    perl -pe "s/\r\n|\n|\r/\n/g" -- "$input_file" >"$output_file" 2>/dev/null
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
 _main "$@"
