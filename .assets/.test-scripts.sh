@@ -296,6 +296,12 @@ _main() {
     __test_file_nonempty "$output_file (noise gate).mp3"
     __test_file_empty "$std_output"
 
+    script_test="Audio and video/Audio: Effects/Audio: Trim silence (-50 db)"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file (trim).mp3"
+    __test_file_empty "$std_output"
+
     #script_test="Audio and video/Audio: MP3 files/MP3: Maximize gain (recursive)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
