@@ -123,8 +123,7 @@ _get_users() {
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
         # Fix YAD output.
         if ! _command_exists "_zenity"; then
-            output_file=$(tr "\n" "$FIELD_SEPARATOR" <<<"$output_file")
-            output_file=$(_str_collapse_char "$output_file" "$FIELD_SEPARATOR")
+            TEMP_DATA_TASK=$(_str_collapse_char "$TEMP_DATA_TASK" "$FIELD_SEPARATOR")
         fi
     elif _command_exists "kdialog"; then
         # shellcheck disable=SC2001
