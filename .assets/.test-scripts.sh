@@ -11,14 +11,14 @@ source "$ROOT_DIR/.common-functions.sh"
 unset "DISPLAY"
 
 # -----------------------------------------------------------------------------
-# SECTION /// [GLOBAL VARIABLES]
+# SECTION Global variables ----
 # -----------------------------------------------------------------------------
 
 _TOTAL_TESTS=0
 _TOTAL_FAILED=0
 
 # -----------------------------------------------------------------------------
-# SECTION /// [TEST FUNCTIONS]
+# SECTION Test functions ----
 # -----------------------------------------------------------------------------
 
 __test_file_empty() {
@@ -61,7 +61,7 @@ __echo_script() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION /// [MAIN]
+# SECTION Main ----
 # -----------------------------------------------------------------------------
 
 _main() {
@@ -80,7 +80,11 @@ _main() {
     _open_items_locations "$std_output" "true"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Archive]
+    # SECTION: Tests ----
+    # -------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
+    ## SUBSECTION: Archive ----
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
@@ -153,7 +157,7 @@ _main() {
     __test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Audio]
+    ## SUBSECTION: Audio ----
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
@@ -348,7 +352,7 @@ _main() {
     __test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Video]
+    ## SUBSECTION: Video ----
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
@@ -553,7 +557,7 @@ _main() {
     __test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Clipboard operations/]
+    ## SUBSECTION: Clipboard operations ----
     # -------------------------------------------------------------------------
 
     #script_test="Clipboard operations/Copy file content to clipboard"
@@ -599,7 +603,7 @@ _main() {
     #__test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Directories and files]
+    ## SUBSECTION: Directories and files ----
     # -------------------------------------------------------------------------
 
     script_test="Directories and files/Compare items (via Diff)"
@@ -688,7 +692,7 @@ _main() {
     __test_file_nonempty "$std_output"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / File encryption]
+    ## SUBSECTION: File encryption ----
     # -------------------------------------------------------------------------
 
     #script_test="File encryption/GPG: Decrypt"
@@ -752,7 +756,7 @@ _main() {
     #__test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Hash and checksum]
+    ## SUBSECTION: Hash and checksum ----
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
@@ -841,7 +845,7 @@ _main() {
     __test_file_nonempty "$output_file"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Image]
+    ## SUBSECTION: Image ----
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
@@ -1280,7 +1284,7 @@ _main() {
     #__test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Image: SVG files]
+    ## SUBSECTION: Image: SVG files ----
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
@@ -1351,7 +1355,7 @@ _main() {
     __test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Document]
+    ## SUBSECTION: Document ----
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
@@ -1446,7 +1450,7 @@ _main() {
     #__test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Document: PDF]
+    ## SUBSECTION: Document: PDF ----
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
@@ -1717,7 +1721,7 @@ _main() {
     #__test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Link operations]
+    ## SUBSECTION: Link operations ----
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
@@ -1783,7 +1787,7 @@ _main() {
     #__test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Network and internet]
+    ## SUBSECTION: Network and internet ----
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
@@ -1858,7 +1862,7 @@ _main() {
     __test_file_nonempty "$std_output"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Open with]
+    ## SUBSECTION: Open with ----
     # -------------------------------------------------------------------------
 
     #script_test="Open with/Code Editor"
@@ -1880,7 +1884,7 @@ _main() {
     #__test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Plain text]
+    ## SUBSECTION: Plain text ----
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
@@ -2010,7 +2014,7 @@ _main() {
     __test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Rename files]
+    ## SUBSECTION: Rename files ----
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
@@ -2125,7 +2129,7 @@ _main() {
     #__test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    # SECTION /// [TESTS / Security and recovery]
+    ## SUBSECTION: Security and recovery ----
     # -------------------------------------------------------------------------
 
     #script_test="Security and recovery/File carving (via Foremost)"
