@@ -3712,6 +3712,16 @@ _cmd_magick_convert() {
     fi
 }
 
+# FUNCTION: _cmd_zenity
+#
+# DESCRIPTION:
+# This function executes a graphical dialog command using either Zenity or YAD,
+# depending on which one is available in the system. Zenity is the preferred
+# tool, but if it's not installed, YAD (Yet Another Dialog) is used as a
+# fallback.
+#
+# PARAMETERS:
+#   $@ : Arguments to be passed to the dialog command.
 _cmd_zenity() {
     if _command_exists "_zenity"; then
         zenity "$@"
