@@ -121,6 +121,11 @@ _get_users() {
             --width="$GUI_BOX_WIDTH" \
             --height="$GUI_BOX_HEIGHT" \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
+        # Fix YAD output.
+        if ! _command_exists "_zenity"; then
+            output_file=$(tr "\n" "$FIELD_SEPARATOR" <<<"$output_file")
+            output_file=$(_str_collapse_char "$output_file" "$FIELD_SEPARATOR")
+        fi
     elif _command_exists "kdialog"; then
         # shellcheck disable=SC2001
         users=$(sed "s|\(.*\)|\1:\1:off|g" <<<"$users")
