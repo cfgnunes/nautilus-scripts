@@ -94,6 +94,17 @@ declare -A DEPENDENCIES_MAP=(
         brew:   cabextract
     "
 
+    ["cjxl"]="
+        pkg:    libjxl-tools
+        apt:    libjxl-tools
+        dnf:    libjxl-tools
+        pacman: libjxl
+        nix:    libjxl
+        zypper: libjxl-tools
+        guix:   libjxl
+        brew:
+    "
+
     ["clamscan"]="
         pkg:    clamav
         apt:    clamav
