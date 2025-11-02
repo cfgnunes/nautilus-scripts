@@ -96,44 +96,12 @@ _get_users() {
         fi
     fi
 
-    _display_lock
-    if _command_exists "zenity"; then
-        users=$(_convert_text_to_delimited_string "$users")
-        local zenity_user_list=()
-
-        local user=""
-        for user in $users; do
-            if (($(_get_items_count "$users") == 1)); then
-                zenity_user_list+=(TRUE "$user")
-            else
-                zenity_user_list+=(FALSE "$user")
-            fi
-        done
-
-        TEMP_DATA_TASK=$(zenity \
-            --list \
-            --checklist \
-            --title="Select users" \
-            --text="Select one or more users from the list below." \
-            --column="Select" \
-            --column="User" "${zenity_user_list[@]}" \
-            --width="$GUI_BOX_WIDTH" \
-            --height="$GUI_BOX_HEIGHT" \
-            --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
-    elif _command_exists "kdialog"; then
-        # shellcheck disable=SC2001
-        users=$(sed "s|\(.*\)|\1:\1:off|g" <<<"$users")
-        users=$(tr ":\n" "$FIELD_SEPARATOR" <<<"$users")
-        # shellcheck disable=SC2086
-        TEMP_DATA_TASK=$(kdialog \
-            --title "Select a user" \
-            --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
-            --checklist "Select one or more users from the list below." \
-            --separate-output \
-            -- $users 2>/dev/null) || _exit_script
-        TEMP_DATA_TASK=$(_convert_text_to_delimited_string "$TEMP_DATA_TASK")
-    fi
-    _display_unlock
+    users=$(tr "\n" "$FIELD_SEPARATOR" <<<"$users")
+    TEMP_DATA_TASK=$(_display_checklist_box_simple \
+        "$users" \
+        "Select users" \
+        "Select one or more users from the list below." \
+        "User" "false" "false")
 
     if [[ -z "$TEMP_DATA_TASK" ]]; then
         _display_error_box "Failed: you must select at least one user!"

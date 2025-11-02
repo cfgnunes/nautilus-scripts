@@ -15,18 +15,26 @@ _main() {
     input_files=$(_get_files "par_type=file; par_recursive=true")
 
     local output_file=""
-    local output_options=""
+    local options=""
     if (($(_get_items_count "$input_files") == 1)); then
         local file_1=""
         file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
         file_1=$(basename -- "$file_1")
-        output_options+=$file_1
-        output_options+=".sha512"$'\n'
+        options+=$file_1
+        options+=".sha512"
+        options+="$FIELD_SEPARATOR"
     fi
-    output_options+="sha512sum.txt"$'\n'
-    output_options+="checksums.sha512"$'\n'
-    output_options+="SHA512SUMS"$'\n'
-    output_file=$(_select_output_filename "$output_options")
+    options+="sha512sum.txt"
+    options+="$FIELD_SEPARATOR"
+    options+="checksums.sha512"
+    options+="$FIELD_SEPARATOR"
+    options+="SHA512SUMS"
+
+    output_file=$(_display_checklist_box_simple \
+        "$options" \
+        "Select output checksum file" \
+        "Select output checksum file from the list below." \
+        "Filename" "true" "true")
 
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
@@ -62,56 +70,6 @@ _main_task() {
     std_output=$(sed "s|\([^ ]*\)\s*\(.*\)|\2$FIELD_SEPARATOR\1|g" <<<"$std_output")
 
     _storage_text_write_ln "$std_output"
-}
-
-_select_output_filename() {
-    local options=$1
-    local output_file=""
-
-    _display_lock
-    if ! _is_gui_session; then
-        output_file=$(head -n 1 <<<"$options")
-    elif _command_exists "zenity"; then
-        options=$(_convert_text_to_delimited_string "$options")
-        local zenity_options=()
-
-        local first_option="true"
-        local option=""
-        for option in $options; do
-            if [[ "$first_option" == "true" ]]; then
-                zenity_options+=(TRUE "$option")
-                first_option="false"
-            else
-                zenity_options+=(FALSE "$option")
-            fi
-        done
-
-        output_file=$(zenity --list --radiolist \
-            --title="Select output checksum file" \
-            --text="Select output checksum file from the list below." \
-            --column="Select" \
-            --column="Filename" "${zenity_options[@]}" \
-            --width="$GUI_BOX_WIDTH" \
-            --height="$GUI_BOX_HEIGHT" \
-            --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
-    elif _command_exists "kdialog"; then
-        # shellcheck disable=SC2001
-        options=$(sed "s|\(.*\)|\1:\1:off|g" <<<"$options")
-        options=$(tr ":\n" "$FIELD_SEPARATOR" <<<"$options")
-        # shellcheck disable=SC2086
-        output_file=$(kdialog \
-            --title "Select output checksum file" \
-            --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
-            --radiolist "Select output checksum file from the list below." \
-            -- $options 2>/dev/null) || _exit_script
-    fi
-    _display_unlock
-
-    if [[ -z "$output_file" ]]; then
-        output_file=$(head -n 1 <<<"$options")
-    fi
-
-    printf "%s" "$output_file"
 }
 
 _main "$@"

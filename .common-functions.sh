@@ -1663,6 +1663,86 @@ _display_info_box() {
     _display_unlock
 }
 
+# FUNCTION: _display_checklist_box_simple
+#
+# DESCRIPTION:
+# This function displays a checklist or radiolist dialog to the user,
+# adapting to the available graphical dialog tool.
+#
+# PARAMETERS:
+#   $1 (options): A list of options separated by '$FIELD_SEPARATOR',
+#      to be displayed in the checklist or radiolist.
+#   $2 (title): The title of the dialog window.
+#   $3 (text): The informational text or message shown above the list.
+#   $4 (column): The label for the options column.
+#   $5 (radio_list): Optional. 'true' to display as a radiolist (single
+#      selection), 'false' to display as a checklist (multiple selections).
+#      Default is 'false'.
+#   $6 (select_first): Optional. 'true' to preselect the first option.
+#      Default is 'true'.
+#
+# RETURNS:
+#   Prints the selected option(s) to stdout, separated by the
+#   '$FIELD_SEPARATOR'.
+_display_checklist_box_simple() {
+    local options=$1
+    local title=$2
+    local text=$3
+    local column=$4
+    local radio_list=${5:-"false"}
+    local select_first=${6:-"true"}
+    local selected=""
+    local par_type=""
+
+    options=$(_str_collapse_char "$options" "$FIELD_SEPARATOR")
+
+    if [[ "$radio_list" == "true" ]]; then
+        par_type="--radiolist"
+    else
+        par_type="--checklist"
+    fi
+
+    _display_lock
+    if ! _is_gui_session; then
+        selected=$(head -n 1 <<<"$options")
+    elif _command_exists "zenity"; then
+        local option_list=""
+        local option=""
+        for option in $options; do
+            if [[ "$select_first" == "true" ]] ||
+                (($(_get_items_count "$options") == 1)); then
+                option_list+="TRUE$FIELD_SEPARATOR"
+                select_first="false"
+            else
+                option_list+="FALSE$FIELD_SEPARATOR"
+            fi
+            option_list+="$option$FIELD_SEPARATOR"
+        done
+        option_list=$(_str_collapse_char "$option_list" "$FIELD_SEPARATOR")
+
+        # shellcheck disable=SC2086
+        selected=$(zenity --list "$par_type" \
+            --title="$title" --separator="$FIELD_SEPARATOR" \
+            --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+            --print-column "2" --text="$text" \
+            --column="Select" --column="$column" \
+            $option_list 2>/dev/null) || _exit_script
+
+    elif _command_exists "kdialog"; then
+        options=$(tr "$FIELD_SEPARATOR" "\n" <<<"$options")
+        # shellcheck disable=SC2001
+        options=$(sed "s|\(.*\)|\1:\1:off|g" <<<"$options")
+        options=$(tr ":\n" "$FIELD_SEPARATOR" <<<"$options")
+        # shellcheck disable=SC2086
+        selected=$(kdialog --title "$title" \
+            --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
+            --radiolist "$text" -- $options 2>/dev/null) || _exit_script
+    fi
+    _display_unlock
+
+    printf "%s" "$selected"
+}
+
 # FUNCTION: _display_list_box
 #
 # DESCRIPTION:
