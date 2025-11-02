@@ -2924,11 +2924,11 @@ _get_files() {
         [[ -d "$input_files" ]] && [[ "$par_recursive" == "false" ]] &&
         printf "%s" "$(basename -- "$input_files")" |
         grep --quiet --ignore-case --word-regexp "batch"; then
-        # This workaround allows the scripts to handle cases with a large input
-        # list of files. In this case, just select a single directory  with a
-        # name that includes the word 'batch'. Then, the scripts operate on the
-        # files within the selected directory. This addresses the GNOME error:
-        # "Could not start application: Failed to execute child process
+        # HACK: This workaround allows the scripts to handle cases with a large
+        # input list of files. In this case, just select a single directory
+        # with a name that includes the word 'batch'. Then, the scripts operate
+        # on the files within the selected directory. This addresses the GNOME
+        # error: "Could not start application: Failed to execute child process
         # "/bin/sh" (Argument list too long)".
 
         local batch_message=""
