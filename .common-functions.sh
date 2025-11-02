@@ -1561,7 +1561,6 @@ _display_dir_selection_box() {
     _str_collapse_char "$input_files" "$FIELD_SEPARATOR"
 }
 
-# shellcheck disable=SC2120
 # FUNCTION: _display_file_selection_box
 #
 # DESCRIPTION:
