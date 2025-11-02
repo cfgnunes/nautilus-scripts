@@ -2166,6 +2166,7 @@ _display_wait_box_message() {
             if ! _command_exists "zenity"; then
                 # HACK: Workaround for YAD.
                 # Removes the progress label and sets the progress bar to 90%.
+                # See the: https://github.com/v1cont/yad/issues/305
                 printf "#\n90\n" >"$TEMP_CONTROL_WAIT_BOX_FIFO" &
             fi
         fi
@@ -2198,6 +2199,7 @@ _display_wait_box_message() {
             else
                 # HACK: Workaround for YAD.
                 # The '--pulsate' option behaves differently across versions.
+                # See the: https://github.com/v1cont/yad/issues/305
                 parameters="--pulsate"
             fi
 
