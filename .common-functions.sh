@@ -371,6 +371,7 @@ _run_function_parallel() {
     export -f \
         _check_output \
         _cmd_magick_convert \
+        _cmd_zenity \
         _command_exists \
         _convert_delimited_string_to_text \
         _convert_text_to_delimited_string \
@@ -1545,8 +1546,8 @@ _display_dir_selection_box() {
     _display_lock
     if ! _is_gui_session; then
         input_files=$(_get_working_directory)
-    elif _command_exists "zenity"; then
-        input_files=$(zenity --title "$(_get_script_name)" \
+    elif _command_exists "zenity" || _command_exists "yad"; then
+        input_files=$(_cmd_zenity --title "$(_get_script_name)" \
             --file-selection --multiple --directory \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "kdialog"; then
@@ -1583,13 +1584,13 @@ _display_file_selection_box() {
     _display_lock
     if ! _is_gui_session; then
         return 0
-    elif _command_exists "zenity"; then
+    elif _command_exists "zenity" || _command_exists "yad"; then
         # Add --multiple only if explicitly enabled.
         if [[ "$multiple" == "true" ]]; then
             multiple_flag="--multiple"
         fi
 
-        input_files=$(zenity --title "$title" \
+        input_files=$(_cmd_zenity --title "$title" \
             --file-selection "$multiple_flag" \
             ${file_filter:+--file-filter="$file_filter"} \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
@@ -1623,8 +1624,8 @@ _display_error_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _display_gdbus_notify "dialog-error" "$(_get_script_name)" \
             "$message" "2"
-    elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --error \
+    elif _command_exists "zenity" || _command_exists "yad"; then
+        _cmd_zenity --title "$(_get_script_name)" --error \
             --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --error "$message" &>/dev/null
@@ -1652,8 +1653,8 @@ _display_info_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _display_gdbus_notify "dialog-information" "$(_get_script_name)" \
             "$message" "1"
-    elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --info \
+    elif _command_exists "zenity" || _command_exists "yad"; then
+        _cmd_zenity --title "$(_get_script_name)" --info \
             --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" --msgbox "$message" &>/dev/null
@@ -1705,7 +1706,7 @@ _display_checklist_box_simple() {
     _display_lock
     if ! _is_gui_session; then
         selected_items=$(head -n 1 <<<"$options")
-    elif _command_exists "zenity"; then
+    elif _command_exists "zenity" || _command_exists "yad"; then
         local option_list=""
         local option=""
         for option in $options; do
@@ -1720,14 +1721,27 @@ _display_checklist_box_simple() {
         done
         option_list=$(_str_collapse_char "$option_list" "$FIELD_SEPARATOR")
 
+        # HACK: Workaround for YAD input fields,
+        # which do not accept the '<' character.
+        if ! _command_exists "zenity"; then
+            option_list=$(sed "s|<|((|g; s|>|))|g" <<<"$option_list")
+        fi
+
         # shellcheck disable=SC2086
-        selected_items=$(zenity --list "$par_type" \
+        selected_items=$(_cmd_zenity --list "$par_type" \
             --title="$title" --separator="$FIELD_SEPARATOR" \
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --print-column "2" --text="$text" \
             --column="Select" --column="$column" \
             $option_list 2>/dev/null) || _exit_script
 
+        # HACK: Workaround for YAD output.
+        if ! _command_exists "zenity"; then
+            selected_items=$(sed "s|((|<|g; s|))|>|g" <<<"$selected_items")
+            selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
+            selected_items=$(_str_collapse_char \
+                "$selected_items" "$FIELD_SEPARATOR")
+        fi
     elif _command_exists "kdialog"; then
         options=$(tr "$FIELD_SEPARATOR" "\n" <<<"$options")
         # shellcheck disable=SC2001
@@ -1799,7 +1813,7 @@ _display_list_box() {
     _display_lock
     if ! _is_gui_session; then
         _display_list_box_terminal "$message"
-    elif _command_exists "zenity"; then
+    elif _command_exists "zenity" || _command_exists "yad"; then
         _display_list_box_zenity "$message" "$par_columns" \
             "$par_item_name" "$par_action" "$par_resolve_links" \
             "$par_checkbox" "$par_checkbox_value"
@@ -1907,12 +1921,18 @@ _display_list_box_zenity() {
     arg_max=$(getconf "ARG_MAX")
     msg_size=$(printf "%s" "$message" | wc -c)
 
+    # HACK: Workaround for YAD input fields,
+    # which do not accept the '<' character.
+    if ! _command_exists "zenity"; then
+        message=$(sed "s|<|((|g; s|>|))|g" <<<"$message")
+    fi
+
     if ((msg_size > arg_max - safet_margin)); then
         # Alternative strategy: use stdin instead of passing arguments directly
         # This avoids the "Argument list too long" error when '$message' is too
         # large.
         # shellcheck disable=SC2086
-        selected_items=$(zenity --title "$(_get_script_name)" --list \
+        selected_items=$(_cmd_zenity --title "$(_get_script_name)" --list \
             --multiple --separator="$FIELD_SEPARATOR" \
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --print-column "$columns_count" --text "$header_label" \
@@ -1920,11 +1940,19 @@ _display_list_box_zenity() {
     else
         # Default strategy: pass '$message' directly as arguments (fast).
         # shellcheck disable=SC2086
-        selected_items=$(zenity --title "$(_get_script_name)" --list \
+        selected_items=$(_cmd_zenity --title "$(_get_script_name)" --list \
             --multiple --separator="$FIELD_SEPARATOR" \
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --print-column "$columns_count" --text "$header_label" \
             $par_columns $message 2>/dev/null) || _exit_script
+    fi
+
+    # HACK: Workaround for YAD output.
+    if ! _command_exists "zenity"; then
+        selected_items=$(sed "s|((|<|g; s|))|>|g" <<<"$selected_items")
+        selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
+        selected_items=$(_str_collapse_char \
+            "$selected_items" "$FIELD_SEPARATOR")
     fi
 
     # Open the selected items.
@@ -1994,8 +2022,8 @@ _display_password_box() {
         echo -e -n "$MSG_INFO $message " >&2
         read -r -s password </dev/tty
         echo >&2
-    elif _command_exists "zenity"; then
-        password=$(zenity \
+    elif _command_exists "zenity" || _command_exists "yad"; then
+        password=$(_cmd_zenity \
             --title="Password" --entry --hide-text --width="$GUI_INFO_WIDTH" \
             --text "$message" 2>/dev/null) || return 1
     elif _command_exists "kdialog"; then
@@ -2053,8 +2081,8 @@ _display_question_box() {
         read -r response </dev/tty
         echo >&2
         [[ ${response,,} == *"n"* ]] && return 1
-    elif _command_exists "zenity"; then
-        zenity --title "$(_get_script_name)" --question \
+    elif _command_exists "zenity" || _command_exists "yad"; then
+        _cmd_zenity --title "$(_get_script_name)" --question \
             --width="$GUI_INFO_WIDTH" --text="$message" &>/dev/null || return 1
     elif _command_exists "kdialog"; then
         kdialog --title "$(_get_script_name)" \
@@ -2090,9 +2118,9 @@ _display_text_box() {
     _display_lock
     if ! _is_gui_session; then
         printf "%s\n" "$message"
-    elif _command_exists "zenity"; then
+    elif _command_exists "zenity" || _command_exists "yad"; then
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
-        zenity --title "$(_get_script_name)" --text-info --no-wrap \
+        _cmd_zenity --title "$(_get_script_name)" --text-info --no-wrap \
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --filename="$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
     elif _command_exists "kdialog"; then
@@ -2183,7 +2211,7 @@ _display_wait_box_message() {
         echo -e "$MSG_INFO $message" >&2
 
     # Check if the Zenity is available.
-    elif _command_exists "zenity"; then
+    elif _command_exists "zenity" || _command_exists "yad"; then
         # Control flag to inform that a 'wait box' will open
         # (if the task takes over 2 seconds).
         touch -- "$TEMP_CONTROL_WAIT_BOX"
@@ -2191,6 +2219,7 @@ _display_wait_box_message() {
         # Create the FIFO for communication with Zenity 'wait box'.
         if [[ ! -p "$TEMP_CONTROL_WAIT_BOX_FIFO" ]]; then
             mkfifo "$TEMP_CONTROL_WAIT_BOX_FIFO"
+            printf "0\n" >"$TEMP_CONTROL_WAIT_BOX_FIFO" &
         fi
 
         # Launch a background thread for Zenity 'wait box':
@@ -2213,9 +2242,15 @@ _display_wait_box_message() {
             # Check if the 'wait box' should open.
             [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]] && return 0
 
-            tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (zenity \
+            # HACK: Workaround for YAD cancel button.
+            local cancel_button=""
+            if ! _command_exists "zenity"; then
+                cancel_button="--button=Cancel:1"
+            fi
+
+            tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (_cmd_zenity \
                 --title="$(_get_script_name)" --progress \
-                --width="$GUI_INFO_WIDTH" \
+                --width="$GUI_INFO_WIDTH" "$cancel_button" \
                 --pulsate --auto-close --text="$message" || _exit_script)
         ) &
 
@@ -3775,6 +3810,24 @@ _cmd_magick_convert() {
         magick convert "$@"
     else
         convert "$@"
+    fi
+}
+
+# FUNCTION: _cmd_zenity
+#
+# DESCRIPTION:
+# This function executes a graphical dialog command using either Zenity or YAD,
+# depending on which one is available in the system. Zenity is the preferred
+# tool, but if it's not installed, YAD (Yet Another Dialog) is used as a
+# fallback.
+#
+# PARAMETERS:
+#   $@ : Arguments to be passed to the dialog command.
+_cmd_zenity() {
+    if _command_exists "zenity"; then
+        zenity "$@"
+    else
+        yad "$@"
     fi
 }
 
