@@ -576,10 +576,12 @@ _step_install_dependencies() {
 
     # Packages for dialogs.
     if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
-        if ! _command_exists "zenity" &&
-            ! _command_exists "kdialog" &&
-            ! _command_exists "yad"; then
-            packages+="zenity "
+        if ! _command_exists "zenity" && ! _command_exists "yad"; then
+            if [[ "${XDG_CURRENT_DESKTOP,,}" != *"gnome"* ]]; then
+                packages+="zenity "
+            else
+                packages+="yad "
+            fi
         fi
     fi
 

@@ -40,7 +40,6 @@ TEMP_CONTROL_BATCH_ENABLED="$TEMP_DIR/control_batch_enabled"
 TEMP_CONTROL_DISPLAY_LOCKED="$TEMP_DIR/control_display_locked"
 TEMP_CONTROL_WAIT_BOX="$TEMP_DIR/control_wait_box"
 TEMP_CONTROL_WAIT_BOX_FIFO="$TEMP_DIR/control_wait_box_fifo"
-TEMP_CONTROL_WAIT_BOX_KDIALOG="$TEMP_DIR/control_wait_box_kdialog"
 TEMP_DATA_TEXT_BOX="$TEMP_DIR/data_text_box"
 
 # Message tags for displaying status messages on terminal.
@@ -73,7 +72,6 @@ readonly \
     TEMP_CONTROL_DISPLAY_LOCKED \
     TEMP_CONTROL_WAIT_BOX \
     TEMP_CONTROL_WAIT_BOX_FIFO \
-    TEMP_CONTROL_WAIT_BOX_KDIALOG \
     TEMP_DATA_TEXT_BOX \
     TEMP_DIR \
     TEMP_DIR_FILENAME_LOCKS \
@@ -1550,12 +1548,6 @@ _display_dir_selection_box() {
         input_files=$(_cmd_zenity --title "$(_get_script_name)" \
             --file-selection --multiple --directory \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
-    elif _command_exists "kdialog"; then
-        input_files=$(kdialog --title "$(_get_script_name)" \
-            --getexistingdirectory 2>/dev/null) || _exit_script
-        # Use parameter expansion to remove the last space.
-        input_files=${input_files% }
-        input_files=${input_files// \//$FIELD_SEPARATOR/}
     fi
     _display_unlock
 
@@ -1594,12 +1586,6 @@ _display_file_selection_box() {
             --file-selection "$multiple_flag" \
             ${file_filter:+--file-filter="$file_filter"} \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
-    elif _command_exists "kdialog"; then
-        input_files=$(kdialog --title "$title" \
-            --getopenfilename 2>/dev/null) || _exit_script
-        # Use parameter expansion to remove the last space.
-        input_files=${input_files% }
-        input_files=${input_files// \//$FIELD_SEPARATOR/}
     fi
     _display_unlock
 
@@ -1627,8 +1613,6 @@ _display_error_box() {
     elif _command_exists "zenity" || _command_exists "yad"; then
         _cmd_zenity --title "$(_get_script_name)" --error \
             --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
-    elif _command_exists "kdialog"; then
-        kdialog --title "$(_get_script_name)" --error "$message" &>/dev/null
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "Error: $message" &>/dev/null
     fi
@@ -1656,8 +1640,6 @@ _display_info_box() {
     elif _command_exists "zenity" || _command_exists "yad"; then
         _cmd_zenity --title "$(_get_script_name)" --info \
             --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
-    elif _command_exists "kdialog"; then
-        kdialog --title "$(_get_script_name)" --msgbox "$message" &>/dev/null
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "Info: $message" &>/dev/null
     fi
@@ -1743,15 +1725,6 @@ _display_checklist_box_simple() {
             selected_items=$(_str_collapse_char \
                 "$selected_items" "$FIELD_SEPARATOR")
         fi
-    elif _command_exists "kdialog"; then
-        options=$(tr "$FIELD_SEPARATOR" "\n" <<<"$options")
-        # shellcheck disable=SC2001
-        options=$(sed "s|\(.*\)|\1:\1:off|g" <<<"$options")
-        options=$(tr ":\n" "$FIELD_SEPARATOR" <<<"$options")
-        # shellcheck disable=SC2086
-        selected_items=$(kdialog --title "$title" \
-            --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
-            --radiolist "$text" -- $options 2>/dev/null) || _exit_script
     fi
     _display_unlock
 
@@ -1818,8 +1791,6 @@ _display_list_box() {
         _display_list_box_zenity "$message" "$par_columns" \
             "$par_item_name" "$par_action" "$par_resolve_links" \
             "$par_checkbox" "$par_checkbox_value"
-    elif _command_exists "kdialog"; then
-        _display_list_box_kdialog "$message" "$par_columns"
     elif _command_exists "xmessage"; then
         _display_list_box_xmessage "$message" "$par_columns"
     fi
@@ -1970,23 +1941,6 @@ _display_list_box_zenity() {
     fi
 }
 
-# FUNCTION: _display_list_box_kdialog
-_display_list_box_kdialog() {
-    local message=$1
-    local par_columns=$2
-
-    par_columns=$(sed "s|--column:||g" <<<"$par_columns")
-    par_columns=$(tr "," "\t" <<<"$par_columns")
-    message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
-    message="$par_columns"$'\n'$'\n'"$message"
-
-    printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
-    kdialog --title "$(_get_script_name)" \
-        --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
-        --textinputbox "" \
-        --textbox "$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
-}
-
 # FUNCTION: _display_list_box_xmessage
 _display_list_box_xmessage() {
     local message=$1
@@ -2028,9 +1982,6 @@ _display_password_box() {
         password=$(_cmd_zenity \
             --title="Password" --entry --hide-text --width="$GUI_INFO_WIDTH" \
             --text "$message" 2>/dev/null) || return 1
-    elif _command_exists "kdialog"; then
-        password=$(kdialog --title "Password" \
-            --password "$message" 2>/dev/null) || return 1
     fi
     _display_unlock
 
@@ -2086,9 +2037,6 @@ _display_question_box() {
     elif _command_exists "zenity" || _command_exists "yad"; then
         _cmd_zenity --title "$(_get_script_name)" --question \
             --width="$GUI_INFO_WIDTH" --text="$message" &>/dev/null || return 1
-    elif _command_exists "kdialog"; then
-        kdialog --title "$(_get_script_name)" \
-            --yesno "$message" &>/dev/null || return 1
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" \
             -buttons "Yes:0,No:1" "$message" &>/dev/null || return 1
@@ -2125,12 +2073,6 @@ _display_text_box() {
         _cmd_zenity --title "$(_get_script_name)" --text-info --no-wrap \
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --filename="$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
-    elif _command_exists "kdialog"; then
-        printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
-        kdialog --title "$(_get_script_name)" \
-            --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
-            --textinputbox "" \
-            --textbox "$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
         xmessage -title "$(_get_script_name)" \
@@ -2264,64 +2206,6 @@ _display_wait_box_message() {
                 --width="$GUI_INFO_WIDTH" "$parameters" \
                 --auto-close --text="$message" || _exit_script)
         ) &
-
-    # Check if the KDialog is available.
-    elif _command_exists "kdialog"; then
-        _get_qdbus_command &>/dev/null || return 0
-        # Control flag to inform that a 'wait box' will open
-        # (if the task takes over 2 seconds).
-        touch -- "$TEMP_CONTROL_WAIT_BOX"
-
-        # Launch the "background thread 1", for KDialog 'wait box':
-        #   - Waits for the specified delay.
-        #   - Opens the KDialog 'wait box' if the control flag still exists.
-        (
-            sleep "$open_delay"
-
-            # Wait another window close.
-            while [[ -f "$TEMP_CONTROL_DISPLAY_LOCKED" ]]; do
-                # Short delay to avoid high CPU usage in the loop.
-                sleep 0.3
-            done
-
-            # Check if the task has already finished.
-            [[ ! -d "$TEMP_DIR" ]] && return 0
-
-            # Check if the 'wait box' should open.
-            [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]] && return 0
-
-            kdialog --title="$(_get_script_name)" \
-                --progressbar "$message" 0 >"$TEMP_CONTROL_WAIT_BOX_KDIALOG" \
-                2>/dev/null
-        ) &
-
-        # Launch the "background thread 2", to monitor the KDialog 'wait box':
-        #   - Periodically checks if the dialog has been closed/cancelled.
-        #   - If KDialog 'wait box' is cancelled, exit the script.
-        (
-            sleep "$open_delay"
-            # Wait the 'wait box' finish to write the output file.
-            sleep 0.1
-
-            while [[ -f "$TEMP_CONTROL_WAIT_BOX" ]] ||
-                [[ -f "$TEMP_CONTROL_WAIT_BOX_KDIALOG" ]]; do
-                # Extract the D-Bus reference for the KDialog instance.
-                local dbus_ref=""
-                dbus_ref=$(cut -d " " -f 1 <"$TEMP_CONTROL_WAIT_BOX_KDIALOG")
-
-                # Check if the user has cancelled the wait box.
-                local std_output=""
-                std_output=$($(_get_qdbus_command) "$dbus_ref" \
-                    "/ProgressDialog" "wasCancelled" 2>&1)
-
-                if [[ "${std_output,,}" == *"does not exist"* ]]; then
-                    _exit_script
-                fi
-
-                # Short delay to avoid high CPU usage in the loop.
-                sleep 0.3
-            done
-        ) &
     fi
 }
 
@@ -2329,8 +2213,7 @@ _display_wait_box_message() {
 #
 # DESCRIPTION:
 # This function is responsible for closing any open 'wait box' (progress
-# indicators) that were displayed during the execution of a task. It checks
-# for both Zenity and KDialog wait boxes and handles their closure.
+# indicators) that were displayed during the execution of a task.
 _close_wait_box() {
     if [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]]; then
         return 0
@@ -2345,23 +2228,6 @@ _close_wait_box() {
     if pgrep -fl "$TEMP_CONTROL_WAIT_BOX_FIFO" &>/dev/null; then
         # Close the Zenity using the FIFO.
         printf "100\n" >"$TEMP_CONTROL_WAIT_BOX_FIFO"
-    fi
-
-    if [[ -f "$TEMP_CONTROL_WAIT_BOX_KDIALOG" ]]; then
-        # Extract the D-Bus reference for the KDialog instance.
-        local dbus_ref=""
-        dbus_ref=$(cut -d " " -f 1 <"$TEMP_CONTROL_WAIT_BOX_KDIALOG")
-
-        # Stop the loop of "background thread 2".
-        rm -f -- "$TEMP_CONTROL_WAIT_BOX_KDIALOG"
-
-        # Wait the "background thread 2" main loop stop
-        # before close the KDialog 'wait box'.
-        sleep 0.3
-
-        # Close the KDialog 'wait box'.
-        $(_get_qdbus_command) "$dbus_ref" "/ProgressDialog" \
-            "close" &>/dev/null
     fi
 }
 
@@ -2410,21 +2276,6 @@ _display_gdbus_notify() {
     gdbus call --session --dest "$interface" --object-path "$object_path" \
         --method "$interface.$method" "$app_name" 0 "$icon" "$title" "$body" \
         "[]" "{\"urgency\": <$urgency>}" 5000 &>/dev/null
-}
-
-# FUNCTION: _get_qdbus_command
-#
-# DESCRIPTION:
-# This function retrieves the first command matching the pattern 'qdbus'.
-# The command may vary depending on the Linux distribution and could be
-# 'qdbus', 'qdbus-qt6', 'qdbus6', or similar variations.
-#
-# RETURNS:
-#   "0" (true): If a command matching the pattern "qdbus" is found.
-#   "1" (false): If no command matching the pattern "qdbus" is found.
-_get_qdbus_command() {
-    compgen -c | grep --perl-regexp -m1 "^qdbus[0-9]*(-qt[0-9])?$" || return 1
-    return 0
 }
 
 # -----------------------------------------------------------------------------
