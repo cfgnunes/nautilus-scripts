@@ -2219,7 +2219,11 @@ _display_wait_box_message() {
         # Create the FIFO for communication with Zenity 'wait box'.
         if [[ ! -p "$TEMP_CONTROL_WAIT_BOX_FIFO" ]]; then
             mkfifo "$TEMP_CONTROL_WAIT_BOX_FIFO"
-            printf "0\n" >"$TEMP_CONTROL_WAIT_BOX_FIFO" &
+            if ! _command_exists "zenity"; then
+                # HACK: Workaround for YAD dialog.
+                # Removes the progress label and sets the progress bar to 90%.
+                printf "#\n90\n" >"$TEMP_CONTROL_WAIT_BOX_FIFO" &
+            fi
         fi
 
         # Launch a background thread for Zenity 'wait box':
@@ -2242,16 +2246,20 @@ _display_wait_box_message() {
             # Check if the 'wait box' should open.
             [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]] && return 0
 
-            # HACK: Workaround for YAD cancel button.
-            local cancel_button=""
+            local parameters=""
             if ! _command_exists "zenity"; then
-                cancel_button="--button=Cancel:1"
+                # HACK: Workaround for YAD dialog. Enable the 'Cancel' button.
+                parameters="--button=Cancel:1"
+            else
+                # Use '--pulsate' only with Zenity,
+                # because its behavior differs across YAD versions.
+                parameters="--pulsate"
             fi
 
             tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (_cmd_zenity \
                 --title="$(_get_script_name)" --progress \
-                --width="$GUI_INFO_WIDTH" "$cancel_button" \
-                --pulsate --auto-close --text="$message" || _exit_script)
+                --width="$GUI_INFO_WIDTH" "$parameters" \
+                --auto-close --text="$message" || _exit_script)
         ) &
 
     # Check if the KDialog is available.
