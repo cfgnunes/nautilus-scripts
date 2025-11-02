@@ -1721,8 +1721,8 @@ _display_checklist_box_simple() {
         done
         option_list=$(_str_collapse_char "$option_list" "$FIELD_SEPARATOR")
 
-        # HACK: Workaround for YAD input fields,
-        # which do not accept the '<' character.
+        # HACK: Workaround for YAD. The input fields,
+        # do not accept the '<' character.
         if ! _command_exists "zenity"; then
             option_list=$(sed "s|<|((|g; s|>|))|g" <<<"$option_list")
         fi
@@ -1735,7 +1735,8 @@ _display_checklist_box_simple() {
             --column="Select" --column="$column" \
             $option_list 2>/dev/null) || _exit_script
 
-        # HACK: Workaround for YAD output.
+        # HACK: Workaround for YAD. Its output appends an extra
+        # field separator at the end of the string.
         if ! _command_exists "zenity"; then
             selected_items=$(sed "s|((|<|g; s|))|>|g" <<<"$selected_items")
             selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
@@ -1921,8 +1922,8 @@ _display_list_box_zenity() {
     arg_max=$(getconf "ARG_MAX")
     msg_size=$(printf "%s" "$message" | wc -c)
 
-    # HACK: Workaround for YAD input fields,
-    # which do not accept the '<' character.
+    # HACK: Workaround for YAD. The input fields,
+    # do not accept the '<' character.
     if ! _command_exists "zenity"; then
         message=$(sed "s|<|((|g; s|>|))|g" <<<"$message")
     fi
@@ -1947,7 +1948,8 @@ _display_list_box_zenity() {
             $par_columns $message 2>/dev/null) || _exit_script
     fi
 
-    # HACK: Workaround for YAD output.
+    # HACK: Workaround for YAD. Its output appends an extra
+    # field separator at the end of the string.
     if ! _command_exists "zenity"; then
         selected_items=$(sed "s|((|<|g; s|))|>|g" <<<"$selected_items")
         selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
@@ -2220,8 +2222,8 @@ _display_wait_box_message() {
         if [[ ! -p "$TEMP_CONTROL_WAIT_BOX_FIFO" ]]; then
             mkfifo "$TEMP_CONTROL_WAIT_BOX_FIFO"
             if ! _command_exists "zenity"; then
-                # HACK: Workaround for YAD dialog.
-                # Removes the progress label and sets the progress bar to 90%.
+                # HACK: Workaround for YAD. Removes the progress label
+                # and sets the progress bar to 90%.
                 printf "#\n90\n" >"$TEMP_CONTROL_WAIT_BOX_FIFO" &
             fi
         fi
@@ -2248,11 +2250,11 @@ _display_wait_box_message() {
 
             local parameters=""
             if ! _command_exists "zenity"; then
-                # HACK: Workaround for YAD dialog. Enable the 'Cancel' button.
+                # HACK: Workaround for YAD. Enable the 'Cancel' button.
                 parameters="--button=Cancel:1"
             else
-                # Use '--pulsate' only with Zenity,
-                # because its behavior differs across YAD versions.
+                # HACK: Workaround for YAD. The '--pulsate' option
+                # behaves differently across versions.
                 parameters="--pulsate"
             fi
 
