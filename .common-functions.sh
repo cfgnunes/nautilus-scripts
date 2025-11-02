@@ -180,7 +180,7 @@ _exit_script() {
 
     # NOTE: Use 'xargs' and kill to send the SIGTERM signal to all child
     # processes, including the current script.
-    # See the: https://www.baeldung.com/linux/safely-exit-scripts
+    # See: https://www.baeldung.com/linux/safely-exit-scripts
     xargs kill <<<"$child_pids" 2>/dev/null
 }
 
@@ -1705,6 +1705,7 @@ _display_checklist_box_simple() {
 
         # HACK: Workaround for YAD.
         # Its input fields, do not accept the '<' character.
+        # See: https://github.com/v1cont/yad/issues/306
         if ! _command_exists "zenity"; then
             option_list=$(sed "s|<|((|g; s|>|))|g" <<<"$option_list")
         fi
@@ -1719,6 +1720,7 @@ _display_checklist_box_simple() {
 
         # HACK: Workaround for YAD.
         # Its output appends an extra field separator at the end.
+        # See: https://github.com/v1cont/yad/issues/307
         if ! _command_exists "zenity"; then
             selected_items=$(sed "s|((|<|g; s|))|>|g" <<<"$selected_items")
             selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
@@ -1895,6 +1897,7 @@ _display_list_box_zenity() {
 
     # HACK: Workaround for YAD.
     # Its input fields, do not accept the '<' character.
+    # See: https://github.com/v1cont/yad/issues/306
     if ! _command_exists "zenity"; then
         message=$(sed "s|<|((|g; s|>|))|g" <<<"$message")
     fi
@@ -1921,6 +1924,7 @@ _display_list_box_zenity() {
 
     # HACK: Workaround for YAD.
     # Its output appends an extra field separator at the end.
+    # See: https://github.com/v1cont/yad/issues/307
     if ! _command_exists "zenity"; then
         selected_items=$(sed "s|((|<|g; s|))|>|g" <<<"$selected_items")
         selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
@@ -2166,7 +2170,7 @@ _display_wait_box_message() {
             if ! _command_exists "zenity"; then
                 # HACK: Workaround for YAD.
                 # Removes the progress label and sets the progress bar to 90%.
-                # See the: https://github.com/v1cont/yad/issues/305
+                # See: https://github.com/v1cont/yad/issues/305
                 printf "#\n90\n" >"$TEMP_CONTROL_WAIT_BOX_FIFO" &
             fi
         fi
@@ -2199,7 +2203,7 @@ _display_wait_box_message() {
             else
                 # HACK: Workaround for YAD.
                 # The '--pulsate' option behaves differently across versions.
-                # See the: https://github.com/v1cont/yad/issues/305
+                # See: https://github.com/v1cont/yad/issues/305
                 parameters="--pulsate"
             fi
 

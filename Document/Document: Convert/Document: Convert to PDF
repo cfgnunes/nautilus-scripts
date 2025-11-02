@@ -169,7 +169,8 @@ _run_command() {
         temp_dir_local=$(_make_temp_dir_local "$output_dir" ".$basename")
 
         # HACK: Workaround for LibreOffice.
-        # See the: https://bugs.documentfoundation.org/show_bug.cgi?id=37531
+        # LibreOffice does not run if another instance is already open.
+        # See: https://bugs.documentfoundation.org/show_bug.cgi?id=37531
         local temp_dir=""
         temp_dir=$(_make_temp_dir)
 
