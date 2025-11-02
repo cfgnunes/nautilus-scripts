@@ -1691,7 +1691,7 @@ _display_checklist_box_simple() {
     local column=$4
     local radio_list=${5:-"false"}
     local select_first=${6:-"true"}
-    local selected=""
+    local selected_items=""
     local par_type=""
 
     options=$(_str_collapse_char "$options" "$FIELD_SEPARATOR")
@@ -1704,7 +1704,7 @@ _display_checklist_box_simple() {
 
     _display_lock
     if ! _is_gui_session; then
-        selected=$(head -n 1 <<<"$options")
+        selected_items=$(head -n 1 <<<"$options")
     elif _command_exists "zenity"; then
         local option_list=""
         local option=""
@@ -1721,7 +1721,7 @@ _display_checklist_box_simple() {
         option_list=$(_str_collapse_char "$option_list" "$FIELD_SEPARATOR")
 
         # shellcheck disable=SC2086
-        selected=$(zenity --list "$par_type" \
+        selected_items=$(zenity --list "$par_type" \
             --title="$title" --separator="$FIELD_SEPARATOR" \
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --print-column "2" --text="$text" \
@@ -1734,13 +1734,13 @@ _display_checklist_box_simple() {
         options=$(sed "s|\(.*\)|\1:\1:off|g" <<<"$options")
         options=$(tr ":\n" "$FIELD_SEPARATOR" <<<"$options")
         # shellcheck disable=SC2086
-        selected=$(kdialog --title "$title" \
+        selected_items=$(kdialog --title "$title" \
             --geometry "${GUI_BOX_WIDTH}x${GUI_BOX_HEIGHT}" \
             --radiolist "$text" -- $options 2>/dev/null) || _exit_script
     fi
     _display_unlock
 
-    printf "%s" "$selected"
+    printf "%s" "$selected_items"
 }
 
 # FUNCTION: _display_list_box
@@ -1912,25 +1912,19 @@ _display_list_box_zenity() {
         # This avoids the "Argument list too long" error when '$message' is too
         # large.
         # shellcheck disable=SC2086
-        selected_items=$(
-            zenity --title "$(_get_script_name)" --list \
-                --multiple --separator="$FIELD_SEPARATOR" \
-                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-                --print-column "$columns_count" \
-                --text "$header_label" \
-                $par_columns <<<"$message" 2>/dev/null
-        ) || _exit_script
+        selected_items=$(zenity --title "$(_get_script_name)" --list \
+            --multiple --separator="$FIELD_SEPARATOR" \
+            --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+            --print-column "$columns_count" --text "$header_label" \
+            $par_columns <<<"$message" 2>/dev/null) || _exit_script
     else
         # Default strategy: pass '$message' directly as arguments (fast).
         # shellcheck disable=SC2086
-        selected_items=$(
-            zenity --title "$(_get_script_name)" --list \
-                --multiple --separator="$FIELD_SEPARATOR" \
-                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-                --print-column "$columns_count" \
-                --text "$header_label" \
-                $par_columns $message 2>/dev/null
-        ) || _exit_script
+        selected_items=$(zenity --title "$(_get_script_name)" --list \
+            --multiple --separator="$FIELD_SEPARATOR" \
+            --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+            --print-column "$columns_count" --text "$header_label" \
+            $par_columns $message 2>/dev/null) || _exit_script
     fi
 
     # Open the selected items.
