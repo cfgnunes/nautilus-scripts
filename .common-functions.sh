@@ -8,7 +8,7 @@
 # AUTHOR: Cristiano Fraga G. Nunes
 # REPOSITORY: https://github.com/cfgnunes/nautilus-scripts
 # LICENSE: MIT License
-# VERSION: 25.8
+# VERSION: 25.9
 # =============================================================================
 
 set -u
