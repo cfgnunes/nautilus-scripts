@@ -2402,6 +2402,22 @@ _get_script_name() {
     sed "s|^[0-9]\{2\} ||" <<<"$output"
 }
 
+# FUNCTION: _is_file_manager_session
+#
+# DESCRIPTION:
+# This function checks whether the script is being executed from within a
+# file manager action specifically in GNOME Files (Nautilus), Nemo, or Caja.
+# The detection is done by checking if any environment variable matches the
+# pattern "_SCRIPT_SELECTED_URIS", which is set by these file managers when
+# running user-defined scripts.
+#
+# RETURNS:
+#   "0" (true): If running inside a file manager session.
+#   "1" (false): If not running inside one of these file managers.
+_is_file_manager_session() {
+    compgen -v | grep --quiet -m1 "_SCRIPT_SELECTED_URIS$"
+}
+
 # FUNCTION: _is_gui_session
 #
 # DESCRIPTION:
@@ -2769,8 +2785,7 @@ _get_files() {
     # scripts like 'Open with Terminal', where no file is selected but the
     # intention is to open the working directory.
     if (($(_get_items_count "$input_files") == 0)); then
-        # Detect if running in a supported file manager context.
-        if compgen -v | grep --quiet -m1 "_SCRIPT_SELECTED_URIS$"; then
+        if _is_file_manager_session; then
             if [[ "$par_type" != "file" ]] ||
                 [[ "$par_recursive" == "true" ]]; then
                 # Return the current working directory if no files have been
