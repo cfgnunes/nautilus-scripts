@@ -2764,7 +2764,10 @@ _get_files() {
     # Evaluate the values from the '$parameters' variable.
     eval "$parameters"
 
-    # Check if there are input files.
+    # NOTE: Handle the case where no file was selected in the file manager, but
+    # 'par_type!=directory' or 'par_type=true'. This is particularly useful for
+    # scripts like 'Open with Terminal', where no file is selected but the
+    # intention is to open the working directory.
     if (($(_get_items_count "$input_files") == 0)); then
         # Detect if running in a supported file manager context.
         if compgen -v | grep --quiet -m1 "_SCRIPT_SELECTED_URIS$"; then
@@ -2822,7 +2825,7 @@ _get_files() {
         "$par_skip_extension" \
         "$find_parameters")
 
-    # Handle the case where a file is selected in the file manager, but
+    # NOTE: Handle the case where a file was selected in the file manager, but
     # 'par_type=directory'. This is particularly useful for scripts like 'Open
     # with Terminal' where a file is selected, but the intention is to open the
     # working directory.
