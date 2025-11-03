@@ -38,7 +38,7 @@ TEMP_DIR_TASK="$TEMP_DIR/task"
 # Temporary files.
 TEMP_CONTROL_BATCH_ENABLED="$TEMP_DIR/control_batch_enabled"
 TEMP_CONTROL_DISPLAY_LOCKED="$TEMP_DIR/control_display_locked"
-TEMP_CONTROL_WAIT_BOX="$TEMP_DIR/control_wait_box"
+TEMP_CONTROL_WAIT_BOX_DELAY="$TEMP_DIR/control_wait_box_delay"
 TEMP_CONTROL_WAIT_BOX_FIFO="$TEMP_DIR/control_wait_box_fifo"
 TEMP_DATA_TEXT_BOX="$TEMP_DIR/data_text_box"
 
@@ -70,7 +70,7 @@ readonly \
     PREFIX_ERROR_LOG_FILE \
     PREFIX_OUTPUT_DIR \
     TEMP_CONTROL_DISPLAY_LOCKED \
-    TEMP_CONTROL_WAIT_BOX \
+    TEMP_CONTROL_WAIT_BOX_DELAY \
     TEMP_CONTROL_WAIT_BOX_FIFO \
     TEMP_DATA_TEXT_BOX \
     TEMP_DIR \
@@ -2181,7 +2181,7 @@ _display_wait_box_message() {
     local open_delay=${2:-"2"}
 
     # Avoid open more than one 'wait box'.
-    [[ -f "$TEMP_CONTROL_WAIT_BOX" ]] && return 0
+    [[ -f "$TEMP_CONTROL_WAIT_BOX_DELAY" ]] && return 0
 
     if ! _is_gui_session; then
         # For non-GUI sessions, simply print the message to the console.
@@ -2191,7 +2191,7 @@ _display_wait_box_message() {
     elif _command_exists "zenity" || _command_exists "yad"; then
         # Control flag to inform that a 'wait box' will open
         # (if the task takes over 2 seconds).
-        touch -- "$TEMP_CONTROL_WAIT_BOX"
+        touch -- "$TEMP_CONTROL_WAIT_BOX_DELAY"
 
         # Create the FIFO for communication with Zenity 'wait box'.
         if [[ ! -p "$TEMP_CONTROL_WAIT_BOX_FIFO" ]]; then
@@ -2222,7 +2222,7 @@ _display_wait_box_message() {
             [[ ! -d "$TEMP_DIR" ]] && return 0
 
             # Check if the 'wait box' should open.
-            [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]] && return 0
+            [[ ! -f "$TEMP_CONTROL_WAIT_BOX_DELAY" ]] && return 0
 
             if _command_exists "zenity"; then
                 tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (zenity \
@@ -2247,11 +2247,11 @@ _display_wait_box_message() {
 # This function is responsible for closing any open 'wait box' (progress
 # indicators) that were displayed during the execution of a task.
 _close_wait_box() {
-    if [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]]; then
+    if [[ ! -f "$TEMP_CONTROL_WAIT_BOX_DELAY" ]]; then
         return 0
     fi
     # Cancel the future open of any 'wait box'.
-    rm -f -- "$TEMP_CONTROL_WAIT_BOX"
+    rm -f -- "$TEMP_CONTROL_WAIT_BOX_DELAY"
 
     # Wait the 'wait box' finish to write the control file.
     sleep 0.1
