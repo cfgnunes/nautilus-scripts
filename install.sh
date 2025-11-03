@@ -1126,37 +1126,6 @@ _step_install_menus_pcmanfm() {
     while IFS= read -r -d $'\0' filename; do
         name=${filename##*/}
 
-        # Set the 'MIME' requirements.
-        local par_recursive=""
-        local par_select_mime=""
-        par_recursive=$(_get_par_value "$filename" "par_recursive")
-        par_select_mime=$(_get_par_value "$filename" "par_select_mime")
-
-        if [[ -z "$par_select_mime" ]]; then
-            local par_type=""
-            par_type=$(_get_par_value "$filename" "par_type")
-
-            case "$par_type" in
-            "directory") par_select_mime="inode/directory" ;;
-            "all") par_select_mime="all/all" ;;
-            "file") par_select_mime="all/allfiles" ;;
-            *) par_select_mime="all/allfiles" ;;
-            esac
-        fi
-
-        if [[ "$par_recursive" == "true" ]]; then
-            case "$par_select_mime" in
-            "inode/directory") : ;;
-            "all/all") : ;;
-            "all/allfiles") par_select_mime="all/all" ;;
-            *) par_select_mime+=";inode/directory" ;;
-            esac
-        fi
-
-        par_select_mime="$par_select_mime;"
-        # shellcheck disable=SC2001
-        par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
-
         local menu_file=""
         menu_file="${menus_dir}/${name}.desktop"
         {
@@ -1166,7 +1135,6 @@ _step_install_menus_pcmanfm() {
             printf "%s\n" "Profiles=scriptAction"
             printf "\n"
             printf "%s\n" "[X-Action-Profile scriptAction]"
-            printf "%s\n" "MimeTypes=$par_select_mime"
             printf "%s\n" "Exec=bash \"$filename\" %F"
         } | _tee_file "$menu_file"
 
