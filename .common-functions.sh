@@ -146,6 +146,9 @@ _cleanup_on_exit() {
     # with 'bash -c'.
     items_to_remove=$(sed -z "s|'|'\\\''|g" <<<"$items_to_remove")
 
+    # Wait for processes to terminate.
+    sleep 0.5
+
     printf "%s" "$items_to_remove" | xargs \
         --no-run-if-empty \
         --delimiter="$FIELD_SEPARATOR" \
@@ -2210,16 +2213,16 @@ _display_wait_box_message() {
         #   - If Zenity 'wait box' fails or is cancelled, exit the script.
         # shellcheck disable=SC2002
         (
-            # DELAY: Wait some window open before.
+            # Wait for a possible previous window to finish opening.
             sleep 0.2
 
-            # Wait the window close.
+            # Monitor lock file until the window closes.
             while [[ -f "$TEMP_CONTROL_DISPLAY_LOCKED" ]]; do
-                # DELAY: Avoid high CPU usage in the loop.
+                # Small delay to prevent high CPU usage.
                 sleep 0.5
             done
 
-            # DELAY: Custom delay to open the 'wait_box'.
+            # Optional delay before showing the 'wait_box'.
             sleep "$open_delay"
 
             # Check if the task has already finished.
