@@ -38,6 +38,7 @@ _main() {
         "geany"
         "gnome-text-editor"
         "gedit"
+        "mousepad"
     )
     available_app=$(_get_available_app "apps")
 
