@@ -42,6 +42,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 - **Dependency management**: Prompts users to install any missing dependencies.
 - **Keyboard accelerators**: Provides keyboard shortcuts for some scripts.
 - **Easy access to recent scripts**: Includes a menu, _Accessed recently_, to quickly access recently used scripts, saving time and streamlining workflows.
+- **Category-based installation:** The installer allows you to choose which script categories you want to install, so there's no need to install everything.
 - **Non-destructive output**: Never overwrites the input file; the output is distinct.
 - **Direct usage**: Allows direct usage without requiring input parameters.
 - **Log file**: Produces an `Errors.log` file when a task finishes with an error.
