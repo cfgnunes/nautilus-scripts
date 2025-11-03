@@ -369,7 +369,6 @@ _run_function_parallel() {
     export -f \
         _check_output \
         _cmd_magick_convert \
-        _cmd_zenity \
         _command_exists \
         _convert_delimited_string_to_text \
         _convert_text_to_delimited_string \
@@ -1619,9 +1618,14 @@ _display_error_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _display_gdbus_notify "dialog-error" "$(_get_script_name)" \
             "$message" "2"
-    elif _command_exists "zenity" || _command_exists "yad"; then
-        _cmd_zenity --title "$(_get_script_name)" --error \
-            --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
+    elif _command_exists "zenity"; then
+        zenity --title "$(_get_script_name)" \
+            --width="$GUI_INFO_WIDTH" --text="$message" \
+            --error &>/dev/null
+    elif _command_exists "yad"; then
+        yad --title "$(_get_script_name)" --center \
+            --width="$GUI_INFO_WIDTH" --text="$message" \
+            --button=OK:0 --image="dialog-error" &>/dev/null
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "Error: $message" &>/dev/null
     fi
@@ -1646,9 +1650,14 @@ _display_info_box() {
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _display_gdbus_notify "dialog-information" "$(_get_script_name)" \
             "$message" "1"
-    elif _command_exists "zenity" || _command_exists "yad"; then
-        _cmd_zenity --title "$(_get_script_name)" --info \
-            --width="$GUI_INFO_WIDTH" --text "$message" &>/dev/null
+    elif _command_exists "zenity"; then
+        zenity --title "$(_get_script_name)" \
+            --width="$GUI_INFO_WIDTH" --text="$message" \
+            --info &>/dev/null
+    elif _command_exists "yad"; then
+        yad --title "$(_get_script_name)" --center \
+            --width="$GUI_INFO_WIDTH" --text="$message" \
+            --button=OK:0 --image="dialog-information" &>/dev/null
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" "Info: $message" &>/dev/null
     fi
@@ -1686,33 +1695,41 @@ _display_checklist_box_simple() {
 
     options=$(_str_collapse_char "$options" "$FIELD_SEPARATOR")
 
+    local option_list=""
+    local option=""
+    for option in $options; do
+        if [[ "$select_first" == "true" ]] ||
+            (($(_get_items_count "$options") == 1)); then
+            option_list+="TRUE$FIELD_SEPARATOR"
+            select_first="false"
+        else
+            option_list+="FALSE$FIELD_SEPARATOR"
+        fi
+        option_list+="$option$FIELD_SEPARATOR"
+    done
+    option_list=$(_str_collapse_char "$option_list" "$FIELD_SEPARATOR")
+
+    if [[ "$radio_list" == "true" ]]; then
+        par_type="--radiolist"
+    else
+        par_type="--checklist"
+    fi
+
     _display_lock
     if ! _is_gui_session; then
         # Automatically select the first option, if no GUI session.
         selected_items=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$options")
-    elif _command_exists "zenity" || _command_exists "yad"; then
-        local option_list=""
-        local option=""
-        for option in $options; do
-            if [[ "$select_first" == "true" ]] ||
-                (($(_get_items_count "$options") == 1)); then
-                option_list+="TRUE$FIELD_SEPARATOR"
-                select_first="false"
-            else
-                option_list+="FALSE$FIELD_SEPARATOR"
-            fi
-            option_list+="$option$FIELD_SEPARATOR"
-        done
-        option_list=$(_str_collapse_char "$option_list" "$FIELD_SEPARATOR")
-
-        if [[ "$radio_list" == "true" ]]; then
-            par_type="--radiolist"
-        else
-            par_type="--checklist"
-        fi
-
+    elif _command_exists "zenity"; then
         # shellcheck disable=SC2086
-        selected_items=$(_cmd_zenity --title "$(_get_script_name)" \
+        selected_items=$(zenity --title "$(_get_script_name)" \
+            --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+            --text="$header_label" --list "$par_type" \
+            --separator="$FIELD_SEPARATOR" \
+            --print-column "2" --column="Select" --column="$column" \
+            $option_list 2>/dev/null) || _exit_script
+    elif _command_exists "yad"; then
+        # shellcheck disable=SC2086
+        selected_items=$(yad --title "$(_get_script_name)" --center \
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --text="$header_label" --list "$par_type" \
             --separator="$FIELD_SEPARATOR" \
@@ -1722,11 +1739,9 @@ _display_checklist_box_simple() {
         # HACK: Workaround for YAD.
         # Its output appends an extra field separator at the end.
         # See: https://github.com/v1cont/yad/issues/307
-        if ! _command_exists "zenity"; then
-            selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
-            selected_items=$(_str_collapse_char \
-                "$selected_items" "$FIELD_SEPARATOR")
-        fi
+        selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
+        selected_items=$(_str_collapse_char \
+            "$selected_items" "$FIELD_SEPARATOR")
     fi
     _display_unlock
 
@@ -1789,8 +1804,12 @@ _display_list_box() {
     _display_lock
     if ! _is_gui_session; then
         _display_list_box_terminal "$message"
-    elif _command_exists "zenity" || _command_exists "yad"; then
-        _display_list_box_zenity "$message" "$par_columns" \
+    elif _command_exists "zenity"; then
+        _display_list_box_zenity_yad "zenity" "$message" "$par_columns" \
+            "$par_item_name" "$par_action" "$par_resolve_links" \
+            "$par_checkbox" "$par_checkbox_value"
+    elif _command_exists "yad"; then
+        _display_list_box_zenity_yad "yad" "$message" "$par_columns" \
             "$par_item_name" "$par_action" "$par_resolve_links" \
             "$par_checkbox" "$par_checkbox_value"
     elif _command_exists "xmessage"; then
@@ -1812,15 +1831,16 @@ _display_list_box_terminal() {
     fi
 }
 
-# FUNCTION: _display_list_box_zenity
-_display_list_box_zenity() {
-    local message=$1
-    local par_columns=$2
-    local par_item_name=$3
-    local par_action=$4
-    local par_resolve_links=$5
-    local par_checkbox=$6
-    local par_checkbox_value=$7
+# FUNCTION: _display_list_box_zenity_yad
+_display_list_box_zenity_yad() {
+    local cmd_dialog=$1
+    local message=$2
+    local par_columns=$3
+    local par_item_name=$4
+    local par_action=$5
+    local par_resolve_links=$6
+    local par_checkbox=$7
+    local par_checkbox_value=$8
 
     local columns_count=0
     local items_count=0
@@ -1900,7 +1920,7 @@ _display_list_box_zenity() {
         # This avoids the "Argument list too long" error when '$message' is too
         # large.
         # shellcheck disable=SC2086
-        selected_items=$(_cmd_zenity --title "$(_get_script_name)" --list \
+        selected_items=$($cmd_dialog --title "$(_get_script_name)" --list \
             --multiple --no-markup --separator="$FIELD_SEPARATOR" \
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --print-column "$columns_count" --text "$header_label" \
@@ -1908,17 +1928,17 @@ _display_list_box_zenity() {
     else
         # Default strategy: pass '$message' directly as arguments (fast).
         # shellcheck disable=SC2086
-        selected_items=$(_cmd_zenity --title "$(_get_script_name)" --list \
+        selected_items=$($cmd_dialog --title "$(_get_script_name)" --list \
             --multiple --no-markup --separator="$FIELD_SEPARATOR" \
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --print-column "$columns_count" --text "$header_label" \
-            $par_columns -- $message 2>/dev/null) || _exit_script
+            $par_columns $message 2>/dev/null) || _exit_script
     fi
 
     # HACK: Workaround for YAD.
     # Its output appends an extra field separator at the end.
     # See: https://github.com/v1cont/yad/issues/307
-    if ! _command_exists "zenity"; then
+    if [[ "$cmd_dialog" == "yad" ]]; then
         selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
         selected_items=$(_str_collapse_char \
             "$selected_items" "$FIELD_SEPARATOR")
@@ -1974,10 +1994,14 @@ _display_password_box() {
         echo -e -n "$MSG_INFO $message " >&2
         read -r -s password </dev/tty
         echo >&2
-    elif _command_exists "zenity" || _command_exists "yad"; then
-        password=$(_cmd_zenity \
-            --title="Password" --entry --hide-text --width="$GUI_INFO_WIDTH" \
-            --text "$message" 2>/dev/null) || return 1
+    elif _command_exists "zenity"; then
+        password=$(zenity --title="Password" \
+            --width="$GUI_INFO_WIDTH" \
+            --text="$message" --entry --hide-text 2>/dev/null) || return 1
+    elif _command_exists "yad"; then
+        password=$(yad --title="Password" --center \
+            --width="$GUI_INFO_WIDTH" \
+            --text="$message" --entry --hide-text 2>/dev/null) || return 1
     fi
     _display_unlock
 
@@ -2030,9 +2054,15 @@ _display_question_box() {
         read -r response </dev/tty
         echo >&2
         [[ ${response,,} == *"n"* ]] && return 1
-    elif _command_exists "zenity" || _command_exists "yad"; then
-        _cmd_zenity --title "$(_get_script_name)" --question \
-            --width="$GUI_INFO_WIDTH" --text="$message" &>/dev/null || return 1
+    elif _command_exists "zenity"; then
+        zenity --title "$(_get_script_name)" \
+            --width="$GUI_INFO_WIDTH" --text="$message" \
+            --question &>/dev/null || return 1
+    elif _command_exists "yad"; then
+        yad --title "$(_get_script_name)" --center \
+            --width="$GUI_INFO_WIDTH" --text="$message" \
+            --button=No:1 --button=Yes:0 \
+            --image="dialog-question" &>/dev/null || return 1
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" \
             -buttons "Yes:0,No:1" "$message" &>/dev/null || return 1
@@ -2064,10 +2094,17 @@ _display_text_box() {
     _display_lock
     if ! _is_gui_session; then
         printf "%s\n" "$message"
-    elif _command_exists "zenity" || _command_exists "yad"; then
+    elif _command_exists "zenity"; then
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
-        _cmd_zenity --title "$(_get_script_name)" --text-info --no-wrap \
-            --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+        zenity --title "$(_get_script_name)" \
+            --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+            --text-info --no-wrap \
+            --filename="$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
+    elif _command_exists "yad"; then
+        printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
+        yad --title "$(_get_script_name)" --center \
+            --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+            --text-info --no-wrap \
             --filename="$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
@@ -2187,22 +2224,19 @@ _display_wait_box_message() {
             # Check if the 'wait box' should open.
             [[ ! -f "$TEMP_CONTROL_WAIT_BOX" ]] && return 0
 
-            local parameters=""
-            if ! _command_exists "zenity"; then
-                # HACK: Workaround for YAD.
-                # Enable the 'Cancel' button.
-                parameters="--button=Cancel:1"
+            if _command_exists "zenity"; then
+                tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (zenity \
+                    --title="$(_get_script_name)" \
+                    --width="$GUI_INFO_WIDTH" \
+                    --progress --auto-close --pulsate \
+                    --text="$message" || _exit_script)
             else
-                # HACK: Workaround for YAD.
-                # The '--pulsate' option behaves differently across versions.
-                # See: https://github.com/v1cont/yad/issues/305
-                parameters="--pulsate"
+                tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (yad \
+                    --title="$(_get_script_name)" --center \
+                    --width="$GUI_INFO_WIDTH" \
+                    --progress --auto-close --button=Cancel:1 \
+                    --text="$message" || _exit_script)
             fi
-
-            tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (_cmd_zenity \
-                --title="$(_get_script_name)" --progress \
-                --width="$GUI_INFO_WIDTH" "$parameters" \
-                --auto-close --text="$message" || _exit_script)
         ) &
     fi
 }
@@ -3685,24 +3719,6 @@ _cmd_magick_convert() {
         magick convert "$@"
     else
         convert "$@"
-    fi
-}
-
-# FUNCTION: _cmd_zenity
-#
-# DESCRIPTION:
-# This function executes a graphical dialog command using either Zenity or YAD,
-# depending on which one is available in the system. Zenity is the preferred
-# tool, but if it's not installed, YAD (Yet Another Dialog) is used as a
-# fallback.
-#
-# PARAMETERS:
-#   $@ : Arguments to be passed to the dialog command.
-_cmd_zenity() {
-    if _command_exists "zenity"; then
-        zenity "$@"
-    else
-        yad "$@"
     fi
 }
 
