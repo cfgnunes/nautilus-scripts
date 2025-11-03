@@ -1696,7 +1696,8 @@ _display_checklist_box_simple() {
 
     _display_lock
     if ! _is_gui_session; then
-        selected_items=$(head -n 1 <<<"$options")
+        # Automatically select the first option, if no GUI session.
+        selected_items=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$options")
     elif _command_exists "zenity" || _command_exists "yad"; then
         local option_list=""
         local option=""
