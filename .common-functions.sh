@@ -1713,26 +1713,18 @@ _display_checklist_box_simple() {
         done
         option_list=$(_str_collapse_char "$option_list" "$FIELD_SEPARATOR")
 
-        # HACK: Workaround for YAD.
-        # Its input fields, do not accept the '<' character.
-        # See: https://github.com/v1cont/yad/issues/306
-        if ! _command_exists "zenity"; then
-            option_list=$(sed "s|<|((|g; s|>|))|g" <<<"$option_list")
-        fi
-
         # shellcheck disable=SC2086
-        selected_items=$(_cmd_zenity --list "$par_type" \
-            --title="$title" --separator="$FIELD_SEPARATOR" \
+        selected_items=$(_cmd_zenity --title="$title" --list "$par_type" \
+            --no-markup --separator="$FIELD_SEPARATOR" \
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --print-column "2" --text="$text" \
             --column="Select" --column="$column" \
-            $option_list 2>/dev/null) || _exit_script
+            -- $option_list 2>/dev/null) || _exit_script
 
         # HACK: Workaround for YAD.
         # Its output appends an extra field separator at the end.
         # See: https://github.com/v1cont/yad/issues/307
         if ! _command_exists "zenity"; then
-            selected_items=$(sed "s|((|<|g; s|))|>|g" <<<"$selected_items")
             selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
             selected_items=$(_str_collapse_char \
                 "$selected_items" "$FIELD_SEPARATOR")
@@ -1905,20 +1897,13 @@ _display_list_box_zenity() {
     arg_max=$(getconf "ARG_MAX")
     msg_size=$(printf "%s" "$message" | wc -c)
 
-    # HACK: Workaround for YAD.
-    # Its input fields, do not accept the '<' character.
-    # See: https://github.com/v1cont/yad/issues/306
-    if ! _command_exists "zenity"; then
-        message=$(sed "s|<|((|g; s|>|))|g" <<<"$message")
-    fi
-
     if ((msg_size > arg_max - safet_margin)); then
         # Alternative strategy: use stdin instead of passing arguments directly
         # This avoids the "Argument list too long" error when '$message' is too
         # large.
         # shellcheck disable=SC2086
         selected_items=$(_cmd_zenity --title "$(_get_script_name)" --list \
-            --multiple --separator="$FIELD_SEPARATOR" \
+            --multiple --no-markup --separator="$FIELD_SEPARATOR" \
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --print-column "$columns_count" --text "$header_label" \
             $par_columns <<<"$message" 2>/dev/null) || _exit_script
@@ -1926,17 +1911,16 @@ _display_list_box_zenity() {
         # Default strategy: pass '$message' directly as arguments (fast).
         # shellcheck disable=SC2086
         selected_items=$(_cmd_zenity --title "$(_get_script_name)" --list \
-            --multiple --separator="$FIELD_SEPARATOR" \
+            --multiple --no-markup --separator="$FIELD_SEPARATOR" \
             --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --print-column "$columns_count" --text "$header_label" \
-            $par_columns $message 2>/dev/null) || _exit_script
+            $par_columns -- $message 2>/dev/null) || _exit_script
     fi
 
     # HACK: Workaround for YAD.
     # Its output appends an extra field separator at the end.
     # See: https://github.com/v1cont/yad/issues/307
     if ! _command_exists "zenity"; then
-        selected_items=$(sed "s|((|<|g; s|))|>|g" <<<"$selected_items")
         selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
         selected_items=$(_str_collapse_char \
             "$selected_items" "$FIELD_SEPARATOR")
