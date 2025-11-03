@@ -105,7 +105,7 @@ _get_command() {
     local _cmds_xar=("unar" "bsdtar")
     local _cmds_xz=("xz" "unar" "7za")
     local _cmds_z=("gzip" "unar")
-    local _cmds_zip=("7za" "bsdtar" "unar" "unzip")
+    local _cmds_zip=("bsdtar" "7za" "unar" "unzip")
     local _cmds_zoo=("unar")
     local _cmds_zpaq=("zpaq")
     local _cmds_zstd=("zstd")
