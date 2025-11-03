@@ -2210,13 +2210,17 @@ _display_wait_box_message() {
         #   - If Zenity 'wait box' fails or is cancelled, exit the script.
         # shellcheck disable=SC2002
         (
-            sleep "$open_delay"
+            # DELAY: Wait some window open before.
+            sleep 0.2
 
-            # Wait another window close.
+            # Wait the window close.
             while [[ -f "$TEMP_CONTROL_DISPLAY_LOCKED" ]]; do
-                # Short delay to avoid high CPU usage in the loop.
-                sleep 0.3
+                # DELAY: Avoid high CPU usage in the loop.
+                sleep 0.5
             done
+
+            # DELAY: Custom delay to open the 'wait_box'.
+            sleep "$open_delay"
 
             # Check if the task has already finished.
             [[ ! -d "$TEMP_DIR" ]] && return 0
@@ -2224,6 +2228,7 @@ _display_wait_box_message() {
             # Check if the 'wait box' should open.
             [[ ! -f "$TEMP_CONTROL_WAIT_BOX_DELAY" ]] && return 0
 
+            _display_lock
             if _command_exists "zenity"; then
                 tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (zenity \
                     --title="$(_get_script_name)" \
@@ -2237,6 +2242,7 @@ _display_wait_box_message() {
                     --progress --auto-close --button=Cancel:1 \
                     --text="$message" || _exit_script)
             fi
+            _display_unlock
         ) &
     fi
 }
@@ -2247,14 +2253,9 @@ _display_wait_box_message() {
 # This function is responsible for closing any open 'wait box' (progress
 # indicators) that were displayed during the execution of a task.
 _close_wait_box() {
-    if [[ ! -f "$TEMP_CONTROL_WAIT_BOX_DELAY" ]]; then
-        return 0
-    fi
     # Cancel the future open of any 'wait box'.
     rm -f -- "$TEMP_CONTROL_WAIT_BOX_DELAY"
-
-    # Wait the 'wait box' finish to write the control file.
-    sleep 0.1
+    _display_unlock
 
     # Check if Zenity 'wait box' is open, (waiting for an input in the FIFO).
     if pgrep -fl "$TEMP_CONTROL_WAIT_BOX_FIFO" &>/dev/null; then
