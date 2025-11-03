@@ -3760,6 +3760,14 @@ _initialize_homebrew() {
 #   "1" (false): If there was an error adding the script.
 _recent_scripts_add() {
     local running_script=$0
+
+    # Ensure that the '$ACCESSED_RECENTLY_DIR' exists and is writable.
+    if [[ ! -d $ACCESSED_RECENTLY_DIR ]]; then
+        mkdir -p "$ACCESSED_RECENTLY_DIR"
+    else
+        [[ -w $ACCESSED_RECENTLY_DIR ]] || return 1
+    fi
+
     if [[ "$0" != "/"* ]]; then
         # If '$0' is a relative path, resolve it relative to the current
         # working directory.
@@ -3769,11 +3777,6 @@ _recent_scripts_add() {
     # Resolve symbolic links to their target locations.
     if [[ -L "$running_script" ]]; then
         running_script=$(readlink -f "$running_script")
-    fi
-
-    # Create '$ACCESSED_RECENTLY_DIR' if it does not exist.
-    if [[ ! -d $ACCESSED_RECENTLY_DIR ]]; then
-        mkdir -p "$ACCESSED_RECENTLY_DIR"
     fi
 
     _directory_push "$ACCESSED_RECENTLY_DIR" || return 1
@@ -3832,9 +3835,11 @@ _recent_scripts_organize() {
     done
 }
 
-# Execute functions to organize the recently accessed scripts.
-_recent_scripts_add
-_recent_scripts_organize
+# If running from a supported file manager and the scripts directory is
+# writable, update the list of recently accessed scripts.
+if _is_file_manager_session && [[ -w $SCRIPT_DIR ]]; then
+    _recent_scripts_add && _recent_scripts_organize
+fi
 
 # Initialize Homebrew environment if available.
 _initialize_homebrew
