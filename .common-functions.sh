@@ -1535,31 +1535,6 @@ _is_directory_empty() {
 # SECTION: User interface ----
 # -----------------------------------------------------------------------------
 
-# FUNCTION: _display_dir_selection_box
-#
-# DESCRIPTION:
-# This function presents a graphical interface to allow the user to select
-# one or more directories.
-_display_dir_selection_box() {
-    local input_files=""
-
-    _display_lock
-    if ! _is_gui_session; then
-        input_files=$(_get_working_directory)
-    elif _command_exists "zenity"; then
-        input_files=$(zenity --title "$(_get_script_name)" \
-            --file-selection --multiple --directory \
-            --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
-    elif _command_exists "yad"; then
-        input_files=$(yad --title "$(_get_script_name)" \
-            --file --multiple --directory \
-            --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
-    fi
-    _display_unlock
-
-    _str_collapse_char "$input_files" "$FIELD_SEPARATOR"
-}
-
 # FUNCTION: _display_file_selection_box
 #
 # DESCRIPTION:
@@ -1567,34 +1542,35 @@ _display_dir_selection_box() {
 # a file.
 #
 # PARAMETERS:
-#   $1 (file_filter): Optional. File filter pattern to restrict the types
-#      of files shown.
+#   $1 (file_filter): Optional. File filter pattern.
 #   $2 (title): Optional. Title of the window.
-#   $3 (multiple): Optional. Accepts "true" or "false". If "true", allows
-#      multiple file selection (only applies for Zenity).
+#   $3 (multiple): Optional. Enable multiple selection ('true' or 'false).
+#   $4 (directory): Optional. Enable directory selection ('true' or 'false).
 _display_file_selection_box() {
     local file_filter=${1:-""}
-    local title=${2:-"$(_get_script_name)"}
+    local title=${2:-""}
     local multiple=${3:-"false"}
+    local directory=${4:-"false"}
     local input_files=""
     local multiple_flag=""
+    local directory_flag=""
 
-    # Add --multiple only if explicitly enabled.
-    if [[ "$multiple" == "true" ]]; then
-        multiple_flag="--multiple"
-    fi
+    # Exit early if not in a GUI session.
+    _is_gui_session || return 0
+
+    [[ -z "$title" ]] && title=$(_get_script_name)
+    [[ "$multiple" == "true" ]] && multiple_flag="--multiple"
+    [[ "$directory" == "true" ]] && directory_flag="--directory"
 
     _display_lock
-    if ! _is_gui_session; then
-        return 0
-    elif _command_exists "zenity"; then
+    if _command_exists "zenity"; then
         input_files=$(zenity --title "$title" \
-            --file-selection "$multiple_flag" \
+            --file-selection $multiple_flag $directory_flag \
             ${file_filter:+--file-filter="$file_filter"} \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "yad"; then
         input_files=$(yad --title "$title" \
-            --file "$multiple_flag" \
+            --file $multiple_flag $directory_flag \
             ${file_filter:+--file-filter="$file_filter"} \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     fi
@@ -2820,10 +2796,9 @@ _get_files() {
     if (($(_get_items_count "$input_files") == 0)); then
         if [[ "$par_type" != "file" ]] ||
             [[ "$par_recursive" == "true" ]]; then
-            input_files=$(_display_dir_selection_box)
+            input_files=$(_display_file_selection_box "" "" "true" "true")
         else
-            input_files=$(_display_file_selection_box \
-                "" "$(_get_script_name)" "true")
+            input_files=$(_display_file_selection_box "" "" "true" "false")
         fi
     fi
 
