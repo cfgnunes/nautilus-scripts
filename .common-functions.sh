@@ -1544,9 +1544,13 @@ _display_dir_selection_box() {
     _display_lock
     if ! _is_gui_session; then
         input_files=$(_get_working_directory)
-    elif _command_exists "zenity" || _command_exists "yad"; then
-        input_files=$(_cmd_zenity --title "$(_get_script_name)" \
+    elif _command_exists "zenity"; then
+        input_files=$(zenity --title "$(_get_script_name)" \
             --file-selection --multiple --directory \
+            --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
+    elif _command_exists "yad"; then
+        input_files=$(yad --title "$(_get_script_name)" \
+            --file --multiple --directory \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     fi
     _display_unlock
@@ -1573,17 +1577,22 @@ _display_file_selection_box() {
     local input_files=""
     local multiple_flag=""
 
+    # Add --multiple only if explicitly enabled.
+    if [[ "$multiple" == "true" ]]; then
+        multiple_flag="--multiple"
+    fi
+
     _display_lock
     if ! _is_gui_session; then
         return 0
-    elif _command_exists "zenity" || _command_exists "yad"; then
-        # Add --multiple only if explicitly enabled.
-        if [[ "$multiple" == "true" ]]; then
-            multiple_flag="--multiple"
-        fi
-
-        input_files=$(_cmd_zenity --title "$title" \
+    elif _command_exists "zenity"; then
+        input_files=$(zenity --title "$title" \
             --file-selection "$multiple_flag" \
+            ${file_filter:+--file-filter="$file_filter"} \
+            --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
+    elif _command_exists "yad"; then
+        input_files=$(yad --title "$title" \
+            --file "$multiple_flag" \
             ${file_filter:+--file-filter="$file_filter"} \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     fi
