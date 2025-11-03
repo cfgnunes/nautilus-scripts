@@ -1451,8 +1451,8 @@ _move_file() {
 # DESCRIPTION:
 # This function attempts to determine the current working directory in a
 # variety of ways, based on the available environment variables or input
-# files. It first checks if the file manager (e.g., Caja, Nemo, or
-# Nautilus) provides the current URI (directory) of the script. If not, it
+# files. It first checks if the file manager (e.g., Nautilus, Nemo, or
+# Caja) provides the current URI (directory) of the script. If not, it
 # falls back to other methods. If the working directory cannot be obtained
 # from the file manager or input files, it defaults to the current
 # directory.
@@ -2478,7 +2478,7 @@ _get_max_procs() {
 #
 # DESCRIPTION:
 # This function unset global variables that may have been set by different
-# file managers (Caja, Nautilus, Nemo) during script execution.
+# file managers (Nautilus, Nemo, Caja) during script execution.
 _unset_global_variables_file_manager() {
     local var=""
     while IFS= read -r var; do
@@ -2669,7 +2669,7 @@ _translate_to_gvfs_path() {
 #
 # DESCRIPTION:
 # This function retrieves a list of selected filenames or URIs from a file
-# manager (such as Caja, Nemo, or Nautilus) and processes the input
+# manager (such as Nautilus, Nemo, or Caja) and processes the input
 # accordingly. If no selection is detected, it falls back to using a
 # standard input file list.
 _get_filenames_filemanager() {
