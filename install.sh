@@ -1215,54 +1215,13 @@ _step_install_menus_thunar() {
 
             printf "\t%s\n" "<command>bash &quot;$filename&quot; %F</command>"
             printf "\t%s\n" "<description></description>"
-
-            # Set the min/max files requirements.
-            local par_min_items=""
-            local par_max_items=""
-            par_min_items=$(_get_par_value "$filename" "par_min_items")
-            par_max_items=$(_get_par_value "$filename" "par_max_items")
-            if [[ -n "$par_min_items" ]] && [[ -n "$par_max_items" ]]; then
-                printf "\t%s\n" "<range>$par_min_items-$par_max_items</range>"
-            else
-                printf "\t%s\n" "<range></range>"
-            fi
-
+            printf "\t%s\n" "<range></range>"
             printf "\t%s\n" "<patterns>*</patterns>"
-
-            # Set the type requirements.
-            local par_recursive=""
-            local par_type=""
-            par_recursive=$(_get_par_value "$filename" "par_recursive")
-            par_type=$(_get_par_value "$filename" "par_type")
-            if [[ "$par_type" == "all" ]] ||
-                [[ "$par_type" == "directory" ]] ||
-                [[ "$par_recursive" == "true" ]]; then
-                printf "\t%s\n" "<directories/>"
-            fi
-
-            # Set the 'MIME' requirements.
-            local par_select_mime=""
-            par_select_mime=$(_get_par_value "$filename" "par_select_mime")
-
-            if [[ -n "$par_select_mime" ]]; then
-                if [[ "$par_select_mime" == *"audio"* ]]; then
-                    printf "\t%s\n" "<audio-files/>"
-                fi
-                if [[ "$par_select_mime" == *"image"* ]]; then
-                    printf "\t%s\n" "<image-files/>"
-                fi
-                if [[ "$par_select_mime" == *"text"* ]]; then
-                    printf "\t%s\n" "<text-files/>"
-                fi
-                if [[ "$par_select_mime" == *"video"* ]]; then
-                    printf "\t%s\n" "<video-files/>"
-                fi
-            else
-                printf "\t%s\n" "<audio-files/>"
-                printf "\t%s\n" "<image-files/>"
-                printf "\t%s\n" "<text-files/>"
-                printf "\t%s\n" "<video-files/>"
-            fi
+            printf "\t%s\n" "<directories/>"
+            printf "\t%s\n" "<audio-files/>"
+            printf "\t%s\n" "<image-files/>"
+            printf "\t%s\n" "<text-files/>"
+            printf "\t%s\n" "<video-files/>"
             printf "\t%s\n" "<other-files/>"
             printf "%s\n" "</action>"
         done < <(_list_scripts)
