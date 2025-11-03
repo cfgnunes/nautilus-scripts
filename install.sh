@@ -818,8 +818,9 @@ _step_install_accels_thunar() {
     {
         # Default Thunar shortcuts.
         printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-1-1" "")'
+        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-2-2" "")'
+        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-3-3" "<Primary><Shift>f")'
         printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-4-4" "")'
-        printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-3-3" "")'
         # Disable "<Primary><Shift>o".
         printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActionManager/open-in-new-window" "")'
         # Disable "<Primary>e".
@@ -1178,19 +1179,6 @@ _step_install_menus_thunar() {
         printf "\t%s\n" "<range></range>"
         printf "\t%s\n" "<patterns>*</patterns>"
         printf "\t%s\n" "<directories/>"
-        printf "%s\n" "</action>"
-        printf "%s\n" "<action>"
-        printf "\t%s\n" "<icon>document-print</icon>"
-        printf "\t%s\n" "<name>Print file(s)</name>"
-        printf "\t%s\n" "<submenu></submenu>"
-        printf "\t%s\n" "<unique-id>4-4</unique-id>"
-        printf "\t%s\n" "<command>thunar-print %F</command>"
-        printf "\t%s\n" "<description>Send one or multiple files to the default printer</description>"
-        printf "\t%s\n" "<range></range>"
-        printf "\t%s\n" "<patterns>*.asc;*.brf;*.css;*.doc;*.docm;*.docx;*.dotm;*.dotx;*.fodg;*.fodp;*.fods;*.fodt;*.gif;*.htm;*.html;*.jpe;*.jpeg;*.jpg;*.odb;*.odf;*.odg;*.odm;*.odp;*.ods;*.odt;*.otg;*.oth;*.otp;*.ots;*.ott;*.pbm;*.pdf;*.pgm;*.png;*.pnm;*.pot;*.potm;*.potx;*.ppm;*.ppt;*.pptm;*.pptx;*.rtf;*.shtml;*.srt;*.text;*.tif;*.tiff;*.txt;*.xbm;*.xls;*.xlsb;*.xlsm;*.xlsx;*.xltm;*.xltx;*.xpm;*.xwd</patterns>"
-        printf "\t%s\n" "<image-files/>"
-        printf "\t%s\n" "<other-files/>"
-        printf "\t%s\n" "<text-files/>"
         printf "%s\n" "</action>"
 
         local filename=""
