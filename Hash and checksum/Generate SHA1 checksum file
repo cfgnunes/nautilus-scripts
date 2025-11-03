@@ -32,7 +32,6 @@ _main() {
 
     output_file=$(_display_checklist_box_simple \
         "$options" \
-        "Select output checksum file" \
         "Select output checksum file from the list below." \
         "Filename" "true" "true")
 

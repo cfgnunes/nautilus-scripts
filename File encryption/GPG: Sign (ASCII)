@@ -90,7 +90,6 @@ _get_user() {
     users=$(tr "\n" "$FIELD_SEPARATOR" <<<"$users")
     TEMP_DATA_TASK=$(_display_checklist_box_simple \
         "$users" \
-        "Select a user" \
         "Select a user from the list below." \
         "User" "true" "true")
 

@@ -1664,13 +1664,12 @@ _display_info_box() {
 # PARAMETERS:
 #   $1 (options): A list of options separated by '$FIELD_SEPARATOR',
 #      to be displayed in the checklist or radiolist.
-#   $2 (title): The title of the dialog window.
-#   $3 (text): The informational text or message shown above the list.
-#   $4 (column): The label for the options column.
-#   $5 (radio_list): Optional. 'true' to display as a radiolist (single
+#   $2 (header_label): The informational message shown above the list.
+#   $3 (column): The label for the options column.
+#   $4 (radio_list): Optional. 'true' to display as a radiolist (single
 #      selection), 'false' to display as a checklist (multiple selections).
 #      Default is 'false'.
-#   $6 (select_first): Optional. 'true' to preselect the first option.
+#   $5 (select_first): Optional. 'true' to preselect the first option.
 #      Default is 'true'.
 #
 # RETURNS:
@@ -1678,21 +1677,14 @@ _display_info_box() {
 #   '$FIELD_SEPARATOR'.
 _display_checklist_box_simple() {
     local options=$1
-    local title=$2
-    local text=$3
-    local column=$4
-    local radio_list=${5:-"false"}
-    local select_first=${6:-"true"}
+    local header_label=$2
+    local column=$3
+    local radio_list=${4:-"false"}
+    local select_first=${5:-"true"}
     local selected_items=""
     local par_type=""
 
     options=$(_str_collapse_char "$options" "$FIELD_SEPARATOR")
-
-    if [[ "$radio_list" == "true" ]]; then
-        par_type="--radiolist"
-    else
-        par_type="--checklist"
-    fi
 
     _display_lock
     if ! _is_gui_session; then
@@ -1713,13 +1705,19 @@ _display_checklist_box_simple() {
         done
         option_list=$(_str_collapse_char "$option_list" "$FIELD_SEPARATOR")
 
+        if [[ "$radio_list" == "true" ]]; then
+            par_type="--radiolist"
+        else
+            par_type="--checklist"
+        fi
+
         # shellcheck disable=SC2086
-        selected_items=$(_cmd_zenity --title="$title" --list "$par_type" \
-            --no-markup --separator="$FIELD_SEPARATOR" \
-            --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-            --print-column "2" --text="$text" \
-            --column="Select" --column="$column" \
-            -- $option_list 2>/dev/null) || _exit_script
+        selected_items=$(_cmd_zenity --title "$(_get_script_name)" \
+            --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+            --text="$header_label" --list "$par_type" \
+            --separator="$FIELD_SEPARATOR" \
+            --print-column "2" --column="Select" --column="$column" \
+            $option_list 2>/dev/null) || _exit_script
 
         # HACK: Workaround for YAD.
         # Its output appends an extra field separator at the end.
