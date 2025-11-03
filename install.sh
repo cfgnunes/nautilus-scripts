@@ -1006,43 +1006,6 @@ _step_install_menus_dolphin() {
         name=${script_relative##*/}
         submenu=${script_relative%%/*}
 
-        # Set the 'MIME' requirements.
-        local par_recursive=""
-        local par_select_mime=""
-        par_recursive=$(_get_par_value "$filename" "par_recursive")
-        par_select_mime=$(_get_par_value "$filename" "par_select_mime")
-
-        if [[ -z "$par_select_mime" ]]; then
-            local par_type=""
-            par_type=$(_get_par_value "$filename" "par_type")
-
-            case "$par_type" in
-            "directory") par_select_mime="inode/directory" ;;
-            "all") par_select_mime="all/all" ;;
-            "file") par_select_mime="all/allfiles" ;;
-            *) par_select_mime="all/allfiles" ;;
-            esac
-        fi
-
-        if [[ "$par_recursive" == "true" ]]; then
-            case "$par_select_mime" in
-            "inode/directory") : ;;
-            "all/all") : ;;
-            "all/allfiles") par_select_mime="all/all" ;;
-            *) par_select_mime+=";inode/directory" ;;
-            esac
-        fi
-
-        par_select_mime="$par_select_mime;"
-        # shellcheck disable=SC2001
-        par_select_mime=$(sed "s|/;|/*;|g" <<<"$par_select_mime")
-
-        # Set the min/max files requirements.
-        local par_min_items=""
-        local par_max_items=""
-        par_min_items=$(_get_par_value "$filename" "par_min_items")
-        par_max_items=$(_get_par_value "$filename" "par_max_items")
-
         local menu_file=""
         menu_file="${menus_dir}/${name}.desktop"
         {
@@ -1050,16 +1013,7 @@ _step_install_menus_dolphin() {
             printf "%s\n" "Type=Service"
             printf "%s\n" "X-KDE-ServiceTypes=KonqPopupMenu/Plugin"
             printf "%s\n" "Actions=scriptAction;"
-            printf "%s\n" "MimeType=$par_select_mime"
-
-            if [[ -n "$par_min_items" ]]; then
-                printf "%s\n" "X-KDE-MinNumberOfUrls=$par_min_items"
-            fi
-
-            if [[ -n "$par_max_items" ]]; then
-                printf "%s\n" "X-KDE-MaxNumberOfUrls=$par_max_items"
-            fi
-
+            printf "%s\n" "MimeType=all/all;"
             printf "%s\n" "Encoding=UTF-8"
             printf "%s\n" "X-KDE-Submenu=$submenu"
             printf "\n"
