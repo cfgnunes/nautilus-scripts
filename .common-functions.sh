@@ -2830,13 +2830,10 @@ _get_files() {
     # with Terminal' where a file is selected, but the intention is to open the
     # working directory.
     if (($(_get_items_count "$input_files") == 0)); then
-        # Detect if running in a supported file manager context.
-        if compgen -v | grep --quiet -m1 "_SCRIPT_SELECTED_URIS$"; then
-            if [[ "$par_type" == "directory" ]]; then
-                # Return the current working directory if no files have been
-                # selected.
-                input_files=$(_get_working_directory)
-            fi
+        if [[ "$par_type" == "directory" ]]; then
+            # Return the current working directory if no files have been
+            # selected.
+            input_files=$(_get_working_directory)
         fi
     fi
 
