@@ -146,9 +146,6 @@ _cleanup_on_exit() {
     # with 'bash -c'.
     items_to_remove=$(sed -z "s|'|'\\\''|g" <<<"$items_to_remove")
 
-    # Wait for processes to terminate.
-    sleep 0.5
-
     printf "%s" "$items_to_remove" | xargs \
         --no-run-if-empty \
         --delimiter="$FIELD_SEPARATOR" \
@@ -157,7 +154,7 @@ _cleanup_on_exit() {
         bash -c "{ chmod -R u+rw -- '{}' && rm -rf -- '{}'; } 2>/dev/null"
 
     # Remove the main temporary dir.
-    rm -rf -- "$TEMP_DIR" 2>/dev/null
+    { chmod -R u+w -- "$TEMP_DIR" && rm -rf -- "$TEMP_DIR"; } 2>/dev/null
 
     if ! _is_gui_session; then
         echo -e "$MSG_INFO End." >&2
@@ -173,6 +170,10 @@ trap _cleanup_on_exit EXIT
 # message to the terminal.
 _exit_script() {
     _close_wait_box
+
+    # Lock the main temporary directory to prevent
+    # any active process from writing to it.
+    chmod -R u-w -- "$TEMP_DIR" 2>/dev/null
 
     local child_pids=""
     local script_pid=$$
@@ -248,7 +249,7 @@ _log_error() {
     local output_file=$4
 
     local log_temp_file=""
-    log_temp_file=$(mktemp --tmpdir="$TEMP_DIR_LOGS")
+    log_temp_file=$(mktemp --tmpdir="$TEMP_DIR_LOGS" 2>/dev/null) || return 1
 
     {
         printf "[%s]\n" "$(date "+%Y-%m-%d %H:%M:%S")"
@@ -1319,8 +1320,9 @@ _make_temp_dir_local() {
         --tmpdir="$output_dir" "$basename.XXXXXXXX.tmp")
 
     # Remember to remove this directory after exit.
-    item_to_remove=$(mktemp --tmpdir="$TEMP_DIR_ITEMS_TO_REMOVE")
-    printf "%s$FIELD_SEPARATOR" "$temp_dir" >"$item_to_remove"
+    item_remove=$(mktemp --tmpdir="$TEMP_DIR_ITEMS_TO_REMOVE" 2>/dev/null) ||
+        return 1
+    printf "%s$FIELD_SEPARATOR" "$temp_dir" >"$item_remove"
 
     printf "%s" "$temp_dir"
 }
@@ -1336,7 +1338,7 @@ _make_temp_dir_local() {
 # Output:
 #   - The full path to the newly created temporary file.
 _make_temp_file() {
-    mktemp --tmpdir="$TEMP_DIR_TASK"
+    mktemp --tmpdir="$TEMP_DIR_TASK" 2>/dev/null
 }
 
 # FUNCTION: _move_file
@@ -3440,7 +3442,8 @@ _storage_text_write() {
     fi
 
     # Save the text to be compiled into a single file.
-    temp_file=$(mktemp --tmpdir="$TEMP_DIR_STORAGE_TEXT")
+    temp_file=$(mktemp --tmpdir="$TEMP_DIR_STORAGE_TEXT" 2>/dev/null) ||
+        return 1
     printf "%s" "$input_text" >"$temp_file"
 }
 
