@@ -55,6 +55,8 @@ _main() {
     __run_text_remove_empty_lines
     __run_text_sort
 
+    rm -rf -- "$_TEMP_DIR"
+
     printf "\nFinished! "
     printf "Results: %s tests, %s failed.\n" "$_TOTAL_TESTS" "$_TOTAL_FAILED"
 }
