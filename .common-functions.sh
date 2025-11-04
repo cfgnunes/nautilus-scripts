@@ -1897,9 +1897,10 @@ _display_list_box_zenity_yad() {
     if ((msg_size > arg_max - safet_margin)); then
         message=$(tr "$FIELD_SEPARATOR" "\n" <<<"$message")
 
-        # Alternative strategy: use stdin instead of passing arguments directly
-        # This avoids the "Argument list too long" error when '$message' is too
-        # large.
+        # HACK: Workaround for '--list'. Use stdin instead of passing
+        # arguments directly. This avoids the "Argument list too long"
+        # error when '$message' is too large.
+
         # shellcheck disable=SC2086
         selected_items=$($cmd_dialog --title "$(_get_script_name)" --list \
             --multiple --no-markup --separator="$FIELD_SEPARATOR" \
@@ -1907,7 +1908,9 @@ _display_list_box_zenity_yad() {
             --print-column "$columns_count" --text "$header_label" \
             $par_columns <<<"$message" 2>/dev/null) || _exit_script
     else
-        # Default strategy: pass '$message' directly as arguments (fast).
+        # Default strategy for '--list'. Pass '$message' directly as
+        # arguments. This strategy is very fast.
+
         # shellcheck disable=SC2086
         selected_items=$($cmd_dialog --title "$(_get_script_name)" --list \
             --multiple --no-markup --separator="$FIELD_SEPARATOR" \
@@ -2818,12 +2821,14 @@ _get_files() {
         [[ -d "$input_files" ]] && [[ "$par_recursive" == "false" ]] &&
         printf "%s" "$(basename -- "$input_files")" |
         grep --quiet --ignore-case --word-regexp "batch"; then
-        # HACK: This workaround allows the scripts to handle cases with a large
-        # input list of files. In this case, just select a single directory
-        # with a name that includes the word 'batch'. Then, the scripts operate
-        # on the files within the selected directory. This addresses the GNOME
-        # error: "Could not start application: Failed to execute child process
-        # "/bin/sh" (Argument list too long)".
+
+        # HACK: Batch mode. This workaround allows the scripts to
+        # handle cases with a large input list of files. In this case,
+        # just select a single directory with a name that includes the
+        # word 'batch'. Then, the scripts operate on the files within
+        # the selected directory. This addresses the error: "Could not
+        # start application: Failed to execute child process "/bin/sh"
+        # (Argument list too long)".
 
         local batch_message=""
         batch_message+="Batch mode detected: Each file inside this"
