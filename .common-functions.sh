@@ -1895,6 +1895,8 @@ _display_list_box_zenity_yad() {
     msg_size=$(printf "%s" "$message" | wc -c)
 
     if ((msg_size > arg_max - safet_margin)); then
+        message=$(tr "$FIELD_SEPARATOR" "\n" <<<"$message")
+
         # Alternative strategy: use stdin instead of passing arguments directly
         # This avoids the "Argument list too long" error when '$message' is too
         # large.
