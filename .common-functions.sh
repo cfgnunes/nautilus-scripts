@@ -1894,11 +1894,7 @@ _display_list_box_zenity_yad() {
     arg_max=$(getconf "ARG_MAX")
     msg_size=$(printf "%s" "$message" | wc -c)
 
-    if ((msg_size < arg_max - safet_margin)); then
-        if [[ "$cmd_dialog" == "yad" ]]; then
-            message=$(tr "$FIELD_SEPARATOR" "\n" <<<"$message")
-        fi
-
+    if ((msg_size > arg_max - safet_margin)); then
         # Alternative strategy: use stdin instead of passing arguments directly
         # This avoids the "Argument list too long" error when '$message' is too
         # large.
