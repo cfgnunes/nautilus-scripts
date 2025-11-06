@@ -1115,7 +1115,7 @@ _main() {
     __test_file_nonempty "$output_file (reduced) (2).jpg"
     __test_file_empty "$std_output"
 
-    script_test="Image/Image: Optimize, Reduce/Image: Remove metadata"
+    script_test="Image/Image: Metadata, Exif/Image: Remove metadata"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file (no metadata).png"
@@ -2041,11 +2041,11 @@ _main() {
     __test_file_empty "$std_output"
 
     # Create mock files for testing.
-    input_file1="$temp_dir/Test rename brackets (brackets1) (brackets2).txt"
-    output_file="$temp_dir/Test rename brackets.txt"
+    input_file1="$temp_dir/Test rename parentheses (suffix 1) (suffix 2).txt"
+    output_file="$temp_dir/Test rename parentheses.txt"
     echo "Content of 'Test'." >"$input_file1"
 
-    script_test="Rename files/Rename: Remove brackets"
+    script_test="Rename files/Rename: Remove parentheses suffixes"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file"
