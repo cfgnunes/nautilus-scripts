@@ -25,7 +25,7 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
-    local tabs="8"
+    local tabs=8
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($tabs spaces)'")
 

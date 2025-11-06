@@ -477,17 +477,17 @@ __run_text_sort() {
 
 __run_get_items_count() {
     input=""
-    expected_output="0"
+    expected_output=0
     output=$(_get_items_count "$input")
     __test_equal "$input" "$expected_output" "$output"
 
     input="${FIELD_SEPARATOR}${FIELD_SEPARATOR}"
-    expected_output="3"
+    expected_output=3
     output=$(_get_items_count "$input")
     __test_equal "$input" "$expected_output" "$output"
 
     input="10${FIELD_SEPARATOR}2"
-    expected_output="2"
+    expected_output=2
     output=$(_get_items_count "$input")
     __test_equal "$input" "$expected_output" "$output"
 }

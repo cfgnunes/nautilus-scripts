@@ -794,12 +794,12 @@ _deps_install_packages() {
             # Configure Homebrew for non-interactive and less verbose
             # operation.
             export HOMEBREW_VERBOSE=""
-            export HOMEBREW_NO_ANALYTICS="1"
-            export HOMEBREW_NO_AUTO_UPDATE="1"
-            export HOMEBREW_NO_COLOR="1"
-            export HOMEBREW_NO_EMOJI="1"
-            export HOMEBREW_NO_ENV_HINTS="1"
-            export HOMEBREW_NO_GITHUB_API="1"
+            export HOMEBREW_NO_ANALYTICS=1
+            export HOMEBREW_NO_AUTO_UPDATE=1
+            export HOMEBREW_NO_COLOR=1
+            export HOMEBREW_NO_EMOJI=1
+            export HOMEBREW_NO_ENV_HINTS=1
+            export HOMEBREW_NO_GITHUB_API=1
 
             # Replace spaces with '$FIELD_SEPARATOR' for iteration.
             packages=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")

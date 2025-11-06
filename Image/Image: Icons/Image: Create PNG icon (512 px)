@@ -29,7 +29,7 @@ _main_task() {
     local temp_file1=""
     local temp_file2=""
     local temp_file3=""
-    local icon_size="512"
+    local icon_size=512
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=png; par_suffix='(icon $icon_size px)'")
 

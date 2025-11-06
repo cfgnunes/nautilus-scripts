@@ -33,7 +33,7 @@ _main_task() {
     local host=""
     local now_epoch=""
     local status=""
-    local timeout_value="3"
+    local timeout_value=3
 
     # Remove the port from the host if specified.
     input_file=$(sed -E 's#^(https?://[^:/]+)(:[0-9]+)?(/.*)?$#\1\3#' <<<"$input_file")
@@ -58,7 +58,7 @@ _main_task() {
     fi
 
     if ((days_left < 0)); then
-        days_left="0"
+        days_left=0
     fi
 
     # Set status based on days remaining.

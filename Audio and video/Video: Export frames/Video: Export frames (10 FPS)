@@ -25,7 +25,7 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
-    local frame_rate="10"
+    local frame_rate=10
 
     output_file=$(_get_output_filename "${input_file}_frame_%05d.png" "$output_dir" "par_extension_opt=preserve")
 

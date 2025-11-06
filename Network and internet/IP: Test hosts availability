@@ -35,7 +35,7 @@ _main_task() {
     local hostname=""
 
     local host="$input_file"
-    local timeout_value="3"
+    local timeout_value=3
 
     # Strategy: Nmap host discovery (no port scan).
     if [[ -z "$status" ]]; then

@@ -28,7 +28,7 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
-    local timeout_value="5"
+    local timeout_value=5
     local status=""
 
     # Run the main process.

@@ -76,7 +76,7 @@ _reset_permissions() {
     # -------------------------------------------------------------------------
     # Step 1: Sensitive directories first (700).
     # -------------------------------------------------------------------------
-    new_pemission="700"
+    new_pemission=700
     for dir_pattern in "${sensitive_dirs[@]}"; do
         # shellcheck disable=SC2086
         find $input_files \
@@ -88,7 +88,7 @@ _reset_permissions() {
     # -------------------------------------------------------------------------
     # Step 2: Files inside sensitive directories (600).
     # -------------------------------------------------------------------------
-    new_pemission="600"
+    new_pemission=600
     for dir_pattern in "${sensitive_dirs[@]}"; do
         # shellcheck disable=SC2086
         find $input_files \
@@ -100,7 +100,7 @@ _reset_permissions() {
     # -------------------------------------------------------------------------
     # Step 3: Directories inside sensitive directories (700).
     # -------------------------------------------------------------------------
-    new_pemission="700"
+    new_pemission=700
     for dir_pattern in "${sensitive_dirs[@]}"; do
         # shellcheck disable=SC2086
         find $input_files \
@@ -125,7 +125,7 @@ _reset_permissions() {
     # -------------------------------------------------------------------------
     # Step 5: Sensitive files (600).
     # -------------------------------------------------------------------------
-    new_pemission="600"
+    new_pemission=600
     for pattern in "${sensitive_files[@]}"; do
         # shellcheck disable=SC2086
         find $input_files \

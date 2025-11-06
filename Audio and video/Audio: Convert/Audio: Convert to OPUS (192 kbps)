@@ -25,8 +25,8 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
-    local bitrate="192"
-    local channels="2"
+    local bitrate=192
+    local channels=2
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=opus")
 

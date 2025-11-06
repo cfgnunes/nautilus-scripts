@@ -25,7 +25,7 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
-    local timeout_value="5"
+    local timeout_value=5
 
     # Run the main process.
     std_output=$(axel --insecure --num-connections=10 --timeout="$timeout_value" --output="$output_dir" -- "$input_file" 2>&1)
