@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "exiftool"
     _display_wait_box "2"
-    input_files=$(_get_files "par_type=file; par_select_mime=image/")
+    input_files=$(_get_files "par_type=file; par_select_mime='image/|video/'")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -36,8 +36,8 @@ _main_task() {
 
     # Extract the creation date from metadata (first match only).
     local date=""
-    date=$(exiftool -duplicates -short -CreateDate "$input_file" 2>/dev/null |
-        sed -n "1p" | cut -d ":" -f 2- | sed "s|:|-|g; s| |_|g")
+    date=$(exiftool -s -s -s -duplicates -CreateDate -DateTimeOriginal \
+        "$input_file" 2>/dev/null | sed -n "1p" | sed "s|:|-|g; s| |_|g")
 
     # Abort if no creation date is available.
     if [[ -z "$date" ]]; then
@@ -45,7 +45,7 @@ _main_task() {
     fi
 
     # Run the main process.
-    _move_file "skip" "$input_file" "$dir/${date:1}_$filename" || return 1
+    _move_file "skip" "$input_file" "$dir/${date}_$filename" || return 1
 }
 
 _main "$@"
