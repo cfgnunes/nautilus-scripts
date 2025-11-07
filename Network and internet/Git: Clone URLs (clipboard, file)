@@ -25,12 +25,13 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
+    local param="core.sshCommand=ssh -o StrictHostKeyChecking=no -o ConnectTimeout=3"
 
     __git_repo_dir_name() {
         local repo_url=$1
         local dir_name=""
 
-        # Remove possible trailing slash.
+        # Remove possible trailing slash from the URL.
         repo_url=${repo_url%/}
 
         # Extract the part after the last slash and remove .git if present.
@@ -42,11 +43,33 @@ _main_task() {
 
     local repo_dir_name=""
     repo_dir_name=$(__git_repo_dir_name "$input_file")
+
+    # Determine the directory name for cloning.
     dir_name=$(_get_output_filename "$output_dir/$repo_dir_name" "$output_dir" "par_extension_opt=preserve")
 
     # Run the main process.
-    std_output=$(git clone -q -- "$input_file" "$dir_name" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    # Attempt 1: Try cloning using SSH as-is.
+    local exit_code=0
+    std_output=$(git -c "$param" clone -q -- "$input_file" "$dir_name" 2>&1)
+    exit_code=$?
+
+    # Attempt 2: If the first attempt failed,
+    # try SSH with '@ssh.' inserted in the host
+    if ((exit_code != 0)) && [[ "$input_file" != *"@ssh."* ]]; then
+        std_output=$(git -c "$param" clone -q -- "${input_file/@/@ssh.}" "$dir_name" 2>&1)
+        exit_code=$?
+    fi
+
+    # If SSH attempts failed, try converting SSH URL to HTTPS and clone.
+    if ((exit_code != 0)); then
+        # Convert SSH to HTTPS form.
+        input_file=${input_file/@ssh./@}
+        input_file=$(sed -E 's#git@([^:]+):([^/]+)/([^ ]+)#https://\1/\2/\3#g' <<<"$input_file")
+        std_output=$(git -c "$param" clone -q -- "$input_file" "$dir_name" 2>&1)
+        exit_code=$?
+    fi
+
+    _check_output "$exit_code" "$std_output" "$input_file" "" || return 1
 }
 
 _extract_git_urls() {
