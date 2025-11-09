@@ -37,7 +37,6 @@ IGNORE_APPLICATION_SHORTCUTS=(
 
 # Directories to be ignored during install.
 IGNORE_FIND_PATHS=(
-    ! -path "*/Accessed recently*"
     ! -path "*/.assets*"
     ! -path "*/.git*"
     ! -path "*/.po*"
