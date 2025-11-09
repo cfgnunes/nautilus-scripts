@@ -3862,7 +3862,11 @@ _i18n_load_file() {
     local line=""
     while IFS= read -r line || [[ -n "$line" ]]; do
         case "$line" in
-        "# SECTION: Menu"*) break ;;
+        "# SECTION: Menu"*)
+            if [[ "$(_get_script_name)" != "install"* ]]; then
+                break
+            fi
+            ;;
         "msgid"*)
             key="${line#msgid }"
             key="${key%\"}"
