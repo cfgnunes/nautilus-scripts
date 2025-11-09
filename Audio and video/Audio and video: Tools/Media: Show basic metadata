@@ -44,16 +44,16 @@ _main_task() {
 
     # Check if the values are not empty.
     if [[ -z "$tag_duration" ]]; then
-        tag_duration="(Empty)"
+        tag_duration=" "
     fi
     if [[ -z "$tag_album" ]]; then
-        tag_album="(Empty)"
+        tag_album=" "
     fi
     if [[ -z "$tag_artist" ]]; then
-        tag_artist="(Empty)"
+        tag_artist=" "
     fi
     if [[ -z "$tag_title" ]]; then
-        tag_title="(Empty)"
+        tag_title=" "
     fi
 
     _storage_text_write_ln "$tag_duration$FIELD_SEPARATOR$tag_album$FIELD_SEPARATOR$tag_artist$FIELD_SEPARATOR$tag_title$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"

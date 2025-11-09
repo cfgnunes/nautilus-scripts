@@ -44,16 +44,16 @@ _main_task() {
 
     # Check if the values are not empty.
     if [[ -z "$mode" ]]; then
-        mode="(Empty)"
+        mode=" "
     fi
     if [[ -z "$bit_rate" ]]; then
-        bit_rate="(Empty)"
+        bit_rate=" "
     fi
     if [[ -z "$sampling_rate" ]]; then
-        sampling_rate="(Empty)"
+        sampling_rate=" "
     fi
     if [[ -z "$channels" ]]; then
-        channels="(Empty)"
+        channels=" "
     fi
 
     _storage_text_write_ln "$mode$FIELD_SEPARATOR$bit_rate$FIELD_SEPARATOR$sampling_rate$FIELD_SEPARATOR$channels$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
