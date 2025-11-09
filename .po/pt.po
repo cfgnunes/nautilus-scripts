@@ -480,6 +480,130 @@ msgstr "arquivos"
 msgid "files or directories"
 msgstr "arquivos ou diretórios"
 
+# Installer
+msgid "Add shortcuts to the application menu"
+msgstr "Adicionar atalhos ao menu de aplicativos"
+
+# Installer
+msgid "All dependencies are already satisfied."
+msgstr "Todas as dependências já estão satisfeitas."
+
+# Installer
+msgid "Choose which script categories to install"
+msgstr "Escolher categorias de scripts para instalar"
+
+# Installer
+msgid "Close the file manager to reload its configurations"
+msgstr "Fechar o gerenciador de arquivos para recarregar suas configurações"
+
+# Installer
+msgid "Closing the file manager..."
+msgstr "Fechando o gerenciador de arquivos..."
+
+# Installer
+msgid "Creating '.desktop' files..."
+msgstr "Criando arquivos '.desktop'..."
+
+# Installer
+msgid "Creating GNOME application folder..."
+msgstr "Criando pasta de aplicativos do GNOME..."
+
+# Installer
+msgid "Done!"
+msgstr "Concluído!"
+
+# Installer
+msgid "Downloading the package..."
+msgstr "Baixando o pacote..."
+
+# Installer
+msgid "File manager:"
+msgstr "Gerenciador de arquivos:"
+
+# Installer
+msgid "Home dir:"
+msgstr "Diretório home:"
+
+# Installer
+msgid "Homebrew is already installed."
+msgstr "Homebrew já está instalado."
+
+# Installer
+msgid "Install basic dependencies (may require sudo)"
+msgstr "Instalar dependências básicas (pode exigir sudo)"
+
+# Installer
+msgid "Install for all users (may require sudo)"
+msgstr "Instalar para todos os usuários (pode exigir sudo)"
+
+# Installer
+msgid "Install Homebrew (optional)"
+msgstr "Instalar Homebrew (opcional)"
+
+# Installer
+msgid "Install keyboard accelerators"
+msgstr "Instalar teclas de atalho"
+
+# Installer
+msgid "Installation completed successfully!"
+msgstr "Instalação concluída com sucesso!"
+
+# Installer
+msgid "Installing basic dependencies:"
+msgstr "Instalando dependências básicas:"
+
+# Installer
+msgid "Installing Homebrew to:"
+msgstr "Instalando Homebrew em:"
+
+# Installer
+msgid "Installing Homebrew:"
+msgstr "Instalando Homebrew:"
+
+# Installer
+msgid "Installing in non-interactive mode..."
+msgstr "Instalando em modo não interativo..."
+
+# Installer
+msgid "Installing keyboard accelerators..."
+msgstr "Instalando aceleradores de teclado..."
+
+# Installer
+msgid "Installing new scripts:"
+msgstr "Instalando novos scripts:"
+
+# Installer
+msgid "Installing the scripts..."
+msgstr "Instalando os scripts..."
+
+# Installer
+msgid "Installing file manager actions..."
+msgstr "Instalando ações do gerenciador de arquivos..."
+
+# Installer
+msgid "Remove previously installed scripts"
+msgstr "Remover scripts instalados anteriormente"
+
+# Installer
+msgid "Removing application menu shortcuts..."
+msgstr "Removendo atalhos do menu de aplicativos..."
+
+# Installer
+msgid "Removing previously installed scripts..."
+msgstr "Removendo scripts instalados anteriormente..."
+
+# Installer
+msgid "Select the categories (<SPACE> to check, <ENTER> to confirm):"
+msgstr "Selecione as categorias (<ESPAÇO> para marcar, <ENTER> para confirmar):"
+
+# Installer
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr "Selecione as opções (<ESPAÇO> para marcar, <ENTER> para confirmar):"
+
+# Installer
+msgid "User:"
+msgstr "Usuário:"
+
 # SECTION: Menu strings ----
 # Menu: Category
 msgid "Accessed recently"

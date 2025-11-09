@@ -42,10 +42,6 @@ IGNORE_FIND_PATHS=(
     ! -path "*/.git*"
 )
 
-# Colored status messages for logging.
-MSG_ERROR="[\033[0;31mFAILED\033[0m]"
-MSG_INFO="[\033[0;32m INFO \033[0m]"
-
 # Define the directory of this script. If '$BASH_SOURCE' is available,
 # use its path. Otherwise, create a temporary directory for cases like remote
 # execution via curl.
@@ -60,8 +56,6 @@ readonly \
     APP_MENUS_DIR \
     COMPATIBLE_FILE_MANAGERS \
     IGNORE_FIND_PATHS \
-    MSG_ERROR \
-    MSG_INFO \
     SCRIPT_DIR
 
 # Use current username if $USER is undefined.
@@ -96,6 +90,11 @@ OPT_QUIET_INSTALL="false"
 #shellcheck source=.assets/.multiselect-menu.sh
 if [[ -f "$SCRIPT_DIR/.assets/.multiselect-menu.sh" ]]; then
     source "$SCRIPT_DIR/.assets/.multiselect-menu.sh"
+fi
+
+if [[ -f "$SCRIPT_DIR/.common-functions.sh" ]]; then
+    ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+    source "$ROOT_DIR/.common-functions.sh"
 fi
 
 # -----------------------------------------------------------------------------
@@ -134,14 +133,14 @@ _main() {
 
     # Available options presented in the interactive menu.
     menu_labels=(
-        "Install basic dependencies (may require 'sudo')"
-        "Remove previously installed scripts"
-        "Install keyboard accelerators"
-        "Close the file manager to reload its configurations"
-        "Add shortcuts to the application menu"
-        "Install for all users (may require 'sudo')"
-        "Install Homebrew (optional)"
-        "Choose which script categories to install"
+        "$(_i18n 'Install basic dependencies (may require sudo)')"
+        "$(_i18n 'Remove previously installed scripts')"
+        "$(_i18n 'Install keyboard accelerators')"
+        "$(_i18n 'Close the file manager to reload its configurations')"
+        "$(_i18n 'Add shortcuts to the application menu')"
+        "$(_i18n 'Install for all users (may require sudo)')"
+        "$(_i18n 'Install Homebrew (optional)')"
+        "$(_i18n 'Choose which script categories to install')"
     )
 
     # Default states for the menu options.
@@ -160,12 +159,12 @@ _main() {
     _echo ""
 
     if [[ "$OPT_INTERACTIVE_INSTALL" == "true" ]]; then
-        _echo "Select the options (<SPACE> to check, <ENTER> to confirm):"
+        _echo "$(_i18n 'Select the options (<SPACE> to check, <ENTER> to confirm):')"
 
         # Display the interactive menu and capture user selections.
         _multiselect_menu menu_selected menu_labels menu_defaults
     else
-        _echo_info "Installing in non-interactive mode..."
+        _echo_info "$(_i18n 'Installing in non-interactive mode...')"
         menu_selected=("${menu_defaults[@]}")
     fi
 
@@ -190,7 +189,7 @@ _main() {
     # If requested, let the user select which categories to install.
     if [[ "$OPT_CHOOSE_CATEGORIES" == "true" ]]; then
         _echo ""
-        _echo "Select the categories (<SPACE> to check, <ENTER> to confirm):"
+        _echo "$(_i18n 'Select the categories (<SPACE> to check, <ENTER> to confirm):')"
         _multiselect_menu cat_selected cat_dirs cat_defaults
     fi
 
@@ -271,10 +270,10 @@ _main() {
 
             # Perform installation steps.
             _echo ""
-            _echo_info "Installing new scripts:"
-            _echo_info "> User: $INSTALL_OWNER"
-            _echo_info "> Home dir: $INSTALL_HOME"
-            _echo_info "> File manager: $FILE_MANAGER"
+            _echo_info "$(_i18n 'Installing new scripts:')"
+            _echo_info "> $(_i18n 'User:') $INSTALL_OWNER"
+            _echo_info "> $(_i18n 'Home dir:') $INSTALL_HOME"
+            _echo_info "> $(_i18n 'File manager:') $FILE_MANAGER"
             _step_install_scripts cat_selected cat_dirs
             _step_install_menus
             [[ "$OPT_INSTALL_ACCELS" == "true" ]] && _step_install_accels
@@ -283,7 +282,7 @@ _main() {
             if [[ "$USER" == "$INSTALL_OWNER" ]]; then
                 [[ "$OPT_CLOSE_FILE_MANAGER" == "true" ]] && _step_close_filemanager
             fi
-            _echo_info "> Done!"
+            _echo_info "> $(_i18n 'Done!')"
         done
 
         # Add shortcuts to the application menu.
@@ -294,7 +293,7 @@ _main() {
 
             _step_install_application_shortcuts
             _step_create_gnome_application_folder
-            _echo_info "> Done!"
+            _echo_info "> $(_i18n 'Done!')"
         fi
     done
 
@@ -304,7 +303,7 @@ _main() {
     fi
 
     _echo ""
-    _echo_info "Installation completed successfully!"
+    _echo_info "$(_i18n 'Installation completed successfully!')"
 }
 
 # -----------------------------------------------------------------------------
@@ -322,11 +321,14 @@ _echo_info() {
     if [[ "$OPT_QUIET_INSTALL" == "true" ]]; then
         return
     fi
-    echo -e "$MSG_INFO $1"
+
+    local msg_info="[\033[0;32m INFO \033[0m]"
+    echo -e "$msg_info $1"
 }
 
 _echo_error() {
-    echo -e "$MSG_ERROR $1"
+    local msg_error="[\033[0;31mFAILED\033[0m]"
+    echo -e "$msg_error $1"
 }
 
 # -----------------------------------------------------------------------------
@@ -351,23 +353,6 @@ _check_exist_filemanager() {
         fi
     done
     return 1
-}
-
-# FUNCTION: _command_exists
-#
-# DESCRIPTION:
-# This function checks whether a given command is available on the system.
-#
-# PARAMETERS:
-#   $1 (command_check): The name of the command to verify.
-#
-# RETURNS:
-#   "0" (true): If the command is available.
-#   "1" (false): If the command is not available.
-_command_exists() {
-    local command_check=$1
-
-    command -v "$command_check" &>/dev/null || return 1
 }
 
 # -----------------------------------------------------------------------------
@@ -398,11 +383,11 @@ _tee_file() {
     $SUDO_CMD tee -- "$1" >/dev/null
 }
 
-# FUNCTION: _delete_items
+# FUNCTION: __delete_items
 #
 # DESCRIPTION:
 # This function deletes or trash items, using the best available method.
-_delete_items() {
+__delete_items() {
     local items=$1
 
     # Attempt to remove empty directories directly (rmdir only removes empty
@@ -559,7 +544,7 @@ _get_par_value() {
 # shellcheck disable=SC2086
 _step_install_dependencies() {
     _echo ""
-    _echo_info "Installing basic dependencies:"
+    _echo_info "$(_i18n 'Installing basic dependencies:')"
 
     local packages=""
     local admin_cmd=""
@@ -663,9 +648,9 @@ _step_install_dependencies() {
     fi
 
     if [[ -z "$packages" ]]; then
-        _echo_info "> All dependencies are already satisfied."
+        _echo_info "> $(_i18n 'All dependencies are already satisfied.')"
     fi
-    _echo_info "> Done!"
+    _echo_info "> $(_i18n 'Done!')"
 }
 
 # FUNCTION: _step_install_scripts
@@ -682,17 +667,17 @@ _step_install_scripts() {
 
     # Remove previous scripts if requested.
     if [[ "$OPT_REMOVE_SCRIPTS" == "true" ]]; then
-        _echo_info "> Removing previously installed scripts..."
-        _delete_items "$INSTALL_DIR"
+        _echo_info "> $(_i18n 'Removing previously installed scripts...')"
+        __delete_items "$INSTALL_DIR"
         # Also remove application menu shortcuts if they exist.
         local app_menus_path="$INSTALL_HOME/.local/share/applications/$APP_MENUS_DIR"
         if [[ -d "$app_menus_path" ]]; then
-            _echo_info "> Removing application menu shortcuts..."
-            _delete_items "$app_menus_path"
+            _echo_info "> $(_i18n 'Removing application menu shortcuts...')"
+            __delete_items "$app_menus_path"
         fi
     fi
 
-    _echo_info "> Installing the scripts..."
+    _echo_info "> $(_i18n 'Installing the scripts...')"
     $SUDO_CMD_USER mkdir --parents "$INSTALL_DIR"
 
     # Always copy the '.common-functions.sh' and the '.dependencies.sh' files.
@@ -728,7 +713,7 @@ _step_install_scripts() {
 # DESCRIPTION:
 # Install keyboard accelerators (shortcuts) for specific file managers.
 _step_install_accels() {
-    _echo_info "> Installing keyboard accelerators..."
+    _echo_info "> $(_i18n 'Installing keyboard accelerators...')"
 
     case "$FILE_MANAGER" in
     "nautilus")
@@ -754,7 +739,7 @@ _step_install_accels_nautilus() {
     local accels_file=$1
     $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
 
-    _delete_items "$accels_file"
+    __delete_items "$accels_file"
 
     {
         local filename=""
@@ -779,7 +764,7 @@ _step_install_accels_gnome2() {
     local accels_file=$1
     $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
 
-    _delete_items "$accels_file"
+    __delete_items "$accels_file"
 
     {
         # Disable the shortcut for 'OpenAlternate' (<control><shift>o).
@@ -813,7 +798,7 @@ _step_install_accels_thunar() {
     local accels_file=$1
     $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
 
-    _delete_items "$accels_file"
+    __delete_items "$accels_file"
 
     {
         # Default Thunar shortcuts.
@@ -863,7 +848,7 @@ _step_install_application_shortcuts() {
     local submenu=""
     local app_menus_path="$INSTALL_HOME/.local/share/applications/$APP_MENUS_DIR"
 
-    _echo_info "> Creating '.desktop' files..."
+    _echo_info "> $(_i18n 'Creating '.desktop' files...')"
 
     # Remove previously installed '.desktop' files.
     $SUDO_CMD rm -rf -- "$app_menus_path"
@@ -924,7 +909,7 @@ _step_create_gnome_application_folder() {
         return
     fi
 
-    _echo_info "> Creating '$folder_name' GNOME application folder..."
+    _echo_info "> $(_i18n 'Creating GNOME application folder...')"
 
     # Determine which 'gsettings' command to use:
     # - Use 'machinectl' when modifying another user's GNOME settings.
@@ -987,11 +972,11 @@ _step_install_menus() {
 }
 
 _step_install_menus_dolphin() {
-    _echo_info "> Installing Dolphin actions..."
+    _echo_info "> $(_i18n 'Installing file manager actions...')"
 
     local menus_dir="$INSTALL_HOME/.local/share/kio/servicemenus"
 
-    _delete_items "$menus_dir"
+    __delete_items "$menus_dir"
     $SUDO_CMD_USER mkdir --parents "$menus_dir"
 
     local filename=""
@@ -1028,11 +1013,11 @@ _step_install_menus_dolphin() {
 }
 
 _step_install_menus_pcmanfm() {
-    _echo_info "> Installing PCManFM-Qt actions..."
+    _echo_info "> $(_i18n 'Installing file manager actions...')"
 
     local menus_dir="$INSTALL_HOME/.local/share/file-manager/actions"
 
-    _delete_items "$menus_dir"
+    __delete_items "$menus_dir"
     $SUDO_CMD_USER mkdir --parents "$menus_dir"
 
     # Create the 'Scripts.desktop' for the categories (main menu).
@@ -1099,11 +1084,11 @@ _step_install_menus_pcmanfm() {
 }
 
 _step_install_menus_thunar() {
-    _echo_info "> Installing Thunar actions..."
+    _echo_info "> $(_i18n 'Installing file manager actions...')"
 
     local menus_file="$INSTALL_HOME/.config/Thunar/uca.xml"
 
-    _delete_items "$menus_file"
+    __delete_items "$menus_file"
 
     $SUDO_CMD_USER mkdir --parents "$INSTALL_HOME/.config/Thunar"
 
@@ -1189,7 +1174,7 @@ _step_close_filemanager() {
         return
     fi
 
-    _echo_info "> Closing the file manager..."
+    _echo_info "> $(_i18n 'Closing the file manager...')"
 
     case "$FILE_MANAGER" in
     "nautilus" | "nemo" | "thunar")
@@ -1246,7 +1231,7 @@ _step_install_homebrew() {
     fi
 
     _echo ""
-    _echo_info "Installing Homebrew:"
+    _echo_info "$(_i18n 'Installing Homebrew:')"
 
     # Homebrew install directory.
     local homebrew_dir="$HOME/.local/apps/homebrew"
@@ -1254,14 +1239,14 @@ _step_install_homebrew() {
 
     # Check if Homebrew is already installed.
     if [[ -e "$brew_cmd" ]]; then
-        _echo_info "> Homebrew is already installed."
+        _echo_info "> $(_i18n 'Homebrew is already installed.')"
         return
     fi
 
-    _echo_info "> Installing Homebrew to: ~/.local/apps/homebrew"
+    _echo_info "> $(_i18n 'Installing Homebrew to:') ~/.local/apps/homebrew"
     mkdir --parents "$homebrew_dir"
 
-    _echo_info "> Downloading the package..."
+    _echo_info "> $(_i18n 'Downloading the package...')"
 
     # Download and extract Homebrew.
     {
@@ -1279,7 +1264,7 @@ _step_install_homebrew() {
         exit 1
     fi
 
-    _echo_info "> Done!"
+    _echo_info "> $(_i18n 'Done!')"
 }
 
 # -----------------------------------------------------------------------------

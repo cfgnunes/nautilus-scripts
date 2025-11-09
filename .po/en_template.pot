@@ -480,6 +480,130 @@ msgstr ""
 msgid "files or directories"
 msgstr ""
 
+# Installer
+msgid "Add shortcuts to the application menu"
+msgstr ""
+
+# Installer
+msgid "All dependencies are already satisfied."
+msgstr ""
+
+# Installer
+msgid "Choose which script categories to install"
+msgstr ""
+
+# Installer
+msgid "Close the file manager to reload its configurations"
+msgstr ""
+
+# Installer
+msgid "Closing the file manager..."
+msgstr ""
+
+# Installer
+msgid "Creating '.desktop' files..."
+msgstr ""
+
+# Installer
+msgid "Creating GNOME application folder..."
+msgstr ""
+
+# Installer
+msgid "Done!"
+msgstr ""
+
+# Installer
+msgid "Downloading the package..."
+msgstr ""
+
+# Installer
+msgid "File manager:"
+msgstr ""
+
+# Installer
+msgid "Home dir:"
+msgstr ""
+
+# Installer
+msgid "Homebrew is already installed."
+msgstr ""
+
+# Installer
+msgid "Install basic dependencies (may require sudo)"
+msgstr ""
+
+# Installer
+msgid "Install for all users (may require sudo)"
+msgstr ""
+
+# Installer
+msgid "Install Homebrew (optional)"
+msgstr ""
+
+# Installer
+msgid "Install keyboard accelerators"
+msgstr ""
+
+# Installer
+msgid "Installation completed successfully!"
+msgstr ""
+
+# Installer
+msgid "Installing basic dependencies:"
+msgstr ""
+
+# Installer
+msgid "Installing Homebrew to:"
+msgstr ""
+
+# Installer
+msgid "Installing Homebrew:"
+msgstr ""
+
+# Installer
+msgid "Installing in non-interactive mode..."
+msgstr ""
+
+# Installer
+msgid "Installing keyboard accelerators..."
+msgstr ""
+
+# Installer
+msgid "Installing new scripts:"
+msgstr ""
+
+# Installer
+msgid "Installing the scripts..."
+msgstr ""
+
+# Installer
+msgid "Installing file manager actions..."
+msgstr ""
+
+# Installer
+msgid "Remove previously installed scripts"
+msgstr ""
+
+# Installer
+msgid "Removing application menu shortcuts..."
+msgstr ""
+
+# Installer
+msgid "Removing previously installed scripts..."
+msgstr ""
+
+# Installer
+msgid "Select the categories (<SPACE> to check, <ENTER> to confirm):"
+msgstr ""
+
+# Installer
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr ""
+
+# Installer
+msgid "User:"
+msgstr ""
+
 # SECTION: Menu strings ----
 # Menu: Category
 msgid "Accessed recently"
