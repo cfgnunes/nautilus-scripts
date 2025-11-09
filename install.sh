@@ -40,6 +40,7 @@ IGNORE_FIND_PATHS=(
     ! -path "*/Accessed recently*"
     ! -path "*/.assets*"
     ! -path "*/.git*"
+    ! -path "*/.po*"
 )
 
 # Define the directory of this script. If '$BASH_SOURCE' is available,
@@ -680,9 +681,10 @@ _step_install_scripts() {
     _echo_info "> $(_i18n 'Installing the scripts...')"
     $SUDO_CMD_USER mkdir --parents "$INSTALL_DIR"
 
-    # Always copy the '.common-functions.sh' and the '.dependencies.sh' files.
+    # Always copy important files and directories.
     $SUDO_CMD cp -- "$SCRIPT_DIR/.common-functions.sh" "$INSTALL_DIR"
     $SUDO_CMD cp -- "$SCRIPT_DIR/.dependencies.sh" "$INSTALL_DIR"
+    $SUDO_CMD cp -r -- "$SCRIPT_DIR/.po" "$INSTALL_DIR"
 
     # Copy scripts by category. If the user selected specific categories, only
     # those are installed. Otherwise, all categories are copied by default.
