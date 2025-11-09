@@ -3588,21 +3588,18 @@ _str_sort() {
 #   $1 (input_path): The input file path to process.
 _str_human_readable_path() {
     local input_path=$1
-    local output_path=""
+    local output_path
 
+    # Remove the current working directory prefix, if present.
     output_path=$(_text_remove_pwd "$input_path")
-    output_path=$(_text_remove_home "$output_path")
-    output_path=$(sed "s|^\./||g" <<<"$output_path")
 
-    if [[ "$output_path" == "." ]]; then
-        output_path="same"
-    elif [[ "$output_path" == "~" ]]; then
-        output_path="home"
-    elif [[ "$output_path" == "" ]]; then
-        output_path="(None)"
-    else
-        output_path="'$output_path'"
+    # Replace the absolute home directory path with '~/'.
+    if [[ -n ${HOME:-} ]]; then
+        output_path=${output_path/#$HOME\//~\/}
     fi
+
+    # Remove a leading './' to simplify relative paths.
+    output_path=${output_path#./}
 
     printf "%s" "$output_path"
 }
@@ -3612,37 +3609,6 @@ _text_remove_empty_lines() {
     local input_text=$1
 
     grep -v "^\s*$" <<<"$input_text"
-}
-
-# FUNCTION: _text_remove_home
-#
-# DESCRIPTION:
-# This function replaces the user's home directory path in a given string
-# with the tilde ("~") symbol for brevity.
-#
-# PARAMETERS:
-#   $1 (input_text): The input string that may contain the user's home
-#      directory path.
-#
-# RETURNS:
-#   - The modified string with the home directory replaced by "~", or the
-#     original string if '$HOME' is not defined.
-#
-# EXAMPLES:
-#   - Input: "/home/user/documents/file.txt" (assuming '$HOME' is
-#     "/home/user")
-#   - Output: "~/documents/file.txt"
-#
-#   - Input: "/etc/config" (assuming '$HOME' is "/home/user")
-#   - Output: "/etc/config"
-_text_remove_home() {
-    local input_text=$1
-
-    if [[ -n "${HOME:-}" ]]; then
-        sed "s|$HOME|~|g" <<<"$input_text"
-    else
-        printf "%s" "$input_text"
-    fi
 }
 
 # FUNCTION: _text_remove_pwd
