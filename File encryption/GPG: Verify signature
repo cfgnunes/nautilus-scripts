@@ -16,7 +16,7 @@ _main() {
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" ""
 
-    local output_dir=""
+    local std_output=""
     std_output=$(_storage_text_read_all)
 
     _display_text_box "$std_output"
@@ -24,7 +24,6 @@ _main() {
 
 _main_task() {
     local input_file=$1
-    local output_dir=$2
     local std_output=""
     local status="🔴"
 

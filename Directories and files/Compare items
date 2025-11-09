@@ -254,6 +254,7 @@ _compare_images() {
 
     # Determine the default image viewer to display the visual diff.
     local image_viewer=""
+    # shellcheck disable=SC2034
     local apps=(
         "loupe"
         "eog"

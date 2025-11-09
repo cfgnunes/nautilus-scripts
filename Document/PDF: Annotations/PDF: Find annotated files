@@ -25,7 +25,6 @@ _main() {
 
 _main_task() {
     local input_file=$1
-    local output_dir=$2
 
     # Run the main process.
     if grep -z -a -m1 --quiet "/Subtype\s*\(/Caret\|/Circle\|/FileAttachment\|/FreeText\|/Highlight\|/Ink\|/Line\|/Movie\|/Polygon\|/PolyLine\|/Popup\|/Printermark\|/Screen\|/Sound\|/Square\|/Squiggly\|/Stamp\|/StrikeOut\|/Text\|/Underline\|/Watermark\)" "$input_file"; then

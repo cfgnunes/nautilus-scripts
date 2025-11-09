@@ -99,6 +99,7 @@ _main_task() {
 
         # Determine the image viewer.
         local image_viewer=""
+        # shellcheck disable=SC2034
         local apps=(
             "eog"
         )

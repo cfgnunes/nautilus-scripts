@@ -21,6 +21,7 @@ _main() {
 _open_app() {
     local input_files=$1
     local available_app=""
+    # shellcheck disable=SC2034
     local apps=(
         "ptyxis"
         "gnome-terminal"

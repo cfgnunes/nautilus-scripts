@@ -22,7 +22,6 @@ _main() {
 _main_task() {
     local input_file=$1
     local output_dir=$2
-    local output_file=""
     local std_output=""
 
     # Run the main process.

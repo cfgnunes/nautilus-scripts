@@ -8,7 +8,6 @@ source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
     local input_files=""
-    local output_dir=""
 
     # Execute initial checks.
     _check_dependencies ""

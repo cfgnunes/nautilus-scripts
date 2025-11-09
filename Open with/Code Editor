@@ -33,6 +33,7 @@ _main() {
 
     # Run the main process.
     local available_app=""
+    # shellcheck disable=SC2034
     local apps=(
         "code"
         "geany"

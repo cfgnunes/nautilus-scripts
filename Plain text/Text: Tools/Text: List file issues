@@ -26,7 +26,6 @@ _main() {
 
 _main_task() {
     local input_file=$1
-    local output_dir=$2
     local file_encoding=""
     local hex_dump=""
     local issues=""
