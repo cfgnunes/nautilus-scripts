@@ -84,7 +84,11 @@ readonly \
 # SECTION: Global variables ----
 # -----------------------------------------------------------------------------
 
+# Internal Field Separator used for splitting fields based on the
+# value defined in $FIELD_SEPARATOR.
 IFS=$FIELD_SEPARATOR
+
+# List of all input files passed as positional parameters.
 INPUT_FILES=$*
 
 # Variable used to share data between specific parallel task functions
@@ -539,7 +543,7 @@ _check_dependencies() {
         # Abort if no package definition was found.
         if [[ "$definitions_found" == "false" ]]; then
             local msg=""
-            msg="Could not find package names to install dependency:"
+            msg="Could not find package names to install:"
             _display_error_box "$msg $dep_key"
             _exit_script
         fi
@@ -749,7 +753,9 @@ _deps_install_packages() {
         _command_exists "pkexec" && cmd_admin_available="pkexec"
     fi
 
-    _display_wait_box_message "Installing the packages. Please, wait..." "0"
+    local msg=""
+    msg="Installing the packages. Please, wait..."
+    _display_wait_box_message "$msg" "0"
 
     # Iterate over each detected package manager.
     for pkg_manager in "${!pkg_map[@]}"; do
@@ -2085,8 +2091,7 @@ _display_question_box() {
 # terminal or using a GUI dialog.
 #
 # PARAMETERS:
-#   $1 (message): The message to display. If empty, a default message
-#      '(Empty result)' is shown.
+#   $1 (message): The message to display.
 _display_text_box() {
     local message=$1
 
@@ -2094,7 +2099,7 @@ _display_text_box() {
     _logs_consolidate ""
 
     if [[ -z "$message" ]]; then
-        message="(Empty result)"
+        message="(Empty)"
     fi
 
     _display_lock
