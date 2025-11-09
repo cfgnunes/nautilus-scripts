@@ -1613,6 +1613,9 @@ _display_file_selection_box() {
 _display_error_box() {
     local message=$1
 
+    local ok_btn=""
+    ok_btn="OK"
+
     _display_lock
     if ! _is_gui_session; then
         # For non-GUI sessions, simply print the message to the console.
@@ -1623,13 +1626,16 @@ _display_error_box() {
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" \
             --width="$GUI_INFO_WIDTH" --text="$message" \
-            --error &>/dev/null
+            --ok-label="${ok_btn}" --error &>/dev/null
     elif _command_exists "yad"; then
         yad --title "$(_get_script_name)" --center \
             --width="$GUI_INFO_WIDTH" --text="$message" \
-            --button=OK:0 --image="dialog-error" &>/dev/null
+            --button="${ok_btn}:0" \
+            --image="dialog-error" &>/dev/null
     elif _command_exists "xmessage"; then
-        xmessage -title "$(_get_script_name)" "Error: $message" &>/dev/null
+        xmessage -title "$(_get_script_name)" \
+            -buttons "${ok_btn}:0" \
+            "Error: $message" &>/dev/null
     fi
     _display_unlock
 }
@@ -1645,6 +1651,9 @@ _display_error_box() {
 _display_info_box() {
     local message=$1
 
+    local ok_btn=""
+    ok_btn="OK"
+
     _display_lock
     if ! _is_gui_session; then
         # For non-GUI sessions, simply print the message to the console.
@@ -1655,13 +1664,16 @@ _display_info_box() {
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" \
             --width="$GUI_INFO_WIDTH" --text="$message" \
-            --info &>/dev/null
+            --ok-label="${ok_btn}" --info &>/dev/null
     elif _command_exists "yad"; then
         yad --title "$(_get_script_name)" --center \
             --width="$GUI_INFO_WIDTH" --text="$message" \
-            --button=OK:0 --image="dialog-information" &>/dev/null
+            --button="${ok_btn}:0" \
+            --image="dialog-information" &>/dev/null
     elif _command_exists "xmessage"; then
-        xmessage -title "$(_get_script_name)" "Info: $message" &>/dev/null
+        xmessage -title "$(_get_script_name)" \
+            -buttons "${ok_btn}:0" \
+            "Info: $message" &>/dev/null
     fi
     _display_unlock
 }
@@ -1717,6 +1729,11 @@ _display_checklist_box_simple() {
         par_type="--checklist"
     fi
 
+    local ok_btn=""
+    ok_btn="OK"
+    local cancel_btn=""
+    cancel_btn="Cancel"
+
     _display_lock
     if ! _is_gui_session; then
         # Automatically select the first option, if no GUI session.
@@ -1725,7 +1742,9 @@ _display_checklist_box_simple() {
         # shellcheck disable=SC2086
         selected_items=$(zenity --title "$(_get_script_name)" \
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-            --text="$header_label" --list "$par_type" \
+            --text="$header_label" \
+            --cancel-label="${cancel_btn}" --ok-label="${ok_btn}" \
+            --list "$par_type" \
             --separator="$FIELD_SEPARATOR" \
             --print-column "2" --column= --column="$column" \
             $option_list 2>/dev/null) || _exit_script
@@ -1733,7 +1752,9 @@ _display_checklist_box_simple() {
         # shellcheck disable=SC2086
         selected_items=$(yad --title "$(_get_script_name)" --center \
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-            --text="$header_label" --list "$par_type" \
+            --text="$header_label" \
+            --button="${cancel_btn}:1" --button="${ok_btn}:0" \
+            --list "$par_type" \
             --separator="$FIELD_SEPARATOR" \
             --print-column "2" --column= --column="$column" \
             $option_list 2>/dev/null) || _exit_script
@@ -1969,6 +1990,9 @@ _display_list_box_xmessage() {
     local message=$1
     local par_columns=$2
 
+    local ok_btn=""
+    ok_btn="OK"
+
     par_columns=$(sed "s|--column:||g" <<<"$par_columns")
     par_columns=$(tr "," "\t" <<<"$par_columns")
     message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
@@ -1976,7 +2000,9 @@ _display_list_box_xmessage() {
 
     printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
     xmessage -title "$(_get_script_name)" \
-        -file "$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
+        -buttons "${ok_btn}:0" \
+        -file "$TEMP_DATA_TEXT_BOX" \
+        &>/dev/null || _exit_script
 }
 
 # FUNCTION: _display_password_box
@@ -1998,6 +2024,11 @@ _display_password_box() {
     local title=""
     title="Password"
 
+    local ok_btn=""
+    ok_btn="OK"
+    local cancel_btn=""
+    cancel_btn="Cancel"
+
     _display_lock
     # Ask the user for the password.
     if ! _is_gui_session; then
@@ -2006,12 +2037,14 @@ _display_password_box() {
         echo >&2
     elif _command_exists "zenity"; then
         password=$(zenity --title="$title" \
-            --width="$GUI_INFO_WIDTH" \
-            --text="$message" --entry --hide-text 2>/dev/null) || return 1
+            --width="$GUI_INFO_WIDTH" --text="$message" \
+            --cancel-label="${cancel_btn}" --ok-label="${ok_btn}" \
+            --entry --hide-text 2>/dev/null) || return 1
     elif _command_exists "yad"; then
         password=$(yad --title="$title" --center \
-            --width="$GUI_INFO_WIDTH" \
-            --text="$message" --entry --hide-text 2>/dev/null) || return 1
+            --width="$GUI_INFO_WIDTH" --text="$message" \
+            --button="${cancel_btn}:1" --button="${ok_btn}:0" \
+            --entry --hide-text 2>/dev/null) || return 1
     fi
     _display_unlock
 
@@ -2060,6 +2093,11 @@ _display_question_box() {
     local message=$1
     local response=""
 
+    local yes_btn=""
+    yes_btn="Yes"
+    local no_btn=""
+    no_btn="No"
+
     _display_lock
     if ! _is_gui_session; then
         echo -e -n "$message [Y/n] " >&2
@@ -2069,15 +2107,17 @@ _display_question_box() {
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" \
             --width="$GUI_INFO_WIDTH" --text="$message" \
+            --cancel-label="${no_btn}" --ok-label="${yes_btn}" \
             --question &>/dev/null || return 1
     elif _command_exists "yad"; then
         yad --title "$(_get_script_name)" --center \
             --width="$GUI_INFO_WIDTH" --text="$message" \
-            --button=No:1 --button=Yes:0 \
+            --button="${no_btn}:1" --button="${yes_btn}:0" \
             --image="dialog-question" &>/dev/null || return 1
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" \
-            -buttons "Yes:0,No:1" "$message" &>/dev/null || return 1
+            -buttons "${no_btn}:1,${yes_btn}:0" \
+            "$message" &>/dev/null || return 1
     fi
     _display_unlock
 
@@ -2102,6 +2142,11 @@ _display_text_box() {
         message="(Empty)"
     fi
 
+    local ok_btn=""
+    ok_btn="OK"
+    local cancel_btn=""
+    cancel_btn="Cancel"
+
     _display_lock
     if ! _is_gui_session; then
         printf "%s\n" "$message"
@@ -2109,17 +2154,20 @@ _display_text_box() {
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
         zenity --title "$(_get_script_name)" \
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+            --cancel-label="${cancel_btn}" --ok-label="${ok_btn}" \
             --text-info --no-wrap \
             --filename="$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
     elif _command_exists "yad"; then
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
         yad --title "$(_get_script_name)" --center \
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+            --button="${cancel_btn}:1" --button="${ok_btn}:0" \
             --text-info --no-wrap \
             --filename="$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
         xmessage -title "$(_get_script_name)" \
+            -buttons "${ok_btn}:0" \
             -file "$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
     fi
     _display_unlock
@@ -2220,6 +2268,9 @@ _display_wait_box_message() {
             fi
         fi
 
+        local cancel_btn=""
+        cancel_btn="Cancel"
+
         # Launch a background thread for Zenity 'wait box':
         #   - Waits for the specified delay.
         #   - Opens the Zenity 'wait box' if the control flag still exists.
@@ -2248,14 +2299,14 @@ _display_wait_box_message() {
             if _command_exists "zenity"; then
                 tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (zenity \
                     --title="$(_get_script_name)" \
-                    --width="$GUI_INFO_WIDTH" \
+                    --width="$GUI_INFO_WIDTH" --cancel-label="${cancel_btn}" \
                     --progress --auto-close --pulsate \
                     --text="$message" || _exit_script)
             else
                 tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (yad \
                     --title="$(_get_script_name)" --center \
                     --width="$GUI_INFO_WIDTH" \
-                    --progress --auto-close --button=Cancel:1 \
+                    --progress --auto-close --button="${cancel_btn}:1" \
                     --text="$message" || _exit_script)
             fi
             _display_unlock
@@ -3082,7 +3133,7 @@ _validate_files_count() {
                 _display_error_box "$msg"
             else
                 msg="You must select"
-            _display_error_box "$msg $valid_file_label!"
+                _display_error_box "$msg $valid_file_label!"
             fi
         fi
         _exit_script
