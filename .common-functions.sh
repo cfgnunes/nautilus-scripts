@@ -17,7 +17,6 @@ set -u
 # SECTION: Constants ----
 # -----------------------------------------------------------------------------
 
-ACCESSED_RECENTLY_DIR="$ROOT_DIR/Accessed recently"
 ACCESSED_RECENTLY_LINKS_TO_KEEP=10
 FIELD_SEPARATOR=$'\r'          # The main field separator.
 GUI_BOX_HEIGHT=550             # Height of the GUI dialog boxes.
@@ -60,7 +59,6 @@ PKG_MANAGER_PRIORITY=(
 )
 
 readonly \
-    ACCESSED_RECENTLY_DIR \
     ACCESSED_RECENTLY_LINKS_TO_KEEP \
     FIELD_SEPARATOR \
     GUI_BOX_HEIGHT \
@@ -3917,19 +3915,23 @@ _i18n() {
 #
 # DESCRIPTION:
 # This function adds the running script to the history of recently accessed
-# scripts ('$ACCESSED_RECENTLY_DIR').
+# scripts.
 #
 # RETURNS:
 #   "0" (true): If the script was added successfully.
 #   "1" (false): If there was an error adding the script.
 _recent_scripts_add() {
     local running_script=$0
+    local dir=""
+    dir="$ROOT_DIR/0 $(_i18n 'Accessed recently')"
 
-    # Ensure that the '$ACCESSED_RECENTLY_DIR' exists and is writable.
-    if [[ ! -d $ACCESSED_RECENTLY_DIR ]]; then
-        mkdir -p "$ACCESSED_RECENTLY_DIR"
+    # Part 1: Add the link.
+
+    # Ensure that the '$dir' exists and is writable.
+    if [[ ! -d "$dir" ]]; then
+        mkdir -p "$dir"
     else
-        [[ -w $ACCESSED_RECENTLY_DIR ]] || return 1
+        [[ -w "$dir" ]] || return 1
     fi
 
     if [[ "$0" != "/"* ]]; then
@@ -3943,29 +3945,18 @@ _recent_scripts_add() {
         running_script=$(readlink -f "$running_script")
     fi
 
-    _directory_push "$ACCESSED_RECENTLY_DIR" || return 1
+    _directory_push "$dir" || return 1
 
     # Remove any existing links pointing to the same script.
-    find "$ACCESSED_RECENTLY_DIR" -lname "$running_script" \
+    find "$dir" -lname "$running_script" \
         -exec rm -f -- {} +
 
     # Create a new symbolic link with a ".00" prefix.
     ln -s -- "$running_script" ".00 $(basename -- "$running_script")"
 
     _directory_pop || return 1
-}
 
-# FUNCTION: _recent_scripts_organize
-#
-# DESCRIPTION:
-# This function organizes the directory containing recently accessed
-# scripts ('$ACCESSED_RECENTLY_DIR'). This function manages symbolic links
-# in the directory by:
-# 1. Keeping only the '$ACCESSED_RECENTLY_LINKS_TO_KEEP' most recently
-#    accessed scripts.
-# 2. Renaming retained links with numeric prefixes (e.g., "01", "02") to
-#    maintain chronological order.
-_recent_scripts_organize() {
+    # Part 2: Organize links.
     local links=()
     local link=""
     while IFS= read -r -d $'\0' link; do
@@ -3976,7 +3967,7 @@ _recent_scripts_organize() {
         else
             links+=("$link")
         fi
-    done < <(find "$ACCESSED_RECENTLY_DIR" -maxdepth 1 -type l \
+    done < <(find "$dir" -maxdepth 1 -type l \
         -print0 2>/dev/null | sort --zero-terminated --numeric-sort)
 
     # Process the links, keeping only the '$ACCESSED_RECENTLY_LINKS_TO_KEEP'
@@ -3988,8 +3979,7 @@ _recent_scripts_organize() {
             # Rename the link with a numeric prefix for ordering.
             link_name=$(basename "$link" |
                 sed --regexp-extended 's|^.?[0-9]{2} ||')
-            mv -f -- "$link" \
-                "$ACCESSED_RECENTLY_DIR/$(printf '%02d' "$count") $link_name" \
+            mv -f -- "$link" "$dir/$(printf '%02d' "$count") $link_name" \
                 2>/dev/null
             ((count++))
         else
@@ -3999,13 +3989,13 @@ _recent_scripts_organize() {
     done
 }
 
-# If running from a supported file manager and the scripts directory is
-# writable, update the list of recently accessed scripts.
-if _is_file_manager_session && [[ -w $SCRIPT_DIR ]]; then
-    _recent_scripts_add && _recent_scripts_organize
-fi
-
 _i18n_initialize
 
 # Initialize Homebrew environment if available.
 _initialize_homebrew
+
+# If running from a supported file manager and the scripts directory is
+# writable, update the list of recently accessed scripts.
+if _is_file_manager_session && [[ -w $SCRIPT_DIR ]]; then
+    _recent_scripts_add
+fi

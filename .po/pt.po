@@ -604,10 +604,11 @@ msgstr "Selecione as opções (<ESPAÇO> para marcar, <ENTER> para confirmar):"
 msgid "User:"
 msgstr "Usuário:"
 
-# SECTION: Menu strings ----
 # Menu: Category
 msgid "Accessed recently"
 msgstr "Acessado recentemente"
+
+# SECTION: Menu strings ----
 
 # Menu: Category
 msgid "Archive"

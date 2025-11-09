@@ -604,10 +604,11 @@ msgstr ""
 msgid "User:"
 msgstr ""
 
-# SECTION: Menu strings ----
 # Menu: Category
 msgid "Accessed recently"
 msgstr ""
+
+# SECTION: Menu strings ----
 
 # Menu: Category
 msgid "Archive"
