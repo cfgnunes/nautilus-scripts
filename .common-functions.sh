@@ -1613,8 +1613,8 @@ _display_file_selection_box() {
 _display_error_box() {
     local message=$1
 
-    local ok_btn=""
-    ok_btn="OK"
+    local btn_ok=""
+    btn_ok="OK"
 
     _display_lock
     if ! _is_gui_session; then
@@ -1626,15 +1626,15 @@ _display_error_box() {
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" \
             --width="$GUI_INFO_WIDTH" --text="$message" \
-            --ok-label="${ok_btn}" --error &>/dev/null
+            --ok-label="${btn_ok}" --error &>/dev/null
     elif _command_exists "yad"; then
         yad --title "$(_get_script_name)" --center \
             --width="$GUI_INFO_WIDTH" --text="$message" \
-            --button="${ok_btn}:0" \
+            --button="${btn_ok}:0" \
             --image="dialog-error" &>/dev/null
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" \
-            -buttons "${ok_btn}:0" \
+            -buttons "${btn_ok}:0" \
             "Error: $message" &>/dev/null
     fi
     _display_unlock
@@ -1651,8 +1651,8 @@ _display_error_box() {
 _display_info_box() {
     local message=$1
 
-    local ok_btn=""
-    ok_btn="OK"
+    local btn_ok=""
+    btn_ok="OK"
 
     _display_lock
     if ! _is_gui_session; then
@@ -1664,15 +1664,15 @@ _display_info_box() {
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" \
             --width="$GUI_INFO_WIDTH" --text="$message" \
-            --ok-label="${ok_btn}" --info &>/dev/null
+            --ok-label="${btn_ok}" --info &>/dev/null
     elif _command_exists "yad"; then
         yad --title "$(_get_script_name)" --center \
             --width="$GUI_INFO_WIDTH" --text="$message" \
-            --button="${ok_btn}:0" \
+            --button="${btn_ok}:0" \
             --image="dialog-information" &>/dev/null
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" \
-            -buttons "${ok_btn}:0" \
+            -buttons "${btn_ok}:0" \
             "Info: $message" &>/dev/null
     fi
     _display_unlock
@@ -1729,10 +1729,10 @@ _display_checklist_box_simple() {
         par_type="--checklist"
     fi
 
-    local ok_btn=""
-    ok_btn="OK"
-    local cancel_btn=""
-    cancel_btn="Cancel"
+    local btn_ok=""
+    btn_ok="OK"
+    local btn_cancel=""
+    btn_cancel="Cancel"
 
     _display_lock
     if ! _is_gui_session; then
@@ -1743,7 +1743,7 @@ _display_checklist_box_simple() {
         selected_items=$(zenity --title "$(_get_script_name)" \
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --text="$header_label" \
-            --cancel-label="${cancel_btn}" --ok-label="${ok_btn}" \
+            --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
             --list "$par_type" \
             --separator="$FIELD_SEPARATOR" \
             --print-column "2" --column= --column="$column" \
@@ -1753,7 +1753,7 @@ _display_checklist_box_simple() {
         selected_items=$(yad --title "$(_get_script_name)" --center \
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --text="$header_label" \
-            --button="${cancel_btn}:1" --button="${ok_btn}:0" \
+            --button="${btn_cancel}:1" --button="${btn_ok}:0" \
             --list "$par_type" \
             --separator="$FIELD_SEPARATOR" \
             --print-column "2" --column= --column="$column" \
@@ -1827,12 +1827,8 @@ _display_list_box() {
     _display_lock
     if ! _is_gui_session; then
         _display_list_box_terminal "$message"
-    elif _command_exists "zenity"; then
-        _display_list_box_zenity_yad "zenity" "$message" "$par_columns" \
-            "$par_item_name" "$par_action" "$par_resolve_links" \
-            "$par_checkbox" "$par_checkbox_value"
-    elif _command_exists "yad"; then
-        _display_list_box_zenity_yad "yad" "$message" "$par_columns" \
+    elif _command_exists "zenity" || _command_exists "yad"; then
+        _display_list_box_zenity_yad "$message" "$par_columns" \
             "$par_item_name" "$par_action" "$par_resolve_links" \
             "$par_checkbox" "$par_checkbox_value"
     elif _command_exists "xmessage"; then
@@ -1856,14 +1852,13 @@ _display_list_box_terminal() {
 
 # FUNCTION: _display_list_box_zenity_yad
 _display_list_box_zenity_yad() {
-    local cmd_dialog=$1
-    local message=$2
-    local par_columns=$3
-    local par_item_name=$4
-    local par_action=$5
-    local par_resolve_links=$6
-    local par_checkbox=$7
-    local par_checkbox_value=$8
+    local message=$1
+    local par_columns=$2
+    local par_item_name=$3
+    local par_action=$4
+    local par_resolve_links=$5
+    local par_checkbox=$6
+    local par_checkbox_value=$7
 
     local columns_count=0
     local items_count=0
@@ -1938,6 +1933,11 @@ _display_list_box_zenity_yad() {
     arg_max=$(getconf "ARG_MAX")
     msg_size=$(printf "%s" "$message" | wc -c)
 
+    local btn_ok=""
+    btn_ok="OK"
+    local btn_cancel=""
+    btn_cancel="Cancel"
+
     if ((msg_size > arg_max - safet_margin)); then
         message=$(tr "$FIELD_SEPARATOR" "\n" <<<"$message")
 
@@ -1945,28 +1945,51 @@ _display_list_box_zenity_yad() {
         # arguments directly. This avoids the "Argument list too long"
         # error when '$message' is too large.
 
-        # shellcheck disable=SC2086
-        selected_items=$($cmd_dialog --title "$(_get_script_name)" --list \
-            --multiple --no-markup --separator="$FIELD_SEPARATOR" \
-            --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-            --print-column "$columns_count" --text "$header_label" \
-            $par_columns <<<"$message" 2>/dev/null) || _exit_script
+        if _command_exists "zenity"; then
+            # shellcheck disable=SC2086
+            selected_items=$(zenity --title "$(_get_script_name)" --list \
+                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
+                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+                --print-column "$columns_count" --text "$header_label" \
+                --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
+                $par_columns <<<"$message" 2>/dev/null) || _exit_script
+        else
+            # shellcheck disable=SC2086
+            selected_items=$(yad --title "$(_get_script_name)" --list \
+                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
+                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+                --print-column "$columns_count" --text "$header_label" \
+                --button="${btn_cancel}:1" --button="${btn_ok}:0" \
+                $par_columns <<<"$message" 2>/dev/null) || _exit_script
+        fi
+
     else
         # Default strategy for '--list'. Pass '$message' directly as
         # arguments. This strategy is very fast.
 
-        # shellcheck disable=SC2086
-        selected_items=$($cmd_dialog --title "$(_get_script_name)" --list \
-            --multiple --no-markup --separator="$FIELD_SEPARATOR" \
-            --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-            --print-column "$columns_count" --text "$header_label" \
-            $par_columns $message 2>/dev/null) || _exit_script
+        if _command_exists "zenity"; then
+            # shellcheck disable=SC2086
+            selected_items=$(zenity --title "$(_get_script_name)" --list \
+                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
+                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+                --print-column "$columns_count" --text "$header_label" \
+                --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
+                $par_columns $message 2>/dev/null) || _exit_script
+        else
+            # shellcheck disable=SC2086
+            selected_items=$(yad --title "$(_get_script_name)" --list \
+                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
+                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+                --print-column "$columns_count" --text "$header_label" \
+                --button="${btn_cancel}:1" --button="${btn_ok}:0" \
+                $par_columns $message 2>/dev/null) || _exit_script
+        fi
     fi
 
     # HACK: Workaround for YAD.
     # Its output appends an extra field separator at the end.
     # See: https://github.com/v1cont/yad/issues/307
-    if [[ "$cmd_dialog" == "yad" ]]; then
+    if ! _command_exists "zenity"; then
         selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
         selected_items=$(_str_collapse_char \
             "$selected_items" "$FIELD_SEPARATOR")
@@ -1990,8 +2013,8 @@ _display_list_box_xmessage() {
     local message=$1
     local par_columns=$2
 
-    local ok_btn=""
-    ok_btn="OK"
+    local btn_ok=""
+    btn_ok="OK"
 
     par_columns=$(sed "s|--column:||g" <<<"$par_columns")
     par_columns=$(tr "," "\t" <<<"$par_columns")
@@ -2000,7 +2023,7 @@ _display_list_box_xmessage() {
 
     printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
     xmessage -title "$(_get_script_name)" \
-        -buttons "${ok_btn}:0" \
+        -buttons "${btn_ok}:0" \
         -file "$TEMP_DATA_TEXT_BOX" \
         &>/dev/null || _exit_script
 }
@@ -2024,10 +2047,10 @@ _display_password_box() {
     local title=""
     title="Password"
 
-    local ok_btn=""
-    ok_btn="OK"
-    local cancel_btn=""
-    cancel_btn="Cancel"
+    local btn_ok=""
+    btn_ok="OK"
+    local btn_cancel=""
+    btn_cancel="Cancel"
 
     _display_lock
     # Ask the user for the password.
@@ -2038,12 +2061,12 @@ _display_password_box() {
     elif _command_exists "zenity"; then
         password=$(zenity --title="$title" \
             --width="$GUI_INFO_WIDTH" --text="$message" \
-            --cancel-label="${cancel_btn}" --ok-label="${ok_btn}" \
+            --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
             --entry --hide-text 2>/dev/null) || return 1
     elif _command_exists "yad"; then
         password=$(yad --title="$title" --center \
             --width="$GUI_INFO_WIDTH" --text="$message" \
-            --button="${cancel_btn}:1" --button="${ok_btn}:0" \
+            --button="${btn_cancel}:1" --button="${btn_ok}:0" \
             --entry --hide-text 2>/dev/null) || return 1
     fi
     _display_unlock
@@ -2093,10 +2116,10 @@ _display_question_box() {
     local message=$1
     local response=""
 
-    local yes_btn=""
-    yes_btn="Yes"
-    local no_btn=""
-    no_btn="No"
+    local btn_yes=""
+    btn_yes="Yes"
+    local btn_btn=""
+    btn_btn="No"
 
     _display_lock
     if ! _is_gui_session; then
@@ -2107,16 +2130,16 @@ _display_question_box() {
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" \
             --width="$GUI_INFO_WIDTH" --text="$message" \
-            --cancel-label="${no_btn}" --ok-label="${yes_btn}" \
+            --cancel-label="${btn_btn}" --ok-label="${btn_yes}" \
             --question &>/dev/null || return 1
     elif _command_exists "yad"; then
         yad --title "$(_get_script_name)" --center \
             --width="$GUI_INFO_WIDTH" --text="$message" \
-            --button="${no_btn}:1" --button="${yes_btn}:0" \
+            --button="${btn_btn}:1" --button="${btn_yes}:0" \
             --image="dialog-question" &>/dev/null || return 1
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" \
-            -buttons "${no_btn}:1,${yes_btn}:0" \
+            -buttons "${btn_btn}:1,${btn_yes}:0" \
             "$message" &>/dev/null || return 1
     fi
     _display_unlock
@@ -2142,10 +2165,10 @@ _display_text_box() {
         message="(Empty)"
     fi
 
-    local ok_btn=""
-    ok_btn="OK"
-    local cancel_btn=""
-    cancel_btn="Cancel"
+    local btn_ok=""
+    btn_ok="OK"
+    local btn_cancel=""
+    btn_cancel="Cancel"
 
     _display_lock
     if ! _is_gui_session; then
@@ -2154,20 +2177,20 @@ _display_text_box() {
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
         zenity --title "$(_get_script_name)" \
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-            --cancel-label="${cancel_btn}" --ok-label="${ok_btn}" \
+            --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
             --text-info --no-wrap \
             --filename="$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
     elif _command_exists "yad"; then
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
         yad --title "$(_get_script_name)" --center \
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-            --button="${cancel_btn}:1" --button="${ok_btn}:0" \
+            --button="${btn_cancel}:1" --button="${btn_ok}:0" \
             --text-info --no-wrap \
             --filename="$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
         xmessage -title "$(_get_script_name)" \
-            -buttons "${ok_btn}:0" \
+            -buttons "${btn_ok}:0" \
             -file "$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
     fi
     _display_unlock
@@ -2268,8 +2291,8 @@ _display_wait_box_message() {
             fi
         fi
 
-        local cancel_btn=""
-        cancel_btn="Cancel"
+        local btn_cancel=""
+        btn_cancel="Cancel"
 
         # Launch a background thread for Zenity 'wait box':
         #   - Waits for the specified delay.
@@ -2299,14 +2322,14 @@ _display_wait_box_message() {
             if _command_exists "zenity"; then
                 tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (zenity \
                     --title="$(_get_script_name)" \
-                    --width="$GUI_INFO_WIDTH" --cancel-label="${cancel_btn}" \
+                    --width="$GUI_INFO_WIDTH" --cancel-label="${btn_cancel}" \
                     --progress --auto-close --pulsate \
                     --text="$message" || _exit_script)
             else
                 tail -f -- "$TEMP_CONTROL_WAIT_BOX_FIFO" | (yad \
                     --title="$(_get_script_name)" --center \
                     --width="$GUI_INFO_WIDTH" \
-                    --progress --auto-close --button="${cancel_btn}:1" \
+                    --progress --auto-close --button="${btn_cancel}:1" \
                     --text="$message" || _exit_script)
             fi
             _display_unlock
