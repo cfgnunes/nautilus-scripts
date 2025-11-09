@@ -2118,8 +2118,8 @@ _display_question_box() {
 
     local btn_yes=""
     btn_yes="Yes"
-    local btn_btn=""
-    btn_btn="No"
+    local btn_no=""
+    btn_no="No"
 
     _display_lock
     if ! _is_gui_session; then
@@ -2130,16 +2130,16 @@ _display_question_box() {
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" \
             --width="$GUI_INFO_WIDTH" --text="$message" \
-            --cancel-label="${btn_btn}" --ok-label="${btn_yes}" \
+            --cancel-label="${btn_no}" --ok-label="${btn_yes}" \
             --question &>/dev/null || return 1
     elif _command_exists "yad"; then
         yad --title "$(_get_script_name)" --center \
             --width="$GUI_INFO_WIDTH" --text="$message" \
-            --button="${btn_btn}:1" --button="${btn_yes}:0" \
+            --button="${btn_no}:1" --button="${btn_yes}:0" \
             --image="dialog-question" &>/dev/null || return 1
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" \
-            -buttons "${btn_btn}:1,${btn_yes}:0" \
+            -buttons "${btn_no}:1,${btn_yes}:0" \
             "$message" &>/dev/null || return 1
     fi
     _display_unlock
