@@ -60,7 +60,7 @@ _save_file_from_clipboard() {
 
     if [[ -z "$supported_type" ]]; then
         local msg=""
-        msg="Unsupported clipboard type."
+        msg="$(_i18n 'Unsupported clipboard type.')"
         _display_error_box "$msg"
         _exit_script
     fi

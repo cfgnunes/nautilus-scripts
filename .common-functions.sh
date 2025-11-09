@@ -23,6 +23,7 @@ FIELD_SEPARATOR=$'\r'          # The main field separator.
 GUI_BOX_HEIGHT=550             # Height of the GUI dialog boxes.
 GUI_BOX_WIDTH=900              # Width of the GUI dialog boxes.
 GUI_INFO_WIDTH=400             # Width of the GUI small dialog boxes.
+I18N_DIR="$ROOT_DIR/.po"       # Directory containing PO files for translation.
 IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
 PREFIX_ERROR_LOG_FILE="Errors" # Basename of 'Error' log file.
 PREFIX_OUTPUT_DIR="Output"     # Basename of 'Output' directory.
@@ -65,6 +66,7 @@ readonly \
     GUI_BOX_HEIGHT \
     GUI_BOX_WIDTH \
     GUI_INFO_WIDTH \
+    I18N_DIR \
     IGNORE_FIND_PATH \
     PKG_MANAGER_PRIORITY \
     PREFIX_ERROR_LOG_FILE \
@@ -94,6 +96,10 @@ INPUT_FILES=$*
 # Variable used to share data between specific parallel task functions
 # (e.g., passwords, configuration values).
 TEMP_DATA_TASK=""
+
+# Associative array that stores translation key-value pairs loaded
+# from PO files during i18n initialization by '_i18n_initialize'.
+declare -A I18N_DATA=()
 
 # -----------------------------------------------------------------------------
 # SECTION: Build the structure of the '$TEMP_DIR' ----
@@ -312,7 +318,7 @@ _logs_consolidate() {
     local log_file=""
     log_file=$(_str_human_readable_path "$log_file_output")
     local msg=""
-    msg="Finished with errors! See the log:"
+    msg="$(_i18n 'Finished with errors! See the log:')"
     _display_error_box "$msg $log_file"
 
     _exit_script
@@ -400,6 +406,7 @@ _run_function_parallel() {
         _make_temp_dir_local \
         _make_temp_file \
         _get_working_directory \
+        _i18n \
         _is_directory_empty \
         _is_gui_session \
         _log_error \
@@ -479,7 +486,7 @@ _check_dependencies_clipboard() {
     "x11") dep_keys_final+="xclip" ;;
     *)
         local msg=""
-        msg="Your session type is not supported for clipboard operations."
+        msg="$(_i18n 'Your session type is not supported for clipboard operations.')"
         _display_error_box "$msg"
         _exit_script
         ;;
@@ -543,7 +550,7 @@ _check_dependencies() {
         # Abort if no package definition was found.
         if [[ "$definitions_found" == "false" ]]; then
             local msg=""
-            msg="Could not find package names to install:"
+            msg="$(_i18n 'Could not find package names to install dependency:')"
             _display_error_box "$msg $dep_key"
             _exit_script
         fi
@@ -692,11 +699,11 @@ _deps_install_missing_packages() {
     pkg_names=$(sed "s|^\([a-z-]*\):\(.*\)|- \2 (\1)|g" <<<"$pkg_names")
 
     local msg=""
-    msg+="The following packages are missing:"
+    msg+="$(_i18n 'The following packages are missing:')"
     msg+="\n"
     msg+="$pkg_names"
     msg+="\n\n"
-    msg+="Would you like to install them?"
+    msg+="$(_i18n 'Would you like to install them?')"
     if ! _display_question_box "$msg"; then
         _exit_script
     fi
@@ -754,7 +761,7 @@ _deps_install_packages() {
     fi
 
     local msg=""
-    msg="Installing the packages. Please, wait..."
+    msg="$(_i18n 'Installing the packages. Please, wait...')"
     _display_wait_box_message "$msg" "0"
 
     # Iterate over each detected package manager.
@@ -902,13 +909,13 @@ _deps_installation_check() {
         if [[ "$pkg_manager" == "rpm-ostree" ]] &&
             rpm-ostree status --json | jq -r ".deployments[0].packages[]" |
             grep -Fxq "$package"; then
-            msg="The package is installed, but you need to reboot to use it:"
+            msg="$(_i18n 'The package is installed, but you need to reboot to use it:')"
             _display_info_box "$msg $package"
             _exit_script
         fi
 
         # If the package could not be installed, show an error and exit.
-        msg="Could not install the package:"
+        msg="$(_i18n 'Could not install the package:')"
         _display_error_box "$msg $package ($pkg_manager)!"
         _exit_script
     done
@@ -1007,12 +1014,12 @@ _delete_items() {
     local items_count=""
     items_count=$(_get_items_count "$items")
 
-    msg+="This action will delete the selected items."
+    msg+="$(_i18n 'This action will delete the selected items.')"
     msg+="\n"
-    msg+="Total selected:"
+    msg+="$(_i18n 'Total selected:')"
     msg+=" $items_count"
     msg+="\n\n"
-    msg+="Would you like to continue?"
+    msg+="$(_i18n 'Would you like to continue?')"
 
     if ! _display_question_box "$msg"; then
         return
@@ -1039,11 +1046,11 @@ _delete_items() {
     done
 
     if [[ -n "$failed_items" ]]; then
-        msg="Some items could not be deleted."
+        msg="$(_i18n 'Some items could not be deleted.')"
         _log_error "$msg" "" "$failed_items" ""
         _logs_consolidate ""
     else
-        msg="All selected items were successfully deleted!"
+        msg="$(_i18n 'All items were successfully deleted!')"
         _display_info_box "$msg"
     fi
 }
@@ -1080,7 +1087,7 @@ _directory_push() {
 
     pushd "$directory" &>/dev/null || {
         local msg=""
-        msg="Could not access the directory:"
+        msg="$(_i18n 'Could not access the directory:')"
         _log_error "$msg $directory" "" "" ""
         return 1
     }
@@ -1614,7 +1621,7 @@ _display_error_box() {
     local message=$1
 
     local btn_ok=""
-    btn_ok="OK"
+    btn_ok="$(_i18n 'OK')"
 
     _display_lock
     if ! _is_gui_session; then
@@ -1652,7 +1659,7 @@ _display_info_box() {
     local message=$1
 
     local btn_ok=""
-    btn_ok="OK"
+    btn_ok="$(_i18n 'OK')"
 
     _display_lock
     if ! _is_gui_session; then
@@ -1730,9 +1737,9 @@ _display_checklist_box_simple() {
     fi
 
     local btn_ok=""
-    btn_ok="OK"
+    btn_ok="$(_i18n 'OK')"
     local btn_cancel=""
-    btn_cancel="Cancel"
+    btn_cancel="$(_i18n 'Cancel')"
 
     _display_lock
     if ! _is_gui_session; then
@@ -1821,6 +1828,9 @@ _display_list_box() {
     # Evaluate the values from the '$parameters' variable.
     eval "$parameters"
 
+    # Translate the label.
+    par_item_name="$(_i18n "$par_item_name")"
+
     _close_wait_box
     _logs_consolidate ""
 
@@ -1897,16 +1907,16 @@ _display_list_box_zenity_yad() {
         local msg=""
         case "$par_action" in
         "open_file")
-            msg="Select the ones to open:"
+            msg="$(_i18n 'Select the ones to open:')"
             ;;
         "open_location")
-            msg="Select the ones to open in the file manager:"
+            msg="$(_i18n 'Select the ones to open in the file manager:')"
             ;;
         "open_url")
-            msg="Select the ones to open in the web browser:"
+            msg="$(_i18n 'Select the ones to open in the web browser:')"
             ;;
         "delete_item")
-            msg="Select the ones to delete:"
+            msg="$(_i18n 'Select the ones to delete:')"
             ;;
         esac
         header_label="$items_count $par_item_name. $msg"
@@ -1934,9 +1944,9 @@ _display_list_box_zenity_yad() {
     msg_size=$(printf "%s" "$message" | wc -c)
 
     local btn_ok=""
-    btn_ok="OK"
+    btn_ok="$(_i18n 'OK')"
     local btn_cancel=""
-    btn_cancel="Cancel"
+    btn_cancel="$(_i18n 'Cancel')"
 
     if ((msg_size > arg_max - safet_margin)); then
         message=$(tr "$FIELD_SEPARATOR" "\n" <<<"$message")
@@ -2014,7 +2024,7 @@ _display_list_box_xmessage() {
     local par_columns=$2
 
     local btn_ok=""
-    btn_ok="OK"
+    btn_ok="$(_i18n 'OK')"
 
     par_columns=$(sed "s|--column:||g" <<<"$par_columns")
     par_columns=$(tr "," "\t" <<<"$par_columns")
@@ -2045,12 +2055,12 @@ _display_password_box() {
     local password=""
 
     local title=""
-    title="Password"
+    title="$(_i18n 'Password')"
 
     local btn_ok=""
-    btn_ok="OK"
+    btn_ok="$(_i18n 'OK')"
     local btn_cancel=""
-    btn_cancel="Cancel"
+    btn_cancel="$(_i18n 'Cancel')"
 
     _display_lock
     # Ask the user for the password.
@@ -2087,12 +2097,12 @@ _display_password_box_define() {
     local password=""
     local msg=""
 
-    msg="Type your password:"
+    msg="$(_i18n 'Type your password:')"
     password=$(_display_password_box "$msg") || return 1
 
     # Check if '$password' is not empty.
     if [[ -z "$password" ]]; then
-        msg="The password can not be empty!"
+        msg="$(_i18n 'The password can not be empty!')"
         _display_error_box "$msg"
         return 1
     fi
@@ -2117,9 +2127,9 @@ _display_question_box() {
     local response=""
 
     local btn_yes=""
-    btn_yes="Yes"
+    btn_yes="$(_i18n 'Yes')"
     local btn_no=""
-    btn_no="No"
+    btn_no="$(_i18n 'No')"
 
     _display_lock
     if ! _is_gui_session; then
@@ -2166,9 +2176,9 @@ _display_text_box() {
     fi
 
     local btn_ok=""
-    btn_ok="OK"
+    btn_ok="$(_i18n 'OK')"
     local btn_cancel=""
-    btn_cancel="Cancel"
+    btn_cancel="$(_i18n 'Cancel')"
 
     _display_lock
     if ! _is_gui_session; then
@@ -2223,14 +2233,14 @@ _display_result_box() {
         if [[ -d "$output_dir" ]]; then
             local dir_label=""
             dir_label=$(_str_human_readable_path "$output_dir")
-            msg="Finished! The output files are in:"
+            msg="$(_i18n 'Finished! The output files are in:')"
             _display_info_box "$msg $dir_label"
         else
-            msg="Finished, but there is nothing to do."
+            msg="$(_i18n 'Finished, but there is nothing to do.')"
             _display_info_box "$msg"
         fi
     else
-        msg="Finished!"
+        msg="$(_i18n 'Finished!')"
         _display_info_box "$msg"
     fi
 }
@@ -2247,7 +2257,7 @@ _display_result_box() {
 _display_wait_box() {
     local open_delay=${1:-"2"}
     local msg=""
-    msg="Running the task. Please, wait..."
+    msg="$(_i18n 'Running the task. Please, wait...')"
 
     _display_wait_box_message "$msg" "$open_delay"
 }
@@ -2292,7 +2302,7 @@ _display_wait_box_message() {
         fi
 
         local btn_cancel=""
-        btn_cancel="Cancel"
+        btn_cancel="$(_i18n 'Cancel')"
 
         # Launch a background thread for Zenity 'wait box':
         #   - Waits for the specified delay.
@@ -2627,7 +2637,7 @@ _xdg_get_default_app() {
         if [[ "$quiet" == "true" ]]; then
             return 1
         fi
-        msg="No default application set for MIME type:"
+        msg="$(_i18n 'No default application set for MIME type:')"
         _display_error_box "$msg '$mime'!"
         _exit_script
     fi
@@ -2664,7 +2674,7 @@ _xdg_get_default_app() {
         if [[ "$quiet" == "true" ]]; then
             return 1
         fi
-        msg="Could not find the executable to open MIME type:"
+        msg="$(_i18n 'Could not find the executable to open MIME type:')"
         _display_error_box "$msg '$mime'!"
         _exit_script
     fi
@@ -2938,11 +2948,11 @@ _get_files() {
         # (Argument list too long)".
 
         local msg=""
-        msg+="Batch mode detected."
+        msg+="$(_i18n 'Batch mode detected.')"
         msg+=" "
-        msg+="Each file inside this directory will be processed individually."
+        msg+="$(_i18n 'Each file inside this directory will be processed individually.')"
         msg+="\n\n"
-        msg+="Would you like to continue?"
+        msg+="$(_i18n 'Would you like to continue?')"
         if ! _display_question_box "$msg"; then
             _exit_script
         fi
@@ -3135,6 +3145,9 @@ _validate_files_count() {
     "all") valid_file_label="files or directories" ;;
     esac
 
+    # Translate the label.
+    valid_file_label="$(_i18n "$valid_file_label")"
+
     # Count the number of valid files.
     local valid_items_count=0
     valid_items_count=$(_get_items_count "$input_files")
@@ -3148,14 +3161,14 @@ _validate_files_count() {
     # Check if there is at least one valid file.
     if ((valid_items_count == 0)); then
         if [[ -n "$par_select_extension" ]]; then
-            msg="You must select files with extension:"
+            msg="$(_i18n 'You must select files with extension:')"
             _display_error_box "$msg $extension_label!"
         else
             if [[ -n "$par_select_mime" ]] || [[ -z "$par_type" ]]; then
-                msg="Invalid input file!"
+                msg="$(_i18n 'Invalid input file!')"
                 _display_error_box "$msg"
             else
-                msg="You must select"
+                msg="$(_i18n 'You must select')"
                 _display_error_box "$msg $valid_file_label!"
             fi
         fi
@@ -3163,13 +3176,13 @@ _validate_files_count() {
     fi
 
     if [[ -n "$par_min_items" ]] && ((valid_items_count < par_min_items)); then
-        msg="You must select at least"
+        msg="$(_i18n 'You must select at least')"
         _display_error_box "$msg $par_min_items $valid_file_label!"
         _exit_script
     fi
 
     if [[ -n "$par_max_items" ]] && ((valid_items_count > par_max_items)); then
-        msg="You must select up to"
+        msg="$(_i18n 'You must select up to')"
         _display_error_box "$msg $par_max_items $valid_file_label!"
         _exit_script
     fi
@@ -3210,7 +3223,7 @@ _get_output_dir() {
     [[ ! -w "$output_dir" ]] && output_dir=${HOME:-/tmp}
     if [[ ! -w "$output_dir" ]]; then
         local msg=""
-        msg="Could not find a directory with write permissions!"
+        msg="$(_i18n 'Could not find a directory with write permissions!')"
         _display_error_box "$msg"
         _exit_script
     fi
@@ -3808,6 +3821,91 @@ _initialize_homebrew() {
 }
 
 # -----------------------------------------------------------------------------
+# SECTION: Translation and Internationalization (i18n) ----
+# -----------------------------------------------------------------------------
+
+# FUNCTION: _i18n_initialize
+#
+# DESCRIPTION:
+# This function initializes the internationalization (i18n) system by
+# determining the current language from the system and loading the
+# corresponding '.po' translation file into the '$I18N_DATA' array.
+_i18n_initialize() {
+    local lang_code=${LANG%%_*}
+    lang_code=${lang_code:-en}
+
+    local po_file=""
+    po_file="$I18N_DIR/$lang_code.po"
+
+    # Load translations.
+    if [[ -f "$po_file" ]]; then
+        _i18n_load_file "$po_file"
+    fi
+}
+
+# FUNCTION: _i18n_load_file
+#
+# DESCRIPTION:
+# This function reads a PO (Portable Object) file line by line,
+# extracting the translation strings and storing them in the
+# associative array '$I18N_DATA'. Stops reading when encountering
+# the "# SECTION: Menu" comment.
+#
+# PARAMETERS:
+#   $1 (po_file): Path to the .po file to be loaded.
+_i18n_load_file() {
+    local po_file=$1
+    local key=""
+    local val=""
+
+    # Read line-by-line (handles multi-line strings).
+    local line=""
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        case "$line" in
+        "# SECTION: Menu"*) break ;;
+        "msgid"*)
+            key="${line#msgid }"
+            key="${key%\"}"
+            key="${key#\"}"
+            ;;
+        "msgstr"*)
+            val="${line#msgstr }"
+            val="${val%\"}"
+            val="${val#\"}"
+            ;;
+        "")
+            # End of entry: store in associative array.
+            if [[ -n "$key" ]] && [[ -n "$val" ]]; then
+                I18N_DATA["$key"]="$val"
+                key=""
+                val=""
+            fi
+            ;;
+        esac
+    done <"$po_file"
+}
+
+# FUNCTION: _i18n
+#
+# DESCRIPTION:
+# This function returns the translated version of a given string using
+# the '$I18N_DATA' array loaded. If a translation is not available, it
+# returns the original string.
+#
+# PARAMETERS:
+#   $1 (msgid): The string to be translated.
+_i18n() {
+    local msgid=$1
+
+    # Try the loaded translation first.
+    if [[ -n "${I18N_DATA[$msgid]:-}" ]]; then
+        printf "%s" "${I18N_DATA[$msgid]}"
+    else
+        printf "%s" "$msgid"
+    fi
+}
+
+# -----------------------------------------------------------------------------
 # SECTION: Scripts recent history ----
 # -----------------------------------------------------------------------------
 
@@ -3902,6 +4000,8 @@ _recent_scripts_organize() {
 if _is_file_manager_session && [[ -w $SCRIPT_DIR ]]; then
     _recent_scripts_add && _recent_scripts_organize
 fi
+
+_i18n_initialize
 
 # Initialize Homebrew environment if available.
 _initialize_homebrew

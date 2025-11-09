@@ -15,9 +15,9 @@ _main() {
     input_files=$(_get_files "par_type=all")
 
     local msg=""
-    msg+="This action will rename the selected files and directories recursively."
+    msg+="$(_i18n 'This action will rename the selected files and directories recursively.')"
     msg+="\n\n"
-    msg+="Would you like to continue?"
+    msg+="$(_i18n 'Would you like to continue?')"
     if ! _display_question_box "$msg"; then
         _exit_script
     fi

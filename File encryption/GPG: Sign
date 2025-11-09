@@ -76,9 +76,9 @@ _get_user() {
     users=$(gpg --list-secret-keys --with-colons 2>/dev/null |
         grep --ignore-case "^uid" | cut -d ":" -f 10)
     if [[ -z "$users" ]]; then
-        msg+="No secret keys were found."
+        msg+="$(_i18n 'No secret keys were found.')"
         msg+="\n\n"
-        msg+="Would you like to import a key now?"
+        msg+="$(_i18n 'Would you like to import a key now?')"
         if ! _display_question_box "$msg"; then
             _exit_script
         fi
@@ -86,7 +86,7 @@ _get_user() {
         users=$(gpg --list-secret-keys --with-colons 2>/dev/null |
             grep --ignore-case "^uid" | cut -d ":" -f 10)
         if [[ -z "$users" ]]; then
-            msg="Failed to import the secret key!"
+            msg="$(_i18n 'Failed to import the secret key!')"
             _display_error_box "$msg"
             _exit_script
         fi
@@ -95,11 +95,11 @@ _get_user() {
     users=$(tr "\n" "$FIELD_SEPARATOR" <<<"$users")
     TEMP_DATA_TASK=$(_display_checklist_box_simple \
         "$users" \
-        "Select a user:" \
-        "User" "true" "true")
+        "$(_i18n 'Select a user:')" \
+        "$(_i18n 'User')" "true" "true")
 
     if [[ -z "$TEMP_DATA_TASK" ]]; then
-        msg="Failed: you must select a user!"
+        msg="$(_i18n 'Failed: you must select a user!')"
         _display_error_box "$msg"
         _exit_script
     fi

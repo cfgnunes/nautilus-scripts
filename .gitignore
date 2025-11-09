@@ -7,6 +7,9 @@
 # Output dirs.
 Output*/
 
+# Translation files.
+*.mo
+
 # Some scripts directories.
 Accessed recently/
 test*

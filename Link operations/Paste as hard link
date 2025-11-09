@@ -48,7 +48,7 @@ _get_uris() {
 
     if [[ -z "$uris" ]]; then
         local msg=""
-        msg="There are no valid paths in the clipboard!"
+        msg="$(_i18n 'There are no valid paths in the clipboard!')"
         _display_error_box "$msg"
         _exit_script
     fi

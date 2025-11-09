@@ -14,9 +14,9 @@ _main() {
     input_files=$(_get_files "par_type=directory; par_max_items=1")
 
     local msg=""
-    msg+="This action will move all files from subdirectories to the root of the selected directory."
+    msg+="$(_i18n 'This action will move all files from subdirectories to the root of the selected directory.')"
     msg+="\n\n"
-    msg+="Would you like to continue?"
+    msg+="$(_i18n 'Would you like to continue?')"
     if ! _display_question_box "$msg"; then
         _exit_script
     fi

@@ -112,8 +112,8 @@ _prepare_input() {
     fi
 
     if [[ -z "$urls" ]]; then
-        local msg=""
-        msg="There are no valid URLs in the clipboard or in the selected file(s)!"
+        local message=""
+        msg="$(_i18n 'There are no valid URLs in the clipboard or in the selected file(s)!')"
         _display_error_box "$msg"
         _exit_script
     fi

@@ -109,7 +109,7 @@ _prepare_input() {
 
     if [[ -z "$ips" ]]; then
         local msg=""
-        msg="There are no valid IPs in the selected file(s)!"
+        msg="$(_i18n 'There are no valid IPs in the selected file(s)!')"
         _display_error_box "$msg"
         _exit_script
     fi

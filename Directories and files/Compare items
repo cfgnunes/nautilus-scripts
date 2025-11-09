@@ -57,7 +57,7 @@ _compare() {
     "compare")
         # Use ImageMagick's compare tool for image files.
         if ((num_files_compare > 2)); then
-            msg="You must select only two images to compare!"
+            msg="$(_i18n 'You must select only two images to compare!')"
             _display_error_box "$msg"
             _exit_script
         fi
@@ -66,7 +66,7 @@ _compare() {
     "diffpdf")
         # Use 'diffpdf' for comparing PDF files.
         if ((num_files_compare > 2)); then
-            msg="You must select only two PDFs to compare!"
+            msg="$(_i18n 'You must select only two PDFs to compare!')"
             _display_error_box "$msg"
             _exit_script
         fi
@@ -83,7 +83,7 @@ _compare() {
     *",xxd")
         # Use a hex comparison tool for binary files.
         if ((num_files_compare > 2)); then
-            msg="You must select only two binary files to compare!"
+            msg="$(_i18n 'You must select only two binary files to compare!')"
             _display_error_box "$msg"
             _exit_script
         fi
@@ -175,7 +175,7 @@ _compare_identical() {
     # identical.
     if [[ -z "$file_3" ]]; then
         if [[ -z "$diff_1_2" ]]; then
-            msg="The two selected items are identical."
+            msg="$(_i18n 'The selected items are identical.')"
             _display_info_box "$msg"
             _exit_script
         fi
@@ -185,7 +185,7 @@ _compare_identical() {
 
         # Check if all three items are identical.
         if [[ -z "$diff_1_2" ]] && [[ -z "$diff_1_3" ]]; then
-            msg="The three selected items are identical."
+            msg="$(_i18n 'The selected items are identical.')"
             _display_info_box "$msg"
             _exit_script
         fi
@@ -221,7 +221,7 @@ _compare_images() {
     # Check if the two images have identical pixel values.
     if __cmd_magick_compare -metric AE -- "$file_1" "$file_2" null: &>/dev/null; then
         local msg=""
-        msg="The two selected images has same pixel values."
+        msg="$(_i18n 'The selected images has same pixel values.')"
         _display_info_box "$msg"
         _exit_script
     fi
