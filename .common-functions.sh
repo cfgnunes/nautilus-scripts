@@ -8,7 +8,7 @@
 # AUTHOR: Cristiano Fraga G. Nunes
 # REPOSITORY: https://github.com/cfgnunes/nautilus-scripts
 # LICENSE: MIT License
-# VERSION: 26.1.1
+# VERSION: 26.1.2
 # =============================================================================
 
 set -u
@@ -3863,4 +3863,5 @@ if _is_file_manager_session && [[ -w $SCRIPT_DIR ]]; then
     _recent_scripts_add && _recent_scripts_organize
 fi
 
+# Initialize Homebrew environment if available.
 _initialize_homebrew
