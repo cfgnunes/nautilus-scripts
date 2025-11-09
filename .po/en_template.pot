@@ -619,7 +619,7 @@ msgid "Audio and video"
 msgstr ""
 
 # Menu: Category
-msgid "Clipboard operations"
+msgid "Clipboard"
 msgstr ""
 
 # Menu: Category
@@ -631,11 +631,11 @@ msgid "Document"
 msgstr ""
 
 # Menu: Category
-msgid "File encryption"
+msgid "Encryption"
 msgstr ""
 
 # Menu: Category
-msgid "Hash and checksum"
+msgid "Checksum"
 msgstr ""
 
 # Menu: Category
@@ -1007,23 +1007,23 @@ msgid "Compute SHA512"
 msgstr ""
 
 # Menu: Script name
-msgid "Copy file content to clipboard"
+msgid "Copy file content"
 msgstr ""
 
 # Menu: Script name
-msgid "Copy filename to clipboard"
+msgid "Copy filename"
 msgstr ""
 
 # Menu: Script name
-msgid "Copy filename to clipboard (recursive)"
+msgid "Copy filename (recursive)"
 msgstr ""
 
 # Menu: Script name
-msgid "Copy filepath to clipboard"
+msgid "Copy filepath"
 msgstr ""
 
 # Menu: Script name
-msgid "Copy filepath to clipboard (recursive)"
+msgid "Copy filepath (recursive)"
 msgstr ""
 
 # Menu: Script name

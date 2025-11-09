@@ -557,40 +557,40 @@ _main() {
     __test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    ## SUBSECTION: Clipboard operations ----
+    ## SUBSECTION: Clipboard ----
     # -------------------------------------------------------------------------
 
-    #script_test="Clipboard operations/Copy file content to clipboard"
+    #script_test="Clipboard/Copy file content"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Clipboard operations/Copy filename to clipboard"
+    #script_test="Clipboard/Copy filename"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Clipboard operations/Copy filename to clipboard (recursive)"
+    #script_test="Clipboard/Copy filename (recursive)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Clipboard operations/Copy filepath to clipboard"
+    #script_test="Clipboard/Copy filepath"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Clipboard operations/Copy filepath to clipboard (recursive)"
+    #script_test="Clipboard/Copy filepath (recursive)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Clipboard operations/Paste clipboard as a file"
+    #script_test="Clipboard/Paste clipboard as a file"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
@@ -692,71 +692,71 @@ _main() {
     __test_file_nonempty "$std_output"
 
     # -------------------------------------------------------------------------
-    ## SUBSECTION: File encryption ----
+    ## SUBSECTION: Encryption ----
     # -------------------------------------------------------------------------
 
-    #script_test="File encryption/GPG: Decrypt"
+    #script_test="Encryption/GPG: Decrypt"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="File encryption/GPG: Encrypt with password"
+    #script_test="Encryption/GPG: Encrypt with password"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="File encryption/GPG: Encrypt with password (ASCII)"
+    #script_test="Encryption/GPG: Encrypt with password (ASCII)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="File encryption/GPG: Encrypt with public keys"
+    #script_test="Encryption/GPG: Encrypt with public keys"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="File encryption/GPG: Encrypt with public keys (ASCII)"
+    #script_test="Encryption/GPG: Encrypt with public keys (ASCII)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="File encryption/GPG: Import key"
+    #script_test="Encryption/GPG: Import key"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="File encryption/GPG: Sign"
+    #script_test="Encryption/GPG: Sign"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="File encryption/GPG: Sign (ASCII)"
+    #script_test="Encryption/GPG: Sign (ASCII)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="File encryption/GPG: Sign (detached signature)"
+    #script_test="Encryption/GPG: Sign (detached signature)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="File encryption/GPG: Verify signature"
+    #script_test="Encryption/GPG: Verify signature"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    ## SUBSECTION: Hash and checksum ----
+    ## SUBSECTION: Checksum ----
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
@@ -764,82 +764,82 @@ _main() {
     echo "Content of 'Test hash'." >"$input_file1"
     output_file=$input_file1
 
-    script_test="Hash and checksum/Compute all hashes"
+    script_test="Checksum/Compute all hashes"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file"
     __test_file_nonempty "$std_output"
 
-    script_test="Hash and checksum/Compute CRC32"
+    script_test="Checksum/Compute CRC32"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file"
     __test_file_nonempty "$std_output"
 
-    script_test="Hash and checksum/Compute MD5"
+    script_test="Checksum/Compute MD5"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file"
     __test_file_nonempty "$std_output"
 
-    script_test="Hash and checksum/Compute SHA1"
+    script_test="Checksum/Compute SHA1"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file"
     __test_file_nonempty "$std_output"
 
-    script_test="Hash and checksum/Compute SHA256"
+    script_test="Checksum/Compute SHA256"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file"
     __test_file_nonempty "$std_output"
 
-    script_test="Hash and checksum/Compute SHA512"
+    script_test="Checksum/Compute SHA512"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file"
     __test_file_nonempty "$std_output"
 
-    script_test="Hash and checksum/Generate MD5 checksum file"
+    script_test="Checksum/Generate MD5 checksum file"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.md5"
     __test_file_empty "$std_output"
 
-    script_test="Hash and checksum/Generate SHA1 checksum file"
+    script_test="Checksum/Generate SHA1 checksum file"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.sha1"
     __test_file_empty "$std_output"
 
-    script_test="Hash and checksum/Generate SHA256 checksum file"
+    script_test="Checksum/Generate SHA256 checksum file"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.sha256"
     __test_file_empty "$std_output"
 
-    script_test="Hash and checksum/Generate SHA512 checksum file"
+    script_test="Checksum/Generate SHA512 checksum file"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.sha512"
     __test_file_empty "$std_output"
 
-    script_test="Hash and checksum/Verify MD5 checksum file"
+    script_test="Checksum/Verify MD5 checksum file"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$output_file.md5" >"$std_output"
     __test_file_nonempty "$output_file"
 
-    script_test="Hash and checksum/Verify SHA1 checksum file"
+    script_test="Checksum/Verify SHA1 checksum file"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$output_file.sha1" >"$std_output"
     __test_file_nonempty "$output_file"
 
-    script_test="Hash and checksum/Verify SHA256 checksum file"
+    script_test="Checksum/Verify SHA256 checksum file"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$output_file.sha256" >"$std_output"
     __test_file_nonempty "$output_file"
 
-    script_test="Hash and checksum/Verify SHA512 checksum file"
+    script_test="Checksum/Verify SHA512 checksum file"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$output_file.sha512" >"$std_output"
     __test_file_nonempty "$output_file"
