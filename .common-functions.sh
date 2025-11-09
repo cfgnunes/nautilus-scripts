@@ -1825,7 +1825,7 @@ _display_list_box_terminal() {
     local message=$1
 
     if [[ -z "$message" ]]; then
-        message="(Empty result)"
+        message="(Empty)"
         printf "%s\n" "$message" >&2
     else
         message=$(tr "$FIELD_SEPARATOR" " " <<<"$message")

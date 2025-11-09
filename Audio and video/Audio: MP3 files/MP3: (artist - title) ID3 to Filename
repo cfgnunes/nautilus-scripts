@@ -34,14 +34,6 @@ _main_task() {
     tag_artist=$(grep -m1 "^Performer:" <<<"$std_output" | cut -d ":" -f 2-)
     tag_title=$(grep -m1 "^Title:" <<<"$std_output" | cut -d ":" -f 2-)
 
-    # Check if the values are not empty.
-    if [[ -z "$tag_artist" ]]; then
-        tag_artist=" "
-    fi
-    if [[ -z "$tag_title" ]]; then
-        tag_title=" "
-    fi
-
     # Rename the file.
     local dir_file=""
     dir_file=$(_get_filename_dir "$input_file")
