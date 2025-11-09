@@ -3829,13 +3829,24 @@ _initialize_homebrew() {
 # determining the current language from the system and loading the
 # corresponding '.po' translation file into the '$I18N_DATA' array.
 _i18n_initialize() {
-    local lang_code=${LANG%%_*}
-    lang_code=${lang_code:-en}
+    # LANG not set: nothing to load
+    if [[ -z "${LANG:-}" ]]; then
+        return
+    fi
 
+    local lang_full="${LANG%%.*}"      # e.g. 'pt_BR.UTF-8' to 'pt_BR'.
+    local lang_base="${lang_full%%_*}" # e.g. 'pt_BR to' 'pt'.
     local po_file=""
-    po_file="$I18N_DIR/$lang_code.po"
 
-    # Load translations.
+    # Try full locale first (e.g. pt_BR.po).
+    po_file="$I18N_DIR/$lang_full.po"
+    if [[ -f "$po_file" ]]; then
+        _i18n_load_file "$po_file"
+        return
+    fi
+
+    # Fallback to base language (e.g. pt.po).
+    po_file="$I18N_DIR/$lang_base.po"
     if [[ -f "$po_file" ]]; then
         _i18n_load_file "$po_file"
     fi
