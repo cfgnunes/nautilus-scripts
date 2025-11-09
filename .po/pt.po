@@ -16,11 +16,29 @@ msgstr ""
 msgid "(Empty)"
 msgstr "(Vazio)"
 
+msgid "Image files"
+msgstr "Arquivos de imagem"
+
+msgid "Key files"
+msgstr "Arquivos de chave"
+
+msgid "PDF files"
+msgstr "Arquivos PDF"
+
 msgid "All items were successfully deleted!"
 msgstr "Todos os itens foram excluídos com sucesso!"
 
 msgid "Batch mode detected."
 msgstr "Modo em lote detectado."
+
+msgid "Choose a key file to import."
+msgstr "Escolha uma chave para importar."
+
+msgid "Choose an image to use as the watermark"
+msgstr "Escolha uma imagem para usar como marca d'água."
+
+msgid "Choose an PDF to use as the watermark"
+msgstr "Escolha um PDF para usar como marca d'água."
 
 msgid "Command failed with a non-zero exit code."
 msgstr "O comando falhou com um código de saída diferente de zero."

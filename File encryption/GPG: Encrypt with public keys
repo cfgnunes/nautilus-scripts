@@ -58,8 +58,8 @@ _import_key() {
     local key_id=""
 
     input_file=$(_display_file_selection_box \
-        "Key files | *.asc *.gpg *.pgp" \
-        "Choose a key file to import.")
+        "$(_i18n 'Key files') | *.asc *.gpg *.pgp" \
+        "$(_i18n 'Choose a key file to import.')")
 
     if [[ -z "$input_file" ]]; then
         _exit_script

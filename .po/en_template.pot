@@ -16,10 +16,28 @@ msgstr ""
 msgid "(Empty)"
 msgstr ""
 
+msgid "Image files"
+msgstr ""
+
+msgid "Key files"
+msgstr ""
+
+msgid "PDF files"
+msgstr ""
+
 msgid "All items were successfully deleted!"
 msgstr ""
 
 msgid "Batch mode detected."
+msgstr ""
+
+msgid "Choose a key file to import."
+msgstr ""
+
+msgid "Choose an image to use as the watermark"
+msgstr ""
+
+msgid "Choose an PDF to use as the watermark"
 msgstr ""
 
 msgid "Command failed with a non-zero exit code."
