@@ -137,7 +137,7 @@ _main() {
         "$(_i18n 'Install basic dependencies (may require sudo)')"
         "$(_i18n 'Remove previously installed scripts')"
         "$(_i18n 'Install keyboard accelerators')"
-        "$(_i18n 'Close the file manager to reload its configurations')"
+        "$(_i18n 'Close the file manager to reload configurations')"
         "$(_i18n 'Add shortcuts to the application menu')"
         "$(_i18n 'Install for all users (may require sudo)')"
         "$(_i18n 'Install Homebrew (optional)')"
@@ -704,6 +704,32 @@ _step_install_scripts() {
     $SUDO_CMD chown -R "$INSTALL_OWNER:$INSTALL_GROUP" -- "$INSTALL_DIR"
     $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" -exec chmod +x -- {} +
+
+    # Translate: rename scripts (files).
+    local name=""
+    local new_name=""
+    local dir=""
+    local filename=""
+    while IFS= read -r -d $'\0' filename; do
+        name=$(basename -- "$filename")
+        dir=$(dirname -- "$filename")
+        new_name=$(_i18n "$name")
+        if [[ -n "$new_name" ]] && [[ "$name" != "$new_name" ]]; then
+            $SUDO_CMD mv -- "$dir/$name" "$dir/$new_name"
+        fi
+    done < <(_list_scripts)
+
+    # Translate: rename scripts (directories).
+    while IFS= read -r -d $'\0' filename; do
+        name=$(basename -- "$filename")
+        dir=$(dirname -- "$filename")
+        new_name=$(_i18n "$name")
+        if [[ -n "$new_name" ]] && [[ "$name" != "$new_name" ]]; then
+            $SUDO_CMD mv -- "$dir/$name" "$dir/$new_name"
+        fi
+    done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 1 -type d \
+        "${IGNORE_FIND_PATHS[@]}" \
+        -print0 2>/dev/null | sort --reverse --zero-terminated)
 }
 
 # -----------------------------------------------------------------------------
