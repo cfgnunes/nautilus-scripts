@@ -112,7 +112,9 @@ _prepare_input() {
     fi
 
     if [[ -z "$urls" ]]; then
-        _display_error_box "There are no valid Git URLs in the clipboard or in the selected file(s)!"
+        local msg=""
+        msg="There are no valid URLs in the clipboard or in the selected file(s)!"
+        _display_error_box "$msg"
         _exit_script
     fi
 

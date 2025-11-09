@@ -307,7 +307,9 @@ _logs_consolidate() {
 
     local log_file=""
     log_file=$(_str_human_readable_path "$log_file_output")
-    _display_error_box "Finished with errors! See the $log_file for details."
+    local msg=""
+    msg="Finished with errors! See the log:"
+    _display_error_box "$msg $log_file"
 
     _exit_script
 }
@@ -472,8 +474,9 @@ _check_dependencies_clipboard() {
     "wayland") dep_keys_final+="wl-paste" ;;
     "x11") dep_keys_final+="xclip" ;;
     *)
-        _display_error_box \
-            "Your session type is not supported for clipboard operations."
+        local msg=""
+        msg="Your session type is not supported for clipboard operations."
+        _display_error_box "$msg"
         _exit_script
         ;;
     esac
@@ -535,7 +538,9 @@ _check_dependencies() {
         done
         # Abort if no package definition was found.
         if [[ "$definitions_found" == "false" ]]; then
-            _display_error_box "Could not find package names to install dependency '$dep_key'!"
+            local msg=""
+            msg="Could not find package names to install dependency:"
+            _display_error_box "$msg $dep_key"
             _exit_script
         fi
 
@@ -682,11 +687,13 @@ _deps_install_missing_packages() {
     pkg_names=$(sed "s|~[^\n]*||g" <<<"$pkg_names")
     pkg_names=$(sed "s|^\([a-z-]*\):\(.*\)|- \2 (\1)|g" <<<"$pkg_names")
 
-    local message="The following packages are missing:"$'\n'
-    message+="$pkg_names"
-    message+=$'\n'$'\n'
-    message+="Would you like to install them?"
-    if ! _display_question_box "$message"; then
+    local msg=""
+    msg+="The following packages are missing:"
+    msg+="\n"
+    msg+="$pkg_names"
+    msg+="\n\n"
+    msg+="Would you like to install them?"
+    if ! _display_question_box "$msg"; then
         _exit_script
     fi
     _deps_install_packages "$packages_install" "$post_install"
@@ -868,6 +875,7 @@ _deps_install_packages() {
 #   $1 (pairs_check): A space-separated list of "<pkg_manager>:<package>".
 _deps_installation_check() {
     local pairs=$1
+    local msg=""
 
     # Replace spaces with '$FIELD_SEPARATOR' for iteration.
     pairs=$(tr " " "$FIELD_SEPARATOR" <<<"$pairs")
@@ -888,14 +896,14 @@ _deps_installation_check() {
         if [[ "$pkg_manager" == "rpm-ostree" ]] &&
             rpm-ostree status --json | jq -r ".deployments[0].packages[]" |
             grep -Fxq "$package"; then
-            _display_info_box \
-                "The package '$package' is installed but you need to reboot to use it!"
+            msg="The package is installed, but you need to reboot to use it:"
+            _display_info_box "$msg $package"
             _exit_script
         fi
 
         # If the package could not be installed, show an error and exit.
-        _display_error_box \
-            "Could not install the package '$package' using '$pkg_manager'!"
+        msg="Could not install the package:"
+        _display_error_box "$msg $package ($pkg_manager)!"
         _exit_script
     done
 }
@@ -988,13 +996,19 @@ _deps_is_package_installed() {
 # them to the trash (if supported) or by permanently deleting them.
 _delete_items() {
     local items=$1
-    local warning_message=""
+    local msg=""
+
     local items_count=""
     items_count=$(_get_items_count "$items")
-    warning_message="This action will delete the $items_count selected items."
-    warning_message="$warning_message\n\nWould you like to continue?"
 
-    if ! _display_question_box "$warning_message"; then
+    msg+="This action will delete the selected items."
+    msg+="\n"
+    msg+="Total selected:"
+    msg+=" $items_count"
+    msg+="\n\n"
+    msg+="Would you like to continue?"
+
+    if ! _display_question_box "$msg"; then
         return
     fi
 
@@ -1019,10 +1033,12 @@ _delete_items() {
     done
 
     if [[ -n "$failed_items" ]]; then
-        _log_error "Some items could not be deleted." "" "$failed_items" ""
+        msg="Some items could not be deleted."
+        _log_error "$msg" "" "$failed_items" ""
         _logs_consolidate ""
     else
-        _display_info_box "All selected items were successfully deleted!"
+        msg="All selected items were successfully deleted!"
+        _display_info_box "$msg"
     fi
 }
 
@@ -1036,10 +1052,7 @@ _delete_items() {
 #   "0" (true): If the directory was successfully popped and changed.
 #   "1" (false): If there was an error popping the directory.
 _directory_pop() {
-    popd &>/dev/null || {
-        _log_error "Could not pop a directory." "" "" ""
-        return 1
-    }
+    popd &>/dev/null || return 1
     return 0
 }
 
@@ -1060,7 +1073,9 @@ _directory_push() {
     local directory=$1
 
     pushd "$directory" &>/dev/null || {
-        _log_error "Could not push the directory '$directory'." "" "" ""
+        local msg=""
+        msg="Could not access the directory:"
+        _log_error "$msg $directory" "" "" ""
         return 1
     }
     return 0
@@ -1706,7 +1721,7 @@ _display_checklist_box_simple() {
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --text="$header_label" --list "$par_type" \
             --separator="$FIELD_SEPARATOR" \
-            --print-column "2" --column="Select" --column="$column" \
+            --print-column "2" --column= --column="$column" \
             $option_list 2>/dev/null) || _exit_script
     elif _command_exists "yad"; then
         # shellcheck disable=SC2086
@@ -1714,7 +1729,7 @@ _display_checklist_box_simple() {
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --text="$header_label" --list "$par_type" \
             --separator="$FIELD_SEPARATOR" \
-            --print-column "2" --column="Select" --column="$column" \
+            --print-column "2" --column= --column="$column" \
             $option_list 2>/dev/null) || _exit_script
 
         # HACK: Workaround for YAD.
@@ -1826,14 +1841,13 @@ _display_list_box_zenity_yad() {
     local columns_count=0
     local items_count=0
     local selected_items=""
-    local message_select=""
     local header_label=""
 
     # Transform to uppercase.
     par_checkbox_value=${par_checkbox_value^^}
 
     if [[ "$par_checkbox" == "true" ]]; then
-        par_columns="--column=Select$FIELD_SEPARATOR$par_columns"
+        par_columns="--column=$FIELD_SEPARATOR$par_columns"
         par_columns="--checklist$FIELD_SEPARATOR$par_columns"
     fi
 
@@ -1858,23 +1872,24 @@ _display_list_box_zenity_yad() {
                 <<<"$message")
         fi
 
+        local msg=""
         case "$par_action" in
         "open_file")
-            message_select="Select the ones to open:"
+            msg="Select the ones to open:"
             ;;
         "open_location")
-            message_select="Select the ones to open in the file manager:"
+            msg="Select the ones to open in the file manager:"
             ;;
         "open_url")
-            message_select="Select the ones to open in the web browser:"
+            msg="Select the ones to open in the web browser:"
             ;;
         "delete_item")
-            message_select="Select the ones to delete:"
+            msg="Select the ones to delete:"
             ;;
         esac
-        header_label="Total: $items_count $par_item_name. $message_select"
+        header_label="$items_count $par_item_name. $msg"
     else
-        header_label="No $par_item_name."
+        header_label="$items_count $par_item_name."
     fi
 
     if [[ -z "$message" ]]; then
@@ -1974,6 +1989,9 @@ _display_password_box() {
     local message=$1
     local password=""
 
+    local title=""
+    title="Password"
+
     _display_lock
     # Ask the user for the password.
     if ! _is_gui_session; then
@@ -1981,11 +1999,11 @@ _display_password_box() {
         read -r -s password </dev/tty
         echo >&2
     elif _command_exists "zenity"; then
-        password=$(zenity --title="Password" \
+        password=$(zenity --title="$title" \
             --width="$GUI_INFO_WIDTH" \
             --text="$message" --entry --hide-text 2>/dev/null) || return 1
     elif _command_exists "yad"; then
-        password=$(yad --title="Password" --center \
+        password=$(yad --title="$title" --center \
             --width="$GUI_INFO_WIDTH" \
             --text="$message" --entry --hide-text 2>/dev/null) || return 1
     fi
@@ -2004,14 +2022,16 @@ _display_password_box() {
 #   "0" (true): If the password is successfully obtained.
 #   "1" (false): If the user cancels the input or an error occurs.
 _display_password_box_define() {
-    local message="Type your password:"
     local password=""
+    local msg=""
 
-    password=$(_display_password_box "$message") || return 1
+    msg="Type your password:"
+    password=$(_display_password_box "$msg") || return 1
 
     # Check if '$password' is not empty.
     if [[ -z "$password" ]]; then
-        _display_error_box "The password can not be empty!"
+        msg="The password can not be empty!"
+        _display_error_box "$msg"
         return 1
     fi
 
@@ -2111,6 +2131,8 @@ _display_text_box() {
 #      expected to be.
 _display_result_box() {
     local output_dir=$1
+    local msg=""
+
     _close_wait_box
     _logs_consolidate "$output_dir"
 
@@ -2125,13 +2147,15 @@ _display_result_box() {
         if [[ -d "$output_dir" ]]; then
             local dir_label=""
             dir_label=$(_str_human_readable_path "$output_dir")
-            _display_info_box \
-                "Finished! The output files are in the $dir_label directory."
+            msg="Finished! The output files are in:"
+            _display_info_box "$msg $dir_label"
         else
-            _display_info_box "Finished, but there is nothing to do."
+            msg="Finished, but there is nothing to do."
+            _display_info_box "$msg"
         fi
     else
-        _display_info_box "Finished!"
+        msg="Finished!"
+        _display_info_box "$msg"
     fi
 }
 
@@ -2146,9 +2170,10 @@ _display_result_box() {
 #      is shown. Defaults to 2 seconds if not provided.
 _display_wait_box() {
     local open_delay=${1:-"2"}
-    local message="Running the task. Please, wait..."
+    local msg=""
+    msg="Running the task. Please, wait..."
 
-    _display_wait_box_message "$message" "$open_delay"
+    _display_wait_box_message "$msg" "$open_delay"
 }
 
 # FUNCTION: _display_wait_box_message
@@ -2515,6 +2540,7 @@ _xdg_get_default_app() {
     local desktop_file=""
     local desktop_path=""
     local default_app=""
+    local msg=""
 
     # Get '.desktop' file from xdg-mime.
     desktop_file=$(xdg-mime query default "$mime" 2>/dev/null)
@@ -2522,8 +2548,8 @@ _xdg_get_default_app() {
         if [[ "$quiet" == "true" ]]; then
             return 1
         fi
-        _display_error_box \
-            "No default application set for MIME type '$mime'!"
+        msg="No default application set for MIME type:"
+        _display_error_box "$msg '$mime'!"
         _exit_script
     fi
 
@@ -2559,8 +2585,8 @@ _xdg_get_default_app() {
         if [[ "$quiet" == "true" ]]; then
             return 1
         fi
-        _display_error_box \
-            "Could not find the executable to open MIME type '$mime'!"
+        msg="Could not find the executable to open MIME type:"
+        _display_error_box "$msg '$mime'!"
         _exit_script
     fi
 
@@ -2832,11 +2858,13 @@ _get_files() {
         # start application: Failed to execute child process "/bin/sh"
         # (Argument list too long)".
 
-        local batch_message=""
-        batch_message+="Batch mode detected: Each file inside this"
-        batch_message+=" directory will be processed individually."
-        batch_message+="\n\nWould you like to continue?"
-        if ! _display_question_box "$batch_message"; then
+        local msg=""
+        msg+="Batch mode detected."
+        msg+=" "
+        msg+="Each file inside this directory will be processed individually."
+        msg+="\n\n"
+        msg+="Would you like to continue?"
+        if ! _display_question_box "$msg"; then
             _exit_script
         fi
         touch -- "$TEMP_CONTROL_BATCH_ENABLED"
@@ -3019,21 +3047,14 @@ _validate_files_count() {
     local par_min_items=$5
     local par_max_items=$6
     local par_recursive=$7
+    local msg=""
 
     # Define a label for a valid file.
-    local valid_file_label="valid files"
-    if [[ "$par_type" == "directory" ]]; then
-        valid_file_label="directories"
-    elif [[ -n "$par_select_mime" ]]; then
-        valid_file_label="$par_select_mime"
-        valid_file_label=$(sed "s|\|| or |g" <<<"$par_select_mime")
-        valid_file_label=$(sed "s|/$||g; s|/ | |g" <<<"$valid_file_label")
-        valid_file_label+=" files"
-    elif [[ "$par_type" == "file" ]]; then
-        valid_file_label="files"
-    elif [[ "$par_type" == "all" ]]; then
-        valid_file_label="files or directories"
-    fi
+    local valid_file_label="files"
+    case "$par_type" in
+    "directory") valid_file_label="directories" ;;
+    "all") valid_file_label="files or directories" ;;
+    esac
 
     # Count the number of valid files.
     local valid_items_count=0
@@ -3047,33 +3068,30 @@ _validate_files_count() {
 
     # Check if there is at least one valid file.
     if ((valid_items_count == 0)); then
-        if [[ "$par_recursive" == "true" ]]; then
-            if [[ -n "$par_select_extension" ]]; then
-                _display_error_box \
-                    "No files with extension: $extension_label were selected!"
-            else
-                _display_error_box "No $valid_file_label were selected!"
-            fi
+        if [[ -n "$par_select_extension" ]]; then
+            msg="You must select files with extension:"
+            _display_error_box "$msg $extension_label!"
         else
-            if [[ -n "$par_select_extension" ]]; then
-                _display_error_box \
-                    "You must select files with extension: $extension_label!"
+            if [[ -n "$par_select_mime" ]] || [[ -z "$par_type" ]]; then
+                msg="Invalid input file!"
+                _display_error_box "$msg"
             else
-                _display_error_box "You must select $valid_file_label!"
+                msg="You must select"
+            _display_error_box "$msg $valid_file_label!"
             fi
         fi
         _exit_script
     fi
 
     if [[ -n "$par_min_items" ]] && ((valid_items_count < par_min_items)); then
-        _display_error_box \
-            "You must select at least $par_min_items $valid_file_label!"
+        msg="You must select at least"
+        _display_error_box "$msg $par_min_items $valid_file_label!"
         _exit_script
     fi
 
     if [[ -n "$par_max_items" ]] && ((valid_items_count > par_max_items)); then
-        _display_error_box \
-            "You must select up to $par_max_items $valid_file_label!"
+        msg="You must select up to"
+        _display_error_box "$msg $par_max_items $valid_file_label!"
         _exit_script
     fi
 }
@@ -3112,7 +3130,9 @@ _get_output_dir() {
     output_dir=$(_get_working_directory)
     [[ ! -w "$output_dir" ]] && output_dir=${HOME:-/tmp}
     if [[ ! -w "$output_dir" ]]; then
-        _display_error_box "Could not find a directory with write permissions!"
+        local msg=""
+        msg="Could not find a directory with write permissions!"
+        _display_error_box "$msg"
         _exit_script
     fi
 
@@ -3838,5 +3858,4 @@ if _is_file_manager_session && [[ -w $SCRIPT_DIR ]]; then
     _recent_scripts_add && _recent_scripts_organize
 fi
 
-# Initialize Homebrew environment if available.
 _initialize_homebrew

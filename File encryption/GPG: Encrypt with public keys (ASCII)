@@ -80,19 +80,24 @@ _import_key() {
 }
 
 _get_users() {
+    local msg=""
+
     local users=""
     users=$(gpg --list-public-keys --with-colons 2>/dev/null |
         grep --ignore-case "^uid" | cut -d ":" -f 10)
     if [[ -z "$users" ]]; then
-        local message="No public keys were found.\n\nWould you like to import a key now?"
-        if ! _display_question_box "$message"; then
+        msg+="No public keys were found."
+        msg+="\n\n"
+        msg+="Would you like to import a key now?"
+        if ! _display_question_box "$msg"; then
             _exit_script
         fi
         _import_key
         users=$(gpg --list-public-keys --with-colons 2>/dev/null |
             grep --ignore-case "^uid" | cut -d ":" -f 10)
         if [[ -z "$users" ]]; then
-            _display_error_box "Failed to import the public key!"
+            msg="Failed to import the public key!"
+            _display_error_box "$msg"
             _exit_script
         fi
     fi
@@ -100,11 +105,12 @@ _get_users() {
     users=$(tr "\n" "$FIELD_SEPARATOR" <<<"$users")
     TEMP_DATA_TASK=$(_display_checklist_box_simple \
         "$users" \
-        "Select one or more users from the list below." \
+        "Select one or more users:" \
         "User" "false" "false")
 
     if [[ -z "$TEMP_DATA_TASK" ]]; then
-        _display_error_box "Failed: you must select at least one user!"
+        msg="Failed: you must select at least one user!"
+        _display_error_box "$msg"
         _exit_script
     fi
 }

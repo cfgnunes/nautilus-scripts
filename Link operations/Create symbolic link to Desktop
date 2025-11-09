@@ -43,7 +43,9 @@ _get_desktop_dir() {
     fi
 
     if [[ ! -d "$desktop_dir" ]]; then
-        _display_error_box "Could not find the Desktop directory."
+        local msg=""
+        msg="Could not find the Desktop directory."
+        _display_error_box "$msg"
         _exit_script
     fi
 

@@ -14,7 +14,11 @@ _main() {
     _display_wait_box "2"
     input_files=$(_get_files "par_type=all")
 
-    if ! _display_question_box "This action will rename the selected\nfiles and directories recursively.\n\nWould you like to continue?"; then
+    local msg=""
+    msg+="This action will rename the selected files and directories recursively."
+    msg+="\n\n"
+    msg+="Would you like to continue?"
+    if ! _display_question_box "$msg"; then
         _exit_script
     fi
 

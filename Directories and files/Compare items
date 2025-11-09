@@ -26,6 +26,7 @@ _main() {
 _compare() {
     local input_files=$1      # Input files separated by '$FIELD_SEPARATOR'.
     local num_files_compare=2 # Default number of files to compare.
+    local msg=""
 
     local file_1="" # First file in the input.
     local file_2="" # Second file in the input.
@@ -56,7 +57,8 @@ _compare() {
     "compare")
         # Use ImageMagick's compare tool for image files.
         if ((num_files_compare > 2)); then
-            _display_error_box "You must select only two images to compare!"
+            msg="You must select only two images to compare!"
+            _display_error_box "$msg"
             _exit_script
         fi
         _compare_images "$file_1" "$file_2"
@@ -64,7 +66,8 @@ _compare() {
     "diffpdf")
         # Use 'diffpdf' for comparing PDF files.
         if ((num_files_compare > 2)); then
-            _display_error_box "You must select only two PDFs to compare!"
+            msg="You must select only two PDFs to compare!"
+            _display_error_box "$msg"
             _exit_script
         fi
         diffpdf -- "$file_1" "$file_2" &
@@ -80,7 +83,8 @@ _compare() {
     *",xxd")
         # Use a hex comparison tool for binary files.
         if ((num_files_compare > 2)); then
-            _display_error_box "You must select only two binary files to compare!"
+            msg="You must select only two binary files to compare!"
+            _display_error_box "$msg"
             _exit_script
         fi
         _compare_hexa "$command" "$file_1" "$file_2" "$file_3"
@@ -158,6 +162,7 @@ _compare_identical() {
     local file_1=$1
     local file_2=$2
     local file_3=$3
+    local msg=""
 
     # Variables to store the results of the comparisons.
     local diff_1_2=""
@@ -170,7 +175,8 @@ _compare_identical() {
     # identical.
     if [[ -z "$file_3" ]]; then
         if [[ -z "$diff_1_2" ]]; then
-            _display_info_box "The two selected items are identical."
+            msg="The two selected items are identical."
+            _display_info_box "$msg"
             _exit_script
         fi
     else
@@ -179,7 +185,8 @@ _compare_identical() {
 
         # Check if all three items are identical.
         if [[ -z "$diff_1_2" ]] && [[ -z "$diff_1_3" ]]; then
-            _display_info_box "The three selected items are identical."
+            msg="The three selected items are identical."
+            _display_info_box "$msg"
             _exit_script
         fi
     fi
@@ -213,7 +220,9 @@ _compare_images() {
 
     # Check if the two images have identical pixel values.
     if __cmd_magick_compare -metric AE -- "$file_1" "$file_2" null: &>/dev/null; then
-        _display_info_box "The two selected images has same pixel values."
+        local msg=""
+        msg="The two selected images has same pixel values."
+        _display_info_box "$msg"
         _exit_script
     fi
 

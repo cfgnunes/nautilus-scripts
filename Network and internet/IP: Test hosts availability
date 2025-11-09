@@ -123,7 +123,9 @@ _prepare_input() {
     ips=$(_extract_ips "$file_data")
 
     if [[ -z "$ips" ]]; then
-        _display_error_box "There are no valid IPs in the selected file(s)!"
+        local msg=""
+        msg="There are no valid IPs in the selected file(s)!"
+        _display_error_box "$msg"
         _exit_script
     fi
 

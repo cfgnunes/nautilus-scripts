@@ -100,7 +100,9 @@ _prepare_input() {
     urls=$(_extract_urls "$file_data")
 
     if [[ -z "$urls" ]]; then
-        _display_error_box "There are no valid URLs in the selected file(s)!"
+        local msg=""
+        msg="There are no valid URLs in the selected file(s)!"
+        _display_error_box "$msg"
         _exit_script
     fi
 
