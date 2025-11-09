@@ -493,8 +493,8 @@ msgid "Choose which script categories to install"
 msgstr "Escolher categorias de scripts para instalar"
 
 # Installer
-msgid "Close the file manager to reload its configurations"
-msgstr "Fechar o gerenciador de arquivos para recarregar suas configurações"
+msgid "Close the file manager to reload configurations"
+msgstr "Fechar o gerenciador de arquivos para recarregar configurações"
 
 # Installer
 msgid "Closing the file manager..."
@@ -566,7 +566,7 @@ msgstr "Instalando em modo não interativo..."
 
 # Installer
 msgid "Installing keyboard accelerators..."
-msgstr "Instalando aceleradores de teclado..."
+msgstr "Instalando teclas de atalho..."
 
 # Installer
 msgid "Installing new scripts:"
@@ -582,7 +582,7 @@ msgstr "Instalando ações do gerenciador de arquivos..."
 
 # Installer
 msgid "Remove previously installed scripts"
-msgstr "Remover scripts instalados anteriormente"
+msgstr "Remover scripts instalados previamente"
 
 # Installer
 msgid "Removing application menu shortcuts..."
@@ -590,7 +590,7 @@ msgstr "Removendo atalhos do menu de aplicativos..."
 
 # Installer
 msgid "Removing previously installed scripts..."
-msgstr "Removendo scripts instalados anteriormente..."
+msgstr "Removendo scripts instalados previamente..."
 
 # Installer
 msgid "Select the categories (<SPACE> to check, <ENTER> to confirm):"
@@ -611,7 +611,7 @@ msgstr "Acessado recentemente"
 
 # Menu: Category
 msgid "Archive"
-msgstr "Arquivo"
+msgstr "Arquivamento"
 
 # Menu: Category
 msgid "Audio and video"
@@ -619,7 +619,7 @@ msgstr "Áudio e vídeo"
 
 # Menu: Category
 msgid "Clipboard operations"
-msgstr "Operações com área de transferência"
+msgstr "Área de transferência"
 
 # Menu: Category
 msgid "Directories and files"
@@ -631,11 +631,11 @@ msgstr "Documento"
 
 # Menu: Category
 msgid "File encryption"
-msgstr "Criptografia de arquivos"
+msgstr "Criptografia"
 
 # Menu: Category
 msgid "Hash and checksum"
-msgstr "Hash e soma de verificação"
+msgstr "Hash"
 
 # Menu: Category
 msgid "Image"
@@ -770,8 +770,8 @@ msgid "PDF: Optimize, Reduce"
 msgstr "PDF: Otimizar, Reduzir"
 
 # Menu: Subcategory
-msgid "PDF: Paper size"
-msgstr "PDF: Tamanho do papel"
+msgid "PDF: Page size"
+msgstr "PDF: Tamanho da página"
 
 # Menu: Subcategory
 msgid "PDF: Rotate"
@@ -1007,23 +1007,23 @@ msgstr "Calcular SHA512"
 
 # Menu: Script name
 msgid "Copy file content to clipboard"
-msgstr "Copiar conteúdo do arquivo para área de transferência"
+msgstr "Copiar conteúdo do arquivo"
 
 # Menu: Script name
 msgid "Copy filename to clipboard"
-msgstr "Copiar nome de arquivo para área de transferência"
+msgstr "Copiar nome do arquivo"
 
 # Menu: Script name
 msgid "Copy filename to clipboard (recursive)"
-msgstr "Copiar nome de arquivo para área de transferência (recursivo)"
+msgstr "Copiar nome do arquivo (recursivo)"
 
 # Menu: Script name
 msgid "Copy filepath to clipboard"
-msgstr "Copiar caminho do arquivo para área de transferência"
+msgstr "Copiar caminho do arquivo"
 
 # Menu: Script name
 msgid "Copy filepath to clipboard (recursive)"
-msgstr "Copiar caminho do arquivo para área de transferência (recursivo)"
+msgstr "Copiar caminho do arquivo (recursivo)"
 
 # Menu: Script name
 msgid "Create hard link here"
@@ -1686,24 +1686,24 @@ msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF: Otimizar para web (linearizar)"
 
 # Menu: Script name
-msgid "PDF: Paper size to A3"
-msgstr "PDF: Tamanho do papel para A3"
+msgid "PDF: Page size to A3"
+msgstr "PDF: Tamanho da página para A3"
 
 # Menu: Script name
-msgid "PDF: Paper size to A4"
-msgstr "PDF: Tamanho do papel para A4"
+msgid "PDF: Page size to A4"
+msgstr "PDF: Tamanho da página para A4"
 
 # Menu: Script name
-msgid "PDF: Paper size to A5"
-msgstr "PDF: Tamanho do papel para A5"
+msgid "PDF: Page size to A5"
+msgstr "PDF: Tamanho da página para A5"
 
 # Menu: Script name
-msgid "PDF: Paper size to US Legal"
-msgstr "PDF: Tamanho do papel para US Legal"
+msgid "PDF: Page size to US Legal"
+msgstr "PDF: Tamanho da página para US Legal"
 
 # Menu: Script name
-msgid "PDF: Paper size to US Letter"
-msgstr "PDF: Tamanho do papel para US Letter"
+msgid "PDF: Page size to US Letter"
+msgstr "PDF: Tamanho da página para US Letter"
 
 # Menu: Script name
 msgid "PDF: Perform OCR (English)"

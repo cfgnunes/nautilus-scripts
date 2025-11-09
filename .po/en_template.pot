@@ -493,7 +493,7 @@ msgid "Choose which script categories to install"
 msgstr ""
 
 # Installer
-msgid "Close the file manager to reload its configurations"
+msgid "Close the file manager to reload configurations"
 msgstr ""
 
 # Installer
@@ -770,7 +770,7 @@ msgid "PDF: Optimize, Reduce"
 msgstr ""
 
 # Menu: Subcategory
-msgid "PDF: Paper size"
+msgid "PDF: Page size"
 msgstr ""
 
 # Menu: Subcategory
@@ -1686,23 +1686,23 @@ msgid "PDF: Optimize for web (linearize)"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Paper size to A3"
+msgid "PDF: Page size to A3"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Paper size to A4"
+msgid "PDF: Page size to A4"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Paper size to A5"
+msgid "PDF: Page size to A5"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Paper size to US Legal"
+msgid "PDF: Page size to US Legal"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Paper size to US Letter"
+msgid "PDF: Page size to US Letter"
 msgstr ""
 
 # Menu: Script name
