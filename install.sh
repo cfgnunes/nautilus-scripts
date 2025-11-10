@@ -1309,6 +1309,7 @@ _step_install_homebrew() {
 _bootstrap_repository() {
     local repo_owner="cfgnunes"
     local repo_name="nautilus-scripts"
+    local branch="main"
 
     # Check if 'curl' or 'wget' is available.
     local downloader=""
@@ -1324,36 +1325,12 @@ _bootstrap_repository() {
     _echo_info "Downloading the installer package:"
 
     # Create a temporary directory for the installation.
-    local temp_dir=""
+    local temp_dir
     temp_dir=$(mktemp --directory)
 
-    _echo_info "> Checking for the latest release..."
-
-    # Retrieve the latest release tag from GitHub,
-    # (fallback to HEAD if unavailable).
-    local latest_tag=""
+    # Download and extract the HEAD of the branch.
+    local tarball_url="https://github.com/${repo_owner}/${repo_name}/archive/refs/heads/${branch}.tar.gz"
     {
-        local latest_url="https://api.github.com/repos/${repo_owner}/${repo_name}/releases/latest"
-        if [[ "$downloader" == "curl" ]]; then
-            latest_tag=$(curl -fsSL "$latest_url" |
-                grep -Po '"tag_name": "\K.*?(?=")')
-        else
-            latest_tag=$(wget -qO- "$latest_url" |
-                grep -Po '"tag_name": "\K.*?(?=")')
-        fi
-    } 2>/dev/null
-
-    # Validate extracted content.
-    if [[ -z "$latest_tag" ]]; then
-        _echo_error "Could not fetch latest release tag."
-        exit 1
-    fi
-
-    _echo_info "> Downloading ${repo_name} (${latest_tag})..."
-
-    # Download and extract using available tool.
-    {
-        local tarball_url="https://github.com/${repo_owner}/${repo_name}/archive/refs/tags/${latest_tag}.tar.gz"
         if [[ "$downloader" == "curl" ]]; then
             curl -fsSL "$tarball_url" | tar -xz -C "$temp_dir"
         else
@@ -1361,8 +1338,8 @@ _bootstrap_repository() {
         fi
     } 2>/dev/null
 
-    # Identify the extracted directory (matches nautilus-scripts-<version>).
-    local extracted_dir=""
+    # Identify the extracted directory (matches nautilus-scripts-*).
+    local extracted_dir
     extracted_dir=$(
         find "$temp_dir" -maxdepth 1 -type d -name "${repo_name}-*" | head -n 1
     )
