@@ -448,7 +448,7 @@ msgstr "Hora"
 
 # Column
 msgid "Title"
-msgstr "Titulo"
+msgstr "Título"
 
 # Column
 msgid "Type"
@@ -533,7 +533,7 @@ msgstr "Renombrar archivos"
 
 # Menu: Category
 msgid "Security and Recovery"
-msgstr ""
+msgstr "Seguridad y Recuperación"
 
 # Menu: Subcategory. This string must NOT contain the "%" character.
 msgid "Audio and Video: Tools"
@@ -1469,7 +1469,7 @@ msgstr "PDF: Agregar marca de agua (superpuesta)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "PDF: Add watermark (underlay)"
-msgstr "PDF: Agregar marca de agua (subpuesta)"
+msgstr "PDF: Agregar marca de agua (debajo)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "PDF: Combine multiple PDFs"
