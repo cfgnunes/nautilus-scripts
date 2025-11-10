@@ -1583,6 +1583,11 @@ _display_file_selection_box() {
     local multiple_flag=""
     local directory_flag=""
 
+    local btn_ok=""
+    btn_ok="$(_i18n 'OK')"
+    local btn_cancel=""
+    btn_cancel="$(_i18n 'Cancel')"
+
     # Exit early if not in a GUI session.
     _is_gui_session || return 0
 
@@ -1598,6 +1603,7 @@ _display_file_selection_box() {
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "yad"; then
         input_files=$(yad --title "$title" \
+            --button="${btn_cancel}:1" --button="${btn_ok}:0" \
             --file $multiple_flag $directory_flag \
             ${file_filter:+--file-filter="$file_filter"} \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
