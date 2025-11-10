@@ -1322,7 +1322,7 @@ _bootstrap_repository() {
         exit 1
     fi
 
-    _echo_info "Downloading the installer package:"
+    _echo_info "Downloading the installer package..."
 
     # Create a temporary directory for the installation.
     local temp_dir
@@ -1338,10 +1338,10 @@ _bootstrap_repository() {
         fi
     } 2>/dev/null
 
-    # Identify the extracted directory (matches nautilus-scripts-*).
+    # Identify the extracted directory.
     local extracted_dir
     extracted_dir=$(
-        find "$temp_dir" -maxdepth 1 -type d -name "${repo_name}-*" | head -n 1
+        find "$temp_dir" -maxdepth 1 -type d -name "${repo_name}*" | head -n 1
     )
 
     # Validate extracted content.
@@ -1351,7 +1351,7 @@ _bootstrap_repository() {
     fi
 
     # Run the installer from the extracted directory.
-    _echo_info "> Running installation from extracted files..."
+    _echo_info "Running installation from extracted files..."
     _echo ""
     cd "$extracted_dir" || exit 1
     bash install.sh "$@"
