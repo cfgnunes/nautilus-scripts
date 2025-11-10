@@ -189,7 +189,7 @@ _main() {
     # If requested, let the user select which categories to install.
     if [[ "$OPT_CHOOSE_CATEGORIES" == "true" ]]; then
         _echo ""
-        _echo "$(_i18n 'Select the categories (<SPACE> to check, <ENTER> to confirm):')"
+        _echo "$(_i18n 'Select the options (<SPACE> to check, <ENTER> to confirm):')"
         _multiselect_menu cat_selected cat_dirs cat_defaults
     fi
 

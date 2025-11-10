@@ -2105,10 +2105,6 @@ msgid "Removing previously installed scripts..."
 msgstr "Eliminando scripts instalados previamente..."
 
 # Installer
-msgid "Select the categories (<SPACE> to check, <ENTER> to confirm):"
-msgstr "Seleccione las categorías (<ESPACIO> para marcar, <ENTER> para confirmar):"
-
-# Installer
 msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
 msgstr "Seleccione las opciones (<ESPACIO> para marcar, <ENTER> para confirmar):"
 
