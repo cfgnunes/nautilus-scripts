@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enhanced File Manager Actions for Linux\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-09 01:00-0300\n"
+"POT-Creation-Date: 2025-11-10 00:28-0300\n"
 "PO-Revision-Date: 2025-11-07 22:05-0300\n"
 "Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
 "Language-Team: \n"
@@ -479,7 +479,6 @@ msgid "Accessed recently"
 msgstr ""
 
 # SECTION: Menu ----
-
 # Menu: Category
 msgid "Archive"
 msgstr ""
@@ -1993,7 +1992,6 @@ msgid "Video: Speed to 2.0"
 msgstr ""
 
 # SECTION: Installer ----
-
 # Installer
 msgid "Add shortcuts to the application menu"
 msgstr ""
@@ -2118,5 +2116,5 @@ msgstr ""
 msgid "User:"
 msgstr ""
 
-#~ msgid ""
-#~ msgstr ""
+#~ msgid "EOF"
+#~ msgstr "EOF"
