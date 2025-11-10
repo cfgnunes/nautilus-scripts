@@ -518,7 +518,7 @@ msgstr "Operações com links"
 
 # Menu: Category
 msgid "Network and Internet"
-msgstr "Rede e internet"
+msgstr "Rede e Internet"
 
 # Menu: Category
 msgid "Open with"
@@ -538,7 +538,7 @@ msgstr "Segurança e Recuperação"
 
 # Menu: Subcategory
 msgid "Audio and Video: Tools"
-msgstr "Áudio e vídeo: Ferramentas"
+msgstr "Áudio e Vídeo: Ferramentas"
 
 # Menu: Subcategory
 msgid "Audio: Channels"
@@ -1058,11 +1058,11 @@ msgstr "GPG: Criptografar com senha (ASCII)"
 
 # Menu: Script name
 msgid "GPG: Encrypt with keys"
-msgstr "GPG: Criptografar com chaves públicas"
+msgstr "GPG: Criptografar com chaves"
 
 # Menu: Script name
 msgid "GPG: Encrypt with keys (ASCII)"
-msgstr "GPG: Criptografar com chaves públicas (ASCII)"
+msgstr "GPG: Criptografar com chaves (ASCII)"
 
 # Menu: Script name
 msgid "GPG: Import key"
