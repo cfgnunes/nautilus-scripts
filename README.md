@@ -148,6 +148,13 @@ Many thanks to all of them for their excellent and creative script collections:
 - [Vault (by Maravento)](https://github.com/maravento/vault)
 - [Nautilus Scripts (by Bernhard Tittelbach)](https://github.com/btittelbach/nautilus-scripts)
 
+## Translation Credits
+
+Special thanks to everyone who contributed to the translation of this project:
+
+- 🇧🇷 **Nathália Medeiros** - Brazilian Portuguese (pt_BR): review.
+- 🇨🇳 **JoveYu** - Chinese (zh_CN): translation.
+
 ## Contributing
 
 If you spot a bug or want to improve the code or even improve the content, you can do the following:
