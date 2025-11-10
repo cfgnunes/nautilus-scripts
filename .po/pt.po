@@ -481,7 +481,7 @@ msgstr "Acessado recentemente"
 # SECTION: Menu ----
 # Menu: Category
 msgid "Archive"
-msgstr "Arquivamento"
+msgstr "Compressão"
 
 # Menu: Category
 msgid "Audio and Video"
@@ -489,7 +489,7 @@ msgstr "Áudio e Vídeo"
 
 # Menu: Category
 msgid "Clipboard"
-msgstr "Área de transferência"
+msgstr "Área de Transferência"
 
 # Menu: Category
 msgid "Directories and Files"
