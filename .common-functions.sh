@@ -3934,7 +3934,7 @@ _i18n() {
 _recent_scripts_add() {
     local running_script=$0
     local dir=""
-    dir="$ROOT_DIR/0 $(_i18n 'Accessed recently')"
+    dir="$ROOT_DIR/$(_i18n 'Accessed recently')"
 
     # Part 1: Add the link.
 
