@@ -764,7 +764,7 @@ _main() {
     echo "Content of 'Test hash'." >"$input_file1"
     output_file=$input_file1
 
-    script_test="Checksum/Compute all hashes"
+    script_test="Checksum/Compute all checksums"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file"

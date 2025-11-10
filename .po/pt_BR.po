@@ -853,7 +853,7 @@ msgid "Compress to .zip with password (each)"
 msgstr "Compactar para .zip com senha (cada)"
 
 # Menu: Script name
-msgid "Compute all hashes"
+msgid "Compute all checksums"
 msgstr "Calcular todos os hashes"
 
 # Menu: Script name

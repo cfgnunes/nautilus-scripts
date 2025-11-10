@@ -83,7 +83,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Shift>V` | Paste as symbolic link              |
 | `<Control><Shift>C` | Compare items                       |
 | `<Control><Shift>O` | Open item location                  |
-| `<Control><Shift>H` | Compute all hashes                  |
+| `<Control><Shift>H` | Compute all checksums               |
 | `<Control><Shift>E` | Find empty directories              |
 | `<Control><Shift>P` | Rename: Remove parentheses suffixes |
 | `<Control><Shift>G` | Git: Clone URLs                     |
