@@ -288,8 +288,8 @@ _main() {
         # Add shortcuts to the application menu.
         if [[ "$OPT_INSTALL_APP_SHORTCUTS" == "true" ]]; then
             _echo ""
-            _echo_info "Installing application menu shortcuts:"
-            _echo_info "> User: $INSTALL_OWNER"
+            _echo_info "$(_i18n 'Installing application menu shortcuts:')"
+            _echo_info "> $(_i18n 'User:') $INSTALL_OWNER"
 
             _step_install_application_shortcuts
             _step_create_gnome_application_folder
