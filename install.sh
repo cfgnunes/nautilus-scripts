@@ -97,6 +97,8 @@ if [[ -f "$SCRIPT_DIR/.common-functions.sh" ]]; then
     source "$ROOT_DIR/.common-functions.sh"
 fi
 
+IFS=$' \t\n'
+
 # -----------------------------------------------------------------------------
 # SECTION: Main flow ----
 # -----------------------------------------------------------------------------
@@ -575,7 +577,6 @@ _step_install_dependencies() {
         _command_exists "pgrep" || packages+="procps "
 
         # Package manager 'nix': no root required.
-        packages="${packages% }"
         if [[ -n "$packages" ]]; then
             local nix_packages=""
             local nix_channel="nixpkgs"
@@ -595,7 +596,6 @@ _step_install_dependencies() {
         _command_exists "pgrep" || packages+="procps "
 
         # Package manager 'guix': no root required.
-        packages="${packages% }"
         if [[ -n "$packages" ]]; then
             guix install $packages
         fi
@@ -603,7 +603,6 @@ _step_install_dependencies() {
         # Package manager 'apt-get': For Debian/Ubuntu systems.
         _command_exists "pgrep" || packages+="procps "
 
-        packages="${packages% }"
         if [[ -n "$packages" ]]; then
             $admin_cmd apt-get update
             $admin_cmd apt-get -y install $packages
@@ -612,7 +611,6 @@ _step_install_dependencies() {
         # Package manager 'rpm-ostree': For Fedora/RHEL atomic systems.
         _command_exists "pgrep" || packages+="procps-ng "
 
-        packages="${packages% }"
         if [[ -n "$packages" ]]; then
             $admin_cmd rpm-ostree install $packages
         fi
@@ -620,7 +618,6 @@ _step_install_dependencies() {
         # Package manager 'dnf': For Fedora/RHEL systems.
         _command_exists "pgrep" || packages+="procps-ng "
 
-        packages="${packages% }"
         if [[ -n "$packages" ]]; then
             $admin_cmd dnf check-update
             $admin_cmd dnf -y install $packages
@@ -634,7 +631,6 @@ _step_install_dependencies() {
             packages+="gtk4 zlib glib2 "
         fi
 
-        packages="${packages% }"
         if [[ -n "$packages" ]]; then
             $admin_cmd pacman -Syy
             $admin_cmd pacman --noconfirm -S $packages
@@ -643,13 +639,11 @@ _step_install_dependencies() {
         # Package manager 'zypper': For openSUSE systems.
         _command_exists "pgrep" || packages+="procps-ng "
 
-        packages="${packages% }"
         if [[ -n "$packages" ]]; then
             $admin_cmd zypper refresh
             $admin_cmd zypper --non-interactive install $packages
         fi
     else
-        packages="${packages% }"
         if [[ -n "$packages" ]]; then
             _echo_error "Could not find a package manager!"
             exit 1
