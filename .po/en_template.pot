@@ -2061,6 +2061,10 @@ msgid "Installation completed successfully!"
 msgstr ""
 
 # Installer
+msgid "Installing application menu shortcuts:"
+msgstr ""
+
+# Installer
 msgid "Installing basic dependencies:"
 msgstr ""
 

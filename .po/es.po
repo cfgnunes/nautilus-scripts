@@ -2057,6 +2057,10 @@ msgid "Install keyboard accelerators"
 msgstr "Instalar atajos de teclado"
 
 # Installer
+msgid "Installing application menu shortcuts:"
+msgstr "Instalando accesos directos en el menú de aplicaciones:"
+
+# Installer
 msgid "Installation completed successfully!"
 msgstr "¡Instalación completada con éxito!"
 

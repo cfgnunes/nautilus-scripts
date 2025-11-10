@@ -1994,7 +1994,7 @@ msgstr "Vídeo: Velocidade para 2.0"
 # SECTION: Installer ----
 # Installer
 msgid "Add shortcuts to the application menu"
-msgstr "Adicionar atalhos ao menu de aplicativos"
+msgstr "Adicionar atalhos no menu de aplicativos"
 
 # Installer
 msgid "All dependencies are already satisfied."
@@ -2059,6 +2059,10 @@ msgstr "Instalar teclas de atalho"
 # Installer
 msgid "Installation completed successfully!"
 msgstr "Instalação concluída com sucesso!"
+
+# Installer
+msgid "Installing application menu shortcuts:"
+msgstr "Instalando atalhos no menu de aplicativos:"
 
 # Installer
 msgid "Installing basic dependencies:"

@@ -2063,6 +2063,10 @@ msgid "Installation completed successfully!"
 msgstr "安装成功完成！"
 
 # Installer
+msgid "Installing application menu shortcuts:"
+msgstr "正在安装应用程序菜单快捷方式："
+
+# Installer
 msgid "Installing basic dependencies:"
 msgstr "正在安装基本依赖项："
 
