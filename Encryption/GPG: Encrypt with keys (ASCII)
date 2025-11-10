@@ -96,7 +96,7 @@ _get_users() {
         users=$(gpg --list-public-keys --with-colons 2>/dev/null |
             grep --ignore-case "^uid" | cut -d ":" -f 10)
         if [[ -z "$users" ]]; then
-            msg="$(_i18n 'Failed to import the public key!')"
+            msg="$(_i18n 'Failed to import the key!')"
             _display_error_box "$msg"
             _exit_script
         fi

@@ -52,9 +52,6 @@ msgstr "Não foi possível encontrar um diretório com permissão de escrita!"
 msgid "Could not find package names to install:"
 msgstr "Não foi possível encontrar nomes de pacotes para instalar:"
 
-msgid "Could not find the Desktop directory."
-msgstr "Não foi possível encontrar o diretório Desktop."
-
 msgid "Could not find the executable to open MIME type:"
 msgstr "Não foi possível encontrar o executável para abrir o tipo MIME:"
 
@@ -67,11 +64,8 @@ msgstr "Não foi possível retornar ao diretório anterior."
 msgid "Each file inside this directory will be processed individually."
 msgstr "Cada arquivo dentro deste diretório será processado individualmente."
 
-msgid "Failed to import the public key!"
-msgstr "Falha ao importar a chave pública!"
-
-msgid "Failed to import the secret key!"
-msgstr "Falha ao importar a chave secreta!"
+msgid "Failed to import the key!"
+msgstr "Falha ao importar a chave!"
 
 msgid "Failed: you must select a user!"
 msgstr "Falha: você deve selecionar um usuário!"
@@ -160,16 +154,16 @@ msgstr "As imagens selecionadas possuem os mesmos valores de pixel."
 msgid "The selected items are identical."
 msgstr "Os itens selecionados são idênticos."
 
-msgid "There are no valid IPs in the selected file(s)!"
+msgid "There are no valid IPs in the selected files!"
 msgstr "Não há IPs válidos nos arquivos selecionados!"
 
 msgid "There are no valid paths in the clipboard!"
 msgstr "Não há caminhos válidos na área de transferência!"
 
-msgid "There are no valid URLs in the clipboard or in the selected file(s)!"
+msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "Não há URLs válidas na área de transferência ou nos arquivos selecionados!"
 
-msgid "There are no valid URLs in the selected file(s)!"
+msgid "There are no valid URLs in the selected files!"
 msgstr "Não há URLs válidas nos arquivos selecionados!"
 
 msgid "This action will delete the selected items."
@@ -491,16 +485,16 @@ msgid "Archive"
 msgstr "Arquivamento"
 
 # Menu: Category
-msgid "Audio and video"
-msgstr "Áudio e vídeo"
+msgid "Audio and Video"
+msgstr "Áudio e Vídeo"
 
 # Menu: Category
 msgid "Clipboard"
 msgstr "Área de transferência"
 
 # Menu: Category
-msgid "Directories and files"
-msgstr "Diretórios e arquivos"
+msgid "Directories and Files"
+msgstr "Diretórios e Arquivos"
 
 # Menu: Category
 msgid "Document"
@@ -523,7 +517,7 @@ msgid "Link operations"
 msgstr "Operações com links"
 
 # Menu: Category
-msgid "Network and internet"
+msgid "Network and Internet"
 msgstr "Rede e internet"
 
 # Menu: Category
@@ -532,18 +526,18 @@ msgstr "Abrir com"
 
 # Menu: Category
 msgid "Plain text"
-msgstr "Texto plano"
+msgstr "Texto simples"
 
 # Menu: Category
 msgid "Rename files"
 msgstr "Renomear arquivos"
 
 # Menu: Category
-msgid "Security and recovery"
-msgstr "Segurança e recuperação"
+msgid "Security and Recovery"
+msgstr "Segurança e Recuperação"
 
 # Menu: Subcategory
-msgid "Audio and video: Tools"
+msgid "Audio and Video: Tools"
 msgstr "Áudio e vídeo: Ferramentas"
 
 # Menu: Subcategory
@@ -552,7 +546,7 @@ msgstr "Áudio: Canais"
 
 # Menu: Subcategory
 msgid "Audio: Convert"
-msgstr "Áudio: Conversão"
+msgstr "Áudio: Converter"
 
 # Menu: Subcategory
 msgid "Audio: Effects"
@@ -568,7 +562,7 @@ msgstr "Áudio: Qualidade"
 
 # Menu: Subcategory
 msgid "Document: Convert"
-msgstr "Documento: Conversão"
+msgstr "Documento: Converter"
 
 # Menu: Subcategory
 msgid "Document: Print"
@@ -584,7 +578,7 @@ msgstr "Imagem: Combinar, Dividir"
 
 # Menu: Subcategory
 msgid "Image: Convert"
-msgstr "Imagem: Conversão"
+msgstr "Imagem: Converter"
 
 # Menu: Subcategory
 msgid "Image: Crop, Resize"
@@ -671,8 +665,8 @@ msgid "PDF: Watermark"
 msgstr "PDF: Marca d'água"
 
 # Menu: Subcategory
-msgid "Text: Encodings"
-msgstr "Texto: Codificações"
+msgid "Text: Encoding"
+msgstr "Texto: Codificação"
 
 # Menu: Subcategory
 msgid "Text: Indentation"
@@ -680,7 +674,7 @@ msgstr "Texto: Indentação"
 
 # Menu: Subcategory
 msgid "Text: Line breaks"
-msgstr "Texto: Quebras de linha"
+msgstr "Texto: Fim de linha"
 
 # Menu: Subcategory
 msgid "Text: Statistics"
@@ -700,7 +694,7 @@ msgstr "Vídeo: Faixa de áudio"
 
 # Menu: Subcategory
 msgid "Video: Convert"
-msgstr "Vídeo: Conversão"
+msgstr "Vídeo: Converter"
 
 # Menu: Subcategory
 msgid "Video: Export frames"
@@ -719,8 +713,8 @@ msgid "Video: Resize"
 msgstr "Vídeo: Redimensionar"
 
 # Menu: Subcategory
-msgid "Video: Speed factor"
-msgstr "Vídeo: Fator de velocidade"
+msgid "Video: Speed"
+msgstr "Vídeo: Velocidade"
 
 # Menu: Script name
 msgid "Audio: Check quality"
@@ -731,8 +725,8 @@ msgid "Audio: Convert to FLAC"
 msgstr "Áudio: Converter para FLAC"
 
 # Menu: Script name
-msgid "Audio: Convert to MP3 (48 kbps, mono)"
-msgstr "Áudio: Converter para MP3 (48 kbps, mono)"
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "Áudio: Converter para MP3 (48 kbps)"
 
 # Menu: Script name
 msgid "Audio: Convert to MP3 (192 kbps)"
@@ -743,8 +737,8 @@ msgid "Audio: Convert to MP3 (320 kbps)"
 msgstr "Áudio: Converter para MP3 (320 kbps)"
 
 # Menu: Script name
-msgid "Audio: Convert to OGG (48 kbps, mono)"
-msgstr "Áudio: Converter para OGG (48 kbps, mono)"
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "Áudio: Converter para OGG (48 kbps)"
 
 # Menu: Script name
 msgid "Audio: Convert to OGG (192 kbps)"
@@ -755,8 +749,8 @@ msgid "Audio: Convert to OGG (320 kbps)"
 msgstr "Áudio: Converter para OGG (320 kbps)"
 
 # Menu: Script name
-msgid "Audio: Convert to OPUS (48 kbps, mono)"
-msgstr "Áudio: Converter para OPUS (48 kbps, mono)"
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "Áudio: Converter para OPUS (48 kbps)"
 
 # Menu: Script name
 msgid "Audio: Convert to OPUS (192 kbps)"
@@ -783,28 +777,28 @@ msgid "Audio: Mix channels to mono"
 msgstr "Áudio: Mesclar canais em mono"
 
 # Menu: Script name
-msgid "Audio: Mix two files (WAV output)"
-msgstr "Áudio: Mesclar dois arquivos (saída WAV)"
+msgid "Audio: Mix two files"
+msgstr "Áudio: Mesclar dois arquivos"
 
 # Menu: Script name
-msgid "Audio: Normalize"
-msgstr "Áudio: Normalizar"
+msgid "Audio: Volume normalize"
+msgstr "Áudio: Normalizar volume"
 
 # Menu: Script name
 msgid "Audio: Produce a spectrogram"
 msgstr "Áudio: Produzir espectrograma"
 
 # Menu: Script name
-msgid "Audio: Remove silent sections (-30 db)"
-msgstr "Áudio: Remover trechos silenciosos (-30 dB)"
+msgid "Audio: Remove silent sections"
+msgstr "Áudio: Remover trechos silenciosos"
 
 # Menu: Script name
-msgid "Audio: Silence noise (-30 db)"
-msgstr "Áudio: Silenciar ruído (-30 dB)"
+msgid "Audio: Silence noise"
+msgstr "Áudio: Silenciar ruído"
 
 # Menu: Script name
-msgid "Audio: Trim silence (-50 db)"
-msgstr "Áudio: Remover silêncio (-50 dB)"
+msgid "Audio: Trim silence"
+msgstr "Áudio: Remover silêncio"
 
 # Menu: Script name
 msgid "Code Editor"
@@ -988,11 +982,11 @@ msgstr "Extrair aqui"
 
 # Menu: Script name
 msgid "File carving (via Foremost)"
-msgstr "Recuperação de arquivos (via Foremost)"
+msgstr "Recuperar arquivos (via Foremost)"
 
 # Menu: Script name
 msgid "File carving (via PhotoRec)"
-msgstr "Recuperação de arquivos (via PhotoRec)"
+msgstr "Recuperar arquivos (via PhotoRec)"
 
 # Menu: Script name
 msgid "Find broken links"
@@ -1023,24 +1017,24 @@ msgid "Flatten directory structure"
 msgstr "Achatar estrutura de diretórios"
 
 # Menu: Script name
-msgid "Generate MD5 checksum file"
-msgstr "Gerar arquivo de checksum MD5"
+msgid "Generate MD5 file"
+msgstr "Gerar arquivo MD5"
 
 # Menu: Script name
-msgid "Generate SHA1 checksum file"
-msgstr "Gerar arquivo de checksum SHA1"
+msgid "Generate SHA1 file"
+msgstr "Gerar arquivo SHA1"
 
 # Menu: Script name
-msgid "Generate SHA256 checksum file"
-msgstr "Gerar arquivo de checksum SHA256"
+msgid "Generate SHA256 file"
+msgstr "Gerar arquivo SHA256"
 
 # Menu: Script name
-msgid "Generate SHA512 checksum file"
-msgstr "Gerar arquivo de checksum SHA512"
+msgid "Generate SHA512 file"
+msgstr "Gerar arquivo SHA512"
 
 # Menu: Script name
-msgid "Git: Clone URLs (clipboard, file)"
-msgstr "Git: Clonar URLs (área de transferência, arquivo)"
+msgid "Git: Clone URLs"
+msgstr "Git: Clonar URLs"
 
 # Menu: Script name
 msgid "Git: Open repository website"
@@ -1063,11 +1057,11 @@ msgid "GPG: Encrypt with password (ASCII)"
 msgstr "GPG: Criptografar com senha (ASCII)"
 
 # Menu: Script name
-msgid "GPG: Encrypt with public keys"
+msgid "GPG: Encrypt with keys"
 msgstr "GPG: Criptografar com chaves públicas"
 
 # Menu: Script name
-msgid "GPG: Encrypt with public keys (ASCII)"
+msgid "GPG: Encrypt with keys (ASCII)"
 msgstr "GPG: Criptografar com chaves públicas (ASCII)"
 
 # Menu: Script name
@@ -1092,31 +1086,31 @@ msgstr "GPG: Verificar assinatura"
 
 # Menu: Script name
 msgid "Image: Add watermark (center)"
-msgstr "Imagem: Adicionar marca d'água (centro)"
+msgstr "Imagem: Adic. marca d'água (centro)"
 
 # Menu: Script name
 msgid "Image: Add watermark (north)"
-msgstr "Imagem: Adicionar marca d'água (norte)"
+msgstr "Imagem: Adic. marca d'água (norte)"
 
 # Menu: Script name
 msgid "Image: Add watermark (northeast)"
-msgstr "Imagem: Adicionar marca d'água (nordeste)"
+msgstr "Imagem: Adic. marca d'água (nordeste)"
 
 # Menu: Script name
 msgid "Image: Add watermark (northwest)"
-msgstr "Imagem: Adicionar marca d'água (noroeste)"
+msgstr "Imagem: Adic. marca d'água (noroeste)"
 
 # Menu: Script name
 msgid "Image: Add watermark (south)"
-msgstr "Imagem: Adicionar marca d'água (sul)"
+msgstr "Imagem: Adic. marca d'água (sul)"
 
 # Menu: Script name
 msgid "Image: Add watermark (southeast)"
-msgstr "Imagem: Adicionar marca d'água (sudeste)"
+msgstr "Imagem: Adic. marca d'água (sudeste)"
 
 # Menu: Script name
 msgid "Image: Add watermark (southwest)"
-msgstr "Imagem: Adicionar marca d'água (sudoeste)"
+msgstr "Imagem: Adic. marca d'água (sudoeste)"
 
 # Menu: Script name
 msgid "Image: Automatic crop"
@@ -1136,43 +1130,43 @@ msgstr "Imagem: Fundo para alfa (15 pct)"
 
 # Menu: Script name
 msgid "Image: Color alpha to black"
-msgstr "Imagem: Alfa para preto"
+msgstr "Imagem: Cor alfa para preto"
 
 # Menu: Script name
 msgid "Image: Color alpha to magenta"
-msgstr "Imagem: Alfa para magenta"
+msgstr "Imagem: Cor alfa para magenta"
 
 # Menu: Script name
 msgid "Image: Color alpha to white"
-msgstr "Imagem: Alfa para branco"
+msgstr "Imagem: Cor alfa para branco"
 
 # Menu: Script name
 msgid "Image: Color black to alpha"
-msgstr "Imagem: Preto para alfa"
+msgstr "Imagem: Cor preta para alfa"
 
 # Menu: Script name
 msgid "Image: Color black to alpha (15 pct)"
-msgstr "Imagem: Preto para alfa (15 pct)"
+msgstr "Imagem: Cor preta para alfa (15 pct)"
 
 # Menu: Script name
 msgid "Image: Color magenta to alpha"
-msgstr "Imagem: Magenta para alfa"
+msgstr "Imagem: Cor magenta para alfa"
 
 # Menu: Script name
 msgid "Image: Color magenta to alpha (15 pct)"
-msgstr "Imagem: Magenta para alfa (15 pct)"
+msgstr "Imagem: Cor magenta para alfa (15 pct)"
 
 # Menu: Script name
 msgid "Image: Colorspace to gray"
-msgstr "Imagem: Converter espaço de cor para cinza"
+msgstr "Imagem: Espaço de cor para cinza"
 
 # Menu: Script name
 msgid "Image: Color white to alpha"
-msgstr "Imagem: Branco para alfa"
+msgstr "Imagem: Cor branca para alfa"
 
 # Menu: Script name
 msgid "Image: Color white to alpha (15 pct)"
-msgstr "Imagem: Branco para alfa (15 pct)"
+msgstr "Imagem: Cor branca para alfa (15 pct)"
 
 # Menu: Script name
 msgid "Image: Combine into a GIF"
@@ -1236,7 +1230,7 @@ msgstr "Imagem: Criar ícone PNG (512 px)"
 
 # Menu: Script name
 msgid "Image: Desaturate"
-msgstr "Imagem: Desaturar"
+msgstr "Imagem: Dessaturar"
 
 # Menu: Script name
 msgid "Image: Export to PDF"
@@ -1264,11 +1258,11 @@ msgstr "Imagem: Espelhar (horizontalmente)"
 
 # Menu: Script name
 msgid "Image: Flip (vertically)"
-msgstr "Imagem: Espelhar (vertical)"
+msgstr "Imagem: Espelhar (verticalmente)"
 
 # Menu: Script name
 msgid "Image: Generate multiple hues"
-msgstr "Imagem: Gerar múltiplos matizes"
+msgstr "Imagem: Gerar múltiplas matizes"
 
 # Menu: Script name
 msgid "Image: Optimize PNG"
@@ -1316,7 +1310,7 @@ msgstr "Imagem: Remover metadados"
 
 # Menu: Script name
 msgid "Image: Rename from metadata"
-msgstr "Imagem: Renomear a partir de metadados"
+msgstr "Imagem: Renomear pelos metadados"
 
 # Menu: Script name
 msgid "Image: Resize (25 pct)"
@@ -1332,35 +1326,35 @@ msgstr "Imagem: Redimensionar (75 pct)"
 
 # Menu: Script name
 msgid "Image: Resize and crop (512x512)"
-msgstr "Imagem: Redimensionar e cortar (512x512)"
+msgstr "Imagem: Redim. e cortar (512x512)"
 
 # Menu: Script name
 msgid "Image: Resize and crop (1080x1080)"
-msgstr "Imagem: Redimensionar e cortar (1080x1080)"
+msgstr "Imagem: Redim. e cortar (1080x1080)"
 
 # Menu: Script name
 msgid "Image: Resize and crop (1920x1080)"
-msgstr "Imagem: Redimensionar e cortar (1920x1080)"
+msgstr "Imagem: Redim. e cortar (1920x1080)"
 
 # Menu: Script name
 msgid "Image: Resize and crop (2560x1440)"
-msgstr "Imagem: Redimensionar e cortar (2560x1440)"
+msgstr "Imagem: Redim. e cortar (2560x1440)"
 
 # Menu: Script name
 msgid "Image: Resize and crop (3840x2160)"
-msgstr "Imagem: Redimensionar e cortar (3840x2160)"
+msgstr "Imagem: Redim. e cortar (3840x2160)"
 
 # Menu: Script name
 msgid "Image: Rotate (90 deg)"
-msgstr "Imagem: Rotacionar (90°)"
+msgstr "Imagem: Rotacionar (90 graus)"
 
 # Menu: Script name
 msgid "Image: Rotate (180 deg)"
-msgstr "Imagem: Rotacionar (180°)"
+msgstr "Imagem: Rotacionar (180 graus)"
 
 # Menu: Script name
 msgid "Image: Rotate (270 deg)"
-msgstr "Imagem: Rotacionar (270°)"
+msgstr "Imagem: Rotacionar (270 graus)"
 
 # Menu: Script name
 msgid "Image: Split into 2 (horizontally)"
@@ -1368,7 +1362,7 @@ msgstr "Imagem: Dividir em 2 (horizontalmente)"
 
 # Menu: Script name
 msgid "Image: Split into 2 (vertically)"
-msgstr "Imagem: Dividir em 2 (vertical)"
+msgstr "Imagem: Dividir em 2 (verticalmente)"
 
 # Menu: Script name
 msgid "Image: Split into 4"
@@ -1380,7 +1374,7 @@ msgstr "Imagem: Empilhar (horizontalmente)"
 
 # Menu: Script name
 msgid "Image: Stack (vertically)"
-msgstr "Imagem: Empilhar (vertical)"
+msgstr "Imagem: Empilhar (verticalmente)"
 
 # Menu: Script name
 msgid "IP: Ping hosts"
@@ -1436,15 +1430,15 @@ msgstr "MP3: (artista - título) Nome para ID3"
 
 # Menu: Script name
 msgid "MP3: (artist - title) ID3 to Filename"
-msgstr "MP3: (artista - título) ID3 para nome do arquivo"
+msgstr "MP3: (artista - título) ID3 para Nome"
 
 # Menu: Script name
-msgid "MP3: Maximize gain (recursive)"
-msgstr "MP3: Maximizar ganho (recursivo)"
+msgid "MP3: Volume maximize (recursive)"
+msgstr "MP3: Maximizar volume (recursivo)"
 
 # Menu: Script name
-msgid "MP3: Normalize gain (recursive)"
-msgstr "MP3: Normalizar ganho (recursivo)"
+msgid "MP3: Volume normalize (recursive)"
+msgstr "MP3: Normalizar volume (recursivo)"
 
 # Menu: Script name
 msgid "MP3: Repair (recursive)"
@@ -1467,20 +1461,20 @@ msgid "Paste as symbolic link"
 msgstr "Colar como link simbólico"
 
 # Menu: Script name
-msgid "Paste clipboard as a file"
-msgstr "Colar área de transferência como arquivo"
+msgid "Paste clipboard"
+msgstr "Colar área de transferência"
 
 # Menu: Script name
 msgid "PDF: Add watermark (overlay)"
-msgstr "PDF: Adicionar marca d'água (sobreposta)"
+msgstr "PDF: Adic. marca d'água (sobreposta)"
 
 # Menu: Script name
 msgid "PDF: Add watermark (underlay)"
-msgstr "PDF: Adicionar marca d'água (sobposta)"
+msgstr "PDF: Adic. marca d'água (sobposta)"
 
 # Menu: Script name
-msgid "PDF: Combine multiple files"
-msgstr "PDF: Combinar múltiplos arquivos"
+msgid "PDF: Combine multiple PDFs"
+msgstr "PDF: Combinar múltiplos PDFs"
 
 # Menu: Script name
 msgid "PDF: Convert to PDFA-2b"
@@ -1499,24 +1493,24 @@ msgid "PDF: Extract images"
 msgstr "PDF: Extrair imagens"
 
 # Menu: Script name
-msgid "PDF: Find annotated files"
-msgstr "PDF: Encontrar arquivos anotados"
+msgid "PDF: Find annotated PDFs"
+msgstr "PDF: Encontrar PDFs anotados"
 
 # Menu: Script name
-msgid "PDF: Find non-linearized files"
-msgstr "PDF: Encontrar arquivos não linearizados"
+msgid "PDF: Find non-linearized PDFs"
+msgstr "PDF: Encontrar PDFs não linearizados"
 
 # Menu: Script name
-msgid "PDF: Find non-searchable files"
-msgstr "PDF: Encontrar arquivos não pesquisáveis"
+msgid "PDF: Find non-searchable PDFs"
+msgstr "PDF: Encontrar PDFs não pesquisáveis"
 
 # Menu: Script name
-msgid "PDF: Find password-encrypted files"
-msgstr "PDF: Encontrar PDFs criptografados com senha"
+msgid "PDF: Find password-encrypted PDFs"
+msgstr "PDF: Encontrar PDFs com senha"
 
 # Menu: Script name
-msgid "PDF: Find signed files"
-msgstr "PDF: Encontrar arquivos assinados"
+msgid "PDF: Find signed PDFs"
+msgstr "PDF: Encontrar PDFs assinados"
 
 # Menu: Script name
 msgid "PDF: Layout (landscape, 1x2)"
@@ -1563,24 +1557,24 @@ msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF: Otimizar para web (linearizar)"
 
 # Menu: Script name
-msgid "PDF: Page size to A3"
-msgstr "PDF: Tamanho da página para A3"
+msgid "PDF: Set size (A3)"
+msgstr "PDF: Definir tamanho (A3)"
 
 # Menu: Script name
-msgid "PDF: Page size to A4"
-msgstr "PDF: Tamanho da página para A4"
+msgid "PDF: Set size (A4)"
+msgstr "PDF: Definir tamanho (A4)"
 
 # Menu: Script name
-msgid "PDF: Page size to A5"
-msgstr "PDF: Tamanho da página para A5"
+msgid "PDF: Set size (A5)"
+msgstr "PDF: Definir tamanho (A5)"
 
 # Menu: Script name
-msgid "PDF: Page size to US Legal"
-msgstr "PDF: Tamanho da página para US Legal"
+msgid "PDF: Set size (US Legal)"
+msgstr "PDF: Definir tamanho (US Legal)"
 
 # Menu: Script name
-msgid "PDF: Page size to US Letter"
-msgstr "PDF: Tamanho da página para US Letter"
+msgid "PDF: Set size (US Letter)"
+msgstr "PDF: Definir tamanho (US Letter)"
 
 # Menu: Script name
 msgid "PDF: Perform OCR (English)"
@@ -1628,27 +1622,27 @@ msgstr "PDF: Remover metadados"
 
 # Menu: Script name
 msgid "PDF: Rotate (90 deg)"
-msgstr "PDF: Rotacionar (90°)"
+msgstr "PDF: Rotacionar (90 graus)"
 
 # Menu: Script name
 msgid "PDF: Rotate (180 deg)"
-msgstr "PDF: Rotacionar (180°)"
+msgstr "PDF: Rotacionar (180 graus)"
 
 # Menu: Script name
 msgid "PDF: Rotate (270 deg)"
-msgstr "PDF: Rotacionar (270°)"
+msgstr "PDF: Rotacionar (270 graus)"
 
 # Menu: Script name
 msgid "PDF: Show signatures"
 msgstr "PDF: Mostrar assinaturas"
 
 # Menu: Script name
-msgid "PDF: Split into single-page files"
+msgid "PDF: Split into single-page PDFs"
 msgstr "PDF: Dividir em páginas individuais"
 
 # Menu: Script name
-msgid "Rename: Remove accents (translit.)"
-msgstr "Renomear: Remover acentos (translit.)"
+msgid "Rename: Remove accents"
+msgstr "Renomear: Remover acentos"
 
 # Menu: Script name
 msgid "Rename: Remove parentheses suffixes"
@@ -1656,15 +1650,15 @@ msgstr "Renomear: Remover sufixos entre parênteses"
 
 # Menu: Script name
 msgid "Rename: Replace gaps with dashes"
-msgstr "Renomear: Substituir lacunas por traços"
+msgstr "Renomear: Trocar lacunas por traços"
 
 # Menu: Script name
 msgid "Rename: Replace gaps with spaces"
-msgstr "Renomear: Substituir lacunas por espaços"
+msgstr "Renomear: Trocar lacunas por espaços"
 
 # Menu: Script name
 msgid "Rename: Replace gaps with underscores"
-msgstr "Renomear: Substituir lacunas por sublinhados"
+msgstr "Renomear: Trocar lacunas por sublinhados"
 
 # Menu: Script name
 msgid "Rename: To lowercase"
@@ -1676,11 +1670,11 @@ msgstr "Renomear: Para minúsculas (recursivo)"
 
 # Menu: Script name
 msgid "Rename: To sentence case"
-msgstr "Renomear: Para formato de frase"
+msgstr "Renomear: Para estilo de frase"
 
 # Menu: Script name
 msgid "Rename: To title case"
-msgstr "Renomear: Para formato de título"
+msgstr "Renomear: Para estilo de título"
 
 # Menu: Script name
 msgid "Rename: To uppercase"
@@ -1748,15 +1742,15 @@ msgstr "SVG: Exportar para PNG (1024 px)"
 
 # Menu: Script name
 msgid "SVG: Replace fonts to 'Charter'"
-msgstr "SVG: Substituir fontes por 'Charter'"
+msgstr "SVG: Trocar fontes por 'Charter'"
 
 # Menu: Script name
 msgid "SVG: Replace fonts to 'Helvetica'"
-msgstr "SVG: Substituir fontes por 'Helvetica'"
+msgstr "SVG: Trocar fontes por 'Helvetica'"
 
 # Menu: Script name
 msgid "SVG: Replace fonts to 'Times'"
-msgstr "SVG: Substituir fontes por 'Times'"
+msgstr "SVG: Trocar fontes por 'Times'"
 
 # Menu: Script name
 msgid "Terminal"
@@ -1783,12 +1777,12 @@ msgid "Text: Convert 'tabs' to '8 spaces'"
 msgstr "Texto: Converter 'tabs' para '8 espaços'"
 
 # Menu: Script name
-msgid "Text: Convert UTF-8 CRLF (recursive)"
-msgstr "Texto: Converter UTF-8 para CRLF (recursivo)"
+msgid "Text: Convert to UTF+CRLF (recursive)"
+msgstr "Texto: Converter para UTF+CRLF (recursivo)"
 
 # Menu: Script name
-msgid "Text: Convert UTF-8 LF (recursive)"
-msgstr "Texto: Converter UTF-8 para LF (recursivo)"
+msgid "Text: Convert to UTF+LF (recursive)"
+msgstr "Texto: Converter para UTF+LF (recursivo)"
 
 # Menu: Script name
 msgid "Text: Encode to ISO-8859-1"
@@ -1800,15 +1794,15 @@ msgstr "Texto: Codificar para UTF-8"
 
 # Menu: Script name
 msgid "Text: Line breaks to CRLF (Windows)"
-msgstr "Texto: Converter quebras de linha para CRLF (Windows)"
+msgstr "Texto: Converter fim de linha para CRLF (Windows)"
 
 # Menu: Script name
 msgid "Text: Line breaks to LF (Unix)"
-msgstr "Texto: Converter quebras de linha para LF (Unix)"
+msgstr "Texto: Converter fim de linha para LF (Unix)"
 
 # Menu: Script name
-msgid "Text: List encodings"
-msgstr "Texto: Listar codificações"
+msgid "Text: List encoding"
+msgstr "Texto: Listar codificação"
 
 # Menu: Script name
 msgid "Text: List file issues"
@@ -1820,7 +1814,7 @@ msgstr "Texto: Listar arquivos com caracteres inválidos"
 
 # Menu: Script name
 msgid "Text: List line breaks"
-msgstr "Texto: Listar quebras de linha"
+msgstr "Texto: Listar fim de linha"
 
 # Menu: Script name
 msgid "Text: List line count"
@@ -1839,8 +1833,8 @@ msgid "Text: Remove trailing spaces"
 msgstr "Texto: Remover espaços finais"
 
 # Menu: Script name
-msgid "Text: Transliterate to ASCII"
-msgstr "Texto: Transliterar para ASCII"
+msgid "Text: Remove accents"
+msgstr "Texto: Remover acentos"
 
 # Menu: Script name
 msgid "URL: Check HTTP status"
@@ -1848,31 +1842,31 @@ msgstr "URL: Verificar status HTTP"
 
 # Menu: Script name
 msgid "URL: Check SSL expiry"
-msgstr "URL: Verificar expiração de certificado SSL"
+msgstr "URL: Verificar expiração de SSL"
 
 # Menu: Script name
-msgid "URL: Download (clipboard, file)"
-msgstr "URL: Baixar (área de transferência, arquivo)"
+msgid "URL: Download"
+msgstr "URL: Baixar"
 
 # Menu: Script name
 msgid "URL: Show HTTP headers"
 msgstr "URL: Mostrar cabeçalhos HTTP"
 
 # Menu: Script name
-msgid "Verify MD5 checksum file"
-msgstr "Verificar arquivo de checksum MD5"
+msgid "Verify MD5 file"
+msgstr "Verificar arquivo MD5"
 
 # Menu: Script name
-msgid "Verify SHA1 checksum file"
-msgstr "Verificar arquivo de checksum SHA1"
+msgid "Verify SHA1 file"
+msgstr "Verificar arquivo SHA1"
 
 # Menu: Script name
-msgid "Verify SHA256 checksum file"
-msgstr "Verificar arquivo de checksum SHA256"
+msgid "Verify SHA256 file"
+msgstr "Verificar arquivo SHA256"
 
 # Menu: Script name
-msgid "Verify SHA512 checksum file"
-msgstr "Verificar arquivo de checksum SHA512"
+msgid "Verify SHA512 file"
+msgstr "Verificar arquivo SHA512"
 
 # Menu: Script name
 msgid "Video: Aspect to 1:1"
@@ -1948,7 +1942,7 @@ msgstr "Vídeo: Espelhar (horizontalmente)"
 
 # Menu: Script name
 msgid "Video: Flip (vertically)"
-msgstr "Vídeo: Espelhar (vertical)"
+msgstr "Vídeo: Espelhar (verticalmente)"
 
 # Menu: Script name
 msgid "Video: Frame rate to 30 FPS"
@@ -1976,27 +1970,27 @@ msgstr "Vídeo: Redimensionar (75 pct)"
 
 # Menu: Script name
 msgid "Video: Rotate (90 deg)"
-msgstr "Vídeo: Rotacionar (90°)"
+msgstr "Vídeo: Rotacionar (90 graus)"
 
 # Menu: Script name
 msgid "Video: Rotate (180 deg)"
-msgstr "Vídeo: Rotacionar (180°)"
+msgstr "Vídeo: Rotacionar (180 graus)"
 
 # Menu: Script name
 msgid "Video: Rotate (270 deg)"
-msgstr "Vídeo: Rotacionar (270°)"
+msgstr "Vídeo: Rotacionar (270 graus)"
 
 # Menu: Script name
-msgid "Video: Speed factor to 0.5"
-msgstr "Vídeo: Fator de velocidade para 0.5"
+msgid "Video: Speed to 0.5"
+msgstr "Vídeo: Velocidade para 0.5"
 
 # Menu: Script name
-msgid "Video: Speed factor to 1.5"
-msgstr "Vídeo: Fator de velocidade para 1.5"
+msgid "Video: Speed to 1.5"
+msgstr "Vídeo: Velocidade para 1.5"
 
 # Menu: Script name
-msgid "Video: Speed factor to 2.0"
-msgstr "Vídeo: Fator de velocidade para 2.0"
+msgid "Video: Speed to 2.0"
+msgstr "Vídeo: Velocidade para 2.0"
 
 # SECTION: Installer ----
 

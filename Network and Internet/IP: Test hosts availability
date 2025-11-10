@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "ping"
+    _check_dependencies "nmap ping"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file")
 
@@ -22,40 +22,55 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
+    std_output=$(sort --version-sort --reverse <<<"$std_output")
 
-    _display_text_box "$std_output"
+    _display_list_box "$std_output" "par_columns='--column:Status,--column:IP,--column:Hostname'; par_item_name=IPs"
 }
 
 _main_task() {
     local input_file=$1
     local output_dir=$2
-    local std_output=""
-    local timeout_value=5
-    local status="🟢"
+    local str_online="🟢 Online"
+    local status=""
     local hostname=""
 
-    # Run the main process.
-    std_output=$(LC_ALL=C ping -n -c 3 -W "$timeout_value" -- "$input_file" 2>/dev/null)
+    local host="$input_file"
+    local timeout_value=3
 
-    std_output=$(grep --ignore-case -v "bytes of data" <<<"$std_output")
-    std_output=$(grep --ignore-case -v "pipe" <<<"$std_output")
-    std_output=$(grep --ignore-case -v "statistics" <<<"$std_output")
-    std_output=$(grep --ignore-case -v "Host Unreachable" <<<"$std_output")
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|.*, 0 received,.*|(No response)|g" <<<"$std_output")
+    # Strategy: Nmap host discovery (no port scan).
+    if [[ -z "$status" ]]; then
+        if LC_ALL=C nmap -sn --host-timeout "$timeout_value"s "$host" 2>/dev/null |
+            grep --quiet --ignore-case "Host is up"; then
+            status=$str_online
+        fi
+    fi
 
-    if [[ "$std_output" == *"(No response)"* ]]; then
-        status="🔴"
+    # Strategy: Nmap port scan (SYN scan on top 20 ports).
+    if [[ -z "$status" ]]; then
+        if LC_ALL=C nmap -T4 -Pn --top-ports 20 --host-timeout "$timeout_value"s "$host" 2>/dev/null |
+            grep --quiet --ignore-case "open"; then
+            status=$str_online
+        fi
+    fi
+
+    # Strategy: ICMP Echo Request (fast but often filtered by firewalls).
+    if [[ -z "$status" ]]; then
+        if ping -c 3 -W "$timeout_value" "$host" &>/dev/null; then
+            status=$str_online
+        fi
+    fi
+
+    # Notify if the host is offline.
+    if [[ -z "$status" ]]; then
+        status="🔴 Offline"
     fi
 
     hostname=$(_resolve_host "$input_file")
-    if [[ -n "$hostname" ]]; then
-        hostname=" ($hostname)"
+    if [[ -z "$hostname" ]]; then
+        hostname="(unknown)"
     fi
 
-    std_output=$(_text_remove_empty_lines "$std_output")
-
-    _storage_text_write_ln "$status IP: $input_file$hostname"$'\n'"$std_output"$'\n'
+    _storage_text_write_ln "$status$FIELD_SEPARATOR$input_file$FIELD_SEPARATOR$hostname"
 }
 
 _extract_ips() {
@@ -109,7 +124,7 @@ _prepare_input() {
 
     if [[ -z "$ips" ]]; then
         local msg=""
-        msg="$(_i18n 'There are no valid IPs in the selected file(s)!')"
+        msg="$(_i18n 'There are no valid IPs in the selected files!')"
         _display_error_box "$msg"
         _exit_script
     fi

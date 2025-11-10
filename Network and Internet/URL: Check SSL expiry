@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "curl"
+    _check_dependencies "openssl"
     _display_wait_box "2"
     input_files=$(_get_files "par_type=file")
 
@@ -19,31 +19,58 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
+    std_output=$(sort --version-sort --unique <<<"$std_output")
 
-    # Replace 3+ consecutive newlines with 2 newlines.
-    std_output=$(sed -z "s|\n\{3,\}|\n\n|g" <<<"$std_output")
-
-    _display_text_box "$std_output"
+    _display_list_box "$std_output" "par_columns='--column:Days left,--column:URL'; par_item_name=URLs; par_action=open_url; par_checkbox=true"
 }
 
 _main_task() {
     local input_file=$1
     local output_dir=$2
-    local std_output=""
-    local timeout_value=5
-    local status="🟢"
+    local days_left=""
+    local end_date_epoch=""
+    local end_date=""
+    local host=""
+    local now_epoch=""
+    local status=""
+    local timeout_value=3
+
+    # Remove the port from the host if specified.
+    input_file=$(sed -E 's#^(https?://[^:/]+)(:[0-9]+)?(/.*)?$#\1\3#' <<<"$input_file")
+
+    # Extract hostname and port from the input URL (default port: 443).
+    host=$(sed -E 's#^https?://##; s#/.*##' <<<"$input_file")
 
     # Run the main process.
-    std_output=$(LC_ALL=C curl --max-time "$timeout_value" --connect-timeout 3 -s -I "$input_file" 2>/dev/null)
+    # Retrieve the remote SSL certificate and extract its expiration date.
+    end_date=$(timeout "$timeout_value" bash -c \
+        "echo | openssl s_client -servername \"$host\" \
+        -connect \"$host:443\" 2>/dev/null \
+        | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2")
 
-    if [[ -z "$std_output" ]]; then
-        std_output="(No response)"
-        status="🔴"
+    if [[ -n "$end_date" ]]; then
+        # Convert expiration date to epoch and calculate days remaining.
+        end_date_epoch=$(date -d "$end_date" +%s)
+        now_epoch=$(date +%s)
+        days_left=$(((end_date_epoch - now_epoch) / 86400))
+    else
+        days_left="(not found)"
     fi
 
-    std_output=$(_text_remove_empty_lines "$std_output")
+    if ((days_left < 0)); then
+        days_left=0
+    fi
 
-    _storage_text_write_ln "$status URL: $input_file"$'\n'"$std_output"$'\n'
+    # Set status based on days remaining.
+    if ((days_left > 30)); then
+        status="🟢 $days_left"
+    elif ((days_left > 0)); then
+        status="🟠 $days_left"
+    else
+        status="🔴 $days_left"
+    fi
+
+    _storage_text_write_ln "$status$FIELD_SEPARATOR$host"
 }
 
 # FUNCTION: _extract_urls
@@ -91,7 +118,7 @@ _prepare_input() {
 
     if [[ -z "$urls" ]]; then
         local msg=""
-        msg="$(_i18n 'There are no valid URLs in the selected file(s)!')"
+        msg="$(_i18n 'There are no valid URLs in the selected files!')"
         _display_error_box "$msg"
         _exit_script
     fi

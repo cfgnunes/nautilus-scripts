@@ -104,7 +104,7 @@ _prepare_input() {
     file_data=$(cat -- $input_files 2>/dev/null)
     urls=$(_extract_git_urls "$file_data")
 
-    # If there are no valid URLs in the file(s),
+    # If there are no valid URLs in the files,
     # get the URLs from the clipboard.
     if [[ -z "$urls" ]]; then
         clipboard_data=$(_get_clipboard_data)
@@ -113,7 +113,7 @@ _prepare_input() {
 
     if [[ -z "$urls" ]]; then
         local message=""
-        msg="$(_i18n 'There are no valid URLs in the clipboard or in the selected file(s)!')"
+        msg="$(_i18n 'There are no valid URLs in the clipboard or in the selected files!')"
         _display_error_box "$msg"
         _exit_script
     fi

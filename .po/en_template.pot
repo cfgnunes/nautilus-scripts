@@ -52,9 +52,6 @@ msgstr ""
 msgid "Could not find package names to install:"
 msgstr ""
 
-msgid "Could not find the Desktop directory."
-msgstr ""
-
 msgid "Could not find the executable to open MIME type:"
 msgstr ""
 
@@ -67,10 +64,7 @@ msgstr ""
 msgid "Each file inside this directory will be processed individually."
 msgstr ""
 
-msgid "Failed to import the public key!"
-msgstr ""
-
-msgid "Failed to import the secret key!"
+msgid "Failed to import the key!"
 msgstr ""
 
 msgid "Failed: you must select a user!"
@@ -160,16 +154,16 @@ msgstr ""
 msgid "The selected items are identical."
 msgstr ""
 
-msgid "There are no valid IPs in the selected file(s)!"
+msgid "There are no valid IPs in the selected files!"
 msgstr ""
 
 msgid "There are no valid paths in the clipboard!"
 msgstr ""
 
-msgid "There are no valid URLs in the clipboard or in the selected file(s)!"
+msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr ""
 
-msgid "There are no valid URLs in the selected file(s)!"
+msgid "There are no valid URLs in the selected files!"
 msgstr ""
 
 msgid "This action will delete the selected items."
@@ -491,7 +485,7 @@ msgid "Archive"
 msgstr ""
 
 # Menu: Category
-msgid "Audio and video"
+msgid "Audio and Video"
 msgstr ""
 
 # Menu: Category
@@ -499,7 +493,7 @@ msgid "Clipboard"
 msgstr ""
 
 # Menu: Category
-msgid "Directories and files"
+msgid "Directories and Files"
 msgstr ""
 
 # Menu: Category
@@ -523,7 +517,7 @@ msgid "Link operations"
 msgstr ""
 
 # Menu: Category
-msgid "Network and internet"
+msgid "Network and Internet"
 msgstr ""
 
 # Menu: Category
@@ -539,11 +533,11 @@ msgid "Rename files"
 msgstr ""
 
 # Menu: Category
-msgid "Security and recovery"
+msgid "Security and Recovery"
 msgstr ""
 
 # Menu: Subcategory
-msgid "Audio and video: Tools"
+msgid "Audio and Video: Tools"
 msgstr ""
 
 # Menu: Subcategory
@@ -671,7 +665,7 @@ msgid "PDF: Watermark"
 msgstr ""
 
 # Menu: Subcategory
-msgid "Text: Encodings"
+msgid "Text: Encoding"
 msgstr ""
 
 # Menu: Subcategory
@@ -719,7 +713,7 @@ msgid "Video: Resize"
 msgstr ""
 
 # Menu: Subcategory
-msgid "Video: Speed factor"
+msgid "Video: Speed"
 msgstr ""
 
 # Menu: Script name
@@ -731,7 +725,7 @@ msgid "Audio: Convert to FLAC"
 msgstr ""
 
 # Menu: Script name
-msgid "Audio: Convert to MP3 (48 kbps, mono)"
+msgid "Audio: Convert to MP3 (48 kbps)"
 msgstr ""
 
 # Menu: Script name
@@ -743,7 +737,7 @@ msgid "Audio: Convert to MP3 (320 kbps)"
 msgstr ""
 
 # Menu: Script name
-msgid "Audio: Convert to OGG (48 kbps, mono)"
+msgid "Audio: Convert to OGG (48 kbps)"
 msgstr ""
 
 # Menu: Script name
@@ -755,7 +749,7 @@ msgid "Audio: Convert to OGG (320 kbps)"
 msgstr ""
 
 # Menu: Script name
-msgid "Audio: Convert to OPUS (48 kbps, mono)"
+msgid "Audio: Convert to OPUS (48 kbps)"
 msgstr ""
 
 # Menu: Script name
@@ -783,11 +777,11 @@ msgid "Audio: Mix channels to mono"
 msgstr ""
 
 # Menu: Script name
-msgid "Audio: Mix two files (WAV output)"
+msgid "Audio: Mix two files"
 msgstr ""
 
 # Menu: Script name
-msgid "Audio: Normalize"
+msgid "Audio: Volume normalize"
 msgstr ""
 
 # Menu: Script name
@@ -795,15 +789,15 @@ msgid "Audio: Produce a spectrogram"
 msgstr ""
 
 # Menu: Script name
-msgid "Audio: Remove silent sections (-30 db)"
+msgid "Audio: Remove silent sections"
 msgstr ""
 
 # Menu: Script name
-msgid "Audio: Silence noise (-30 db)"
+msgid "Audio: Silence noise"
 msgstr ""
 
 # Menu: Script name
-msgid "Audio: Trim silence (-50 db)"
+msgid "Audio: Trim silence"
 msgstr ""
 
 # Menu: Script name
@@ -1023,23 +1017,23 @@ msgid "Flatten directory structure"
 msgstr ""
 
 # Menu: Script name
-msgid "Generate MD5 checksum file"
+msgid "Generate MD5 file"
 msgstr ""
 
 # Menu: Script name
-msgid "Generate SHA1 checksum file"
+msgid "Generate SHA1 file"
 msgstr ""
 
 # Menu: Script name
-msgid "Generate SHA256 checksum file"
+msgid "Generate SHA256 file"
 msgstr ""
 
 # Menu: Script name
-msgid "Generate SHA512 checksum file"
+msgid "Generate SHA512 file"
 msgstr ""
 
 # Menu: Script name
-msgid "Git: Clone URLs (clipboard, file)"
+msgid "Git: Clone URLs"
 msgstr ""
 
 # Menu: Script name
@@ -1063,11 +1057,11 @@ msgid "GPG: Encrypt with password (ASCII)"
 msgstr ""
 
 # Menu: Script name
-msgid "GPG: Encrypt with public keys"
+msgid "GPG: Encrypt with keys"
 msgstr ""
 
 # Menu: Script name
-msgid "GPG: Encrypt with public keys (ASCII)"
+msgid "GPG: Encrypt with keys (ASCII)"
 msgstr ""
 
 # Menu: Script name
@@ -1439,11 +1433,11 @@ msgid "MP3: (artist - title) ID3 to Filename"
 msgstr ""
 
 # Menu: Script name
-msgid "MP3: Maximize gain (recursive)"
+msgid "MP3: Volume maximize (recursive)"
 msgstr ""
 
 # Menu: Script name
-msgid "MP3: Normalize gain (recursive)"
+msgid "MP3: Volume normalize (recursive)"
 msgstr ""
 
 # Menu: Script name
@@ -1467,7 +1461,7 @@ msgid "Paste as symbolic link"
 msgstr ""
 
 # Menu: Script name
-msgid "Paste clipboard as a file"
+msgid "Paste clipboard"
 msgstr ""
 
 # Menu: Script name
@@ -1479,7 +1473,7 @@ msgid "PDF: Add watermark (underlay)"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Combine multiple files"
+msgid "PDF: Combine multiple PDFs"
 msgstr ""
 
 # Menu: Script name
@@ -1499,23 +1493,23 @@ msgid "PDF: Extract images"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Find annotated files"
+msgid "PDF: Find annotated PDFs"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Find non-linearized files"
+msgid "PDF: Find non-linearized PDFs"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Find non-searchable files"
+msgid "PDF: Find non-searchable PDFs"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Find password-encrypted files"
+msgid "PDF: Find password-encrypted PDFs"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Find signed files"
+msgid "PDF: Find signed PDFs"
 msgstr ""
 
 # Menu: Script name
@@ -1563,23 +1557,23 @@ msgid "PDF: Optimize for web (linearize)"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Page size to A3"
+msgid "PDF: Set size (A3)"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Page size to A4"
+msgid "PDF: Set size (A4)"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Page size to A5"
+msgid "PDF: Set size (A5)"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Page size to US Legal"
+msgid "PDF: Set size (US Legal)"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Page size to US Letter"
+msgid "PDF: Set size (US Letter)"
 msgstr ""
 
 # Menu: Script name
@@ -1643,11 +1637,11 @@ msgid "PDF: Show signatures"
 msgstr ""
 
 # Menu: Script name
-msgid "PDF: Split into single-page files"
+msgid "PDF: Split into single-page PDFs"
 msgstr ""
 
 # Menu: Script name
-msgid "Rename: Remove accents (translit.)"
+msgid "Rename: Remove accents"
 msgstr ""
 
 # Menu: Script name
@@ -1783,11 +1777,11 @@ msgid "Text: Convert 'tabs' to '8 spaces'"
 msgstr ""
 
 # Menu: Script name
-msgid "Text: Convert UTF-8 CRLF (recursive)"
+msgid "Text: Convert to UTF+CRLF (recursive)"
 msgstr ""
 
 # Menu: Script name
-msgid "Text: Convert UTF-8 LF (recursive)"
+msgid "Text: Convert to UTF+LF (recursive)"
 msgstr ""
 
 # Menu: Script name
@@ -1807,7 +1801,7 @@ msgid "Text: Line breaks to LF (Unix)"
 msgstr ""
 
 # Menu: Script name
-msgid "Text: List encodings"
+msgid "Text: List encoding"
 msgstr ""
 
 # Menu: Script name
@@ -1839,7 +1833,7 @@ msgid "Text: Remove trailing spaces"
 msgstr ""
 
 # Menu: Script name
-msgid "Text: Transliterate to ASCII"
+msgid "Text: Remove accents"
 msgstr ""
 
 # Menu: Script name
@@ -1851,7 +1845,7 @@ msgid "URL: Check SSL expiry"
 msgstr ""
 
 # Menu: Script name
-msgid "URL: Download (clipboard, file)"
+msgid "URL: Download"
 msgstr ""
 
 # Menu: Script name
@@ -1859,19 +1853,19 @@ msgid "URL: Show HTTP headers"
 msgstr ""
 
 # Menu: Script name
-msgid "Verify MD5 checksum file"
+msgid "Verify MD5 file"
 msgstr ""
 
 # Menu: Script name
-msgid "Verify SHA1 checksum file"
+msgid "Verify SHA1 file"
 msgstr ""
 
 # Menu: Script name
-msgid "Verify SHA256 checksum file"
+msgid "Verify SHA256 file"
 msgstr ""
 
 # Menu: Script name
-msgid "Verify SHA512 checksum file"
+msgid "Verify SHA512 file"
 msgstr ""
 
 # Menu: Script name
@@ -1987,15 +1981,15 @@ msgid "Video: Rotate (270 deg)"
 msgstr ""
 
 # Menu: Script name
-msgid "Video: Speed factor to 0.5"
+msgid "Video: Speed to 0.5"
 msgstr ""
 
 # Menu: Script name
-msgid "Video: Speed factor to 1.5"
+msgid "Video: Speed to 1.5"
 msgstr ""
 
 # Menu: Script name
-msgid "Video: Speed factor to 2.0"
+msgid "Video: Speed to 2.0"
 msgstr ""
 
 # SECTION: Installer ----

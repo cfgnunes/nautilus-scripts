@@ -79,16 +79,16 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Alt>R`   | List recently modified files        |
 | `<Control><Alt>W`   | Text: List file issues              |
 | `<Control><Alt>C`   | Copy filename                       |
-| `<Control><Alt>V`   | Paste clipboard as a file           |
+| `<Control><Alt>V`   | Paste clipboard                     |
 | `<Control><Shift>V` | Paste as symbolic link              |
 | `<Control><Shift>C` | Compare items                       |
 | `<Control><Shift>O` | Open item location                  |
 | `<Control><Shift>H` | Compute all hashes                  |
 | `<Control><Shift>E` | Find empty directories              |
 | `<Control><Shift>P` | Rename: Remove parentheses suffixes |
-| `<Control><Shift>G` | Git: Clone URLs (clipboard, file)   |
+| `<Control><Shift>G` | Git: Clone URLs                     |
 | `<Control><Shift>R` | Git: Reset and pull                 |
-| `<Control><Shift>X` | URL: Download (clipboard, file)     |
+| `<Control><Shift>X` | URL: Download                       |
 
 ## Compatibility
 
