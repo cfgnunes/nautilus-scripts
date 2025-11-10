@@ -733,8 +733,8 @@ msgid "Audio: Convert to FLAC"
 msgstr "音频：转换为FLAC"
 
 # Menu: Script name
-msgid "Audio: Convert to MP3 (48 kbps, mono)"
-msgstr "音频：转换为MP3（48 kbps，单声道）"
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "音频：转换为MP3（48 kbps）"
 
 # Menu: Script name
 msgid "Audio: Convert to MP3 (192 kbps)"
@@ -745,8 +745,8 @@ msgid "Audio: Convert to MP3 (320 kbps)"
 msgstr "音频：转换为MP3（320 kbps）"
 
 # Menu: Script name
-msgid "Audio: Convert to OGG (48 kbps, mono)"
-msgstr "音频：转换为OGG（48 kbps，单声道）"
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "音频：转换为OGG（48 kbps）"
 
 # Menu: Script name
 msgid "Audio: Convert to OGG (192 kbps)"
@@ -757,8 +757,8 @@ msgid "Audio: Convert to OGG (320 kbps)"
 msgstr "音频：转换为OGG（320 kbps）"
 
 # Menu: Script name
-msgid "Audio: Convert to OPUS (48 kbps, mono)"
-msgstr "音频：转换为OPUS（48 kbps，单声道）"
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "音频：转换为OPUS（48 kbps）"
 
 # Menu: Script name
 msgid "Audio: Convert to OPUS (192 kbps)"
@@ -785,8 +785,8 @@ msgid "Audio: Mix channels to mono"
 msgstr "音频：混音为单声道"
 
 # Menu: Script name
-msgid "Audio: Mix two files (WAV output)"
-msgstr "音频：混合两个文件（WAV输出）"
+msgid "Audio: Mix two files"
+msgstr "音频：混合两个文件"
 
 # Menu: Script name
 msgid "Audio: Normalize"
@@ -797,16 +797,16 @@ msgid "Audio: Produce a spectrogram"
 msgstr "音频：生成频谱图"
 
 # Menu: Script name
-msgid "Audio: Remove silent sections (-30 db)"
-msgstr "音频：移除静音部分（-30 db）"
+msgid "Audio: Remove silent sections"
+msgstr "音频：移除静音部分"
 
 # Menu: Script name
-msgid "Audio: Silence noise (-30 db)"
-msgstr "音频：静音降噪（-30 db）"
+msgid "Audio: Silence noise"
+msgstr "音频：静音降噪"
 
 # Menu: Script name
-msgid "Audio: Trim silence (-50 db)"
-msgstr "音频：修剪静音（-50 db）"
+msgid "Audio: Trim silence"
+msgstr "音频：修剪静音"
 
 # Menu: Script name
 msgid "Code Editor"
@@ -2126,5 +2126,5 @@ msgstr "选择选项 (<空格键> 勾选，<回车键> 确认)："
 msgid "User:"
 msgstr "用户："
 
-#~ msgid ""
-#~ msgstr ""
+#~ msgid "EOF"
+#~ msgstr "EOF"
