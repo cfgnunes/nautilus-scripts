@@ -185,7 +185,7 @@ _main() {
         cat_dirs+=("$dir")
     done < <(find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
         "${IGNORE_FIND_PATHS[@]}" -print0 2>/dev/null |
-        sed -z "s|^.*/||" | sort --zero-terminated --version-sort)
+        sed -z "s|^.*/||" | sort --zero-terminated)
 
     # If requested, let the user select which categories to install.
     if [[ "$OPT_CHOOSE_CATEGORIES" == "true" ]]; then
