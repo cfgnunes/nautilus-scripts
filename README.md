@@ -12,13 +12,13 @@ You can install in two ways:
 
 You can use either **curl** or **wget**. Choose **one** of the following commands and run it in your terminal:
 
-#### Using `curl`
+#### 🚀 Using `curl`
 
 ```bash
 bash -c "$(curl -fsSL https://cfgnunes.github.io/nautilus-scripts/install.sh)"
 ```
 
-#### Using `wget`
+#### 🚀 Using `wget`
 
 ```bash
 bash -c "$(wget -qO- https://cfgnunes.github.io/nautilus-scripts/install.sh)"
@@ -36,7 +36,7 @@ bash install.sh
 
 While numerous scripts are available for file managers on the web, many suffer from poor functionality, lack of error checking, and dependency management. Some scripts only work with files that don't have special characters in their names, among other limitations. To address these shortcomings, I have developed my own set of scripts, which offer the following advantages:
 
-- **Parallel task execution**: Processes multiple files simultaneously. Very fast!
+- **Parallel task execution**: Processes multiple files simultaneously. Very fast! 🚀
 - **Multi-language support**: Automatically detects the system language and displays messages in the appropriate language (🇧🇷|🇺🇸|🇨🇳|🇪🇸).
 - **Progress dialog**: Displays a progress dialog and allows interruption of tasks at any time.
 - **Status notifications**: Notifies users of dependency errors and MIME types.
