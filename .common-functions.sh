@@ -484,7 +484,7 @@ _check_dependencies_clipboard() {
     "x11") dep_keys_final+="xclip" ;;
     *)
         local msg=""
-        msg="$(_i18n 'Your session type is not supported for clipboard operations.')"
+        msg="$(_i18n 'Your system does not support clipboard operations.')"
         _display_error_box "$msg"
         _exit_script
         ;;

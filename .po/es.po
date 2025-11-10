@@ -223,8 +223,8 @@ msgstr "Debe seleccionar hasta"
 msgid "You must select"
 msgstr "Debe seleccionar"
 
-msgid "Your session type is not supported for clipboard operations."
-msgstr "El tipo de sesión no es compatible con operaciones del portapapeles."
+msgid "Your system does not support clipboard operations."
+msgstr "Su sistema no admite operaciones con el portapapeles."
 
 # Buttons
 msgid "Cancel"

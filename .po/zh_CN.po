@@ -225,8 +225,8 @@ msgstr "最多选择"
 msgid "You must select"
 msgstr "必须选择"
 
-msgid "Your session type is not supported for clipboard operations."
-msgstr "您的会话类型不支持剪贴板操作。"
+msgid "Your system does not support clipboard operations."
+msgstr "您的系统不支持剪贴板操作。"
 
 # Button
 msgid "Cancel"

@@ -223,8 +223,8 @@ msgstr "Você deve selecionar até"
 msgid "You must select"
 msgstr "Você deve selecionar"
 
-msgid "Your session type is not supported for clipboard operations."
-msgstr "O tipo da sua sessão não é suportado para operações com área de transferência."
+msgid "Your system does not support clipboard operations."
+msgstr "Seu sistema não suporta operações com a área de transferência."
 
 # Button
 msgid "Cancel"

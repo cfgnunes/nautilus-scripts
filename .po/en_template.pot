@@ -223,7 +223,7 @@ msgstr ""
 msgid "You must select"
 msgstr ""
 
-msgid "Your session type is not supported for clipboard operations."
+msgid "Your system does not support clipboard operations."
 msgstr ""
 
 # Button
