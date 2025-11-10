@@ -491,7 +491,7 @@
              id="tspan177-6-5-5-2-1-7-8-9"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="108.77531"
-             y="44.948208">Audio and video</tspan></text><text
+             y="44.948208">Audio and Video</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="108.77531"
@@ -527,7 +527,7 @@
              id="tspan177-6-5-5-2-1-7-8-3"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="108.77531"
-             y="70.3153">Directories and files</tspan></text><text
+             y="70.3153">Directories and Files</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="108.77531"
@@ -575,7 +575,7 @@
              id="tspan177-6-5-5-2-1-7-8-43"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="108.77531"
-             y="104.13809">Link operations</tspan></text><text
+             y="104.13809">Links</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="108.77531"
@@ -587,7 +587,7 @@
              id="tspan177-6-5-5-2-1-7-8-2"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="108.77531"
-             y="112.5938">Network and internet</tspan></text><text
+             y="112.5938">Network and Internet</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="108.77531"
@@ -682,7 +682,7 @@
              id="tspan177-6-5-5-2-1-7-8-30"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="55.027576">Compute all hashes</tspan></text><text
+             y="55.027576">Compute all checksums</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="197.1524"
@@ -766,7 +766,7 @@
              id="tspan177-6-5-5-2-1-7-8-38-1"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="105.87498">Generate MD5 checksum file</tspan></text><text
+             y="105.87498">Generate MD5 file</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -778,7 +778,7 @@
              id="tspan177-6-5-5-2-1-7-8-7-8"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="114.34956">Generate SHA1 checksum file</tspan></text><text
+             y="114.34956">Generate SHA1 file</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -790,7 +790,7 @@
              id="tspan177-6-5-5-2-1-7-8-93-7"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="122.82413">Generate SHA256 checksum file</tspan></text><text
+             y="122.82413">Generate SHA256 file</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -802,7 +802,7 @@
              id="tspan177-6-5-5-2-1-7-8-43-1"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="131.29869">Generate SHA512 checksum file</tspan></text><text
+             y="131.29869">Generate SHA512 file</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -814,7 +814,7 @@
              id="tspan177-6-5-5-2-1-7-8-2-5"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="139.77324">Verify MD5 checksum file</tspan></text><text
+             y="139.77324">Verify MD5 file</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -826,7 +826,7 @@
              id="tspan177-6-5-5-2-1-7-8-1-7"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="148.2478">Verify SHA1 checksum file</tspan></text><text
+             y="148.2478">Verify SHA1 file</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -838,7 +838,7 @@
              id="tspan177-6-5-5-2-1-7-8-17-3"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="156.7224">Verify SHA256 checksum file</tspan></text><text
+             y="156.7224">Verify SHA256 file</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -850,6 +850,6 @@
              id="tspan177-6-5-5-2-1-7-8-171-8"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="165.19695">Verify SHA512 checksum file</tspan></text></g></g></g><metadata
+             y="165.19695">Verify SHA512 file</tspan></text></g></g></g><metadata
      id="metadata3144"><rdf:RDF><cc:Work
          rdf:about=""><dc:title>Enhanced File Manager Actions for Linux</dc:title><dc:creator><cc:Agent><dc:title>Cristiano Fraga G. Nunes</dc:title></cc:Agent></dc:creator></cc:Work></rdf:RDF></metadata></svg>
