@@ -7,8 +7,8 @@ msgstr ""
 "POT-Creation-Date: 2025-11-09 01:00-0300\n"
 "PO-Revision-Date: 2025-11-07 22:05-0300\n"
 "Last-Translator: JoveYu <yushijun110@gmail.com>\n"
-"Language: zh_CN\n"
 "Language-Team: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -54,9 +54,6 @@ msgstr "找不到具有写入权限的目录！"
 msgid "Could not find package names to install:"
 msgstr "找不到要安装的软件包名称："
 
-msgid "Could not find the Desktop directory."
-msgstr "找不到桌面目录。"
-
 msgid "Could not find the executable to open MIME type:"
 msgstr "找不到打开MIME类型的可执行文件："
 
@@ -69,11 +66,8 @@ msgstr "无法弹出目录。"
 msgid "Each file inside this directory will be processed individually."
 msgstr "此目录内的每个文件都将被单独处理。"
 
-msgid "Failed to import the public key!"
-msgstr "导入公钥失败！"
-
-msgid "Failed to import the secret key!"
-msgstr "导入私钥失败！"
+msgid "Failed to import the key!"
+msgstr "导入密钥失败！"
 
 msgid "Failed: you must select a user!"
 msgstr "失败：必须选择一个用户！"
@@ -117,7 +111,7 @@ msgstr "密码"
 msgid "Running the task. Please, wait..."
 msgstr "正在执行任务，请稍候..."
 
-msgid "Select an output filename:"
+msgid "Select the output filename:"
 msgstr "选择输出文件名："
 
 msgid "Select one or more users:"
@@ -162,17 +156,17 @@ msgstr "所选图像具有相同的像素值。"
 msgid "The selected items are identical."
 msgstr "所选项目完全相同。"
 
-msgid "There are no valid IPs in the selected file(s)!"
-msgstr "所选文件中没有有效的IP地址！"
+msgid "There are no valid IPs in the selected files!"
+msgstr "所选文件中没有有效的 IP！"
 
 msgid "There are no valid paths in the clipboard!"
 msgstr "剪贴板中没有有效路径！"
 
-msgid "There are no valid URLs in the clipboard or in the selected file(s)!"
-msgstr "剪贴板或所选文件中没有有效URL！"
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr "剪贴板或所选文件中没有有效的 URL！"
 
-msgid "There are no valid URLs in the selected file(s)!"
-msgstr "所选文件中没有有效URL！"
+msgid "There are no valid URLs in the selected files!"
+msgstr "所选文件中没有有效的 URL！"
 
 msgid "This action will delete the selected items."
 msgstr "此操作将删除所选项目。"
@@ -487,13 +481,12 @@ msgid "Accessed recently"
 msgstr "最近访问"
 
 # SECTION: Menu ----
-
 # Menu: Category
 msgid "Archive"
 msgstr "归档"
 
 # Menu: Category
-msgid "Audio and video"
+msgid "Audio and Video"
 msgstr "音视频"
 
 # Menu: Category
@@ -501,7 +494,7 @@ msgid "Clipboard"
 msgstr "剪贴板"
 
 # Menu: Category
-msgid "Directories and files"
+msgid "Directories and Files"
 msgstr "目录和文件"
 
 # Menu: Category
@@ -521,11 +514,11 @@ msgid "Image"
 msgstr "图像"
 
 # Menu: Category
-msgid "Link operations"
-msgstr "链接操作"
+msgid "Links"
+msgstr "链接"
 
 # Menu: Category
-msgid "Network and internet"
+msgid "Network and Internet"
 msgstr "网络和互联网"
 
 # Menu: Category
@@ -541,11 +534,11 @@ msgid "Rename files"
 msgstr "重命名文件"
 
 # Menu: Category
-msgid "Security and recovery"
+msgid "Security and Recovery"
 msgstr "安全与恢复"
 
 # Menu: Subcategory
-msgid "Audio and video: Tools"
+msgid "Audio and Video: Tools"
 msgstr "音频和视频：工具"
 
 # Menu: Subcategory
@@ -673,7 +666,7 @@ msgid "PDF: Watermark"
 msgstr "PDF：水印"
 
 # Menu: Subcategory
-msgid "Text: Encodings"
+msgid "Text: Encoding"
 msgstr "文本：编码"
 
 # Menu: Subcategory
@@ -721,8 +714,8 @@ msgid "Video: Resize"
 msgstr "视频：调整大小"
 
 # Menu: Subcategory
-msgid "Video: Speed factor"
-msgstr "视频：速度系数"
+msgid "Video: Speed"
+msgstr "视频：速度"
 
 # Menu: Script name
 msgid "Audio: Check quality"
@@ -789,8 +782,8 @@ msgid "Audio: Mix two files"
 msgstr "音频：混合两个文件"
 
 # Menu: Script name
-msgid "Audio: Normalize"
-msgstr "音频：标准化"
+msgid "Audio: Volume normalize"
+msgstr "音频：音量标准化"
 
 # Menu: Script name
 msgid "Audio: Produce a spectrogram"
@@ -861,8 +854,8 @@ msgid "Compress to .zip with password (each)"
 msgstr "压缩为带密码的.zip（每个）"
 
 # Menu: Script name
-msgid "Compute all hashes"
-msgstr "计算所有哈希值"
+msgid "Compute all checksums"
+msgstr "计算所有校验和"
 
 # Menu: Script name
 msgid "Compute CRC32"
@@ -1025,24 +1018,24 @@ msgid "Flatten directory structure"
 msgstr "扁平化目录结构"
 
 # Menu: Script name
-msgid "Generate MD5 checksum file"
-msgstr "生成 MD5 校验和文件"
+msgid "Generate MD5 file"
+msgstr "生成 MD5 文件"
 
 # Menu: Script name
-msgid "Generate SHA1 checksum file"
-msgstr "生成 SHA1 校验和文件"
+msgid "Generate SHA1 file"
+msgstr "生成 SHA1 文件"
 
 # Menu: Script name
-msgid "Generate SHA256 checksum file"
-msgstr "生成 SHA256 校验和文件"
+msgid "Generate SHA256 file"
+msgstr "生成 SHA256 文件"
 
 # Menu: Script name
-msgid "Generate SHA512 checksum file"
-msgstr "生成 SHA512 校验和文件"
+msgid "Generate SHA512 file"
+msgstr "生成 SHA512 文件"
 
 # Menu: Script name
-msgid "Git: Clone URLs (clipboard, file)"
-msgstr "Git：克隆 URL (剪贴板, 文件)"
+msgid "Git: Clone URLs"
+msgstr "Git：克隆 URL"
 
 # Menu: Script name
 msgid "Git: Open repository website"
@@ -1065,12 +1058,12 @@ msgid "GPG: Encrypt with password (ASCII)"
 msgstr "GPG：使用密码加密 (ASCII)"
 
 # Menu: Script name
-msgid "GPG: Encrypt with public keys"
-msgstr "GPG：使用公钥加密"
+msgid "GPG: Encrypt with keys"
+msgstr "GPG：使用密钥加密"
 
 # Menu: Script name
-msgid "GPG: Encrypt with public keys (ASCII)"
-msgstr "GPG：使用公钥加密 (ASCII)"
+msgid "GPG: Encrypt with keys (ASCII)"
+msgstr "GPG：使用密钥加密(ASCII)"
 
 # Menu: Script name
 msgid "GPG: Import key"
@@ -1393,8 +1386,8 @@ msgid "IP: Scan ports"
 msgstr "IP：扫描端口"
 
 # Menu: Script name
-msgid "IP: Test hosts availability"
-msgstr "IP：测试主机可用性"
+msgid "IP: Test availability"
+msgstr "IP：测试可用性"
 
 # Menu: Script name
 msgid "List hard links"
@@ -1441,12 +1434,12 @@ msgid "MP3: (artist - title) ID3 to Filename"
 msgstr "MP3：(艺术家 - 标题) ID3转文件名"
 
 # Menu: Script name
-msgid "MP3: Maximize gain (recursive)"
-msgstr "MP3：最大化增益 (递归)"
+msgid "MP3: Volume maximize (recursive)"
+msgstr "MP3：最大化音量（递归）"
 
 # Menu: Script name
-msgid "MP3: Normalize gain (recursive)"
-msgstr "MP3：标准化增益 (递归)"
+msgid "MP3: Volume normalize (recursive)"
+msgstr "MP3：音量标准化（递归）"
 
 # Menu: Script name
 msgid "MP3: Repair (recursive)"
@@ -1469,8 +1462,8 @@ msgid "Paste as symbolic link"
 msgstr "粘贴为符号链接"
 
 # Menu: Script name
-msgid "Paste clipboard as a file"
-msgstr "粘贴剪贴板为文件"
+msgid "Paste clipboard"
+msgstr "粘贴剪贴板"
 
 # Menu: Script name
 msgid "PDF: Add watermark (overlay)"
@@ -1481,8 +1474,8 @@ msgid "PDF: Add watermark (underlay)"
 msgstr "PDF：添加水印 (衬底)"
 
 # Menu: Script name
-msgid "PDF: Combine multiple files"
-msgstr "PDF：合并多个文件"
+msgid "PDF: Combine multiple PDFs"
+msgstr "PDF：合并多个 PDF"
 
 # Menu: Script name
 msgid "PDF: Convert to PDFA-2b"
@@ -1501,24 +1494,24 @@ msgid "PDF: Extract images"
 msgstr "PDF：提取图像"
 
 # Menu: Script name
-msgid "PDF: Find annotated files"
-msgstr "PDF：查找带注释文件"
+msgid "PDF: Find annotated PDFs"
+msgstr "PDF：查找带注释的 PDF"
 
 # Menu: Script name
-msgid "PDF: Find non-linearized files"
-msgstr "PDF：查找非线性化文件"
+msgid "PDF: Find non-linearized PDFs"
+msgstr "PDF：查找未线性化的 PDF"
 
 # Menu: Script name
-msgid "PDF: Find non-searchable files"
-msgstr "PDF：查找不可搜索文件"
+msgid "PDF: Find non-searchable PDFs"
+msgstr "PDF：查找不可搜索的 PDF"
 
 # Menu: Script name
-msgid "PDF: Find password-encrypted files"
-msgstr "PDF：查找密码加密文件"
+msgid "PDF: Find password-encrypted PDFs"
+msgstr "PDF：查找密码加密的 PDF"
 
 # Menu: Script name
-msgid "PDF: Find signed files"
-msgstr "PDF：查找签名文件"
+msgid "PDF: Find signed PDFs"
+msgstr "PDF：查找已签名的 PDF"
 
 # Menu: Script name
 msgid "PDF: Layout (landscape, 1x2)"
@@ -1565,24 +1558,24 @@ msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF：优化用于网页（线性化）"
 
 # Menu: Script name
-msgid "PDF: Page size to A3"
-msgstr "PDF：页面尺寸设为A3"
+msgid "PDF: Set size (A3)"
+msgstr "PDF：设置尺寸（A3）"
 
 # Menu: Script name
-msgid "PDF: Page size to A4"
-msgstr "PDF：页面尺寸设为A4"
+msgid "PDF: Set size (A4)"
+msgstr "PDF：设置尺寸（A4）"
 
 # Menu: Script name
-msgid "PDF: Page size to A5"
-msgstr "PDF：页面尺寸设为A5"
+msgid "PDF: Set size (A5)"
+msgstr "PDF：设置尺寸（A5）"
 
 # Menu: Script name
-msgid "PDF: Page size to US Legal"
-msgstr "PDF：页面尺寸设为US Legal"
+msgid "PDF: Set size (US Legal)"
+msgstr "PDF：设置尺寸（美国 Legal）"
 
 # Menu: Script name
-msgid "PDF: Page size to US Letter"
-msgstr "PDF：页面尺寸设为US Letter"
+msgid "PDF: Set size (US Letter)"
+msgstr "PDF：设置尺寸（美国 Letter）"
 
 # Menu: Script name
 msgid "PDF: Perform OCR (English)"
@@ -1645,28 +1638,28 @@ msgid "PDF: Show signatures"
 msgstr "PDF：显示签名"
 
 # Menu: Script name
-msgid "PDF: Split into single-page files"
-msgstr "PDF：拆分为单页文件"
+msgid "PDF: Split into single-page PDFs"
+msgstr "PDF：拆分为单页 PDF"
 
 # Menu: Script name
-msgid "Rename: Remove accents (translit.)"
-msgstr "重命名：移除重音符号（音译）"
+msgid "Rename: Remove accents"
+msgstr "文本：移除重音符号"
 
 # Menu: Script name
 msgid "Rename: Remove parentheses suffixes"
 msgstr "重命名：移除括号后缀"
 
 # Menu: Script name
-msgid "Rename: Replace gaps with dashes"
-msgstr "重命名：用短横线替换空格"
+msgid "Rename: Gaps by dashes"
+msgstr "重命名：空格替换为短横线"
 
 # Menu: Script name
-msgid "Rename: Replace gaps with spaces"
-msgstr "重命名：用空格替换间隔"
+msgid "Rename: Gaps by spaces"
+msgstr "重命名：空格替换为空格字符"
 
 # Menu: Script name
-msgid "Rename: Replace gaps with underscores"
-msgstr "重命名：用下划线替换空格"
+msgid "Rename: Gaps by underscores"
+msgstr "重命名：空格替换为下划线"
 
 # Menu: Script name
 msgid "Rename: To lowercase"
@@ -1701,15 +1694,15 @@ msgid "Scan for malware (via ClamAV)"
 msgstr "扫描恶意软件（通过ClamAV）"
 
 # Menu: Script name
-msgid "Show files information"
+msgid "Show file information"
 msgstr "显示文件信息"
 
 # Menu: Script name
-msgid "Show files metadata"
+msgid "Show file metadata"
 msgstr "显示文件元数据"
 
 # Menu: Script name
-msgid "Show files MIME types"
+msgid "Show file MIME type"
 msgstr "显示文件MIME类型"
 
 # Menu: Script name
@@ -1717,7 +1710,7 @@ msgid "Show media information"
 msgstr "显示媒体信息"
 
 # Menu: Script name
-msgid "Shred files (secure delete)"
+msgid "Shred file (secure delete)"
 msgstr "粉碎文件（安全删除）"
 
 # Menu: Script name
@@ -1785,12 +1778,12 @@ msgid "Text: Convert 'tabs' to '8 spaces'"
 msgstr "文本：转换'制表符'为'8个空格'"
 
 # Menu: Script name
-msgid "Text: Convert UTF-8 CRLF (recursive)"
-msgstr "文本：转换UTF-8 CRLF（递归）"
+msgid "Text: Convert to UTF+CRLF (recursive)"
+msgstr "文本：转换为 UTF+CRLF（递归）"
 
 # Menu: Script name
-msgid "Text: Convert UTF-8 LF (recursive)"
-msgstr "文本：转换UTF-8 LF（递归）"
+msgid "Text: Convert to UTF+LF (recursive)"
+msgstr "文本：转换为 UTF+LF（递归）"
 
 # Menu: Script name
 msgid "Text: Encode to ISO-8859-1"
@@ -1809,12 +1802,12 @@ msgid "Text: Line breaks to LF (Unix)"
 msgstr "文本：换行符转LF（Unix）"
 
 # Menu: Script name
-msgid "Text: List encodings"
+msgid "Text: List encoding"
 msgstr "文本：列出编码"
 
 # Menu: Script name
-msgid "Text: List file issues"
-msgstr "文本：列出文件问题"
+msgid "Text: List issues"
+msgstr "文本：列出问题"
 
 # Menu: Script name
 msgid "Text: List files with bad chars"
@@ -1841,8 +1834,8 @@ msgid "Text: Remove trailing spaces"
 msgstr "文本：删除行尾空格"
 
 # Menu: Script name
-msgid "Text: Transliterate to ASCII"
-msgstr "文本：音译为ASCII"
+msgid "Text: Remove accents"
+msgstr "文本：移除重音符号"
 
 # Menu: Script name
 msgid "URL: Check HTTP status"
@@ -1853,28 +1846,28 @@ msgid "URL: Check SSL expiry"
 msgstr "URL：检查SSL过期时间"
 
 # Menu: Script name
-msgid "URL: Download (clipboard, file)"
-msgstr "URL：下载（剪贴板，文件）"
+msgid "URL: Download file"
+msgstr "URL：下载文件"
 
 # Menu: Script name
 msgid "URL: Show HTTP headers"
 msgstr "URL：显示HTTP头信息"
 
 # Menu: Script name
-msgid "Verify MD5 checksum file"
-msgstr "验证MD5校验和文件"
+msgid "Verify MD5 file"
+msgstr "验证 MD5 文件"
 
 # Menu: Script name
-msgid "Verify SHA1 checksum file"
-msgstr "验证SHA1校验和文件"
+msgid "Verify SHA1 file"
+msgstr "验证 SHA1 文件"
 
 # Menu: Script name
-msgid "Verify SHA256 checksum file"
-msgstr "验证SHA256校验和文件"
+msgid "Verify SHA256 file"
+msgstr "验证 SHA256 文件"
 
 # Menu: Script name
-msgid "Verify SHA512 checksum file"
-msgstr "验证SHA512校验和文件"
+msgid "Verify SHA512 file"
+msgstr "验证 SHA512 文件"
 
 # Menu: Script name
 msgid "Video: Aspect to 1:1"
@@ -1989,19 +1982,18 @@ msgid "Video: Rotate (270 deg)"
 msgstr "视频：旋转 (270 度)"
 
 # Menu: Script name
-msgid "Video: Speed factor to 0.5"
-msgstr "视频：速度因子设为 0.5"
+msgid "Video: Speed to 0.5"
+msgstr "视频：速度调整为 0.5"
 
 # Menu: Script name
-msgid "Video: Speed factor to 1.5"
-msgstr "视频：速度因子设为 1.5"
+msgid "Video: Speed to 1.5"
+msgstr "视频：速度调整为 1.5"
 
 # Menu: Script name
-msgid "Video: Speed factor to 2.0"
-msgstr "视频：速度因子设为 2.0"
+msgid "Video: Speed to 2.0"
+msgstr "视频：速度调整为 2.0"
 
 # SECTION: Installer ----
-
 # Installer
 msgid "Add shortcuts to the application menu"
 msgstr "添加快捷方式到应用程序菜单"
