@@ -1045,7 +1045,7 @@ msgstr "Git: Reset e pull"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "GPG: Decrypt"
-msgstr "GPG: Decriptar"
+msgstr "GPG: Descriptografar"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "GPG: Encrypt with password"
