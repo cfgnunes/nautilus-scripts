@@ -126,9 +126,10 @@ _main() {
 
     # If the file ".common-functions.sh" is missing, it means the installer is
     # being executed remotely (e.g., via 'curl'). In that case, download the
-    # repository and continue the installation from the extracted files.
+    # tarball and continue the installation from the extracted files.
     if [[ ! -f "$SCRIPT_DIR/.common-functions.sh" ]]; then
         _bootstrap_repository "$@"
+        exit 0
     fi
 
     # Available options presented in the interactive menu.
@@ -199,7 +200,7 @@ _main() {
     # Step 2: Determine target home directories (single user or all users).
     local install_home_list=""
     if [[ "$OPT_INSTALL_FOR_ALL_USERS" == "true" ]]; then
-        if __command_exists "sudo"; then
+        if _command_exists "sudo"; then
             SUDO_CMD="sudo"
         fi
 
@@ -228,7 +229,7 @@ _main() {
 
         if [[ "$OPT_INSTALL_FOR_ALL_USERS" == "true" ]] &&
             [[ -n "$INSTALL_OWNER" ]] && [[ -n "$INSTALL_GROUP" ]]; then
-            if __command_exists "sudo"; then
+            if _command_exists "sudo"; then
                 SUDO_CMD_USER="sudo -u $INSTALL_OWNER -g $INSTALL_GROUP"
             fi
         fi
@@ -239,7 +240,7 @@ _main() {
             FILE_MANAGER=$file_manager
 
             if [[ "$FILE_MANAGER" != "unknown" ]] &&
-                ! __command_exists "$FILE_MANAGER"; then
+                ! _command_exists "$FILE_MANAGER"; then
                 continue
             fi
 
@@ -348,28 +349,11 @@ _echo_error() {
 _check_exist_filemanager() {
     local file_manager=""
     for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
-        if __command_exists "$file_manager"; then
+        if _command_exists "$file_manager"; then
             return 0
         fi
     done
     return 1
-}
-
-# FUNCTION: __command_exists
-#
-# DESCRIPTION:
-# This function checks whether a given command is available on the system.
-#
-# PARAMETERS:
-#   $1 (command_check): The name of the command to verify.
-#
-# RETURNS:
-#   "0" (true): If the command is available.
-#   "1" (false): If the command is not available.
-__command_exists() {
-    local command_check=$1
-
-    command -v "$command_check" &>/dev/null || return 1
 }
 
 # -----------------------------------------------------------------------------
@@ -414,11 +398,11 @@ __delete_items() {
     rmdir -- $items &>/dev/null
 
     # shellcheck disable=SC2086
-    if __command_exists "gio"; then
+    if _command_exists "gio"; then
         $SUDO_CMD_USER gio trash -- $items 2>/dev/null
-    elif __command_exists "kioclient"; then
+    elif _command_exists "kioclient"; then
         $SUDO_CMD_USER kioclient move -- $items trash:/ 2>/dev/null
-    elif __command_exists "gvfs-trash"; then
+    elif _command_exists "gvfs-trash"; then
         $SUDO_CMD_USER gvfs-trash -- $items 2>/dev/null
     else
         $SUDO_CMD rm -rf -- $items 2>/dev/null
@@ -566,19 +550,19 @@ _step_install_dependencies() {
     local packages=""
     local admin_cmd=""
 
-    if __command_exists "sudo"; then
+    if _command_exists "sudo"; then
         admin_cmd="sudo"
     fi
 
     # Basic packages to run the script '.common-functions.sh'.
-    __command_exists "basename" || packages+="coreutils "
-    __command_exists "file" || packages+="file "
-    __command_exists "pstree" || packages+="psmisc "
-    __command_exists "xdg-open" || packages+="xdg-utils "
+    _command_exists "basename" || packages+="coreutils "
+    _command_exists "file" || packages+="file "
+    _command_exists "pstree" || packages+="psmisc "
+    _command_exists "xdg-open" || packages+="xdg-utils "
 
     # Packages for dialogs.
     if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
-        if ! __command_exists "zenity" && ! __command_exists "yad"; then
+        if ! _command_exists "zenity" && ! _command_exists "yad"; then
             if [[ "${XDG_CURRENT_DESKTOP,,}" == *"gnome"* ]]; then
                 packages+="zenity "
             else
@@ -587,8 +571,8 @@ _step_install_dependencies() {
         fi
     fi
 
-    if __command_exists "nix-env"; then
-        __command_exists "pgrep" || packages+="procps "
+    if _command_exists "nix-env"; then
+        _command_exists "pgrep" || packages+="procps "
 
         # Package manager 'nix': no root required.
         if [[ -n "$packages" ]]; then
@@ -606,39 +590,39 @@ _step_install_dependencies() {
 
             nix-env -iA $nix_packages
         fi
-    elif __command_exists "guix"; then
-        __command_exists "pgrep" || packages+="procps "
+    elif _command_exists "guix"; then
+        _command_exists "pgrep" || packages+="procps "
 
         # Package manager 'guix': no root required.
         if [[ -n "$packages" ]]; then
             guix install $packages
         fi
-    elif __command_exists "apt-get"; then
+    elif _command_exists "apt-get"; then
         # Package manager 'apt-get': For Debian/Ubuntu systems.
-        __command_exists "pgrep" || packages+="procps "
+        _command_exists "pgrep" || packages+="procps "
 
         if [[ -n "$packages" ]]; then
             $admin_cmd apt-get update
             $admin_cmd apt-get -y install $packages
         fi
-    elif __command_exists "rpm-ostree"; then
+    elif _command_exists "rpm-ostree"; then
         # Package manager 'rpm-ostree': For Fedora/RHEL atomic systems.
-        __command_exists "pgrep" || packages+="procps-ng "
+        _command_exists "pgrep" || packages+="procps-ng "
 
         if [[ -n "$packages" ]]; then
             $admin_cmd rpm-ostree install $packages
         fi
-    elif __command_exists "dnf"; then
+    elif _command_exists "dnf"; then
         # Package manager 'dnf': For Fedora/RHEL systems.
-        __command_exists "pgrep" || packages+="procps-ng "
+        _command_exists "pgrep" || packages+="procps-ng "
 
         if [[ -n "$packages" ]]; then
             $admin_cmd dnf check-update
             $admin_cmd dnf -y install $packages
         fi
-    elif __command_exists "pacman"; then
+    elif _command_exists "pacman"; then
         # Package manager 'pacman': For Arch Linux systems.
-        __command_exists "pgrep" || packages+="procps "
+        _command_exists "pgrep" || packages+="procps "
 
         # NOTE: Force update GTK4 packages on Arch Linux.
         if [[ "$packages" == *"zenity"* ]]; then
@@ -649,9 +633,9 @@ _step_install_dependencies() {
             $admin_cmd pacman -Syy
             $admin_cmd pacman --noconfirm -S $packages
         fi
-    elif __command_exists "zypper"; then
+    elif _command_exists "zypper"; then
         # Package manager 'zypper': For openSUSE systems.
-        __command_exists "pgrep" || packages+="procps-ng "
+        _command_exists "pgrep" || packages+="procps-ng "
 
         if [[ -n "$packages" ]]; then
             $admin_cmd zypper refresh
@@ -948,7 +932,7 @@ _step_create_gnome_application_folder() {
 
     # Check if 'gsettings' is available and the GNOME schemas are present. If
     # not, skip folder creation.
-    if ! __command_exists "gsettings" || ! gsettings list-schemas |
+    if ! _command_exists "gsettings" || ! gsettings list-schemas |
         grep --quiet '^org.gnome.desktop.app-folders$'; then
         return
     fi
@@ -959,7 +943,7 @@ _step_create_gnome_application_folder() {
     # - Use 'machinectl' when modifying another user's GNOME settings.
     # - Otherwise, use the local 'gsettings' command.
     local gsettings_user="gsettings"
-    if __command_exists "machinectl" && [[ "$USER" != "$INSTALL_OWNER" ]]; then
+    if _command_exists "machinectl" && [[ "$USER" != "$INSTALL_OWNER" ]]; then
         gsettings_user="sudo machinectl --quiet shell $INSTALL_OWNER@ $(which "gsettings")"
     fi
 
@@ -1265,9 +1249,9 @@ _step_install_homebrew() {
 
     # Check if 'curl' or 'wget' is available.
     local downloader=""
-    if __command_exists "curl"; then
+    if _command_exists "curl"; then
         downloader="curl"
-    elif __command_exists "wget"; then
+    elif _command_exists "wget"; then
         downloader="wget"
     else
         _echo_error "Neither 'curl' nor 'wget' is installed. Please install one of them to continue."
@@ -1326,9 +1310,9 @@ _bootstrap_repository() {
 
     # Check if 'curl' or 'wget' is available.
     local downloader=""
-    if __command_exists "curl"; then
+    if command -v "curl" &>/dev/null; then
         downloader="curl"
-    elif __command_exists "wget"; then
+    elif command -v "wget" &>/dev/null; then
         downloader="wget"
     else
         _echo_error "Neither 'curl' nor 'wget' is installed. Please install one of them to continue."
@@ -1394,7 +1378,6 @@ _bootstrap_repository() {
     bash install.sh "$@"
 
     rm -rf -- "$temp_dir"
-    exit 0
 }
 
 _main "$@"
