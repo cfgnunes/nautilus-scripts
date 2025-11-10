@@ -1119,7 +1119,7 @@ msgstr "图像：自动裁剪"
 
 # Menu: Script name
 msgid "Image: Automatic crop (15 pct)"
-msgstr "图像：自动裁剪 (15%)"
+msgstr "图像：自动裁剪 (15pct)"
 
 # Menu: Script name
 msgid "Image: Background to alpha"
@@ -1127,7 +1127,7 @@ msgstr "图像：背景转为透明"
 
 # Menu: Script name
 msgid "Image: Background to alpha (15 pct)"
-msgstr "图像：背景转为透明 (15%)"
+msgstr "图像：背景转为透明 (15pct)"
 
 # Menu: Script name
 msgid "Image: Color alpha to black"
@@ -1147,7 +1147,7 @@ msgstr "图像：颜色黑色转Alpha通道"
 
 # Menu: Script name
 msgid "Image: Color black to alpha (15 pct)"
-msgstr "图像：颜色黑色转Alpha通道（15%）"
+msgstr "图像：颜色黑色转Alpha通道（15pct）"
 
 # Menu: Script name
 msgid "Image: Color magenta to alpha"
@@ -1155,7 +1155,7 @@ msgstr "图像：颜色洋红转Alpha通道"
 
 # Menu: Script name
 msgid "Image: Color magenta to alpha (15 pct)"
-msgstr "图像：颜色洋红转Alpha通道（15%）"
+msgstr "图像：颜色洋红转Alpha通道（15pct）"
 
 # Menu: Script name
 msgid "Image: Colorspace to gray"
@@ -1167,7 +1167,7 @@ msgstr "图像：颜色白色转Alpha通道"
 
 # Menu: Script name
 msgid "Image: Color white to alpha (15 pct)"
-msgstr "图像：颜色白色转Alpha通道（15%）"
+msgstr "图像：颜色白色转Alpha通道（15pct）"
 
 # Menu: Script name
 msgid "Image: Combine into a GIF"
@@ -1239,19 +1239,19 @@ msgstr "图像：导出为PDF"
 
 # Menu: Script name
 msgid "Image: Find similar (65 pct)"
-msgstr "图像：查找相似图片（65%）"
+msgstr "图像：查找相似图片（65pct）"
 
 # Menu: Script name
 msgid "Image: Find similar (75 pct)"
-msgstr "图像：查找相似图片（75%）"
+msgstr "图像：查找相似图片（75pct）"
 
 # Menu: Script name
 msgid "Image: Find similar (85 pct)"
-msgstr "图像：查找相似图片（85%）"
+msgstr "图像：查找相似图片（85pct）"
 
 # Menu: Script name
 msgid "Image: Find similar (95 pct)"
-msgstr "图像：查找相似图片（95%）"
+msgstr "图像：查找相似图片（95pct）"
 
 # Menu: Script name
 msgid "Image: Flip (horizontally)"
@@ -1315,15 +1315,15 @@ msgstr "图像：从元数据重命名"
 
 # Menu: Script name
 msgid "Image: Resize (25 pct)"
-msgstr "图像：调整尺寸（25%）"
+msgstr "图像：调整尺寸（25pct）"
 
 # Menu: Script name
 msgid "Image: Resize (50 pct)"
-msgstr "图像：调整尺寸（50%）"
+msgstr "图像：调整尺寸（50pct）"
 
 # Menu: Script name
 msgid "Image: Resize (75 pct)"
-msgstr "图像：调整尺寸（75%）"
+msgstr "图像：调整尺寸（75pct）"
 
 # Menu: Script name
 msgid "Image: Resize and crop (512x512)"
@@ -1959,15 +1959,15 @@ msgstr "视频：移除音频"
 
 # Menu: Script name
 msgid "Video: Resize (25 pct)"
-msgstr "视频：调整大小 (25%)"
+msgstr "视频：调整大小 (25pct)"
 
 # Menu: Script name
 msgid "Video: Resize (50 pct)"
-msgstr "视频：调整大小 (50%)"
+msgstr "视频：调整大小 (50pct)"
 
 # Menu: Script name
 msgid "Video: Resize (75 pct)"
-msgstr "视频：调整大小 (75%)"
+msgstr "视频：调整大小 (75pct)"
 
 # Menu: Script name
 msgid "Video: Rotate (90 deg)"
