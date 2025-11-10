@@ -152,9 +152,9 @@ Many thanks to all of them for their excellent and creative script collections:
 
 Special thanks to everyone who contributed to the translation of this project:
 
-- 🇨🇳 **JoveYu** - Chinese.
-- 🇧🇷 **Nathália Medeiros** - Brazilian Portuguese.
-- 🇪🇸 **Maravento** - Spanish.
+- 🇨🇳 **JoveYu** - Chinese (translation).
+- 🇧🇷 **Nathália Medeiros** - Brazilian Portuguese (review).
+- 🇪🇸 **Maravento** - Spanish (review).
 
 ### Contributors
 
