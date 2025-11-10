@@ -29,7 +29,7 @@ _main_task() {
     dir=$(dirname -- "$input_file")
     filename=$(basename -- "$input_file")
 
-    # Replace gaps with spaces.
+    # Gaps by spaces.
     output_file=$(tr -s -- "-_\t" " " <<<"$filename")
 
     # Run the main process.

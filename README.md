@@ -68,8 +68,8 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Alt>S`   | Compress to .tar.zst (each)         |
 | `<Control><Alt>X`   | Compress to .tar.xz (each)          |
 | `<Control><Alt>Z`   | Compress to .zip (each)             |
-| `<Control><Alt>I`   | Show files information              |
-| `<Control><Alt>M`   | Show files MIME types               |
+| `<Control><Alt>I`   | Show file information               |
+| `<Control><Alt>M`   | Show file MIME type                 |
 | `<Control><Alt>H`   | Find hidden items                   |
 | `<Control><Alt>J`   | Find junk files                     |
 | `<Control><Alt>U`   | Find duplicate files                |
@@ -77,7 +77,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Alt>P`   | List permissions and owners         |
 | `<Control><Alt>B`   | List largest files                  |
 | `<Control><Alt>R`   | List recently modified files        |
-| `<Control><Alt>W`   | Text: List file issues              |
+| `<Control><Alt>W`   | Text: List issues                   |
 | `<Control><Alt>C`   | Copy filename                       |
 | `<Control><Alt>V`   | Paste clipboard                     |
 | `<Control><Shift>V` | Paste as symbolic link              |
@@ -88,7 +88,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Shift>P` | Rename: Remove parentheses suffixes |
 | `<Control><Shift>G` | Git: Clone URLs                     |
 | `<Control><Shift>R` | Git: Reset and pull                 |
-| `<Control><Shift>X` | URL: Download                       |
+| `<Control><Shift>X` | URL: Download file                  |
 
 ## Compatibility
 

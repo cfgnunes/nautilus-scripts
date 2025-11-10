@@ -513,8 +513,8 @@ msgid "Image"
 msgstr "Imagem"
 
 # Menu: Category
-msgid "Link operations"
-msgstr "Operações com links"
+msgid "Links"
+msgstr "Links"
 
 # Menu: Category
 msgid "Network and Internet"
@@ -1385,8 +1385,8 @@ msgid "IP: Scan ports"
 msgstr "IP: Escanear portas"
 
 # Menu: Script name
-msgid "IP: Test hosts availability"
-msgstr "IP: Testar disponibilidade de hosts"
+msgid "IP: Test availability"
+msgstr "IP: Testar disponibilidade"
 
 # Menu: Script name
 msgid "List hard links"
@@ -1649,16 +1649,16 @@ msgid "Rename: Remove parentheses suffixes"
 msgstr "Renomear: Remover sufixos entre parênteses"
 
 # Menu: Script name
-msgid "Rename: Replace gaps with dashes"
-msgstr "Renomear: Trocar lacunas por traços"
+msgid "Rename: Gaps by dashes"
+msgstr "Renomear: Lacunas por traços"
 
 # Menu: Script name
-msgid "Rename: Replace gaps with spaces"
-msgstr "Renomear: Trocar lacunas por espaços"
+msgid "Rename: Gaps by spaces"
+msgstr "Renomear: Lacunas por espaços"
 
 # Menu: Script name
-msgid "Rename: Replace gaps with underscores"
-msgstr "Renomear: Trocar lacunas por sublinhados"
+msgid "Rename: Gaps by underscores"
+msgstr "Renomear: Lacunas por sublinhados"
 
 # Menu: Script name
 msgid "Rename: To lowercase"
@@ -1693,24 +1693,24 @@ msgid "Scan for malware (via ClamAV)"
 msgstr "Verificar malware (via ClamAV)"
 
 # Menu: Script name
-msgid "Show files information"
-msgstr "Mostrar informações dos arquivos"
+msgid "Show file information"
+msgstr "Mostrar informação do arquivo"
 
 # Menu: Script name
-msgid "Show files metadata"
-msgstr "Mostrar metadados dos arquivos"
+msgid "Show file metadata"
+msgstr "Mostrar metadado do arquivo"
 
 # Menu: Script name
-msgid "Show files MIME types"
-msgstr "Mostrar tipos MIME dos arquivos"
+msgid "Show file MIME type"
+msgstr "Mostrar tipo MIME do arquivo"
 
 # Menu: Script name
 msgid "Show media information"
-msgstr "Mostrar informações de mídia"
+msgstr "Mostrar informação de mídia"
 
 # Menu: Script name
-msgid "Shred files (secure delete)"
-msgstr "Destruir arquivos (exclusão segura)"
+msgid "Shred file (secure delete)"
+msgstr "Destruir arquivo (exclusão segura)"
 
 # Menu: Script name
 msgid "SVG: Compress to SVGZ"
@@ -1805,8 +1805,8 @@ msgid "Text: List encoding"
 msgstr "Texto: Listar codificação"
 
 # Menu: Script name
-msgid "Text: List file issues"
-msgstr "Texto: Listar problemas de arquivo"
+msgid "Text: List issues"
+msgstr "Texto: Listar problemas"
 
 # Menu: Script name
 msgid "Text: List files with bad chars"
@@ -1845,8 +1845,8 @@ msgid "URL: Check SSL expiry"
 msgstr "URL: Verificar expiração de SSL"
 
 # Menu: Script name
-msgid "URL: Download"
-msgstr "URL: Baixar"
+msgid "URL: Download file"
+msgstr "URL: Baixar arquivo"
 
 # Menu: Script name
 msgid "URL: Show HTTP headers"

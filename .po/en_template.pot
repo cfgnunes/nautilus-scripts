@@ -513,7 +513,7 @@ msgid "Image"
 msgstr ""
 
 # Menu: Category
-msgid "Link operations"
+msgid "Links"
 msgstr ""
 
 # Menu: Category
@@ -1385,7 +1385,7 @@ msgid "IP: Scan ports"
 msgstr ""
 
 # Menu: Script name
-msgid "IP: Test hosts availability"
+msgid "IP: Test availability"
 msgstr ""
 
 # Menu: Script name
@@ -1649,15 +1649,15 @@ msgid "Rename: Remove parentheses suffixes"
 msgstr ""
 
 # Menu: Script name
-msgid "Rename: Replace gaps with dashes"
+msgid "Rename: Gaps by dashes"
 msgstr ""
 
 # Menu: Script name
-msgid "Rename: Replace gaps with spaces"
+msgid "Rename: Gaps by spaces"
 msgstr ""
 
 # Menu: Script name
-msgid "Rename: Replace gaps with underscores"
+msgid "Rename: Gaps by underscores"
 msgstr ""
 
 # Menu: Script name
@@ -1693,15 +1693,15 @@ msgid "Scan for malware (via ClamAV)"
 msgstr ""
 
 # Menu: Script name
-msgid "Show files information"
+msgid "Show file information"
 msgstr ""
 
 # Menu: Script name
-msgid "Show files metadata"
+msgid "Show file metadata"
 msgstr ""
 
 # Menu: Script name
-msgid "Show files MIME types"
+msgid "Show file MIME type"
 msgstr ""
 
 # Menu: Script name
@@ -1709,7 +1709,7 @@ msgid "Show media information"
 msgstr ""
 
 # Menu: Script name
-msgid "Shred files (secure delete)"
+msgid "Shred file (secure delete)"
 msgstr ""
 
 # Menu: Script name
@@ -1805,7 +1805,7 @@ msgid "Text: List encoding"
 msgstr ""
 
 # Menu: Script name
-msgid "Text: List file issues"
+msgid "Text: List issues"
 msgstr ""
 
 # Menu: Script name
@@ -1845,7 +1845,7 @@ msgid "URL: Check SSL expiry"
 msgstr ""
 
 # Menu: Script name
-msgid "URL: Download"
+msgid "URL: Download file"
 msgstr ""
 
 # Menu: Script name

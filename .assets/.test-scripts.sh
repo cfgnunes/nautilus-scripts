@@ -676,17 +676,17 @@ _main() {
     #bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     #__test_file_empty "$std_output"
 
-    script_test="Directories and Files/Show files information"
+    script_test="Directories and Files/Show file information"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Directories and Files/Show files metadata"
+    script_test="Directories and Files/Show file metadata"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Directories and Files/Show files MIME types"
+    script_test="Directories and Files/Show file MIME type"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_nonempty "$std_output"
@@ -1733,60 +1733,60 @@ _main() {
     #__test_file_empty "$std_output"
 
     # -------------------------------------------------------------------------
-    ## SUBSECTION: Link operations ----
+    ## SUBSECTION: Links ----
     # -------------------------------------------------------------------------
 
     # Create mock files for testing.
     input_file1="$temp_dir/link"
     echo "Content of 'link'." >"$input_file1"
 
-    script_test="Link operations/Create hard link here"
+    script_test="Links/Create hard link here"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$temp_dir/Hard link to link"
     __test_file_empty "$std_output"
 
-    #script_test="Link operations/Create hard link to..."
+    #script_test="Links/Create hard link to..."
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    script_test="Link operations/Create symbolic link here"
+    script_test="Links/Create symbolic link here"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$temp_dir/Link to link"
     __test_file_empty "$std_output"
 
-    #script_test="Link operations/Create symbolic link to..."
+    #script_test="Links/Create symbolic link to..."
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    script_test="Link operations/List hard links"
+    script_test="Links/List hard links"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Link operations/List symbolic links"
+    script_test="Links/List symbolic links"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_nonempty "$std_output"
 
     rm -- "$input_file1"
-    script_test="Link operations/Find broken links"
+    script_test="Links/Find broken links"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    #script_test="Link operations/Paste as hard link"
+    #script_test="Links/Paste as hard link"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Link operations/Paste as symbolic link"
+    #script_test="Links/Paste as symbolic link"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
@@ -1833,7 +1833,7 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Network and Internet/IP: Test hosts availability"
+    script_test="Network and Internet/IP: Test availability"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"
@@ -1856,7 +1856,7 @@ _main() {
     input_file1="$temp_dir/Test internet.txt"
     echo "https://www.rfc-editor.org/rfc/rfc2616.txt" >"$input_file1"
 
-    script_test="Network and Internet/URL: Download"
+    script_test="Network and Internet/URL: Download file"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$temp_dir/rfc2616.txt"
@@ -2003,7 +2003,7 @@ _main() {
     __test_file_nonempty "$output_file.txt (2).bak"
     __test_file_empty "$std_output"
 
-    script_test="Plain text/Text: Tools/Text: List file issues"
+    script_test="Plain text/Text: Tools/Text: List issues"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_empty "$std_output"
@@ -2050,7 +2050,7 @@ _main() {
     output_file="$temp_dir/Test-rename.txt"
     echo "Content of 'Test'." >"$input_file1"
 
-    script_test="Rename files/Rename: Replace gaps with dashes"
+    script_test="Rename files/Rename: Gaps by dashes"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file"
@@ -2061,7 +2061,7 @@ _main() {
     output_file="$temp_dir/Test rename.txt"
     echo "Content of 'Test'." >"$input_file1"
 
-    script_test="Rename files/Rename: Replace gaps with spaces"
+    script_test="Rename files/Rename: Gaps by spaces"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file"
@@ -2072,7 +2072,7 @@ _main() {
     output_file="$temp_dir/Test_rename.txt"
     echo "Content of 'Test'." >"$input_file1"
 
-    script_test="Rename files/Rename: Replace gaps with underscores"
+    script_test="Rename files/Rename: Gaps by underscores"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file"
@@ -2156,7 +2156,7 @@ _main() {
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Security and Recovery/Shred files (secure delete)"
+    #script_test="Security and Recovery/Shred file (secure delete)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
