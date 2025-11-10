@@ -8,7 +8,7 @@ This project offers a collection of file manager actions, also known as _Nautilu
 
 You can install in two ways:
 
-### Option 1 - Online installation (recommended)
+### Option 1: Online installation (recommended)
 
 You can use either **curl** or **wget**. Choose **one** of the following commands and run it in your terminal:
 
@@ -24,7 +24,7 @@ bash -c "$(curl -fsSL https://cfgnunes.github.io/nautilus-scripts/install.sh)"
 bash -c "$(wget -qO- https://cfgnunes.github.io/nautilus-scripts/install.sh)"
 ```
 
-### Option 2 - Local installation
+### Option 2: Local installation
 
 After cloning this repository, run the following command:
 
