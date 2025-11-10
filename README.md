@@ -152,8 +152,8 @@ Many thanks to all of them for their excellent and creative script collections:
 
 Special thanks to everyone who contributed to the translation of this project:
 
-- 🇨🇳 **JoveYu** - Chinese (zh_CN): translation.
-- 🇧🇷 **Nathália Medeiros** - Brazilian Portuguese (pt_BR): review.
+- 🇨🇳 **JoveYu** - Chinese (zh_CN) translation.
+- 🇧🇷 **Nathália Medeiros** - Brazilian Portuguese (pt_BR) review.
 
 ### Contributors
 
