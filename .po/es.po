@@ -299,8 +299,8 @@ msgid "non-searchable PDFs"
 msgstr "PDFs no buscables"
 
 # par_item_name
-msgid "password-encrypted PDFs"
-msgstr "PDFs cifrados con contraseña"
+msgid "password-protected PDFs"
+msgstr "PDFs protegidos con contraseña"
 
 # par_item_name
 msgid "PDFs"
@@ -628,8 +628,8 @@ msgid "PDF: Combine, Split"
 msgstr "PDF: Combinar, Dividir"
 
 # Menu: Subcategory. This string must NOT contain the "%" character.
-msgid "PDF: Encrypt, Decrypt"
-msgstr "PDF: Cifrar, Descifrar"
+msgid "PDF: Security"
+msgstr "PDF: Seguridad"
 
 # Menu: Subcategory. This string must NOT contain the "%" character.
 msgid "PDF: Multiple-page layout"
@@ -1480,12 +1480,12 @@ msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: Convertir a PDFA-2b"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "PDF: Decrypt (remove password)"
-msgstr "PDF: Descifrar (eliminar contraseña)"
+msgid "PDF: Remove password"
+msgstr "PDF: Eliminar contraseña"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "PDF: Encrypt (set a password)"
-msgstr "PDF: Cifrar (definir contraseña)"
+msgid "PDF: Set a password"
+msgstr "PDF: Establecer contraseña"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "PDF: Extract images"
@@ -1504,8 +1504,8 @@ msgid "PDF: Find non-searchable PDFs"
 msgstr "PDF: Encontrar PDFs no buscables"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "PDF: Find password-encrypted PDFs"
-msgstr "PDF: Encontrar PDFs con contraseña"
+msgid "PDF: Find password-protected PDFs"
+msgstr "PDF: Buscar PDFs con contraseña"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "PDF: Find signed PDFs"

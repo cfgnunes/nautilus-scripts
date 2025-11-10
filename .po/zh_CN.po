@@ -301,8 +301,8 @@ msgid "non-searchable PDFs"
 msgstr "不可搜索PDF"
 
 # par_item_name
-msgid "password-encrypted PDFs"
-msgstr "密码加密PDF"
+msgid "password-protected PDFs"
+msgstr "受密码保护的 PDF"
 
 # par_item_name
 msgid "PDFs"
@@ -630,8 +630,8 @@ msgid "PDF: Combine, Split"
 msgstr "PDF：合并、分割"
 
 # Menu: Subcategory. This string must NOT contain the "%" character.
-msgid "PDF: Encrypt, Decrypt"
-msgstr "PDF：加密、解密"
+msgid "PDF: Security"
+msgstr "PDF：安全"
 
 # Menu: Subcategory. This string must NOT contain the "%" character.
 msgid "PDF: Multiple-page layout"
@@ -1482,12 +1482,12 @@ msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF：转换为PDFA-2b"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "PDF: Decrypt (remove password)"
-msgstr "PDF：解密 (移除密码)"
+msgid "PDF: Remove password"
+msgstr "PDF：移除密码"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "PDF: Encrypt (set a password)"
-msgstr "PDF：加密 (设置密码)"
+msgid "PDF: Set a password"
+msgstr "PDF：设置密码"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "PDF: Extract images"
@@ -1506,8 +1506,8 @@ msgid "PDF: Find non-searchable PDFs"
 msgstr "PDF：查找不可搜索的 PDF"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "PDF: Find password-encrypted PDFs"
-msgstr "PDF：查找密码加密的 PDF"
+msgid "PDF: Find password-protected PDFs"
+msgstr "PDF：查找受密码保护的 PDF"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "PDF: Find signed PDFs"

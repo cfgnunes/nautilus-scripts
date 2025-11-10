@@ -1496,19 +1496,19 @@ _main() {
     __test_file_nonempty "$temp_dir/Output/Test document PDF.0001.pdf"
     __test_file_empty "$std_output"
 
-    #script_test="Document/PDF: Encrypt, Decrypt/PDF: Decrypt (remove password)"
+    #script_test="Document/PDF: Security/PDF: Remove password"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file (decrypted).pdf"
     #__test_file_empty "$std_output"
 
-    #script_test="Document/PDF: Encrypt, Decrypt/PDF: Encrypt (set a password)"
+    #script_test="Document/PDF: Security/PDF: Set a password"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    script_test="Document/PDF: Encrypt, Decrypt/PDF: Find password-encrypted PDFs"
+    script_test="Document/PDF: Security/PDF: Find password-protected PDFs"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_empty "$std_output"
