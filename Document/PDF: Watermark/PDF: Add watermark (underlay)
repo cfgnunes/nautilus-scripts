@@ -16,7 +16,7 @@ _main() {
 
     TEMP_DATA_TASK=$(_display_file_selection_box \
         "$(_i18n 'PDF files') | *.pdf" \
-        "$(_i18n 'Choose an PDF to use as the watermark')")
+        "$(_i18n 'Choose a PDF to use as the watermark')")
 
     # Check output directory only after displaying dialog boxes to the user.
     output_dir=$(_get_output_dir "par_use_same_dir=true")

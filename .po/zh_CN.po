@@ -39,7 +39,7 @@ msgstr "选择要导入的密钥文件。"
 msgid "Choose an image to use as the watermark"
 msgstr "选择用作水印的图像"
 
-msgid "Choose an PDF to use as the watermark"
+msgid "Choose a PDF to use as the watermark"
 msgstr "选择用作水印的PDF"
 
 msgid "Command failed with a non-zero exit code."
@@ -766,11 +766,11 @@ msgid "Audio: Convert to WAV"
 msgstr "音频：转换为WAV"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Audio: Fade in"
+msgid "Audio: Fade-in"
 msgstr "音频：淡入"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Audio: Fade out"
+msgid "Audio: Fade-out"
 msgstr "音频：淡出"
 
 # Menu: Script name. This string must NOT contain the "%" character.

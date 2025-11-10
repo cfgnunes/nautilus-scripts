@@ -37,7 +37,7 @@ msgstr "Elija un archivo de clave para importar."
 msgid "Choose an image to use as the watermark"
 msgstr "Elija una imagen para usar como marca de agua"
 
-msgid "Choose an PDF to use as the watermark"
+msgid "Choose a PDF to use as the watermark"
 msgstr "Elija un PDF para usar como marca de agua"
 
 msgid "Command failed with a non-zero exit code."
@@ -764,12 +764,12 @@ msgid "Audio: Convert to WAV"
 msgstr "Audio: Convertir a WAV"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Audio: Fade in"
-msgstr "Audio: Fade in"
+msgid "Audio: Fade-in"
+msgstr "Audio: Fade-in"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Audio: Fade out"
-msgstr "Audio: Fade out"
+msgid "Audio: Fade-out"
+msgstr "Audio: Fade-out"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Audio: Mix channels to mono"

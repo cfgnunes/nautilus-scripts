@@ -37,7 +37,7 @@ msgstr ""
 msgid "Choose an image to use as the watermark"
 msgstr ""
 
-msgid "Choose an PDF to use as the watermark"
+msgid "Choose a PDF to use as the watermark"
 msgstr ""
 
 msgid "Command failed with a non-zero exit code."
@@ -764,11 +764,11 @@ msgid "Audio: Convert to WAV"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Audio: Fade in"
+msgid "Audio: Fade-in"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Audio: Fade out"
+msgid "Audio: Fade-out"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.

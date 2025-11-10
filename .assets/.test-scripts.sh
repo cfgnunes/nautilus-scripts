@@ -270,13 +270,13 @@ _main() {
     __test_file_nonempty "$output_file.wav"
     __test_file_empty "$std_output"
 
-    script_test="Audio and Video/Audio: Effects/Audio: Fade in"
+    script_test="Audio and Video/Audio: Effects/Audio: Fade-in"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file (fade-in).mp3"
     __test_file_empty "$std_output"
 
-    script_test="Audio and Video/Audio: Effects/Audio: Fade out"
+    script_test="Audio and Video/Audio: Effects/Audio: Fade-out"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file (fade-out).mp3"
