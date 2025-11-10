@@ -2013,7 +2013,7 @@ msgid "Closing the file manager..."
 msgstr ""
 
 # Installer
-msgid "Creating '.desktop' files..."
+msgid "Creating shortcuts to the application menu..."
 msgstr ""
 
 # Installer

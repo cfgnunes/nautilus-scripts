@@ -35,10 +35,10 @@ msgid "Choose a key file to import."
 msgstr "Escolha uma chave para importar."
 
 msgid "Choose an image to use as the watermark"
-msgstr "Escolha uma imagem para usar como marca d'água"
+msgstr "Escolha uma imagem para usar como marca dágua"
 
 msgid "Choose an PDF to use as the watermark"
-msgstr "Escolha um PDF para usar como marca d'água"
+msgstr "Escolha um PDF para usar como marca dágua"
 
 msgid "Command failed with a non-zero exit code."
 msgstr "O comando falhou com um código de saída diferente de zero."
@@ -2013,8 +2013,8 @@ msgid "Closing the file manager..."
 msgstr "Fechando o gerenciador de arquivos..."
 
 # Installer
-msgid "Creating '.desktop' files..."
-msgstr "Criando arquivos '.desktop'..."
+msgid "Creating shortcuts to the application menu..."
+msgstr "Criando atalhos ao menu de aplicativos..."
 
 # Installer
 msgid "Creating GNOME application folder..."

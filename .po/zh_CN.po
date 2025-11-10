@@ -2015,8 +2015,8 @@ msgid "Closing the file manager..."
 msgstr "正在关闭文件管理器..."
 
 # Installer
-msgid "Creating '.desktop' files..."
-msgstr "正在创建 '.desktop' 文件..."
+msgid "Creating shortcuts to the application menu..."
+msgstr "正在创建应用程序菜单的快捷方式..."
 
 # Installer
 msgid "Creating GNOME application folder..."

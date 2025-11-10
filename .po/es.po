@@ -2013,8 +2013,8 @@ msgid "Closing the file manager..."
 msgstr "Cerrando el gestor de archivos..."
 
 # Installer
-msgid "Creating '.desktop' files..."
-msgstr "Creando archivos '.desktop'..."
+msgid "Creating shortcuts to the application menu..."
+msgstr "Creando accesos directos al menú de aplicaciones..."
 
 # Installer
 msgid "Creating GNOME application folder..."

@@ -884,7 +884,7 @@ _step_install_application_shortcuts() {
     local submenu=""
     local app_menus_path="$INSTALL_HOME/.local/share/applications/$APP_MENUS_DIR"
 
-    _echo_info "> $(_i18n 'Creating '.desktop' files...')"
+    _echo_info "> $(_i18n 'Creating shortcuts to the application menu...')"
 
     # Remove previously installed '.desktop' files.
     $SUDO_CMD rm -rf -- "$app_menus_path"
