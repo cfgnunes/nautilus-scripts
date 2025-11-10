@@ -2014,7 +2014,7 @@ msgstr "Fechando o gerenciador de arquivos..."
 
 # Installer
 msgid "Creating shortcuts to the application menu..."
-msgstr "Criando atalhos ao menu de aplicativos..."
+msgstr "Criando atalhos no menu de aplicativos..."
 
 # Installer
 msgid "Creating GNOME application folder..."
