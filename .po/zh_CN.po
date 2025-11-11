@@ -1778,12 +1778,12 @@ msgid "Text: Convert 'tabs' to '8 spaces'"
 msgstr "文本：转换'制表符'为'8个空格'"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert to UTF+CRLF (recursive)"
-msgstr "文本：转换为 UTF+CRLF（递归）"
+msgid "Text: Normalize (CRLF, recursive)"
+msgstr "文本：规范化（CRLF，递归）"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert to UTF+LF (recursive)"
-msgstr "文本：转换为 UTF+LF（递归）"
+msgid "Text: Normalize (LF, recursive)"
+msgstr "文本：规范化（LF，递归）"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Text: Encode to ISO-8859-1"

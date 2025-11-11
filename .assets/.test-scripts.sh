@@ -1991,13 +1991,13 @@ _main() {
     echo "Content of 'Test text'." >"$input_file1"
     echo "Content of 'Test text'." >>"$input_file1"
 
-    script_test="Plain text/Text: Tools/Text: Convert to UTF+CRLF (recursive)"
+    script_test="Plain text/Text: Tools/Text: Normalize (CRLF, recursive)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.txt.bak"
     __test_file_empty "$std_output"
 
-    script_test="Plain text/Text: Tools/Text: Convert to UTF+LF (recursive)"
+    script_test="Plain text/Text: Tools/Text: Normalize (LF, recursive)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.txt (2).bak"
