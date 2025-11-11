@@ -1794,12 +1794,12 @@ msgid "Text: Encode to UTF-8"
 msgstr "文本：编码为UTF-8"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Line breaks to CRLF (Windows)"
-msgstr "文本：换行符转CRLF（Windows）"
+msgid "Text: Line breaks to CRLF"
+msgstr "文本：换行符转CRLF"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Line breaks to LF (Unix)"
-msgstr "文本：换行符转LF（Unix）"
+msgid "Text: Line breaks to LF"
+msgstr "文本：换行符转LF"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Text: List encoding"

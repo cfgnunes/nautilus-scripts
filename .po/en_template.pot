@@ -1792,11 +1792,11 @@ msgid "Text: Encode to UTF-8"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Line breaks to CRLF (Windows)"
+msgid "Text: Line breaks to CRLF"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Line breaks to LF (Unix)"
+msgid "Text: Line breaks to LF"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
