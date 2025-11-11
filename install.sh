@@ -713,13 +713,13 @@ _step_install_scripts() {
         "${IGNORE_FIND_PATHS[@]}" -exec chmod +x -- {} +
 
     # Translate: rename scripts (files).
+    local dir=""
     local name=""
     local new_name=""
-    local dir=""
-    local filename=""
-    while IFS= read -r -d $'\0' filename; do
-        name=$(basename -- "$filename")
-        dir=$(dirname -- "$filename")
+    local file_path=""
+    while IFS= read -r -d $'\0' file_path; do
+        name=$(basename -- "$file_path")
+        dir=$(dirname -- "$file_path")
         new_name=$(_i18n "$name")
         if [[ -n "$new_name" ]] && [[ "$name" != "$new_name" ]]; then
             $SUDO_CMD mv -- "$dir/$name" "$dir/$new_name"
@@ -727,9 +727,9 @@ _step_install_scripts() {
     done < <(_list_scripts)
 
     # Translate: rename scripts (directories).
-    while IFS= read -r -d $'\0' filename; do
-        name=$(basename -- "$filename")
-        dir=$(dirname -- "$filename")
+    while IFS= read -r -d $'\0' file_path; do
+        name=$(basename -- "$file_path")
+        dir=$(dirname -- "$file_path")
         new_name=$(_i18n "$name")
         if [[ -n "$new_name" ]] && [[ "$name" != "$new_name" ]]; then
             $SUDO_CMD mv -- "$dir/$name" "$dir/$new_name"
@@ -914,9 +914,11 @@ _step_install_application_shortcuts() {
             printf "%s\n" "Icon=application-x-executable"
             printf "%s\n" "Terminal=false"
             printf "%s\n" "Type=Application"
+
         } | _tee_file "$menu_file"
         _chown_file "$menu_file"
         _chmod_x_file "$menu_file"
+
     done < <(_list_scripts_application)
 }
 
@@ -1005,10 +1007,10 @@ _step_install_menus() {
 _step_install_menus_dolphin() {
     _echo_info "> $(_i18n 'Installing file manager actions...')"
 
-    local menus_dir="$INSTALL_HOME/.local/share/kio/servicemenus"
-
-    __delete_items "$menus_dir"
-    $SUDO_CMD_USER mkdir --parents "$menus_dir"
+    local menu_file=""
+    local menus_path="$INSTALL_HOME/.local/share/kio/servicemenus"
+    __delete_items "$menus_path"
+    $SUDO_CMD_USER mkdir --parents "$menus_path"
 
     # -------------------------------------------------------------------------
     # Create a '.desktop' file for each script.
@@ -1023,8 +1025,12 @@ _step_install_menus_dolphin() {
         name=${script_relative##*/}
         submenu=${script_relative%%/*}
 
-        local menu_file=""
-        menu_file="${menus_dir}/${name}.desktop"
+        menu_file=$name
+        menu_file=$(tr -cd "[:alnum:]- " <<<"$menu_file")
+        menu_file=$(tr " " "-" <<<"$menu_file")
+        menu_file=$(tr -s "-" <<<"$menu_file")
+        menu_file=${menu_file,,}
+        menu_file="$menus_path/$menu_file.desktop"
         {
             printf "%s\n" "[Desktop Entry]"
             printf "%s\n" "Type=Service"
@@ -1037,23 +1043,26 @@ _step_install_menus_dolphin() {
             printf "%s\n" "[Desktop Action scriptAction]"
             printf "%s\n" "Name=$name"
             printf "%s\n" "Exec=bash \"$filename\" %F"
+
         } | _tee_file "$menu_file"
         _chown_file "$menu_file"
         _chmod_x_file "$menu_file"
+
     done < <(_list_scripts)
 }
 
 _step_install_menus_pcmanfm() {
     _echo_info "> $(_i18n 'Installing file manager actions...')"
 
-    local menus_dir="$INSTALL_HOME/.local/share/file-manager/actions"
-
-    __delete_items "$menus_dir"
-    $SUDO_CMD_USER mkdir --parents "$menus_dir"
+    local menu_file=""
+    local menus_path="$INSTALL_HOME/.local/share/file-manager/actions"
+    __delete_items "$menus_path"
+    $SUDO_CMD_USER mkdir --parents "$menus_path"
 
     # -------------------------------------------------------------------------
     # Create the 'scripts.desktop' for the categories (main menu).
     # -------------------------------------------------------------------------
+    menu_file="$menus_path/scripts.desktop"
     {
         printf "%s\n" "[Desktop Entry]"
         printf "%s\n" "Type=Menu"
@@ -1063,15 +1072,17 @@ _step_install_menus_pcmanfm() {
             "${IGNORE_FIND_PATHS[@]}" \
             -printf "%f\0" 2>/dev/null | sort --zero-terminated | tr "\0" ";"
         printf "\n"
-    } | _tee_file "$menus_dir/Scripts.desktop"
 
-    _chown_file "$menus_dir/Scripts.desktop"
-    _chmod_x_file "$menus_dir/Scripts.desktop"
+    } | _tee_file "$menu_file"
+    _chown_file "$menu_file"
+    _chmod_x_file "$menu_file"
 
+    # -------------------------------------------------------------------------
     # Create a '.desktop' file for each sub-category (sub-menus).
-    local filename=""
-    local name=""
+    # -------------------------------------------------------------------------
     local dir_items=""
+    local name=""
+    local filename=""
     while IFS= read -r -d $'\0' filename; do
         name=${filename##*/}
         dir_items=$($SUDO_CMD find -L "$filename" -mindepth 1 -maxdepth 1 \
@@ -1081,15 +1092,17 @@ _step_install_menus_pcmanfm() {
             continue
         fi
 
+        menu_file="$menus_path/$name.desktop"
         {
             printf "%s\n" "[Desktop Entry]"
             printf "%s\n" "Type=Menu"
             printf "%s\n" "Name=$name"
             printf "%s\n" "ItemsList=$dir_items"
 
-        } | _tee_file "$menus_dir/$name.desktop"
-        _chown_file "$menus_dir/$name.desktop"
-        _chmod_x_file "$menus_dir/$name.desktop"
+        } | _tee_file "$menu_file"
+        _chown_file "$menu_file"
+        _chmod_x_file "$menu_file"
+
     done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 1 -type d \
         "${IGNORE_FIND_PATHS[@]}" \
         -print0 2>/dev/null | sort --zero-terminated)
@@ -1100,8 +1113,7 @@ _step_install_menus_pcmanfm() {
     while IFS= read -r -d $'\0' filename; do
         name=${filename##*/}
 
-        local menu_file=""
-        menu_file="${menus_dir}/${name}.desktop"
+        menu_file="$menus_path/$name.desktop"
         {
             printf "%s\n" "[Desktop Entry]"
             printf "%s\n" "Type=Action"
@@ -1110,24 +1122,26 @@ _step_install_menus_pcmanfm() {
             printf "\n"
             printf "%s\n" "[X-Action-Profile scriptAction]"
             printf "%s\n" "Exec=bash \"$filename\" %F"
+
         } | _tee_file "$menu_file"
         _chown_file "$menu_file"
         _chmod_x_file "$menu_file"
+
     done < <(_list_scripts)
 }
 
 _step_install_menus_thunar() {
     _echo_info "> $(_i18n 'Installing file manager actions...')"
 
-    local menu_file="$INSTALL_HOME/.config/Thunar/uca.xml"
-
+    local menu_file=""
+    local menus_path="$INSTALL_HOME/.config/Thunar"
     __delete_items "$menu_file"
-
-    $SUDO_CMD_USER mkdir --parents "$INSTALL_HOME/.config/Thunar"
+    $SUDO_CMD_USER mkdir --parents "$menus_path"
 
     # -------------------------------------------------------------------------
     # Create the file "~/.config/Thunar/uca.xml".
     # -------------------------------------------------------------------------
+    menu_file="$menus_path/uca.xml"
     {
         printf "%s\n" "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
         printf "%s\n" "<actions>"
@@ -1189,6 +1203,7 @@ _step_install_menus_thunar() {
         done < <(_list_scripts)
 
         printf "%s\n" "</actions>"
+
     } | _tee_file "$menu_file"
     _chown_file "$menu_file"
 }
