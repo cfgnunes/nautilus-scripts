@@ -1644,8 +1644,8 @@ msgid "Rename: Remove accents"
 msgstr "Renombrar: Eliminar acentos"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Rename: Remove parentheses suffixes"
-msgstr "Renombrar: Eliminar sufijos entre paréntesis"
+msgid "Rename: Remove parentheses blocks"
+msgstr "Renombrar: Eliminar bloques entre paréntesis"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Rename: Gaps by dashes"

@@ -2039,7 +2039,7 @@ _main() {
     output_file="$temp_dir/Test rename parentheses.txt"
     echo "Content of 'Test'." >"$input_file1"
 
-    script_test="Rename files/Rename: Remove parentheses suffixes"
+    script_test="Rename files/Rename: Remove parentheses blocks"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file"

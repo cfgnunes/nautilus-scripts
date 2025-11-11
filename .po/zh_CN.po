@@ -1643,11 +1643,11 @@ msgstr "PDF：拆分为单页 PDF"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Rename: Remove accents"
-msgstr "文本：移除重音符号"
+msgstr "重命名：移除重音符号"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Rename: Remove parentheses suffixes"
-msgstr "重命名：移除括号后缀"
+msgid "Rename: Remove parentheses blocks"
+msgstr "重命名：删除括号中的内容"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Rename: Gaps by dashes"
