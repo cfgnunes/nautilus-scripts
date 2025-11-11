@@ -35,10 +35,10 @@ msgid "Choose a key file to import."
 msgstr "Escolha uma chave para importar."
 
 msgid "Choose an image to use as the watermark"
-msgstr "Escolha uma imagem para usar como marca dágua"
+msgstr "Escolha uma imagem para usar como marca d'água"
 
 msgid "Choose a PDF to use as the watermark"
-msgstr "Escolha um PDF para usar como marca dágua"
+msgstr "Escolha um PDF para usar como marca d'água"
 
 msgid "Command failed with a non-zero exit code."
 msgstr "O comando falhou com um código de saída diferente de zero."
