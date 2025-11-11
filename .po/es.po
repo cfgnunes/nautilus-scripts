@@ -1648,16 +1648,12 @@ msgid "Rename: Remove parentheses blocks"
 msgstr "Renombrar: Eliminar bloques de paréntesis"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Rename: Gaps by dashes"
-msgstr "Renombrar: Reemplazar espacios por guiones"
+msgid "Rename: Change spaces to dashes"
+msgstr "Renombrar: Cambiar espacios por guiones"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Rename: Gaps by spaces"
-msgstr "Renombrar: Reemplazar espacios por espacios"
-
-# Menu: Script name. This string must NOT contain the "%" character.
-msgid "Rename: Gaps by underscores"
-msgstr "Renombrar: Reemplazar espacios por guiones bajos"
+msgid "Rename: Change dashes to spaces"
+msgstr "Renombrar: Cambiar guiones por espacios"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Rename: To lowercase"

@@ -2050,7 +2050,7 @@ _main() {
     output_file="$temp_dir/Test-rename.txt"
     echo "Content of 'Test'." >"$input_file1"
 
-    script_test="Rename files/Rename: Gaps by dashes"
+    script_test="Rename files/Rename: Change spaces to dashes"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file"
@@ -2061,7 +2061,7 @@ _main() {
     output_file="$temp_dir/Test rename.txt"
     echo "Content of 'Test'." >"$input_file1"
 
-    script_test="Rename files/Rename: Gaps by spaces"
+    script_test="Rename files/Rename: Change dashes to spaces"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file"
@@ -2071,12 +2071,6 @@ _main() {
     input_file1="$temp_dir/Test rename.txt"
     output_file="$temp_dir/Test_rename.txt"
     echo "Content of 'Test'." >"$input_file1"
-
-    script_test="Rename files/Rename: Gaps by underscores"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_empty "$std_output"
 
     # Create mock files for testing.
     input_file1="$temp_dir/Test rename.txt"

@@ -1650,12 +1650,12 @@ msgid "Rename: Remove parentheses blocks"
 msgstr "重命名：删除括号中的内容"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Rename: Gaps by dashes"
-msgstr "重命名：空格替换为短横线"
+msgid "Rename: Change spaces to dashes"
+msgstr "重命名：将空格改为短横线"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Rename: Gaps by spaces"
-msgstr "重命名：空格替换为空格字符"
+msgid "Rename: Change dashes to spaces"
+msgstr "重命名：将短横线改为空格"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Rename: Gaps by underscores"
