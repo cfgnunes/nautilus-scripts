@@ -817,39 +817,39 @@ msgstr "Comprimir..."
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Compress to .7z (each)"
-msgstr "Comprimir a .7z (cada uno)"
+msgstr "Comprimir a .7z (cada)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Compress to .7z with password (each)"
-msgstr "Comprimir a .7z con contraseña (cada uno)"
+msgstr "Comprimir a .7z con contraseña (cada)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Compress to .iso (each)"
-msgstr "Comprimir a .iso (cada uno)"
+msgstr "Comprimir a .iso (cada)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Compress to .squashfs (each)"
-msgstr "Comprimir a .squashfs (cada uno)"
+msgstr "Comprimir a .squashfs (cada)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Compress to .tar.gz (each)"
-msgstr "Comprimir a .tar.gz (cada uno)"
+msgstr "Comprimir a .tar.gz (cada)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Compress to .tar.xz (each)"
-msgstr "Comprimir a .tar.xz (cada uno)"
+msgstr "Comprimir a .tar.xz (cada)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Compress to .tar.zst (each)"
-msgstr "Comprimir a .tar.zst (cada uno)"
+msgstr "Comprimir a .tar.zst (cada)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Compress to .zip (each)"
-msgstr "Comprimir a .zip (cada uno)"
+msgstr "Comprimir a .zip (cada)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Compress to .zip with password (each)"
-msgstr "Comprimir a .zip con contraseña (cada uno)"
+msgstr "Comprimir a .zip con contraseña (cada)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Compute all checksums"
@@ -1645,7 +1645,7 @@ msgstr "Renombrar: Eliminar acentos"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Rename: Remove parentheses blocks"
-msgstr "Renombrar: Eliminar bloques entre paréntesis"
+msgstr "Renombrar: Eliminar bloques de paréntesis"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Rename: Gaps by dashes"
@@ -1761,19 +1761,19 @@ msgstr "Texto: Concatenar múltiples archivos"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Text: Convert '4 spaces' to 'tabs'"
-msgstr "Texto: Convertir '4 espacios' a 'tabulaciones'"
+msgstr "Texto: Convertir '4 espacios' a 'tabs'"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Text: Convert '8 spaces' to 'tabs'"
-msgstr "Texto: Convertir '8 espacios' a 'tabulaciones'"
+msgstr "Texto: Convertir '8 espacios' a 'tabs'"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Text: Convert 'tabs' to '4 spaces'"
-msgstr "Texto: Convertir 'tabulaciones' a '4 espacios'"
+msgstr "Texto: Convertir 'tabs' a '4 espacios'"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Text: Convert 'tabs' to '8 spaces'"
-msgstr "Texto: Convertir 'tabulaciones' a '8 espacios'"
+msgstr "Texto: Convertir 'tabs' a '8 espacios'"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Text: Normalize (CRLF, recursive)"
