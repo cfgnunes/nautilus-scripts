@@ -1905,7 +1905,7 @@ msgstr "Vídeo: Converter para MKV"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Video: Convert to MKV (no re-encoding)"
-msgstr "Vídeo: Converter para MKV (sem recodificar)"
+msgstr "Vídeo: Converter para MKV (sem recod.)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Video: Convert to MP4"
@@ -1913,7 +1913,7 @@ msgstr "Vídeo: Converter para MP4"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Video: Convert to MP4 (no re-encoding)"
-msgstr "Vídeo: Converter para MP4 (sem recodificar)"
+msgstr "Vídeo: Converter para MP4 (sem recod.)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Video: Export frames (1 FPS)"
