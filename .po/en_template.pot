@@ -1740,15 +1740,15 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "SVG: Replace fonts to 'Charter'"
+msgid "SVG: Replace fonts to Charter"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "SVG: Replace fonts to 'Helvetica'"
+msgid "SVG: Replace fonts to Helvetica"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "SVG: Replace fonts to 'Times'"
+msgid "SVG: Replace fonts to Times"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
@@ -1760,19 +1760,19 @@ msgid "Text: Concatenate multiple files"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert '4 spaces' to 'tabs'"
+msgid "Text: Convert 4 spaces to tabs"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert '8 spaces' to 'tabs'"
+msgid "Text: Convert 8 spaces to tabs"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert 'tabs' to '4 spaces'"
+msgid "Text: Convert tabs to 4 spaces"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert 'tabs' to '8 spaces'"
+msgid "Text: Convert tabs to 8 spaces"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.

@@ -1740,16 +1740,16 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG: Exportar a PNG (1024 px)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "SVG: Replace fonts to 'Charter'"
-msgstr "SVG: Reemplazar fuentes por 'Charter'"
+msgid "SVG: Replace fonts to Charter"
+msgstr "SVG: Reemplazar fuentes por Charter"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "SVG: Replace fonts to 'Helvetica'"
-msgstr "SVG: Reemplazar fuentes por 'Helvetica'"
+msgid "SVG: Replace fonts to Helvetica"
+msgstr "SVG: Reemplazar fuentes por Helvetica"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "SVG: Replace fonts to 'Times'"
-msgstr "SVG: Reemplazar fuentes por 'Times'"
+msgid "SVG: Replace fonts to Times"
+msgstr "SVG: Reemplazar fuentes por Times"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Terminal"
@@ -1760,20 +1760,20 @@ msgid "Text: Concatenate multiple files"
 msgstr "Texto: Concatenar múltiples archivos"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert '4 spaces' to 'tabs'"
-msgstr "Texto: Convertir '4 espacios' a 'tabs'"
+msgid "Text: Convert 4 spaces to tabs"
+msgstr "Texto: Convertir 4 espacios a tabs"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert '8 spaces' to 'tabs'"
-msgstr "Texto: Convertir '8 espacios' a 'tabs'"
+msgid "Text: Convert 8 spaces to tabs"
+msgstr "Texto: Convertir 8 espacios a tabs"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert 'tabs' to '4 spaces'"
-msgstr "Texto: Convertir 'tabs' a '4 espacios'"
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "Texto: Convertir tabs a 4 espacios"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert 'tabs' to '8 spaces'"
-msgstr "Texto: Convertir 'tabs' a '8 espacios'"
+msgid "Text: Convert tabs to 8 spaces"
+msgstr "Texto: Convertir tabs a 8 espacios"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Text: Normalize (CRLF, recursive)"

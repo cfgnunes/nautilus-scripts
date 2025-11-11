@@ -1740,16 +1740,16 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG: Exportar para PNG (1024 px)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "SVG: Replace fonts to 'Charter'"
-msgstr "SVG: Trocar fontes por 'Charter'"
+msgid "SVG: Replace fonts to Charter"
+msgstr "SVG: Trocar fontes por Charter"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "SVG: Replace fonts to 'Helvetica'"
-msgstr "SVG: Trocar fontes por 'Helvetica'"
+msgid "SVG: Replace fonts to Helvetica"
+msgstr "SVG: Trocar fontes por Helvetica"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "SVG: Replace fonts to 'Times'"
-msgstr "SVG: Trocar fontes por 'Times'"
+msgid "SVG: Replace fonts to Times"
+msgstr "SVG: Trocar fontes por Times"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Terminal"
@@ -1760,20 +1760,20 @@ msgid "Text: Concatenate multiple files"
 msgstr "Texto: Concatenar múltiplos arquivos"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert '4 spaces' to 'tabs'"
-msgstr "Texto: Converter '4 espaços' para 'tabs'"
+msgid "Text: Convert 4 spaces to tabs"
+msgstr "Texto: Converter 4 espaços para tabs"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert '8 spaces' to 'tabs'"
-msgstr "Texto: Converter '8 espaços' para 'tabs'"
+msgid "Text: Convert 8 spaces to tabs"
+msgstr "Texto: Converter 8 espaços para tabs"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert 'tabs' to '4 spaces'"
-msgstr "Texto: Converter 'tabs' para '4 espaços'"
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "Texto: Converter tabs para 4 espaços"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert 'tabs' to '8 spaces'"
-msgstr "Texto: Converter 'tabs' para '8 espaços'"
+msgid "Text: Convert tabs to 8 spaces"
+msgstr "Texto: Converter tabs para 8 espaços"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Text: Normalize (CRLF, recursive)"

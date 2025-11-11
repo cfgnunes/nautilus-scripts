@@ -1742,16 +1742,16 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG：导出为PNG（1024像素）"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "SVG: Replace fonts to 'Charter'"
-msgstr "SVG：替换字体为'Charter'"
+msgid "SVG: Replace fonts to Charter"
+msgstr "SVG：替换字体为Charter"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "SVG: Replace fonts to 'Helvetica'"
-msgstr "SVG：替换字体为'Helvetica'"
+msgid "SVG: Replace fonts to Helvetica"
+msgstr "SVG：替换字体为Helvetica"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "SVG: Replace fonts to 'Times'"
-msgstr "SVG：替换字体为'Times'"
+msgid "SVG: Replace fonts to Times"
+msgstr "SVG：替换字体为Times"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Terminal"
@@ -1762,20 +1762,20 @@ msgid "Text: Concatenate multiple files"
 msgstr "文本：合并多个文件"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert '4 spaces' to 'tabs'"
-msgstr "文本：转换'4个空格'为'制表符'"
+msgid "Text: Convert 4 spaces to tabs"
+msgstr "文本：将4个空格转换为制表符"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert '8 spaces' to 'tabs'"
-msgstr "文本：转换'8个空格'为'制表符'"
+msgid "Text: Convert 8 spaces to tabs"
+msgstr "文本：将8个空格转换为制表符"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert 'tabs' to '4 spaces'"
-msgstr "文本：转换'制表符'为'4个空格'"
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "文本：将制表符转换成4个空格"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: Convert 'tabs' to '8 spaces'"
-msgstr "文本：转换'制表符'为'8个空格'"
+msgid "Text: Convert tabs to 8 spaces"
+msgstr "文本：将制表符转换成4个空格"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Text: Normalize (CRLF, recursive)"
