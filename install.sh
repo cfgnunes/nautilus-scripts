@@ -93,8 +93,9 @@ if [[ -f "$SCRIPT_DIR/.assets/.multiselect-menu.sh" ]]; then
 fi
 
 if [[ -f "$SCRIPT_DIR/.common-functions.sh" ]]; then
-    ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
-    source "$ROOT_DIR/.common-functions.sh"
+    # shellcheck disable=SC2034
+    ROOT_DIR=$SCRIPT_DIR
+    source "$SCRIPT_DIR/.common-functions.sh"
 fi
 
 IFS=$' \t\n'
@@ -656,6 +657,10 @@ _step_install_dependencies() {
     _echo_info "> $(_i18n 'Done!')"
 }
 
+# -----------------------------------------------------------------------------
+## SUBSECTION: Install scripts ----
+# -----------------------------------------------------------------------------
+
 # FUNCTION: _step_install_scripts
 #
 # DESCRIPTION:
@@ -786,7 +791,6 @@ _step_install_accels_nautilus() {
         done < <(_list_scripts)
 
     } | _tee_file "$accels_file"
-
     _chown_file "$accels_file"
 }
 
@@ -820,7 +824,6 @@ _step_install_accels_gnome2() {
         done < <(_list_scripts)
 
     } | _tee_file "$accels_file"
-
     _chown_file "$accels_file"
 }
 
@@ -862,7 +865,6 @@ _step_install_accels_thunar() {
         done < <(_list_scripts)
 
     } | _tee_file "$accels_file"
-
     _chown_file "$accels_file"
 }
 
@@ -871,7 +873,6 @@ _step_install_accels_thunar() {
 # -----------------------------------------------------------------------------
 
 _step_install_application_shortcuts() {
-    local filename=""
     local menu_file=""
     local name=""
     local script_relative=""
@@ -887,6 +888,7 @@ _step_install_application_shortcuts() {
     $SUDO_CMD_USER mkdir --parents "$app_menus_path"
 
     # Create a '.desktop' file for each script.
+    local filename=""
     while IFS= read -r -d $'\0' filename; do
         # shellcheck disable=SC2001
         script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
@@ -913,7 +915,6 @@ _step_install_application_shortcuts() {
             printf "%s\n" "Terminal=false"
             printf "%s\n" "Type=Application"
         } | _tee_file "$menu_file"
-
         _chown_file "$menu_file"
         _chmod_x_file "$menu_file"
     done < <(_list_scripts_application)
@@ -1009,12 +1010,13 @@ _step_install_menus_dolphin() {
     __delete_items "$menus_dir"
     $SUDO_CMD_USER mkdir --parents "$menus_dir"
 
-    local filename=""
+    # -------------------------------------------------------------------------
+    # Create a '.desktop' file for each script.
+    # -------------------------------------------------------------------------
     local name=""
     local script_relative=""
     local submenu=""
-
-    # Create a '.desktop' file for each script.
+    local filename=""
     while IFS= read -r -d $'\0' filename; do
         # shellcheck disable=SC2001
         script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
@@ -1036,7 +1038,6 @@ _step_install_menus_dolphin() {
             printf "%s\n" "Name=$name"
             printf "%s\n" "Exec=bash \"$filename\" %F"
         } | _tee_file "$menu_file"
-
         _chown_file "$menu_file"
         _chmod_x_file "$menu_file"
     done < <(_list_scripts)
@@ -1050,7 +1051,9 @@ _step_install_menus_pcmanfm() {
     __delete_items "$menus_dir"
     $SUDO_CMD_USER mkdir --parents "$menus_dir"
 
-    # Create the 'Scripts.desktop' for the categories (main menu).
+    # -------------------------------------------------------------------------
+    # Create the 'scripts.desktop' for the categories (main menu).
+    # -------------------------------------------------------------------------
     {
         printf "%s\n" "[Desktop Entry]"
         printf "%s\n" "Type=Menu"
@@ -1085,14 +1088,15 @@ _step_install_menus_pcmanfm() {
             printf "%s\n" "ItemsList=$dir_items"
 
         } | _tee_file "$menus_dir/$name.desktop"
-
         _chown_file "$menus_dir/$name.desktop"
         _chmod_x_file "$menus_dir/$name.desktop"
     done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 1 -type d \
         "${IGNORE_FIND_PATHS[@]}" \
         -print0 2>/dev/null | sort --zero-terminated)
 
+    # -------------------------------------------------------------------------
     # Create a '.desktop' file for each script.
+    # -------------------------------------------------------------------------
     while IFS= read -r -d $'\0' filename; do
         name=${filename##*/}
 
@@ -1107,7 +1111,6 @@ _step_install_menus_pcmanfm() {
             printf "%s\n" "[X-Action-Profile scriptAction]"
             printf "%s\n" "Exec=bash \"$filename\" %F"
         } | _tee_file "$menu_file"
-
         _chown_file "$menu_file"
         _chmod_x_file "$menu_file"
     done < <(_list_scripts)
@@ -1116,13 +1119,15 @@ _step_install_menus_pcmanfm() {
 _step_install_menus_thunar() {
     _echo_info "> $(_i18n 'Installing file manager actions...')"
 
-    local menus_file="$INSTALL_HOME/.config/Thunar/uca.xml"
+    local menu_file="$INSTALL_HOME/.config/Thunar/uca.xml"
 
-    __delete_items "$menus_file"
+    __delete_items "$menu_file"
 
     $SUDO_CMD_USER mkdir --parents "$INSTALL_HOME/.config/Thunar"
 
+    # -------------------------------------------------------------------------
     # Create the file "~/.config/Thunar/uca.xml".
+    # -------------------------------------------------------------------------
     {
         printf "%s\n" "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
         printf "%s\n" "<actions>"
@@ -1184,9 +1189,8 @@ _step_install_menus_thunar() {
         done < <(_list_scripts)
 
         printf "%s\n" "</actions>"
-    } | _tee_file "$menus_file"
-
-    _chown_file "$menus_file"
+    } | _tee_file "$menu_file"
+    _chown_file "$menu_file"
 }
 
 # -----------------------------------------------------------------------------
