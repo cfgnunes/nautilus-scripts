@@ -1810,8 +1810,8 @@ msgid "Text: List issues"
 msgstr "文本：列出问题"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: List files with bad chars"
-msgstr "文本：列出含非法字符的文件"
+msgid "Text: List invalid chars"
+msgstr "文本：列出无效字符"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Text: List line breaks"

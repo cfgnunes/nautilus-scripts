@@ -1808,7 +1808,7 @@ msgid "Text: List issues"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "Text: List files with bad chars"
+msgid "Text: List invalid chars"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
