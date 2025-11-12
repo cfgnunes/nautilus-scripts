@@ -296,7 +296,14 @@ _i18n_print_desktop_name() {
 _i18n_get_translation() {
     local po_file=$1
     local msgid=$2
-    grep -A1 "msgid \"$msgid\"" "$po_file" | grep "msgstr" | cut -d '"' -f 2
+    msgstr=$(grep -A1 "msgid \"$msgid\"" "$po_file" 2>/dev/null |
+        grep "msgstr" | cut -d '"' -f 2)
+
+    if [[ -n "$msgstr" ]]; then
+        printf "%s" "$msgstr"
+    else
+        printf "%s" "$msgid"
+    fi
 }
 
 # Translate each directory component in the path.
