@@ -2099,10 +2099,6 @@ msgid "Remove previously installed scripts"
 msgstr "移除之前安装的脚本"
 
 # Installer
-msgid "Removing previously installed scripts..."
-msgstr "正在移除之前安装的脚本..."
-
-# Installer
 msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
 msgstr "选择选项 (<空格键> 勾选，<回车键> 确认)："
 

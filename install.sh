@@ -740,7 +740,6 @@ _create_links() {
 
     # Remove previous scripts if requested.
     if [[ "$OPT_REMOVE_SCRIPTS" == "true" ]]; then
-        _echo_info "> ($FILE_MANAGER) $(_i18n 'Removing previously installed scripts...')"
         __delete_items "$destination_dir"
     else
         # Remove broken links.
