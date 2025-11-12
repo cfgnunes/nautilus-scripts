@@ -56,9 +56,12 @@ else
     SCRIPT_DIR="."
 fi
 
+I18N_DIR="$SCRIPT_DIR/.po"
+
 # Mark constants as read-only to prevent accidental modification.
 readonly \
     COMPATIBLE_FILE_MANAGERS \
+    I18N_DIR \
     IGNORE_FIND_PATHS \
     INSTALL_NAME_DIR \
     INSTALL_APPS_SHORTCUTS_PATH \
@@ -73,6 +76,7 @@ USER=${USER:-$(id -un)}
 # -----------------------------------------------------------------------------
 
 FILE_MANAGER=""  # Current file manager being processed.
+I18N_FILE=""     # Current translation file being used.
 INSTALL_DIR=""   # Target installation directory for scripts.
 INSTALL_HOME=""  # User's home directory where scripts will be installed.
 INSTALL_OWNER="" # Owner of the installation directory.
@@ -95,13 +99,6 @@ OPT_QUIET_INSTALL="false"
 if [[ -f "$SCRIPT_DIR/.assets/.multiselect-menu.sh" ]]; then
     source "$SCRIPT_DIR/.assets/.multiselect-menu.sh"
 fi
-
-if [[ -f "$SCRIPT_DIR/.common-functions.sh" ]]; then
-    # shellcheck disable=SC2034
-    ROOT_DIR=$SCRIPT_DIR
-    source "$SCRIPT_DIR/.common-functions.sh"
-fi
-IFS=$' \t\n'
 
 # -----------------------------------------------------------------------------
 # Main flow ----
@@ -137,6 +134,7 @@ _main() {
         _bootstrap_repository "$@"
         exit 0
     fi
+    _i18n_initialize
 
     # Available options presented in the interactive menu.
     menu_labels=(
@@ -321,6 +319,36 @@ _i18n_translate_path() {
     printf "%s" "$translated_path"
 }
 
+_i18n() {
+    local msgid=$1
+
+    _i18n_get_translation "$I18N_FILE" "$msgid"
+}
+
+_i18n_initialize() {
+    # LANG not set: nothing to load
+    if [[ -z "${LANG:-}" ]]; then
+        return
+    fi
+
+    local lang_full="${LANG%%.*}"      # e.g. 'pt_BR.UTF-8' to 'pt_BR'.
+    local lang_base="${lang_full%%_*}" # e.g. 'pt_BR to' 'pt'.
+    local po_file=""
+
+    # Try full locale first (e.g. pt_BR.po).
+    po_file="$I18N_DIR/$lang_full.po"
+    if [[ -f "$po_file" ]]; then
+        I18N_FILE="$po_file"
+        return
+    fi
+
+    # Fallback to base language (e.g. pt.po).
+    po_file="$I18N_DIR/$lang_base.po"
+    if [[ -f "$po_file" ]]; then
+        I18N_FILE="$po_file"
+    fi
+}
+
 # -----------------------------------------------------------------------------
 # Validation and checks ----
 # -----------------------------------------------------------------------------
@@ -431,6 +459,12 @@ __delete_items() {
 # -----------------------------------------------------------------------------
 # System information and parameters ----
 # -----------------------------------------------------------------------------
+
+_command_exists() {
+    local command_check=$1
+
+    command -v "$command_check" &>/dev/null || return 1
+}
 
 _get_parameters_command_line() {
     local expanded_args=()
@@ -1364,9 +1398,9 @@ _bootstrap_repository() {
 
     # Check if 'curl' or 'wget' is available.
     local downloader=""
-    if command -v "curl" &>/dev/null; then
+    if _command_exists "curl"; then
         downloader="curl"
-    elif command -v "wget" &>/dev/null; then
+    elif _command_exists "wget"; then
         downloader="wget"
     else
         _echo_error "Neither 'curl' nor 'wget' is installed. Please install one of them to continue."
