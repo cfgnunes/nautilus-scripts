@@ -2043,10 +2043,6 @@ msgid "Install basic dependencies (may require sudo)"
 msgstr "安装基本依赖项 (可能需要 sudo)"
 
 # Installer
-msgid "Install for all users (may require sudo)"
-msgstr "为所有用户安装 (可能需要 sudo)"
-
-# Installer
 msgid "Install Homebrew (optional)"
 msgstr "安装 Homebrew (可选)"
 

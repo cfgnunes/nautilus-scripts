@@ -2037,10 +2037,6 @@ msgid "Install basic dependencies (may require sudo)"
 msgstr "Instalar dependências básicas (pode exigir sudo)"
 
 # Installer
-msgid "Install for all users (may require sudo)"
-msgstr "Instalar para todos os usuários (pode exigir sudo)"
-
-# Installer
 msgid "Install Homebrew (optional)"
 msgstr "Instalar Homebrew (opcional)"
 

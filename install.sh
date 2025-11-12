@@ -77,8 +77,6 @@ INSTALL_DIR=""   # Target installation directory for scripts.
 INSTALL_HOME=""  # User's home directory where scripts will be installed.
 INSTALL_OWNER="" # Owner of the installation directory.
 INSTALL_GROUP="" # Group of the installation directory.
-SUDO_CMD=""      # Command prefix for elevated operations.
-SUDO_CMD_USER="" # Command prefix for running as target user.
 
 # Default main menu options.
 OPT_INSTALL_BASIC_DEPS="true"
@@ -86,7 +84,6 @@ OPT_REMOVE_SCRIPTS="true"
 OPT_INSTALL_ACCELS="true"
 OPT_CLOSE_FILE_MANAGER="true"
 OPT_INSTALL_APP_SHORTCUTS="false"
-OPT_INSTALL_FOR_ALL_USERS="false"
 OPT_INSTALL_HOMEBREW="false"
 OPT_CHOOSE_CATEGORIES="false"
 # Default core options.
@@ -148,7 +145,6 @@ _main() {
         "$(_i18n 'Install keyboard accelerators')"
         "$(_i18n 'Close the file manager to reload configurations')"
         "$(_i18n 'Add shortcuts to the application menu')"
-        "$(_i18n 'Install for all users (may require sudo)')"
         "$(_i18n 'Install Homebrew (optional)')"
         "$(_i18n 'Choose which script categories to install')"
     )
@@ -160,7 +156,6 @@ _main() {
         "$OPT_INSTALL_ACCELS"
         "$OPT_CLOSE_FILE_MANAGER"
         "$OPT_INSTALL_APP_SHORTCUTS"
-        "$OPT_INSTALL_FOR_ALL_USERS"
         "$OPT_INSTALL_HOMEBREW"
         "$OPT_CHOOSE_CATEGORIES"
     )
@@ -184,9 +179,8 @@ _main() {
     OPT_INSTALL_ACCELS=${menu_selected[2]}
     OPT_CLOSE_FILE_MANAGER=${menu_selected[3]}
     OPT_INSTALL_APP_SHORTCUTS=${menu_selected[4]}
-    OPT_INSTALL_FOR_ALL_USERS=${menu_selected[5]}
-    OPT_INSTALL_HOMEBREW=${menu_selected[6]}
-    OPT_CHOOSE_CATEGORIES=${menu_selected[7]}
+    OPT_INSTALL_HOMEBREW=${menu_selected[5]}
+    OPT_CHOOSE_CATEGORIES=${menu_selected[6]}
 
     # Collect all available script categories (directories).
     local dir=""
@@ -204,71 +198,40 @@ _main() {
     ## Step 1: Install basic dependencies. ----
     [[ "$OPT_INSTALL_BASIC_DEPS" == "true" ]] && _install_dependencies
 
-    ## Step 2: Determine target directories (single user or all users). ----
-    local install_home_list=""
-    if [[ "$OPT_INSTALL_FOR_ALL_USERS" == "true" ]]; then
-        if _command_exists "sudo"; then
-            SUDO_CMD="sudo"
+    ## Step 2: Install the scripts. ----
+    INSTALL_HOME=$HOME
+    INSTALL_OWNER=$(stat -c "%U" "$INSTALL_HOME")
+    INSTALL_GROUP=$(stat -c "%G" "$INSTALL_HOME")
+
+    _echo ""
+    _echo_info "$(_i18n 'Installing new scripts:')"
+    _echo_info "> $(_i18n 'User:') $INSTALL_OWNER"
+    _echo_info "> $(_i18n 'Home dir:') $INSTALL_HOME"
+    INSTALL_DIR="$INSTALL_HOME/$INSTALL_PATH"
+    _install_scripts cat_selected cat_dirs
+
+    ## Step 3: Install file manager configurations. ----
+
+    # Install the actions and the keyboard accelerators for
+    # each detected file manager.
+    local file_manager=""
+    for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
+        FILE_MANAGER=$file_manager
+        if ! _command_exists "$FILE_MANAGER"; then
+            continue
         fi
 
-        # Get the list of all user home directories currently
-        # available on the system.
-        install_home_list=$(_get_user_homes)
+        ### Step 3.1: Install the the actions. ----
+        _install_actions
 
-        # Also include the system skeleton directory '/etc/skel'. This
-        # directory contains default configuration files that are
-        # copied into the home directory of 'new users' when they are
-        # created. By installing scripts here, all future accounts
-        # will automatically inherit the same setup.
-        if [[ -d "/etc/skel" ]]; then
-            install_home_list+=$'\n'
-            install_home_list+="/etc/skel"
-        fi
-    else
-        install_home_list=$HOME
-    fi
+        ### Step 3.2: Install the keyboard accelerators. ----
+        [[ "$OPT_INSTALL_ACCELS" == "true" ]] && _install_accels
 
-    ## Step 3: Install scripts for each user. ----
-    for install_home in $install_home_list; do
-        INSTALL_HOME=$install_home
-        INSTALL_OWNER=$($SUDO_CMD stat -c "%U" "$INSTALL_HOME")
-        INSTALL_GROUP=$($SUDO_CMD stat -c "%G" "$INSTALL_HOME")
-
-        if [[ "$OPT_INSTALL_FOR_ALL_USERS" == "true" ]] &&
-            [[ -n "$INSTALL_OWNER" ]] && [[ -n "$INSTALL_GROUP" ]]; then
-            if _command_exists "sudo"; then
-                SUDO_CMD_USER="sudo -u $INSTALL_OWNER -g $INSTALL_GROUP"
-            fi
+        ### Step 3.3: Reload file manager to apply changes. ----
+        if [[ "$USER" == "$INSTALL_OWNER" ]]; then
+            [[ "$OPT_CLOSE_FILE_MANAGER" == "true" ]] && _close_filemanager
         fi
 
-        ### Step 3.1: Install the scripts. ----
-        _echo ""
-        _echo_info "$(_i18n 'Installing new scripts:')"
-        _echo_info "> $(_i18n 'User:') $INSTALL_OWNER"
-        _echo_info "> $(_i18n 'Home dir:') $INSTALL_HOME"
-        INSTALL_DIR="$INSTALL_HOME/$INSTALL_PATH"
-        _install_scripts cat_selected cat_dirs
-
-        # Install the actions and the keyboard accelerators for
-        # each detected file manager.
-        local file_manager=""
-        for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
-            FILE_MANAGER=$file_manager
-            if ! _command_exists "$FILE_MANAGER"; then
-                continue
-            fi
-
-            ### Step 3.2: Install the the actions (each file manager). ----
-            _install_actions
-
-            ### Step 3.3: Install the keyboard accelerators (each file manager). ----
-            [[ "$OPT_INSTALL_ACCELS" == "true" ]] && _install_accels
-
-            ### Step 3.4: Reload file manager to apply changes (each file manager). ----
-            if [[ "$USER" == "$INSTALL_OWNER" ]]; then
-                [[ "$OPT_CLOSE_FILE_MANAGER" == "true" ]] && _close_filemanager
-            fi
-        done
         _echo_info "> $(_i18n 'Done!')"
 
         ## Step 4: Install the shortcuts (application menu). ----
@@ -282,7 +245,7 @@ _main() {
         fi
     done
 
-    ## Step 5: Install Homebrew (Optional). ----
+    ## Step 5: Install Homebrew (optional). ----
     if [[ "$OPT_INSTALL_HOMEBREW" == "true" ]]; then
         _install_homebrew
     fi
@@ -387,20 +350,20 @@ _check_exist_filemanager() {
 # -----------------------------------------------------------------------------
 
 _list_scripts() {
-    $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+    find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" \
         -print0 2>/dev/null | sort --zero-terminated
 }
 
 _list_scripts_installed() {
     local dir=$1
-    $SUDO_CMD find -L "$dir" -mindepth 2 -type f \
+    find -L "$dir" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" \
         -print0 2>/dev/null | sort --zero-terminated
 }
 
 _list_scripts_application() {
-    $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+    find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" "${IGNORE_APPS_SHORTCUTS[@]}" \
         -print0 2>/dev/null | sort --zero-terminated
 }
@@ -412,20 +375,20 @@ _list_scripts_categories() {
 }
 
 _list_traslation_files() {
-    $SUDO_CMD find -L "$I18N_DIR" -name "*.po" -type f \
+    find -L "$I18N_DIR" -name "*.po" -type f \
         -printf "%f\0" 2>/dev/null | sort --zero-terminated
 }
 
 _chown_file() {
-    $SUDO_CMD chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$1"
+    chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$1"
 }
 
 _chmod_x_file() {
-    $SUDO_CMD chmod +x -- "$1"
+    chmod +x -- "$1"
 }
 
 _tee_file() {
-    $SUDO_CMD tee -- "$1" >/dev/null
+    tee -- "$1" >/dev/null
 }
 
 # FUNCTION: _item_create_backup
@@ -436,7 +399,7 @@ _item_create_backup() {
     local item=$1
 
     if [[ -e "$item" ]] && [[ ! -e "$item.bak" ]]; then
-        $SUDO_CMD mv -- "$item" "$item.bak" 2>/dev/null
+        mv -- "$item" "$item.bak" 2>/dev/null
     fi
 }
 
@@ -455,48 +418,19 @@ __delete_items() {
 
     # shellcheck disable=SC2086
     if _command_exists "gio"; then
-        $SUDO_CMD_USER gio trash -- $items 2>/dev/null
+        gio trash -- $items 2>/dev/null
     elif _command_exists "kioclient"; then
-        $SUDO_CMD_USER kioclient move -- $items trash:/ 2>/dev/null
+        kioclient move -- $items trash:/ 2>/dev/null
     elif _command_exists "gvfs-trash"; then
-        $SUDO_CMD_USER gvfs-trash -- $items 2>/dev/null
+        gvfs-trash -- $items 2>/dev/null
     else
-        $SUDO_CMD rm -rf -- $items 2>/dev/null
+        rm -rf -- $items 2>/dev/null
     fi
 }
 
 # -----------------------------------------------------------------------------
 # System information and parameters ----
 # -----------------------------------------------------------------------------
-
-# FUNCTION: _get_user_homes
-#
-# DESCRIPTION:
-# This function returns the list of home directories for users who can log
-# in. It filters '/etc/passwd' entries for accounts with valid login
-# shells.
-_get_user_homes() {
-    local homes=""
-
-    homes=$(grep --extended-regexp "/(bash|sh|zsh|csh|ksh|tcsh|fish|dash)$" \
-        </etc/passwd | cut -d ":" -f 6)
-
-    # Ensure the current user's home is included, in case it's missing
-    # from '/etc/passwd'.
-    if [[ -n "${HOME:-}" ]]; then
-        homes+=$'\n'
-        homes+=$HOME
-    fi
-
-    # Remove empty lines.
-    homes=$(grep -v "^\s*$" <<<"$homes")
-
-    # Exclude the root '/' directory.
-    homes=$(grep -v "^/$" <<<"$homes")
-
-    # Sort and remove duplicates.
-    sort --unique <<<"$homes"
-}
 
 _get_parameters_command_line() {
     local expanded_args=()
@@ -526,8 +460,6 @@ _get_parameters_command_line() {
     # Read parameters from command line.
     while [[ $# -gt 0 ]]; do
         case "$1" in
-        -a | --install-all-users) OPT_INSTALL_FOR_ALL_USERS="true" ;;
-        -A | --no-install-all-users) OPT_INSTALL_FOR_ALL_USERS="false" ;;
         -b | --install-homebrew) OPT_INSTALL_HOMEBREW="true" ;;
         -B | --no-install-homebrew) OPT_INSTALL_HOMEBREW="false" ;;
         -d | --remove-scripts) OPT_REMOVE_SCRIPTS="true" ;;
@@ -545,8 +477,6 @@ _get_parameters_command_line() {
         -h | --help)
             echo "Usage: $0 [options]"
             echo
-            echo "  -a, --install-all-users         Install for all users."
-            echo "  -A, --no-install-all-users      Do not install for all users."
             echo "  -b, --install-homebrew          Install Homebrew."
             echo "  -B, --no-install-homebrew       Do not install Homebrew."
             echo "  -d, --remove-scripts            Remove previously installed scripts."
@@ -585,7 +515,7 @@ _get_par_value() {
     local filename=$1
     local parameter=$2
 
-    $SUDO_CMD grep --only-matching -m 1 "$parameter=.*" "$filename" |
+    grep --only-matching -m 1 "$parameter=.*" "$filename" |
         cut -d "=" -f 2- 2>/dev/null
 }
 
@@ -735,16 +665,16 @@ _install_scripts() {
     local -n _cat_selected=$1
     local -n _cat_dirs=$2
 
-    $SUDO_CMD rm -rf -- "$INSTALL_DIR" 2>/dev/null
-    $SUDO_CMD rm -rf -- "$INSTALL_HOME/$INSTALL_APPS_SHORTCUTS_PATH" 2>/dev/null
+    rm -rf -- "$INSTALL_DIR" 2>/dev/null
+    rm -rf -- "$INSTALL_HOME/$INSTALL_APPS_SHORTCUTS_PATH" 2>/dev/null
 
     _echo_info "> $(_i18n 'Installing the scripts...')"
-    $SUDO_CMD_USER mkdir --parents "$INSTALL_DIR"
+    mkdir --parents "$INSTALL_DIR"
 
     # Always copy important files and directories.
-    $SUDO_CMD cp -- "$SCRIPT_DIR/.common-functions.sh" "$INSTALL_DIR"
-    $SUDO_CMD cp -- "$SCRIPT_DIR/.dependencies.sh" "$INSTALL_DIR"
-    $SUDO_CMD cp -r -- "$SCRIPT_DIR/.po" "$INSTALL_DIR"
+    cp -- "$SCRIPT_DIR/.common-functions.sh" "$INSTALL_DIR"
+    cp -- "$SCRIPT_DIR/.dependencies.sh" "$INSTALL_DIR"
+    cp -r -- "$SCRIPT_DIR/.po" "$INSTALL_DIR"
 
     # Copy scripts by category. If the user selected specific categories, only
     # those are installed. Otherwise, all categories are copied by default.
@@ -752,17 +682,17 @@ _install_scripts() {
     for i in "${!_cat_dirs[@]}"; do
         if [[ ${_cat_selected[$i]+_} ]]; then
             if [[ ${_cat_selected[i]} == "true" ]]; then
-                $SUDO_CMD cp -r -- "$SCRIPT_DIR/${_cat_dirs[i]}" "$INSTALL_DIR"
+                cp -r -- "$SCRIPT_DIR/${_cat_dirs[i]}" "$INSTALL_DIR"
             fi
         else
-            $SUDO_CMD cp -r -- "$SCRIPT_DIR/${_cat_dirs[i]}" "$INSTALL_DIR"
+            cp -r -- "$SCRIPT_DIR/${_cat_dirs[i]}" "$INSTALL_DIR"
         fi
     done
 
     # Adjust ownership and permissions. Ensures all files belong to
     # the correct user/group and are executable.
-    $SUDO_CMD chown -R "$INSTALL_OWNER:$INSTALL_GROUP" -- "$INSTALL_DIR"
-    $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 2 -type f \
+    chown -R "$INSTALL_OWNER:$INSTALL_GROUP" -- "$INSTALL_DIR"
+    find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" -exec chmod +x -- {} +
 }
 
@@ -814,7 +744,7 @@ _create_links() {
             mkdir --parents -- "$destination_path"
             ln -sf -- "$file_path" "$destination_path/$(_i18n "$name")"
         fi
-    done < <($SUDO_CMD find -L "$INSTALL_DIR" \
+    done < <(find -L "$INSTALL_DIR" \
         -mindepth 1 "${IGNORE_FIND_PATHS[@]}" -print0 2>/dev/null)
 }
 
@@ -839,7 +769,7 @@ _install_accels() {
 
 _install_accels_nautilus() {
     local accels_file=$1
-    $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
+    mkdir --parents "$(dirname -- "$accels_file")"
 
     # Create a backup of older custom actions.
     _item_create_backup "$accels_file"
@@ -891,7 +821,7 @@ _install_accels_gnome2() {
     local accels_file=$1
     local scripts_installed_dir=$2
 
-    $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
+    mkdir --parents "$(dirname -- "$accels_file")"
 
     # Create a backup of older custom actions.
     _item_create_backup "$accels_file"
@@ -928,7 +858,7 @@ _install_accels_gnome2() {
 
 _install_accels_thunar() {
     local accels_file=$1
-    $SUDO_CMD_USER mkdir --parents "$(dirname -- "$accels_file")"
+    mkdir --parents "$(dirname -- "$accels_file")"
 
     # Create a backup of older custom actions.
     _item_create_backup "$accels_file"
@@ -983,10 +913,10 @@ _install_application_shortcuts() {
     _echo_info "> $(_i18n 'Creating shortcuts to the application menu...')"
 
     # Remove previously installed '.desktop' files.
-    $SUDO_CMD rm -rf -- "$app_menus_path" 2>/dev/null
+    rm -rf -- "$app_menus_path" 2>/dev/null
 
     # Create the directory for menu entries.
-    $SUDO_CMD_USER mkdir --parents "$app_menus_path"
+    mkdir --parents "$app_menus_path"
 
     # Create a '.desktop' file for each script.
     local filename=""
@@ -1067,7 +997,7 @@ _create_gnome_application_folder() {
     local list_scripts=""
     local app_menus_path="$INSTALL_HOME/$INSTALL_APPS_SHORTCUTS_PATH"
     list_scripts=$(
-        $SUDO_CMD find "$app_menus_path" \
+        find "$app_menus_path" \
             -maxdepth 1 -type f -name "*.desktop" \
             -printf "'$INSTALL_NAME_DIR-%f', " |
             sed 's/, $//; s/^/[/' | sed 's/$/]/'
@@ -1108,7 +1038,7 @@ _install_actions_dolphin() {
     local menus_path="$INSTALL_HOME/.local/share/kio/servicemenus"
     find "$menus_path" -name "$INSTALL_NAME_DIR-*.desktop" \
         -type f -delete 2>/dev/null
-    $SUDO_CMD_USER mkdir --parents "$menus_path"
+    mkdir --parents "$menus_path"
 
     # -------------------------------------------------------------------------
     # Create a '.desktop' file for each script.
@@ -1152,7 +1082,7 @@ _install_actions_pcmanfm() {
     local menus_path="$INSTALL_HOME/.local/share/file-manager/actions"
     find "$menus_path" -name "$INSTALL_NAME_DIR-*.desktop" \
         -type f -delete 2>/dev/null
-    $SUDO_CMD_USER mkdir --parents "$menus_path"
+    mkdir --parents "$menus_path"
 
     # -------------------------------------------------------------------------
     # Create the 'scripts.desktop' for the categories (main menu).
@@ -1163,7 +1093,7 @@ _install_actions_pcmanfm() {
         printf "%s\n" "Type=Menu"
         printf "%s\n" "Name=Scripts"
         printf "%s" "ItemsList="
-        $SUDO_CMD find -L "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -type d \
+        find -L "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -type d \
             "${IGNORE_FIND_PATHS[@]}" \
             -printf "$INSTALL_NAME_DIR-%f\0" 2>/dev/null |
             sort --zero-terminated | tr "\0" ";" | _sanitize_string
@@ -1181,7 +1111,7 @@ _install_actions_pcmanfm() {
     local filename=""
     while IFS= read -r -d $'\0' filename; do
         name=${filename##*/}
-        dir_items=$($SUDO_CMD find -L "$filename" -mindepth 1 -maxdepth 1 \
+        dir_items=$(find -L "$filename" -mindepth 1 -maxdepth 1 \
             "${IGNORE_FIND_PATHS[@]}" \
             -printf "$INSTALL_NAME_DIR-%f\0" 2>/dev/null |
             sort --zero-terminated | tr "\0" ";" | _sanitize_string)
@@ -1202,7 +1132,7 @@ _install_actions_pcmanfm() {
         _chown_file "$menu_file"
         _chmod_x_file "$menu_file"
 
-    done < <($SUDO_CMD find -L "$INSTALL_DIR" -mindepth 1 -type d \
+    done < <(find -L "$INSTALL_DIR" -mindepth 1 -type d \
         "${IGNORE_FIND_PATHS[@]}" \
         -print0 2>/dev/null | sort --zero-terminated)
 
@@ -1234,7 +1164,7 @@ _install_actions_pcmanfm() {
 _install_actions_thunar() {
     local menu_file=""
     local menus_path="$INSTALL_HOME/.config/Thunar"
-    $SUDO_CMD_USER mkdir --parents "$menus_path"
+    mkdir --parents "$menus_path"
     menu_file="$menus_path/uca.xml"
 
     # Create a backup of older custom actions.
