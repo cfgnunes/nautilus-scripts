@@ -2025,10 +2025,6 @@ msgid "Downloading the package..."
 msgstr "Baixando o pacote..."
 
 # Installer
-msgid "File manager:"
-msgstr "Gerenciador de arquivos:"
-
-# Installer
 msgid "Home dir:"
 msgstr "Diretório home:"
 
@@ -2095,10 +2091,6 @@ msgstr "Instalando ações do gerenciador de arquivos..."
 # Installer
 msgid "Remove previously installed scripts"
 msgstr "Remover scripts instalados previamente"
-
-# Installer
-msgid "Removing application menu shortcuts..."
-msgstr "Removendo atalhos do menu de aplicativos..."
 
 # Installer
 msgid "Removing previously installed scripts..."

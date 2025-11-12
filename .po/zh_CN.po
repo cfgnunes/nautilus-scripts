@@ -2031,10 +2031,6 @@ msgid "Downloading the package..."
 msgstr "正在下载软件包..."
 
 # Installer
-msgid "File manager:"
-msgstr "文件管理器："
-
-# Installer
 msgid "Home dir:"
 msgstr "主目录："
 
@@ -2101,10 +2097,6 @@ msgstr "正在安装文件管理器操作..."
 # Installer
 msgid "Remove previously installed scripts"
 msgstr "移除之前安装的脚本"
-
-# Installer
-msgid "Removing application menu shortcuts..."
-msgstr "正在移除应用程序菜单快捷方式..."
 
 # Installer
 msgid "Removing previously installed scripts..."

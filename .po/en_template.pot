@@ -2025,10 +2025,6 @@ msgid "Downloading the package..."
 msgstr ""
 
 # Installer
-msgid "File manager:"
-msgstr ""
-
-# Installer
 msgid "Home dir:"
 msgstr ""
 
@@ -2094,10 +2090,6 @@ msgstr ""
 
 # Installer
 msgid "Remove previously installed scripts"
-msgstr ""
-
-# Installer
-msgid "Removing application menu shortcuts..."
 msgstr ""
 
 # Installer
