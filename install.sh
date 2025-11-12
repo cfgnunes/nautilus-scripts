@@ -922,11 +922,13 @@ _install_accels_thunar() {
             keyboard_shortcut=${keyboard_shortcut//Control/Primary}
 
             if [[ -n "$keyboard_shortcut" ]]; then
+                local msg_scripts=""
+                msg_scripts=$(_i18n 'Scripts')
                 local name=""
                 local submenu=""
                 local unique_id=""
                 name=$(basename -- "$filename")
-                submenu=$(dirname -- "$filename" | sed "s|.*scripts/|Scripts/|g")
+                submenu=$(dirname -- "$filename" | sed "s|.*scripts/|$msg_scripts/|g")
                 unique_id=$(md5sum <<<"$submenu$name" 2>/dev/null |
                     sed "s|[^0-9]*||g" | cut -c 1-8)
 
@@ -988,6 +990,8 @@ _install_application_shortcuts() {
 
 _create_gnome_application_folder() {
     local folder_name="Scripts"
+    local translated_folder_name=""
+    translated_folder_name=$(_i18n "$folder_name")
     # Configure the application folder in GNOME.
 
     # Exit if not running under a GNOME desktop environment.
@@ -1021,7 +1025,7 @@ _create_gnome_application_folder() {
     # Set the display name for the new GNOME application folder.
     gsettings set \
         org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
-        name "$folder_name" &>/dev/null
+        name "$translated_folder_name" &>/dev/null
 
     # Build a list of all .desktop files in the scripts directory to be added
     # under this GNOME application folder.
@@ -1118,11 +1122,13 @@ _install_actions_pcmanfm() {
     # -------------------------------------------------------------------------
     # Create the 'scripts.desktop' for the categories (main menu).
     # -------------------------------------------------------------------------
+    local msg_scripts=""
+    msg_scripts=$(_i18n 'Scripts')
     menu_file="$menus_path/$INSTALL_NAME_DIR-main.desktop"
     {
         printf "%s\n" "[Desktop Entry]"
         printf "%s\n" "Type=Menu"
-        printf "%s\n" "Name=Scripts"
+        printf "%s\n" "Name=$msg_scripts"
         printf "%s" "ItemsList="
         find -L "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -type d \
             "${IGNORE_FIND_PATHS[@]}" \
@@ -1236,11 +1242,13 @@ _install_actions_thunar() {
         local name=""
         local submenu=""
         local unique_id=""
+        local msg_scripts=""
+        msg_scripts=$(_i18n 'Scripts')
 
         while IFS= read -r -d $'\0' filename; do
             name=$(basename -- "$filename")
             submenu=$(dirname -- "$filename" |
-                sed "s|.*scripts/|Scripts/|g")
+                sed "s|.*scripts/|$msg_scripts/|g")
 
             printf "%s\n" "<action>"
             printf "\t%s\n" "<icon></icon>"
