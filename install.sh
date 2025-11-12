@@ -20,12 +20,13 @@ INSTALL_APPS_SHORTCUTS_PATH=".local/share/applications/$INSTALL_NAME_DIR"
 # List of supported file managers.
 COMPATIBLE_FILE_MANAGERS=(
     "nautilus"
+    "dolphin"
     "nemo"
     "caja"
-    "dolphin"
-    "pcmanfm"
+    "thunar"
     "pcmanfm-qt"
-    "thunar")
+    "pcmanfm"
+)
 
 # Ignored shortcuts (application menu) during install.
 IGNORE_APPS_SHORTCUTS=(
