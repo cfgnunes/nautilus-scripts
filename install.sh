@@ -846,7 +846,6 @@ _encode_path_gtk() {
         *) printf '%s' "$c" | hexdump -v -e '/1 "-%02X" ' | sed "s|-|\%|g" ;;
         esac
     done
-    printf '\n'
 }
 
 _install_accels_gnome2() {
