@@ -23,6 +23,7 @@ COMPATIBLE_FILE_MANAGERS=(
     "nemo"
     "caja"
     "dolphin"
+    "pcmanfm"
     "pcmanfm-qt"
     "thunar")
 
@@ -1097,7 +1098,7 @@ _install_actions() {
     "caja") _create_links "$INSTALL_HOME/.config/caja/scripts" ;;
     "nemo") _create_links "$INSTALL_HOME/.local/share/nemo/scripts" ;;
     "dolphin") _install_actions_dolphin ;;
-    "pcmanfm-qt") _install_actions_pcmanfm ;;
+    "pcmanfm"*) _install_actions_pcmanfm ;;
     "thunar") _install_actions_thunar ;;
     esac
 }
@@ -1335,24 +1336,24 @@ _close_filemanager() {
         # Close Caja gracefully.
         caja -q &>/dev/null
         # Reload Caja in background to restore desktop icons.
-        nohup caja --force-desktop --no-default-window &>/dev/null &
+        nohup "$FILE_MANAGER" --force-desktop --no-default-window &>/dev/null &
         ;;
-    "pcmanfm-qt")
+    "pcmanfm"*)
         # NOTE: 'pcmanfm-qt' does not reload automatically after quitting.
         # We need to capture its current launch command to restart it.
-        local session_command=""
-        session_command=$(pgrep -a "pcmanfm-qt" | head -n1 | cut -d " " -f 2-)
+        local session_cmd=""
+        session_cmd=$(pgrep -a "$FILE_MANAGER" | head -n1 | cut -d " " -f 2-)
 
         # Kill all existing 'pcmanfm-qt' processes.
         killall "$FILE_MANAGER" &>/dev/null
 
         # Restart it using the same session command (if found).
-        if [[ -n "$session_command" ]]; then
+        if [[ -n "$session_cmd" ]]; then
             # shellcheck disable=SC2086
-            nohup $session_command &>/dev/null &
+            nohup $session_cmd &>/dev/null &
         else
-            # Fallback: start pcmanfm-qt with default settings.
-            nohup pcmanfm-qt --desktop &>/dev/null &
+            # Fallback: start 'pcmanfm-qt' with default settings.
+            nohup "$FILE_MANAGER" --desktop &>/dev/null &
         fi
         ;;
     esac
