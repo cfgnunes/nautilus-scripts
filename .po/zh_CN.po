@@ -1993,6 +1993,10 @@ msgstr "视频：速度调整为 1.5"
 msgid "Video: Speed to 2.0"
 msgstr "视频：速度调整为 2.0"
 
+# Menu: Folder name. This string must NOT contain the "%" character.
+msgid "Scripts"
+msgstr "脚本"
+
 # SECTION: Installer ----
 # Installer
 msgid "Add shortcuts to the application menu"

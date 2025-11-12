@@ -1987,6 +1987,10 @@ msgstr ""
 msgid "Video: Speed to 2.0"
 msgstr ""
 
+# Menu: Folder name. This string must NOT contain the "%" character.
+msgid "Scripts"
+msgstr ""
+
 # SECTION: Installer ----
 # Installer
 msgid "Add shortcuts to the application menu"
