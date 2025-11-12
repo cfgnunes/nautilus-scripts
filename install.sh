@@ -226,9 +226,7 @@ _main() {
         [[ "$OPT_INSTALL_ACCELS" == "true" ]] && _install_accels
 
         ### Step 3.3: Reload file manager to apply changes. ----
-        if [[ "$USER" == "$INSTALL_OWNER" ]]; then
-            [[ "$OPT_CLOSE_FILE_MANAGER" == "true" ]] && _close_filemanager
-        fi
+        [[ "$OPT_CLOSE_FILE_MANAGER" == "true" ]] && _close_filemanager
 
         _echo_info "> $(_i18n 'Done!')"
 
@@ -1010,26 +1008,18 @@ _create_gnome_application_folder() {
 
     _echo_info "> $(_i18n 'Creating GNOME application folder...')"
 
-    # Determine which 'gsettings' command to use:
-    # - Use 'machinectl' when modifying another user's GNOME settings.
-    # - Otherwise, use the local 'gsettings' command.
-    local gsettings_user="gsettings"
-    if _command_exists "machinectl" && [[ "$USER" != "$INSTALL_OWNER" ]]; then
-        gsettings_user="sudo machinectl --quiet shell $INSTALL_OWNER@ $(which "gsettings")"
-    fi
-
     # Retrieve the current list of GNOME app folders.
     # If the folder does not exist, append it to the list.
     local current_folders=""
-    current_folders=$($gsettings_user get org.gnome.desktop.app-folders folder-children)
+    current_folders=$(gsettings get org.gnome.desktop.app-folders folder-children)
     if [[ "$current_folders" != *"'$folder_name'"* ]]; then
         # shellcheck disable=SC2001
-        $gsettings_user set \
+        gsettings set \
             org.gnome.desktop.app-folders folder-children "$(sed "s/]/,'$folder_name']/" <<<"$current_folders")" &>/dev/null
     fi
 
     # Set the display name for the new GNOME application folder.
-    $gsettings_user set \
+    gsettings set \
         org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
         name "$folder_name" &>/dev/null
 
@@ -1045,7 +1035,7 @@ _create_gnome_application_folder() {
     )
 
     # Assign all found .desktop files to the folder in GNOME settings.
-    $gsettings_user set \
+    gsettings set \
         org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
         apps "$list_scripts" &>/dev/null
 
