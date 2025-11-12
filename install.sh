@@ -666,7 +666,7 @@ _install_scripts() {
     local -n _cat_dirs=$2
 
     rm -rf -- "$INSTALL_DIR" 2>/dev/null
-    rm -rf -- "$INSTALL_HOME/$INSTALL_APPS_SHORTCUTS_PATH" 2>/dev/null
+    rm -rf -- "${INSTALL_HOME:?}/$INSTALL_APPS_SHORTCUTS_PATH" 2>/dev/null
 
     _echo_info "> $(_i18n 'Installing the scripts...')"
     mkdir --parents -- "$INSTALL_DIR"
