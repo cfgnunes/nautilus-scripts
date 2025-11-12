@@ -836,21 +836,14 @@ _encode_path_gtk() {
     local string=$1
     local length="${#string}"
 
-    local encoded=""
     local c=""
     local i=""
     for ((i = 0; i < length; i++)); do
         c="${string:i:1}"
         # shellcheck disable=SC1001
         case "$c" in
-        [a-zA-Z0-9\:\'\(\)\.\_\~\-\\])
-            printf '%s' "$c"
-            ;;
-        *)
-            encoded=$(printf '%s' "$c" | iconv -t UTF-8 |
-                hexdump -v -e '/1 "-%02X" ' | sed "s|-|\%|g")
-            printf '%s' "$encoded"
-            ;;
+        [a-zA-Z0-9\:\'\(\)\.\_\~\-\\]) printf '%s' "$c" ;;
+        *) printf '%s' "$c" | hexdump -v -e '/1 "-%02X" ' | sed "s|-|\%|g" ;;
         esac
     done
     printf '\n'
