@@ -3874,8 +3874,7 @@ _i18n_initialize() {
 # DESCRIPTION:
 # This function reads a PO (Portable Object) file line by line,
 # extracting the translation strings and storing them in the
-# associative array '$I18N_DATA'. Stops reading when encountering
-# the "# SECTION: Menu" comment.
+# associative array '$I18N_DATA'.
 #
 # PARAMETERS:
 #   $1 (po_file): Path to the .po file to be loaded.
@@ -3888,11 +3887,6 @@ _i18n_load_file() {
     local line=""
     while IFS= read -r line || [[ -n "$line" ]]; do
         case "$line" in
-        "# SECTION: Menu"*)
-            if [[ "$(_get_script_name)" != "install"* ]]; then
-                break
-            fi
-            ;;
         "msgid"*)
             key="${line#msgid }"
             key="${key%\"}"
