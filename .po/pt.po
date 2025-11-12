@@ -1449,7 +1449,7 @@ msgstr "MP3: Mostrar detalhes de codificação"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Open item location"
-msgstr "Abrir localização do item"
+msgstr "Abrir local do item"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Paste as hard link"
