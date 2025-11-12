@@ -235,7 +235,6 @@ _main() {
         if [[ "$OPT_INSTALL_APP_SHORTCUTS" == "true" ]]; then
             _echo ""
             _echo_info "$(_i18n 'Installing application menu shortcuts:')"
-            _echo_info "> $(_i18n 'User:') $INSTALL_OWNER"
             _install_application_shortcuts
             _create_gnome_application_folder
             _echo_info "> $(_i18n 'Done!')"
