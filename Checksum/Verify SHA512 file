@@ -10,7 +10,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
-    _display_wait_box "2"
+    _display_wait_box
     input_files=$(_get_files "par_type=file; par_max_items=1; par_select_mime=text/plain")
 
     # Execute the function '_verify_checksum' for each file in parallel.

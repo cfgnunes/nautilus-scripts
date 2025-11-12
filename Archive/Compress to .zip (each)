@@ -14,7 +14,7 @@ _main() {
     if ! _command_exists "zip" && ! _command_exists "bsdtar"; then
         _check_dependencies "7za"
     fi
-    _display_wait_box "2"
+    _display_wait_box
     input_files=$(_get_files "par_type=all")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 

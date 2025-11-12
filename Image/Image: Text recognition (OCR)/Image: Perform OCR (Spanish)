@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     TEMP_DATA_TASK="spa"
     _check_dependencies "tesseract-lang-$TEMP_DATA_TASK"
-    _display_wait_box "2"
+    _display_wait_box
     input_files=$(_get_files "par_type=file; par_select_mime=image/")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 

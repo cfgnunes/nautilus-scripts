@@ -10,7 +10,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "gpg"
-    _display_wait_box "2"
+    _display_wait_box
     input_files=$(_get_files "par_type=file; par_select_mime='application/octet-stream|application/pgp|application/pgp-encrypted|application/pgp-signature|text/PGP|text/plain'")
 
     # Execute the function '_main_task' for each file in parallel.

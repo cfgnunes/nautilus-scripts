@@ -12,7 +12,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies ""
-    _display_wait_box "2"
+    _display_wait_box
     input_files=$(_get_files "par_type=file; par_recursive=true; par_skip_encoding='binary'; par_skip_extension='pdf|svg'")
 
     # Execute the function '_main_task' for each file in parallel.
