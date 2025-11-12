@@ -1046,44 +1046,44 @@ msgid "Git: Reset and pull"
 msgstr "Git：重置并拉取"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Decrypt"
-msgstr "GPG：解密"
+msgid "Decrypt"
+msgstr "解密"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with password"
-msgstr "GPG：使用密码加密"
+msgid "Encrypt with password"
+msgstr "使用密码加密"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with password (ASCII)"
-msgstr "GPG：使用密码加密 (ASCII)"
+msgid "Encrypt with password (ASCII)"
+msgstr "使用密码加密 (ASCII)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with keys"
-msgstr "GPG：使用密钥加密"
+msgid "Encrypt with keys"
+msgstr "使用密钥加密"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with keys (ASCII)"
-msgstr "GPG：使用密钥加密(ASCII)"
+msgid "Encrypt with keys (ASCII)"
+msgstr "使用密钥加密(ASCII)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Import key"
-msgstr "GPG：导入密钥"
+msgid "Import key"
+msgstr "导入密钥"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Sign"
-msgstr "GPG：签名"
+msgid "Sign"
+msgstr "签名"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Sign (ASCII)"
-msgstr "GPG：签名 (ASCII)"
+msgid "Sign (ASCII)"
+msgstr "签名 (ASCII)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Sign (detached signature)"
-msgstr "GPG：签名 (分离签名)"
+msgid "Sign (detached signature)"
+msgstr "签名 (分离签名)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Verify signature"
-msgstr "GPG：验证签名"
+msgid "Verify signature"
+msgstr "验证签名"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Image: Add watermark (center)"

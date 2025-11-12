@@ -1044,44 +1044,44 @@ msgid "Git: Reset and pull"
 msgstr "Git: Reset e pull"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Decrypt"
-msgstr "GPG: Descriptografar"
+msgid "Decrypt"
+msgstr "Descriptografar"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with password"
-msgstr "GPG: Criptografar com senha"
+msgid "Encrypt with password"
+msgstr "Criptografar com senha"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with password (ASCII)"
-msgstr "GPG: Criptografar com senha (ASCII)"
+msgid "Encrypt with password (ASCII)"
+msgstr "Criptografar com senha (ASCII)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with keys"
-msgstr "GPG: Criptografar com chaves"
+msgid "Encrypt with keys"
+msgstr "Criptografar com chaves"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with keys (ASCII)"
-msgstr "GPG: Criptografar com chaves (ASCII)"
+msgid "Encrypt with keys (ASCII)"
+msgstr "Criptografar com chaves (ASCII)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Import key"
-msgstr "GPG: Importar chave"
+msgid "Import key"
+msgstr "Importar chave"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Sign"
-msgstr "GPG: Assinar"
+msgid "Sign"
+msgstr "Assinar"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Sign (ASCII)"
-msgstr "GPG: Assinar (ASCII)"
+msgid "Sign (ASCII)"
+msgstr "Assinar (ASCII)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Sign (detached signature)"
-msgstr "GPG: Assinar (assinatura separada)"
+msgid "Sign (detached signature)"
+msgstr "Assinar (assinatura separada)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Verify signature"
-msgstr "GPG: Verificar assinatura"
+msgid "Verify signature"
+msgstr "Verificar assinatura"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Image: Add watermark (center)"

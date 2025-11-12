@@ -1044,44 +1044,44 @@ msgid "Git: Reset and pull"
 msgstr "Git: Reset y pull"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Decrypt"
-msgstr "GPG: Descifrar"
+msgid "Decrypt"
+msgstr "Descifrar"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with password"
-msgstr "GPG: Cifrar con contraseña"
+msgid "Encrypt with password"
+msgstr "Cifrar con contraseña"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with password (ASCII)"
-msgstr "GPG: Cifrar con contraseña (ASCII)"
+msgid "Encrypt with password (ASCII)"
+msgstr "Cifrar con contraseña (ASCII)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with keys"
-msgstr "GPG: Cifrar con claves"
+msgid "Encrypt with keys"
+msgstr "Cifrar con claves"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with keys (ASCII)"
-msgstr "GPG: Cifrar con claves (ASCII)"
+msgid "Encrypt with keys (ASCII)"
+msgstr "Cifrar con claves (ASCII)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Import key"
-msgstr "GPG: Importar clave"
+msgid "Import key"
+msgstr "Importar clave"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Sign"
-msgstr "GPG: Firmar"
+msgid "Sign"
+msgstr "Firmar"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Sign (ASCII)"
-msgstr "GPG: Firmar (ASCII)"
+msgid "Sign (ASCII)"
+msgstr "Firmar (ASCII)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Sign (detached signature)"
-msgstr "GPG: Firmar (firma separada)"
+msgid "Sign (detached signature)"
+msgstr "Firmar (firma separada)"
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Verify signature"
-msgstr "GPG: Verificar firma"
+msgid "Verify signature"
+msgstr "Verificar firma"
 
 # Menu: Script name. This string must NOT contain the "%" character.
 msgid "Image: Add watermark (center)"

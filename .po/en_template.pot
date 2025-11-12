@@ -1044,43 +1044,43 @@ msgid "Git: Reset and pull"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Decrypt"
+msgid "Decrypt"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with password"
+msgid "Encrypt with password"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with password (ASCII)"
+msgid "Encrypt with password (ASCII)"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with keys"
+msgid "Encrypt with keys"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Encrypt with keys (ASCII)"
+msgid "Encrypt with keys (ASCII)"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Import key"
+msgid "Import key"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Sign"
+msgid "Sign"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Sign (ASCII)"
+msgid "Sign (ASCII)"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Sign (detached signature)"
+msgid "Sign (detached signature)"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
-msgid "GPG: Verify signature"
+msgid "Verify signature"
 msgstr ""
 
 # Menu: Script name. This string must NOT contain the "%" character.
