@@ -832,7 +832,7 @@ _install_accels_nautilus() {
     _chown_file "$accels_file"
 }
 
-_path_encode() {
+_encode_path_gtk() {
     local string=$1
     local length="${#string}"
 
@@ -885,7 +885,7 @@ _install_accels_gnome2() {
             if [[ -n "$keyboard_shortcut" ]]; then
                 # shellcheck disable=SC2001
                 filename=$(sed "s|/|\\\\\\\\s|g" <<<"$filename")
-                filename=$(_path_encode "$filename")
+                filename=$(_encode_path_gtk "$filename")
 
                 printf "%s\n" '(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s'"$filename"'" "'"$keyboard_shortcut"'")'
             fi
