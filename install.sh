@@ -1031,7 +1031,6 @@ _create_gnome_application_folder() {
     gsettings set \
         org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
         apps "$list_scripts" &>/dev/null
-
 }
 
 # -----------------------------------------------------------------------------
