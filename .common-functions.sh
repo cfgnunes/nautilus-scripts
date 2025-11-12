@@ -2528,11 +2528,12 @@ _get_available_file_manager() {
 # Script"), used in naming of 'Accessed recently' directory, that prefix is
 # removed.
 _get_script_name() {
-    local output=""
-    output=$(basename -- "$0")
+    local script_name=""
+    script_name=$(basename -- "$0")
 
     # Remove 'dd ' (two digits + space) at the beginning.
-    sed "s|^[0-9]\{2\} ||" <<<"$output"
+    script_name=$(sed "s|^[0-9]\{2\} ||" <<<"$script_name")
+    _i18n "$script_name"
 }
 
 # FUNCTION: _is_file_manager_session
@@ -3836,7 +3837,7 @@ _initialize_homebrew() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION: Translation and Internationalization (i18n) ----
+# SECTION: Internationalization (i18n) ----
 # -----------------------------------------------------------------------------
 
 # FUNCTION: _i18n_initialize
