@@ -1022,12 +1022,10 @@ _create_gnome_application_folder() {
     # under this GNOME application folder.
     local list_scripts=""
     local app_menus_path="$INSTALL_HOME/$INSTALL_APPS_SHORTCUTS_PATH"
-    list_scripts=$(
-        find "$app_menus_path" \
-            -maxdepth 1 -type f -name "*.desktop" \
-            -printf "'$INSTALL_NAME_DIR-%f', " |
-            sed 's/, $//; s/^/[/' | sed 's/$/]/'
-    )
+    list_scripts=$(find "$app_menus_path" \
+        -maxdepth 1 -type f -name "*.desktop" \
+        -printf "'$INSTALL_NAME_DIR-%f', " |
+        sed 's/, $//; s/^/[/' | sed 's/$/]/')
 
     # Assign all found .desktop files to the folder in GNOME settings.
     gsettings set \
