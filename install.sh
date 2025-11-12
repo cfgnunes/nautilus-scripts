@@ -669,7 +669,7 @@ _install_scripts() {
     rm -rf -- "$INSTALL_HOME/$INSTALL_APPS_SHORTCUTS_PATH" 2>/dev/null
 
     _echo_info "> $(_i18n 'Installing the scripts...')"
-    mkdir --parents "$INSTALL_DIR"
+    mkdir --parents -- "$INSTALL_DIR"
 
     # Always copy important files and directories.
     cp -- "$SCRIPT_DIR/.common-functions.sh" "$INSTALL_DIR"
@@ -769,7 +769,7 @@ _install_accels() {
 
 _install_accels_nautilus() {
     local accels_file=$1
-    mkdir --parents "$(dirname -- "$accels_file")"
+    mkdir --parents -- "$(dirname -- "$accels_file")"
 
     # Create a backup of older custom actions.
     _item_create_backup "$accels_file"
@@ -821,7 +821,7 @@ _install_accels_gnome2() {
     local accels_file=$1
     local scripts_installed_dir=$2
 
-    mkdir --parents "$(dirname -- "$accels_file")"
+    mkdir --parents -- "$(dirname -- "$accels_file")"
 
     # Create a backup of older custom actions.
     _item_create_backup "$accels_file"
@@ -858,7 +858,7 @@ _install_accels_gnome2() {
 
 _install_accels_thunar() {
     local accels_file=$1
-    mkdir --parents "$(dirname -- "$accels_file")"
+    mkdir --parents -- "$(dirname -- "$accels_file")"
 
     # Create a backup of older custom actions.
     _item_create_backup "$accels_file"
@@ -916,7 +916,7 @@ _install_application_shortcuts() {
     rm -rf -- "$app_menus_path" 2>/dev/null
 
     # Create the directory for menu entries.
-    mkdir --parents "$app_menus_path"
+    mkdir --parents -- "$app_menus_path"
 
     # Create a '.desktop' file for each script.
     local filename=""
@@ -1038,7 +1038,7 @@ _install_actions_dolphin() {
     local menus_path="$INSTALL_HOME/.local/share/kio/servicemenus"
     find "$menus_path" -name "$INSTALL_NAME_DIR-*.desktop" \
         -type f -delete 2>/dev/null
-    mkdir --parents "$menus_path"
+    mkdir --parents -- "$menus_path"
 
     # -------------------------------------------------------------------------
     # Create a '.desktop' file for each script.
@@ -1082,7 +1082,7 @@ _install_actions_pcmanfm() {
     local menus_path="$INSTALL_HOME/.local/share/file-manager/actions"
     find "$menus_path" -name "$INSTALL_NAME_DIR-*.desktop" \
         -type f -delete 2>/dev/null
-    mkdir --parents "$menus_path"
+    mkdir --parents -- "$menus_path"
 
     # -------------------------------------------------------------------------
     # Create the 'scripts.desktop' for the categories (main menu).
@@ -1164,7 +1164,7 @@ _install_actions_pcmanfm() {
 _install_actions_thunar() {
     local menu_file=""
     local menus_path="$INSTALL_HOME/.config/Thunar"
-    mkdir --parents "$menus_path"
+    mkdir --parents -- "$menus_path"
     menu_file="$menus_path/uca.xml"
 
     # Create a backup of older custom actions.
@@ -1325,7 +1325,7 @@ _install_homebrew() {
     fi
 
     _echo_info "> $(_i18n 'Installing Homebrew to:') ~/.local/apps/homebrew"
-    mkdir --parents "$homebrew_dir"
+    mkdir --parents -- "$homebrew_dir"
 
     _echo_info "> $(_i18n 'Downloading the package...')"
 
