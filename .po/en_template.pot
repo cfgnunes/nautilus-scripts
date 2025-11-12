@@ -2037,7 +2037,7 @@ msgid "Homebrew is already installed."
 msgstr ""
 
 # Installer
-msgid "Install basic dependencies (may require sudo)"
+msgid "Install basic dependencies"
 msgstr ""
 
 # Installer

@@ -139,7 +139,7 @@ _main() {
 
     # Available options presented in the interactive menu.
     menu_labels=(
-        "$(_i18n 'Install basic dependencies (may require sudo)')"
+        "$(_i18n 'Install basic dependencies')"
         "$(_i18n 'Remove previously installed scripts')"
         "$(_i18n 'Install keyboard accelerators')"
         "$(_i18n 'Close the file manager to reload configurations')"

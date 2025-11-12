@@ -2043,8 +2043,8 @@ msgid "Homebrew is already installed."
 msgstr "Homebrew 已安装。"
 
 # Installer
-msgid "Install basic dependencies (may require sudo)"
-msgstr "安装基本依赖项 (可能需要 sudo)"
+msgid "Install basic dependencies"
+msgstr "安装基本依赖项"
 
 # Installer
 msgid "Install Homebrew (optional)"
