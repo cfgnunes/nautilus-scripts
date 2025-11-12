@@ -3975,7 +3975,7 @@ _recent_scripts_add() {
         -exec rm -f -- {} +
 
     # Create a new symbolic link with a ".00" prefix.
-    ln -s -- "$running_script" ".00 $(basename -- "$running_script")"
+    ln -s -- "$running_script" ".00 $(_get_script_name)"
 
     _directory_pop || return 1
 
