@@ -515,7 +515,7 @@ declare -A DEPENDENCIES_MAP=(
     ["pandoc"]="
         pkg:    pandoc
         apt:    pandoc
-        dnf:    pandoc
+        dnf:    pandoc-cli
         pacman: pandoc
         nix:    pandoc
         zypper: pandoc
