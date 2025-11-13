@@ -1,11 +1,11 @@
 # Translators: The string must NOT contain the "%" character and must be a single-line string.
-#, fuzzy
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Enhanced File Manager Actions for Linux\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-09 01:00-0300\n"
-"PO-Revision-Date: 2025-11-07 22:05-0300\n"
+"PO-Revision-Date: 2025-11-13 12:34-0300\n"
 "Last-Translator: JoveYu <yushijun110@gmail.com>\n"
 "Language-Team: \n"
 "Language: zh_CN\n"
@@ -15,116 +15,83 @@ msgstr ""
 "X-Generator: Poedit 3.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-msgid "links"
-msgstr "链接"
+msgid "Done!"
+msgstr "完成！"
 
-msgid "MIME"
-msgstr "MIME"
+msgid "files"
+msgstr "文件"
 
-msgid "(Empty)"
-msgstr "（空）"
+msgid "Would you like to continue?"
+msgstr "是否继续？"
 
-msgid "Image files"
-msgstr "图像文件"
+msgid "directories"
+msgstr "目录"
 
-msgid "Key files"
-msgstr "密钥文件"
-
-msgid "PDF files"
-msgstr "PDF文件"
-
-msgid "All items were successfully deleted!"
-msgstr "所有项目已成功删除！"
-
-msgid "Batch mode detected."
-msgstr "检测到批处理模式。"
-
-msgid "Choose a key file to import."
-msgstr "选择要导入的密钥文件。"
-
-msgid "Choose an image to use as the watermark"
-msgstr "选择用作水印的图像"
-
-msgid "Choose a PDF to use as the watermark"
-msgstr "选择用作水印的PDF"
+msgid "items"
+msgstr "项目"
 
 msgid "Command failed with a non-zero exit code."
 msgstr "命令执行失败，退出码非零。"
 
-msgid "Could not access the directory:"
-msgstr "无法访问目录："
-
-msgid "Could not find a directory with write permissions!"
-msgstr "找不到具有写入权限的目录！"
-
-msgid "Could not find package names to install:"
-msgstr "找不到要安装的软件包名称："
-
-msgid "Could not find the executable to open MIME type:"
-msgstr "找不到打开MIME类型的可执行文件："
-
-msgid "Could not install the package:"
-msgstr "无法安装软件包："
-
-msgid "Each file inside this directory will be processed individually."
-msgstr "此目录内的每个文件都将被单独处理。"
-
-msgid "Failed to import the key!"
-msgstr "导入密钥失败！"
-
-msgid "Failed: you must select a user!"
-msgstr "失败：必须选择一个用户！"
-
-msgid "Select a user:"
-msgstr "选择用户："
-
-msgid "Failed: you must select at least one user!"
-msgstr "失败：必须至少选择一个用户！"
+msgid "The output file does not exist."
+msgstr "输出文件不存在。"
 
 msgid "Finished with errors! See the log:"
 msgstr "完成但存在错误！请查看日志："
 
-msgid "Finished, but there is nothing to do."
-msgstr "完成，但无需执行任何操作。"
+msgid "Your system does not support clipboard operations."
+msgstr "您的系统不支持剪贴板操作。"
 
-msgid "Finished! The output files are in:"
-msgstr "完成！输出文件位于："
+msgid "Could not find package names to install:"
+msgstr "找不到要安装的软件包名称："
 
-msgid "Finished!"
-msgstr "完成！"
+msgid "The following packages are missing:"
+msgstr "以下软件包缺失："
+
+msgid "Would you like to install them?"
+msgstr "是否安装它们？"
 
 msgid "Installing the packages. Please, wait..."
 msgstr "正在安装软件包，请稍候..."
 
-msgid "Invalid input file!"
-msgstr "输入文件无效！"
+msgid "The package is installed, but you need to reboot to use it:"
+msgstr "软件包已安装，但需要重启才能使用："
 
-msgid "No default application set for MIME type:"
-msgstr "未设置MIME类型的默认应用程序："
+msgid "Could not install the package:"
+msgstr "无法安装软件包："
 
-msgid "No public keys were found."
-msgstr "未找到公钥。"
+msgid "This action will delete the selected items."
+msgstr "此操作将删除所选项目。"
 
-msgid "No remote URL found."
-msgstr "未找到远程URL。"
+msgid "Total selected:"
+msgstr "已选总数："
 
-msgid "No secret keys were found."
-msgstr "未找到私钥。"
+msgid "Some items could not be deleted."
+msgstr "部分项目无法删除。"
 
-msgid "Password"
-msgstr "密码"
+msgid "All items were successfully deleted!"
+msgstr "所有项目已成功删除！"
 
-msgid "Running the task. Please, wait..."
-msgstr "正在执行任务，请稍候..."
+msgid "Could not access the directory:"
+msgstr "无法访问目录："
 
-msgid "Select the output filename:"
-msgstr "选择输出文件名："
+msgid "The destination file already exists."
+msgstr "目标文件已存在。"
 
-msgid "Select one or more users:"
-msgstr "选择一个或多个用户："
+msgid "Unable to move."
+msgstr "无法移动。"
 
-msgid "Select the ones to delete:"
-msgstr "选择要删除的项目："
+msgid "OK"
+msgstr "确定"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "(Empty)"
+msgstr "（空）"
+
+msgid "Select the ones to open:"
+msgstr "选择要打开的项目："
 
 msgid "Select the ones to open in the file manager:"
 msgstr "选择要在文件管理器中打开的项目："
@@ -132,92 +99,209 @@ msgstr "选择要在文件管理器中打开的项目："
 msgid "Select the ones to open in the web browser:"
 msgstr "选择要在网页浏览器中打开的项目："
 
-msgid "Select the ones to open:"
-msgstr "选择要打开的项目："
+msgid "Select the ones to delete:"
+msgstr "选择要删除的项目："
 
-msgid "Some items could not be deleted."
-msgstr "部分项目无法删除。"
-
-msgid "The destination file already exists."
-msgstr "目标文件已存在。"
-
-msgid "The directory is empty."
-msgstr "该目录为空。"
-
-msgid "The following packages are missing:"
-msgstr "以下软件包缺失："
-
-msgid "The output file does not exist."
-msgstr "输出文件不存在。"
-
-msgid "The package is installed, but you need to reboot to use it:"
-msgstr "软件包已安装，但需要重启才能使用："
-
-msgid "The password can not be empty!"
-msgstr "密码不能为空！"
-
-msgid "The selected images has same pixel values."
-msgstr "所选图像具有相同的像素值。"
-
-msgid "The selected items are identical."
-msgstr "所选项目完全相同。"
-
-msgid "There are no valid IPs in the selected files!"
-msgstr "所选文件中没有有效的 IP！"
-
-msgid "There are no valid paths in the clipboard!"
-msgstr "剪贴板中没有有效路径！"
-
-msgid "There are no valid URLs in the clipboard or in the selected files!"
-msgstr "剪贴板或所选文件中没有有效的 URL！"
-
-msgid "There are no valid URLs in the selected files!"
-msgstr "所选文件中没有有效的 URL！"
-
-msgid "This action will delete the selected items."
-msgstr "此操作将删除所选项目。"
-
-msgid "This action will move all files from subdirectories to the root of the selected directory."
-msgstr "此操作会将所有文件从子目录移动到所选目录的根目录。"
-
-msgid "This action will permanently delete the selected files."
-msgstr "此操作将永久删除所选文件。"
-
-msgid "This action will rename the selected files and directories recursively."
-msgstr "此操作将递归重命名所选文件和目录。"
-
-msgid "This action will reset the permissions recursively."
-msgstr "此操作将递归重置权限。"
-
-msgid "Total selected:"
-msgstr "已选总数："
+msgid "Password"
+msgstr "密码"
 
 msgid "Type your password:"
 msgstr "输入密码："
 
-msgid "Unable to move."
-msgstr "无法移动。"
+msgid "The password can not be empty!"
+msgstr "密码不能为空！"
 
-msgid "Unsupported clipboard type."
-msgstr "不支持的剪贴板类型。"
+msgid "Yes"
+msgstr "是"
 
-msgid "Would you like to continue?"
-msgstr "是否继续？"
+msgid "No"
+msgstr "否"
 
-msgid "Would you like to import a key now?"
-msgstr "是否立即导入密钥？"
+msgid "Finished! The output files are in:"
+msgstr "完成！输出文件位于："
 
-msgid "Would you like to install them?"
-msgstr "是否安装它们？"
+msgid "Finished, but there is nothing to do."
+msgstr "完成，但无需执行任何操作。"
 
-msgid "You must select at least"
-msgstr "必须至少选择"
+msgid "Finished!"
+msgstr "完成！"
+
+msgid "Running the task. Please, wait..."
+msgstr "正在执行任务，请稍候..."
+
+msgid "No default application set for MIME type:"
+msgstr "未设置MIME类型的默认应用程序："
+
+msgid "Could not find the executable to open MIME type:"
+msgstr "找不到打开MIME类型的可执行文件："
+
+msgid "Batch mode detected."
+msgstr "检测到批处理模式。"
+
+msgid "Each file inside this directory will be processed individually."
+msgstr "此目录内的每个文件都将被单独处理。"
+
+msgid "files or directories"
+msgstr "文件或目录"
 
 msgid "You must select files with extension:"
 msgstr "必须选择扩展名为以下类型的文件："
 
-msgid "You must select only two binary files to compare!"
-msgstr "必须仅选择两个二进制文件进行比较！"
+msgid "Invalid input file!"
+msgstr "输入文件无效！"
+
+msgid "You must select"
+msgstr "必须选择"
+
+msgid "You must select at least"
+msgstr "必须至少选择"
+
+msgid "You must select up to"
+msgstr "最多选择"
+
+msgid "Could not find a directory with write permissions!"
+msgstr "找不到具有写入权限的目录！"
+
+msgid "Accessed recently"
+msgstr "最近访问"
+
+msgid "Endings"
+msgstr "结尾"
+
+msgid "File"
+msgstr "文件"
+
+msgid "Count"
+msgstr "计数"
+
+msgid "Char"
+msgstr "字符"
+
+msgid "Line"
+msgstr "行"
+
+msgid "Issues"
+msgstr "问题"
+
+msgid "Encoding"
+msgstr "编码"
+
+msgid "There are no valid paths in the clipboard!"
+msgstr "剪贴板中没有有效路径！"
+
+msgid "links"
+msgstr "链接"
+
+msgid "Inode"
+msgstr "Inode"
+
+msgid "Link"
+msgstr "链接"
+
+msgid "Unsupported clipboard type."
+msgstr "不支持的剪贴板类型。"
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr "此操作将递归重命名所选文件和目录。"
+
+msgid "PDF files"
+msgstr "PDF文件"
+
+msgid "Choose a PDF to use as the watermark"
+msgstr "选择用作水印的PDF"
+
+msgid "Signature"
+msgstr "签名"
+
+msgid "This action will permanently delete the selected files."
+msgstr "此操作将永久删除所选文件。"
+
+msgid "Malware"
+msgstr "恶意软件"
+
+msgid "Mode"
+msgstr "模式"
+
+msgid "Bit rate"
+msgstr "比特率"
+
+msgid "Sampling rate"
+msgstr "采样率"
+
+msgid "Channels"
+msgstr "声道"
+
+msgid "Duration"
+msgstr "时长"
+
+msgid "Album"
+msgstr "专辑"
+
+msgid "Artist"
+msgstr "艺术家"
+
+msgid "Title"
+msgstr "标题"
+
+msgid "Quality"
+msgstr "质量"
+
+msgid "Image files"
+msgstr "图像文件"
+
+msgid "Choose an image to use as the watermark"
+msgstr "选择用作水印的图像"
+
+msgid "Key files"
+msgstr "密钥文件"
+
+msgid "Choose a key file to import."
+msgstr "选择要导入的密钥文件。"
+
+msgid "No secret keys were found."
+msgstr "未找到私钥。"
+
+msgid "Would you like to import a key now?"
+msgstr "是否立即导入密钥？"
+
+msgid "Failed to import the key!"
+msgstr "导入密钥失败！"
+
+msgid "Select a user:"
+msgstr "选择用户："
+
+msgid "User"
+msgstr "用户"
+
+msgid "Failed: you must select a user!"
+msgstr "失败：必须选择一个用户！"
+
+msgid "No public keys were found."
+msgstr "未找到公钥。"
+
+msgid "Select one or more users:"
+msgstr "选择一个或多个用户："
+
+msgid "Failed: you must select at least one user!"
+msgstr "失败：必须至少选择一个用户！"
+
+msgid "Directory"
+msgstr "目录"
+
+msgid "Size"
+msgstr "大小"
+
+msgid "Group"
+msgstr "组"
+
+msgid "Item"
+msgstr "项目"
+
+msgid "Octal"
+msgstr "八进制"
+
+msgid "Type"
+msgstr "类型"
 
 msgid "You must select only two images to compare!"
 msgstr "必须仅选择两张图片进行比较！"
@@ -225,1824 +309,1687 @@ msgstr "必须仅选择两张图片进行比较！"
 msgid "You must select only two PDFs to compare!"
 msgstr "必须仅选择两个PDF文件进行比较！"
 
-msgid "You must select up to"
-msgstr "最多选择"
+msgid "You must select only two binary files to compare!"
+msgstr "必须仅选择两个二进制文件进行比较！"
 
-msgid "You must select"
-msgstr "必须选择"
+msgid "The selected items are identical."
+msgstr "所选项目完全相同。"
 
-msgid "Your system does not support clipboard operations."
-msgstr "您的系统不支持剪贴板操作。"
+msgid "The selected images has same pixel values."
+msgstr "所选图像具有相同的像素值。"
 
-# Button
-msgid "Cancel"
-msgstr "取消"
+msgid "MIME"
+msgstr "MIME"
 
-# Button
-msgid "No"
-msgstr "否"
+msgid "This action will move all files from subdirectories to the root of the selected directory."
+msgstr "此操作会将所有文件从子目录移动到所选目录的根目录。"
 
-# Button
-msgid "OK"
-msgstr "确定"
+msgid "This action will reset the permissions recursively."
+msgstr "此操作将递归重置权限。"
 
-# Button
-msgid "Yes"
-msgstr "是"
-
-# par_item_name
-msgid "IPs"
-msgstr "IP地址"
-
-# par_item_name
-msgid "items"
-msgstr "项目"
-
-# par_item_name
-msgid "URLs"
-msgstr "URL"
-
-# Column
-msgid "Album"
-msgstr "专辑"
-
-# Column
-msgid "Artist"
-msgstr "艺术家"
-
-# Column
-msgid "Bit rate"
-msgstr "比特率"
-
-# Column
-msgid "Channels"
-msgstr "声道"
-
-# Column
-msgid "Char"
-msgstr "字符"
-
-# Column
-msgid "Count"
-msgstr "计数"
-
-# Column
 msgid "Date"
 msgstr "日期"
 
-# Column
-msgid "Directory"
-msgstr "目录"
-
-# Column
-msgid "Duration"
-msgstr "时长"
-
-# Column
-msgid "Encoding"
-msgstr "编码"
-
-# Column
-msgid "Endings"
-msgstr "结尾"
-
-# Column
-msgid "File"
-msgstr "文件"
-
-# Column
-msgid "Filename"
-msgstr "文件名"
-
-# Column
-msgid "Group"
-msgstr "组"
-
-# Column
-msgid "Hostname"
-msgstr "主机名"
-
-# Column
-msgid "HTTP code"
-msgstr "HTTP 状态码"
-
-# Column
-msgid "Inode"
-msgstr "Inode"
-
-# Column
-msgid "IP"
-msgstr "IP"
-
-# Column
-msgid "Issues"
-msgstr "问题"
-
-# Column
-msgid "Item"
-msgstr "项目"
-
-# Column
-msgid "Line"
-msgstr "行"
-
-# Column
-msgid "Link"
-msgstr "链接"
-
-# Column
-msgid "Malware"
-msgstr "恶意软件"
-
-# Column
-msgid "Mode"
-msgstr "模式"
-
-# Column
-msgid "Octal"
-msgstr "八进制"
-
-# Column
-msgid "Quality"
-msgstr "质量"
-
-# Column
-msgid "Sampling rate"
-msgstr "采样率"
-
-# Column
-msgid "Signature"
-msgstr "签名"
-
-# Column
-msgid "Size"
-msgstr "大小"
-
-# Column
-msgid "Status"
-msgstr "状态"
-
-# Column
 msgid "Time"
 msgstr "时间"
 
-# Column
-msgid "Title"
-msgstr "标题"
+msgid "Select the output filename:"
+msgstr "选择输出文件名："
 
-# Column
-msgid "Type"
-msgstr "类型"
+msgid "Filename"
+msgstr "文件名"
 
-# Column
+msgid "Status"
+msgstr "状态"
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr "剪贴板或所选文件中没有有效的 URL！"
+
+msgid "IPs"
+msgstr "IP地址"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Hostname"
+msgstr "主机名"
+
+msgid "There are no valid IPs in the selected files!"
+msgstr "所选文件中没有有效的 IP！"
+
+msgid "There are no valid URLs in the selected files!"
+msgstr "所选文件中没有有效的 URL！"
+
+msgid "No remote URL found."
+msgstr "未找到远程URL。"
+
+msgid "URLs"
+msgstr "URL"
+
+msgid "HTTP code"
+msgstr "HTTP 状态码"
+
 msgid "URL"
 msgstr "URL"
 
-# Column
-msgid "User"
-msgstr "用户"
+msgid "The directory is empty."
+msgstr "该目录为空。"
 
-# valid_file_label
-msgid "directories"
-msgstr "目录"
-
-# valid_file_label, par_item_name
-msgid "files"
-msgstr "文件"
-
-# valid_file_label
-msgid "files or directories"
-msgstr "文件或目录"
-
-# Menu: Category
-msgid "Accessed recently"
-msgstr "最近访问"
-
-# SECTION: Menu ----
-# Menu: Category
+#: Menu
 msgid "Archive"
 msgstr "归档"
 
-# Menu: Category
+#: Menu
 msgid "Audio and Video"
 msgstr "音视频"
 
-# Menu: Category
-msgid "Clipboard"
-msgstr "剪贴板"
-
-# Menu: Category
-msgid "Directories and Files"
-msgstr "目录和文件"
-
-# Menu: Category
-msgid "Document"
-msgstr "文档"
-
-# Menu: Category
-msgid "Encryption"
-msgstr "加密"
-
-# Menu: Category
+#: Menu
 msgid "Checksum"
 msgstr "校验和"
 
-# Menu: Category
+#: Menu
+msgid "Clipboard"
+msgstr "剪贴板"
+
+#: Menu
+msgid "Directories and Files"
+msgstr "目录和文件"
+
+#: Menu
+msgid "Document"
+msgstr "文档"
+
+#: Menu
+msgid "Encryption"
+msgstr "加密"
+
+#: Menu
 msgid "Image"
 msgstr "图像"
 
-# Menu: Category
+#: Menu
 msgid "Links"
 msgstr "链接"
 
-# Menu: Category
+#: Menu
 msgid "Network and Internet"
 msgstr "网络"
 
-# Menu: Category
+#: Menu
 msgid "Open with"
 msgstr "打开"
 
-# Menu: Category
+#: Menu
 msgid "Plain text"
 msgstr "文本"
 
-# Menu: Category
+#: Menu
 msgid "Rename files"
 msgstr "重命名"
 
-# Menu: Category
+#: Menu
 msgid "Security and Recovery"
 msgstr "安全与恢复"
 
-# Menu: Subcategory
+#: Menu
 msgid "Audio and Video: Tools"
 msgstr "音频和视频：工具"
 
-# Menu: Subcategory
+#: Menu
 msgid "Audio: Channels"
 msgstr "音频：声道"
 
-# Menu: Subcategory
+#: Menu
 msgid "Audio: Convert"
 msgstr "音频：转换"
 
-# Menu: Subcategory
+#: Menu
 msgid "Audio: Effects"
 msgstr "音频：效果"
 
-# Menu: Subcategory
+#: Menu
 msgid "Audio: MP3 files"
 msgstr "音频：MP3文件"
 
-# Menu: Subcategory
+#: Menu
 msgid "Audio: Quality"
 msgstr "音频：质量"
 
-# Menu: Subcategory
+#: Menu
 msgid "Document: Convert"
 msgstr "文档：转换"
 
-# Menu: Subcategory
+#: Menu
 msgid "Document: Print"
 msgstr "文档：打印"
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Color"
 msgstr "图像：颜色"
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Combine, Split"
 msgstr "图像：合并、分割"
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Convert"
 msgstr "图像：转换"
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Crop, Resize"
 msgstr "图像：裁剪、调整大小"
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Flip, Rotate"
 msgstr "图像：翻转、旋转"
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Icons"
 msgstr "图像：图标"
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Metadata, Exif"
 msgstr "图像：元数据、Exif"
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Optimize, Reduce"
 msgstr "图像：优化、压缩"
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Similarity"
 msgstr "图像：相似度"
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: SVG files"
 msgstr "图像：SVG文件"
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Text recognition (OCR)"
 msgstr "图像：文字识别（OCR）"
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Transparency"
 msgstr "图像：透明度"
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Watermark"
 msgstr "图像：水印"
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Annotations"
 msgstr "PDF：注释"
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Combine, Split"
 msgstr "PDF：合并、分割"
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Security"
 msgstr "PDF：安全"
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Multiple-page layout"
 msgstr "PDF：多页布局"
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Optimize, Reduce"
 msgstr "PDF：优化、压缩"
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Page size"
 msgstr "PDF：页面尺寸"
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Rotate"
 msgstr "PDF：旋转"
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Signatures"
 msgstr "PDF：签名"
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Text recognition (OCR)"
 msgstr "PDF：文字识别（OCR）"
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Tools"
 msgstr "PDF：工具"
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Watermark"
 msgstr "PDF：水印"
 
-# Menu: Subcategory
+#: Menu
 msgid "Text: Encoding"
 msgstr "文本：编码"
 
-# Menu: Subcategory
+#: Menu
 msgid "Text: Indentation"
 msgstr "文本：缩进"
 
-# Menu: Subcategory
+#: Menu
 msgid "Text: Line breaks"
 msgstr "文本：换行符"
 
-# Menu: Subcategory
+#: Menu
 msgid "Text: Statistics"
 msgstr "文本：统计"
 
-# Menu: Subcategory
+#: Menu
 msgid "Text: Tools"
 msgstr "文本：工具"
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Aspect ratio"
 msgstr "视频：宽高比"
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Audio track"
 msgstr "视频：音轨"
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Convert"
 msgstr "视频：转换"
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Export frames"
 msgstr "视频：导出帧"
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Flip, Rotate"
 msgstr "视频：翻转、旋转"
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Frame rate"
 msgstr "视频：帧率"
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Resize"
 msgstr "视频：调整大小"
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Speed"
 msgstr "视频：速度"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Check quality"
 msgstr "音频：检查质量"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to FLAC"
 msgstr "音频：转换为FLAC"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to MP3 (48 kbps)"
 msgstr "音频：转换为MP3（48 kbps）"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to MP3 (192 kbps)"
 msgstr "音频：转换为MP3（192 kbps）"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to MP3 (320 kbps)"
 msgstr "音频：转换为MP3（320 kbps）"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to OGG (48 kbps)"
 msgstr "音频：转换为OGG（48 kbps）"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to OGG (192 kbps)"
 msgstr "音频：转换为OGG（192 kbps）"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to OGG (320 kbps)"
 msgstr "音频：转换为OGG（320 kbps）"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to OPUS (48 kbps)"
 msgstr "音频：转换为OPUS（48 kbps）"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to OPUS (192 kbps)"
 msgstr "音频：转换为OPUS（192 kbps）"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to OPUS (320 kbps)"
 msgstr "音频：转换为OPUS（320 kbps）"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to WAV"
 msgstr "音频：转换为WAV"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Fade-in"
 msgstr "音频：淡入"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Fade-out"
 msgstr "音频：淡出"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Mix channels to mono"
 msgstr "音频：混音为单声道"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Mix two files"
 msgstr "音频：混合两个文件"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Volume normalize"
 msgstr "音频：音量标准化"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Produce a spectrogram"
 msgstr "音频：生成频谱图"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Remove silent sections"
 msgstr "音频：移除静音部分"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Silence noise"
 msgstr "音频：静音降噪"
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Trim silence"
 msgstr "音频：修剪静音"
 
-# Menu: Script name
+#: Menu
 msgid "Code Editor"
 msgstr "代码编辑器"
 
-# Menu: Script name
+#: Menu
 msgid "Compare items"
 msgstr "比较项目"
 
-# Menu: Script name
+#: Menu
 msgid "Compare items (via Diff)"
 msgstr "比较项目（通过Diff）"
 
-# Menu: Script name
+#: Menu
 msgid "Compress..."
 msgstr "压缩..."
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .7z (each)"
 msgstr "压缩为.7z（每个）"
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .7z with password (each)"
 msgstr "压缩为带密码的.7z（每个）"
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .iso (each)"
 msgstr "压缩为.iso（每个）"
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .squashfs (each)"
 msgstr "压缩为.squashfs（每个）"
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .tar.gz (each)"
 msgstr "压缩为.tar.gz（每个）"
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .tar.xz (each)"
 msgstr "压缩为.tar.xz（每个）"
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .tar.zst (each)"
 msgstr "压缩为.tar.zst（每个）"
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .zip (each)"
 msgstr "压缩为.zip（每个）"
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .zip with password (each)"
 msgstr "压缩为带密码的.zip（每个）"
 
-# Menu: Script name
+#: Menu
 msgid "Compute all checksums"
 msgstr "计算所有校验和"
 
-# Menu: Script name
+#: Menu
 msgid "Compute CRC32"
 msgstr "计算CRC32"
 
-# Menu: Script name
+#: Menu
 msgid "Compute MD5"
 msgstr "计算MD5"
 
-# Menu: Script name
+#: Menu
 msgid "Compute SHA1"
 msgstr "计算SHA1"
 
-# Menu: Script name
+#: Menu
 msgid "Compute SHA256"
 msgstr "计算SHA256"
 
-# Menu: Script name
+#: Menu
 msgid "Compute SHA512"
 msgstr "计算SHA512"
 
-# Menu: Script name
+#: Menu
 msgid "Copy file content"
 msgstr "复制文件内容"
 
-# Menu: Script name
+#: Menu
 msgid "Copy filename"
 msgstr "复制文件名"
 
-# Menu: Script name
+#: Menu
 msgid "Copy filename (recursive)"
 msgstr "复制文件名（递归）"
 
-# Menu: Script name
+#: Menu
 msgid "Copy filepath"
 msgstr "复制文件路径"
 
-# Menu: Script name
+#: Menu
 msgid "Copy filepath (recursive)"
 msgstr "复制文件路径（递归）"
 
-# Menu: Script name
+#: Menu
 msgid "Create hard link here"
 msgstr "在此创建硬链接"
 
-# Menu: Script name
+#: Menu
 msgid "Create hard link to..."
 msgstr "创建硬链接到..."
 
-# Menu: Script name
+#: Menu
 msgid "Create symbolic link here"
 msgstr "在此创建符号链接"
 
-# Menu: Script name
+#: Menu
 msgid "Create symbolic link to..."
 msgstr "创建符号链接到..."
 
-# Menu: Script name
+#: Menu
 msgid "Create symbolic link to Desktop"
 msgstr "创建到桌面的符号链接"
 
-# Menu: Script name
+#: Menu
 msgid "Disk Usage Analyzer"
 msgstr "磁盘使用分析器"
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to DOCX"
 msgstr "文档：转换为DOCX"
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to EPUB"
 msgstr "文档：转换为EPUB"
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to FB2"
 msgstr "文档：转换为FB2"
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to Markdown"
 msgstr "文档：转换为Markdown"
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to ODP"
 msgstr "文档：转换为 ODP"
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to ODS"
 msgstr "文档：转换为 ODS"
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to ODT"
 msgstr "文档：转换为 ODT"
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to PDF"
 msgstr "文档：转换为 PDF"
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to PPTX"
 msgstr "文档：转换为 PPTX"
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to TXT"
 msgstr "文档：转换为 TXT"
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to XLSX"
 msgstr "文档：转换为 XLSX"
 
-# Menu: Script name
+#: Menu
 msgid "Document: Print (A4)"
 msgstr "文档：打印 (A4)"
 
-# Menu: Script name
+#: Menu
 msgid "Document: Print (US Legal)"
 msgstr "文档：打印 (US Legal)"
 
-# Menu: Script name
+#: Menu
 msgid "Document: Print (US Letter)"
 msgstr "文档：打印 (US Letter)"
 
-# Menu: Script name
+#: Menu
 msgid "Extract here"
 msgstr "解压到此处"
 
-# Menu: Script name
+#: Menu
 msgid "File carving (via Foremost)"
 msgstr "文件雕刻 (通过 Foremost)"
 
-# Menu: Script name
+#: Menu
 msgid "File carving (via PhotoRec)"
 msgstr "文件雕刻 (通过 PhotoRec)"
 
-# Menu: Script name
+#: Menu
 msgid "Find broken links"
 msgstr "查找损坏的链接"
 
-# Menu: Script name
+#: Menu
 msgid "Find duplicate files"
 msgstr "查找重复文件"
 
-# Menu: Script name
+#: Menu
 msgid "Find empty directories"
 msgstr "查找空目录"
 
-# Menu: Script name
+#: Menu
 msgid "Find hidden items"
 msgstr "查找隐藏项目"
 
-# Menu: Script name
+#: Menu
 msgid "Find junk files"
 msgstr "查找垃圾文件"
 
-# Menu: Script name
+#: Menu
 msgid "Find zero-byte files"
 msgstr "查找零字节文件"
 
-# Menu: Script name
+#: Menu
 msgid "Flatten directory structure"
 msgstr "扁平化目录结构"
 
-# Menu: Script name
+#: Menu
 msgid "Generate MD5 file"
 msgstr "生成 MD5 文件"
 
-# Menu: Script name
+#: Menu
 msgid "Generate SHA1 file"
 msgstr "生成 SHA1 文件"
 
-# Menu: Script name
+#: Menu
 msgid "Generate SHA256 file"
 msgstr "生成 SHA256 文件"
 
-# Menu: Script name
+#: Menu
 msgid "Generate SHA512 file"
 msgstr "生成 SHA512 文件"
 
-# Menu: Script name
+#: Menu
 msgid "Git: Clone URLs"
 msgstr "Git：克隆 URL"
 
-# Menu: Script name
+#: Menu
 msgid "Git: Open repository website"
 msgstr "Git：打开代码库网站"
 
-# Menu: Script name
+#: Menu
 msgid "Git: Reset and pull"
 msgstr "Git：重置并拉取"
 
-# Menu: Script name
+#: Menu
 msgid "Decrypt"
 msgstr "解密"
 
-# Menu: Script name
+#: Menu
 msgid "Encrypt with password"
 msgstr "使用密码加密"
 
-# Menu: Script name
+#: Menu
 msgid "Encrypt with password (ASCII)"
 msgstr "使用密码加密 (ASCII)"
 
-# Menu: Script name
+#: Menu
 msgid "Encrypt with keys"
 msgstr "使用密钥加密"
 
-# Menu: Script name
+#: Menu
 msgid "Encrypt with keys (ASCII)"
 msgstr "使用密钥加密(ASCII)"
 
-# Menu: Script name
+#: Menu
 msgid "Import key"
 msgstr "导入密钥"
 
-# Menu: Script name
+#: Menu
 msgid "Sign"
 msgstr "签名"
 
-# Menu: Script name
+#: Menu
 msgid "Sign (ASCII)"
 msgstr "签名 (ASCII)"
 
-# Menu: Script name
+#: Menu
 msgid "Sign (detached signature)"
 msgstr "签名 (分离签名)"
 
-# Menu: Script name
+#: Menu
 msgid "Verify signature"
 msgstr "验证签名"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Add watermark (center)"
 msgstr "图像：添加水印 (居中)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Add watermark (north)"
 msgstr "图像：添加水印 (顶部)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Add watermark (northeast)"
 msgstr "图像：添加水印 (右上角)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Add watermark (northwest)"
 msgstr "图像：添加水印 (左上角)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Add watermark (south)"
 msgstr "图像：添加水印 (底部)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Add watermark (southeast)"
 msgstr "图像：添加水印 (右下角)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Add watermark (southwest)"
 msgstr "图像：添加水印 (左下角)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Automatic crop"
 msgstr "图像：自动裁剪"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Automatic crop (15 pct)"
 msgstr "图像：自动裁剪 (15pct)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Background to alpha"
 msgstr "图像：背景转为透明"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Background to alpha (15 pct)"
 msgstr "图像：背景转为透明 (15pct)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color alpha to black"
 msgstr "图像：透明通道着色为黑色"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color alpha to magenta"
 msgstr "图像：透明通道着色为洋红色"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color alpha to white"
 msgstr "图像：颜色Alpha通道转白色"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color black to alpha"
 msgstr "图像：颜色黑色转Alpha通道"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color black to alpha (15 pct)"
 msgstr "图像：颜色黑色转Alpha通道（15pct）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color magenta to alpha"
 msgstr "图像：颜色洋红转Alpha通道"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color magenta to alpha (15 pct)"
 msgstr "图像：颜色洋红转Alpha通道（15pct）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Colorspace to gray"
 msgstr "图像：色彩空间转灰度"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color white to alpha"
 msgstr "图像：颜色白色转Alpha通道"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color white to alpha (15 pct)"
 msgstr "图像：颜色白色转Alpha通道（15pct）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Combine into a GIF"
 msgstr "图像：合并为GIF"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Combine into a PDF"
 msgstr "图像：合并为PDF"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to AVIF"
 msgstr "图像：转换为AVIF"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to BMP"
 msgstr "图像：转换为BMP"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to GIF"
 msgstr "图像：转换为GIF"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to HEIC"
 msgstr "图像：转换为HEIC"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to JPG"
 msgstr "图像：转换为JPG"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to JXL"
 msgstr "图像：转换为JXL"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to PNG"
 msgstr "图像：转换为PNG"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to TIFF"
 msgstr "图像：转换为TIFF"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to WebP"
 msgstr "图像：转换为WebP"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Create PNG icon (64 px)"
 msgstr "图像：创建PNG图标（64像素）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Create PNG icon (128 px)"
 msgstr "图像：创建PNG图标（128像素）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Create PNG icon (256 px)"
 msgstr "图像：创建PNG图标（256像素）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Create PNG icon (512 px)"
 msgstr "图像：创建PNG图标（512像素）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Desaturate"
 msgstr "图像：去饱和度"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Export to PDF"
 msgstr "图像：导出为PDF"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Find similar (65 pct)"
 msgstr "图像：查找相似图片（65pct）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Find similar (75 pct)"
 msgstr "图像：查找相似图片（75pct）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Find similar (85 pct)"
 msgstr "图像：查找相似图片（85pct）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Find similar (95 pct)"
 msgstr "图像：查找相似图片（95pct）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Flip (horizontally)"
 msgstr "图像：翻转（水平）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Flip (vertically)"
 msgstr "图像：翻转（垂直）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Generate multiple hues"
 msgstr "图像：生成多色调"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Optimize PNG"
 msgstr "图像：优化PNG"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Perform OCR (English)"
 msgstr "图像：执行OCR（英语）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Perform OCR (French)"
 msgstr "图像：执行OCR（法语）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Perform OCR (German)"
 msgstr "图像：执行OCR（德语）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Perform OCR (Italian)"
 msgstr "图像：执行OCR（意大利语）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Perform OCR (Portuguese)"
 msgstr "图像：执行OCR（葡萄牙语）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Perform OCR (Russian)"
 msgstr "图像：执行OCR（俄语）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Perform OCR (Spanish)"
 msgstr "图像：执行OCR（西班牙语）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Reduce (JPG, 500kB max)"
 msgstr "图像：压缩（JPG，最大500kB）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Reduce (JPG, 1000kB max)"
 msgstr "图像：压缩（JPG，最大1000kB）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Remove metadata"
 msgstr "图像：移除元数据"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Rename from metadata"
 msgstr "图像：从元数据重命名"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize (25 pct)"
 msgstr "图像：调整尺寸（25pct）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize (50 pct)"
 msgstr "图像：调整尺寸（50pct）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize (75 pct)"
 msgstr "图像：调整尺寸（75pct）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize and crop (512x512)"
 msgstr "图像：调整尺寸并裁剪（512x512）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize and crop (1080x1080)"
 msgstr "图像：调整尺寸并裁剪（1080x1080）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize and crop (1920x1080)"
 msgstr "图像：调整尺寸并裁剪（1920x1080）"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize and crop (2560x1440)"
 msgstr "图像：调整大小并裁剪 (2560x1440)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize and crop (3840x2160)"
 msgstr "图像：调整大小并裁剪 (3840x2160)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Rotate (90 deg)"
 msgstr "图像：旋转 (90度)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Rotate (180 deg)"
 msgstr "图像：旋转 (180度)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Rotate (270 deg)"
 msgstr "图像：旋转 (270度)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Split into 2 (horizontally)"
 msgstr "图像：分割为2份 (水平)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Split into 2 (vertically)"
 msgstr "图像：分割为2份 (垂直)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Split into 4"
 msgstr "图像：分割为4份"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Stack (horizontally)"
 msgstr "图像：堆叠 (水平)"
 
-# Menu: Script name
+#: Menu
 msgid "Image: Stack (vertically)"
 msgstr "图像：堆叠 (垂直)"
 
-# Menu: Script name
+#: Menu
 msgid "IP: Ping hosts"
 msgstr "IP：Ping主机"
 
-# Menu: Script name
+#: Menu
 msgid "IP: Scan ports"
 msgstr "IP：扫描端口"
 
-# Menu: Script name
+#: Menu
 msgid "IP: Test availability"
 msgstr "IP：测试可用性"
 
-# Menu: Script name
+#: Menu
 msgid "List hard links"
 msgstr "列出硬链接"
 
-# Menu: Script name
+#: Menu
 msgid "List largest directories"
 msgstr "列出最大目录"
 
-# Menu: Script name
+#: Menu
 msgid "List largest files"
 msgstr "列出最大文件"
 
-# Menu: Script name
+#: Menu
 msgid "List permissions and owners"
 msgstr "列出权限和所有者"
 
-# Menu: Script name
+#: Menu
 msgid "List recently modified files"
 msgstr "列出最近修改的文件"
 
-# Menu: Script name
+#: Menu
 msgid "List symbolic links"
 msgstr "列出符号链接"
 
-# Menu: Script name
+#: Menu
 msgid "Media: Concatenate files"
 msgstr "媒体：合并文件"
 
-# Menu: Script name
+#: Menu
 msgid "Media: Remove metadata"
 msgstr "媒体：移除元数据"
 
-# Menu: Script name
+#: Menu
 msgid "Media: Show basic metadata"
 msgstr "媒体：显示基本元数据"
 
-# Menu: Script name
+#: Menu
 msgid "MP3: (artist - title) Filename to ID3"
 msgstr "MP3：(艺术家 - 标题) 文件名转ID3"
 
-# Menu: Script name
+#: Menu
 msgid "MP3: (artist - title) ID3 to Filename"
 msgstr "MP3：(艺术家 - 标题) ID3转文件名"
 
-# Menu: Script name
+#: Menu
 msgid "MP3: Volume maximize (recursive)"
 msgstr "MP3：最大化音量（递归）"
 
-# Menu: Script name
+#: Menu
 msgid "MP3: Volume normalize (recursive)"
 msgstr "MP3：音量标准化（递归）"
 
-# Menu: Script name
+#: Menu
 msgid "MP3: Repair (recursive)"
 msgstr "MP3：修复 (递归)"
 
-# Menu: Script name
+#: Menu
 msgid "MP3: Show encoding details"
 msgstr "MP3：显示编码详情"
 
-# Menu: Script name
+#: Menu
 msgid "Open item location"
 msgstr "打开项目位置"
 
-# Menu: Script name
+#: Menu
 msgid "Paste as hard link"
 msgstr "粘贴为硬链接"
 
-# Menu: Script name
+#: Menu
 msgid "Paste as symbolic link"
 msgstr "粘贴为符号链接"
 
-# Menu: Script name
+#: Menu
 msgid "Paste clipboard"
 msgstr "粘贴剪贴板"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Add watermark (overlay)"
 msgstr "PDF：添加水印 (覆盖)"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Add watermark (underlay)"
 msgstr "PDF：添加水印 (衬底)"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Combine multiple PDFs"
 msgstr "PDF：合并多个 PDF"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF：转换为PDFA-2b"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Remove password"
 msgstr "PDF：移除密码"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Set a password"
 msgstr "PDF：设置密码"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Extract images"
 msgstr "PDF：提取图像"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Find annotated PDFs"
 msgstr "PDF：查找带注释的 PDF"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Find non-linearized PDFs"
 msgstr "PDF：查找未线性化的 PDF"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Find non-searchable PDFs"
 msgstr "PDF：查找不可搜索的 PDF"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Find password-protected PDFs"
 msgstr "PDF：查找受密码保护的 PDF"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Find signed PDFs"
 msgstr "PDF：查找已签名的 PDF"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (landscape, 1x2)"
 msgstr "PDF：布局 (横向, 1x2)"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (landscape, 2x1)"
 msgstr "PDF：布局 (横向, 2x1)"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (landscape, 2x2)"
 msgstr "PDF：布局 (横向, 2x2)"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (landscape, 2x4)"
 msgstr "PDF：布局 (横向, 2x4)"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (landscape, 4x2)"
 msgstr "PDF：布局 (横向, 4x2)"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (portrait, 1x2)"
 msgstr "PDF：布局 (纵向, 1x2)"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (portrait, 2x1)"
 msgstr "PDF：布局（纵向，2x1）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (portrait, 2x2)"
 msgstr "PDF：布局（纵向，2x2）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (portrait, 2x4)"
 msgstr "PDF：布局（纵向，2x4）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (portrait, 4x2)"
 msgstr "PDF：布局（纵向，4x2）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF：优化用于网页（线性化）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Set size (A3)"
 msgstr "PDF：设置尺寸（A3）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Set size (A4)"
 msgstr "PDF：设置尺寸（A4）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Set size (A5)"
 msgstr "PDF：设置尺寸（A5）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Set size (US Legal)"
 msgstr "PDF：设置尺寸（美国 Legal）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Set size (US Letter)"
 msgstr "PDF：设置尺寸（美国 Letter）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Perform OCR (English)"
 msgstr "PDF：执行OCR（英语）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Perform OCR (French)"
 msgstr "PDF：执行OCR（法语）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Perform OCR (German)"
 msgstr "PDF：执行OCR（德语）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Perform OCR (Italian)"
 msgstr "PDF：执行OCR（意大利语）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Perform OCR (Portuguese)"
 msgstr "PDF：执行OCR（葡萄牙语）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Perform OCR (Russian)"
 msgstr "PDF：执行OCR（俄语）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Perform OCR (Spanish)"
 msgstr "PDF：执行OCR（西班牙语）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Reduce (150 dpi, e-book)"
 msgstr "PDF：缩减（150 dpi，电子书）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Reduce (300 dpi, printer)"
 msgstr "PDF：缩减（300 dpi，打印机）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Remove annotations"
 msgstr "PDF：移除注释"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Remove metadata"
 msgstr "PDF：移除元数据"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Rotate (90 deg)"
 msgstr "PDF：旋转（90度）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Rotate (180 deg)"
 msgstr "PDF：旋转（180度）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Rotate (270 deg)"
 msgstr "PDF：旋转（270度）"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Show signatures"
 msgstr "PDF：显示签名"
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Split into single-page PDFs"
 msgstr "PDF：拆分为单页 PDF"
 
-# Menu: Script name
+#: Menu
 msgid "Rename: Remove accents"
 msgstr "重命名：移除重音符号"
 
-# Menu: Script name
+#: Menu
 msgid "Rename: Remove parentheses blocks"
 msgstr "重命名：删除括号中的内容"
 
-# Menu: Script name
+#: Menu
 msgid "Rename: Change spaces to dashes"
 msgstr "重命名：将空格改为短横线"
 
-# Menu: Script name
+#: Menu
 msgid "Rename: Change dashes to spaces"
 msgstr "重命名：将短横线改为空格"
 
-# Menu: Script name
-msgid "Rename: Gaps by underscores"
-msgstr "重命名：空格替换为下划线"
-
-# Menu: Script name
+#: Menu
 msgid "Rename: To lowercase"
 msgstr "重命名：转为小写"
 
-# Menu: Script name
+#: Menu
 msgid "Rename: To lowercase (recursive)"
 msgstr "重命名：转为小写（递归）"
 
-# Menu: Script name
+#: Menu
 msgid "Rename: To sentence case"
 msgstr "重命名：转为句首大写"
 
-# Menu: Script name
+#: Menu
 msgid "Rename: To title case"
 msgstr "重命名：转为标题大小写"
 
-# Menu: Script name
+#: Menu
 msgid "Rename: To uppercase"
 msgstr "重命名：转为大写"
 
-# Menu: Script name
+#: Menu
 msgid "Rename: To uppercase (recursive)"
 msgstr "重命名：转为大写（递归）"
 
-# Menu: Script name
+#: Menu
 msgid "Reset permissions (recursive)"
 msgstr "重置权限（递归）"
 
-# Menu: Script name
+#: Menu
 msgid "Scan for malware (via ClamAV)"
 msgstr "扫描恶意软件（通过ClamAV）"
 
-# Menu: Script name
+#: Menu
 msgid "Show file information"
 msgstr "显示文件信息"
 
-# Menu: Script name
+#: Menu
 msgid "Show file metadata"
 msgstr "显示文件元数据"
 
-# Menu: Script name
+#: Menu
 msgid "Show file MIME type"
 msgstr "显示文件MIME类型"
 
-# Menu: Script name
+#: Menu
 msgid "Show media information"
 msgstr "显示媒体信息"
 
-# Menu: Script name
+#: Menu
 msgid "Shred file (secure delete)"
 msgstr "粉碎文件（安全删除）"
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Compress to SVGZ"
 msgstr "SVG：压缩为SVGZ"
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Decompress SVGZ"
 msgstr "SVG：解压缩SVGZ"
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Export to EPS"
 msgstr "SVG：导出为EPS"
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Export to PDF"
 msgstr "SVG：导出为PDF"
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Export to PNG (256 px)"
 msgstr "SVG：导出为PNG（256像素）"
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Export to PNG (512 px)"
 msgstr "SVG：导出为PNG（512像素）"
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG：导出为PNG（1024像素）"
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Replace fonts to Charter"
 msgstr "SVG：替换字体为Charter"
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Replace fonts to Helvetica"
 msgstr "SVG：替换字体为Helvetica"
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Replace fonts to Times"
 msgstr "SVG：替换字体为Times"
 
-# Menu: Script name
+#: Menu
 msgid "Terminal"
 msgstr "终端"
 
-# Menu: Script name
+#: Menu
 msgid "Text: Concatenate multiple files"
 msgstr "文本：合并多个文件"
 
-# Menu: Script name
+#: Menu
 msgid "Text: Convert 4 spaces to tabs"
 msgstr "文本：将4个空格转换为制表符"
 
-# Menu: Script name
+#: Menu
 msgid "Text: Convert 8 spaces to tabs"
 msgstr "文本：将8个空格转换为制表符"
 
-# Menu: Script name
+#: Menu
 msgid "Text: Convert tabs to 4 spaces"
 msgstr "文本：将制表符转换成4个空格"
 
-# Menu: Script name
+#: Menu
 msgid "Text: Convert tabs to 8 spaces"
 msgstr "文本：将制表符转换成4个空格"
 
-# Menu: Script name
+#: Menu
 msgid "Text: Normalize (CRLF, recursive)"
 msgstr "文本：规范化（CRLF，递归）"
 
-# Menu: Script name
+#: Menu
 msgid "Text: Normalize (LF, recursive)"
 msgstr "文本：规范化（LF，递归）"
 
-# Menu: Script name
+#: Menu
 msgid "Text: Encode to ISO-8859-1"
 msgstr "文本：编码为ISO-8859-1"
 
-# Menu: Script name
+#: Menu
 msgid "Text: Encode to UTF-8"
 msgstr "文本：编码为UTF-8"
 
-# Menu: Script name
+#: Menu
 msgid "Text: Line breaks to CRLF"
 msgstr "文本：换行符转CRLF"
 
-# Menu: Script name
+#: Menu
 msgid "Text: Line breaks to LF"
 msgstr "文本：换行符转LF"
 
-# Menu: Script name
+#: Menu
 msgid "Text: List encoding"
 msgstr "文本：列出编码"
 
-# Menu: Script name
+#: Menu
 msgid "Text: List issues"
 msgstr "文本：列出问题"
 
-# Menu: Script name
+#: Menu
 msgid "Text: List invalid chars"
 msgstr "文本：列出无效字符"
 
-# Menu: Script name
+#: Menu
 msgid "Text: List line breaks"
 msgstr "文本：列出换行符类型"
 
-# Menu: Script name
+#: Menu
 msgid "Text: List line count"
 msgstr "文本：统计行数"
 
-# Menu: Script name
+#: Menu
 msgid "Text: List max line length"
 msgstr "文本：列出最大行长"
 
-# Menu: Script name
+#: Menu
 msgid "Text: List word count"
 msgstr "文本：统计词数"
 
-# Menu: Script name
+#: Menu
 msgid "Text: Remove trailing spaces"
 msgstr "文本：删除行尾空格"
 
-# Menu: Script name
+#: Menu
 msgid "Text: Remove accents"
 msgstr "文本：移除重音符号"
 
-# Menu: Script name
+#: Menu
 msgid "URL: Check HTTP status"
 msgstr "URL：检查HTTP状态"
 
-# Menu: Script name
+#: Menu
 msgid "URL: Check SSL expiry"
 msgstr "URL：检查SSL过期时间"
 
-# Menu: Script name
+#: Menu
 msgid "URL: Download file"
 msgstr "URL：下载文件"
 
-# Menu: Script name
+#: Menu
 msgid "URL: Show HTTP headers"
 msgstr "URL：显示HTTP头信息"
 
-# Menu: Script name
+#: Menu
 msgid "Verify MD5 file"
 msgstr "验证 MD5 文件"
 
-# Menu: Script name
+#: Menu
 msgid "Verify SHA1 file"
 msgstr "验证 SHA1 文件"
 
-# Menu: Script name
+#: Menu
 msgid "Verify SHA256 file"
 msgstr "验证 SHA256 文件"
 
-# Menu: Script name
+#: Menu
 msgid "Verify SHA512 file"
 msgstr "验证 SHA512 文件"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 1:1"
 msgstr "视频：画面比例设为1:1"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 2.21:1"
 msgstr "视频：画面比例设为2.21:1"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 2.35:1"
 msgstr "视频：画面比例设为2.35:1"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 2.39:1"
 msgstr "视频：画面比例设为2.39:1"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 4:3"
 msgstr "视频：画面比例设为4:3"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 5:4"
 msgstr "视频：画面比例设为5:4"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 16:9"
 msgstr "视频：画面比例设为16:9"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 16:10"
 msgstr "视频：画面比例设为16:10"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Convert to MKV"
 msgstr "视频：转换为MKV"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Convert to MKV (no re-encoding)"
 msgstr "视频：转换为MKV（不重新编码）"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Convert to MP4"
 msgstr "视频：转换为MP4"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Convert to MP4 (no re-encoding)"
 msgstr "视频：转换为MP4（不重新编码）"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Export frames (1 FPS)"
 msgstr "视频：导出帧（1 FPS）"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Export frames (5 FPS)"
 msgstr "视频：导出帧（5 FPS）"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Export frames (10 FPS)"
 msgstr "视频：导出帧（10 FPS）"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Export to GIF"
 msgstr "视频：导出为GIF"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Extract audio"
 msgstr "视频：提取音频"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Flip (horizontally)"
 msgstr "视频：水平翻转"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Flip (vertically)"
 msgstr "视频：垂直翻转"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Frame rate to 30 FPS"
 msgstr "视频：帧率设为 30 FPS"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Frame rate to 60 FPS"
 msgstr "视频：帧率设为 60 FPS"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Remove audio"
 msgstr "视频：移除音频"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Resize (25 pct)"
 msgstr "视频：调整大小 (25pct)"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Resize (50 pct)"
 msgstr "视频：调整大小 (50pct)"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Resize (75 pct)"
 msgstr "视频：调整大小 (75pct)"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Rotate (90 deg)"
 msgstr "视频：旋转 (90 度)"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Rotate (180 deg)"
 msgstr "视频：旋转 (180 度)"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Rotate (270 deg)"
 msgstr "视频：旋转 (270 度)"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Speed to 0.5"
 msgstr "视频：速度调整为 0.5"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Speed to 1.5"
 msgstr "视频：速度调整为 1.5"
 
-# Menu: Script name
+#: Menu
 msgid "Video: Speed to 2.0"
 msgstr "视频：速度调整为 2.0"
 
-# Menu: Folder name.
-msgid "Scripts"
-msgstr "脚本"
-
-# SECTION: Installer ----
-# Installer
-msgid "Add shortcuts to the application menu"
-msgstr "添加快捷方式到应用程序菜单"
-
-# Installer
-msgid "All dependencies are already satisfied."
-msgstr "所有依赖项已满足。"
-
-# Installer
-msgid "Choose which script categories to install"
-msgstr "选择要安装的脚本类别"
-
-# Installer
-msgid "Close the file manager to reload configurations"
-msgstr "关闭文件管理器以重新加载配置"
-
-# Installer
-msgid "Closing the file manager..."
-msgstr "正在关闭文件管理器..."
-
-# Installer
-msgid "Creating shortcuts to the application menu..."
-msgstr "正在创建应用程序菜单的快捷方式..."
-
-# Installer
-msgid "Creating GNOME application folder..."
-msgstr "正在创建 GNOME 应用程序文件夹..."
-
-# Installer
-msgid "Done!"
-msgstr "完成！"
-
-# Installer
-msgid "Downloading the package..."
-msgstr "正在下载软件包..."
-
-# Installer
-msgid "Home dir:"
-msgstr "主目录："
-
-# Installer
-msgid "Homebrew is already installed."
-msgstr "Homebrew 已安装。"
-
-# Installer
+#: install.sh
 msgid "Install basic dependencies"
 msgstr "安装基本依赖项"
 
-# Installer
-msgid "Install Homebrew (optional)"
-msgstr "安装 Homebrew (可选)"
-
-# Installer
-msgid "Install keyboard accelerators"
-msgstr "安装键盘加速器"
-
-# Installer
-msgid "Installation completed successfully!"
-msgstr "安装成功完成！"
-
-# Installer
-msgid "Installing application menu shortcuts:"
-msgstr "正在安装应用程序菜单快捷方式："
-
-# Installer
-msgid "Installing basic dependencies:"
-msgstr "正在安装基本依赖项："
-
-# Installer
-msgid "Installing Homebrew to:"
-msgstr "正在安装 Homebrew 到："
-
-# Installer
-msgid "Installing Homebrew:"
-msgstr "正在安装 Homebrew："
-
-# Installer
-msgid "Installing in non-interactive mode..."
-msgstr "正在以非交互模式安装..."
-
-# Installer
-msgid "Installing keyboard accelerators..."
-msgstr "正在安装键盘加速器..."
-
-# Installer
-msgid "Installing new scripts:"
-msgstr "正在安装新脚本："
-
-# Installer
-msgid "Installing the scripts..."
-msgstr "正在安装脚本..."
-
-# Installer
-msgid "Installing file manager actions..."
-msgstr "正在安装文件管理器操作..."
-
-# Installer
+#: install.sh
 msgid "Remove previously installed scripts"
 msgstr "移除之前安装的脚本"
 
-# Installer
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr "安装键盘加速器"
+
+#: install.sh
+msgid "Close the file manager to reload configurations"
+msgstr "关闭文件管理器以重新加载配置"
+
+#: install.sh
+msgid "Add shortcuts to the application menu"
+msgstr "添加快捷方式到应用程序菜单"
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr "安装 Homebrew (可选)"
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr "选择要安装的脚本类别"
+
+#: install.sh
 msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
 msgstr "选择选项 (<空格键> 勾选，<回车键> 确认)："
 
-# Installer
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr "正在以非交互模式安装..."
+
+#: install.sh
+msgid "Installing new scripts:"
+msgstr "正在安装新脚本："
+
+#: install.sh
 msgid "User:"
 msgstr "用户："
+
+#: install.sh
+msgid "Home dir:"
+msgstr "主目录："
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr "正在安装应用程序菜单快捷方式："
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr "安装成功完成！"
+
+#: install.sh
+msgid "Installing basic dependencies:"
+msgstr "正在安装基本依赖项："
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr "所有依赖项已满足。"
+
+#: install.sh
+msgid "Installing the scripts..."
+msgstr "正在安装脚本..."
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr "正在安装键盘加速器..."
+
+#: install.sh
+msgid "Scripts"
+msgstr "脚本"
+
+#: install.sh
+msgid "Creating shortcuts to the application menu..."
+msgstr "正在创建应用程序菜单的快捷方式..."
+
+#: install.sh
+msgid "Creating GNOME application folder..."
+msgstr "正在创建 GNOME 应用程序文件夹..."
+
+#: install.sh
+msgid "Installing file manager actions..."
+msgstr "正在安装文件管理器操作..."
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr "正在关闭文件管理器..."
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr "正在安装 Homebrew："
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr "Homebrew 已安装。"
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr "正在安装 Homebrew 到："
+
+#: install.sh
+msgid "Downloading the package..."
+msgstr "正在下载软件包..."
 
 #~ msgid "EOF"
 #~ msgstr "EOF"
