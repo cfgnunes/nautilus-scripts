@@ -242,30 +242,6 @@ msgid "Yes"
 msgstr "是"
 
 # par_item_name
-msgid "broken links"
-msgstr "损坏的链接"
-
-# par_item_name
-msgid "duplicate files"
-msgstr "重复文件"
-
-# par_item_name
-msgid "empty directories"
-msgstr "空目录"
-
-# par_item_name
-msgid "hard links"
-msgstr "硬链接"
-
-# par_item_name
-msgid "hidden items"
-msgstr "隐藏项目"
-
-# par_item_name
-msgid "infected files"
-msgstr "受感染文件"
-
-# par_item_name
 msgid "IPs"
 msgstr "IP地址"
 
@@ -274,44 +250,8 @@ msgid "items"
 msgstr "项目"
 
 # par_item_name
-msgid "junk files"
-msgstr "垃圾文件"
-
-# par_item_name
-msgid "largest directories"
-msgstr "最大目录"
-
-# par_item_name
-msgid "largest files"
-msgstr "最大文件"
-
-# par_item_name
-msgid "non-linearized PDFs"
-msgstr "非线性化PDF"
-
-# par_item_name
-msgid "non-searchable PDFs"
-msgstr "不可搜索PDF"
-
-# par_item_name
-msgid "password-protected PDFs"
-msgstr "受密码保护的 PDF"
-
-# par_item_name
-msgid "PDFs"
-msgstr "PDF文件"
-
-# par_item_name
-msgid "symbolic links"
-msgstr "符号链接"
-
-# par_item_name
 msgid "URLs"
 msgstr "URL"
-
-# par_item_name
-msgid "zero-byte files"
-msgstr "零字节文件"
 
 # Column
 msgid "Album"

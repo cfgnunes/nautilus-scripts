@@ -241,30 +241,6 @@ msgid "Yes"
 msgstr "Sim"
 
 # par_item_name
-msgid "broken links"
-msgstr "links quebrados"
-
-# par_item_name
-msgid "duplicate files"
-msgstr "arquivos duplicados"
-
-# par_item_name
-msgid "empty directories"
-msgstr "diretórios vazios"
-
-# par_item_name
-msgid "hard links"
-msgstr "links físicos"
-
-# par_item_name
-msgid "hidden items"
-msgstr "itens ocultos"
-
-# par_item_name
-msgid "infected files"
-msgstr "arquivos infectados"
-
-# par_item_name
 msgid "IPs"
 msgstr "IPs"
 
@@ -273,44 +249,8 @@ msgid "items"
 msgstr "itens"
 
 # par_item_name
-msgid "junk files"
-msgstr "arquivos inúteis"
-
-# par_item_name
-msgid "largest directories"
-msgstr "maiores diretórios"
-
-# par_item_name
-msgid "largest files"
-msgstr "maiores arquivos"
-
-# par_item_name
-msgid "non-linearized PDFs"
-msgstr "arquivos PDFs não linearizados"
-
-# par_item_name
-msgid "non-searchable PDFs"
-msgstr "arquivos PDFs não pesquisáveis"
-
-# par_item_name
-msgid "password-protected PDFs"
-msgstr "arquivos PDFs protegidos com senha"
-
-# par_item_name
-msgid "PDFs"
-msgstr "PDFs"
-
-# par_item_name
-msgid "symbolic links"
-msgstr "links simbólicos"
-
-# par_item_name
 msgid "URLs"
 msgstr "URLs"
-
-# par_item_name
-msgid "zero-byte files"
-msgstr "arquivos de zero bytes"
 
 # Column
 msgid "Album"

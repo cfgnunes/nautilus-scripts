@@ -241,30 +241,6 @@ msgid "Yes"
 msgstr ""
 
 # par_item_name
-msgid "broken links"
-msgstr ""
-
-# par_item_name
-msgid "duplicate files"
-msgstr ""
-
-# par_item_name
-msgid "empty directories"
-msgstr ""
-
-# par_item_name
-msgid "hard links"
-msgstr ""
-
-# par_item_name
-msgid "hidden items"
-msgstr ""
-
-# par_item_name
-msgid "infected files"
-msgstr ""
-
-# par_item_name
 msgid "IPs"
 msgstr ""
 
@@ -273,43 +249,7 @@ msgid "items"
 msgstr ""
 
 # par_item_name
-msgid "junk files"
-msgstr ""
-
-# par_item_name
-msgid "largest directories"
-msgstr ""
-
-# par_item_name
-msgid "largest files"
-msgstr ""
-
-# par_item_name
-msgid "non-linearized PDFs"
-msgstr ""
-
-# par_item_name
-msgid "non-searchable PDFs"
-msgstr ""
-
-# par_item_name
-msgid "password-protected PDFs"
-msgstr ""
-
-# par_item_name
-msgid "PDFs"
-msgstr ""
-
-# par_item_name
-msgid "symbolic links"
-msgstr ""
-
-# par_item_name
 msgid "URLs"
-msgstr ""
-
-# par_item_name
-msgid "zero-byte files"
 msgstr ""
 
 # Column
