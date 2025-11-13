@@ -291,20 +291,6 @@ _i18n_print_desktop_name() {
     done < <(_list_traslation_files)
 }
 
-_i18n_get_translation() {
-    local po_file=$1
-    local msgid=$2
-    local msgstr=""
-    msgstr=$(grep -A1 "msgid \"$msgid\"" "$po_file" 2>/dev/null |
-        grep "msgstr" | cut -d '"' -f 2)
-
-    if [[ -n "$msgstr" ]]; then
-        printf "%s" "$msgstr"
-    else
-        printf "%s" "$msgid"
-    fi
-}
-
 # Translate each directory component in the path.
 _i18n_translate_path() {
     local path=$1
@@ -329,6 +315,20 @@ _i18n() {
     local msgid=$1
 
     _i18n_get_translation "$I18N_FILE" "$msgid"
+}
+
+_i18n_get_translation() {
+    local po_file=$1
+    local msgid=$2
+    local msgstr=""
+    msgstr=$(grep -A1 "msgid \"$msgid\"" "$po_file" 2>/dev/null |
+        grep "msgstr" | cut -d '"' -f 2)
+
+    if [[ -n "$msgstr" ]]; then
+        printf "%s" "$msgstr"
+    else
+        printf "%s" "$msgid"
+    fi
 }
 
 _i18n_initialize() {
