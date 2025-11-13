@@ -28,14 +28,16 @@ __test_file_empty() {
 
     if [[ -f "$file" && ! -s "$file" ]]; then
         printf "[\033[32m PASS \033[0m] "
+        printf "\033[32mTest file (empty).\033[0m\n"
     else
         printf "[\033[31mFAILED\033[0m] "
+        printf "\033[31mTest file (empty).\033[0m\n"
+        printf "[\033[31m FILE \033[0m] "
+        printf "\033[31m"
+        printf "%s" "$file" | sed -z "s|\n|\\\n|g" | cat -A
+        printf "\033[0m\n"
         ((_TOTAL_FAILED++))
     fi
-
-    printf "\033[33mTest file (empty):\033[0m "
-    printf "%s" "$file" | sed -z "s|\n|\\\n|g" | cat -A
-    printf "\n"
 }
 
 __test_file_nonempty() {
@@ -45,14 +47,16 @@ __test_file_nonempty() {
 
     if [[ -f "$file" && -s "$file" ]]; then
         printf "[\033[32m PASS \033[0m] "
+        printf "\033[32mTest file (non empty).\033[0m\n"
     else
         printf "[\033[31mFAILED\033[0m] "
+        printf "\033[31mTest file (non empty).\033[0m\n"
+        printf "[\033[31m FILE \033[0m] "
+        printf "\033[31m"
+        printf "%s" "$file" | sed -z "s|\n|\\\n|g" | cat -A
+        printf "\033[0m\n"
         ((_TOTAL_FAILED++))
     fi
-
-    printf "\033[33mTest file (non empty):\033[0m "
-    printf "%s" "$file" | sed -z "s|\n|\\\n|g" | cat -A
-    printf "\n"
 }
 
 __echo_script() {
