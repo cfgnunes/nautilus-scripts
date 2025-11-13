@@ -1858,7 +1858,7 @@ _display_list_box_terminal() {
     local message=$1
 
     if [[ -z "$message" ]]; then
-        message="(Empty)"
+        message="$(_i18n '(Empty)')"
         printf "%s\n" "$message" >&2
     else
         message=$(tr "$FIELD_SEPARATOR" " " <<<"$message")
@@ -2189,7 +2189,7 @@ _display_text_box() {
     _logs_consolidate ""
 
     if [[ -z "$message" ]]; then
-        message="(Empty)"
+        message="$(_i18n '(Empty)')"
     fi
 
     local btn_ok=""
