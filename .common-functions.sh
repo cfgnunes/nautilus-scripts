@@ -1834,9 +1834,6 @@ _display_list_box() {
     # Evaluate the values from the '$parameters' variable.
     eval "$parameters"
 
-    # Translate the label.
-    par_item_name="$(_i18n "$par_item_name")"
-
     _close_wait_box
     _logs_consolidate ""
 
