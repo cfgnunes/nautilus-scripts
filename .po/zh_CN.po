@@ -515,19 +515,19 @@ msgstr "链接"
 
 # Menu: Category
 msgid "Network and Internet"
-msgstr "网络和互联网"
+msgstr "网络"
 
 # Menu: Category
 msgid "Open with"
-msgstr "打开方式"
+msgstr "打开"
 
 # Menu: Category
 msgid "Plain text"
-msgstr "纯文本"
+msgstr "文本"
 
 # Menu: Category
 msgid "Rename files"
-msgstr "重命名文件"
+msgstr "重命名"
 
 # Menu: Category
 msgid "Security and Recovery"
