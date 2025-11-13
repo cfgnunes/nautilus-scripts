@@ -1,10 +1,10 @@
 # Translators: The string must NOT contain the "%" character and must be a single-line string.
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Enhanced File Manager Actions for Linux\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-10 00:28-0300\n"
+"POT-Creation-Date: 2025-11-13 12:12-0300\n"
 "PO-Revision-Date: 2025-11-07 22:05-0300\n"
 "Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
 "Language-Team: \n"
@@ -14,115 +14,82 @@ msgstr ""
 "X-Generator: Poedit 3.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-msgid "links"
+msgid "Done!"
 msgstr ""
 
-msgid "MIME"
+msgid "files"
 msgstr ""
 
-msgid "(Empty)"
+msgid "Would you like to continue?"
 msgstr ""
 
-msgid "Image files"
+msgid "directories"
 msgstr ""
 
-msgid "Key files"
-msgstr ""
-
-msgid "PDF files"
-msgstr ""
-
-msgid "All items were successfully deleted!"
-msgstr ""
-
-msgid "Batch mode detected."
-msgstr ""
-
-msgid "Choose a key file to import."
-msgstr ""
-
-msgid "Choose an image to use as the watermark"
-msgstr ""
-
-msgid "Choose a PDF to use as the watermark"
+msgid "items"
 msgstr ""
 
 msgid "Command failed with a non-zero exit code."
 msgstr ""
 
-msgid "Could not access the directory:"
-msgstr ""
-
-msgid "Could not find a directory with write permissions!"
-msgstr ""
-
-msgid "Could not find package names to install:"
-msgstr ""
-
-msgid "Could not find the executable to open MIME type:"
-msgstr ""
-
-msgid "Could not install the package:"
-msgstr ""
-
-msgid "Each file inside this directory will be processed individually."
-msgstr ""
-
-msgid "Failed to import the key!"
-msgstr ""
-
-msgid "Failed: you must select a user!"
-msgstr ""
-
-msgid "Select a user:"
-msgstr ""
-
-msgid "Failed: you must select at least one user!"
+msgid "The output file does not exist."
 msgstr ""
 
 msgid "Finished with errors! See the log:"
 msgstr ""
 
-msgid "Finished, but there is nothing to do."
+msgid "Your system does not support clipboard operations."
 msgstr ""
 
-msgid "Finished! The output files are in:"
+msgid "Could not find package names to install:"
 msgstr ""
 
-msgid "Finished!"
+msgid "The following packages are missing:"
+msgstr ""
+
+msgid "Would you like to install them?"
 msgstr ""
 
 msgid "Installing the packages. Please, wait..."
 msgstr ""
 
-msgid "Invalid input file!"
+msgid "The package is installed, but you need to reboot to use it:"
 msgstr ""
 
-msgid "No default application set for MIME type:"
+msgid "Could not install the package:"
 msgstr ""
 
-msgid "No public keys were found."
+msgid "This action will delete the selected items."
 msgstr ""
 
-msgid "No remote URL found."
+msgid "Total selected:"
 msgstr ""
 
-msgid "No secret keys were found."
+msgid "Some items could not be deleted."
 msgstr ""
 
-msgid "Password"
+msgid "All items were successfully deleted!"
 msgstr ""
 
-msgid "Running the task. Please, wait..."
+msgid "Could not access the directory:"
 msgstr ""
 
-msgid "Select the output filename:"
+msgid "The destination file already exists."
 msgstr ""
 
-msgid "Select one or more users:"
+msgid "Unable to move."
 msgstr ""
 
-msgid "Select the ones to delete:"
+msgid "OK"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "(Empty)"
+msgstr ""
+
+msgid "Select the ones to open:"
 msgstr ""
 
 msgid "Select the ones to open in the file manager:"
@@ -131,91 +98,208 @@ msgstr ""
 msgid "Select the ones to open in the web browser:"
 msgstr ""
 
-msgid "Select the ones to open:"
+msgid "Select the ones to delete:"
 msgstr ""
 
-msgid "Some items could not be deleted."
-msgstr ""
-
-msgid "The destination file already exists."
-msgstr ""
-
-msgid "The directory is empty."
-msgstr ""
-
-msgid "The following packages are missing:"
-msgstr ""
-
-msgid "The output file does not exist."
-msgstr ""
-
-msgid "The package is installed, but you need to reboot to use it:"
-msgstr ""
-
-msgid "The password can not be empty!"
-msgstr ""
-
-msgid "The selected images has same pixel values."
-msgstr ""
-
-msgid "The selected items are identical."
-msgstr ""
-
-msgid "There are no valid IPs in the selected files!"
-msgstr ""
-
-msgid "There are no valid paths in the clipboard!"
-msgstr ""
-
-msgid "There are no valid URLs in the clipboard or in the selected files!"
-msgstr ""
-
-msgid "There are no valid URLs in the selected files!"
-msgstr ""
-
-msgid "This action will delete the selected items."
-msgstr ""
-
-msgid "This action will move all files from subdirectories to the root of the selected directory."
-msgstr ""
-
-msgid "This action will permanently delete the selected files."
-msgstr ""
-
-msgid "This action will rename the selected files and directories recursively."
-msgstr ""
-
-msgid "This action will reset the permissions recursively."
-msgstr ""
-
-msgid "Total selected:"
+msgid "Password"
 msgstr ""
 
 msgid "Type your password:"
 msgstr ""
 
-msgid "Unable to move."
+msgid "The password can not be empty!"
 msgstr ""
 
-msgid "Unsupported clipboard type."
+msgid "Yes"
 msgstr ""
 
-msgid "Would you like to continue?"
+msgid "No"
 msgstr ""
 
-msgid "Would you like to import a key now?"
+msgid "Finished! The output files are in:"
 msgstr ""
 
-msgid "Would you like to install them?"
+msgid "Finished, but there is nothing to do."
 msgstr ""
 
-msgid "You must select at least"
+msgid "Finished!"
+msgstr ""
+
+msgid "Running the task. Please, wait..."
+msgstr ""
+
+msgid "No default application set for MIME type:"
+msgstr ""
+
+msgid "Could not find the executable to open MIME type:"
+msgstr ""
+
+msgid "Batch mode detected."
+msgstr ""
+
+msgid "Each file inside this directory will be processed individually."
+msgstr ""
+
+msgid "files or directories"
 msgstr ""
 
 msgid "You must select files with extension:"
 msgstr ""
 
-msgid "You must select only two binary files to compare!"
+msgid "Invalid input file!"
+msgstr ""
+
+msgid "You must select"
+msgstr ""
+
+msgid "You must select at least"
+msgstr ""
+
+msgid "You must select up to"
+msgstr ""
+
+msgid "Could not find a directory with write permissions!"
+msgstr ""
+
+msgid "Accessed recently"
+msgstr ""
+
+msgid "Endings"
+msgstr ""
+
+msgid "File"
+msgstr ""
+
+msgid "Count"
+msgstr ""
+
+msgid "Char"
+msgstr ""
+
+msgid "Line"
+msgstr ""
+
+msgid "Issues"
+msgstr ""
+
+msgid "Encoding"
+msgstr ""
+
+msgid "There are no valid paths in the clipboard!"
+msgstr ""
+
+msgid "links"
+msgstr ""
+
+msgid "Inode"
+msgstr ""
+
+msgid "Link"
+msgstr ""
+
+msgid "Unsupported clipboard type."
+msgstr ""
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr ""
+
+msgid "PDF files"
+msgstr ""
+
+msgid "Choose a PDF to use as the watermark"
+msgstr ""
+
+msgid "Signature"
+msgstr ""
+
+msgid "This action will permanently delete the selected files."
+msgstr ""
+
+msgid "Malware"
+msgstr ""
+
+msgid "Mode"
+msgstr ""
+
+msgid "Bit rate"
+msgstr ""
+
+msgid "Sampling rate"
+msgstr ""
+
+msgid "Channels"
+msgstr ""
+
+msgid "Duration"
+msgstr ""
+
+msgid "Album"
+msgstr ""
+
+msgid "Artist"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Quality"
+msgstr ""
+
+msgid "Image files"
+msgstr ""
+
+msgid "Choose an image to use as the watermark"
+msgstr ""
+
+msgid "Key files"
+msgstr ""
+
+msgid "Choose a key file to import."
+msgstr ""
+
+msgid "No secret keys were found."
+msgstr ""
+
+msgid "Would you like to import a key now?"
+msgstr ""
+
+msgid "Failed to import the key!"
+msgstr ""
+
+msgid "Select a user:"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "Failed: you must select a user!"
+msgstr ""
+
+msgid "No public keys were found."
+msgstr ""
+
+msgid "Select one or more users:"
+msgstr ""
+
+msgid "Failed: you must select at least one user!"
+msgstr ""
+
+msgid "Directory"
+msgstr ""
+
+msgid "Size"
+msgstr ""
+
+msgid "Group"
+msgstr ""
+
+msgid "Item"
+msgstr ""
+
+msgid "Octal"
+msgstr ""
+
+msgid "Type"
 msgstr ""
 
 msgid "You must select only two images to compare!"
@@ -224,1819 +308,1686 @@ msgstr ""
 msgid "You must select only two PDFs to compare!"
 msgstr ""
 
-msgid "You must select up to"
+msgid "You must select only two binary files to compare!"
 msgstr ""
 
-msgid "You must select"
+msgid "The selected items are identical."
 msgstr ""
 
-msgid "Your system does not support clipboard operations."
+msgid "The selected images has same pixel values."
 msgstr ""
 
-# Button
-msgid "Cancel"
+msgid "MIME"
 msgstr ""
 
-# Button
-msgid "No"
+msgid "This action will move all files from subdirectories to the root of the selected directory."
 msgstr ""
 
-# Button
-msgid "OK"
+msgid "This action will reset the permissions recursively."
 msgstr ""
 
-# Button
-msgid "Yes"
-msgstr ""
-
-# par_item_name
-msgid "IPs"
-msgstr ""
-
-# par_item_name
-msgid "items"
-msgstr ""
-
-# par_item_name
-msgid "URLs"
-msgstr ""
-
-# Column
-msgid "Album"
-msgstr ""
-
-# Column
-msgid "Artist"
-msgstr ""
-
-# Column
-msgid "Bit rate"
-msgstr ""
-
-# Column
-msgid "Channels"
-msgstr ""
-
-# Column
-msgid "Char"
-msgstr ""
-
-# Column
-msgid "Count"
-msgstr ""
-
-# Column
 msgid "Date"
 msgstr ""
 
-# Column
-msgid "Directory"
-msgstr ""
-
-# Column
-msgid "Duration"
-msgstr ""
-
-# Column
-msgid "Encoding"
-msgstr ""
-
-# Column
-msgid "Endings"
-msgstr ""
-
-# Column
-msgid "File"
-msgstr ""
-
-# Column
-msgid "Filename"
-msgstr ""
-
-# Column
-msgid "Group"
-msgstr ""
-
-# Column
-msgid "Hostname"
-msgstr ""
-
-# Column
-msgid "HTTP code"
-msgstr ""
-
-# Column
-msgid "Inode"
-msgstr ""
-
-# Column
-msgid "IP"
-msgstr ""
-
-# Column
-msgid "Issues"
-msgstr ""
-
-# Column
-msgid "Item"
-msgstr ""
-
-# Column
-msgid "Line"
-msgstr ""
-
-# Column
-msgid "Link"
-msgstr ""
-
-# Column
-msgid "Malware"
-msgstr ""
-
-# Column
-msgid "Mode"
-msgstr ""
-
-# Column
-msgid "Octal"
-msgstr ""
-
-# Column
-msgid "Quality"
-msgstr ""
-
-# Column
-msgid "Sampling rate"
-msgstr ""
-
-# Column
-msgid "Signature"
-msgstr ""
-
-# Column
-msgid "Size"
-msgstr ""
-
-# Column
-msgid "Status"
-msgstr ""
-
-# Column
 msgid "Time"
 msgstr ""
 
-# Column
-msgid "Title"
+msgid "Select the output filename:"
 msgstr ""
 
-# Column
-msgid "Type"
+msgid "Filename"
 msgstr ""
 
-# Column
+msgid "Status"
+msgstr ""
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr ""
+
+msgid "IPs"
+msgstr ""
+
+msgid "IP"
+msgstr ""
+
+msgid "Hostname"
+msgstr ""
+
+msgid "There are no valid IPs in the selected files!"
+msgstr ""
+
+msgid "There are no valid URLs in the selected files!"
+msgstr ""
+
+msgid "No remote URL found."
+msgstr ""
+
+msgid "URLs"
+msgstr ""
+
+msgid "HTTP code"
+msgstr ""
+
 msgid "URL"
 msgstr ""
 
-# Column
-msgid "User"
+msgid "The directory is empty."
 msgstr ""
 
-# valid_file_label
-msgid "directories"
-msgstr ""
-
-# valid_file_label, par_item_name
-msgid "files"
-msgstr ""
-
-# valid_file_label
-msgid "files or directories"
-msgstr ""
-
-# Menu: Category
-msgid "Accessed recently"
-msgstr ""
-
-# SECTION: Menu ----
-# Menu: Category
+#: Menu
 msgid "Archive"
 msgstr ""
 
-# Menu: Category
+#: Menu
 msgid "Audio and Video"
 msgstr ""
 
-# Menu: Category
-msgid "Clipboard"
-msgstr ""
-
-# Menu: Category
-msgid "Directories and Files"
-msgstr ""
-
-# Menu: Category
-msgid "Document"
-msgstr ""
-
-# Menu: Category
-msgid "Encryption"
-msgstr ""
-
-# Menu: Category
+#: Menu
 msgid "Checksum"
 msgstr ""
 
-# Menu: Category
+#: Menu
+msgid "Clipboard"
+msgstr ""
+
+#: Menu
+msgid "Directories and Files"
+msgstr ""
+
+#: Menu
+msgid "Document"
+msgstr ""
+
+#: Menu
+msgid "Encryption"
+msgstr ""
+
+#: Menu
 msgid "Image"
 msgstr ""
 
-# Menu: Category
+#: Menu
 msgid "Links"
 msgstr ""
 
-# Menu: Category
+#: Menu
 msgid "Network and Internet"
 msgstr ""
 
-# Menu: Category
+#: Menu
 msgid "Open with"
 msgstr ""
 
-# Menu: Category
+#: Menu
 msgid "Plain text"
 msgstr ""
 
-# Menu: Category
+#: Menu
 msgid "Rename files"
 msgstr ""
 
-# Menu: Category
+#: Menu
 msgid "Security and Recovery"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Audio and Video: Tools"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Audio: Channels"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Audio: Convert"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Audio: Effects"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Audio: MP3 files"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Audio: Quality"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Document: Convert"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Document: Print"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Color"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Combine, Split"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Convert"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Crop, Resize"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Flip, Rotate"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Icons"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Metadata, Exif"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Optimize, Reduce"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Similarity"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: SVG files"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Text recognition (OCR)"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Transparency"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Image: Watermark"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Annotations"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Combine, Split"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Security"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Multiple-page layout"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Optimize, Reduce"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Page size"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Rotate"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Signatures"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Text recognition (OCR)"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Tools"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "PDF: Watermark"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Text: Encoding"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Text: Indentation"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Text: Line breaks"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Text: Statistics"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Text: Tools"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Aspect ratio"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Audio track"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Convert"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Export frames"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Flip, Rotate"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Frame rate"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Resize"
 msgstr ""
 
-# Menu: Subcategory
+#: Menu
 msgid "Video: Speed"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Check quality"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to FLAC"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to MP3 (48 kbps)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to MP3 (192 kbps)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to MP3 (320 kbps)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to OGG (48 kbps)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to OGG (192 kbps)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to OGG (320 kbps)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to OPUS (48 kbps)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to OPUS (192 kbps)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to OPUS (320 kbps)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Convert to WAV"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Fade-in"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Fade-out"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Mix channels to mono"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Mix two files"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Volume normalize"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Produce a spectrogram"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Remove silent sections"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Silence noise"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Audio: Trim silence"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Code Editor"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compare items"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compare items (via Diff)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compress..."
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .7z (each)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .7z with password (each)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .iso (each)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .squashfs (each)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .tar.gz (each)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .tar.xz (each)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .tar.zst (each)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .zip (each)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compress to .zip with password (each)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compute all checksums"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compute CRC32"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compute MD5"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compute SHA1"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compute SHA256"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Compute SHA512"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Copy file content"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Copy filename"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Copy filename (recursive)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Copy filepath"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Copy filepath (recursive)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Create hard link here"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Create hard link to..."
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Create symbolic link here"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Create symbolic link to..."
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Create symbolic link to Desktop"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Disk Usage Analyzer"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to DOCX"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to EPUB"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to FB2"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to Markdown"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to ODP"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to ODS"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to ODT"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to PDF"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to PPTX"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to TXT"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Document: Convert to XLSX"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Document: Print (A4)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Document: Print (US Legal)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Document: Print (US Letter)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Extract here"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "File carving (via Foremost)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "File carving (via PhotoRec)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Find broken links"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Find duplicate files"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Find empty directories"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Find hidden items"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Find junk files"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Find zero-byte files"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Flatten directory structure"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Generate MD5 file"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Generate SHA1 file"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Generate SHA256 file"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Generate SHA512 file"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Git: Clone URLs"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Git: Open repository website"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Git: Reset and pull"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Decrypt"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Encrypt with password"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Encrypt with password (ASCII)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Encrypt with keys"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Encrypt with keys (ASCII)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Import key"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Sign"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Sign (ASCII)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Sign (detached signature)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Verify signature"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Add watermark (center)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Add watermark (north)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Add watermark (northeast)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Add watermark (northwest)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Add watermark (south)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Add watermark (southeast)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Add watermark (southwest)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Automatic crop"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Automatic crop (15 pct)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Background to alpha"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Background to alpha (15 pct)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color alpha to black"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color alpha to magenta"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color alpha to white"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color black to alpha"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color black to alpha (15 pct)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color magenta to alpha"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color magenta to alpha (15 pct)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Colorspace to gray"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color white to alpha"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Color white to alpha (15 pct)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Combine into a GIF"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Combine into a PDF"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to AVIF"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to BMP"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to GIF"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to HEIC"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to JPG"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to JXL"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to PNG"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to TIFF"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Convert to WebP"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Create PNG icon (64 px)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Create PNG icon (128 px)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Create PNG icon (256 px)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Create PNG icon (512 px)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Desaturate"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Export to PDF"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Find similar (65 pct)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Find similar (75 pct)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Find similar (85 pct)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Find similar (95 pct)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Flip (horizontally)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Flip (vertically)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Generate multiple hues"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Optimize PNG"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Perform OCR (English)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Perform OCR (French)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Perform OCR (German)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Perform OCR (Italian)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Perform OCR (Portuguese)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Perform OCR (Russian)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Perform OCR (Spanish)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Reduce (JPG, 500kB max)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Reduce (JPG, 1000kB max)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Remove metadata"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Rename from metadata"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize (25 pct)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize (50 pct)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize (75 pct)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize and crop (512x512)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize and crop (1080x1080)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize and crop (1920x1080)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize and crop (2560x1440)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Resize and crop (3840x2160)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Rotate (90 deg)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Rotate (180 deg)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Rotate (270 deg)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Split into 2 (horizontally)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Split into 2 (vertically)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Split into 4"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Stack (horizontally)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Image: Stack (vertically)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "IP: Ping hosts"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "IP: Scan ports"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "IP: Test availability"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "List hard links"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "List largest directories"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "List largest files"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "List permissions and owners"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "List recently modified files"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "List symbolic links"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Media: Concatenate files"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Media: Remove metadata"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Media: Show basic metadata"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "MP3: (artist - title) Filename to ID3"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "MP3: (artist - title) ID3 to Filename"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "MP3: Volume maximize (recursive)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "MP3: Volume normalize (recursive)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "MP3: Repair (recursive)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "MP3: Show encoding details"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Open item location"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Paste as hard link"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Paste as symbolic link"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Paste clipboard"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Add watermark (overlay)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Add watermark (underlay)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Combine multiple PDFs"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Remove password"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Set a password"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Extract images"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Find annotated PDFs"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Find non-linearized PDFs"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Find non-searchable PDFs"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Find password-protected PDFs"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Find signed PDFs"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (landscape, 1x2)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (landscape, 2x1)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (landscape, 2x2)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (landscape, 2x4)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (landscape, 4x2)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (portrait, 1x2)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (portrait, 2x1)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (portrait, 2x2)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (portrait, 2x4)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Layout (portrait, 4x2)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Set size (A3)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Set size (A4)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Set size (A5)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Set size (US Legal)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Set size (US Letter)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Perform OCR (English)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Perform OCR (French)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Perform OCR (German)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Perform OCR (Italian)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Perform OCR (Portuguese)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Perform OCR (Russian)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Perform OCR (Spanish)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Reduce (150 dpi, e-book)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Reduce (300 dpi, printer)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Remove annotations"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Remove metadata"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Rotate (90 deg)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Rotate (180 deg)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Rotate (270 deg)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Show signatures"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "PDF: Split into single-page PDFs"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Rename: Remove accents"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Rename: Remove parentheses blocks"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Rename: Change spaces to dashes"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Rename: Change dashes to spaces"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Rename: To lowercase"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Rename: To lowercase (recursive)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Rename: To sentence case"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Rename: To title case"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Rename: To uppercase"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Rename: To uppercase (recursive)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Reset permissions (recursive)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Scan for malware (via ClamAV)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Show file information"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Show file metadata"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Show file MIME type"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Show media information"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Shred file (secure delete)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Compress to SVGZ"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Decompress SVGZ"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Export to EPS"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Export to PDF"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Export to PNG (256 px)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Export to PNG (512 px)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Export to PNG (1024 px)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Replace fonts to Charter"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Replace fonts to Helvetica"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "SVG: Replace fonts to Times"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Terminal"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: Concatenate multiple files"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: Convert 4 spaces to tabs"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: Convert 8 spaces to tabs"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: Convert tabs to 4 spaces"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: Convert tabs to 8 spaces"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: Normalize (CRLF, recursive)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: Normalize (LF, recursive)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: Encode to ISO-8859-1"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: Encode to UTF-8"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: Line breaks to CRLF"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: Line breaks to LF"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: List encoding"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: List issues"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: List invalid chars"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: List line breaks"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: List line count"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: List max line length"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: List word count"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: Remove trailing spaces"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Text: Remove accents"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "URL: Check HTTP status"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "URL: Check SSL expiry"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "URL: Download file"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "URL: Show HTTP headers"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Verify MD5 file"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Verify SHA1 file"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Verify SHA256 file"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Verify SHA512 file"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 1:1"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 2.21:1"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 2.35:1"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 2.39:1"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 4:3"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 5:4"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 16:9"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Aspect to 16:10"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Convert to MKV"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Convert to MKV (no re-encoding)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Convert to MP4"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Convert to MP4 (no re-encoding)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Export frames (1 FPS)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Export frames (5 FPS)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Export frames (10 FPS)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Export to GIF"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Extract audio"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Flip (horizontally)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Flip (vertically)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Frame rate to 30 FPS"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Frame rate to 60 FPS"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Remove audio"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Resize (25 pct)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Resize (50 pct)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Resize (75 pct)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Rotate (90 deg)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Rotate (180 deg)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Rotate (270 deg)"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Speed to 0.5"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Speed to 1.5"
 msgstr ""
 
-# Menu: Script name
+#: Menu
 msgid "Video: Speed to 2.0"
 msgstr ""
 
-# Menu: Folder name.
-msgid "Scripts"
-msgstr ""
-
-# SECTION: Installer ----
-# Installer
-msgid "Add shortcuts to the application menu"
-msgstr ""
-
-# Installer
-msgid "All dependencies are already satisfied."
-msgstr ""
-
-# Installer
-msgid "Choose which script categories to install"
-msgstr ""
-
-# Installer
-msgid "Close the file manager to reload configurations"
-msgstr ""
-
-# Installer
-msgid "Closing the file manager..."
-msgstr ""
-
-# Installer
-msgid "Creating shortcuts to the application menu..."
-msgstr ""
-
-# Installer
-msgid "Creating GNOME application folder..."
-msgstr ""
-
-# Installer
-msgid "Done!"
-msgstr ""
-
-# Installer
-msgid "Downloading the package..."
-msgstr ""
-
-# Installer
-msgid "Home dir:"
-msgstr ""
-
-# Installer
-msgid "Homebrew is already installed."
-msgstr ""
-
-# Installer
+#: install.sh
 msgid "Install basic dependencies"
 msgstr ""
 
-# Installer
-msgid "Install Homebrew (optional)"
-msgstr ""
-
-# Installer
-msgid "Install keyboard accelerators"
-msgstr ""
-
-# Installer
-msgid "Installation completed successfully!"
-msgstr ""
-
-# Installer
-msgid "Installing application menu shortcuts:"
-msgstr ""
-
-# Installer
-msgid "Installing basic dependencies:"
-msgstr ""
-
-# Installer
-msgid "Installing Homebrew to:"
-msgstr ""
-
-# Installer
-msgid "Installing Homebrew:"
-msgstr ""
-
-# Installer
-msgid "Installing in non-interactive mode..."
-msgstr ""
-
-# Installer
-msgid "Installing keyboard accelerators..."
-msgstr ""
-
-# Installer
-msgid "Installing new scripts:"
-msgstr ""
-
-# Installer
-msgid "Installing the scripts..."
-msgstr ""
-
-# Installer
-msgid "Installing file manager actions..."
-msgstr ""
-
-# Installer
+#: install.sh
 msgid "Remove previously installed scripts"
 msgstr ""
 
-# Installer
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr ""
+
+#: install.sh
+msgid "Close the file manager to reload configurations"
+msgstr ""
+
+#: install.sh
+msgid "Add shortcuts to the application menu"
+msgstr ""
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr ""
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr ""
+
+#: install.sh
 msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
 msgstr ""
 
-# Installer
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr ""
+
+#: install.sh
+msgid "Installing new scripts:"
+msgstr ""
+
+#: install.sh
 msgid "User:"
+msgstr ""
+
+#: install.sh
+msgid "Home dir:"
+msgstr ""
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr ""
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr ""
+
+#: install.sh
+msgid "Installing basic dependencies:"
+msgstr ""
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr ""
+
+#: install.sh
+msgid "Installing the scripts..."
+msgstr ""
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr ""
+
+#: install.sh
+msgid "Scripts"
+msgstr ""
+
+#: install.sh
+msgid "Creating shortcuts to the application menu..."
+msgstr ""
+
+#: install.sh
+msgid "Creating GNOME application folder..."
+msgstr ""
+
+#: install.sh
+msgid "Installing file manager actions..."
+msgstr ""
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr ""
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr ""
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr ""
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr ""
+
+#: install.sh
+msgid "Downloading the package..."
 msgstr ""
 
 #~ msgid "EOF"
