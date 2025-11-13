@@ -347,10 +347,6 @@ msgid "Date"
 msgstr "Data"
 
 # Column
-msgid "Days left"
-msgstr "Dias restantes"
-
-# Column
 msgid "Directory"
 msgstr "Diretório"
 

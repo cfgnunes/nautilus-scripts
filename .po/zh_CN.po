@@ -349,10 +349,6 @@ msgid "Date"
 msgstr "日期"
 
 # Column
-msgid "Days left"
-msgstr "剩余天数"
-
-# Column
 msgid "Directory"
 msgstr "目录"
 
