@@ -1882,24 +1882,14 @@ _display_list_box_zenity_yad() {
     # Transform to uppercase.
     par_checkbox_value=${par_checkbox_value^^}
 
-    # Translate the label of the columns.
-    if [[ -n "$par_columns" ]]; then
-        local new_par_columns=""
-        local column=""
-        while IFS= read -r -d ',' column; do
-            new_par_columns+="--column="
-            new_par_columns+=$(_i18n "${column#--column:}")
-            new_par_columns+=$FIELD_SEPARATOR
-        done <<<"$par_columns,"
-        par_columns=$new_par_columns
-    fi
-
     if [[ "$par_checkbox" == "true" ]]; then
         par_columns="--column=$FIELD_SEPARATOR$par_columns"
         par_columns="--checklist$FIELD_SEPARATOR$par_columns"
     fi
 
     if [[ -n "$par_columns" ]]; then
+        par_columns=$(tr ":" "=" <<<"$par_columns")
+
         # Count the number of columns.
         columns_count=$(
             grep --only-matching "column=" <<<"$par_columns" | wc -l
