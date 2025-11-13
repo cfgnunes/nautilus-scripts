@@ -985,7 +985,7 @@ _deps_is_package_installed() {
         fi
         ;;
     "brew")
-        if brew list | grep --quiet "$package"; then
+        if brew list | grep --quiet "^$package$"; then
             return 0
         fi
         ;;
