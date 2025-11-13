@@ -253,10 +253,6 @@ msgid "empty directories"
 msgstr "diretórios vazios"
 
 # par_item_name
-msgid "files with bad chars"
-msgstr "arquivos com caracteres inválidos"
-
-# par_item_name
 msgid "hard links"
 msgstr "links físicos"
 

@@ -254,10 +254,6 @@ msgid "empty directories"
 msgstr "空目录"
 
 # par_item_name
-msgid "files with bad chars"
-msgstr "含非法字符的文件"
-
-# par_item_name
 msgid "hard links"
 msgstr "硬链接"
 
