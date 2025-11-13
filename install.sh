@@ -294,6 +294,7 @@ _i18n_print_desktop_name() {
 _i18n_get_translation() {
     local po_file=$1
     local msgid=$2
+    local msgstr=""
     msgstr=$(grep -A1 "msgid \"$msgid\"" "$po_file" 2>/dev/null |
         grep "msgstr" | cut -d '"' -f 2)
 
