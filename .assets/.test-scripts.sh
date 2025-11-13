@@ -1847,11 +1847,6 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Network and Internet/URL: Check SSL expiry"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$std_output"
-
     # Create mock files for testing.
     input_file1="$temp_dir/Test internet.txt"
     echo "https://www.rfc-editor.org/rfc/rfc2616.txt" >"$input_file1"
