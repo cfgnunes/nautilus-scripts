@@ -60,9 +60,6 @@ msgstr "找不到打开MIME类型的可执行文件："
 msgid "Could not install the package:"
 msgstr "无法安装软件包："
 
-msgid "Could not pop a directory."
-msgstr "无法弹出目录。"
-
 msgid "Each file inside this directory will be processed individually."
 msgstr "此目录内的每个文件都将被单独处理。"
 

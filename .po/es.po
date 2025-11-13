@@ -59,9 +59,6 @@ msgstr "No se pudo encontrar el ejecutable para abrir el tipo MIME:"
 msgid "Could not install the package:"
 msgstr "No se pudo instalar el paquete:"
 
-msgid "Could not pop a directory."
-msgstr "No se pudo regresar al directorio anterior."
-
 msgid "Each file inside this directory will be processed individually."
 msgstr "Cada archivo dentro de este directorio será procesado individualmente."
 
