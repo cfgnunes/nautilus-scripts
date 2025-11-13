@@ -959,7 +959,8 @@ _deps_is_package_installed() {
         fi
         ;;
     "dnf")
-        if dnf repoquery --installed | grep --quiet "$package-"; then
+        if dnf repoquery --installed --qf "%{name}\n" |
+            grep --quiet "^$package$"; then
             return 0
         fi
         ;;
