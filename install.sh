@@ -757,6 +757,7 @@ _create_links() {
     local relative_path=""
 
     # Process all files and directories recursively.
+    local file_path=""
     while IFS= read -r -d $'\0' file_path; do
         relative_path="${file_path#"$INSTALL_DIR"/}"
         dir=$(dirname -- "$relative_path")
