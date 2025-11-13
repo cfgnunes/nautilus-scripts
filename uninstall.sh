@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 INSTALL_NAME_DIR="scripts"
 
 # -----------------------------------------------------------------------------
@@ -8,9 +10,11 @@ INSTALL_NAME_DIR="scripts"
 
 _remove_empty_parent_dirs() {
     local path=$1
+    local parent_dir=""
 
     # Remove the directory and parent directories recursively (if empty).
-    local parent_dir=$path
+    rmdir -- "$path" 2>/dev/null
+    parent_dir=$(dirname -- "$path")
     while [[ "$parent_dir" != "$HOME" ]] && [[ "$parent_dir" != "/" ]]; do
         rmdir -- "$parent_dir" 2>/dev/null || break
         parent_dir=$(dirname -- "$parent_dir")
@@ -29,7 +33,7 @@ _uninstall_file() {
 
     # Restore the backup (if exists).
     cp -- "$file.bak" "$file" 2>/dev/null
-    _remove_empty_parent_dirs "$dir"
+    _remove_empty_parent_dirs "$file"
 }
 
 # -----------------------------------------------------------------------------
