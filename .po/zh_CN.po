@@ -1,4 +1,4 @@
-#
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
 #, fuzzy
 msgid ""
 msgstr ""
@@ -533,1463 +533,1463 @@ msgstr "重命名文件"
 msgid "Security and Recovery"
 msgstr "安全与恢复"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Audio and Video: Tools"
 msgstr "音频和视频：工具"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Audio: Channels"
 msgstr "音频：声道"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Audio: Convert"
 msgstr "音频：转换"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Audio: Effects"
 msgstr "音频：效果"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Audio: MP3 files"
 msgstr "音频：MP3文件"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Audio: Quality"
 msgstr "音频：质量"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Document: Convert"
 msgstr "文档：转换"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Document: Print"
 msgstr "文档：打印"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Color"
 msgstr "图像：颜色"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Combine, Split"
 msgstr "图像：合并、分割"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Convert"
 msgstr "图像：转换"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Crop, Resize"
 msgstr "图像：裁剪、调整大小"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Flip, Rotate"
 msgstr "图像：翻转、旋转"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Icons"
 msgstr "图像：图标"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Metadata, Exif"
 msgstr "图像：元数据、Exif"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Optimize, Reduce"
 msgstr "图像：优化、压缩"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Similarity"
 msgstr "图像：相似度"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: SVG files"
 msgstr "图像：SVG文件"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Text recognition (OCR)"
 msgstr "图像：文字识别（OCR）"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Transparency"
 msgstr "图像：透明度"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Watermark"
 msgstr "图像：水印"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Annotations"
 msgstr "PDF：注释"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Combine, Split"
 msgstr "PDF：合并、分割"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Security"
 msgstr "PDF：安全"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Multiple-page layout"
 msgstr "PDF：多页布局"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Optimize, Reduce"
 msgstr "PDF：优化、压缩"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Page size"
 msgstr "PDF：页面尺寸"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Rotate"
 msgstr "PDF：旋转"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Signatures"
 msgstr "PDF：签名"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Text recognition (OCR)"
 msgstr "PDF：文字识别（OCR）"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Tools"
 msgstr "PDF：工具"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Watermark"
 msgstr "PDF：水印"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Text: Encoding"
 msgstr "文本：编码"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Text: Indentation"
 msgstr "文本：缩进"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Text: Line breaks"
 msgstr "文本：换行符"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Text: Statistics"
 msgstr "文本：统计"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Text: Tools"
 msgstr "文本：工具"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Aspect ratio"
 msgstr "视频：宽高比"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Audio track"
 msgstr "视频：音轨"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Convert"
 msgstr "视频：转换"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Export frames"
 msgstr "视频：导出帧"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Flip, Rotate"
 msgstr "视频：翻转、旋转"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Frame rate"
 msgstr "视频：帧率"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Resize"
 msgstr "视频：调整大小"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Speed"
 msgstr "视频：速度"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Check quality"
 msgstr "音频：检查质量"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to FLAC"
 msgstr "音频：转换为FLAC"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to MP3 (48 kbps)"
 msgstr "音频：转换为MP3（48 kbps）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to MP3 (192 kbps)"
 msgstr "音频：转换为MP3（192 kbps）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to MP3 (320 kbps)"
 msgstr "音频：转换为MP3（320 kbps）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to OGG (48 kbps)"
 msgstr "音频：转换为OGG（48 kbps）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to OGG (192 kbps)"
 msgstr "音频：转换为OGG（192 kbps）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to OGG (320 kbps)"
 msgstr "音频：转换为OGG（320 kbps）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to OPUS (48 kbps)"
 msgstr "音频：转换为OPUS（48 kbps）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to OPUS (192 kbps)"
 msgstr "音频：转换为OPUS（192 kbps）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to OPUS (320 kbps)"
 msgstr "音频：转换为OPUS（320 kbps）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to WAV"
 msgstr "音频：转换为WAV"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Fade-in"
 msgstr "音频：淡入"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Fade-out"
 msgstr "音频：淡出"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Mix channels to mono"
 msgstr "音频：混音为单声道"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Mix two files"
 msgstr "音频：混合两个文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Volume normalize"
 msgstr "音频：音量标准化"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Produce a spectrogram"
 msgstr "音频：生成频谱图"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Remove silent sections"
 msgstr "音频：移除静音部分"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Silence noise"
 msgstr "音频：静音降噪"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Trim silence"
 msgstr "音频：修剪静音"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Code Editor"
 msgstr "代码编辑器"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compare items"
 msgstr "比较项目"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compare items (via Diff)"
 msgstr "比较项目（通过Diff）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress..."
 msgstr "压缩..."
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .7z (each)"
 msgstr "压缩为.7z（每个）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .7z with password (each)"
 msgstr "压缩为带密码的.7z（每个）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .iso (each)"
 msgstr "压缩为.iso（每个）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .squashfs (each)"
 msgstr "压缩为.squashfs（每个）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .tar.gz (each)"
 msgstr "压缩为.tar.gz（每个）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .tar.xz (each)"
 msgstr "压缩为.tar.xz（每个）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .tar.zst (each)"
 msgstr "压缩为.tar.zst（每个）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .zip (each)"
 msgstr "压缩为.zip（每个）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .zip with password (each)"
 msgstr "压缩为带密码的.zip（每个）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compute all checksums"
 msgstr "计算所有校验和"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compute CRC32"
 msgstr "计算CRC32"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compute MD5"
 msgstr "计算MD5"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compute SHA1"
 msgstr "计算SHA1"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compute SHA256"
 msgstr "计算SHA256"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compute SHA512"
 msgstr "计算SHA512"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Copy file content"
 msgstr "复制文件内容"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Copy filename"
 msgstr "复制文件名"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Copy filename (recursive)"
 msgstr "复制文件名（递归）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Copy filepath"
 msgstr "复制文件路径"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Copy filepath (recursive)"
 msgstr "复制文件路径（递归）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Create hard link here"
 msgstr "在此创建硬链接"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Create hard link to..."
 msgstr "创建硬链接到..."
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Create symbolic link here"
 msgstr "在此创建符号链接"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Create symbolic link to..."
 msgstr "创建符号链接到..."
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Create symbolic link to Desktop"
 msgstr "创建到桌面的符号链接"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Disk Usage Analyzer"
 msgstr "磁盘使用分析器"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to DOCX"
 msgstr "文档：转换为DOCX"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to EPUB"
 msgstr "文档：转换为EPUB"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to FB2"
 msgstr "文档：转换为FB2"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to Markdown"
 msgstr "文档：转换为Markdown"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to ODP"
 msgstr "文档：转换为 ODP"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to ODS"
 msgstr "文档：转换为 ODS"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to ODT"
 msgstr "文档：转换为 ODT"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to PDF"
 msgstr "文档：转换为 PDF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to PPTX"
 msgstr "文档：转换为 PPTX"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to TXT"
 msgstr "文档：转换为 TXT"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to XLSX"
 msgstr "文档：转换为 XLSX"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Print (A4)"
 msgstr "文档：打印 (A4)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Print (US Legal)"
 msgstr "文档：打印 (US Legal)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Print (US Letter)"
 msgstr "文档：打印 (US Letter)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Extract here"
 msgstr "解压到此处"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "File carving (via Foremost)"
 msgstr "文件雕刻 (通过 Foremost)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "File carving (via PhotoRec)"
 msgstr "文件雕刻 (通过 PhotoRec)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Find broken links"
 msgstr "查找损坏的链接"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Find duplicate files"
 msgstr "查找重复文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Find empty directories"
 msgstr "查找空目录"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Find hidden items"
 msgstr "查找隐藏项目"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Find junk files"
 msgstr "查找垃圾文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Find zero-byte files"
 msgstr "查找零字节文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Flatten directory structure"
 msgstr "扁平化目录结构"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Generate MD5 file"
 msgstr "生成 MD5 文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Generate SHA1 file"
 msgstr "生成 SHA1 文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Generate SHA256 file"
 msgstr "生成 SHA256 文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Generate SHA512 file"
 msgstr "生成 SHA512 文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Git: Clone URLs"
 msgstr "Git：克隆 URL"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Git: Open repository website"
 msgstr "Git：打开代码库网站"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Git: Reset and pull"
 msgstr "Git：重置并拉取"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Decrypt"
 msgstr "解密"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Encrypt with password"
 msgstr "使用密码加密"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Encrypt with password (ASCII)"
 msgstr "使用密码加密 (ASCII)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Encrypt with keys"
 msgstr "使用密钥加密"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Encrypt with keys (ASCII)"
 msgstr "使用密钥加密(ASCII)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Import key"
 msgstr "导入密钥"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Sign"
 msgstr "签名"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Sign (ASCII)"
 msgstr "签名 (ASCII)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Sign (detached signature)"
 msgstr "签名 (分离签名)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Verify signature"
 msgstr "验证签名"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Add watermark (center)"
 msgstr "图像：添加水印 (居中)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Add watermark (north)"
 msgstr "图像：添加水印 (顶部)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Add watermark (northeast)"
 msgstr "图像：添加水印 (右上角)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Add watermark (northwest)"
 msgstr "图像：添加水印 (左上角)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Add watermark (south)"
 msgstr "图像：添加水印 (底部)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Add watermark (southeast)"
 msgstr "图像：添加水印 (右下角)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Add watermark (southwest)"
 msgstr "图像：添加水印 (左下角)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Automatic crop"
 msgstr "图像：自动裁剪"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Automatic crop (15 pct)"
 msgstr "图像：自动裁剪 (15pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Background to alpha"
 msgstr "图像：背景转为透明"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Background to alpha (15 pct)"
 msgstr "图像：背景转为透明 (15pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color alpha to black"
 msgstr "图像：透明通道着色为黑色"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color alpha to magenta"
 msgstr "图像：透明通道着色为洋红色"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color alpha to white"
 msgstr "图像：颜色Alpha通道转白色"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color black to alpha"
 msgstr "图像：颜色黑色转Alpha通道"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color black to alpha (15 pct)"
 msgstr "图像：颜色黑色转Alpha通道（15pct）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color magenta to alpha"
 msgstr "图像：颜色洋红转Alpha通道"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color magenta to alpha (15 pct)"
 msgstr "图像：颜色洋红转Alpha通道（15pct）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Colorspace to gray"
 msgstr "图像：色彩空间转灰度"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color white to alpha"
 msgstr "图像：颜色白色转Alpha通道"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color white to alpha (15 pct)"
 msgstr "图像：颜色白色转Alpha通道（15pct）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Combine into a GIF"
 msgstr "图像：合并为GIF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Combine into a PDF"
 msgstr "图像：合并为PDF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to AVIF"
 msgstr "图像：转换为AVIF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to BMP"
 msgstr "图像：转换为BMP"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to GIF"
 msgstr "图像：转换为GIF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to HEIC"
 msgstr "图像：转换为HEIC"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to JPG"
 msgstr "图像：转换为JPG"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to JXL"
 msgstr "图像：转换为JXL"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to PNG"
 msgstr "图像：转换为PNG"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to TIFF"
 msgstr "图像：转换为TIFF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to WebP"
 msgstr "图像：转换为WebP"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Create PNG icon (64 px)"
 msgstr "图像：创建PNG图标（64像素）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Create PNG icon (128 px)"
 msgstr "图像：创建PNG图标（128像素）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Create PNG icon (256 px)"
 msgstr "图像：创建PNG图标（256像素）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Create PNG icon (512 px)"
 msgstr "图像：创建PNG图标（512像素）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Desaturate"
 msgstr "图像：去饱和度"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Export to PDF"
 msgstr "图像：导出为PDF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Find similar (65 pct)"
 msgstr "图像：查找相似图片（65pct）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Find similar (75 pct)"
 msgstr "图像：查找相似图片（75pct）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Find similar (85 pct)"
 msgstr "图像：查找相似图片（85pct）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Find similar (95 pct)"
 msgstr "图像：查找相似图片（95pct）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Flip (horizontally)"
 msgstr "图像：翻转（水平）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Flip (vertically)"
 msgstr "图像：翻转（垂直）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Generate multiple hues"
 msgstr "图像：生成多色调"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Optimize PNG"
 msgstr "图像：优化PNG"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Perform OCR (English)"
 msgstr "图像：执行OCR（英语）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Perform OCR (French)"
 msgstr "图像：执行OCR（法语）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Perform OCR (German)"
 msgstr "图像：执行OCR（德语）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Perform OCR (Italian)"
 msgstr "图像：执行OCR（意大利语）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Perform OCR (Portuguese)"
 msgstr "图像：执行OCR（葡萄牙语）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Perform OCR (Russian)"
 msgstr "图像：执行OCR（俄语）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Perform OCR (Spanish)"
 msgstr "图像：执行OCR（西班牙语）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Reduce (JPG, 500kB max)"
 msgstr "图像：压缩（JPG，最大500kB）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Reduce (JPG, 1000kB max)"
 msgstr "图像：压缩（JPG，最大1000kB）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Remove metadata"
 msgstr "图像：移除元数据"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Rename from metadata"
 msgstr "图像：从元数据重命名"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize (25 pct)"
 msgstr "图像：调整尺寸（25pct）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize (50 pct)"
 msgstr "图像：调整尺寸（50pct）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize (75 pct)"
 msgstr "图像：调整尺寸（75pct）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize and crop (512x512)"
 msgstr "图像：调整尺寸并裁剪（512x512）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize and crop (1080x1080)"
 msgstr "图像：调整尺寸并裁剪（1080x1080）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize and crop (1920x1080)"
 msgstr "图像：调整尺寸并裁剪（1920x1080）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize and crop (2560x1440)"
 msgstr "图像：调整大小并裁剪 (2560x1440)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize and crop (3840x2160)"
 msgstr "图像：调整大小并裁剪 (3840x2160)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Rotate (90 deg)"
 msgstr "图像：旋转 (90度)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Rotate (180 deg)"
 msgstr "图像：旋转 (180度)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Rotate (270 deg)"
 msgstr "图像：旋转 (270度)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Split into 2 (horizontally)"
 msgstr "图像：分割为2份 (水平)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Split into 2 (vertically)"
 msgstr "图像：分割为2份 (垂直)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Split into 4"
 msgstr "图像：分割为4份"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Stack (horizontally)"
 msgstr "图像：堆叠 (水平)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Stack (vertically)"
 msgstr "图像：堆叠 (垂直)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "IP: Ping hosts"
 msgstr "IP：Ping主机"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "IP: Scan ports"
 msgstr "IP：扫描端口"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "IP: Test availability"
 msgstr "IP：测试可用性"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "List hard links"
 msgstr "列出硬链接"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "List largest directories"
 msgstr "列出最大目录"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "List largest files"
 msgstr "列出最大文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "List permissions and owners"
 msgstr "列出权限和所有者"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "List recently modified files"
 msgstr "列出最近修改的文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "List symbolic links"
 msgstr "列出符号链接"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Media: Concatenate files"
 msgstr "媒体：合并文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Media: Remove metadata"
 msgstr "媒体：移除元数据"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Media: Show basic metadata"
 msgstr "媒体：显示基本元数据"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "MP3: (artist - title) Filename to ID3"
 msgstr "MP3：(艺术家 - 标题) 文件名转ID3"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "MP3: (artist - title) ID3 to Filename"
 msgstr "MP3：(艺术家 - 标题) ID3转文件名"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "MP3: Volume maximize (recursive)"
 msgstr "MP3：最大化音量（递归）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "MP3: Volume normalize (recursive)"
 msgstr "MP3：音量标准化（递归）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "MP3: Repair (recursive)"
 msgstr "MP3：修复 (递归)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "MP3: Show encoding details"
 msgstr "MP3：显示编码详情"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Open item location"
 msgstr "打开项目位置"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Paste as hard link"
 msgstr "粘贴为硬链接"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Paste as symbolic link"
 msgstr "粘贴为符号链接"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Paste clipboard"
 msgstr "粘贴剪贴板"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Add watermark (overlay)"
 msgstr "PDF：添加水印 (覆盖)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Add watermark (underlay)"
 msgstr "PDF：添加水印 (衬底)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Combine multiple PDFs"
 msgstr "PDF：合并多个 PDF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF：转换为PDFA-2b"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Remove password"
 msgstr "PDF：移除密码"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Set a password"
 msgstr "PDF：设置密码"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Extract images"
 msgstr "PDF：提取图像"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Find annotated PDFs"
 msgstr "PDF：查找带注释的 PDF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Find non-linearized PDFs"
 msgstr "PDF：查找未线性化的 PDF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Find non-searchable PDFs"
 msgstr "PDF：查找不可搜索的 PDF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Find password-protected PDFs"
 msgstr "PDF：查找受密码保护的 PDF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Find signed PDFs"
 msgstr "PDF：查找已签名的 PDF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (landscape, 1x2)"
 msgstr "PDF：布局 (横向, 1x2)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (landscape, 2x1)"
 msgstr "PDF：布局 (横向, 2x1)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (landscape, 2x2)"
 msgstr "PDF：布局 (横向, 2x2)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (landscape, 2x4)"
 msgstr "PDF：布局 (横向, 2x4)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (landscape, 4x2)"
 msgstr "PDF：布局 (横向, 4x2)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (portrait, 1x2)"
 msgstr "PDF：布局 (纵向, 1x2)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (portrait, 2x1)"
 msgstr "PDF：布局（纵向，2x1）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (portrait, 2x2)"
 msgstr "PDF：布局（纵向，2x2）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (portrait, 2x4)"
 msgstr "PDF：布局（纵向，2x4）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (portrait, 4x2)"
 msgstr "PDF：布局（纵向，4x2）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF：优化用于网页（线性化）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Set size (A3)"
 msgstr "PDF：设置尺寸（A3）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Set size (A4)"
 msgstr "PDF：设置尺寸（A4）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Set size (A5)"
 msgstr "PDF：设置尺寸（A5）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Set size (US Legal)"
 msgstr "PDF：设置尺寸（美国 Legal）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Set size (US Letter)"
 msgstr "PDF：设置尺寸（美国 Letter）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Perform OCR (English)"
 msgstr "PDF：执行OCR（英语）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Perform OCR (French)"
 msgstr "PDF：执行OCR（法语）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Perform OCR (German)"
 msgstr "PDF：执行OCR（德语）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Perform OCR (Italian)"
 msgstr "PDF：执行OCR（意大利语）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Perform OCR (Portuguese)"
 msgstr "PDF：执行OCR（葡萄牙语）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Perform OCR (Russian)"
 msgstr "PDF：执行OCR（俄语）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Perform OCR (Spanish)"
 msgstr "PDF：执行OCR（西班牙语）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Reduce (150 dpi, e-book)"
 msgstr "PDF：缩减（150 dpi，电子书）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Reduce (300 dpi, printer)"
 msgstr "PDF：缩减（300 dpi，打印机）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Remove annotations"
 msgstr "PDF：移除注释"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Remove metadata"
 msgstr "PDF：移除元数据"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Rotate (90 deg)"
 msgstr "PDF：旋转（90度）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Rotate (180 deg)"
 msgstr "PDF：旋转（180度）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Rotate (270 deg)"
 msgstr "PDF：旋转（270度）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Show signatures"
 msgstr "PDF：显示签名"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Split into single-page PDFs"
 msgstr "PDF：拆分为单页 PDF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: Remove accents"
 msgstr "重命名：移除重音符号"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: Remove parentheses blocks"
 msgstr "重命名：删除括号中的内容"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: Change spaces to dashes"
 msgstr "重命名：将空格改为短横线"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: Change dashes to spaces"
 msgstr "重命名：将短横线改为空格"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: Gaps by underscores"
 msgstr "重命名：空格替换为下划线"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: To lowercase"
 msgstr "重命名：转为小写"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: To lowercase (recursive)"
 msgstr "重命名：转为小写（递归）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: To sentence case"
 msgstr "重命名：转为句首大写"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: To title case"
 msgstr "重命名：转为标题大小写"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: To uppercase"
 msgstr "重命名：转为大写"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: To uppercase (recursive)"
 msgstr "重命名：转为大写（递归）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Reset permissions (recursive)"
 msgstr "重置权限（递归）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Scan for malware (via ClamAV)"
 msgstr "扫描恶意软件（通过ClamAV）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Show file information"
 msgstr "显示文件信息"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Show file metadata"
 msgstr "显示文件元数据"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Show file MIME type"
 msgstr "显示文件MIME类型"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Show media information"
 msgstr "显示媒体信息"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Shred file (secure delete)"
 msgstr "粉碎文件（安全删除）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Compress to SVGZ"
 msgstr "SVG：压缩为SVGZ"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Decompress SVGZ"
 msgstr "SVG：解压缩SVGZ"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Export to EPS"
 msgstr "SVG：导出为EPS"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Export to PDF"
 msgstr "SVG：导出为PDF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Export to PNG (256 px)"
 msgstr "SVG：导出为PNG（256像素）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Export to PNG (512 px)"
 msgstr "SVG：导出为PNG（512像素）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG：导出为PNG（1024像素）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Replace fonts to Charter"
 msgstr "SVG：替换字体为Charter"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Replace fonts to Helvetica"
 msgstr "SVG：替换字体为Helvetica"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Replace fonts to Times"
 msgstr "SVG：替换字体为Times"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Terminal"
 msgstr "终端"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Concatenate multiple files"
 msgstr "文本：合并多个文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Convert 4 spaces to tabs"
 msgstr "文本：将4个空格转换为制表符"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Convert 8 spaces to tabs"
 msgstr "文本：将8个空格转换为制表符"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Convert tabs to 4 spaces"
 msgstr "文本：将制表符转换成4个空格"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Convert tabs to 8 spaces"
 msgstr "文本：将制表符转换成4个空格"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Normalize (CRLF, recursive)"
 msgstr "文本：规范化（CRLF，递归）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Normalize (LF, recursive)"
 msgstr "文本：规范化（LF，递归）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Encode to ISO-8859-1"
 msgstr "文本：编码为ISO-8859-1"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Encode to UTF-8"
 msgstr "文本：编码为UTF-8"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Line breaks to CRLF"
 msgstr "文本：换行符转CRLF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Line breaks to LF"
 msgstr "文本：换行符转LF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: List encoding"
 msgstr "文本：列出编码"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: List issues"
 msgstr "文本：列出问题"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: List invalid chars"
 msgstr "文本：列出无效字符"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: List line breaks"
 msgstr "文本：列出换行符类型"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: List line count"
 msgstr "文本：统计行数"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: List max line length"
 msgstr "文本：列出最大行长"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: List word count"
 msgstr "文本：统计词数"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Remove trailing spaces"
 msgstr "文本：删除行尾空格"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Remove accents"
 msgstr "文本：移除重音符号"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "URL: Check HTTP status"
 msgstr "URL：检查HTTP状态"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "URL: Check SSL expiry"
 msgstr "URL：检查SSL过期时间"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "URL: Download file"
 msgstr "URL：下载文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "URL: Show HTTP headers"
 msgstr "URL：显示HTTP头信息"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Verify MD5 file"
 msgstr "验证 MD5 文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Verify SHA1 file"
 msgstr "验证 SHA1 文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Verify SHA256 file"
 msgstr "验证 SHA256 文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Verify SHA512 file"
 msgstr "验证 SHA512 文件"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 1:1"
 msgstr "视频：画面比例设为1:1"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 2.21:1"
 msgstr "视频：画面比例设为2.21:1"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 2.35:1"
 msgstr "视频：画面比例设为2.35:1"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 2.39:1"
 msgstr "视频：画面比例设为2.39:1"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 4:3"
 msgstr "视频：画面比例设为4:3"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 5:4"
 msgstr "视频：画面比例设为5:4"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 16:9"
 msgstr "视频：画面比例设为16:9"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 16:10"
 msgstr "视频：画面比例设为16:10"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Convert to MKV"
 msgstr "视频：转换为MKV"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Convert to MKV (no re-encoding)"
 msgstr "视频：转换为MKV（不重新编码）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Convert to MP4"
 msgstr "视频：转换为MP4"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Convert to MP4 (no re-encoding)"
 msgstr "视频：转换为MP4（不重新编码）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Export frames (1 FPS)"
 msgstr "视频：导出帧（1 FPS）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Export frames (5 FPS)"
 msgstr "视频：导出帧（5 FPS）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Export frames (10 FPS)"
 msgstr "视频：导出帧（10 FPS）"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Export to GIF"
 msgstr "视频：导出为GIF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Extract audio"
 msgstr "视频：提取音频"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Flip (horizontally)"
 msgstr "视频：水平翻转"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Flip (vertically)"
 msgstr "视频：垂直翻转"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Frame rate to 30 FPS"
 msgstr "视频：帧率设为 30 FPS"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Frame rate to 60 FPS"
 msgstr "视频：帧率设为 60 FPS"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Remove audio"
 msgstr "视频：移除音频"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Resize (25 pct)"
 msgstr "视频：调整大小 (25pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Resize (50 pct)"
 msgstr "视频：调整大小 (50pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Resize (75 pct)"
 msgstr "视频：调整大小 (75pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Rotate (90 deg)"
 msgstr "视频：旋转 (90 度)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Rotate (180 deg)"
 msgstr "视频：旋转 (180 度)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Rotate (270 deg)"
 msgstr "视频：旋转 (270 度)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Speed to 0.5"
 msgstr "视频：速度调整为 0.5"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Speed to 1.5"
 msgstr "视频：速度调整为 1.5"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Speed to 2.0"
 msgstr "视频：速度调整为 2.0"
 
-# Menu: Folder name. This string must NOT contain the "%" character.
+# Menu: Folder name.
 msgid "Scripts"
 msgstr "脚本"
 

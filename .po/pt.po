@@ -1,3 +1,4 @@
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
 msgid ""
 msgstr ""
 "Project-Id-Version: Enhanced File Manager Actions for Linux\n"
@@ -531,1459 +532,1459 @@ msgstr "Renomear arquivos"
 msgid "Security and Recovery"
 msgstr "Segurança e Recuperação"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Audio and Video: Tools"
 msgstr "Áudio e Vídeo: Ferramentas"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Audio: Channels"
 msgstr "Áudio: Canais"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Audio: Convert"
 msgstr "Áudio: Converter"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Audio: Effects"
 msgstr "Áudio: Efeitos"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Audio: MP3 files"
 msgstr "Áudio: Arquivos MP3"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Audio: Quality"
 msgstr "Áudio: Qualidade"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Document: Convert"
 msgstr "Documento: Converter"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Document: Print"
 msgstr "Documento: Impressão"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Color"
 msgstr "Imagem: Cor"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Combine, Split"
 msgstr "Imagem: Combinar, Dividir"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Convert"
 msgstr "Imagem: Converter"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Crop, Resize"
 msgstr "Imagem: Cortar, Redimensionar"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Flip, Rotate"
 msgstr "Imagem: Espelhar, Rotacionar"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Icons"
 msgstr "Imagem: Ícones"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Metadata, Exif"
 msgstr "Imagem: Metadados, Exif"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Optimize, Reduce"
 msgstr "Imagem: Otimizar, Reduzir"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Similarity"
 msgstr "Imagem: Similaridade"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: SVG files"
 msgstr "Imagem: Arquivos SVG"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Text recognition (OCR)"
 msgstr "Imagem: Reconhecimento de texto (OCR)"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Transparency"
 msgstr "Imagem: Transparência"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Image: Watermark"
 msgstr "Imagem: Marca d'água"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Annotations"
 msgstr "PDF: Anotações"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Combine, Split"
 msgstr "PDF: Combinar, Dividir"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Security"
 msgstr "PDF: Segurança"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Multiple-page layout"
 msgstr "PDF: Layout de múltiplas páginas"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Optimize, Reduce"
 msgstr "PDF: Otimizar, Reduzir"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Page size"
 msgstr "PDF: Tamanho da página"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Rotate"
 msgstr "PDF: Rotacionar"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Signatures"
 msgstr "PDF: Assinaturas"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Text recognition (OCR)"
 msgstr "PDF: Reconhecimento de texto (OCR)"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Tools"
 msgstr "PDF: Ferramentas"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "PDF: Watermark"
 msgstr "PDF: Marca d'água"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Text: Encoding"
 msgstr "Texto: Codificação"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Text: Indentation"
 msgstr "Texto: Indentação"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Text: Line breaks"
 msgstr "Texto: Fim de linha"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Text: Statistics"
 msgstr "Texto: Estatísticas"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Text: Tools"
 msgstr "Texto: Ferramentas"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Aspect ratio"
 msgstr "Vídeo: Proporção"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Audio track"
 msgstr "Vídeo: Faixa de áudio"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Convert"
 msgstr "Vídeo: Converter"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Export frames"
 msgstr "Vídeo: Exportar quadros"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Flip, Rotate"
 msgstr "Vídeo: Espelhar, Rotacionar"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Frame rate"
 msgstr "Vídeo: Taxa de quadros"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Resize"
 msgstr "Vídeo: Redimensionar"
 
-# Menu: Subcategory. This string must NOT contain the "%" character.
+# Menu: Subcategory
 msgid "Video: Speed"
 msgstr "Vídeo: Velocidade"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Check quality"
 msgstr "Áudio: Verificar qualidade"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to FLAC"
 msgstr "Áudio: Converter para FLAC"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to MP3 (48 kbps)"
 msgstr "Áudio: Converter para MP3 (48 kbps)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to MP3 (192 kbps)"
 msgstr "Áudio: Converter para MP3 (192 kbps)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to MP3 (320 kbps)"
 msgstr "Áudio: Converter para MP3 (320 kbps)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to OGG (48 kbps)"
 msgstr "Áudio: Converter para OGG (48 kbps)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to OGG (192 kbps)"
 msgstr "Áudio: Converter para OGG (192 kbps)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to OGG (320 kbps)"
 msgstr "Áudio: Converter para OGG (320 kbps)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to OPUS (48 kbps)"
 msgstr "Áudio: Converter para OPUS (48 kbps)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to OPUS (192 kbps)"
 msgstr "Áudio: Converter para OPUS (192 kbps)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to OPUS (320 kbps)"
 msgstr "Áudio: Converter para OPUS (320 kbps)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Convert to WAV"
 msgstr "Áudio: Converter para WAV"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Fade-in"
 msgstr "Áudio: Fade-in"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Fade-out"
 msgstr "Áudio: Fade-out"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Mix channels to mono"
 msgstr "Áudio: Mesclar canais em mono"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Mix two files"
 msgstr "Áudio: Mesclar dois arquivos"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Volume normalize"
 msgstr "Áudio: Normalizar volume"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Produce a spectrogram"
 msgstr "Áudio: Produzir espectrograma"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Remove silent sections"
 msgstr "Áudio: Remover trechos silenciosos"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Silence noise"
 msgstr "Áudio: Silenciar ruído"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Audio: Trim silence"
 msgstr "Áudio: Remover silêncio"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Code Editor"
 msgstr "Editor de Código"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compare items"
 msgstr "Comparar itens"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compare items (via Diff)"
 msgstr "Comparar itens (via Diff)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress..."
 msgstr "Compactar..."
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .7z (each)"
 msgstr "Compactar para .7z (cada)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .7z with password (each)"
 msgstr "Compactar para .7z com senha (cada)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .iso (each)"
 msgstr "Compactar para .iso (cada)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .squashfs (each)"
 msgstr "Compactar para .squashfs (cada)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .tar.gz (each)"
 msgstr "Compactar para .tar.gz (cada)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .tar.xz (each)"
 msgstr "Compactar para .tar.xz (cada)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .tar.zst (each)"
 msgstr "Compactar para .tar.zst (cada)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .zip (each)"
 msgstr "Compactar para .zip (cada)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compress to .zip with password (each)"
 msgstr "Compactar para .zip com senha (cada)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compute all checksums"
 msgstr "Calcular todos os hashes"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compute CRC32"
 msgstr "Calcular CRC32"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compute MD5"
 msgstr "Calcular MD5"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compute SHA1"
 msgstr "Calcular SHA1"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compute SHA256"
 msgstr "Calcular SHA256"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Compute SHA512"
 msgstr "Calcular SHA512"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Copy file content"
 msgstr "Copiar conteúdo do arquivo"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Copy filename"
 msgstr "Copiar nome do arquivo"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Copy filename (recursive)"
 msgstr "Copiar nome do arquivo (recursivo)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Copy filepath"
 msgstr "Copiar caminho do arquivo"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Copy filepath (recursive)"
 msgstr "Copiar caminho do arquivo (recursivo)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Create hard link here"
 msgstr "Criar link físico aqui"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Create hard link to..."
 msgstr "Criar link físico para..."
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Create symbolic link here"
 msgstr "Criar link simbólico aqui"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Create symbolic link to..."
 msgstr "Criar link simbólico para..."
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Create symbolic link to Desktop"
 msgstr "Criar link simbólico para a Área de Trabalho"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Disk Usage Analyzer"
 msgstr "Analisador de Uso de Disco"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to DOCX"
 msgstr "Documento: Converter para DOCX"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to EPUB"
 msgstr "Documento: Converter para EPUB"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to FB2"
 msgstr "Documento: Converter para FB2"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to Markdown"
 msgstr "Documento: Converter para Markdown"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to ODP"
 msgstr "Documento: Converter para ODP"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to ODS"
 msgstr "Documento: Converter para ODS"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to ODT"
 msgstr "Documento: Converter para ODT"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to PDF"
 msgstr "Documento: Converter para PDF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to PPTX"
 msgstr "Documento: Converter para PPTX"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to TXT"
 msgstr "Documento: Converter para TXT"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Convert to XLSX"
 msgstr "Documento: Converter para XLSX"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Print (A4)"
 msgstr "Documento: Imprimir (A4)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Print (US Legal)"
 msgstr "Documento: Imprimir (US Legal)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Document: Print (US Letter)"
 msgstr "Documento: Imprimir (US Letter)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Extract here"
 msgstr "Extrair aqui"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "File carving (via Foremost)"
 msgstr "Recuperar arquivos (via Foremost)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "File carving (via PhotoRec)"
 msgstr "Recuperar arquivos (via PhotoRec)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Find broken links"
 msgstr "Encontrar links quebrados"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Find duplicate files"
 msgstr "Encontrar arquivos duplicados"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Find empty directories"
 msgstr "Encontrar diretórios vazios"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Find hidden items"
 msgstr "Encontrar itens ocultos"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Find junk files"
 msgstr "Encontrar arquivos inúteis"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Find zero-byte files"
 msgstr "Encontrar arquivos de zero bytes"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Flatten directory structure"
 msgstr "Achatar estrutura de diretórios"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Generate MD5 file"
 msgstr "Gerar arquivo MD5"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Generate SHA1 file"
 msgstr "Gerar arquivo SHA1"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Generate SHA256 file"
 msgstr "Gerar arquivo SHA256"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Generate SHA512 file"
 msgstr "Gerar arquivo SHA512"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Git: Clone URLs"
 msgstr "Git: Clonar URLs"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Git: Open repository website"
 msgstr "Git: Abrir site do repositório"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Git: Reset and pull"
 msgstr "Git: Reset e pull"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Decrypt"
 msgstr "Descriptografar"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Encrypt with password"
 msgstr "Criptografar com senha"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Encrypt with password (ASCII)"
 msgstr "Criptografar com senha (ASCII)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Encrypt with keys"
 msgstr "Criptografar com chaves"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Encrypt with keys (ASCII)"
 msgstr "Criptografar com chaves (ASCII)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Import key"
 msgstr "Importar chave"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Sign"
 msgstr "Assinar"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Sign (ASCII)"
 msgstr "Assinar (ASCII)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Sign (detached signature)"
 msgstr "Assinar (assinatura separada)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Verify signature"
 msgstr "Verificar assinatura"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Add watermark (center)"
 msgstr "Imagem: Adic. marca d'água (centro)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Add watermark (north)"
 msgstr "Imagem: Adic. marca d'água (norte)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Add watermark (northeast)"
 msgstr "Imagem: Adic. marca d'água (nordeste)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Add watermark (northwest)"
 msgstr "Imagem: Adic. marca d'água (noroeste)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Add watermark (south)"
 msgstr "Imagem: Adic. marca d'água (sul)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Add watermark (southeast)"
 msgstr "Imagem: Adic. marca d'água (sudeste)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Add watermark (southwest)"
 msgstr "Imagem: Adic. marca d'água (sudoeste)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Automatic crop"
 msgstr "Imagem: Corte automático"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Automatic crop (15 pct)"
 msgstr "Imagem: Corte automático (15 pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Background to alpha"
 msgstr "Imagem: Fundo para alfa"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Background to alpha (15 pct)"
 msgstr "Imagem: Fundo para alfa (15 pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color alpha to black"
 msgstr "Imagem: Cor alfa para preto"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color alpha to magenta"
 msgstr "Imagem: Cor alfa para magenta"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color alpha to white"
 msgstr "Imagem: Cor alfa para branco"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color black to alpha"
 msgstr "Imagem: Cor preta para alfa"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color black to alpha (15 pct)"
 msgstr "Imagem: Cor preta para alfa (15 pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color magenta to alpha"
 msgstr "Imagem: Cor magenta para alfa"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color magenta to alpha (15 pct)"
 msgstr "Imagem: Cor magenta para alfa (15 pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Colorspace to gray"
 msgstr "Imagem: Espaço de cor para cinza"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color white to alpha"
 msgstr "Imagem: Cor branca para alfa"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Color white to alpha (15 pct)"
 msgstr "Imagem: Cor branca para alfa (15 pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Combine into a GIF"
 msgstr "Imagem: Combinar em um GIF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Combine into a PDF"
 msgstr "Imagem: Combinar em um PDF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to AVIF"
 msgstr "Imagem: Converter para AVIF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to BMP"
 msgstr "Imagem: Converter para BMP"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to GIF"
 msgstr "Imagem: Converter para GIF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to HEIC"
 msgstr "Imagem: Converter para HEIC"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to JPG"
 msgstr "Imagem: Converter para JPG"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to JXL"
 msgstr "Imagem: Converter para JXL"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to PNG"
 msgstr "Imagem: Converter para PNG"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to TIFF"
 msgstr "Imagem: Converter para TIFF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Convert to WebP"
 msgstr "Imagem: Converter para WebP"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Create PNG icon (64 px)"
 msgstr "Imagem: Criar ícone PNG (64 px)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Create PNG icon (128 px)"
 msgstr "Imagem: Criar ícone PNG (128 px)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Create PNG icon (256 px)"
 msgstr "Imagem: Criar ícone PNG (256 px)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Create PNG icon (512 px)"
 msgstr "Imagem: Criar ícone PNG (512 px)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Desaturate"
 msgstr "Imagem: Dessaturar"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Export to PDF"
 msgstr "Imagem: Exportar para PDF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Find similar (65 pct)"
 msgstr "Imagem: Encontrar similares (65 pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Find similar (75 pct)"
 msgstr "Imagem: Encontrar similares (75 pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Find similar (85 pct)"
 msgstr "Imagem: Encontrar similares (85 pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Find similar (95 pct)"
 msgstr "Imagem: Encontrar similares (95 pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Flip (horizontally)"
 msgstr "Imagem: Espelhar (horizontalmente)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Flip (vertically)"
 msgstr "Imagem: Espelhar (verticalmente)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Generate multiple hues"
 msgstr "Imagem: Gerar múltiplas matizes"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Optimize PNG"
 msgstr "Imagem: Otimizar PNG"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Perform OCR (English)"
 msgstr "Imagem: Executar OCR (Inglês)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Perform OCR (French)"
 msgstr "Imagem: Executar OCR (Francês)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Perform OCR (German)"
 msgstr "Imagem: Executar OCR (Alemão)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Perform OCR (Italian)"
 msgstr "Imagem: Executar OCR (Italiano)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Perform OCR (Portuguese)"
 msgstr "Imagem: Executar OCR (Português)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Perform OCR (Russian)"
 msgstr "Imagem: Executar OCR (Russo)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Perform OCR (Spanish)"
 msgstr "Imagem: Executar OCR (Espanhol)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Reduce (JPG, 500kB max)"
 msgstr "Imagem: Reduzir (JPG, máximo 500kB)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Reduce (JPG, 1000kB max)"
 msgstr "Imagem: Reduzir (JPG, máximo 1000kB)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Remove metadata"
 msgstr "Imagem: Remover metadados"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Rename from metadata"
 msgstr "Imagem: Renomear pelos metadados"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize (25 pct)"
 msgstr "Imagem: Redimensionar (25 pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize (50 pct)"
 msgstr "Imagem: Redimensionar (50 pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize (75 pct)"
 msgstr "Imagem: Redimensionar (75 pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize and crop (512x512)"
 msgstr "Imagem: Redim. e cortar (512x512)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize and crop (1080x1080)"
 msgstr "Imagem: Redim. e cortar (1080x1080)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize and crop (1920x1080)"
 msgstr "Imagem: Redim. e cortar (1920x1080)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize and crop (2560x1440)"
 msgstr "Imagem: Redim. e cortar (2560x1440)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Resize and crop (3840x2160)"
 msgstr "Imagem: Redim. e cortar (3840x2160)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Rotate (90 deg)"
 msgstr "Imagem: Rotacionar (90 graus)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Rotate (180 deg)"
 msgstr "Imagem: Rotacionar (180 graus)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Rotate (270 deg)"
 msgstr "Imagem: Rotacionar (270 graus)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Split into 2 (horizontally)"
 msgstr "Imagem: Dividir em 2 (horizontalmente)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Split into 2 (vertically)"
 msgstr "Imagem: Dividir em 2 (verticalmente)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Split into 4"
 msgstr "Imagem: Dividir em 4"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Stack (horizontally)"
 msgstr "Imagem: Empilhar (horizontalmente)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Image: Stack (vertically)"
 msgstr "Imagem: Empilhar (verticalmente)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "IP: Ping hosts"
 msgstr "IP: Ping em hosts"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "IP: Scan ports"
 msgstr "IP: Escanear portas"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "IP: Test availability"
 msgstr "IP: Testar disponibilidade"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "List hard links"
 msgstr "Listar links físicos"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "List largest directories"
 msgstr "Listar maiores diretórios"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "List largest files"
 msgstr "Listar maiores arquivos"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "List permissions and owners"
 msgstr "Listar permissões e proprietários"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "List recently modified files"
 msgstr "Listar arquivos modificados recentemente"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "List symbolic links"
 msgstr "Listar links simbólicos"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Media: Concatenate files"
 msgstr "Mídia: Concatenar arquivos"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Media: Remove metadata"
 msgstr "Mídia: Remover metadados"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Media: Show basic metadata"
 msgstr "Mídia: Mostrar metadados básicos"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "MP3: (artist - title) Filename to ID3"
 msgstr "MP3: (artista - título) Nome para ID3"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "MP3: (artist - title) ID3 to Filename"
 msgstr "MP3: (artista - título) ID3 para Nome"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "MP3: Volume maximize (recursive)"
 msgstr "MP3: Maximizar volume (recursivo)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "MP3: Volume normalize (recursive)"
 msgstr "MP3: Normalizar volume (recursivo)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "MP3: Repair (recursive)"
 msgstr "MP3: Reparar (recursivo)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "MP3: Show encoding details"
 msgstr "MP3: Mostrar detalhes de codificação"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Open item location"
 msgstr "Abrir local do item"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Paste as hard link"
 msgstr "Colar como link físico"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Paste as symbolic link"
 msgstr "Colar como link simbólico"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Paste clipboard"
 msgstr "Colar área de transferência"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Add watermark (overlay)"
 msgstr "PDF: Adic. marca d'água (sobreposta)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Add watermark (underlay)"
 msgstr "PDF: Adic. marca d'água (sobposta)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Combine multiple PDFs"
 msgstr "PDF: Combinar múltiplos PDFs"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: Converter para PDFA-2b"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Remove password"
 msgstr "PDF: Remover senha"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Set a password"
 msgstr "PDF: Definir senha"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Extract images"
 msgstr "PDF: Extrair imagens"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Find annotated PDFs"
 msgstr "PDF: Encontrar PDFs anotados"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Find non-linearized PDFs"
 msgstr "PDF: Encontrar PDFs não linearizados"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Find non-searchable PDFs"
 msgstr "PDF: Encontrar PDFs não pesquisáveis"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Find password-protected PDFs"
 msgstr "PDF: Encontrar PDFs com senha"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Find signed PDFs"
 msgstr "PDF: Encontrar PDFs assinados"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (landscape, 1x2)"
 msgstr "PDF: Layout (paisagem, 1x2)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (landscape, 2x1)"
 msgstr "PDF: Layout (paisagem, 2x1)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (landscape, 2x2)"
 msgstr "PDF: Layout (paisagem, 2x2)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (landscape, 2x4)"
 msgstr "PDF: Layout (paisagem, 2x4)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (landscape, 4x2)"
 msgstr "PDF: Layout (paisagem, 4x2)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (portrait, 1x2)"
 msgstr "PDF: Layout (retrato, 1x2)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (portrait, 2x1)"
 msgstr "PDF: Layout (retrato, 2x1)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (portrait, 2x2)"
 msgstr "PDF: Layout (retrato, 2x2)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (portrait, 2x4)"
 msgstr "PDF: Layout (retrato, 2x4)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Layout (portrait, 4x2)"
 msgstr "PDF: Layout (retrato, 4x2)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF: Otimizar para web (linearizar)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Set size (A3)"
 msgstr "PDF: Definir tamanho (A3)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Set size (A4)"
 msgstr "PDF: Definir tamanho (A4)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Set size (A5)"
 msgstr "PDF: Definir tamanho (A5)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Set size (US Legal)"
 msgstr "PDF: Definir tamanho (US Legal)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Set size (US Letter)"
 msgstr "PDF: Definir tamanho (US Letter)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Perform OCR (English)"
 msgstr "PDF: Executar OCR (Inglês)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Perform OCR (French)"
 msgstr "PDF: Executar OCR (Francês)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Perform OCR (German)"
 msgstr "PDF: Executar OCR (Alemão)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Perform OCR (Italian)"
 msgstr "PDF: Executar OCR (Italiano)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Perform OCR (Portuguese)"
 msgstr "PDF: Executar OCR (Português)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Perform OCR (Russian)"
 msgstr "PDF: Executar OCR (Russo)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Perform OCR (Spanish)"
 msgstr "PDF: Executar OCR (Espanhol)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Reduce (150 dpi, e-book)"
 msgstr "PDF: Reduzir (150 dpi, e-book)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Reduce (300 dpi, printer)"
 msgstr "PDF: Reduzir (300 dpi, impressora)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Remove annotations"
 msgstr "PDF: Remover anotações"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Remove metadata"
 msgstr "PDF: Remover metadados"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Rotate (90 deg)"
 msgstr "PDF: Rotacionar (90 graus)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Rotate (180 deg)"
 msgstr "PDF: Rotacionar (180 graus)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Rotate (270 deg)"
 msgstr "PDF: Rotacionar (270 graus)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Show signatures"
 msgstr "PDF: Mostrar assinaturas"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "PDF: Split into single-page PDFs"
 msgstr "PDF: Dividir em páginas individuais"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: Remove accents"
 msgstr "Renomear: Remover acentos"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: Remove parentheses blocks"
 msgstr "Renomear: Remover blocos de parênteses"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: Change spaces to dashes"
 msgstr "Renomear: Trocar espaços por traços"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: Change dashes to spaces"
 msgstr "Renomear: Trocar traços por espaços"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: To lowercase"
 msgstr "Renomear: Para minúsculas"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: To lowercase (recursive)"
 msgstr "Renomear: Para minúsculas (recursivo)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: To sentence case"
 msgstr "Renomear: Para estilo de frase"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: To title case"
 msgstr "Renomear: Para estilo de título"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: To uppercase"
 msgstr "Renomear: Para maiúsculas"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Rename: To uppercase (recursive)"
 msgstr "Renomear: Para maiúsculas (recursivo)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Reset permissions (recursive)"
 msgstr "Redefinir permissões (recursivo)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Scan for malware (via ClamAV)"
 msgstr "Verificar malware (via ClamAV)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Show file information"
 msgstr "Mostrar informação do arquivo"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Show file metadata"
 msgstr "Mostrar metadado do arquivo"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Show file MIME type"
 msgstr "Mostrar tipo MIME do arquivo"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Show media information"
 msgstr "Mostrar informação de mídia"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Shred file (secure delete)"
 msgstr "Destruir arquivo (exclusão segura)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Compress to SVGZ"
 msgstr "SVG: Compactar para SVGZ"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Decompress SVGZ"
 msgstr "SVG: Descompactar SVGZ"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Export to EPS"
 msgstr "SVG: Exportar para EPS"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Export to PDF"
 msgstr "SVG: Exportar para PDF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Export to PNG (256 px)"
 msgstr "SVG: Exportar para PNG (256 px)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Export to PNG (512 px)"
 msgstr "SVG: Exportar para PNG (512 px)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG: Exportar para PNG (1024 px)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Replace fonts to Charter"
 msgstr "SVG: Trocar fontes por Charter"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Replace fonts to Helvetica"
 msgstr "SVG: Trocar fontes por Helvetica"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "SVG: Replace fonts to Times"
 msgstr "SVG: Trocar fontes por Times"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Terminal"
 msgstr "Terminal"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Concatenate multiple files"
 msgstr "Texto: Concatenar múltiplos arquivos"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Convert 4 spaces to tabs"
 msgstr "Texto: Converter 4 espaços para tabs"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Convert 8 spaces to tabs"
 msgstr "Texto: Converter 8 espaços para tabs"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Convert tabs to 4 spaces"
 msgstr "Texto: Converter tabs para 4 espaços"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Convert tabs to 8 spaces"
 msgstr "Texto: Converter tabs para 8 espaços"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Normalize (CRLF, recursive)"
 msgstr "Texto: Normalizar (CRLF, recursivo)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Normalize (LF, recursive)"
 msgstr "Texto: Normalizar (LF, recursivo)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Encode to ISO-8859-1"
 msgstr "Texto: Codificar para ISO-8859-1"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Encode to UTF-8"
 msgstr "Texto: Codificar para UTF-8"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Line breaks to CRLF"
 msgstr "Texto: Converter fim de linha para CRLF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Line breaks to LF"
 msgstr "Texto: Converter fim de linha para LF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: List encoding"
 msgstr "Texto: Listar codificação"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: List issues"
 msgstr "Texto: Listar problemas"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: List invalid chars"
 msgstr "Texto: Listar caracteres inválidos"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: List line breaks"
 msgstr "Texto: Listar fim de linha"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: List line count"
 msgstr "Texto: Contar linhas"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: List max line length"
 msgstr "Texto: Listar maior tamanho de linha"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: List word count"
 msgstr "Texto: Contar palavras"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Remove trailing spaces"
 msgstr "Texto: Remover espaços finais"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Text: Remove accents"
 msgstr "Texto: Remover acentos"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "URL: Check HTTP status"
 msgstr "URL: Verificar status HTTP"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "URL: Check SSL expiry"
 msgstr "URL: Verificar expiração de SSL"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "URL: Download file"
 msgstr "URL: Baixar arquivo"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "URL: Show HTTP headers"
 msgstr "URL: Mostrar cabeçalhos HTTP"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Verify MD5 file"
 msgstr "Verificar arquivo MD5"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Verify SHA1 file"
 msgstr "Verificar arquivo SHA1"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Verify SHA256 file"
 msgstr "Verificar arquivo SHA256"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Verify SHA512 file"
 msgstr "Verificar arquivo SHA512"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 1:1"
 msgstr "Vídeo: Proporção para 1:1"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 2.21:1"
 msgstr "Vídeo: Proporção para 2.21:1"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 2.35:1"
 msgstr "Vídeo: Proporção para 2.35:1"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 2.39:1"
 msgstr "Vídeo: Proporção para 2.39:1"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 4:3"
 msgstr "Vídeo: Proporção para 4:3"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 5:4"
 msgstr "Vídeo: Proporção para 5:4"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 16:9"
 msgstr "Vídeo: Proporção para 16:9"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Aspect to 16:10"
 msgstr "Vídeo: Proporção para 16:10"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Convert to MKV"
 msgstr "Vídeo: Converter para MKV"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Convert to MKV (no re-encoding)"
 msgstr "Vídeo: Converter para MKV (sem recod.)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Convert to MP4"
 msgstr "Vídeo: Converter para MP4"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Convert to MP4 (no re-encoding)"
 msgstr "Vídeo: Converter para MP4 (sem recod.)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Export frames (1 FPS)"
 msgstr "Vídeo: Exportar quadros (1 FPS)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Export frames (5 FPS)"
 msgstr "Vídeo: Exportar quadros (5 FPS)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Export frames (10 FPS)"
 msgstr "Vídeo: Exportar quadros (10 FPS)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Export to GIF"
 msgstr "Vídeo: Exportar para GIF"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Extract audio"
 msgstr "Vídeo: Extrair áudio"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Flip (horizontally)"
 msgstr "Vídeo: Espelhar (horizontalmente)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Flip (vertically)"
 msgstr "Vídeo: Espelhar (verticalmente)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Frame rate to 30 FPS"
 msgstr "Vídeo: Taxa de quadros para 30 FPS"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Frame rate to 60 FPS"
 msgstr "Vídeo: Taxa de quadros para 60 FPS"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Remove audio"
 msgstr "Vídeo: Remover áudio"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Resize (25 pct)"
 msgstr "Vídeo: Redimensionar (25 pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Resize (50 pct)"
 msgstr "Vídeo: Redimensionar (50 pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Resize (75 pct)"
 msgstr "Vídeo: Redimensionar (75 pct)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Rotate (90 deg)"
 msgstr "Vídeo: Rotacionar (90 graus)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Rotate (180 deg)"
 msgstr "Vídeo: Rotacionar (180 graus)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Rotate (270 deg)"
 msgstr "Vídeo: Rotacionar (270 graus)"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Speed to 0.5"
 msgstr "Vídeo: Velocidade para 0.5"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Speed to 1.5"
 msgstr "Vídeo: Velocidade para 1.5"
 
-# Menu: Script name. This string must NOT contain the "%" character.
+# Menu: Script name
 msgid "Video: Speed to 2.0"
 msgstr "Vídeo: Velocidade para 2.0"
 
-# Menu: Folder name. This string must NOT contain the "%" character.
+# Menu: Folder name.
 msgid "Scripts"
 msgstr "Scripts"
 
