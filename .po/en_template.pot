@@ -71,6 +71,9 @@ msgstr ""
 msgid "Failed: you must select a user!"
 msgstr ""
 
+msgid "Select a user:"
+msgstr ""
+
 msgid "Failed: you must select at least one user!"
 msgstr ""
 

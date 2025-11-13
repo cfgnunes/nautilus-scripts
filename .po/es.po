@@ -71,6 +71,9 @@ msgstr "¡Error al importar la clave!"
 msgid "Failed: you must select a user!"
 msgstr "Error: ¡debe seleccionar un usuario!"
 
+msgid "Select a user:"
+msgstr "Seleccione un usuario:"
+
 msgid "Failed: you must select at least one user!"
 msgstr "Error: ¡debe seleccionar al menos un usuario!"
 
