@@ -15,6 +15,9 @@ msgstr ""
 "X-Generator: Poedit 3.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
+msgid "links"
+msgstr "链接"
+
 msgid "MIME"
 msgstr "MIME"
 
