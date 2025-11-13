@@ -1825,11 +1825,12 @@ _display_list_box() {
 
     # Default values for input parameters.
     local par_columns=""
-    local par_item_name="items"
+    local par_item_name=""
     local par_action=""
     local par_resolve_links="true"
     local par_checkbox="false"
     local par_checkbox_value="false"
+    par_item_name=$(_i18n 'items')
 
     # Evaluate the values from the '$parameters' variable.
     eval "$parameters"

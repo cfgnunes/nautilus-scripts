@@ -25,9 +25,7 @@ _main() {
 
     std_output=$(_text_remove_pwd "$std_output")
 
-    # shellcheck disable=SC2155
-    local item_name="$(_i18n 'files')"
-    _display_list_box "$std_output" "par_columns='--column:Size,--column:File'; par_item_name=$item_name; par_action=open_location; par_checkbox=true"
+    _display_list_box "$std_output" "par_item_name=$(_i18n 'files'); par_columns='--column:$(_i18n 'Size'),--column:$(_i18n 'File')'; par_action=open_location; par_checkbox=true"
 }
 
 _main "$@"

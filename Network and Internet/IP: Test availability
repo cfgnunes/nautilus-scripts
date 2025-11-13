@@ -24,9 +24,7 @@ _main() {
     std_output=$(_storage_text_read_all)
     std_output=$(sort --version-sort --reverse <<<"$std_output")
 
-    # shellcheck disable=SC2155
-    local item_name="$(_i18n 'IPs')"
-    _display_list_box "$std_output" "par_columns='--column:Status,--column:IP,--column:Hostname'; par_item_name=$item_name"
+    _display_list_box "$std_output" "par_item_name=$(_i18n 'IPs'); par_columns='--column:$(_i18n 'Status'),--column:$(_i18n 'IP'),--column:$(_i18n 'Hostname')'"
 }
 
 _main_task() {
