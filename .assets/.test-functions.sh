@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Source the script '.common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/.common-functions.sh"
+
 # Test all functions defined in the script '.common-functions.sh'.
 
 set -u
@@ -103,15 +108,6 @@ __test_equal() {
 }
 
 __run_source_common_functions() {
-    local SCRIPT_DIR=""
-    local ROOT_DIR=""
-
-    # Source the script '.common-functions.sh'.
-    SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-    ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
-    ROOT_DIR=${ROOT_DIR//".assets"/}
-    source "$ROOT_DIR/.common-functions.sh"
-
     __test_equal "Check global variables." "$FIELD_SEPARATOR" $'\r'
 }
 
