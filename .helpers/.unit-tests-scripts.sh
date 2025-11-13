@@ -10,6 +10,9 @@ source "$ROOT_DIR/.common-functions.sh"
 # Disable GUI for testing on terminal.
 unset "DISPLAY"
 
+# Enable automatic 'yes' for testing.
+export DEBUG="true"
+
 # -----------------------------------------------------------------------------
 # SECTION Global variables ----
 # -----------------------------------------------------------------------------

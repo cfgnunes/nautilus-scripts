@@ -2138,9 +2138,11 @@ _display_question_box() {
 
     _display_lock
     if ! _is_gui_session; then
-        echo -e -n "$message [Y/n] " >&2
-        read -r response </dev/tty
-        echo >&2
+        if [[ "${DEBUG:-}" != "true" ]]; then
+            echo -e -n "$message [Y/n] " >&2
+            read -r response </dev/tty
+            echo >&2
+        fi
         [[ ${response,,} == *"n"* ]] && return 1
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" \
