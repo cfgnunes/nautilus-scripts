@@ -3157,14 +3157,12 @@ _validate_files_count() {
     local msg=""
 
     # Define a label for a valid file.
-    local valid_file_label="files"
+    local valid_file_label=""
     case "$par_type" in
-    "directory") valid_file_label="directories" ;;
-    "all") valid_file_label="files or directories" ;;
+    "directory") valid_file_label="$(_i18n 'directories')" ;;
+    "all") valid_file_label="$(_i18n 'files or directories')" ;;
+    *) valid_file_label="$(_i18n 'files')" ;;
     esac
-
-    # Translate the label.
-    valid_file_label="$(_i18n "$valid_file_label")"
 
     # Count the number of valid files.
     local valid_items_count=0
