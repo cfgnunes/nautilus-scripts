@@ -811,11 +811,11 @@ declare -A DEPENDENCIES_MAP=(
 
     ["tesseract-lang-$TEMP_DATA_TASK"]="
         pkg:    tesseract
-        apt:    tesseract-ocr-$TEMP_DATA_TASK
-        dnf:    tesseract-langpack-$TEMP_DATA_TASK
-        pacman: tesseract-data-$TEMP_DATA_TASK
+        apt:    tesseract tesseract-ocr-$TEMP_DATA_TASK
+        dnf:    tesseract tesseract-langpack-$TEMP_DATA_TASK
+        pacman: tesseract tesseract-data-$TEMP_DATA_TASK
         nix:    tesseract
-        zypper: tesseract-ocr-traineddata-$TEMP_DATA_TASK
+        zypper: tesseract tesseract-ocr-traineddata-$TEMP_DATA_TASK
         guix:
         brew:
     "
