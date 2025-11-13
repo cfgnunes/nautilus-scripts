@@ -50,11 +50,17 @@ msgstr "No se pudo acceder al directorio:"
 msgid "Could not find a directory with write permissions!"
 msgstr "¡No se pudo encontrar un directorio con permisos de escritura!"
 
+msgid "Could not find package names to install:"
+msgstr "No se pudieron encontrar nombres de paquetes para instalar:"
+
 msgid "Could not find the executable to open MIME type:"
 msgstr "No se pudo encontrar el ejecutable para abrir el tipo MIME:"
 
 msgid "Could not install the package:"
 msgstr "No se pudo instalar el paquete:"
+
+msgid "Could not pop a directory."
+msgstr "No se pudo regresar al directorio anterior."
 
 msgid "Each file inside this directory will be processed individually."
 msgstr "Cada archivo dentro de este directorio será procesado individualmente."
