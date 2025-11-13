@@ -119,4 +119,40 @@ _remove_empty_parent_dirs "$dir"
 # Homebrew: Installed directory.
 _uninstall_directory "$HOME/.local/apps/homebrew"
 
+# -----------------------------------------------------------------------------
+# GNOME Shell: application folder ----
+# -----------------------------------------------------------------------------
+
+_remove_gnome_application_folder() {
+    local folder_name="Scripts"
+
+    # Exit if not running under GNOME.
+    if [[ -z "${XDG_CURRENT_DESKTOP:-}" ||
+        "${XDG_CURRENT_DESKTOP,,}" != *"gnome"* ]]; then
+        return
+    fi
+
+    # Check gsettings and schema availability.
+    if ! command -v gsettings &>/dev/null || ! gsettings list-schemas |
+        grep --quiet '^org.gnome.desktop.app-folders$'; then
+        return
+    fi
+
+    # Reset all keys for the specific folder
+    gsettings reset-recursively \
+        org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ &>/dev/null
+
+    # Remove the folder from GNOME app-folders list.
+    local current_folders=""
+    current_folders=$(gsettings get org.gnome.desktop.app-folders folder-children)
+
+    # Remove the folder name if it exists.
+    if [[ "$current_folders" == *"'$folder_name'"* ]]; then
+        local new_list=""
+        new_list=$(sed "s/'$folder_name'//g; s/, ,/,/g; s/ ,/,/g; s/\[,/[ /; s/, \]/]/" <<<"$current_folders" | tr -s ' ')
+        gsettings set org.gnome.desktop.app-folders folder-children "$new_list" &>/dev/null
+    fi
+}
+_remove_gnome_application_folder
+
 echo "Uninstall complete!"
