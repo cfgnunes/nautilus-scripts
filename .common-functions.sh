@@ -165,7 +165,7 @@ _cleanup_on_exit() {
     { chmod -R u+w -- "$TEMP_DIR" && rm -rf -- "$TEMP_DIR"; } 2>/dev/null
 
     if ! _is_gui_session; then
-        echo -e "$MSG_INFO End." >&2
+        echo -e "$MSG_INFO $(_i18n 'Done!')" >&2
     fi
 }
 trap _cleanup_on_exit EXIT
