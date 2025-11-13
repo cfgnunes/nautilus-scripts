@@ -93,7 +93,9 @@ _open_repository_website() {
         if [[ -n "$web_url" ]]; then
             xdg-open "$web_url"
         else
-            _log_error "No remote URL found." "$input_file" "" ""
+            local msg=""
+            msg="$(_i18n 'No remote URL found.')"
+            _log_error "$msg" "$input_file" "" ""
         fi
     done
 }

@@ -33,7 +33,9 @@ _main_task() {
     if [[ -d "$input_file" ]]; then
         # Check if the directory is empty.
         if _is_directory_empty "$input_file"; then
-            _log_error "The directory is empty." "$input_file" "" "$output_file"
+            local msg=""
+            msg="$(_i18n 'The directory is empty.')"
+            _log_error "$msg" "$input_file" "" "$output_file"
             return 1
         fi
 

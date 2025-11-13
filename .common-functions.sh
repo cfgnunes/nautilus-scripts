@@ -217,18 +217,19 @@ _check_output() {
     local std_output=$2
     local input_file=$3
     local output_file=$4
+    local msg=""
 
     # Check the '$exit_code' and log the error.
     if ((exit_code != 0)); then
-        _log_error "Command failed with a non-zero exit code." \
-            "$input_file" "$std_output" "$output_file"
+        msg="$(_i18n 'Command failed with a non-zero exit code.')"
+        _log_error "$msg" "$input_file" "$std_output" "$output_file"
         return 1
     fi
 
     # Check if the output file exists.
     if [[ -n "$output_file" ]] && [[ ! -e "$output_file" ]]; then
-        _log_error "The output file does not exist." \
-            "$input_file" "$std_output" "$output_file"
+        msg="$(_i18n 'The output file does not exist.')"
+        _log_error "$msg" "$input_file" "$std_output" "$output_file"
         return 1
     fi
 
@@ -1463,12 +1464,13 @@ _move_file() {
 
     if [[ "$par_when_conflict" != "safe_overwrite" ]] &&
         [[ -e "$file_src" ]]; then
+        local msg=""
         if [[ -e "$file_dst" ]]; then
-            _log_error "The destination file already exists." \
-                "$file_src" "" "$file_dst"
+            msg="$(_i18n 'The destination file already exists.')"
+            _log_error "$msg" "$file_src" "" "$file_dst"
         else
-            _log_error "Unable to move." \
-                "$file_src" "" "$file_dst"
+            msg="$(_i18n 'Unable to move.')"
+            _log_error "$msg" "$file_src" "" "$file_dst"
         fi
         return 1
     fi
