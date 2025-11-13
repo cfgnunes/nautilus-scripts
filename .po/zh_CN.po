@@ -51,17 +51,11 @@ msgstr "无法访问目录："
 msgid "Could not find a directory with write permissions!"
 msgstr "找不到具有写入权限的目录！"
 
-msgid "Could not find package names to install:"
-msgstr "找不到要安装的软件包名称："
-
 msgid "Could not find the executable to open MIME type:"
 msgstr "找不到打开MIME类型的可执行文件："
 
 msgid "Could not install the package:"
 msgstr "无法安装软件包："
-
-msgid "Could not pop a directory."
-msgstr "无法弹出目录。"
 
 msgid "Each file inside this directory will be processed individually."
 msgstr "此目录内的每个文件都将被单独处理。"

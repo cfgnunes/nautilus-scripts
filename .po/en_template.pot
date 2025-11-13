@@ -50,16 +50,10 @@ msgstr ""
 msgid "Could not find a directory with write permissions!"
 msgstr ""
 
-msgid "Could not find package names to install:"
-msgstr ""
-
 msgid "Could not find the executable to open MIME type:"
 msgstr ""
 
 msgid "Could not install the package:"
-msgstr ""
-
-msgid "Could not pop a directory."
 msgstr ""
 
 msgid "Each file inside this directory will be processed individually."
