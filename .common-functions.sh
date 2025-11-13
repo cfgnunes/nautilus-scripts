@@ -549,7 +549,7 @@ _check_dependencies() {
         # Abort if no package definition was found.
         if [[ "$definitions_found" == "false" ]]; then
             local msg=""
-            msg="$(_i18n 'Could not find package names to install dependency:')"
+            msg="$(_i18n 'Could not find package names to install:')"
             _display_error_box "$msg $dep_key"
             _exit_script
         fi
