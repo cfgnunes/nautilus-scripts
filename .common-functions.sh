@@ -3922,8 +3922,7 @@ _i18n_load_file() {
 _i18n() {
     local msgid=$1
 
-    # Try the loaded translation first.
-    if [[ -n "${I18N_DATA[$msgid]:-}" ]]; then
+    if [[ -n "$msgid" ]] && [[ -n "${I18N_DATA[$msgid]:-}" ]]; then
         printf "%s" "${I18N_DATA[$msgid]}"
     else
         printf "%s" "$msgid"
