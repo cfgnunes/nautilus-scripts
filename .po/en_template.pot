@@ -1,6 +1,5 @@
 # Translators: The string must NOT contain the "%" character and must be a single-line string.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Enhanced File Manager Actions for Linux\n"
