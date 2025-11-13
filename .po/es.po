@@ -1884,8 +1884,8 @@ msgid "Video: Speed to 2.0"
 msgstr "Video: Velocidad a 2.0"
 
 #: install.sh
-msgid "Install basic dependencies"
-msgstr "Instalar dependencias básicas"
+msgid "Check for basic dependencies"
+msgstr "Verificar dependencias básicas"
 
 #: install.sh
 msgid "Remove previously installed scripts"
@@ -1920,8 +1920,8 @@ msgid "Installing in non-interactive mode..."
 msgstr "Instalando en modo no interactivo..."
 
 #: install.sh
-msgid "Installing new scripts:"
-msgstr "Instalando nuevos scripts:"
+msgid "Installing:"
+msgstr "Instalando:"
 
 #: install.sh
 msgid "User:"
@@ -1940,16 +1940,16 @@ msgid "Installation completed successfully!"
 msgstr "¡Instalación completada con éxito!"
 
 #: install.sh
-msgid "Installing basic dependencies:"
-msgstr "Instalando dependencias básicas:"
+msgid "Checking for basic dependencies:"
+msgstr "Verificando dependencias básicas:"
 
 #: install.sh
 msgid "All dependencies are already satisfied."
 msgstr "Todas las dependencias ya están satisfechas."
 
 #: install.sh
-msgid "Installing the scripts..."
-msgstr "Instalando los scripts..."
+msgid "Copying files..."
+msgstr "Copiando archivos..."
 
 #: install.sh
 msgid "Installing keyboard accelerators..."

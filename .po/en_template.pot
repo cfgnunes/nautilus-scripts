@@ -1882,7 +1882,7 @@ msgid "Video: Speed to 2.0"
 msgstr ""
 
 #: install.sh
-msgid "Install basic dependencies"
+msgid "Check for basic dependencies"
 msgstr ""
 
 #: install.sh
@@ -1918,7 +1918,7 @@ msgid "Installing in non-interactive mode..."
 msgstr ""
 
 #: install.sh
-msgid "Installing new scripts:"
+msgid "Installing:"
 msgstr ""
 
 #: install.sh
@@ -1938,7 +1938,7 @@ msgid "Installation completed successfully!"
 msgstr ""
 
 #: install.sh
-msgid "Installing basic dependencies:"
+msgid "Checking for basic dependencies:"
 msgstr ""
 
 #: install.sh
@@ -1946,7 +1946,7 @@ msgid "All dependencies are already satisfied."
 msgstr ""
 
 #: install.sh
-msgid "Installing the scripts..."
+msgid "Copying files..."
 msgstr ""
 
 #: install.sh

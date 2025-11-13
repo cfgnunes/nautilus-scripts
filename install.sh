@@ -139,7 +139,7 @@ _main() {
 
     # Available options presented in the interactive menu.
     menu_labels=(
-        "$(_i18n 'Install basic dependencies')"
+        "$(_i18n 'Check for basic dependencies')"
         "$(_i18n 'Remove previously installed scripts')"
         "$(_i18n 'Install keyboard accelerators')"
         "$(_i18n 'Close the file manager to reload configurations')"
@@ -194,7 +194,7 @@ _main() {
         _multiselect_menu cat_selected cat_dirs cat_defaults
     fi
 
-    ## Step 1: Install basic dependencies. ----
+    ## Step 1: Check for basic dependencies. ----
     [[ "$OPT_INSTALL_BASIC_DEPS" == "true" ]] && _install_dependencies
 
     ## Step 2: Install the scripts. ----
@@ -203,7 +203,7 @@ _main() {
     INSTALL_GROUP=$(stat -c "%G" "$INSTALL_HOME")
 
     _echo ""
-    _echo_info "$(_i18n 'Installing new scripts:')"
+    _echo_info "$(_i18n 'Installing:')"
     _echo_info "> $(_i18n 'User:') $INSTALL_OWNER"
     _echo_info "> $(_i18n 'Home dir:') $INSTALL_HOME"
     INSTALL_DIR="$INSTALL_HOME/$INSTALL_PATH"
@@ -502,12 +502,12 @@ _get_parameters_command_line() {
         case "$1" in
         -b | --install-homebrew) OPT_INSTALL_HOMEBREW="true" ;;
         -B | --no-install-homebrew) OPT_INSTALL_HOMEBREW="false" ;;
+        -c | --check-dependencies) OPT_INSTALL_BASIC_DEPS="true" ;;
+        -C | --no-check-dependencies) OPT_INSTALL_BASIC_DEPS="false" ;;
         -d | --remove-scripts) OPT_REMOVE_SCRIPTS="true" ;;
         -D | --no-remove-scripts) OPT_REMOVE_SCRIPTS="false" ;;
         -f | --close-filemanager) OPT_CLOSE_FILE_MANAGER="true" ;;
         -F | --no-close-filemanager) OPT_CLOSE_FILE_MANAGER="false" ;;
-        -i | --install-dependencies) OPT_INSTALL_BASIC_DEPS="true" ;;
-        -I | --no-install-dependencies) OPT_INSTALL_BASIC_DEPS="false" ;;
         -k | --install-shortcuts) OPT_INSTALL_ACCELS="true" ;;
         -K | --no-install-shortcuts) OPT_INSTALL_ACCELS="false" ;;
         -n | --non-interactive) OPT_INTERACTIVE_INSTALL="false" ;;
@@ -519,12 +519,12 @@ _get_parameters_command_line() {
             echo
             echo "  -b, --install-homebrew          Install Homebrew."
             echo "  -B, --no-install-homebrew       Do not install Homebrew."
+            echo "  -c, --check-dependencies        Check for basic dependencies."
+            echo "  -C, --no-check-dependencies     Do not check for basic dependencies."
             echo "  -d, --remove-scripts            Remove previously installed scripts."
             echo "  -D, --no-remove-scripts         Do not remove previously installed scripts."
             echo "  -f, --close-filemanager         Close file manager after install."
             echo "  -F, --no-close-filemanager      Do not close file manager after install."
-            echo "  -i, --install-dependencies      Install basic dependencies."
-            echo "  -I, --no-install-dependencies   Do not install basic dependencies."
             echo "  -k, --install-shortcuts         Install keyboard accelerators."
             echo "  -K, --no-install-shortcuts      Do not install keyboard accelerators."
             echo "  -n, --non-interactive           Run without prompts."
@@ -580,7 +580,7 @@ _generate_desktop_filename() {
 # shellcheck disable=SC2086
 _install_dependencies() {
     _echo ""
-    _echo_info "$(_i18n 'Installing basic dependencies:')"
+    _echo_info "$(_i18n 'Checking for basic dependencies:')"
 
     local packages=""
     local admin_cmd=""
@@ -708,7 +708,7 @@ _install_scripts() {
     rm -rf -- "$INSTALL_DIR" 2>/dev/null
     rm -rf -- "${INSTALL_HOME:?}/$INSTALL_APPS_SHORTCUTS_PATH" 2>/dev/null
 
-    _echo_info "> $(_i18n 'Installing the scripts...')"
+    _echo_info "> $(_i18n 'Copying files...')"
     mkdir --parents -- "$INSTALL_DIR"
 
     # Always copy important files and directories.
@@ -1350,6 +1350,7 @@ _install_homebrew() {
     # Check if Homebrew is already installed.
     if [[ -e "$brew_cmd" ]]; then
         _echo_info "> $(_i18n 'Homebrew is already installed.')"
+        _echo_info "> $(_i18n 'Done!')"
         return
     fi
 

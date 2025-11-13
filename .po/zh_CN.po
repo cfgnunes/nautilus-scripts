@@ -1884,8 +1884,8 @@ msgid "Video: Speed to 2.0"
 msgstr "视频：速度调整为 2.0"
 
 #: install.sh
-msgid "Install basic dependencies"
-msgstr "安装基本依赖项"
+msgid "Check for basic dependencies"
+msgstr "检查基本依赖项"
 
 #: install.sh
 msgid "Remove previously installed scripts"
@@ -1920,8 +1920,8 @@ msgid "Installing in non-interactive mode..."
 msgstr "正在以非交互模式安装..."
 
 #: install.sh
-msgid "Installing new scripts:"
-msgstr "正在安装新脚本："
+msgid "Installing:"
+msgstr "正在安装："
 
 #: install.sh
 msgid "User:"
@@ -1940,16 +1940,16 @@ msgid "Installation completed successfully!"
 msgstr "安装成功完成！"
 
 #: install.sh
-msgid "Installing basic dependencies:"
-msgstr "正在安装基本依赖项："
+msgid "Checking for basic dependencies:"
+msgstr "正在检查基本依赖项："
 
 #: install.sh
 msgid "All dependencies are already satisfied."
 msgstr "所有依赖项已满足。"
 
 #: install.sh
-msgid "Installing the scripts..."
-msgstr "正在安装脚本..."
+msgid "Copying files..."
+msgstr "正在复制文件..."
 
 #: install.sh
 msgid "Installing keyboard accelerators..."
