@@ -799,6 +799,7 @@ _deps_install_packages() {
             if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
                 nix_channel="nixos"
             fi
+            packages=$(sed "s|~[^ ]*||g" <<<"$packages")
 
             # Prefix packages with their channel namespace.
             nix_packages="$nix_channel.$packages"
@@ -865,7 +866,6 @@ _deps_install_packages() {
                 fi
             fi
 
-            # Execute the installation under the correct privilege context.
             # If root privileges are required, prepend with 'sudo' or 'pkexec'.
             $cmd_admin bash -c "$cmd_inst"
         fi
