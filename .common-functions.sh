@@ -3791,15 +3791,14 @@ _text_uri_decode() {
 #
 # DESCRIPTION:
 # This function executes ImageMagick's "convert" command in a
-# version-compatible way. In ImageMagick 7+, the main executable is "magick",
-# so this function calls "magick convert". In ImageMagick 6 (legacy version),
-# the command "convert" is used directly.
+# version-compatible way. In ImageMagick 7+, the main executable is "magick".
+# In ImageMagick 6 (legacy version), the command "convert" is used directly.
 #
 # PARAMETERS:
 #   $@ : Arguments to be passed to the convert command.
 _cmd_magick_convert() {
     if _command_exists "magick"; then
-        magick convert "$@"
+        magick "$@"
     else
         convert "$@"
     fi
