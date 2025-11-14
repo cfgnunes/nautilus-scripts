@@ -902,15 +902,9 @@ _deps_installation_check() {
             continue
         fi
 
-        # Special case for 'rpm-ostree': If the package appears in the
-        # 'rpm-ostree' deployment list, it means it is installed but
-        # requires a system reboot to take effect.
-        if [[ "$pkg_manager" == "rpm-ostree" ]] &&
-            rpm-ostree status --json | jq -r ".deployments[0].packages[]" |
-            grep -qxF "$package"; then
-            msg="$(_i18n 'The package is installed, but you need to reboot to use it:')"
-            _display_info_box "$msg $package"
-            _exit_script
+        # Special case for 'rpm-ostree'.
+        if [[ "$pkg_manager" == "rpm-ostree" ]]; then
+            _deps_check_rpm_ostree_requires_reboot "$package"
         fi
 
         # If the package could not be installed, show an error and exit.
@@ -918,6 +912,26 @@ _deps_installation_check() {
         _display_error_box "$msg $package ($pkg_manager)!"
         _exit_script
     done
+}
+# FUNCTION: _deps_check_rpm_ostree_requires_reboot
+#
+# DESCRIPTION:
+# This function checks if a package installed via 'rpm-ostree' requires
+# a system reboot to take effect. If the package is found in the current
+# deployment list, it indicates that a reboot is necessary.
+# PARAMETERS:
+#   $1 (package): The name of the package to check.
+_deps_check_rpm_ostree_requires_reboot() {
+    local package=$1
+    local msg=""
+    msg="$(_i18n 'The package is installed, but you need to reboot to use it:')"
+
+    # Check if the package appears in the 'rpm-ostree' deployment list.
+    if rpm-ostree status --json | jq -r ".deployments[0].packages[]" |
+        grep -qxF "$package"; then
+        _display_info_box "$msg $package"
+        _exit_script
+    fi
 }
 
 # FUNCTION: _deps_is_package_installed
@@ -965,6 +979,7 @@ _deps_is_package_installed() {
         fi
         ;;
     "rpm-ostree")
+        _deps_check_rpm_ostree_requires_reboot "$package"
         if rpm -qa --qf "%{name}\n" | grep -qxF "$package"; then
             return 0
         fi
