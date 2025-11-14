@@ -1197,23 +1197,23 @@ msgstr "Imagen: Redimensionar (75 pct)"
 
 #: Menu
 msgid "Image: Resize and crop (512x512)"
-msgstr "Imagen: Redimensionar y recortar (512x512)"
+msgstr "Imagen: Redim. y recortar (512x512)"
 
 #: Menu
 msgid "Image: Resize and crop (1080x1080)"
-msgstr "Imagen: Redimensionar y recortar (1080x1080)"
+msgstr "Imagen: Redim. y recortar (1080x1080)"
 
 #: Menu
 msgid "Image: Resize and crop (1920x1080)"
-msgstr "Imagen: Redimensionar y recortar (1920x1080)"
+msgstr "Imagen: Redim. y recortar (1920x1080)"
 
 #: Menu
 msgid "Image: Resize and crop (2560x1440)"
-msgstr "Imagen: Redimensionar y recortar (2560x1440)"
+msgstr "Imagen: Redim. y recortar (2560x1440)"
 
 #: Menu
 msgid "Image: Resize and crop (3840x2160)"
-msgstr "Imagen: Redimensionar y recortar (3840x2160)"
+msgstr "Imagen: Redim. y recortar (3840x2160)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"
