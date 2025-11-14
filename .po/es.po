@@ -1632,8 +1632,8 @@ msgid "Text: Convert tabs to 4 spaces"
 msgstr "Texto: Convertir tabs a 4 espacios"
 
 #: Menu
-msgid "Text: Normalize (LF, recursive)"
-msgstr "Texto: Normalizar (LF, recursivo)"
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "Texto: Normalizar (UTF-8, recursivo)"
 
 #: Menu
 msgid "Text: Encode to UTF-8"

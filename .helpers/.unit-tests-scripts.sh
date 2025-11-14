@@ -1963,7 +1963,7 @@ _main() {
     echo "Content of 'Test text'.(á)" |
         iconv -f UTF-8 -t ISO-8859-1 >"$input_file1"
 
-    script_test="Plain text/Text: Normalize (LF, recursive)"
+    script_test="Plain text/Text: Normalize (UTF-8, recursive)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.txt.bak"

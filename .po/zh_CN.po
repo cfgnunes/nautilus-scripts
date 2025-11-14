@@ -1632,8 +1632,8 @@ msgid "Text: Convert tabs to 4 spaces"
 msgstr "文本：将制表符转换成4个空格"
 
 #: Menu
-msgid "Text: Normalize (LF, recursive)"
-msgstr "文本：规范化（LF，递归）"
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "文本：规范化（UTF-8，递归）"
 
 #: Menu
 msgid "Text: Encode to UTF-8"
