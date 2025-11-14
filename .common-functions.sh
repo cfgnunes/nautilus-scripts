@@ -903,8 +903,8 @@ _deps_installation_check() {
         fi
 
         # Special case for 'rpm-ostree': If the package appears in the
-        # rpm-ostree deployment list, it means it is installed but requires a
-        # system reboot to take effect.
+        # 'rpm-ostree' deployment list, it means it is installed but
+        # requires a system reboot to take effect.
         if [[ "$pkg_manager" == "rpm-ostree" ]] &&
             rpm-ostree status --json | jq -r ".deployments[0].packages[]" |
             grep -qxF "$package"; then
