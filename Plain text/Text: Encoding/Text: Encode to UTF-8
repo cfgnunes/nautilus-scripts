@@ -24,14 +24,13 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local output_file=""
-    local std_output=""
     local encoding="utf-8"
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(${encoding^^})'")
 
     # Run the main process.
-    std_output=$(iconv -f "$(_get_file_encoding "$input_file")" "$input_file" -t "$encoding" -o "$output_file")
-    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+    iconv -f "$(_get_file_encoding "$input_file")" "$input_file" -t "$encoding" > "$output_file"
+    _check_output "$?" "" "$input_file" "$output_file" || return 1
 }
 
 _main "$@"
