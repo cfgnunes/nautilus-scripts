@@ -14,7 +14,7 @@ _main() {
     _display_wait_box
     input_files=$(_get_files "par_type=file")
 
-    _get_user
+    _get_key_id
 
     # Check output directory only after displaying dialog boxes to the user.
     output_dir=$(_get_output_dir "par_use_same_dir=true")
@@ -69,12 +69,11 @@ _import_key() {
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
-_get_user() {
+_get_key_id() {
     local msg=""
 
     local users=""
-    users=$(gpg --list-secret-keys --with-colons 2>/dev/null |
-        grep --ignore-case "^uid" | cut -d ":" -f 10)
+    users=$(_get_users_gpg)
     if [[ -z "$users" ]]; then
         msg+="$(_i18n 'No secret keys were found.')"
         msg+="\n\n"
@@ -83,8 +82,7 @@ _get_user() {
             _exit_script
         fi
         _import_key
-        users=$(gpg --list-secret-keys --with-colons 2>/dev/null |
-            grep --ignore-case "^uid" | cut -d ":" -f 10)
+        users=$(_get_users_gpg)
         if [[ -z "$users" ]]; then
             msg="$(_i18n 'Failed to import the key!')"
             _display_error_box "$msg"
@@ -92,9 +90,9 @@ _get_user() {
         fi
     fi
 
-    users=$(tr "\n" "$FIELD_SEPARATOR" <<<"$users")
+    users=$(tr ":" "$FIELD_SEPARATOR" <<<"$users")
     TEMP_DATA_TASK=$(_display_select_box "$users" \
-        "--column:$(_i18n 'User')" \
+        "--column:$(_i18n 'User'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Key ID')" \
         "radiolist" "first" \
         "$(_i18n 'Select a user:')")
 
@@ -103,6 +101,16 @@ _get_user() {
         _display_error_box "$msg"
         _exit_script
     fi
+}
+
+_get_users_gpg() {
+    gpg --list-secret-keys --with-colons --keyid-format LONG 2>/dev/null |
+        awk -F: '
+    $1=="sec" {keyid=$5}
+    $1=="uid" {
+        match($10, /(.*) <(.*)>/, arr)
+        print arr[1] ":" arr[2] ":" keyid
+    }'
 }
 
 _main "$@"
