@@ -23,21 +23,26 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local output_file=""
-    local std_output=""
     local temp_file1=""
     local temp_file2=""
+    local encoding="utf-8//TRANSLIT"
 
     # Work on a temporary file.
     temp_file1=$(_make_temp_file)
     temp_file2=$(_make_temp_file)
 
+    # NOTE: Sometimes 'file' command returns 'us-ascii' for 'utf-8' files.
+    local input_encoding=""
+    input_encoding=$(_get_file_encoding "$input_file")
+    [[ "$input_encoding" == "us-ascii" ]] && input_encoding="utf-8"
+
     # Step 1: 'convert encoding to utf-8'.
-    iconv -f "$(_get_file_encoding "$input_file")" "$input_file" -t utf-8 > "$temp_file1"
-    _check_output "$?" "" "$input_file" "$temp_file1" || return 1
+    iconv -f "$input_encoding" "$input_file" -t "$encoding" >"$temp_file1"
+    _check_output "$?" "iconv" "$input_file" "$temp_file1" || return 1
 
     # Step 2: 'convert line breaks to Unix'.
     perl -pe "s/\r\n|\n|\r/\n/g" "$temp_file1" >"$temp_file2" 2>/dev/null
-    _check_output "$?" "$std_output" "$input_file" "$temp_file2" || return 1
+    _check_output "$?" "perl" "$input_file" "$temp_file2" || return 1
 
     # Step 3: 'remove trailing spaces'.
     sed -i "s|[ \t]*\(\r*\)$|\1|" "$temp_file2"
