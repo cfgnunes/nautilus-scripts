@@ -28,18 +28,17 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
-    local status="🟢"
 
     # Run the main process.
     std_output=$(rhash --printf="CRC32:\t\t%{crc32}\nMD5:\t\t%{md5}\nSHA-1:\t\t%h\nSHA-256:\t%{sha-256}\nSHA-512:\t%{sha-512}\nSHA3-256:\t%{sha3-256}\nSHA3-512:\t%{sha3-512}\nBLAKE2s:\t%{blake2s}\nBLAKE2b:\t%{blake2b}\n " -- "$input_file" 2>/dev/null)
 
     if [[ -z "$std_output" ]]; then
-        status="🔴"
+        return
     fi
 
     # FORMAT THE OUTPUT:
     # Prepend the filename.
-    std_output="$status File: \"$(_text_remove_pwd "$input_file")\""$'\n'"$std_output"
+    std_output="File: \"$(_text_remove_pwd "$input_file")\""$'\n'"$std_output"
 
     _storage_text_write_ln "$std_output"
 }
