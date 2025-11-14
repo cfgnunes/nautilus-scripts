@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "iconv"
     _display_wait_box
-    input_files=$(_get_files "par_type=file; par_skip_encoding='binary'; par_skip_extension='bak|pdf|svg'")
+    input_files=$(_get_files "par_type=file; par_skip_extension='bak|pdf|svg'")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
@@ -29,6 +29,9 @@ _main_task() {
     # NOTE: Sometimes 'file' command returns 'us-ascii' for 'utf-8' files.
     local input_encoding=""
     input_encoding=$(_get_file_encoding "$input_file")
+    if [[ -z "$input_encoding" ]] || [[ "$input_encoding" == "binary" ]]; then
+        return
+    fi
     [[ "$input_encoding" == "us-ascii" ]] && input_encoding="utf-8"
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(UTF-8)'")
