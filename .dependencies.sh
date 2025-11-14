@@ -95,7 +95,7 @@ declare -A DEPENDENCIES_MAP=(
     "
 
     ["cjxl"]="
-        pkg:    libjxl-tools
+        pkg:    libjxl-progs
         apt:    libjxl-tools
         dnf:    libjxl-utils
         pacman: libjxl
@@ -315,7 +315,7 @@ declare -A DEPENDENCIES_MAP=(
     "
 
     ["inkscape"]="
-        pkg:    inkscape
+        pkg:
         apt:    inkscape
         dnf:    inkscape
         pacman: inkscape
