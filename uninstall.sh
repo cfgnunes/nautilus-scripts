@@ -138,7 +138,7 @@ _remove_gnome_application_folder() {
 
     # Check gsettings and schema availability.
     if ! command -v gsettings &>/dev/null || ! gsettings list-schemas |
-        grep --quiet '^org.gnome.desktop.app-folders$'; then
+        grep -qxF "org.gnome.desktop.app-folders"; then
         return
     fi
 

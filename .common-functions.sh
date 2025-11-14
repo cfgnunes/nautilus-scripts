@@ -907,7 +907,7 @@ _deps_installation_check() {
         # system reboot to take effect.
         if [[ "$pkg_manager" == "rpm-ostree" ]] &&
             rpm-ostree status --json | jq -r ".deployments[0].packages[]" |
-            grep -Fxq "$package"; then
+            grep -qxF "$package"; then
             msg="$(_i18n 'The package is installed, but you need to reboot to use it:')"
             _display_info_box "$msg $package"
             _exit_script
@@ -960,7 +960,7 @@ _deps_is_package_installed() {
         ;;
     "dnf")
         if dnf repoquery --installed --qf "%{name}\n" |
-            grep --quiet "^$package$"; then
+            grep -qxF "$package"; then
             return 0
         fi
         ;;
@@ -985,7 +985,7 @@ _deps_is_package_installed() {
         fi
         ;;
     "brew")
-        if brew list | grep --quiet "^$package$"; then
+        if brew list | grep -qxF "$package"; then
             return 0
         fi
         ;;

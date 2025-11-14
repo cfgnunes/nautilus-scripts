@@ -999,7 +999,7 @@ _create_gnome_application_folder() {
     # Check if 'gsettings' is available and the GNOME schemas are present. If
     # not, skip folder creation.
     if ! _command_exists "gsettings" || ! gsettings list-schemas |
-        grep --quiet '^org.gnome.desktop.app-folders$'; then
+        grep -qxF "org.gnome.desktop.app-folders"; then
         return
     fi
 

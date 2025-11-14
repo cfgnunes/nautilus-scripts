@@ -103,7 +103,7 @@ _main_task() {
 
     # Delete branches missing from the remote.
     for merged_branch in $merged_branches; do
-        if ! grep -q "^$merged_branch\$" <<<"$remote_branches"; then
+        if ! grep -qxF "$merged_branch" <<<"$remote_branches"; then
             std_output=$(git branch --delete --force "$merged_branch" 2>&1)
             _check_output "$?" "$std_output" "$input_file" "" || return 1
         fi
