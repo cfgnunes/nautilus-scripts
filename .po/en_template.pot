@@ -558,26 +558,6 @@ msgid "PDF: Watermark"
 msgstr ""
 
 #: Menu
-msgid "Text: Encoding"
-msgstr ""
-
-#: Menu
-msgid "Text: Indentation"
-msgstr ""
-
-#: Menu
-msgid "Text: Line breaks"
-msgstr ""
-
-#: Menu
-msgid "Text: Statistics"
-msgstr ""
-
-#: Menu
-msgid "Text: Tools"
-msgstr ""
-
-#: Menu
 msgid "Video: Aspect ratio"
 msgstr ""
 

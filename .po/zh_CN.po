@@ -560,26 +560,6 @@ msgid "PDF: Watermark"
 msgstr "PDF：水印"
 
 #: Menu
-msgid "Text: Encoding"
-msgstr "文本：编码"
-
-#: Menu
-msgid "Text: Indentation"
-msgstr "文本：缩进"
-
-#: Menu
-msgid "Text: Line breaks"
-msgstr "文本：换行符"
-
-#: Menu
-msgid "Text: Statistics"
-msgstr "文本：统计"
-
-#: Menu
-msgid "Text: Tools"
-msgstr "文本：工具"
-
-#: Menu
 msgid "Video: Aspect ratio"
 msgstr "视频：宽高比"
 
