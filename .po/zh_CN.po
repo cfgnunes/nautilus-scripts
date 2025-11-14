@@ -1640,10 +1640,6 @@ msgid "Text: Encode to UTF-8"
 msgstr "文本：编码为UTF-8"
 
 #: Menu
-msgid "Text: Line breaks to LF"
-msgstr "文本：换行符转LF"
-
-#: Menu
 msgid "Text: List encodings"
 msgstr "文本：列出编码"
 

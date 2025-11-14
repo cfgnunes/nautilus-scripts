@@ -1640,10 +1640,6 @@ msgid "Text: Encode to UTF-8"
 msgstr "Texto: Codificar a UTF-8"
 
 #: Menu
-msgid "Text: Line breaks to LF"
-msgstr "Texto: Saltos de línea a LF"
-
-#: Menu
 msgid "Text: List encodings"
 msgstr "Texto: Listar codificaciones"
 
