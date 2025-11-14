@@ -102,10 +102,11 @@ _get_users() {
     fi
 
     users=$(tr "\n" "$FIELD_SEPARATOR" <<<"$users")
-    TEMP_DATA_TASK=$(_display_checklist_box_simple \
-        "$users" \
-        "$(_i18n 'Select one or more users:')" \
-        "$(_i18n 'User')" "false" "false")
+
+    TEMP_DATA_TASK=$(_display_select_box "$users" \
+        "--column:$(_i18n 'User')" \
+        "checkbox" "none" \
+        "$(_i18n 'Select one or more users:')")
 
     if [[ -z "$TEMP_DATA_TASK" ]]; then
         msg="$(_i18n 'Failed: you must select at least one user!')"

@@ -25,7 +25,7 @@ _main() {
     std_output=$(sort -k1,1r -k2,2r <<<"$std_output") # Sort the result.
     std_output=$(head -n 50 <<<"$std_output")
 
-    _display_list_box "$std_output" "par_item_name=$(_i18n 'files'); par_columns='--column:$(_i18n 'Date'),--column:$(_i18n 'Time'),--column:$(_i18n 'File')'; par_resolve_links=false; par_action=open_location; par_checkbox=true"
+    _display_list_box "$std_output" "par_item_name=$(_i18n 'files'); par_columns='--column:$(_i18n 'Date'),--column:$(_i18n 'Time'),--column:$(_i18n 'File')'; par_resolve_links=false; par_action=open_location; par_check_type=checkbox"
 }
 
 _main "$@"

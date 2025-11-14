@@ -1709,99 +1709,6 @@ _display_info_box() {
     _display_unlock
 }
 
-# FUNCTION: _display_checklist_box_simple
-#
-# DESCRIPTION:
-# This function displays a checklist or radiolist dialog to the user,
-# adapting to the available graphical dialog tool.
-#
-# PARAMETERS:
-#   $1 (options): A list of options separated by '$FIELD_SEPARATOR',
-#      to be displayed in the checklist or radiolist.
-#   $2 (header_label): The informational message shown above the list.
-#   $3 (column): The label for the options column.
-#   $4 (radio_list): Optional. 'true' to display as a radiolist (single
-#      selection), 'false' to display as a checklist (multiple selections).
-#      Default is 'false'.
-#   $5 (select_first): Optional. 'true' to preselect the first option.
-#      Default is 'true'.
-#
-# RETURNS:
-#   Prints the selected option(s) to stdout, separated by the
-#   '$FIELD_SEPARATOR'.
-_display_checklist_box_simple() {
-    local options=$1
-    local header_label=$2
-    local column=$3
-    local radio_list=${4:-"false"}
-    local select_first=${5:-"true"}
-    local selected_items=""
-    local par_type=""
-
-    options=$(_str_collapse_char "$options" "$FIELD_SEPARATOR")
-
-    local option_list=""
-    local option=""
-    for option in $options; do
-        if [[ "$select_first" == "true" ]] ||
-            (($(_get_items_count "$options") == 1)); then
-            option_list+="TRUE$FIELD_SEPARATOR"
-            select_first="false"
-        else
-            option_list+="FALSE$FIELD_SEPARATOR"
-        fi
-        option_list+="$option$FIELD_SEPARATOR"
-    done
-    option_list=$(_str_collapse_char "$option_list" "$FIELD_SEPARATOR")
-
-    if [[ "$radio_list" == "true" ]]; then
-        par_type="--radiolist"
-    else
-        par_type="--checklist"
-    fi
-
-    local btn_ok=""
-    btn_ok="$(_i18n 'OK')"
-    local btn_cancel=""
-    btn_cancel="$(_i18n 'Cancel')"
-
-    _display_lock
-    if ! _is_gui_session; then
-        # Automatically select the first option, if no GUI session.
-        selected_items=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$options")
-    elif _command_exists "zenity"; then
-        # shellcheck disable=SC2086
-        selected_items=$(zenity --title "$(_get_script_name)" \
-            --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-            --text="$header_label" \
-            --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
-            --list "$par_type" \
-            --separator="$FIELD_SEPARATOR" \
-            --print-column "2" --column= --column="$column" \
-            $option_list 2>/dev/null) || _exit_script
-    elif _command_exists "yad"; then
-        # shellcheck disable=SC2086
-        selected_items=$(yad --title "$(_get_script_name)" --center \
-            --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-            --text="$header_label" \
-            --button="${btn_cancel}:1" --button="${btn_ok}:0" \
-            --list "$par_type" \
-            --separator="$FIELD_SEPARATOR" \
-            --print-column "2" --column= --column="$column" \
-            $option_list 2>/dev/null) || _exit_script
-
-        # HACK: Workaround for YAD.
-        # Its output appends an extra field separator at the end.
-        # See: https://github.com/v1cont/yad/issues/307
-        selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
-        selected_items=$(_str_collapse_char \
-            "$selected_items" "$FIELD_SEPARATOR")
-    fi
-    _display_unlock
-
-    printf "%s" "$selected_items"
-}
-
 # FUNCTION: _display_list_box
 #
 # DESCRIPTION:
@@ -1809,7 +1716,7 @@ _display_checklist_box_simple() {
 # available environment.
 #
 # PARAMETERS:
-#   $1 (message): A string containing the items to display in the list.
+#   $1 (list): A string containing the items to display in the list.
 #   $1 (parameters): A string containing key-value pairs that configure
 #      the function's behavior. Example: 'par_item_name=files'.
 #
@@ -1820,25 +1727,27 @@ _display_checklist_box_simple() {
 #      list. If not provided, the default value is 'items'.
 #   - "par_action": The action to perform on the selected items.
 #      Supported values:
-#      - "open_file": Opens the selected files with the default
-#        application.
+#      - "open_file": Opens the selected files with the default application.
 #      - "open_location": Opens the file manager at the location of the
 #        selected items.
 #      - "open_url": Opens the selected URLs in the default web browser.
-#      - "delete_item": Deletes the selected items after user
-#     confirmation.
+#      - "delete_item": Deletes the selected items after user confirmation.
 #   - "par_resolve_links": A boolean-like string ('true' or 'false')
 #     indicating whether symbolic links in item paths should be resolved to
 #     their target locations when opening the item's location. Defaults to
 #     'true'.
-#   - "par_checkbox": A boolean-like string ('true' or 'false') indicating
-#     the list should include checkboxes for item selection. Defaults to
-#     'false'.
-#   - "par_checkbox_value": A boolean-like string ('true' or 'false')
-#     defining the default state of the checkboxes (checked or unchecked)
-#     when the list is initially displayed. Defaults to 'false'.
+#   - "par_check_type": Defines the type of selectable field added to item.
+#      Supported values:
+#      - "checkbox": Adds a checkbox column.
+#      - "radiolist": Adds a radio button column.
+#      - "none": No selection field is added (default).
+#   - "par_check_select": Defines which items should start selected when a
+#      check type is enabled. Supported values:
+#      - "all": All items are marked as selected.
+#      - "first": Only the first item is selected.
+#      - "none": No items start selected.
 _display_list_box() {
-    local message=$1
+    local list=$1
     local parameters=$2
 
     # Default values for input parameters.
@@ -1846,8 +1755,8 @@ _display_list_box() {
     local par_item_name=""
     local par_action=""
     local par_resolve_links="true"
-    local par_checkbox="false"
-    local par_checkbox_value="false"
+    local par_check_type="none"
+    local par_check_select="none"
     par_item_name=$(_i18n 'items')
 
     # Evaluate the values from the '$parameters' variable.
@@ -1856,77 +1765,50 @@ _display_list_box() {
     _close_wait_box
     _logs_consolidate ""
 
-    _display_lock
     if ! _is_gui_session; then
-        _display_list_box_terminal "$message"
+        _display_list_box_terminal "$list"
     elif _command_exists "zenity" || _command_exists "yad"; then
-        _display_list_box_zenity_yad "$message" "$par_columns" \
-            "$par_item_name" "$par_action" "$par_resolve_links" \
-            "$par_checkbox" "$par_checkbox_value"
+        _display_select_box_action "$list" \
+            "$par_columns" "$par_check_type" "$par_check_select" \
+            "$par_item_name" "$par_action" "$par_resolve_links"
     elif _command_exists "xmessage"; then
-        _display_list_box_xmessage "$message" "$par_columns"
+        _display_list_box_xmessage "$list" "$par_columns"
     fi
-    _display_unlock
 }
 
 # FUNCTION: _display_list_box_terminal
 _display_list_box_terminal() {
-    local message=$1
+    local list=$1
 
-    if [[ -z "$message" ]]; then
-        message="$(_i18n '(Empty)')"
-        printf "%s\n" "$message" >&2
+    if [[ -z "$list" ]]; then
+        list="$(_i18n '(Empty)')"
+        printf "%s\n" "$list" >&2
     else
-        message=$(tr "$FIELD_SEPARATOR" " " <<<"$message")
-        printf "%s\n" "$message"
+        list=$(tr "$FIELD_SEPARATOR" " " <<<"$list")
+        printf "%s\n" "$list"
     fi
 }
 
-# FUNCTION: _display_list_box_zenity_yad
-_display_list_box_zenity_yad() {
-    local message=$1
+# FUNCTION: _display_select_box_action
+_display_select_box_action() {
+    local list=$1
     local par_columns=$2
-    local par_item_name=$3
-    local par_action=$4
-    local par_resolve_links=$5
-    local par_checkbox=$6
-    local par_checkbox_value=$7
-
+    local par_check_type=$3
+    local par_check_select=$4
+    local par_item_name=$5
+    local par_action=$6
+    local par_resolve_links=$7
     local columns_count=0
     local items_count=0
     local selected_items=""
     local header_label=""
 
-    # Transform to uppercase.
-    par_checkbox_value=${par_checkbox_value^^}
-
-    if [[ "$par_checkbox" == "true" ]]; then
-        par_columns="--column=$FIELD_SEPARATOR$par_columns"
-        par_columns="--checklist$FIELD_SEPARATOR$par_columns"
+    if [[ -n "$list" ]]; then
+        items_count=$(tr -cd "\n" <<<"$list" | wc -c)
     fi
 
-    if [[ -n "$par_columns" ]]; then
-        par_columns=$(tr ":" "=" <<<"$par_columns")
-
-        # Count the number of columns.
-        columns_count=$(
-            grep --only-matching "column=" <<<"$par_columns" | wc -l
-        )
-    fi
-
-    if [[ -n "$message" ]]; then
-        items_count=$(tr -cd "\n" <<<"$message" | wc -c)
-    fi
-
-    # Set the selection message based on the action and item count.
+    # Set the selection list based on the action and item count.
     if ((items_count > 0)); then
-
-        # Add the prefix 'TRUE/FALSE' in each item.
-        if [[ "$par_checkbox" == "true" ]]; then
-            message=$(sed "s|^\(.*\)$|$par_checkbox_value$FIELD_SEPARATOR\1|" \
-                <<<"$message")
-        fi
-
         local msg=""
         case "$par_action" in
         "open_file")
@@ -1947,86 +1829,8 @@ _display_list_box_zenity_yad() {
         header_label="$items_count $par_item_name."
     fi
 
-    if [[ -z "$message" ]]; then
-        # NOTE: Some versions of Zenity crash if the
-        # message is empty (Segmentation fault).
-        message=" "
-    fi
-
-    par_columns=$(tr "," "$FIELD_SEPARATOR" <<<"$par_columns")
-    message=$(tr "\n" "$FIELD_SEPARATOR" <<<"$message")
-
-    # Avoid leading '-' in the variable to use in command line.
-    message=$(sed "s|$FIELD_SEPARATOR-|$FIELD_SEPARATOR|g" <<<"$message")
-
-    # Get the system limit for arguments.
-    local arg_max=""
-    local msg_size=""
-    local safet_margin=65536 # Reserve space for extra args.
-    arg_max=$(getconf "ARG_MAX")
-    msg_size=$(printf "%s" "$message" | wc -c)
-
-    local btn_ok=""
-    btn_ok="$(_i18n 'OK')"
-    local btn_cancel=""
-    btn_cancel="$(_i18n 'Cancel')"
-
-    if ((msg_size > arg_max - safet_margin)); then
-        message=$(tr "$FIELD_SEPARATOR" "\n" <<<"$message")
-
-        # HACK: Workaround for '--list'. Use stdin instead of passing
-        # arguments directly. This avoids the "Argument list too long"
-        # error when '$message' is too large.
-
-        if _command_exists "zenity"; then
-            # shellcheck disable=SC2086
-            selected_items=$(zenity --title "$(_get_script_name)" --list \
-                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
-                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-                --print-column "$columns_count" --text "$header_label" \
-                --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
-                $par_columns <<<"$message" 2>/dev/null) || _exit_script
-        else
-            # shellcheck disable=SC2086
-            selected_items=$(yad --title "$(_get_script_name)" --list \
-                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
-                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-                --print-column "$columns_count" --text "$header_label" \
-                --button="${btn_cancel}:1" --button="${btn_ok}:0" \
-                $par_columns <<<"$message" 2>/dev/null) || _exit_script
-        fi
-
-    else
-        # Default strategy for '--list'. Pass '$message' directly as
-        # arguments. This strategy is very fast.
-
-        if _command_exists "zenity"; then
-            # shellcheck disable=SC2086
-            selected_items=$(zenity --title "$(_get_script_name)" --list \
-                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
-                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-                --print-column "$columns_count" --text "$header_label" \
-                --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
-                $par_columns $message 2>/dev/null) || _exit_script
-        else
-            # shellcheck disable=SC2086
-            selected_items=$(yad --title "$(_get_script_name)" --list \
-                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
-                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-                --print-column "$columns_count" --text "$header_label" \
-                --button="${btn_cancel}:1" --button="${btn_ok}:0" \
-                $par_columns $message 2>/dev/null) || _exit_script
-        fi
-    fi
-
-    # HACK: Workaround for YAD.
-    # Its output appends an extra field separator at the end.
-    # See: https://github.com/v1cont/yad/issues/307
-    if ! _command_exists "zenity"; then
-        selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
-        selected_items=$(_str_collapse_char \
-            "$selected_items" "$FIELD_SEPARATOR")
-    fi
+    selected_items=$(_display_select_box "$list" "$par_columns" \
+        "$par_check_type" "$par_check_select" "$header_label")
 
     # Open the selected items.
     if ((items_count > 0)) && [[ -n "$selected_items" ]]; then
@@ -2039,6 +1843,134 @@ _display_list_box_zenity_yad() {
         "delete_item") _delete_items "$selected_items" ;;
         esac
     fi
+}
+
+# FUNCTION: _display_select_box
+_display_select_box() {
+    local list=$1
+    local par_columns=$2
+    local par_check_type=$3
+    local par_check_select=$4
+    local header_label=$5
+
+    case "$par_check_type" in
+    "checkbox")
+        par_columns="--column=$FIELD_SEPARATOR$par_columns"
+        par_columns="--checklist$FIELD_SEPARATOR$par_columns"
+        ;;
+    "radiolist")
+        par_columns="--column=$FIELD_SEPARATOR$par_columns"
+        par_columns="--radiolist$FIELD_SEPARATOR$par_columns"
+        ;;
+    esac
+
+    if [[ -n "$par_columns" ]]; then
+        par_columns=$(tr ":" "=" <<<"$par_columns")
+        columns_count=$(grep --only-matching "column=" <<<"$par_columns" |
+            wc -l)
+    fi
+
+    if [[ -n "$list" ]]; then
+        items_count=$(tr -cd "\n" <<<"$list" | wc -c)
+    fi
+
+    # Set the selection.
+    if ((items_count > 0)) && [[ "$par_check_type" != "none" ]]; then
+        case "${par_check_select,,}" in
+        "all")
+            list=$(sed "s|^\(.*\)$|TRUE$FIELD_SEPARATOR\1|" <<<"$list")
+            ;;
+        "first")
+            list=$(sed "1s|^\(.*\)$|TRUE$FIELD_SEPARATOR\1|" <<<"$list")
+            list=$(sed "1!s|^\(.*\)$|FALSE$FIELD_SEPARATOR\1|" <<<"$list")
+            ;;
+        *)
+            list=$(sed "s|^\(.*\)$|FALSE$FIELD_SEPARATOR\1|" <<<"$list")
+            ;;
+        esac
+    fi
+
+    if [[ -z "$list" ]]; then
+        # NOTE: Some versions of Zenity crash if the
+        # list is empty (Segmentation fault).
+        list=" "
+    fi
+
+    par_columns=$(tr "," "$FIELD_SEPARATOR" <<<"$par_columns")
+    list=$(tr "\n" "$FIELD_SEPARATOR" <<<"$list")
+
+    # Avoid leading '-' in the variable to use in command line.
+    list=$(sed "s|$FIELD_SEPARATOR-|$FIELD_SEPARATOR|g" <<<"$list")
+
+    # Get the system limit for arguments.
+    local arg_max=""
+    local msg_size=""
+    local safet_margin=65536 # Reserve space for extra args.
+    arg_max=$(getconf "ARG_MAX")
+    msg_size=$(printf "%s" "$list" | wc -c)
+
+    local btn_ok=""
+    btn_ok="$(_i18n 'OK')"
+    local btn_cancel=""
+    btn_cancel="$(_i18n 'Cancel')"
+
+    _display_lock
+    if ((msg_size > arg_max - safet_margin)); then
+        list=$(tr "$FIELD_SEPARATOR" "\n" <<<"$list")
+
+        # HACK: Workaround for '--list'. Use stdin instead of passing
+        # arguments directly. This avoids the "Argument list too long"
+        # error when '$list' is too large.
+        if _command_exists "zenity"; then
+            # shellcheck disable=SC2086
+            selected_items=$(zenity --title "$(_get_script_name)" --list \
+                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
+                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+                --print-column "$columns_count" --text "$header_label" \
+                --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
+                $par_columns <<<"$list" 2>/dev/null) || _exit_script
+        else
+            # shellcheck disable=SC2086
+            selected_items=$(yad --title "$(_get_script_name)" --list \
+                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
+                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+                --print-column "$columns_count" --text "$header_label" \
+                --button="${btn_cancel}:1" --button="${btn_ok}:0" \
+                $par_columns <<<"$list" 2>/dev/null) || _exit_script
+        fi
+
+    else
+        # Default strategy for '--list'. Pass '$list' directly as
+        # arguments. This strategy is very fast.
+        if _command_exists "zenity"; then
+            # shellcheck disable=SC2086
+            selected_items=$(zenity --title "$(_get_script_name)" --list \
+                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
+                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+                --print-column "$columns_count" --text "$header_label" \
+                --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
+                $par_columns $list 2>/dev/null) || _exit_script
+        else
+            # shellcheck disable=SC2086
+            selected_items=$(yad --title "$(_get_script_name)" --list \
+                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
+                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+                --print-column "$columns_count" --text "$header_label" \
+                --button="${btn_cancel}:1" --button="${btn_ok}:0" \
+                $par_columns $list 2>/dev/null) || _exit_script
+        fi
+    fi
+    _display_unlock
+
+    # HACK: Workaround for YAD.
+    # Its output appends an extra field separator at the end.
+    # See: https://github.com/v1cont/yad/issues/307
+    if ! _command_exists "zenity"; then
+        selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
+        selected_items=$(_str_collapse_char \
+            "$selected_items" "$FIELD_SEPARATOR")
+    fi
+    printf "%s" "$selected_items"
 }
 
 # FUNCTION: _display_list_box_xmessage
@@ -2054,11 +1986,13 @@ _display_list_box_xmessage() {
     message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
     message="$par_columns"$'\n'$'\n'"$message"
 
+    _display_lock
     printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
     xmessage -title "$(_get_script_name)" \
         -buttons "${btn_ok}:0" \
         -file "$TEMP_DATA_TEXT_BOX" \
         &>/dev/null || _exit_script
+    _display_unlock
 }
 
 # FUNCTION: _display_password_box

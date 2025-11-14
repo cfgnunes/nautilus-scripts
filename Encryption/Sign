@@ -93,10 +93,10 @@ _get_user() {
     fi
 
     users=$(tr "\n" "$FIELD_SEPARATOR" <<<"$users")
-    TEMP_DATA_TASK=$(_display_checklist_box_simple \
-        "$users" \
-        "$(_i18n 'Select a user:')" \
-        "$(_i18n 'User')" "true" "true")
+    TEMP_DATA_TASK=$(_display_select_box "$users" \
+        "--column:$(_i18n 'User')" \
+        "radiolist" "first" \
+        "$(_i18n 'Select a user:')")
 
     if [[ -z "$TEMP_DATA_TASK" ]]; then
         msg="$(_i18n 'Failed: you must select a user!')"

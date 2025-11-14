@@ -25,7 +25,7 @@ _main() {
 
     std_output=$(_text_remove_pwd "$std_output")
 
-    _display_list_box "$std_output" "par_item_name=$(_i18n 'files'); par_columns='--column:$(_i18n 'Size'),--column:$(_i18n 'File')'; par_action=open_location; par_checkbox=true"
+    _display_list_box "$std_output" "par_item_name=$(_i18n 'files'); par_columns='--column:$(_i18n 'Size'),--column:$(_i18n 'File')'; par_action=open_location; par_check_type=checkbox"
 }
 
 _main "$@"

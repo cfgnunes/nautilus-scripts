@@ -30,10 +30,10 @@ _main() {
     options+="$FIELD_SEPARATOR"
     options+="SHA256SUMS"
 
-    output_file=$(_display_checklist_box_simple \
-        "$options" \
-        "$(_i18n 'Select the output filename:')" \
-        "$(_i18n 'Filename')" "true" "true")
+    output_file=$(_display_select_box "$options" \
+        "--column:$(_i18n 'Filename')" \
+        "radiolist" "first" \
+        "$(_i18n 'Select the output filename:')")
 
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
