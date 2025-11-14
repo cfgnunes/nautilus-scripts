@@ -54,7 +54,7 @@ _save_file_from_clipboard() {
     local supported_type=""
     local mime=""
     for mime in "${!mime_map[@]}"; do
-        supported_type=$(grep -m1 "$mime" 2>/dev/null <<<"$clipboard_types")
+        supported_type=$(grep -F -m1 "$mime" 2>/dev/null <<<"$clipboard_types")
         [[ -n "$supported_type" ]] && break
     done
 
