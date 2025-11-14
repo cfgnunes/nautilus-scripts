@@ -919,6 +919,7 @@ _deps_installation_check() {
 # This function checks if a package installed via 'rpm-ostree' requires
 # a system reboot to take effect. If the package is found in the current
 # deployment list, it indicates that a reboot is necessary.
+#
 # PARAMETERS:
 #   $1 (package): The name of the package to check.
 _deps_check_rpm_ostree_requires_reboot() {
