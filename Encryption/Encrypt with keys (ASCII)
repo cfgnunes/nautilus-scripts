@@ -14,7 +14,7 @@ _main() {
     _display_wait_box
     input_files=$(_get_files "par_type=file")
 
-    _get_users
+    _get_keys_id
 
     # Check output directory only after displaying dialog boxes to the user.
     output_dir=$(_get_output_dir "par_use_same_dir=true")
@@ -79,13 +79,12 @@ _import_key() {
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
-_get_users() {
+_get_keys_id() {
     local msg=""
 
-    local users=""
-    users=$(gpg --list-public-keys --with-colons 2>/dev/null |
-        grep --ignore-case "^uid" | cut -d ":" -f 10)
-    if [[ -z "$users" ]]; then
+    local keys=""
+    keys=$(_get_public_keys)
+    if [[ -z "$keys" ]]; then
         msg+="$(_i18n 'No public keys were found.')"
         msg+="\n\n"
         msg+="$(_i18n 'Would you like to import a key now?')"
@@ -93,18 +92,17 @@ _get_users() {
             _exit_script
         fi
         _import_key
-        users=$(gpg --list-public-keys --with-colons 2>/dev/null |
-            grep --ignore-case "^uid" | cut -d ":" -f 10)
-        if [[ -z "$users" ]]; then
+        keys=$(_get_public_keys)
+        if [[ -z "$keys" ]]; then
             msg="$(_i18n 'Failed to import the key!')"
             _display_error_box "$msg"
             _exit_script
         fi
     fi
 
-    users=$(tr "\n" "$FIELD_SEPARATOR" <<<"$users")
-    TEMP_DATA_TASK=$(_display_select_box "$users" \
-        "--column:$(_i18n 'User')" \
+    keys=$(tr ":" "$FIELD_SEPARATOR" <<<"$keys")
+    TEMP_DATA_TASK=$(_display_select_box "$keys" \
+        "--column:$(_i18n 'User'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Key ID')" \
         "checkbox" "none" \
         "$(_i18n 'Select one or more users:')")
 
@@ -113,6 +111,16 @@ _get_users() {
         _display_error_box "$msg"
         _exit_script
     fi
+}
+
+_get_public_keys() {
+    gpg --list-public-keys --with-colons --keyid-format LONG 2>/dev/null |
+        awk -F: '
+    $1=="pub" {keyid=$5}
+    $1=="uid" {
+        match($10, /(.*) <(.*)>/, arr)
+        print arr[1] ":" arr[2] ":" keyid
+    }'
 }
 
 _main "$@"
