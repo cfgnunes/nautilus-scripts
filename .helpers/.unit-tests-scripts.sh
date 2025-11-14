@@ -1960,13 +1960,13 @@ _main() {
     # Create mock files for testing.
     input_file1="$temp_dir/Test text.txt"
     output_file="$temp_dir/Test text"
-    echo "Content of 'Test text'." >"$input_file1"
-    echo "Content of 'Test text'." >>"$input_file1"
+    echo "Content of 'Test text'.(á)" |
+        iconv -f UTF-8 -t ISO-8859-1 >"$input_file1"
 
     script_test="Plain text/Text: Normalize (LF, recursive)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.txt (2).bak"
+    __test_file_nonempty "$output_file.txt.bak"
     __test_file_empty "$std_output"
 
     script_test="Plain text/Text: List issues"
