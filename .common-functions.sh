@@ -965,7 +965,7 @@ _deps_is_package_installed() {
         fi
         ;;
     "rpm-ostree")
-        if rpm -qa | grep --quiet "$package"; then
+        if rpm -qa --qf "%{name}\n" | grep -qxF "$package"; then
             return 0
         fi
         ;;
