@@ -102,6 +102,7 @@ File managers compatibility:
 | Thunar                 | Xfce        | 🟢                | 🟢                     | 🟢                     | 🔴                        |
 | Dolphin                | KDE Plasma  | 🟢                | 🟢                     | 🔴                     | 🔴                        |
 | PCManFM-Qt             | LXQt        | 🟢                | 🟢                     | 🔴                     | 🔴                        |
+| PCManFM                | LXDE        | 🟢                | 🟢                     | 🔴                     | 🔴                        |
 
 Most scripts have been tested on the following GNU/Linux distributions:
 
