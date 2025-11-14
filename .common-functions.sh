@@ -913,6 +913,7 @@ _deps_installation_check() {
         _exit_script
     done
 }
+
 # FUNCTION: _deps_check_rpm_ostree_requires_reboot
 #
 # DESCRIPTION:
