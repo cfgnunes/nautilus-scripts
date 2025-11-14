@@ -611,6 +611,7 @@ _install_dependencies() {
 
         # Package manager 'nix': no root required.
         if [[ -n "$packages" ]]; then
+            _print_missing_packages "$packages"
             local nix_packages=""
             local nix_channel="nixpkgs"
             if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
@@ -630,6 +631,7 @@ _install_dependencies() {
 
         # Package manager 'guix': no root required.
         if [[ -n "$packages" ]]; then
+            _print_missing_packages "$packages"
             guix install $packages
         fi
     elif _command_exists "apt-get"; then
@@ -637,6 +639,7 @@ _install_dependencies() {
         _command_exists "pgrep" || packages+="procps "
 
         if [[ -n "$packages" ]]; then
+            _print_missing_packages "$packages"
             $admin_cmd apt-get update
             $admin_cmd apt-get -y install $packages
         fi
@@ -645,6 +648,7 @@ _install_dependencies() {
         _command_exists "pgrep" || packages+="procps-ng "
 
         if [[ -n "$packages" ]]; then
+            _print_missing_packages "$packages"
             $admin_cmd rpm-ostree install $packages
         fi
     elif _command_exists "dnf"; then
@@ -652,6 +656,7 @@ _install_dependencies() {
         _command_exists "pgrep" || packages+="procps-ng "
 
         if [[ -n "$packages" ]]; then
+            _print_missing_packages "$packages"
             $admin_cmd dnf check-update
             $admin_cmd dnf -y install $packages
         fi
@@ -665,6 +670,7 @@ _install_dependencies() {
         fi
 
         if [[ -n "$packages" ]]; then
+            _print_missing_packages "$packages"
             $admin_cmd pacman -Syy
             $admin_cmd pacman --noconfirm -S $packages
         fi
@@ -673,11 +679,13 @@ _install_dependencies() {
         _command_exists "pgrep" || packages+="procps-ng "
 
         if [[ -n "$packages" ]]; then
+            _print_missing_packages "$packages"
             $admin_cmd zypper refresh
             $admin_cmd zypper --non-interactive install $packages
         fi
     else
         if [[ -n "$packages" ]]; then
+            _print_missing_packages "$packages"
             _echo_error "Could not find a package manager!"
             exit 1
         fi
@@ -687,6 +695,11 @@ _install_dependencies() {
         _echo_info "> $(_i18n 'All dependencies are already satisfied.')"
     fi
     _echo_info "> $(_i18n 'Done!')"
+}
+
+_print_missing_packages() {
+    local packages=$1
+    _echo_info "> $(_i18n 'The following packages are missing:') $packages"
 }
 
 # -----------------------------------------------------------------------------
