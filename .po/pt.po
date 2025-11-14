@@ -1991,5 +1991,13 @@ msgstr "Instalando Homebrew em:"
 msgid "Downloading the package..."
 msgstr "Baixando o pacote..."
 
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr "Não foi possível encontrar um gerenciador de pacotes!"
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr "A instalação do Homebrew falhou!"
+
 #~ msgid "EOF"
 #~ msgstr "EOF"

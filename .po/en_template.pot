@@ -1989,5 +1989,13 @@ msgstr ""
 msgid "Downloading the package..."
 msgstr ""
 
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr ""
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr ""
+
 #~ msgid "EOF"
 #~ msgstr "EOF"

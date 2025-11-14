@@ -686,7 +686,7 @@ _install_dependencies() {
     else
         if [[ -n "$packages" ]]; then
             _print_missing_packages "$packages"
-            _echo_error "Could not find a package manager!"
+            _echo_error "$(_i18n 'Could not find a package manager!')"
             exit 1
         fi
     fi
@@ -1349,7 +1349,7 @@ _install_homebrew() {
     elif _command_exists "wget"; then
         downloader="wget"
     else
-        _echo_error "Neither 'curl' nor 'wget' is installed. Please install one of them to continue."
+        _echo_error "Neither 'curl' nor 'wget' is installed! Please install one of them to continue."
         exit 1
     fi
 
@@ -1384,7 +1384,7 @@ _install_homebrew() {
 
     # Verify installation.
     if [[ ! -e "$brew_cmd" ]]; then
-        _echo_error "Homebrew installation failed." >&2
+        _echo_error "$(_i18n 'Homebrew installation failed!')"
         exit 1
     fi
 
@@ -1412,7 +1412,7 @@ _bootstrap_repository() {
     elif _command_exists "wget"; then
         downloader="wget"
     else
-        _echo_error "Neither 'curl' nor 'wget' is installed. Please install one of them to continue."
+        _echo_error "Neither 'curl' nor 'wget' is installed! Please install one of them to continue."
         exit 1
     fi
 
