@@ -1902,12 +1902,6 @@ _main() {
     echo "Content of 'Test text'." >"$input_file1"
     echo "Content of 'Test text 2'." >"$input_file2"
 
-    script_test="Plain text/Text: Encoding/Text: Encode to ISO-8859-1"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (ISO-8859-1).txt"
-    __test_file_empty "$std_output"
-
     script_test="Plain text/Text: Encoding/Text: Encode to UTF-8"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
@@ -1925,34 +1919,10 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Plain text/Text: Indentation/Text: Convert 4 spaces to tabs"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (tabs).txt"
-    __test_file_empty "$std_output"
-
-    script_test="Plain text/Text: Indentation/Text: Convert 8 spaces to tabs"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (tabs) (2).txt"
-    __test_file_empty "$std_output"
-
     script_test="Plain text/Text: Indentation/Text: Convert tabs to 4 spaces"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file (4 spaces).txt"
-    __test_file_empty "$std_output"
-
-    script_test="Plain text/Text: Indentation/Text: Convert tabs to 8 spaces"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (8 spaces).txt"
-    __test_file_empty "$std_output"
-
-    script_test="Plain text/Text: Line breaks/Text: Line breaks to CRLF"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (CRLF).txt"
     __test_file_empty "$std_output"
 
     script_test="Plain text/Text: Line breaks/Text: Line breaks to LF"
@@ -1992,12 +1962,6 @@ _main() {
     output_file="$temp_dir/Test text"
     echo "Content of 'Test text'." >"$input_file1"
     echo "Content of 'Test text'." >>"$input_file1"
-
-    script_test="Plain text/Text: Tools/Text: Normalize (CRLF, recursive)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.txt.bak"
-    __test_file_empty "$std_output"
 
     script_test="Plain text/Text: Tools/Text: Normalize (LF, recursive)"
     __echo_script "$script_test"

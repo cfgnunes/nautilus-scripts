@@ -1652,40 +1652,16 @@ msgid "Text: Concatenate multiple files"
 msgstr "文本：合并多个文件"
 
 #: Menu
-msgid "Text: Convert 4 spaces to tabs"
-msgstr "文本：将4个空格转换为制表符"
-
-#: Menu
-msgid "Text: Convert 8 spaces to tabs"
-msgstr "文本：将8个空格转换为制表符"
-
-#: Menu
 msgid "Text: Convert tabs to 4 spaces"
 msgstr "文本：将制表符转换成4个空格"
-
-#: Menu
-msgid "Text: Convert tabs to 8 spaces"
-msgstr "文本：将制表符转换成4个空格"
-
-#: Menu
-msgid "Text: Normalize (CRLF, recursive)"
-msgstr "文本：规范化（CRLF，递归）"
 
 #: Menu
 msgid "Text: Normalize (LF, recursive)"
 msgstr "文本：规范化（LF，递归）"
 
 #: Menu
-msgid "Text: Encode to ISO-8859-1"
-msgstr "文本：编码为ISO-8859-1"
-
-#: Menu
 msgid "Text: Encode to UTF-8"
 msgstr "文本：编码为UTF-8"
-
-#: Menu
-msgid "Text: Line breaks to CRLF"
-msgstr "文本：换行符转CRLF"
 
 #: Menu
 msgid "Text: Line breaks to LF"

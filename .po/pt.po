@@ -1652,40 +1652,16 @@ msgid "Text: Concatenate multiple files"
 msgstr "Texto: Concatenar múltiplos arquivos"
 
 #: Menu
-msgid "Text: Convert 4 spaces to tabs"
-msgstr "Texto: Converter 4 espaços para tabs"
-
-#: Menu
-msgid "Text: Convert 8 spaces to tabs"
-msgstr "Texto: Converter 8 espaços para tabs"
-
-#: Menu
 msgid "Text: Convert tabs to 4 spaces"
 msgstr "Texto: Converter tabs para 4 espaços"
-
-#: Menu
-msgid "Text: Convert tabs to 8 spaces"
-msgstr "Texto: Converter tabs para 8 espaços"
-
-#: Menu
-msgid "Text: Normalize (CRLF, recursive)"
-msgstr "Texto: Normalizar (CRLF, recursivo)"
 
 #: Menu
 msgid "Text: Normalize (LF, recursive)"
 msgstr "Texto: Normalizar (LF, recursivo)"
 
 #: Menu
-msgid "Text: Encode to ISO-8859-1"
-msgstr "Texto: Codificar para ISO-8859-1"
-
-#: Menu
 msgid "Text: Encode to UTF-8"
 msgstr "Texto: Codificar para UTF-8"
-
-#: Menu
-msgid "Text: Line breaks to CRLF"
-msgstr "Texto: Converter fim de linha para CRLF"
 
 #: Menu
 msgid "Text: Line breaks to LF"
