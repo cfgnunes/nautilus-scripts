@@ -72,9 +72,9 @@ _import_key() {
 _get_key_id() {
     local msg=""
 
-    local users=""
-    users=$(_get_users_gpg)
-    if [[ -z "$users" ]]; then
+    local keys=""
+    keys=$(_get_secret_keys)
+    if [[ -z "$keys" ]]; then
         msg+="$(_i18n 'No secret keys were found.')"
         msg+="\n\n"
         msg+="$(_i18n 'Would you like to import a key now?')"
@@ -82,16 +82,16 @@ _get_key_id() {
             _exit_script
         fi
         _import_key
-        users=$(_get_users_gpg)
-        if [[ -z "$users" ]]; then
+        keys=$(_get_secret_keys)
+        if [[ -z "$keys" ]]; then
             msg="$(_i18n 'Failed to import the key!')"
             _display_error_box "$msg"
             _exit_script
         fi
     fi
 
-    users=$(tr ":" "$FIELD_SEPARATOR" <<<"$users")
-    TEMP_DATA_TASK=$(_display_select_box "$users" \
+    keys=$(tr ":" "$FIELD_SEPARATOR" <<<"$keys")
+    TEMP_DATA_TASK=$(_display_select_box "$keys" \
         "--column:$(_i18n 'User'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Key ID')" \
         "radiolist" "first" \
         "$(_i18n 'Select a user:')")
@@ -103,7 +103,7 @@ _get_key_id() {
     fi
 }
 
-_get_users_gpg() {
+_get_secret_keys() {
     gpg --list-secret-keys --with-colons --keyid-format LONG 2>/dev/null |
         awk -F: '
     $1=="sec" {keyid=$5}
