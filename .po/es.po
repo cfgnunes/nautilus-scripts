@@ -54,8 +54,8 @@ msgstr "¿Desea instalarlos?"
 msgid "Installing the packages. Please, wait..."
 msgstr "Instalando los paquetes. Por favor, espere..."
 
-msgid "The package is installed, but you need to reboot to use it:"
-msgstr "El paquete está instalado, pero necesita reiniciar el sistema para usarlo:"
+msgid "The package was installed, but a reboot is required to use it."
+msgstr "El paquete se instaló, pero es necesario reiniciar el sistema para usarlo."
 
 msgid "Could not install the package:"
 msgstr "No se pudo instalar el paquete:"

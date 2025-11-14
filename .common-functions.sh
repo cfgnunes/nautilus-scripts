@@ -926,12 +926,12 @@ _deps_installation_check() {
 _deps_check_rpm_ostree_requires_reboot() {
     local package=$1
     local msg=""
-    msg="$(_i18n 'The package is installed, but you need to reboot to use it:')"
+    msg="$(_i18n 'The package was installed, but a reboot is required to use it.')"
 
     # Check if the package appears in the 'rpm-ostree' deployment list.
     if rpm-ostree status --json | jq -r ".deployments[0].packages[]" |
         grep -qxF "$package"; then
-        _display_info_box "$msg $package"
+        _display_info_box "$msg ($package)"
         _exit_script
     fi
 }

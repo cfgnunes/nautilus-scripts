@@ -54,8 +54,8 @@ msgstr "是否安装它们？"
 msgid "Installing the packages. Please, wait..."
 msgstr "正在安装软件包，请稍候..."
 
-msgid "The package is installed, but you need to reboot to use it:"
-msgstr "软件包已安装，但需要重启才能使用："
+msgid "The package was installed, but a reboot is required to use it."
+msgstr "软件包已安装，但需要重启系统才能使用。"
 
 msgid "Could not install the package:"
 msgstr "无法安装软件包："

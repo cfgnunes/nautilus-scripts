@@ -52,7 +52,7 @@ msgstr ""
 msgid "Installing the packages. Please, wait..."
 msgstr ""
 
-msgid "The package is installed, but you need to reboot to use it:"
+msgid "The package was installed, but a reboot is required to use it."
 msgstr ""
 
 msgid "Could not install the package:"
