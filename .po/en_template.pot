@@ -750,23 +750,23 @@ msgid "Compute SHA512"
 msgstr ""
 
 #: Menu
-msgid "Copy file content"
+msgid "Copy files content"
 msgstr ""
 
 #: Menu
-msgid "Copy filename"
+msgid "Copy filenames"
 msgstr ""
 
 #: Menu
-msgid "Copy filename (recursive)"
+msgid "Copy filenames (recursive)"
 msgstr ""
 
 #: Menu
-msgid "Copy filepath"
+msgid "Copy filepaths"
 msgstr ""
 
 #: Menu
-msgid "Copy filepath (recursive)"
+msgid "Copy filepaths (recursive)"
 msgstr ""
 
 #: Menu
@@ -1562,15 +1562,15 @@ msgid "Scan for malware (via ClamAV)"
 msgstr ""
 
 #: Menu
-msgid "Show file information"
+msgid "Show files information"
 msgstr ""
 
 #: Menu
-msgid "Show file metadata"
+msgid "Show files metadata"
 msgstr ""
 
 #: Menu
-msgid "Show file MIME type"
+msgid "Show files MIME type"
 msgstr ""
 
 #: Menu
@@ -1578,7 +1578,7 @@ msgid "Show media information"
 msgstr ""
 
 #: Menu
-msgid "Shred file (secure delete)"
+msgid "Shred files (secure delete)"
 msgstr ""
 
 #: Menu
@@ -1646,7 +1646,7 @@ msgid "Text: Line breaks to LF"
 msgstr ""
 
 #: Menu
-msgid "Text: List encoding"
+msgid "Text: List encodings"
 msgstr ""
 
 #: Menu
@@ -1662,15 +1662,15 @@ msgid "Text: List line breaks"
 msgstr ""
 
 #: Menu
-msgid "Text: List line count"
+msgid "Text: List line counts"
 msgstr ""
 
 #: Menu
-msgid "Text: List max line length"
+msgid "Text: List max line lengths"
 msgstr ""
 
 #: Menu
-msgid "Text: List word count"
+msgid "Text: List word counts"
 msgstr ""
 
 #: Menu

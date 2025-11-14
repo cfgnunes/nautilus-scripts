@@ -752,24 +752,24 @@ msgid "Compute SHA512"
 msgstr "Calcular SHA512"
 
 #: Menu
-msgid "Copy file content"
-msgstr "Copiar conteúdo do arquivo"
+msgid "Copy files content"
+msgstr "Copiar conteúdo de arquivos"
 
 #: Menu
-msgid "Copy filename"
-msgstr "Copiar nome do arquivo"
+msgid "Copy filenames"
+msgstr "Copiar nome de arquivos"
 
 #: Menu
-msgid "Copy filename (recursive)"
-msgstr "Copiar nome do arquivo (recursivo)"
+msgid "Copy filenames (recursive)"
+msgstr "Copiar nome de arquivos (recursivo)"
 
 #: Menu
-msgid "Copy filepath"
-msgstr "Copiar caminho do arquivo"
+msgid "Copy filepaths"
+msgstr "Copiar caminho de arquivos"
 
 #: Menu
-msgid "Copy filepath (recursive)"
-msgstr "Copiar caminho do arquivo (recursivo)"
+msgid "Copy filepaths (recursive)"
+msgstr "Copiar caminho de arquivos (recursivo)"
 
 #: Menu
 msgid "Create hard link here"
@@ -1564,24 +1564,24 @@ msgid "Scan for malware (via ClamAV)"
 msgstr "Verificar malware (via ClamAV)"
 
 #: Menu
-msgid "Show file information"
-msgstr "Mostrar informação do arquivo"
+msgid "Show files information"
+msgstr "Mostrar informação de arquivos"
 
 #: Menu
-msgid "Show file metadata"
-msgstr "Mostrar metadado do arquivo"
+msgid "Show files metadata"
+msgstr "Mostrar metadado de arquivos"
 
 #: Menu
-msgid "Show file MIME type"
-msgstr "Mostrar tipo MIME do arquivo"
+msgid "Show files MIME type"
+msgstr "Mostrar tipo MIME de arquivos"
 
 #: Menu
 msgid "Show media information"
 msgstr "Mostrar informação de mídia"
 
 #: Menu
-msgid "Shred file (secure delete)"
-msgstr "Destruir arquivo (exclusão segura)"
+msgid "Shred files (secure delete)"
+msgstr "Destruir arquivos (exclusão segura)"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"
@@ -1648,8 +1648,8 @@ msgid "Text: Line breaks to LF"
 msgstr "Texto: Converter fim de linha para LF"
 
 #: Menu
-msgid "Text: List encoding"
-msgstr "Texto: Listar codificação"
+msgid "Text: List encodings"
+msgstr "Texto: Listar codificações"
 
 #: Menu
 msgid "Text: List issues"
@@ -1664,16 +1664,16 @@ msgid "Text: List line breaks"
 msgstr "Texto: Listar fim de linha"
 
 #: Menu
-msgid "Text: List line count"
-msgstr "Texto: Contar linhas"
+msgid "Text: List line counts"
+msgstr "Texto: Listar contagem de linhas"
 
 #: Menu
-msgid "Text: List max line length"
-msgstr "Texto: Listar maior tamanho de linha"
+msgid "Text: List max line lengths"
+msgstr "Texto: Listar maior tamanhos de linhas"
 
 #: Menu
-msgid "Text: List word count"
-msgstr "Texto: Contar palavras"
+msgid "Text: List word counts"
+msgstr "Texto: Listar contagem de palavras"
 
 #: Menu
 msgid "Text: Remove trailing spaces"

@@ -567,31 +567,31 @@ _main() {
     ## SUBSECTION: Clipboard ----
     # -------------------------------------------------------------------------
 
-    #script_test="Clipboard/Copy file content"
+    #script_test="Clipboard/Copy files content"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Clipboard/Copy filename"
+    #script_test="Clipboard/Copy filenames"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Clipboard/Copy filename (recursive)"
+    #script_test="Clipboard/Copy filenames (recursive)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Clipboard/Copy filepath"
+    #script_test="Clipboard/Copy filepaths"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Clipboard/Copy filepath (recursive)"
+    #script_test="Clipboard/Copy filepaths (recursive)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
@@ -683,17 +683,17 @@ _main() {
     #bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     #__test_file_empty "$std_output"
 
-    script_test="Directories and Files/Show file information"
+    script_test="Directories and Files/Show files information"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Directories and Files/Show file metadata"
+    script_test="Directories and Files/Show files metadata"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Directories and Files/Show file MIME type"
+    script_test="Directories and Files/Show files MIME type"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_nonempty "$std_output"
@@ -1914,7 +1914,7 @@ _main() {
     __test_file_nonempty "$output_file (ASCII).txt"
     __test_file_empty "$std_output"
 
-    script_test="Plain text/Text: List encoding"
+    script_test="Plain text/Text: List encodings"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"
@@ -1936,17 +1936,17 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Plain text/Text: List line count"
+    script_test="Plain text/Text: List line counts"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Plain text/Text: List max line length"
+    script_test="Plain text/Text: List max line lengths"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Plain text/Text: List word count"
+    script_test="Plain text/Text: List word counts"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"
@@ -2116,7 +2116,7 @@ _main() {
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Security and Recovery/Shred file (secure delete)"
+    #script_test="Security and Recovery/Shred files (secure delete)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"

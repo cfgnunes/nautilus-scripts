@@ -752,23 +752,23 @@ msgid "Compute SHA512"
 msgstr "计算SHA512"
 
 #: Menu
-msgid "Copy file content"
+msgid "Copy files content"
 msgstr "复制文件内容"
 
 #: Menu
-msgid "Copy filename"
+msgid "Copy filenames"
 msgstr "复制文件名"
 
 #: Menu
-msgid "Copy filename (recursive)"
+msgid "Copy filenames (recursive)"
 msgstr "复制文件名（递归）"
 
 #: Menu
-msgid "Copy filepath"
+msgid "Copy filepaths"
 msgstr "复制文件路径"
 
 #: Menu
-msgid "Copy filepath (recursive)"
+msgid "Copy filepaths (recursive)"
 msgstr "复制文件路径（递归）"
 
 #: Menu
@@ -1564,15 +1564,15 @@ msgid "Scan for malware (via ClamAV)"
 msgstr "扫描恶意软件（通过ClamAV）"
 
 #: Menu
-msgid "Show file information"
+msgid "Show files information"
 msgstr "显示文件信息"
 
 #: Menu
-msgid "Show file metadata"
+msgid "Show files metadata"
 msgstr "显示文件元数据"
 
 #: Menu
-msgid "Show file MIME type"
+msgid "Show files MIME type"
 msgstr "显示文件MIME类型"
 
 #: Menu
@@ -1580,7 +1580,7 @@ msgid "Show media information"
 msgstr "显示媒体信息"
 
 #: Menu
-msgid "Shred file (secure delete)"
+msgid "Shred files (secure delete)"
 msgstr "粉碎文件（安全删除）"
 
 #: Menu
@@ -1648,7 +1648,7 @@ msgid "Text: Line breaks to LF"
 msgstr "文本：换行符转LF"
 
 #: Menu
-msgid "Text: List encoding"
+msgid "Text: List encodings"
 msgstr "文本：列出编码"
 
 #: Menu
@@ -1664,15 +1664,15 @@ msgid "Text: List line breaks"
 msgstr "文本：列出换行符类型"
 
 #: Menu
-msgid "Text: List line count"
-msgstr "文本：统计行数"
+msgid "Text: List line counts"
+msgstr "文本：列出行数"
 
 #: Menu
-msgid "Text: List max line length"
-msgstr "文本：列出最大行长"
+msgid "Text: List max line lengths"
+msgstr "文本：列出最大行长度"
 
 #: Menu
-msgid "Text: List word count"
+msgid "Text: List word counts"
 msgstr "文本：统计词数"
 
 #: Menu

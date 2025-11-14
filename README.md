@@ -68,8 +68,8 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Alt>S`   | Compress to .tar.zst (each)       |
 | `<Control><Alt>X`   | Compress to .tar.xz (each)        |
 | `<Control><Alt>Z`   | Compress to .zip (each)           |
-| `<Control><Alt>I`   | Show file information             |
-| `<Control><Alt>M`   | Show file MIME type               |
+| `<Control><Alt>I`   | Show files information            |
+| `<Control><Alt>M`   | Show files MIME type              |
 | `<Control><Alt>H`   | Find hidden items                 |
 | `<Control><Alt>J`   | Find junk files                   |
 | `<Control><Alt>U`   | Find duplicate files              |
@@ -78,7 +78,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Alt>B`   | List largest files                |
 | `<Control><Alt>R`   | List recently modified files      |
 | `<Control><Alt>W`   | Text: List issues                 |
-| `<Control><Alt>C`   | Copy filename                     |
+| `<Control><Alt>C`   | Copy filenames                    |
 | `<Control><Alt>V`   | Paste clipboard                   |
 | `<Control><Shift>V` | Paste as symbolic link            |
 | `<Control><Shift>C` | Compare items                     |
