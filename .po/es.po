@@ -788,10 +788,6 @@ msgid "Create symbolic link to..."
 msgstr "Crear enlace simbólico a..."
 
 #: Menu
-msgid "Create symbolic link to Desktop"
-msgstr "Crear enlace simbólico al Escritorio"
-
-#: Menu
 msgid "Disk Usage Analyzer"
 msgstr "Analizador de Uso de Disco"
 

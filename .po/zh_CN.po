@@ -788,10 +788,6 @@ msgid "Create symbolic link to..."
 msgstr "创建符号链接到..."
 
 #: Menu
-msgid "Create symbolic link to Desktop"
-msgstr "创建到桌面的符号链接"
-
-#: Menu
 msgid "Disk Usage Analyzer"
 msgstr "磁盘使用分析器"
 

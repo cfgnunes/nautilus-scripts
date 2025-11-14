@@ -786,10 +786,6 @@ msgid "Create symbolic link to..."
 msgstr ""
 
 #: Menu
-msgid "Create symbolic link to Desktop"
-msgstr ""
-
-#: Menu
 msgid "Disk Usage Analyzer"
 msgstr ""
 
