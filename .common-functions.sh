@@ -1922,6 +1922,7 @@ _display_select_box() {
         # arguments directly. This avoids the "Argument list too long"
         # error when '$list' is too large.
         # See: https://gitlab.gnome.org/GNOME/zenity/-/issues/117
+        # See: https://github.com/v1cont/yad/issues/308
         if _command_exists "zenity"; then
             # shellcheck disable=SC2086
             selected_items=$(zenity --title "$(_get_script_name)" --list \
