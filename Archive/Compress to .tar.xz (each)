@@ -46,8 +46,8 @@ _main_task() {
         # Change to the directory to perform compression.
         _directory_push "$input_file" || return 1
 
-        std_output=$(find . -mindepth 1 -maxdepth 1 -print0 2>/dev/null |
-            sed -z "s|\./||g" |
+        std_output=$(find . -mindepth 1 -maxdepth 1 -printf "%f\0" 2>/dev/null |
+            sort --zero-terminated --version-sort |
             xargs --no-run-if-empty --null tar -cJf "$output_file" --)
     else
         # If the input is a file, change to its parent directory.
