@@ -948,7 +948,7 @@ msgid "Encrypt with keys (ASCII)"
 msgstr "使用密钥加密(ASCII)"
 
 #: Menu
-msgid "Import key"
+msgid "Import keys"
 msgstr "导入密钥"
 
 #: Menu

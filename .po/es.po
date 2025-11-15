@@ -948,8 +948,8 @@ msgid "Encrypt with keys (ASCII)"
 msgstr "Cifrar con claves (ASCII)"
 
 #: Menu
-msgid "Import key"
-msgstr "Importar clave"
+msgid "Import keys"
+msgstr "Importar claves"
 
 #: Menu
 msgid "Sign"
