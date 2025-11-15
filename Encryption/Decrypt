@@ -36,8 +36,11 @@ _main_task() {
     file_mime=$(_get_file_mime "$output_file")
     if [[ "$file_mime" == "application/x-tar" ]]; then
         # Create a temporary local directory for extraction.
+        local basename=""
         local temp_dir_local=""
-        temp_dir_local=$(_make_temp_dir_local "$output_dir" "")
+        basename=$(basename -- "$input_file")             # Remove the path.
+        basename=$(_strip_filename_extension "$basename") # Remove the extension.
+        temp_dir_local=$(_make_temp_dir_local "$output_dir" ".$basename")
 
         _directory_push "$temp_dir_local" || return 1
         std_output=$(tar --extract --file="$output_file" 2>&1)
