@@ -1304,8 +1304,15 @@ _close_filemanager() {
     "caja")
         # Close Caja gracefully.
         caja -q &>/dev/null
-        # Reload Caja in background to restore desktop icons.
-        nohup "$FILE_MANAGER" --force-desktop --no-default-window &>/dev/null &
+
+        # Reload the file manager in background to restore desktop session.
+        if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
+            # Only restart if running under MATE.
+            if [[ "${XDG_CURRENT_DESKTOP,,}" == *"mate"* ]]; then
+                nohup "$FILE_MANAGER" --force-desktop \
+                    --no-default-window &>/dev/null &
+            fi
+        fi
         ;;
     "pcmanfm"*)
         # NOTE: 'pcmanfm-qt' does not reload automatically after quitting.
@@ -1316,7 +1323,7 @@ _close_filemanager() {
         # Kill all existing 'pcmanfm-qt' processes.
         killall "$FILE_MANAGER" &>/dev/null
 
-        # Restart it using the same session command (if found).
+        # Reload the file manager in background to restore desktop session.
         if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
             # Only restart if running under LXDE or LXQT.
             if [[ "${XDG_CURRENT_DESKTOP,,}" == *"lxde"* ||
