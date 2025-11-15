@@ -285,8 +285,8 @@ msgstr "Criado em"
 msgid "Expires"
 msgstr "Expira em"
 
-msgid "Failed: you must select a user!"
-msgstr "Falha: você deve selecionar um usuário!"
+msgid "You must select a user!"
+msgstr "Você deve selecionar um usuário!"
 
 msgid "No public keys were found."
 msgstr "Nenhuma chave pública foi encontrada."
@@ -294,8 +294,8 @@ msgstr "Nenhuma chave pública foi encontrada."
 msgid "Select one or more users:"
 msgstr "Selecione um ou mais usuários:"
 
-msgid "Failed: you must select at least one user!"
-msgstr "Falha: você deve selecionar ao menos um usuário!"
+msgid "You must select at least one user!"
+msgstr "Você deve selecionar ao menos um usuário!"
 
 msgid "Directory"
 msgstr "Diretório"

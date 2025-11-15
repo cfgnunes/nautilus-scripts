@@ -97,7 +97,7 @@ _get_key_id() {
         "$(_i18n 'Select a user:')")
 
     if [[ -z "$TEMP_DATA_TASK" ]]; then
-        msg="$(_i18n 'Failed: you must select a user!')"
+        msg="$(_i18n 'You must select a user!')"
         _display_error_box "$msg"
         _exit_script
     fi

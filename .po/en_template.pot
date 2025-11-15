@@ -283,7 +283,7 @@ msgstr ""
 msgid "Expires"
 msgstr ""
 
-msgid "Failed: you must select a user!"
+msgid "You must select a user!"
 msgstr ""
 
 msgid "No public keys were found."
@@ -292,7 +292,7 @@ msgstr ""
 msgid "Select one or more users:"
 msgstr ""
 
-msgid "Failed: you must select at least one user!"
+msgid "You must select at least one user!"
 msgstr ""
 
 msgid "Directory"
