@@ -2880,6 +2880,7 @@ _get_files() {
             [[ "$par_recursive" == "true" ]]; then
             # HACK: Workaround for Zenity.
             # Zenity cannot select files and directories in the same dialog.
+            # See: https://gitlab.gnome.org/GNOME/zenity/-/issues/116
             if ! _command_exists "zenity"; then
                 # Select files and directories (YAD).
                 input_files=$(_display_file_selection_box "" "" "true" "false")
