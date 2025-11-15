@@ -1922,7 +1922,6 @@ _display_select_box() {
         # arguments directly. This avoids the "Argument list too long"
         # error when '$list' is too large.
         # See: https://gitlab.gnome.org/GNOME/zenity/-/issues/117
-        # See: https://github.com/v1cont/yad/issues/308
         if _command_exists "zenity"; then
             # shellcheck disable=SC2086
             selected_items=$(zenity --title "$(_get_script_name)" --list \
@@ -1932,13 +1931,15 @@ _display_select_box() {
                 --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
                 $par_columns <<<"$list" 2>/dev/null) || _exit_script
         else
+            printf "%s" "$list" >"$TEMP_DIR/list.txt"
             # shellcheck disable=SC2086
             selected_items=$(yad --title "$(_get_script_name)" --list \
                 --multiple --no-markup --separator="$FIELD_SEPARATOR" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" --text "$header_label" \
                 --button="${btn_cancel}:1" --button="${btn_ok}:0" \
-                $par_columns <<<"$list" 2>/dev/null) || _exit_script
+                --rest="$TEMP_DIR/list.txt" \
+                $par_columns 2>/dev/null) || _exit_script
         fi
 
     else
