@@ -336,15 +336,15 @@ _run_command() {
         if [[ "$file_mime" == "application/x-tar" ]]; then
             # Create a temporary local directory for extraction.
             local basename=""
-            local temp_dir_local2=""
+            local temp_dir_local=""
             basename=$(basename -- "$input_file")             # Remove the path.
             basename=$(_strip_filename_extension "$basename") # Remove the extension.
-            temp_dir_local2=$(_make_temp_dir_local "$output_dir" ".$basename")
-            mv -- "$filename" "$temp_dir_local2/$filename"
-            std_output=$(tar --extract --file="$temp_dir_local2/$filename" 2>&1)
+            temp_dir_local=$(_make_temp_dir_local "$output_dir" ".$basename")
+            mv -- "$filename" "$temp_dir_local/$filename"
+            std_output=$(tar --extract --file="$temp_dir_local/$filename" 2>&1)
             exit_code=$?
             # Remove the temporary directory (local directory).
-            rm -rf -- "$temp_dir_local2"
+            rm -rf -- "$temp_dir_local"
         fi
         ;;
     "gzip") gzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
