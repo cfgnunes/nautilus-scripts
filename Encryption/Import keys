@@ -7,45 +7,21 @@ source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
     local input_files=""
+    local output_dir=""
 
     # Execute initial checks.
     _check_dependencies "gpg"
     _display_wait_box
-    input_files=$(_get_files "par_type=file")
+    input_files=$(_get_files "par_type=file; par_select_mime='application/octet-stream|application/pgp-keys|text/plain'")
 
-    # Execute the function '_main_task'.
-    _main_task "$input_files"
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
     _display_result_box ""
 }
 
 _main_task() {
-    local input_files=$1
-    local imported_count=0
-
-    local input_file=""
-    for input_file in $input_files; do
-        _import_key "$input_file" || continue
-        imported_count=$((imported_count + 1))
-    done
-
-    if ((imported_count == 0)); then
-        input_file=$(_display_file_selection_box \
-            "$(_i18n 'Key files') | *.asc *.gpg *.pgp" \
-            "$(_i18n 'Choose a key file to import.')")
-        if [[ -z "$input_file" ]]; then
-            _exit_script
-        fi
-        _import_key "$input_file" && imported_count=$((imported_count + 1))
-    fi
-
-    # If keys were imported, clean up the temporary error logs.
-    if ((imported_count > 0)); then
-        rm -f -- "$TEMP_DIR_LOGS/"* 2>/dev/null
-    fi
-}
-
-_import_key() {
     local input_file=$1
+    local output_dir=$2
     local std_output=""
     local key_id=""
 
@@ -53,6 +29,7 @@ _import_key() {
     key_id=$(gpg --with-colons --import-options show-only --import "$input_file" |
         grep -m1 "^fpr" | cut -d ":" -f 10 2>/dev/null)
 
+    # Run the main process.
     # Import the key.
     std_output=$(gpg --batch --yes --import "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
