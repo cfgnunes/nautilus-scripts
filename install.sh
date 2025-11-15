@@ -1000,12 +1000,9 @@ _create_gnome_application_folder() {
     translated_folder_name=$(_i18n "$folder_name")
     # Configure the application folder in GNOME.
 
-    # Exit if not running under a GNOME desktop environment.
-    if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
-        if [[ "${XDG_CURRENT_DESKTOP,,}" != *"gnome"* ]]; then
-            return
-        fi
-    else
+    # Exit if not running under GNOME.
+    if [[ -z "${XDG_CURRENT_DESKTOP:-}" ||
+        "${XDG_CURRENT_DESKTOP,,}" != *"gnome"* ]]; then
         return
     fi
 
