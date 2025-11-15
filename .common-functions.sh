@@ -1745,6 +1745,7 @@ _display_info_box() {
 #      check type is enabled. Supported values:
 #      - "all": All items are marked as selected.
 #      - "first": Only the first item is selected.
+#      - "first_if_one": Only the first item is selected if there is one item.
 #      - "none": No items start selected.
 _display_list_box() {
     local list=$1
@@ -1883,6 +1884,13 @@ _display_select_box() {
         "first")
             list=$(sed "1s|^\(.*\)$|TRUE$FIELD_SEPARATOR\1|" <<<"$list")
             list=$(sed "1!s|^\(.*\)$|FALSE$FIELD_SEPARATOR\1|" <<<"$list")
+            ;;
+        "first_if_one")
+            if ((items_count == 1)); then
+                list=$(sed "1s|^\(.*\)$|TRUE$FIELD_SEPARATOR\1|" <<<"$list")
+            else
+                list=$(sed "s|^\(.*\)$|FALSE$FIELD_SEPARATOR\1|" <<<"$list")
+            fi
             ;;
         *)
             list=$(sed "s|^\(.*\)$|FALSE$FIELD_SEPARATOR\1|" <<<"$list")
