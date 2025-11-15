@@ -1317,12 +1317,18 @@ _close_filemanager() {
         killall "$FILE_MANAGER" &>/dev/null
 
         # Restart it using the same session command (if found).
-        if [[ -n "$session_cmd" ]]; then
-            # shellcheck disable=SC2086
-            nohup $session_cmd &>/dev/null &
-        else
-            # Fallback: start 'pcmanfm-qt' with default settings.
-            nohup "$FILE_MANAGER" --desktop &>/dev/null &
+        if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
+            # Only restart if running under LXDE or LXQT.
+            if [[ "${XDG_CURRENT_DESKTOP,,}" == *"lxde"* ||
+                "${XDG_CURRENT_DESKTOP,,}" == *"lxqt"* ]]; then
+                if [[ -n "$session_cmd" ]]; then
+                    # shellcheck disable=SC2086
+                    nohup $session_cmd &>/dev/null &
+                else
+                    # Fallback: start 'pcmanfm-qt' with default settings.
+                    nohup "$FILE_MANAGER" --desktop &>/dev/null &
+                fi
+            fi
         fi
         ;;
     esac
