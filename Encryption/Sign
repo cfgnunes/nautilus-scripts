@@ -12,12 +12,14 @@ _main() {
     # Execute initial checks.
     _check_dependencies "gpg"
     _display_wait_box
-    input_files=$(_get_files "par_type=file")
+    input_files=$(_get_files "par_type=all")
 
     _get_key_id
 
     # Check output directory only after displaying dialog boxes to the user.
     output_dir=$(_get_output_dir "par_use_same_dir=true")
+
+    export -f _run_gpg
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -28,11 +30,51 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local output_file=""
+
+    # Determine if the input is a directory or a file.
+    if [[ -d "$input_file" ]]; then
+        # Check if the directory is empty.
+        if _is_directory_empty "$input_file"; then
+            local msg=""
+            msg="$(_i18n 'The directory is empty.')"
+            _log_error "$msg" "$input_file" "" "$output_file"
+            return 1
+        fi
+
+        # Generate the output filename for directories.
+        output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=append; par_extension=tar.gpg")
+
+        # Create a temporary local directory for archiving.
+        local temp_dir_local=""
+        temp_dir_local=$(_make_temp_dir_local "$output_dir" "")
+
+        # Archive the contents of the directory into a temporary tar file.
+        local temp_archive="$temp_dir_local/archive.tar"
+        _directory_push "$input_file" || return 1
+        std_output=$(find . -mindepth 1 -maxdepth 1 -printf "%f\0" 2>/dev/null |
+            sort --zero-terminated --version-sort |
+            xargs --no-run-if-empty --null tar -cf "$temp_archive" --)
+        _directory_pop || return 1
+
+        # Encrypt the archived file using GPG.
+        _run_gpg "$temp_archive" "$output_file"
+
+        # Remove the temporary directory (local directory).
+        rm -rf -- "$temp_dir_local"
+    else
+        # Generate the output filename for regular files.
+        output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=append; par_extension=gpg")
+
+        # Encrypt the input file directly using GPG.
+        _run_gpg "$input_file" "$output_file"
+    fi
+}
+
+_run_gpg() {
+    local input_file=$1
+    local output_file=$2
     local std_output=""
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=append; par_extension=gpg")
-
-    # Run the main process.
     std_output=$(gpg \
         --batch \
         --yes \
@@ -40,6 +82,7 @@ _main_task() {
         --local-user "$TEMP_DATA_TASK" \
         --output "$output_file" \
         -- "$input_file" 2>&1)
+
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
