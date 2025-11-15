@@ -273,6 +273,18 @@ msgstr "Selecione um usuário:"
 msgid "User"
 msgstr "Usuário"
 
+msgid "Name"
+msgstr "Nome"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "Created"
+msgstr "Criado em"
+
+msgid "Expires"
+msgstr "Expira em"
+
 msgid "Failed: you must select a user!"
 msgstr "Falha: você deve selecionar um usuário!"
 

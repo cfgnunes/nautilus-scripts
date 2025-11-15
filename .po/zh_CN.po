@@ -273,6 +273,18 @@ msgstr "选择用户："
 msgid "User"
 msgstr "用户"
 
+msgid "Name"
+msgstr "名称"
+
+msgid "E-mail"
+msgstr "电子邮件"
+
+msgid "Created"
+msgstr "创建于"
+
+msgid "Expires"
+msgstr "到期于"
+
 msgid "Failed: you must select a user!"
 msgstr "失败：必须选择一个用户！"
 

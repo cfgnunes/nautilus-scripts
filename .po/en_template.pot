@@ -271,6 +271,18 @@ msgstr ""
 msgid "User"
 msgstr ""
 
+msgid "Name"
+msgstr ""
+
+msgid "E-mail"
+msgstr ""
+
+msgid "Created"
+msgstr ""
+
+msgid "Expires"
+msgstr ""
+
 msgid "Failed: you must select a user!"
 msgstr ""
 
