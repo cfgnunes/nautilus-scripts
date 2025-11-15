@@ -101,7 +101,7 @@ _get_keys_id() {
 
     keys=$(tr ":" "$FIELD_SEPARATOR" <<<"$keys")
     TEMP_DATA_TASK=$(_display_select_box "$keys" \
-        "--column:$(_i18n 'User'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Key ID')" \
+        "--column:$(_i18n 'Name'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Created'),--column:$(_i18n 'Expires'),--column:$(_i18n 'Key ID')" \
         "checkbox" "none" \
         "$(_i18n 'Select one or more users:')")
 
@@ -113,13 +113,36 @@ _get_keys_id() {
 }
 
 _get_public_keys() {
-    gpg --list-public-keys --with-colons --keyid-format LONG 2>/dev/null |
+    gpg --list-public-keys --with-colons --keyid-format LONG |
         awk -F: '
-    $1=="pub" {keyid=$5}
-    $1=="uid" {
-        match($10, /(.*) <(.*)>/, arr)
-        print arr[1] ":" arr[2] ":" keyid
-    }'
+            # When the main key is found.
+            $1=="pub" {
+                keyid=$5
+                created_ts=$6
+                expire_ts=$7
+
+                # Format creation date.
+                cmd="date -d @" created_ts " +\"%Y-%m-%d\""
+                cmd | getline created
+                close(cmd)
+
+                # Format expiration date (may be empty).
+                if (expire_ts != "") {
+                    cmd2="date -d @" expire_ts " +\"%Y-%m-%d\""
+                    cmd2 | getline expire
+                    close(cmd2)
+                } else {
+                    expire=" "
+                }
+            }
+
+            # Extract name and email.
+            $1=="uid" {
+                match($10, /(.*) <(.*)>/, arr)
+                name=arr[1]
+                email=arr[2]
+                print name ":" email ":" created ":" expire ":" keyid
+            }'
 }
 
 _main "$@"
