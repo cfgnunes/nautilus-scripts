@@ -384,9 +384,6 @@ msgstr "Código HTTP"
 msgid "URL"
 msgstr "URL"
 
-msgid "The directory is empty."
-msgstr "O diretório está vazio."
-
 #: Menu
 msgid "Archive"
 msgstr "Compressão"

@@ -384,9 +384,6 @@ msgstr "HTTP 状态码"
 msgid "URL"
 msgstr "URL"
 
-msgid "The directory is empty."
-msgstr "该目录为空。"
-
 #: Menu
 msgid "Archive"
 msgstr "归档"

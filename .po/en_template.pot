@@ -382,9 +382,6 @@ msgstr ""
 msgid "URL"
 msgstr ""
 
-msgid "The directory is empty."
-msgstr ""
-
 #: Menu
 msgid "Archive"
 msgstr ""
