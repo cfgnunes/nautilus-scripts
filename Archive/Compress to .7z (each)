@@ -41,7 +41,7 @@ _main_task() {
         # Check if the directory is empty.
         if _is_directory_empty "$input_file"; then
             local msg=""
-            msg="$(_i18n 'The directory is empty.')"
+            msg="The directory is empty."
             _log_error "$msg" "$input_file" "" "$output_file"
             return 1
         fi
