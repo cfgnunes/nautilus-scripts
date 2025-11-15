@@ -159,36 +159,35 @@ _get_keys_id() {
 }
 
 _get_public_keys() {
-    gpg --list-public-keys --with-colons --keyid-format LONG |
-        awk -F: '
-            # When the main key is found.
-            $1=="pub" {
-                keyid=$5
-                created_ts=$6
-                expire_ts=$7
+    gpg --list-public-keys --with-colons | awk -F: '
+        # When the main key is found.
+        $1=="pub" {
+            keyid=$5
+            created_ts=$6
+            expire_ts=$7
 
-                # Format creation date.
-                cmd="date -d @" created_ts " +\"%Y-%m-%d\""
-                cmd | getline created
-                close(cmd)
+            # Format creation date.
+            cmd="date -d @" created_ts " +\"%Y-%m-%d\""
+            cmd | getline created
+            close(cmd)
 
-                # Format expiration date (may be empty).
-                if (expire_ts != "") {
-                    cmd2="date -d @" expire_ts " +\"%Y-%m-%d\""
-                    cmd2 | getline expire
-                    close(cmd2)
-                } else {
-                    expire=" "
-                }
+            # Format expiration date (may be empty).
+            if (expire_ts != "") {
+                cmd2="date -d @" expire_ts " +\"%Y-%m-%d\""
+                cmd2 | getline expire
+                close(cmd2)
+            } else {
+                expire=" "
             }
+        }
 
-            # Extract name and email.
-            $1=="uid" {
-                match($10, /(.*) <(.*)>/, arr)
-                name=arr[1]
-                email=arr[2]
-                print name ":" email ":" created ":" expire ":" keyid
-            }'
+        # Extract name and email.
+        $1=="uid" {
+            match($10, /(.*) <(.*)>/, arr)
+            name=arr[1]
+            email=arr[2]
+            print name ":" email ":" created ":" expire ":" keyid
+        }'
 }
 
 _main "$@"
