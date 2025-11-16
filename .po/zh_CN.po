@@ -29,8 +29,8 @@ msgstr "目录"
 msgid "items"
 msgstr "项目"
 
-msgid "Command failed with a non-zero exit code."
-msgstr "命令执行失败，退出码非零。"
+msgid "The command failed."
+msgstr "命令执行失败。"
 
 msgid "The output file does not exist."
 msgstr "输出文件不存在。"
@@ -41,8 +41,8 @@ msgstr "完成但存在错误！请查看日志："
 msgid "Your system does not support clipboard operations."
 msgstr "您的系统不支持剪贴板操作。"
 
-msgid "Could not find package names to install:"
-msgstr "找不到要安装的软件包名称："
+msgid "Could not find a package for:"
+msgstr "未找到对应的软件包："
 
 msgid "The following packages are missing:"
 msgstr "以下软件包缺失："
@@ -53,8 +53,8 @@ msgstr "是否安装它们？"
 msgid "Installing the packages. Please, wait..."
 msgstr "正在安装软件包，请稍候..."
 
-msgid "The package was installed, but a reboot is required to use it."
-msgstr "软件包已安装，但需要重启系统才能使用。"
+msgid "The package was installed, but a system reboot is required."
+msgstr "软件包已安装，但需要重启系统。"
 
 msgid "Could not install the package:"
 msgstr "无法安装软件包："
@@ -128,8 +128,8 @@ msgstr "完成！"
 msgid "Running the task. Please, wait..."
 msgstr "正在执行任务，请稍候..."
 
-msgid "No default application set for MIME type:"
-msgstr "未设置MIME类型的默认应用程序："
+msgid "No default application is set for the type:"
+msgstr "未为此类型设置默认应用程序："
 
 msgid "Could not find the executable to open MIME type:"
 msgstr "找不到打开MIME类型的可执行文件："
@@ -163,9 +163,6 @@ msgstr "找不到具有写入权限的目录！"
 
 msgid "Accessed recently"
 msgstr "最近访问"
-
-msgid "Endings"
-msgstr "结尾"
 
 msgid "File"
 msgstr "文件"

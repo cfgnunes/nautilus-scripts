@@ -29,8 +29,8 @@ msgstr "Verzeichnisse"
 msgid "items"
 msgstr "Elemente"
 
-msgid "Command failed with a non-zero exit code."
-msgstr "Der Befehl ist mit einem Fehlercode fehlgeschlagen."
+msgid "The command failed."
+msgstr "Der Befehl ist fehlgeschlagen."
 
 msgid "The output file does not exist."
 msgstr "Die Ausgabedatei existiert nicht."
@@ -41,8 +41,8 @@ msgstr "Mit Fehlern abgeschlossen! Siehe das Protokoll:"
 msgid "Your system does not support clipboard operations."
 msgstr "Dein System unterstützt keine Zwischenablage-Operationen."
 
-msgid "Could not find package names to install:"
-msgstr "Konnte keine Paketnamen zum Installieren finden:"
+msgid "Could not find a package for:"
+msgstr "Es konnte kein Paket gefunden werden für:"
 
 msgid "The following packages are missing:"
 msgstr "Die folgenden Pakete fehlen:"
@@ -53,8 +53,8 @@ msgstr "Möchtest du sie installieren?"
 msgid "Installing the packages. Please, wait..."
 msgstr "Installiere die Pakete. Bitte warte..."
 
-msgid "The package was installed, but a reboot is required to use it."
-msgstr "Das Paket wurde installiert, aber ein Neustart ist erforderlich, um es zu verwenden."
+msgid "The package was installed, but a system reboot is required."
+msgstr "Das Paket wurde installiert, aber ein Neustart des Systems ist erforderlich."
 
 msgid "Could not install the package:"
 msgstr "Konnte das Paket nicht installieren:"
@@ -128,8 +128,8 @@ msgstr "Fertig!"
 msgid "Running the task. Please, wait..."
 msgstr "Aufgabe wird ausgeführt. Bitte warte..."
 
-msgid "No default application set for MIME type:"
-msgstr "Keine Standardanwendung für den MIME-Typ festgelegt:"
+msgid "No default application is set for the type:"
+msgstr "Keine Standardanwendung für den Typ festgelegt:"
 
 msgid "Could not find the executable to open MIME type:"
 msgstr "Konnte die ausführbare Datei zum Öffnen des MIME-Typs nicht finden:"
@@ -163,9 +163,6 @@ msgstr "Konnte kein Verzeichnis mit Schreibrechten finden!"
 
 msgid "Accessed recently"
 msgstr "Kürzlich zugegriffen"
-
-msgid "Endings"
-msgstr "Endungen"
 
 msgid "File"
 msgstr "Datei"

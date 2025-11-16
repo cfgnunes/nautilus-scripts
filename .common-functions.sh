@@ -221,7 +221,7 @@ _check_output() {
 
     # Check the '$exit_code' and log the error.
     if ((exit_code != 0)); then
-        msg="$(_i18n 'Command failed with a non-zero exit code.')"
+        msg="$(_i18n 'The command failed.')"
         _log_error "$msg" "$input_file" "$std_output" "$output_file"
         return 1
     fi
@@ -549,7 +549,7 @@ _check_dependencies() {
         # Abort if no package definition was found.
         if [[ "$definitions_found" == "false" ]]; then
             local msg=""
-            msg="$(_i18n 'Could not find package names to install:')"
+            msg="$(_i18n 'Could not find a package for:')"
             _display_error_box "$msg $dep_key"
             _exit_script
         fi
@@ -926,7 +926,7 @@ _deps_installation_check() {
 _deps_check_rpm_ostree_requires_reboot() {
     local package=$1
     local msg=""
-    msg="$(_i18n 'The package was installed, but a reboot is required to use it.')"
+    msg="$(_i18n 'The package was installed, but a system reboot is required.')"
 
     # Check if the package appears in the 'rpm-ostree' deployment list.
     if rpm-ostree status --json | jq -r ".deployments[0].packages[]" |
@@ -2608,7 +2608,7 @@ _xdg_get_default_app() {
         if [[ "$quiet" == "true" ]]; then
             return 1
         fi
-        msg="$(_i18n 'No default application set for MIME type:')"
+        msg="$(_i18n 'No default application is set for the type:')"
         _display_error_box "$msg '$mime'!"
         _exit_script
     fi

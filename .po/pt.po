@@ -29,8 +29,8 @@ msgstr "diretórios"
 msgid "items"
 msgstr "itens"
 
-msgid "Command failed with a non-zero exit code."
-msgstr "O comando falhou com um código de saída diferente de zero."
+msgid "The command failed."
+msgstr "O comando falhou."
 
 msgid "The output file does not exist."
 msgstr "O arquivo de saída não existe."
@@ -41,8 +41,8 @@ msgstr "Finalizado com erros! Veja o log:"
 msgid "Your system does not support clipboard operations."
 msgstr "Seu sistema não suporta operações com a área de transferência."
 
-msgid "Could not find package names to install:"
-msgstr "Não foi possível encontrar nomes de pacotes para instalar:"
+msgid "Could not find a package for the dependency:"
+msgstr "Não foi possível encontrar um pacote para a dependência:"
 
 msgid "The following packages are missing:"
 msgstr "Os seguintes pacotes estão ausentes:"
@@ -53,8 +53,8 @@ msgstr "Deseja instalá-los?"
 msgid "Installing the packages. Please, wait..."
 msgstr "Instalando os pacotes. Por favor, aguarde..."
 
-msgid "The package was installed, but a reboot is required to use it."
-msgstr "O pacote foi instalado, mas é necessário reiniciar o sistema para usá-lo."
+msgid "The package was installed, but a system reboot is required."
+msgstr "O pacote foi instalado, porém é necessário reiniciar o sistema."
 
 msgid "Could not install the package:"
 msgstr "Não foi possível instalar o pacote:"
@@ -128,8 +128,8 @@ msgstr "Finalizado!"
 msgid "Running the task. Please, wait..."
 msgstr "Executando a tarefa. Por favor, aguarde..."
 
-msgid "No default application set for MIME type:"
-msgstr "Nenhum aplicativo padrão definido para o tipo MIME:"
+msgid "No default application is set for the type:"
+msgstr "Nenhum aplicativo padrão foi definido para o tipo:"
 
 msgid "Could not find the executable to open MIME type:"
 msgstr "Não foi possível encontrar o executável para abrir o tipo MIME:"
@@ -163,9 +163,6 @@ msgstr "Não foi possível encontrar um diretório com permissão de escrita!"
 
 msgid "Accessed recently"
 msgstr "Acessado recentemente"
-
-msgid "Endings"
-msgstr "Finalizações"
 
 msgid "File"
 msgstr "Arquivo"
@@ -737,7 +734,7 @@ msgstr "Compactar para 'zip' com senha"
 
 #: Menu
 msgid "Compute all checksums"
-msgstr "Calcular todos os hashes"
+msgstr "Calcular todos os checksums"
 
 #: Menu
 msgid "Compute CRC32"
@@ -1581,7 +1578,7 @@ msgstr "Mostrar tipo MIME de arquivos"
 
 #: Menu
 msgid "Show media information"
-msgstr "Mostrar informação de mídia"
+msgstr "Mostrar informações de mídias"
 
 #: Menu
 msgid "Shred files (secure delete)"

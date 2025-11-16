@@ -29,8 +29,8 @@ msgstr "directorios"
 msgid "items"
 msgstr "elementos"
 
-msgid "Command failed with a non-zero exit code."
-msgstr "El comando falló con un código de salida distinto de cero."
+msgid "The command failed."
+msgstr "El comando falló."
 
 msgid "The output file does not exist."
 msgstr "El archivo de salida no existe."
@@ -41,8 +41,8 @@ msgstr "Finalizado con errores. Vea el registro:"
 msgid "Your system does not support clipboard operations."
 msgstr "Su sistema no admite operaciones con el portapapeles."
 
-msgid "Could not find package names to install:"
-msgstr "No se pudieron encontrar nombres de paquetes para instalar:"
+msgid "Could not find a package for:"
+msgstr "No se pudo encontrar un paquete para:"
 
 msgid "The following packages are missing:"
 msgstr "Faltan los siguientes paquetes:"
@@ -53,8 +53,8 @@ msgstr "¿Desea instalarlos?"
 msgid "Installing the packages. Please, wait..."
 msgstr "Instalando los paquetes. Por favor, espere..."
 
-msgid "The package was installed, but a reboot is required to use it."
-msgstr "El paquete se instaló, pero es necesario reiniciar el sistema para usarlo."
+msgid "The package was installed, but a system reboot is required."
+msgstr "El paquete se instaló, pero es necesario reiniciar el sistema."
 
 msgid "Could not install the package:"
 msgstr "No se pudo instalar el paquete:"
@@ -128,8 +128,8 @@ msgstr "¡Finalizado!"
 msgid "Running the task. Please, wait..."
 msgstr "Ejecutando la tarea. Por favor, espere..."
 
-msgid "No default application set for MIME type:"
-msgstr "No hay una aplicación predeterminada para el tipo MIME:"
+msgid "No default application is set for the type:"
+msgstr "No hay una aplicación predeterminada para el tipo:"
 
 msgid "Could not find the executable to open MIME type:"
 msgstr "No se pudo encontrar el ejecutable para abrir el tipo MIME:"
@@ -163,9 +163,6 @@ msgstr "¡No se pudo encontrar un directorio con permisos de escritura!"
 
 msgid "Accessed recently"
 msgstr "Accedido recientemente"
-
-msgid "Endings"
-msgstr "Finales"
 
 msgid "File"
 msgstr "Archivo"
@@ -737,7 +734,7 @@ msgstr "Comprimir a 'zip' con contraseña"
 
 #: Menu
 msgid "Compute all checksums"
-msgstr "Calcular todos los hashes"
+msgstr "Calcular todos los checksums"
 
 #: Menu
 msgid "Compute CRC32"

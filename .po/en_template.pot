@@ -28,7 +28,7 @@ msgstr ""
 msgid "items"
 msgstr ""
 
-msgid "Command failed with a non-zero exit code."
+msgid "The command failed."
 msgstr ""
 
 msgid "The output file does not exist."
@@ -40,7 +40,7 @@ msgstr ""
 msgid "Your system does not support clipboard operations."
 msgstr ""
 
-msgid "Could not find package names to install:"
+msgid "Could not find a package for:"
 msgstr ""
 
 msgid "The following packages are missing:"
@@ -52,7 +52,7 @@ msgstr ""
 msgid "Installing the packages. Please, wait..."
 msgstr ""
 
-msgid "The package was installed, but a reboot is required to use it."
+msgid "The package was installed, but a system reboot is required."
 msgstr ""
 
 msgid "Could not install the package:"
@@ -127,7 +127,7 @@ msgstr ""
 msgid "Running the task. Please, wait..."
 msgstr ""
 
-msgid "No default application set for MIME type:"
+msgid "No default application is set for the type:"
 msgstr ""
 
 msgid "Could not find the executable to open MIME type:"
@@ -161,9 +161,6 @@ msgid "Could not find a directory with write permissions!"
 msgstr ""
 
 msgid "Accessed recently"
-msgstr ""
-
-msgid "Endings"
 msgstr ""
 
 msgid "File"
