@@ -965,31 +965,31 @@ msgstr "Signatur überprüfen"
 
 #: Menu
 msgid "Image: Add watermark (center)"
-msgstr "Bild: Wasserzeichen hinzufügen (Mitte)"
+msgstr "Bild: Wasserzeichen (Mitte)"
 
 #: Menu
 msgid "Image: Add watermark (north)"
-msgstr "Bild: Wasserzeichen hinzufügen (Norden)"
+msgstr "Bild: Wasserzeichen (Norden)"
 
 #: Menu
 msgid "Image: Add watermark (northeast)"
-msgstr "Bild: Wasserzeichen hinzufügen (Nordosten)"
+msgstr "Bild: Wasserzeichen (Nordosten)"
 
 #: Menu
 msgid "Image: Add watermark (northwest)"
-msgstr "Bild: Wasserzeichen hinzufügen (Nordwesten)"
+msgstr "Bild: Wasserzeichen (Nordwesten)"
 
 #: Menu
 msgid "Image: Add watermark (south)"
-msgstr "Bild: Wasserzeichen hinzufügen (Süden)"
+msgstr "Bild: Wasserzeichen (Süden)"
 
 #: Menu
 msgid "Image: Add watermark (southeast)"
-msgstr "Bild: Wasserzeichen hinzufügen (Südosten)"
+msgstr "Bild: Wasserzeichen (Südosten)"
 
 #: Menu
 msgid "Image: Add watermark (southwest)"
-msgstr "Bild: Wasserzeichen hinzufügen (Südwesten)"
+msgstr "Bild: Wasserzeichen (Südwesten)"
 
 #: Menu
 msgid "Image: Automatic crop"
@@ -1345,11 +1345,11 @@ msgstr "Zwischenablage einfügen"
 
 #: Menu
 msgid "PDF: Add watermark (overlay)"
-msgstr "PDF: Wasserzeichen hinzufügen (Überlagerung)"
+msgstr "PDF: Wasserzeichen (Überlagerung)"
 
 #: Menu
 msgid "PDF: Add watermark (underlay)"
-msgstr "PDF: Wasserzeichen hinzufügen (Unterlage)"
+msgstr "PDF: Wasserzeichen (Unterlage)"
 
 #: Menu
 msgid "PDF: Combine multiple PDFs"
