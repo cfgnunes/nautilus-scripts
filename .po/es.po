@@ -1685,10 +1685,6 @@ msgid "URL: Check HTTP status"
 msgstr "URL: Verificar estado HTTP"
 
 #: Menu
-msgid "URL: Check SSL expiry"
-msgstr "URL: Verificar expiración de SSL"
-
-#: Menu
 msgid "URL: Download file"
 msgstr "URL: Descargar archivo"
 
