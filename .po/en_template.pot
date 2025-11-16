@@ -1303,11 +1303,11 @@ msgid "Media: Show basic metadata"
 msgstr ""
 
 #: Menu
-msgid "MP3: (artist - title) Filename to ID3"
+msgid "MP3: (artist - title) Name to ID3"
 msgstr ""
 
 #: Menu
-msgid "MP3: (artist - title) ID3 to Filename"
+msgid "MP3: (artist - title) ID3 to Name"
 msgstr ""
 
 #: Menu

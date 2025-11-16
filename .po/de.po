@@ -1304,12 +1304,12 @@ msgid "Media: Show basic metadata"
 msgstr "Medien: Grundlegende Metadaten anzeigen"
 
 #: Menu
-msgid "MP3: (artist - title) Filename to ID3"
-msgstr "MP3: (Künstler - Titel) Dateiname zu ID3"
+msgid "MP3: (artist - title) Name to ID3"
+msgstr "MP3: (Künstler - Titel) Name zu ID3"
 
 #: Menu
-msgid "MP3: (artist - title) ID3 to Filename"
-msgstr "MP3: (Künstler - Titel) ID3 zu Dateiname"
+msgid "MP3: (artist - title) ID3 to Name"
+msgstr "MP3: (Künstler - Titel) ID3 zu Name"
 
 #: Menu
 msgid "MP3: Volume maximize (recursive)"
