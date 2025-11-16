@@ -8,6 +8,9 @@ set -u
 # Constants ----
 # -----------------------------------------------------------------------------
 
+APP_NAME="Enhanced File Manager Actions for Linux"
+APP_VERSION="29.2"
+
 # Used in:
 #  - Directory where scripts are installed located at:
 #    "$HOME/.local/share/$INSTALL_NAME_DIR".
@@ -69,6 +72,8 @@ I18N_DIR="$SCRIPT_DIR/.po"
 
 # Mark constants as read-only to prevent accidental modification.
 readonly \
+    APP_NAME \
+    APP_VERSION \
     COMPATIBLE_FILE_MANAGERS \
     I18N_DIR \
     IGNORE_FIND_PATHS \
@@ -181,8 +186,10 @@ _main() {
         "$OPT_CHOOSE_CATEGORIES"
     )
 
-    _echo "Enhanced File Manager Actions for Linux"
+    _echo "$APP_NAME v$APP_VERSION"
     _echo ""
+
+    _log_variable "APP_VERSION"
 
     if [[ "$OPT_INTERACTIVE_INSTALL" == "true" ]]; then
         _echo "$(_i18n 'Select the options (<SPACE> to check, <ENTER> to confirm):')"
