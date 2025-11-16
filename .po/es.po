@@ -1517,7 +1517,7 @@ msgstr "PDF: Mostrar firmas"
 
 #: Menu
 msgid "PDF: Split into single-page PDFs"
-msgstr "PDF: Dividir en PDFs de una sola página"
+msgstr "PDF: Dividir en PDFs de una página"
 
 #: Menu
 msgid "Rename: Remove accents"
