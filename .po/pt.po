@@ -869,27 +869,27 @@ msgstr "Recuperar arquivos (via PhotoRec)"
 
 #: Menu
 msgid "Find broken links"
-msgstr "Encontrar links quebrados"
+msgstr "Procurar links quebrados"
 
 #: Menu
 msgid "Find duplicate files"
-msgstr "Encontrar arquivos duplicados"
+msgstr "Procurar arquivos duplicados"
 
 #: Menu
 msgid "Find empty directories"
-msgstr "Encontrar diretórios vazios"
+msgstr "Procurar diretórios vazios"
 
 #: Menu
 msgid "Find hidden items"
-msgstr "Encontrar itens ocultos"
+msgstr "Procurar itens ocultos"
 
 #: Menu
 msgid "Find junk files"
-msgstr "Encontrar arquivos inúteis"
+msgstr "Procurar arquivos inúteis"
 
 #: Menu
 msgid "Find zero-byte files"
-msgstr "Encontrar arquivos de zero bytes"
+msgstr "Procurar arquivos de zero bytes"
 
 #: Menu
 msgid "Flatten directory structure"
@@ -1009,7 +1009,7 @@ msgstr "Imagem: Fundo para alfa (15 pct)"
 
 #: Menu
 msgid "Image: Color alpha to black"
-msgstr "Imagem: Cor alfa para preto"
+msgstr "Imagem: Cor alfa para preta"
 
 #: Menu
 msgid "Image: Color alpha to magenta"
@@ -1017,7 +1017,7 @@ msgstr "Imagem: Cor alfa para magenta"
 
 #: Menu
 msgid "Image: Color alpha to white"
-msgstr "Imagem: Cor alfa para branco"
+msgstr "Imagem: Cor alfa para branca"
 
 #: Menu
 msgid "Image: Color black to alpha"
@@ -1117,19 +1117,19 @@ msgstr "Imagem: Exportar para PDF"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"
-msgstr "Imagem: Encontrar similares (65 pct)"
+msgstr "Imagem: Procurar similares (65 pct)"
 
 #: Menu
 msgid "Image: Find similar (75 pct)"
-msgstr "Imagem: Encontrar similares (75 pct)"
+msgstr "Imagem: Procurar similares (75 pct)"
 
 #: Menu
 msgid "Image: Find similar (85 pct)"
-msgstr "Imagem: Encontrar similares (85 pct)"
+msgstr "Imagem: Procurar similares (85 pct)"
 
 #: Menu
 msgid "Image: Find similar (95 pct)"
-msgstr "Imagem: Encontrar similares (95 pct)"
+msgstr "Imagem: Procurar similares (95 pct)"
 
 #: Menu
 msgid "Image: Flip (horizontal)"
@@ -1373,23 +1373,23 @@ msgstr "PDF: Extrair imagens"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"
-msgstr "PDF: Encontrar PDFs anotados"
+msgstr "PDF: Procurar PDFs anotados"
 
 #: Menu
 msgid "PDF: Find non-linearized PDFs"
-msgstr "PDF: Encontrar PDFs não linearizados"
+msgstr "PDF: Procurar PDFs não linearizados"
 
 #: Menu
 msgid "PDF: Find non-searchable PDFs"
-msgstr "PDF: Encontrar PDFs não pesquisáveis"
+msgstr "PDF: Procurar PDFs não pesquisáveis"
 
 #: Menu
 msgid "PDF: Find password-protected PDFs"
-msgstr "PDF: Encontrar PDFs com senha"
+msgstr "PDF: Procurar PDFs com senha"
 
 #: Menu
 msgid "PDF: Find signed PDFs"
-msgstr "PDF: Encontrar PDFs assinados"
+msgstr "PDF: Procurar PDFs assinados"
 
 #: Menu
 msgid "PDF: Layout (landscape, 1x2)"
