@@ -1341,12 +1341,12 @@ msgid "Paste clipboard"
 msgstr "Colar área de transferência"
 
 #: Menu
-msgid "PDF: Add watermark (overlay)"
-msgstr "PDF: Adic. marca d'água (sobreposta)"
+msgid "PDF: Add watermark (over)"
+msgstr "PDF: Adic. marca d'água (sobre)"
 
 #: Menu
-msgid "PDF: Add watermark (underlay)"
-msgstr "PDF: Adic. marca d'água (sobposta)"
+msgid "PDF: Add watermark (under)"
+msgstr "PDF: Adic. marca d'água (sob)"
 
 #: Menu
 msgid "PDF: Combine multiple PDFs"

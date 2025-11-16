@@ -1727,13 +1727,13 @@ _main() {
     __test_file_nonempty "$output_file (no metadata).pdf"
     __test_file_empty "$std_output"
 
-    #script_test="Document/PDF: Watermark/PDF: Add watermark (overlay)"
+    #script_test="Document/PDF: Watermark/PDF: Add watermark (over)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Document/PDF: Watermark/PDF: Add watermark (underlay)"
+    #script_test="Document/PDF: Watermark/PDF: Add watermark (under)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"

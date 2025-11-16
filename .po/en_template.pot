@@ -1340,11 +1340,11 @@ msgid "Paste clipboard"
 msgstr ""
 
 #: Menu
-msgid "PDF: Add watermark (overlay)"
+msgid "PDF: Add watermark (over)"
 msgstr ""
 
 #: Menu
-msgid "PDF: Add watermark (underlay)"
+msgid "PDF: Add watermark (under)"
 msgstr ""
 
 #: Menu

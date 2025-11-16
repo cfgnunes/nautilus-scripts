@@ -1341,12 +1341,12 @@ msgid "Paste clipboard"
 msgstr "粘贴剪贴板"
 
 #: Menu
-msgid "PDF: Add watermark (overlay)"
+msgid "PDF: Add watermark (over)"
 msgstr "PDF：添加水印 (覆盖)"
 
 #: Menu
-msgid "PDF: Add watermark (underlay)"
-msgstr "PDF：添加水印 (衬底)"
+msgid "PDF: Add watermark (under)"
+msgstr "PDF：添加水印 (底层)"
 
 #: Menu
 msgid "PDF: Combine multiple PDFs"

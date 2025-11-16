@@ -1341,12 +1341,12 @@ msgid "Paste clipboard"
 msgstr "Zwischenablage einfügen"
 
 #: Menu
-msgid "PDF: Add watermark (overlay)"
-msgstr "PDF: Wasserzeichen (Überlagerung)"
+msgid "PDF: Add watermark (over)"
+msgstr "PDF: Wasserzeichen (darüber)"
 
 #: Menu
-msgid "PDF: Add watermark (underlay)"
-msgstr "PDF: Wasserzeichen (Unterlage)"
+msgid "PDF: Add watermark (under)"
+msgstr "PDF: Wasserzeichen (darunter)"
 
 #: Menu
 msgid "PDF: Combine multiple PDFs"

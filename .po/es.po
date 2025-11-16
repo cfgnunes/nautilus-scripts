@@ -1341,11 +1341,11 @@ msgid "Paste clipboard"
 msgstr "Pegar portapapeles"
 
 #: Menu
-msgid "PDF: Add watermark (overlay)"
-msgstr "PDF: Agr. marca de agua (superpuesta)"
+msgid "PDF: Add watermark (over)"
+msgstr "PDF: Agr. marca de agua (encima)"
 
 #: Menu
-msgid "PDF: Add watermark (underlay)"
+msgid "PDF: Add watermark (under)"
 msgstr "PDF: Agr. marca de agua (debajo)"
 
 #: Menu
