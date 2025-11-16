@@ -678,7 +678,7 @@ msgstr "Áudio: Silenciar ruído"
 
 #: Menu
 msgid "Audio: Trim silence"
-msgstr "Áudio: Remover silêncio"
+msgstr "Áudio: Aparar silêncio"
 
 #: Menu
 msgid "Code Editor"
