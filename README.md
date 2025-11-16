@@ -92,8 +92,6 @@ While numerous scripts are available for file managers on the web, many suffer f
 
 ## Compatibility
 
-File managers compatibility:
-
 | File manager           | Environment | Menu integration | Application shortcuts | Keyboard accelerators | Menu "Accessed recently" |
 | ---------------------- | ----------- | ---------------- | --------------------- | --------------------- | ------------------------ |
 | GNOME Files (Nautilus) | GNOME       | 🟢                | 🟢                     | 🟢                     | 🟢                        |
@@ -104,40 +102,19 @@ File managers compatibility:
 | PCManFM-Qt             | LXQt        | 🟢                | 🟢                     | 🔴                     | 🔴                        |
 | PCManFM                | LXDE        | 🟢                | 🟢                     | 🔴                     | 🔴                        |
 
-Most scripts have been tested on the following GNU/Linux distributions:
-
-- Debian/Ubuntu
-  - Debian 12, 13 (GNOME, KDE, Xfce and LXQt)
-  - Ubuntu 16.04, 18.04, 20.04, 22.04, 24.04
-  - Mint 21, 22 (Cinnamon, MATE and Xfce)
-  - Zorin OS Core 17, 18
-  - KDE neon 2024, 2025
-- Fedora
-  - Workstation 39, 40, 41, 42, 43
-- Arch Linux
-  - CachyOS
-  - EndeavourOS
-  - Manjaro 23, 24, 25 (GNOME and KDE)
-- openSUSE
-  - Tumbleweed 2024, 2025 (GNOME)
-- Others
-  - NixOS
-  - Termux
-
 ## Handling large input lists
 
 This project includes a functionality specifically designed to manage scenarios where input lists are too large for processing (e.g., 100,000 input files). Excessively large input lists can lead to errors like:
 
 `Could not start application: Failed to execute child process "/bin/sh" (Argument list too long)`
 
-In some cases, the scripts may fail to run. To avoid such issues, follow these steps:
+To avoid such issues, follow these steps:
 
 1. Create a single directory with a name that includes the word `batch`;
 2. Place all the files you want to process into this directory;
 3. Execute the desired script using this directory as the input.
 
 When batch mode is detected, the script recognizes the directory as a special case and process each file inside it individually, instead of treating the entire directory as a single input.
-This approach prevents errors caused by excessively long argument lists and ensures reliable execution.
 
 ## Acknowledgments
 
