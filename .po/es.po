@@ -965,31 +965,31 @@ msgstr "Verificar firma"
 
 #: Menu
 msgid "Image: Add watermark (center)"
-msgstr "Imagen: Agregar marca de agua (centro)"
+msgstr "Imagen: Agr. marca de agua (centro)"
 
 #: Menu
 msgid "Image: Add watermark (north)"
-msgstr "Imagen: Agregar marca de agua (norte)"
+msgstr "Imagen: Agr. marca de agua (norte)"
 
 #: Menu
 msgid "Image: Add watermark (northeast)"
-msgstr "Imagen: Agregar marca de agua (noreste)"
+msgstr "Imagen: Agr. marca de agua (noreste)"
 
 #: Menu
 msgid "Image: Add watermark (northwest)"
-msgstr "Imagen: Agregar marca de agua (noroeste)"
+msgstr "Imagen: Agr. marca de agua (noroeste)"
 
 #: Menu
 msgid "Image: Add watermark (south)"
-msgstr "Imagen: Agregar marca de agua (sur)"
+msgstr "Imagen: Agr. marca de agua (sur)"
 
 #: Menu
 msgid "Image: Add watermark (southeast)"
-msgstr "Imagen: Agregar marca de agua (sureste)"
+msgstr "Imagen: Agr. marca de agua (sureste)"
 
 #: Menu
 msgid "Image: Add watermark (southwest)"
-msgstr "Imagen: Agregar marca de agua (suroeste)"
+msgstr "Imagen: Agr. marca de agua (suroeste)"
 
 #: Menu
 msgid "Image: Automatic crop"
@@ -1345,11 +1345,11 @@ msgstr "Pegar portapapeles"
 
 #: Menu
 msgid "PDF: Add watermark (overlay)"
-msgstr "PDF: Agregar marca de agua (superpuesta)"
+msgstr "PDF: Agr. marca de agua (superpuesta)"
 
 #: Menu
 msgid "PDF: Add watermark (underlay)"
-msgstr "PDF: Agregar marca de agua (debajo)"
+msgstr "PDF: Agr. marca de agua (debajo)"
 
 #: Menu
 msgid "PDF: Combine multiple PDFs"
