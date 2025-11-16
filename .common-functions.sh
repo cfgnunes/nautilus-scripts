@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2001
 
-# This file contains shared functions and constants sourced by all scripts.
-
 # =============================================================================
 # PROJECT: Enhanced File Manager Actions for Linux
 # AUTHOR: Cristiano Fraga G. Nunes
@@ -10,6 +8,8 @@
 # LICENSE: MIT License
 # VERSION: 29.2
 # =============================================================================
+
+# This file contains shared functions and constants sourced by all scripts.
 
 set -u
 
