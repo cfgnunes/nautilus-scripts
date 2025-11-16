@@ -1668,8 +1668,8 @@ msgid "Text: List line counts"
 msgstr "文本：列出行数"
 
 #: Menu
-msgid "Text: List max line lengths"
-msgstr "文本：列出最大行长度"
+msgid "Text: List line lengths"
+msgstr "文本：列出行长度"
 
 #: Menu
 msgid "Text: List word counts"

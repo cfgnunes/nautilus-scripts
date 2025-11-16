@@ -1935,7 +1935,7 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Plain text/Text: List max line lengths"
+    script_test="Plain text/Text: List line lengths"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"

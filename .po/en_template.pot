@@ -1667,7 +1667,7 @@ msgid "Text: List line counts"
 msgstr ""
 
 #: Menu
-msgid "Text: List max line lengths"
+msgid "Text: List line lengths"
 msgstr ""
 
 #: Menu

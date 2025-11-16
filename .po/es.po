@@ -1668,8 +1668,8 @@ msgid "Text: List line counts"
 msgstr "Texto: Contar líneas"
 
 #: Menu
-msgid "Text: List max line lengths"
-msgstr "Texto: Listar longitud máxima de líneas"
+msgid "Text: List line lengths"
+msgstr "Texto: Lista de longitudes de línea"
 
 #: Menu
 msgid "Text: List word counts"
