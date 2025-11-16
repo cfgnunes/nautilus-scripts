@@ -17,6 +17,14 @@ INSTALL_NAME_DIR="scripts"
 INSTALL_PATH=".local/share/$INSTALL_NAME_DIR"
 INSTALL_APPS_SHORTCUTS_PATH=".local/share/applications/$INSTALL_NAME_DIR"
 
+# Constants for logging.
+if [[ -z "${TEMP_DIR:-}" ]]; then
+    TEMP_DIR=$(mktemp --directory)
+    export TEMP_DIR
+fi
+INSTALL_LOG_NAME="install.log"
+INSTALL_LOG_TMP="$TEMP_DIR/$INSTALL_LOG_NAME"
+
 # List of supported file managers.
 COMPATIBLE_FILE_MANAGERS=(
     "nautilus"
@@ -64,8 +72,10 @@ readonly \
     COMPATIBLE_FILE_MANAGERS \
     I18N_DIR \
     IGNORE_FIND_PATHS \
-    INSTALL_NAME_DIR \
     INSTALL_APPS_SHORTCUTS_PATH \
+    INSTALL_LOG_NAME \
+    INSTALL_LOG_TMP \
+    INSTALL_NAME_DIR \
     INSTALL_PATH \
     SCRIPT_DIR
 
@@ -105,6 +115,14 @@ fi
 # Main flow ----
 # -----------------------------------------------------------------------------
 
+_on_exit() {
+    local exit_code=$?
+    if [[ $exit_code -ne 0 ]]; then
+        _log "[ERR] Installation terminated with exit code $exit_code."
+    fi
+}
+trap _on_exit EXIT
+
 # shellcheck disable=SC2034
 _main() {
     local cat_defaults=()
@@ -113,6 +131,9 @@ _main() {
     local menu_defaults=()
     local menu_labels=()
     local menu_selected=()
+
+    _log "[INF] Installation started."
+    _log_system_info
 
     # Prevent running the installer with sudo/root.
     if [[ "$(id -u)" -eq 0 ]]; then
@@ -181,6 +202,16 @@ _main() {
     OPT_INSTALL_HOMEBREW=${menu_selected[5]}
     OPT_CHOOSE_CATEGORIES=${menu_selected[6]}
 
+    _log_variable "OPT_INSTALL_BASIC_DEPS"
+    _log_variable "OPT_REMOVE_SCRIPTS"
+    _log_variable "OPT_INSTALL_ACCELS"
+    _log_variable "OPT_CLOSE_FILE_MANAGER"
+    _log_variable "OPT_INSTALL_APP_SHORTCUTS"
+    _log_variable "OPT_INSTALL_HOMEBREW"
+    _log_variable "OPT_CHOOSE_CATEGORIES"
+    _log_variable "OPT_INTERACTIVE_INSTALL"
+    _log_variable "OPT_QUIET_INSTALL"
+
     # Collect all available script categories (directories).
     local dir=""
     while IFS= read -r -d $'\0' dir; do
@@ -201,6 +232,9 @@ _main() {
     INSTALL_HOME=$HOME
     INSTALL_OWNER=$(stat -c "%U" "$INSTALL_HOME")
     INSTALL_GROUP=$(stat -c "%G" "$INSTALL_HOME")
+
+    _log_variable "INSTALL_OWNER"
+    _log_variable "INSTALL_GROUP"
 
     _echo ""
     _echo_info "$(_i18n 'Installing:')"
@@ -248,6 +282,7 @@ _main() {
 
     _echo ""
     _echo_info "$(_i18n 'Installation completed successfully!')"
+    _log_finish
 }
 
 # -----------------------------------------------------------------------------
@@ -255,24 +290,82 @@ _main() {
 # -----------------------------------------------------------------------------
 
 _echo() {
+    local message=$1
+    if [[ -n "$message" ]]; then
+        _log "[MSG] $message"
+    fi
+
     if [[ "$OPT_QUIET_INSTALL" == "true" ]]; then
         return
     fi
-    echo "$1"
+
+    echo "$message"
 }
 
 _echo_info() {
+    local message=$1
+    _log "[MSG] $message"
+
     if [[ "$OPT_QUIET_INSTALL" == "true" ]]; then
         return
     fi
 
     local msg_info="[\033[0;32m INFO \033[0m]"
-    echo -e "$msg_info $1"
+    echo -e "$msg_info $message"
 }
 
 _echo_error() {
+    local message=$1
+    _log "[ERR] $message"
+
     local msg_error="[\033[0;31mFAILED\033[0m]"
-    echo -e "$msg_error $1"
+    echo -e "$msg_error $message"
+}
+
+# -----------------------------------------------------------------------------
+# Log functions ----
+# -----------------------------------------------------------------------------
+
+_print_date() {
+    date +"%Y-%m-%d %T %Z"
+}
+
+_log() {
+    local message=$1
+    printf "%s\n" "$(_print_date) $message" >>"$INSTALL_LOG_TMP"
+}
+
+_log_finish() {
+    local log_file="$INSTALL_DIR/$INSTALL_LOG_NAME"
+    touch -- "$log_file"
+    cat -- "$INSTALL_LOG_TMP" >>"$log_file"
+}
+
+_log_system_info() {
+    local sys_kernel=""
+    local sys_os=""
+    if _command_exists "lsb_release"; then
+        # shellcheck disable=SC2034
+        sys_os=$(lsb_release -ds 2>/dev/null)
+    fi
+    if _command_exists "uname"; then
+        # shellcheck disable=SC2034
+        sys_kernel=$(uname -srmo 2>/dev/null)
+    fi
+    _log_variable "USER"
+    _log_variable "HOME"
+    _log_variable "SHELL"
+    _log_variable "LANG"
+    _log_variable "sys_kernel"
+    _log_variable "sys_os"
+    _log_variable "XDG_CURRENT_DESKTOP"
+    _log_variable "XDG_SESSION_TYPE"
+}
+
+_log_variable() {
+    local var_name=$1
+    local var_value="${!var_name:-}"
+    _log "[VAR] $var_name=\"$var_value\""
 }
 
 # -----------------------------------------------------------------------------
@@ -437,11 +530,11 @@ _item_create_backup() {
     fi
 }
 
-# FUNCTION: __delete_items
+# FUNCTION: _delete_items
 #
 # DESCRIPTION:
 # This function deletes or trash items, using the best available method.
-__delete_items() {
+_delete_items() {
     local items=$1
 
     # Attempt to remove empty directories directly (rmdir only removes empty
@@ -611,6 +704,7 @@ _install_dependencies() {
 
         # Package manager 'nix': no root required.
         if [[ -n "$packages" ]]; then
+            _log "[INF] Package manager: nix-env"
             _print_missing_packages "$packages"
             local nix_packages=""
             local nix_channel="nixpkgs"
@@ -631,6 +725,7 @@ _install_dependencies() {
 
         # Package manager 'guix': no root required.
         if [[ -n "$packages" ]]; then
+            _log "[INF] Package manager: guix"
             _print_missing_packages "$packages"
             guix install $packages
         fi
@@ -639,6 +734,7 @@ _install_dependencies() {
         _command_exists "pgrep" || packages+="procps "
 
         if [[ -n "$packages" ]]; then
+            _log "[INF] Package manager: apt-get"
             _print_missing_packages "$packages"
             $admin_cmd apt-get update
             $admin_cmd apt-get -y install $packages
@@ -648,6 +744,7 @@ _install_dependencies() {
         _command_exists "pgrep" || packages+="procps-ng "
 
         if [[ -n "$packages" ]]; then
+            _log "[INF] Package manager: rpm-ostree"
             _print_missing_packages "$packages"
             $admin_cmd rpm-ostree install $packages
         fi
@@ -656,6 +753,7 @@ _install_dependencies() {
         _command_exists "pgrep" || packages+="procps-ng "
 
         if [[ -n "$packages" ]]; then
+            _log "[INF] Package manager: dnf"
             _print_missing_packages "$packages"
             $admin_cmd dnf check-update
             $admin_cmd dnf -y install $packages
@@ -670,6 +768,7 @@ _install_dependencies() {
         fi
 
         if [[ -n "$packages" ]]; then
+            _log "[INF] Package manager: pacman"
             _print_missing_packages "$packages"
             $admin_cmd pacman -Syy
             $admin_cmd pacman --noconfirm -S $packages
@@ -679,12 +778,14 @@ _install_dependencies() {
         _command_exists "pgrep" || packages+="procps-ng "
 
         if [[ -n "$packages" ]]; then
+            _log "[INF] Package manager: zypper"
             _print_missing_packages "$packages"
             $admin_cmd zypper refresh
             $admin_cmd zypper --non-interactive install $packages
         fi
     else
         if [[ -n "$packages" ]]; then
+            _log "[ERR] Missing package manager."
             _print_missing_packages "$packages"
             _echo_error "$(_i18n 'Could not find a package manager!')"
             exit 1
@@ -754,7 +855,7 @@ _create_links() {
 
     # Remove previous scripts if requested.
     if [[ "$OPT_REMOVE_SCRIPTS" == "true" ]]; then
-        __delete_items "$destination_dir"
+        _delete_items "$destination_dir"
     else
         # Remove broken links.
         find "$destination_dir" -type l -delete 2>/dev/null
