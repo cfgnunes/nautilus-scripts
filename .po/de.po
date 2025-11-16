@@ -885,8 +885,8 @@ msgid "Find junk files"
 msgstr "Müll-Dateien finden"
 
 #: Menu
-msgid "Find zero-byte files"
-msgstr "Dateien mit 0 Byte finden"
+msgid "Find empty files"
+msgstr "Leere Dateien finden"
 
 #: Menu
 msgid "Flatten directory structure"

@@ -884,7 +884,7 @@ msgid "Find junk files"
 msgstr ""
 
 #: Menu
-msgid "Find zero-byte files"
+msgid "Find empty files"
 msgstr ""
 
 #: Menu

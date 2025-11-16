@@ -641,7 +641,7 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Directories and Files/Find zero-byte files"
+    script_test="Directories and Files/Find empty files"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_nonempty "$std_output"

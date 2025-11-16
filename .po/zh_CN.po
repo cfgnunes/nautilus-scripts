@@ -885,8 +885,8 @@ msgid "Find junk files"
 msgstr "查找垃圾文件"
 
 #: Menu
-msgid "Find zero-byte files"
-msgstr "查找零字节文件"
+msgid "Find empty files"
+msgstr "查找空文件"
 
 #: Menu
 msgid "Flatten directory structure"
