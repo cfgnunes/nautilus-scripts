@@ -654,11 +654,11 @@ msgstr "Áudio: Fade-out"
 
 #: Menu
 msgid "Audio: Mix channels to mono"
-msgstr "Áudio: Mesclar canais em mono"
+msgstr "Áudio: Misturar canais para mono"
 
 #: Menu
 msgid "Audio: Mix two files"
-msgstr "Áudio: Mesclar dois arquivos"
+msgstr "Áudio: Misturar dois arquivos"
 
 #: Menu
 msgid "Audio: Volume normalize"
