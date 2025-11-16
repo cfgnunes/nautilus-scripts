@@ -3,7 +3,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Enhanced File Manager Actions for Linux\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 12:12-0300\n"
 "PO-Revision-Date: 2025-11-13 12:29-0300\n"
 "Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
