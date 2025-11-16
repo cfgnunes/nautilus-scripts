@@ -70,10 +70,10 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Alt>Z`   | Compress to 'zip'                 |
 | `<Control><Alt>I`   | Show files information            |
 | `<Control><Alt>M`   | Show files MIME type              |
-| `<Control><Alt>H`   | Find hidden items                 |
 | `<Control><Alt>J`   | Find junk files                   |
 | `<Control><Alt>U`   | Find duplicate files              |
 | `<Control><Alt>0`   | Find zero-byte files              |
+| `<Control><Alt>H`   | List hidden items                 |
 | `<Control><Alt>P`   | List permissions and owners       |
 | `<Control><Alt>B`   | List largest files                |
 | `<Control><Alt>R`   | List recent files                 |
