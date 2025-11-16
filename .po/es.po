@@ -869,27 +869,27 @@ msgstr "Recuperar archivos (via PhotoRec)"
 
 #: Menu
 msgid "Find broken links"
-msgstr "Encontrar enlaces rotos"
+msgstr "Buscar enlaces rotos"
 
 #: Menu
 msgid "Find duplicate files"
-msgstr "Encontrar archivos duplicados"
+msgstr "Buscar archivos duplicados"
 
 #: Menu
 msgid "Find empty directories"
-msgstr "Encontrar directorios vacíos"
+msgstr "Buscar directorios vacíos"
 
 #: Menu
 msgid "Find hidden items"
-msgstr "Encontrar elementos ocultos"
+msgstr "Buscar elementos ocultos"
 
 #: Menu
 msgid "Find junk files"
-msgstr "Encontrar archivos basura"
+msgstr "Buscar archivos basura"
 
 #: Menu
 msgid "Find zero-byte files"
-msgstr "Encontrar archivos de cero bytes"
+msgstr "Buscar archivos de cero bytes"
 
 #: Menu
 msgid "Flatten directory structure"
@@ -1117,19 +1117,19 @@ msgstr "Imagen: Exportar a PDF"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"
-msgstr "Imagen: Encontrar similares (65 pct)"
+msgstr "Imagen: Buscar similares (65 pct)"
 
 #: Menu
 msgid "Image: Find similar (75 pct)"
-msgstr "Imagen: Encontrar similares (75 pct)"
+msgstr "Imagen: Buscar similares (75 pct)"
 
 #: Menu
 msgid "Image: Find similar (85 pct)"
-msgstr "Imagen: Encontrar similares (85 pct)"
+msgstr "Imagen: Buscar similares (85 pct)"
 
 #: Menu
 msgid "Image: Find similar (95 pct)"
-msgstr "Imagen: Encontrar similares (95 pct)"
+msgstr "Imagen: Buscar similares (95 pct)"
 
 #: Menu
 msgid "Image: Flip (horizontal)"
@@ -1373,15 +1373,15 @@ msgstr "PDF: Extraer imágenes"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"
-msgstr "PDF: Encontrar PDFs anotados"
+msgstr "PDF: Buscar PDFs anotados"
 
 #: Menu
 msgid "PDF: Find non-linearized PDFs"
-msgstr "PDF: Encontrar PDFs no linealizados"
+msgstr "PDF: Buscar PDFs no linealizados"
 
 #: Menu
 msgid "PDF: Find non-searchable PDFs"
-msgstr "PDF: Encontrar PDFs no buscables"
+msgstr "PDF: Buscar PDFs no buscables"
 
 #: Menu
 msgid "PDF: Find password-protected PDFs"
@@ -1389,7 +1389,7 @@ msgstr "PDF: Buscar PDFs con contraseña"
 
 #: Menu
 msgid "PDF: Find signed PDFs"
-msgstr "PDF: Encontrar PDFs firmados"
+msgstr "PDF: Buscar PDFs firmados"
 
 #: Menu
 msgid "PDF: Layout (landscape, 1x2)"
