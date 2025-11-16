@@ -1258,7 +1258,7 @@ msgstr "IP: Ping em hosts"
 
 #: Menu
 msgid "IP: Scan ports"
-msgstr "IP: Escanear portas"
+msgstr "IP: Verificar portas"
 
 #: Menu
 msgid "IP: Test availability"
