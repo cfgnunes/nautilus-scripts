@@ -1204,24 +1204,24 @@ msgid "Image: Resize (75 pct)"
 msgstr "Imagem: Redimensionar (75 pct)"
 
 #: Menu
-msgid "Image: Resize and crop (512x512)"
-msgstr "Imagem: Redim. e cortar (512x512)"
+msgid "Image: Resize (512x512)"
+msgstr "Imagem: Redimensionar (512x512)"
 
 #: Menu
-msgid "Image: Resize and crop (1080x1080)"
-msgstr "Imagem: Redim. e cortar (1080x1080)"
+msgid "Image: Resize (1080x1080)"
+msgstr "Imagem: Redimensionar (1080x1080)"
 
 #: Menu
-msgid "Image: Resize and crop (1920x1080)"
-msgstr "Imagem: Redim. e cortar (1920x1080)"
+msgid "Image: Resize (1920x1080)"
+msgstr "Imagem: Redimensionar (1920x1080)"
 
 #: Menu
-msgid "Image: Resize and crop (2560x1440)"
-msgstr "Imagem: Redim. e cortar (2560x1440)"
+msgid "Image: Resize (2560x1440)"
+msgstr "Imagem: Redimensionar (2560x1440)"
 
 #: Menu
-msgid "Image: Resize and crop (3840x2160)"
-msgstr "Imagem: Redim. e cortar (3840x2160)"
+msgid "Image: Resize (3840x2160)"
+msgstr "Imagem: Redimensionar (3840x2160)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

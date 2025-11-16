@@ -1204,24 +1204,24 @@ msgid "Image: Resize (75 pct)"
 msgstr "图像：调整尺寸（75pct）"
 
 #: Menu
-msgid "Image: Resize and crop (512x512)"
-msgstr "图像：调整尺寸并裁剪（512x512）"
+msgid "Image: Resize (512x512)"
+msgstr "图像：调整尺寸（512x512）"
 
 #: Menu
-msgid "Image: Resize and crop (1080x1080)"
-msgstr "图像：调整尺寸并裁剪（1080x1080）"
+msgid "Image: Resize (1080x1080)"
+msgstr "图像：调整尺寸（1080x1080）"
 
 #: Menu
-msgid "Image: Resize and crop (1920x1080)"
-msgstr "图像：调整尺寸并裁剪（1920x1080）"
+msgid "Image: Resize (1920x1080)"
+msgstr "图像：调整尺寸（1920x1080）"
 
 #: Menu
-msgid "Image: Resize and crop (2560x1440)"
-msgstr "图像：调整大小并裁剪 (2560x1440)"
+msgid "Image: Resize (2560x1440)"
+msgstr "图像：调整尺寸（2560x1440）"
 
 #: Menu
-msgid "Image: Resize and crop (3840x2160)"
-msgstr "图像：调整大小并裁剪 (3840x2160)"
+msgid "Image: Resize (3840x2160)"
+msgstr "图像：调整尺寸（3840x2160）"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

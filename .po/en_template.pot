@@ -1203,23 +1203,23 @@ msgid "Image: Resize (75 pct)"
 msgstr ""
 
 #: Menu
-msgid "Image: Resize and crop (512x512)"
+msgid "Image: Resize (512x512)"
 msgstr ""
 
 #: Menu
-msgid "Image: Resize and crop (1080x1080)"
+msgid "Image: Resize (1080x1080)"
 msgstr ""
 
 #: Menu
-msgid "Image: Resize and crop (1920x1080)"
+msgid "Image: Resize (1920x1080)"
 msgstr ""
 
 #: Menu
-msgid "Image: Resize and crop (2560x1440)"
+msgid "Image: Resize (2560x1440)"
 msgstr ""
 
 #: Menu
-msgid "Image: Resize and crop (3840x2160)"
+msgid "Image: Resize (3840x2160)"
 msgstr ""
 
 #: Menu
