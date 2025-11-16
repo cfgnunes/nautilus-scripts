@@ -1566,7 +1566,7 @@ msgstr "Escanear malware (via ClamAV)"
 
 #: Menu
 msgid "Show files information"
-msgstr "Mostrar información de archivos"
+msgstr "Mostrar informaciones de archivos"
 
 #: Menu
 msgid "Show files metadata"
@@ -1578,7 +1578,7 @@ msgstr "Mostrar tipo MIME de archivos"
 
 #: Menu
 msgid "Show media information"
-msgstr "Mostrar información multimedia"
+msgstr "Mostrar informaciones multimedia"
 
 #: Menu
 msgid "Shred files (secure delete)"

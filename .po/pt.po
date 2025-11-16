@@ -1566,7 +1566,7 @@ msgstr "Verificar malware (via ClamAV)"
 
 #: Menu
 msgid "Show files information"
-msgstr "Mostrar informação de arquivos"
+msgstr "Mostrar informações de arquivos"
 
 #: Menu
 msgid "Show files metadata"
