@@ -1132,12 +1132,12 @@ msgid "Image: Find similar (95 pct)"
 msgstr "Imagem: Encontrar similares (95 pct)"
 
 #: Menu
-msgid "Image: Flip (horizontally)"
-msgstr "Imagem: Espelhar (horizontalmente)"
+msgid "Image: Flip (horizontal)"
+msgstr "Imagem: Espelhar (horizontal)"
 
 #: Menu
-msgid "Image: Flip (vertically)"
-msgstr "Imagem: Espelhar (verticalmente)"
+msgid "Image: Flip (vertical)"
+msgstr "Imagem: Espelhar (vertical)"
 
 #: Menu
 msgid "Image: Generate multiple hues"
@@ -1236,24 +1236,24 @@ msgid "Image: Rotate (270 deg)"
 msgstr "Imagem: Rotacionar (270 graus)"
 
 #: Menu
-msgid "Image: Split into 2 (horizontally)"
-msgstr "Imagem: Dividir em 2 (horizontalmente)"
+msgid "Image: Split into 2 (horizontal)"
+msgstr "Imagem: Dividir em 2 (horizontal)"
 
 #: Menu
-msgid "Image: Split into 2 (vertically)"
-msgstr "Imagem: Dividir em 2 (verticalmente)"
+msgid "Image: Split into 2 (vertical)"
+msgstr "Imagem: Dividir em 2 (vertical)"
 
 #: Menu
 msgid "Image: Split into 4"
 msgstr "Imagem: Dividir em 4"
 
 #: Menu
-msgid "Image: Stack (horizontally)"
-msgstr "Imagem: Empilhar (horizontalmente)"
+msgid "Image: Stack (horizontal)"
+msgstr "Imagem: Empilhar (horizontal)"
 
 #: Menu
-msgid "Image: Stack (vertically)"
-msgstr "Imagem: Empilhar (verticalmente)"
+msgid "Image: Stack (vertical)"
+msgstr "Imagem: Empilhar (vertical)"
 
 #: Menu
 msgid "IP: Ping hosts"
@@ -1784,12 +1784,12 @@ msgid "Video: Extract audio"
 msgstr "Vídeo: Extrair áudio"
 
 #: Menu
-msgid "Video: Flip (horizontally)"
-msgstr "Vídeo: Espelhar (horizontalmente)"
+msgid "Video: Flip (horizontal)"
+msgstr "Vídeo: Espelhar (horizontal)"
 
 #: Menu
-msgid "Video: Flip (vertically)"
-msgstr "Vídeo: Espelhar (verticalmente)"
+msgid "Video: Flip (vertical)"
+msgstr "Vídeo: Espelhar (vertical)"
 
 #: Menu
 msgid "Video: Frame rate to 30 FPS"

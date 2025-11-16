@@ -1132,11 +1132,11 @@ msgid "Image: Find similar (95 pct)"
 msgstr "图像：查找相似图片（95pct）"
 
 #: Menu
-msgid "Image: Flip (horizontally)"
+msgid "Image: Flip (horizontal)"
 msgstr "图像：翻转（水平）"
 
 #: Menu
-msgid "Image: Flip (vertically)"
+msgid "Image: Flip (vertical)"
 msgstr "图像：翻转（垂直）"
 
 #: Menu
@@ -1236,11 +1236,11 @@ msgid "Image: Rotate (270 deg)"
 msgstr "图像：旋转 (270度)"
 
 #: Menu
-msgid "Image: Split into 2 (horizontally)"
+msgid "Image: Split into 2 (horizontal)"
 msgstr "图像：分割为2份 (水平)"
 
 #: Menu
-msgid "Image: Split into 2 (vertically)"
+msgid "Image: Split into 2 (vertical)"
 msgstr "图像：分割为2份 (垂直)"
 
 #: Menu
@@ -1248,11 +1248,11 @@ msgid "Image: Split into 4"
 msgstr "图像：分割为4份"
 
 #: Menu
-msgid "Image: Stack (horizontally)"
+msgid "Image: Stack (horizontal)"
 msgstr "图像：堆叠 (水平)"
 
 #: Menu
-msgid "Image: Stack (vertically)"
+msgid "Image: Stack (vertical)"
 msgstr "图像：堆叠 (垂直)"
 
 #: Menu
@@ -1784,11 +1784,11 @@ msgid "Video: Extract audio"
 msgstr "视频：提取音频"
 
 #: Menu
-msgid "Video: Flip (horizontally)"
+msgid "Video: Flip (horizontal)"
 msgstr "视频：水平翻转"
 
 #: Menu
-msgid "Video: Flip (vertically)"
+msgid "Video: Flip (vertical)"
 msgstr "视频：垂直翻转"
 
 #: Menu

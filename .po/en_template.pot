@@ -1131,11 +1131,11 @@ msgid "Image: Find similar (95 pct)"
 msgstr ""
 
 #: Menu
-msgid "Image: Flip (horizontally)"
+msgid "Image: Flip (horizontal)"
 msgstr ""
 
 #: Menu
-msgid "Image: Flip (vertically)"
+msgid "Image: Flip (vertical)"
 msgstr ""
 
 #: Menu
@@ -1235,11 +1235,11 @@ msgid "Image: Rotate (270 deg)"
 msgstr ""
 
 #: Menu
-msgid "Image: Split into 2 (horizontally)"
+msgid "Image: Split into 2 (horizontal)"
 msgstr ""
 
 #: Menu
-msgid "Image: Split into 2 (vertically)"
+msgid "Image: Split into 2 (vertical)"
 msgstr ""
 
 #: Menu
@@ -1247,11 +1247,11 @@ msgid "Image: Split into 4"
 msgstr ""
 
 #: Menu
-msgid "Image: Stack (horizontally)"
+msgid "Image: Stack (horizontal)"
 msgstr ""
 
 #: Menu
-msgid "Image: Stack (vertically)"
+msgid "Image: Stack (vertical)"
 msgstr ""
 
 #: Menu
@@ -1783,11 +1783,11 @@ msgid "Video: Extract audio"
 msgstr ""
 
 #: Menu
-msgid "Video: Flip (horizontally)"
+msgid "Video: Flip (horizontal)"
 msgstr ""
 
 #: Menu
-msgid "Video: Flip (vertically)"
+msgid "Video: Flip (vertical)"
 msgstr ""
 
 #: Menu
