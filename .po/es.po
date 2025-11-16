@@ -1913,8 +1913,8 @@ msgid "Creating shortcuts to the application menu..."
 msgstr "Creando accesos directos al menú de aplicaciones..."
 
 #: install.sh
-msgid "Creating GNOME application folder..."
-msgstr "Creando carpeta de aplicaciones de GNOME..."
+msgid "Creating GNOME Shell application folder..."
+msgstr "Creando carpeta de aplicaciones de GNOME Shell..."
 
 #: install.sh
 msgid "Installing file manager actions..."
@@ -1926,11 +1926,11 @@ msgstr "Cerrando el gestor de archivos..."
 
 #: install.sh
 msgid "Installing Homebrew:"
-msgstr "Instalando Homebrew:"
+msgstr "Instalando el Homebrew:"
 
 #: install.sh
 msgid "Homebrew is already installed."
-msgstr "Homebrew ya está instalado."
+msgstr "El Homebrew ya está instalado."
 
 #: install.sh
 msgid "Installing Homebrew to:"

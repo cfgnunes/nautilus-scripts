@@ -1912,7 +1912,7 @@ msgid "Creating shortcuts to the application menu..."
 msgstr ""
 
 #: install.sh
-msgid "Creating GNOME application folder..."
+msgid "Creating GNOME Shell application folder..."
 msgstr ""
 
 #: install.sh

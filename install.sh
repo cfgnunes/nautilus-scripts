@@ -1128,7 +1128,7 @@ _create_gnome_application_folder() {
         return
     fi
 
-    _echo_info "> $(_i18n 'Creating GNOME application folder...')"
+    _echo_info "> $(_i18n 'Creating GNOME Shell application folder...')"
 
     # Retrieve the current list of GNOME app folders.
     # If the folder does not exist, append it to the list.

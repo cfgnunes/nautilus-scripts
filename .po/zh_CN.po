@@ -1913,8 +1913,8 @@ msgid "Creating shortcuts to the application menu..."
 msgstr "正在创建应用程序菜单的快捷方式..."
 
 #: install.sh
-msgid "Creating GNOME application folder..."
-msgstr "正在创建 GNOME 应用程序文件夹..."
+msgid "Creating GNOME Shell application folder..."
+msgstr "正在创建 GNOME Shell 应用程序文件夹..."
 
 #: install.sh
 msgid "Installing file manager actions..."

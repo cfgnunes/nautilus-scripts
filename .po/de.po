@@ -1913,8 +1913,8 @@ msgid "Creating shortcuts to the application menu..."
 msgstr "Erstelle Verknüpfungen im Anwendungsmenü..."
 
 #: install.sh
-msgid "Creating GNOME application folder..."
-msgstr "Erstelle GNOME-Anwendungsordner..."
+msgid "Creating GNOME Shell application folder..."
+msgstr "Erstelle GNOME Shell-Anwendungsordner..."
 
 #: install.sh
 msgid "Installing file manager actions..."
