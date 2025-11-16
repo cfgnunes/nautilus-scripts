@@ -133,7 +133,6 @@ _main() {
     local menu_selected=()
 
     _log "[INF] Installation started."
-    _log_system_info
 
     # Prevent running the installer with sudo/root.
     if [[ "$(id -u)" -eq 0 ]]; then
@@ -153,9 +152,11 @@ _main() {
     # being executed remotely (e.g., via 'curl'). In that case, download the
     # tarball and continue the installation from the extracted files.
     if [[ ! -f "$SCRIPT_DIR/.common-functions.sh" ]]; then
+        _log "[INF] Running remote installer."
         _bootstrap_repository "$@"
         exit 0
     fi
+    _log_system_info
     _i18n_initialize
 
     # Available options presented in the interactive menu.
