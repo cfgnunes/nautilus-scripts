@@ -1752,16 +1752,16 @@ msgid "Video: Convert to MKV"
 msgstr "Video: Convertir a MKV"
 
 #: Menu
-msgid "Video: Convert to MKV (no re-encoding)"
-msgstr "Video: Convertir a MKV (sin recod.)"
+msgid "Video: Convert to MKV (copy)"
+msgstr "Video: Convertir a MKV (copiar)"
 
 #: Menu
 msgid "Video: Convert to MP4"
 msgstr "Video: Convertir a MP4"
 
 #: Menu
-msgid "Video: Convert to MP4 (no re-encoding)"
-msgstr "Video: Convertir a MP4 (sin recod.)"
+msgid "Video: Convert to MP4 (copy)"
+msgstr "Video: Convertir a MP4 (copiar)"
 
 #: Menu
 msgid "Video: Export frames (1 FPS)"

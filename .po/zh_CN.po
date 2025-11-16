@@ -1752,16 +1752,16 @@ msgid "Video: Convert to MKV"
 msgstr "视频：转换为MKV"
 
 #: Menu
-msgid "Video: Convert to MKV (no re-encoding)"
-msgstr "视频：转换为MKV（不重新编码）"
+msgid "Video: Convert to MKV (copy)"
+msgstr "视频：转换为MKV（复制）"
 
 #: Menu
 msgid "Video: Convert to MP4"
 msgstr "视频：转换为MP4"
 
 #: Menu
-msgid "Video: Convert to MP4 (no re-encoding)"
-msgstr "视频：转换为MP4（不重新编码）"
+msgid "Video: Convert to MP4 (copy)"
+msgstr "视频：转换为MP4（复制）"
 
 #: Menu
 msgid "Video: Export frames (1 FPS)"

@@ -440,7 +440,7 @@ _main() {
     __test_file_nonempty "$output_file.mkv"
     __test_file_empty "$std_output"
 
-    script_test="Audio and Video/Video: Convert/Video: Convert to MKV (no re-encoding)"
+    script_test="Audio and Video/Video: Convert/Video: Convert to MKV (copy)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file (2).mkv"
@@ -452,7 +452,7 @@ _main() {
     __test_file_nonempty "$output_file (2).mp4"
     __test_file_empty "$std_output"
 
-    script_test="Audio and Video/Video: Convert/Video: Convert to MP4 (no re-encoding)"
+    script_test="Audio and Video/Video: Convert/Video: Convert to MP4 (copy)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file (3).mp4"
