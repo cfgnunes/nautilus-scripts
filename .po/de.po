@@ -1281,8 +1281,8 @@ msgid "List permissions and owners"
 msgstr "Berechtigungen und Besitzer anzeigen"
 
 #: Menu
-msgid "List recently modified files"
-msgstr "Kürzlich geänderte Dateien anzeigen"
+msgid "List recent files"
+msgstr "Zuletzt verwendete Dateien anzeigen"
 
 #: Menu
 msgid "List symbolic links"

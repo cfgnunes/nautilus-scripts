@@ -1281,8 +1281,8 @@ msgid "List permissions and owners"
 msgstr "列出权限和所有者"
 
 #: Menu
-msgid "List recently modified files"
-msgstr "列出最近修改的文件"
+msgid "List recent files"
+msgstr "列出最近的文件"
 
 #: Menu
 msgid "List symbolic links"

@@ -1280,7 +1280,7 @@ msgid "List permissions and owners"
 msgstr ""
 
 #: Menu
-msgid "List recently modified files"
+msgid "List recent files"
 msgstr ""
 
 #: Menu
