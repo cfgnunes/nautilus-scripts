@@ -64,10 +64,10 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `F4`                | Terminal                          |
 | `F7`                | Disk Usage Analyzer               |
 | `<Control>E`        | Extract here                      |
-| `<Control><Alt>G`   | Compress to .tar.gz (each)        |
-| `<Control><Alt>S`   | Compress to .tar.zst (each)       |
-| `<Control><Alt>X`   | Compress to .tar.xz (each)        |
-| `<Control><Alt>Z`   | Compress to .zip (each)           |
+| `<Control><Alt>G`   | Compress to 'tar.gz'              |
+| `<Control><Alt>S`   | Compress to 'tar.zst'             |
+| `<Control><Alt>X`   | Compress to 'tar.xz'              |
+| `<Control><Alt>Z`   | Compress to 'zip'                 |
 | `<Control><Alt>I`   | Show files information            |
 | `<Control><Alt>M`   | Show files MIME type              |
 | `<Control><Alt>H`   | Find hidden items                 |

@@ -700,40 +700,40 @@ msgid "Compress..."
 msgstr "压缩..."
 
 #: Menu
-msgid "Compress to .7z (each)"
-msgstr "压缩为.7z（每个）"
+msgid "Compress to '7z'"
+msgstr "压缩为'7z'"
 
 #: Menu
-msgid "Compress to .7z with password (each)"
-msgstr "压缩为带密码的.7z（每个）"
+msgid "Compress to '7z' with password"
+msgstr "压缩为带密码的'7z'"
 
 #: Menu
-msgid "Compress to .iso (each)"
-msgstr "压缩为.iso（每个）"
+msgid "Compress to 'iso'"
+msgstr "压缩为'iso'"
 
 #: Menu
-msgid "Compress to .squashfs (each)"
-msgstr "压缩为.squashfs（每个）"
+msgid "Compress to 'squashfs'"
+msgstr "压缩为'squashfs'"
 
 #: Menu
-msgid "Compress to .tar.gz (each)"
-msgstr "压缩为.tar.gz（每个）"
+msgid "Compress to 'tar.gz'"
+msgstr "压缩为'tar.gz'"
 
 #: Menu
-msgid "Compress to .tar.xz (each)"
-msgstr "压缩为.tar.xz（每个）"
+msgid "Compress to 'tar.xz'"
+msgstr "压缩为'tar.xz'"
 
 #: Menu
-msgid "Compress to .tar.zst (each)"
-msgstr "压缩为.tar.zst（每个）"
+msgid "Compress to 'tar.zst'"
+msgstr "压缩为'tar.zst'"
 
 #: Menu
-msgid "Compress to .zip (each)"
-msgstr "压缩为.zip（每个）"
+msgid "Compress to 'zip'"
+msgstr "压缩为'zip'"
 
 #: Menu
-msgid "Compress to .zip with password (each)"
-msgstr "压缩为带密码的.zip（每个）"
+msgid "Compress to 'zip' with password"
+msgstr "压缩为带密码的'zip'"
 
 #: Menu
 msgid "Compute all checksums"

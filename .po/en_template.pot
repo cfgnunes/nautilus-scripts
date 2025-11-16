@@ -699,39 +699,39 @@ msgid "Compress..."
 msgstr ""
 
 #: Menu
-msgid "Compress to .7z (each)"
+msgid "Compress to '7z'"
 msgstr ""
 
 #: Menu
-msgid "Compress to .7z with password (each)"
+msgid "Compress to '7z' with password"
 msgstr ""
 
 #: Menu
-msgid "Compress to .iso (each)"
+msgid "Compress to 'iso'"
 msgstr ""
 
 #: Menu
-msgid "Compress to .squashfs (each)"
+msgid "Compress to 'squashfs'"
 msgstr ""
 
 #: Menu
-msgid "Compress to .tar.gz (each)"
+msgid "Compress to 'tar.gz'"
 msgstr ""
 
 #: Menu
-msgid "Compress to .tar.xz (each)"
+msgid "Compress to 'tar.xz'"
 msgstr ""
 
 #: Menu
-msgid "Compress to .tar.zst (each)"
+msgid "Compress to 'tar.zst'"
 msgstr ""
 
 #: Menu
-msgid "Compress to .zip (each)"
+msgid "Compress to 'zip'"
 msgstr ""
 
 #: Menu
-msgid "Compress to .zip with password (each)"
+msgid "Compress to 'zip' with password"
 msgstr ""
 
 #: Menu

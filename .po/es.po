@@ -700,40 +700,40 @@ msgid "Compress..."
 msgstr "Comprimir..."
 
 #: Menu
-msgid "Compress to .7z (each)"
-msgstr "Comprimir a .7z (cada)"
+msgid "Compress to '7z'"
+msgstr "Comprimir a '7z'"
 
 #: Menu
-msgid "Compress to .7z with password (each)"
-msgstr "Comprimir a .7z con contraseña (cada)"
+msgid "Compress to '7z' with password"
+msgstr "Comprimir a '7z' con contraseña"
 
 #: Menu
-msgid "Compress to .iso (each)"
-msgstr "Comprimir a .iso (cada)"
+msgid "Compress to 'iso'"
+msgstr "Comprimir a 'iso'"
 
 #: Menu
-msgid "Compress to .squashfs (each)"
-msgstr "Comprimir a .squashfs (cada)"
+msgid "Compress to 'squashfs'"
+msgstr "Comprimir a 'squashfs'"
 
 #: Menu
-msgid "Compress to .tar.gz (each)"
-msgstr "Comprimir a .tar.gz (cada)"
+msgid "Compress to 'tar.gz'"
+msgstr "Comprimir a 'tar.gz'"
 
 #: Menu
-msgid "Compress to .tar.xz (each)"
-msgstr "Comprimir a .tar.xz (cada)"
+msgid "Compress to 'tar.xz'"
+msgstr "Comprimir a 'tar.xz'"
 
 #: Menu
-msgid "Compress to .tar.zst (each)"
-msgstr "Comprimir a .tar.zst (cada)"
+msgid "Compress to 'tar.zst'"
+msgstr "Comprimir a 'tar.zst'"
 
 #: Menu
-msgid "Compress to .zip (each)"
-msgstr "Comprimir a .zip (cada)"
+msgid "Compress to 'zip'"
+msgstr "Comprimir a 'zip'"
 
 #: Menu
-msgid "Compress to .zip with password (each)"
-msgstr "Comprimir a .zip con contraseña (cada)"
+msgid "Compress to 'zip' with password"
+msgstr "Comprimir a 'zip' con contraseña"
 
 #: Menu
 msgid "Compute all checksums"
