@@ -380,6 +380,48 @@ msgstr "Código HTTP"
 msgid "URL"
 msgstr "URL"
 
+msgid "(No differences)"
+msgstr ""
+
+msgid "(No line breaks)"
+msgstr ""
+
+msgid "(No response)"
+msgstr ""
+
+msgid "(None)"
+msgstr ""
+
+msgid "(Unknown)"
+msgstr ""
+
+msgid "Checksum mismatch!"
+msgstr ""
+
+msgid "File not found!"
+msgstr ""
+
+msgid "High"
+msgstr ""
+
+msgid "Low"
+msgstr ""
+
+msgid "Medium"
+msgstr ""
+
+msgid "Online"
+msgstr ""
+
+msgid "Offline"
+msgstr ""
+
+msgid "Valid"
+msgstr ""
+
+msgid "Invalid"
+msgstr ""
+
 #: Menu
 msgid "Archive"
 msgstr "Compressão"
