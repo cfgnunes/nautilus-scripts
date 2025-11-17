@@ -1917,8 +1917,8 @@ msgid "Creating GNOME Shell application folder..."
 msgstr "正在创建 GNOME Shell 应用程序文件夹..."
 
 #: install.sh
-msgid "Installing file manager actions..."
-msgstr "正在安装文件管理器操作..."
+msgid "Installing actions in the context menu..."
+msgstr "正在安装上下文菜单中的操作..."
 
 #: install.sh
 msgid "Closing the file manager..."

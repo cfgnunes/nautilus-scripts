@@ -1171,7 +1171,7 @@ _create_gnome_application_folder() {
 # file managers. Delegates to the appropriate function depending on
 # the detected file manager.
 _install_actions() {
-    _echo_info "> ($FILE_MANAGER) $(_i18n 'Installing file manager actions...')"
+    _echo_info "> ($FILE_MANAGER) $(_i18n 'Installing actions in the context menu...')"
 
     case "$FILE_MANAGER" in
     "nautilus") _create_links "$INSTALL_HOME/.local/share/nautilus/scripts" ;;

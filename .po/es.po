@@ -1917,8 +1917,8 @@ msgid "Creating GNOME Shell application folder..."
 msgstr "Creando carpeta de aplicaciones de GNOME Shell..."
 
 #: install.sh
-msgid "Installing file manager actions..."
-msgstr "Instalando acciones del gestor de archivos..."
+msgid "Installing actions in the context menu..."
+msgstr "Instalando acciones en el menú contextual..."
 
 #: install.sh
 msgid "Closing the file manager..."

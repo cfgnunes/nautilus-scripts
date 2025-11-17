@@ -51,7 +51,7 @@ msgid "Would you like to install them?"
 msgstr "Möchtest du sie installieren?"
 
 msgid "Installing the packages. Please, wait..."
-msgstr "Installiere die Pakete. Bitte warte..."
+msgstr "Pakete werden installiert. Bitte warten..."
 
 msgid "The package was installed, but a system reboot is required."
 msgstr "Das Paket wurde installiert, aber ein Neustart des Systems ist erforderlich."
@@ -126,7 +126,7 @@ msgid "Finished!"
 msgstr "Fertig!"
 
 msgid "Running the task. Please, wait..."
-msgstr "Aufgabe wird ausgeführt. Bitte warte..."
+msgstr "Aufgabe wird ausgeführt. Bitte warten..."
 
 msgid "No default application is set for the type:"
 msgstr "Keine Standardanwendung für den Typ festgelegt:"
@@ -1866,7 +1866,7 @@ msgstr "Wähle die Optionen aus (<SPACE> zum Markieren, <ENTER> zum Bestätigen)
 
 #: install.sh
 msgid "Installing in non-interactive mode..."
-msgstr "Installation im nicht-interaktiven Modus..."
+msgstr "Installation im nicht-interaktiven Modus läuft..."
 
 #: install.sh
 msgid "Installing:"
@@ -1902,7 +1902,7 @@ msgstr "Kopiere Dateien..."
 
 #: install.sh
 msgid "Installing keyboard accelerators..."
-msgstr "Installiere Tastenkürzel..."
+msgstr "Tastaturkürzel werden installiert..."
 
 #: install.sh
 msgid "Scripts"
@@ -1910,19 +1910,19 @@ msgstr "Skripte"
 
 #: install.sh
 msgid "Creating shortcuts to the application menu..."
-msgstr "Erstelle Verknüpfungen im Anwendungsmenü..."
+msgstr "Verknüpfungen zum Anwendungsmenü werden erstellt..."
 
 #: install.sh
 msgid "Creating GNOME Shell application folder..."
-msgstr "Erstelle GNOME Shell-Anwendungsordner..."
+msgstr "GNOME-Shell-Anwendungsordner wird erstellt..."
 
 #: install.sh
-msgid "Installing file manager actions..."
-msgstr "Installiere Dateimanager-Aktionen..."
+msgid "Installing actions in the context menu..."
+msgstr "Aktionen im Kontextmenü werden installiert..."
 
 #: install.sh
 msgid "Closing the file manager..."
-msgstr "Schließe den Dateimanager..."
+msgstr "Dateimanager wird geschlossen..."
 
 #: install.sh
 msgid "Installing Homebrew:"
@@ -1938,7 +1938,7 @@ msgstr "Installiere Homebrew nach:"
 
 #: install.sh
 msgid "Downloading the package..."
-msgstr "Lade Paket herunter..."
+msgstr "Paket wird heruntergeladen..."
 
 #: install.sh
 msgid "Could not find a package manager!"
