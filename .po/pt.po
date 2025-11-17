@@ -93,7 +93,7 @@ msgid "Select the items to open:"
 msgstr "Selecione os itens para abrir:"
 
 msgid "Select the items to show in the file manager:"
-msgstr "Selecione os itens para mostrar no gerenciador de arquivos:"
+msgstr "Selecione os itens para exibir no gerenciador de arquivos:"
 
 msgid "Select the items to open in the web browser:"
 msgstr "Selecione os itens para abrir no navegador:"
