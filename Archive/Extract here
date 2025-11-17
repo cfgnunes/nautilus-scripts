@@ -14,6 +14,9 @@ _main() {
     _check_dependencies ""
     input_files=$(_get_files "par_type=file")
 
+    # Defalt password for testing encrypted archives.
+    TEMP_DATA_TASK="123456"
+
     # Execute the function '_get_dependencies' for each file in parallel.
     export -f \
         _all_commands_exists \
@@ -300,7 +303,7 @@ _run_command() {
 
     case "$command" in
     "7za")
-        std_output=$(__cmd_7za x -aoa -p"null" -- "$input_file" 2>&1)
+        std_output=$(__cmd_7za x -aoa -p"$TEMP_DATA_TASK" -- "$input_file" 2>&1)
         exit_code=$?
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "wrong password" <<<"$std_output"; then
@@ -314,7 +317,7 @@ _run_command() {
         ;;
     "ar") std_output=$(ar x -- "$input_file" 2>&1) ;;
     "bsdtar")
-        std_output=$(LC_ALL=C bsdtar --passphrase "null" -xf "$input_file" 2>&1)
+        std_output=$(LC_ALL=C bsdtar --passphrase "$TEMP_DATA_TASK" -xf "$input_file" 2>&1)
         exit_code=$?
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect passphrase" <<<"$std_output"; then
@@ -378,7 +381,7 @@ _run_command() {
         fi
         ;;
     "unrar")
-        std_output=$(LC_ALL=C unrar x -p"null" -- "$input_file" 2>&1)
+        std_output=$(LC_ALL=C unrar x -p"$TEMP_DATA_TASK" -- "$input_file" 2>&1)
         exit_code=$?
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "password" <<<"$std_output"; then
@@ -392,7 +395,7 @@ _run_command() {
         ;;
     "unsquashfs") std_output=$(unsquashfs "$input_file" 2>&1) ;;
     "unzip")
-        std_output=$(LC_ALL=C unzip -P "null" -- "$input_file" 2>&1)
+        std_output=$(LC_ALL=C unzip -P "$TEMP_DATA_TASK" -- "$input_file" 2>&1)
         exit_code=$?
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect password" <<<"$std_output"; then
