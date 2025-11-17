@@ -28,7 +28,7 @@ _main_task() {
     local status="🔴"
 
     # Run the main process.
-    std_output=$(pdfsig -- "$input_file" 2>/dev/null)
+    std_output=$(LC_ALL=C pdfsig -- "$input_file" 2>/dev/null)
 
     if [[ "$std_output" == *"Signature #"* ]]; then
         # FORMAT THE OUTPUT:

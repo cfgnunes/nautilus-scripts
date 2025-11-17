@@ -35,7 +35,7 @@ _main_task() {
     local str_low="🔴 Low"
 
     # Run the main process.
-    std_output=$(sox "$input_file" -n remix 1 sinc "19k-20k" -m stat 2>&1)
+    std_output=$(LC_ALL=C sox "$input_file" -n remix 1 sinc "19k-20k" -m stat 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     std_output=$(grep --ignore-case "^Mean.*norm" <<<"$std_output")
@@ -50,7 +50,7 @@ _main_task() {
     fi
 
     if [[ "$status" == "$str_medium" ]]; then
-        std_output=$(sox "$input_file" -n remix 1 sinc "17k-18k" -m stat 2>&1)
+        std_output=$(LC_ALL=C sox "$input_file" -n remix 1 sinc "17k-18k" -m stat 2>&1)
         _check_output "$?" "$std_output" "$input_file" "" || return 1
 
         std_output=$(grep --ignore-case "^Mean.*norm" <<<"$std_output")

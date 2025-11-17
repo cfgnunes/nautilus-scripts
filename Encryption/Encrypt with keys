@@ -111,11 +111,11 @@ _import_key() {
     fi
 
     # Get the ID from the key.
-    key_id=$(gpg --with-colons --import-options show-only --import "$input_file" |
+    key_id=$(LC_ALL=C gpg --with-colons --import-options show-only --import "$input_file" |
         grep -m1 "^fpr" | cut -d ":" -f 10 2>/dev/null)
 
     # Import the key.
-    std_output=$(gpg --batch --yes --import "$input_file" 2>&1)
+    std_output=$(LC_ALL=C gpg --batch --yes --import "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Set the trust level to 'ultimate'.

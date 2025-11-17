@@ -31,13 +31,9 @@ _main_task() {
     local std_output=""
     local file_mime=""
 
-    file_mime=$(file --brief --mime-type -- "$input_file" 2>/dev/null)
+    file_mime=$(LC_ALL=C file --brief --mime-type -- "$input_file" 2>/dev/null)
 
-    if [[ -z "$file_mime" ]]; then
-        return
-    fi
-
-    if [[ "$file_mime" == "cannot"* ]]; then
+    if [[ -z "$file_mime" ]] || [[ "$file_mime" == "cannot"* ]]; then
         return
     fi
 

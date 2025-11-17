@@ -25,7 +25,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(mediainfo --Inform="General;Title:%Title%\nPerformer:%Performer%" -- "$input_file" 2>&1)
+    std_output=$(LC_ALL=C mediainfo --Inform="General;Title:%Title%\nPerformer:%Performer%" -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     local tag_artist=""

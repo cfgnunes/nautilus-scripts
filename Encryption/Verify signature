@@ -28,7 +28,7 @@ _main_task() {
     local status="🔴"
 
     # Run the main process.
-    std_output=$(gpg --yes --verify -- "$input_file" 2>&1)
+    std_output=$(LC_ALL=C gpg --yes --verify -- "$input_file" 2>&1)
 
     if grep --quiet --ignore-case "Good signature" <<<"$std_output"; then
         status="🟢"

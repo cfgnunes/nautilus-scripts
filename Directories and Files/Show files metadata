@@ -30,7 +30,7 @@ _main_task() {
     local status="🟢"
 
     # Run the main process.
-    std_output=$(exiftool -- "$input_file" 2>/dev/null)
+    std_output=$(LC_ALL=C exiftool -- "$input_file" 2>/dev/null)
 
     # FORMAT THE OUTPUT:
     # Remove any extra spaces before colons ":".

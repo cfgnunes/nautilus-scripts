@@ -209,7 +209,7 @@ _get_command() {
         "application/octet-stream")
             # For generic binary files, try further identification.
             local file_information=""
-            file_information=$(file --dereference --brief \
+            file_information=$(LC_ALL=C file --dereference --brief \
                 -- "$input_file" 2>/dev/null)
 
             case "${file_information,,}" in
@@ -284,9 +284,9 @@ _run_command() {
     }
     __cmd_7za() {
         if _command_exists "7z"; then
-            7z "$@"
+            LC_ALL=C 7z "$@"
         else
-            7za "$@"
+            LC_ALL=C 7za "$@"
         fi
     }
 
@@ -314,7 +314,7 @@ _run_command() {
         ;;
     "ar") std_output=$(ar x -- "$input_file" 2>&1) ;;
     "bsdtar")
-        std_output=$(bsdtar --passphrase "null" -xf "$input_file" 2>&1)
+        std_output=$(LC_ALL=C bsdtar --passphrase "null" -xf "$input_file" 2>&1)
         exit_code=$?
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect passphrase" <<<"$std_output"; then
@@ -322,7 +322,7 @@ _run_command() {
             __temp_dir_pop && __temp_dir_remove
             password=$(__get_password) || return 1
             __temp_dir_push || return 1
-            std_output=$(bsdtar --passphrase "$password" -xf "$input_file" 2>&1)
+            std_output=$(LC_ALL=C bsdtar --passphrase "$password" -xf "$input_file" 2>&1)
             exit_code=$?
         fi
         ;;
@@ -365,7 +365,7 @@ _run_command() {
     "tar,zstd") std_output=$(zstd -f -d -c -- "$input_file" | tar xf -) ;;
     "tar") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
     "unar")
-        std_output=$(unar -- "$input_file" 2>&1)
+        std_output=$(LC_ALL=C unar -- "$input_file" 2>&1)
         exit_code=$?
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "requires a password" <<<"$std_output"; then
@@ -373,12 +373,12 @@ _run_command() {
             __temp_dir_pop && __temp_dir_remove
             password=$(__get_password) || return 1
             __temp_dir_push || return 1
-            std_output=$(unar -force-overwrite -password "$password" -- "$input_file" 2>&1)
+            std_output=$(LC_ALL=C unar -force-overwrite -password "$password" -- "$input_file" 2>&1)
             exit_code=$?
         fi
         ;;
     "unrar")
-        std_output=$(unrar x -p"null" -- "$input_file" 2>&1)
+        std_output=$(LC_ALL=C unrar x -p"null" -- "$input_file" 2>&1)
         exit_code=$?
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "password" <<<"$std_output"; then
@@ -386,13 +386,13 @@ _run_command() {
             __temp_dir_pop && __temp_dir_remove
             password=$(__get_password) || return 1
             __temp_dir_push || return 1
-            std_output=$(unrar x -p"$password" -- "$input_file" 2>&1)
+            std_output=$(LC_ALL=C unrar x -p"$password" -- "$input_file" 2>&1)
             exit_code=$?
         fi
         ;;
     "unsquashfs") std_output=$(unsquashfs "$input_file" 2>&1) ;;
     "unzip")
-        std_output=$(unzip -P "null" -- "$input_file" 2>&1)
+        std_output=$(LC_ALL=C unzip -P "null" -- "$input_file" 2>&1)
         exit_code=$?
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect password" <<<"$std_output"; then
@@ -400,7 +400,7 @@ _run_command() {
             __temp_dir_pop && __temp_dir_remove
             password=$(__get_password) || return 1
             __temp_dir_push || return 1
-            std_output=$(unzip -P "$password" -- "$input_file" 2>&1)
+            std_output=$(LC_ALL=C unzip -P "$password" -- "$input_file" 2>&1)
             exit_code=$?
         fi
         ;;
