@@ -381,52 +381,52 @@ msgid "URL"
 msgstr "URL"
 
 msgid "(No differences)"
-msgstr ""
+msgstr "(Sem diferenças)"
 
 msgid "(No line breaks)"
-msgstr ""
+msgstr "(Sem quebras de linha)"
 
 msgid "(No response)"
-msgstr ""
+msgstr "(Sem resposta)"
 
 msgid "(None)"
-msgstr ""
+msgstr "(Nenhum)"
 
 msgid "(Unknown)"
-msgstr ""
+msgstr "(Desconhecido)"
 
 msgid "Checksum mismatch!"
-msgstr ""
+msgstr "Falha na verificação de integridade!"
 
 msgid "File not found!"
-msgstr ""
+msgstr "Arquivo não encontrado!"
 
 msgid "High"
-msgstr ""
+msgstr "Alta"
 
 msgid "Low"
-msgstr ""
+msgstr "Baixa"
 
 msgid "Medium"
-msgstr ""
+msgstr "Média"
 
 msgid "Online"
-msgstr ""
+msgstr "Online"
 
 msgid "Offline"
-msgstr ""
+msgstr "Offline"
 
 msgid "Valid"
-msgstr ""
+msgstr "Válida"
 
 msgid "Invalid"
-msgstr ""
+msgstr "Inválida"
 
 msgid "File:"
-msgstr ""
+msgstr "Arquivo:"
 
 msgid "Enter the password for the archive:"
-msgstr ""
+msgstr "Digite a senha do arquivo:"
 
 #: Menu
 msgid "Archive"
