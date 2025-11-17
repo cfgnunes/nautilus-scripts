@@ -90,16 +90,16 @@ msgid "(Empty)"
 msgstr "(Vacío)"
 
 msgid "Select the items to open:"
-msgstr "Seleccione cuáles desea abrir:"
+msgstr "Seleccione los elementos para abrir:"
 
 msgid "Select the items to show in the file manager:"
-msgstr "Seleccione cuáles desea abrir en el gestor de archivos:"
+msgstr "Seleccione los elementos para mostrar en el gestor de archivos:"
 
 msgid "Select the items to open in the web browser:"
-msgstr "Seleccione cuáles desea abrir en el navegador web:"
+msgstr "Seleccione los elementos para abrir en el navegador web:"
 
 msgid "Select the items to delete:"
-msgstr "Seleccione cuáles desea eliminar:"
+msgstr "Seleccione los elementos para eliminar:"
 
 msgid "Password"
 msgstr "Contraseña"

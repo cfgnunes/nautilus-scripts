@@ -93,10 +93,10 @@ msgid "Select the items to open:"
 msgstr "选择要打开的项目："
 
 msgid "Select the items to show in the file manager:"
-msgstr "选择要在文件管理器中打开的项目："
+msgstr "选择要在文件管理器中显示的项目："
 
 msgid "Select the items to open in the web browser:"
-msgstr "选择要在网页浏览器中打开的项目："
+msgstr "选择要在浏览器中打开的项目："
 
 msgid "Select the items to delete:"
 msgstr "选择要删除的项目："
