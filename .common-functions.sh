@@ -1572,7 +1572,7 @@ _get_working_directory() {
 _is_directory_empty() {
     local directory=$1
 
-    if ! find "$directory" -mindepth 1 -maxdepth 1 -print -quit |
+    if ! find -L "$directory" -mindepth 1 -maxdepth 1 -print -quit |
         grep --quiet .; then
         return 0
     fi
