@@ -1337,8 +1337,8 @@ msgid "Paste as symbolic link"
 msgstr "Pegar como enlace simbólico"
 
 #: Menu
-msgid "Paste clipboard"
-msgstr "Pegar portapapeles"
+msgid "Paste clipboard content"
+msgstr "Pegar contenido del portapapeles"
 
 #: Menu
 msgid "PDF: Add watermark (over)"

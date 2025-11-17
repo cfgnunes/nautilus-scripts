@@ -1336,7 +1336,7 @@ msgid "Paste as symbolic link"
 msgstr ""
 
 #: Menu
-msgid "Paste clipboard"
+msgid "Paste clipboard content"
 msgstr ""
 
 #: Menu

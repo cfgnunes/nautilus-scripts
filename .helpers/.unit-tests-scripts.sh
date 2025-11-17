@@ -597,7 +597,7 @@ _main() {
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    #script_test="Clipboard/Paste clipboard"
+    #script_test="Clipboard/Paste clipboard content"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"

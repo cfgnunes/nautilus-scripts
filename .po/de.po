@@ -1337,8 +1337,8 @@ msgid "Paste as symbolic link"
 msgstr "Als symbolischen Link einfügen"
 
 #: Menu
-msgid "Paste clipboard"
-msgstr "Zwischenablage einfügen"
+msgid "Paste clipboard content"
+msgstr "Inhalt aus der Zwischenablage einfügen"
 
 #: Menu
 msgid "PDF: Add watermark (over)"

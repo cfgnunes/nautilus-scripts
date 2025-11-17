@@ -55,7 +55,7 @@ IGNORE_APPS_SHORTCUTS=(
     ! -iname "Create symbolic link here"
     ! -iname "Paste as hard link"
     ! -iname "Paste as symbolic link"
-    ! -iname "Paste clipboard"
+    ! -iname "Paste clipboard content"
 )
 
 # Directories to be ignored during install.

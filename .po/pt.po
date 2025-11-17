@@ -1337,7 +1337,7 @@ msgid "Paste as symbolic link"
 msgstr "Colar como link simbólico"
 
 #: Menu
-msgid "Paste clipboard"
+msgid "Paste clipboard content"
 msgstr "Colar área de transferência"
 
 #: Menu

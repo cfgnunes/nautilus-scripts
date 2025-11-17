@@ -79,7 +79,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Alt>R`   | List recent files                 |
 | `<Control><Alt>W`   | Text: List issues                 |
 | `<Control><Alt>C`   | Copy filenames                    |
-| `<Control><Alt>V`   | Paste clipboard                   |
+| `<Control><Alt>V`   | Paste clipboard content           |
 | `<Control><Shift>V` | Paste as symbolic link            |
 | `<Control><Shift>C` | Compare items                     |
 | `<Control><Shift>O` | Open item location                |
