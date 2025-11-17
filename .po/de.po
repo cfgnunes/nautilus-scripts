@@ -89,16 +89,16 @@ msgstr "Abbrechen"
 msgid "(Empty)"
 msgstr "(Leer)"
 
-msgid "Select the ones to open:"
+msgid "Choose the items to open:"
 msgstr "Wähle die zu öffnenden aus:"
 
-msgid "Select the ones to open in the file manager:"
+msgid "Choose the items to show in the file manager:"
 msgstr "Wähle die im Dateimanager zu öffnenden aus:"
 
-msgid "Select the ones to open in the web browser:"
+msgid "Choose the items to open in the web browser:"
 msgstr "Wähle die im Webbrowser zu öffnenden aus:"
 
-msgid "Select the ones to delete:"
+msgid "Choose the items to delete:"
 msgstr "Wähle die zu löschenden aus:"
 
 msgid "Password"
