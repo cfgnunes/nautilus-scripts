@@ -1245,6 +1245,8 @@ _install_actions_pcmanfm() {
         printf "%s\n" "[Desktop Entry]"
         printf "%s\n" "Type=Menu"
         printf "%s\n" "Name=$msg_scripts"
+        _i18n_print_desktop_name "Name" "$msg_scripts"
+        printf "%s\n" "Icon=inode-directory"
         printf "%s" "ItemsList="
         find -L "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -type d \
             "${IGNORE_FIND_PATHS[@]}" \
@@ -1279,6 +1281,7 @@ _install_actions_pcmanfm() {
             printf "%s\n" "Type=Menu"
             printf "%s\n" "Name=$name"
             _i18n_print_desktop_name "Name" "$name"
+            printf "%s\n" "Icon=inode-directory"
             printf "%s\n" "ItemsList=$dir_items"
 
         } | _tee_file "$menu_file"
