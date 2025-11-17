@@ -35,11 +35,9 @@ INSTALL_LOG_NAME="install.log"
 INSTALL_LOG_TMP="$TEMP_DIR/$INSTALL_LOG_NAME"
 
 # List of supported file managers.
-# NOTE: KIO is a framework, not a file manager. Detecting 'kioclient'
-# covers Dolphin, Krusader, and other KIO-based apps.
 COMPATIBLE_FILE_MANAGERS=(
     "nautilus"
-    "kioclient"
+    "dolphin"
     "nemo"
     "caja"
     "thunar"
@@ -1180,13 +1178,13 @@ _install_actions() {
     "nautilus") _create_links "$INSTALL_HOME/.local/share/nautilus/scripts" ;;
     "caja") _create_links "$INSTALL_HOME/.config/caja/scripts" ;;
     "nemo") _create_links "$INSTALL_HOME/.local/share/nemo/scripts" ;;
-    "kioclient") _install_actions_kio ;;
+    "dolphin") _install_actions_dolphin ;;
     "pcmanfm"*) _install_actions_pcmanfm ;;
     "thunar") _install_actions_thunar ;;
     esac
 }
 
-_install_actions_kio() {
+_install_actions_dolphin() {
     local menu_file=""
     local menus_path="$INSTALL_HOME/.local/share/kio/servicemenus"
     find "$menus_path" -name "$INSTALL_NAME_DIR-*.desktop" \
@@ -1411,7 +1409,7 @@ _install_actions_thunar() {
 # configurations. For most file managers, the `-q` option is used to quit
 # gracefully.
 _close_filemanager() {
-    if [[ -z "$FILE_MANAGER" ]] || [[ "$FILE_MANAGER" == "kioclient" ]]; then
+    if [[ -z "$FILE_MANAGER" ]]; then
         return
     fi
 
