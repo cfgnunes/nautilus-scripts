@@ -2676,13 +2676,13 @@ _get_clipboard_data() {
 # data, adapting the method according to the session type.
 #
 # PARAMETERS:
-#   $1 (input_data): The text string to be copied into the clipboard.
+#   $1 (data): The text string to be copied into the clipboard.
 _set_clipboard_data() {
-    local input_data=$1
+    local data=$1
 
     case "${XDG_SESSION_TYPE:-}" in
-    "wayland") wl-copy <<<"$input_data" 2>/dev/null ;;
-    "x11") xclip -selection clipboard -i <<<"$input_data" 2>/dev/null ;;
+    "wayland") printf "%s" "$data" | wl-copy 2>/dev/null ;;
+    "x11") printf "%s" "$data" | xclip -selection clipboard -i 2>/dev/null ;;
     esac
 }
 
