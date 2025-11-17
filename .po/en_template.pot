@@ -1876,7 +1876,7 @@ msgid "User:"
 msgstr ""
 
 #: install.sh
-msgid "Home dir:"
+msgid "Directory:"
 msgstr ""
 
 #: install.sh

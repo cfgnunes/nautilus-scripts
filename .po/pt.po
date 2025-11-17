@@ -1877,8 +1877,8 @@ msgid "User:"
 msgstr "Usuário:"
 
 #: install.sh
-msgid "Home dir:"
-msgstr "Diretório home:"
+msgid "Directory:"
+msgstr "Diretório:"
 
 #: install.sh
 msgid "Installing application menu shortcuts:"

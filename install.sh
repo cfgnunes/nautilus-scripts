@@ -250,11 +250,12 @@ _main() {
     _log_variable "INSTALL_OWNER"
     _log_variable "INSTALL_GROUP"
 
+    INSTALL_DIR="$INSTALL_HOME/$INSTALL_PATH"
+
     _echo ""
     _echo_info "$(_i18n 'Installing:')"
     _echo_info "> $(_i18n 'User:') $INSTALL_OWNER"
-    _echo_info "> $(_i18n 'Home dir:') $INSTALL_HOME"
-    INSTALL_DIR="$INSTALL_HOME/$INSTALL_PATH"
+    _echo_info "> $(_i18n 'Directory:') $INSTALL_DIR"
     _install_scripts cat_selected cat_dirs
 
     ## Step 3: Install file manager configurations. ----
