@@ -877,7 +877,7 @@ msgid "Find empty directories"
 msgstr "Leere Verzeichnisse finden"
 
 #: Menu
-msgid "List hidden items"
+msgid "List hidden files"
 msgstr "Versteckte Elemente anzeigen"
 
 #: Menu

@@ -877,8 +877,8 @@ msgid "Find empty directories"
 msgstr "Procurar diretórios vazios"
 
 #: Menu
-msgid "List hidden items"
-msgstr "Listar itens ocultos"
+msgid "List hidden files"
+msgstr "Listar arquivos ocultos"
 
 #: Menu
 msgid "Find junk files"

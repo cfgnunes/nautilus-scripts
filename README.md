@@ -73,7 +73,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Alt>0`   | Find empty files                  |
 | `<Control><Alt>J`   | Find junk files                   |
 | `<Control><Alt>U`   | Find duplicate files              |
-| `<Control><Alt>H`   | List hidden items                 |
+| `<Control><Alt>H`   | List hidden files                 |
 | `<Control><Alt>P`   | List permissions and owners       |
 | `<Control><Alt>B`   | List largest files                |
 | `<Control><Alt>R`   | List recent files                 |
