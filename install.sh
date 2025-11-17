@@ -43,6 +43,7 @@ COMPATIBLE_FILE_MANAGERS=(
     "thunar"
     "pcmanfm-qt"
     "pcmanfm"
+    "krusader"
 )
 
 # Ignored shortcuts (application menu) during install.
@@ -1178,13 +1179,14 @@ _install_actions() {
     "nautilus") _create_links "$INSTALL_HOME/.local/share/nautilus/scripts" ;;
     "caja") _create_links "$INSTALL_HOME/.config/caja/scripts" ;;
     "nemo") _create_links "$INSTALL_HOME/.local/share/nemo/scripts" ;;
-    "dolphin") _install_actions_dolphin ;;
+    "dolphin") _install_actions_kio_servicemenus ;;
     "pcmanfm"*) _install_actions_pcmanfm ;;
     "thunar") _install_actions_thunar ;;
+    "krusader") _install_actions_kio_servicemenus ;;
     esac
 }
 
-_install_actions_dolphin() {
+_install_actions_kio_servicemenus() {
     local menu_file=""
     local menus_path="$INSTALL_HOME/.local/share/kio/servicemenus"
     find "$menus_path" -name "$INSTALL_NAME_DIR-*.desktop" \
@@ -1409,7 +1411,9 @@ _install_actions_thunar() {
 # configurations. For most file managers, the `-q` option is used to quit
 # gracefully.
 _close_filemanager() {
-    if [[ -z "$FILE_MANAGER" ]]; then
+    if [[ -z "$FILE_MANAGER" ||
+        "$FILE_MANAGER" == "dolphin" ||
+        "$FILE_MANAGER" == "krusader" ]]; then
         return
     fi
 
