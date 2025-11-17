@@ -762,19 +762,19 @@ msgstr "Copiar conteúdo de arquivos"
 
 #: Menu
 msgid "Copy filenames"
-msgstr "Copiar nome de arquivos"
+msgstr "Copiar nomes de arquivos"
 
 #: Menu
 msgid "Copy filenames (recursive)"
-msgstr "Copiar nome de arquivos (recursivo)"
+msgstr "Copiar nomes de arquivos (recursivo)"
 
 #: Menu
 msgid "Copy filepaths"
-msgstr "Copiar caminho de arquivos"
+msgstr "Copiar caminhos de arquivos"
 
 #: Menu
 msgid "Copy filepaths (recursive)"
-msgstr "Copiar caminho de arquivos (recursivo)"
+msgstr "Copiar caminhos de arquivos (recursivo)"
 
 #: Menu
 msgid "Create hard link here"
