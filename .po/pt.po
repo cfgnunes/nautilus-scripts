@@ -761,19 +761,19 @@ msgid "Copy file contents"
 msgstr "Copiar conteúdo de arquivos"
 
 #: Menu
-msgid "Copy filenames"
+msgid "Copy file names"
 msgstr "Copiar nomes de arquivos"
 
 #: Menu
-msgid "Copy filenames (recursive)"
+msgid "Copy file names (recursive)"
 msgstr "Copiar nomes de arquivos (recursivo)"
 
 #: Menu
-msgid "Copy filepaths"
+msgid "Copy file paths"
 msgstr "Copiar caminhos de arquivos"
 
 #: Menu
-msgid "Copy filepaths (recursive)"
+msgid "Copy file paths (recursive)"
 msgstr "Copiar caminhos de arquivos (recursivo)"
 
 #: Menu

@@ -761,19 +761,19 @@ msgid "Copy file contents"
 msgstr "复制文件内容"
 
 #: Menu
-msgid "Copy filenames"
+msgid "Copy file names"
 msgstr "复制文件名"
 
 #: Menu
-msgid "Copy filenames (recursive)"
+msgid "Copy file names (recursive)"
 msgstr "复制文件名（递归）"
 
 #: Menu
-msgid "Copy filepaths"
+msgid "Copy file paths"
 msgstr "复制文件路径"
 
 #: Menu
-msgid "Copy filepaths (recursive)"
+msgid "Copy file paths (recursive)"
 msgstr "复制文件路径（递归）"
 
 #: Menu

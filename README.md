@@ -78,7 +78,7 @@ While numerous scripts are available for file managers on the web, many suffer f
 | `<Control><Alt>B`   | List largest files                |
 | `<Control><Alt>R`   | List recent files                 |
 | `<Control><Alt>W`   | Text: List issues                 |
-| `<Control><Alt>C`   | Copy filenames                    |
+| `<Control><Alt>C`   | Copy file names                   |
 | `<Control><Alt>V`   | Paste clipboard content           |
 | `<Control><Shift>V` | Paste as symbolic link            |
 | `<Control><Shift>C` | Compare items                     |
