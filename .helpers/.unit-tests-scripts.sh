@@ -567,7 +567,7 @@ _main() {
     ## SUBSECTION: Clipboard ----
     # -------------------------------------------------------------------------
 
-    #script_test="Clipboard/Copy files content"
+    #script_test="Clipboard/Copy file contents"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"

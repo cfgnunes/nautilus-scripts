@@ -757,7 +757,7 @@ msgid "Compute SHA512"
 msgstr "SHA512 berechnen"
 
 #: Menu
-msgid "Copy files content"
+msgid "Copy file contents"
 msgstr "Dateiinhalte kopieren"
 
 #: Menu
