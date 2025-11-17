@@ -1298,7 +1298,7 @@ msgstr "Mídia: Remover metadados"
 
 #: Menu
 msgid "Media: Show basic metadata"
-msgstr "Mídia: Mostrar metadados básicos"
+msgstr "Mídia: Exibir metadados básicos"
 
 #: Menu
 msgid "MP3: (artist - title) Name to ID3"
@@ -1322,7 +1322,7 @@ msgstr "MP3: Reparar (recursivo)"
 
 #: Menu
 msgid "MP3: Show encoding details"
-msgstr "MP3: Mostrar detalhes de codificação"
+msgstr "MP3: Exibir detalhes de codificação"
 
 #: Menu
 msgid "Open item location"
@@ -1510,7 +1510,7 @@ msgstr "PDF: Rotacionar (270 graus)"
 
 #: Menu
 msgid "PDF: Show signatures"
-msgstr "PDF: Mostrar assinaturas"
+msgstr "PDF: Exibir assinaturas"
 
 #: Menu
 msgid "PDF: Split into single-page PDFs"
@@ -1566,19 +1566,19 @@ msgstr "Verificar malware (via ClamAV)"
 
 #: Menu
 msgid "Show files information"
-msgstr "Mostrar informações de arquivos"
+msgstr "Exibir informações de arquivos"
 
 #: Menu
 msgid "Show files metadata"
-msgstr "Mostrar metadado de arquivos"
+msgstr "Exibir metadado de arquivos"
 
 #: Menu
 msgid "Show files MIME type"
-msgstr "Mostrar tipo MIME de arquivos"
+msgstr "Exibir tipo MIME de arquivos"
 
 #: Menu
 msgid "Show media information"
-msgstr "Mostrar informações de mídias"
+msgstr "Exibir informações de mídias"
 
 #: Menu
 msgid "Shred files (secure delete)"
@@ -1690,7 +1690,7 @@ msgstr "URL: Baixar arquivo"
 
 #: Menu
 msgid "URL: Show HTTP headers"
-msgstr "URL: Mostrar cabeçalhos HTTP"
+msgstr "URL: Exibir cabeçalhos HTTP"
 
 #: Menu
 msgid "Verify MD5 file"
