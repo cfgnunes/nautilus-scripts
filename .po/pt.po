@@ -1542,11 +1542,11 @@ msgstr "Renomear: Para minúsculas (recursivo)"
 
 #: Menu
 msgid "Rename: To sentence case"
-msgstr "Renomear: Para estilo de frase"
+msgstr "Renomear: Para formato de frases"
 
 #: Menu
 msgid "Rename: To title case"
-msgstr "Renomear: Para estilo de título"
+msgstr "Renomear: Para formato de títulos"
 
 #: Menu
 msgid "Rename: To uppercase"
