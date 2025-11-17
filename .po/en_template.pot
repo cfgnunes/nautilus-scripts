@@ -668,7 +668,7 @@ msgid "Audio: Produce a spectrogram"
 msgstr ""
 
 #: Menu
-msgid "Audio: Remove silent sections"
+msgid "Audio: Remove silence (sections)"
 msgstr ""
 
 #: Menu
@@ -676,7 +676,7 @@ msgid "Audio: Silence noise"
 msgstr ""
 
 #: Menu
-msgid "Audio: Trim silence"
+msgid "Audio: Remove silence (extremities)"
 msgstr ""
 
 #: Menu

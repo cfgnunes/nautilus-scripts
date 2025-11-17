@@ -669,16 +669,16 @@ msgid "Audio: Produce a spectrogram"
 msgstr "音频：生成频谱图"
 
 #: Menu
-msgid "Audio: Remove silent sections"
-msgstr "音频：移除静音部分"
+msgid "Audio: Remove silence (sections)"
+msgstr "音频：移除静音（开头和结尾）"
 
 #: Menu
 msgid "Audio: Silence noise"
 msgstr "音频：静音降噪"
 
 #: Menu
-msgid "Audio: Trim silence"
-msgstr "音频：修剪静音"
+msgid "Audio: Remove silence (extremities)"
+msgstr "音频：移除静音（片段）"
 
 #: Menu
 msgid "Code Editor"

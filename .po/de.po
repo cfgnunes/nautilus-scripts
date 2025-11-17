@@ -669,16 +669,16 @@ msgid "Audio: Produce a spectrogram"
 msgstr "Audio: Spektrogramm erzeugen"
 
 #: Menu
-msgid "Audio: Remove silent sections"
-msgstr "Audio: Stille Abschnitte entfernen"
+msgid "Audio: Remove silence (sections)"
+msgstr "Audio: Stille entfernen (Abschnitte)"
 
 #: Menu
 msgid "Audio: Silence noise"
 msgstr "Audio: Geräusche dämpfen"
 
 #: Menu
-msgid "Audio: Trim silence"
-msgstr "Audio: Stille kürzen"
+msgid "Audio: Remove silence (extremities)"
+msgstr "Audio: Stille entfernen (Anfang und Ende)"
 
 #: Menu
 msgid "Code Editor"
