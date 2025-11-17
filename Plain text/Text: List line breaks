@@ -43,7 +43,7 @@ _main_task() {
     elif [[ "$std_output" == *"0D-"* ]]; then
         std_output="CR (Mac OS Classic)"
     else
-        std_output="(None)"
+        std_output="(No line breaks)"
     fi
 
     _storage_text_write_ln "${std_output}${FIELD_SEPARATOR}${input_file}"
