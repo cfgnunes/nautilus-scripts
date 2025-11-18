@@ -22,9 +22,9 @@ _main() {
 
     # Translate some strings from the '$std_output'.
     # shellcheck disable=SC2001
-    std_output=$(sed "s|__MSG_Valid__|$(_i18n 'Valid')|g" <<<"$std_output")
+    std_output=$(sed "s|__MSG_Valid__|$(_i18n 'Valid signature')|g" <<<"$std_output")
     # shellcheck disable=SC2001
-    std_output=$(sed "s|__MSG_Invalid__|$(_i18n 'Invalid')|g" <<<"$std_output")
+    std_output=$(sed "s|__MSG_Invalid__|$(_i18n 'Invalid signature')|g" <<<"$std_output")
 
     _display_list_box "$std_output" "par_item_name=$(_i18n 'files'); par_columns='--column:$(_i18n 'Signature'),--column:$(_i18n 'File')'; par_action=open_location; par_check_type=checkbox"
 }

@@ -416,11 +416,11 @@ msgstr "Online"
 msgid "Offline"
 msgstr "Offline"
 
-msgid "Valid"
-msgstr "Válida"
+msgid "Valid signature"
+msgstr "Assinatura válida"
 
-msgid "Invalid"
-msgstr "Inválida"
+msgid "Invalid signature"
+msgstr "Assinatura inválida"
 
 msgid "Enter the password for the archive:"
 msgstr "Digite a senha do arquivo:"

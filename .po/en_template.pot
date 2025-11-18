@@ -415,10 +415,10 @@ msgstr ""
 msgid "Offline"
 msgstr ""
 
-msgid "Valid"
+msgid "Valid signature"
 msgstr ""
 
-msgid "Invalid"
+msgid "Invalid signature"
 msgstr ""
 
 msgid "Enter the password for the archive:"
