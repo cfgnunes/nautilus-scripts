@@ -64,6 +64,9 @@ msgstr ""
 msgid "Total selected:"
 msgstr ""
 
+msgid "Total:"
+msgstr ""
+
 msgid "Some items could not be deleted."
 msgstr ""
 

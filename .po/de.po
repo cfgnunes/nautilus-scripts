@@ -65,6 +65,9 @@ msgstr "Diese Aktion wird die ausgewählten Elemente löschen."
 msgid "Total selected:"
 msgstr "Gesamt ausgewählt:"
 
+msgid "Total:"
+msgstr ""
+
 msgid "Some items could not be deleted."
 msgstr "Einige Elemente konnten nicht gelöscht werden."
 
