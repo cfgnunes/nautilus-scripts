@@ -30,6 +30,12 @@ _main() {
     std_output=$(sed "s|__MSG_NoKey__|$(_i18n 'Missing key')|g" <<<"$std_output")
     # shellcheck disable=SC2001
     std_output=$(sed "s|__MSG_NoData__|$(_i18n 'Missing datafile')|g" <<<"$std_output")
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|__MSG_RevKey__|$(_i18n 'Revoked key')|g" <<<"$std_output")
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|__MSG_ExpKey__|$(_i18n 'Expired key')|g" <<<"$std_output")
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|__MSG_ExpSig__|$(_i18n 'Expired signature')|g" <<<"$std_output")
 
     _display_list_box "$std_output" "par_item_name=$(_i18n 'files'); par_columns='--column:$(_i18n 'Status'),--column:$(_i18n 'Name'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Key ID'),--column:$(_i18n 'Date'),--column:$(_i18n 'Time'),--column:$(_i18n 'File')'; par_action=open_location; par_check_type=checkbox"
 }
@@ -37,50 +43,61 @@ _main() {
 _main_task() {
     local input_file=$1
     local std_output=""
-    local status="__MSG_Unknown__"
+    local status=""
     local name=" "
     local email=" "
     local key_id=" "
     local date=" "
     local time=" "
     local timestamp=""
+    local line=""
 
     # Run the main process.
     std_output=$(LC_ALL=C gpg --yes --status-fd=1 --verify -- "$input_file" 2>&1)
 
-    if grep --quiet --ignore-case "\[GNUPG:\] GOODSIG" <<<"$std_output"; then
+    if grep -qF "[GNUPG:] GOODSIG" <<<"$std_output"; then
         status="🟢 __MSG_Valid__"
-    elif grep --quiet --ignore-case "\[GNUPG:\] BADSIG" <<<"$std_output"; then
+    elif grep -qF "[GNUPG:] BADSIG" <<<"$std_output"; then
         status="🔴 __MSG_Invalid__"
-    elif grep --quiet --ignore-case "\[GNUPG:\] NO_PUBKEY" <<<"$std_output"; then
+    elif grep -qF "[GNUPG:] REVKEYSIG" <<<"$std_output"; then
+        status="🟠 __MSG_RevKey__"
+    elif grep -qF "[GNUPG:] EXPKEYSIG" <<<"$std_output"; then
+        status="🟠 __MSG_ExpKey__"
+    elif grep -qF "[GNUPG:] EXPSIG" <<<"$std_output"; then
+        status="🟠 __MSG_ExpSig__"
+    elif grep -qF "[GNUPG:] SIGEXPIRED" <<<"$std_output"; then
+        status="🟠 __MSG_ExpSig__"
+    elif grep -qF "[GNUPG:] NO_PUBKEY" <<<"$std_output"; then
         status="⚪ __MSG_NoKey__"
-    elif grep --quiet --ignore-case "can't hash datafile" <<<"$std_output"; then
+    elif grep -qF "can't hash datafile" <<<"$std_output"; then
         status="⚪ __MSG_NoData__"
     else
         return 1
     fi
 
-    if [[ "$status" == *"__MSG_Valid__"* || "$status" == *"__MSG_Invalid__"* ]]; then
-        local sig_line=""
-        sig_line=$(grep --ignore-case --perl-regexp "\[GNUPG:\] (BAD|GOOD)SIG" <<<"$std_output")
-        key_id=$(cut -d " " -f3 <<<"$sig_line")
+    line=$(grep --perl-regexp "\[GNUPG:\] (BAD|GOOD|REVKEY)SIG" <<<"$std_output" 2>/dev/null)
+    if [[ -n "$line" ]]; then
+        key_id=$(cut -d " " -f3 <<<"$line")
         local user=""
-        user=$(cut -d " " -f4- <<<"$sig_line")
+        user=$(cut -d " " -f4- <<<"$line")
         user=$(sed "s| <|$FIELD_SEPARATOR|g; s|>$||g" <<<"$user")
         name=$(cut -d "$FIELD_SEPARATOR" -f1 <<<"$user")
         email=$(cut -d "$FIELD_SEPARATOR" -f2 <<<"$user")
-        if [[ "$status" == *"__MSG_Valid__"* ]]; then
-            local validsig_line=""
-            validsig_line=$(grep --ignore-case "\[GNUPG:\] VALIDSIG" <<<"$std_output")
-            timestamp=$(awk '{print $5}' <<<"$validsig_line")
-        fi
-    elif [[ "$status" == *"__MSG_NoKey__"* ]]; then
-        local no_pubkey_line=""
-        no_pubkey_line=$(grep --ignore-case "\[GNUPG:\] NO_PUBKEY" <<<"$std_output")
-        key_id=$(cut -d " " -f3 <<<"$no_pubkey_line")
-        local errsig_line=""
-        errsig_line=$(grep --ignore-case "\[GNUPG:\] ERRSIG" <<<"$std_output")
-        timestamp=$(awk '{print $7}' <<<"$errsig_line")
+    fi
+
+    line=$(grep -F "[GNUPG:] VALIDSIG" <<<"$std_output" 2>/dev/null)
+    if [[ -n "$line" ]]; then
+        timestamp=$(awk '{print $5}' <<<"$line")
+    fi
+
+    line=$(grep -F "[GNUPG:] NO_PUBKEY" <<<"$std_output" 2>/dev/null)
+    if [[ -n "$line" ]]; then
+        key_id=$(cut -d " " -f3 <<<"$line")
+    fi
+
+    line=$(grep -F "[GNUPG:] ERRSIG" <<<"$std_output" 2>/dev/null)
+    if [[ -n "$line" ]]; then
+        timestamp=$(awk '{print $7}' <<<"$line")
     fi
 
     if [[ -n "$timestamp" ]]; then
