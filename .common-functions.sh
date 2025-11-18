@@ -1808,6 +1808,9 @@ _display_select_box_action() {
         items_count=$(tr -cd "\n" <<<"$list" | wc -c)
     fi
 
+    local total_msg=""
+    total_msg="$(_i18n 'Total:')"
+
     # Set the selection list based on the action and item count.
     if ((items_count > 0)); then
         local msg=""
@@ -1825,11 +1828,9 @@ _display_select_box_action() {
             msg="$(_i18n 'Select the ones to delete:')"
             ;;
         esac
-        local total_msg=""
-        total_msg="$(_i18n 'Total:')"
         header_label="$total_msg $items_count $par_item_name. $msg"
     else
-        header_label="$items_count $par_item_name."
+        header_label="$total_msg $items_count $par_item_name."
     fi
 
     selected_items=$(_display_select_box "$list" "$par_columns" \
