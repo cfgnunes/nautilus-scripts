@@ -92,16 +92,16 @@ msgstr "取消"
 msgid "(Empty)"
 msgstr "（空）"
 
-msgid "Select the items to open:"
+msgid "Select the ones to open:"
 msgstr "选择要打开的项目："
 
-msgid "Select the items to show in the file manager:"
+msgid "Select the ones to reveal in the file manager:"
 msgstr "选择要在文件管理器中显示的项目："
 
-msgid "Select the items to open in the web browser:"
-msgstr "选择要在浏览器中打开的项目："
+msgid "Select the ones to open in the web browser:"
+msgstr "选择要在网页浏览器中打开的项目："
 
-msgid "Select the items to delete:"
+msgid "Select the ones to delete:"
 msgstr "选择要删除的项目："
 
 msgid "Password"

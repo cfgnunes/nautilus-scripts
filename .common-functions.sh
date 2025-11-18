@@ -1813,16 +1813,16 @@ _display_select_box_action() {
         local msg=""
         case "$par_action" in
         "open_file")
-            msg="$(_i18n 'Select the items to open:')"
+            msg="$(_i18n 'Select the ones to open:')"
             ;;
         "open_location")
-            msg="$(_i18n 'Select the items to show in the file manager:')"
+            msg="$(_i18n 'Select the ones to reveal in the file manager:')"
             ;;
         "open_url")
-            msg="$(_i18n 'Select the items to open in the web browser:')"
+            msg="$(_i18n 'Select the ones to open in the web browser:')"
             ;;
         "delete_item")
-            msg="$(_i18n 'Select the items to delete:')"
+            msg="$(_i18n 'Select the ones to delete:')"
             ;;
         esac
         local total_msg=""

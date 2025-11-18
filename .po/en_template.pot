@@ -91,16 +91,16 @@ msgstr ""
 msgid "(Empty)"
 msgstr ""
 
-msgid "Select the items to open:"
+msgid "Select the ones to open:"
 msgstr ""
 
-msgid "Select the items to show in the file manager:"
+msgid "Select the ones to reveal in the file manager:"
 msgstr ""
 
-msgid "Select the items to open in the web browser:"
+msgid "Select the ones to open in the web browser:"
 msgstr ""
 
-msgid "Select the items to delete:"
+msgid "Select the ones to delete:"
 msgstr ""
 
 msgid "Password"
