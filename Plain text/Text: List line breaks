@@ -22,6 +22,10 @@ _main() {
     std_output=$(_storage_text_read_all)
     std_output=$(_text_sort "$std_output")
 
+    # Translate some strings from the '$std_output'.
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|__MSG_NoLB__|$(_i18n '(No line break)')|g" <<<"$std_output")
+
     _display_list_box "$std_output" "par_item_name=$(_i18n 'files'); par_columns='--column:$(_i18n 'Type'),--column:$(_i18n 'File')'; par_action=open_location; par_check_type=checkbox"
 }
 
@@ -43,7 +47,7 @@ _main_task() {
     elif [[ "$std_output" == *"0D-"* ]]; then
         std_output="CR (Mac OS Classic)"
     else
-        std_output="(No line breaks)"
+        std_output="__MSG_NoLB__"
     fi
 
     _storage_text_write_ln "${std_output}${FIELD_SEPARATOR}${input_file}"

@@ -24,13 +24,21 @@ _main() {
     std_output=$(_storage_text_read_all)
     std_output=$(sort --version-sort --reverse <<<"$std_output")
 
+    # Translate some strings from the '$std_output'.
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|__MSG_Online__|$(_i18n 'Online')|g" <<<"$std_output")
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|__MSG_Offline__|$(_i18n 'Offline')|g" <<<"$std_output")
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|__MSG_Unknown__|$(_i18n '(Unknown)')|g" <<<"$std_output")
+
     _display_list_box "$std_output" "par_item_name=$(_i18n 'IPs'); par_columns='--column:$(_i18n 'Status'),--column:$(_i18n 'IP'),--column:$(_i18n 'Hostname')'"
 }
 
 _main_task() {
     local input_file=$1
     local output_dir=$2
-    local str_online="🟢 Online"
+    local str_online="🟢 __MSG_Online__"
     local status=""
     local hostname=""
 
@@ -62,12 +70,12 @@ _main_task() {
 
     # Notify if the host is offline.
     if [[ -z "$status" ]]; then
-        status="🔴 Offline"
+        status="🔴 __MSG_Offline__"
     fi
 
     hostname=$(_resolve_host "$input_file")
     if [[ -z "$hostname" ]]; then
-        hostname="(unknown)"
+        hostname="__MSG_Unknown__"
     fi
 
     _storage_text_write_ln "$status$FIELD_SEPARATOR$input_file$FIELD_SEPARATOR$hostname"

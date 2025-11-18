@@ -383,23 +383,23 @@ msgstr "URL"
 msgid "(No differences)"
 msgstr "(Sem diferenças)"
 
-msgid "(No line breaks)"
-msgstr "(Sem quebras de linha)"
+msgid "(No line break)"
+msgstr "(Sem fim de linha)"
 
 msgid "(No response)"
 msgstr "(Sem resposta)"
 
-msgid "(None)"
-msgstr "(Nenhum)"
+msgid "(No open ports)"
+msgstr "(Sem portas abertas)"
 
 msgid "(Unknown)"
 msgstr "(Desconhecido)"
 
-msgid "Checksum mismatch!"
-msgstr "Falha na verificação de integridade!"
+msgid "Checksum mismatch."
+msgstr "Falha na verificação de integridade."
 
-msgid "File not found!"
-msgstr "Arquivo não encontrado!"
+msgid "File does not exist."
+msgstr "Arquivo inexistente."
 
 msgid "High"
 msgstr "Alta"
@@ -421,9 +421,6 @@ msgstr "Válida"
 
 msgid "Invalid"
 msgstr "Inválida"
-
-msgid "File:"
-msgstr "Arquivo:"
 
 msgid "Enter the password for the archive:"
 msgstr "Digite a senha do arquivo:"

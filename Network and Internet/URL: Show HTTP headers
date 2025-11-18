@@ -23,6 +23,12 @@ _main() {
     # Replace 3+ consecutive newlines with 2 newlines.
     std_output=$(sed -z "s|\n\{3,\}|\n\n|g" <<<"$std_output")
 
+    # Translate some strings from the '$std_output'.
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|__MSG_NoResp__|$(_i18n '(No response)')|g" <<<"$std_output")
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|__MSG_URL__|$(_i18n 'URL')|g" <<<"$std_output")
+
     _display_text_box "$std_output"
 }
 
@@ -34,16 +40,16 @@ _main_task() {
     local status="🟢"
 
     # Run the main process.
-    std_output=$(LC_ALL=C curl --max-time "$timeout_value" --connect-timeout 3 -s -I "$input_file" 2>/dev/null)
+    std_output=$(curl --max-time "$timeout_value" --connect-timeout 3 -s -I "$input_file" 2>/dev/null)
 
     if [[ -z "$std_output" ]]; then
-        std_output="(No response)"
+        std_output="__MSG_NoResp__"
         status="🔴"
     fi
 
     std_output=$(_text_remove_empty_lines "$std_output")
 
-    _storage_text_write_ln "$status URL: $input_file"$'\n'"$std_output"$'\n'
+    _storage_text_write_ln "$status __MSG_URL__: $input_file"$'\n'"$std_output"$'\n'
 }
 
 # FUNCTION: _extract_urls

@@ -23,6 +23,12 @@ _main() {
     local std_output=""
     std_output=$(_storage_text_read_all)
 
+    # Translate some strings from the '$std_output'.
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|__MSG_NoResp__|$(_i18n '(No response)')|g" <<<"$std_output")
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|__MSG_IP__|$(_i18n 'IP')|g" <<<"$std_output")
+
     _display_text_box "$std_output"
 }
 
@@ -42,9 +48,9 @@ _main_task() {
     std_output=$(grep --ignore-case -v "statistics" <<<"$std_output")
     std_output=$(grep --ignore-case -v "Host Unreachable" <<<"$std_output")
     # shellcheck disable=SC2001
-    std_output=$(sed "s|.*, 0 received,.*|(No response)|g" <<<"$std_output")
+    std_output=$(sed "s|.*, 0 received,.*|__MSG_NoResp__|g" <<<"$std_output")
 
-    if [[ "$std_output" == *"(No response)"* ]]; then
+    if [[ "$std_output" == *"__MSG_NoResp__"* ]]; then
         status="🔴"
     fi
 
@@ -55,7 +61,7 @@ _main_task() {
 
     std_output=$(_text_remove_empty_lines "$std_output")
 
-    _storage_text_write_ln "$status IP: $input_file$hostname"$'\n'"$std_output"$'\n'
+    _storage_text_write_ln "$status __MSG_IP__: $input_file$hostname"$'\n'"$std_output"$'\n'
 }
 
 _extract_ips() {

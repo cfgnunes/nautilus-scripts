@@ -382,22 +382,22 @@ msgstr ""
 msgid "(No differences)"
 msgstr ""
 
-msgid "(No line breaks)"
+msgid "(No line break)"
 msgstr ""
 
 msgid "(No response)"
 msgstr ""
 
-msgid "(None)"
+msgid "(No open ports)"
 msgstr ""
 
 msgid "(Unknown)"
 msgstr ""
 
-msgid "Checksum mismatch!"
+msgid "Checksum mismatch."
 msgstr ""
 
-msgid "File not found!"
+msgid "File does not exist."
 msgstr ""
 
 msgid "High"
@@ -419,9 +419,6 @@ msgid "Valid"
 msgstr ""
 
 msgid "Invalid"
-msgstr ""
-
-msgid "File:"
 msgstr ""
 
 msgid "Enter the password for the archive:"

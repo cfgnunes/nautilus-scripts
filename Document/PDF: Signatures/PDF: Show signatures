@@ -19,6 +19,10 @@ _main() {
     local std_output=""
     std_output=$(_storage_text_read_all)
 
+    # Translate some strings from the '$std_output'.
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|__MSG_File__|$(_i18n 'File')|g" <<<"$std_output")
+
     _display_text_box "$std_output"
 }
 
@@ -40,7 +44,7 @@ _main_task() {
         fi
 
         # Prepend the filename.
-        std_output="$status File: \"$(_text_remove_pwd "$input_file")\""$'\n'"$std_output"
+        std_output="$status __MSG_File__: \"$(_text_remove_pwd "$input_file")\""$'\n'"$std_output"
 
         _storage_text_write_ln "$std_output"$'\n'
     fi
