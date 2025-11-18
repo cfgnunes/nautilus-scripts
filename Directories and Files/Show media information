@@ -34,7 +34,7 @@ _main_task() {
     local status="🔴"
 
     # Run the main process.
-    std_output=$(LC_ALL=C mediainfo -- "$input_file" 2>/dev/null)
+    std_output=$(mediainfo -- "$input_file" 2>/dev/null)
 
     # FORMAT THE OUTPUT:
     # Remove any extra spaces before colons ":".

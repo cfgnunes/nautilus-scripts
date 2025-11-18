@@ -30,7 +30,7 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(LC_ALL=C mediainfo --Inform="Audio;BitRate_Mode:%BitRate_Mode%\nBitRate:%BitRate/String%\nSamplingRate:%SamplingRate/String%\nChannel(s):%Channel(s)/String%" -- "$input_file" 2>&1)
+    std_output=$(mediainfo --Inform="Audio;BitRate_Mode:%BitRate_Mode%\nBitRate:%BitRate/String%\nSamplingRate:%SamplingRate/String%\nChannel(s):%Channel(s)/String%" -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     local mode=""
