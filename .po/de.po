@@ -426,19 +426,19 @@ msgid "Invalid signature"
 msgstr "Ungültige Signatur"
 
 msgid "Missing key"
-msgstr ""
+msgstr "Fehlender Schlüssel"
 
 msgid "Missing data file"
-msgstr ""
+msgstr "Fehlende Datendatei"
 
 msgid "Revoked key"
-msgstr ""
+msgstr "Widerrufener Schlüssel"
 
 msgid "Expired key"
-msgstr ""
+msgstr "Abgelaufener Schlüssel"
 
 msgid "Expired signature"
-msgstr ""
+msgstr "Abgelaufene Signatur"
 
 msgid "Enter the password for the archive:"
 msgstr "Geben Sie das Passwort für das Archiv ein:"
