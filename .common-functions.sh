@@ -1825,7 +1825,9 @@ _display_select_box_action() {
             msg="$(_i18n 'Select the items to delete:')"
             ;;
         esac
-        header_label="$items_count $par_item_name. $msg"
+        local total_msg=""
+        total_msg="$(_i18n 'Total:')"
+        header_label="$total_msg $items_count $par_item_name. $msg"
     else
         header_label="$items_count $par_item_name."
     fi
