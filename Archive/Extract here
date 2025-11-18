@@ -15,7 +15,7 @@ _main() {
     input_files=$(_get_files "par_type=file")
 
     # Defalt password for testing encrypted archives.
-    TEMP_DATA_TASK="123456"
+    TEMP_DATA_TASK="null"
 
     # Execute the function '_get_dependencies' for each file in parallel.
     export -f \
