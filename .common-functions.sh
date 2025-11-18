@@ -1857,6 +1857,10 @@ _display_select_box() {
     local par_check_select=$4
     local header_label=$5
 
+    if [[ -z "$par_columns" ]]; then
+        par_columns="--column="
+    fi
+
     case "$par_check_type" in
     "checkbox")
         par_columns="--column=$FIELD_SEPARATOR$par_columns"
@@ -1874,7 +1878,11 @@ _display_select_box() {
             wc -l)
     fi
 
-    if [[ -n "$list" ]]; then
+    if [[ -z "$list" ]]; then
+        # NOTE: Some Zenity versions crash  with
+        # an empty list (Segmentation fault).
+        list=" "
+    else
         items_count=$(tr -cd "\n" <<<"$list" | wc -c)
     fi
 
@@ -1899,12 +1907,6 @@ _display_select_box() {
             list=$(sed "s|^\(.*\)$|FALSE$FIELD_SEPARATOR\1|" <<<"$list")
             ;;
         esac
-    fi
-
-    if [[ -z "$list" ]]; then
-        # NOTE: Some versions of Zenity crash if the
-        # list is empty (Segmentation fault).
-        list=" "
     fi
 
     par_columns=$(tr "," "$FIELD_SEPARATOR" <<<"$par_columns")
