@@ -907,15 +907,15 @@ msgstr "文档：转换为 XLSX"
 
 #: Menu
 msgid "Document: Print (A4)"
-msgstr "文档：打印 (A4)"
+msgstr "文档：打印（A4）"
 
 #: Menu
 msgid "Document: Print (US Legal)"
-msgstr "文档：打印 (US Legal)"
+msgstr "文档：打印（US Legal）"
 
 #: Menu
 msgid "Document: Print (US Letter)"
-msgstr "文档：打印 (US Letter)"
+msgstr "文档：打印（US Letter）"
 
 #: Menu
 msgid "Extract here"
@@ -923,11 +923,11 @@ msgstr "解压到此处"
 
 #: Menu
 msgid "File carving (via Foremost)"
-msgstr "文件雕刻 (通过 Foremost)"
+msgstr "文件雕刻（通过 Foremost）"
 
 #: Menu
 msgid "File carving (via PhotoRec)"
-msgstr "文件雕刻 (通过 PhotoRec)"
+msgstr "文件雕刻（通过 PhotoRec）"
 
 #: Menu
 msgid "Find broken links"
@@ -995,7 +995,7 @@ msgstr "使用密码加密"
 
 #: Menu
 msgid "Encrypt with password (ASCII)"
-msgstr "使用密码加密 (ASCII)"
+msgstr "使用密码加密（ASCII）"
 
 #: Menu
 msgid "Encrypt with keys"
@@ -1003,7 +1003,7 @@ msgstr "使用密钥加密"
 
 #: Menu
 msgid "Encrypt with keys (ASCII)"
-msgstr "使用密钥加密(ASCII)"
+msgstr "使用密钥加密（ASCII）"
 
 #: Menu
 msgid "Import keys"
@@ -1015,11 +1015,11 @@ msgstr "签名"
 
 #: Menu
 msgid "Sign (ASCII)"
-msgstr "签名 (ASCII)"
+msgstr "签名（ASCII）"
 
 #: Menu
 msgid "Sign (detached signature)"
-msgstr "签名 (分离签名)"
+msgstr "签名（分离签名）"
 
 #: Menu
 msgid "Verify signature"
@@ -1027,31 +1027,31 @@ msgstr "验证签名"
 
 #: Menu
 msgid "Image: Add watermark (center)"
-msgstr "图像：添加水印 (居中)"
+msgstr "图像：添加水印（居中）"
 
 #: Menu
 msgid "Image: Add watermark (north)"
-msgstr "图像：添加水印 (顶部)"
+msgstr "图像：添加水印（顶部）"
 
 #: Menu
 msgid "Image: Add watermark (northeast)"
-msgstr "图像：添加水印 (右上角)"
+msgstr "图像：添加水印（右上角）"
 
 #: Menu
 msgid "Image: Add watermark (northwest)"
-msgstr "图像：添加水印 (左上角)"
+msgstr "图像：添加水印（左上角）"
 
 #: Menu
 msgid "Image: Add watermark (south)"
-msgstr "图像：添加水印 (底部)"
+msgstr "图像：添加水印（底部）"
 
 #: Menu
 msgid "Image: Add watermark (southeast)"
-msgstr "图像：添加水印 (右下角)"
+msgstr "图像：添加水印（右下角）"
 
 #: Menu
 msgid "Image: Add watermark (southwest)"
-msgstr "图像：添加水印 (左下角)"
+msgstr "图像：添加水印（左下角）"
 
 #: Menu
 msgid "Image: Automatic crop"
@@ -1059,7 +1059,7 @@ msgstr "图像：自动裁剪"
 
 #: Menu
 msgid "Image: Automatic crop (15 pct)"
-msgstr "图像：自动裁剪 (15pct)"
+msgstr "图像：自动裁剪（15pct）"
 
 #: Menu
 msgid "Image: Background to alpha"
@@ -1067,7 +1067,7 @@ msgstr "图像：背景转为透明"
 
 #: Menu
 msgid "Image: Background to alpha (15 pct)"
-msgstr "图像：背景转为透明 (15pct)"
+msgstr "图像：背景转为透明（15pct）"
 
 #: Menu
 msgid "Image: Color alpha to black"
@@ -1287,23 +1287,23 @@ msgstr "图像：调整尺寸（3840x2160）"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"
-msgstr "图像：旋转 (90度)"
+msgstr "图像：旋转（90度）"
 
 #: Menu
 msgid "Image: Rotate (180 deg)"
-msgstr "图像：旋转 (180度)"
+msgstr "图像：旋转（180度）"
 
 #: Menu
 msgid "Image: Rotate (270 deg)"
-msgstr "图像：旋转 (270度)"
+msgstr "图像：旋转（270度）"
 
 #: Menu
 msgid "Image: Split into 2 (horizontal)"
-msgstr "图像：分割为2份 (水平)"
+msgstr "图像：分割为2份（水平）"
 
 #: Menu
 msgid "Image: Split into 2 (vertical)"
-msgstr "图像：分割为2份 (垂直)"
+msgstr "图像：分割为2份（垂直）"
 
 #: Menu
 msgid "Image: Split into 4"
@@ -1311,11 +1311,11 @@ msgstr "图像：分割为4份"
 
 #: Menu
 msgid "Image: Stack (horizontal)"
-msgstr "图像：堆叠 (水平)"
+msgstr "图像：堆叠（水平）"
 
 #: Menu
 msgid "Image: Stack (vertical)"
-msgstr "图像：堆叠 (垂直)"
+msgstr "图像：堆叠（垂直）"
 
 #: Menu
 msgid "IP: Ping hosts"
@@ -1367,11 +1367,11 @@ msgstr "媒体：显示基本元数据"
 
 #: Menu
 msgid "MP3: (artist - title) Name to ID3"
-msgstr "MP3：(艺术家 - 标题) 文件名转ID3"
+msgstr "MP3：（艺术家 - 标题） 文件名转ID3"
 
 #: Menu
 msgid "MP3: (artist - title) ID3 to Name"
-msgstr "MP3：(艺术家 - 标题) ID3转文件名"
+msgstr "MP3：（艺术家 - 标题） ID3转文件名"
 
 #: Menu
 msgid "MP3: Volume maximize (recursive)"
@@ -1383,7 +1383,7 @@ msgstr "MP3：音量标准化（递归）"
 
 #: Menu
 msgid "MP3: Repair (recursive)"
-msgstr "MP3：修复 (递归)"
+msgstr "MP3：修复（递归）"
 
 #: Menu
 msgid "MP3: Show encoding details"
@@ -1407,11 +1407,11 @@ msgstr "粘贴剪贴板内容"
 
 #: Menu
 msgid "PDF: Add watermark (over)"
-msgstr "PDF：添加水印 (覆盖)"
+msgstr "PDF：添加水印（覆盖）"
 
 #: Menu
 msgid "PDF: Add watermark (under)"
-msgstr "PDF：添加水印 (底层)"
+msgstr "PDF：添加水印（底层）"
 
 #: Menu
 msgid "PDF: Combine multiple PDFs"
@@ -1455,27 +1455,27 @@ msgstr "PDF：查找已签名的 PDF"
 
 #: Menu
 msgid "PDF: Layout (landscape, 1x2)"
-msgstr "PDF：布局 (横向, 1x2)"
+msgstr "PDF：布局（横向, 1x2）"
 
 #: Menu
 msgid "PDF: Layout (landscape, 2x1)"
-msgstr "PDF：布局 (横向, 2x1)"
+msgstr "PDF：布局（横向, 2x1）"
 
 #: Menu
 msgid "PDF: Layout (landscape, 2x2)"
-msgstr "PDF：布局 (横向, 2x2)"
+msgstr "PDF：布局（横向, 2x2）"
 
 #: Menu
 msgid "PDF: Layout (landscape, 2x4)"
-msgstr "PDF：布局 (横向, 2x4)"
+msgstr "PDF：布局（横向, 2x4）"
 
 #: Menu
 msgid "PDF: Layout (landscape, 4x2)"
-msgstr "PDF：布局 (横向, 4x2)"
+msgstr "PDF：布局（横向, 4x2）"
 
 #: Menu
 msgid "PDF: Layout (portrait, 1x2)"
-msgstr "PDF：布局 (纵向, 1x2)"
+msgstr "PDF：布局（纵向, 1x2）"
 
 #: Menu
 msgid "PDF: Layout (portrait, 2x1)"
@@ -1863,27 +1863,27 @@ msgstr "视频：移除音频"
 
 #: Menu
 msgid "Video: Resize (25 pct)"
-msgstr "视频：调整大小 (25pct)"
+msgstr "视频：调整大小（25pct）"
 
 #: Menu
 msgid "Video: Resize (50 pct)"
-msgstr "视频：调整大小 (50pct)"
+msgstr "视频：调整大小（50pct）"
 
 #: Menu
 msgid "Video: Resize (75 pct)"
-msgstr "视频：调整大小 (75pct)"
+msgstr "视频：调整大小（75pct）"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"
-msgstr "视频：旋转 (90 度)"
+msgstr "视频：旋转（90 度）"
 
 #: Menu
 msgid "Video: Rotate (180 deg)"
-msgstr "视频：旋转 (180 度)"
+msgstr "视频：旋转（180 度）"
 
 #: Menu
 msgid "Video: Rotate (270 deg)"
-msgstr "视频：旋转 (270 度)"
+msgstr "视频：旋转（270 度）"
 
 #: Menu
 msgid "Video: Speed to 0.5"
@@ -1919,7 +1919,7 @@ msgstr "添加快捷方式到应用程序菜单"
 
 #: install.sh
 msgid "Install Homebrew (optional)"
-msgstr "安装 Homebrew (可选)"
+msgstr "安装 Homebrew（可选）"
 
 #: install.sh
 msgid "Choose which script categories to install"
@@ -1927,7 +1927,7 @@ msgstr "选择要安装的脚本类别"
 
 #: install.sh
 msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
-msgstr "选择选项 (<空格键> 勾选，<回车键> 确认)："
+msgstr "选择选项（<空格键> 勾选，<回车键> 确认）："
 
 #: install.sh
 msgid "Installing in non-interactive mode..."
