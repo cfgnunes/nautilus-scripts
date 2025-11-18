@@ -41,8 +41,8 @@ msgstr "Finalizado com erros! Veja o log:"
 msgid "Your system does not support clipboard operations."
 msgstr "Seu sistema não suporta operações com a área de transferência."
 
-msgid "Could not find a package for the dependency:"
-msgstr "Não foi possível encontrar um pacote para a dependência:"
+msgid "Could not find a package for:"
+msgstr "Não foi possível encontrar um pacote para:"
 
 msgid "The following packages are missing:"
 msgstr "Os seguintes pacotes estão ausentes:"
