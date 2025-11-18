@@ -439,6 +439,9 @@ msgstr ""
 msgid "Expired signature"
 msgstr ""
 
+msgid "Unknown algorithm"
+msgstr ""
+
 msgid "Key ID"
 msgstr ""
 

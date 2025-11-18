@@ -36,6 +36,8 @@ _main() {
     std_output=$(sed "s|__MSG_ExpKey__|$(_i18n 'Expired key')|g" <<<"$std_output")
     # shellcheck disable=SC2001
     std_output=$(sed "s|__MSG_ExpSig__|$(_i18n 'Expired signature')|g" <<<"$std_output")
+    # shellcheck disable=SC2001
+    std_output=$(sed "s|__MSG_UnknownAlg__|$(_i18n 'Unknown algorithm')|g" <<<"$std_output")
 
     _display_list_box "$std_output" "par_item_name=$(_i18n 'files'); par_columns='--column:$(_i18n 'Status'),--column:$(_i18n 'Name'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Key ID'),--column:$(_i18n 'Date'),--column:$(_i18n 'Time'),--column:$(_i18n 'File')'; par_action=open_location; par_check_type=checkbox"
 }
@@ -44,11 +46,11 @@ _main_task() {
     local input_file=$1
     local std_output=""
     local status=""
-    local name=" "
-    local email=" "
-    local key_id=" "
-    local date=" "
-    local time=" "
+    local name=""
+    local email=""
+    local key_id=""
+    local date=""
+    local time=""
     local timestamp=""
     local line=""
 
@@ -71,6 +73,8 @@ _main_task() {
         status="⚪ __MSG_NoKey__"
     elif grep -qF "can't hash datafile" <<<"$std_output"; then
         status="⚪ __MSG_NoData__"
+    elif grep -q "unknown \w* algorithm" <<<"$std_output"; then
+        status="⚪ __MSG_UnknownAlg__"
     else
         return 1
     fi
@@ -97,13 +101,34 @@ _main_task() {
 
     line=$(grep -F "[GNUPG:] ERRSIG" <<<"$std_output" 2>/dev/null)
     if [[ -n "$line" ]]; then
+        key_id=$(cut -d " " -f3 <<<"$line")
         timestamp=$(awk '{print $7}' <<<"$line")
+    fi
+
+    # Try to read packets to get missing information.
+    if [[ -z "$key_id" || -z "$timestamp" ]]; then
+        std_output=$(LC_ALL=C gpg --list-packets -- "$input_file" 2>&1)
+
+        if [[ -z "$key_id" ]]; then
+            key_id=$(awk -F 'keyid ' '/keyid/ {print $2}' <<<"$std_output")
+        fi
+        if [[ -z "$timestamp" ]]; then
+            timestamp=$(awk -F 'created ' '/, created/ {print $2}' |
+                tr -d ',' | awk '{print $1}' <<<"$std_output")
+        fi
     fi
 
     if [[ -n "$timestamp" ]]; then
         date=$(date -d "@$timestamp" "+%Y-%m-%d")
         time=$(date -d "@$timestamp" "+%H:%M:%S %z")
     fi
+
+    # Avoid empty strings on dialog.
+    [[ -z "$name" ]] && name=" "
+    [[ -z "$email" ]] && email=" "
+    [[ -z "$key_id" ]] && key_id=" "
+    [[ -z "$date" ]] && date=" "
+    [[ -z "$time" ]] && time=" "
 
     _storage_text_write_ln "${status}${FIELD_SEPARATOR}${name}${FIELD_SEPARATOR}${email}${FIELD_SEPARATOR}${key_id}${FIELD_SEPARATOR}${date}${FIELD_SEPARATOR}${time}${FIELD_SEPARATOR}$(_text_remove_pwd "$input_file")"
 }

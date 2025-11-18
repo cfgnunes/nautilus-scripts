@@ -440,6 +440,9 @@ msgstr "Abgelaufener Schlüssel"
 msgid "Expired signature"
 msgstr "Abgelaufene Signatur"
 
+msgid "Unknown algorithm"
+msgstr "Unbekannter Algorithmus"
+
 msgid "Key ID"
 msgstr "Schlüssel-ID"
 
