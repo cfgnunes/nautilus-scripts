@@ -255,8 +255,8 @@ _main() {
 
     _echo ""
     _echo_info "$(_i18n 'Installing:')"
-    _echo_info "> $(_i18n 'User:') $INSTALL_OWNER"
-    _echo_info "> $(_i18n 'Directory:') $INSTALL_DIR"
+    _echo_info "> $(_i18n 'User'): $INSTALL_OWNER"
+    _echo_info "> $(_i18n 'Directory'): $INSTALL_DIR"
     _install_scripts cat_selected cat_dirs
 
     ## Step 3: Install file manager configurations. ----

@@ -1917,14 +1917,6 @@ msgid "Installing:"
 msgstr ""
 
 #: install.sh
-msgid "User:"
-msgstr ""
-
-#: install.sh
-msgid "Directory:"
-msgstr ""
-
-#: install.sh
 msgid "Installing application menu shortcuts:"
 msgstr ""
 

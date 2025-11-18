@@ -1918,14 +1918,6 @@ msgid "Installing:"
 msgstr "Instalando:"
 
 #: install.sh
-msgid "User:"
-msgstr "Usuário:"
-
-#: install.sh
-msgid "Directory:"
-msgstr "Diretório:"
-
-#: install.sh
 msgid "Installing application menu shortcuts:"
 msgstr "Instalando atalhos no menu de aplicativos:"
 

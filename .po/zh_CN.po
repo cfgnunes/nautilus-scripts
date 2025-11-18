@@ -1918,14 +1918,6 @@ msgid "Installing:"
 msgstr "正在安装："
 
 #: install.sh
-msgid "User:"
-msgstr "用户："
-
-#: install.sh
-msgid "Directory:"
-msgstr "目录："
-
-#: install.sh
 msgid "Installing application menu shortcuts:"
 msgstr "正在安装应用程序菜单快捷方式："
 
