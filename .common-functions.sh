@@ -1989,7 +1989,7 @@ _display_select_box() {
 
 # FUNCTION: _display_list_box_xmessage
 _display_list_box_xmessage() {
-    local message=$1
+    local list=$1
     local par_columns=$2
 
     local btn_ok=""
@@ -1997,11 +1997,11 @@ _display_list_box_xmessage() {
 
     par_columns=$(sed "s|--column:||g" <<<"$par_columns")
     par_columns=$(tr "," "\t" <<<"$par_columns")
-    message=$(tr "$FIELD_SEPARATOR" "\t" <<<"$message")
-    message="$par_columns"$'\n'$'\n'"$message"
+    list=$(tr "$FIELD_SEPARATOR" "\t" <<<"$list")
+    list="$par_columns"$'\n'$'\n'"$list"
 
     _display_lock
-    printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
+    printf "%s" "$list" >"$TEMP_DATA_TEXT_BOX"
     xmessage -title "$(_get_script_name)" \
         -buttons "${btn_ok}:0" \
         -file "$TEMP_DATA_TEXT_BOX" \
