@@ -66,7 +66,7 @@ msgid "Total selected:"
 msgstr "已选总数："
 
 msgid "Total:"
-msgstr ""
+msgstr "总计："
 
 msgid "Some items could not be deleted."
 msgstr "部分项目无法删除。"
@@ -384,49 +384,49 @@ msgid "URL"
 msgstr "URL"
 
 msgid "(No differences)"
-msgstr ""
+msgstr "（无差异）"
 
 msgid "(No line break)"
-msgstr ""
+msgstr "（无换行）"
 
 msgid "(No response)"
-msgstr ""
+msgstr "（无响应）"
 
 msgid "(No open ports)"
-msgstr ""
+msgstr "（无开放端口）"
 
 msgid "(Unknown)"
-msgstr ""
+msgstr "（未知）"
 
 msgid "Checksum mismatch."
-msgstr ""
+msgstr "校验和不匹配。"
 
 msgid "File does not exist."
-msgstr ""
+msgstr "文件不存在。"
 
 msgid "High"
-msgstr ""
+msgstr "高"
 
 msgid "Low"
-msgstr ""
+msgstr "低"
 
 msgid "Medium"
-msgstr ""
+msgstr "中"
 
 msgid "Online"
-msgstr ""
+msgstr "在线"
 
 msgid "Offline"
-msgstr ""
+msgstr "离线"
 
 msgid "Valid signature"
-msgstr ""
+msgstr "有效签名"
 
 msgid "Invalid signature"
-msgstr ""
+msgstr "无效签名"
 
 msgid "Enter the password for the archive:"
-msgstr ""
+msgstr "请输入压缩包密码："
 
 #: Menu
 msgid "Archive"

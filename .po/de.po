@@ -66,7 +66,7 @@ msgid "Total selected:"
 msgstr "Gesamt ausgewählt:"
 
 msgid "Total:"
-msgstr ""
+msgstr "Gesamt:"
 
 msgid "Some items could not be deleted."
 msgstr "Einige Elemente konnten nicht gelöscht werden."
@@ -382,6 +382,51 @@ msgstr "HTTP-Code"
 
 msgid "URL"
 msgstr "URL"
+
+msgid "(No differences)"
+msgstr "(Keine Unterschiede)"
+
+msgid "(No line break)"
+msgstr "(Kein Zeilenumbruch)"
+
+msgid "(No response)"
+msgstr "(Keine Antwort)"
+
+msgid "(No open ports)"
+msgstr "(Keine offenen Ports)"
+
+msgid "(Unknown)"
+msgstr "(Unbekannt)"
+
+msgid "Checksum mismatch."
+msgstr "Prüfsumme stimmt nicht überein."
+
+msgid "File does not exist."
+msgstr "Datei existiert nicht."
+
+msgid "High"
+msgstr "Hoch"
+
+msgid "Low"
+msgstr "Niedrig"
+
+msgid "Medium"
+msgstr "Mittel"
+
+msgid "Online"
+msgstr "Online"
+
+msgid "Offline"
+msgstr "Offline"
+
+msgid "Valid signature"
+msgstr "Gültige Signatur"
+
+msgid "Invalid signature"
+msgstr "Ungültige Signatur"
+
+msgid "Enter the password for the archive:"
+msgstr "Geben Sie das Passwort für das Archiv ein:"
 
 #: Menu
 msgid "Archive"
