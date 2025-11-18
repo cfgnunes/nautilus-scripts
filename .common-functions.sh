@@ -1910,6 +1910,10 @@ _display_select_box() {
     par_columns=$(tr "," "$FIELD_SEPARATOR" <<<"$par_columns")
     list=$(tr "\n" "$FIELD_SEPARATOR" <<<"$list")
 
+    # Avoid empty fields.
+    local fs=$FIELD_SEPARATOR
+    list=$(sed ":again; s/$fs$fs/$fs $fs/g; t again" <<<"$list")
+
     # Avoid leading '-' in the variable to use in command line.
     list=$(sed "s|$FIELD_SEPARATOR-|$FIELD_SEPARATOR|g" <<<"$list")
 
