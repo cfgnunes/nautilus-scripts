@@ -283,6 +283,7 @@ _run_command() {
         rm -rf -- "$temp_dir_output" 2>/dev/null
     }
     __get_password() {
+        # FIXME: Call the function '_i18n'.
         _display_password_box "Enter the password for the archive: '$(basename -- "$input_file")'"
     }
     __cmd_7za() {
