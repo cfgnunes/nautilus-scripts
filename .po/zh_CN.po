@@ -1059,7 +1059,7 @@ msgstr "图像：自动裁剪"
 
 #: Menu
 msgid "Image: Automatic crop (15 pct)"
-msgstr "图像：自动裁剪（15pct）"
+msgstr "图像：自动裁剪（15％）"
 
 #: Menu
 msgid "Image: Background to alpha"
@@ -1067,7 +1067,7 @@ msgstr "图像：背景转为透明"
 
 #: Menu
 msgid "Image: Background to alpha (15 pct)"
-msgstr "图像：背景转为透明（15pct）"
+msgstr "图像：背景转为透明（15％）"
 
 #: Menu
 msgid "Image: Color alpha to black"
@@ -1087,7 +1087,7 @@ msgstr "图像：颜色黑色转Alpha通道"
 
 #: Menu
 msgid "Image: Color black to alpha (15 pct)"
-msgstr "图像：颜色黑色转Alpha通道（15pct）"
+msgstr "图像：颜色黑色转Alpha通道（15％）"
 
 #: Menu
 msgid "Image: Color magenta to alpha"
@@ -1095,7 +1095,7 @@ msgstr "图像：颜色洋红转Alpha通道"
 
 #: Menu
 msgid "Image: Color magenta to alpha (15 pct)"
-msgstr "图像：颜色洋红转Alpha通道（15pct）"
+msgstr "图像：颜色洋红转Alpha通道（15％）"
 
 #: Menu
 msgid "Image: Colorspace to gray"
@@ -1107,7 +1107,7 @@ msgstr "图像：颜色白色转Alpha通道"
 
 #: Menu
 msgid "Image: Color white to alpha (15 pct)"
-msgstr "图像：颜色白色转Alpha通道（15pct）"
+msgstr "图像：颜色白色转Alpha通道（15％）"
 
 #: Menu
 msgid "Image: Combine into a GIF"
@@ -1179,19 +1179,19 @@ msgstr "图像：导出为PDF"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"
-msgstr "图像：查找相似图片（65pct）"
+msgstr "图像：查找相似图片（65％）"
 
 #: Menu
 msgid "Image: Find similar (75 pct)"
-msgstr "图像：查找相似图片（75pct）"
+msgstr "图像：查找相似图片（75％）"
 
 #: Menu
 msgid "Image: Find similar (85 pct)"
-msgstr "图像：查找相似图片（85pct）"
+msgstr "图像：查找相似图片（85％）"
 
 #: Menu
 msgid "Image: Find similar (95 pct)"
-msgstr "图像：查找相似图片（95pct）"
+msgstr "图像：查找相似图片（95％）"
 
 #: Menu
 msgid "Image: Flip (horizontal)"
@@ -1255,15 +1255,15 @@ msgstr "图像：从元数据重命名"
 
 #: Menu
 msgid "Image: Resize (25 pct)"
-msgstr "图像：调整尺寸（25pct）"
+msgstr "图像：调整尺寸（25％）"
 
 #: Menu
 msgid "Image: Resize (50 pct)"
-msgstr "图像：调整尺寸（50pct）"
+msgstr "图像：调整尺寸（50％）"
 
 #: Menu
 msgid "Image: Resize (75 pct)"
-msgstr "图像：调整尺寸（75pct）"
+msgstr "图像：调整尺寸（75％）"
 
 #: Menu
 msgid "Image: Resize (512x512)"
@@ -1863,27 +1863,27 @@ msgstr "视频：移除音频"
 
 #: Menu
 msgid "Video: Resize (25 pct)"
-msgstr "视频：调整大小（25pct）"
+msgstr "视频：调整大小（25％）"
 
 #: Menu
 msgid "Video: Resize (50 pct)"
-msgstr "视频：调整大小（50pct）"
+msgstr "视频：调整大小（50％）"
 
 #: Menu
 msgid "Video: Resize (75 pct)"
-msgstr "视频：调整大小（75pct）"
+msgstr "视频：调整大小（75％）"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"
-msgstr "视频：旋转（90 度）"
+msgstr "视频：旋转（90度）"
 
 #: Menu
 msgid "Video: Rotate (180 deg)"
-msgstr "视频：旋转（180 度）"
+msgstr "视频：旋转（180度）"
 
 #: Menu
 msgid "Video: Rotate (270 deg)"
-msgstr "视频：旋转（270 度）"
+msgstr "视频：旋转（270度）"
 
 #: Menu
 msgid "Video: Speed to 0.5"
