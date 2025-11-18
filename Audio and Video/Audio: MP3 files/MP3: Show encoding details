@@ -42,20 +42,6 @@ _main_task() {
     sampling_rate=$(grep -m1 "^SamplingRate:" <<<"$std_output" | cut -d ":" -f 2-)
     channels=$(grep -m1 "^Channel" <<<"$std_output" | cut -d ":" -f 2-)
 
-    # Check if the values are not empty.
-    if [[ -z "$mode" ]]; then
-        mode=" "
-    fi
-    if [[ -z "$bit_rate" ]]; then
-        bit_rate=" "
-    fi
-    if [[ -z "$sampling_rate" ]]; then
-        sampling_rate=" "
-    fi
-    if [[ -z "$channels" ]]; then
-        channels=" "
-    fi
-
     _storage_text_write_ln "$mode$FIELD_SEPARATOR$bit_rate$FIELD_SEPARATOR$sampling_rate$FIELD_SEPARATOR$channels$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
 }
 

@@ -121,8 +121,6 @@ _get_secret_keys() {
                 cmd2="date -d @" expire_ts " +\"%Y-%m-%d\""
                 cmd2 | getline expire
                 close(cmd2)
-            } else {
-                expire=" "
             }
         }
 

@@ -123,13 +123,6 @@ _main_task() {
         time=$(date -d "@$timestamp" "+%H:%M:%S %z")
     fi
 
-    # Avoid empty strings on dialog.
-    [[ -z "$name" ]] && name=" "
-    [[ -z "$email" ]] && email=" "
-    [[ -z "$key_id" ]] && key_id=" "
-    [[ -z "$date" ]] && date=" "
-    [[ -z "$time" ]] && time=" "
-
     _storage_text_write_ln "${status}${FIELD_SEPARATOR}${name}${FIELD_SEPARATOR}${email}${FIELD_SEPARATOR}${key_id}${FIELD_SEPARATOR}${date}${FIELD_SEPARATOR}${time}${FIELD_SEPARATOR}$(_text_remove_pwd "$input_file")"
 }
 
