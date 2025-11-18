@@ -425,6 +425,21 @@ msgstr "有效签名"
 msgid "Invalid signature"
 msgstr "无效签名"
 
+msgid "Missing key"
+msgstr ""
+
+msgid "Missing data file"
+msgstr ""
+
+msgid "Revoked key"
+msgstr ""
+
+msgid "Expired key"
+msgstr ""
+
+msgid "Expired signature"
+msgstr ""
+
 msgid "Enter the password for the archive:"
 msgstr "请输入压缩包密码："
 

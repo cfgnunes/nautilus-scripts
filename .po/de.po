@@ -425,6 +425,21 @@ msgstr "Gültige Signatur"
 msgid "Invalid signature"
 msgstr "Ungültige Signatur"
 
+msgid "Missing key"
+msgstr ""
+
+msgid "Missing data file"
+msgstr ""
+
+msgid "Revoked key"
+msgstr ""
+
+msgid "Expired key"
+msgstr ""
+
+msgid "Expired signature"
+msgstr ""
+
 msgid "Enter the password for the archive:"
 msgstr "Geben Sie das Passwort für das Archiv ein:"
 

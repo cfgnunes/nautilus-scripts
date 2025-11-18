@@ -29,7 +29,7 @@ _main() {
     # shellcheck disable=SC2001
     std_output=$(sed "s|__MSG_NoKey__|$(_i18n 'Missing key')|g" <<<"$std_output")
     # shellcheck disable=SC2001
-    std_output=$(sed "s|__MSG_NoData__|$(_i18n 'Missing datafile')|g" <<<"$std_output")
+    std_output=$(sed "s|__MSG_NoData__|$(_i18n 'Missing data file')|g" <<<"$std_output")
     # shellcheck disable=SC2001
     std_output=$(sed "s|__MSG_RevKey__|$(_i18n 'Revoked key')|g" <<<"$std_output")
     # shellcheck disable=SC2001
