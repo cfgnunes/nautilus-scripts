@@ -439,6 +439,9 @@ msgstr ""
 msgid "Expired signature"
 msgstr ""
 
+msgid "Key ID"
+msgstr ""
+
 msgid "Enter the password for the archive:"
 msgstr ""
 

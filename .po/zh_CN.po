@@ -440,6 +440,9 @@ msgstr "密钥已过期"
 msgid "Expired signature"
 msgstr "签名已过期"
 
+msgid "Key ID"
+msgstr "密钥ID"
+
 msgid "Enter the password for the archive:"
 msgstr "请输入压缩包密码："
 

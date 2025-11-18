@@ -440,6 +440,9 @@ msgstr "Chave expirada"
 msgid "Expired signature"
 msgstr "Assinatura expirada"
 
+msgid "Key ID"
+msgstr "ID da chave"
+
 msgid "Enter the password for the archive:"
 msgstr "Digite a senha do arquivo:"
 
