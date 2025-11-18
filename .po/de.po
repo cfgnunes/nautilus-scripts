@@ -762,10 +762,6 @@ msgid "Compare items (via Diff)"
 msgstr "Elemente vergleichen (über Diff)"
 
 #: Menu
-msgid "Compress..."
-msgstr "Komprimieren..."
-
-#: Menu
 msgid "Compress to '7z'"
 msgstr "Zu '7z' komprimieren"
 

@@ -151,12 +151,6 @@ _main() {
     __test_file_nonempty "$output_file.zip"
     __test_file_empty "$std_output"
 
-    #script_test="Archive/Compress..."
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_dir1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
     script_test="Archive/Extract here"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$output_file.zip" >"$std_output"

@@ -762,10 +762,6 @@ msgid "Compare items (via Diff)"
 msgstr "比较项目（通过Diff）"
 
 #: Menu
-msgid "Compress..."
-msgstr "压缩..."
-
-#: Menu
 msgid "Compress to '7z'"
 msgstr "压缩为'7z'"
 

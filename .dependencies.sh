@@ -193,17 +193,6 @@ declare -A DEPENDENCIES_MAP=(
         brew:
     "
 
-    ["file-roller"]="
-        pkg:    file-roller
-        apt:    file-roller
-        dnf:    file-roller
-        pacman: file-roller
-        nix:    file-roller
-        zypper: file-roller
-        guix:   file-roller
-        brew:
-    "
-
     ["filelight"]="
         pkg:    filelight
         apt:    filelight
