@@ -34,7 +34,6 @@ _main() {
     # If no differences are found, set a default message.
     if [[ -z "$std_output" ]]; then
         std_output="$(_i18n '(No differences)')"
-        std_output+=$'\n'
     fi
 
     _display_text_box "$std_output"

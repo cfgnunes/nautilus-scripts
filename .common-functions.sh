@@ -2144,6 +2144,7 @@ _display_text_box() {
     if [[ -z "$message" ]]; then
         message="$(_i18n '(Empty)')"
     fi
+    message+=$'\n'
 
     local btn_ok=""
     btn_ok="$(_i18n 'OK')"
