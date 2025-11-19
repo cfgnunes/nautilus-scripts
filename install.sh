@@ -711,21 +711,27 @@ _check_dependencies() {
     fi
 
     if _command_exists "nix-env"; then
+        # Package manager 'nix-env': For Nix-based systems.
         _command_exists "pgrep" || packages+="procps "
         _install_packages "nix-env" "$packages"
     elif _command_exists "guix"; then
+        # Package manager 'guix': For GNU Guix systems.
         _command_exists "pgrep" || packages+="procps "
         _install_packages "guix" "$packages"
     elif _command_exists "apt-get"; then
+        # Package manager 'apt-get': For Debian/Ubuntu systems.
         _command_exists "pgrep" || packages+="procps "
         _install_packages "apt-get" "$packages"
     elif _command_exists "rpm-ostree"; then
+        # Package manager 'rpm-ostree': For Fedora/RHEL atomic systems.
         _command_exists "pgrep" || packages+="procps-ng "
         _install_packages "rpm-ostree" "$packages"
     elif _command_exists "dnf"; then
+        # Package manager 'dnf': For Fedora/RHEL systems.
         _command_exists "pgrep" || packages+="procps-ng "
         _install_packages "dnf" "$packages"
     elif _command_exists "pacman"; then
+        # Package manager 'pacman': For Arch Linux systems.
         _command_exists "pgrep" || packages+="procps "
         # NOTE: Force update GTK4 packages on Arch Linux.
         if [[ "$packages" == *"zenity"* ]]; then
@@ -733,9 +739,11 @@ _check_dependencies() {
         fi
         _install_packages "pacman" "$packages"
     elif _command_exists "zypper"; then
+        # Package manager 'zypper': For openSUSE systems.
         _command_exists "pgrep" || packages+="procps-ng "
         _install_packages "zypper" "$packages"
     elif _command_exists "xbps-install"; then
+        # Package manager 'zypper': For Void Linux systems.
         _command_exists "pgrep" || packages+="procps-ng "
         # NOTE: Update dependencies on Void Linux.
         if [[ "$packages" == *"yad"* ]]; then
