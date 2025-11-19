@@ -36,10 +36,14 @@ _main() {
     # shellcheck disable=SC2034
     local apps=(
         "code"
+        "codium"
+        "subl"
         "geany"
         "gnome-text-editor"
         "gedit"
+        "kate"
         "mousepad"
+        "xed"
     )
     available_app=$(_get_available_app "apps")
 
