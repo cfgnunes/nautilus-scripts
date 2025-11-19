@@ -241,7 +241,7 @@ _main() {
     fi
 
     ## Step 1: Check for basic dependencies. ----
-    [[ "$OPT_INSTALL_BASIC_DEPS" == "true" ]] && _install_dependencies
+    [[ "$OPT_INSTALL_BASIC_DEPS" == "true" ]] && _check_dependencies
 
     ## Step 2: Install the scripts. ----
     INSTALL_HOME=$HOME
@@ -687,16 +687,11 @@ _generate_desktop_filename() {
 # -----------------------------------------------------------------------------
 
 # shellcheck disable=SC2086
-_install_dependencies() {
+_check_dependencies() {
     _echo ""
     _echo_info "$(_i18n 'Checking for basic dependencies:')"
 
     local packages=""
-    local admin_cmd=""
-
-    if _command_exists "sudo"; then
-        admin_cmd="sudo"
-    fi
 
     # Basic packages to run the script '.common-functions.sh'.
     _command_exists "basename" || packages+="coreutils "
@@ -717,92 +712,32 @@ _install_dependencies() {
 
     if _command_exists "nix-env"; then
         _command_exists "pgrep" || packages+="procps "
-
-        # Package manager 'nix': no root required.
-        if [[ -n "$packages" ]]; then
-            _log "[INF] Package manager: nix-env"
-            _print_missing_packages "$packages"
-            local nix_packages=""
-            local nix_channel="nixpkgs"
-            if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
-                nix_channel="nixos"
-            fi
-
-            nix_packages="$nix_channel.$packages"
-            # shellcheck disable=SC2001
-            nix_packages=$(sed "s| $||g" <<<"$nix_packages")
-            # shellcheck disable=SC2001
-            nix_packages=$(sed "s| | $nix_channel.|g" <<<"$nix_packages")
-
-            nix-env -iA $nix_packages
-        fi
+        _install_packages "nix-env" "$packages"
     elif _command_exists "guix"; then
         _command_exists "pgrep" || packages+="procps "
-
-        # Package manager 'guix': no root required.
-        if [[ -n "$packages" ]]; then
-            _log "[INF] Package manager: guix"
-            _print_missing_packages "$packages"
-            guix install $packages
-        fi
+        _install_packages "guix" "$packages"
     elif _command_exists "apt-get"; then
-        # Package manager 'apt-get': For Debian/Ubuntu systems.
         _command_exists "pgrep" || packages+="procps "
-
-        if [[ -n "$packages" ]]; then
-            _log "[INF] Package manager: apt-get"
-            _print_missing_packages "$packages"
-            $admin_cmd apt-get update
-            $admin_cmd apt-get -y install $packages
-        fi
+        _install_packages "apt-get" "$packages"
     elif _command_exists "rpm-ostree"; then
-        # Package manager 'rpm-ostree': For Fedora/RHEL atomic systems.
         _command_exists "pgrep" || packages+="procps-ng "
-
-        if [[ -n "$packages" ]]; then
-            _log "[INF] Package manager: rpm-ostree"
-            _print_missing_packages "$packages"
-            $admin_cmd rpm-ostree install $packages
-        fi
+        _install_packages "rpm-ostree" "$packages"
     elif _command_exists "dnf"; then
-        # Package manager 'dnf': For Fedora/RHEL systems.
         _command_exists "pgrep" || packages+="procps-ng "
-
-        if [[ -n "$packages" ]]; then
-            _log "[INF] Package manager: dnf"
-            _print_missing_packages "$packages"
-            $admin_cmd dnf check-update
-            $admin_cmd dnf -y install $packages
-        fi
+        _install_packages "dnf" "$packages"
     elif _command_exists "pacman"; then
-        # Package manager 'pacman': For Arch Linux systems.
         _command_exists "pgrep" || packages+="procps "
-
         # NOTE: Force update GTK4 packages on Arch Linux.
         if [[ "$packages" == *"zenity"* ]]; then
             packages+="gtk4 zlib glib2 "
         fi
-
-        if [[ -n "$packages" ]]; then
-            _log "[INF] Package manager: pacman"
-            _print_missing_packages "$packages"
-            $admin_cmd pacman -Syy
-            $admin_cmd pacman --noconfirm -S $packages
-        fi
+        _install_packages "pacman" "$packages"
     elif _command_exists "zypper"; then
-        # Package manager 'zypper': For openSUSE systems.
         _command_exists "pgrep" || packages+="procps-ng "
-
-        if [[ -n "$packages" ]]; then
-            _log "[INF] Package manager: zypper"
-            _print_missing_packages "$packages"
-            $admin_cmd zypper refresh
-            $admin_cmd zypper --non-interactive install $packages
-        fi
+        _install_packages "zypper" "$packages"
     else
         if [[ -n "$packages" ]]; then
             _log "[ERR] Missing package manager."
-            _print_missing_packages "$packages"
             _echo_error "$(_i18n 'Could not find a package manager!')"
             exit 1
         fi
@@ -814,9 +749,75 @@ _install_dependencies() {
     _echo_info "> $(_i18n 'Done!')"
 }
 
-_print_missing_packages() {
-    local packages=$1
+_install_packages() {
+    local pkg_manager=$1
+    local packages=$2
+    local cmd_admin=""
+    local cmd_admin_available=""
+    local cmd_inst=""
+
+    # Remove the last space char.
+    packages=${packages% }
+
+    _log "[INF] Package manager: $pkg_manager"
+
+    [[ -z "$packages" ]] && return
+
     _echo_info "> $(_i18n 'The following packages are missing:') $packages"
+
+    _command_exists "sudo" && cmd_admin_available="sudo"
+
+    cmd_inst=""
+    cmd_admin="$cmd_admin_available"
+
+    case "$pkg_manager" in
+    "apt-get")
+        cmd_inst+="apt-get update;"
+        cmd_inst+="apt-get -y install $packages"
+        ;;
+    "dnf")
+        cmd_inst+="dnf check-update;"
+        cmd_inst+="dnf -y install $packages"
+        ;;
+    "rpm-ostree")
+        cmd_inst+="rpm-ostree install $packages"
+        ;;
+    "pacman")
+        cmd_inst+="pacman -Syy;"
+        cmd_inst+="pacman --noconfirm -S $packages"
+        ;;
+    "zypper")
+        cmd_inst+="zypper refresh;"
+        cmd_inst+="zypper --non-interactive install $packages"
+        ;;
+    "nix-env")
+        local nix_packages=""
+        local nix_channel="nixpkgs"
+        if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
+            nix_channel="nixos"
+        fi
+
+        # Prefix packages with their channel namespace.
+        nix_packages="$nix_channel.$packages"
+        # shellcheck disable=SC2001
+        nix_packages=$(sed "s| $||g" <<<"$nix_packages")
+        # shellcheck disable=SC2001
+        nix_packages=$(sed "s| | $nix_channel.|g" <<<"$nix_packages")
+
+        cmd_inst+="nix-env -iA $nix_packages"
+        # Nix does not require root for installing user packages.
+        cmd_admin=""
+        ;;
+    "guix")
+        cmd_inst="guix package -i $packages"
+        ;;
+    esac
+
+    # Execute installation.
+    if [[ -n "$cmd_inst" ]]; then
+        # If root privileges are required, prepend with 'sudo'.
+        $cmd_admin bash -c "$cmd_inst"
+    fi
 }
 
 # -----------------------------------------------------------------------------
