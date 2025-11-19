@@ -834,6 +834,7 @@ _install_packages() {
 
     # Execute installation.
     if [[ -n "$cmd_inst" ]]; then
+        _echo_info "> $(_i18n 'Installing the packages. Please, wait...')"
         # If root privileges are required, prepend with 'sudo'.
         $cmd_admin bash -c "$cmd_inst"
     fi
