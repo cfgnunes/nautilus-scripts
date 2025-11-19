@@ -735,6 +735,13 @@ _check_dependencies() {
     elif _command_exists "zypper"; then
         _command_exists "pgrep" || packages+="procps-ng "
         _install_packages "zypper" "$packages"
+    elif _command_exists "xbps-install"; then
+        _command_exists "pgrep" || packages+="procps-ng "
+        # NOTE: Update dependencies on Void Linux.
+        if [[ "$packages" == *"yad"* ]]; then
+            packages+="xbps libavcodec6 libheif "
+        fi
+        _install_packages "xbps-install" "$packages"
     else
         if [[ -n "$packages" ]]; then
             _log "[ERR] Missing package manager."
@@ -810,6 +817,10 @@ _install_packages() {
         ;;
     "guix")
         cmd_inst="guix package -i $packages"
+        ;;
+    "xbps-install")
+        cmd_inst+="xbps-install -Suy;"
+        cmd_inst+="xbps-install -Sy $packages"
         ;;
     esac
 
