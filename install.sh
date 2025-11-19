@@ -819,8 +819,8 @@ _install_packages() {
         cmd_inst="guix package -i $packages"
         ;;
     "xbps-install")
-        cmd_inst+="xbps-install -Suy;"
-        cmd_inst+="xbps-install -Sy $packages"
+        cmd_inst+="xbps-install -Sy;"
+        cmd_inst+="xbps-install -y $packages"
         ;;
     esac
 
