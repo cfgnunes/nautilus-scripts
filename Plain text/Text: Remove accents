@@ -34,7 +34,7 @@ _main_task() {
     fi
     [[ "$input_encoding" == "us-ascii" ]] && input_encoding="utf-8"
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(ASCII)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(no accents)'")
 
     # Run the main process.
     iconv -f "$input_encoding" "$input_file" -t "$encoding" > "$output_file"
