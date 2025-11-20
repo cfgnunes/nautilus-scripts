@@ -148,4 +148,4 @@ If you spot a bug or want to improve the code or even improve the content, you c
   describing the bug or feature idea;
 - Fork the project, make changes, and submit a pull request.
 
-🌍 If you'd like to translate this project into your native language, feel free to send me the translated file: [en_template.pot](https://github.com/cfgnunes/nautilus-scripts/blob/main/.po/en_template.pot)
+If you'd like to translate this project into your native language, feel free to send me the translated file: [en_template.pot](https://github.com/cfgnunes/nautilus-scripts/blob/main/.po/en_template.pot)
