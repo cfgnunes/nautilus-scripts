@@ -50,7 +50,7 @@ _import_key() {
 
     input_file=$(_display_file_selection_box \
         "$(_i18n 'Key files') | *.asc *.gpg *.pgp" \
-        "$(_i18n 'Choose a key file to import.')")
+        "$(_i18n 'Choose a key file to import.')" "true")
 
     if [[ -z "$input_file" ]]; then
         _exit_script

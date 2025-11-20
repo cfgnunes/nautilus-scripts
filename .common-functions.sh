@@ -1593,7 +1593,7 @@ _is_directory_empty() {
 #   $1 (file_filter): Optional. File filter pattern.
 #   $2 (title): Optional. Title of the window.
 #   $3 (multiple): Optional. Enable multiple selection ('true' or 'false').
-#   $4 (directory): Optional. Enable directory selection ('true' or 'false').
+#   $4 (directory): Optional. Enable directory-only ('true' or 'false').
 _display_file_selection_box() {
     local file_filter=${1:-""}
     local title=${2:-""}
@@ -1617,7 +1617,7 @@ _display_file_selection_box() {
 
     _display_lock
     if _command_exists "zenity"; then
-        input_files=$(zenity --title "$title" \
+        input_files=$(GDK_DEBUG=no-portals zenity --title "$title" \
             --file-selection $multiple_flag $directory_flag \
             ${file_filter:+--file-filter="$file_filter"} \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
@@ -2897,20 +2897,12 @@ _get_files() {
 
     # If still no files available, prompt user with selection dialog.
     if (($(_get_items_count "$input_files") == 0)); then
-        if [[ "$par_type" != "file" ]] ||
-            [[ "$par_recursive" == "true" ]]; then
-            # HACK: Workaround for Zenity.
-            # Zenity cannot select files and directories in the same dialog.
-            # See: https://gitlab.gnome.org/GNOME/zenity/-/issues/116
-            if ! _command_exists "zenity"; then
-                # Select files and directories (YAD).
-                input_files=$(_display_file_selection_box "" "" "true" "false")
-            else
-                # Select only directories (Zenity).
-                input_files=$(_display_file_selection_box "" "" "true" "true")
-            fi
+        if [[ "$par_type" == "directory" ]] &&
+            [[ "$par_recursive" == "false" ]]; then
+            # Select only directories.
+            input_files=$(_display_file_selection_box "" "" "true" "true")
         else
-            # Select only files (Zenity), or files and directories (YAD).
+            # Select files or directories.
             input_files=$(_display_file_selection_box "" "" "true" "false")
         fi
     fi
