@@ -15,8 +15,8 @@ _main() {
     input_files=$(_get_files "par_type=file; par_select_mime=image/")
 
     TEMP_DATA_TASK=$(_display_file_selection_box \
-        "$(_i18n 'Image files') | *.bmp *.gif *.png *.jpg *.jpeg *.tif" \
-        "$(_i18n 'Choose an image to use as the watermark')")
+        "$(_i18n 'Choose an image to use as the watermark')" \
+        "$(_i18n 'Image files') | *.bmp *.gif *.png *.jpg *.jpeg *.tif")
 
     # Check output directory only after displaying dialog boxes to the user.
     output_dir=$(_get_output_dir "par_use_same_dir=true")

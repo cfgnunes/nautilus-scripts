@@ -1599,8 +1599,8 @@ _is_directory_empty() {
 # a file.
 #
 # PARAMETERS:
-#   $1 (file_filter): Optional. File filter pattern.
-#   $2 (title): Optional. Title of the window.
+#   $1 (title): Optional. Title of the window.
+#   $2 (file_filter): Optional. File filter pattern.
 #   $3 (parameters): A string containing key-value pairs that configure
 #      the function's behavior. Example: 'par_multiple=true'.
 #
@@ -1608,8 +1608,8 @@ _is_directory_empty() {
 #   - "par_multiple": Enable multiple selection ('true' or 'false').
 #   - "par_directory_only": Enable directory-only ('true' or 'false').
 _display_file_selection_box() {
-    local file_filter=${1:-""}
-    local title=${2:-""}
+    local title=${1:-""}
+    local file_filter=${2:-""}
     local parameters=${3:-""}
     local input_files=""
     local multiple_flag=""
