@@ -97,7 +97,6 @@ _extract_git_urls() {
 _prepare_input() {
     local input_files=$1
     local file_data=""
-    local clipboard_data=""
     local urls=""
 
     # shellcheck disable=SC2086
@@ -107,6 +106,7 @@ _prepare_input() {
     # If there are no valid URLs in the files,
     # get the URLs from the clipboard.
     if [[ -z "$urls" ]]; then
+        local clipboard_data=""
         clipboard_data=$(_get_clipboard_data)
         urls=$(_extract_git_urls "$clipboard_data")
     fi

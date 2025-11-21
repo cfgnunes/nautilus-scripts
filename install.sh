@@ -46,7 +46,7 @@ COMPATIBLE_FILE_MANAGERS=(
     "krusader"
 )
 
-# Ignored shortcuts (application menu) during install.
+# Ignored application menu shortcuts during install.
 IGNORE_APPS_SHORTCUTS=(
     ! -iname "Code Editor"
     ! -iname "Disk Usage Analyzer"
