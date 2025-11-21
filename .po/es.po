@@ -206,8 +206,8 @@ msgstr "Esta acción renombrará los archivos y directorios seleccionados de for
 msgid "PDF files"
 msgstr "Archivos PDF"
 
-msgid "Choose a PDF to use as the watermark"
-msgstr "Elija un PDF para usar como marca de agua"
+msgid "Select a PDF to use as the watermark"
+msgstr "Seleccione un PDF para usar como marca de agua"
 
 msgid "Signature"
 msgstr "Firma"
@@ -248,14 +248,14 @@ msgstr "Calidad"
 msgid "Image files"
 msgstr "Archivos de imagen"
 
-msgid "Choose an image to use as the watermark"
-msgstr "Elija una imagen para usar como marca de agua"
+msgid "Select an image to use as the watermark"
+msgstr "Seleccione una imagen para usar como marca de agua"
 
 msgid "Key files"
 msgstr "Archivos de clave"
 
-msgid "Choose a key file to import."
-msgstr "Elija un archivo de clave para importar."
+msgid "Select a key file to import"
+msgstr "Seleccione un archivo de clave para importar"
 
 msgid "No secret keys were found."
 msgstr "No se encontraron claves secretas."
@@ -458,8 +458,14 @@ msgstr "ID de la clave"
 msgid "Enter the password for the archive:"
 msgstr "Introduce la contraseña del archivo:"
 
-msgid "Choose the output directory."
-msgstr "Elige el directorio de salida."
+msgid "Select the output directory"
+msgstr "Seleccione el directorio de salida"
+
+msgid "Select input directories"
+msgstr "Seleccione los directorios de entrada"
+
+msgid "Select input files"
+msgstr "Seleccione los archivos de entrada"
 
 #: Menu
 msgid "Archive"

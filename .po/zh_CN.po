@@ -206,8 +206,8 @@ msgstr "此操作将递归重命名所选文件和目录。"
 msgid "PDF files"
 msgstr "PDF文件"
 
-msgid "Choose a PDF to use as the watermark"
-msgstr "选择用作水印的PDF"
+msgid "Select a PDF to use as the watermark"
+msgstr "选择一个 PDF 作为水印"
 
 msgid "Signature"
 msgstr "签名"
@@ -248,14 +248,14 @@ msgstr "质量"
 msgid "Image files"
 msgstr "图像文件"
 
-msgid "Choose an image to use as the watermark"
-msgstr "选择用作水印的图像"
+msgid "Select an image to use as the watermark"
+msgstr "选择一张图像作为水印"
 
 msgid "Key files"
 msgstr "密钥文件"
 
-msgid "Choose a key file to import."
-msgstr "选择要导入的密钥文件。"
+msgid "Select a key file to import"
+msgstr "选择要导入的密钥文件"
 
 msgid "No secret keys were found."
 msgstr "未找到私钥。"
@@ -458,8 +458,14 @@ msgstr "密钥ID"
 msgid "Enter the password for the archive:"
 msgstr "请输入压缩包密码："
 
-msgid "Choose the output directory."
-msgstr "选择输出目录。"
+msgid "Select the output directory"
+msgstr "选择输出目录"
+
+msgid "Select input directories"
+msgstr "选择输入目录"
+
+msgid "Select input files"
+msgstr "选择输入文件"
 
 #: Menu
 msgid "Archive"

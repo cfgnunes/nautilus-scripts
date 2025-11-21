@@ -205,7 +205,7 @@ msgstr ""
 msgid "PDF files"
 msgstr ""
 
-msgid "Choose a PDF to use as the watermark"
+msgid "Select a PDF to use as the watermark"
 msgstr ""
 
 msgid "Signature"
@@ -247,13 +247,13 @@ msgstr ""
 msgid "Image files"
 msgstr ""
 
-msgid "Choose an image to use as the watermark"
+msgid "Select an image to use as the watermark"
 msgstr ""
 
 msgid "Key files"
 msgstr ""
 
-msgid "Choose a key file to import."
+msgid "Select a key file to import"
 msgstr ""
 
 msgid "No secret keys were found."
@@ -457,7 +457,13 @@ msgstr ""
 msgid "Enter the password for the archive:"
 msgstr ""
 
-msgid "Choose the output directory."
+msgid "Select the output directory"
+msgstr ""
+
+msgid "Select input directories"
+msgstr ""
+
+msgid "Select input files"
 msgstr ""
 
 #: Menu

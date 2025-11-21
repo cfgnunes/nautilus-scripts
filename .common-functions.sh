@@ -2948,11 +2948,13 @@ _get_files() {
         if [[ "$par_type" == "directory" ]] &&
             [[ "$par_recursive" == "false" ]]; then
             # Select only directories.
-            input_files=$(_display_file_selection_box "" "" \
+            input_files=$(_display_file_selection_box \
+                "$(_i18n 'Select input directories')" "" \
                 "par_multiple=true; par_directory_only=true")
         else
             # Select files or directories.
-            input_files=$(_display_file_selection_box "" "" \
+            input_files=$(_display_file_selection_box \
+                "$(_i18n 'Select input files')" "" \
                 "par_multiple=true; par_directory_only=false")
         fi
     fi
@@ -3246,7 +3248,7 @@ _get_output_dir() {
     # prompt the user to manually select a directory.
     if [[ ! -w "$output_dir" || -z "$output_dir" ]]; then
         output_dir=$(_display_file_selection_box \
-            "$(_i18n 'Choose the output directory.')" "" \
+            "$(_i18n 'Select the output directory')" "" \
             "par_multiple=false; par_directory_only=true")
     fi
 
