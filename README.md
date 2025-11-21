@@ -133,6 +133,7 @@ Special thanks to everyone who contributed to the translation of this project:
 - 🇨🇳 **JoveYu** - Chinese (translation).
 - 🇧🇷 **Nathália Medeiros** - Brazilian Portuguese (review).
 - 🇪🇸 **Maravento** - Spanish (review).
+- 🇩🇪 **La-vaos** - German (review).
 
 ### Contributors
 
