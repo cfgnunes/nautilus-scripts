@@ -1592,16 +1592,26 @@ _is_directory_empty() {
 # PARAMETERS:
 #   $1 (file_filter): Optional. File filter pattern.
 #   $2 (title): Optional. Title of the window.
-#   $3 (multiple): Optional. Enable multiple selection ('true' or 'false').
-#   $4 (directory): Optional. Enable directory-only ('true' or 'false').
+#   $1 (parameters): A string containing key-value pairs that configure
+#      the function's behavior. Example: 'par_multiple=true'.
+#
+# PARAMETERS OPTIONS:
+#   - "par_multiple": Enable multiple selection ('true' or 'false').
+#   - "par_directory_only": Enable directory-only ('true' or 'false').
 _display_file_selection_box() {
     local file_filter=${1:-""}
     local title=${2:-""}
-    local multiple=${3:-"false"}
-    local directory=${4:-"false"}
+    local parameters=${3:-""}
     local input_files=""
     local multiple_flag=""
     local directory_flag=""
+
+    # Default values for input parameters.
+    local par_multiple="false"
+    local par_directory_only="false"
+
+    # Evaluate the values from the '$parameters' variable.
+    eval "$parameters"
 
     local btn_ok=""
     btn_ok="$(_i18n 'OK')"
@@ -1612,8 +1622,8 @@ _display_file_selection_box() {
     _is_gui_session || return 0
 
     [[ -z "$title" ]] && title=$(_get_script_name)
-    [[ "$multiple" == "true" ]] && multiple_flag="--multiple"
-    [[ "$directory" == "true" ]] && directory_flag="--directory"
+    [[ "$par_multiple" == "true" ]] && multiple_flag="--multiple"
+    [[ "$par_directory_only" == "true" ]] && directory_flag="--directory"
 
     _display_lock
     if _command_exists "zenity"; then
@@ -2900,10 +2910,12 @@ _get_files() {
         if [[ "$par_type" == "directory" ]] &&
             [[ "$par_recursive" == "false" ]]; then
             # Select only directories.
-            input_files=$(_display_file_selection_box "" "" "true" "true")
+            input_files=$(_display_file_selection_box "" "" \
+                "par_multiple=true; par_directory_only=true")
         else
             # Select files or directories.
-            input_files=$(_display_file_selection_box "" "" "true" "false")
+            input_files=$(_display_file_selection_box "" "" \
+                "par_multiple=true; par_directory_only=false")
         fi
     fi
 
