@@ -165,7 +165,7 @@ msgid "Could not find a directory with write permissions!"
 msgstr "Konnte kein Verzeichnis mit Schreibrechten finden!"
 
 msgid "Accessed recently"
-msgstr "Kürzlich zugegriffen"
+msgstr "Zuletzt verwendet"
 
 msgid "File"
 msgstr "Datei"
@@ -447,7 +447,7 @@ msgid "Key ID"
 msgstr "Schlüssel-ID"
 
 msgid "Enter the password for the archive:"
-msgstr "Gebe das Passwort für das Archiv ein:"
+msgstr "Gib das Passwort für das Archiv ein:"
 
 #: Menu
 msgid "Archive"
@@ -715,11 +715,11 @@ msgstr "Audio: Zu WAV konvertieren"
 
 #: Menu
 msgid "Audio: Fade-in"
-msgstr "Audio: Fade-in"
+msgstr "Audio: Einblenden"
 
 #: Menu
 msgid "Audio: Fade-out"
-msgstr "Audio: Fade-out"
+msgstr "Audio: Ausblenden"
 
 #: Menu
 msgid "Audio: Mix channels to mono"
@@ -947,7 +947,7 @@ msgstr "Versteckte Dateien anzeigen"
 
 #: Menu
 msgid "Find junk files"
-msgstr "Müll-Dateien finden"
+msgstr "Überflüssige Dateien finden"
 
 #: Menu
 msgid "Find empty files"
@@ -955,7 +955,7 @@ msgstr "Leere Dateien finden"
 
 #: Menu
 msgid "Flatten directory structure"
-msgstr "Verzeichnisstruktur glätten"
+msgstr "Verzeichnisstruktur einebnen"
 
 #: Menu
 msgid "Generate MD5 file"
@@ -1099,7 +1099,7 @@ msgstr "Bild: Magenta zu Alpha (15 Prozent)"
 
 #: Menu
 msgid "Image: Colorspace to gray"
-msgstr "Bild: Farbraum zu Grau"
+msgstr "Bild: In Graustufen umwandeln"
 
 #: Menu
 msgid "Image: Color white to alpha"
@@ -1111,11 +1111,11 @@ msgstr "Bild: Weiß zu Alpha (15 Prozent)"
 
 #: Menu
 msgid "Image: Combine into a GIF"
-msgstr "Bild: In GIF umwandeln"
+msgstr "Bild: Zu GIF zusammenfügen"
 
 #: Menu
 msgid "Image: Combine into a PDF"
-msgstr "Bild: In PDF umwandeln"
+msgstr "Bild: Zu PDF zusammenfügen"
 
 #: Menu
 msgid "Image: Convert to AVIF"
@@ -1959,7 +1959,7 @@ msgstr "Kopiere Dateien..."
 
 #: install.sh
 msgid "Installing keyboard accelerators..."
-msgstr "Tastaturkürzel werden installiert..."
+msgstr "Tastenkürzel werden installiert..."
 
 #: install.sh
 msgid "Scripts"
@@ -1991,7 +1991,7 @@ msgstr "Homebrew ist bereits installiert."
 
 #: install.sh
 msgid "Installing Homebrew to:"
-msgstr "Installiere Homebrew nach:"
+msgstr "Installiere Homebrew unter:"
 
 #: install.sh
 msgid "Downloading the package..."
