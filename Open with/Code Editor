@@ -17,7 +17,7 @@ _main() {
 
     # Check if the first file is a binary file.
     local file_1=""
-    file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
+    file_1=$(_get_element "$input_files" "1")
     if [[ ! -d "$file_1" ]]; then
         if [[ "$(_get_file_encoding "$file_1")" == "binary" ]] && [[ -s "$file_1" ]]; then
             if _is_qt_desktop; then

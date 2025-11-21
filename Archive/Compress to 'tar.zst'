@@ -47,7 +47,7 @@ _main_task() {
             xargs --no-run-if-empty --null tar --zstd -cf "$output_file" --)
     else
         # If the input is a file, change to its parent directory.
-        _directory_push "$(_get_filename_dir "$input_file")" || return 1
+        _directory_push "$(_get_dirname "$input_file")" || return 1
 
         # Extract the base name of the input file for compression.
         local input_file_basename=""

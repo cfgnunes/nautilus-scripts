@@ -17,8 +17,8 @@ _main() {
     # Extract the two file or directory paths from the input.
     local file_1=""
     local file_2=""
-    file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
-    file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$input_files")
+    file_1=$(_get_element "$input_files" "1")
+    file_2=$(_get_element "$input_files" "2")
 
     # Append a trailing slash if the path is a directory to ensure proper comparison.
     [[ -d "$file_1" ]] && file_1+="/"

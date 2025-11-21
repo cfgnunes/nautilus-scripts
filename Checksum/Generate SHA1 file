@@ -18,7 +18,7 @@ _main() {
     local options=""
     if (($(_get_items_count "$input_files") == 1)); then
         local file_1=""
-        file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
+        file_1=$(_get_element "$input_files" "1")
         file_1=$(basename -- "$file_1")
         options+=$file_1
         options+=".sha1"

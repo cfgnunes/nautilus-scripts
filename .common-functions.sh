@@ -393,9 +393,10 @@ _run_function_parallel() {
         _display_unlock \
         _display_password_box \
         _exit_script \
+        _get_dirname \
+        _get_element \
         _get_file_encoding \
         _get_file_mime \
-        _get_filename_dir \
         _get_filename_extension \
         _get_filename_full_path \
         _get_filename_next_suffix \
@@ -1184,14 +1185,14 @@ _find_filtered_files() {
     _str_collapse_char "$filtered_files" "$FIELD_SEPARATOR"
 }
 
-# FUNCTION: _get_filename_dir
+# FUNCTION: _get_dirname
 #
 # DESCRIPTION:
 # This function extracts the directory path from a given file path.
 #
 # PARAMETERS:
 #   $1 (input_filename): The full path or relative path to the file.
-_get_filename_dir() {
+_get_dirname() {
     local input_filename=$1
     local dir=""
 
@@ -1255,7 +1256,7 @@ _get_filename_full_path() {
     local dir=""
 
     if [[ $input_filename != "/"* ]]; then
-        dir=$(_get_filename_dir "$input_filename")
+        dir=$(_get_dirname "$input_filename")
         full_path=$dir/$(basename -- "$input_filename")
     fi
 
@@ -1528,7 +1529,7 @@ _get_working_directory() {
         # Cases:
         # - Files selected in the search screen ('x-nautilus-search://');
         # - Files selected in other screen ('recent://', 'trash://').
-        working_dir=${HOME:-}
+        working_dir=""
         ;;
     *"://"*)
         # Case: Files opened remotely ('sftp://', 'smb://').
@@ -1539,11 +1540,11 @@ _get_working_directory() {
         #
         # Strategy: Get the directory from first selected file's path.
         local item_1=""
-        item_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$INPUT_FILES")
+        item_1=$(_get_element "$INPUT_FILES" "1")
 
         if [[ -n "$item_1" ]]; then
             # Get the directory name of the first input file.
-            working_dir=$(_get_filename_dir "$item_1")
+            working_dir=$(_get_dirname "$item_1")
         fi
         ;;
     esac
@@ -1592,7 +1593,7 @@ _is_directory_empty() {
 # PARAMETERS:
 #   $1 (file_filter): Optional. File filter pattern.
 #   $2 (title): Optional. Title of the window.
-#   $1 (parameters): A string containing key-value pairs that configure
+#   $3 (parameters): A string containing key-value pairs that configure
 #      the function's behavior. Example: 'par_multiple=true'.
 #
 # PARAMETERS OPTIONS:
@@ -3392,7 +3393,7 @@ _open_items_locations() {
         local dir=""
         for item in $items_open; do
             # Open the directory of the item.
-            dir=$(_get_filename_dir "$item")
+            dir=$(_get_dirname "$item")
             if [[ -z "$dir" ]]; then
                 continue
             fi
@@ -3603,6 +3604,19 @@ _convert_text_to_delimited_string() {
     input_items=$(sed -z "s|$new_line|\n|g" <<<"$input_items")
 
     _str_collapse_char "$input_items" "$FIELD_SEPARATOR"
+}
+
+# FUNCTION: _get_element
+#
+# DESCRIPTION:
+# Extracts the Nth field from a delimited string using the global
+# '$FIELD_SEPARATOR' as the delimiter.
+#
+# PARAMETERS:
+#   $1 (list): The input string containing delimited fields.
+#   $2 (n): The field index (1-based) to extract from the input string.
+_get_element() {
+    cut -d "$FIELD_SEPARATOR" -f "$2" <<<"$1"
 }
 
 # FUNCTION: _str_collapse_char
