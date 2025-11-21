@@ -35,7 +35,7 @@ _main_task() {
 
     # Rename the file.
     local dir_file=""
-    dir_file=$(_get_filename_dir "$input_file")
+    dir_file=$(_get_dirname "$input_file")
     _move_file "rename" "$input_file" "$dir_file/$tag_artist - $tag_title.mp3" || return 1
 }
 

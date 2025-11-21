@@ -393,10 +393,10 @@ _run_function_parallel() {
         _display_unlock \
         _display_password_box \
         _exit_script \
+        _get_dirname \
         _get_element \
         _get_file_encoding \
         _get_file_mime \
-        _get_filename_dir \
         _get_filename_extension \
         _get_filename_full_path \
         _get_filename_next_suffix \
@@ -1185,14 +1185,14 @@ _find_filtered_files() {
     _str_collapse_char "$filtered_files" "$FIELD_SEPARATOR"
 }
 
-# FUNCTION: _get_filename_dir
+# FUNCTION: _get_dirname
 #
 # DESCRIPTION:
 # This function extracts the directory path from a given file path.
 #
 # PARAMETERS:
 #   $1 (input_filename): The full path or relative path to the file.
-_get_filename_dir() {
+_get_dirname() {
     local input_filename=$1
     local dir=""
 
@@ -1256,7 +1256,7 @@ _get_filename_full_path() {
     local dir=""
 
     if [[ $input_filename != "/"* ]]; then
-        dir=$(_get_filename_dir "$input_filename")
+        dir=$(_get_dirname "$input_filename")
         full_path=$dir/$(basename -- "$input_filename")
     fi
 
@@ -1544,7 +1544,7 @@ _get_working_directory() {
 
         if [[ -n "$item_1" ]]; then
             # Get the directory name of the first input file.
-            working_dir=$(_get_filename_dir "$item_1")
+            working_dir=$(_get_dirname "$item_1")
         fi
         ;;
     esac
@@ -3393,7 +3393,7 @@ _open_items_locations() {
         local dir=""
         for item in $items_open; do
             # Open the directory of the item.
-            dir=$(_get_filename_dir "$item")
+            dir=$(_get_dirname "$item")
             if [[ -z "$dir" ]]; then
                 continue
             fi
