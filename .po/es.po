@@ -161,8 +161,8 @@ msgstr "Debe seleccionar al menos"
 msgid "You must select up to"
 msgstr "Debe seleccionar hasta"
 
-msgid "Could not find a directory with write permissions!"
-msgstr "¡No se pudo encontrar un directorio con permisos de escritura!"
+msgid "Could not find a directory to save the files!"
+msgstr "¡No fue posible encontrar un directorio para guardar los archivos!"
 
 msgid "Accessed recently"
 msgstr "Accedido recientemente"
@@ -449,8 +449,8 @@ msgstr "ID de la clave"
 msgid "Enter the password for the archive:"
 msgstr "Introduce la contraseña del archivo:"
 
-msgid "Choose where to save the output files."
-msgstr "Elija dónde guardar los archivos de salida."
+msgid "Choose where to save the files."
+msgstr "Elige dónde guardar los archivos."
 
 #: Menu
 msgid "Archive"
