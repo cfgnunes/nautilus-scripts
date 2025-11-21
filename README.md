@@ -130,8 +130,8 @@ Many thanks to all of them for their excellent and creative script collections:
 
 Special thanks to everyone who contributed to the translation of this project:
 
-- 🇨🇳 **Jove Yu (@JoveYu)** - Chinese (translation).
 - 🇧🇷 **Nathália Medeiros** - Brazilian Portuguese (review).
+- 🇨🇳 **Jove Yu (@JoveYu)** - Chinese (translation).
 - 🇪🇸 **Maravento (@maravento)** - Spanish (review).
 - 🇩🇪 **Stephan Mikwauschk (@Pappmann)** and **La-vaos (@la-vaos)** - German (review).
 
