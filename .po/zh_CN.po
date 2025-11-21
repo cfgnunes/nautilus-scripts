@@ -362,6 +362,12 @@ msgstr "IP地址"
 msgid "IP"
 msgstr "IP"
 
+msgid "Ping"
+msgstr "Ping"
+
+msgid "Ports"
+msgstr "端口"
+
 msgid "Hostname"
 msgstr "主机名"
 
@@ -400,12 +406,6 @@ msgstr "（无换行）"
 
 msgid "(No response)"
 msgstr "（无响应）"
-
-msgid "(No open ports)"
-msgstr "（无开放端口）"
-
-msgid "(Unknown)"
-msgstr "（未知）"
 
 msgid "Checksum mismatch."
 msgstr "校验和不匹配。"
@@ -1336,16 +1336,8 @@ msgid "Image: Stack (vertical)"
 msgstr "图像：堆叠（垂直）"
 
 #: Menu
-msgid "IP: Ping hosts"
-msgstr "IP：Ping主机"
-
-#: Menu
-msgid "IP: Scan ports"
-msgstr "IP：扫描端口"
-
-#: Menu
-msgid "IP: Test availability"
-msgstr "IP：测试可用性"
+msgid "IP: Scanner"
+msgstr "IP：扫描器"
 
 #: Menu
 msgid "List hard links"

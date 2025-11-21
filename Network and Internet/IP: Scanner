@@ -29,56 +29,51 @@ _main() {
     std_output=$(sed "s|__MSG_Online__|$(_i18n 'Online')|g" <<<"$std_output")
     # shellcheck disable=SC2001
     std_output=$(sed "s|__MSG_Offline__|$(_i18n 'Offline')|g" <<<"$std_output")
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|__MSG_Unknown__|$(_i18n '(Unknown)')|g" <<<"$std_output")
 
-    _display_list_box "$std_output" "par_item_name=$(_i18n 'IPs'); par_columns='--column:$(_i18n 'Status'),--column:$(_i18n 'IP'),--column:$(_i18n 'Hostname')'"
+    _display_list_box "$std_output" "par_item_name=$(_i18n 'IPs'); par_columns='--column:$(_i18n 'Status'),--column:$(_i18n 'IP'),--column:$(_i18n 'Hostname'),--column:$(_i18n 'Ping'),--column:$(_i18n 'Ports')'"
 }
 
 _main_task() {
     local input_file=$1
     local output_dir=$2
-    local str_online="🟢 __MSG_Online__"
+    local timeout_value=2
+    local ip=$input_file
     local status=""
-    local hostname=""
+    local ping=""
+    local ports=""
 
-    local host="$input_file"
-    local timeout_value=3
+    # Run ping and extract only the result from the last ICMP packet.
+    ping=$(LC_ALL=C ping -n -c 3 -W "$timeout_value" -- "$input_file" 2>/dev/null |
+        grep -E "icmp_seq=3" | grep -o "time=.*" | cut -d "=" -f 2)
 
-    # Strategy: Nmap host discovery (no port scan).
-    if [[ -z "$status" ]]; then
-        if LC_ALL=C nmap -sn --host-timeout "$timeout_value"s "$host" 2>/dev/null |
+    # Perform an Nmap scan to detect open ports.
+    ports=$(LC_ALL=C nmap -n -Pn -T4 --max-retries 1 --host-timeout "$timeout_value"s "$ip" 2>/dev/null |
+        awk '/open/ {split($1, a, "/"); print a[1]}' | paste -s -d ",")
+
+    if [[ -z "$ping" && -z "$ports" ]]; then
+        # Use Nmap host discovery (no port scan) to see if the host replies.
+        if LC_ALL=C nmap -sn --host-timeout "$timeout_value"s "$ip" 2>/dev/null |
             grep --quiet --ignore-case "Host is up"; then
-            status=$str_online
+            status="__MSG_Online__"
         fi
     fi
 
-    # Strategy: Nmap port scan (SYN scan on top 20 ports).
-    if [[ -z "$status" ]]; then
-        if LC_ALL=C nmap -T4 -Pn --top-ports 20 --host-timeout "$timeout_value"s "$host" 2>/dev/null |
-            grep --quiet --ignore-case "open"; then
-            status=$str_online
-        fi
-    fi
-
-    # Strategy: ICMP Echo Request (fast but often filtered by firewalls).
-    if [[ -z "$status" ]]; then
-        if ping -c 3 -W "$timeout_value" "$host" &>/dev/null; then
-            status=$str_online
-        fi
-    fi
-
-    # Notify if the host is offline.
-    if [[ -z "$status" ]]; then
+    # Determine final status.
+    if [[ -n "$ports" ]]; then
+        status="🟢 __MSG_Online__"
+    elif [[ -n "$ping" ]]; then
+        status="🔵 __MSG_Online__"
+    elif [[ -n "$status" ]]; then
+        status="🔵 __MSG_Online__"
+    else
         status="🔴 __MSG_Offline__"
     fi
 
-    hostname=$(_resolve_host "$input_file")
-    if [[ -z "$hostname" ]]; then
-        hostname="__MSG_Unknown__"
-    fi
+    # Resolve hostname. If empty, set as unknown.
+    local hostname=""
+    hostname=$(_resolve_host "$ip")
 
-    _storage_text_write_ln "$status$FIELD_SEPARATOR$input_file$FIELD_SEPARATOR$hostname"
+    _storage_text_write_ln "$status$FIELD_SEPARATOR$ip$FIELD_SEPARATOR$hostname$FIELD_SEPARATOR$ping$FIELD_SEPARATOR$ports"
 }
 
 _extract_ips() {

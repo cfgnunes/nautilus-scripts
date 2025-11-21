@@ -361,6 +361,12 @@ msgstr ""
 msgid "IP"
 msgstr ""
 
+msgid "Ping"
+msgstr ""
+
+msgid "Ports"
+msgstr ""
+
 msgid "Hostname"
 msgstr ""
 
@@ -398,12 +404,6 @@ msgid "(No line break)"
 msgstr ""
 
 msgid "(No response)"
-msgstr ""
-
-msgid "(No open ports)"
-msgstr ""
-
-msgid "(Unknown)"
 msgstr ""
 
 msgid "Checksum mismatch."
@@ -1335,15 +1335,7 @@ msgid "Image: Stack (vertical)"
 msgstr ""
 
 #: Menu
-msgid "IP: Ping hosts"
-msgstr ""
-
-#: Menu
-msgid "IP: Scan ports"
-msgstr ""
-
-#: Menu
-msgid "IP: Test availability"
+msgid "IP: Scanner"
 msgstr ""
 
 #: Menu

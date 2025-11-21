@@ -362,6 +362,12 @@ msgstr "IPs"
 msgid "IP"
 msgstr "IP"
 
+msgid "Ping"
+msgstr "Ping"
+
+msgid "Ports"
+msgstr "Ports"
+
 msgid "Hostname"
 msgstr "Hostname"
 
@@ -400,12 +406,6 @@ msgstr "(Kein Zeilenumbruch)"
 
 msgid "(No response)"
 msgstr "(Keine Antwort)"
-
-msgid "(No open ports)"
-msgstr "(Keine offenen Ports)"
-
-msgid "(Unknown)"
-msgstr "(Unbekannt)"
 
 msgid "Checksum mismatch."
 msgstr "Prüfsumme stimmt nicht überein."
@@ -1336,16 +1336,8 @@ msgid "Image: Stack (vertical)"
 msgstr "Bild: Stapeln (vertikal)"
 
 #: Menu
-msgid "IP: Ping hosts"
-msgstr "IP: Hosts anpingen"
-
-#: Menu
-msgid "IP: Scan ports"
-msgstr "IP: Ports scannen"
-
-#: Menu
-msgid "IP: Test availability"
-msgstr "IP: Verfügbarkeit testen"
+msgid "IP: Scanner"
+msgstr "IP: Scanner"
 
 #: Menu
 msgid "List hard links"
