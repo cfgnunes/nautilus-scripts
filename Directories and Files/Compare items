@@ -33,9 +33,9 @@ _compare() {
     local file_3="" # Third file in the input, optional.
 
     # Extract individual file paths from the input string.
-    file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
-    file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$input_files")
-    file_3=$(cut -d "$FIELD_SEPARATOR" -f 3 <<<"$input_files")
+    file_1=$(_get_element "$input_files" "1")
+    file_2=$(_get_element "$input_files" "2")
+    file_3=$(_get_element "$input_files" "3")
 
     # Perform a preliminary comparison to check if the files are identical.
     _compare_identical "$file_1" "$file_2" "$file_3"

@@ -24,11 +24,11 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+
     local file_1=""
     local file_2=""
-
-    file_1=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$input_files")
-    file_2=$(cut -d "$FIELD_SEPARATOR" -f 2 <<<"$input_files")
+    file_1=$(_get_element "$input_files" "1")
+    file_2=$(_get_element "$input_files" "2")
 
     output_file=$(_get_output_filename "Mixed audio.wav" "$output_dir" "par_extension_opt=preserve")
 
