@@ -161,8 +161,8 @@ msgstr "必须至少选择"
 msgid "You must select up to"
 msgstr "最多选择"
 
-msgid "Could not find a directory to save the files!"
-msgstr "无法找到用于保存文件的目录！"
+msgid "Could not find the output directory!"
+msgstr "无法找到输出目录。"
 
 msgid "Accessed recently"
 msgstr "最近访问"
@@ -449,8 +449,8 @@ msgstr "密钥ID"
 msgid "Enter the password for the archive:"
 msgstr "请输入压缩包密码："
 
-msgid "Choose where to save the files."
-msgstr "选择保存文件的位置。"
+msgid "Choose the output directory."
+msgstr "选择输出目录。"
 
 #: Menu
 msgid "Archive"

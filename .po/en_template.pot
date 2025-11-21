@@ -160,7 +160,7 @@ msgstr ""
 msgid "You must select up to"
 msgstr ""
 
-msgid "Could not find a directory to save the files!"
+msgid "Could not find the output directory!"
 msgstr ""
 
 msgid "Accessed recently"
@@ -448,7 +448,7 @@ msgstr ""
 msgid "Enter the password for the archive:"
 msgstr ""
 
-msgid "Choose where to save the files."
+msgid "Choose the output directory."
 msgstr ""
 
 #: Menu

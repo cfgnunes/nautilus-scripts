@@ -3218,14 +3218,14 @@ _get_output_dir() {
     # prompt the user to manually select a directory.
     if [[ ! -w "$output_dir" || -z "$output_dir" ]]; then
         output_dir=$(_display_file_selection_box \
-            "$(_i18n 'Choose where to save the files.')" "" \
+            "$(_i18n 'Choose the output directory.')" "" \
             "par_multiple=false; par_directory_only=true")
     fi
 
     # If the selected directory is still not writable, abort with an error.
     if [[ ! -w "$output_dir" || -z "$output_dir" ]]; then
         local msg=""
-        msg="$(_i18n 'Could not find a directory to save the files!')"
+        msg="$(_i18n 'Could not find the output directory!')"
         _display_error_box "$msg"
         _exit_script
     fi
