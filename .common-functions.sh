@@ -2034,6 +2034,50 @@ _display_list_box_xmessage() {
     _display_unlock
 }
 
+# FUNCTION: _display_input_text_box
+#
+# DESCRIPTION:
+# This function displays an input text dialog (GUI or terminal) to request
+# a text value from the user. It supports an optional default value and
+# returns the user's input.
+#
+# PARAMETERS:
+#   $1 (message): The message or prompt to display to the user.
+#   $2 (default_value): Optional default text to prefill the input field.
+_display_input_text_box() {
+    local message=$1
+    local default_value=${2:-""}
+    local input=""
+
+    local btn_ok=""
+    btn_ok="$(_i18n 'OK')"
+    local btn_cancel=""
+    btn_cancel="$(_i18n 'Cancel')"
+
+    _display_lock
+    # Ask the user for the input.
+    if ! _is_gui_session; then
+        echo -e -n "$MSG_INFO $message " >&2
+        read -r input </dev/tty
+        echo >&2
+    elif _command_exists "zenity"; then
+        input=$(zenity --title="$(_get_script_name)" \
+            --width="$GUI_INFO_WIDTH" --text="$message" \
+            --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
+            --entry ${default_value:+--entry-text="$default_value"} \
+            2>/dev/null) || _exit_script
+    elif _command_exists "yad"; then
+        input=$(yad --title="$(_get_script_name)" --center \
+            --width="$GUI_INFO_WIDTH" --text="$message" \
+            --button="${btn_cancel}:1" --button="${btn_ok}:0" \
+            --entry ${default_value:+--entry-text="$default_value"} \
+            2>/dev/null) || _exit_script
+    fi
+    _display_unlock
+
+    printf "%s" "$input"
+}
+
 # FUNCTION: _display_password_box
 #
 # DESCRIPTION:
