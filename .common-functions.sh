@@ -3217,7 +3217,8 @@ _get_output_dir() {
     # If the working directory is not writable or not defined,
     # prompt the user to manually select a directory.
     if [[ ! -w "$output_dir" || -z "$output_dir" ]]; then
-        output_dir=$(_display_file_selection_box "" "" \
+        output_dir=$(_display_file_selection_box \
+            "$(_i18n 'Choose where to save the output files.')" "" \
             "par_multiple=false; par_directory_only=true")
     fi
 

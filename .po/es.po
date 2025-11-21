@@ -449,6 +449,9 @@ msgstr "ID de la clave"
 msgid "Enter the password for the archive:"
 msgstr "Introduce la contraseña del archivo:"
 
+msgid "Choose where to save the output files."
+msgstr "Elija dónde guardar los archivos de salida."
+
 #: Menu
 msgid "Archive"
 msgstr "Compresión"

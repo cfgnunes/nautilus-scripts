@@ -448,6 +448,9 @@ msgstr ""
 msgid "Enter the password for the archive:"
 msgstr ""
 
+msgid "Choose where to save the output files."
+msgstr ""
+
 #: Menu
 msgid "Archive"
 msgstr ""

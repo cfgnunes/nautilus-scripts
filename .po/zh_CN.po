@@ -449,6 +449,9 @@ msgstr "密钥ID"
 msgid "Enter the password for the archive:"
 msgstr "请输入压缩包密码："
 
+msgid "Choose where to save the output files."
+msgstr "选择保存输出文件的位置。"
+
 #: Menu
 msgid "Archive"
 msgstr "归档"

@@ -449,6 +449,9 @@ msgstr "Schlüssel-ID"
 msgid "Enter the password for the archive:"
 msgstr "Gebe das Passwort für das Archiv ein:"
 
+msgid "Choose where to save the output files."
+msgstr "Wählen Sie aus, wo die Ausgabedateien gespeichert werden sollen."
+
 #: Menu
 msgid "Archive"
 msgstr "Archiv"
