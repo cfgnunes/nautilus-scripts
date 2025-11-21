@@ -374,6 +374,9 @@ msgstr "Ingrese direcciones IP o rangos de IP."
 msgid "There are no valid IPs in the input!"
 msgstr "¡No hay IPs válidas en la entrada!"
 
+msgid "Enter the URLs."
+msgstr "Ingrese las URL."
+
 msgid "There are no valid URLs in the input!"
 msgstr "¡No hay URL válidas en la entrada!"
 

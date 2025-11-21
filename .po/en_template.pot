@@ -373,6 +373,9 @@ msgstr ""
 msgid "There are no valid IPs in the input!"
 msgstr ""
 
+msgid "Enter the URLs."
+msgstr ""
+
 msgid "There are no valid URLs in the input!"
 msgstr ""
 
