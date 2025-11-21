@@ -139,6 +139,7 @@ _prepare_input() {
     local input_files=$1
     local data=""
     local ips=""
+    local msg=""
 
     # shellcheck disable=SC2086
     data=$(cat -- $input_files 2>/dev/null)
@@ -148,8 +149,7 @@ _prepare_input() {
         local local_range=""
         local_range=$(_get_local_range)
 
-        local msg=""
-        msg+="$(_i18n 'Enter IP addresses or IP ranges.')"
+        msg="$(_i18n 'Enter IP addresses or IP ranges.')"
         msg+="\n\n"
         msg+="$(_i18n 'Example:') 192.168.0.1-10, 192.168.100.1"
         data=$(_display_input_text_box "$msg" "$local_range")
@@ -157,7 +157,6 @@ _prepare_input() {
     fi
 
     if [[ -z "$ips" ]]; then
-        local msg=""
         msg="$(_i18n 'There are no valid IPs in the input!')"
         _display_error_box "$msg"
         _exit_script

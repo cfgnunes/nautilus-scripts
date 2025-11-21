@@ -92,15 +92,23 @@ _extract_urls() {
 
 _prepare_input() {
     local input_files=$1
-    local file_data=""
+    local data=""
     local urls=""
+    local msg=""
 
     # shellcheck disable=SC2086
-    file_data=$(cat -- $input_files 2>/dev/null)
-    urls=$(_extract_urls "$file_data")
+    data=$(cat -- $input_files 2>/dev/null)
+    urls=$(_extract_urls "$data")
 
     if [[ -z "$urls" ]]; then
-        local msg=""
+        msg="$(_i18n 'Enter the URLs.')"
+        msg+="\n\n"
+        msg+="$(_i18n 'Example:') www.google.com"
+        data=$(_display_input_text_box "$msg" "")
+        urls=$(_extract_urls "$data")
+    fi
+
+    if [[ -z "$urls" ]]; then
         msg="$(_i18n 'There are no valid URLs in the input!')"
         _display_error_box "$msg"
         _exit_script
