@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "curl"
     _display_wait_box
-    input_files=$(_get_files "par_type=file")
+    input_files=$(_get_files "par_type=all")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$(_prepare_input "$input_files")" "$output_dir"
@@ -101,7 +101,7 @@ _prepare_input() {
 
     if [[ -z "$urls" ]]; then
         local msg=""
-        msg="$(_i18n 'There are no valid URLs in the selected files!')"
+        msg="$(_i18n 'There are no valid URLs in the input!')"
         _display_error_box "$msg"
         _exit_script
     fi

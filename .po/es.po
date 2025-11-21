@@ -374,8 +374,8 @@ msgstr "Ingrese direcciones IP o rangos de IP."
 msgid "There are no valid IPs in the input!"
 msgstr "¡No hay IPs válidas en la entrada!"
 
-msgid "There are no valid URLs in the selected files!"
-msgstr "¡No hay URLs válidas en los archivos seleccionados!"
+msgid "There are no valid URLs in the input!"
+msgstr "¡No hay URL válidas en la entrada!"
 
 msgid "No remote URL found."
 msgstr "No se encontró ninguna URL remota."

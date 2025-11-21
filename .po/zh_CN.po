@@ -368,8 +368,8 @@ msgstr "主机名"
 msgid "There are no valid IPs in the input!"
 msgstr "输入中没有有效的 IP！"
 
-msgid "There are no valid URLs in the selected files!"
-msgstr "所选文件中没有有效的 URL！"
+msgid "There are no valid URLs in the input!"
+msgstr "输入中没有有效的 URL！"
 
 msgid "No remote URL found."
 msgstr "未找到远程URL。"

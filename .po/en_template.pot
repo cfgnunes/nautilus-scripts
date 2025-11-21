@@ -373,7 +373,7 @@ msgstr ""
 msgid "There are no valid IPs in the input!"
 msgstr ""
 
-msgid "There are no valid URLs in the selected files!"
+msgid "There are no valid URLs in the input!"
 msgstr ""
 
 msgid "No remote URL found."
