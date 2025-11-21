@@ -3211,9 +3211,17 @@ _get_output_dir() {
     # Evaluate the values from the '$parameters' variable.
     eval "$parameters"
 
-    # Check directories available to put the output dir.
+    # Attempt to use the current working directory as the base output location.
     output_dir=$(_get_working_directory)
-    [[ ! -w "$output_dir" ]] && output_dir=${HOME:-/tmp}
+
+    # If the working directory is not writable or not defined,
+    # prompt the user to manually select a directory.
+    if [[ ! -w "$output_dir" || -z "$output_dir" ]]; then
+        output_dir=$(_display_file_selection_box "" "" \
+            "par_multiple=false; par_directory_only=true")
+    fi
+
+    # If the selected directory is still not writable, abort with an error.
     if [[ ! -w "$output_dir" ]]; then
         local msg=""
         msg="$(_i18n 'Could not find a directory with write permissions!')"
