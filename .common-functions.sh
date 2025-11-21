@@ -1538,23 +1538,31 @@ _get_working_directory() {
     *)
         # Case: File managers that don't set current directory variables.
         #
-        # Strategy: Get the directory from first selected file's path.
+        # Strategy:
+        #   - Derive the working directory from the selected files.
+        #   - If two or more files are selected and the first two belong to the
+        #     same directory, use that directory as the working directory.
+        #   - If only one file is selected, use its directory.
         local item_1=""
+        local item_2=""
         item_1=$(_get_element "$INPUT_FILES" "1")
+        item_2=$(_get_element "$INPUT_FILES" "2")
 
         if [[ -n "$item_1" ]]; then
-            # Get the directory name of the first input file.
-            working_dir=$(_get_dirname "$item_1")
+            local working_dir1=""
+            working_dir1=$(_get_dirname "$item_1")
+            if [[ -n "$item_2" ]]; then
+                local working_dir2=""
+                working_dir2=$(_get_dirname "$item_2")
+                if [[ "$working_dir1" == "$working_dir2" ]]; then
+                    working_dir=$working_dir1
+                fi
+            else
+                working_dir=$working_dir1
+            fi
         fi
         ;;
     esac
-
-    if [[ -z "$working_dir" ]]; then
-        # As a last resort, use the 'pwd' command. Using 'pwd' command is
-        # unreliable as it reflects the shell's working directory, not
-        # necessarily the file manager's current view.
-        working_dir=$(pwd)
-    fi
 
     printf "%s" "$working_dir"
 }
