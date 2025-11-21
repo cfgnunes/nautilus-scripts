@@ -461,6 +461,12 @@ msgstr "Gib das Passwort für das Archiv ein:"
 msgid "Select the output directory"
 msgstr "Wählen Sie das Ausgabeverzeichnis aus"
 
+msgid "Select input directories"
+msgstr "Wählen Sie die Eingabeverzeichnisse aus"
+
+msgid "Select input files"
+msgstr "Wählen Sie die Eingabedateien aus"
+
 #: Menu
 msgid "Archive"
 msgstr "Archiv"
