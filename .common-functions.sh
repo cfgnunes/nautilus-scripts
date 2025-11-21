@@ -3371,7 +3371,9 @@ _open_items_locations() {
     # Restore absolute paths for items if relative paths are used.
     local working_dir=""
     working_dir=$(_get_working_directory)
-    items=$(sed "s|^\(\./\)\?\([^/].*\)|$working_dir/\2|" <<<"$items")
+    if [[ -n "$working_dir" ]]; then
+        items=$(sed "s|^\(\./\)\?\([^/].*\)|$working_dir/\2|" <<<"$items")
+    fi
 
     # Prepare items to be opened by the file manager.
     local items_open=""
@@ -3739,7 +3741,7 @@ _text_remove_pwd() {
     local working_dir=""
     working_dir=$(_get_working_directory)
 
-    if [[ "$working_dir" != "/" ]]; then
+    if [[ -n "$working_dir" && "$working_dir" != "/" ]]; then
         sed "s|$working_dir/||g" <<<"$input_text"
     else
         printf "%s" "$input_text"
