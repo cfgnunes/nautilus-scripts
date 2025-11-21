@@ -104,18 +104,44 @@ _extract_ips() {
     printf "%s" "$output"
 }
 
+_get_local_range() {
+    local ip=""
+    ip=$(hostname -I 2>/dev/null | awk '{print $1}')
+
+    if [[ -z "$ip" ]]; then
+        ip="192.168.0.1"
+    fi
+
+    local base=""
+    base=$(cut -d. -f1-3 <<<"$ip")
+
+    printf "%s" "${base}.1-254"
+}
+
 _prepare_input() {
     local input_files=$1
-    local file_data=""
+    local data=""
     local ips=""
 
     # shellcheck disable=SC2086
-    file_data=$(cat -- $input_files 2>/dev/null)
-    ips=$(_extract_ips "$file_data")
+    data=$(cat -- $input_files 2>/dev/null)
+    ips=$(_extract_ips "$data")
+
+    if [[ -z "$ips" ]]; then
+        local local_range=""
+        local_range=$(_get_local_range)
+
+        local msg=""
+        msg+="$(_i18n 'Enter IP addresses or IP ranges.')"
+        msg+="\n\n"
+        msg+="$(_i18n 'Example:') 192.168.0.1-10, 192.168.100.1"
+        data=$(_display_input_text_box "$msg" "$local_range")
+        ips=$(_extract_ips "$data")
+    fi
 
     if [[ -z "$ips" ]]; then
         local msg=""
-        msg="$(_i18n 'There are no valid IPs in the selected files!')"
+        msg="$(_i18n 'There are no valid IPs in the input!')"
         _display_error_box "$msg"
         _exit_script
     fi

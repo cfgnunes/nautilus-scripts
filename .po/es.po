@@ -365,8 +365,14 @@ msgstr "IP"
 msgid "Hostname"
 msgstr "Hostname"
 
-msgid "There are no valid IPs in the selected files!"
-msgstr "¡No hay IPs válidas en los archivos seleccionados!"
+msgid "Example"
+msgstr "Ejemplo"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "Ingrese direcciones IP o rangos de IP."
+
+msgid "There are no valid IPs in the input!"
+msgstr "¡No hay IPs válidas en la entrada!"
 
 msgid "There are no valid URLs in the selected files!"
 msgstr "¡No hay URLs válidas en los archivos seleccionados!"
