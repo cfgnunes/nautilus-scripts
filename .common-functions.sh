@@ -3341,8 +3341,7 @@ _open_items_locations() {
     # Restore absolute paths for items if relative paths are used.
     local working_dir=""
     working_dir=$(_get_working_directory)
-    items=$(sed "s|^\./|$working_dir/|g" <<<"$items")
-    items=$(sed "s|^\([^/].*\)|$working_dir/\1|g" <<<"$items")
+    items=$(sed "s|^\(\./\)\?\([^/].*\)|$working_dir/\2|" <<<"$items")
 
     # Prepare items to be opened by the file manager.
     local items_open=""
