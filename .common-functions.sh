@@ -2081,7 +2081,6 @@ _display_password_box() {
 
     local title=""
     title="$(_i18n 'Password')"
-
     local btn_ok=""
     btn_ok="$(_i18n 'OK')"
     local btn_cancel=""
@@ -2303,7 +2302,7 @@ _display_wait_box() {
 #      is shown. Defaults to 2 seconds if not provided.
 _display_wait_box_message() {
     local message=$1
-    local open_delay=${2:-"2"}
+    local open_delay=${2:-"1.5"}
 
     # Avoid open more than one 'wait box'.
     [[ -f "$TEMP_CONTROL_WAIT_BOX_DELAY" ]] && return 0
@@ -2339,7 +2338,7 @@ _display_wait_box_message() {
         # shellcheck disable=SC2002
         (
             # Wait for a possible previous window to finish opening.
-            sleep 0.2
+            sleep 0.5
 
             # Monitor lock file until the window closes.
             while [[ -f "$TEMP_CONTROL_DISPLAY_LOCKED" ]]; do
