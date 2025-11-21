@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enhanced File Manager Actions for Linux\n"
 "POT-Creation-Date: 2025-11-13 12:12-0300\n"
-"PO-Revision-Date: 2025-11-16 03:35-0300\n"
-"Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
+"PO-Revision-Date: 2025-11-21 11:36+0100\n"
+"Last-Translator: la-vaos <github@lars.so>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgid "The output file does not exist."
 msgstr "Die Ausgabedatei existiert nicht."
 
 msgid "Finished with errors! See the log:"
-msgstr "Mit Fehlern abgeschlossen! Siehe das Protokoll:"
+msgstr "Mit Fehlern abgeschlossen! Siehe Log:"
 
 msgid "Your system does not support clipboard operations."
 msgstr "Dein System unterstützt keine Zwischenablage-Operationen."
@@ -93,16 +93,16 @@ msgid "(Empty)"
 msgstr "(Leer)"
 
 msgid "Select the ones to open:"
-msgstr "Wählen Sie zum Öffnen aus:"
+msgstr "Wähle Einträge zum Öffnen aus:"
 
 msgid "Select the ones to reveal in the file manager:"
-msgstr "Wählen Sie zum Anzeigen im Dateimanager aus:"
+msgstr "Wähle Einträge zum Anzeigen im Dateimanager aus:"
 
 msgid "Select the ones to open in the web browser:"
-msgstr "Wählen Sie zum Öffnen im Webbrowser aus:"
+msgstr "Wähle Einträge zum Öffnen im Webbrowser aus:"
 
 msgid "Select the ones to delete:"
-msgstr "Wählen Sie zum Löschen aus:"
+msgstr "Wähle Einträge zum Löschen aus:"
 
 msgid "Password"
 msgstr "Passwort"
@@ -372,7 +372,7 @@ msgid "There are no valid URLs in the selected files!"
 msgstr "Es gibt keine gültigen URLs in den ausgewählten Dateien!"
 
 msgid "No remote URL found."
-msgstr "Keine entfernte URL gefunden."
+msgstr "Keine Remote-URL gefunden."
 
 msgid "URLs"
 msgstr "URLs"
@@ -447,7 +447,7 @@ msgid "Key ID"
 msgstr "Schlüssel-ID"
 
 msgid "Enter the password for the archive:"
-msgstr "Geben Sie das Passwort für das Archiv ein:"
+msgstr "Gebe das Passwort für das Archiv ein:"
 
 #: Menu
 msgid "Archive"
@@ -559,7 +559,7 @@ msgstr "Bild: Spiegeln, Drehen"
 
 #: Menu
 msgid "Image: Icons"
-msgstr "Bild: Symbole"
+msgstr "Bild: Icons"
 
 #: Menu
 msgid "Image: Metadata, Exif"
@@ -715,11 +715,11 @@ msgstr "Audio: Zu WAV konvertieren"
 
 #: Menu
 msgid "Audio: Fade-in"
-msgstr "Audio: Einblenden"
+msgstr "Audio: Fade-in"
 
 #: Menu
 msgid "Audio: Fade-out"
-msgstr "Audio: Ausblenden"
+msgstr "Audio: Fade-out"
 
 #: Menu
 msgid "Audio: Mix channels to mono"
@@ -743,7 +743,7 @@ msgstr "Audio: Stille entfernen (Abschnitte)"
 
 #: Menu
 msgid "Audio: Silence noise"
-msgstr "Audio: Geräusche dämpfen"
+msgstr "Audio: Geräuschreduzierung"
 
 #: Menu
 msgid "Audio: Remove silence (extremities)"
@@ -859,7 +859,7 @@ msgstr "Symbolischen Link erstellen zu..."
 
 #: Menu
 msgid "Disk Usage Analyzer"
-msgstr "Plattennutzung analysieren"
+msgstr "Festplattennutzung analysieren"
 
 #: Menu
 msgid "Document: Convert to DOCX"
@@ -1019,7 +1019,7 @@ msgstr "Signieren (ASCII)"
 
 #: Menu
 msgid "Sign (detached signature)"
-msgstr "Signieren (abgetrennte Signatur)"
+msgstr "Signieren (separate Signatur)"
 
 #: Menu
 msgid "Verify signature"
@@ -1027,31 +1027,31 @@ msgstr "Signatur überprüfen"
 
 #: Menu
 msgid "Image: Add watermark (center)"
-msgstr "Bild: Wasserzeichen (Mitte)"
+msgstr "Bild: Wasserzeichen hinzufügen (Mitte)"
 
 #: Menu
 msgid "Image: Add watermark (north)"
-msgstr "Bild: Wasserzeichen (Norden)"
+msgstr "Bild: Wasserzeichen hinzufügen (Norden)"
 
 #: Menu
 msgid "Image: Add watermark (northeast)"
-msgstr "Bild: Wasserzeichen (Nordosten)"
+msgstr "Bild: Wasserzeichen hinzufügen (Nordosten)"
 
 #: Menu
 msgid "Image: Add watermark (northwest)"
-msgstr "Bild: Wasserzeichen (Nordwesten)"
+msgstr "Bild: Wasserzeichen hinzufügen (Nordwesten)"
 
 #: Menu
 msgid "Image: Add watermark (south)"
-msgstr "Bild: Wasserzeichen (Süden)"
+msgstr "Bild: Wasserzeichen hinzufügen (Süden)"
 
 #: Menu
 msgid "Image: Add watermark (southeast)"
-msgstr "Bild: Wasserzeichen (Südosten)"
+msgstr "Bild: Wasserzeichen hinzufügen (Südosten)"
 
 #: Menu
 msgid "Image: Add watermark (southwest)"
-msgstr "Bild: Wasserzeichen (Südwesten)"
+msgstr "Bild: Wasserzeichen hinzufügen (Südwesten)"
 
 #: Menu
 msgid "Image: Automatic crop"
@@ -1059,7 +1059,7 @@ msgstr "Bild: Automatischer Zuschnitt"
 
 #: Menu
 msgid "Image: Automatic crop (15 pct)"
-msgstr "Bild: Automatischer Zuschnitt (15 pct)"
+msgstr "Bild: Automatischer Zuschnitt (15 Prozent)"
 
 #: Menu
 msgid "Image: Background to alpha"
@@ -1067,7 +1067,7 @@ msgstr "Bild: Hintergrund zu Alpha"
 
 #: Menu
 msgid "Image: Background to alpha (15 pct)"
-msgstr "Bild: Hintergrund zu Alpha (15 pct)"
+msgstr "Bild: Hintergrund zu Alpha (15 Prozent)"
 
 #: Menu
 msgid "Image: Color alpha to black"
@@ -1087,7 +1087,7 @@ msgstr "Bild: Schwarz zu Alpha"
 
 #: Menu
 msgid "Image: Color black to alpha (15 pct)"
-msgstr "Bild: Schwarz zu Alpha (15 pct)"
+msgstr "Bild: Schwarz zu Alpha (15 Prozent)"
 
 #: Menu
 msgid "Image: Color magenta to alpha"
@@ -1095,7 +1095,7 @@ msgstr "Bild: Magenta zu Alpha"
 
 #: Menu
 msgid "Image: Color magenta to alpha (15 pct)"
-msgstr "Bild: Magenta zu Alpha (15 pct)"
+msgstr "Bild: Magenta zu Alpha (15 Prozent)"
 
 #: Menu
 msgid "Image: Colorspace to gray"
@@ -1107,7 +1107,7 @@ msgstr "Bild: Weiß zu Alpha"
 
 #: Menu
 msgid "Image: Color white to alpha (15 pct)"
-msgstr "Bild: Weiß zu Alpha (15 pct)"
+msgstr "Bild: Weiß zu Alpha (15 Prozent)"
 
 #: Menu
 msgid "Image: Combine into a GIF"
@@ -1155,19 +1155,19 @@ msgstr "Bild: Zu WebP konvertieren"
 
 #: Menu
 msgid "Image: Create PNG icon (64 px)"
-msgstr "Bild: PNG-Symbol erstellen (64 px)"
+msgstr "Bild: PNG-Icon erstellen (64 px)"
 
 #: Menu
 msgid "Image: Create PNG icon (128 px)"
-msgstr "Bild: PNG-Symbol erstellen (128 px)"
+msgstr "Bild: PNG-Icon erstellen (128 px)"
 
 #: Menu
 msgid "Image: Create PNG icon (256 px)"
-msgstr "Bild: PNG-Symbol erstellen (256 px)"
+msgstr "Bild: PNG-Icon erstellen (256 px)"
 
 #: Menu
 msgid "Image: Create PNG icon (512 px)"
-msgstr "Bild: PNG-Symbol erstellen (512 px)"
+msgstr "Bild: PNG-Icon erstellen (512 px)"
 
 #: Menu
 msgid "Image: Desaturate"
@@ -1179,19 +1179,19 @@ msgstr "Bild: Als PDF exportieren"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"
-msgstr "Bild: Ähnliche finden (65 pct)"
+msgstr "Bild: Ähnliche finden (65 Prozent)"
 
 #: Menu
 msgid "Image: Find similar (75 pct)"
-msgstr "Bild: Ähnliche finden (75 pct)"
+msgstr "Bild: Ähnliche finden (75 Prozent)"
 
 #: Menu
 msgid "Image: Find similar (85 pct)"
-msgstr "Bild: Ähnliche finden (85 pct)"
+msgstr "Bild: Ähnliche finden (85 Prozent)"
 
 #: Menu
 msgid "Image: Find similar (95 pct)"
-msgstr "Bild: Ähnliche finden (95 pct)"
+msgstr "Bild: Ähnliche finden (95 Prozent)"
 
 #: Menu
 msgid "Image: Flip (horizontal)"
@@ -1255,15 +1255,15 @@ msgstr "Bild: Nach Metadaten umbenennen"
 
 #: Menu
 msgid "Image: Resize (25 pct)"
-msgstr "Bild: Größe ändern (25 pct)"
+msgstr "Bild: Größe ändern (25 Prozent)"
 
 #: Menu
 msgid "Image: Resize (50 pct)"
-msgstr "Bild: Größe ändern (50 pct)"
+msgstr "Bild: Größe ändern (50 Prozent)"
 
 #: Menu
 msgid "Image: Resize (75 pct)"
-msgstr "Bild: Größe ändern (75 pct)"
+msgstr "Bild: Größe ändern (75 Prozent)"
 
 #: Menu
 msgid "Image: Resize (512x512)"
@@ -1287,15 +1287,15 @@ msgstr "Bild: Größe ändern (3840x2160)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"
-msgstr "Bild: Rotieren (90 grad)"
+msgstr "Bild: Drehen (90 Grad)"
 
 #: Menu
 msgid "Image: Rotate (180 deg)"
-msgstr "Bild: Rotieren (180 grad)"
+msgstr "Bild: Drehen (180 Grad)"
 
 #: Menu
 msgid "Image: Rotate (270 deg)"
-msgstr "Bild: Rotieren (270 grad)"
+msgstr "Bild: Drehen (270 Grad)"
 
 #: Menu
 msgid "Image: Split into 2 (horizontal)"
@@ -1331,7 +1331,7 @@ msgstr "IP: Verfügbarkeit testen"
 
 #: Menu
 msgid "List hard links"
-msgstr "Hardlinks auflisten"
+msgstr "Hardlinks anzeigen"
 
 #: Menu
 msgid "List largest directories"
@@ -1563,15 +1563,15 @@ msgstr "PDF: Metadaten entfernen"
 
 #: Menu
 msgid "PDF: Rotate (90 deg)"
-msgstr "PDF: Rotieren (90 grad)"
+msgstr "PDF: Drehen (90 Grad)"
 
 #: Menu
 msgid "PDF: Rotate (180 deg)"
-msgstr "PDF: Rotieren (180 grad)"
+msgstr "PDF: Drehen (180 Grad)"
 
 #: Menu
 msgid "PDF: Rotate (270 deg)"
-msgstr "PDF: Rotieren (270 grad)"
+msgstr "PDF: Drehen (270 Grad)"
 
 #: Menu
 msgid "PDF: Show signatures"
@@ -1727,11 +1727,11 @@ msgstr "Text: Zeilenumbrüche anzeigen"
 
 #: Menu
 msgid "Text: List line counts"
-msgstr "Text: Zeilenzahlen anzeigen"
+msgstr "Text: Zeilenanzahlen anzeigen"
 
 #: Menu
 msgid "Text: List line lengths"
-msgstr "Text: Listenzeilenlängen"
+msgstr "Text: Zeilenlängen anzeigen"
 
 #: Menu
 msgid "Text: List word counts"
@@ -1863,27 +1863,27 @@ msgstr "Video: Audio entfernen"
 
 #: Menu
 msgid "Video: Resize (25 pct)"
-msgstr "Video: Größe ändern (25 pct)"
+msgstr "Video: Größe ändern (25 Prozent)"
 
 #: Menu
 msgid "Video: Resize (50 pct)"
-msgstr "Video: Größe ändern (50 pct)"
+msgstr "Video: Größe ändern (50 Prozent)"
 
 #: Menu
 msgid "Video: Resize (75 pct)"
-msgstr "Video: Größe ändern (75 pct)"
+msgstr "Video: Größe ändern (75 Prozent)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"
-msgstr "Video: Rotieren (90 grad)"
+msgstr "Video: Drehen (90 Grad)"
 
 #: Menu
 msgid "Video: Rotate (180 deg)"
-msgstr "Video: Rotieren (180 grad)"
+msgstr "Video: Drehen (180 Grad)"
 
 #: Menu
 msgid "Video: Rotate (270 deg)"
-msgstr "Video: Rotieren (270 grad)"
+msgstr "Video: Drehen (270 Grad)"
 
 #: Menu
 msgid "Video: Speed to 0.5"
@@ -1927,7 +1927,7 @@ msgstr "Wähle, welche Skriptkategorien installiert werden sollen"
 
 #: install.sh
 msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
-msgstr "Wähle die Optionen aus (<SPACE> zum Markieren, <ENTER> zum Bestätigen):"
+msgstr "Wähle die Optionen aus (<LEERTASTE> zum Auswählen, <ENTER> zum Bestätigen):"
 
 #: install.sh
 msgid "Installing in non-interactive mode..."
