@@ -17,8 +17,8 @@ _main() {
     # Export functions to be used inside new shells (when using 'xargs').
     export -f _resolve_host
 
-    # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$(_prepare_input "$input_files")" "$output_dir"
+    # Execute the function '_main_task' for each ip in parallel (127 threads).
+    _run_task_parallel "$(_prepare_input "$input_files")" "$output_dir" "127"
 
     local std_output=""
     std_output=$(_storage_text_read_all)

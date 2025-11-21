@@ -332,14 +332,17 @@ _logs_consolidate() {
 # PARAMETERS:
 #   $1 (input_files): A field-separated list of file paths to process.
 #   $2 (output_dir): The directory where the output files will be stored.
+#   $3 (max_procs): Optional. Maximum number of parallel processes to use.
 _run_task_parallel() {
     local input_files=$1
     local output_dir=$2
+    local max_procs=${3:-""}
 
     # Execute the function '_main_task' for each file in parallel.
     export -f _main_task
     _run_function_parallel \
-        "_main_task '{}' '$output_dir'" "$input_files" "$FIELD_SEPARATOR"
+        "_main_task '{}' '$output_dir'" "$input_files" "$FIELD_SEPARATOR" \
+        "$max_procs"
 }
 
 # FUNCTION: _run_function_parallel
@@ -356,10 +359,16 @@ _run_task_parallel() {
 #      current item being processed.
 #   $2 (items): A list of items to process, separated by the char delimiter.
 #   $3 (delimiter): The character used to separate items in the input list.
+#   $4 (max_procs): Optional. Maximum number of parallel processes to use.
 _run_function_parallel() {
     local expression=$1
     local items=$2
     local delimiter=$3
+    local max_procs=${4:-""}
+
+    if [[ -z "$max_procs" ]]; then
+        max_procs=$(_get_max_procs)
+    fi
 
     # Export necessary environment variables so they are available
     # within each subshell created by 'xargs'.
@@ -428,7 +437,7 @@ _run_function_parallel() {
     printf "%s" "$items" | xargs \
         --no-run-if-empty \
         --delimiter="$delimiter" \
-        --max-procs="$(_get_max_procs)" \
+        --max-procs="$max_procs" \
         --replace="{}" \
         bash -c "$expression"
 }
