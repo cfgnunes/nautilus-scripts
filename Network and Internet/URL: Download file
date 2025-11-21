@@ -85,7 +85,7 @@ _prepare_input() {
     fi
 
     if [[ -z "$urls" ]]; then
-        msg="$(_i18n 'Enter the URLs.')"
+        msg+="$(_i18n 'Enter the URLs.')"
         msg+="\n\n"
         msg+="$(_i18n 'Example:') https://www.google.com/favicon.ico"
         data=$(_display_input_text_box "$msg" "")

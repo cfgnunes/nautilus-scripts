@@ -97,7 +97,7 @@ _prepare_input() {
     urls=$(_extract_urls "$data")
 
     if [[ -z "$urls" ]]; then
-        msg="$(_i18n 'Enter the URLs.')"
+        msg+="$(_i18n 'Enter the URLs.')"
         msg+="\n\n"
         msg+="$(_i18n 'Example:') www.google.com"
         data=$(_display_input_text_box "$msg" "")

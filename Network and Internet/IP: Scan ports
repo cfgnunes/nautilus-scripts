@@ -129,7 +129,7 @@ _prepare_input() {
         local local_range=""
         local_range=$(_get_local_range)
 
-        msg="$(_i18n 'Enter IP addresses or IP ranges.')"
+        msg+="$(_i18n 'Enter IP addresses or IP ranges.')"
         msg+="\n\n"
         msg+="$(_i18n 'Example:') 192.168.0.1-10, 192.168.100.1"
         data=$(_display_input_text_box "$msg" "$local_range")

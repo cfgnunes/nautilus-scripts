@@ -1027,11 +1027,11 @@ _deps_is_package_installed() {
 # them to the trash (if supported) or by permanently deleting them.
 _delete_items() {
     local items=$1
-    local msg=""
 
     local items_count=""
     items_count=$(_get_items_count "$items")
 
+    local msg=""
     msg+="$(_i18n 'This action will delete the selected items.')"
     msg+="\n"
     msg+="$(_i18n 'Total selected:')"
@@ -2987,8 +2987,7 @@ _get_files() {
         # (Argument list too long)".
 
         local msg=""
-        msg+="$(_i18n 'Batch mode detected.')"
-        msg+=" "
+        msg+="$(_i18n 'Batch mode detected.') "
         msg+="$(_i18n 'Each file inside this directory will be processed individually.')"
         msg+="\n\n"
         msg+="$(_i18n 'Would you like to continue?')"
