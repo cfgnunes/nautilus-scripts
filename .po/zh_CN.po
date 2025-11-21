@@ -365,6 +365,12 @@ msgstr "IP"
 msgid "Hostname"
 msgstr "主机名"
 
+msgid "Example"
+msgstr "示例"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "输入 IP 地址或 IP 范围。"
+
 msgid "There are no valid IPs in the input!"
 msgstr "输入中没有有效的 IP！"
 
