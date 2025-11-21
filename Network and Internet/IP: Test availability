@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "nmap ping"
     _display_wait_box
-    input_files=$(_get_files "par_type=file")
+    input_files=$(_get_files "par_type=all")
 
     # Export functions to be used inside new shells (when using 'xargs').
     export -f _resolve_host
