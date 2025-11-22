@@ -1,0 +1,2019 @@
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Enhanced File Manager Actions for Linux\n"
+"POT-Creation-Date: 2025-11-13 12:12-0300\n"
+"PO-Revision-Date: 2025-11-13 12:25-0300\n"
+"Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Done!"
+msgstr "Terminé!"
+
+msgid "files"
+msgstr "fichiers"
+
+msgid "Would you like to continue?"
+msgstr "Voulez-vous continuer?"
+
+msgid "directories"
+msgstr "répertoires"
+
+msgid "items"
+msgstr "éléments"
+
+msgid "The command failed."
+msgstr "La commande a échoué."
+
+msgid "The output file does not exist."
+msgstr "Le fichier de sortie n'existe pas."
+
+msgid "Finished with errors! See the log:"
+msgstr "Terminé avec des erreurs! Voir le journal:"
+
+msgid "Your system does not support clipboard operations."
+msgstr "Votre système ne prend pas en charge les opérations de presse-papiers."
+
+msgid "Could not find a package for:"
+msgstr "Impossible de trouver un paquet pour:"
+
+msgid "The following packages are missing:"
+msgstr "Les paquets suivants sont manquants:"
+
+msgid "Would you like to install them?"
+msgstr "Voulez-vous les installer?"
+
+msgid "Installing the packages. Please, wait..."
+msgstr "Installation des paquets. Veuillez patienter..."
+
+msgid "The package was installed, but a system reboot is required."
+msgstr "Le paquet a été installé, mais un redémarrage du système est nécessaire."
+
+msgid "Could not install the package:"
+msgstr "Impossible d'installer le paquet:"
+
+msgid "This action will delete the selected items."
+msgstr "Cette action supprimera les éléments sélectionnés."
+
+msgid "Total selected:"
+msgstr "Total sélectionné:"
+
+msgid "Total:"
+msgstr "Total:"
+
+msgid "Some items could not be deleted."
+msgstr "Certains éléments n'ont pas pu être supprimés."
+
+msgid "All items were successfully deleted!"
+msgstr "Tous les éléments ont été supprimés avec succès!"
+
+msgid "Could not access the directory:"
+msgstr "Impossible d'accéder au répertoire:"
+
+msgid "The destination file already exists."
+msgstr "Le fichier de destination existe déjà."
+
+msgid "Unable to move."
+msgstr "Impossible de déplacer."
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "(Empty)"
+msgstr "(Vide)"
+
+msgid "Select the ones to open:"
+msgstr "Sélectionnez ceux à ouvrir:"
+
+msgid "Select the ones to reveal in the file manager:"
+msgstr "Sélectionnez ceux à révéler dans le gestionnaire de fichiers:"
+
+msgid "Select the ones to open in the web browser:"
+msgstr "Sélectionnez ceux à ouvrir dans le navigateur web:"
+
+msgid "Select the ones to delete:"
+msgstr "Sélectionnez ceux à supprimer:"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "Type your password:"
+msgstr "Tapez votre mot de passe:"
+
+msgid "The password can not be empty!"
+msgstr "Le mot de passe ne peut pas être vide!"
+
+msgid "Yes"
+msgstr "Oui"
+
+msgid "No"
+msgstr "Non"
+
+msgid "Finished! The output files are in:"
+msgstr "Terminé! Les fichiers de sortie sont dans:"
+
+msgid "Finished, but there is nothing to do."
+msgstr "Terminé, mais il n'y a rien à faire."
+
+msgid "Finished!"
+msgstr "Terminé!"
+
+msgid "Running the task. Please, wait..."
+msgstr "Exécution de la tâche. Veuillez patienter..."
+
+msgid "No default application is set for the type:"
+msgstr "Aucune application par défaut n'est définie pour le type:"
+
+msgid "Could not find the executable to open MIME type:"
+msgstr "Impossible de trouver l'exécutable pour ouvrir le type MIME:"
+
+msgid "Batch mode detected."
+msgstr "Mode batch détecté."
+
+msgid "Each file inside this directory will be processed individually."
+msgstr "Chaque fichier dans ce répertoire sera traité individuellement."
+
+msgid "files or directories"
+msgstr "fichiers ou répertoires"
+
+msgid "You must select files with extension:"
+msgstr "Vous devez sélectionner des fichiers avec l'extension:"
+
+msgid "Invalid input file!"
+msgstr "Fichier d'entrée invalide!"
+
+msgid "You must select"
+msgstr "Vous devez sélectionner"
+
+msgid "You must select at least"
+msgstr "Vous devez sélectionner au moins"
+
+msgid "You must select up to"
+msgstr "Vous devez sélectionner jusqu'à"
+
+msgid "Could not find the output directory!"
+msgstr "Impossible de trouver le répertoire de sortie!"
+
+msgid "Accessed recently"
+msgstr "Accédé récemment"
+
+msgid "File"
+msgstr "Fichier"
+
+msgid "Count"
+msgstr "Nombre"
+
+msgid "Char"
+msgstr "Caractère"
+
+msgid "Line"
+msgstr "Ligne"
+
+msgid "Issues"
+msgstr "Problèmes"
+
+msgid "Encoding"
+msgstr "Encodage"
+
+msgid "There are no valid paths in the clipboard!"
+msgstr "Il n'y a pas de chemins valides dans le presse-papiers!"
+
+msgid "links"
+msgstr "liens"
+
+msgid "Inode"
+msgstr "Inode"
+
+msgid "Link"
+msgstr "Lien"
+
+msgid "Unsupported clipboard type."
+msgstr "Type de presse-papiers non supporté."
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr "Cette action renommera les fichiers et répertoires sélectionnés de manière récursive."
+
+msgid "PDF files"
+msgstr "Fichiers PDF"
+
+msgid "Select a PDF to use as the watermark"
+msgstr "Sélectionnez un PDF à utiliser comme filigrane"
+
+msgid "Signature"
+msgstr "Signature"
+
+msgid "This action will permanently delete the selected files."
+msgstr "Cette action supprimera définitivement les fichiers sélectionnés."
+
+msgid "Malware"
+msgstr "Logiciel malveillant"
+
+msgid "Mode"
+msgstr "Mode"
+
+msgid "Bit rate"
+msgstr "Débit binaire"
+
+msgid "Sampling rate"
+msgstr "Taux d'échantillonnage"
+
+msgid "Channels"
+msgstr "Canaux"
+
+msgid "Duration"
+msgstr "Durée"
+
+msgid "Album"
+msgstr "Album"
+
+msgid "Artist"
+msgstr "Artiste"
+
+msgid "Title"
+msgstr "Titre"
+
+msgid "Quality"
+msgstr "Qualité"
+
+msgid "Image files"
+msgstr "Fichiers image"
+
+msgid "Select an image to use as the watermark"
+msgstr "Sélectionnez une image à utiliser comme filigrane"
+
+msgid "Key files"
+msgstr "Fichiers de clés"
+
+msgid "Select a key file to import"
+msgstr "Sélectionnez un fichier de clé à importer"
+
+msgid "No secret keys were found."
+msgstr "Aucune clé secrète n'a été trouvée."
+
+msgid "Would you like to import a key now?"
+msgstr "Voulez-vous importer une clé maintenant?"
+
+msgid "Failed to import the key!"
+msgstr "Échec de l'importation de la clé!"
+
+msgid "Select a user:"
+msgstr "Sélectionnez un utilisateur:"
+
+msgid "User"
+msgstr "Utilisateur"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "Created"
+msgstr "Créé"
+
+msgid "Expires"
+msgstr "Expire"
+
+msgid "You must select a user!"
+msgstr "Vous devez sélectionner un utilisateur!"
+
+msgid "No public keys were found."
+msgstr "Aucune clé publique n'a été trouvée."
+
+msgid "Select one or more users:"
+msgstr "Sélectionnez un ou plusieurs utilisateurs:"
+
+msgid "You must select at least one user!"
+msgstr "Vous devez sélectionner au moins un utilisateur!"
+
+msgid "Directory"
+msgstr "Répertoire"
+
+msgid "Size"
+msgstr "Taille"
+
+msgid "Group"
+msgstr "Groupe"
+
+msgid "Item"
+msgstr "Élément"
+
+msgid "Octal"
+msgstr "Octal"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "You must select only two images to compare!"
+msgstr "Vous devez sélectionner seulement deux images à comparer!"
+
+msgid "You must select only two PDFs to compare!"
+msgstr "Vous devez sélectionner seulement deux PDF à comparer!"
+
+msgid "You must select only two binary files to compare!"
+msgstr "Vous devez sélectionner seulement deux fichiers binaires à comparer!"
+
+msgid "The selected items are identical."
+msgstr "Les éléments sélectionnés sont identiques."
+
+msgid "The selected images has same pixel values."
+msgstr "Les images sélectionnées ont les mêmes valeurs de pixels."
+
+msgid "MIME"
+msgstr "MIME"
+
+msgid "This action will move all files from subdirectories to the root of the selected directory."
+msgstr "Cette action déplacera tous les fichiers des sous-répertoires vers la racine du répertoire sélectionné."
+
+msgid "This action will reset the permissions recursively."
+msgstr "Cette action réinitialisera les permissions de manière récursive."
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Time"
+msgstr "Heure"
+
+msgid "Select the output filename:"
+msgstr "Sélectionnez le nom du fichier de sortie:"
+
+msgid "Filename"
+msgstr "Nom de fichier"
+
+msgid "Status"
+msgstr "Statut"
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr "Il n'y a pas d'URL valides dans le presse-papiers ou dans les fichiers sélectionnés!"
+
+msgid "IPs"
+msgstr "IP"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Ping"
+msgstr "Ping"
+
+msgid "Ports"
+msgstr "Ports"
+
+msgid "Hostname"
+msgstr "Nom d'hôte"
+
+msgid "Example"
+msgstr "Exemple"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "Entrez les adresses IP ou les plages d'IP."
+
+msgid "There are no valid IPs in the input!"
+msgstr "Il n'y a pas d'IP valides dans l'entrée!"
+
+msgid "Enter the URLs."
+msgstr "Entrez les URL."
+
+msgid "There are no valid URLs in the input!"
+msgstr "Il n'y a pas d'URL valides dans l'entrée!"
+
+msgid "No remote URL found."
+msgstr "Aucune URL distante trouvée."
+
+msgid "URLs"
+msgstr "URL"
+
+msgid "HTTP code"
+msgstr "Code HTTP"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "(No differences)"
+msgstr "(Aucune différence)"
+
+msgid "(No line break)"
+msgstr "(Pas de saut de ligne)"
+
+msgid "(No response)"
+msgstr "(Aucune réponse)"
+
+msgid "Checksum mismatch."
+msgstr "Somme de contrôle non concordante."
+
+msgid "File does not exist."
+msgstr "Le fichier n'existe pas."
+
+msgid "High"
+msgstr "Élevé"
+
+msgid "Low"
+msgstr "Faible"
+
+msgid "Medium"
+msgstr "Moyen"
+
+msgid "Online"
+msgstr "En ligne"
+
+msgid "Offline"
+msgstr "Hors ligne"
+
+msgid "Valid signature"
+msgstr "Signature valide"
+
+msgid "Invalid signature"
+msgstr "Signature invalide"
+
+msgid "Missing key"
+msgstr "Clé manquante"
+
+msgid "Missing data file"
+msgstr "Fichier de données manquant"
+
+msgid "Revoked key"
+msgstr "Clé révoquée"
+
+msgid "Expired key"
+msgstr "Clé expirée"
+
+msgid "Expired signature"
+msgstr "Signature expirée"
+
+msgid "Unknown algorithm"
+msgstr "Algorithme inconnu"
+
+msgid "Key ID"
+msgstr "ID de clé"
+
+msgid "Enter the password for the archive:"
+msgstr "Entrez le mot de passe pour l'archive:"
+
+msgid "Select the output directory"
+msgstr "Sélectionnez le répertoire de sortie"
+
+msgid "Select input directories"
+msgstr "Sélectionnez les répertoires d'entrée"
+
+msgid "Select input files"
+msgstr "Sélectionnez les fichiers d'entrée"
+
+#: Menu
+msgid "Archive"
+msgstr "Archive"
+
+#: Menu
+msgid "Audio and Video"
+msgstr "Audio et Vidéo"
+
+#: Menu
+msgid "Checksum"
+msgstr "Somme de contrôle"
+
+#: Menu
+msgid "Clipboard"
+msgstr "Presse-papiers"
+
+#: Menu
+msgid "Directories and Files"
+msgstr "Répertoires et Fichiers"
+
+#: Menu
+msgid "Document"
+msgstr "Document"
+
+#: Menu
+msgid "Encryption"
+msgstr "Chiffrement"
+
+#: Menu
+msgid "Image"
+msgstr "Image"
+
+#: Menu
+msgid "Links"
+msgstr "Liens"
+
+#: Menu
+msgid "Network and Internet"
+msgstr "Réseau et Internet"
+
+#: Menu
+msgid "Open with"
+msgstr "Ouvrir avec"
+
+#: Menu
+msgid "Plain text"
+msgstr "Texte brut"
+
+#: Menu
+msgid "Rename files"
+msgstr "Renommer les fichiers"
+
+#: Menu
+msgid "Security and Recovery"
+msgstr "Sécurité et Récupération"
+
+#: Menu
+msgid "Audio and Video: Tools"
+msgstr "Audio et Vidéo: Outils"
+
+#: Menu
+msgid "Audio: Channels"
+msgstr "Audio: Canaux"
+
+#: Menu
+msgid "Audio: Convert"
+msgstr "Audio: Convertir"
+
+#: Menu
+msgid "Audio: Effects"
+msgstr "Audio: Effets"
+
+#: Menu
+msgid "Audio: MP3 files"
+msgstr "Audio: Fichiers MP3"
+
+#: Menu
+msgid "Audio: Quality"
+msgstr "Audio: Qualité"
+
+#: Menu
+msgid "Document: Convert"
+msgstr "Document: Convertir"
+
+#: Menu
+msgid "Document: Print"
+msgstr "Document: Imprimer"
+
+#: Menu
+msgid "Image: Color"
+msgstr "Image: Couleur"
+
+#: Menu
+msgid "Image: Combine, Split"
+msgstr "Image: Combiner, Diviser"
+
+#: Menu
+msgid "Image: Convert"
+msgstr "Image: Convertir"
+
+#: Menu
+msgid "Image: Crop, Resize"
+msgstr "Image: Rogner, Redimensionner"
+
+#: Menu
+msgid "Image: Flip, Rotate"
+msgstr "Image: Retourner, Pivoter"
+
+#: Menu
+msgid "Image: Icons"
+msgstr "Image: Icônes"
+
+#: Menu
+msgid "Image: Metadata, Exif"
+msgstr "Image: Métadonnées, Exif"
+
+#: Menu
+msgid "Image: Optimize, Reduce"
+msgstr "Image: Optimiser, Réduire"
+
+#: Menu
+msgid "Image: Similarity"
+msgstr "Image: Similarité"
+
+#: Menu
+msgid "Image: SVG files"
+msgstr "Image: Fichiers SVG"
+
+#: Menu
+msgid "Image: Text recognition (OCR)"
+msgstr "Image: Reconnaissance de texte (OCR)"
+
+#: Menu
+msgid "Image: Transparency"
+msgstr "Image: Transparence"
+
+#: Menu
+msgid "Image: Watermark"
+msgstr "Image: Filigrane"
+
+#: Menu
+msgid "PDF: Annotations"
+msgstr "PDF: Annotations"
+
+#: Menu
+msgid "PDF: Combine, Split"
+msgstr "PDF: Combiner, Diviser"
+
+#: Menu
+msgid "PDF: Security"
+msgstr "PDF: Sécurité"
+
+#: Menu
+msgid "PDF: Multiple-page layout"
+msgstr "PDF: Mise en page multipage"
+
+#: Menu
+msgid "PDF: Optimize, Reduce"
+msgstr "PDF: Optimiser, Réduire"
+
+#: Menu
+msgid "PDF: Page size"
+msgstr "PDF: Taille de page"
+
+#: Menu
+msgid "PDF: Rotate"
+msgstr "PDF: Pivoter"
+
+#: Menu
+msgid "PDF: Signatures"
+msgstr "PDF: Signatures"
+
+#: Menu
+msgid "PDF: Text recognition (OCR)"
+msgstr "PDF: Reconnaissance de texte (OCR)"
+
+#: Menu
+msgid "PDF: Tools"
+msgstr "PDF: Outils"
+
+#: Menu
+msgid "PDF: Watermark"
+msgstr "PDF: Filigrane"
+
+#: Menu
+msgid "Video: Aspect ratio"
+msgstr "Vidéo: Ratio d'aspect"
+
+#: Menu
+msgid "Video: Audio track"
+msgstr "Vidéo: Piste audio"
+
+#: Menu
+msgid "Video: Convert"
+msgstr "Vidéo: Convertir"
+
+#: Menu
+msgid "Video: Export frames"
+msgstr "Vidéo: Exporter des images"
+
+#: Menu
+msgid "Video: Flip, Rotate"
+msgstr "Vidéo: Retourner, Pivoter"
+
+#: Menu
+msgid "Video: Frame rate"
+msgstr "Vidéo: Fréquence d'images"
+
+#: Menu
+msgid "Video: Resize"
+msgstr "Vidéo: Redimensionner"
+
+#: Menu
+msgid "Video: Speed"
+msgstr "Vidéo: Vitesse"
+
+#: Menu
+msgid "Audio: Check quality"
+msgstr "Audio: Vérifier la qualité"
+
+#: Menu
+msgid "Audio: Convert to FLAC"
+msgstr "Audio: Convertir en FLAC"
+
+#: Menu
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "Audio: Convertir en MP3 (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (192 kbps)"
+msgstr "Audio: Convertir en MP3 (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (320 kbps)"
+msgstr "Audio: Convertir en MP3 (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "Audio: Convertir en OGG (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (192 kbps)"
+msgstr "Audio: Convertir en OGG (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (320 kbps)"
+msgstr "Audio: Convertir en OGG (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "Audio: Convertir en OPUS (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (192 kbps)"
+msgstr "Audio: Convertir en OPUS (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (320 kbps)"
+msgstr "Audio: Convertir en OPUS (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to WAV"
+msgstr "Audio: Convertir en WAV"
+
+#: Menu
+msgid "Audio: Fade-in"
+msgstr "Audio: Fondu entrant"
+
+#: Menu
+msgid "Audio: Fade-out"
+msgstr "Audio: Fondu sortant"
+
+#: Menu
+msgid "Audio: Mix channels to mono"
+msgstr "Audio: Mixer les canaux en mono"
+
+#: Menu
+msgid "Audio: Mix two files"
+msgstr "Audio: Mixer deux fichiers"
+
+#: Menu
+msgid "Audio: Volume normalize"
+msgstr "Audio: Normaliser le volume"
+
+#: Menu
+msgid "Audio: Produce a spectrogram"
+msgstr "Audio: Produire un spectrogramme"
+
+#: Menu
+msgid "Audio: Remove silence (sections)"
+msgstr "Audio: Supprimer les silences (sections)"
+
+#: Menu
+msgid "Audio: Silence noise"
+msgstr "Audio: Réduire le bruit"
+
+#: Menu
+msgid "Audio: Remove silence (extremities)"
+msgstr "Audio: Supprimer les silences (extrémités)"
+
+#: Menu
+msgid "Code Editor"
+msgstr "Éditeur de code"
+
+#: Menu
+msgid "Compare items"
+msgstr "Comparer les éléments"
+
+#: Menu
+msgid "Compare items (via Diff)"
+msgstr "Comparer les éléments (via Diff)"
+
+#: Menu
+msgid "Compress to '7z'"
+msgstr "Compresser en '7z'"
+
+#: Menu
+msgid "Compress to '7z' with password"
+msgstr "Compresser en '7z' avec mot de passe"
+
+#: Menu
+msgid "Compress to 'iso'"
+msgstr "Compresser en 'iso'"
+
+#: Menu
+msgid "Compress to 'squashfs'"
+msgstr "Compresser en 'squashfs'"
+
+#: Menu
+msgid "Compress to 'tar.gz'"
+msgstr "Compresser en 'tar.gz'"
+
+#: Menu
+msgid "Compress to 'tar.xz'"
+msgstr "Compresser en 'tar.xz'"
+
+#: Menu
+msgid "Compress to 'tar.zst'"
+msgstr "Compresser en 'tar.zst'"
+
+#: Menu
+msgid "Compress to 'zip'"
+msgstr "Compresser en 'zip'"
+
+#: Menu
+msgid "Compress to 'zip' with password"
+msgstr "Compresser en 'zip' avec mot de passe"
+
+#: Menu
+msgid "Compute all checksums"
+msgstr "Calculer toutes les sommes de contrôle"
+
+#: Menu
+msgid "Compute CRC32"
+msgstr "Calculer CRC32"
+
+#: Menu
+msgid "Compute MD5"
+msgstr "Calculer MD5"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "Calculer SHA1"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "Calculer SHA256"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "Calculer SHA512"
+
+#: Menu
+msgid "Copy file contents"
+msgstr "Copier le contenu des fichiers"
+
+#: Menu
+msgid "Copy file names"
+msgstr "Copier les noms de fichiers"
+
+#: Menu
+msgid "Copy file names (recursive)"
+msgstr "Copier les noms de fichiers (récursif)"
+
+#: Menu
+msgid "Copy file paths"
+msgstr "Copier les chemins de fichiers"
+
+#: Menu
+msgid "Copy file paths (recursive)"
+msgstr "Copier les chemins de fichiers (récursif)"
+
+#: Menu
+msgid "Create hard link here"
+msgstr "Créer un lien physique ici"
+
+#: Menu
+msgid "Create hard link to..."
+msgstr "Créer un lien physique vers..."
+
+#: Menu
+msgid "Create symbolic link here"
+msgstr "Créer un lien symbolique ici"
+
+#: Menu
+msgid "Create symbolic link to..."
+msgstr "Créer un lien symbolique vers..."
+
+#: Menu
+msgid "Disk Usage Analyzer"
+msgstr "Analyseur d'utilisation du disque"
+
+#: Menu
+msgid "Document: Convert to DOCX"
+msgstr "Document: Convertir en DOCX"
+
+#: Menu
+msgid "Document: Convert to EPUB"
+msgstr "Document: Convertir en EPUB"
+
+#: Menu
+msgid "Document: Convert to FB2"
+msgstr "Document: Convertir en FB2"
+
+#: Menu
+msgid "Document: Convert to Markdown"
+msgstr "Document: Convertir en Markdown"
+
+#: Menu
+msgid "Document: Convert to ODP"
+msgstr "Document: Convertir en ODP"
+
+#: Menu
+msgid "Document: Convert to ODS"
+msgstr "Document: Convertir en ODS"
+
+#: Menu
+msgid "Document: Convert to ODT"
+msgstr "Document: Convertir en ODT"
+
+#: Menu
+msgid "Document: Convert to PDF"
+msgstr "Document: Convertir en PDF"
+
+#: Menu
+msgid "Document: Convert to PPTX"
+msgstr "Document: Convertir en PPTX"
+
+#: Menu
+msgid "Document: Convert to TXT"
+msgstr "Document: Convertir en TXT"
+
+#: Menu
+msgid "Document: Convert to XLSX"
+msgstr "Document: Convertir en XLSX"
+
+#: Menu
+msgid "Document: Print (A4)"
+msgstr "Document: Imprimer (A4)"
+
+#: Menu
+msgid "Document: Print (US Legal)"
+msgstr "Document: Imprimer (US Legal)"
+
+#: Menu
+msgid "Document: Print (US Letter)"
+msgstr "Document: Imprimer (US Letter)"
+
+#: Menu
+msgid "Extract here"
+msgstr "Extraire ici"
+
+#: Menu
+msgid "File carving (via Foremost)"
+msgstr "Récupération de fichiers (via Foremost)"
+
+#: Menu
+msgid "File carving (via PhotoRec)"
+msgstr "Récupération de fichiers (via PhotoRec)"
+
+#: Menu
+msgid "Find broken links"
+msgstr "Trouver les liens brisés"
+
+#: Menu
+msgid "Find duplicate files"
+msgstr "Trouver les fichiers en double"
+
+#: Menu
+msgid "Find empty directories"
+msgstr "Trouver les répertoires vides"
+
+#: Menu
+msgid "List hidden files"
+msgstr "Lister les fichiers cachés"
+
+#: Menu
+msgid "Find junk files"
+msgstr "Trouver les fichiers indésirables"
+
+#: Menu
+msgid "Find empty files"
+msgstr "Trouver les fichiers vides"
+
+#: Menu
+msgid "Flatten directory structure"
+msgstr "Aplatir la structure de répertoires"
+
+#: Menu
+msgid "Generate MD5 file"
+msgstr "Générer un fichier MD5"
+
+#: Menu
+msgid "Generate SHA1 file"
+msgstr "Générer un fichier SHA1"
+
+#: Menu
+msgid "Generate SHA256 file"
+msgstr "Générer un fichier SHA256"
+
+#: Menu
+msgid "Generate SHA512 file"
+msgstr "Générer un fichier SHA512"
+
+#: Menu
+msgid "Git: Clone URLs"
+msgstr "Git: Cloner les URL"
+
+#: Menu
+msgid "Git: Open repository website"
+msgstr "Git: Ouvrir le site web du dépôt"
+
+#: Menu
+msgid "Git: Reset and pull"
+msgstr "Git: Réinitialiser et tirer"
+
+#: Menu
+msgid "Decrypt"
+msgstr "Déchiffrer"
+
+#: Menu
+msgid "Encrypt with password"
+msgstr "Chiffrer avec mot de passe"
+
+#: Menu
+msgid "Encrypt with password (ASCII)"
+msgstr "Chiffrer avec mot de passe (ASCII)"
+
+#: Menu
+msgid "Encrypt with keys"
+msgstr "Chiffrer avec des clés"
+
+#: Menu
+msgid "Encrypt with keys (ASCII)"
+msgstr "Chiffrer avec des clés (ASCII)"
+
+#: Menu
+msgid "Import keys"
+msgstr "Importer des clés"
+
+#: Menu
+msgid "Sign"
+msgstr "Signer"
+
+#: Menu
+msgid "Sign (ASCII)"
+msgstr "Signer (ASCII)"
+
+#: Menu
+msgid "Sign (detached signature)"
+msgstr "Signer (signature détachée)"
+
+#: Menu
+msgid "Verify signature"
+msgstr "Vérifier la signature"
+
+#: Menu
+msgid "Image: Add watermark (center)"
+msgstr "Image: Ajouter un filigrane (centre)"
+
+#: Menu
+msgid "Image: Add watermark (north)"
+msgstr "Image: Ajouter un filigrane (nord)"
+
+#: Menu
+msgid "Image: Add watermark (northeast)"
+msgstr "Image: Ajouter un filigrane (nord-est)"
+
+#: Menu
+msgid "Image: Add watermark (northwest)"
+msgstr "Image: Ajouter un filigrane (nord-ouest)"
+
+#: Menu
+msgid "Image: Add watermark (south)"
+msgstr "Image: Ajouter un filigrane (sud)"
+
+#: Menu
+msgid "Image: Add watermark (southeast)"
+msgstr "Image: Ajouter un filigrane (sud-est)"
+
+#: Menu
+msgid "Image: Add watermark (southwest)"
+msgstr "Image: Ajouter un filigrane (sud-ouest)"
+
+#: Menu
+msgid "Image: Automatic crop"
+msgstr "Image: Rogner automatiquement"
+
+#: Menu
+msgid "Image: Automatic crop (15 pct)"
+msgstr "Image: Rogner automatiquement (15 pct)"
+
+#: Menu
+msgid "Image: Background to alpha"
+msgstr "Image: Arrière-plan vers alpha"
+
+#: Menu
+msgid "Image: Background to alpha (15 pct)"
+msgstr "Image: Arrière-plan vers alpha (15 pct)"
+
+#: Menu
+msgid "Image: Color alpha to black"
+msgstr "Image: Couleur alpha vers noir"
+
+#: Menu
+msgid "Image: Color alpha to magenta"
+msgstr "Image: Couleur alpha vers magenta"
+
+#: Menu
+msgid "Image: Color alpha to white"
+msgstr "Image: Couleur alpha vers blanc"
+
+#: Menu
+msgid "Image: Color black to alpha"
+msgstr "Image: Couleur noir vers alpha"
+
+#: Menu
+msgid "Image: Color black to alpha (15 pct)"
+msgstr "Image: Couleur noir vers alpha (15 pct)"
+
+#: Menu
+msgid "Image: Color magenta to alpha"
+msgstr "Image: Couleur magenta vers alpha"
+
+#: Menu
+msgid "Image: Color magenta to alpha (15 pct)"
+msgstr "Image: Couleur magenta vers alpha (15 pct)"
+
+#: Menu
+msgid "Image: Colorspace to gray"
+msgstr "Image: Espace colorimétrique vers niveaux de gris"
+
+#: Menu
+msgid "Image: Color white to alpha"
+msgstr "Image: Couleur blanc vers alpha"
+
+#: Menu
+msgid "Image: Color white to alpha (15 pct)"
+msgstr "Image: Couleur blanc vers alpha (15 pct)"
+
+#: Menu
+msgid "Image: Combine into a GIF"
+msgstr "Image: Combiner en GIF"
+
+#: Menu
+msgid "Image: Combine into a PDF"
+msgstr "Image: Combiner en PDF"
+
+#: Menu
+msgid "Image: Convert to AVIF"
+msgstr "Image: Convertir en AVIF"
+
+#: Menu
+msgid "Image: Convert to BMP"
+msgstr "Image: Convertir en BMP"
+
+#: Menu
+msgid "Image: Convert to GIF"
+msgstr "Image: Convertir en GIF"
+
+#: Menu
+msgid "Image: Convert to HEIC"
+msgstr "Image: Convertir en HEIC"
+
+#: Menu
+msgid "Image: Convert to JPG"
+msgstr "Image: Convertir en JPG"
+
+#: Menu
+msgid "Image: Convert to JXL"
+msgstr "Image: Convertir en JXL"
+
+#: Menu
+msgid "Image: Convert to PNG"
+msgstr "Image: Convertir en PNG"
+
+#: Menu
+msgid "Image: Convert to TIFF"
+msgstr "Image: Convertir en TIFF"
+
+#: Menu
+msgid "Image: Convert to WebP"
+msgstr "Image: Convertir en WebP"
+
+#: Menu
+msgid "Image: Create PNG icon (64 px)"
+msgstr "Image: Créer une icône PNG (64 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (128 px)"
+msgstr "Image: Créer une icône PNG (128 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (256 px)"
+msgstr "Image: Créer une icône PNG (256 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (512 px)"
+msgstr "Image: Créer une icône PNG (512 px)"
+
+#: Menu
+msgid "Image: Desaturate"
+msgstr "Image: Désaturer"
+
+#: Menu
+msgid "Image: Export to PDF"
+msgstr "Image: Exporter en PDF"
+
+#: Menu
+msgid "Image: Find similar (65 pct)"
+msgstr "Image: Trouver les similaires (65 pct)"
+
+#: Menu
+msgid "Image: Find similar (75 pct)"
+msgstr "Image: Trouver les similaires (75 pct)"
+
+#: Menu
+msgid "Image: Find similar (85 pct)"
+msgstr "Image: Trouver les similaires (85 pct)"
+
+#: Menu
+msgid "Image: Find similar (95 pct)"
+msgstr "Image: Trouver les similaires (95 pct)"
+
+#: Menu
+msgid "Image: Flip (horizontal)"
+msgstr "Image: Retourner (horizontal)"
+
+#: Menu
+msgid "Image: Flip (vertical)"
+msgstr "Image: Retourner (vertical)"
+
+#: Menu
+msgid "Image: Generate multiple hues"
+msgstr "Image: Générer des teintes multiples"
+
+#: Menu
+msgid "Image: Optimize PNG"
+msgstr "Image: Optimiser PNG"
+
+#: Menu
+msgid "Image: Perform OCR (English)"
+msgstr "Image: Effectuer OCR (Anglais)"
+
+#: Menu
+msgid "Image: Perform OCR (French)"
+msgstr "Image: Effectuer OCR (Français)"
+
+#: Menu
+msgid "Image: Perform OCR (German)"
+msgstr "Image: Effectuer OCR (Allemand)"
+
+#: Menu
+msgid "Image: Perform OCR (Italian)"
+msgstr "Image: Effectuer OCR (Italien)"
+
+#: Menu
+msgid "Image: Perform OCR (Portuguese)"
+msgstr "Image: Effectuer OCR (Portugais)"
+
+#: Menu
+msgid "Image: Perform OCR (Russian)"
+msgstr "Image: Effectuer OCR (Russe)"
+
+#: Menu
+msgid "Image: Perform OCR (Spanish)"
+msgstr "Image: Effectuer OCR (Espagnol)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 500kB max)"
+msgstr "Image: Réduire (JPG, 500kB max)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 1000kB max)"
+msgstr "Image: Réduire (JPG, 1000kB max)"
+
+#: Menu
+msgid "Image: Remove metadata"
+msgstr "Image: Supprimer les métadonnées"
+
+#: Menu
+msgid "Image: Rename from metadata"
+msgstr "Image: Renommer à partir des métadonnées"
+
+#: Menu
+msgid "Image: Resize (25 pct)"
+msgstr "Image: Redimensionner (25 pct)"
+
+#: Menu
+msgid "Image: Resize (50 pct)"
+msgstr "Image: Redimensionner (50 pct)"
+
+#: Menu
+msgid "Image: Resize (75 pct)"
+msgstr "Image: Redimensionner (75 pct)"
+
+#: Menu
+msgid "Image: Resize (512x512)"
+msgstr "Image: Redimensionner (512x512)"
+
+#: Menu
+msgid "Image: Resize (1080x1080)"
+msgstr "Image: Redimensionner (1080x1080)"
+
+#: Menu
+msgid "Image: Resize (1920x1080)"
+msgstr "Image: Redimensionner (1920x1080)"
+
+#: Menu
+msgid "Image: Resize (2560x1440)"
+msgstr "Image: Redimensionner (2560x1440)"
+
+#: Menu
+msgid "Image: Resize (3840x2160)"
+msgstr "Image: Redimensionner (3840x2160)"
+
+#: Menu
+msgid "Image: Rotate (90 deg)"
+msgstr "Image: Pivoter (90 deg)"
+
+#: Menu
+msgid "Image: Rotate (180 deg)"
+msgstr "Image: Pivoter (180 deg)"
+
+#: Menu
+msgid "Image: Rotate (270 deg)"
+msgstr "Image: Pivoter (270 deg)"
+
+#: Menu
+msgid "Image: Split into 2 (horizontal)"
+msgstr "Image: Diviser en 2 (horizontal)"
+
+#: Menu
+msgid "Image: Split into 2 (vertical)"
+msgstr "Image: Diviser en 2 (vertical)"
+
+#: Menu
+msgid "Image: Split into 4"
+msgstr "Image: Diviser en 4"
+
+#: Menu
+msgid "Image: Stack (horizontal)"
+msgstr "Image: Empiler (horizontal)"
+
+#: Menu
+msgid "Image: Stack (vertical)"
+msgstr "Image: Empiler (vertical)"
+
+#: Menu
+msgid "IP: Scanner"
+msgstr "IP: Scanner"
+
+#: Menu
+msgid "List hard links"
+msgstr "Lister les liens physiques"
+
+#: Menu
+msgid "List largest directories"
+msgstr "Lister les plus grands répertoires"
+
+#: Menu
+msgid "List largest files"
+msgstr "Lister les plus gros fichiers"
+
+#: Menu
+msgid "List permissions and owners"
+msgstr "Lister les permissions et propriétaires"
+
+#: Menu
+msgid "List recent files"
+msgstr "Lister les fichiers récents"
+
+#: Menu
+msgid "List symbolic links"
+msgstr "Lister les liens symboliques"
+
+#: Menu
+msgid "Media: Concatenate files"
+msgstr "Média: Concaténer les fichiers"
+
+#: Menu
+msgid "Media: Remove metadata"
+msgstr "Média: Supprimer les métadonnées"
+
+#: Menu
+msgid "Media: Show basic metadata"
+msgstr "Média: Afficher les métadonnées de base"
+
+#: Menu
+msgid "MP3: (artist - title) Name to ID3"
+msgstr "MP3: (artiste - titre) Nom vers ID3"
+
+#: Menu
+msgid "MP3: (artist - title) ID3 to Name"
+msgstr "MP3: (artiste - titre) ID3 vers Nom"
+
+#: Menu
+msgid "MP3: Volume maximize (recursive)"
+msgstr "MP3: Maximiser le volume (récursif)"
+
+#: Menu
+msgid "MP3: Volume normalize (recursive)"
+msgstr "MP3: Normaliser le volume (récursif)"
+
+#: Menu
+msgid "MP3: Repair (recursive)"
+msgstr "MP3: Réparer (récursif)"
+
+#: Menu
+msgid "MP3: Show encoding details"
+msgstr "MP3: Afficher les détails d'encodage"
+
+#: Menu
+msgid "Open item location"
+msgstr "Ouvrir l'emplacement de l'élément"
+
+#: Menu
+msgid "Paste as hard link"
+msgstr "Coller comme lien physique"
+
+#: Menu
+msgid "Paste as symbolic link"
+msgstr "Coller comme lien symbolique"
+
+#: Menu
+msgid "Paste clipboard content"
+msgstr "Coller le contenu du presse-papiers"
+
+#: Menu
+msgid "PDF: Add watermark (over)"
+msgstr "PDF: Ajouter un filigrane (par-dessus)"
+
+#: Menu
+msgid "PDF: Add watermark (under)"
+msgstr "PDF: Ajouter un filigrane (par-dessous)"
+
+#: Menu
+msgid "PDF: Combine multiple PDFs"
+msgstr "PDF: Combiner plusieurs PDF"
+
+#: Menu
+msgid "PDF: Convert to PDFA-2b"
+msgstr "PDF: Convertir en PDFA-2b"
+
+#: Menu
+msgid "PDF: Remove password"
+msgstr "PDF: Supprimer le mot de passe"
+
+#: Menu
+msgid "PDF: Set a password"
+msgstr "PDF: Définir un mot de passe"
+
+#: Menu
+msgid "PDF: Extract images"
+msgstr "PDF: Extraire les images"
+
+#: Menu
+msgid "PDF: Find annotated PDFs"
+msgstr "PDF: Trouver les PDF annotés"
+
+#: Menu
+msgid "PDF: Find non-linearized PDFs"
+msgstr "PDF: Trouver les PDF non linéarisés"
+
+#: Menu
+msgid "PDF: Find non-searchable PDFs"
+msgstr "PDF: Trouver les PDF non interrogeables"
+
+#: Menu
+msgid "PDF: Find password-protected PDFs"
+msgstr "PDF: Trouver les PDF protégés par mot de passe"
+
+#: Menu
+msgid "PDF: Find signed PDFs"
+msgstr "PDF: Trouver les PDF signés"
+
+#: Menu
+msgid "PDF: Layout (landscape, 1x2)"
+msgstr "PDF: Mise en page (paysage, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x1)"
+msgstr "PDF: Mise en page (paysage, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x2)"
+msgstr "PDF: Mise en page (paysage, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x4)"
+msgstr "PDF: Mise en page (paysage, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 4x2)"
+msgstr "PDF: Mise en page (paysage, 4x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 1x2)"
+msgstr "PDF: Mise en page (portrait, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x1)"
+msgstr "PDF: Mise en page (portrait, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x2)"
+msgstr "PDF: Mise en page (portrait, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x4)"
+msgstr "PDF: Mise en page (portrait, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 4x2)"
+msgstr "PDF: Mise en page (portrait, 4x2)"
+
+#: Menu
+msgid "PDF: Optimize for web (linearize)"
+msgstr "PDF: Optimiser pour le web (linéariser)"
+
+#: Menu
+msgid "PDF: Set size (A3)"
+msgstr "PDF: Définir la taille (A3)"
+
+#: Menu
+msgid "PDF: Set size (A4)"
+msgstr "PDF: Définir la taille (A4)"
+
+#: Menu
+msgid "PDF: Set size (A5)"
+msgstr "PDF: Définir la taille (A5)"
+
+#: Menu
+msgid "PDF: Set size (US Legal)"
+msgstr "PDF: Définir la taille (US Legal)"
+
+#: Menu
+msgid "PDF: Set size (US Letter)"
+msgstr "PDF: Définir la taille (US Letter)"
+
+#: Menu
+msgid "PDF: Perform OCR (English)"
+msgstr "PDF: Effectuer OCR (Anglais)"
+
+#: Menu
+msgid "PDF: Perform OCR (French)"
+msgstr "PDF: Effectuer OCR (Français)"
+
+#: Menu
+msgid "PDF: Perform OCR (German)"
+msgstr "PDF: Effectuer OCR (Allemand)"
+
+#: Menu
+msgid "PDF: Perform OCR (Italian)"
+msgstr "PDF: Effectuer OCR (Italien)"
+
+#: Menu
+msgid "PDF: Perform OCR (Portuguese)"
+msgstr "PDF: Effectuer OCR (Portugais)"
+
+#: Menu
+msgid "PDF: Perform OCR (Russian)"
+msgstr "PDF: Effectuer OCR (Russe)"
+
+#: Menu
+msgid "PDF: Perform OCR (Spanish)"
+msgstr "PDF: Effectuer OCR (Espagnol)"
+
+#: Menu
+msgid "PDF: Reduce (150 dpi, e-book)"
+msgstr "PDF: Réduire (150 dpi, e-book)"
+
+#: Menu
+msgid "PDF: Reduce (300 dpi, printer)"
+msgstr "PDF: Réduire (300 dpi, imprimante)"
+
+#: Menu
+msgid "PDF: Remove annotations"
+msgstr "PDF: Supprimer les annotations"
+
+#: Menu
+msgid "PDF: Remove metadata"
+msgstr "PDF: Supprimer les métadonnées"
+
+#: Menu
+msgid "PDF: Rotate (90 deg)"
+msgstr "PDF: Pivoter (90 deg)"
+
+#: Menu
+msgid "PDF: Rotate (180 deg)"
+msgstr "PDF: Pivoter (180 deg)"
+
+#: Menu
+msgid "PDF: Rotate (270 deg)"
+msgstr "PDF: Pivoter (270 deg)"
+
+#: Menu
+msgid "PDF: Show signatures"
+msgstr "PDF: Afficher les signatures"
+
+#: Menu
+msgid "PDF: Split into single-page PDFs"
+msgstr "PDF: Diviser en PDF à page unique"
+
+#: Menu
+msgid "Rename: Remove accents"
+msgstr "Renommer: Supprimer les accents"
+
+#: Menu
+msgid "Rename: Remove parentheses blocks"
+msgstr "Renommer: Supprimer les blocs entre parenthèses"
+
+#: Menu
+msgid "Rename: Change spaces to dashes"
+msgstr "Renommer: Changer les espaces en tirets"
+
+#: Menu
+msgid "Rename: Change dashes to spaces"
+msgstr "Renommer: Changer les tirets en espaces"
+
+#: Menu
+msgid "Rename: To lowercase"
+msgstr "Renommer: En minuscules"
+
+#: Menu
+msgid "Rename: To lowercase (recursive)"
+msgstr "Renommer: En minuscules (récursif)"
+
+#: Menu
+msgid "Rename: To sentence case"
+msgstr "Renommer: En casse phrase"
+
+#: Menu
+msgid "Rename: To title case"
+msgstr "Renommer: En casse titre"
+
+#: Menu
+msgid "Rename: To uppercase"
+msgstr "Renommer: En majuscules"
+
+#: Menu
+msgid "Rename: To uppercase (recursive)"
+msgstr "Renommer: En majuscules (récursif)"
+
+#: Menu
+msgid "Reset permissions (recursive)"
+msgstr "Réinitialiser les permissions (récursif)"
+
+#: Menu
+msgid "Scan for malware (via ClamAV)"
+msgstr "Rechercher les logiciels malveillants (via ClamAV)"
+
+#: Menu
+msgid "Show files information"
+msgstr "Afficher les informations des fichiers"
+
+#: Menu
+msgid "Show files metadata"
+msgstr "Afficher les métadonnées des fichiers"
+
+#: Menu
+msgid "Show files MIME type"
+msgstr "Afficher le type MIME des fichiers"
+
+#: Menu
+msgid "Show media information"
+msgstr "Afficher les informations des médias"
+
+#: Menu
+msgid "Shred files (secure delete)"
+msgstr "Détruire les fichiers (suppression sécurisée)"
+
+#: Menu
+msgid "SVG: Compress to SVGZ"
+msgstr "SVG: Compresser en SVGZ"
+
+#: Menu
+msgid "SVG: Decompress SVGZ"
+msgstr "SVG: Décompresser SVGZ"
+
+#: Menu
+msgid "SVG: Export to EPS"
+msgstr "SVG: Exporter en EPS"
+
+#: Menu
+msgid "SVG: Export to PDF"
+msgstr "SVG: Exporter en PDF"
+
+#: Menu
+msgid "SVG: Export to PNG (256 px)"
+msgstr "SVG: Exporter en PNG (256 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (512 px)"
+msgstr "SVG: Exporter en PNG (512 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (1024 px)"
+msgstr "SVG: Exporter en PNG (1024 px)"
+
+#: Menu
+msgid "SVG: Replace fonts to Charter"
+msgstr "SVG: Remplacer les polices par Charter"
+
+#: Menu
+msgid "SVG: Replace fonts to Helvetica"
+msgstr "SVG: Remplacer les polices par Helvetica"
+
+#: Menu
+msgid "SVG: Replace fonts to Times"
+msgstr "SVG: Remplacer les polices par Times"
+
+#: Menu
+msgid "Terminal"
+msgstr "Terminal"
+
+#: Menu
+msgid "Text: Concatenate multiple files"
+msgstr "Texte: Concaténer plusieurs fichiers"
+
+#: Menu
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "Texte: Convertir les tabulations en 4 espaces"
+
+#: Menu
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "Texte: Normaliser (UTF-8, récursif)"
+
+#: Menu
+msgid "Text: Encode to UTF-8"
+msgstr "Texte: Encoder en UTF-8"
+
+#: Menu
+msgid "Text: List encodings"
+msgstr "Texte: Lister les encodages"
+
+#: Menu
+msgid "Text: List issues"
+msgstr "Texte: Lister les problèmes"
+
+#: Menu
+msgid "Text: List invalid chars"
+msgstr "Texte: Lister les caractères invalides"
+
+#: Menu
+msgid "Text: List line breaks"
+msgstr "Texte: Lister les sauts de ligne"
+
+#: Menu
+msgid "Text: List line counts"
+msgstr "Texte: Lister le nombre de lignes"
+
+#: Menu
+msgid "Text: List line lengths"
+msgstr "Texte: Lister la longueur des lignes"
+
+#: Menu
+msgid "Text: List word counts"
+msgstr "Texte: Lister le nombre de mots"
+
+#: Menu
+msgid "Text: Remove trailing spaces"
+msgstr "Texte: Supprimer les espaces de fin"
+
+#: Menu
+msgid "Text: Remove accents"
+msgstr "Texte: Supprimer les accents"
+
+#: Menu
+msgid "URL: Check HTTP status"
+msgstr "URL: Vérifier le statut HTTP"
+
+#: Menu
+msgid "URL: Download file"
+msgstr "URL: Télécharger le fichier"
+
+#: Menu
+msgid "URL: Show HTTP headers"
+msgstr "URL: Afficher les en-têtes HTTP"
+
+#: Menu
+msgid "Verify MD5 file"
+msgstr "Vérifier le fichier MD5"
+
+#: Menu
+msgid "Verify SHA1 file"
+msgstr "Vérifier le fichier SHA1"
+
+#: Menu
+msgid "Verify SHA256 file"
+msgstr "Vérifier le fichier SHA256"
+
+#: Menu
+msgid "Verify SHA512 file"
+msgstr "Vérifier le fichier SHA512"
+
+#: Menu
+msgid "Video: Aspect to 1:1"
+msgstr "Vidéo: Ratio à 1:1"
+
+#: Menu
+msgid "Video: Aspect to 2.21:1"
+msgstr "Vidéo: Ratio à 2.21:1"
+
+#: Menu
+msgid "Video: Aspect to 2.35:1"
+msgstr "Vidéo: Ratio à 2.35:1"
+
+#: Menu
+msgid "Video: Aspect to 2.39:1"
+msgstr "Vidéo: Ratio à 2.39:1"
+
+#: Menu
+msgid "Video: Aspect to 4:3"
+msgstr "Vidéo: Ratio à 4:3"
+
+#: Menu
+msgid "Video: Aspect to 5:4"
+msgstr "Vidéo: Ratio à 5:4"
+
+#: Menu
+msgid "Video: Aspect to 16:9"
+msgstr "Vidéo: Ratio à 16:9"
+
+#: Menu
+msgid "Video: Aspect to 16:10"
+msgstr "Vidéo: Ratio à 16:10"
+
+#: Menu
+msgid "Video: Convert to MKV"
+msgstr "Vidéo: Convertir en MKV"
+
+#: Menu
+msgid "Video: Convert to MKV (copy)"
+msgstr "Vidéo: Convertir en MKV (copie)"
+
+#: Menu
+msgid "Video: Convert to MP4"
+msgstr "Vidéo: Convertir en MP4"
+
+#: Menu
+msgid "Video: Convert to MP4 (copy)"
+msgstr "Vidéo: Convertir en MP4 (copie)"
+
+#: Menu
+msgid "Video: Export frames (1 FPS)"
+msgstr "Vidéo: Exporter des images (1 FPS)"
+
+#: Menu
+msgid "Video: Export frames (5 FPS)"
+msgstr "Vidéo: Exporter des images (5 FPS)"
+
+#: Menu
+msgid "Video: Export frames (10 FPS)"
+msgstr "Vidéo: Exporter des images (10 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF"
+msgstr "Vidéo: Exporter en GIF"
+
+#: Menu
+msgid "Video: Extract audio"
+msgstr "Vidéo: Extraire l'audio"
+
+#: Menu
+msgid "Video: Flip (horizontal)"
+msgstr "Vidéo: Retourner (horizontal)"
+
+#: Menu
+msgid "Video: Flip (vertical)"
+msgstr "Vidéo: Retourner (vertical)"
+
+#: Menu
+msgid "Video: Frame rate to 30 FPS"
+msgstr "Vidéo: Fréquence d'images à 30 FPS"
+
+#: Menu
+msgid "Video: Frame rate to 60 FPS"
+msgstr "Vidéo: Fréquence d'images à 60 FPS"
+
+#: Menu
+msgid "Video: Remove audio"
+msgstr "Vidéo: Supprimer l'audio"
+
+#: Menu
+msgid "Video: Resize (25 pct)"
+msgstr "Vidéo: Redimensionner (25 pct)"
+
+#: Menu
+msgid "Video: Resize (50 pct)"
+msgstr "Vidéo: Redimensionner (50 pct)"
+
+#: Menu
+msgid "Video: Resize (75 pct)"
+msgstr "Vidéo: Redimensionner (75 pct)"
+
+#: Menu
+msgid "Video: Rotate (90 deg)"
+msgstr "Vidéo: Pivoter (90 deg)"
+
+#: Menu
+msgid "Video: Rotate (180 deg)"
+msgstr "Vidéo: Pivoter (180 deg)"
+
+#: Menu
+msgid "Video: Rotate (270 deg)"
+msgstr "Vidéo: Pivoter (270 deg)"
+
+#: Menu
+msgid "Video: Speed to 0.5"
+msgstr "Vidéo: Vitesse à 0.5"
+
+#: Menu
+msgid "Video: Speed to 1.5"
+msgstr "Vidéo: Vitesse à 1.5"
+
+#: Menu
+msgid "Video: Speed to 2.0"
+msgstr "Vidéo: Vitesse à 2.0"
+
+#: install.sh
+msgid "Check for basic dependencies"
+msgstr "Vérifier les dépendances de base"
+
+#: install.sh
+msgid "Remove previously installed scripts"
+msgstr "Supprimer les scripts précédemment installés"
+
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr "Installer les raccourcis clavier"
+
+#: install.sh
+msgid "Close the file manager to reload configurations"
+msgstr "Fermez le gestionnaire de fichiers pour recharger les configurations"
+
+#: install.sh
+msgid "Add shortcuts to the application menu"
+msgstr "Ajouter des raccourcis au menu de l'application"
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr "Installer Homebrew (optionnel)"
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr "Choisir les catégories de scripts à installer"
+
+#: install.sh
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr "Sélectionnez les options (<ESPACE> pour cocher, <ENTRÉE> pour confirmer):"
+
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr "Installation en mode non interactif..."
+
+#: install.sh
+msgid "Installing:"
+msgstr "Installation:"
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr "Installation des raccourcis du menu de l'application:"
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr "Installation terminée avec succès!"
+
+#: install.sh
+msgid "Checking for basic dependencies:"
+msgstr "Vérification des dépendances de base:"
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr "Toutes les dépendances sont déjà satisfaites."
+
+#: install.sh
+msgid "Copying files..."
+msgstr "Copie des fichiers..."
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr "Installation des raccourcis clavier..."
+
+#: install.sh
+msgid "Scripts"
+msgstr "Scripts"
+
+#: install.sh
+msgid "Creating shortcuts to the application menu..."
+msgstr "Création des raccourcis vers le menu de l'application..."
+
+#: install.sh
+msgid "Creating GNOME Shell application folder..."
+msgstr "Création du dossier d'applications GNOME Shell..."
+
+#: install.sh
+msgid "Installing actions in the context menu..."
+msgstr "Installation des actions dans le menu contextuel..."
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr "Fermeture du gestionnaire de fichiers..."
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr "Installation de Homebrew:"
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr "Homebrew est déjà installé."
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr "Installation de Homebrew vers:"
+
+#: install.sh
+msgid "Downloading the package..."
+msgstr "Téléchargement du paquet..."
+
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr "Impossible de trouver un gestionnaire de paquets!"
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr "L'installation de Homebrew a échoué!"
+
+#~ msgid "EOF"
+#~ msgstr "EOF"
