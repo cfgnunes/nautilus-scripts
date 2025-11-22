@@ -36,11 +36,15 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
-    local timeout_value=5
+    local timeout_value=10
+    local timeout_max=20
     local status="🟢"
 
     # Run the main process.
-    std_output=$(curl --max-time "$timeout_value" --connect-timeout 3 -s -I "$input_file" 2>/dev/null)
+    std_output=$(curl \
+        -A "Mozilla/5.0 (X11; Linux x86_64) Gecko/20100101 Firefox/140.0" \
+        --max-time "$timeout_max" --connect-timeout "$timeout_value" \
+        -s -k -I "$input_file" 2>/dev/null)
 
     if [[ -z "$std_output" ]]; then
         std_output="__MSG_NoResp__"
