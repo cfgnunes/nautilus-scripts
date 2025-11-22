@@ -22,7 +22,7 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    std_output=$(sort --version-sort --reverse <<<"$std_output")
+    std_output=$(_text_sort "$std_output")
 
     # Translate some strings from the '$std_output'.
     # shellcheck disable=SC2001
@@ -30,7 +30,7 @@ _main() {
     # shellcheck disable=SC2001
     std_output=$(sed "s|__MSG_Offline__|$(_i18n 'Offline')|g" <<<"$std_output")
 
-    _display_list_box "$std_output" "par_item_name=$(_i18n 'IPs'); par_columns='--column:$(_i18n 'Status'),--column:$(_i18n 'IP'),--column:$(_i18n 'Hostname'),--column:$(_i18n 'Ping'),--column:$(_i18n 'Ports')'"
+    _display_list_box "$std_output" "par_item_name=$(_i18n 'IPs'); par_columns='--column:$(_i18n 'IP'),--column:$(_i18n 'Status'),--column:$(_i18n 'Hostname'),--column:$(_i18n 'Ping'),--column:$(_i18n 'Ports')'"
 }
 
 _main_task() {
@@ -52,9 +52,9 @@ _main_task() {
 
     if [[ -z "$ping" && -z "$ports" ]]; then
         # Use Nmap host discovery (no port scan) to see if the host replies.
-        if LC_ALL=C nmap -sn --host-timeout "$timeout_value"s "$ip" 2>/dev/null |
-            grep --quiet --ignore-case "Host is up"; then
-            status="__MSG_Online__"
+        if LC_ALL=C nmap -sn --max-retries 1 --host-timeout "$timeout_value"s "$ip" 2>/dev/null |
+            grep -qiF "Host is up"; then
+            status="up"
         fi
     fi
 
@@ -69,11 +69,11 @@ _main_task() {
         status="🔴 __MSG_Offline__"
     fi
 
-    # Resolve hostname. If empty, set as unknown.
+    # Resolve the hostname.
     local hostname=""
     hostname=$(_resolve_host "$ip")
 
-    _storage_text_write_ln "$status$FIELD_SEPARATOR$ip$FIELD_SEPARATOR$hostname$FIELD_SEPARATOR$ping$FIELD_SEPARATOR$ports"
+    _storage_text_write_ln "$ip$FIELD_SEPARATOR$status$FIELD_SEPARATOR$hostname$FIELD_SEPARATOR$ping$FIELD_SEPARATOR$ports"
 }
 
 _extract_ips() {
