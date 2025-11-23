@@ -2017,5 +2017,5 @@ msgstr "Không tìm thấy trình quản lý gói!"
 msgid "Homebrew installation failed!"
 msgstr "Cài Homebrew thất bại!"
 
-msgid "EOF"
-msgstr "EOF"
+#~ msgid "EOF"
+#~ msgstr "EOF"
