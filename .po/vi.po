@@ -1,0 +1,2021 @@
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Enhanced File Manager Actions for Linux\n"
+"POT-Creation-Date: 2025-11-13 12:12-0300\n"
+"PO-Revision-Date: 2025-11-23 11:16+0700\n"
+"Last-Translator: Loccun <huynhloc.contact@gmail.com>\n"
+"Language-Team: \n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Done!"
+msgstr "Hoàn tất!"
+
+msgid "files"
+msgstr "tệp"
+
+msgid "Would you like to continue?"
+msgstr "Bạn có muốn tiếp tục không?"
+
+msgid "directories"
+msgstr "thư mục"
+
+msgid "items"
+msgstr "mục"
+
+msgid "The command failed."
+msgstr "Lệnh đã thất bại."
+
+msgid "The output file does not exist."
+msgstr "Tệp đầu ra không tồn tại."
+
+msgid "Finished with errors! See the log:"
+msgstr "Hoàn tất với lỗi! Xem nhật ký:"
+
+msgid "Your system does not support clipboard operations."
+msgstr "Hệ thống của bạn không hỗ trợ thao tác bộ nhớ tạm."
+
+msgid "Could not find a package for:"
+msgstr "Không tìm thấy gói cho:"
+
+msgid "The following packages are missing:"
+msgstr "Các gói sau bị thiếu:"
+
+msgid "Would you like to install them?"
+msgstr "Bạn có muốn cài đặt chúng không?"
+
+msgid "Installing the packages. Please, wait..."
+msgstr "Đang cài đặt các gói. Vui lòng chờ..."
+
+msgid "The package was installed, but a system reboot is required."
+msgstr "Gói đã được cài, nhưng cần khởi động lại hệ thống."
+
+msgid "Could not install the package:"
+msgstr "Không thể cài gói:"
+
+msgid "This action will delete the selected items."
+msgstr "Hành động này sẽ xóa các mục đã chọn."
+
+msgid "Total selected:"
+msgstr "Tổng đã chọn:"
+
+msgid "Total:"
+msgstr "Tổng:"
+
+msgid "Some items could not be deleted."
+msgstr "Một số mục không thể xóa."
+
+msgid "All items were successfully deleted!"
+msgstr "Tất cả mục đã được xóa thành công!"
+
+msgid "Could not access the directory:"
+msgstr "Không thể truy cập thư mục:"
+
+msgid "The destination file already exists."
+msgstr "Tệp đích đã tồn tại."
+
+msgid "Unable to move."
+msgstr "Không thể di chuyển."
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Cancel"
+msgstr "Hủy"
+
+msgid "(Empty)"
+msgstr "(Trống)"
+
+msgid "Select the ones to open:"
+msgstr "Chọn những mục để mở:"
+
+msgid "Select the ones to reveal in the file manager:"
+msgstr "Chọn những mục để hiển thị trong trình quản lý tệp:"
+
+msgid "Select the ones to open in the web browser:"
+msgstr "Chọn những mục để mở trong trình duyệt web:"
+
+msgid "Select the ones to delete:"
+msgstr "Chọn những mục để xóa:"
+
+msgid "Password"
+msgstr "Mật khẩu"
+
+msgid "Type your password:"
+msgstr "Nhập mật khẩu của bạn:"
+
+msgid "The password can not be empty!"
+msgstr "Mật khẩu không được để trống!"
+
+msgid "Yes"
+msgstr "Có"
+
+msgid "No"
+msgstr "Không"
+
+msgid "Finished! The output files are in:"
+msgstr "Hoàn tất! Các tệp đầu ra nằm ở:"
+
+msgid "Finished, but there is nothing to do."
+msgstr "Hoàn tất, nhưng không có gì để làm."
+
+msgid "Finished!"
+msgstr "Hoàn tất!"
+
+msgid "Running the task. Please, wait..."
+msgstr "Đang chạy tác vụ. Vui lòng chờ..."
+
+msgid "No default application is set for the type:"
+msgstr "Không có ứng dụng mặc định cho loại này:"
+
+msgid "Could not find the executable to open MIME type:"
+msgstr "Không tìm thấy chương trình thực thi để mở loại MIME:"
+
+msgid "Batch mode detected."
+msgstr "Phát hiện chế độ hàng loạt."
+
+msgid "Each file inside this directory will be processed individually."
+msgstr "Mỗi tệp trong thư mục này sẽ được xử lý riêng lẻ."
+
+msgid "files or directories"
+msgstr "tệp hoặc thư mục"
+
+msgid "You must select files with extension:"
+msgstr "Bạn phải chọn các tệp có phần mở rộng:"
+
+msgid "Invalid input file!"
+msgstr "Tệp nhập không hợp lệ!"
+
+msgid "You must select"
+msgstr "Bạn phải chọn"
+
+msgid "You must select at least"
+msgstr "Bạn phải chọn ít nhất"
+
+msgid "You must select up to"
+msgstr "Bạn chỉ được chọn tối đa"
+
+msgid "Could not find the output directory!"
+msgstr "Không tìm thấy thư mục đầu ra!"
+
+msgid "Accessed recently"
+msgstr "Truy cập gần đây"
+
+msgid "File"
+msgstr "Tệp"
+
+msgid "Count"
+msgstr "Số lượng"
+
+msgid "Char"
+msgstr "Ký tự"
+
+msgid "Line"
+msgstr "Dòng"
+
+msgid "Issues"
+msgstr "Vấn đề"
+
+msgid "Encoding"
+msgstr "Mã hóa"
+
+msgid "There are no valid paths in the clipboard!"
+msgstr "Không có đường dẫn hợp lệ trong bộ nhớ tạm!"
+
+msgid "links"
+msgstr "liên kết"
+
+msgid "Inode"
+msgstr "Inode"
+
+msgid "Link"
+msgstr "Liên kết"
+
+msgid "Unsupported clipboard type."
+msgstr "Loại bộ nhớ tạm không được hỗ trợ."
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr "Hành động này sẽ đổi tên các tệp và thư mục đã chọn theo chế độ đệ quy."
+
+msgid "PDF files"
+msgstr "Tệp PDF"
+
+msgid "Select a PDF to use as the watermark"
+msgstr "Chọn một PDF để dùng làm watermark"
+
+msgid "Signature"
+msgstr "Chữ ký"
+
+msgid "This action will permanently delete the selected files."
+msgstr "Hành động này sẽ xóa vĩnh viễn các tệp được chọn."
+
+msgid "Malware"
+msgstr "Phần mềm độc hại"
+
+msgid "Mode"
+msgstr "Chế độ"
+
+msgid "Bit rate"
+msgstr "Tốc độ bit"
+
+msgid "Sampling rate"
+msgstr "Tần số lấy mẫu"
+
+msgid "Channels"
+msgstr "Kênh"
+
+msgid "Duration"
+msgstr "Thời lượng"
+
+msgid "Album"
+msgstr "Album"
+
+msgid "Artist"
+msgstr "Nghệ sĩ"
+
+msgid "Title"
+msgstr "Tiêu đề"
+
+msgid "Quality"
+msgstr "Chất lượng"
+
+msgid "Image files"
+msgstr "Tệp hình ảnh"
+
+msgid "Select an image to use as the watermark"
+msgstr "Chọn một ảnh để dùng làm watermark"
+
+msgid "Key files"
+msgstr "Tệp khóa"
+
+msgid "Select a key file to import"
+msgstr "Chọn tệp khóa để nhập"
+
+msgid "No secret keys were found."
+msgstr "Không tìm thấy khóa bí mật nào."
+
+msgid "Would you like to import a key now?"
+msgstr "Bạn có muốn nhập khóa ngay bây giờ không?"
+
+msgid "Failed to import the key!"
+msgstr "Nhập khóa thất bại!"
+
+msgid "Select a user:"
+msgstr "Chọn một người dùng:"
+
+msgid "User"
+msgstr "Người dùng"
+
+msgid "Name"
+msgstr "Tên"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "Created"
+msgstr "Được tạo"
+
+msgid "Expires"
+msgstr "Hết hạn"
+
+msgid "You must select a user!"
+msgstr "Bạn phải chọn một người dùng!"
+
+msgid "No public keys were found."
+msgstr "Không tìm thấy khóa công khai nào."
+
+msgid "Select one or more users:"
+msgstr "Chọn một hoặc nhiều người dùng:"
+
+msgid "You must select at least one user!"
+msgstr "Bạn phải chọn ít nhất một người dùng!"
+
+msgid "Directory"
+msgstr "Thư mục"
+
+msgid "Size"
+msgstr "Kích thước"
+
+msgid "Group"
+msgstr "Nhóm"
+
+msgid "Item"
+msgstr "Mục"
+
+msgid "Octal"
+msgstr "Octal"
+
+msgid "Type"
+msgstr "Loại"
+
+msgid "You must select only two images to compare!"
+msgstr "Bạn chỉ được chọn đúng hai ảnh để so sánh!"
+
+msgid "You must select only two PDFs to compare!"
+msgstr "Bạn chỉ được chọn đúng hai PDF để so sánh!"
+
+msgid "You must select only two binary files to compare!"
+msgstr "Bạn chỉ được chọn đúng hai tệp nhị phân để so sánh!"
+
+msgid "The selected items are identical."
+msgstr "Các mục được chọn giống nhau."
+
+msgid "The selected images has same pixel values."
+msgstr "Các ảnh được chọn có giá trị điểm ảnh giống nhau."
+
+msgid "MIME"
+msgstr "MIME"
+
+msgid ""
+"This action will move all files from subdirectories to the root of the selected "
+"directory."
+msgstr "Hành động này sẽ di chuyển tất cả tệp từ các thư mục con về thư mục gốc đã chọn."
+
+msgid "This action will reset the permissions recursively."
+msgstr "Hành động này sẽ đặt lại quyền truy cập một cách đệ quy."
+
+msgid "Date"
+msgstr "Ngày"
+
+msgid "Time"
+msgstr "Thời gian"
+
+msgid "Select the output filename:"
+msgstr "Chọn tên tệp đầu ra:"
+
+msgid "Filename"
+msgstr "Tên tệp"
+
+msgid "Status"
+msgstr "Trạng thái"
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr "Không có URL hợp lệ trong bộ nhớ tạm hoặc trong các tệp đã chọn!"
+
+msgid "IPs"
+msgstr "Địa chỉ IP"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Ping"
+msgstr "Ping"
+
+msgid "Ports"
+msgstr "Cổng"
+
+msgid "Hostname"
+msgstr "Tên máy"
+
+msgid "Example"
+msgstr "Ví dụ"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "Nhập địa chỉ IP hoặc dải IP."
+
+msgid "There are no valid IPs in the input!"
+msgstr "Không có IP hợp lệ trong dữ liệu nhập!"
+
+msgid "Enter the URLs."
+msgstr "Nhập các URL."
+
+msgid "There are no valid URLs in the input!"
+msgstr "Không có URL hợp lệ trong dữ liệu nhập!"
+
+msgid "No remote URL found."
+msgstr "Không tìm thấy URL từ xa."
+
+msgid "URLs"
+msgstr "URL"
+
+msgid "HTTP code"
+msgstr "Mã HTTP"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "(No differences)"
+msgstr "(Không có khác biệt)"
+
+msgid "(No line break)"
+msgstr "(Không có xuống dòng)"
+
+msgid "(No response)"
+msgstr "(Không có phản hồi)"
+
+msgid "Checksum mismatch."
+msgstr "Sai checksum."
+
+msgid "File does not exist."
+msgstr "Tệp không tồn tại."
+
+msgid "High"
+msgstr "Cao"
+
+msgid "Low"
+msgstr "Thấp"
+
+msgid "Medium"
+msgstr "Trung bình"
+
+msgid "Online"
+msgstr "Trực tuyến"
+
+msgid "Offline"
+msgstr "Ngoại tuyến"
+
+msgid "Valid signature"
+msgstr "Chữ ký hợp lệ"
+
+msgid "Invalid signature"
+msgstr "Chữ ký không hợp lệ"
+
+msgid "Missing key"
+msgstr "Thiếu khóa"
+
+msgid "Missing data file"
+msgstr "Thiếu tệp dữ liệu"
+
+msgid "Revoked key"
+msgstr "Khóa đã bị thu hồi"
+
+msgid "Expired key"
+msgstr "Khóa đã hết hạn"
+
+msgid "Expired signature"
+msgstr "Chữ ký đã hết hạn"
+
+msgid "Unknown algorithm"
+msgstr "Thuật toán không xác định"
+
+msgid "Key ID"
+msgstr "ID khóa"
+
+msgid "Enter the password for the archive:"
+msgstr "Nhập mật khẩu cho lưu trữ:"
+
+msgid "Select the output directory"
+msgstr "Chọn thư mục đầu ra"
+
+msgid "Select input directories"
+msgstr "Chọn thư mục đầu vào"
+
+msgid "Select input files"
+msgstr "Chọn tệp đầu vào"
+
+#: Menu
+msgid "Archive"
+msgstr "Lưu trữ"
+
+#: Menu
+msgid "Audio and Video"
+msgstr "Âm thanh và Video"
+
+#: Menu
+msgid "Checksum"
+msgstr "Kiểm tra checksum"
+
+#: Menu
+msgid "Clipboard"
+msgstr "Bộ nhớ tạm"
+
+#: Menu
+msgid "Directories and Files"
+msgstr "Thư mục và Tệp"
+
+#: Menu
+msgid "Document"
+msgstr "Tài liệu"
+
+#: Menu
+msgid "Encryption"
+msgstr "Mã hóa"
+
+#: Menu
+msgid "Image"
+msgstr "Hình ảnh"
+
+#: Menu
+msgid "Links"
+msgstr "Liên kết"
+
+#: Menu
+msgid "Network and Internet"
+msgstr "Mạng và Internet"
+
+#: Menu
+msgid "Open with"
+msgstr "Mở bằng"
+
+#: Menu
+msgid "Plain text"
+msgstr "Văn bản thuần"
+
+#: Menu
+msgid "Rename files"
+msgstr "Đổi tên tệp"
+
+#: Menu
+msgid "Security and Recovery"
+msgstr "Bảo mật và Phục hồi"
+
+#: Menu
+msgid "Audio and Video: Tools"
+msgstr "Âm thanh và Video: Công cụ"
+
+#: Menu
+msgid "Audio: Channels"
+msgstr "Âm thanh: Kênh"
+
+#: Menu
+msgid "Audio: Convert"
+msgstr "Âm thanh: Chuyển đổi"
+
+#: Menu
+msgid "Audio: Effects"
+msgstr "Âm thanh: Hiệu ứng"
+
+#: Menu
+msgid "Audio: MP3 files"
+msgstr "Âm thanh: Tệp MP3"
+
+#: Menu
+msgid "Audio: Quality"
+msgstr "Âm thanh: Chất lượng"
+
+#: Menu
+msgid "Document: Convert"
+msgstr "Tài liệu: Chuyển đổi"
+
+#: Menu
+msgid "Document: Print"
+msgstr "Tài liệu: In"
+
+#: Menu
+msgid "Image: Color"
+msgstr "Hình ảnh: Màu sắc"
+
+#: Menu
+msgid "Image: Combine, Split"
+msgstr "Hình ảnh: Kết hợp, Tách"
+
+#: Menu
+msgid "Image: Convert"
+msgstr "Hình ảnh: Chuyển đổi"
+
+#: Menu
+msgid "Image: Crop, Resize"
+msgstr "Hình ảnh: Cắt, Thay đổi kích thước"
+
+#: Menu
+msgid "Image: Flip, Rotate"
+msgstr "Hình ảnh: Lật, Xoay"
+
+#: Menu
+msgid "Image: Icons"
+msgstr "Hình ảnh: Biểu tượng"
+
+#: Menu
+msgid "Image: Metadata, Exif"
+msgstr "Hình ảnh: Metadata, Exif"
+
+#: Menu
+msgid "Image: Optimize, Reduce"
+msgstr "Hình ảnh: Tối ưu, Giảm kích thước"
+
+#: Menu
+msgid "Image: Similarity"
+msgstr "Hình ảnh: Tương tự"
+
+#: Menu
+msgid "Image: SVG files"
+msgstr "Hình ảnh: Tệp SVG"
+
+#: Menu
+msgid "Image: Text recognition (OCR)"
+msgstr "Hình ảnh: Nhận diện văn bản (OCR)"
+
+#: Menu
+msgid "Image: Transparency"
+msgstr "Hình ảnh: Độ trong suốt"
+
+#: Menu
+msgid "Image: Watermark"
+msgstr "Hình ảnh: Watermark"
+
+#: Menu
+msgid "PDF: Annotations"
+msgstr "PDF: Ghi chú"
+
+#: Menu
+msgid "PDF: Combine, Split"
+msgstr "PDF: Kết hợp, Tách"
+
+#: Menu
+msgid "PDF: Security"
+msgstr "PDF: Bảo mật"
+
+#: Menu
+msgid "PDF: Multiple-page layout"
+msgstr "PDF: Bố cục nhiều trang"
+
+#: Menu
+msgid "PDF: Optimize, Reduce"
+msgstr "PDF: Tối ưu, Giảm kích thước"
+
+#: Menu
+msgid "PDF: Page size"
+msgstr "PDF: Kích thước trang"
+
+#: Menu
+msgid "PDF: Rotate"
+msgstr "PDF: Xoay"
+
+#: Menu
+msgid "PDF: Signatures"
+msgstr "PDF: Chữ ký"
+
+#: Menu
+msgid "PDF: Text recognition (OCR)"
+msgstr "PDF: Nhận diện văn bản (OCR)"
+
+#: Menu
+msgid "PDF: Tools"
+msgstr "PDF: Công cụ"
+
+#: Menu
+msgid "PDF: Watermark"
+msgstr "PDF: Watermark"
+
+#: Menu
+msgid "Video: Aspect ratio"
+msgstr "Video: Tỷ lệ khung hình"
+
+#: Menu
+msgid "Video: Audio track"
+msgstr "Video: Dòng âm thanh"
+
+#: Menu
+msgid "Video: Convert"
+msgstr "Video: Chuyển đổi"
+
+#: Menu
+msgid "Video: Export frames"
+msgstr "Video: Xuất khung hình"
+
+#: Menu
+msgid "Video: Flip, Rotate"
+msgstr "Video: Lật, Xoay"
+
+#: Menu
+msgid "Video: Frame rate"
+msgstr "Video: Tốc độ khung hình"
+
+#: Menu
+msgid "Video: Resize"
+msgstr "Video: Thay đổi kích thước"
+
+#: Menu
+msgid "Video: Speed"
+msgstr "Video: Tốc độ"
+
+#: Menu
+msgid "Audio: Check quality"
+msgstr "Âm thanh: Kiểm tra chất lượng"
+
+#: Menu
+msgid "Audio: Convert to FLAC"
+msgstr "Âm thanh: Chuyển thành FLAC"
+
+#: Menu
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "Âm thanh: Chuyển thành MP3 (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (192 kbps)"
+msgstr "Âm thanh: Chuyển thành MP3 (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (320 kbps)"
+msgstr "Âm thanh: Chuyển thành MP3 (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "Âm thanh: Chuyển thành OGG (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (192 kbps)"
+msgstr "Âm thanh: Chuyển thành OGG (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (320 kbps)"
+msgstr "Âm thanh: Chuyển thành OGG (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "Âm thanh: Chuyển thành OPUS (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (192 kbps)"
+msgstr "Âm thanh: Chuyển thành OPUS (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (320 kbps)"
+msgstr "Âm thanh: Chuyển thành OPUS (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to WAV"
+msgstr "Âm thanh: Chuyển thành WAV"
+
+#: Menu
+msgid "Audio: Fade-in"
+msgstr "Âm thanh: Fade-in"
+
+#: Menu
+msgid "Audio: Fade-out"
+msgstr "Âm thanh: Fade-out"
+
+#: Menu
+msgid "Audio: Mix channels to mono"
+msgstr "Âm thanh: Trộn kênh thành mono"
+
+#: Menu
+msgid "Audio: Mix two files"
+msgstr "Âm thanh: Trộn hai tệp"
+
+#: Menu
+msgid "Audio: Volume normalize"
+msgstr "Âm thanh: Chuẩn hóa âm lượng"
+
+#: Menu
+msgid "Audio: Produce a spectrogram"
+msgstr "Âm thanh: Tạo phổ tần (spectrogram)"
+
+#: Menu
+msgid "Audio: Remove silence (sections)"
+msgstr "Âm thanh: Loại bỏ đoạn im lặng (phần giữa)"
+
+#: Menu
+msgid "Audio: Silence noise"
+msgstr "Âm thanh: Giảm nhiễu"
+
+#: Menu
+msgid "Audio: Remove silence (extremities)"
+msgstr "Âm thanh: Loại bỏ im lặng (đầu/cuối)"
+
+#: Menu
+msgid "Code Editor"
+msgstr "Trình soạn thảo mã"
+
+#: Menu
+msgid "Compare items"
+msgstr "So sánh mục"
+
+#: Menu
+msgid "Compare items (via Diff)"
+msgstr "So sánh mục (qua Diff)"
+
+#: Menu
+msgid "Compress to '7z'"
+msgstr "Nén thành '7z'"
+
+#: Menu
+msgid "Compress to '7z' with password"
+msgstr "Nén thành '7z' có mật khẩu"
+
+#: Menu
+msgid "Compress to 'iso'"
+msgstr "Nén thành 'iso'"
+
+#: Menu
+msgid "Compress to 'squashfs'"
+msgstr "Nén thành 'squashfs'"
+
+#: Menu
+msgid "Compress to 'tar.gz'"
+msgstr "Nén thành 'tar.gz'"
+
+#: Menu
+msgid "Compress to 'tar.xz'"
+msgstr "Nén thành 'tar.xz'"
+
+#: Menu
+msgid "Compress to 'tar.zst'"
+msgstr "Nén thành 'tar.zst'"
+
+#: Menu
+msgid "Compress to 'zip'"
+msgstr "Nén thành 'zip'"
+
+#: Menu
+msgid "Compress to 'zip' with password"
+msgstr "Nén thành 'zip' có mật khẩu"
+
+#: Menu
+msgid "Compute all checksums"
+msgstr "Tính tất cả checksum"
+
+#: Menu
+msgid "Compute CRC32"
+msgstr "Tính CRC32"
+
+#: Menu
+msgid "Compute MD5"
+msgstr "Tính MD5"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "Tính SHA1"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "Tính SHA256"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "Tính SHA512"
+
+#: Menu
+msgid "Copy file contents"
+msgstr "Sao chép nội dung tệp"
+
+#: Menu
+msgid "Copy file names"
+msgstr "Sao chép tên tệp"
+
+#: Menu
+msgid "Copy file names (recursive)"
+msgstr "Sao chép tên tệp (đệ quy)"
+
+#: Menu
+msgid "Copy file paths"
+msgstr "Sao chép đường dẫn tệp"
+
+#: Menu
+msgid "Copy file paths (recursive)"
+msgstr "Sao chép đường dẫn tệp (đệ quy)"
+
+#: Menu
+msgid "Create hard link here"
+msgstr "Tạo liên kết cứng ở đây"
+
+#: Menu
+msgid "Create hard link to..."
+msgstr "Tạo liên kết cứng tới..."
+
+#: Menu
+msgid "Create symbolic link here"
+msgstr "Tạo liên kết tượng trưng ở đây"
+
+#: Menu
+msgid "Create symbolic link to..."
+msgstr "Tạo liên kết tượng trưng tới..."
+
+#: Menu
+msgid "Disk Usage Analyzer"
+msgstr "Trình phân tích sử dụng đĩa"
+
+#: Menu
+msgid "Document: Convert to DOCX"
+msgstr "Tài liệu: Chuyển sang DOCX"
+
+#: Menu
+msgid "Document: Convert to EPUB"
+msgstr "Tài liệu: Chuyển sang EPUB"
+
+#: Menu
+msgid "Document: Convert to FB2"
+msgstr "Tài liệu: Chuyển sang FB2"
+
+#: Menu
+msgid "Document: Convert to Markdown"
+msgstr "Tài liệu: Chuyển sang Markdown"
+
+#: Menu
+msgid "Document: Convert to ODP"
+msgstr "Tài liệu: Chuyển sang ODP"
+
+#: Menu
+msgid "Document: Convert to ODS"
+msgstr "Tài liệu: Chuyển sang ODS"
+
+#: Menu
+msgid "Document: Convert to ODT"
+msgstr "Tài liệu: Chuyển sang ODT"
+
+#: Menu
+msgid "Document: Convert to PDF"
+msgstr "Tài liệu: Chuyển sang PDF"
+
+#: Menu
+msgid "Document: Convert to PPTX"
+msgstr "Tài liệu: Chuyển sang PPTX"
+
+#: Menu
+msgid "Document: Convert to TXT"
+msgstr "Tài liệu: Chuyển sang TXT"
+
+#: Menu
+msgid "Document: Convert to XLSX"
+msgstr "Tài liệu: Chuyển sang XLSX"
+
+#: Menu
+msgid "Document: Print (A4)"
+msgstr "Tài liệu: In (A4)"
+
+#: Menu
+msgid "Document: Print (US Legal)"
+msgstr "Tài liệu: In (US Legal)"
+
+#: Menu
+msgid "Document: Print (US Letter)"
+msgstr "Tài liệu: In (US Letter)"
+
+#: Menu
+msgid "Extract here"
+msgstr "Giải nén ở đây"
+
+#: Menu
+msgid "File carving (via Foremost)"
+msgstr "Khôi phục tệp (qua Foremost)"
+
+#: Menu
+msgid "File carving (via PhotoRec)"
+msgstr "Khôi phục tệp (qua PhotoRec)"
+
+#: Menu
+msgid "Find broken links"
+msgstr "Tìm liên kết hỏng"
+
+#: Menu
+msgid "Find duplicate files"
+msgstr "Tìm tệp trùng lặp"
+
+#: Menu
+msgid "Find empty directories"
+msgstr "Tìm thư mục rỗng"
+
+#: Menu
+msgid "List hidden files"
+msgstr "Liệt kê tệp ẩn"
+
+#: Menu
+msgid "Find junk files"
+msgstr "Tìm tệp rác"
+
+#: Menu
+msgid "Find empty files"
+msgstr "Tìm tệp rỗng"
+
+#: Menu
+msgid "Flatten directory structure"
+msgstr "Làm phẳng cấu trúc thư mục"
+
+#: Menu
+msgid "Generate MD5 file"
+msgstr "Tạo tệp MD5"
+
+#: Menu
+msgid "Generate SHA1 file"
+msgstr "Tạo tệp SHA1"
+
+#: Menu
+msgid "Generate SHA256 file"
+msgstr "Tạo tệp SHA256"
+
+#: Menu
+msgid "Generate SHA512 file"
+msgstr "Tạo tệp SHA512"
+
+#: Menu
+msgid "Git: Clone URLs"
+msgstr "Git: Sao chép URL"
+
+#: Menu
+msgid "Git: Open repository website"
+msgstr "Git: Mở trang kho lưu trữ"
+
+#: Menu
+msgid "Git: Reset and pull"
+msgstr "Git: Reset và pull"
+
+#: Menu
+msgid "Decrypt"
+msgstr "Giải mã"
+
+#: Menu
+msgid "Encrypt with password"
+msgstr "Mã hóa bằng mật khẩu"
+
+#: Menu
+msgid "Encrypt with password (ASCII)"
+msgstr "Mã hóa bằng mật khẩu (ASCII)"
+
+#: Menu
+msgid "Encrypt with keys"
+msgstr "Mã hóa bằng khóa"
+
+#: Menu
+msgid "Encrypt with keys (ASCII)"
+msgstr "Mã hóa bằng khóa (ASCII)"
+
+#: Menu
+msgid "Import keys"
+msgstr "Nhập khóa"
+
+#: Menu
+msgid "Sign"
+msgstr "Ký"
+
+#: Menu
+msgid "Sign (ASCII)"
+msgstr "Ký (ASCII)"
+
+#: Menu
+msgid "Sign (detached signature)"
+msgstr "Ký (chữ ký tách rời)"
+
+#: Menu
+msgid "Verify signature"
+msgstr "Xác minh chữ ký"
+
+#: Menu
+msgid "Image: Add watermark (center)"
+msgstr "Hình ảnh: Thêm watermark (giữa)"
+
+#: Menu
+msgid "Image: Add watermark (north)"
+msgstr "Hình ảnh: Thêm watermark (trên)"
+
+#: Menu
+msgid "Image: Add watermark (northeast)"
+msgstr "Hình ảnh: Thêm watermark (đông bắc)"
+
+#: Menu
+msgid "Image: Add watermark (northwest)"
+msgstr "Hình ảnh: Thêm watermark (tây bắc)"
+
+#: Menu
+msgid "Image: Add watermark (south)"
+msgstr "Hình ảnh: Thêm watermark (dưới)"
+
+#: Menu
+msgid "Image: Add watermark (southeast)"
+msgstr "Hình ảnh: Thêm watermark (đông nam)"
+
+#: Menu
+msgid "Image: Add watermark (southwest)"
+msgstr "Hình ảnh: Thêm watermark (tây nam)"
+
+#: Menu
+msgid "Image: Automatic crop"
+msgstr "Hình ảnh: Cắt tự động"
+
+#: Menu
+msgid "Image: Automatic crop (15 pct)"
+msgstr "Hình ảnh: Cắt tự động (15%)"
+
+#: Menu
+msgid "Image: Background to alpha"
+msgstr "Hình ảnh: Nền thành alpha"
+
+#: Menu
+msgid "Image: Background to alpha (15 pct)"
+msgstr "Hình ảnh: Nền thành alpha (15%)"
+
+#: Menu
+msgid "Image: Color alpha to black"
+msgstr "Hình ảnh: Chuyển alpha màu sang đen"
+
+#: Menu
+msgid "Image: Color alpha to magenta"
+msgstr "Hình ảnh: Chuyển alpha màu sang magenta"
+
+#: Menu
+msgid "Image: Color alpha to white"
+msgstr "Hình ảnh: Chuyển alpha màu sang trắng"
+
+#: Menu
+msgid "Image: Color black to alpha"
+msgstr "Hình ảnh: Chuyển màu đen thành alpha"
+
+#: Menu
+msgid "Image: Color black to alpha (15 pct)"
+msgstr "Hình ảnh: Chuyển màu đen thành alpha (15%)"
+
+#: Menu
+msgid "Image: Color magenta to alpha"
+msgstr "Hình ảnh: Chuyển magenta thành alpha"
+
+#: Menu
+msgid "Image: Color magenta to alpha (15 pct)"
+msgstr "Hình ảnh: Chuyển magenta thành alpha (15%)"
+
+#: Menu
+msgid "Image: Colorspace to gray"
+msgstr "Hình ảnh: Đổi không gian màu sang xám"
+
+#: Menu
+msgid "Image: Color white to alpha"
+msgstr "Hình ảnh: Chuyển trắng thành alpha"
+
+#: Menu
+msgid "Image: Color white to alpha (15 pct)"
+msgstr "Hình ảnh: Chuyển trắng thành alpha (15%)"
+
+#: Menu
+msgid "Image: Combine into a GIF"
+msgstr "Hình ảnh: Kết hợp thành GIF"
+
+#: Menu
+msgid "Image: Combine into a PDF"
+msgstr "Hình ảnh: Kết hợp thành PDF"
+
+#: Menu
+msgid "Image: Convert to AVIF"
+msgstr "Hình ảnh: Chuyển thành AVIF"
+
+#: Menu
+msgid "Image: Convert to BMP"
+msgstr "Hình ảnh: Chuyển thành BMP"
+
+#: Menu
+msgid "Image: Convert to GIF"
+msgstr "Hình ảnh: Chuyển thành GIF"
+
+#: Menu
+msgid "Image: Convert to HEIC"
+msgstr "Hình ảnh: Chuyển thành HEIC"
+
+#: Menu
+msgid "Image: Convert to JPG"
+msgstr "Hình ảnh: Chuyển thành JPG"
+
+#: Menu
+msgid "Image: Convert to JXL"
+msgstr "Hình ảnh: Chuyển thành JXL"
+
+#: Menu
+msgid "Image: Convert to PNG"
+msgstr "Hình ảnh: Chuyển thành PNG"
+
+#: Menu
+msgid "Image: Convert to TIFF"
+msgstr "Hình ảnh: Chuyển thành TIFF"
+
+#: Menu
+msgid "Image: Convert to WebP"
+msgstr "Hình ảnh: Chuyển thành WebP"
+
+#: Menu
+msgid "Image: Create PNG icon (64 px)"
+msgstr "Hình ảnh: Tạo biểu tượng PNG (64 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (128 px)"
+msgstr "Hình ảnh: Tạo biểu tượng PNG (128 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (256 px)"
+msgstr "Hình ảnh: Tạo biểu tượng PNG (256 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (512 px)"
+msgstr "Hình ảnh: Tạo biểu tượng PNG (512 px)"
+
+#: Menu
+msgid "Image: Desaturate"
+msgstr "Hình ảnh: Khử bão hòa"
+
+#: Menu
+msgid "Image: Export to PDF"
+msgstr "Hình ảnh: Xuất sang PDF"
+
+#: Menu
+msgid "Image: Find similar (65 pct)"
+msgstr "Hình ảnh: Tìm tương tự (65%)"
+
+#: Menu
+msgid "Image: Find similar (75 pct)"
+msgstr "Hình ảnh: Tìm tương tự (75%)"
+
+#: Menu
+msgid "Image: Find similar (85 pct)"
+msgstr "Hình ảnh: Tìm tương tự (85%)"
+
+#: Menu
+msgid "Image: Find similar (95 pct)"
+msgstr "Hình ảnh: Tìm tương tự (95%)"
+
+#: Menu
+msgid "Image: Flip (horizontal)"
+msgstr "Hình ảnh: Lật (ngang)"
+
+#: Menu
+msgid "Image: Flip (vertical)"
+msgstr "Hình ảnh: Lật (dọc)"
+
+#: Menu
+msgid "Image: Generate multiple hues"
+msgstr "Hình ảnh: Tạo nhiều sắc thái"
+
+#: Menu
+msgid "Image: Optimize PNG"
+msgstr "Hình ảnh: Tối ưu PNG"
+
+#: Menu
+msgid "Image: Perform OCR (English)"
+msgstr "Hình ảnh: Thực hiện OCR (Tiếng Anh)"
+
+#: Menu
+msgid "Image: Perform OCR (French)"
+msgstr "Hình ảnh: Thực hiện OCR (Tiếng Pháp)"
+
+#: Menu
+msgid "Image: Perform OCR (German)"
+msgstr "Hình ảnh: Thực hiện OCR (Tiếng Đức)"
+
+#: Menu
+msgid "Image: Perform OCR (Italian)"
+msgstr "Hình ảnh: Thực hiện OCR (Tiếng Ý)"
+
+#: Menu
+msgid "Image: Perform OCR (Portuguese)"
+msgstr "Hình ảnh: Thực hiện OCR (Tiếng Bồ Đào Nha)"
+
+#: Menu
+msgid "Image: Perform OCR (Russian)"
+msgstr "Hình ảnh: Thực hiện OCR (Tiếng Nga)"
+
+#: Menu
+msgid "Image: Perform OCR (Spanish)"
+msgstr "Hình ảnh: Thực hiện OCR (Tiếng Tây Ban Nha)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 500kB max)"
+msgstr "Hình ảnh: Giảm kích thước (JPG, tối đa 500kB)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 1000kB max)"
+msgstr "Hình ảnh: Giảm kích thước (JPG, tối đa 1000kB)"
+
+#: Menu
+msgid "Image: Remove metadata"
+msgstr "Hình ảnh: Xóa metadata"
+
+#: Menu
+msgid "Image: Rename from metadata"
+msgstr "Hình ảnh: Đổi tên từ metadata"
+
+#: Menu
+msgid "Image: Resize (25 pct)"
+msgstr "Hình ảnh: Thay đổi kích thước (25%)"
+
+#: Menu
+msgid "Image: Resize (50 pct)"
+msgstr "Hình ảnh: Thay đổi kích thước (50%)"
+
+#: Menu
+msgid "Image: Resize (75 pct)"
+msgstr "Hình ảnh: Thay đổi kích thước (75%)"
+
+#: Menu
+msgid "Image: Resize (512x512)"
+msgstr "Hình ảnh: Thay đổi kích thước (512x512)"
+
+#: Menu
+msgid "Image: Resize (1080x1080)"
+msgstr "Hình ảnh: Thay đổi kích thước (1080x1080)"
+
+#: Menu
+msgid "Image: Resize (1920x1080)"
+msgstr "Hình ảnh: Thay đổi kích thước (1920x1080)"
+
+#: Menu
+msgid "Image: Resize (2560x1440)"
+msgstr "Hình ảnh: Thay đổi kích thước (2560x1440)"
+
+#: Menu
+msgid "Image: Resize (3840x2160)"
+msgstr "Hình ảnh: Thay đổi kích thước (3840x2160)"
+
+#: Menu
+msgid "Image: Rotate (90 deg)"
+msgstr "Hình ảnh: Xoay (90 độ)"
+
+#: Menu
+msgid "Image: Rotate (180 deg)"
+msgstr "Hình ảnh: Xoay (180 độ)"
+
+#: Menu
+msgid "Image: Rotate (270 deg)"
+msgstr "Hình ảnh: Xoay (270 độ)"
+
+#: Menu
+msgid "Image: Split into 2 (horizontal)"
+msgstr "Hình ảnh: Chia thành 2 (ngang)"
+
+#: Menu
+msgid "Image: Split into 2 (vertical)"
+msgstr "Hình ảnh: Chia thành 2 (dọc)"
+
+#: Menu
+msgid "Image: Split into 4"
+msgstr "Hình ảnh: Chia thành 4"
+
+#: Menu
+msgid "Image: Stack (horizontal)"
+msgstr "Hình ảnh: Ghép hàng (ngang)"
+
+#: Menu
+msgid "Image: Stack (vertical)"
+msgstr "Hình ảnh: Ghép cột (dọc)"
+
+#: Menu
+msgid "IP: Scanner"
+msgstr "IP: Quét"
+
+#: Menu
+msgid "List hard links"
+msgstr "Liệt kê liên kết cứng"
+
+#: Menu
+msgid "List largest directories"
+msgstr "Liệt kê thư mục lớn nhất"
+
+#: Menu
+msgid "List largest files"
+msgstr "Liệt kê tệp lớn nhất"
+
+#: Menu
+msgid "List permissions and owners"
+msgstr "Liệt kê quyền và chủ sở hữu"
+
+#: Menu
+msgid "List recent files"
+msgstr "Liệt kê tệp gần đây"
+
+#: Menu
+msgid "List symbolic links"
+msgstr "Liệt kê liên kết tượng trưng"
+
+#: Menu
+msgid "Media: Concatenate files"
+msgstr "Media: Nối tệp"
+
+#: Menu
+msgid "Media: Remove metadata"
+msgstr "Media: Xóa metadata"
+
+#: Menu
+msgid "Media: Show basic metadata"
+msgstr "Media: Hiển thị metadata cơ bản"
+
+#: Menu
+msgid "MP3: (artist - title) Name to ID3"
+msgstr "MP3: (nghệ sĩ - tiêu đề) Tên -> ID3"
+
+#: Menu
+msgid "MP3: (artist - title) ID3 to Name"
+msgstr "MP3: (nghệ sĩ - tiêu đề) ID3 -> Tên"
+
+#: Menu
+msgid "MP3: Volume maximize (recursive)"
+msgstr "MP3: Tăng âm lượng tối đa (đệ quy)"
+
+#: Menu
+msgid "MP3: Volume normalize (recursive)"
+msgstr "MP3: Chuẩn hóa âm lượng (đệ quy)"
+
+#: Menu
+msgid "MP3: Repair (recursive)"
+msgstr "MP3: Sửa lỗi (đệ quy)"
+
+#: Menu
+msgid "MP3: Show encoding details"
+msgstr "MP3: Hiển thị chi tiết mã hóa"
+
+#: Menu
+msgid "Open item location"
+msgstr "Mở vị trí mục"
+
+#: Menu
+msgid "Paste as hard link"
+msgstr "Dán dưới dạng liên kết cứng"
+
+#: Menu
+msgid "Paste as symbolic link"
+msgstr "Dán dưới dạng liên kết tượng trưng"
+
+#: Menu
+msgid "Paste clipboard content"
+msgstr "Dán nội dung bộ nhớ tạm"
+
+#: Menu
+msgid "PDF: Add watermark (over)"
+msgstr "PDF: Thêm watermark (phía trên)"
+
+#: Menu
+msgid "PDF: Add watermark (under)"
+msgstr "PDF: Thêm watermark (phía dưới)"
+
+#: Menu
+msgid "PDF: Combine multiple PDFs"
+msgstr "PDF: Kết hợp nhiều PDF"
+
+#: Menu
+msgid "PDF: Convert to PDFA-2b"
+msgstr "PDF: Chuyển sang PDFA-2b"
+
+#: Menu
+msgid "PDF: Remove password"
+msgstr "PDF: Xóa mật khẩu"
+
+#: Menu
+msgid "PDF: Set a password"
+msgstr "PDF: Đặt mật khẩu"
+
+#: Menu
+msgid "PDF: Extract images"
+msgstr "PDF: Trích xuất hình ảnh"
+
+#: Menu
+msgid "PDF: Find annotated PDFs"
+msgstr "PDF: Tìm PDF có chú thích"
+
+#: Menu
+msgid "PDF: Find non-linearized PDFs"
+msgstr "PDF: Tìm PDF không tuyến tính hóa"
+
+#: Menu
+msgid "PDF: Find non-searchable PDFs"
+msgstr "PDF: Tìm PDF không thể tìm kiếm"
+
+#: Menu
+msgid "PDF: Find password-protected PDFs"
+msgstr "PDF: Tìm PDF có mật khẩu"
+
+#: Menu
+msgid "PDF: Find signed PDFs"
+msgstr "PDF: Tìm PDF đã ký"
+
+#: Menu
+msgid "PDF: Layout (landscape, 1x2)"
+msgstr "PDF: Bố cục (ngang, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x1)"
+msgstr "PDF: Bố cục (ngang, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x2)"
+msgstr "PDF: Bố cục (ngang, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x4)"
+msgstr "PDF: Bố cục (ngang, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 4x2)"
+msgstr "PDF: Bố cục (ngang, 4x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 1x2)"
+msgstr "PDF: Bố cục (dọc, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x1)"
+msgstr "PDF: Bố cục (dọc, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x2)"
+msgstr "PDF: Bố cục (dọc, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x4)"
+msgstr "PDF: Bố cục (dọc, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 4x2)"
+msgstr "PDF: Bố cục (dọc, 4x2)"
+
+#: Menu
+msgid "PDF: Optimize for web (linearize)"
+msgstr "PDF: Tối ưu cho web (linearize)"
+
+#: Menu
+msgid "PDF: Set size (A3)"
+msgstr "PDF: Đặt kích thước (A3)"
+
+#: Menu
+msgid "PDF: Set size (A4)"
+msgstr "PDF: Đặt kích thước (A4)"
+
+#: Menu
+msgid "PDF: Set size (A5)"
+msgstr "PDF: Đặt kích thước (A5)"
+
+#: Menu
+msgid "PDF: Set size (US Legal)"
+msgstr "PDF: Đặt kích thước (US Legal)"
+
+#: Menu
+msgid "PDF: Set size (US Letter)"
+msgstr "PDF: Đặt kích thước (US Letter)"
+
+#: Menu
+msgid "PDF: Perform OCR (English)"
+msgstr "PDF: Thực hiện OCR (Tiếng Anh)"
+
+#: Menu
+msgid "PDF: Perform OCR (French)"
+msgstr "PDF: Thực hiện OCR (Tiếng Pháp)"
+
+#: Menu
+msgid "PDF: Perform OCR (German)"
+msgstr "PDF: Thực hiện OCR (Tiếng Đức)"
+
+#: Menu
+msgid "PDF: Perform OCR (Italian)"
+msgstr "PDF: Thực hiện OCR (Tiếng Ý)"
+
+#: Menu
+msgid "PDF: Perform OCR (Portuguese)"
+msgstr "PDF: Thực hiện OCR (Tiếng Bồ Đào Nha)"
+
+#: Menu
+msgid "PDF: Perform OCR (Russian)"
+msgstr "PDF: Thực hiện OCR (Tiếng Nga)"
+
+#: Menu
+msgid "PDF: Perform OCR (Spanish)"
+msgstr "PDF: Thực hiện OCR (Tiếng Tây Ban Nha)"
+
+#: Menu
+msgid "PDF: Reduce (150 dpi, e-book)"
+msgstr "PDF: Giảm (150 dpi, sách điện tử)"
+
+#: Menu
+msgid "PDF: Reduce (300 dpi, printer)"
+msgstr "PDF: Giảm (300 dpi, in)"
+
+#: Menu
+msgid "PDF: Remove annotations"
+msgstr "PDF: Xóa chú thích"
+
+#: Menu
+msgid "PDF: Remove metadata"
+msgstr "PDF: Xóa metadata"
+
+#: Menu
+msgid "PDF: Rotate (90 deg)"
+msgstr "PDF: Xoay (90 độ)"
+
+#: Menu
+msgid "PDF: Rotate (180 deg)"
+msgstr "PDF: Xoay (180 độ)"
+
+#: Menu
+msgid "PDF: Rotate (270 deg)"
+msgstr "PDF: Xoay (270 độ)"
+
+#: Menu
+msgid "PDF: Show signatures"
+msgstr "PDF: Hiển thị chữ ký"
+
+#: Menu
+msgid "PDF: Split into single-page PDFs"
+msgstr "PDF: Tách thành PDF một trang"
+
+#: Menu
+msgid "Rename: Remove accents"
+msgstr "Đổi tên: Xóa dấu"
+
+#: Menu
+msgid "Rename: Remove parentheses blocks"
+msgstr "Đổi tên: Xóa nội dung trong ngoặc"
+
+#: Menu
+msgid "Rename: Change spaces to dashes"
+msgstr "Đổi tên: Đổi khoảng trắng thành dấu gạch"
+
+#: Menu
+msgid "Rename: Change dashes to spaces"
+msgstr "Đổi tên: Đổi dấu gạch thành khoảng trắng"
+
+#: Menu
+msgid "Rename: To lowercase"
+msgstr "Đổi tên: Thành chữ thường"
+
+#: Menu
+msgid "Rename: To lowercase (recursive)"
+msgstr "Đổi tên: Thành chữ thường (đệ quy)"
+
+#: Menu
+msgid "Rename: To sentence case"
+msgstr "Đổi tên: Viết hoa câu"
+
+#: Menu
+msgid "Rename: To title case"
+msgstr "Đổi tên: Viết hoa tiêu đề"
+
+#: Menu
+msgid "Rename: To uppercase"
+msgstr "Đổi tên: Thành chữ hoa"
+
+#: Menu
+msgid "Rename: To uppercase (recursive)"
+msgstr "Đổi tên: Thành chữ hoa (đệ quy)"
+
+#: Menu
+msgid "Reset permissions (recursive)"
+msgstr "Đặt lại quyền (đệ quy)"
+
+#: Menu
+msgid "Scan for malware (via ClamAV)"
+msgstr "Quét phần mềm độc hại (qua ClamAV)"
+
+#: Menu
+msgid "Show files information"
+msgstr "Hiển thị thông tin tệp"
+
+#: Menu
+msgid "Show files metadata"
+msgstr "Hiển thị metadata tệp"
+
+#: Menu
+msgid "Show files MIME type"
+msgstr "Hiển thị loại MIME của tệp"
+
+#: Menu
+msgid "Show media information"
+msgstr "Hiển thị thông tin media"
+
+#: Menu
+msgid "Shred files (secure delete)"
+msgstr "Xóa an toàn tệp (shred)"
+
+#: Menu
+msgid "SVG: Compress to SVGZ"
+msgstr "SVG: Nén thành SVGZ"
+
+#: Menu
+msgid "SVG: Decompress SVGZ"
+msgstr "SVG: Giải nén SVGZ"
+
+#: Menu
+msgid "SVG: Export to EPS"
+msgstr "SVG: Xuất sang EPS"
+
+#: Menu
+msgid "SVG: Export to PDF"
+msgstr "SVG: Xuất sang PDF"
+
+#: Menu
+msgid "SVG: Export to PNG (256 px)"
+msgstr "SVG: Xuất sang PNG (256 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (512 px)"
+msgstr "SVG: Xuất sang PNG (512 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (1024 px)"
+msgstr "SVG: Xuất sang PNG (1024 px)"
+
+#: Menu
+msgid "SVG: Replace fonts to Charter"
+msgstr "SVG: Thay font sang Charter"
+
+#: Menu
+msgid "SVG: Replace fonts to Helvetica"
+msgstr "SVG: Thay font sang Helvetica"
+
+#: Menu
+msgid "SVG: Replace fonts to Times"
+msgstr "SVG: Thay font sang Times"
+
+#: Menu
+msgid "Terminal"
+msgstr "Terminal"
+
+#: Menu
+msgid "Text: Concatenate multiple files"
+msgstr "Văn bản: Nối nhiều tệp"
+
+#: Menu
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "Văn bản: Chuyển tab thành 4 khoảng trắng"
+
+#: Menu
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "Văn bản: Chuẩn hóa (UTF-8, đệ quy)"
+
+#: Menu
+msgid "Text: Encode to UTF-8"
+msgstr "Văn bản: Mã hóa sang UTF-8"
+
+#: Menu
+msgid "Text: List encodings"
+msgstr "Văn bản: Liệt kê mã hóa"
+
+#: Menu
+msgid "Text: List issues"
+msgstr "Văn bản: Liệt kê vấn đề"
+
+#: Menu
+msgid "Text: List invalid chars"
+msgstr "Văn bản: Liệt kê ký tự không hợp lệ"
+
+#: Menu
+msgid "Text: List line breaks"
+msgstr "Văn bản: Liệt kê xuống dòng"
+
+#: Menu
+msgid "Text: List line counts"
+msgstr "Văn bản: Liệt kê số dòng"
+
+#: Menu
+msgid "Text: List line lengths"
+msgstr "Văn bản: Liệt kê độ dài dòng"
+
+#: Menu
+msgid "Text: List word counts"
+msgstr "Văn bản: Liệt kê số từ"
+
+#: Menu
+msgid "Text: Remove trailing spaces"
+msgstr "Văn bản: Xóa khoảng trắng cuối dòng"
+
+#: Menu
+msgid "Text: Remove accents"
+msgstr "Văn bản: Xóa dấu"
+
+#: Menu
+msgid "URL: Check HTTP status"
+msgstr "URL: Kiểm tra trạng thái HTTP"
+
+#: Menu
+msgid "URL: Download file"
+msgstr "URL: Tải tệp"
+
+#: Menu
+msgid "URL: Show HTTP headers"
+msgstr "URL: Hiển thị header HTTP"
+
+#: Menu
+msgid "Verify MD5 file"
+msgstr "Xác minh tệp MD5"
+
+#: Menu
+msgid "Verify SHA1 file"
+msgstr "Xác minh tệp SHA1"
+
+#: Menu
+msgid "Verify SHA256 file"
+msgstr "Xác minh tệp SHA256"
+
+#: Menu
+msgid "Verify SHA512 file"
+msgstr "Xác minh tệp SHA512"
+
+#: Menu
+msgid "Video: Aspect to 1:1"
+msgstr "Video: Tỷ lệ 1:1"
+
+#: Menu
+msgid "Video: Aspect to 2.21:1"
+msgstr "Video: Tỷ lệ 2.21:1"
+
+#: Menu
+msgid "Video: Aspect to 2.35:1"
+msgstr "Video: Tỷ lệ 2.35:1"
+
+#: Menu
+msgid "Video: Aspect to 2.39:1"
+msgstr "Video: Tỷ lệ 2.39:1"
+
+#: Menu
+msgid "Video: Aspect to 4:3"
+msgstr "Video: Tỷ lệ 4:3"
+
+#: Menu
+msgid "Video: Aspect to 5:4"
+msgstr "Video: Tỷ lệ 5:4"
+
+#: Menu
+msgid "Video: Aspect to 16:9"
+msgstr "Video: Tỷ lệ 16:9"
+
+#: Menu
+msgid "Video: Aspect to 16:10"
+msgstr "Video: Tỷ lệ 16:10"
+
+#: Menu
+msgid "Video: Convert to MKV"
+msgstr "Video: Chuyển sang MKV"
+
+#: Menu
+msgid "Video: Convert to MKV (copy)"
+msgstr "Video: Chuyển sang MKV (copy)"
+
+#: Menu
+msgid "Video: Convert to MP4"
+msgstr "Video: Chuyển sang MP4"
+
+#: Menu
+msgid "Video: Convert to MP4 (copy)"
+msgstr "Video: Chuyển sang MP4 (copy)"
+
+#: Menu
+msgid "Video: Export frames (1 FPS)"
+msgstr "Video: Xuất khung hình (1 FPS)"
+
+#: Menu
+msgid "Video: Export frames (5 FPS)"
+msgstr "Video: Xuất khung hình (5 FPS)"
+
+#: Menu
+msgid "Video: Export frames (10 FPS)"
+msgstr "Video: Xuất khung hình (10 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF"
+msgstr "Video: Xuất thành GIF"
+
+#: Menu
+msgid "Video: Extract audio"
+msgstr "Video: Trích xuất âm thanh"
+
+#: Menu
+msgid "Video: Flip (horizontal)"
+msgstr "Video: Lật (ngang)"
+
+#: Menu
+msgid "Video: Flip (vertical)"
+msgstr "Video: Lật (dọc)"
+
+#: Menu
+msgid "Video: Frame rate to 30 FPS"
+msgstr "Video: Đặt tốc độ khung hình thành 30 FPS"
+
+#: Menu
+msgid "Video: Frame rate to 60 FPS"
+msgstr "Video: Đặt tốc độ khung hình thành 60 FPS"
+
+#: Menu
+msgid "Video: Remove audio"
+msgstr "Video: Loại bỏ âm thanh"
+
+#: Menu
+msgid "Video: Resize (25 pct)"
+msgstr "Video: Thay đổi kích thước (25%)"
+
+#: Menu
+msgid "Video: Resize (50 pct)"
+msgstr "Video: Thay đổi kích thước (50%)"
+
+#: Menu
+msgid "Video: Resize (75 pct)"
+msgstr "Video: Thay đổi kích thước (75%)"
+
+#: Menu
+msgid "Video: Rotate (90 deg)"
+msgstr "Video: Xoay (90 độ)"
+
+#: Menu
+msgid "Video: Rotate (180 deg)"
+msgstr "Video: Xoay (180 độ)"
+
+#: Menu
+msgid "Video: Rotate (270 deg)"
+msgstr "Video: Xoay (270 độ)"
+
+#: Menu
+msgid "Video: Speed to 0.5"
+msgstr "Video: Tốc độ 0.5"
+
+#: Menu
+msgid "Video: Speed to 1.5"
+msgstr "Video: Tốc độ 1.5"
+
+#: Menu
+msgid "Video: Speed to 2.0"
+msgstr "Video: Tốc độ 2.0"
+
+#: install.sh
+msgid "Check for basic dependencies"
+msgstr "Kiểm tra các phụ thuộc cơ bản"
+
+#: install.sh
+msgid "Remove previously installed scripts"
+msgstr "Xóa các script đã cài trước đó"
+
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr "Cài đặt phím tắt bàn phím"
+
+#: install.sh
+msgid "Close the file manager to reload configurations"
+msgstr "Đóng trình quản lý tệp để nạp lại cấu hình"
+
+#: install.sh
+msgid "Add shortcuts to the application menu"
+msgstr "Thêm phím tắt vào menu ứng dụng"
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr "Cài Homebrew (tùy chọn)"
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr "Chọn danh mục script để cài đặt"
+
+#: install.sh
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr "Chọn các tùy chọn (<SPACE> để chọn, <ENTER> để xác nhận):"
+
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr "Đang cài ở chế độ không tương tác..."
+
+#: install.sh
+msgid "Installing:"
+msgstr "Đang cài:"
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr "Đang cài phím tắt menu ứng dụng:"
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr "Cài đặt hoàn tất thành công!"
+
+#: install.sh
+msgid "Checking for basic dependencies:"
+msgstr "Đang kiểm tra các phụ thuộc cơ bản:"
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr "Tất cả phụ thuộc đã được đáp ứng."
+
+#: install.sh
+msgid "Copying files..."
+msgstr "Đang sao chép tệp..."
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr "Đang cài phím tắt bàn phím..."
+
+#: install.sh
+msgid "Scripts"
+msgstr "Các script"
+
+#: install.sh
+msgid "Creating shortcuts to the application menu..."
+msgstr "Đang tạo phím tắt vào menu ứng dụng..."
+
+#: install.sh
+msgid "Creating GNOME Shell application folder..."
+msgstr "Đang tạo thư mục ứng dụng GNOME Shell..."
+
+#: install.sh
+msgid "Installing actions in the context menu..."
+msgstr "Đang cài hành động vào menu ngữ cảnh..."
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr "Đang đóng trình quản lý tệp..."
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr "Đang cài Homebrew:"
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr "Homebrew đã được cài đặt."
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr "Cài Homebrew vào:"
+
+#: install.sh
+msgid "Downloading the package..."
+msgstr "Đang tải gói..."
+
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr "Không tìm thấy trình quản lý gói!"
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr "Cài Homebrew thất bại!"
+
+msgid "EOF"
+msgstr "EOF"
