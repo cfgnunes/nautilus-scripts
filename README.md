@@ -134,7 +134,7 @@ Special thanks to everyone who contributed to the translation of this project:
 - 🇨🇳 **Jove Yu (@JoveYu)** - Chinese.
 - 🇪🇸 **Maravento (@maravento)** - Spanish.
 - 🇩🇪 **Stephan Mikwauschk (@Pappmann)** and **La-vaos (@la-vaos)** - German.
-- 🇻🇳 **Loccun (@hthienloc)** - Vietnamese.
+- 🇻🇳 **Loc Huynh (@hthienloc)** - Vietnamese.
 
 ### Contributors
 
