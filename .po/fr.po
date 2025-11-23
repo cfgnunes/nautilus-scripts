@@ -39,7 +39,7 @@ msgid "Finished with errors! See the log:"
 msgstr "Terminé avec des erreurs! Voir le journal:"
 
 msgid "Your system does not support clipboard operations."
-msgstr "Votre système ne prend pas en charge les opérations du presse‑papiers."
+msgstr "Votre système ne prend pas en charge les opérations du presse-papiers."
 
 msgid "Could not find a package for:"
 msgstr "Impossible de trouver un paquet pour:"
