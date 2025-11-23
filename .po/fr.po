@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enhanced File Manager Actions for Linux\n"
 "POT-Creation-Date: 2025-11-13 12:12-0300\n"
-"PO-Revision-Date: 2025-11-13 12:25-0300\n"
-"Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
+"PO-Revision-Date: 2025-11-23 15:46+0100\n"
+"Last-Translator: Germain Rémi <contact@germainremi.fr>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -15,13 +15,13 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Done!"
-msgstr "Terminé!"
+msgstr "Terminé !"
 
 msgid "files"
 msgstr "fichiers"
 
 msgid "Would you like to continue?"
-msgstr "Voulez-vous continuer?"
+msgstr "Voulez-vous continuer ?"
 
 msgid "directories"
 msgstr "répertoires"
@@ -39,7 +39,7 @@ msgid "Finished with errors! See the log:"
 msgstr "Terminé avec des erreurs! Voir le journal:"
 
 msgid "Your system does not support clipboard operations."
-msgstr "Votre système ne prend pas en charge les opérations de presse-papiers."
+msgstr "Votre système ne prend pas en charge les opérations du presse‑papiers."
 
 msgid "Could not find a package for:"
 msgstr "Impossible de trouver un paquet pour:"
@@ -48,7 +48,7 @@ msgid "The following packages are missing:"
 msgstr "Les paquets suivants sont manquants:"
 
 msgid "Would you like to install them?"
-msgstr "Voulez-vous les installer?"
+msgstr "Voulez-vous les installer ?"
 
 msgid "Installing the packages. Please, wait..."
 msgstr "Installation des paquets. Veuillez patienter..."
@@ -72,7 +72,7 @@ msgid "Some items could not be deleted."
 msgstr "Certains éléments n'ont pas pu être supprimés."
 
 msgid "All items were successfully deleted!"
-msgstr "Tous les éléments ont été supprimés avec succès!"
+msgstr "Tous les éléments ont été supprimés avec succès !"
 
 msgid "Could not access the directory:"
 msgstr "Impossible d'accéder au répertoire:"
@@ -111,7 +111,7 @@ msgid "Type your password:"
 msgstr "Tapez votre mot de passe:"
 
 msgid "The password can not be empty!"
-msgstr "Le mot de passe ne peut pas être vide!"
+msgstr "Le mot de passe ne peut pas être vide !"
 
 msgid "Yes"
 msgstr "Oui"
@@ -126,7 +126,7 @@ msgid "Finished, but there is nothing to do."
 msgstr "Terminé, mais il n'y a rien à faire."
 
 msgid "Finished!"
-msgstr "Terminé!"
+msgstr "Terminé !"
 
 msgid "Running the task. Please, wait..."
 msgstr "Exécution de la tâche. Veuillez patienter..."
@@ -150,7 +150,7 @@ msgid "You must select files with extension:"
 msgstr "Vous devez sélectionner des fichiers avec l'extension:"
 
 msgid "Invalid input file!"
-msgstr "Fichier d'entrée invalide!"
+msgstr "Fichier d'entrée invalide !"
 
 msgid "You must select"
 msgstr "Vous devez sélectionner"
@@ -162,10 +162,10 @@ msgid "You must select up to"
 msgstr "Vous devez sélectionner jusqu'à"
 
 msgid "Could not find the output directory!"
-msgstr "Impossible de trouver le répertoire de sortie!"
+msgstr "Impossible de trouver le répertoire de sortie !"
 
 msgid "Accessed recently"
-msgstr "Accédé récemment"
+msgstr "Accès récents"
 
 msgid "File"
 msgstr "Fichier"
@@ -186,7 +186,7 @@ msgid "Encoding"
 msgstr "Encodage"
 
 msgid "There are no valid paths in the clipboard!"
-msgstr "Il n'y a pas de chemins valides dans le presse-papiers!"
+msgstr "Il n'y a pas de chemins valides dans le presse-papiers !"
 
 msgid "links"
 msgstr "liens"
@@ -198,7 +198,7 @@ msgid "Link"
 msgstr "Lien"
 
 msgid "Unsupported clipboard type."
-msgstr "Type de presse-papiers non supporté."
+msgstr "Type de presse-papiers non pris en charge."
 
 msgid "This action will rename the selected files and directories recursively."
 msgstr "Cette action renommera les fichiers et répertoires sélectionnés de manière récursive."
@@ -261,10 +261,10 @@ msgid "No secret keys were found."
 msgstr "Aucune clé secrète n'a été trouvée."
 
 msgid "Would you like to import a key now?"
-msgstr "Voulez-vous importer une clé maintenant?"
+msgstr "Voulez-vous importer une clé maintenant ?"
 
 msgid "Failed to import the key!"
-msgstr "Échec de l'importation de la clé!"
+msgstr "Échec de l'importation de la clé !"
 
 msgid "Select a user:"
 msgstr "Sélectionnez un utilisateur:"
@@ -285,7 +285,7 @@ msgid "Expires"
 msgstr "Expire"
 
 msgid "You must select a user!"
-msgstr "Vous devez sélectionner un utilisateur!"
+msgstr "Vous devez sélectionner un utilisateur !"
 
 msgid "No public keys were found."
 msgstr "Aucune clé publique n'a été trouvée."
@@ -294,7 +294,7 @@ msgid "Select one or more users:"
 msgstr "Sélectionnez un ou plusieurs utilisateurs:"
 
 msgid "You must select at least one user!"
-msgstr "Vous devez sélectionner au moins un utilisateur!"
+msgstr "Vous devez sélectionner au moins un utilisateur !"
 
 msgid "Directory"
 msgstr "Répertoire"
@@ -315,13 +315,13 @@ msgid "Type"
 msgstr "Type"
 
 msgid "You must select only two images to compare!"
-msgstr "Vous devez sélectionner seulement deux images à comparer!"
+msgstr "Vous devez sélectionner seulement deux images à comparer !"
 
 msgid "You must select only two PDFs to compare!"
-msgstr "Vous devez sélectionner seulement deux PDF à comparer!"
+msgstr "Vous devez sélectionner seulement deux PDF à comparer !"
 
 msgid "You must select only two binary files to compare!"
-msgstr "Vous devez sélectionner seulement deux fichiers binaires à comparer!"
+msgstr "Vous devez sélectionner seulement deux fichiers binaires à comparer !"
 
 msgid "The selected items are identical."
 msgstr "Les éléments sélectionnés sont identiques."
@@ -354,7 +354,7 @@ msgid "Status"
 msgstr "Statut"
 
 msgid "There are no valid URLs in the clipboard or in the selected files!"
-msgstr "Il n'y a pas d'URL valides dans le presse-papiers ou dans les fichiers sélectionnés!"
+msgstr "Il n'y a pas d'URL valides dans le presse-papiers ou dans les fichiers sélectionnés !"
 
 msgid "IPs"
 msgstr "IP"
@@ -378,13 +378,13 @@ msgid "Enter IP addresses or IP ranges."
 msgstr "Entrez les adresses IP ou les plages d'IP."
 
 msgid "There are no valid IPs in the input!"
-msgstr "Il n'y a pas d'IP valides dans l'entrée!"
+msgstr "Il n'y a pas d'IP valides dans l'entrée !"
 
 msgid "Enter the URLs."
 msgstr "Entrez les URL."
 
 msgid "There are no valid URLs in the input!"
-msgstr "Il n'y a pas d'URL valides dans l'entrée!"
+msgstr "Il n'y a pas d'URL valides dans l'entrée !"
 
 msgid "No remote URL found."
 msgstr "Aucune URL distante trouvée."
@@ -1077,7 +1077,7 @@ msgstr "Image: Rogner automatiquement"
 
 #: Menu
 msgid "Image: Automatic crop (15 pct)"
-msgstr "Image: Rogner automatiquement (15 pct)"
+msgstr "Image: Rogner automatiquement (15 %)"
 
 #: Menu
 msgid "Image: Background to alpha"
@@ -1085,7 +1085,7 @@ msgstr "Image: Arrière-plan vers alpha"
 
 #: Menu
 msgid "Image: Background to alpha (15 pct)"
-msgstr "Image: Arrière-plan vers alpha (15 pct)"
+msgstr "Image: Arrière-plan vers alpha (15 %)"
 
 #: Menu
 msgid "Image: Color alpha to black"
@@ -1105,7 +1105,7 @@ msgstr "Image: Couleur noir vers alpha"
 
 #: Menu
 msgid "Image: Color black to alpha (15 pct)"
-msgstr "Image: Couleur noir vers alpha (15 pct)"
+msgstr "Image: Couleur noir vers alpha (15 %)"
 
 #: Menu
 msgid "Image: Color magenta to alpha"
@@ -1113,7 +1113,7 @@ msgstr "Image: Couleur magenta vers alpha"
 
 #: Menu
 msgid "Image: Color magenta to alpha (15 pct)"
-msgstr "Image: Couleur magenta vers alpha (15 pct)"
+msgstr "Image: Couleur magenta vers alpha (15 %)"
 
 #: Menu
 msgid "Image: Colorspace to gray"
@@ -1125,7 +1125,7 @@ msgstr "Image: Couleur blanc vers alpha"
 
 #: Menu
 msgid "Image: Color white to alpha (15 pct)"
-msgstr "Image: Couleur blanc vers alpha (15 pct)"
+msgstr "Image: Couleur blanc vers alpha (15 %)"
 
 #: Menu
 msgid "Image: Combine into a GIF"
@@ -1197,19 +1197,19 @@ msgstr "Image: Exporter en PDF"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"
-msgstr "Image: Trouver les similaires (65 pct)"
+msgstr "Image: Trouver les similaires (65 %)"
 
 #: Menu
 msgid "Image: Find similar (75 pct)"
-msgstr "Image: Trouver les similaires (75 pct)"
+msgstr "Image: Trouver les similaires (75 %)"
 
 #: Menu
 msgid "Image: Find similar (85 pct)"
-msgstr "Image: Trouver les similaires (85 pct)"
+msgstr "Image: Trouver les similaires (85 %)"
 
 #: Menu
 msgid "Image: Find similar (95 pct)"
-msgstr "Image: Trouver les similaires (95 pct)"
+msgstr "Image: Trouver les similaires (95 %)"
 
 #: Menu
 msgid "Image: Flip (horizontal)"
@@ -1273,15 +1273,15 @@ msgstr "Image: Renommer à partir des métadonnées"
 
 #: Menu
 msgid "Image: Resize (25 pct)"
-msgstr "Image: Redimensionner (25 pct)"
+msgstr "Image: Redimensionner (25 %)"
 
 #: Menu
 msgid "Image: Resize (50 pct)"
-msgstr "Image: Redimensionner (50 pct)"
+msgstr "Image: Redimensionner (50 %)"
 
 #: Menu
 msgid "Image: Resize (75 pct)"
-msgstr "Image: Redimensionner (75 pct)"
+msgstr "Image: Redimensionner (75 %)"
 
 #: Menu
 msgid "Image: Resize (512x512)"
@@ -1305,15 +1305,15 @@ msgstr "Image: Redimensionner (3840x2160)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"
-msgstr "Image: Pivoter (90 deg)"
+msgstr "Image: Pivoter (90 °)"
 
 #: Menu
 msgid "Image: Rotate (180 deg)"
-msgstr "Image: Pivoter (180 deg)"
+msgstr "Image: Pivoter (180 °)"
 
 #: Menu
 msgid "Image: Rotate (270 deg)"
-msgstr "Image: Pivoter (270 deg)"
+msgstr "Image: Pivoter (270 °)"
 
 #: Menu
 msgid "Image: Split into 2 (horizontal)"
@@ -1573,15 +1573,15 @@ msgstr "PDF: Supprimer les métadonnées"
 
 #: Menu
 msgid "PDF: Rotate (90 deg)"
-msgstr "PDF: Pivoter (90 deg)"
+msgstr "PDF: Pivoter (90 °)"
 
 #: Menu
 msgid "PDF: Rotate (180 deg)"
-msgstr "PDF: Pivoter (180 deg)"
+msgstr "PDF: Pivoter (180 °)"
 
 #: Menu
 msgid "PDF: Rotate (270 deg)"
-msgstr "PDF: Pivoter (270 deg)"
+msgstr "PDF: Pivoter (270 °)"
 
 #: Menu
 msgid "PDF: Show signatures"
@@ -1873,27 +1873,27 @@ msgstr "Vidéo: Supprimer l'audio"
 
 #: Menu
 msgid "Video: Resize (25 pct)"
-msgstr "Vidéo: Redimensionner (25 pct)"
+msgstr "Vidéo: Redimensionner (25 %)"
 
 #: Menu
 msgid "Video: Resize (50 pct)"
-msgstr "Vidéo: Redimensionner (50 pct)"
+msgstr "Vidéo: Redimensionner (50 %)"
 
 #: Menu
 msgid "Video: Resize (75 pct)"
-msgstr "Vidéo: Redimensionner (75 pct)"
+msgstr "Vidéo: Redimensionner (75 %)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"
-msgstr "Vidéo: Pivoter (90 deg)"
+msgstr "Vidéo: Pivoter (90 °)"
 
 #: Menu
 msgid "Video: Rotate (180 deg)"
-msgstr "Vidéo: Pivoter (180 deg)"
+msgstr "Vidéo: Pivoter (180 °)"
 
 #: Menu
 msgid "Video: Rotate (270 deg)"
-msgstr "Vidéo: Pivoter (270 deg)"
+msgstr "Vidéo: Pivoter (270 °)"
 
 #: Menu
 msgid "Video: Speed to 0.5"
@@ -1925,7 +1925,7 @@ msgstr "Fermez le gestionnaire de fichiers pour recharger les configurations"
 
 #: install.sh
 msgid "Add shortcuts to the application menu"
-msgstr "Ajouter des raccourcis au menu de l'application"
+msgstr "Ajouter des raccourcis au menu d'application"
 
 #: install.sh
 msgid "Install Homebrew (optional)"
@@ -1949,11 +1949,11 @@ msgstr "Installation:"
 
 #: install.sh
 msgid "Installing application menu shortcuts:"
-msgstr "Installation des raccourcis du menu de l'application:"
+msgstr "Installation des raccourcis du menu d'application:"
 
 #: install.sh
 msgid "Installation completed successfully!"
-msgstr "Installation terminée avec succès!"
+msgstr "Installation terminée avec succès !"
 
 #: install.sh
 msgid "Checking for basic dependencies:"
@@ -1977,7 +1977,7 @@ msgstr "Scripts"
 
 #: install.sh
 msgid "Creating shortcuts to the application menu..."
-msgstr "Création des raccourcis vers le menu de l'application..."
+msgstr "Création des raccourcis vers le menu d'application..."
 
 #: install.sh
 msgid "Creating GNOME Shell application folder..."
@@ -2009,11 +2009,11 @@ msgstr "Téléchargement du paquet..."
 
 #: install.sh
 msgid "Could not find a package manager!"
-msgstr "Impossible de trouver un gestionnaire de paquets!"
+msgstr "Impossible de trouver un gestionnaire de paquets !"
 
 #: install.sh
 msgid "Homebrew installation failed!"
-msgstr "L'installation de Homebrew a échoué!"
+msgstr "L'installation de Homebrew a échoué !"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"
