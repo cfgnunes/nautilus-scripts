@@ -332,9 +332,7 @@ msgstr "Các ảnh được chọn có giá trị điểm ảnh giống nhau."
 msgid "MIME"
 msgstr "MIME"
 
-msgid ""
-"This action will move all files from subdirectories to the root of the selected "
-"directory."
+msgid "This action will move all files from subdirectories to the root of the selected directory."
 msgstr "Hành động này sẽ di chuyển tất cả tệp từ các thư mục con về thư mục gốc đã chọn."
 
 msgid "This action will reset the permissions recursively."
