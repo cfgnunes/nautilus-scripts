@@ -37,7 +37,7 @@ bash install.sh
 While numerous scripts are available for file managers on the web, many suffer from poor functionality, lack of error checking, and dependency management. Some scripts only work with files that don't have special characters in their names, among other limitations. To address these shortcomings, I have developed my own set of scripts, which offer the following advantages:
 
 - **Parallel task execution**: Processes multiple files simultaneously. Very fast! 🚀
-- **Multi-language support**: Automatically detects the system language and displays messages in the appropriate language (🇧🇷 🇺🇸 🇨🇳 🇪🇸 🇩🇪 🇫🇷).
+- **Multi-language support**: Automatically detects the system language and displays messages in the appropriate language (🇧🇷 🇺🇸 🇨🇳 🇪🇸 🇩🇪 🇫🇷 🇻🇳).
 - **Progress dialog**: Displays a progress dialog and allows interruption of tasks at any time.
 - **Status notifications**: Notifies users of dependency errors and MIME types.
 - **Dependency management**: Prompts users to install any missing dependencies.
@@ -134,6 +134,7 @@ Special thanks to everyone who contributed to the translation of this project:
 - 🇨🇳 **Jove Yu (@JoveYu)** - Chinese.
 - 🇪🇸 **Maravento (@maravento)** - Spanish.
 - 🇩🇪 **Stephan Mikwauschk (@Pappmann)** and **La-vaos (@la-vaos)** - German.
+- 🇻🇳 **Loccun (@hthienloc)** - Vietnamese.
 
 ### Contributors
 
