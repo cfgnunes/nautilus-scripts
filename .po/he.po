@@ -332,11 +332,8 @@ msgstr "לתמונות שנבחרו יש ערכי פיקסלים זהים."
 msgid "MIME"
 msgstr "MIME"
 
-msgid ""
-"This action will move all files from subdirectories to the root of the "
-"selected directory."
-msgstr ""
-"פעולה זו תוציא את כל הקבצים מתיקיות המשנה ותעביר אותם לתוך התיקייה שנבחרה."
+msgid "This action will move all files from subdirectories to the root of the selected directory."
+msgstr "פעולה זו תוציא את כל הקבצים מתיקיות המשנה ותעביר אותם לתוך התיקייה שנבחרה."
 
 msgid "This action will reset the permissions recursively."
 msgstr "פעולה זו תאפס את ההרשאות באופן רקורסיבי."
