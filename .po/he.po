@@ -1,0 +1,2022 @@
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Enhanced File Manager Actions for Linux\n"
+"POT-Creation-Date: 2025-11-13 12:12-0300\n"
+"PO-Revision-Date: 2025-11-24 17:32+0200\n"
+"Last-Translator: Omer I.S. <omeritzicschwartz@gmail.com>\n"
+"Language-Team: \n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Done!"
+msgstr "בוצע!"
+
+msgid "files"
+msgstr "קבצים"
+
+msgid "Would you like to continue?"
+msgstr "האם ברצונך להמשיך?"
+
+msgid "directories"
+msgstr "תיקיות"
+
+msgid "items"
+msgstr "פריטים"
+
+msgid "The command failed."
+msgstr "ביצוע הפקודה נכשל."
+
+msgid "The output file does not exist."
+msgstr "קובץ הפלט אינו קיים."
+
+msgid "Finished with errors! See the log:"
+msgstr "הפעולה הסתיימה עם שגיאות! נא לעיין ביומן:"
+
+msgid "Your system does not support clipboard operations."
+msgstr "המערכת שלך לא תומכת בפעולות של לוח הגזירים."
+
+msgid "Could not find a package for:"
+msgstr "לא נמצאה חבילה עבור:"
+
+msgid "The following packages are missing:"
+msgstr "חסרות החבילות הבאות:"
+
+msgid "Would you like to install them?"
+msgstr "להתקין אותן?"
+
+msgid "Installing the packages. Please, wait..."
+msgstr "התקנת החבילות מתבצעת. נא להמתין..."
+
+msgid "The package was installed, but a system reboot is required."
+msgstr "החבילה הותקנה, אך נחוצה הפעלה מחדש של המערכת."
+
+msgid "Could not install the package:"
+msgstr "לא היה ניתן להתקין את החבילה:"
+
+msgid "This action will delete the selected items."
+msgstr "פעולה זו תמחק את הפריטים שנבחרו."
+
+msgid "Total selected:"
+msgstr "סך כל הנבחרים:"
+
+msgid "Total:"
+msgstr "סך הכול:"
+
+msgid "Some items could not be deleted."
+msgstr "לא היה ניתן למחוק חלק מהפריטים."
+
+msgid "All items were successfully deleted!"
+msgstr "כל הפריטים נמחקו בהצלחה!"
+
+msgid "Could not access the directory:"
+msgstr "לא היה ניתן לגשת לתיקייה:"
+
+msgid "The destination file already exists."
+msgstr "קובץ היעד כבר קיים."
+
+msgid "Unable to move."
+msgstr "אין אפשרות להעביר."
+
+msgid "OK"
+msgstr "אישור"
+
+msgid "Cancel"
+msgstr "ביטול"
+
+msgid "(Empty)"
+msgstr "(ריק)"
+
+msgid "Select the ones to open:"
+msgstr "נא לבחור מה לפתוח:"
+
+msgid "Select the ones to reveal in the file manager:"
+msgstr "נא לבחור מה להציג במנהל הקבצים:"
+
+msgid "Select the ones to open in the web browser:"
+msgstr "נא לבחור מה לפתוח בדפדפן:"
+
+msgid "Select the ones to delete:"
+msgstr "נא לבחור מה למחוק:"
+
+msgid "Password"
+msgstr "סיסמה"
+
+msgid "Type your password:"
+msgstr "נא להקליד את הסיסמה שלך:"
+
+msgid "The password can not be empty!"
+msgstr "לא ניתן להמשיך מבלי להקליד סיסמה!"
+
+msgid "Yes"
+msgstr "כן"
+
+msgid "No"
+msgstr "לא"
+
+msgid "Finished! The output files are in:"
+msgstr "הפעולה הסתיימה! קובצי הפלט נמצאים בתוך:"
+
+msgid "Finished, but there is nothing to do."
+msgstr "הפעולה הסתיימה, אך אין פעולות לביצוע."
+
+msgid "Finished!"
+msgstr "הפעולה הסתיימה!"
+
+msgid "Running the task. Please, wait..."
+msgstr "המשימה מתבצעת. נא להמתין..."
+
+msgid "No default application is set for the type:"
+msgstr "לא נבחר יישום ברירת מחדל לסוג:"
+
+msgid "Could not find the executable to open MIME type:"
+msgstr "לא היה ניתן למצוא קובץ אצווה לפתיחת סוג הקובץ:"
+
+msgid "Batch mode detected."
+msgstr "זוהה מצב כמותי."
+
+msgid "Each file inside this directory will be processed individually."
+msgstr "כל קובץ בתיקייה זו יעבור עיבוד בנפרד."
+
+msgid "files or directories"
+msgstr "קבצים או תיקיות"
+
+msgid "You must select files with extension:"
+msgstr "יש לבחור קבצים עם הסיומת:"
+
+msgid "Invalid input file!"
+msgstr "קובץ קלט זה אינו תקני!"
+
+msgid "You must select"
+msgstr "יש לבחור"
+
+msgid "You must select at least"
+msgstr "יש לבחור לפחות"
+
+msgid "You must select up to"
+msgstr "יש לבחור עד"
+
+msgid "Could not find the output directory!"
+msgstr "לא נמצאה תיקיית הפלט!"
+
+msgid "Accessed recently"
+msgstr "מועד גישה אחרון"
+
+msgid "File"
+msgstr "קובץ"
+
+msgid "Count"
+msgstr "מספר"
+
+msgid "Char"
+msgstr "תו"
+
+msgid "Line"
+msgstr "שורה"
+
+msgid "Issues"
+msgstr "בעיות"
+
+msgid "Encoding"
+msgstr "קידוד"
+
+msgid "There are no valid paths in the clipboard!"
+msgstr "אין נתיבים תקניים בלוח הגזירים!"
+
+msgid "links"
+msgstr "קישורים"
+
+msgid "Inode"
+msgstr "צומת"
+
+msgid "Link"
+msgstr "קישור"
+
+msgid "Unsupported clipboard type."
+msgstr "סוג לוח גזירים שאינו נתמך."
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr "פעולה זו תשנה את שמות הקבצים והתיקיות שנבחרו באופן רקורסיבי."
+
+msgid "PDF files"
+msgstr "קובצי PDF"
+
+msgid "Select a PDF to use as the watermark"
+msgstr "נא לבחור קובץ PDF שישמש כסימן המים"
+
+msgid "Signature"
+msgstr "חתימה"
+
+msgid "This action will permanently delete the selected files."
+msgstr "פעולה זו תמחק לצמיתות את הקבצים שנבחרו."
+
+msgid "Malware"
+msgstr "נוזקה"
+
+msgid "Mode"
+msgstr "מצב"
+
+msgid "Bit rate"
+msgstr "קצב העברה"
+
+msgid "Sampling rate"
+msgstr "קצב דגימה"
+
+msgid "Channels"
+msgstr "ערוצים"
+
+msgid "Duration"
+msgstr "משך זמן"
+
+msgid "Album"
+msgstr "אלבום"
+
+msgid "Artist"
+msgstr "אומן"
+
+msgid "Title"
+msgstr "כותרת"
+
+msgid "Quality"
+msgstr "איכות"
+
+msgid "Image files"
+msgstr "קובצי תמונות"
+
+msgid "Select an image to use as the watermark"
+msgstr "נא לבחור תמונה שתשמש כסימן המים"
+
+msgid "Key files"
+msgstr "קובצי מפתחות"
+
+msgid "Select a key file to import"
+msgstr "נא לבחור קובץ מפתח לייבוא"
+
+msgid "No secret keys were found."
+msgstr "לא נמצאו מפתחות סודיים."
+
+msgid "Would you like to import a key now?"
+msgstr "האם ברצונך לייבא מפתח כעת?"
+
+msgid "Failed to import the key!"
+msgstr "ייבוא המפתח נכשל!"
+
+msgid "Select a user:"
+msgstr "נא לבחור משתמש:"
+
+msgid "User"
+msgstr "משתמש"
+
+msgid "Name"
+msgstr "שם"
+
+msgid "E-mail"
+msgstr "דוא״ל"
+
+msgid "Created"
+msgstr "תאריך יצירה"
+
+msgid "Expires"
+msgstr "תאריך תפוגה"
+
+msgid "You must select a user!"
+msgstr "יש לבחור משתמש!"
+
+msgid "No public keys were found."
+msgstr "לא נמצאו מפתחות ציבוריים."
+
+msgid "Select one or more users:"
+msgstr "נא לבחור משתמש אחד או יותר:"
+
+msgid "You must select at least one user!"
+msgstr "יש לבחור לפחות משתמש אחד!"
+
+msgid "Directory"
+msgstr "תיקייה"
+
+msgid "Size"
+msgstr "גודל"
+
+msgid "Group"
+msgstr "קבוצה"
+
+msgid "Item"
+msgstr "פריטים"
+
+msgid "Octal"
+msgstr ""
+
+msgid "Type"
+msgstr "סוג"
+
+msgid "You must select only two images to compare!"
+msgstr "יש לבחור שתי תמונות בלבד להשוואה ביניהן!"
+
+msgid "You must select only two PDFs to compare!"
+msgstr "יש לבחור שני קובצי PDF בלבד להשוואה ביניהם!"
+
+msgid "You must select only two binary files to compare!"
+msgstr "יש לבחור שני קבצים בינריים בלבד להשוואה ביניהם!"
+
+msgid "The selected items are identical."
+msgstr "הפריטים שנבחרו זהים."
+
+msgid "The selected images has same pixel values."
+msgstr "לתמונות שנבחרו יש ערכי פיקסלים זהים."
+
+msgid "MIME"
+msgstr "MIME"
+
+msgid ""
+"This action will move all files from subdirectories to the root of the "
+"selected directory."
+msgstr ""
+"פעולה זו תוציא את כל הקבצים מתיקיות המשנה ותעביר אותם לתוך התיקייה שנבחרה."
+
+msgid "This action will reset the permissions recursively."
+msgstr "פעולה זו תאפס את ההרשאות באופן רקורסיבי."
+
+msgid "Date"
+msgstr "תאריך"
+
+msgid "Time"
+msgstr "שעה"
+
+msgid "Select the output filename:"
+msgstr "נא לבחור את שם קובץ הפלט:"
+
+msgid "Filename"
+msgstr "שם קובץ"
+
+msgid "Status"
+msgstr "מצב"
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr "אין כתובות תקינות בלוח הגזירים או בין הקבצים שנבחרו!"
+
+msgid "IPs"
+msgstr "כתובות IP"
+
+msgid "IP"
+msgstr "כתובת IP"
+
+msgid "Ping"
+msgstr "שליחת פינג"
+
+msgid "Ports"
+msgstr "פתחות"
+
+msgid "Hostname"
+msgstr "שם מארח"
+
+msgid "Example"
+msgstr "דוגמה"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "נא להקליד כתובות IP או טווחי כתובות IP."
+
+msgid "There are no valid IPs in the input!"
+msgstr "לא הוקלדו כתובות IP תקינות!"
+
+msgid "Enter the URLs."
+msgstr "נא למלא את הכתובות."
+
+msgid "There are no valid URLs in the input!"
+msgstr "לא הוקלדו כתובות תקינות!"
+
+msgid "No remote URL found."
+msgstr "לא נמצאה כתובת מרוחקת."
+
+msgid "URLs"
+msgstr "כתובות"
+
+msgid "HTTP code"
+msgstr "קוד HTTP"
+
+msgid "URL"
+msgstr "כתובת"
+
+msgid "(No differences)"
+msgstr "(אין הבדל)"
+
+msgid "(No line break)"
+msgstr "(אין ירידת שורות)"
+
+msgid "(No response)"
+msgstr "(אין תגובה)"
+
+msgid "Checksum mismatch."
+msgstr "סכום הביקורת אינו תואם."
+
+msgid "File does not exist."
+msgstr "הקובץ אינו קיים."
+
+msgid "High"
+msgstr "גבוה"
+
+msgid "Low"
+msgstr "נמוך"
+
+msgid "Medium"
+msgstr "בינוני"
+
+msgid "Online"
+msgstr "במצב מקוון"
+
+msgid "Offline"
+msgstr "במצב לא מקוון"
+
+msgid "Valid signature"
+msgstr "חתימה תקנית"
+
+msgid "Invalid signature"
+msgstr "חתימה לא תקנית"
+
+msgid "Missing key"
+msgstr "חסר מפתח"
+
+msgid "Missing data file"
+msgstr "חסר קובץ נתונים"
+
+msgid "Revoked key"
+msgstr "מפתח שנשלל"
+
+msgid "Expired key"
+msgstr "מפתח פג תוקף"
+
+msgid "Expired signature"
+msgstr "חתימה פגת תוקף"
+
+msgid "Unknown algorithm"
+msgstr "אלגוריתם לא ידוע"
+
+msgid "Key ID"
+msgstr "מזהה מפתח"
+
+msgid "Enter the password for the archive:"
+msgstr "נא להקליד את הסיסמה לארכיון:"
+
+msgid "Select the output directory"
+msgstr "נא לבחור את תיקיית הפלט"
+
+msgid "Select input directories"
+msgstr "בחירת תיקיות קלט"
+
+msgid "Select input files"
+msgstr "בחירת קובצי קלט"
+
+#: Menu
+msgid "Archive"
+msgstr "ארכיון"
+
+#: Menu
+msgid "Audio and Video"
+msgstr "שמע ווידאו"
+
+#: Menu
+msgid "Checksum"
+msgstr "סכום ביקורת"
+
+#: Menu
+msgid "Clipboard"
+msgstr "לוח הגזירים"
+
+#: Menu
+msgid "Directories and Files"
+msgstr "תיקיות וקבצים"
+
+#: Menu
+msgid "Document"
+msgstr "מסמך"
+
+#: Menu
+msgid "Encryption"
+msgstr "הצפנה"
+
+#: Menu
+msgid "Image"
+msgstr "תמונה"
+
+#: Menu
+msgid "Links"
+msgstr "קישורים"
+
+#: Menu
+msgid "Network and Internet"
+msgstr "רשת ואינטרנט"
+
+#: Menu
+msgid "Open with"
+msgstr "פתיחה באמצעות"
+
+#: Menu
+msgid "Plain text"
+msgstr "טקסט פשוט"
+
+#: Menu
+msgid "Rename files"
+msgstr "שינוי שמות קבצים"
+
+#: Menu
+msgid "Security and Recovery"
+msgstr "אבטחה ושחזור"
+
+#: Menu
+msgid "Audio and Video: Tools"
+msgstr "שמע ווידאו: כלים"
+
+#: Menu
+msgid "Audio: Channels"
+msgstr "שמע: ערוצים"
+
+#: Menu
+msgid "Audio: Convert"
+msgstr "שמע: המרה"
+
+#: Menu
+msgid "Audio: Effects"
+msgstr "שמע: אפקטים"
+
+#: Menu
+msgid "Audio: MP3 files"
+msgstr "שמע: קובצי MP3"
+
+#: Menu
+msgid "Audio: Quality"
+msgstr "שמע: איכות"
+
+#: Menu
+msgid "Document: Convert"
+msgstr "מסמך: המרה"
+
+#: Menu
+msgid "Document: Print"
+msgstr "מסמך: הדפסה"
+
+#: Menu
+msgid "Image: Color"
+msgstr "תמונה: צבע"
+
+#: Menu
+msgid "Image: Combine, Split"
+msgstr "תמונה: שילוב, פיצול"
+
+#: Menu
+msgid "Image: Convert"
+msgstr "תמונה: המרה"
+
+#: Menu
+msgid "Image: Crop, Resize"
+msgstr "תמונה: חיתוך, שינוי גודל"
+
+#: Menu
+msgid "Image: Flip, Rotate"
+msgstr "תמונה: היפוך, סיבוב"
+
+#: Menu
+msgid "Image: Icons"
+msgstr "תמונה: סמלים"
+
+#: Menu
+msgid "Image: Metadata, Exif"
+msgstr "תמונה: נתוני על, Exif"
+
+#: Menu
+msgid "Image: Optimize, Reduce"
+msgstr "תמונה: מיטוב גודל, הקטנה"
+
+#: Menu
+msgid "Image: Similarity"
+msgstr "תמונה: דמיון"
+
+#: Menu
+msgid "Image: SVG files"
+msgstr "תמונה: קובצי SVG"
+
+#: Menu
+msgid "Image: Text recognition (OCR)"
+msgstr "תמונה: זיהוי טקסט (OCR)"
+
+#: Menu
+msgid "Image: Transparency"
+msgstr "תמונה: שקיפות"
+
+#: Menu
+msgid "Image: Watermark"
+msgstr "תמונה: סימן מים"
+
+#: Menu
+msgid "PDF: Annotations"
+msgstr "קובץ PDF: הערות"
+
+#: Menu
+msgid "PDF: Combine, Split"
+msgstr "קובץ PDF: שילוב, פיצול"
+
+#: Menu
+msgid "PDF: Security"
+msgstr "קובץ PDF: אבטחה"
+
+#: Menu
+msgid "PDF: Multiple-page layout"
+msgstr "קובץ PDF: פריסה מרובת־עמודים"
+
+#: Menu
+msgid "PDF: Optimize, Reduce"
+msgstr "קובץ PDF: מיטוב גודל, הקטנה"
+
+#: Menu
+msgid "PDF: Page size"
+msgstr "קובץ PDF: גודל עמוד"
+
+#: Menu
+msgid "PDF: Rotate"
+msgstr "קובץ PDF: סיבוב"
+
+#: Menu
+msgid "PDF: Signatures"
+msgstr "קובץ PDF: חתימות"
+
+#: Menu
+msgid "PDF: Text recognition (OCR)"
+msgstr "קובץ PDF: זיהוי טקסט (OCR)"
+
+#: Menu
+msgid "PDF: Tools"
+msgstr "קובץ PDF: כלים"
+
+#: Menu
+msgid "PDF: Watermark"
+msgstr "קובץ PDF: סימן מים"
+
+#: Menu
+msgid "Video: Aspect ratio"
+msgstr "וידאו: יחס תצוגה"
+
+#: Menu
+msgid "Video: Audio track"
+msgstr "וידאו: רצועת שמע"
+
+#: Menu
+msgid "Video: Convert"
+msgstr "וידאו: המרה"
+
+#: Menu
+msgid "Video: Export frames"
+msgstr "וידאו: ייצוא תמוניות"
+
+#: Menu
+msgid "Video: Flip, Rotate"
+msgstr "וידאו: היפוך, סיבוב"
+
+#: Menu
+msgid "Video: Frame rate"
+msgstr "וידאו: קצב תמוניות (FPS)"
+
+#: Menu
+msgid "Video: Resize"
+msgstr "וידאו: שינוי גודל"
+
+#: Menu
+msgid "Video: Speed"
+msgstr "וידאו: מהירות"
+
+#: Menu
+msgid "Audio: Check quality"
+msgstr "שמע: בדיקת איכות"
+
+#: Menu
+msgid "Audio: Convert to FLAC"
+msgstr "שמע: המרה לקובץ FLAC"
+
+#: Menu
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "שמע: המרה לקובץ MP3 ‏(48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (192 kbps)"
+msgstr "שמע: המרה לקובץ MP3 ‏(320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (320 kbps)"
+msgstr "שמע: המרה לקובץ MP3 ‏(320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "שמע: המרה לקובץ OGG ‏(48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (192 kbps)"
+msgstr "שמע: המרה לקובץ OGG ‏(192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (320 kbps)"
+msgstr "שמע: המרה לקובץ OGG ‏(320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "שמע: המרה לקובץ OPUS ‏(48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (192 kbps)"
+msgstr "שמע: המרה לקובץ OPUS ‏(192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (320 kbps)"
+msgstr "שמע: המרה לקובץ OPUS ‏(320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to WAV"
+msgstr "שמע: המרה לקובץ WAV"
+
+#: Menu
+msgid "Audio: Fade-in"
+msgstr "שמע: כניסה בהדרגה"
+
+#: Menu
+msgid "Audio: Fade-out"
+msgstr "שמע: יציאה בהדרגה"
+
+#: Menu
+msgid "Audio: Mix channels to mono"
+msgstr "שמע: השמעת שני הערוצים במצב מונו (Mono)"
+
+#: Menu
+msgid "Audio: Mix two files"
+msgstr "שמע: ערבול שני קבצים"
+
+#: Menu
+msgid "Audio: Volume normalize"
+msgstr "שמע: נרמול עוצמת השמע"
+
+#: Menu
+msgid "Audio: Produce a spectrogram"
+msgstr "שמע: הפקת ספקטרוגרמה"
+
+#: Menu
+msgid "Audio: Remove silence (sections)"
+msgstr "שמע: הסרת חלקים שקטים (מקטעים)"
+
+#: Menu
+msgid "Audio: Silence noise"
+msgstr "שמע: השתקת רעשים"
+
+#: Menu
+msgid "Audio: Remove silence (extremities)"
+msgstr "שמע: הסרת חלקים שקטים (בקצוות)"
+
+#: Menu
+msgid "Code Editor"
+msgstr "עורך קוד"
+
+#: Menu
+msgid "Compare items"
+msgstr "השוואה בין פריטים"
+
+#: Menu
+msgid "Compare items (via Diff)"
+msgstr "השוואה בין פריטים (באמצעות Diff)"
+
+#: Menu
+msgid "Compress to '7z'"
+msgstr "דחיסה לקובץ ‚7z’"
+
+#: Menu
+msgid "Compress to '7z' with password"
+msgstr "דחיסה לקובץ ‚7z’ עם סיסמה"
+
+#: Menu
+msgid "Compress to 'iso'"
+msgstr "דחיסה לקובץ ‚iso’"
+
+#: Menu
+msgid "Compress to 'squashfs'"
+msgstr "דחיסה לקובץ ‚squashfs’"
+
+#: Menu
+msgid "Compress to 'tar.gz'"
+msgstr "דחיסה לקובץ ‚tar.gz’"
+
+#: Menu
+msgid "Compress to 'tar.xz'"
+msgstr "דחיסה לקובץ ‚tar.xz’"
+
+#: Menu
+msgid "Compress to 'tar.zst'"
+msgstr "דחיסה לקובץ ‚tar.zst’"
+
+#: Menu
+msgid "Compress to 'zip'"
+msgstr "דחיסה לקובץ ‚zip’"
+
+#: Menu
+msgid "Compress to 'zip' with password"
+msgstr "דחיסה לקובץ ‚zip’ עם סיסמה"
+
+#: Menu
+msgid "Compute all checksums"
+msgstr "חישוב כל סכומי הביקורת"
+
+#: Menu
+msgid "Compute CRC32"
+msgstr "חישוב קובץ CRC32"
+
+#: Menu
+msgid "Compute MD5"
+msgstr "חישוב קובץ MD5"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "חישוב קובץ SHA1"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "חישוב קובץ SHA256"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "חישוב קובץ SHA512"
+
+#: Menu
+msgid "Copy file contents"
+msgstr "העתקת תוכן הקובץ"
+
+#: Menu
+msgid "Copy file names"
+msgstr "העתקת שמות קבצים"
+
+#: Menu
+msgid "Copy file names (recursive)"
+msgstr "העתקת שמות קבצים (רקורסיבית)"
+
+#: Menu
+msgid "Copy file paths"
+msgstr "העתקת נתיבי קבצים"
+
+#: Menu
+msgid "Copy file paths (recursive)"
+msgstr "העתקת נתיבי קבצים (רקורסיבית)"
+
+#: Menu
+msgid "Create hard link here"
+msgstr "יצירת קישור קשיח כאן"
+
+#: Menu
+msgid "Create hard link to..."
+msgstr "יצירת קישור קשיח במיקום..."
+
+#: Menu
+msgid "Create symbolic link here"
+msgstr "יצירת קישור סימבולי כאן"
+
+#: Menu
+msgid "Create symbolic link to..."
+msgstr "יצירת קישור סימבולי במיקום..."
+
+#: Menu
+msgid "Disk Usage Analyzer"
+msgstr "מנתח השימוש בכונן"
+
+#: Menu
+msgid "Document: Convert to DOCX"
+msgstr "מסמך: המרה לקובץ DOCX"
+
+#: Menu
+msgid "Document: Convert to EPUB"
+msgstr "מסמך: המרה לקובץ EPUB"
+
+#: Menu
+msgid "Document: Convert to FB2"
+msgstr "מסמך: המרה לקובץ FB2"
+
+#: Menu
+msgid "Document: Convert to Markdown"
+msgstr "מסמך: המרה לקובץ Markdown"
+
+#: Menu
+msgid "Document: Convert to ODP"
+msgstr "מסמך: המרה לקובץ ODP"
+
+#: Menu
+msgid "Document: Convert to ODS"
+msgstr "מסמך: המרה לקובץ ODS"
+
+#: Menu
+msgid "Document: Convert to ODT"
+msgstr "מסמך: המרה לקובץ ODT"
+
+#: Menu
+msgid "Document: Convert to PDF"
+msgstr "מסמך: המרה לקובץ PDF"
+
+#: Menu
+msgid "Document: Convert to PPTX"
+msgstr "מסמך: המרה לקובץ PPTX"
+
+#: Menu
+msgid "Document: Convert to TXT"
+msgstr "מסמך: המרה לקובץ TXT"
+
+#: Menu
+msgid "Document: Convert to XLSX"
+msgstr "מסמך: המרה לקובץ XLSX"
+
+#: Menu
+msgid "Document: Print (A4)"
+msgstr "מסמך: הדפסה (A4)"
+
+#: Menu
+msgid "Document: Print (US Legal)"
+msgstr "מסמך: הדפסה (US Legal)"
+
+#: Menu
+msgid "Document: Print (US Letter)"
+msgstr "מסמך: הדפסה (US Letter)"
+
+#: Menu
+msgid "Extract here"
+msgstr "חילוץ לכאן"
+
+#: Menu
+msgid "File carving (via Foremost)"
+msgstr "גילוף קבצים (באמצעות Foremost)"
+
+#: Menu
+msgid "File carving (via PhotoRec)"
+msgstr "גילוף קבצים (באמצעות PhotoRec)"
+
+#: Menu
+msgid "Find broken links"
+msgstr "איתור קבצים פגומים"
+
+#: Menu
+msgid "Find duplicate files"
+msgstr "איתור קבצים כפולים"
+
+#: Menu
+msgid "Find empty directories"
+msgstr "איתור תיקיות ריקות"
+
+#: Menu
+msgid "List hidden files"
+msgstr "הצגת קבצים מוסתרים"
+
+#: Menu
+msgid "Find junk files"
+msgstr "איתור קובצי זבל"
+
+#: Menu
+msgid "Find empty files"
+msgstr "איתור קבצים ריקים"
+
+#: Menu
+msgid "Flatten directory structure"
+msgstr "פישוט מבנה התיקייה"
+
+#: Menu
+msgid "Generate MD5 file"
+msgstr "יצירת קובץ MD5"
+
+#: Menu
+msgid "Generate SHA1 file"
+msgstr "יצירת קובץ SHA1"
+
+#: Menu
+msgid "Generate SHA256 file"
+msgstr "יצירת קובץ SHA256"
+
+#: Menu
+msgid "Generate SHA512 file"
+msgstr "יצירת קובץ SHA512"
+
+#: Menu
+msgid "Git: Clone URLs"
+msgstr "מערכת Git: שיבוט מכתובות"
+
+#: Menu
+msgid "Git: Open repository website"
+msgstr "מערכת Git: פתיחת אתר הבית של המאגר"
+
+#: Menu
+msgid "Git: Reset and pull"
+msgstr "מערכת Git: איפוס ודחיפה"
+
+#: Menu
+msgid "Decrypt"
+msgstr "ביטול הצפנה"
+
+#: Menu
+msgid "Encrypt with password"
+msgstr "הצפנה עם סיסמה"
+
+#: Menu
+msgid "Encrypt with password (ASCII)"
+msgstr "הצפנה עם סיסמה (ASCII)"
+
+#: Menu
+msgid "Encrypt with keys"
+msgstr "הצפנה עם מפתחות"
+
+#: Menu
+msgid "Encrypt with keys (ASCII)"
+msgstr "הצפנה עם מפתחות (ASCII)"
+
+#: Menu
+msgid "Import keys"
+msgstr "ייבוא מפתחות"
+
+#: Menu
+msgid "Sign"
+msgstr "חתימה"
+
+#: Menu
+msgid "Sign (ASCII)"
+msgstr "חתימה (ASCII)"
+
+#: Menu
+msgid "Sign (detached signature)"
+msgstr "חתימה (חתימה מנותקת)"
+
+#: Menu
+msgid "Verify signature"
+msgstr "אימות חתימה"
+
+#: Menu
+msgid "Image: Add watermark (center)"
+msgstr "תמונה: הוספת סימן מים (במרכז)"
+
+#: Menu
+msgid "Image: Add watermark (north)"
+msgstr "תמונה: הוספת סימן מים (בצפון)"
+
+#: Menu
+msgid "Image: Add watermark (northeast)"
+msgstr "תמונה: הוספת סימן מים (בצפון־מזרח)"
+
+#: Menu
+msgid "Image: Add watermark (northwest)"
+msgstr "תמונה: הוספת סימן מים (בצפון־מערב)"
+
+#: Menu
+msgid "Image: Add watermark (south)"
+msgstr "תמונה: הוספת סימן מים (בדרום)"
+
+#: Menu
+msgid "Image: Add watermark (southeast)"
+msgstr "תמונה: הוספת סימן מים (בדרום־מזרח)"
+
+#: Menu
+msgid "Image: Add watermark (southwest)"
+msgstr "תמונה: הוספת סימן מים (בדרום־מערב)"
+
+#: Menu
+msgid "Image: Automatic crop"
+msgstr "תמונה: חיתוך אוטומטי"
+
+#: Menu
+msgid "Image: Automatic crop (15 pct)"
+msgstr "תמונה: חיתוך אוטומטי (15 pct)"
+
+#: Menu
+msgid "Image: Background to alpha"
+msgstr "תמונה: מצבע הרקע לצבע אלפא"
+
+#: Menu
+msgid "Image: Background to alpha (15 pct)"
+msgstr "תמונה: מצבע הרקע לצבע אלפא (15 pct)"
+
+#: Menu
+msgid "Image: Color alpha to black"
+msgstr "תמונה: מצבע אלפא לשחור"
+
+#: Menu
+msgid "Image: Color alpha to magenta"
+msgstr "תמונה: מצבע אלפא לסגלגל"
+
+#: Menu
+msgid "Image: Color alpha to white"
+msgstr "תמונה: מצבע אלפא ללבן"
+
+#: Menu
+msgid "Image: Color black to alpha"
+msgstr "תמונה: מצבע שחור לצבע אלפא"
+
+#: Menu
+msgid "Image: Color black to alpha (15 pct)"
+msgstr "תמונה: מצבע שחור לצבע אלפא (15 pct)"
+
+#: Menu
+msgid "Image: Color magenta to alpha"
+msgstr "תמונה: מצבע סגלגל לצבע אלפא"
+
+#: Menu
+msgid "Image: Color magenta to alpha (15 pct)"
+msgstr "תמונה: מצבע סגלגל לצבע אלפא (15 pct)"
+
+#: Menu
+msgid "Image: Colorspace to gray"
+msgstr "תמונה: המרת תמונה צבעונית לצבעי אפור"
+
+#: Menu
+msgid "Image: Color white to alpha"
+msgstr "תמונה: מצבע לבן לצבע אלפא"
+
+#: Menu
+msgid "Image: Color white to alpha (15 pct)"
+msgstr "תמונה: מצבע לבן לצבע אלפא (15 pct)"
+
+#: Menu
+msgid "Image: Combine into a GIF"
+msgstr "תמונה: שילוב לתוך קובץ GIF"
+
+#: Menu
+msgid "Image: Combine into a PDF"
+msgstr "תמונה: שילוב לתוך קובץ PDF"
+
+#: Menu
+msgid "Image: Convert to AVIF"
+msgstr "תמונה: המרה לקובץ AVIF"
+
+#: Menu
+msgid "Image: Convert to BMP"
+msgstr "תמונה: המרה לקובץ BMP"
+
+#: Menu
+msgid "Image: Convert to GIF"
+msgstr "תמונה: המרה לקובץ GIF"
+
+#: Menu
+msgid "Image: Convert to HEIC"
+msgstr "תמונה: המרה לקובץ HEIC"
+
+#: Menu
+msgid "Image: Convert to JPG"
+msgstr "תמונה: המרה לקובץ JPG"
+
+#: Menu
+msgid "Image: Convert to JXL"
+msgstr "תמונה: המרה לקובץ JXL"
+
+#: Menu
+msgid "Image: Convert to PNG"
+msgstr "תמונה: המרה לקובץ PNG"
+
+#: Menu
+msgid "Image: Convert to TIFF"
+msgstr "תמונה: המרה לקובץ TIFF"
+
+#: Menu
+msgid "Image: Convert to WebP"
+msgstr "תמונה: המרה לקובץ WebP"
+
+#: Menu
+msgid "Image: Create PNG icon (64 px)"
+msgstr "תמונה: יצירת סמל בקובץ PNG ‏(64 נק׳)"
+
+#: Menu
+msgid "Image: Create PNG icon (128 px)"
+msgstr "תמונה: יצירת סמל בקובץ PNG ‏(128 נק׳)"
+
+#: Menu
+msgid "Image: Create PNG icon (256 px)"
+msgstr "תמונה: יצירת סמל בקובץ PNG ‏(256 נק׳)"
+
+#: Menu
+msgid "Image: Create PNG icon (512 px)"
+msgstr "תמונה: יצירת סמל בקובץ PNG ‏(512 נק׳)"
+
+#: Menu
+msgid "Image: Desaturate"
+msgstr "תמונה: הפחתת רווייה"
+
+#: Menu
+msgid "Image: Export to PDF"
+msgstr "תמונה: ייצוא כקובץ PDF"
+
+#: Menu
+msgid "Image: Find similar (65 pct)"
+msgstr "תמונה: איתור תמונות דומות (65 pct)"
+
+#: Menu
+msgid "Image: Find similar (75 pct)"
+msgstr "תמונה: איתור תמונות דומות (75 pct)"
+
+#: Menu
+msgid "Image: Find similar (85 pct)"
+msgstr "תמונה: איתור תמונות דומות (85 pct)"
+
+#: Menu
+msgid "Image: Find similar (95 pct)"
+msgstr "תמונה: איתור תמונות דומות (95 pct)"
+
+#: Menu
+msgid "Image: Flip (horizontal)"
+msgstr "תמונה: היפוך (אופקי)"
+
+#: Menu
+msgid "Image: Flip (vertical)"
+msgstr "תמונה: היפוך (אנכי)"
+
+#: Menu
+msgid "Image: Generate multiple hues"
+msgstr "תמונה: יצירת גוונים מרובים"
+
+#: Menu
+msgid "Image: Optimize PNG"
+msgstr "תמונה: מיטוב גודל תמונה מסוג PNG"
+
+#: Menu
+msgid "Image: Perform OCR (English)"
+msgstr "תמונה: זיהוי טקסט (אנגלית)"
+
+#: Menu
+msgid "Image: Perform OCR (French)"
+msgstr "תמונה: זיהוי טקסט (צרפתית)"
+
+#: Menu
+msgid "Image: Perform OCR (German)"
+msgstr "תמונה: זיהוי טקסט (גרמנית)"
+
+#: Menu
+msgid "Image: Perform OCR (Italian)"
+msgstr "תמונה: זיהוי טקסט (איטלקית)"
+
+#: Menu
+msgid "Image: Perform OCR (Portuguese)"
+msgstr "תמונה: זיהוי טקסט (פורטוגלית)"
+
+#: Menu
+msgid "Image: Perform OCR (Russian)"
+msgstr "תמונה: זיהוי טקסט (רוסית)"
+
+#: Menu
+msgid "Image: Perform OCR (Spanish)"
+msgstr "תמונה: זיהוי טקסט (ספרדית)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 500kB max)"
+msgstr "תמונה: הקטנה (JPG, ‏500 ק״ב לכל היותר)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 1000kB max)"
+msgstr "תמונה: הקטנה (JPG, ‏1000 ק״ב לכל היותר)"
+
+#: Menu
+msgid "Image: Remove metadata"
+msgstr "תמונה: הסרת נתוני על"
+
+#: Menu
+msgid "Image: Rename from metadata"
+msgstr "תמונה: שינוי שם מתוך נתוני העל"
+
+#: Menu
+msgid "Image: Resize (25 pct)"
+msgstr "תמונה: שינוי גודל (25 pct)"
+
+#: Menu
+msgid "Image: Resize (50 pct)"
+msgstr "תמונה: שינוי גודל (50 pct)"
+
+#: Menu
+msgid "Image: Resize (75 pct)"
+msgstr "תמונה: שינוי גודל (75 pct)"
+
+#: Menu
+msgid "Image: Resize (512x512)"
+msgstr "תמונה: שינוי גודל (512x512)"
+
+#: Menu
+msgid "Image: Resize (1080x1080)"
+msgstr "תמונה: שינוי גודל (1080x1080)"
+
+#: Menu
+msgid "Image: Resize (1920x1080)"
+msgstr "תמונה: שינוי גודל (1920x1080)"
+
+#: Menu
+msgid "Image: Resize (2560x1440)"
+msgstr "תמונה: שינוי גודל (2560x1440)"
+
+#: Menu
+msgid "Image: Resize (3840x2160)"
+msgstr "תמונה: שינוי גודל (3840x2160)"
+
+#: Menu
+msgid "Image: Rotate (90 deg)"
+msgstr "תמונה: סיבוב (90 מעלות)"
+
+#: Menu
+msgid "Image: Rotate (180 deg)"
+msgstr "תמונה: סיבוב (180 מעלות)"
+
+#: Menu
+msgid "Image: Rotate (270 deg)"
+msgstr "תמונה: סיבוב (270 מעלות)"
+
+#: Menu
+msgid "Image: Split into 2 (horizontal)"
+msgstr "תמונה: פיצול ל־2 חלקים (אופקי)"
+
+#: Menu
+msgid "Image: Split into 2 (vertical)"
+msgstr "תמונה: פיצול ל־2 חלקים (אנכי)"
+
+#: Menu
+msgid "Image: Split into 4"
+msgstr "תמונה: פיצול ל־4 חלקים"
+
+#: Menu
+msgid "Image: Stack (horizontal)"
+msgstr "תמונה: ערימה (אופקית)"
+
+#: Menu
+msgid "Image: Stack (vertical)"
+msgstr "תמונה: ערימה (אנכית)"
+
+#: Menu
+msgid "IP: Scanner"
+msgstr "כתובות IP: סורק"
+
+#: Menu
+msgid "List hard links"
+msgstr "הצגת קישורים קשיחים"
+
+#: Menu
+msgid "List largest directories"
+msgstr "הצגת התיקיות הגדולות ביותר"
+
+#: Menu
+msgid "List largest files"
+msgstr "הצגת הקבצים הגדולים ביותר"
+
+#: Menu
+msgid "List permissions and owners"
+msgstr "הצגת הרשאות ובעלים"
+
+#: Menu
+msgid "List recent files"
+msgstr "הצגת קבצים אחרונים"
+
+#: Menu
+msgid "List symbolic links"
+msgstr "הצגת קישורים סימבוליים"
+
+#: Menu
+msgid "Media: Concatenate files"
+msgstr "מדיה: שרשור קבצים"
+
+#: Menu
+msgid "Media: Remove metadata"
+msgstr "מדיה: הסרת נתוני על"
+
+#: Menu
+msgid "Media: Show basic metadata"
+msgstr "מדיה: הצגת נתוני על בסיסיים"
+
+#: Menu
+msgid "MP3: (artist - title) Name to ID3"
+msgstr "קובץ MP3: (אומן - כותרת) המרת שם ל־ID3"
+
+#: Menu
+msgid "MP3: (artist - title) ID3 to Name"
+msgstr "קובץ MP3: (אומן - כותרת) המרת ID3 לשֵׁם"
+
+#: Menu
+msgid "MP3: Volume maximize (recursive)"
+msgstr "שמע: הגברה לעוצמת השמע המרבית (רקורסיבית)"
+
+#: Menu
+msgid "MP3: Volume normalize (recursive)"
+msgstr "שמע: נרמול עוצמת השמע (רקורסיבי)"
+
+#: Menu
+msgid "MP3: Repair (recursive)"
+msgstr "קובצי MP3: תיקון (רקורסיבי)"
+
+#: Menu
+msgid "MP3: Show encoding details"
+msgstr "קובצי MP3: הצגת פרטי קידוד"
+
+#: Menu
+msgid "Open item location"
+msgstr "פתיחת מיקום פריט"
+
+#: Menu
+msgid "Paste as hard link"
+msgstr "הדבקה בתור קישור קשיח"
+
+#: Menu
+msgid "Paste as symbolic link"
+msgstr "הדבקה בתור קישור סימבולי"
+
+#: Menu
+msgid "Paste clipboard content"
+msgstr "הדבקת התוכן מלוח הגזירים"
+
+#: Menu
+msgid "PDF: Add watermark (over)"
+msgstr "קובץ PDF: הוספת סימן מים (מעל)"
+
+#: Menu
+msgid "PDF: Add watermark (under)"
+msgstr "קובץ PDF: הוספת סימן מים (מתחת)"
+
+#: Menu
+msgid "PDF: Combine multiple PDFs"
+msgstr "קובץ PDF: שילוב קובצי PDF מרובים"
+
+#: Menu
+msgid "PDF: Convert to PDFA-2b"
+msgstr "קובץ PDF: המרה לקובץ PDFA-2b"
+
+#: Menu
+msgid "PDF: Remove password"
+msgstr "קובץ PDF: הסרת סיסמה"
+
+#: Menu
+msgid "PDF: Set a password"
+msgstr "קובץ PDF: הגדרת סיסמה"
+
+#: Menu
+msgid "PDF: Extract images"
+msgstr "קובץ PDF: חילוץ תמונות"
+
+#: Menu
+msgid "PDF: Find annotated PDFs"
+msgstr "קובץ PDF: הצגת קובצי PDF עם הערות"
+
+#: Menu
+msgid "PDF: Find non-linearized PDFs"
+msgstr "קובץ PDF: הצגת קובצי PDF שאינם לינאריים"
+
+#: Menu
+msgid "PDF: Find non-searchable PDFs"
+msgstr "קובץ PDF: הצגת קובצי PDF שלא ניתן לאתר"
+
+#: Menu
+msgid "PDF: Find password-protected PDFs"
+msgstr "קובץ PDF: הצגת קובצי PDF מוגנים בסיסמה"
+
+#: Menu
+msgid "PDF: Find signed PDFs"
+msgstr "קובץ SVG: איתור קובצי PDF חתומים"
+
+#: Menu
+msgid "PDF: Layout (landscape, 1x2)"
+msgstr "קובץ PDF: פריסה (לרוחב, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x1)"
+msgstr "קובץ PDF: פריסה (לרוחב, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x2)"
+msgstr "קובץ PDF: פריסה (לרוחב, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x4)"
+msgstr "קובץ PDF: פריסה (לרוחב, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 4x2)"
+msgstr "קובץ PDF: פריסה (לרוחב, 4x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 1x2)"
+msgstr "קובץ PDF: פריסה (לאורך, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x1)"
+msgstr "קובץ PDF: פריסה (לאורך, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x2)"
+msgstr "קובץ PDF: פריסה (לאורך, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x4)"
+msgstr "קובץ PDF: פריסה (לאורך, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 4x2)"
+msgstr "קובץ PDF: פריסה (לאורך, 4x2)"
+
+#: Menu
+msgid "PDF: Optimize for web (linearize)"
+msgstr "קובץ PDF: מיטוב להצגה בדפדפן (באופן לינארי)"
+
+#: Menu
+msgid "PDF: Set size (A3)"
+msgstr "קובץ PDF: קביעת גודל (A3)"
+
+#: Menu
+msgid "PDF: Set size (A4)"
+msgstr "קובץ PDF: קביעת גודל (A4)"
+
+#: Menu
+msgid "PDF: Set size (A5)"
+msgstr "קובץ PDF: קביעת גודל (A5)"
+
+#: Menu
+msgid "PDF: Set size (US Legal)"
+msgstr "קובץ PDF: קביעת גודל (US Legal)"
+
+#: Menu
+msgid "PDF: Set size (US Letter)"
+msgstr "קובץ PDF: קביעת גודל (US Letter)"
+
+#: Menu
+msgid "PDF: Perform OCR (English)"
+msgstr "קובץ PDF: זיהוי טקסט (אנגלית)"
+
+#: Menu
+msgid "PDF: Perform OCR (French)"
+msgstr "קובץ PDF: זיהוי טקסט (צרפתית)"
+
+#: Menu
+msgid "PDF: Perform OCR (German)"
+msgstr "קובץ PDF: זיהוי טקסט (גרמנית)"
+
+#: Menu
+msgid "PDF: Perform OCR (Italian)"
+msgstr "קובץ PDF: זיהוי טקסט (איטלקית)"
+
+#: Menu
+msgid "PDF: Perform OCR (Portuguese)"
+msgstr "קובץ PDF: זיהוי טקסט (פורטוגלית)"
+
+#: Menu
+msgid "PDF: Perform OCR (Russian)"
+msgstr "קובץ PDF: זיהוי טקסט (רוסית)"
+
+#: Menu
+msgid "PDF: Perform OCR (Spanish)"
+msgstr "קובץ PDF: זיהוי טקסט (ספרדית)"
+
+#: Menu
+msgid "PDF: Reduce (150 dpi, e-book)"
+msgstr "קובץ PDF: הקטנה (150 DPI, ‏ספר אלקטרוני)"
+
+#: Menu
+msgid "PDF: Reduce (300 dpi, printer)"
+msgstr "קובץ PDF: הקטנה (30 DPI, ‏למדפסת)"
+
+#: Menu
+msgid "PDF: Remove annotations"
+msgstr "קובץ PDF: הסרת הערות"
+
+#: Menu
+msgid "PDF: Remove metadata"
+msgstr "קובץ PDF: הסרת נתוני על"
+
+#: Menu
+msgid "PDF: Rotate (90 deg)"
+msgstr "קובץ PDF: סיבוב (90 מעלות)"
+
+#: Menu
+msgid "PDF: Rotate (180 deg)"
+msgstr "קובץ PDF: סיבוב (180 מעלות)"
+
+#: Menu
+msgid "PDF: Rotate (270 deg)"
+msgstr "קובץ PDF: סיבוב (270 מעלות)"
+
+#: Menu
+msgid "PDF: Show signatures"
+msgstr "קובץ PDF: הצגת חתימות"
+
+#: Menu
+msgid "PDF: Split into single-page PDFs"
+msgstr "קובץ PDF: פיצול לקובצי PDF בעלי עמוד אחד"
+
+#: Menu
+msgid "Rename: Remove accents"
+msgstr "שינוי שם: הסרת סימנים דיאקריטיים מהאותיות"
+
+#: Menu
+msgid "Rename: Remove parentheses blocks"
+msgstr ""
+
+#: Menu
+msgid "Rename: Change spaces to dashes"
+msgstr "שינוי שם: המרת רווחים למקפים"
+
+#: Menu
+msgid "Rename: Change dashes to spaces"
+msgstr "שינוי שם: המרת מקפים לרווחים"
+
+#: Menu
+msgid "Rename: To lowercase"
+msgstr "שינוי שם: המרה לאותיות קטנות"
+
+#: Menu
+msgid "Rename: To lowercase (recursive)"
+msgstr "שינוי שם: המרה לאותיות קטנות (רקורסיבית)"
+
+#: Menu
+msgid "Rename: To sentence case"
+msgstr ""
+
+#: Menu
+msgid "Rename: To title case"
+msgstr ""
+
+#: Menu
+msgid "Rename: To uppercase"
+msgstr "שינוי שם: המרה לאותיות רישיות"
+
+#: Menu
+msgid "Rename: To uppercase (recursive)"
+msgstr "שינוי שם: המרה לאותיות רישיות (רקורסיבית)"
+
+#: Menu
+msgid "Reset permissions (recursive)"
+msgstr "איפוס הרשאות (רקורסיבי)"
+
+#: Menu
+msgid "Scan for malware (via ClamAV)"
+msgstr "סריקה לאיתור נוזקות (באמצעות ClamAV)"
+
+#: Menu
+msgid "Show files information"
+msgstr "הצגת מידע על הקבצים"
+
+#: Menu
+msgid "Show files metadata"
+msgstr "הצגת נתוני העל של הקבצים"
+
+#: Menu
+msgid "Show files MIME type"
+msgstr "הצגת ה־MIME type של הקבצים"
+
+#: Menu
+msgid "Show media information"
+msgstr "הצגת מידע על המדיה"
+
+#: Menu
+msgid "Shred files (secure delete)"
+msgstr "השמדת קבצים (מחיקה בטוחה)"
+
+#: Menu
+msgid "SVG: Compress to SVGZ"
+msgstr "קובץ SVG: דחיסה לקובץ SVGZ"
+
+#: Menu
+msgid "SVG: Decompress SVGZ"
+msgstr "קובצי SVG: פרישׂת קובץ SVGZ דחוס"
+
+#: Menu
+msgid "SVG: Export to EPS"
+msgstr "תמונה: ייצוא כקובץ EPS"
+
+#: Menu
+msgid "SVG: Export to PDF"
+msgstr "קובץ SVG: ייצוא כקובץ PDF"
+
+#: Menu
+msgid "SVG: Export to PNG (256 px)"
+msgstr "קובץ SVG: ייצוא כקובץ PNG ‏(256 נק׳)"
+
+#: Menu
+msgid "SVG: Export to PNG (512 px)"
+msgstr "קובץ SVG: ייצוא כקובץ PNG ‏(512 נק׳)"
+
+#: Menu
+msgid "SVG: Export to PNG (1024 px)"
+msgstr "קובץ SVG: ייצוא כקובץ PNG ‏(1024 נק׳)"
+
+#: Menu
+msgid "SVG: Replace fonts to Charter"
+msgstr "קובץ SVG: החלפת הגופנים לגופן Charter"
+
+#: Menu
+msgid "SVG: Replace fonts to Helvetica"
+msgstr "קובץ SVG: החלפת הגופנים לגופן Helvetica"
+
+#: Menu
+msgid "SVG: Replace fonts to Times"
+msgstr "קובץ SVG: החלפת הגופנים לגופן Times"
+
+#: Menu
+msgid "Terminal"
+msgstr "מסוף"
+
+#: Menu
+msgid "Text: Concatenate multiple files"
+msgstr "טקסט: שרשור קבצים מרובים"
+
+#: Menu
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "טקסט: המרת טאבים ל־4 רווחים"
+
+#: Menu
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "טקסט: נרמול (UTF-8, רקורסיבי)"
+
+#: Menu
+msgid "Text: Encode to UTF-8"
+msgstr "טקסט: המרה לקידוד UTF-8"
+
+#: Menu
+msgid "Text: List encodings"
+msgstr "טקסט: הצגת שיטות קידוד"
+
+#: Menu
+msgid "Text: List issues"
+msgstr "טקסט: הצגת בעיות"
+
+#: Menu
+msgid "Text: List invalid chars"
+msgstr "טקסט: הצגת תווים לא תקניים"
+
+#: Menu
+msgid "Text: List line breaks"
+msgstr "טקסט: הצגת ירידות שורה"
+
+#: Menu
+msgid "Text: List line counts"
+msgstr "טקסט: הצגת מספרי שורות"
+
+#: Menu
+msgid "Text: List line lengths"
+msgstr "טקסט: הצגת אורכי שורות"
+
+#: Menu
+msgid "Text: List word counts"
+msgstr "טקסט: הצגת מספרי מילים"
+
+#: Menu
+msgid "Text: Remove trailing spaces"
+msgstr "שינוי שם: הסרת רווחים מיותרים"
+
+#: Menu
+msgid "Text: Remove accents"
+msgstr "טקסט: הסרת סימנים דיאקריטיים מהאותיות"
+
+#: Menu
+msgid "URL: Check HTTP status"
+msgstr "כתובת: בדיקת מצב HTTP"
+
+#: Menu
+msgid "URL: Download file"
+msgstr "כתובת: הורדת קובץ"
+
+#: Menu
+msgid "URL: Show HTTP headers"
+msgstr "כתובת: הצגת כותרות HTTP"
+
+#: Menu
+msgid "Verify MD5 file"
+msgstr "אימות קובץ MD5"
+
+#: Menu
+msgid "Verify SHA1 file"
+msgstr "אימות קובץ SHA1"
+
+#: Menu
+msgid "Verify SHA256 file"
+msgstr "אימות קובץ SHA256"
+
+#: Menu
+msgid "Verify SHA512 file"
+msgstr "אימות קובץ SHA512"
+
+#: Menu
+msgid "Video: Aspect to 1:1"
+msgstr "וידאו: שינוי ליחס תצוגה 1:1"
+
+#: Menu
+msgid "Video: Aspect to 2.21:1"
+msgstr "וידאו: שינוי ליחס תצוגה 2.21:1"
+
+#: Menu
+msgid "Video: Aspect to 2.35:1"
+msgstr "וידאו: שינוי ליחס תצוגה 2.35:1"
+
+#: Menu
+msgid "Video: Aspect to 2.39:1"
+msgstr "וידאו: שינוי ליחס תצוגה 2.39:1"
+
+#: Menu
+msgid "Video: Aspect to 4:3"
+msgstr "וידאו: שינוי ליחס תצוגה 4:3"
+
+#: Menu
+msgid "Video: Aspect to 5:4"
+msgstr "וידאו: שינוי ליחס תצוגה 5:4"
+
+#: Menu
+msgid "Video: Aspect to 16:9"
+msgstr "וידאו: שינוי ליחס תצוגה 16:9"
+
+#: Menu
+msgid "Video: Aspect to 16:10"
+msgstr "וידאו: שינוי ליחס תצוגה 16:10"
+
+#: Menu
+msgid "Video: Convert to MKV"
+msgstr "וידאו: המרה לקובץ MKV"
+
+#: Menu
+msgid "Video: Convert to MKV (copy)"
+msgstr "וידאו: המרה לקובץ MKV (עותק)"
+
+#: Menu
+msgid "Video: Convert to MP4"
+msgstr "וידאו: המרה לקובץ MP4"
+
+#: Menu
+msgid "Video: Convert to MP4 (copy)"
+msgstr "וידאו: המרה לקובץ MP4 (עותק)"
+
+#: Menu
+msgid "Video: Export frames (1 FPS)"
+msgstr "וידאו: ייצוא תמוניות (1 FPS)"
+
+#: Menu
+msgid "Video: Export frames (5 FPS)"
+msgstr "וידאו: ייצוא תמוניות (5 FPS)"
+
+#: Menu
+msgid "Video: Export frames (10 FPS)"
+msgstr "וידאו: ייצוא תמוניות (10 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF"
+msgstr "וידאו: ייצוא כקובץ GIF"
+
+#: Menu
+msgid "Video: Extract audio"
+msgstr "וידאו: חילוץ שמע"
+
+#: Menu
+msgid "Video: Flip (horizontal)"
+msgstr "וידאו: היפוך (אופקי)"
+
+#: Menu
+msgid "Video: Flip (vertical)"
+msgstr "וידאו: היפוך (אנכי)"
+
+#: Menu
+msgid "Video: Frame rate to 30 FPS"
+msgstr "וידאו: שינוי קצב התמוניות ל־30 FPS"
+
+#: Menu
+msgid "Video: Frame rate to 60 FPS"
+msgstr "וידאו: שינוי קצב התמוניות ל־60 FPS"
+
+#: Menu
+msgid "Video: Remove audio"
+msgstr "וידאו: הסרת שמע"
+
+#: Menu
+msgid "Video: Resize (25 pct)"
+msgstr "וידאו: שינוי גודל (25 pct)"
+
+#: Menu
+msgid "Video: Resize (50 pct)"
+msgstr "וידאו: שינוי גודל (50 pct)"
+
+#: Menu
+msgid "Video: Resize (75 pct)"
+msgstr "וידאו: שינוי גודל (75 pct)"
+
+#: Menu
+msgid "Video: Rotate (90 deg)"
+msgstr "וידאו: סיבוב (90 מעלות)"
+
+#: Menu
+msgid "Video: Rotate (180 deg)"
+msgstr "וידאו: סיבוב (180 מעלות)"
+
+#: Menu
+msgid "Video: Rotate (270 deg)"
+msgstr "וידאו: סיבוב (270 מעלות)"
+
+#: Menu
+msgid "Video: Speed to 0.5"
+msgstr "וידאו: שינוי למהירות 0.5"
+
+#: Menu
+msgid "Video: Speed to 1.5"
+msgstr "וידאו: שינוי למהירות 1.5"
+
+#: Menu
+msgid "Video: Speed to 2.0"
+msgstr "וידאו: שינוי למהירות 2.0"
+
+#: install.sh
+msgid "Check for basic dependencies"
+msgstr "בדיקה לאיתור תלויות בסיסיות"
+
+#: install.sh
+msgid "Remove previously installed scripts"
+msgstr "הסרת סקריפטים שהותקנו קודם לכן"
+
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr "התקנת קיצורי מקשים"
+
+#: install.sh
+msgid "Close the file manager to reload configurations"
+msgstr "יש לסגור את מנהל הקבצים בשביל לטעון מחדש את הגדרות התצורה"
+
+#: install.sh
+msgid "Add shortcuts to the application menu"
+msgstr "הוספת קיצורים לתפריט היישומים"
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr "התקנת Homebrew (רשות)"
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr "נא לבחור אילו קטגוריות של סקריפטים להתקין"
+
+#: install.sh
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr "נא לבחור מבין האפשרויות (<SPACE> בשביל לסמן, <ENTER> בשביל לאשר):"
+
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr "מתבצעת התקנה במצב לא מודרך..."
+
+#: install.sh
+msgid "Installing:"
+msgstr "התקנה:"
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr "התקנת קיצורי היישומים לתפריט:"
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr "ההתקנה הושלמה בהצלחה!"
+
+#: install.sh
+msgid "Checking for basic dependencies:"
+msgstr "מתבצעת בדיקה לאיתור תלויות בסיסיות:"
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr "כל התלויות כבר מולאו."
+
+#: install.sh
+msgid "Copying files..."
+msgstr "הקבצים מועתקים..."
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr "קיצורי המקשים מותקנים..."
+
+#: install.sh
+msgid "Scripts"
+msgstr "סקריפטים להרצה"
+
+#: install.sh
+msgid "Creating shortcuts to the application menu..."
+msgstr "הקיצורים נוצרים בתפריט היישומים..."
+
+#: install.sh
+msgid "Creating GNOME Shell application folder..."
+msgstr "נוצרת תיקיית יישום מעטפת GNOME..."
+
+#: install.sh
+msgid "Installing actions in the context menu..."
+msgstr "הפעולות מותקנות בתפריט ההקשר..."
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr "מנהל הקבצים נסגר..."
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr "התקנת Homebrew:"
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr "החבילה של Homebrew כבר מותקנת."
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr "התקנת Homebrew אל:"
+
+#: install.sh
+msgid "Downloading the package..."
+msgstr "החבילה מתקבלת..."
+
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr "לא נמצא מנהל חבילות!"
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr "נכשלה התקנת Homebrew!"
+
+msgid "EOF"
+msgstr "EOF"
