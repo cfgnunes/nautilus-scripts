@@ -1640,6 +1640,10 @@ msgid "Scan for malware (via ClamAV)"
 msgstr "Quét phần mềm độc hại (qua ClamAV)"
 
 #: Menu
+msgid "Scan for malware (via Lenspect)"
+msgstr "Quét phần mềm độc hại (qua Lenspect)"
+
+#: Menu
 msgid "Show files information"
 msgstr "Hiển thị thông tin tệp"
 

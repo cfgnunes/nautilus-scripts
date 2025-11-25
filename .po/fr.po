@@ -1640,6 +1640,10 @@ msgid "Scan for malware (via ClamAV)"
 msgstr "Rechercher les logiciels malveillants (via ClamAV)"
 
 #: Menu
+msgid "Scan for malware (via Lenspect)"
+msgstr "Rechercher les logiciels malveillants (via Lenspect)"
+
+#: Menu
 msgid "Show files information"
 msgstr "Afficher les informations des fichiers"
 
