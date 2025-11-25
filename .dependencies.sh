@@ -325,6 +325,18 @@ declare -A DEPENDENCIES_MAP=(
         brew:
     "
 
+    ["lenspect"]="
+        pkg:
+        apt:
+        dnf:
+        pacman:
+        nix:
+        zypper:
+        guix:
+        brew:
+        flatpak: io.github.vmkspv.lenspect
+    "
+
     ["lha"]="
         pkg:    lhasa
         apt:    lhasa
