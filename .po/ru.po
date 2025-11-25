@@ -194,9 +194,6 @@ msgstr "ссылки"
 msgid "Inode"
 msgstr "Inode"
 
-msgid "Lenspect is not installed. Please install it via Flatpak or from your distribution."
-msgstr "Lenspect не установлен. Установите его через Flatpak или из репозитория дистрибутива."
-
 msgid "Link"
 msgstr "Ссылка"
 

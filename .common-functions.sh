@@ -48,6 +48,7 @@ MSG_INFO="[\033[0;32m INFO \033[0m]"
 
 # Defines the priority order of package managers.
 PKG_MANAGER_PRIORITY=(
+    "flatpak"
     "brew"
     "nix"
     "apt-get"
@@ -739,6 +740,7 @@ _deps_install_missing_packages() {
 # - "nix"         : For Nix-based systems.
 # - "brew"        : For Homebrew package manager.
 # - "guix"        : For GNU Guix systems.
+# - "flatpak"     : For Flatpak packages.
 #
 # PARAMETERS:
 #   $1 (pkg_list): A space-separated list of "<pkg_manager>:<package>" pairs.
@@ -791,6 +793,9 @@ _deps_install_packages() {
         "dnf")
             cmd_inst+="dnf check-update &>/dev/null;"
             cmd_inst+="dnf -y install $packages &>/dev/null"
+            ;;
+        "flatpak")
+            cmd_inst+="flatpak install -y $packages &>/dev/null"
             ;;
         "rpm-ostree")
             cmd_inst+="rpm-ostree install $packages &>/dev/null"
@@ -963,6 +968,7 @@ _deps_check_rpm_ostree_requires_reboot() {
 #      - "nix"         : For Nix-based systems.
 #      - "brew"        : For Homebrew package manager.
 #      - "guix"        : For GNU Guix systems.
+#      - "flatpak"     : For Flatpak packages.
 #   $2 (package): The name of the package to check.
 #
 # RETURNS:
@@ -986,6 +992,12 @@ _deps_is_package_installed() {
         ;;
     "dnf")
         if dnf repoquery --installed --qf "%{name}\n" |
+            grep -qxF "$package"; then
+            return 0
+        fi
+        ;;
+    "flatpak")
+        if flatpak list --app --columns=application |
             grep -qxF "$package"; then
             return 0
         fi
