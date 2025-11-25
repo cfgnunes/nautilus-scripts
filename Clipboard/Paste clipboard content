@@ -37,6 +37,7 @@ _save_file_from_clipboard() {
 
     # Define a mapping between MIME types and file extensions.
     declare -A mime_map=(
+        ["text/plain;charset=utf-8"]="txt"
         ["text/plain"]="txt"
         ["image/png"]="png"
         ["image/jpeg"]="jpg"
