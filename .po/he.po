@@ -165,7 +165,7 @@ msgid "Could not find the output directory!"
 msgstr "לא נמצאה תיקיית הפלט!"
 
 msgid "Accessed recently"
-msgstr "מועד גישה אחרון"
+msgstr "היו בשימוש לאחרונה"
 
 msgid "File"
 msgstr "קובץ"
@@ -1617,11 +1617,11 @@ msgstr "שינוי שם: המרה לאותיות קטנות (רקורסיבית)
 
 #: Menu
 msgid "Rename: To sentence case"
-msgstr ""
+msgstr "שינוי שם: החלת אותיות רישיות כמקובל במשפט תקני"
 
 #: Menu
 msgid "Rename: To title case"
-msgstr ""
+msgstr "שינוי שם: החלת אותיות רישיות כמקובל בכותרות"
 
 #: Menu
 msgid "Rename: To uppercase"
