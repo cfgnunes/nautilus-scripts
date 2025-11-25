@@ -193,6 +193,9 @@ msgstr ""
 msgid "Inode"
 msgstr ""
 
+msgid "Lenspect is not installed. Please install it via Flatpak or from your distribution."
+msgstr ""
+
 msgid "Link"
 msgstr ""
 
@@ -1636,6 +1639,10 @@ msgstr ""
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"
+msgstr ""
+
+#: Menu
+msgid "Scan for malware (via Lenspect)"
 msgstr ""
 
 #: Menu

@@ -192,6 +192,9 @@ msgstr "ссылки"
 msgid "Inode"
 msgstr "Inode"
 
+msgid "Lenspect is not installed. Please install it via Flatpak or from your distribution."
+msgstr "Lenspect не установлен. Установите его через Flatpak или из репозитория дистрибутива."
+
 msgid "Link"
 msgstr "Ссылка"
 
@@ -1636,6 +1639,10 @@ msgstr "Сбросить разрешения (рекурсивно)"
 #: Menu
 msgid "Scan for malware (via ClamAV)"
 msgstr "Сканировать на вредоносное ПО (ClamAV)"
+
+#: Menu
+msgid "Scan for malware (via Lenspect)"
+msgstr "Сканировать на вредоносное ПО (Lenspect)"
 
 #: Menu
 msgid "Show files information"
