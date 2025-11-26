@@ -1,0 +1,2026 @@
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Enhanced File Manager Actions for Linux\n"
+"POT-Creation-Date: 2025-11-13 12:12-0300\n"
+"PO-Revision-Date: 2025-11-26 12:41+0100\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Done!"
+msgstr "Afgerond!"
+
+msgid "files"
+msgstr "bestanden"
+
+msgid "Would you like to continue?"
+msgstr "Wilt u doorgaan?"
+
+msgid "directories"
+msgstr "mappen"
+
+msgid "items"
+msgstr "items"
+
+msgid "The command failed."
+msgstr "De opdracht kan niet worden uitgevoerd."
+
+msgid "The output file does not exist."
+msgstr "Het uitvoerbestand bestaat niet."
+
+msgid "Finished with errors! See the log:"
+msgstr "Afgerond, maar met foutmeldingen. Bekijk het logboek:"
+
+msgid "Your system does not support clipboard operations."
+msgstr "Uw systeem heeft geen ondersteuning voor klembordacties."
+
+msgid "Could not find a package for:"
+msgstr "Er is geen pakket aangetroffen voor:"
+
+msgid "The following packages are missing:"
+msgstr "De volgende pakketten ontbreken:"
+
+msgid "Would you like to install them?"
+msgstr "Wilt u ze installeren?"
+
+msgid "Installing the packages. Please, wait..."
+msgstr "Bezig met installeren van pakketten…"
+
+msgid "The package was installed, but a system reboot is required."
+msgstr "Het pakket is geïnstalleerd, maar werkt pas na een herstart."
+
+msgid "Could not install the package:"
+msgstr "Het pakket kan niet worden geïnstalleerd:"
+
+msgid "This action will delete the selected items."
+msgstr "Door deze actie worden de gekozen items verwijderd."
+
+msgid "Total selected:"
+msgstr "Gekozen:"
+
+msgid "Total:"
+msgstr "Totaal:"
+
+msgid "Some items could not be deleted."
+msgstr "Sommige items kunnen niet worden verwijderd."
+
+msgid "All items were successfully deleted!"
+msgstr "Alle items zijn verwijderd!"
+
+msgid "Could not access the directory:"
+msgstr "Er is geen toegang tot de map:"
+
+msgid "The destination file already exists."
+msgstr "Het doelbestand bestaat al."
+
+msgid "Unable to move."
+msgstr "Het verplaatsen is mislukt."
+
+msgid "OK"
+msgstr "Oké"
+
+msgid "Cancel"
+msgstr "Annuleren"
+
+msgid "(Empty)"
+msgstr "(leeg)"
+
+msgid "Select the ones to open:"
+msgstr "Kies de te openen items:"
+
+msgid "Select the ones to reveal in the file manager:"
+msgstr "Kies de in de bestandsbeheerder te tonen items:"
+
+msgid "Select the ones to open in the web browser:"
+msgstr "Kies de in de webbrowser te openen items:"
+
+msgid "Select the ones to delete:"
+msgstr "Kies de te verwijderen items:"
+
+msgid "Password"
+msgstr "Wachtwoord"
+
+msgid "Type your password:"
+msgstr "Voer uw wachtwoord in:"
+
+msgid "The password can not be empty!"
+msgstr "Het wachtwoord mag niet blanco zijn!"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nee"
+
+msgid "Finished! The output files are in:"
+msgstr "Afgerond! De uitvoerbestanden zijn te vinden in:"
+
+msgid "Finished, but there is nothing to do."
+msgstr "Afgerond, maar er is niets te doen."
+
+msgid "Finished!"
+msgstr "Afgerond!"
+
+msgid "Running the task. Please, wait..."
+msgstr "Bezig met uitvoeren van taak…"
+
+msgid "No default application is set for the type:"
+msgstr "Er is geen standaardtoepassing ingesteld voor:"
+
+msgid "Could not find the executable to open MIME type:"
+msgstr "Er is geen programma aangetroffen dat dit mimetype kan openen:"
+
+msgid "Batch mode detected."
+msgstr "Reeks aangetroffen."
+
+msgid "Each file inside this directory will be processed individually."
+msgstr "Ieder bestand in deze map zal individueel worden behandeld."
+
+msgid "files or directories"
+msgstr "bestanden of mappen"
+
+msgid "You must select files with extension:"
+msgstr "Kies bestanden met deze extensie:"
+
+msgid "Invalid input file!"
+msgstr "Ongeldig invoerbestand!"
+
+msgid "You must select"
+msgstr "Kies"
+
+msgid "You must select at least"
+msgstr "Kies ten minste"
+
+msgid "You must select up to"
+msgstr "Kies maximaal"
+
+msgid "Could not find the output directory!"
+msgstr "De uitvoermap is niet aangetroffen!"
+
+msgid "Accessed recently"
+msgstr "Onlangs bezocht"
+
+msgid "File"
+msgstr "Bestand"
+
+msgid "Count"
+msgstr "Aantal"
+
+msgid "Char"
+msgstr "Tekens"
+
+msgid "Line"
+msgstr "Regels"
+
+msgid "Issues"
+msgstr "Problemen"
+
+msgid "Encoding"
+msgstr "Encodering"
+
+msgid "There are no valid paths in the clipboard!"
+msgstr "Er staan geen geldige locaties op het klembord!"
+
+msgid "links"
+msgstr "links"
+
+msgid "Inode"
+msgstr "Inode"
+
+msgid "Link"
+msgstr "Link"
+
+msgid "Unsupported clipboard type."
+msgstr "Niet-ondersteund klembordtype."
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr ""
+"Door deze actie worden de gekozen bestanden en mappen van naam gewijzigd."
+
+msgid "PDF files"
+msgstr "Pdf-bestanden"
+
+msgid "Select a PDF to use as the watermark"
+msgstr "Kies een pdf-bestand om als watermerk te gebruiken"
+
+msgid "Signature"
+msgstr "Handtekening"
+
+msgid "This action will permanently delete the selected files."
+msgstr "Door deze actie worden de gekozen items permanent verwijderd."
+
+msgid "Malware"
+msgstr "Malware"
+
+msgid "Mode"
+msgstr "Modus"
+
+msgid "Bit rate"
+msgstr "Bitsnelheid"
+
+msgid "Sampling rate"
+msgstr "Samplesnelheid"
+
+msgid "Channels"
+msgstr "Aantal kanalen"
+
+msgid "Duration"
+msgstr "Duur"
+
+msgid "Album"
+msgstr "Album"
+
+msgid "Artist"
+msgstr "Artiest"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Quality"
+msgstr "Kwaliteit"
+
+msgid "Image files"
+msgstr "Afbeeldingsbestanden"
+
+msgid "Select an image to use as the watermark"
+msgstr "Kies een afbeelding om als watermerk te gebruiken"
+
+msgid "Key files"
+msgstr "Sleutelbestanden"
+
+msgid "Select a key file to import"
+msgstr "Kies een te importeren sleutelbestand"
+
+msgid "No secret keys were found."
+msgstr "Er zijn geen sleutels aangetroffen."
+
+msgid "Would you like to import a key now?"
+msgstr "Wilt u een sleutel importeren?"
+
+msgid "Failed to import the key!"
+msgstr "De sleutel kan niet worden geïmporteerd!"
+
+msgid "Select a user:"
+msgstr "Kies een gebruiker:"
+
+msgid "User"
+msgstr "Gebruiker"
+
+msgid "Name"
+msgstr "Naam"
+
+msgid "E-mail"
+msgstr "E-mailadres"
+
+msgid "Created"
+msgstr "Gemaakt op"
+
+msgid "Expires"
+msgstr "Vervalt op"
+
+msgid "You must select a user!"
+msgstr "Kies een gebruiker!"
+
+msgid "No public keys were found."
+msgstr "Er zijn geen openbare sleutels aangetroffen."
+
+msgid "Select one or more users:"
+msgstr "Kies een of meerdere gebruikers:"
+
+msgid "You must select at least one user!"
+msgstr "Kies minimaal één gebruiker!"
+
+msgid "Directory"
+msgstr "Map"
+
+msgid "Size"
+msgstr "Grootte"
+
+msgid "Group"
+msgstr "Groep"
+
+msgid "Item"
+msgstr "Item"
+
+msgid "Octal"
+msgstr "Octaal"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "You must select only two images to compare!"
+msgstr "Kies slechts twee te vergelijken afbeeldingen!"
+
+msgid "You must select only two PDFs to compare!"
+msgstr "Kies slechts twee te vergelijken pdf-bestanden!"
+
+msgid "You must select only two binary files to compare!"
+msgstr "Kies slechts twee te vergelijken binaire bestanden!"
+
+msgid "The selected items are identical."
+msgstr "De gekozen items zijn identiek."
+
+msgid "The selected images has same pixel values."
+msgstr "De gekozen items hebben dezelfde pixelwaarden."
+
+msgid "MIME"
+msgstr "Mimetype"
+
+msgid ""
+"This action will move all files from subdirectories to the root of the "
+"selected directory."
+msgstr ""
+"Door deze actie worden alle bestanden uit onderliggende mappen naar de "
+"bovenliggende map verplaatst."
+
+msgid "This action will reset the permissions recursively."
+msgstr "Door deze actie worden de toegangsrechten hersteld."
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Time"
+msgstr "Tijd"
+
+msgid "Select the output filename:"
+msgstr "Geef het resultaatbestand een naam:"
+
+msgid "Filename"
+msgstr "Bestandsnaam"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr ""
+"Er staan geen geldige url's op het klembord of in de gekozen bestanden!"
+
+msgid "IPs"
+msgstr "IP-adressen"
+
+msgid "IP"
+msgstr "IP-adres"
+
+msgid "Ping"
+msgstr "Ping"
+
+msgid "Ports"
+msgstr "Poorten"
+
+msgid "Hostname"
+msgstr "Hostnaam"
+
+msgid "Example"
+msgstr "Voorbeeld"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "Voer IP-adressen of -bereiken in."
+
+msgid "There are no valid IPs in the input!"
+msgstr "Er zijn geen geldige IP-adressen aangetroffen!"
+
+msgid "Enter the URLs."
+msgstr "Voer de url's in."
+
+msgid "There are no valid URLs in the input!"
+msgstr "Er zijn geen geldige url's aangetroffen!"
+
+msgid "No remote URL found."
+msgstr "De url kan niet worden bereikt."
+
+msgid "URLs"
+msgstr "Url's"
+
+msgid "HTTP code"
+msgstr "Http-code"
+
+msgid "URL"
+msgstr "Url"
+
+msgid "(No differences)"
+msgstr "(geen verschillen)"
+
+msgid "(No line break)"
+msgstr "(geen regel-einde)"
+
+msgid "(No response)"
+msgstr "(geen antwoord)"
+
+msgid "Checksum mismatch."
+msgstr "De controlesom komt niet overeen."
+
+msgid "File does not exist."
+msgstr "Het bestand bestaat niet."
+
+msgid "High"
+msgstr "Hoog"
+
+msgid "Low"
+msgstr "Laag"
+
+msgid "Medium"
+msgstr "Gemiddeld"
+
+msgid "Online"
+msgstr "Online"
+
+msgid "Offline"
+msgstr "Offline"
+
+msgid "Valid signature"
+msgstr "Geldige handtekening"
+
+msgid "Invalid signature"
+msgstr "Ongeldige handtekening"
+
+msgid "Missing key"
+msgstr "Ontbrekende sleutel"
+
+msgid "Missing data file"
+msgstr "Ontbrekend gegevensbestand"
+
+msgid "Revoked key"
+msgstr "Ingetrokken sleutel"
+
+msgid "Expired key"
+msgstr "Verlopen sleutel"
+
+msgid "Expired signature"
+msgstr "Verlopen handtekening"
+
+msgid "Unknown algorithm"
+msgstr "Onbekend algoritme"
+
+msgid "Key ID"
+msgstr "Sleutel-id"
+
+msgid "Enter the password for the archive:"
+msgstr "Voer het archiefwachtwoord in:"
+
+msgid "Select the output directory"
+msgstr "Kies de uitvoermap"
+
+msgid "Select input directories"
+msgstr "Kies de invoermappen"
+
+msgid "Select input files"
+msgstr "Kies de invoerbestanden"
+
+#: Menu
+msgid "Archive"
+msgstr "Archief"
+
+#: Menu
+msgid "Audio and Video"
+msgstr "Audio en video"
+
+#: Menu
+msgid "Checksum"
+msgstr "Controlesom"
+
+#: Menu
+msgid "Clipboard"
+msgstr "Klembord"
+
+#: Menu
+msgid "Directories and Files"
+msgstr "Bestanden en mappen"
+
+#: Menu
+msgid "Document"
+msgstr "Document"
+
+#: Menu
+msgid "Encryption"
+msgstr "Versleuteling"
+
+#: Menu
+msgid "Image"
+msgstr "Afbeelding"
+
+#: Menu
+msgid "Links"
+msgstr "Links"
+
+#: Menu
+msgid "Network and Internet"
+msgstr "Netwerk en internet"
+
+#: Menu
+msgid "Open with"
+msgstr "Openen met"
+
+#: Menu
+msgid "Plain text"
+msgstr "Platte tekst"
+
+#: Menu
+msgid "Rename files"
+msgstr "Bestandsnamen wĳzigen"
+
+#: Menu
+msgid "Security and Recovery"
+msgstr "Beveiliging en herstel"
+
+#: Menu
+msgid "Audio and Video: Tools"
+msgstr "Audio en video: hulpmiddelen"
+
+#: Menu
+msgid "Audio: Channels"
+msgstr "Audio: kanalen"
+
+#: Menu
+msgid "Audio: Convert"
+msgstr "Audio: converteren"
+
+#: Menu
+msgid "Audio: Effects"
+msgstr "Audio: effecten"
+
+#: Menu
+msgid "Audio: MP3 files"
+msgstr "Audio: mp3-bestanden"
+
+#: Menu
+msgid "Audio: Quality"
+msgstr "Audio: kwaliteit"
+
+#: Menu
+msgid "Document: Convert"
+msgstr "Document: converteren"
+
+#: Menu
+msgid "Document: Print"
+msgstr "Document: afdrukken"
+
+#: Menu
+msgid "Image: Color"
+msgstr "Afbeelding: kleur"
+
+#: Menu
+msgid "Image: Combine, Split"
+msgstr "Afbeelding: combineren, splitsen"
+
+#: Menu
+msgid "Image: Convert"
+msgstr "Afbeelding: converteren"
+
+#: Menu
+msgid "Image: Crop, Resize"
+msgstr "Afbeelding: bijsnijden, afmetingen wĳzigen"
+
+#: Menu
+msgid "Image: Flip, Rotate"
+msgstr "Afbeelding: spiegelen, draaien"
+
+#: Menu
+msgid "Image: Icons"
+msgstr "Afbeelding: pictogrammen"
+
+#: Menu
+msgid "Image: Metadata, Exif"
+msgstr "Afbeelding: metagegevens, Exif"
+
+#: Menu
+msgid "Image: Optimize, Reduce"
+msgstr "Afbeelding: optimaliseren, verkleinen"
+
+#: Menu
+msgid "Image: Similarity"
+msgstr "Afbeelding: vergelijking"
+
+#: Menu
+msgid "Image: SVG files"
+msgstr "Afbeelding: svg-bestanden"
+
+#: Menu
+msgid "Image: Text recognition (OCR)"
+msgstr "Afbeelding: tekstherkenning (ocr)"
+
+#: Menu
+msgid "Image: Transparency"
+msgstr "Afbeelding: doorzichtigheid"
+
+#: Menu
+msgid "Image: Watermark"
+msgstr "Afbeelding: watermerk"
+
+#: Menu
+msgid "PDF: Annotations"
+msgstr "PDF: aantekeningen"
+
+#: Menu
+msgid "PDF: Combine, Split"
+msgstr "PDF: combineren, splitsen"
+
+#: Menu
+msgid "PDF: Security"
+msgstr "PDF: beveiliging"
+
+#: Menu
+msgid "PDF: Multiple-page layout"
+msgstr "PDF: meerdere pagina's"
+
+#: Menu
+msgid "PDF: Optimize, Reduce"
+msgstr "PDF: optimaliseren, verkleinen"
+
+#: Menu
+msgid "PDF: Page size"
+msgstr "PDF: paginagrootte"
+
+#: Menu
+msgid "PDF: Rotate"
+msgstr "PDF: draaien"
+
+#: Menu
+msgid "PDF: Signatures"
+msgstr "PDF: handtekeningen"
+
+#: Menu
+msgid "PDF: Text recognition (OCR)"
+msgstr "PDF: tekstherkenning (ocr)"
+
+#: Menu
+msgid "PDF: Tools"
+msgstr "PDF: hulpmiddelen"
+
+#: Menu
+msgid "PDF: Watermark"
+msgstr "PDF: watermerk"
+
+#: Menu
+msgid "Video: Aspect ratio"
+msgstr "Video: beeldverhouding"
+
+#: Menu
+msgid "Video: Audio track"
+msgstr "Video: audiospoor"
+
+#: Menu
+msgid "Video: Convert"
+msgstr "Video: converteren"
+
+#: Menu
+msgid "Video: Export frames"
+msgstr "Video: frames exporteren"
+
+#: Menu
+msgid "Video: Flip, Rotate"
+msgstr "Video: spiegelen, draaien"
+
+#: Menu
+msgid "Video: Frame rate"
+msgstr "Video: framesnelheid"
+
+#: Menu
+msgid "Video: Resize"
+msgstr "Video: grootte aanpassen"
+
+#: Menu
+msgid "Video: Speed"
+msgstr "Video: snelheid"
+
+#: Menu
+msgid "Audio: Check quality"
+msgstr "Audio: kwaliteit controleren"
+
+#: Menu
+msgid "Audio: Convert to FLAC"
+msgstr "Audio: converteren naar flac"
+
+#: Menu
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "Audio: converteren naar mp3 (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (192 kbps)"
+msgstr "Audio: converteren naar mp3 (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (320 kbps)"
+msgstr "Audio: converteren naar mp3 (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "Audio: converteren naar ogg (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (192 kbps)"
+msgstr "Audio: converteren naar ogg (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (320 kbps)"
+msgstr "Audio: converteren naar ogg (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "Audio: converteren naar opus (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (192 kbps)"
+msgstr "Audio: converteren naar opus (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (320 kbps)"
+msgstr "Audio: converteren naar opus (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to WAV"
+msgstr "Audio: converteren naar wav"
+
+#: Menu
+msgid "Audio: Fade-in"
+msgstr "Audio: opkomen"
+
+#: Menu
+msgid "Audio: Fade-out"
+msgstr "Audio: uitvagen"
+
+#: Menu
+msgid "Audio: Mix channels to mono"
+msgstr "Audio: kanalen mengen naar mono"
+
+#: Menu
+msgid "Audio: Mix two files"
+msgstr "Audio: twee bestanden mengen"
+
+#: Menu
+msgid "Audio: Volume normalize"
+msgstr "Audio: volumeniveau normaliseren"
+
+#: Menu
+msgid "Audio: Produce a spectrogram"
+msgstr "Audio: spectrogram opmaken"
+
+#: Menu
+msgid "Audio: Remove silence (sections)"
+msgstr "Audio: stiltes verwijderen (secties)"
+
+#: Menu
+msgid "Audio: Silence noise"
+msgstr "Audio: ruis onderdrukken"
+
+#: Menu
+msgid "Audio: Remove silence (extremities)"
+msgstr "Audio: stiltes verwijderen (extreem)"
+
+#: Menu
+msgid "Code Editor"
+msgstr "Codebewerker"
+
+#: Menu
+msgid "Compare items"
+msgstr "Items vergelijken"
+
+#: Menu
+msgid "Compare items (via Diff)"
+msgstr "Items vergelijken (via diff)"
+
+#: Menu
+msgid "Compress to '7z'"
+msgstr "Comprimeren naar 7z"
+
+#: Menu
+msgid "Compress to '7z' with password"
+msgstr "Comprimeren naar 7z (met wachtwoord)"
+
+#: Menu
+msgid "Compress to 'iso'"
+msgstr "Comprimeren naar iso"
+
+#: Menu
+msgid "Compress to 'squashfs'"
+msgstr "Comprimeren naar squashfs"
+
+#: Menu
+msgid "Compress to 'tar.gz'"
+msgstr "Comprimeren naar tar.gz"
+
+#: Menu
+msgid "Compress to 'tar.xz'"
+msgstr "Comprimeren naar tar.xz"
+
+#: Menu
+msgid "Compress to 'tar.zst'"
+msgstr "Comprimeren naar tar.zst"
+
+#: Menu
+msgid "Compress to 'zip'"
+msgstr "Comprimeren naar zip"
+
+#: Menu
+msgid "Compress to 'zip' with password"
+msgstr "Comprimeren naar zip (met wachtwoord)"
+
+#: Menu
+msgid "Compute all checksums"
+msgstr "Alle controlesommen berekenen"
+
+#: Menu
+msgid "Compute CRC32"
+msgstr "CRC32 berekenen"
+
+#: Menu
+msgid "Compute MD5"
+msgstr "MD5 berekenen"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "SHA1 berekenen"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "SHA256 berekenen"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "SHA512 berekenen"
+
+#: Menu
+msgid "Copy file contents"
+msgstr "Bestandsinhoud kopiëren"
+
+#: Menu
+msgid "Copy file names"
+msgstr "Bestandsnamen kopiëren"
+
+#: Menu
+msgid "Copy file names (recursive)"
+msgstr "Bestandsnamen kopiëren (recursief)"
+
+#: Menu
+msgid "Copy file paths"
+msgstr "Bestandslocaties kopiëren"
+
+#: Menu
+msgid "Copy file paths (recursive)"
+msgstr "Bestandslocaties kopiëren (recursief)"
+
+#: Menu
+msgid "Create hard link here"
+msgstr "Harde koppeling maken"
+
+#: Menu
+msgid "Create hard link to..."
+msgstr "Harde koppeling maken naar…"
+
+#: Menu
+msgid "Create symbolic link here"
+msgstr "Snelkoppeling maken"
+
+#: Menu
+msgid "Create symbolic link to..."
+msgstr "Snelkoppeling maken naar…"
+
+#: Menu
+msgid "Disk Usage Analyzer"
+msgstr "Schijfgebruik analyseren"
+
+#: Menu
+msgid "Document: Convert to DOCX"
+msgstr "Document: converteren naar docx"
+
+#: Menu
+msgid "Document: Convert to EPUB"
+msgstr "Document: converteren naar epub"
+
+#: Menu
+msgid "Document: Convert to FB2"
+msgstr "Document: converteren naar fb2"
+
+#: Menu
+msgid "Document: Convert to Markdown"
+msgstr "Document: converteren naar markdown"
+
+#: Menu
+msgid "Document: Convert to ODP"
+msgstr "Document: converteren naar odp"
+
+#: Menu
+msgid "Document: Convert to ODS"
+msgstr "Document: converteren naar ods"
+
+#: Menu
+msgid "Document: Convert to ODT"
+msgstr "Document: converteren naar odt"
+
+#: Menu
+msgid "Document: Convert to PDF"
+msgstr "Document: converteren naar pdf"
+
+#: Menu
+msgid "Document: Convert to PPTX"
+msgstr "Document: converteren naar pptx"
+
+#: Menu
+msgid "Document: Convert to TXT"
+msgstr "Document: converteren naar txt"
+
+#: Menu
+msgid "Document: Convert to XLSX"
+msgstr "Document: converteren naar xlsx"
+
+#: Menu
+msgid "Document: Print (A4)"
+msgstr "Document: afdrukken (A4)"
+
+#: Menu
+msgid "Document: Print (US Legal)"
+msgstr "Document: afdrukken (Amerikaanse aanmaning)"
+
+#: Menu
+msgid "Document: Print (US Letter)"
+msgstr "Document: afdrukken (Amerikaanse brief)"
+
+#: Menu
+msgid "Extract here"
+msgstr "Hier uitpakken"
+
+#: Menu
+msgid "File carving (via Foremost)"
+msgstr "Bestandsherstel (met Foremost)"
+
+#: Menu
+msgid "File carving (via PhotoRec)"
+msgstr "Bestandsherstel (met Photorec)"
+
+#: Menu
+msgid "Find broken links"
+msgstr "Zoeken naar onjuiste koppelingen"
+
+#: Menu
+msgid "Find duplicate files"
+msgstr "Zoeken naar duplicaten"
+
+#: Menu
+msgid "Find empty directories"
+msgstr "Zoeken naar lege mappen"
+
+#: Menu
+msgid "List hidden files"
+msgstr "Verborgen bestanden tonen"
+
+#: Menu
+msgid "Find junk files"
+msgstr "Zoeken naar overbodige bestanden"
+
+#: Menu
+msgid "Find empty files"
+msgstr "Zoeken naar lege bestanden"
+
+#: Menu
+msgid "Flatten directory structure"
+msgstr "Mapstructuur afvlakken"
+
+#: Menu
+msgid "Generate MD5 file"
+msgstr "MD5-bestand genereren"
+
+#: Menu
+msgid "Generate SHA1 file"
+msgstr "SHA1-bestand genereren"
+
+#: Menu
+msgid "Generate SHA256 file"
+msgstr "SHA256-bestand genereren"
+
+#: Menu
+msgid "Generate SHA512 file"
+msgstr "SHA512-bestand genereren"
+
+#: Menu
+msgid "Git: Clone URLs"
+msgstr "Git: url's klonen"
+
+#: Menu
+msgid "Git: Open repository website"
+msgstr "Git: reposite openen"
+
+#: Menu
+msgid "Git: Reset and pull"
+msgstr "Git: terugzetten en pull"
+
+#: Menu
+msgid "Decrypt"
+msgstr "Ontsleutelen"
+
+#: Menu
+msgid "Encrypt with password"
+msgstr "Versleutelen met wachtwoord"
+
+#: Menu
+msgid "Encrypt with password (ASCII)"
+msgstr "Versleutelen met wachtwoord (ASCII)"
+
+#: Menu
+msgid "Encrypt with keys"
+msgstr "Versleutelen met sleutels"
+
+#: Menu
+msgid "Encrypt with keys (ASCII)"
+msgstr "Versleutelen met sleutels (ASCII)"
+
+#: Menu
+msgid "Import keys"
+msgstr "Sleutels importeren"
+
+#: Menu
+msgid "Sign"
+msgstr "Ondertekenen"
+
+#: Menu
+msgid "Sign (ASCII)"
+msgstr "Ondertekenen (ASCII)"
+
+#: Menu
+msgid "Sign (detached signature)"
+msgstr "Ondertekenen (losse handtekening)"
+
+#: Menu
+msgid "Verify signature"
+msgstr "Handtekening verifiëren"
+
+#: Menu
+msgid "Image: Add watermark (center)"
+msgstr "Afbeelding: watermerk toevoegen (midden)"
+
+#: Menu
+msgid "Image: Add watermark (north)"
+msgstr "Afbeelding: watermerk toevoegen (boven)"
+
+#: Menu
+msgid "Image: Add watermark (northeast)"
+msgstr "Afbeelding: watermerk toevoegen (rechtsboven)"
+
+#: Menu
+msgid "Image: Add watermark (northwest)"
+msgstr "Afbeelding: watermerk toevoegen (linksboven)"
+
+#: Menu
+msgid "Image: Add watermark (south)"
+msgstr "Afbeelding: watermerk toevoegen (onder)"
+
+#: Menu
+msgid "Image: Add watermark (southeast)"
+msgstr "Afbeelding: watermerk toevoegen (rechtsonder)"
+
+#: Menu
+msgid "Image: Add watermark (southwest)"
+msgstr "Afbeelding: watermerk toevoegen (linksonder)"
+
+#: Menu
+msgid "Image: Automatic crop"
+msgstr "Afbeelding: automatisch bijsnijden"
+
+#: Menu
+msgid "Image: Automatic crop (15 pct)"
+msgstr "Afbeelding: automatisch bijsnijden (15 pct.)"
+
+#: Menu
+msgid "Image: Background to alpha"
+msgstr "Afbeelding: achtergrond doorzichtig maken"
+
+#: Menu
+msgid "Image: Background to alpha (15 pct)"
+msgstr "Afbeelding: achtergrond doorzichtig maken (15 pct.)"
+
+#: Menu
+msgid "Image: Color alpha to black"
+msgstr "Afbeelding: doorzichtig → zwart"
+
+#: Menu
+msgid "Image: Color alpha to magenta"
+msgstr "Afbeelding: doorzichtig → magenta"
+
+#: Menu
+msgid "Image: Color alpha to white"
+msgstr "Afbeelding: doorzichtig → wit"
+
+#: Menu
+msgid "Image: Color black to alpha"
+msgstr "Afbeelding: zwart → doorzichtig"
+
+#: Menu
+msgid "Image: Color black to alpha (15 pct)"
+msgstr "Afbeelding: zwart → doorzichtig (15 pct.)"
+
+#: Menu
+msgid "Image: Color magenta to alpha"
+msgstr "Afbeelding: magenta → doorzichtig"
+
+#: Menu
+msgid "Image: Color magenta to alpha (15 pct)"
+msgstr "Afbeelding: magenta → doorzichtig (15 pct.)"
+
+#: Menu
+msgid "Image: Colorspace to gray"
+msgstr "Afbeelding: voorzien van grijswaarden"
+
+#: Menu
+msgid "Image: Color white to alpha"
+msgstr "Afbeelding: wit → doorzichtig"
+
+#: Menu
+msgid "Image: Color white to alpha (15 pct)"
+msgstr "Afbeelding: wit → doorzichtig (15 pct.)"
+
+#: Menu
+msgid "Image: Combine into a GIF"
+msgstr "Afbeelding: combineren naar gif-bestand"
+
+#: Menu
+msgid "Image: Combine into a PDF"
+msgstr "Afbeelding: combineren naar pdf-bestand"
+
+#: Menu
+msgid "Image: Convert to AVIF"
+msgstr "Afbeelding: converteren naar avif"
+
+#: Menu
+msgid "Image: Convert to BMP"
+msgstr "Afbeelding: converteren naar bmp"
+
+#: Menu
+msgid "Image: Convert to GIF"
+msgstr "Afbeelding: converteren naar gif"
+
+#: Menu
+msgid "Image: Convert to HEIC"
+msgstr "Afbeelding: converteren naar heic"
+
+#: Menu
+msgid "Image: Convert to JPG"
+msgstr "Afbeelding: converteren naar jpg"
+
+#: Menu
+msgid "Image: Convert to JXL"
+msgstr "Afbeelding: converteren naar jxl"
+
+#: Menu
+msgid "Image: Convert to PNG"
+msgstr "Afbeelding: converteren naar png"
+
+#: Menu
+msgid "Image: Convert to TIFF"
+msgstr "Afbeelding: converteren naar tiff"
+
+#: Menu
+msgid "Image: Convert to WebP"
+msgstr "Afbeelding: converteren naar webp"
+
+#: Menu
+msgid "Image: Create PNG icon (64 px)"
+msgstr "Afbeelding: png-pictogram maken (64 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (128 px)"
+msgstr "Afbeelding: png-pictogram maken (128 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (256 px)"
+msgstr "Afbeelding: png-pictogram maken (256 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (512 px)"
+msgstr "Afbeelding: png-pictogram maken (512 px)"
+
+#: Menu
+msgid "Image: Desaturate"
+msgstr "Afbeelding: ontkleuren"
+
+#: Menu
+msgid "Image: Export to PDF"
+msgstr "Afbeelding: exporteren naar pdf"
+
+#: Menu
+msgid "Image: Find similar (65 pct)"
+msgstr "Afbeelding: vergelijkbare zoeken (65 pct.)"
+
+#: Menu
+msgid "Image: Find similar (75 pct)"
+msgstr "Afbeelding: vergelijkbare zoeken (75 pct.)"
+
+#: Menu
+msgid "Image: Find similar (85 pct)"
+msgstr "Afbeelding: vergelijkbare zoeken (85 pct.)"
+
+#: Menu
+msgid "Image: Find similar (95 pct)"
+msgstr "Afbeelding: vergelijkbare zoeken (95 pct.)"
+
+#: Menu
+msgid "Image: Flip (horizontal)"
+msgstr "Afbeelding: spiegelen (horizontaal)"
+
+#: Menu
+msgid "Image: Flip (vertical)"
+msgstr "Afbeelding: spiegelen (verticaal)"
+
+#: Menu
+msgid "Image: Generate multiple hues"
+msgstr "Afbeelding: meerdere kleurverlopen maken"
+
+#: Menu
+msgid "Image: Optimize PNG"
+msgstr "Afbeelding: png optimaliseren"
+
+#: Menu
+msgid "Image: Perform OCR (English)"
+msgstr "Afbeelding: tekstherkenning uitvoeren (Engels)"
+
+#: Menu
+msgid "Image: Perform OCR (French)"
+msgstr "Afbeelding: tekstherkenning uitvoeren (Frans)"
+
+#: Menu
+msgid "Image: Perform OCR (German)"
+msgstr "Afbeelding: tekstherkenning uitvoeren (Duits)"
+
+#: Menu
+msgid "Image: Perform OCR (Italian)"
+msgstr "Afbeelding: tekstherkenning uitvoeren (Italiaans)"
+
+#: Menu
+msgid "Image: Perform OCR (Portuguese)"
+msgstr "Afbeelding: tekstherkenning uitvoeren (Portugees)"
+
+#: Menu
+msgid "Image: Perform OCR (Russian)"
+msgstr "Afbeelding: tekstherkenning uitvoeren (Russisch)"
+
+#: Menu
+msgid "Image: Perform OCR (Spanish)"
+msgstr "Afbeelding: tekstherkenning uitvoeren (Spaans)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 500kB max)"
+msgstr "Afbeelding: verkleinen (jpg - max. 500 kB)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 1000kB max)"
+msgstr "Afbeelding: verkleinen (jpg - max. 1000 kB)"
+
+#: Menu
+msgid "Image: Remove metadata"
+msgstr "Afbeelding: metagegevens wissen"
+
+#: Menu
+msgid "Image: Rename from metadata"
+msgstr "Afbeelding: naam wĳzigen a.d.h.v. metagegevens"
+
+#: Menu
+msgid "Image: Resize (25 pct)"
+msgstr "Afbeelding: grootte aanpassen (25 pct.)"
+
+#: Menu
+msgid "Image: Resize (50 pct)"
+msgstr "Afbeelding: grootte aanpassen (50 pct.)"
+
+#: Menu
+msgid "Image: Resize (75 pct)"
+msgstr "Afbeelding: grootte aanpassen (75 pct.)"
+
+#: Menu
+msgid "Image: Resize (512x512)"
+msgstr "Afbeelding: grootte aanpassen (512x512)"
+
+#: Menu
+msgid "Image: Resize (1080x1080)"
+msgstr "Afbeelding: grootte aanpassen (1080x1080)"
+
+#: Menu
+msgid "Image: Resize (1920x1080)"
+msgstr "Afbeelding: grootte aanpassen (1920x1080)"
+
+#: Menu
+msgid "Image: Resize (2560x1440)"
+msgstr "Afbeelding: grootte aanpassen (2560x1440)"
+
+#: Menu
+msgid "Image: Resize (3840x2160)"
+msgstr "Afbeelding: grootte aanpassen (3840x2160)"
+
+#: Menu
+msgid "Image: Rotate (90 deg)"
+msgstr "Afbeelding: draaien (90 grd.)"
+
+#: Menu
+msgid "Image: Rotate (180 deg)"
+msgstr "Afbeelding: draaien (180 grd.)"
+
+#: Menu
+msgid "Image: Rotate (270 deg)"
+msgstr "Afbeelding: draaien (270 grd.)"
+
+#: Menu
+msgid "Image: Split into 2 (horizontal)"
+msgstr "Afbeelding: in tweeën splitsen (horizontaal)"
+
+#: Menu
+msgid "Image: Split into 2 (vertical)"
+msgstr "Afbeelding: in tweeën splitsen (verticaal)"
+
+#: Menu
+msgid "Image: Split into 4"
+msgstr "Afbeelding: in vieren splitsen"
+
+#: Menu
+msgid "Image: Stack (horizontal)"
+msgstr "Afbeelding: stapelen (horizontaal)"
+
+#: Menu
+msgid "Image: Stack (vertical)"
+msgstr "Afbeelding: stapelen (verticaal)"
+
+#: Menu
+msgid "IP: Scanner"
+msgstr "IP: scanner"
+
+#: Menu
+msgid "List hard links"
+msgstr "Harde koppelingen tonen"
+
+#: Menu
+msgid "List largest directories"
+msgstr "Grootste mappen tonen"
+
+#: Menu
+msgid "List largest files"
+msgstr "Grootste bestanden tonen"
+
+#: Menu
+msgid "List permissions and owners"
+msgstr "Rechten en eigenaars tonen"
+
+#: Menu
+msgid "List recent files"
+msgstr "Recente bestanden tonen"
+
+#: Menu
+msgid "List symbolic links"
+msgstr "Snelkoppelingen tonen"
+
+#: Menu
+msgid "Media: Concatenate files"
+msgstr "Media: bestanden samenvoegen"
+
+#: Menu
+msgid "Media: Remove metadata"
+msgstr "Media: metagegevens wissen"
+
+#: Menu
+msgid "Media: Show basic metadata"
+msgstr "Media: metagegevens tonen"
+
+#: Menu
+msgid "MP3: (artist - title) Name to ID3"
+msgstr "MP3: (artiest - titel) naam → ID3"
+
+#: Menu
+msgid "MP3: (artist - title) ID3 to Name"
+msgstr "MP3: (artiest - titel) ID3 → naam"
+
+#: Menu
+msgid "MP3: Volume maximize (recursive)"
+msgstr "MP3: volumeniveau verhogen (recursief)"
+
+#: Menu
+msgid "MP3: Volume normalize (recursive)"
+msgstr "MP3: volumeniveau normaliseren (recursief)"
+
+#: Menu
+msgid "MP3: Repair (recursive)"
+msgstr "MP3: repareren (recursief)"
+
+#: Menu
+msgid "MP3: Show encoding details"
+msgstr "MP3: encoderingsinformatie tonen"
+
+#: Menu
+msgid "Open item location"
+msgstr "Itemlocatie openen"
+
+#: Menu
+msgid "Paste as hard link"
+msgstr "Plakken als harde koppeling"
+
+#: Menu
+msgid "Paste as symbolic link"
+msgstr "Plakken als snelkoppeling"
+
+#: Menu
+msgid "Paste clipboard content"
+msgstr "Klembordinhoud plakken"
+
+#: Menu
+msgid "PDF: Add watermark (over)"
+msgstr "PDF: watermerk toevoegen (bovenop)"
+
+#: Menu
+msgid "PDF: Add watermark (under)"
+msgstr "PDF: watermerk toevoegen (onderop)"
+
+#: Menu
+msgid "PDF: Combine multiple PDFs"
+msgstr "PDF: pdf-bestanden combineren"
+
+#: Menu
+msgid "PDF: Convert to PDFA-2b"
+msgstr "PDF: converteren naar PDFA-2b"
+
+#: Menu
+msgid "PDF: Remove password"
+msgstr "PDF: wachtwoord wissen"
+
+#: Menu
+msgid "PDF: Set a password"
+msgstr "PDF: wachtwoord instellen"
+
+#: Menu
+msgid "PDF: Extract images"
+msgstr "PDF: afbeeldingen extraheren"
+
+#: Menu
+msgid "PDF: Find annotated PDFs"
+msgstr "PDF: zoeken naar pdf's met aantekeningen"
+
+#: Menu
+msgid "PDF: Find non-linearized PDFs"
+msgstr "PDF: zoeken naar niet-lineaire pdf's"
+
+#: Menu
+msgid "PDF: Find non-searchable PDFs"
+msgstr "PDF: zoeken naar niet-doorzoekbare pdf's"
+
+#: Menu
+msgid "PDF: Find password-protected PDFs"
+msgstr "PDF: zoeken naar wachtwoord-beveiligde pdf's"
+
+#: Menu
+msgid "PDF: Find signed PDFs"
+msgstr "PDF: zoeken naar ondertekende pdf's"
+
+#: Menu
+msgid "PDF: Layout (landscape, 1x2)"
+msgstr "PDF: indeling (horizontaal, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x1)"
+msgstr "PDF: indeling (horizontaal, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x2)"
+msgstr "PDF: indeling (horizontaal, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x4)"
+msgstr "PDF: indeling (horizontaal, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 4x2)"
+msgstr "PDF: indeling (horizontaal, 4x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 1x2)"
+msgstr "PDF: indeling (verticaal, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x1)"
+msgstr "PDF: indeling (verticaal, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x2)"
+msgstr "PDF: indeling (verticaal, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x4)"
+msgstr "PDF: indeling (verticaal, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 4x2)"
+msgstr "PDF: indeling (verticaal, 4x2)"
+
+#: Menu
+msgid "PDF: Optimize for web (linearize)"
+msgstr "PDF: optimaliseren voor web (lineair maken)"
+
+#: Menu
+msgid "PDF: Set size (A3)"
+msgstr "PDF: grootte instellen (A3)"
+
+#: Menu
+msgid "PDF: Set size (A4)"
+msgstr "PDF: grootte instellen (A4)"
+
+#: Menu
+msgid "PDF: Set size (A5)"
+msgstr "PDF: grootte instellen (A5)"
+
+#: Menu
+msgid "PDF: Set size (US Legal)"
+msgstr "PDF: grootte instellen (Amerikaanse aanmaning)"
+
+#: Menu
+msgid "PDF: Set size (US Letter)"
+msgstr "PDF: grootte instellen (Amerikaanse brief)"
+
+#: Menu
+msgid "PDF: Perform OCR (English)"
+msgstr "PDF: tekstherkenning uitvoeren (Engels)"
+
+#: Menu
+msgid "PDF: Perform OCR (French)"
+msgstr "PDF: tekstherkenning uitvoeren (Frans)"
+
+#: Menu
+msgid "PDF: Perform OCR (German)"
+msgstr "PDF: tekstherkenning uitvoeren (Duits)"
+
+#: Menu
+msgid "PDF: Perform OCR (Italian)"
+msgstr "PDF: tekstherkenning uitvoeren (Italiaans)"
+
+#: Menu
+msgid "PDF: Perform OCR (Portuguese)"
+msgstr "PDF: tekstherkenning uitvoeren (Portugees)"
+
+#: Menu
+msgid "PDF: Perform OCR (Russian)"
+msgstr "PDF: tekstherkenning uitvoeren (Russisch)"
+
+#: Menu
+msgid "PDF: Perform OCR (Spanish)"
+msgstr "PDF: tekstherkenning uitvoeren (Spaans)"
+
+#: Menu
+msgid "PDF: Reduce (150 dpi, e-book)"
+msgstr "PDF: verkleinen (150 dpi, e-boek)"
+
+#: Menu
+msgid "PDF: Reduce (300 dpi, printer)"
+msgstr "PDF: verkleinen (300 dpi, printer)"
+
+#: Menu
+msgid "PDF: Remove annotations"
+msgstr "PDF: aantekeningen wissen"
+
+#: Menu
+msgid "PDF: Remove metadata"
+msgstr "PDF: metagegevens wissen"
+
+#: Menu
+msgid "PDF: Rotate (90 deg)"
+msgstr "PDF: draaien (90 grd.)"
+
+#: Menu
+msgid "PDF: Rotate (180 deg)"
+msgstr "PDF: draaien (180 grd.)"
+
+#: Menu
+msgid "PDF: Rotate (270 deg)"
+msgstr "PDF: draaien (270 grd.)"
+
+#: Menu
+msgid "PDF: Show signatures"
+msgstr "PDF: handtekeningen tonen"
+
+#: Menu
+msgid "PDF: Split into single-page PDFs"
+msgstr "PDF: splitsen"
+
+#: Menu
+msgid "Rename: Remove accents"
+msgstr "Naam wĳzigen: accenten wissen"
+
+#: Menu
+msgid "Rename: Remove parentheses blocks"
+msgstr "Naam wĳzigen: vierkante haken wissen"
+
+#: Menu
+msgid "Rename: Change spaces to dashes"
+msgstr "Naam wĳzigen: spaties omzetten naar streepjes"
+
+#: Menu
+msgid "Rename: Change dashes to spaces"
+msgstr "Naam wĳzigen: streepjes omzetten naar spaties"
+
+#: Menu
+msgid "Rename: To lowercase"
+msgstr "Naam wĳzigen: omzetten naar kleine letters"
+
+#: Menu
+msgid "Rename: To lowercase (recursive)"
+msgstr "Naam wĳzigen: omzetten naar kleine letters (recursief)"
+
+#: Menu
+msgid "Rename: To sentence case"
+msgstr "Naam wĳzigen: beginhoofdletter toevoegen"
+
+#: Menu
+msgid "Rename: To title case"
+msgstr "Naam wĳzigen: beginhoofdletter (ieder woord)"
+
+#: Menu
+msgid "Rename: To uppercase"
+msgstr "Naam wĳzigen: omzetten naar hoofdletters"
+
+#: Menu
+msgid "Rename: To uppercase (recursive)"
+msgstr "Naam wĳzigen: omzetten naar hoofdletters (recursief)"
+
+#: Menu
+msgid "Reset permissions (recursive)"
+msgstr "Rechten herstellen (recursief)"
+
+#: Menu
+msgid "Scan for malware (via ClamAV)"
+msgstr "Scannen op malware (met ClamAV)"
+
+#: Menu
+msgid "Scan for malware (via Lenspect)"
+msgstr "Scannen op malware (met Lenspect)"
+
+#: Menu
+msgid "Show files information"
+msgstr "Bestandsinformatie tonen"
+
+#: Menu
+msgid "Show files metadata"
+msgstr "Metagegevens tonen"
+
+#: Menu
+msgid "Show files MIME type"
+msgstr "Mimetype tonen"
+
+#: Menu
+msgid "Show media information"
+msgstr "Media-informatie tonen"
+
+#: Menu
+msgid "Shred files (secure delete)"
+msgstr "Bestanden vernietigen (veilig verwijderen)"
+
+#: Menu
+msgid "SVG: Compress to SVGZ"
+msgstr "SVG: comprimeren naar svgz"
+
+#: Menu
+msgid "SVG: Decompress SVGZ"
+msgstr "SVG: svgz decomprimeren"
+
+#: Menu
+msgid "SVG: Export to EPS"
+msgstr "SVG: exporteren naar eps"
+
+#: Menu
+msgid "SVG: Export to PDF"
+msgstr "SVG: exporteren naar pdf"
+
+#: Menu
+msgid "SVG: Export to PNG (256 px)"
+msgstr "SVG: exporteren naar png (256 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (512 px)"
+msgstr "SVG: exporteren naar png (512 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (1024 px)"
+msgstr "SVG: exporteren naar png (1024 px)"
+
+#: Menu
+msgid "SVG: Replace fonts to Charter"
+msgstr "SVG: lettertypen vervangen door Charter"
+
+#: Menu
+msgid "SVG: Replace fonts to Helvetica"
+msgstr "SVG: lettertypen vervangen door Helvetica"
+
+#: Menu
+msgid "SVG: Replace fonts to Times"
+msgstr "SVG: lettertypen vervangen door Times"
+
+#: Menu
+msgid "Terminal"
+msgstr "Terminalvenster"
+
+#: Menu
+msgid "Text: Concatenate multiple files"
+msgstr "Tekst: bestanden samenvoegen"
+
+#: Menu
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "Tekst: tabs omzetten naar 4 spaties"
+
+#: Menu
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "Tekst: normaliseren (utf-8, recursief)"
+
+#: Menu
+msgid "Text: Encode to UTF-8"
+msgstr "Tekst: voorzien van utf-8-tekenset"
+
+#: Menu
+msgid "Text: List encodings"
+msgstr "Tekst: tekensets tonen"
+
+#: Menu
+msgid "Text: List issues"
+msgstr "Tekst: problemen tonen"
+
+#: Menu
+msgid "Text: List invalid chars"
+msgstr "Tekst: ongeldige tekens tonen"
+
+#: Menu
+msgid "Text: List line breaks"
+msgstr "Tekst: regeleinden tonen"
+
+#: Menu
+msgid "Text: List line counts"
+msgstr "Tekst: aantal regels tonen"
+
+#: Menu
+msgid "Text: List line lengths"
+msgstr "Tekst: regellengtes tonen"
+
+#: Menu
+msgid "Text: List word counts"
+msgstr "Tekst: aantal woorden tonen"
+
+#: Menu
+msgid "Text: Remove trailing spaces"
+msgstr "Tekst: spaties aan einde wissen"
+
+#: Menu
+msgid "Text: Remove accents"
+msgstr "Tekst: accenten wissen"
+
+#: Menu
+msgid "URL: Check HTTP status"
+msgstr "URL: http-status controleren"
+
+#: Menu
+msgid "URL: Download file"
+msgstr "URL: bestand downloaden"
+
+#: Menu
+msgid "URL: Show HTTP headers"
+msgstr "URL: http-koppen tonen"
+
+#: Menu
+msgid "Verify MD5 file"
+msgstr "MD5-bestand verifiëren"
+
+#: Menu
+msgid "Verify SHA1 file"
+msgstr "SHA1-bestand verifiëren"
+
+#: Menu
+msgid "Verify SHA256 file"
+msgstr "SHA256-bestand verifiëren"
+
+#: Menu
+msgid "Verify SHA512 file"
+msgstr "SHA512-bestand verifiëren"
+
+#: Menu
+msgid "Video: Aspect to 1:1"
+msgstr "Video: 1:1-beeldverhouding"
+
+#: Menu
+msgid "Video: Aspect to 2.21:1"
+msgstr "Video: 2.21:1-beeldverhouding"
+
+#: Menu
+msgid "Video: Aspect to 2.35:1"
+msgstr "Video: 2.35:1-beeldverhouding"
+
+#: Menu
+msgid "Video: Aspect to 2.39:1"
+msgstr "Video: 2.39:1-beeldverhouding"
+
+#: Menu
+msgid "Video: Aspect to 4:3"
+msgstr "Video: 4:3-beeldverhouding"
+
+#: Menu
+msgid "Video: Aspect to 5:4"
+msgstr "Video: 5:4-beeldverhouding"
+
+#: Menu
+msgid "Video: Aspect to 16:9"
+msgstr "Video: 16:9-beeldverhouding"
+
+#: Menu
+msgid "Video: Aspect to 16:10"
+msgstr "Video: 16:10-beeldverhouding"
+
+#: Menu
+msgid "Video: Convert to MKV"
+msgstr "Video: converteren naar mkv"
+
+#: Menu
+msgid "Video: Convert to MKV (copy)"
+msgstr "Video: converteren naar mkv (kopiëren)"
+
+#: Menu
+msgid "Video: Convert to MP4"
+msgstr "Video: converteren naar mp4"
+
+#: Menu
+msgid "Video: Convert to MP4 (copy)"
+msgstr "Video: converteren naar mp4 (kopiëren)"
+
+#: Menu
+msgid "Video: Export frames (1 FPS)"
+msgstr "Video: frames exporteren (1 fps)"
+
+#: Menu
+msgid "Video: Export frames (5 FPS)"
+msgstr "Video: frames exporteren (5 fps)"
+
+#: Menu
+msgid "Video: Export frames (10 FPS)"
+msgstr "Video: frames exporteren (10 fps)"
+
+#: Menu
+msgid "Video: Export to GIF"
+msgstr "Video: exporteren naar gif"
+
+#: Menu
+msgid "Video: Extract audio"
+msgstr "Video: audio extraheren"
+
+#: Menu
+msgid "Video: Flip (horizontal)"
+msgstr "Video: spiegelen (horizontaal)"
+
+#: Menu
+msgid "Video: Flip (vertical)"
+msgstr "Video: spiegelen (verticaal)"
+
+#: Menu
+msgid "Video: Frame rate to 30 FPS"
+msgstr "Video: framesnelheid instellen op 30 fps"
+
+#: Menu
+msgid "Video: Frame rate to 60 FPS"
+msgstr "Video: framesnelheid instellen op 60 fps"
+
+#: Menu
+msgid "Video: Remove audio"
+msgstr "Video: audio wissen"
+
+#: Menu
+msgid "Video: Resize (25 pct)"
+msgstr "Video: grootte aanpassen (25 pct.)"
+
+#: Menu
+msgid "Video: Resize (50 pct)"
+msgstr "Video: grootte aanpassen (50 pct.)"
+
+#: Menu
+msgid "Video: Resize (75 pct)"
+msgstr "Video: grootte aanpassen (75 pct.)"
+
+#: Menu
+msgid "Video: Rotate (90 deg)"
+msgstr "Video: draaien (90 grd.)"
+
+#: Menu
+msgid "Video: Rotate (180 deg)"
+msgstr "Video: draaien (180 grd.)"
+
+#: Menu
+msgid "Video: Rotate (270 deg)"
+msgstr "Video: draaien (270 grd.)"
+
+#: Menu
+msgid "Video: Speed to 0.5"
+msgstr "Video: snelheid instellen op 0,5"
+
+#: Menu
+msgid "Video: Speed to 1.5"
+msgstr "Video: snelheid instellen op 1,5"
+
+#: Menu
+msgid "Video: Speed to 2.0"
+msgstr "Video: snelheid instellen op 2,0"
+
+#: install.sh
+msgid "Check for basic dependencies"
+msgstr "Afhankelijkheden controleren"
+
+#: install.sh
+msgid "Remove previously installed scripts"
+msgstr "Eerder geïnstalleerde scripts verwijderen"
+
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr "Sneltoetsen vastleggen"
+
+#: install.sh
+msgid "Close the file manager to reload configurations"
+msgstr "Sluit de bestandsbeheerder om de instellingen te herladen"
+
+#: install.sh
+msgid "Add shortcuts to the application menu"
+msgstr "Snelkoppelingen toevoegen aan toepassingsmenu"
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr "Homebrew installeren (optioneel)"
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr "Kies de te installeren scriptcategorieën"
+
+#: install.sh
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr "Maak een keuze (<SPATIE> om aan te kruisen; <ENTER> om te bevestigen):"
+
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr "Bezig met installeren in niet-interactieve modus…"
+
+#: install.sh
+msgid "Installing:"
+msgstr "Bezig met installeren:"
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr "Bezig met toevoegen van snelkoppelingen:"
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr "De installatie is voltooid!"
+
+#: install.sh
+msgid "Checking for basic dependencies:"
+msgstr "Bezig met afhankelijkheidscontrole:"
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr "Alle afhankelijkheden zijn geïnstalleerd."
+
+#: install.sh
+msgid "Copying files..."
+msgstr "Bezig met kopiëren van bestanden…"
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr "Bezig met vastleggen van sneltoetsen…"
+
+#: install.sh
+msgid "Scripts"
+msgstr "Scripts"
+
+#: install.sh
+msgid "Creating shortcuts to the application menu..."
+msgstr "Bezig met toevoegen van snelkoppelingen…"
+
+#: install.sh
+msgid "Creating GNOME Shell application folder..."
+msgstr "Bezig met maken van GNOME Shell-toepassingsmap…"
+
+#: install.sh
+msgid "Installing actions in the context menu..."
+msgstr "Bezig met toevoegen van acties aan rechtermuisknopmenu…"
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr "Bezig met sluiten van bestandsbeheerder…"
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr "Bezig met installeren van Homebrew:"
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr "Homebrew is al geïnstalleerd."
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr "Bezig met installeren van Homebrew in:"
+
+#: install.sh
+msgid "Downloading the package..."
+msgstr "Bezig met ophalen van pakket…"
+
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr "Er is geen pakketbeheerder aangetroffen!"
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr "Homebrew kan niet worden geïnstalleerd!"
