@@ -733,14 +733,14 @@ _deps_install_missing_packages() {
 #
 # Supported package managers:
 # - "apt-get"     : For Debian/Ubuntu systems.
-# - "dnf"         : For Fedora/RHEL systems.
-# - "rpm-ostree"  : For Fedora Atomic systems.
-# - "pacman"      : For Arch Linux systems.
-# - "zypper"      : For openSUSE systems.
-# - "nix"         : For Nix-based systems.
 # - "brew"        : For Homebrew package manager.
-# - "guix"        : For GNU Guix systems.
+# - "dnf"         : For Fedora/RHEL systems.
 # - "flatpak"     : For Flatpak packages.
+# - "guix"        : For GNU Guix systems.
+# - "nix"         : For Nix-based systems.
+# - "pacman"      : For Arch Linux systems.
+# - "rpm-ostree"  : For Fedora Atomic systems.
+# - "zypper"      : For openSUSE systems.
 #
 # PARAMETERS:
 #   $1 (pkg_list): A space-separated list of "<pkg_manager>:<package>" pairs.
@@ -790,41 +790,6 @@ _deps_install_packages() {
             cmd_inst+="apt-get update &>/dev/null;"
             cmd_inst+="apt-get -y install $packages &>/dev/null"
             ;;
-        "dnf")
-            cmd_inst+="dnf check-update &>/dev/null;"
-            cmd_inst+="dnf -y install $packages &>/dev/null"
-            ;;
-        "flatpak")
-            cmd_inst+="flatpak install -y $packages &>/dev/null"
-            ;;
-        "rpm-ostree")
-            cmd_inst+="rpm-ostree install $packages &>/dev/null"
-            ;;
-        "pacman")
-            cmd_inst+="pacman -Syy &>/dev/null;"
-            cmd_inst+="pacman --noconfirm -S $packages &>/dev/null"
-            ;;
-        "zypper")
-            cmd_inst+="zypper refresh &>/dev/null;"
-            cmd_inst+="zypper --non-interactive install $packages &>/dev/null"
-            ;;
-        "nix")
-            local nix_packages=""
-            local nix_channel="nixpkgs"
-            if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
-                nix_channel="nixos"
-            fi
-            packages=$(sed "s|~[^ ]*||g" <<<"$packages")
-
-            # Prefix packages with their channel namespace.
-            nix_packages="$nix_channel.$packages"
-            nix_packages=$(sed "s| $||g" <<<"$nix_packages")
-            nix_packages=$(sed "s| | $nix_channel.|g" <<<"$nix_packages")
-
-            cmd_inst+="nix-env -iA $nix_packages &>/dev/null"
-            # Nix does not require root for installing user packages.
-            cmd_admin=""
-            ;;
         "brew")
             # Configure Homebrew for non-interactive and less verbose
             # operation.
@@ -860,8 +825,44 @@ _deps_install_packages() {
             # Homebrew runs as a non-root user.
             cmd_admin=""
             ;;
+        "dnf")
+            cmd_inst+="dnf check-update &>/dev/null;"
+            cmd_inst+="dnf -y install $packages &>/dev/null"
+            ;;
+        "flatpak")
+            cmd_inst+="flatpak install -y $packages &>/dev/null"
+            ;;
+
         "guix")
             cmd_inst="guix package -i $packages &>/dev/null"
+            ;;
+        "nix")
+            local nix_packages=""
+            local nix_channel="nixpkgs"
+            if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
+                nix_channel="nixos"
+            fi
+            packages=$(sed "s|~[^ ]*||g" <<<"$packages")
+
+            # Prefix packages with their channel namespace.
+            nix_packages="$nix_channel.$packages"
+            nix_packages=$(sed "s| $||g" <<<"$nix_packages")
+            nix_packages=$(sed "s| | $nix_channel.|g" <<<"$nix_packages")
+
+            cmd_inst+="nix-env -iA $nix_packages &>/dev/null"
+            # Nix does not require root for installing user packages.
+            cmd_admin=""
+            ;;
+        "pacman")
+            cmd_inst+="pacman -Syy &>/dev/null;"
+            cmd_inst+="pacman --noconfirm -S $packages &>/dev/null"
+            ;;
+        "rpm-ostree")
+            cmd_inst+="rpm-ostree install $packages &>/dev/null"
+            ;;
+        "zypper")
+            cmd_inst+="zypper refresh &>/dev/null;"
+            cmd_inst+="zypper --non-interactive install $packages &>/dev/null"
             ;;
         esac
 
@@ -961,14 +962,14 @@ _deps_check_rpm_ostree_requires_reboot() {
 #   $1 (pkg_manager): The package manager to use for the check.
 #      Supported values:
 #      - "apt-get"     : For Debian/Ubuntu systems.
-#      - "dnf"         : For Fedora/RHEL systems.
-#      - "rpm-ostree"  : For Fedora Atomic systems.
-#      - "pacman"      : For Arch Linux systems.
-#      - "zypper"      : For openSUSE systems.
-#      - "nix"         : For Nix-based systems.
 #      - "brew"        : For Homebrew package manager.
-#      - "guix"        : For GNU Guix systems.
+#      - "dnf"         : For Fedora/RHEL systems.
 #      - "flatpak"     : For Flatpak packages.
+#      - "guix"        : For GNU Guix systems.
+#      - "nix"         : For Nix-based systems.
+#      - "pacman"      : For Arch Linux systems.
+#      - "rpm-ostree"  : For Fedora Atomic systems.
+#      - "zypper"      : For openSUSE systems.
 #   $2 (package): The name of the package to check.
 #
 # RETURNS:
@@ -990,6 +991,11 @@ _deps_is_package_installed() {
             return 0
         fi
         ;;
+    "brew")
+        if brew list | grep -qxF "$package"; then
+            return 0
+        fi
+        ;;
     "dnf")
         if dnf repoquery --installed --qf "%{name}\n" |
             grep -qxF "$package"; then
@@ -1002,19 +1008,8 @@ _deps_is_package_installed() {
             return 0
         fi
         ;;
-    "rpm-ostree")
-        _deps_check_rpm_ostree_requires_reboot "$package"
-        if rpm -qa --qf "%{name}\n" | grep -qxF "$package"; then
-            return 0
-        fi
-        ;;
-    "pacman")
-        if pacman -Q "$package" &>/dev/null; then
-            return 0
-        fi
-        ;;
-    "zypper")
-        if zypper search --installed-only "$package" | grep --quiet "^i"; then
+    "guix")
+        if guix package -I "$package" &>/dev/null; then
             return 0
         fi
         ;;
@@ -1023,13 +1018,19 @@ _deps_is_package_installed() {
             return 0
         fi
         ;;
-    "brew")
-        if brew list | grep -qxF "$package"; then
+    "pacman")
+        if pacman -Q "$package" &>/dev/null; then
             return 0
         fi
         ;;
-    "guix")
-        if guix package -I "$package" &>/dev/null; then
+    "rpm-ostree")
+        _deps_check_rpm_ostree_requires_reboot "$package"
+        if rpm -qa --qf "%{name}\n" | grep -qxF "$package"; then
+            return 0
+        fi
+        ;;
+    "zypper")
+        if zypper search --installed-only "$package" | grep --quiet "^i"; then
             return 0
         fi
         ;;
