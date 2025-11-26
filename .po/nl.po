@@ -201,8 +201,7 @@ msgid "Unsupported clipboard type."
 msgstr "Niet-ondersteund klembordtype."
 
 msgid "This action will rename the selected files and directories recursively."
-msgstr ""
-"Door deze actie worden de gekozen bestanden en mappen van naam gewijzigd."
+msgstr "Door deze actie worden de gekozen bestanden en mappen van naam gewijzigd."
 
 msgid "PDF files"
 msgstr "Pdf-bestanden"
@@ -333,12 +332,8 @@ msgstr "De gekozen items hebben dezelfde pixelwaarden."
 msgid "MIME"
 msgstr "Mimetype"
 
-msgid ""
-"This action will move all files from subdirectories to the root of the "
-"selected directory."
-msgstr ""
-"Door deze actie worden alle bestanden uit onderliggende mappen naar de "
-"bovenliggende map verplaatst."
+msgid "This action will move all files from subdirectories to the root of the selected directory."
+msgstr "Door deze actie worden alle bestanden uit onderliggende mappen naar de bovenliggende map verplaatst."
 
 msgid "This action will reset the permissions recursively."
 msgstr "Door deze actie worden de toegangsrechten hersteld."
@@ -359,8 +354,7 @@ msgid "Status"
 msgstr "Status"
 
 msgid "There are no valid URLs in the clipboard or in the selected files!"
-msgstr ""
-"Er staan geen geldige url's op het klembord of in de gekozen bestanden!"
+msgstr "Er staan geen geldige url's op het klembord of in de gekozen bestanden!"
 
 msgid "IPs"
 msgstr "IP-adressen"
@@ -2024,3 +2018,6 @@ msgstr "Er is geen pakketbeheerder aangetroffen!"
 #: install.sh
 msgid "Homebrew installation failed!"
 msgstr "Homebrew kan niet worden geïnstalleerd!"
+
+#~ msgid "EOF"
+#~ msgstr "EOF"
