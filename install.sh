@@ -5,7 +5,7 @@
 # AUTHOR: Cristiano Fraga G. Nunes
 # REPOSITORY: https://github.com/cfgnunes/nautilus-scripts
 # LICENSE: MIT License
-# VERSION: 30.3.1
+# VERSION: 30.4
 # =============================================================================
 
 set -u
@@ -15,7 +15,7 @@ set -u
 # -----------------------------------------------------------------------------
 
 APP_NAME="Enhanced File Manager Actions for Linux"
-APP_VERSION="30.3.1"
+APP_VERSION="30.4"
 
 # Used in:
 #  - Directory where scripts are installed located at:
