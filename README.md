@@ -1,6 +1,6 @@
 # Enhanced File Manager Actions for Linux
 
-This project offers a collection of file manager actions, also known as _Nautilus Scripts_, designed to enhance the functionality of file managers. With intuitive right-click options for files and directories, it simplifies tasks, boosts productivity, and provides a more efficient workflow.
+A collection of file manager actions that enhance your workflow. With intuitive right-click options for files and folders, it simplifies common tasks across GNOME, KDE, XFCE, and other desktop environments.
 
 ![screenshot](https://cfgnunes.github.io/nautilus-scripts/screenshot.svg)
 
@@ -39,8 +39,8 @@ While numerous scripts are available for file managers on the web, many suffer f
 - **Parallel task execution**: Processes multiple files simultaneously. Very fast! 🚀
 - **Multi-language support**: Automatically detects the system language and displays messages in the appropriate language.
 - **Progress dialog**: Displays a progress dialog and allows interruption of tasks at any time.
-- **Status notifications**: Notifies users of dependency errors and MIME types.
 - **Dependency management**: Prompts users to install any missing dependencies.
+- **Status notifications**: Notifies users of dependency errors and types.
 - **Keyboard accelerators**: Provides keyboard shortcuts for some scripts.
 - **Easy access to recent scripts**: Includes a menu, _Accessed recently_, to quickly access recently used scripts, saving time and streamlining workflows.
 - **Category-based installation:** The installer allows you to choose which script categories you want to install, so there's no need to install everything.
