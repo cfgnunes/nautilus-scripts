@@ -6,11 +6,7 @@ A collection of file manager actions that enhance your workflow. With intuitive 
 
 ## Installation
 
-You can install in two ways:
-
 ### Option 1: Online installation (recommended)
-
-You can use either **curl** or **wget**. Choose **one** of the following commands and run it in your terminal:
 
 #### 🚀 Using `curl`
 
@@ -36,20 +32,17 @@ bash install.sh
 
 While numerous scripts are available for file managers on the web, many suffer from poor functionality, lack of error checking, and dependency management. Some scripts only work with files that don't have special characters in their names, among other limitations. To address these shortcomings, I have developed my own set of scripts, which offer the following advantages:
 
-- **Parallel task execution**: Processes multiple files simultaneously. Very fast! 🚀
+- **Parallel task execution**: Processes multiple files simultaneously. Very fast!
 - **Multi-language support**: Automatically detects the system language and displays messages in the appropriate language.
 - **Progress dialog**: Displays a progress dialog and allows interruption of tasks at any time.
 - **Dependency management**: Prompts users to install any missing dependencies.
 - **Status notifications**: Notifies users of dependency errors and types.
 - **Keyboard accelerators**: Provides keyboard shortcuts for some scripts.
-- **Easy access to recent scripts**: Includes a menu, _Accessed recently_, to quickly access recently used scripts, saving time and streamlining workflows.
+- **Easy access to recent scripts**: Includes a menu, _Accessed recently_, to quickly access recently used scripts.
 - **Category-based installation:** The installer allows you to choose which script categories you want to install, so there's no need to install everything.
-- **Non-destructive output**: Never overwrites the input file; the output is distinct.
-- **Direct usage**: Allows direct usage without requiring input parameters.
 - **Log file**: Produces an `Errors.log` file when a task finishes with an error.
 - **File manager compatibility**: Designed for major file managers like GNOME Files (Nautilus), Nemo, Caja, Dolphin, and Thunar.
 - **Distro compatibility**: Works on major GNU/Linux distributions, such as Debian, Ubuntu, Fedora, and Arch Linux.
-- **Remote file support:** Works with files stored on remote servers.
 - **Easy adaptation**: Scripts can be easily copied and adapted for other purposes.
 - **Bash implementation**: All scripts are implemented in Bash. So, the scripts work well in the shell (without a graphical interface) and file managers.
 - **Shell script validation**: All scripts have been checked using [ShellCheck](https://github.com/koalaman/shellcheck).
@@ -102,28 +95,11 @@ While numerous scripts are available for file managers on the web, many suffer f
 | PCManFM-Qt             | LXQt        | 🟢                | 🟢                     | 🔴                     | 🔴                        |
 | PCManFM                | LXDE        | 🟢                | 🟢                     | 🔴                     | 🔴                        |
 
-## Handling large input lists
+## Batch mode for large file selections
 
-This project includes a functionality specifically designed to manage scenarios where input lists are too large for processing (e.g., 100,000 input files). Excessively large input lists can lead to errors like:
-
-`Could not start application: Failed to execute child process "/bin/sh" (Argument list too long)`
-
-To avoid such issues, follow these steps:
-
-1. Create a single directory with a name that includes the word `batch`;
-2. Place all the files you want to process into this directory;
-3. Execute the desired script using this directory as the input.
-
-When batch mode is detected, the script recognizes the directory as a special case and process each file inside it individually, instead of treating the entire directory as a single input.
+For very large selections (e.g., 10,000 input files), use **batch mode**: place everything inside a folder named `batch` and run the action on that folder. The scripts will process the files individually and avoid the "argument list too long" error.
 
 ## Acknowledgments
-
-This project was also inspired by other extraordinary projects and their authors.
-Many thanks to all of them for their excellent and creative script collections:
-
-- [Nautilus Scripts (by yeKcim)](https://github.com/yeKcim/my_nautilus_scripts)
-- [NaughtyLust (by Dipankar Pal)](https://github.com/deep5050/NaughtyLust)
-- [Vault (by Maravento)](https://github.com/maravento/vault)
 
 ### Translation
 
