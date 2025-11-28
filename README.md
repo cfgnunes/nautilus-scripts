@@ -1,12 +1,11 @@
 <p align="center">
-  <h2 align="center">Enhanced File Manager Actions for Linux</h1>
+  <h1 align="center">Enhanced File Manager Actions for Linux</h1>
   <p align="center">A collection of file manager actions that enhance your workflow. Useful right-click options to simplify common tasks across GNOME, KDE, XFCE, and more. </p>
-  <img src="https://cfgnunes.github.io/nautilus-scripts/screenshot.svg"/>
 </p>
 
 <p align="center">
   <!-- Release -->
-  <a href="https://github.com/cfgnunes/nautilus-scripts/releases/latest">
+  <a href="https://github.com/cfgnunes/nautilus-scripts#installation">
     <img src="https://img.shields.io/github/v/release/cfgnunes/nautilus-scripts?logoColor=e4e4e4&labelColor=3a484a&color=288c5a"/>
   </a>
   <!-- Stars -->
@@ -24,6 +23,9 @@
   <!-- Supported -->
   <a href="https://github.com/cfgnunes/nautilus-scripts#compatibility">
     <img src="https://img.shields.io/badge/Supported-GNOME%20%7C%20KDE%20%7C%20MATE%20%7C%20Xfce%20%7C%20Cinammon%20%7C%20LXQt-288c5a?labelColor=3a484a" />
+  </a>
+  <a href="https://github.com/cfgnunes/nautilus-scripts#installation">
+    <img src="https://cfgnunes.github.io/nautilus-scripts/screenshot.svg"/>
   </a>
 </p>
 
