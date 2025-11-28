@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center">Enhanced File Manager Actions for Linux</h1>
+  <h2 align="center">Enhanced File Manager Actions for Linux</h1>
   <p align="center">A collection of file manager actions that enhance your workflow. Useful right-click options to simplify common tasks across GNOME, KDE, XFCE, and more. </p>
 </p>
 
@@ -9,17 +9,9 @@
     <img src="https://img.shields.io/github/v/release/cfgnunes/nautilus-scripts?logoColor=e4e4e4&labelColor=3a484a&color=288c5a"/>
   </a>
   <!-- Stars -->
-  <a href="https://github.com/cfgnunes/nautilus-scripts/stargazers">
-    <img src="https://img.shields.io/github/stars/cfgnunes/nautilus-scripts?style=flat&labelColor=3a484a&color=288c5a" />
-  </a>
+  <img src="https://img.shields.io/github/stars/cfgnunes/nautilus-scripts?style=flat&labelColor=3a484a&color=288c5a" />
   <!-- License -->
-  <a href="https://github.com/cfgnunes/nautilus-scripts/tree/main?tab=MIT-1-ov-file">
-    <img src="https://img.shields.io/github/license/cfgnunes/nautilus-scripts?labelColor=3a484a&color=288c5a"/>
-  </a>
-  <!-- ShellCheck -->
-  <a href="https://github.com/koalaman/shellcheck">
-    <img src="https://img.shields.io/badge/ShellCheck-passed-288c5a?labelColor=3a484a"/>
-  </a>
+  <img src="https://img.shields.io/github/license/cfgnunes/nautilus-scripts?labelColor=3a484a&color=288c5a"/>
   <!-- Supported -->
   <a href="https://github.com/cfgnunes/nautilus-scripts#compatibility">
     <img src="https://img.shields.io/badge/Supported-GNOME%20%7C%20KDE%20%7C%20MATE%20%7C%20Xfce%20%7C%20Cinammon%20%7C%20LXQt-288c5a?labelColor=3a484a" />
