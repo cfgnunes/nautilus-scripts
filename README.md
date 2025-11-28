@@ -17,6 +17,8 @@ A collection of file manager actions that enhance your workflow. Useful right-cl
 
 ### Option 1: Online installation (recommended)
 
+You can use either **curl** or **wget**. Choose **one** of the following commands and run it in your terminal:
+
 #### 🚀 Using `curl`
 
 ```bash
