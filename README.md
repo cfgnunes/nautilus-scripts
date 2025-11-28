@@ -24,6 +24,9 @@
   <a href="https://github.com/cfgnunes/nautilus-scripts#compatibility">
     <img src="https://img.shields.io/badge/Supported-GNOME%20%7C%20KDE%20%7C%20MATE%20%7C%20Xfce%20%7C%20Cinammon%20%7C%20LXQt-288c5a?labelColor=3a484a" />
   </a>
+</p>
+
+<p align="center">
   <a href="https://github.com/cfgnunes/nautilus-scripts#installation">
     <img src="https://cfgnunes.github.io/nautilus-scripts/screenshot.svg"/>
   </a>
