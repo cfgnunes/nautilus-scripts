@@ -1784,10 +1784,6 @@ msgid "Video: Aspect to 4:3"
 msgstr "视频：画面比例设为4:3"
 
 #: Menu
-msgid "Video: Aspect to 5:4"
-msgstr "视频：画面比例设为5:4"
-
-#: Menu
 msgid "Video: Aspect to 16:9"
 msgstr "视频：画面比例设为16:9"
 

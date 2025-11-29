@@ -398,12 +398,6 @@ _main() {
     __test_file_nonempty "$output_file (aspect 4:3).mp4"
     __test_file_empty "$std_output"
 
-    script_test="Audio and Video/Video: Aspect ratio/Video: Aspect to 5:4"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (aspect 5:4).mp4"
-    __test_file_empty "$std_output"
-
     script_test="Audio and Video/Video: Audio track/Video: Extract audio"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"

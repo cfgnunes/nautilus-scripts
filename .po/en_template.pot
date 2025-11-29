@@ -1783,10 +1783,6 @@ msgid "Video: Aspect to 4:3"
 msgstr ""
 
 #: Menu
-msgid "Video: Aspect to 5:4"
-msgstr ""
-
-#: Menu
 msgid "Video: Aspect to 16:9"
 msgstr ""
 
