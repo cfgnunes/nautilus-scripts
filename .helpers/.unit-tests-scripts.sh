@@ -113,18 +113,6 @@ _main() {
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    script_test="Archive/Compress to 'iso'"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_dir1" >"$std_output"
-    __test_file_nonempty "$output_file.iso"
-    __test_file_empty "$std_output"
-
-    script_test="Archive/Compress to 'squashfs'"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_dir1" >"$std_output"
-    __test_file_nonempty "$output_file.squashfs"
-    __test_file_empty "$std_output"
-
     script_test="Archive/Compress to 'tar.gz'"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_dir1" >"$std_output"
@@ -775,12 +763,6 @@ _main() {
     __test_file_nonempty "$output_file"
     __test_file_nonempty "$std_output"
 
-    script_test="Checksum/Compute CRC32"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_nonempty "$std_output"
-
     script_test="Checksum/Compute MD5"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
@@ -933,12 +915,6 @@ _main() {
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.avif"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Convert/Image: Convert to BMP"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.bmp"
     __test_file_empty "$std_output"
 
     script_test="Image/Image: Convert/Image: Convert to GIF"
@@ -1325,12 +1301,6 @@ _main() {
     __test_file_nonempty "$output_file (2).svg"
     __test_file_empty "$std_output"
 
-    script_test="Image/Image: SVG files/SVG: Export to EPS"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.eps"
-    __test_file_empty "$std_output"
-
     script_test="Image/Image: SVG files/SVG: Export to PDF"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
@@ -1401,12 +1371,6 @@ _main() {
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.epub"
-    __test_file_empty "$std_output"
-
-    script_test="Document/Document: Convert/Document: Convert to FB2"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.fb2"
     __test_file_empty "$std_output"
 
     script_test="Document/Document: Convert/Document: Convert to Markdown"

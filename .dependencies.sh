@@ -436,17 +436,6 @@ declare -A DEPENDENCIES_MAP=(
         brew:
     "
 
-    ["mksquashfs"]="
-        pkg:
-        apt:    squashfs-tools
-        dnf:    squashfs-tools
-        pacman: squashfs-tools
-        nix:    squashfsTools~squashfs
-        zypper: squashfs
-        guix:   squashfs-tools
-        brew:   squashfs
-    "
-
     ["mp3gain"]="
         pkg:    mp3gain
         apt:    mp3gain

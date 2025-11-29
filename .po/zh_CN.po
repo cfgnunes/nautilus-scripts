@@ -788,14 +788,6 @@ msgid "Compress to '7z' with password"
 msgstr "压缩为带密码的'7z'"
 
 #: Menu
-msgid "Compress to 'iso'"
-msgstr "压缩为'iso'"
-
-#: Menu
-msgid "Compress to 'squashfs'"
-msgstr "压缩为'squashfs'"
-
-#: Menu
 msgid "Compress to 'tar.gz'"
 msgstr "压缩为'tar.gz'"
 
@@ -818,10 +810,6 @@ msgstr "压缩为带密码的'zip'"
 #: Menu
 msgid "Compute all checksums"
 msgstr "计算所有校验和"
-
-#: Menu
-msgid "Compute CRC32"
-msgstr "计算CRC32"
 
 #: Menu
 msgid "Compute MD5"
@@ -886,10 +874,6 @@ msgstr "文档：转换为DOCX"
 #: Menu
 msgid "Document: Convert to EPUB"
 msgstr "文档：转换为EPUB"
-
-#: Menu
-msgid "Document: Convert to FB2"
-msgstr "文档：转换为FB2"
 
 #: Menu
 msgid "Document: Convert to Markdown"
@@ -1138,10 +1122,6 @@ msgstr "图像：合并为PDF"
 #: Menu
 msgid "Image: Convert to AVIF"
 msgstr "图像：转换为AVIF"
-
-#: Menu
-msgid "Image: Convert to BMP"
-msgstr "图像：转换为BMP"
 
 #: Menu
 msgid "Image: Convert to GIF"
@@ -1670,10 +1650,6 @@ msgstr "SVG：压缩为SVGZ"
 #: Menu
 msgid "SVG: Decompress SVGZ"
 msgstr "SVG：解压缩SVGZ"
-
-#: Menu
-msgid "SVG: Export to EPS"
-msgstr "SVG：导出为EPS"
 
 #: Menu
 msgid "SVG: Export to PDF"

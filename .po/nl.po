@@ -788,14 +788,6 @@ msgid "Compress to '7z' with password"
 msgstr "Comprimeren naar 7z (met wachtwoord)"
 
 #: Menu
-msgid "Compress to 'iso'"
-msgstr "Comprimeren naar iso"
-
-#: Menu
-msgid "Compress to 'squashfs'"
-msgstr "Comprimeren naar squashfs"
-
-#: Menu
 msgid "Compress to 'tar.gz'"
 msgstr "Comprimeren naar tar.gz"
 
@@ -818,10 +810,6 @@ msgstr "Comprimeren naar zip (met wachtwoord)"
 #: Menu
 msgid "Compute all checksums"
 msgstr "Alle controlesommen berekenen"
-
-#: Menu
-msgid "Compute CRC32"
-msgstr "CRC32 berekenen"
 
 #: Menu
 msgid "Compute MD5"
@@ -886,10 +874,6 @@ msgstr "Document: converteren naar docx"
 #: Menu
 msgid "Document: Convert to EPUB"
 msgstr "Document: converteren naar epub"
-
-#: Menu
-msgid "Document: Convert to FB2"
-msgstr "Document: converteren naar fb2"
 
 #: Menu
 msgid "Document: Convert to Markdown"
@@ -1138,10 +1122,6 @@ msgstr "Afbeelding: combineren naar pdf-bestand"
 #: Menu
 msgid "Image: Convert to AVIF"
 msgstr "Afbeelding: converteren naar avif"
-
-#: Menu
-msgid "Image: Convert to BMP"
-msgstr "Afbeelding: converteren naar bmp"
 
 #: Menu
 msgid "Image: Convert to GIF"
@@ -1670,10 +1650,6 @@ msgstr "SVG: comprimeren naar svgz"
 #: Menu
 msgid "SVG: Decompress SVGZ"
 msgstr "SVG: svgz decomprimeren"
-
-#: Menu
-msgid "SVG: Export to EPS"
-msgstr "SVG: exporteren naar eps"
 
 #: Menu
 msgid "SVG: Export to PDF"

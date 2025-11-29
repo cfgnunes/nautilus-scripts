@@ -787,14 +787,6 @@ msgid "Compress to '7z' with password"
 msgstr ""
 
 #: Menu
-msgid "Compress to 'iso'"
-msgstr ""
-
-#: Menu
-msgid "Compress to 'squashfs'"
-msgstr ""
-
-#: Menu
 msgid "Compress to 'tar.gz'"
 msgstr ""
 
@@ -816,10 +808,6 @@ msgstr ""
 
 #: Menu
 msgid "Compute all checksums"
-msgstr ""
-
-#: Menu
-msgid "Compute CRC32"
 msgstr ""
 
 #: Menu
@@ -884,10 +872,6 @@ msgstr ""
 
 #: Menu
 msgid "Document: Convert to EPUB"
-msgstr ""
-
-#: Menu
-msgid "Document: Convert to FB2"
 msgstr ""
 
 #: Menu
@@ -1136,10 +1120,6 @@ msgstr ""
 
 #: Menu
 msgid "Image: Convert to AVIF"
-msgstr ""
-
-#: Menu
-msgid "Image: Convert to BMP"
 msgstr ""
 
 #: Menu
@@ -1668,10 +1648,6 @@ msgstr ""
 
 #: Menu
 msgid "SVG: Decompress SVGZ"
-msgstr ""
-
-#: Menu
-msgid "SVG: Export to EPS"
 msgstr ""
 
 #: Menu

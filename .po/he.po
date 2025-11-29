@@ -788,14 +788,6 @@ msgid "Compress to '7z' with password"
 msgstr "דחיסה לקובץ ‚7z’ עם סיסמה"
 
 #: Menu
-msgid "Compress to 'iso'"
-msgstr "דחיסה לקובץ ‚iso’"
-
-#: Menu
-msgid "Compress to 'squashfs'"
-msgstr "דחיסה לקובץ ‚squashfs’"
-
-#: Menu
 msgid "Compress to 'tar.gz'"
 msgstr "דחיסה לקובץ ‚tar.gz’"
 
@@ -818,10 +810,6 @@ msgstr "דחיסה לקובץ ‚zip’ עם סיסמה"
 #: Menu
 msgid "Compute all checksums"
 msgstr "חישוב כל סכומי הביקורת"
-
-#: Menu
-msgid "Compute CRC32"
-msgstr "חישוב קובץ CRC32"
 
 #: Menu
 msgid "Compute MD5"
@@ -886,10 +874,6 @@ msgstr "מסמך: המרה לקובץ DOCX"
 #: Menu
 msgid "Document: Convert to EPUB"
 msgstr "מסמך: המרה לקובץ EPUB"
-
-#: Menu
-msgid "Document: Convert to FB2"
-msgstr "מסמך: המרה לקובץ FB2"
 
 #: Menu
 msgid "Document: Convert to Markdown"
@@ -1138,10 +1122,6 @@ msgstr "תמונה: שילוב לתוך קובץ PDF"
 #: Menu
 msgid "Image: Convert to AVIF"
 msgstr "תמונה: המרה לקובץ AVIF"
-
-#: Menu
-msgid "Image: Convert to BMP"
-msgstr "תמונה: המרה לקובץ BMP"
 
 #: Menu
 msgid "Image: Convert to GIF"
@@ -1670,10 +1650,6 @@ msgstr "קובץ SVG: דחיסה לקובץ SVGZ"
 #: Menu
 msgid "SVG: Decompress SVGZ"
 msgstr "קובצי SVG: פרישׂת קובץ SVGZ דחוס"
-
-#: Menu
-msgid "SVG: Export to EPS"
-msgstr "תמונה: ייצוא כקובץ EPS"
 
 #: Menu
 msgid "SVG: Export to PDF"

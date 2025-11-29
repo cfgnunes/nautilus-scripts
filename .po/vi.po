@@ -788,14 +788,6 @@ msgid "Compress to '7z' with password"
 msgstr "Nén thành '7z' có mật khẩu"
 
 #: Menu
-msgid "Compress to 'iso'"
-msgstr "Nén thành 'iso'"
-
-#: Menu
-msgid "Compress to 'squashfs'"
-msgstr "Nén thành 'squashfs'"
-
-#: Menu
 msgid "Compress to 'tar.gz'"
 msgstr "Nén thành 'tar.gz'"
 
@@ -818,10 +810,6 @@ msgstr "Nén thành 'zip' có mật khẩu"
 #: Menu
 msgid "Compute all checksums"
 msgstr "Tính tất cả checksum"
-
-#: Menu
-msgid "Compute CRC32"
-msgstr "Tính CRC32"
 
 #: Menu
 msgid "Compute MD5"
@@ -886,10 +874,6 @@ msgstr "Tài liệu: Chuyển sang DOCX"
 #: Menu
 msgid "Document: Convert to EPUB"
 msgstr "Tài liệu: Chuyển sang EPUB"
-
-#: Menu
-msgid "Document: Convert to FB2"
-msgstr "Tài liệu: Chuyển sang FB2"
 
 #: Menu
 msgid "Document: Convert to Markdown"
@@ -1138,10 +1122,6 @@ msgstr "Hình ảnh: Kết hợp thành PDF"
 #: Menu
 msgid "Image: Convert to AVIF"
 msgstr "Hình ảnh: Chuyển thành AVIF"
-
-#: Menu
-msgid "Image: Convert to BMP"
-msgstr "Hình ảnh: Chuyển thành BMP"
 
 #: Menu
 msgid "Image: Convert to GIF"
@@ -1670,10 +1650,6 @@ msgstr "SVG: Nén thành SVGZ"
 #: Menu
 msgid "SVG: Decompress SVGZ"
 msgstr "SVG: Giải nén SVGZ"
-
-#: Menu
-msgid "SVG: Export to EPS"
-msgstr "SVG: Xuất sang EPS"
 
 #: Menu
 msgid "SVG: Export to PDF"

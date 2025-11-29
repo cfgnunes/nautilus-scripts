@@ -788,14 +788,6 @@ msgid "Compress to '7z' with password"
 msgstr "Compactar para '7z' com senha"
 
 #: Menu
-msgid "Compress to 'iso'"
-msgstr "Compactar para 'iso'"
-
-#: Menu
-msgid "Compress to 'squashfs'"
-msgstr "Compactar para 'squashfs'"
-
-#: Menu
 msgid "Compress to 'tar.gz'"
 msgstr "Compactar para 'tar.gz'"
 
@@ -818,10 +810,6 @@ msgstr "Compactar para 'zip' com senha"
 #: Menu
 msgid "Compute all checksums"
 msgstr "Calcular todos os checksums"
-
-#: Menu
-msgid "Compute CRC32"
-msgstr "Calcular CRC32"
 
 #: Menu
 msgid "Compute MD5"
@@ -886,10 +874,6 @@ msgstr "Documento: Converter para DOCX"
 #: Menu
 msgid "Document: Convert to EPUB"
 msgstr "Documento: Converter para EPUB"
-
-#: Menu
-msgid "Document: Convert to FB2"
-msgstr "Documento: Converter para FB2"
 
 #: Menu
 msgid "Document: Convert to Markdown"
@@ -1138,10 +1122,6 @@ msgstr "Imagem: Combinar em um PDF"
 #: Menu
 msgid "Image: Convert to AVIF"
 msgstr "Imagem: Converter para AVIF"
-
-#: Menu
-msgid "Image: Convert to BMP"
-msgstr "Imagem: Converter para BMP"
 
 #: Menu
 msgid "Image: Convert to GIF"
@@ -1670,10 +1650,6 @@ msgstr "SVG: Compactar para SVGZ"
 #: Menu
 msgid "SVG: Decompress SVGZ"
 msgstr "SVG: Descompactar SVGZ"
-
-#: Menu
-msgid "SVG: Export to EPS"
-msgstr "SVG: Exportar para EPS"
 
 #: Menu
 msgid "SVG: Export to PDF"
