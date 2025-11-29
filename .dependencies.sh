@@ -3,9 +3,10 @@
 
 # This file centralizes dependency definitions for the scripts.
 
-# -----------------------------------------------------------------------------
-# SECTION: DEPENDENCIES_MAP ----
-# -----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+#region DEPENDENCIES_MAP
+#------------------------------------------------------------------------------
+
 # This array defines the mapping between a dependency key and its corresponding
 # package names across different package managers.
 #
@@ -15,7 +16,6 @@
 #     part after '~' represents the package name used for installation
 #     verification. This is useful in systems like NixOS, where the installed
 #     package name may differ from the one provided during installation.
-
 declare -A DEPENDENCIES_MAP=(
     ["7za"]="
         pkg:    p7zip
@@ -859,15 +859,18 @@ declare -A DEPENDENCIES_MAP=(
     "
 )
 
-# -----------------------------------------------------------------------------
-# SECTION: POST_INSTALL ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region POST_INSTALL
+#------------------------------------------------------------------------------
+
 # This array defines commands that need to be executed after a package is
 # installed. These commands are usually required for proper initialization,
 # configuration, or updates that the package manager alone does not handle.
-
 declare -A POST_INSTALL=(
     ["clamav"]='*:rm -f /var/log/clamav/freshclam.log; sed -i "/^NotifyClamd/d" /etc/clamav/freshclam.conf 2>/dev/null; freshclam --quiet'
 
     ["imagemagick"]='*:find /etc -type f -path "/etc/ImageMagick-*/policy.xml" 2>/dev/null -exec sed -i -e "s/rights=\"none\" pattern=\"PDF\"/rights=\"read|write\" pattern=\"PDF\"/g" -e "s/name=\"disk\" value=\".GiB\"/name=\"disk\" value=\"8GiB\"/g" {} +'
 )
+
+#endregion

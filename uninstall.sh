@@ -4,9 +4,9 @@ set -u
 
 INSTALL_NAME_DIR="scripts"
 
-# -----------------------------------------------------------------------------
-# Helper functions to uninstall ----
-# -----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+#region Helper functions
+#------------------------------------------------------------------------------
 
 _remove_empty_parent_dirs() {
     local path=$1
@@ -36,18 +36,20 @@ _uninstall_file() {
     _remove_empty_parent_dirs "$file"
 }
 
-# -----------------------------------------------------------------------------
-# Close file managers ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Close file managers
+#------------------------------------------------------------------------------
 
 # Close some file managers to release configuration files.
 nemo -q &>/dev/null
 caja -q &>/dev/null
 thunar -q &>/dev/null
 
-# -----------------------------------------------------------------------------
-# Common files ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Common files
+#------------------------------------------------------------------------------
 
 # Installed directory.
 _uninstall_directory "$HOME/.local/share/$INSTALL_NAME_DIR"
@@ -55,9 +57,10 @@ _uninstall_directory "$HOME/.local/share/$INSTALL_NAME_DIR"
 # Desktop shortcuts (application menu).
 _uninstall_directory "$HOME/.local/share/applications/$INSTALL_NAME_DIR"
 
-# -----------------------------------------------------------------------------
-# File manager: Nautilus ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region File manager: Nautilus
+#------------------------------------------------------------------------------
 
 # Nautilus: File manager actions (context menu).
 find "$HOME/.local/share/nautilus/scripts" -type l -delete 2>/dev/null
@@ -66,9 +69,10 @@ find "$HOME/.local/share/nautilus/scripts" -type d -empty -delete 2>/dev/null
 # Nautilus: Keyboard accelerators.
 _uninstall_file "$HOME/.config/nautilus/scripts-accels"
 
-# -----------------------------------------------------------------------------
-# File manager: Nemo ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region File manager: Nemo
+#------------------------------------------------------------------------------
 
 # Nemo: File manager actions (context menu).
 find "$HOME/.local/share/nemo/scripts" -type l -delete 2>/dev/null
@@ -77,9 +81,10 @@ find "$HOME/.local/share/nemo/scripts" -type d -empty -delete 2>/dev/null
 # Nemo: Keyboard accelerators.
 _uninstall_file "$HOME/.gnome2/accels/nemo"
 
-# -----------------------------------------------------------------------------
-# File manager: Caja ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region File manager: Caja
+#------------------------------------------------------------------------------
 
 # Caja: File manager actions (context menu).
 find "$HOME/.config/caja/scripts" -type l -delete 2>/dev/null
@@ -88,9 +93,10 @@ find "$HOME/.config/caja/scripts" -type d -empty -delete 2>/dev/null
 # Caja: Keyboard accelerators.
 _uninstall_file "$HOME/.config/caja/accels"
 
-# -----------------------------------------------------------------------------
-# File manager: Thunar ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region File manager: Thunar
+#------------------------------------------------------------------------------
 
 # Thunar: File manager actions (context menu).
 _uninstall_file "$HOME/.config/Thunar/uca.xml"
@@ -98,34 +104,38 @@ _uninstall_file "$HOME/.config/Thunar/uca.xml"
 # Thunar: Keyboard accelerators.
 _uninstall_file "$HOME/.config/Thunar/accels.scm"
 
-# -----------------------------------------------------------------------------
-# File manager: Dolphin ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region File manager: Dolphin
+#------------------------------------------------------------------------------
 
 # Dolphin: File manager actions (context menu).
 dir="$HOME/.local/share/kio/servicemenus"
 find "$dir" -name "$INSTALL_NAME_DIR-*.desktop" -type f -delete 2>/dev/null
 _remove_empty_parent_dirs "$dir"
 
-# -----------------------------------------------------------------------------
-# File manager: PCManFM-Qt ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region File manager: PCManFM-Qt
+#------------------------------------------------------------------------------
 
 # PCManFM-Qt: File manager actions (context menu).
 dir="$HOME/.local/share/file-manager/actions"
 find "$dir" -name "$INSTALL_NAME_DIR-*.desktop" -type f -delete 2>/dev/null
 _remove_empty_parent_dirs "$dir"
 
-# -----------------------------------------------------------------------------
-# Package manager: Homebrew ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Package manager: Homebrew
+#------------------------------------------------------------------------------
 
 # Homebrew: Installed directory.
 _uninstall_directory "$HOME/.local/apps/homebrew"
 
-# -----------------------------------------------------------------------------
-# GNOME Shell: application folder ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region GNOME Shell: application folder
+#------------------------------------------------------------------------------
 
 _remove_gnome_application_folder() {
     local folder_name="Scripts"
@@ -158,5 +168,7 @@ _remove_gnome_application_folder() {
     fi
 }
 _remove_gnome_application_folder
+
+#endregion
 
 echo "Uninstall complete!"
