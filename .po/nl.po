@@ -1768,18 +1768,6 @@ msgid "Video: Aspect to 1:1"
 msgstr "Video: 1:1-beeldverhouding"
 
 #: Menu
-msgid "Video: Aspect to 2.21:1"
-msgstr "Video: 2.21:1-beeldverhouding"
-
-#: Menu
-msgid "Video: Aspect to 2.35:1"
-msgstr "Video: 2.35:1-beeldverhouding"
-
-#: Menu
-msgid "Video: Aspect to 2.39:1"
-msgstr "Video: 2.39:1-beeldverhouding"
-
-#: Menu
 msgid "Video: Aspect to 4:3"
 msgstr "Video: 4:3-beeldverhouding"
 

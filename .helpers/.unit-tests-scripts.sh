@@ -374,24 +374,6 @@ _main() {
     __test_file_nonempty "$output_file (aspect 16:9).mp4"
     __test_file_empty "$std_output"
 
-    script_test="Audio and Video/Video: Aspect ratio/Video: Aspect to 2.21:1"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (aspect 2.21:1).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Aspect ratio/Video: Aspect to 2.35:1"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (aspect 2.35:1).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Aspect ratio/Video: Aspect to 2.39:1"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (aspect 2.39:1).mp4"
-    __test_file_empty "$std_output"
-
     script_test="Audio and Video/Video: Aspect ratio/Video: Aspect to 4:3"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
