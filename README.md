@@ -1,6 +1,4 @@
-<div align="center">
-
-## Enhanced File Manager Actions for Linux
+# Enhanced File Manager Actions for Linux
 
 A collection of file manager actions that enhance your workflow. Useful right-click options to simplify common tasks across GNOME, KDE, Xfce, and more.
 
@@ -10,8 +8,6 @@ A collection of file manager actions that enhance your workflow. Useful right-cl
 [![Supported](https://img.shields.io/badge/Supported-GNOME%20%7C%20KDE%20%7C%20MATE%20%7C%20Xfce%20%7C%20Cinammon%20%7C%20LXQt-339933?labelColor=333333)](#compatibility)
 
 [![Screenshot](https://cfgnunes.github.io/nautilus-scripts/screenshot.svg)](#installation)
-
-</div>
 
 ## Installation
 
