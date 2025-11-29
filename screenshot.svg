@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="832.5921"
-   height="605.4693"
-   viewBox="0 0 220.29 160.1971"
+   width="832.59216"
+   height="582.40094"
+   viewBox="0 0 220.29002 154.0936"
    version="1.1"
    id="svg5"
    xml:space="preserve"
@@ -29,8 +29,8 @@
      inkscape:document-units="px"
      showgrid="false"
      inkscape:zoom="1"
-     inkscape:cx="405"
-     inkscape:cy="306.5"
+     inkscape:cx="559.5"
+     inkscape:cy="313"
      inkscape:window-width="1920"
      inkscape:window-height="1011"
      inkscape:window-x="0"
@@ -42,7 +42,7 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-30.964685,-9.3596982)"><g
-       id="g2"><g
+       id="g3"><g
          id="g2665"><rect
            style="fill:#ffffff;stroke:#cccccc;stroke-width:0.312771"
            id="rect1297"
@@ -635,7 +635,7 @@
              id="tspan177-6-5-5-2-1-7-8-70"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="108.77531"
-             y="146.41658">Security and recovery</tspan></text><text
+             y="146.41658">Security and Recovery</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="108.77531"
@@ -648,14 +648,14 @@
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="108.77531"
              y="158.07126">Open Scripts Folder</tspan></text></g><g
-         id="g2528"><rect
-           style="fill:#ffffff;stroke:#cccccc;stroke-width:0.316507"
+         id="g2"><rect
+           style="fill:#ffffff;stroke:#cccccc;stroke-width:0.306703"
            id="rect1297-9-6"
-           width="73.812889"
-           height="129.71669"
-           x="177.28355"
-           y="39.681847"
-           ry="2.8837512" /><rect
+           width="73.822693"
+           height="121.78899"
+           x="177.27866"
+           y="39.676945"
+           ry="2.7075095" /><rect
            style="fill:#ececec;stroke:none;stroke-width:0.2"
            id="rect8540-2-1"
            width="70.42981"
@@ -706,7 +706,7 @@
              id="tspan177-6-5-5-2-1-7-8-4-4"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="63.502144">Compute CRC32</tspan></text><text
+             y="63.502144">Compute MD5</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -718,7 +718,7 @@
              id="tspan177-6-5-5-2-1-7-8-9-6"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="71.976715">Compute MD5</tspan></text><text
+             y="71.976715">Compute SHA1</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -730,7 +730,7 @@
              id="tspan177-6-5-5-2-1-7-8-98-1"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="80.451286">Compute SHA1</tspan></text><text
+             y="80.451286">Compute SHA256</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -742,7 +742,7 @@
              id="tspan177-6-5-5-2-1-7-8-5-5"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="88.92585">Compute SHA256</tspan></text><text
+             y="88.92585">Compute SHA512</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -754,7 +754,7 @@
              id="tspan177-6-5-5-2-1-7-8-3-6"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="97.400421">Compute SHA512</tspan></text><text
+             y="97.400421">Generate MD5 file</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -766,7 +766,7 @@
              id="tspan177-6-5-5-2-1-7-8-38-1"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="105.87498">Generate MD5 file</tspan></text><text
+             y="105.87498">Generate SHA1 file</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -778,7 +778,7 @@
              id="tspan177-6-5-5-2-1-7-8-7-8"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="114.34956">Generate SHA1 file</tspan></text><text
+             y="114.34956">Generate SHA256 file</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -790,7 +790,7 @@
              id="tspan177-6-5-5-2-1-7-8-93-7"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="122.82413">Generate SHA256 file</tspan></text><text
+             y="122.82413">Generate SHA512 file</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -802,7 +802,7 @@
              id="tspan177-6-5-5-2-1-7-8-43-1"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="131.29869">Generate SHA512 file</tspan></text><text
+             y="131.29869">Verify MD5 file</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -814,7 +814,7 @@
              id="tspan177-6-5-5-2-1-7-8-2-5"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="139.77324">Verify MD5 file</tspan></text><text
+             y="139.77324">Verify SHA1 file</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -826,7 +826,7 @@
              id="tspan177-6-5-5-2-1-7-8-1-7"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="148.2478">Verify SHA1 file</tspan></text><text
+             y="148.2478">Verify SHA256 file</tspan></text><text
            xml:space="preserve"
            style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
            x="181.85748"
@@ -838,18 +838,6 @@
              id="tspan177-6-5-5-2-1-7-8-17-3"
              style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
              x="181.85748"
-             y="156.7224">Verify SHA256 file</tspan></text><text
-           xml:space="preserve"
-           style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
-           x="181.85748"
-           y="165.19695"
-           id="text179-3-7-3-6-9-2-7-4-8"
-           inkscape:transform-center-x="-1.3042067"
-           inkscape:transform-center-y="-5.8172007"><tspan
-             sodipodi:role="line"
-             id="tspan177-6-5-5-2-1-7-8-171-8"
-             style="font-size:4px;font-family:'Noto Sans';fill:#474042;stroke-width:0.2"
-             x="181.85748"
-             y="165.19695">Verify SHA512 file</tspan></text></g></g></g><metadata
+             y="156.7224">Verify SHA512 file</tspan></text></g></g></g><metadata
      id="metadata3144"><rdf:RDF><cc:Work
          rdf:about=""><dc:title>Enhanced File Manager Actions for Linux</dc:title><dc:creator><cc:Agent><dc:title>Cristiano Fraga G. Nunes</dc:title></cc:Agent></dc:creator></cc:Work></rdf:RDF></metadata></svg>
