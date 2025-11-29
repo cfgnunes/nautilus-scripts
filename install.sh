@@ -10,9 +10,9 @@
 
 set -u
 
-# -----------------------------------------------------------------------------
-# Constants ----
-# -----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+#region Constants
+#------------------------------------------------------------------------------
 
 APP_NAME="Enhanced File Manager Actions for Linux"
 APP_VERSION="30.5.1"
@@ -94,9 +94,10 @@ readonly \
 # Use current username if '$USER' is undefined.
 USER=${USER:-$(id -un)}
 
-# -----------------------------------------------------------------------------
-# Global variables ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Global variables
+#------------------------------------------------------------------------------
 
 FILE_MANAGER=""  # Current file manager being processed.
 I18N_FILE=""     # Current translation file being used.
@@ -123,9 +124,10 @@ if [[ -f "$SCRIPT_DIR/.helpers/.multiselect-menu.sh" ]]; then
     source "$SCRIPT_DIR/.helpers/.multiselect-menu.sh"
 fi
 
-# -----------------------------------------------------------------------------
-# Main flow ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Main flow
+#------------------------------------------------------------------------------
 
 _on_exit() {
     local exit_code=$?
@@ -240,10 +242,11 @@ _main() {
         _multiselect_menu cat_selected cat_dirs cat_defaults
     fi
 
-    ## Step 1: Check for basic dependencies. ----
+    #region Step 1: Check for basic dependencies
     [[ "$OPT_INSTALL_BASIC_DEPS" == "true" ]] && _check_dependencies
+    #endregion
 
-    ## Step 2: Install the scripts. ----
+    #region Step 2: Install the scripts
     INSTALL_HOME=$HOME
     INSTALL_OWNER=$(stat -c "%U" "$INSTALL_HOME")
     INSTALL_GROUP=$(stat -c "%G" "$INSTALL_HOME")
@@ -258,9 +261,9 @@ _main() {
     _echo_info "> $(_i18n 'User'): $INSTALL_OWNER"
     _echo_info "> $(_i18n 'Directory'): $INSTALL_DIR"
     _install_scripts cat_selected cat_dirs
+    #endregion
 
-    ## Step 3: Install file manager configurations. ----
-
+    #region Step 3: Install file manager configurations
     # Install the actions and the keyboard accelerators for
     # each detected file manager.
     local file_manager=""
@@ -270,40 +273,46 @@ _main() {
             continue
         fi
 
-        ### Step 3.1: Install the the actions. ----
+        #region Step 3.1: Install the the actions
         _install_actions
+        #endregion
 
-        ### Step 3.2: Install the keyboard accelerators. ----
+        #region Step 3.2: Install the keyboard accelerators
         [[ "$OPT_INSTALL_ACCELS" == "true" ]] && _install_accels
+        #endregion
 
-        ### Step 3.3: Reload file manager to apply changes. ----
+        #region Step 3.3: Reload file manager to apply changes
         [[ "$OPT_CLOSE_FILE_MANAGER" == "true" ]] && _close_filemanager
-
         _echo_info "> $(_i18n 'Done!')"
-
-        ## Step 4: Install the shortcuts (application menu). ----
-        if [[ "$OPT_INSTALL_APP_SHORTCUTS" == "true" ]]; then
-            _echo ""
-            _echo_info "$(_i18n 'Installing application menu shortcuts:')"
-            _install_application_shortcuts
-            _create_gnome_application_folder
-            _echo_info "> $(_i18n 'Done!')"
-        fi
+        #endregion
     done
+    #endregion
 
-    ## Step 5: Install Homebrew (optional). ----
+    #region Step 4: Install the shortcuts (application menu)
+    if [[ "$OPT_INSTALL_APP_SHORTCUTS" == "true" ]]; then
+        _echo ""
+        _echo_info "$(_i18n 'Installing application menu shortcuts:')"
+        _install_application_shortcuts
+        _create_gnome_application_folder
+        _echo_info "> $(_i18n 'Done!')"
+    fi
+    #endregion
+
+    #region Step 5: Install Homebrew (optional)
     if [[ "$OPT_INSTALL_HOMEBREW" == "true" ]]; then
         _install_homebrew
     fi
+    #endregion
 
     _echo ""
     _echo_info "$(_i18n 'Installation completed successfully!')"
     _log_finish
 }
 
-# -----------------------------------------------------------------------------
-# Printing ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Printing
+#------------------------------------------------------------------------------
 
 _echo() {
     local message=$1
@@ -338,9 +347,10 @@ _echo_error() {
     echo -e "$msg_error $message"
 }
 
-# -----------------------------------------------------------------------------
-# Log functions ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Log functions
+#------------------------------------------------------------------------------
 
 _print_date() {
     date +"%Y-%m-%d %T %Z"
@@ -384,9 +394,10 @@ _log_variable() {
     _log "[VAR] $var_name=\"$var_value\""
 }
 
-# -----------------------------------------------------------------------------
-# Internationalization (i18n) ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Internationalization (i18n)
+#------------------------------------------------------------------------------
 
 _i18n_print_desktop_name() {
     local prefix=$1
@@ -464,9 +475,10 @@ _i18n_initialize() {
     fi
 }
 
-# -----------------------------------------------------------------------------
-# Validation and checks ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Validation and checks
+#------------------------------------------------------------------------------
 
 # FUNCTION: _check_exist_filemanager
 #
@@ -488,9 +500,10 @@ _check_exist_filemanager() {
     return 1
 }
 
-# -----------------------------------------------------------------------------
-# File and directory management ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region File and directory management
+#------------------------------------------------------------------------------
 
 _list_scripts() {
     find -L "$INSTALL_DIR" -mindepth 2 -type f \
@@ -571,9 +584,10 @@ _delete_items() {
     fi
 }
 
-# -----------------------------------------------------------------------------
-# System information and parameters ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region System information and parameters
+#------------------------------------------------------------------------------
 
 _command_exists() {
     local command_check=$1
@@ -668,9 +682,10 @@ _get_par_value() {
         cut -d "=" -f 2- 2>/dev/null
 }
 
-# -----------------------------------------------------------------------------
-# Installation functions ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Installation functions
+#------------------------------------------------------------------------------
 
 _sanitize_string() {
     tr -cd ";[:alnum:] -" | tr " " "-" | tr -s "-" | tr "[:upper:]" "[:lower:]"
@@ -682,9 +697,9 @@ _generate_desktop_filename() {
     printf "%s" "$name.desktop"
 }
 
-# -----------------------------------------------------------------------------
-## Dependencies ----
-# -----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+#region Dependencies
+#------------------------------------------------------------------------------
 
 # shellcheck disable=SC2086
 _check_dependencies() {
@@ -840,9 +855,10 @@ _install_packages() {
     fi
 }
 
-# -----------------------------------------------------------------------------
-## Install scripts ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Install scripts
+#------------------------------------------------------------------------------
 
 # FUNCTION: _install_scripts
 #
@@ -939,9 +955,10 @@ _create_links() {
         -mindepth 1 "${IGNORE_FIND_PATHS[@]}" -print0 2>/dev/null)
 }
 
-# -----------------------------------------------------------------------------
-## Keyboard accellerators ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Keyboard accellerators
+#------------------------------------------------------------------------------
 
 # FUNCTION: _install_accels
 #
@@ -1084,9 +1101,10 @@ _install_accels_thunar() {
     _chown_file "$accels_file"
 }
 
-# -----------------------------------------------------------------------------
-## Application shortcuts ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Application shortcuts
+#------------------------------------------------------------------------------
 
 _install_application_shortcuts() {
     local menu_file=""
@@ -1183,9 +1201,10 @@ _create_gnome_application_folder() {
         apps "$list_scripts" &>/dev/null
 }
 
-# -----------------------------------------------------------------------------
-## File manager actions (context menus) ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region File manager actions (context menus)
+#------------------------------------------------------------------------------
 
 # FUNCTION: _install_actions
 #
@@ -1421,9 +1440,10 @@ _install_actions_thunar() {
     _chown_file "$menu_file"
 }
 
-# -----------------------------------------------------------------------------
-## Close filemanager ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Close filemanager
+#------------------------------------------------------------------------------
 
 # FUNCTION: _close_filemanager
 #
@@ -1485,9 +1505,10 @@ _close_filemanager() {
     esac
 }
 
-# -----------------------------------------------------------------------------
-## Homebrew ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Homebrew
+#------------------------------------------------------------------------------
 
 # FUNCTION: _install_homebrew
 #
@@ -1545,9 +1566,10 @@ _install_homebrew() {
     _echo_info "> $(_i18n 'Done!')"
 }
 
-# -----------------------------------------------------------------------------
-# Online installation ----
-# -----------------------------------------------------------------------------
+#endregion
+#------------------------------------------------------------------------------
+#region Online installation
+#------------------------------------------------------------------------------
 
 # FUNCTION: _bootstrap_repository
 #
@@ -1606,5 +1628,7 @@ _bootstrap_repository() {
 
     rm -rf -- "$temp_dir"
 }
+#endregion
+#endregion
 
 _main "$@"
