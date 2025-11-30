@@ -55,6 +55,7 @@ PKG_MANAGER_PRIORITY=(
     "rpm-ostree"
     "dnf"
     "pacman"
+    "xbps"
     "zypper"
     "guix"
 )
@@ -744,6 +745,7 @@ _deps_install_missing_packages() {
 # - "nix"         : For Nix-based systems.
 # - "pacman"      : For Arch Linux systems.
 # - "rpm-ostree"  : For Fedora Atomic systems.
+# - "xbps"        : For Void Linux systems.
 # - "zypper"      : For openSUSE systems.
 #
 # PARAMETERS:
@@ -864,6 +866,11 @@ _deps_install_packages() {
         "rpm-ostree")
             cmd_inst+="rpm-ostree install $packages &>/dev/null"
             ;;
+        "xbps")
+            cmd_inst+="xbps-install -S;"
+            cmd_inst+="xbps-install -u xbps;"
+            cmd_inst+="xbps-install -y $packages &>/dev/null"
+            ;;
         "zypper")
             cmd_inst+="zypper refresh &>/dev/null;"
             cmd_inst+="zypper --non-interactive install $packages &>/dev/null"
@@ -973,6 +980,7 @@ _deps_check_rpm_ostree_requires_reboot() {
 #      - "nix"         : For Nix-based systems.
 #      - "pacman"      : For Arch Linux systems.
 #      - "rpm-ostree"  : For Fedora Atomic systems.
+#      - "xbps"        : For Void Linux systems.
 #      - "zypper"      : For openSUSE systems.
 #   $2 (package): The name of the package to check.
 #
@@ -1031,6 +1039,11 @@ _deps_is_package_installed() {
         _deps_check_rpm_ostree_requires_reboot "$package"
         if rpm -qa --qf "%{name}\n" | grep -qxF "$package"; then
             return 0
+        fi
+        ;;
+    "xbps")
+        if xbps-query -Rs | grep '[*]'; then
+           return 0
         fi
         ;;
     "zypper")

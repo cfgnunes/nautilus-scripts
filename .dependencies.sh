@@ -25,6 +25,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    p7zip
         zypper: 7zip
         guix:   p7zip
+        xbps:   p7zip
         brew:   p7zip
     "
 
@@ -36,6 +37,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    binutils
         zypper: binutils
         guix:   binutils
+        xbps:   binutils
         brew:   binutils
     "
 
@@ -47,6 +49,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    axel
         zypper: axel
         guix:   axel
+        xbps:   axel
         brew:   axel
     "
 
@@ -58,6 +61,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    baobab
         zypper: baobab
         guix:   baobab
+        xbps:   baobab
         brew:
     "
 
@@ -69,9 +73,11 @@ declare -A DEPENDENCIES_MAP=(
         nix:    libarchive
         zypper: bsdtar
         guix:   libarchive
+        xbps:   bsdtar
         brew:   libarchive
     "
 
+    # bzip3?
     ["bzip2"]="
         pkg:    bzip2
         apt:    bzip2
@@ -80,6 +86,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    bzip2
         zypper: bzip2
         guix:   bzip2
+        xbps:   bzip2
         brew:   bzip2
     "
 
@@ -91,6 +98,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    cabextract
         zypper: cabextract
         guix:   cabextract
+        xbps:   cabextract
         brew:   cabextract
     "
 
@@ -102,6 +110,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    libjxl
         zypper: libjxl-tools
         guix:   libjxl
+        xbps:   libjxl-tools
         brew:
     "
 
@@ -113,6 +122,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    clamav
         zypper: clamav
         guix:   clamav
+        xbps:   clamav
         brew:
     "
 
@@ -124,6 +134,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    imagemagick
         zypper: ImageMagick
         guix:   imagemagick
+        xbps:   ImageMagick
         brew:
     "
 
@@ -135,6 +146,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    imagemagick
         zypper: ImageMagick
         guix:   imagemagick
+        xbps:   ImageMagick
         brew:
     "
 
@@ -146,6 +158,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    cpio
         zypper: cpio
         guix:   cpio
+        xbps:   cpio
         brew:   cpio
     "
 
@@ -157,9 +170,10 @@ declare -A DEPENDENCIES_MAP=(
         nix:    curl
         zypper: curl
         guix:   curl
+        xbps:   curl
         brew:
     "
-
+    # xbps: /usr/bin/diff-pdf?
     ["diffpdf"]="
         pkg:
         apt:    diffpdf
@@ -168,6 +182,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    diffpdf
         zypper:
         guix:
+        xbps:   diff-pdf
         brew:
     "
 
@@ -179,9 +194,10 @@ declare -A DEPENDENCIES_MAP=(
         nix:    exiftool
         zypper: exiftool
         guix:   perl-image-exiftool
+        xbps:   exiftool
         brew:
     "
-
+    # xbps: ffmpeg for version 4 or ffmpeg6?
     ["ffmpeg"]="
         pkg:    ffmpeg
         apt:    ffmpeg
@@ -190,6 +206,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    ffmpeg
         zypper: ffmpeg
         guix:   ffmpeg
+        xbps:   ffmpeg
         brew:
     "
 
@@ -201,6 +218,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    kdePackages.filelight
         zypper: filelight
         guix:   filelight
+        xbps:   filelight
         brew:
     "
 
@@ -212,6 +230,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    foremost
         zypper:
         guix:
+        xbps:   foremost
         brew:   foremost
     "
 
@@ -223,6 +242,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    ghex
         zypper: ghex
         guix:   ghex
+        xbps:   ghex
         brew:
     "
 
@@ -234,6 +254,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    git
         zypper: git
         guix:   git
+        xbps:   git
         brew:
     "
 
@@ -245,6 +266,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    gnupg
         zypper: gpg2
         guix:   gnupg
+        xbps:   gnupg
         brew:
     "
 
@@ -256,6 +278,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    ghostscript
         zypper: ghostscript
         guix:   ghostscript
+        xbps:   ghostscript
         brew:
     "
 
@@ -267,6 +290,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    gzip
         zypper: gzip
         guix:   gzip
+        xbps:   gzip
         brew:   gzip
     "
 
@@ -278,6 +302,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    gzip
         zypper: gzip
         guix:   gzip
+        xbps:   gzip
         brew:   gzip
     "
 
@@ -289,6 +314,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    glibc
         zypper: glibc
         guix:   glibc
+        xbps:   glibc
         brew:
     "
 
@@ -300,6 +326,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    id3v2
         zypper: id3v2
         guix:
+        xbps:   id3v2
         brew:   id3v2
     "
 
@@ -311,6 +338,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    inkscape
         zypper: inkscape
         guix:   inkscape
+        xbps:   inkscape
         brew:
     "
 
@@ -322,6 +350,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    kdiff3
         zypper: kdiff3
         guix:
+        xbps:   kdiff3
         brew:
     "
 
@@ -334,6 +363,7 @@ declare -A DEPENDENCIES_MAP=(
         zypper:
         guix:
         brew:
+        xbps:
         flatpak: io.github.vmkspv.lenspect
     "
 
@@ -345,6 +375,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    lhasa
         zypper: lhasa
         guix:   lhasa
+        xbps:   lhasa
         brew:   lhasa
     "
 
@@ -356,6 +387,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    cups
         zypper: cups
         guix:   cups
+        xbps:   cups
         brew:
     "
 
@@ -367,6 +399,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    lrzip
         zypper: lrzip
         guix:   lrzip
+        xbps:   lrzip
         brew:   lrzip
     "
 
@@ -378,6 +411,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    lz4
         zypper: lz4
         guix:   lz4
+        xbps:   lz4
         brew:   lz4
     "
 
@@ -389,6 +423,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    lzip
         zypper: lzip
         guix:   lzip
+        xbps:   lzip
         brew:   lzip
     "
 
@@ -400,6 +435,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    xz
         zypper: lzma
         guix:   xz
+        xbps:   xz
         brew:   xz
     "
 
@@ -411,6 +447,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    lzop
         zypper: lzop
         guix:   lzop
+        xbps:   lzop
         brew:   lzop
     "
 
@@ -422,6 +459,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    mediainfo
         zypper: mediainfo
         guix:   mediainfo
+        xbps:   mediainfo
         brew:
     "
 
@@ -433,6 +471,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    meld
         zypper: meld
         guix:   meld
+        xbps:   meld
         brew:
     "
 
@@ -444,6 +483,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    mp3gain
         zypper: mp3gain
         guix:
+        xbps:
         brew:   mp3gain
     "
 
@@ -455,6 +495,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    mp3val
         zypper:
         guix:
+        xbps:   mp3val
         brew:   mp3val
     "
 
@@ -466,6 +507,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    nmap
         zypper: nmap
         guix:   nmap
+        xbps:   nmap
         brew:
     "
 
@@ -477,6 +519,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    okteta
         zypper: okteta
         guix:   okteta
+        xbps:   okteta
         brew:
     "
 
@@ -488,6 +531,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    openssl
         zypper: openssl
         guix:   openssl
+        xbps:   openssl
         brew:   openssl
     "
 
@@ -499,6 +543,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    optipng
         zypper: optipng
         guix:   optipng
+        xbps:   optipng
         brew:   optipng
     "
 
@@ -510,6 +555,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    pandoc
         zypper: pandoc
         guix:   pandoc
+        xbps:   pandoc
         brew:   pandoc
     "
 
@@ -521,6 +567,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    poppler-utils
         zypper: poppler-tools
         guix:   poppler
+        xbps:   poppler
         brew:
     "
 
@@ -532,6 +579,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    perl
         zypper: perl-base
         guix:   perl
+        xbps:   perl
         brew:   perl
     "
 
@@ -543,6 +591,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    testdisk
         zypper: photorec
         guix:   testdisk
+        xbps:   testdisk
         brew:   testdisk
     "
 
@@ -554,6 +603,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    iputils
         zypper: iputils
         guix:   iputils
+        xbps:   iputils
         brew:   iputils
     "
 
@@ -565,6 +615,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    qpdf
         zypper: qpdf
         guix:   qpdf
+        xbps:   qpdf
         brew:   qpdf
     "
 
@@ -576,6 +627,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    rdfind
         zypper: rdfind
         guix:
+        xbps:   rdfind
         brew:   rdfind
     "
 
@@ -587,6 +639,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    rhash
         zypper: rhash
         guix:   rhash
+        xbps:   rhash
         brew:   rhash
     "
 
@@ -598,6 +651,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    gnutar
         zypper: tar
         guix:   tar
+        xbps:   tar
         brew:   gnu-tar
     "
 
@@ -609,6 +663,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    unar
         zypper: unar
         guix:
+        xbps:   unar
         brew:   unar
     "
 
@@ -620,6 +675,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    unrar
         zypper: unrar
         guix:
+        xbps:   unrar
         brew:
     "
 
@@ -631,6 +687,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    squashfsTools~squashfs
         zypper: squashfs
         guix:   squashfs-tools
+        xbps:   squashfs-tools
         brew:   squashfs
     "
 
@@ -642,6 +699,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    unzip
         zypper: unzip
         guix:   unzip
+        xbps:   unzip
         brew:   unzip
     "
 
@@ -653,6 +711,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    wl-clipboard
         zypper: wl-clipboard
         guix:   wl-clipboard
+        xbps:   wl-clipboard
         brew:
     "
 
@@ -664,6 +723,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    xclip
         zypper: xclip
         guix:   xclip
+        xbps:   xclip
         brew:
     "
 
@@ -675,6 +735,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    xorriso~libisoburn
         zypper: xorriso
         guix:   xorriso
+        xbps:   xorriso
         brew:   xorriso
     "
 
@@ -686,6 +747,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    xxd
         zypper: xxd
         guix:   xxd
+        xbps:   xxd
         brew:
     "
 
@@ -697,6 +759,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    xz
         zypper: xz
         guix:   xz
+        xbps:   xz
         brew:   xz
     "
 
@@ -708,6 +771,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    zpaq
         zypper: zpaq
         guix:   zpaq
+        xbps:   zpaq
         brew:   zpaq
     "
 
@@ -719,6 +783,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    zstd
         zypper: zstd
         guix:   zstd
+        xbps:   zstd
         brew:   zstd
     "
 
@@ -730,6 +795,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    texlivePackages.latexmk~latexmk
         zypper: texlive-latexmk
         guix:
+        xbps:   texlive-latexmk
         brew:
     "
 
@@ -741,6 +807,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    libreoffice
         zypper: libreoffice-calc
         guix:   libreoffice
+        xbps:   libreoffice-calc
         brew:
     "
 
@@ -752,6 +819,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    libreoffice
         zypper: libreoffice-impress
         guix:   libreoffice
+        xbps:   libreoffice-impress
         brew:
     "
 
@@ -763,6 +831,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    libreoffice
         zypper: libreoffice-writer
         guix:   libreoffice
+        xbps:   libreoffice-writer
         brew:
     "
 
@@ -774,6 +843,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    ocrmypdf
         zypper:
         guix:
+        xbps:   python3-ocrmypdf
         brew:
     "
 
@@ -785,6 +855,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    texliveSmall~texlive texlivePackages.pdfjam~pdfjam
         zypper: texlive-pdfjam-bin
         guix:
+        xbps:   texlive
         brew:
     "
 
@@ -796,6 +867,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    sox
         zypper: sox
         guix:   sox
+        xbps:   sox
         brew:   sox
     "
 
@@ -807,6 +879,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    tesseract
         zypper: tesseract tesseract-ocr-traineddata-$TEMP_DATA_TASK
         guix:
+        xbps:   tesseract tesseract-ocr-$TEMP_DAT_TASK
         brew:
     "
 
@@ -844,6 +917,8 @@ declare -A DEPENDENCIES_MAP=(
             texlive-collection-mathscience \
             texlive-collection-xetex
         guix:
+        xbps: \
+             texlive-bin
         brew:
     "
 )
