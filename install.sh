@@ -5,7 +5,7 @@
 # AUTHOR: Cristiano Fraga G. Nunes
 # REPOSITORY: https://github.com/cfgnunes/fm-scripts
 # LICENSE: MIT License
-# VERSION: 30.5.2
+# VERSION: 30.5.3
 # =============================================================================
 
 set -u
@@ -15,7 +15,7 @@ set -u
 #------------------------------------------------------------------------------
 
 APP_NAME="Enhanced File Manager Actions for Linux"
-APP_VERSION="30.5.2"
+APP_VERSION="30.5.3"
 
 # Used in:
 #  - Directory where scripts are installed located at:
