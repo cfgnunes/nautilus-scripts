@@ -37,7 +37,7 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(no accents)'")
 
     # Run the main process.
-    iconv -f "$input_encoding" "$input_file" -t "$encoding" > "$output_file"
+    iconv -f "$input_encoding" "$input_file" -t "$encoding" >"$output_file"
     _check_output "$?" "" "$input_file" "$output_file" || return 1
 }
 
