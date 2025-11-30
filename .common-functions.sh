@@ -1042,7 +1042,7 @@ _deps_is_package_installed() {
         fi
         ;;
     "xbps")
-        if xbps-query -Rs | grep '[*]'; then
+        if xbps-query -Rs "$package" | cut -d' ' -f1,2 | rev | cut -d'-' -f2- | rev | grep -qxF "[*] $package"; then
            return 0
         fi
         ;;
