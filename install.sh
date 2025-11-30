@@ -753,18 +753,18 @@ _check_dependencies() {
             packages+="gtk4 zlib glib2 "
         fi
         _install_packages "pacman" "$packages"
+    elif _command_exists "xbps-install"; then
+        # Package manager 'xbps': For Void Linux systems.
+        _command_exists "pgrep" || packages+="procps-ng "
+        # NOTE: Update dependencies on Void Linux.
+        if [[ "$packages" == *"yad"* ]]; then
+            packages+="libavcodec6 libheif "
+        fi
+        _install_packages "xbps" "$packages"
     elif _command_exists "zypper"; then
         # Package manager 'zypper': For openSUSE systems.
         _command_exists "pgrep" || packages+="procps-ng "
         _install_packages "zypper" "$packages"
-    elif _command_exists "xbps-install"; then
-        # Package manager 'zypper': For Void Linux systems.
-        _command_exists "pgrep" || packages+="procps-ng "
-        # NOTE: Update dependencies on Void Linux.
-        if [[ "$packages" == *"yad"* ]]; then
-            packages+="xbps libavcodec6 libheif "
-        fi
-        _install_packages "xbps-install" "$packages"
     else
         if [[ -n "$packages" ]]; then
             _log "[ERR] Missing package manager."
@@ -841,8 +841,9 @@ _install_packages() {
     "guix")
         cmd_inst="guix package -i $packages"
         ;;
-    "xbps-install")
-        cmd_inst+="xbps-install -Sy;"
+    "xbps")
+        cmd_inst+="xbps-install -S;"
+        cmd_inst+="xbps-install -u xbps;"
         cmd_inst+="xbps-install -y $packages"
         ;;
     esac
