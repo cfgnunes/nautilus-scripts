@@ -77,7 +77,6 @@ declare -A DEPENDENCIES_MAP=(
         brew:   libarchive
     "
 
-    # bzip3?
     ["bzip2"]="
         pkg:    bzip2
         apt:    bzip2
@@ -173,7 +172,7 @@ declare -A DEPENDENCIES_MAP=(
         xbps:   curl
         brew:
     "
-    # xbps: /usr/bin/diff-pdf?
+
     ["diffpdf"]="
         pkg:
         apt:    diffpdf
@@ -182,7 +181,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    diffpdf
         zypper:
         guix:
-        xbps:   diff-pdf
+        xbps:
         brew:
     "
 
@@ -197,7 +196,7 @@ declare -A DEPENDENCIES_MAP=(
         xbps:   exiftool
         brew:
     "
-    # xbps: ffmpeg for version 4 or ffmpeg6?
+
     ["ffmpeg"]="
         pkg:    ffmpeg
         apt:    ffmpeg
