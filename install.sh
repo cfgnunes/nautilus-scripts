@@ -3,7 +3,7 @@
 # =============================================================================
 # PROJECT: Enhanced File Manager Actions for Linux
 # AUTHOR: Cristiano Fraga G. Nunes
-# REPOSITORY: https://github.com/cfgnunes/nautilus-scripts
+# REPOSITORY: https://github.com/cfgnunes/fm-scripts
 # LICENSE: MIT License
 # VERSION: 30.5.2
 # =============================================================================
@@ -1578,7 +1578,7 @@ _install_homebrew() {
 # running the installation.
 _bootstrap_repository() {
     local repo_owner="cfgnunes"
-    local repo_name="nautilus-scripts"
+    local repo_name="fm-scripts"
     local branch="main"
 
     # Check if 'curl' or 'wget' is available.

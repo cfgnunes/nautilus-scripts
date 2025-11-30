@@ -2,12 +2,12 @@
 
 A collection of file manager actions that enhance your workflow. Useful right-click options to simplify common tasks across GNOME, KDE, Xfce, and more.
 
-[![Release](https://img.shields.io/github/v/release/cfgnunes/nautilus-scripts?labelColor=333333&color=339933)](#installation)
-[![Stars](https://img.shields.io/github/stars/cfgnunes/nautilus-scripts?style=flat&labelColor=333333&color=339933)](#installation)
-[![License](https://img.shields.io/github/license/cfgnunes/nautilus-scripts?labelColor=333333&color=339933)](#installation)
+[![Release](https://img.shields.io/github/v/release/cfgnunes/fm-scripts?labelColor=333333&color=339933)](#installation)
+[![Stars](https://img.shields.io/github/stars/cfgnunes/fm-scripts?style=flat&labelColor=333333&color=339933)](#installation)
+[![License](https://img.shields.io/github/license/cfgnunes/fm-scripts?labelColor=333333&color=339933)](#installation)
 [![Supported](https://img.shields.io/badge/Supported-GNOME%20%7C%20KDE%20%7C%20MATE%20%7C%20Xfce%20%7C%20Cinammon%20%7C%20LXQt-339933?labelColor=333333)](#compatibility)
 
-[![Screenshot](https://cfgnunes.github.io/nautilus-scripts/screenshot.svg)](#installation)
+[![Screenshot](https://cfgnunes.github.io/fm-scripts/screenshot.svg)](#installation)
 
 ## Installation
 
@@ -18,13 +18,13 @@ You can use either **curl** or **wget**. Choose **one** of the following command
 #### 🚀 Using `curl`
 
 ```bash
-bash -c "$(curl -fsSL https://cfgnunes.github.io/nautilus-scripts/install.sh)"
+bash -c "$(curl -fsSL https://cfgnunes.github.io/fm-scripts/install.sh)"
 ```
 
 #### 🚀 Using `wget`
 
 ```bash
-bash -c "$(wget -qO- https://cfgnunes.github.io/nautilus-scripts/install.sh)"
+bash -c "$(wget -qO- https://cfgnunes.github.io/fm-scripts/install.sh)"
 ```
 
 ### Option 2: Local installation
@@ -126,14 +126,14 @@ Special thanks to everyone who contributed to the translation of this project:
 
 Thank you for contributing to this project:
 
-[![contributors](https://contrib.rocks/image?repo=cfgnunes/nautilus-scripts)](https://github.com/cfgnunes/nautilus-scripts/graphs/contributors)
+[![contributors](https://contrib.rocks/image?repo=cfgnunes/fm-scripts)](https://github.com/cfgnunes/fm-scripts/graphs/contributors)
 
 ## Contributing
 
 If you spot a bug or want to improve the code or even improve the content, you can do the following:
 
-- [Open an issue](https://github.com/cfgnunes/nautilus-scripts/issues/new)
+- [Open an issue](https://github.com/cfgnunes/fm-scripts/issues/new)
   describing the bug or feature idea;
 - Fork the project, make changes, and submit a pull request.
 
-If you'd like to translate this project into your native language, feel free to send me the translated file: [en_template.pot](https://github.com/cfgnunes/nautilus-scripts/blob/main/.po/en_template.pot)
+If you'd like to translate this project into your native language, feel free to send me the translated file: [en_template.pot](https://github.com/cfgnunes/fm-scripts/blob/main/.po/en_template.pot)
