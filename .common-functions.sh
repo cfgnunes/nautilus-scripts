@@ -838,7 +838,6 @@ _deps_install_packages() {
         "flatpak")
             cmd_inst+="flatpak install -y $packages"
             ;;
-
         "guix")
             cmd_inst="guix package -i $packages"
             ;;

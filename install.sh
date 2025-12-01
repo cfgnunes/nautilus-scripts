@@ -809,16 +809,8 @@ _install_packages() {
         cmd_inst+="dnf check-update;"
         cmd_inst+="dnf -y install $packages"
         ;;
-    "rpm-ostree")
-        cmd_inst+="rpm-ostree install $packages"
-        ;;
-    "pacman")
-        cmd_inst+="pacman -Syy;"
-        cmd_inst+="pacman --noconfirm -S $packages"
-        ;;
-    "zypper")
-        cmd_inst+="zypper refresh;"
-        cmd_inst+="zypper --non-interactive install $packages"
+    "guix")
+        cmd_inst="guix package -i $packages"
         ;;
     "nix-env")
         local nix_packages=""
@@ -838,13 +830,21 @@ _install_packages() {
         # Nix does not require root for installing user packages.
         cmd_admin=""
         ;;
-    "guix")
-        cmd_inst="guix package -i $packages"
+    "pacman")
+        cmd_inst+="pacman -Syy;"
+        cmd_inst+="pacman --noconfirm -S $packages"
+        ;;
+    "rpm-ostree")
+        cmd_inst+="rpm-ostree install $packages"
         ;;
     "xbps-install")
         cmd_inst+="xbps-install -S;"
         cmd_inst+="xbps-install -y -u xbps;"
         cmd_inst+="xbps-install -y $packages"
+        ;;
+    "zypper")
+        cmd_inst+="zypper refresh;"
+        cmd_inst+="zypper --non-interactive install $packages"
         ;;
     esac
 
