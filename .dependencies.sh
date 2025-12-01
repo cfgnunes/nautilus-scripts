@@ -361,8 +361,8 @@ declare -A DEPENDENCIES_MAP=(
         nix:
         zypper:
         guix:
-        brew:
         xbps:
+        brew:
         flatpak: io.github.vmkspv.lenspect
     "
 
@@ -878,7 +878,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    tesseract
         zypper: tesseract tesseract-ocr-traineddata-$TEMP_DATA_TASK
         guix:
-        xbps:   tesseract tesseract-ocr-$TEMP_DAT_TASK
+        xbps:   tesseract tesseract-ocr-$TEMP_DATA_TASK
         brew:
     "
 
@@ -917,7 +917,7 @@ declare -A DEPENDENCIES_MAP=(
             texlive-collection-xetex
         guix:
         xbps: \
-             texlive-bin
+            texlive-bin
         brew:
     "
 )
