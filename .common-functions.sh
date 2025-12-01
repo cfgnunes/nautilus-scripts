@@ -668,7 +668,8 @@ _deps_get_dependency_value() {
         subkey=$(_str_collapse_char "$subkey" " ")
         value=$(_str_collapse_char "$value" " ")
 
-        # Map equivalent package managers for compatibility.
+        # Map equivalent package managers for compatibility, including
+        # mapping aliases to the correct installer command name.
         case "$subkey:$pkg_manager" in
         "apt:apt-get" | "dnf:rpm-ostree" | "xbps:xbps-install" | "nix:nix-env")
             subkey=$pkg_manager
