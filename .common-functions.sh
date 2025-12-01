@@ -55,9 +55,9 @@ PKG_MANAGER_PRIORITY=(
     "rpm-ostree"
     "dnf"
     "pacman"
-    "xbps"
     "zypper"
     "guix"
+    "xbps-install"
 )
 
 readonly \
@@ -670,7 +670,7 @@ _deps_get_dependency_value() {
 
         # Map equivalent package managers for compatibility.
         case "$subkey:$pkg_manager" in
-        "apt:apt-get" | "dnf:rpm-ostree")
+        "apt:apt-get" | "dnf:rpm-ostree" | "xbps:xbps-install")
             subkey=$pkg_manager
             ;;
         esac
@@ -737,16 +737,16 @@ _deps_install_missing_packages() {
 # _deps_install_packages "apt-get:curl dnf:wget brew:git"
 #
 # Supported package managers:
-# - "apt-get"     : For Debian/Ubuntu systems.
-# - "brew"        : For Homebrew package manager.
-# - "dnf"         : For Fedora/RHEL systems.
-# - "flatpak"     : For Flatpak packages.
-# - "guix"        : For GNU Guix systems.
-# - "nix"         : For Nix-based systems.
-# - "pacman"      : For Arch Linux systems.
-# - "rpm-ostree"  : For Fedora Atomic systems.
-# - "xbps"        : For Void Linux systems.
-# - "zypper"      : For openSUSE systems.
+# - "apt-get"       : For Debian/Ubuntu systems.
+# - "brew"          : For Homebrew package manager.
+# - "dnf"           : For Fedora/RHEL systems.
+# - "flatpak"       : For Flatpak packages.
+# - "guix"          : For GNU Guix systems.
+# - "nix"           : For Nix-based systems.
+# - "pacman"        : For Arch Linux systems.
+# - "rpm-ostree"    : For Fedora Atomic systems.
+# - "xbps-install"  : For Void Linux systems.
+# - "zypper"        : For openSUSE systems.
 #
 # PARAMETERS:
 #   $1 (pkg_list): A space-separated list of "<pkg_manager>:<package>" pairs.
@@ -866,9 +866,9 @@ _deps_install_packages() {
         "rpm-ostree")
             cmd_inst+="rpm-ostree install $packages &>/dev/null"
             ;;
-        "xbps")
-            cmd_inst+="xbps-install -S;"
-            cmd_inst+="xbps-install -u xbps;"
+        "xbps-install")
+            cmd_inst+="xbps-install -S &>/dev/null;"
+            cmd_inst+="xbps-install -y -u xbps &>/dev/null;"
             cmd_inst+="xbps-install -y $packages &>/dev/null"
             ;;
         "zypper")
@@ -972,16 +972,16 @@ _deps_check_rpm_ostree_requires_reboot() {
 # PARAMETERS:
 #   $1 (pkg_manager): The package manager to use for the check.
 #      Supported values:
-#      - "apt-get"     : For Debian/Ubuntu systems.
-#      - "brew"        : For Homebrew package manager.
-#      - "dnf"         : For Fedora/RHEL systems.
-#      - "flatpak"     : For Flatpak packages.
-#      - "guix"        : For GNU Guix systems.
-#      - "nix"         : For Nix-based systems.
-#      - "pacman"      : For Arch Linux systems.
-#      - "rpm-ostree"  : For Fedora Atomic systems.
-#      - "xbps"        : For Void Linux systems.
-#      - "zypper"      : For openSUSE systems.
+#      - "apt-get"      : For Debian/Ubuntu systems.
+#      - "brew"         : For Homebrew package manager.
+#      - "dnf"          : For Fedora/RHEL systems.
+#      - "flatpak"      : For Flatpak packages.
+#      - "guix"         : For GNU Guix systems.
+#      - "nix"          : For Nix-based systems.
+#      - "pacman"       : For Arch Linux systems.
+#      - "rpm-ostree"   : For Fedora Atomic systems.
+#      - "xbps-install" : For Void Linux systems.
+#      - "zypper"       : For openSUSE systems.
 #   $2 (package): The name of the package to check.
 #
 # RETURNS:
@@ -1041,9 +1041,9 @@ _deps_is_package_installed() {
             return 0
         fi
         ;;
-    "xbps")
-        if xbps-query -Rs "$package" | cut -d' ' -f1,2 | rev | cut -d'-' -f2- | rev | grep -qxF "[*] $package"; then
-           return 0
+    "xbps-install")
+        if xbps-query -l | grep -q "^ii $package-"; then
+            return 0
         fi
         ;;
     "zypper")

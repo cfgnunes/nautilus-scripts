@@ -760,7 +760,7 @@ _check_dependencies() {
         if [[ "$packages" == *"yad"* ]]; then
             packages+="libavcodec6 libheif "
         fi
-        _install_packages "xbps" "$packages"
+        _install_packages "xbps-install" "$packages"
     elif _command_exists "zypper"; then
         # Package manager 'zypper': For openSUSE systems.
         _command_exists "pgrep" || packages+="procps-ng "
@@ -841,9 +841,9 @@ _install_packages() {
     "guix")
         cmd_inst="guix package -i $packages"
         ;;
-    "xbps")
+    "xbps-install")
         cmd_inst+="xbps-install -S;"
-        cmd_inst+="xbps-install -u xbps;"
+        cmd_inst+="xbps-install -y -u xbps;"
         cmd_inst+="xbps-install -y $packages"
         ;;
     esac
