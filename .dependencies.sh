@@ -18,6 +18,7 @@
 #     package name may differ from the one provided during installation.
 declare -A DEPENDENCIES_MAP=(
     ["7za"]="
+        termux: p7zip
         apt:    p7zip-full
         dnf:    p7zip
         pacman: p7zip
@@ -25,11 +26,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: 7zip
         guix:   p7zip
         xbps:   p7zip
-        termux: p7zip
         brew:   p7zip
     "
 
     ["ar"]="
+        termux: binutils
         apt:    binutils
         dnf:    binutils
         pacman: binutils
@@ -37,11 +38,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: binutils
         guix:   binutils
         xbps:   binutils
-        termux: binutils
         brew:   binutils
     "
 
     ["axel"]="
+        termux: axel
         apt:    axel
         dnf:    axel
         pacman: axel
@@ -49,11 +50,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: axel
         guix:   axel
         xbps:   axel
-        termux: axel
         brew:   axel
     "
 
     ["baobab"]="
+        termux: baobab
         apt:    baobab
         dnf:    baobab
         pacman: baobab
@@ -61,11 +62,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: baobab
         guix:   baobab
         xbps:   baobab
-        termux: baobab
         brew:
     "
 
     ["bsdtar"]="
+        termux: libarchive
         apt:    libarchive-tools
         dnf:    bsdtar
         pacman: libarchive
@@ -73,11 +74,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: bsdtar
         guix:   libarchive
         xbps:   bsdtar
-        termux: libarchive
         brew:   libarchive
     "
 
     ["bzip2"]="
+        termux: bzip2
         apt:    bzip2
         dnf:    bzip2
         pacman: bzip2
@@ -85,11 +86,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: bzip2
         guix:   bzip2
         xbps:   bzip2
-        termux: bzip2
         brew:   bzip2
     "
 
     ["cabextract"]="
+        termux: cabextract
         apt:    cabextract
         dnf:    cabextract
         pacman: cabextract
@@ -97,11 +98,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: cabextract
         guix:   cabextract
         xbps:   cabextract
-        termux: cabextract
         brew:   cabextract
     "
 
     ["cjxl"]="
+        termux: libjxl-progs
         apt:    libjxl-tools
         dnf:    libjxl-utils
         pacman: libjxl
@@ -109,11 +110,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: libjxl-tools
         guix:   libjxl
         xbps:   libjxl-tools
-        termux: libjxl-progs
         brew:
     "
 
     ["clamscan"]="
+        termux: clamav
         apt:    clamav
         dnf:    clamav
         pacman: clamav
@@ -121,11 +122,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: clamav
         guix:   clamav
         xbps:   clamav
-        termux: clamav
         brew:
     "
 
     ["compare"]="
+        termux: imagemagick
         apt:    imagemagick
         dnf:    ImageMagick
         pacman: imagemagick
@@ -133,11 +134,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: ImageMagick
         guix:   imagemagick
         xbps:   ImageMagick
-        termux: imagemagick
         brew:
     "
 
     ["convert"]="
+        termux: imagemagick
         apt:    imagemagick
         dnf:    ImageMagick
         pacman: imagemagick
@@ -145,11 +146,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: ImageMagick
         guix:   imagemagick
         xbps:   ImageMagick
-        termux: imagemagick
         brew:
     "
 
     ["cpio"]="
+        termux: cpio
         apt:    cpio
         dnf:    cpio
         pacman: cpio
@@ -157,11 +158,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: cpio
         guix:   cpio
         xbps:   cpio
-        termux: cpio
         brew:   cpio
     "
 
     ["curl"]="
+        termux: curl
         apt:    curl
         dnf:    curl
         pacman: curl
@@ -169,11 +170,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: curl
         guix:   curl
         xbps:   curl
-        termux: curl
         brew:
     "
 
     ["diffpdf"]="
+        termux:
         apt:    diffpdf
         dnf:    diffpdf
         pacman: diffpdf
@@ -181,11 +182,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper:
         guix:
         xbps:
-        termux:
         brew:
     "
 
     ["exiftool"]="
+        termux: exiftool
         apt:    libimage-exiftool-perl
         dnf:    perl-Image-ExifTool
         pacman: perl-image-exiftool
@@ -193,11 +194,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: exiftool
         guix:   perl-image-exiftool
         xbps:   exiftool
-        termux: exiftool
         brew:
     "
 
     ["ffmpeg"]="
+        termux: ffmpeg
         apt:    ffmpeg
         dnf:    ffmpeg-free
         pacman: ffmpeg
@@ -205,11 +206,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: ffmpeg
         guix:   ffmpeg
         xbps:   ffmpeg
-        termux: ffmpeg
         brew:
     "
 
     ["filelight"]="
+        termux: filelight
         apt:    filelight
         dnf:    filelight
         pacman: filelight
@@ -217,11 +218,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: filelight
         guix:   filelight
         xbps:   filelight
-        termux: filelight
         brew:
     "
 
     ["foremost"]="
+        termux:
         apt:    foremost
         dnf:    foremost
         pacman: foremost
@@ -229,11 +230,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper:
         guix:
         xbps:   foremost
-        termux:
         brew:   foremost
     "
 
     ["ghex"]="
+        termux: ghex
         apt:    ghex
         dnf:    ghex
         pacman: ghex
@@ -241,11 +242,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: ghex
         guix:   ghex
         xbps:   ghex
-        termux: ghex
         brew:
     "
 
     ["git"]="
+        termux: git
         apt:    git
         dnf:    git
         pacman: git
@@ -253,11 +254,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: git
         guix:   git
         xbps:   git
-        termux: git
         brew:
     "
 
     ["gpg"]="
+        termux: gnupg
         apt:    gnupg
         dnf:    gnupg2
         pacman: gnupg
@@ -265,11 +266,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: gpg2
         guix:   gnupg
         xbps:   gnupg
-        termux: gnupg
         brew:
     "
 
     ["gs"]="
+        termux: ghostscript
         apt:    ghostscript
         dnf:    ghostscript
         pacman: ghostscript
@@ -277,11 +278,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: ghostscript
         guix:   ghostscript
         xbps:   ghostscript
-        termux: ghostscript
         brew:
     "
 
     ["gunzip"]="
+        termux: gzip
         apt:    gzip
         dnf:    gzip
         pacman: gzip
@@ -289,11 +290,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: gzip
         guix:   gzip
         xbps:   gzip
-        termux: gzip
         brew:   gzip
     "
 
     ["gzip"]="
+        termux: gzip
         apt:    gzip
         dnf:    gzip
         pacman: gzip
@@ -301,11 +302,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: gzip
         guix:   gzip
         xbps:   gzip
-        termux: gzip
         brew:   gzip
     "
 
     ["iconv"]="
+        termux: libiconv
         apt:    libc-bin
         dnf:    glibc-common
         pacman: glibc
@@ -313,11 +314,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: glibc
         guix:   glibc
         xbps:   glibc
-        termux: libiconv
         brew:
     "
 
     ["id3v2"]="
+        termux: id3v2
         apt:    id3v2
         dnf:    id3v2
         pacman: id3v2
@@ -325,11 +326,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: id3v2
         guix:
         xbps:   id3v2
-        termux: id3v2
         brew:   id3v2
     "
 
     ["inkscape"]="
+        termux:
         apt:    inkscape
         dnf:    inkscape
         pacman: inkscape
@@ -337,11 +338,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: inkscape
         guix:   inkscape
         xbps:   inkscape
-        termux:
         brew:
     "
 
     ["kdiff3"]="
+        termux:
         apt:    kdiff3
         dnf:    kdiff3
         pacman: kdiff3
@@ -349,11 +350,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: kdiff3
         guix:
         xbps:   kdiff3
-        termux:
         brew:
     "
 
     ["lenspect"]="
+        termux:
         apt:
         dnf:
         pacman:
@@ -361,12 +362,12 @@ declare -A DEPENDENCIES_MAP=(
         zypper:
         guix:
         xbps:
-        termux:
         brew:
         flatpak: io.github.vmkspv.lenspect
     "
 
     ["lha"]="
+        termux: lhasa
         apt:    lhasa
         dnf:    lhasa
         pacman: lhasa
@@ -374,11 +375,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: lhasa
         guix:   lhasa
         xbps:   lhasa
-        termux: lhasa
         brew:   lhasa
     "
 
     ["lp"]="
+        termux: cups
         apt:    cups-client
         dnf:    cups-client
         pacman: cups
@@ -386,11 +387,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: cups
         guix:   cups
         xbps:   cups
-        termux: cups
         brew:
     "
 
     ["lrzip"]="
+        termux: lrzip
         apt:    lrzip
         dnf:
         pacman: lrzip
@@ -398,11 +399,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: lrzip
         guix:   lrzip
         xbps:   lrzip
-        termux: lrzip
         brew:   lrzip
     "
 
     ["lz4"]="
+        termux: lz4
         apt:    lz4
         dnf:    lz4
         pacman: lz4
@@ -410,11 +411,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: lz4
         guix:   lz4
         xbps:   lz4
-        termux: lz4
         brew:   lz4
     "
 
     ["lzip"]="
+        termux: lzip
         apt:    lzip
         dnf:    lzip
         pacman: lzip
@@ -422,11 +423,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: lzip
         guix:   lzip
         xbps:   lzip
-        termux: lzip
         brew:   lzip
     "
 
     ["lzma"]="
+        termux: xz-utils
         apt:    xz-utils
         dnf:    lzma
         pacman: xz
@@ -434,11 +435,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: lzma
         guix:   xz
         xbps:   xz
-        termux: xz-utils
         brew:   xz
     "
 
     ["lzop"]="
+        termux: lzop
         apt:    lzop
         dnf:    lzop
         pacman: lzop
@@ -446,11 +447,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: lzop
         guix:   lzop
         xbps:   lzop
-        termux: lzop
         brew:   lzop
     "
 
     ["mediainfo"]="
+        termux: mediainfo
         apt:    mediainfo
         dnf:    mediainfo
         pacman: mediainfo
@@ -458,11 +459,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: mediainfo
         guix:   mediainfo
         xbps:   mediainfo
-        termux: mediainfo
         brew:
     "
 
     ["meld"]="
+        termux: meld
         apt:    meld
         dnf:    meld
         pacman: meld
@@ -470,11 +471,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: meld
         guix:   meld
         xbps:   meld
-        termux: meld
         brew:
     "
 
     ["mp3gain"]="
+        termux: mp3gain
         apt:    mp3gain
         dnf:    mp3gain
         pacman:
@@ -482,11 +483,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: mp3gain
         guix:
         xbps:
-        termux: mp3gain
         brew:   mp3gain
     "
 
     ["mp3val"]="
+        termux:
         apt:    mp3val
         dnf:
         pacman:
@@ -494,11 +495,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper:
         guix:
         xbps:   mp3val
-        termux:
         brew:   mp3val
     "
 
     ["nmap"]="
+        termux: nmap
         apt:    nmap
         dnf:    nmap
         pacman: nmap
@@ -506,11 +507,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: nmap
         guix:   nmap
         xbps:   nmap
-        termux: nmap
         brew:
     "
 
     ["okteta"]="
+        termux:
         apt:    okteta
         dnf:    okteta
         pacman: okteta
@@ -518,11 +519,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: okteta
         guix:   okteta
         xbps:   okteta
-        termux:
         brew:
     "
 
     ["openssl"]="
+        termux: openssl
         apt:    openssl
         dnf:    openssl
         pacman: openssl
@@ -530,11 +531,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: openssl
         guix:   openssl
         xbps:   openssl
-        termux: openssl
         brew:   openssl
     "
 
     ["optipng"]="
+        termux: optipng
         apt:    optipng
         dnf:    optipng
         pacman: optipng
@@ -542,11 +543,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: optipng
         guix:   optipng
         xbps:   optipng
-        termux: optipng
         brew:   optipng
     "
 
     ["pandoc"]="
+        termux: pandoc
         apt:    pandoc
         dnf:    pandoc-cli
         pacman: pandoc
@@ -554,11 +555,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: pandoc
         guix:   pandoc
         xbps:   pandoc
-        termux: pandoc
         brew:   pandoc
     "
 
     ["pdfinfo"]="
+        termux: poppler
         apt:    poppler-utils
         dnf:    poppler-utils
         pacman: poppler
@@ -566,11 +567,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: poppler-tools
         guix:   poppler
         xbps:   poppler
-        termux: poppler
         brew:
     "
 
     ["perl"]="
+        termux: perl
         apt:    perl-base
         dnf:    perl-base
         pacman: perl-base
@@ -578,11 +579,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: perl-base
         guix:   perl
         xbps:   perl
-        termux: perl
         brew:   perl
     "
 
     ["photorec"]="
+        termux: testdisk
         apt:    testdisk
         dnf:    testdisk
         pacman: testdisk
@@ -590,11 +591,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: photorec
         guix:   testdisk
         xbps:   testdisk
-        termux: testdisk
         brew:   testdisk
     "
 
     ["ping"]="
+        termux: inetutils
         apt:    iputils-ping
         dnf:    iputils
         pacman: iputils
@@ -602,11 +603,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: iputils
         guix:   iputils
         xbps:   iputils
-        termux: inetutils
         brew:   iputils
     "
 
     ["qpdf"]="
+        termux: qpdf
         apt:    qpdf
         dnf:    qpdf
         pacman: qpdf
@@ -614,11 +615,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: qpdf
         guix:   qpdf
         xbps:   qpdf
-        termux: qpdf
         brew:   qpdf
     "
 
     ["rdfind"]="
+        termux: rdfind
         apt:    rdfind
         dnf:    rdfind
         pacman: rdfind
@@ -626,11 +627,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: rdfind
         guix:
         xbps:   rdfind
-        termux: rdfind
         brew:   rdfind
     "
 
     ["rhash"]="
+        termux: rhash
         apt:    rhash
         dnf:    rhash
         pacman: rhash
@@ -638,11 +639,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: rhash
         guix:   rhash
         xbps:   rhash
-        termux: rhash
         brew:   rhash
     "
 
     ["tar"]="
+        termux: tar
         apt:    tar
         dnf:    tar
         pacman: tar
@@ -650,11 +651,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: tar
         guix:   tar
         xbps:   tar
-        termux: tar
         brew:   gnu-tar
     "
 
     ["unar"]="
+        termux: unar
         apt:    unar
         dnf:    unar
         pacman: unarchiver
@@ -662,11 +663,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: unar
         guix:
         xbps:   unar
-        termux: unar
         brew:   unar
     "
 
     ["unrar"]="
+        termux: unrar
         apt:    unrar
         dnf:    unrar
         pacman: unrar
@@ -674,11 +675,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: unrar
         guix:
         xbps:   unrar
-        termux: unrar
         brew:
     "
 
     ["unsquashfs"]="
+        termux:
         apt:    squashfs-tools
         dnf:    squashfs-tools
         pacman: squashfs-tools
@@ -686,11 +687,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: squashfs
         guix:   squashfs-tools
         xbps:   squashfs-tools
-        termux:
         brew:   squashfs
     "
 
     ["unzip"]="
+        termux: unzip
         apt:    unzip
         dnf:    unzip
         pacman: unzip
@@ -698,11 +699,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: unzip
         guix:   unzip
         xbps:   unzip
-        termux: unzip
         brew:   unzip
     "
 
     ["wl-paste"]="
+        termux:
         apt:    wl-clipboard
         dnf:    wl-clipboard
         pacman: wl-clipboard
@@ -710,11 +711,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: wl-clipboard
         guix:   wl-clipboard
         xbps:   wl-clipboard
-        termux:
         brew:
     "
 
     ["xclip"]="
+        termux: xclip
         apt:    xclip
         dnf:    xclip
         pacman: xclip
@@ -722,11 +723,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: xclip
         guix:   xclip
         xbps:   xclip
-        termux: xclip
         brew:
     "
 
     ["xorriso"]="
+        termux: xorriso
         apt:    xorriso
         dnf:    xorriso
         pacman: xorriso
@@ -734,11 +735,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: xorriso
         guix:   xorriso
         xbps:   xorriso
-        termux: xorriso
         brew:   xorriso
     "
 
     ["xxd"]="
+        termux: xxd
         apt:    xxd
         dnf:    xxd
         pacman: xxd
@@ -746,11 +747,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: xxd
         guix:   xxd
         xbps:   xxd
-        termux: xxd
         brew:
     "
 
     ["xz"]="
+        termux: xz-utils
         apt:    xz-utils
         dnf:    xz
         pacman: xz
@@ -758,11 +759,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: xz
         guix:   xz
         xbps:   xz
-        termux: xz-utils
         brew:   xz
     "
 
     ["zpaq"]="
+        termux: zpaq
         apt:    zpaq
         dnf:    zpaq
         pacman:
@@ -770,11 +771,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: zpaq
         guix:   zpaq
         xbps:   zpaq
-        termux: zpaq
         brew:   zpaq
     "
 
     ["zstd"]="
+        termux: zstd
         apt:    zstd
         dnf:    zstd
         pacman: zstd
@@ -782,11 +783,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: zstd
         guix:   zstd
         xbps:   zstd
-        termux: zstd
         brew:   zstd
     "
 
     ["latexmk"]="
+        termux: texlive-bin
         apt:    latexmk
         dnf:    latexmk
         pacman: texlive-binextra
@@ -794,11 +795,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: texlive-latexmk
         guix:
         xbps:   texlive-latexmk
-        termux: texlive-bin
         brew:
     "
 
     ["localc"]="
+        termux:
         apt:    libreoffice-calc
         dnf:    libreoffice-calc
         pacman: libreoffice
@@ -806,11 +807,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: libreoffice-calc
         guix:   libreoffice
         xbps:   libreoffice-calc
-        termux:
         brew:
     "
 
     ["loimpress"]="
+        termux:
         apt:    libreoffice-impress
         dnf:    libreoffice-impress
         pacman: libreoffice
@@ -818,11 +819,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: libreoffice-impress
         guix:   libreoffice
         xbps:   libreoffice-impress
-        termux:
         brew:
     "
 
     ["lowriter"]="
+        termux:
         apt:    libreoffice-writer
         dnf:    libreoffice-writer
         pacman: libreoffice
@@ -830,11 +831,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: libreoffice-writer
         guix:   libreoffice
         xbps:   libreoffice-writer
-        termux:
         brew:
     "
 
     ["ocrmypdf"]="
+        termux:
         apt:    ocrmypdf
         dnf:    ocrmypdf
         pacman:
@@ -842,11 +843,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper:
         guix:
         xbps:   python3-ocrmypdf
-        termux:
         brew:
     "
 
     ["pdfjam"]="
+        termux: texlive-bin
         apt:    texlive-extra-utils
         dnf:    texlive-pdfjam
         pacman: texlive-basic texlive-binextra texlive-latexextra
@@ -854,11 +855,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: texlive-pdfjam-bin
         guix:
         xbps:   texlive
-        termux: texlive-bin
         brew:
     "
 
     ["sox"]="
+        termux: sox
         apt:    sox libsox-fmt-mp3
         dnf:    sox
         pacman: sox
@@ -866,11 +867,11 @@ declare -A DEPENDENCIES_MAP=(
         zypper: sox
         guix:   sox
         xbps:   sox
-        termux: sox
         brew:   sox
     "
 
     ["tesseract-lang-$TEMP_DATA_TASK"]="
+        termux: tesseract
         apt:    tesseract tesseract-ocr-$TEMP_DATA_TASK
         dnf:    tesseract tesseract-langpack-$TEMP_DATA_TASK
         pacman: tesseract tesseract-data-$TEMP_DATA_TASK
@@ -878,11 +879,12 @@ declare -A DEPENDENCIES_MAP=(
         zypper: tesseract tesseract-ocr-traineddata-$TEMP_DATA_TASK
         guix:
         xbps:   tesseract tesseract-ocr-$TEMP_DATA_TASK
-        termux: tesseract
         brew:
     "
 
     ["texlive"]="
+        termux: \
+            texlive-bin
         apt: \
             texlive \
             texlive-fonts-extra \
@@ -915,8 +917,6 @@ declare -A DEPENDENCIES_MAP=(
             texlive-collection-xetex
         guix:
         xbps: \
-            texlive-bin
-        termux: \
             texlive-bin
         brew:
     "
