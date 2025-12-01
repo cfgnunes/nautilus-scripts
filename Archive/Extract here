@@ -80,6 +80,7 @@ _get_command() {
     local _cmds_bz3=("bzip3")
     local _cmds_cab=("cabextract" "bsdtar" "unar")
     local _cmds_cpio=("cpio" "unar" "bsdtar")
+    local _cmds_dar=("dar")
     local _cmds_deb=("ar")
     local _cmds_gpg=("gpg")
     local _cmds_gz=("gzip" "unar" "7za")
@@ -138,6 +139,7 @@ _get_command() {
     *.bz3) pref_commands=("${_cmds_bz3[@]}") ;;
     *.cab) pref_commands=("${_cmds_cab[@]}") ;;
     *.cpio) pref_commands=("${_cmds_cpio[@]}") ;;
+    *.dar) pref_commands=("${_cmds_dar[@]}") ;;
     *.deb | *.udeb) pref_commands=("${_cmds_deb[@]}") ;;
     *.gpg | *.asc | *.pgp) pref_commands=("${_cmds_gpg[@]}") ;;
     *.gz) pref_commands=("${_cmds_gz[@]}") ;;
@@ -186,6 +188,7 @@ _get_command() {
         "application/x-compress") pref_commands=("${_cmds_z[@]}") ;;
         "application/x-compressed-tar") pref_commands=("${_cmds_tar_gz[@]}") ;;
         "application/x-cpio") pref_commands=("${_cmds_cpio[@]}") ;;
+        "application/x-dar") pref_commands=("${_cmds_dar[@]}") ;;
         "application/x-gzip" | "application/gzip") pref_commands=("${_cmds_gz[@]}") ;;
         "application/x-iso9660-image") pref_commands=("${_cmds_iso[@]}") ;;
         "application/x-lha" | "application/x-lzh-compressed") pref_commands=("${_cmds_lzh[@]}") ;;
@@ -337,6 +340,7 @@ _run_command() {
     "bzip3") bzip3 -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
     "cabextract") std_output=$(cabextract "$input_file" 2>&1) ;;
     "cpio") std_output=$(cpio -idv <"$input_file" 2>&1) ;;
+    "dar") std_output=$(dar -x "$input_file" 2>&1) ;;
     "gpg")
         std_output=$(gpg --batch --yes --decrypt --output "$filename" -- "$input_file" 2>&1)
         local file_mime=""

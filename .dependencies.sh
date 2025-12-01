@@ -185,6 +185,18 @@ declare -A DEPENDENCIES_MAP=(
         brew:
     "
 
+    ["dar"]="
+        termux: dar
+        apt:    dar
+        dnf:    dar
+        pacman: dar
+        nix:    dar
+        zypper: dar
+        guix:   dar
+        xbps:   dar
+        brew:   dar
+    "
+
     ["diffpdf"]="
         termux:
         apt:    diffpdf
