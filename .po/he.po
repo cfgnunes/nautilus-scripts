@@ -1372,10 +1372,6 @@ msgid "MP3: Volume normalize (recursive)"
 msgstr "שמע: נרמול עוצמת השמע (רקורסיבי)"
 
 #: Menu
-msgid "MP3: Repair (recursive)"
-msgstr "קובצי MP3: תיקון (רקורסיבי)"
-
-#: Menu
 msgid "MP3: Show encoding details"
 msgstr "קובצי MP3: הצגת פרטי קידוד"
 

@@ -1372,10 +1372,6 @@ msgid "MP3: Volume normalize (recursive)"
 msgstr "MP3: Chuẩn hóa âm lượng (đệ quy)"
 
 #: Menu
-msgid "MP3: Repair (recursive)"
-msgstr "MP3: Sửa lỗi (đệ quy)"
-
-#: Menu
 msgid "MP3: Show encoding details"
 msgstr "MP3: Hiển thị chi tiết mã hóa"
 

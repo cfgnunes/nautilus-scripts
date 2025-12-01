@@ -486,18 +486,6 @@ declare -A DEPENDENCIES_MAP=(
         brew:   mp3gain
     "
 
-    ["mp3val"]="
-        termux:
-        apt:    mp3val
-        dnf:
-        pacman:
-        nix:    mp3val
-        zypper:
-        guix:
-        xbps:   mp3val
-        brew:   mp3val
-    "
-
     ["nmap"]="
         termux: nmap
         apt:    nmap

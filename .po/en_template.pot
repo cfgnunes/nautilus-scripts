@@ -1371,10 +1371,6 @@ msgid "MP3: Volume normalize (recursive)"
 msgstr ""
 
 #: Menu
-msgid "MP3: Repair (recursive)"
-msgstr ""
-
-#: Menu
 msgid "MP3: Show encoding details"
 msgstr ""
 
