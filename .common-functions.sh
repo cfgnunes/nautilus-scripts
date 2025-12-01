@@ -793,8 +793,8 @@ _deps_install_packages() {
         # Define installation commands depending on the package manager.
         case "$pkg_manager" in
         "apt-get")
-            cmd_inst+="apt-get update &>/dev/null;"
-            cmd_inst+="apt-get -y install $packages &>/dev/null"
+            cmd_inst+="apt-get update;"
+            cmd_inst+="apt-get -y install $packages"
             ;;
         "brew")
             # Configure Homebrew for non-interactive and less verbose
@@ -822,9 +822,9 @@ _deps_install_packages() {
                 # Install all dependencies (recursively) using bottles.
                 cmd_inst+="brew deps --topological $pkg 2>/dev/null | "
                 cmd_inst+="xargs --no-run-if-empty -I{} "
-                cmd_inst+="brew install --force-bottle {} &>/dev/null;"
+                cmd_inst+="brew install --force-bottle {};"
                 # Install the requested packages themselves.
-                cmd_inst+="brew install --force-bottle $pkg &>/dev/null;"
+                cmd_inst+="brew install --force-bottle $pkg;"
             done
             cmd_inst=$(_str_collapse_char "$cmd_inst" ";")
 
@@ -832,15 +832,15 @@ _deps_install_packages() {
             cmd_admin=""
             ;;
         "dnf")
-            cmd_inst+="dnf check-update &>/dev/null;"
-            cmd_inst+="dnf -y install $packages &>/dev/null"
+            cmd_inst+="dnf check-update;"
+            cmd_inst+="dnf -y install $packages"
             ;;
         "flatpak")
-            cmd_inst+="flatpak install -y $packages &>/dev/null"
+            cmd_inst+="flatpak install -y $packages"
             ;;
 
         "guix")
-            cmd_inst="guix package -i $packages &>/dev/null"
+            cmd_inst="guix package -i $packages"
             ;;
         "nix")
             local nix_packages=""
@@ -855,25 +855,25 @@ _deps_install_packages() {
             nix_packages=$(sed "s| $||g" <<<"$nix_packages")
             nix_packages=$(sed "s| | $nix_channel.|g" <<<"$nix_packages")
 
-            cmd_inst+="nix-env -iA $nix_packages &>/dev/null"
+            cmd_inst+="nix-env -iA $nix_packages"
             # Nix does not require root for installing user packages.
             cmd_admin=""
             ;;
         "pacman")
-            cmd_inst+="pacman -Syy &>/dev/null;"
-            cmd_inst+="pacman --noconfirm -S $packages &>/dev/null"
+            cmd_inst+="pacman -Syy;"
+            cmd_inst+="pacman --noconfirm -S $packages"
             ;;
         "rpm-ostree")
-            cmd_inst+="rpm-ostree install $packages &>/dev/null"
+            cmd_inst+="rpm-ostree install $packages"
             ;;
         "xbps-install")
-            cmd_inst+="xbps-install -S &>/dev/null;"
-            cmd_inst+="xbps-install -y -u xbps &>/dev/null;"
-            cmd_inst+="xbps-install -y $packages &>/dev/null"
+            cmd_inst+="xbps-install -S;"
+            cmd_inst+="xbps-install -y -u xbps;"
+            cmd_inst+="xbps-install -y $packages"
             ;;
         "zypper")
-            cmd_inst+="zypper refresh &>/dev/null;"
-            cmd_inst+="zypper --non-interactive install $packages &>/dev/null"
+            cmd_inst+="zypper refresh;"
+            cmd_inst+="zypper --non-interactive install $packages"
             ;;
         esac
 
@@ -894,7 +894,7 @@ _deps_install_packages() {
             fi
 
             # If root privileges are required, prepend with 'sudo' or 'pkexec'.
-            $cmd_admin bash -c "$cmd_inst"
+            $cmd_admin bash -c "$cmd_inst" &>/dev/null
         fi
     done
 
