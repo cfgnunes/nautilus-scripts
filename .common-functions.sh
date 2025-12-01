@@ -50,7 +50,7 @@ MSG_INFO="[\033[0;32m INFO \033[0m]"
 PKG_MANAGER_PRIORITY=(
     "flatpak"
     "brew"
-    "nix"
+    "nix-env"
     "apt-get"
     "rpm-ostree"
     "dnf"
@@ -670,7 +670,7 @@ _deps_get_dependency_value() {
 
         # Map equivalent package managers for compatibility.
         case "$subkey:$pkg_manager" in
-        "apt:apt-get" | "dnf:rpm-ostree" | "xbps:xbps-install")
+        "apt:apt-get" | "dnf:rpm-ostree" | "xbps:xbps-install" | "nix:nix-env")
             subkey=$pkg_manager
             ;;
         esac
@@ -742,7 +742,7 @@ _deps_install_missing_packages() {
 # - "dnf"           : For Fedora/RHEL systems.
 # - "flatpak"       : For Flatpak packages.
 # - "guix"          : For GNU Guix systems.
-# - "nix"           : For Nix-based systems.
+# - "nix-env"       : For Nix-based systems.
 # - "pacman"        : For Arch Linux systems.
 # - "rpm-ostree"    : For Fedora Atomic systems.
 # - "xbps-install"  : For Void Linux systems.
@@ -841,7 +841,7 @@ _deps_install_packages() {
         "guix")
             cmd_inst="guix package -i $packages"
             ;;
-        "nix")
+        "nix-env")
             local nix_packages=""
             local nix_channel="nixpkgs"
             if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
@@ -976,7 +976,7 @@ _deps_check_rpm_ostree_requires_reboot() {
 #      - "dnf"          : For Fedora/RHEL systems.
 #      - "flatpak"      : For Flatpak packages.
 #      - "guix"         : For GNU Guix systems.
-#      - "nix"          : For Nix-based systems.
+#      - "nix-env"      : For Nix-based systems.
 #      - "pacman"       : For Arch Linux systems.
 #      - "rpm-ostree"   : For Fedora Atomic systems.
 #      - "xbps-install" : For Void Linux systems.
@@ -1024,7 +1024,7 @@ _deps_is_package_installed() {
             return 0
         fi
         ;;
-    "nix")
+    "nix-env")
         if nix-env -q | grep --quiet "^$package"; then
             return 0
         fi
