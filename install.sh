@@ -729,10 +729,6 @@ _check_dependencies() {
         # Package manager 'nix-env': For Nix-based systems.
         _command_exists "pgrep" || packages+="procps "
         _install_packages "nix-env" "$packages"
-    elif _command_exists "guix"; then
-        # Package manager 'guix': For GNU Guix systems.
-        _command_exists "pgrep" || packages+="procps "
-        _install_packages "guix" "$packages"
     elif _command_exists "apt-get"; then
         # Package manager 'apt-get': For Debian/Ubuntu systems.
         _command_exists "pgrep" || packages+="procps "
@@ -753,6 +749,14 @@ _check_dependencies() {
             packages+="gtk4 zlib glib2 "
         fi
         _install_packages "pacman" "$packages"
+    elif _command_exists "zypper"; then
+        # Package manager 'zypper': For openSUSE systems.
+        _command_exists "pgrep" || packages+="procps-ng "
+        _install_packages "zypper" "$packages"
+    elif _command_exists "guix"; then
+        # Package manager 'guix': For GNU Guix systems.
+        _command_exists "pgrep" || packages+="procps "
+        _install_packages "guix" "$packages"
     elif _command_exists "xbps-install"; then
         # Package manager 'xbps': For Void Linux systems.
         _command_exists "pgrep" || packages+="procps-ng "
@@ -761,10 +765,6 @@ _check_dependencies() {
             packages+="libavcodec6 libheif "
         fi
         _install_packages "xbps-install" "$packages"
-    elif _command_exists "zypper"; then
-        # Package manager 'zypper': For openSUSE systems.
-        _command_exists "pgrep" || packages+="procps-ng "
-        _install_packages "zypper" "$packages"
     else
         if [[ -n "$packages" ]]; then
             _log "[ERR] Missing package manager."
