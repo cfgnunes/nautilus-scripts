@@ -678,9 +678,10 @@ _deps_get_dependency_value() {
         # Special handling for Termux (Android). Since Termux (on Android) uses
         # its own package ecosystem and may share paths with 'proot-distro'
         # containers, we ensure it's a real Termux session by checking that
-        # '$HOME' contains "com.termux", the package manager is "pkg", and the
+        # the '$subkey' is "termux", '$HOME' contains "com.termux", and the
         # system reports "Android".
-        if [[ "$subkey" == "pkg" ]] && [[ "${HOME:-}" == *"com.termux"* ]] &&
+        if [[ "$subkey" == "termux" ]] &&
+            [[ "${HOME:-}" == *"com.termux"* ]] &&
             [[ "$(uname -o)" == "Android" ]]; then
             printf "%s" "$value"
             return 0
