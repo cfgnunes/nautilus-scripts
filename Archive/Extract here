@@ -159,7 +159,7 @@ _get_command() {
     *.xar) pref_commands=("${_cmds_xar[@]}") ;;
     *.xz) pref_commands=("${_cmds_xz[@]}") ;;
     *.z) pref_commands=("${_cmds_z[@]}") ;;
-    *.zip) pref_commands=("${_cmds_zip[@]}") ;;
+    *.zip | *.apk | *.jar | *.ear) pref_commands=("${_cmds_zip[@]}") ;;
     *.zoo) pref_commands=("${_cmds_zoo[@]}") ;;
     *.zpaq) pref_commands=("${_cmds_zpaq[@]}") ;;
     *.zst) pref_commands=("${_cmds_zstd[@]}") ;;
@@ -211,7 +211,7 @@ _get_command() {
         "application/x-xar") pref_commands=("${_cmds_xar[@]}") ;;
         "application/x-xz-compressed-tar") pref_commands=("${_cmds_tar_xz[@]}") ;;
         "application/x-xz") pref_commands=("${_cmds_xz[@]}") ;;
-        "application/x-zip" | "application/x-zip-compressed" | "application/zip") pref_commands=("${_cmds_zip[@]}") ;;
+        "application/x-zip" | "application/x-zip-compressed" | "application/zip" | "application/vnd.android.package-archive" | "application/java-archive") pref_commands=("${_cmds_zip[@]}") ;;
         "application/x-zoo") pref_commands=("${_cmds_zoo[@]}") ;;
         "application/x-zstd-compressed-tar") pref_commands=("${_cmds_tar_zst[@]}") ;;
         "application/zstd") pref_commands=("${_cmds_zstd[@]}") ;;
