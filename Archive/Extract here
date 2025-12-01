@@ -94,6 +94,7 @@ _get_command() {
     local _cmds_msi=("unar")
     local _cmds_pak=("unar")
     local _cmds_rar=("unrar" "unar" "bsdtar")
+    local _cmds_rpm=("bsdtar")
     local _cmds_sit=("unar")
     local _cmds_sqsh=("unsquashfs")
     local _cmds_tar_bz=("tar,bzip2" "unar" "7za")
@@ -153,6 +154,7 @@ _get_command() {
     *.msi) pref_commands=("${_cmds_msi[@]}") ;;
     *.pak) pref_commands=("${_cmds_pak[@]}") ;;
     *.rar) pref_commands=("${_cmds_rar[@]}") ;;
+    *.rpm) pref_commands=("${_cmds_rpm[@]}") ;;
     *.sit) pref_commands=("${_cmds_sit[@]}") ;;
     *.sqsh | *.squashfs | *.sfs) pref_commands=("${_cmds_sqsh[@]}") ;;
     *.tar | *.gtar | *.gem) pref_commands=("${_cmds_tar[@]}") ;;
@@ -204,6 +206,7 @@ _get_command() {
         "application/x-msi") pref_commands=("${_cmds_msi[@]}") ;;
         "application/x-pak") pref_commands=("${_cmds_pak[@]}") ;;
         "application/x-rar" | "application/x-rar-compressed" | "application/vnd.rar") pref_commands=("${_cmds_rar[@]}") ;;
+        "application/x-rpm") pref_commands=("${_cmds_rpm[@]}") ;;
         "application/x-sit" | "application/x-stuffit" | "application/stuffit") pref_commands=("${_cmds_sit[@]}") ;;
         "application/x-tar") pref_commands=("${_cmds_tar[@]}") ;;
         "application/x-tarz") pref_commands=("${_cmds_tar_z[@]}") ;;
