@@ -89,6 +89,18 @@ declare -A DEPENDENCIES_MAP=(
         brew:   bzip2
     "
 
+    ["bzip3"]="
+        termux: bzip3
+        apt:    bzip3
+        dnf:    bzip3
+        pacman: bzip3
+        nix:    bzip3
+        zypper: bzip3
+        guix:   bzip3
+        xbps:   bzip3
+        brew:   bzip3
+    "
+
     ["cabextract"]="
         termux: cabextract
         apt:    cabextract
