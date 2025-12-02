@@ -106,10 +106,6 @@ _import_key() {
         "$(_i18n 'Select a key file to import')" \
         "$(_i18n 'Key files') | *.asc *.gpg *.pgp")
 
-    if [[ -z "$input_file" ]]; then
-        _exit_script
-    fi
-
     # Get the ID from the key.
     key_id=$(LC_ALL=C gpg --with-colons --import-options show-only --import "$input_file" |
         grep -m1 "^fpr" | cut -d ":" -f 10 2>/dev/null)

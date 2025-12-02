@@ -1638,7 +1638,7 @@ _display_file_selection_box() {
     local title=${1:-""}
     local file_filter=${2:-""}
     local parameters=${3:-""}
-    local input_files=""
+    local selected_items=""
     local multiple_flag=""
     local directory_flag=""
 
@@ -1663,12 +1663,12 @@ _display_file_selection_box() {
 
     _display_lock
     if _command_exists "zenity"; then
-        input_files=$(GDK_DEBUG=no-portals zenity --title "$title" \
+        selected_items=$(GDK_DEBUG=no-portals zenity --title "$title" \
             --file-selection $multiple_flag $directory_flag \
             ${file_filter:+--file-filter="$file_filter"} \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
     elif _command_exists "yad"; then
-        input_files=$(yad --title "$title" \
+        selected_items=$(yad --title "$title" \
             --button="${btn_cancel}:1" --button="${btn_ok}:0" \
             --file $multiple_flag $directory_flag \
             ${file_filter:+--file-filter="$file_filter"} \
@@ -1676,7 +1676,13 @@ _display_file_selection_box() {
     fi
     _display_unlock
 
-    _str_collapse_char "$input_files" "$FIELD_SEPARATOR"
+    selected_items=$(_str_collapse_char "$selected_items" "$FIELD_SEPARATOR")
+    if [[ -z "$selected_items" ]]; then
+        msg="$(_i18n 'No items were selected.')"
+        _display_error_box "$msg"
+        _exit_script
+    fi
+    printf "%s" "$selected_items"
 }
 
 # FUNCTION: _display_error_box
