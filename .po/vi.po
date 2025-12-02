@@ -768,6 +768,10 @@ msgid "Audio: Remove silence (extremities)"
 msgstr "Âm thanh: Loại bỏ im lặng (đầu/cuối)"
 
 #: Menu
+msgid "Create backup (via Rsync)"
+msgstr "Tạo bản sao lưu (qua Rsync)"
+
+#: Menu
 msgid "Code Editor"
 msgstr "Trình soạn thảo mã"
 

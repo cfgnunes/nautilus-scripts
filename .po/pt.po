@@ -768,6 +768,10 @@ msgid "Audio: Remove silence (extremities)"
 msgstr "Áudio: Remover silêncio (extermidades)"
 
 #: Menu
+msgid "Create backup (via Rsync)"
+msgstr "Criar backup (via Rsync)"
+
+#: Menu
 msgid "Code Editor"
 msgstr "Editor de Código"
 

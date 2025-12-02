@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+# Source the script '.common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/.common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _check_dependencies "rsync"
+    _display_wait_box
+    input_files=$(_get_files "par_type=all")
+    output_dir=$(_display_file_selection_box \
+        "$(_i18n 'Select the output directory')" \
+        "" "par_directory_only=true")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local std_output=""
+
+    local base_name=""
+    local timestamp=""
+    base_name=$(basename "$input_file")
+    timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
+
+    # Directory for the new timestamped version.
+    local version_dir=""
+    version_dir="$output_dir/${base_name}_${timestamp}.backup"
+
+    # Find the most recent previous backup (used as link-dest).
+    local old_version_dir=""
+    old_version_dir=$(find "$output_dir" -maxdepth 1 -type d \
+        -name "${base_name}_*.backup" 2>/dev/null |
+        sort --version-sort | tail -n 1)
+
+    mkdir -p -- "$version_dir"
+
+    # Perform incremental backup with rsync.
+    if [[ -n "$old_version_dir" && -d "$old_version_dir" ]]; then
+        # If a previous backup exists, use it as incremental reference.
+        std_output=$(rsync --archive --progress --hard-links --delete \
+            --link-dest="$old_version_dir" \
+            -- "$input_file" "$version_dir" 2>&1)
+    else
+        std_output=$(rsync --archive --progress --hard-links --delete \
+            -- "$input_file" "$version_dir" 2>&1)
+    fi
+
+    # Validate the operation.
+    _check_output "$?" "$std_output" "$input_file" "$version_dir" || return 1
+}
+
+_main "$@"

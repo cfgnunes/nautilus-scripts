@@ -654,6 +654,18 @@ declare -A DEPENDENCIES_MAP=(
         brew:   rhash
     "
 
+    ["rsync"]="
+        termux: rsync
+        apt:    rsync
+        dnf:    rsync
+        pacman: rsync
+        nix:    rsync
+        zypper: rsync
+        guix:   rsync
+        xbps:   rsync
+        brew:   rsync
+    "
+
     ["tar"]="
         termux: tar
         apt:    tar
