@@ -323,6 +323,12 @@ msgstr "Bạn chỉ được chọn đúng hai PDF để so sánh!"
 msgid "You must select only two binary files to compare!"
 msgstr "Bạn chỉ được chọn đúng hai tệp nhị phân để so sánh!"
 
+msgid "No items were selected!"
+msgstr "Không có mục nào được chọn!"
+
+msgid "No directories were selected!"
+msgstr "Không có thư mục nào được chọn!"
+
 msgid "The selected items are identical."
 msgstr "Các mục được chọn giống nhau."
 

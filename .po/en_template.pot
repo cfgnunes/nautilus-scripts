@@ -322,6 +322,12 @@ msgstr ""
 msgid "You must select only two binary files to compare!"
 msgstr ""
 
+msgid "No items were selected!"
+msgstr ""
+
+msgid "No directories were selected!"
+msgstr ""
+
 msgid "The selected items are identical."
 msgstr ""
 

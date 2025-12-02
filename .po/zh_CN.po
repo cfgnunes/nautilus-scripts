@@ -323,6 +323,12 @@ msgstr "必须仅选择两个PDF文件进行比较！"
 msgid "You must select only two binary files to compare!"
 msgstr "必须仅选择两个二进制文件进行比较！"
 
+msgid "No items were selected!"
+msgstr "未选择任何项目！"
+
+msgid "No directories were selected!"
+msgstr "未选择任何目录！"
+
 msgid "The selected items are identical."
 msgstr "所选项目完全相同。"
 

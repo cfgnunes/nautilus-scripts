@@ -323,6 +323,12 @@ msgstr "Kies slechts twee te vergelijken pdf-bestanden!"
 msgid "You must select only two binary files to compare!"
 msgstr "Kies slechts twee te vergelijken binaire bestanden!"
 
+msgid "No items were selected!"
+msgstr "Er zijn geen items geselecteerd!"
+
+msgid "No directories were selected!"
+msgstr "Er zijn geen mappen geselecteerd!"
+
 msgid "The selected items are identical."
 msgstr "De gekozen items zijn identiek."
 

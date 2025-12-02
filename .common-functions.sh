@@ -1678,7 +1678,11 @@ _display_file_selection_box() {
 
     selected_items=$(_str_collapse_char "$selected_items" "$FIELD_SEPARATOR")
     if [[ -z "$selected_items" ]]; then
-        msg="$(_i18n 'No items were selected.')"
+        if [[ "$par_directory_only" == "true" ]]; then
+            msg="$(_i18n 'No directories were selected!')"
+        else
+            msg="$(_i18n 'No items were selected!')"
+        fi
         _display_error_box "$msg"
         _exit_script
     fi

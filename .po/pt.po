@@ -323,6 +323,12 @@ msgstr "Você deve selecionar apenas dois PDFs para comparar!"
 msgid "You must select only two binary files to compare!"
 msgstr "Você deve selecionar apenas dois arquivos binários para comparar!"
 
+msgid "No items were selected!"
+msgstr "Nenhum item foi selecionado!"
+
+msgid "No directories were selected!"
+msgstr "Nenhum diretório foi selecionado!"
+
 msgid "The selected items are identical."
 msgstr "Os itens selecionados são idênticos."
 
