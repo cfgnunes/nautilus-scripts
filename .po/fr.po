@@ -212,9 +212,6 @@ msgstr "Sélectionnez un PDF à utiliser comme filigrane"
 msgid "Signature"
 msgstr "Signature"
 
-msgid "This action will permanently delete the selected files."
-msgstr "Cette action supprimera définitivement les fichiers sélectionnés."
-
 msgid "Malware"
 msgstr "Logiciel malveillant"
 
@@ -1644,10 +1641,6 @@ msgstr "Afficher le type MIME des fichiers"
 #: Menu
 msgid "Show media information"
 msgstr "Afficher les informations des médias"
-
-#: Menu
-msgid "Shred files (secure delete)"
-msgstr "Détruire fichiers (suppression sécurisée)"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

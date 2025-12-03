@@ -212,9 +212,6 @@ msgstr "选择一个 PDF 作为水印"
 msgid "Signature"
 msgstr "签名"
 
-msgid "This action will permanently delete the selected files."
-msgstr "此操作将永久删除所选文件。"
-
 msgid "Malware"
 msgstr "恶意软件"
 
@@ -1644,10 +1641,6 @@ msgstr "显示文件MIME类型"
 #: Menu
 msgid "Show media information"
 msgstr "显示媒体信息"
-
-#: Menu
-msgid "Shred files (secure delete)"
-msgstr "粉碎文件（安全删除）"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

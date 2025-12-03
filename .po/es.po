@@ -212,9 +212,6 @@ msgstr "Seleccione un PDF para usar como marca de agua"
 msgid "Signature"
 msgstr "Firma"
 
-msgid "This action will permanently delete the selected files."
-msgstr "Esta acción eliminará permanentemente los archivos seleccionados."
-
 msgid "Malware"
 msgstr "Malware"
 
@@ -1644,10 +1641,6 @@ msgstr "Mostrar tipo MIME de archivos"
 #: Menu
 msgid "Show media information"
 msgstr "Mostrar informaciones multimedia"
-
-#: Menu
-msgid "Shred files (secure delete)"
-msgstr "Destruir archivos (eliminación segura)"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

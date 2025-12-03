@@ -212,9 +212,6 @@ msgstr "Выберите PDF для использования водяного 
 msgid "Signature"
 msgstr "Подпись"
 
-msgid "This action will permanently delete the selected files."
-msgstr "Это действие навсегда удалит выбранные файлы."
-
 msgid "Malware"
 msgstr "Вредоносное ПО"
 
@@ -1644,10 +1641,6 @@ msgstr "Показать MIME-типы файлов"
 #: Menu
 msgid "Show media information"
 msgstr "Показать информацию о медиа"
-
-#: Menu
-msgid "Shred files (secure delete)"
-msgstr "Уничтожить файлы (безопасное удаление)"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

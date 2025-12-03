@@ -212,9 +212,6 @@ msgstr "Chọn một PDF để dùng làm watermark"
 msgid "Signature"
 msgstr "Chữ ký"
 
-msgid "This action will permanently delete the selected files."
-msgstr "Hành động này sẽ xóa vĩnh viễn các tệp được chọn."
-
 msgid "Malware"
 msgstr "Phần mềm độc hại"
 
@@ -1644,10 +1641,6 @@ msgstr "Hiển thị loại MIME của tệp"
 #: Menu
 msgid "Show media information"
 msgstr "Hiển thị thông tin media"
-
-#: Menu
-msgid "Shred files (secure delete)"
-msgstr "Xóa an toàn tệp (shred)"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

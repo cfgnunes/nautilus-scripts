@@ -212,9 +212,6 @@ msgstr "Wählen Sie eine PDF-Datei als Wasserzeichen aus"
 msgid "Signature"
 msgstr "Signatur"
 
-msgid "This action will permanently delete the selected files."
-msgstr "Diese Aktion wird die ausgewählten Dateien dauerhaft löschen."
-
 msgid "Malware"
 msgstr "Malware"
 
@@ -1644,10 +1641,6 @@ msgstr "Dateien: MIME-Typ anzeigen"
 #: Menu
 msgid "Show media information"
 msgstr "Mediendetails anzeigen"
-
-#: Menu
-msgid "Shred files (secure delete)"
-msgstr "Dateien schreddern (sicher löschen)"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

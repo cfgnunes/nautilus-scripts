@@ -212,9 +212,6 @@ msgstr "נא לבחור קובץ PDF שישמש כסימן המים"
 msgid "Signature"
 msgstr "חתימה"
 
-msgid "This action will permanently delete the selected files."
-msgstr "פעולה זו תמחק לצמיתות את הקבצים שנבחרו."
-
 msgid "Malware"
 msgstr "נוזקה"
 
@@ -1644,10 +1641,6 @@ msgstr "הצגת ה־MIME type של הקבצים"
 #: Menu
 msgid "Show media information"
 msgstr "הצגת מידע על המדיה"
-
-#: Menu
-msgid "Shred files (secure delete)"
-msgstr "השמדת קבצים (מחיקה בטוחה)"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

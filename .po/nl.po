@@ -212,9 +212,6 @@ msgstr "Kies een pdf-bestand om als watermerk te gebruiken"
 msgid "Signature"
 msgstr "Handtekening"
 
-msgid "This action will permanently delete the selected files."
-msgstr "Door deze actie worden de gekozen items permanent verwijderd."
-
 msgid "Malware"
 msgstr "Malware"
 
@@ -1644,10 +1641,6 @@ msgstr "Mimetype tonen"
 #: Menu
 msgid "Show media information"
 msgstr "Media-informatie tonen"
-
-#: Menu
-msgid "Shred files (secure delete)"
-msgstr "Bestanden vernietigen (veilig verwijderen)"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

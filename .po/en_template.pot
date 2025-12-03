@@ -211,9 +211,6 @@ msgstr ""
 msgid "Signature"
 msgstr ""
 
-msgid "This action will permanently delete the selected files."
-msgstr ""
-
 msgid "Malware"
 msgstr ""
 
@@ -1642,10 +1639,6 @@ msgstr ""
 
 #: Menu
 msgid "Show media information"
-msgstr ""
-
-#: Menu
-msgid "Shred files (secure delete)"
 msgstr ""
 
 #: Menu
