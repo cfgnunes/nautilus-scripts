@@ -1547,7 +1547,7 @@ msgstr "קובץ PDF: הקטנה (150 DPI, ‏ספר אלקטרוני)"
 
 #: Menu
 msgid "PDF: Reduce (300 dpi, printer)"
-msgstr "קובץ PDF: הקטנה (30 DPI, ‏למדפסת)"
+msgstr "קובץ PDF: הקטנה (300 DPI, ‏למדפסת)"
 
 #: Menu
 msgid "PDF: Remove annotations"
