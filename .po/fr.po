@@ -843,19 +843,19 @@ msgstr "Copier le contenu des fichiers"
 
 #: Menu
 msgid "Copy file names"
-msgstr "Copier les noms de fichiers"
+msgstr "Copier noms de fichiers"
 
 #: Menu
 msgid "Copy file names (recursive)"
-msgstr "Copier les noms de fichiers (récursif)"
+msgstr "Copier noms de fichiers (récursif)"
 
 #: Menu
 msgid "Copy file paths"
-msgstr "Copier les chemins de fichiers"
+msgstr "Copier chemins de fichiers"
 
 #: Menu
 msgid "Copy file paths (recursive)"
-msgstr "Copier les chemins de fichiers (récursif)"
+msgstr "Copier chemins de fichiers (récursif)"
 
 #: Menu
 msgid "Create hard link here"
@@ -935,11 +935,11 @@ msgstr "Extraire ici"
 
 #: Menu
 msgid "File carving (via Foremost)"
-msgstr "Récupération de fichiers (via Foremost)"
+msgstr "Récupérer fichiers (via Foremost)"
 
 #: Menu
 msgid "File carving (via PhotoRec)"
-msgstr "Récupération de fichiers (via PhotoRec)"
+msgstr "Récupérer fichiers (via PhotoRec)"
 
 #: Menu
 msgid "Find broken links"
@@ -1039,31 +1039,31 @@ msgstr "Vérifier la signature"
 
 #: Menu
 msgid "Image: Add watermark (center)"
-msgstr "Image: Ajouter un filigrane (centre)"
+msgstr "Image: Ajouter filigrane (centre)"
 
 #: Menu
 msgid "Image: Add watermark (north)"
-msgstr "Image: Ajouter un filigrane (nord)"
+msgstr "Image: Ajouter filigrane (nord)"
 
 #: Menu
 msgid "Image: Add watermark (northeast)"
-msgstr "Image: Ajouter un filigrane (nord-est)"
+msgstr "Image: Ajouter filigrane (nord-est)"
 
 #: Menu
 msgid "Image: Add watermark (northwest)"
-msgstr "Image: Ajouter un filigrane (nord-ouest)"
+msgstr "Image: Ajouter filigrane (nord-ouest)"
 
 #: Menu
 msgid "Image: Add watermark (south)"
-msgstr "Image: Ajouter un filigrane (sud)"
+msgstr "Image: Ajouter filigrane (sud)"
 
 #: Menu
 msgid "Image: Add watermark (southeast)"
-msgstr "Image: Ajouter un filigrane (sud-est)"
+msgstr "Image: Ajouter filigrane (sud-est)"
 
 #: Menu
 msgid "Image: Add watermark (southwest)"
-msgstr "Image: Ajouter un filigrane (sud-ouest)"
+msgstr "Image: Ajouter filigrane (sud-ouest)"
 
 #: Menu
 msgid "Image: Automatic crop"
@@ -1111,7 +1111,7 @@ msgstr "Image: Couleur magenta vers alpha (15 %)"
 
 #: Menu
 msgid "Image: Colorspace to gray"
-msgstr "Image: Espace colorimétrique vers niveaux de gris"
+msgstr "Image: Couleur vers niveaux de gris"
 
 #: Menu
 msgid "Image: Color white to alpha"
@@ -1579,11 +1579,11 @@ msgstr "PDF: Diviser en PDF à page unique"
 
 #: Menu
 msgid "Rename: Remove accents"
-msgstr "Renommer: Supprimer les accents"
+msgstr "Renommer: Supprimer accents"
 
 #: Menu
 msgid "Rename: Remove parentheses blocks"
-msgstr "Renommer: Supprimer les blocs entre parenthèses"
+msgstr "Renommer: Supprimer blocs entre parenthèses"
 
 #: Menu
 msgid "Rename: Change spaces to dashes"
@@ -1623,11 +1623,11 @@ msgstr "Réinitialiser les permissions (récursif)"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"
-msgstr "Rechercher les logiciels malveillants (via ClamAV)"
+msgstr "Rechercher logiciels malveillants (via ClamAV)"
 
 #: Menu
 msgid "Scan for malware (via Lenspect)"
-msgstr "Rechercher les logiciels malveillants (via Lenspect)"
+msgstr "Rechercher logiciels malveillants (via Lenspect)"
 
 #: Menu
 msgid "Show files information"
@@ -1647,7 +1647,7 @@ msgstr "Afficher les informations des médias"
 
 #: Menu
 msgid "Shred files (secure delete)"
-msgstr "Détruire les fichiers (suppression sécurisée)"
+msgstr "Détruire fichiers (suppression sécurisée)"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"
@@ -1695,7 +1695,7 @@ msgstr "Texte: Concaténer plusieurs fichiers"
 
 #: Menu
 msgid "Text: Convert tabs to 4 spaces"
-msgstr "Texte: Convertir les tabulations en 4 espaces"
+msgstr "Texte: Convertir tabulations en 4 espaces"
 
 #: Menu
 msgid "Text: Normalize (UTF-8, recursive)"
