@@ -25,28 +25,29 @@ _main() {
     # NOTE: The 'rdfind' does not support '--' in the command line.
     LC_ALL=C rdfind -dryrun true -removeidentinode false -outputname "$temp_file" $input_files &>/dev/null
 
-    # FORMAT THE OUTPUT:
-    # Extract lines containing 'DUPTYPE'.
-    std_output=$(grep "DUPTYPE" <"$temp_file")
+    # Parse the output.
+    std_output=$(awk 'BEGIN { id = 0 }
+        # Skip any line that contains a .git directory before processing.
+        /\.git\// { next }
+
+        # Increment ID only for first-occurence.
+        /^DUPTYPE_FIRST_OCCURRENCE/ { id++ }
+
+        # Process all DUPTYPE_ lines.
+        /^DUPTYPE_/ {
+            # Extract the file path starting from field 8.
+            file = substr($0, index($0, $8))
+
+            # Replace double slashes with a single slash.
+            while (file ~ /\/\//)
+                gsub(/\/\//, "/", file)
+
+            # Output the ID and the file path.
+            print id "\r" file
+        }' < "$temp_file")
     rm -f -- "$temp_file"
 
-    # Retain only the fields 2 (id) and 8 (name).
-    std_output=$(cut -d " " -f 2,8- <<<"$std_output")
-
-    # Remove the '-' before the IDs.
-    std_output=$(sed "s|^-||" <<<"$std_output")
-
-    # Insert '$FIELD_SEPARATOR' after the first field.
-    std_output=$(sed "s|^\([0-9]*\)\ |\1$FIELD_SEPARATOR|" <<<"$std_output")
-
-    # Exclude files located in '.git' directories.
-    std_output=$(grep -v "/\.git/" <<<"$std_output")
-
-    # Replace double slashes '//' with a single slash '/'.
-    std_output=$(sed "s|//|/|" <<<"$std_output")
-
     std_output=$(_text_remove_pwd "$std_output")
-    std_output=$(_text_sort "$std_output")
 
     _display_list_box "$std_output" "par_item_name=$(_i18n 'files'); par_columns='--column:$(_i18n 'Group'),--column:$(_i18n 'File')'; par_action=open_location; par_check_type=checkbox"
 }
