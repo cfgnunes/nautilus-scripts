@@ -377,18 +377,6 @@ declare -A DEPENDENCIES_MAP=(
         brew:
     "
 
-    ["jdupes"]="
-        termux:
-        apt:    jdupes
-        dnf:    jdupes
-        pacman: jdupes
-        nix:    jdupes
-        zypper: jdupes
-        guix:   jdupes
-        xbps:   jdupes
-        brew:   jdupes
-    "
-
     ["kdiff3"]="
         termux:
         apt:    kdiff3
@@ -652,6 +640,18 @@ declare -A DEPENDENCIES_MAP=(
         guix:   qpdf
         xbps:   qpdf
         brew:   qpdf
+    "
+
+    ["rdfind"]="
+        termux: rdfind
+        apt:    rdfind
+        dnf:    rdfind
+        pacman: rdfind
+        nix:    rdfind
+        zypper: rdfind
+        guix:
+        xbps:   rdfind
+        brew:   rdfind
     "
 
     ["rhash"]="

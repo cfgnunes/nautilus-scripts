@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2001
 # install_keyboard_shortcut=<Control><Alt>U
 
 # Source the script '.common-functions.sh'.
@@ -9,21 +10,43 @@ source "$ROOT_DIR/.common-functions.sh"
 _main() {
     local input_files=""
     local std_output=""
+    local temp_file=""
 
     # Execute initial checks.
-    _check_dependencies "jdupes"
+    _check_dependencies "rdfind"
     _display_wait_box
     input_files=$(_get_files "par_type=all")
 
+    # Work on a temporary file.
+    temp_file=$(_make_temp_file)
+
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(LC_ALL=C jdupes --recurse --hard-links -X nostr:.git/ -- $input_files)
-    std_output=$(grep -v -x -F "No duplicates found." <<<"$std_output")
+    # NOTE: The 'rdfind' does not support '--' in the command line.
+    LC_ALL=C rdfind -dryrun true -removeidentinode false -outputname "$temp_file" $input_files &>/dev/null
 
-    # Insert group numbers.
-    std_output=$(awk 'NF == 0 { g++; next } { print g+1 "\r" $0 }' <<<"$std_output")
+    # FORMAT THE OUTPUT:
+    # Extract lines containing 'DUPTYPE'.
+    std_output=$(grep "DUPTYPE" <"$temp_file")
+    rm -f -- "$temp_file"
+
+    # Retain only the fields 2 (id) and 8 (name).
+    std_output=$(cut -d " " -f 2,8- <<<"$std_output")
+
+    # Remove the '-' before the IDs.
+    std_output=$(sed "s|^-||" <<<"$std_output")
+
+    # Insert '$FIELD_SEPARATOR' after the first field.
+    std_output=$(sed "s|^\([0-9]*\)\ |\1$FIELD_SEPARATOR|" <<<"$std_output")
+
+    # Exclude files located in '.git' directories.
+    std_output=$(grep -v "/\.git/" <<<"$std_output")
+
+    # Replace double slashes '//' with a single slash '/'.
+    std_output=$(sed "s|//|/|" <<<"$std_output")
 
     std_output=$(_text_remove_pwd "$std_output")
+    std_output=$(_text_sort "$std_output")
 
     _display_list_box "$std_output" "par_item_name=$(_i18n 'files'); par_columns='--column:$(_i18n 'Group'),--column:$(_i18n 'File')'; par_action=open_location; par_check_type=checkbox"
 }
