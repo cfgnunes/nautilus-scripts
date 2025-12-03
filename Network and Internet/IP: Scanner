@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "nmap ping"
+    _check_dependencies "nmap ping dig"
     _display_wait_box
     input_files=$(_get_files "par_type=all")
 
@@ -182,11 +182,7 @@ _resolve_host() {
     fi
 
     # If not found locally, try online resolution.
-    if _command_exists "host"; then
-        hostname=$(host "$ip" | awk '/domain name pointer/ {print $5}')
-    elif _command_exists "dig"; then
-        hostname=$(dig -x "$ip" +short)
-    fi
+    hostname=$(dig -x "$ip" +short)
 
     # shellcheck disable=SC2001
     hostname=$(sed "s|\.$||" <<<"$hostname")

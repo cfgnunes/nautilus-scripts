@@ -209,6 +209,18 @@ declare -A DEPENDENCIES_MAP=(
         brew:
     "
 
+    ["dig"]="
+        termux: dnsutils
+        apt:    bind9-dnsutils
+        dnf:    bind-utils
+        pacman: bind
+        nix:    dnsutils
+        zypper: bind-utils
+        guix:   bind-utils
+        xbps:   bind
+        brew:   bind
+    "
+
     ["exiftool"]="
         termux: exiftool
         apt:    libimage-exiftool-perl

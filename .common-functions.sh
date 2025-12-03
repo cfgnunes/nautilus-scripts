@@ -593,9 +593,8 @@ _check_dependencies() {
         local package="${pair#*:}"
         local post_install=""
 
-        # Skip if the command or package is already available.
-        if _command_exists "$package" ||
-            _deps_is_package_installed "$pkg_manager" "$package"; then
+        # Skip if the package is already available.
+        if _deps_is_package_installed "$pkg_manager" "$package"; then
             continue
         fi
 
