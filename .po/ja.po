@@ -1,0 +1,1982 @@
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Enhanced File Manager Actions for Linux\n"
+"POT-Creation-Date: 2025-12-03 12:12-0300\n"
+"PO-Revision-Date: 2025-12-03 22:05-0300\n"
+"Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
+"Language-Team: \n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Done!"
+msgstr "完了！"
+
+msgid "files"
+msgstr "ファイル"
+
+msgid "Would you like to continue?"
+msgstr "続行しますか？"
+
+msgid "directories"
+msgstr "ディレクトリ"
+
+msgid "items"
+msgstr "アイテム"
+
+msgid "The command failed."
+msgstr "コマンドが失敗しました。"
+
+msgid "The output file does not exist."
+msgstr "出力ファイルが存在しません。"
+
+msgid "Finished with errors! See the log:"
+msgstr "エラーで終了しました！ログを参照："
+
+msgid "Your system does not support clipboard operations."
+msgstr "お使いのシステムはクリップボード操作に対応していません。"
+
+msgid "Could not find a package for:"
+msgstr "パッケージが見つかりませんでした："
+
+msgid "The following packages are missing:"
+msgstr "以下のパッケージが不足しています："
+
+msgid "Would you like to install them?"
+msgstr "インストールしますか？"
+
+msgid "Installing the packages. Please, wait..."
+msgstr "パッケージをインストール中です。お待ちください..."
+
+msgid "The package was installed, but a system reboot is required."
+msgstr "パッケージはインストールされましたが、システムの再起動が必要です。"
+
+msgid "Could not install the package:"
+msgstr "パッケージをインストールできませんでした："
+
+msgid "This action will delete the selected items."
+msgstr "この操作は選択したアイテムを削除します。"
+
+msgid "Total selected:"
+msgstr "選択合計："
+
+msgid "Total:"
+msgstr "合計："
+
+msgid "Some items could not be deleted."
+msgstr "一部のアイテムを削除できませんでした。"
+
+msgid "All items were successfully deleted!"
+msgstr "すべてのアイテムが正常に削除されました！"
+
+msgid "Could not access the directory:"
+msgstr "ディレクトリにアクセスできませんでした："
+
+msgid "The destination file already exists."
+msgstr "宛先ファイルは既に存在します。"
+
+msgid "Unable to move."
+msgstr "移動できません。"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgid "(Empty)"
+msgstr "(空)"
+
+msgid "Select the ones to open:"
+msgstr "開くものを選択："
+
+msgid "Select the ones to reveal in the file manager:"
+msgstr "ファイルマネージャーで表示するものを選択："
+
+msgid "Select the ones to open in the web browser:"
+msgstr "Webブラウザーで開くものを選択："
+
+msgid "Select the ones to delete:"
+msgstr "削除するものを選択："
+
+msgid "Password"
+msgstr "パスワード"
+
+msgid "Type your password:"
+msgstr "パスワードを入力："
+
+msgid "The password can not be empty!"
+msgstr "パスワードを空にすることはできません！"
+
+msgid "Yes"
+msgstr "はい"
+
+msgid "No"
+msgstr "いいえ"
+
+msgid "Finished! The output files are in:"
+msgstr "完了！出力ファイルはこちら："
+
+msgid "Finished, but there is nothing to do."
+msgstr "完了しましたが、実行すべき処理はありませんでした。"
+
+msgid "Finished!"
+msgstr "完了！"
+
+msgid "Running the task. Please, wait..."
+msgstr "タスクを実行中です。お待ちください..."
+
+msgid "No default application is set for the type:"
+msgstr "このタイプのデフォルトアプリケーションが設定されていません："
+
+msgid "Could not find the executable to open MIME type:"
+msgstr "MIMEタイプを開く実行ファイルが見つかりませんでした："
+
+msgid "Batch mode detected."
+msgstr "バッチモードを検出しました。"
+
+msgid "Each file inside this directory will be processed individually."
+msgstr "このディレクトリ内の各ファイルは個別に処理されます。"
+
+msgid "files or directories"
+msgstr "ファイルまたはディレクトリ"
+
+msgid "You must select files with extension:"
+msgstr "以下の拡張子のファイルを選択する必要があります："
+
+msgid "Invalid input file!"
+msgstr "無効な入力ファイルです！"
+
+msgid "You must select"
+msgstr "選択する必要があります："
+
+msgid "You must select at least"
+msgstr "少なくとも選択する必要があります："
+
+msgid "You must select up to"
+msgstr "最大で選択する必要があります："
+
+msgid "Could not find the output directory!"
+msgstr "出力ディレクトリが見つかりません！"
+
+msgid "Accessed recently"
+msgstr "最近アクセス"
+
+msgid "File"
+msgstr "ファイル"
+
+msgid "Count"
+msgstr "数"
+
+msgid "Char"
+msgstr "文字"
+
+msgid "Line"
+msgstr "行"
+
+msgid "Issues"
+msgstr "問題"
+
+msgid "Encoding"
+msgstr "エンコーディング"
+
+msgid "There are no valid paths in the clipboard!"
+msgstr "クリップボードに有効なパスがありません！"
+
+msgid "links"
+msgstr "リンク"
+
+msgid "Inode"
+msgstr "inode"
+
+msgid "Link"
+msgstr "リンク"
+
+msgid "Unsupported clipboard type."
+msgstr "サポートされていないクリップボードタイプです。"
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr "この操作は、選択したファイルとディレクトリを再帰的に名前変更します。"
+
+msgid "PDF files"
+msgstr "PDFファイル"
+
+msgid "Select a PDF to use as the watermark"
+msgstr "透かしとして使用するPDFを選択"
+
+msgid "Signature"
+msgstr "署名"
+
+msgid "Malware"
+msgstr "マルウェア"
+
+msgid "Mode"
+msgstr "モード"
+
+msgid "Bit rate"
+msgstr "ビットレート"
+
+msgid "Sampling rate"
+msgstr "サンプリングレート"
+
+msgid "Channels"
+msgstr "チャンネル"
+
+msgid "Duration"
+msgstr "再生時間"
+
+msgid "Album"
+msgstr "アルバム"
+
+msgid "Artist"
+msgstr "アーティスト"
+
+msgid "Title"
+msgstr "タイトル"
+
+msgid "Quality"
+msgstr "品質"
+
+msgid "Image files"
+msgstr "画像ファイル"
+
+msgid "Select an image to use as the watermark"
+msgstr "透かしとして使用する画像を選択"
+
+msgid "Key files"
+msgstr "鍵ファイル"
+
+msgid "Select a key file to import"
+msgstr "インポートする鍵ファイルを選択"
+
+msgid "No secret keys were found."
+msgstr "秘密鍵が見つかりませんでした。"
+
+msgid "Would you like to import a key now?"
+msgstr "今すぐ鍵をインポートしますか？"
+
+msgid "Failed to import the key!"
+msgstr "鍵のインポートに失敗しました！"
+
+msgid "Select a user:"
+msgstr "ユーザーを選択："
+
+msgid "User"
+msgstr "ユーザー"
+
+msgid "Name"
+msgstr "名前"
+
+msgid "E-mail"
+msgstr "メール"
+
+msgid "Created"
+msgstr "作成日"
+
+msgid "Expires"
+msgstr "有効期限"
+
+msgid "You must select a user!"
+msgstr "ユーザーを選択する必要があります！"
+
+msgid "No public keys were found."
+msgstr "公開鍵が見つかりませんでした。"
+
+msgid "Select one or more users:"
+msgstr "1つ以上のユーザーを選択："
+
+msgid "You must select at least one user!"
+msgstr "少なくとも1人のユーザーを選択する必要があります！"
+
+msgid "Directory"
+msgstr "ディレクトリ"
+
+msgid "Size"
+msgstr "サイズ"
+
+msgid "Group"
+msgstr "グループ"
+
+msgid "Item"
+msgstr "アイテム"
+
+msgid "Octal"
+msgstr "8進数"
+
+msgid "Type"
+msgstr "タイプ"
+
+msgid "You must select only two images to compare!"
+msgstr "比較するには画像を2つだけ選択する必要があります！"
+
+msgid "You must select only two PDFs to compare!"
+msgstr "比較するにはPDFを2つだけ選択する必要があります！"
+
+msgid "You must select only two binary files to compare!"
+msgstr "比較するにはバイナリファイルを2つだけ選択する必要があります！"
+
+msgid "No items were selected!"
+msgstr "アイテムが選択されていません！"
+
+msgid "No directories were selected!"
+msgstr "ディレクトリが選択されていません！"
+
+msgid "The selected items are identical."
+msgstr "選択したアイテムは同一です。"
+
+msgid "The selected images has same pixel values."
+msgstr "選択した画像のピクセル値は同じです。"
+
+msgid "MIME"
+msgstr "MIME"
+
+msgid "This action will move all files from subdirectories to the root of the selected directory."
+msgstr "この操作は、サブディレクトリ内のすべてのファイルを選択したディレクトリのルートに移動します。"
+
+msgid "This action will reset the permissions recursively."
+msgstr "この操作は、権限を再帰的にリセットします。"
+
+msgid "Date"
+msgstr "日付"
+
+msgid "Time"
+msgstr "時刻"
+
+msgid "Select the output filename:"
+msgstr "出力ファイル名を選択："
+
+msgid "Filename"
+msgstr "ファイル名"
+
+msgid "Status"
+msgstr "ステータス"
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr "クリップボードまたは選択したファイルに有効なURLがありません！"
+
+msgid "IPs"
+msgstr "IPアドレス"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Ping"
+msgstr "Ping"
+
+msgid "Ports"
+msgstr "ポート"
+
+msgid "Hostname"
+msgstr "ホスト名"
+
+msgid "Example"
+msgstr "例"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "IPアドレスまたはIP範囲を入力してください。"
+
+msgid "There are no valid IPs in the input!"
+msgstr "入力に有効なIPアドレスがありません！"
+
+msgid "Enter the URLs."
+msgstr "URLを入力してください。"
+
+msgid "There are no valid URLs in the input!"
+msgstr "入力に有効なURLがありません！"
+
+msgid "No remote URL found."
+msgstr "リモートURLが見つかりません。"
+
+msgid "URLs"
+msgstr "URL"
+
+msgid "HTTP code"
+msgstr "HTTPコード"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "(No differences)"
+msgstr "(差分なし)"
+
+msgid "(No line break)"
+msgstr "(改行なし)"
+
+msgid "(No response)"
+msgstr "(応答なし)"
+
+msgid "Checksum mismatch."
+msgstr "チェックサムが一致しません。"
+
+msgid "File does not exist."
+msgstr "ファイルが存在しません。"
+
+msgid "High"
+msgstr "高"
+
+msgid "Low"
+msgstr "低"
+
+msgid "Medium"
+msgstr "中"
+
+msgid "Online"
+msgstr "オンライン"
+
+msgid "Offline"
+msgstr "オフライン"
+
+msgid "Valid signature"
+msgstr "有効な署名"
+
+msgid "Invalid signature"
+msgstr "無効な署名"
+
+msgid "Missing key"
+msgstr "鍵がありません"
+
+msgid "Missing data file"
+msgstr "データファイルがありません"
+
+msgid "Revoked key"
+msgstr "失効した鍵"
+
+msgid "Expired key"
+msgstr "期限切れの鍵"
+
+msgid "Expired signature"
+msgstr "期限切れの署名"
+
+msgid "Unknown algorithm"
+msgstr "不明なアルゴリズム"
+
+msgid "Key ID"
+msgstr "鍵ID"
+
+msgid "Enter the password for the archive:"
+msgstr "アーカイブのパスワードを入力："
+
+msgid "Select the output directory"
+msgstr "出力ディレクトリを選択"
+
+msgid "Select input directories"
+msgstr "入力ディレクトリを選択"
+
+msgid "Select input files"
+msgstr "入力ファイルを選択"
+
+#: Menu
+msgid "Archive"
+msgstr "アーカイブ"
+
+#: Menu
+msgid "Audio and Video"
+msgstr "音声と動画"
+
+#: Menu
+msgid "Checksum"
+msgstr "チェックサム"
+
+#: Menu
+msgid "Clipboard"
+msgstr "クリップボード"
+
+#: Menu
+msgid "Directories and Files"
+msgstr "ディレクトリとファイル"
+
+#: Menu
+msgid "Document"
+msgstr "ドキュメント"
+
+#: Menu
+msgid "Encryption"
+msgstr "暗号化"
+
+#: Menu
+msgid "Image"
+msgstr "画像"
+
+#: Menu
+msgid "Links"
+msgstr "リンク"
+
+#: Menu
+msgid "Network and Internet"
+msgstr "ネットワークとインターネット"
+
+#: Menu
+msgid "Open with"
+msgstr "アプリケーションで開く"
+
+#: Menu
+msgid "Plain text"
+msgstr "プレーンテキスト"
+
+#: Menu
+msgid "Rename files"
+msgstr "ファイル名変更"
+
+#: Menu
+msgid "Security and Recovery"
+msgstr "セキュリティと復元"
+
+#: Menu
+msgid "Audio and Video: Tools"
+msgstr "音声と動画：ツール"
+
+#: Menu
+msgid "Audio: Channels"
+msgstr "音声：チャンネル"
+
+#: Menu
+msgid "Audio: Convert"
+msgstr "音声：変換"
+
+#: Menu
+msgid "Audio: Effects"
+msgstr "音声：エフェクト"
+
+#: Menu
+msgid "Audio: MP3 files"
+msgstr "音声：MP3ファイル"
+
+#: Menu
+msgid "Audio: Quality"
+msgstr "音声：品質"
+
+#: Menu
+msgid "Document: Convert"
+msgstr "ドキュメント：変換"
+
+#: Menu
+msgid "Document: Print"
+msgstr "ドキュメント：印刷"
+
+#: Menu
+msgid "Image: Color"
+msgstr "画像：色"
+
+#: Menu
+msgid "Image: Combine, Split"
+msgstr "画像：結合・分割"
+
+#: Menu
+msgid "Image: Convert"
+msgstr "画像：変換"
+
+#: Menu
+msgid "Image: Crop, Resize"
+msgstr "画像：切り抜き・リサイズ"
+
+#: Menu
+msgid "Image: Flip, Rotate"
+msgstr "画像：反転・回転"
+
+#: Menu
+msgid "Image: Icons"
+msgstr "画像：アイコン"
+
+#: Menu
+msgid "Image: Metadata, Exif"
+msgstr "画像：メタデータ、Exif"
+
+#: Menu
+msgid "Image: Optimize, Reduce"
+msgstr "画像：最適化・縮小"
+
+#: Menu
+msgid "Image: Similarity"
+msgstr "画像：類似性"
+
+#: Menu
+msgid "Image: SVG files"
+msgstr "画像：SVGファイル"
+
+#: Menu
+msgid "Image: Text recognition (OCR)"
+msgstr "画像：テキスト認識 (OCR)"
+
+#: Menu
+msgid "Image: Transparency"
+msgstr "画像：透明度"
+
+#: Menu
+msgid "Image: Watermark"
+msgstr "画像：透かし"
+
+#: Menu
+msgid "PDF: Annotations"
+msgstr "PDF：注釈"
+
+#: Menu
+msgid "PDF: Combine, Split"
+msgstr "PDF：結合・分割"
+
+#: Menu
+msgid "PDF: Security"
+msgstr "PDF：セキュリティ"
+
+#: Menu
+msgid "PDF: Multiple-page layout"
+msgstr "PDF：複数ページレイアウト"
+
+#: Menu
+msgid "PDF: Optimize, Reduce"
+msgstr "PDF：最適化・縮小"
+
+#: Menu
+msgid "PDF: Page size"
+msgstr "PDF：ページサイズ"
+
+#: Menu
+msgid "PDF: Rotate"
+msgstr "PDF：回転"
+
+#: Menu
+msgid "PDF: Signatures"
+msgstr "PDF：署名"
+
+#: Menu
+msgid "PDF: Text recognition (OCR)"
+msgstr "PDF：テキスト認識 (OCR)"
+
+#: Menu
+msgid "PDF: Tools"
+msgstr "PDF：ツール"
+
+#: Menu
+msgid "PDF: Watermark"
+msgstr "PDF：透かし"
+
+#: Menu
+msgid "Video: Aspect ratio"
+msgstr "動画：アスペクト比"
+
+#: Menu
+msgid "Video: Audio track"
+msgstr "動画：音声トラック"
+
+#: Menu
+msgid "Video: Convert"
+msgstr "動画：変換"
+
+#: Menu
+msgid "Video: Export frames"
+msgstr "動画：フレーム抽出"
+
+#: Menu
+msgid "Video: Flip, Rotate"
+msgstr "動画：反転・回転"
+
+#: Menu
+msgid "Video: Frame rate"
+msgstr "動画：フレームレート"
+
+#: Menu
+msgid "Video: Resize"
+msgstr "動画：リサイズ"
+
+#: Menu
+msgid "Video: Speed"
+msgstr "動画：速度"
+
+#: Menu
+msgid "Audio: Check quality"
+msgstr "音声：品質チェック"
+
+#: Menu
+msgid "Audio: Convert to FLAC"
+msgstr "音声：FLACに変換"
+
+#: Menu
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "音声：MP3に変換 (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (192 kbps)"
+msgstr "音声：MP3に変換 (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (320 kbps)"
+msgstr "音声：MP3に変換 (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "音声：OGGに変換 (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (192 kbps)"
+msgstr "音声：OGGに変換 (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (320 kbps)"
+msgstr "音声：OGGに変換 (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "音声：OPUSに変換 (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (192 kbps)"
+msgstr "音声：OPUSに変換 (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (320 kbps)"
+msgstr "音声：OPUSに変換 (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to WAV"
+msgstr "音声：WAVに変換"
+
+#: Menu
+msgid "Audio: Fade-in"
+msgstr "音声：フェードイン"
+
+#: Menu
+msgid "Audio: Fade-out"
+msgstr "音声：フェードアウト"
+
+#: Menu
+msgid "Audio: Mix channels to mono"
+msgstr "音声：チャンネルをモノラルにミックス"
+
+#: Menu
+msgid "Audio: Mix two files"
+msgstr "音声：2つのファイルをミックス"
+
+#: Menu
+msgid "Audio: Volume normalize"
+msgstr "音声：音量正規化"
+
+#: Menu
+msgid "Audio: Produce a spectrogram"
+msgstr "音声：スペクトログラムを生成"
+
+#: Menu
+msgid "Audio: Remove silence (sections)"
+msgstr "音声：無音部分を削除（セクション）"
+
+#: Menu
+msgid "Audio: Silence noise"
+msgstr "音声：ノイズ除去"
+
+#: Menu
+msgid "Audio: Remove silence (extremities)"
+msgstr "音声：無音部分を削除（両端）"
+
+#: Menu
+msgid "Create backup (via Rsync)"
+msgstr "バックアップを作成 (Rsyncを使用)"
+
+#: Menu
+msgid "Code Editor"
+msgstr "コードエディター"
+
+#: Menu
+msgid "Compare items"
+msgstr "アイテムを比較"
+
+#: Menu
+msgid "Compare items (via Diff)"
+msgstr "アイテムを比較 (Diffを使用)"
+
+#: Menu
+msgid "Compress to '7z'"
+msgstr "'7z'に圧縮"
+
+#: Menu
+msgid "Compress to '7z' with password"
+msgstr "パスワード付きで'7z'に圧縮"
+
+#: Menu
+msgid "Compress to 'tar.gz'"
+msgstr "'tar.gz'に圧縮"
+
+#: Menu
+msgid "Compress to 'tar.xz'"
+msgstr "'tar.xz'に圧縮"
+
+#: Menu
+msgid "Compress to 'tar.zst'"
+msgstr "'tar.zst'に圧縮"
+
+#: Menu
+msgid "Compress to 'zip'"
+msgstr "'zip'に圧縮"
+
+#: Menu
+msgid "Compress to 'zip' with password"
+msgstr "パスワード付きで'zip'に圧縮"
+
+#: Menu
+msgid "Compute all checksums"
+msgstr "すべてのチェックサムを計算"
+
+#: Menu
+msgid "Compute MD5"
+msgstr "MD5を計算"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "SHA1を計算"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "SHA256を計算"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "SHA512を計算"
+
+#: Menu
+msgid "Copy file contents"
+msgstr "ファイル内容をコピー"
+
+#: Menu
+msgid "Copy file names"
+msgstr "ファイル名をコピー"
+
+#: Menu
+msgid "Copy file names (recursive)"
+msgstr "ファイル名をコピー（再帰的）"
+
+#: Menu
+msgid "Copy file paths"
+msgstr "ファイルパスをコピー"
+
+#: Menu
+msgid "Copy file paths (recursive)"
+msgstr "ファイルパスをコピー（再帰的）"
+
+#: Menu
+msgid "Create hard link here"
+msgstr "ここにハードリンクを作成"
+
+#: Menu
+msgid "Create hard link to..."
+msgstr "ハードリンクを作成..."
+
+#: Menu
+msgid "Create symbolic link here"
+msgstr "ここにシンボリックリンクを作成"
+
+#: Menu
+msgid "Create symbolic link to..."
+msgstr "シンボリックリンクを作成..."
+
+#: Menu
+msgid "Disk Usage Analyzer"
+msgstr "ディスク使用量分析"
+
+#: Menu
+msgid "Document: Convert to DOCX"
+msgstr "ドキュメント：DOCXに変換"
+
+#: Menu
+msgid "Document: Convert to EPUB"
+msgstr "ドキュメント：EPUBに変換"
+
+#: Menu
+msgid "Document: Convert to Markdown"
+msgstr "ドキュメント：Markdownに変換"
+
+#: Menu
+msgid "Document: Convert to ODP"
+msgstr "ドキュメント：ODPに変換"
+
+#: Menu
+msgid "Document: Convert to ODS"
+msgstr "ドキュメント：ODSに変換"
+
+#: Menu
+msgid "Document: Convert to ODT"
+msgstr "ドキュメント：ODTに変換"
+
+#: Menu
+msgid "Document: Convert to PDF"
+msgstr "ドキュメント：PDFに変換"
+
+#: Menu
+msgid "Document: Convert to PPTX"
+msgstr "ドキュメント：PPTXに変換"
+
+#: Menu
+msgid "Document: Convert to TXT"
+msgstr "ドキュメント：TXTに変換"
+
+#: Menu
+msgid "Document: Convert to XLSX"
+msgstr "ドキュメント：XLSXに変換"
+
+#: Menu
+msgid "Document: Print (A4)"
+msgstr "ドキュメント：印刷 (A4)"
+
+#: Menu
+msgid "Document: Print (US Legal)"
+msgstr "ドキュメント：印刷 (USリーガル)"
+
+#: Menu
+msgid "Document: Print (US Letter)"
+msgstr "ドキュメント：印刷 (USレター)"
+
+#: Menu
+msgid "Extract here"
+msgstr "ここに展開"
+
+#: Menu
+msgid "File carving (via Foremost)"
+msgstr "ファイル復元 (Foremostを使用)"
+
+#: Menu
+msgid "File carving (via PhotoRec)"
+msgstr "ファイル復元 (PhotoRecを使用)"
+
+#: Menu
+msgid "Find broken links"
+msgstr "壊れたリンクを検索"
+
+#: Menu
+msgid "Find duplicate files"
+msgstr "重複ファイルを検索"
+
+#: Menu
+msgid "Find empty directories"
+msgstr "空のディレクトリを検索"
+
+#: Menu
+msgid "List hidden files"
+msgstr "隠しファイルをリスト"
+
+#: Menu
+msgid "Find junk files"
+msgstr "ジャンクファイルを検索"
+
+#: Menu
+msgid "Find empty files"
+msgstr "空のファイルを検索"
+
+#: Menu
+msgid "Flatten directory structure"
+msgstr "ディレクトリ構造をフラット化"
+
+#: Menu
+msgid "Generate MD5 file"
+msgstr "MD5ファイルを生成"
+
+#: Menu
+msgid "Generate SHA1 file"
+msgstr "SHA1ファイルを生成"
+
+#: Menu
+msgid "Generate SHA256 file"
+msgstr "SHA256ファイルを生成"
+
+#: Menu
+msgid "Generate SHA512 file"
+msgstr "SHA512ファイルを生成"
+
+#: Menu
+msgid "Git: Clone URLs"
+msgstr "Git：URLをクローン"
+
+#: Menu
+msgid "Git: Open repository website"
+msgstr "Git：リポジトリWebサイトを開く"
+
+#: Menu
+msgid "Git: Reset and pull"
+msgstr "Git：リセットしてプル"
+
+#: Menu
+msgid "Decrypt"
+msgstr "復号"
+
+#: Menu
+msgid "Encrypt with password"
+msgstr "パスワードで暗号化"
+
+#: Menu
+msgid "Encrypt with password (ASCII)"
+msgstr "パスワードで暗号化 (ASCII)"
+
+#: Menu
+msgid "Encrypt with keys"
+msgstr "鍵で暗号化"
+
+#: Menu
+msgid "Encrypt with keys (ASCII)"
+msgstr "鍵で暗号化 (ASCII)"
+
+#: Menu
+msgid "Import keys"
+msgstr "鍵をインポート"
+
+#: Menu
+msgid "Sign"
+msgstr "署名"
+
+#: Menu
+msgid "Sign (ASCII)"
+msgstr "署名 (ASCII)"
+
+#: Menu
+msgid "Sign (detached signature)"
+msgstr "署名 (分離署名)"
+
+#: Menu
+msgid "Verify signature"
+msgstr "署名を検証"
+
+#: Menu
+msgid "Image: Add watermark (center)"
+msgstr "画像：透かしを追加（中央）"
+
+#: Menu
+msgid "Image: Add watermark (north)"
+msgstr "画像：透かしを追加（北）"
+
+#: Menu
+msgid "Image: Add watermark (northeast)"
+msgstr "画像：透かしを追加（北東）"
+
+#: Menu
+msgid "Image: Add watermark (northwest)"
+msgstr "画像：透かしを追加（北西）"
+
+#: Menu
+msgid "Image: Add watermark (south)"
+msgstr "画像：透かしを追加（南）"
+
+#: Menu
+msgid "Image: Add watermark (southeast)"
+msgstr "画像：透かしを追加（南東）"
+
+#: Menu
+msgid "Image: Add watermark (southwest)"
+msgstr "画像：透かしを追加（南西）"
+
+#: Menu
+msgid "Image: Automatic crop"
+msgstr "画像：自動切り抜き"
+
+#: Menu
+msgid "Image: Automatic crop (15 pct)"
+msgstr "画像：自動切り抜き (15%)"
+
+#: Menu
+msgid "Image: Background to alpha"
+msgstr "画像：背景をアルファに変換"
+
+#: Menu
+msgid "Image: Background to alpha (15 pct)"
+msgstr "画像：背景をアルファに変換 (15%)"
+
+#: Menu
+msgid "Image: Color alpha to black"
+msgstr "画像：アルファ色を黒に変換"
+
+#: Menu
+msgid "Image: Color alpha to magenta"
+msgstr "画像：アルファ色をマゼンタに変換"
+
+#: Menu
+msgid "Image: Color alpha to white"
+msgstr "画像：アルファ色を白に変換"
+
+#: Menu
+msgid "Image: Color black to alpha"
+msgstr "画像：黒をアルファに変換"
+
+#: Menu
+msgid "Image: Color black to alpha (15 pct)"
+msgstr "画像：黒をアルファに変換 (15%)"
+
+#: Menu
+msgid "Image: Color magenta to alpha"
+msgstr "画像：マゼンタをアルファに変換"
+
+#: Menu
+msgid "Image: Color magenta to alpha (15 pct)"
+msgstr "画像：マゼンタをアルファに変換 (15%)"
+
+#: Menu
+msgid "Image: Colorspace to gray"
+msgstr "画像：カラースペースをグレースケールに変換"
+
+#: Menu
+msgid "Image: Color white to alpha"
+msgstr "画像：白をアルファに変換"
+
+#: Menu
+msgid "Image: Color white to alpha (15 pct)"
+msgstr "画像：白をアルファに変換 (15%)"
+
+#: Menu
+msgid "Image: Combine into a GIF"
+msgstr "画像：GIFに結合"
+
+#: Menu
+msgid "Image: Combine into a PDF"
+msgstr "画像：PDFに結合"
+
+#: Menu
+msgid "Image: Convert to AVIF"
+msgstr "画像：AVIFに変換"
+
+#: Menu
+msgid "Image: Convert to GIF"
+msgstr "画像：GIFに変換"
+
+#: Menu
+msgid "Image: Convert to HEIC"
+msgstr "画像：HEICに変換"
+
+#: Menu
+msgid "Image: Convert to JPG"
+msgstr "画像：JPGに変換"
+
+#: Menu
+msgid "Image: Convert to JXL"
+msgstr "画像：JXLに変換"
+
+#: Menu
+msgid "Image: Convert to PNG"
+msgstr "画像：PNGに変換"
+
+#: Menu
+msgid "Image: Convert to TIFF"
+msgstr "画像：TIFFに変換"
+
+#: Menu
+msgid "Image: Convert to WebP"
+msgstr "画像：WebPに変換"
+
+#: Menu
+msgid "Image: Create PNG icon (64 px)"
+msgstr "画像：PNGアイコンを作成 (64 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (128 px)"
+msgstr "画像：PNGアイコンを作成 (128 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (256 px)"
+msgstr "画像：PNGアイコンを作成 (256 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (512 px)"
+msgstr "画像：PNGアイコンを作成 (512 px)"
+
+#: Menu
+msgid "Image: Desaturate"
+msgstr "画像：彩度を下げる"
+
+#: Menu
+msgid "Image: Export to PDF"
+msgstr "画像：PDFにエクスポート"
+
+#: Menu
+msgid "Image: Find similar (65 pct)"
+msgstr "画像：類似を検索 (65%)"
+
+#: Menu
+msgid "Image: Find similar (75 pct)"
+msgstr "画像：類似を検索 (75%)"
+
+#: Menu
+msgid "Image: Find similar (85 pct)"
+msgstr "画像：類似を検索 (85%)"
+
+#: Menu
+msgid "Image: Find similar (95 pct)"
+msgstr "画像：類似を検索 (95%)"
+
+#: Menu
+msgid "Image: Flip (horizontal)"
+msgstr "画像：反転 (水平)"
+
+#: Menu
+msgid "Image: Flip (vertical)"
+msgstr "画像：反転 (垂直)"
+
+#: Menu
+msgid "Image: Generate multiple hues"
+msgstr "画像：複数の色調を生成"
+
+#: Menu
+msgid "Image: Optimize PNG"
+msgstr "画像：PNGを最適化"
+
+#: Menu
+msgid "Image: Perform OCR (English)"
+msgstr "画像：OCRを実行 (英語)"
+
+#: Menu
+msgid "Image: Perform OCR (French)"
+msgstr "画像：OCRを実行 (フランス語)"
+
+#: Menu
+msgid "Image: Perform OCR (German)"
+msgstr "画像：OCRを実行 (ドイツ語)"
+
+#: Menu
+msgid "Image: Perform OCR (Italian)"
+msgstr "画像：OCRを実行 (イタリア語)"
+
+#: Menu
+msgid "Image: Perform OCR (Portuguese)"
+msgstr "画像：OCRを実行 (ポルトガル語)"
+
+#: Menu
+msgid "Image: Perform OCR (Russian)"
+msgstr "画像：OCRを実行 (ロシア語)"
+
+#: Menu
+msgid "Image: Perform OCR (Spanish)"
+msgstr "画像：OCRを実行 (スペイン語)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 500kB max)"
+msgstr "画像：縮小 (JPG, 最大500kB)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 1000kB max)"
+msgstr "画像：縮小 (JPG, 最大1000kB)"
+
+#: Menu
+msgid "Image: Remove metadata"
+msgstr "画像：メタデータを削除"
+
+#: Menu
+msgid "Image: Rename from metadata"
+msgstr "画像：メタデータから名前変更"
+
+#: Menu
+msgid "Image: Resize (25 pct)"
+msgstr "画像：リサイズ (25%)"
+
+#: Menu
+msgid "Image: Resize (50 pct)"
+msgstr "画像：リサイズ (50%)"
+
+#: Menu
+msgid "Image: Resize (75 pct)"
+msgstr "画像：リサイズ (75%)"
+
+#: Menu
+msgid "Image: Resize (512x512)"
+msgstr "画像：リサイズ (512x512)"
+
+#: Menu
+msgid "Image: Resize (1080x1080)"
+msgstr "画像：リサイズ (1080x1080)"
+
+#: Menu
+msgid "Image: Resize (1920x1080)"
+msgstr "画像：リサイズ (1920x1080)"
+
+#: Menu
+msgid "Image: Resize (2560x1440)"
+msgstr "画像：リサイズ (2560x1440)"
+
+#: Menu
+msgid "Image: Resize (3840x2160)"
+msgstr "画像：リサイズ (3840x2160)"
+
+#: Menu
+msgid "Image: Rotate (90 deg)"
+msgstr "画像：回転 (90度)"
+
+#: Menu
+msgid "Image: Rotate (180 deg)"
+msgstr "画像：回転 (180度)"
+
+#: Menu
+msgid "Image: Rotate (270 deg)"
+msgstr "画像：回転 (270度)"
+
+#: Menu
+msgid "Image: Split into 2 (horizontal)"
+msgstr "画像：2つに分割 (水平)"
+
+#: Menu
+msgid "Image: Split into 2 (vertical)"
+msgstr "画像：2つに分割 (垂直)"
+
+#: Menu
+msgid "Image: Split into 4"
+msgstr "画像：4つに分割"
+
+#: Menu
+msgid "Image: Stack (horizontal)"
+msgstr "画像：スタック (水平)"
+
+#: Menu
+msgid "Image: Stack (vertical)"
+msgstr "画像：スタック (垂直)"
+
+#: Menu
+msgid "IP: Scanner"
+msgstr "IP：スキャナー"
+
+#: Menu
+msgid "List hard links"
+msgstr "ハードリンクをリスト"
+
+#: Menu
+msgid "List largest directories"
+msgstr "最大のディレクトリをリスト"
+
+#: Menu
+msgid "List largest files"
+msgstr "最大のファイルをリスト"
+
+#: Menu
+msgid "List permissions and owners"
+msgstr "権限と所有者をリスト"
+
+#: Menu
+msgid "List recent files"
+msgstr "最近のファイルをリスト"
+
+#: Menu
+msgid "List symbolic links"
+msgstr "シンボリックリンクをリスト"
+
+#: Menu
+msgid "Media: Concatenate files"
+msgstr "メディア：ファイルを連結"
+
+#: Menu
+msgid "Media: Remove metadata"
+msgstr "メディア：メタデータを削除"
+
+#: Menu
+msgid "Media: Show basic metadata"
+msgstr "メディア：基本メタデータを表示"
+
+#: Menu
+msgid "MP3: (artist - title) Name to ID3"
+msgstr "MP3：(アーティスト - タイトル) 名前をID3に"
+
+#: Menu
+msgid "MP3: (artist - title) ID3 to Name"
+msgstr "MP3：(アーティスト - タイトル) ID3を名前へ"
+
+#: Menu
+msgid "MP3: Volume maximize (recursive)"
+msgstr "MP3：音量最大化 (再帰的)"
+
+#: Menu
+msgid "MP3: Volume normalize (recursive)"
+msgstr "MP3：音量正規化 (再帰的)"
+
+#: Menu
+msgid "MP3: Show encoding details"
+msgstr "MP3：エンコード詳細を表示"
+
+#: Menu
+msgid "Open item location"
+msgstr "アイテムの場所を開く"
+
+#: Menu
+msgid "Paste as hard link"
+msgstr "ハードリンクとして貼り付け"
+
+#: Menu
+msgid "Paste as symbolic link"
+msgstr "シンボリックリンクとして貼り付け"
+
+#: Menu
+msgid "Paste clipboard content"
+msgstr "クリップボードの内容を貼り付け"
+
+#: Menu
+msgid "PDF: Add watermark (over)"
+msgstr "PDF：透かしを追加（上）"
+
+#: Menu
+msgid "PDF: Add watermark (under)"
+msgstr "PDF：透かしを追加（下）"
+
+#: Menu
+msgid "PDF: Combine multiple PDFs"
+msgstr "PDF：複数のPDFを結合"
+
+#: Menu
+msgid "PDF: Convert to PDFA-2b"
+msgstr "PDF：PDF/A-2bに変換"
+
+#: Menu
+msgid "PDF: Remove password"
+msgstr "PDF：パスワードを削除"
+
+#: Menu
+msgid "PDF: Set a password"
+msgstr "PDF：パスワードを設定"
+
+#: Menu
+msgid "PDF: Extract images"
+msgstr "PDF：画像を抽出"
+
+#: Menu
+msgid "PDF: Find annotated PDFs"
+msgstr "PDF：注釈付きPDFを検索"
+
+#: Menu
+msgid "PDF: Find non-linearized PDFs"
+msgstr "PDF：非線形化PDFを検索"
+
+#: Menu
+msgid "PDF: Find non-searchable PDFs"
+msgstr "PDF：非検索可能PDFを検索"
+
+#: Menu
+msgid "PDF: Find password-protected PDFs"
+msgstr "PDF：パスワード保護PDFを検索"
+
+#: Menu
+msgid "PDF: Find signed PDFs"
+msgstr "PDF：署名済みPDFを検索"
+
+#: Menu
+msgid "PDF: Layout (landscape, 1x2)"
+msgstr "PDF：レイアウト (横向き, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x1)"
+msgstr "PDF：レイアウト (横向き, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x2)"
+msgstr "PDF：レイアウト (横向き, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x4)"
+msgstr "PDF：レイアウト (横向き, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 4x2)"
+msgstr "PDF：レイアウト (横向き, 4x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 1x2)"
+msgstr "PDF：レイアウト (縦向き, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x1)"
+msgstr "PDF：レイアウト (縦向き, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x2)"
+msgstr "PDF：レイアウト (縦向き, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x4)"
+msgstr "PDF：レイアウト (縦向き, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 4x2)"
+msgstr "PDF：レイアウト (縦向き, 4x2)"
+
+#: Menu
+msgid "PDF: Optimize for web (linearize)"
+msgstr "PDF：Web用に最適化 (線形化)"
+
+#: Menu
+msgid "PDF: Set size (A3)"
+msgstr "PDF：サイズを設定 (A3)"
+
+#: Menu
+msgid "PDF: Set size (A4)"
+msgstr "PDF：サイズを設定 (A4)"
+
+#: Menu
+msgid "PDF: Set size (A5)"
+msgstr "PDF：サイズを設定 (A5)"
+
+#: Menu
+msgid "PDF: Set size (US Legal)"
+msgstr "PDF：サイズを設定 (USリーガル)"
+
+#: Menu
+msgid "PDF: Set size (US Letter)"
+msgstr "PDF：サイズを設定 (USレター)"
+
+#: Menu
+msgid "PDF: Perform OCR (English)"
+msgstr "PDF：OCRを実行 (英語)"
+
+#: Menu
+msgid "PDF: Perform OCR (French)"
+msgstr "PDF：OCRを実行 (フランス語)"
+
+#: Menu
+msgid "PDF: Perform OCR (German)"
+msgstr "PDF：OCRを実行 (ドイツ語)"
+
+#: Menu
+msgid "PDF: Perform OCR (Italian)"
+msgstr "PDF：OCRを実行 (イタリア語)"
+
+#: Menu
+msgid "PDF: Perform OCR (Portuguese)"
+msgstr "PDF：OCRを実行 (ポルトガル語)"
+
+#: Menu
+msgid "PDF: Perform OCR (Russian)"
+msgstr "PDF：OCRを実行 (ロシア語)"
+
+#: Menu
+msgid "PDF: Perform OCR (Spanish)"
+msgstr "PDF：OCRを実行 (スペイン語)"
+
+#: Menu
+msgid "PDF: Reduce (150 dpi, e-book)"
+msgstr "PDF：縮小 (150 dpi, 電子書籍)"
+
+#: Menu
+msgid "PDF: Reduce (300 dpi, printer)"
+msgstr "PDF：縮小 (300 dpi, プリンター)"
+
+#: Menu
+msgid "PDF: Remove annotations"
+msgstr "PDF：注釈を削除"
+
+#: Menu
+msgid "PDF: Remove metadata"
+msgstr "PDF：メタデータを削除"
+
+#: Menu
+msgid "PDF: Rotate (90 deg)"
+msgstr "PDF：回転 (90度)"
+
+#: Menu
+msgid "PDF: Rotate (180 deg)"
+msgstr "PDF：回転 (180度)"
+
+#: Menu
+msgid "PDF: Rotate (270 deg)"
+msgstr "PDF：回転 (270度)"
+
+#: Menu
+msgid "PDF: Show signatures"
+msgstr "PDF：署名を表示"
+
+#: Menu
+msgid "PDF: Split into single-page PDFs"
+msgstr "PDF：単一ページのPDFに分割"
+
+#: Menu
+msgid "Rename: Remove accents"
+msgstr "名前変更：アクセント記号を削除"
+
+#: Menu
+msgid "Rename: Remove parentheses blocks"
+msgstr "名前変更：括弧内の文字を削除"
+
+#: Menu
+msgid "Rename: Change spaces to dashes"
+msgstr "名前変更：スペースをダッシュに変更"
+
+#: Menu
+msgid "Rename: Change dashes to spaces"
+msgstr "名前変更：ダッシュをスペースに変更"
+
+#: Menu
+msgid "Rename: To lowercase"
+msgstr "名前変更：小文字に変換"
+
+#: Menu
+msgid "Rename: To lowercase (recursive)"
+msgstr "名前変更：小文字に変換（再帰的）"
+
+#: Menu
+msgid "Rename: To sentence case"
+msgstr "名前変更：センテンスケースに変換"
+
+#: Menu
+msgid "Rename: To title case"
+msgstr "名前変更：タイトルケースに変換"
+
+#: Menu
+msgid "Rename: To uppercase"
+msgstr "名前変更：大文字に変換"
+
+#: Menu
+msgid "Rename: To uppercase (recursive)"
+msgstr "名前変更：大文字に変換（再帰的）"
+
+#: Menu
+msgid "Reset permissions (recursive)"
+msgstr "権限をリセット（再帰的）"
+
+#: Menu
+msgid "Scan for malware (via ClamAV)"
+msgstr "マルウェアをスキャン (ClamAVを使用)"
+
+#: Menu
+msgid "Scan for malware (via Lenspect)"
+msgstr "マルウェアをスキャン (Lenspectを使用)"
+
+#: Menu
+msgid "Show files information"
+msgstr "ファイル情報を表示"
+
+#: Menu
+msgid "Show files metadata"
+msgstr "ファイルのメタデータを表示"
+
+#: Menu
+msgid "Show files MIME type"
+msgstr "ファイルのMIMEタイプを表示"
+
+#: Menu
+msgid "Show media information"
+msgstr "メディア情報を表示"
+
+#: Menu
+msgid "SVG: Compress to SVGZ"
+msgstr "SVG：SVGZに圧縮"
+
+#: Menu
+msgid "SVG: Decompress SVGZ"
+msgstr "SVG：SVGZを解凍"
+
+#: Menu
+msgid "SVG: Export to PDF"
+msgstr "SVG：PDFにエクスポート"
+
+#: Menu
+msgid "SVG: Export to PNG (256 px)"
+msgstr "SVG：PNGにエクスポート (256 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (512 px)"
+msgstr "SVG：PNGにエクスポート (512 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (1024 px)"
+msgstr "SVG：PNGにエクスポート (1024 px)"
+
+#: Menu
+msgid "SVG: Replace fonts to Charter"
+msgstr "SVG：フォントをCharterに置換"
+
+#: Menu
+msgid "SVG: Replace fonts to Helvetica"
+msgstr "SVG：フォントをHelveticaに置換"
+
+#: Menu
+msgid "SVG: Replace fonts to Times"
+msgstr "SVG：フォントをTimesに置換"
+
+#: Menu
+msgid "Terminal"
+msgstr "ターミナル"
+
+#: Menu
+msgid "Text: Concatenate multiple files"
+msgstr "テキスト：複数のファイルを連結"
+
+#: Menu
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "テキスト：タブを4つのスペースに変換"
+
+#: Menu
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "テキスト：正規化 (UTF-8, 再帰的)"
+
+#: Menu
+msgid "Text: Encode to UTF-8"
+msgstr "テキスト：UTF-8にエンコード"
+
+#: Menu
+msgid "Text: List encodings"
+msgstr "テキスト：エンコーディングをリスト"
+
+#: Menu
+msgid "Text: List issues"
+msgstr "テキスト：問題をリスト"
+
+#: Menu
+msgid "Text: List invalid chars"
+msgstr "テキスト：無効な文字をリスト"
+
+#: Menu
+msgid "Text: List line breaks"
+msgstr "テキスト：改行をリスト"
+
+#: Menu
+msgid "Text: List line counts"
+msgstr "テキスト：行数をリスト"
+
+#: Menu
+msgid "Text: List line lengths"
+msgstr "テキスト：行の長さをリスト"
+
+#: Menu
+msgid "Text: List word counts"
+msgstr "テキスト：単語数をリスト"
+
+#: Menu
+msgid "Text: Remove trailing spaces"
+msgstr "テキスト：末尾のスペースを削除"
+
+#: Menu
+msgid "Text: Remove accents"
+msgstr "テキスト：アクセント記号を削除"
+
+#: Menu
+msgid "URL: Check HTTP status"
+msgstr "URL：HTTPステータスを確認"
+
+#: Menu
+msgid "URL: Download file"
+msgstr "URL：ファイルをダウンロード"
+
+#: Menu
+msgid "URL: Show HTTP headers"
+msgstr "URL：HTTPヘッダーを表示"
+
+#: Menu
+msgid "Verify MD5 file"
+msgstr "MD5ファイルを検証"
+
+#: Menu
+msgid "Verify SHA1 file"
+msgstr "SHA1ファイルを検証"
+
+#: Menu
+msgid "Verify SHA256 file"
+msgstr "SHA256ファイルを検証"
+
+#: Menu
+msgid "Verify SHA512 file"
+msgstr "SHA512ファイルを検証"
+
+#: Menu
+msgid "Video: Aspect to 1:1"
+msgstr "動画：アスペクト比を1:1に"
+
+#: Menu
+msgid "Video: Aspect to 4:3"
+msgstr "動画：アスペクト比を4:3に"
+
+#: Menu
+msgid "Video: Aspect to 16:9"
+msgstr "動画：アスペクト比を16:9に"
+
+#: Menu
+msgid "Video: Aspect to 16:10"
+msgstr "動画：アスペクト比を16:10に"
+
+#: Menu
+msgid "Video: Convert to MKV"
+msgstr "動画：MKVに変換"
+
+#: Menu
+msgid "Video: Convert to MKV (copy)"
+msgstr "動画：MKVに変換 (コピー)"
+
+#: Menu
+msgid "Video: Convert to MP4"
+msgstr "動画：MP4に変換"
+
+#: Menu
+msgid "Video: Convert to MP4 (copy)"
+msgstr "動画：MP4に変換 (コピー)"
+
+#: Menu
+msgid "Video: Export frames (1 FPS)"
+msgstr "動画：フレームをエクスポート (1 FPS)"
+
+#: Menu
+msgid "Video: Export frames (5 FPS)"
+msgstr "動画：フレームをエクスポート (5 FPS)"
+
+#: Menu
+msgid "Video: Export frames (10 FPS)"
+msgstr "動画：フレームをエクスポート (10 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF"
+msgstr "動画：GIFにエクスポート"
+
+#: Menu
+msgid "Video: Extract audio"
+msgstr "動画：音声を抽出"
+
+#: Menu
+msgid "Video: Flip (horizontal)"
+msgstr "動画：反転 (水平)"
+
+#: Menu
+msgid "Video: Flip (vertical)"
+msgstr "動画：反転 (垂直)"
+
+#: Menu
+msgid "Video: Frame rate to 30 FPS"
+msgstr "動画：フレームレートを30 FPSに"
+
+#: Menu
+msgid "Video: Frame rate to 60 FPS"
+msgstr "動画：フレームレートを60 FPSに"
+
+#: Menu
+msgid "Video: Remove audio"
+msgstr "動画：音声を削除"
+
+#: Menu
+msgid "Video: Resize (25 pct)"
+msgstr "動画：リサイズ (25%)"
+
+#: Menu
+msgid "Video: Resize (50 pct)"
+msgstr "動画：リサイズ (50%)"
+
+#: Menu
+msgid "Video: Resize (75 pct)"
+msgstr "動画：リサイズ (75%)"
+
+#: Menu
+msgid "Video: Rotate (90 deg)"
+msgstr "動画：回転 (90度)"
+
+#: Menu
+msgid "Video: Rotate (180 deg)"
+msgstr "動画：回転 (180度)"
+
+#: Menu
+msgid "Video: Rotate (270 deg)"
+msgstr "動画：回転 (270度)"
+
+#: Menu
+msgid "Video: Speed to 0.5"
+msgstr "動画：速度を0.5倍に"
+
+#: Menu
+msgid "Video: Speed to 1.5"
+msgstr "動画：速度を1.5倍に"
+
+#: Menu
+msgid "Video: Speed to 2.0"
+msgstr "動画：速度を2.0倍に"
+
+#: install.sh
+msgid "Check for basic dependencies"
+msgstr "基本的な依存関係を確認"
+
+#: install.sh
+msgid "Remove previously installed scripts"
+msgstr "以前にインストールしたスクリプトを削除"
+
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr "キーボードアクセラレータをインストール"
+
+#: install.sh
+msgid "Close the file manager to reload configurations"
+msgstr "設定を再読み込みするにはファイルマネージャーを閉じてください"
+
+#: install.sh
+msgid "Add shortcuts to the application menu"
+msgstr "アプリケーションメニューにショートカットを追加"
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr "Homebrewをインストール (オプション)"
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr "インストールするスクリプトのカテゴリを選択"
+
+#: install.sh
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr "オプションを選択 (<SPACE>で選択、<ENTER>で確定):"
+
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr "非対話モードでインストール中..."
+
+#: install.sh
+msgid "Installing:"
+msgstr "インストール中:"
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr "アプリケーションメニューショートカットをインストール中:"
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr "インストールが正常に完了しました！"
+
+#: install.sh
+msgid "Checking for basic dependencies:"
+msgstr "基本的な依存関係を確認中:"
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr "すべての依存関係は既に満たされています。"
+
+#: install.sh
+msgid "Copying files..."
+msgstr "ファイルをコピー中..."
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr "キーボードアクセラレータをインストール中..."
+
+#: install.sh
+msgid "Scripts"
+msgstr "スクリプト"
+
+#: install.sh
+msgid "Creating shortcuts to the application menu..."
+msgstr "アプリケーションメニューへのショートカットを作成中..."
+
+#: install.sh
+msgid "Creating GNOME Shell application folder..."
+msgstr "GNOME Shellアプリケーションフォルダを作成中..."
+
+#: install.sh
+msgid "Installing actions in the context menu..."
+msgstr "コンテキストメニューにアクションをインストール中..."
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr "ファイルマネージャーを閉じています..."
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr "Homebrewをインストール中:"
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr "Homebrewは既にインストールされています。"
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr "Homebrewをインストール先:"
+
+#: install.sh
+msgid "Downloading the package..."
+msgstr "パッケージをダウンロード中..."
+
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr "パッケージマネージャーが見つかりません！"
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr "Homebrewのインストールに失敗しました！"
+
+#~ msgid "EOF"
+#~ msgstr "EOF"
