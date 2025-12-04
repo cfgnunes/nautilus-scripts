@@ -121,6 +121,7 @@ Special thanks to everyone who contributed to the translation of this project:
 - 🇷🇺 **Vladimir Kosolapov (@vmkspv)** - Russian.
 - 🇮🇱 **Omer I.S. (@omeritzics)** - Hebrew.
 - 🇳🇱 **Heimen Stoffels (@Vistaus)** - Dutch.
+- 🇰🇷 **Yun Juhwan (@g-yunjh)** - Korean.
 
 ### Contributors
 
