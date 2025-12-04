@@ -1,0 +1,1982 @@
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Enhanced File Manager Actions for Linux\n"
+"POT-Creation-Date: 2025-11-13 12:12-0300\n"
+"PO-Revision-Date: 2025-11-13 12:25-0300\n"
+"Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
+"Language-Team: \n"
+"Language: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Done!"
+msgstr "पूर्ण!"
+
+msgid "files"
+msgstr "फ़ाइलें"
+
+msgid "Would you like to continue?"
+msgstr "क्या आप जारी रखना चाहेंगे?"
+
+msgid "directories"
+msgstr "निर्देशिकाएँ"
+
+msgid "items"
+msgstr "आइटम"
+
+msgid "The command failed."
+msgstr "कमांड विफल रही।"
+
+msgid "The output file does not exist."
+msgstr "आउटपुट फ़ाइल मौजूद नहीं है।"
+
+msgid "Finished with errors! See the log:"
+msgstr "त्रुटियों के साथ पूर्ण! लॉग देखें:"
+
+msgid "Your system does not support clipboard operations."
+msgstr "आपका सिस्टम क्लिपबोर्ड संचालन का समर्थन नहीं करता है।"
+
+msgid "Could not find a package for:"
+msgstr "इसके लिए कोई पैकेज नहीं मिला:"
+
+msgid "The following packages are missing:"
+msgstr "निम्नलिखित पैकेज गायब हैं:"
+
+msgid "Would you like to install them?"
+msgstr "क्या आप उन्हें इंस्टॉल करना चाहेंगे?"
+
+msgid "Installing the packages. Please, wait..."
+msgstr "पैकेज इंस्टॉल किए जा रहे हैं। कृपया प्रतीक्षा करें..."
+
+msgid "The package was installed, but a system reboot is required."
+msgstr "पैकेज इंस्टॉल हो गया है, लेकिन सिस्टम रीबूट आवश्यक है।"
+
+msgid "Could not install the package:"
+msgstr "पैकेज इंस्टॉल नहीं किया जा सका:"
+
+msgid "This action will delete the selected items."
+msgstr "यह क्रिया चुने हुए आइटम को हटा देगी।"
+
+msgid "Total selected:"
+msgstr "कुल चयनित:"
+
+msgid "Total:"
+msgstr "कुल:"
+
+msgid "Some items could not be deleted."
+msgstr "कुछ आइटम हटाए नहीं जा सके।"
+
+msgid "All items were successfully deleted!"
+msgstr "सभी आइटम सफलतापूर्वक हटा दिए गए!"
+
+msgid "Could not access the directory:"
+msgstr "निर्देशिका तक पहुँच नहीं बन सकी:"
+
+msgid "The destination file already exists."
+msgstr "गंतव्य फ़ाइल पहले से मौजूद है।"
+
+msgid "Unable to move."
+msgstr "स्थानांतरित करने में असमर्थ।"
+
+msgid "OK"
+msgstr "ठीक है"
+
+msgid "Cancel"
+msgstr "रद्द करें"
+
+msgid "(Empty)"
+msgstr "(खाली)"
+
+msgid "Select the ones to open:"
+msgstr "खोलने के लिए चुनें:"
+
+msgid "Select the ones to reveal in the file manager:"
+msgstr "फ़ाइल प्रबंधक में दिखाने के लिए चुनें:"
+
+msgid "Select the ones to open in the web browser:"
+msgstr "वेब ब्राउज़र में खोलने के लिए चुनें:"
+
+msgid "Select the ones to delete:"
+msgstr "हटाने के लिए चुनें:"
+
+msgid "Password"
+msgstr "पासवर्ड"
+
+msgid "Type your password:"
+msgstr "अपना पासवर्ड टाइप करें:"
+
+msgid "The password can not be empty!"
+msgstr "पासवर्ड खाली नहीं हो सकता!"
+
+msgid "Yes"
+msgstr "हाँ"
+
+msgid "No"
+msgstr "नहीं"
+
+msgid "Finished! The output files are in:"
+msgstr "पूर्ण! आउटपुट फ़ाइलें यहाँ हैं:"
+
+msgid "Finished, but there is nothing to do."
+msgstr "पूर्ण, लेकिन करने के लिए कुछ नहीं है।"
+
+msgid "Finished!"
+msgstr "पूर्ण!"
+
+msgid "Running the task. Please, wait..."
+msgstr "कार्य चल रहा है। कृपया प्रतीक्षा करें..."
+
+msgid "No default application is set for the type:"
+msgstr "इस प्रकार के लिए कोई डिफ़ॉल्ट एप्लिकेशन सेट नहीं है:"
+
+msgid "Could not find the executable to open MIME type:"
+msgstr "MIME प्रकार खोलने के लिए निष्पादन योग्य फ़ाइल नहीं मिली:"
+
+msgid "Batch mode detected."
+msgstr "बैच मोड का पता चला।"
+
+msgid "Each file inside this directory will be processed individually."
+msgstr "इस निर्देशिका के अंदर की प्रत्येक फ़ाइल को अलग-अलग संसाधित किया जाएगा।"
+
+msgid "files or directories"
+msgstr "फ़ाइलें या निर्देशिकाएँ"
+
+msgid "You must select files with extension:"
+msgstr "आपको इस एक्सटेंशन वाली फ़ाइलें चुननी होंगी:"
+
+msgid "Invalid input file!"
+msgstr "अमान्य इनपुट फ़ाइल!"
+
+msgid "You must select"
+msgstr "आपको चुनना होगा"
+
+msgid "You must select at least"
+msgstr "आपको कम से कम चुनना होगा"
+
+msgid "You must select up to"
+msgstr "आपको अधिकतम इतनी तक चुनना होगा"
+
+msgid "Could not find the output directory!"
+msgstr "आउटपुट निर्देशिका नहीं मिली!"
+
+msgid "Accessed recently"
+msgstr "हाल ही में एक्सेस किया गया"
+
+msgid "File"
+msgstr "फ़ाइल"
+
+msgid "Count"
+msgstr "गिनती"
+
+msgid "Char"
+msgstr "अक्षर"
+
+msgid "Line"
+msgstr "पंक्ति"
+
+msgid "Issues"
+msgstr "समस्याएँ"
+
+msgid "Encoding"
+msgstr "एन्कोडिंग"
+
+msgid "There are no valid paths in the clipboard!"
+msgstr "क्लिपबोर्ड में कोई वैध पथ नहीं हैं!"
+
+msgid "links"
+msgstr "लिंक"
+
+msgid "Inode"
+msgstr "इनोड"
+
+msgid "Link"
+msgstr "लिंक"
+
+msgid "Unsupported clipboard type."
+msgstr "असमर्थित क्लिपबोर्ड प्रकार।"
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr "यह क्रिया चुनी हुई फ़ाइलों और निर्देशिकाओं का नाम पुनरावर्ती रूप से बदलेगी।"
+
+msgid "PDF files"
+msgstr "PDF फ़ाइलें"
+
+msgid "Select a PDF to use as the watermark"
+msgstr "वॉटरमार्क के रूप में उपयोग करने के लिए एक PDF चुनें"
+
+msgid "Signature"
+msgstr "हस्ताक्षर"
+
+msgid "Malware"
+msgstr "मैलवेयर"
+
+msgid "Mode"
+msgstr "मोड"
+
+msgid "Bit rate"
+msgstr "बिट दर"
+
+msgid "Sampling rate"
+msgstr "सैंपलिंग दर"
+
+msgid "Channels"
+msgstr "चैनल"
+
+msgid "Duration"
+msgstr "अवधि"
+
+msgid "Album"
+msgstr "एल्बम"
+
+msgid "Artist"
+msgstr "कलाकार"
+
+msgid "Title"
+msgstr "शीर्षक"
+
+msgid "Quality"
+msgstr "गुणवत्ता"
+
+msgid "Image files"
+msgstr "छवि फ़ाइलें"
+
+msgid "Select an image to use as the watermark"
+msgstr "वॉटरमार्क के रूप में उपयोग करने के लिए एक छवि चुनें"
+
+msgid "Key files"
+msgstr "कुंजी फ़ाइलें"
+
+msgid "Select a key file to import"
+msgstr "आयात करने के लिए एक कुंजी फ़ाइल चुनें"
+
+msgid "No secret keys were found."
+msgstr "कोई गुप्त कुंजी नहीं मिली।"
+
+msgid "Would you like to import a key now?"
+msgstr "क्या आप अभी एक कुंजी आयात करना चाहेंगे?"
+
+msgid "Failed to import the key!"
+msgstr "कुंजी आयात करने में विफल!"
+
+msgid "Select a user:"
+msgstr "एक उपयोगकर्ता चुनें:"
+
+msgid "User"
+msgstr "उपयोगकर्ता"
+
+msgid "Name"
+msgstr "नाम"
+
+msgid "E-mail"
+msgstr "ई-मेल"
+
+msgid "Created"
+msgstr "बनाया गया"
+
+msgid "Expires"
+msgstr "समाप्त होता है"
+
+msgid "You must select a user!"
+msgstr "आपको एक उपयोगकर्ता चुनना होगा!"
+
+msgid "No public keys were found."
+msgstr "कोई सार्वजनिक कुंजी नहीं मिली।"
+
+msgid "Select one or more users:"
+msgstr "एक या अधिक उपयोगकर्ता चुनें:"
+
+msgid "You must select at least one user!"
+msgstr "आपको कम से कम एक उपयोगकर्ता चुनना होगा!"
+
+msgid "Directory"
+msgstr "निर्देशिका"
+
+msgid "Size"
+msgstr "आकार"
+
+msgid "Group"
+msgstr "समूह"
+
+msgid "Item"
+msgstr "आइटम"
+
+msgid "Octal"
+msgstr "अष्टाधारी"
+
+msgid "Type"
+msgstr "प्रकार"
+
+msgid "You must select only two images to compare!"
+msgstr "तुलना करने के लिए आपको केवल दो छवियाँ चुननी होंगी!"
+
+msgid "You must select only two PDFs to compare!"
+msgstr "तुलना करने के लिए आपको केवल दो PDF चुननी होंगी!"
+
+msgid "You must select only two binary files to compare!"
+msgstr "तुलना करने के लिए आपको केवल दो बाइनरी फ़ाइलें चुननी होंगी!"
+
+msgid "No items were selected!"
+msgstr "कोई आइटम चयनित नहीं किया गया!"
+
+msgid "No directories were selected!"
+msgstr "कोई निर्देशिका चयनित नहीं की गई!"
+
+msgid "The selected items are identical."
+msgstr "चुने गए आइटम समान हैं।"
+
+msgid "The selected images has same pixel values."
+msgstr "चुनी गई छवियों के पिक्सेल मान समान हैं।"
+
+msgid "MIME"
+msgstr "MIME"
+
+msgid "This action will move all files from subdirectories to the root of the selected directory."
+msgstr "यह क्रिया सभी फ़ाइलों को उपनिर्देशिकाओं से चुनी गई निर्देशिका की जड़ में ले जाएगी।"
+
+msgid "This action will reset the permissions recursively."
+msgstr "यह क्रिया अनुमतियों को पुनरावर्ती रूप से रीसेट करेगी।"
+
+msgid "Date"
+msgstr "तारीख"
+
+msgid "Time"
+msgstr "समय"
+
+msgid "Select the output filename:"
+msgstr "आउटपुट फ़ाइल नाम चुनें:"
+
+msgid "Filename"
+msgstr "फ़ाइल नाम"
+
+msgid "Status"
+msgstr "स्थिति"
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr "क्लिपबोर्ड या चुनी गई फ़ाइलों में कोई वैध URL नहीं हैं!"
+
+msgid "IPs"
+msgstr "IP पते"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Ping"
+msgstr "पिंग"
+
+msgid "Ports"
+msgstr "पोर्ट"
+
+msgid "Hostname"
+msgstr "होस्टनाम"
+
+msgid "Example"
+msgstr "उदाहरण"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "IP पते या IP रेंज दर्ज करें।"
+
+msgid "There are no valid IPs in the input!"
+msgstr "इनपुट में कोई वैध IP नहीं हैं!"
+
+msgid "Enter the URLs."
+msgstr "URL दर्ज करें।"
+
+msgid "There are no valid URLs in the input!"
+msgstr "इनपुट में कोई वैध URL नहीं हैं!"
+
+msgid "No remote URL found."
+msgstr "कोई रिमोट URL नहीं मिला।"
+
+msgid "URLs"
+msgstr "URL"
+
+msgid "HTTP code"
+msgstr "HTTP कोड"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "(No differences)"
+msgstr "(कोई अंतर नहीं)"
+
+msgid "(No line break)"
+msgstr "(कोई लाइन ब्रेक नहीं)"
+
+msgid "(No response)"
+msgstr "(कोई प्रतिक्रिया नहीं)"
+
+msgid "Checksum mismatch."
+msgstr "चेकसम बेमेल।"
+
+msgid "File does not exist."
+msgstr "फ़ाइल मौजूद नहीं है।"
+
+msgid "High"
+msgstr "उच्च"
+
+msgid "Low"
+msgstr "कम"
+
+msgid "Medium"
+msgstr "मध्यम"
+
+msgid "Online"
+msgstr "ऑनलाइन"
+
+msgid "Offline"
+msgstr "ऑफ़लाइन"
+
+msgid "Valid signature"
+msgstr "वैध हस्ताक्षर"
+
+msgid "Invalid signature"
+msgstr "अमान्य हस्ताक्षर"
+
+msgid "Missing key"
+msgstr "कुंजी गायब"
+
+msgid "Missing data file"
+msgstr "डेटा फ़ाइल गायब"
+
+msgid "Revoked key"
+msgstr "रद्द की गई कुंजी"
+
+msgid "Expired key"
+msgstr "समय सीमा समाप्त कुंजी"
+
+msgid "Expired signature"
+msgstr "समय सीमा समाप्त हस्ताक्षर"
+
+msgid "Unknown algorithm"
+msgstr "अज्ञात एल्गोरिदम"
+
+msgid "Key ID"
+msgstr "कुंजी ID"
+
+msgid "Enter the password for the archive:"
+msgstr "आर्काइव के लिए पासवर्ड दर्ज करें:"
+
+msgid "Select the output directory"
+msgstr "आउटपुट निर्देशिका चुनें"
+
+msgid "Select input directories"
+msgstr "इनपुट निर्देशिकाएँ चुनें"
+
+msgid "Select input files"
+msgstr "इनपुट फ़ाइलें चुनें"
+
+#: Menu
+msgid "Archive"
+msgstr "आर्काइव"
+
+#: Menu
+msgid "Audio and Video"
+msgstr "ऑडियो और वीडियो"
+
+#: Menu
+msgid "Checksum"
+msgstr "चेकसम"
+
+#: Menu
+msgid "Clipboard"
+msgstr "क्लिपबोर्ड"
+
+#: Menu
+msgid "Directories and Files"
+msgstr "निर्देशिकाएँ और फ़ाइलें"
+
+#: Menu
+msgid "Document"
+msgstr "दस्तावेज़"
+
+#: Menu
+msgid "Encryption"
+msgstr "एन्क्रिप्शन"
+
+#: Menu
+msgid "Image"
+msgstr "छवि"
+
+#: Menu
+msgid "Links"
+msgstr "लिंक"
+
+#: Menu
+msgid "Network and Internet"
+msgstr "नेटवर्क और इंटरनेट"
+
+#: Menu
+msgid "Open with"
+msgstr "इसके साथ खोलें"
+
+#: Menu
+msgid "Plain text"
+msgstr "सादा पाठ"
+
+#: Menu
+msgid "Rename files"
+msgstr "फ़ाइलों का नाम बदलें"
+
+#: Menu
+msgid "Security and Recovery"
+msgstr "सुरक्षा और पुनर्प्राप्ति"
+
+#: Menu
+msgid "Audio and Video: Tools"
+msgstr "ऑडियो और वीडियो: उपकरण"
+
+#: Menu
+msgid "Audio: Channels"
+msgstr "ऑडियो: चैनल"
+
+#: Menu
+msgid "Audio: Convert"
+msgstr "ऑडियो: कन्वर्ट करें"
+
+#: Menu
+msgid "Audio: Effects"
+msgstr "ऑडियो: प्रभाव"
+
+#: Menu
+msgid "Audio: MP3 files"
+msgstr "ऑडियो: MP3 फ़ाइलें"
+
+#: Menu
+msgid "Audio: Quality"
+msgstr "ऑडियो: गुणवत्ता"
+
+#: Menu
+msgid "Document: Convert"
+msgstr "दस्तावेज़: कन्वर्ट करें"
+
+#: Menu
+msgid "Document: Print"
+msgstr "दस्तावेज़: प्रिंट करें"
+
+#: Menu
+msgid "Image: Color"
+msgstr "छवि: रंग"
+
+#: Menu
+msgid "Image: Combine, Split"
+msgstr "छवि: संयोजित करें, विभाजित करें"
+
+#: Menu
+msgid "Image: Convert"
+msgstr "छवि: कन्वर्ट करें"
+
+#: Menu
+msgid "Image: Crop, Resize"
+msgstr "छवि: क्रॉप करें, आकार बदलें"
+
+#: Menu
+msgid "Image: Flip, Rotate"
+msgstr "छवि: पलटें, घुमाएँ"
+
+#: Menu
+msgid "Image: Icons"
+msgstr "छवि: आइकन"
+
+#: Menu
+msgid "Image: Metadata, Exif"
+msgstr "छवि: मेटाडेटा, एक्सिफ़"
+
+#: Menu
+msgid "Image: Optimize, Reduce"
+msgstr "छवि: अनुकूलित करें, कम करें"
+
+#: Menu
+msgid "Image: Similarity"
+msgstr "छवि: समानता"
+
+#: Menu
+msgid "Image: SVG files"
+msgstr "छवि: SVG फ़ाइलें"
+
+#: Menu
+msgid "Image: Text recognition (OCR)"
+msgstr "छवि: पाठ पहचान (OCR)"
+
+#: Menu
+msgid "Image: Transparency"
+msgstr "छवि: पारदर्शिता"
+
+#: Menu
+msgid "Image: Watermark"
+msgstr "छवि: वॉटरमार्क"
+
+#: Menu
+msgid "PDF: Annotations"
+msgstr "PDF: एनोटेशन"
+
+#: Menu
+msgid "PDF: Combine, Split"
+msgstr "PDF: संयोजित करें, विभाजित करें"
+
+#: Menu
+msgid "PDF: Security"
+msgstr "PDF: सुरक्षा"
+
+#: Menu
+msgid "PDF: Multiple-page layout"
+msgstr "PDF: बहु-पृष्ठ लेआउट"
+
+#: Menu
+msgid "PDF: Optimize, Reduce"
+msgstr "PDF: अनुकूलित करें, कम करें"
+
+#: Menu
+msgid "PDF: Page size"
+msgstr "PDF: पृष्ठ आकार"
+
+#: Menu
+msgid "PDF: Rotate"
+msgstr "PDF: घुमाएँ"
+
+#: Menu
+msgid "PDF: Signatures"
+msgstr "PDF: हस्ताक्षर"
+
+#: Menu
+msgid "PDF: Text recognition (OCR)"
+msgstr "PDF: पाठ पहचान (OCR)"
+
+#: Menu
+msgid "PDF: Tools"
+msgstr "PDF: उपकरण"
+
+#: Menu
+msgid "PDF: Watermark"
+msgstr "PDF: वॉटरमार्क"
+
+#: Menu
+msgid "Video: Aspect ratio"
+msgstr "वीडियो: पहलू अनुपात"
+
+#: Menu
+msgid "Video: Audio track"
+msgstr "वीडियो: ऑडियो ट्रैक"
+
+#: Menu
+msgid "Video: Convert"
+msgstr "वीडियो: कन्वर्ट करें"
+
+#: Menu
+msgid "Video: Export frames"
+msgstr "वीडियो: फ़्रेम निर्यात करें"
+
+#: Menu
+msgid "Video: Flip, Rotate"
+msgstr "वीडियो: पलटें, घुमाएँ"
+
+#: Menu
+msgid "Video: Frame rate"
+msgstr "वीडियो: फ़्रेम दर"
+
+#: Menu
+msgid "Video: Resize"
+msgstr "वीडियो: आकार बदलें"
+
+#: Menu
+msgid "Video: Speed"
+msgstr "वीडियो: गति"
+
+#: Menu
+msgid "Audio: Check quality"
+msgstr "ऑडियो: गुणवत्ता जाँचें"
+
+#: Menu
+msgid "Audio: Convert to FLAC"
+msgstr "ऑडियो: FLAC में कन्वर्ट करें"
+
+#: Menu
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "ऑडियो: MP3 में कन्वर्ट करें (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (192 kbps)"
+msgstr "ऑडियो: MP3 में कन्वर्ट करें (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (320 kbps)"
+msgstr "ऑडियो: MP3 में कन्वर्ट करें (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "ऑडियो: OGG में कन्वर्ट करें (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (192 kbps)"
+msgstr "ऑडियो: OGG में कन्वर्ट करें (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (320 kbps)"
+msgstr "ऑडियो: OGG में कन्वर्ट करें (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "ऑडियो: OPUS में कन्वर्ट करें (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (192 kbps)"
+msgstr "ऑडियो: OPUS में कन्वर्ट करें (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (320 kbps)"
+msgstr "ऑडियो: OPUS में कन्वर्ट करें (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to WAV"
+msgstr "ऑडियो: WAV में कन्वर्ट करें"
+
+#: Menu
+msgid "Audio: Fade-in"
+msgstr "ऑडियो: फ़ेड-इन"
+
+#: Menu
+msgid "Audio: Fade-out"
+msgstr "ऑडियो: फ़ेड-आउट"
+
+#: Menu
+msgid "Audio: Mix channels to mono"
+msgstr "ऑडियो: चैनल मोनो में मिलाएँ"
+
+#: Menu
+msgid "Audio: Mix two files"
+msgstr "ऑडियो: दो फ़ाइलें मिलाएँ"
+
+#: Menu
+msgid "Audio: Volume normalize"
+msgstr "ऑडियो: वॉल्यूम सामान्य करें"
+
+#: Menu
+msgid "Audio: Produce a spectrogram"
+msgstr "ऑडियो: स्पेक्ट्रोग्राम बनाएँ"
+
+#: Menu
+msgid "Audio: Remove silence (sections)"
+msgstr "ऑडियो: मौन हटाएँ (अनुभाग)"
+
+#: Menu
+msgid "Audio: Silence noise"
+msgstr "ऑडियो: शोर शांत करें"
+
+#: Menu
+msgid "Audio: Remove silence (extremities)"
+msgstr "ऑडियो: मौन हटाएँ (सिरे)"
+
+#: Menu
+msgid "Create backup (via Rsync)"
+msgstr "बैकअप बनाएँ (Rsync के माध्यम से)"
+
+#: Menu
+msgid "Code Editor"
+msgstr "कोड संपादक"
+
+#: Menu
+msgid "Compare items"
+msgstr "आइटम तुलना करें"
+
+#: Menu
+msgid "Compare items (via Diff)"
+msgstr "आइटम तुलना करें (Diff के माध्यम से)"
+
+#: Menu
+msgid "Compress to '7z'"
+msgstr "'7z' में संपीड़ित करें"
+
+#: Menu
+msgid "Compress to '7z' with password"
+msgstr "'7z' में पासवर्ड के साथ संपीड़ित करें"
+
+#: Menu
+msgid "Compress to 'tar.gz'"
+msgstr "'tar.gz' में संपीड़ित करें"
+
+#: Menu
+msgid "Compress to 'tar.xz'"
+msgstr "'tar.xz' में संपीड़ित करें"
+
+#: Menu
+msgid "Compress to 'tar.zst'"
+msgstr "'tar.zst' में संपीड़ित करें"
+
+#: Menu
+msgid "Compress to 'zip'"
+msgstr "'zip' में संपीड़ित करें"
+
+#: Menu
+msgid "Compress to 'zip' with password"
+msgstr "'zip' में पासवर्ड के साथ संपीड़ित करें"
+
+#: Menu
+msgid "Compute all checksums"
+msgstr "सभी चेकसम गणना करें"
+
+#: Menu
+msgid "Compute MD5"
+msgstr "MD5 गणना करें"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "SHA1 गणना करें"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "SHA256 गणना करें"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "SHA512 गणना करें"
+
+#: Menu
+msgid "Copy file contents"
+msgstr "फ़ाइल सामग्री कॉपी करें"
+
+#: Menu
+msgid "Copy file names"
+msgstr "फ़ाइल नाम कॉपी करें"
+
+#: Menu
+msgid "Copy file names (recursive)"
+msgstr "फ़ाइल नाम कॉपी करें (पुनरावर्ती)"
+
+#: Menu
+msgid "Copy file paths"
+msgstr "फ़ाइल पथ कॉपी करें"
+
+#: Menu
+msgid "Copy file paths (recursive)"
+msgstr "फ़ाइल पथ कॉपी करें (पुनरावर्ती)"
+
+#: Menu
+msgid "Create hard link here"
+msgstr "यहाँ हार्ड लिंक बनाएँ"
+
+#: Menu
+msgid "Create hard link to..."
+msgstr "इस पर हार्ड लिंक बनाएँ..."
+
+#: Menu
+msgid "Create symbolic link here"
+msgstr "यहाँ सिंबोलिक लिंक बनाएँ"
+
+#: Menu
+msgid "Create symbolic link to..."
+msgstr "इस पर सिंबोलिक लिंक बनाएँ..."
+
+#: Menu
+msgid "Disk Usage Analyzer"
+msgstr "डिस्क उपयोग विश्लेषक"
+
+#: Menu
+msgid "Document: Convert to DOCX"
+msgstr "दस्तावेज़: DOCX में कन्वर्ट करें"
+
+#: Menu
+msgid "Document: Convert to EPUB"
+msgstr "दस्तावेज़: EPUB में कन्वर्ट करें"
+
+#: Menu
+msgid "Document: Convert to Markdown"
+msgstr "दस्तावेज़: Markdown में कन्वर्ट करें"
+
+#: Menu
+msgid "Document: Convert to ODP"
+msgstr "दस्तावेज़: ODP में कन्वर्ट करें"
+
+#: Menu
+msgid "Document: Convert to ODS"
+msgstr "दस्तावेज़: ODS में कन्वर्ट करें"
+
+#: Menu
+msgid "Document: Convert to ODT"
+msgstr "दस्तावेज़: ODT में कन्वर्ट करें"
+
+#: Menu
+msgid "Document: Convert to PDF"
+msgstr "दस्तावेज़: PDF में कन्वर्ट करें"
+
+#: Menu
+msgid "Document: Convert to PPTX"
+msgstr "दस्तावेज़: PPTX में कन्वर्ट करें"
+
+#: Menu
+msgid "Document: Convert to TXT"
+msgstr "दस्तावेज़: TXT में कन्वर्ट करें"
+
+#: Menu
+msgid "Document: Convert to XLSX"
+msgstr "दस्तावेज़: XLSX में कन्वर्ट करें"
+
+#: Menu
+msgid "Document: Print (A4)"
+msgstr "दस्तावेज़: प्रिंट करें (A4)"
+
+#: Menu
+msgid "Document: Print (US Legal)"
+msgstr "दस्तावेज़: प्रिंट करें (US Legal)"
+
+#: Menu
+msgid "Document: Print (US Letter)"
+msgstr "दस्तावेज़: प्रिंट करें (US Letter)"
+
+#: Menu
+msgid "Extract here"
+msgstr "यहाँ निकालें"
+
+#: Menu
+msgid "File carving (via Foremost)"
+msgstr "फ़ाइल कार्विंग (Foremost के माध्यम से)"
+
+#: Menu
+msgid "File carving (via PhotoRec)"
+msgstr "फ़ाइल कार्विंग (PhotoRec के माध्यम से)"
+
+#: Menu
+msgid "Find broken links"
+msgstr "टूटी हुई लिंक खोजें"
+
+#: Menu
+msgid "Find duplicate files"
+msgstr "डुप्लिकेट फ़ाइलें खोजें"
+
+#: Menu
+msgid "Find empty directories"
+msgstr "खाली निर्देशिकाएँ खोजें"
+
+#: Menu
+msgid "List hidden files"
+msgstr "छिपी हुई फ़ाइलें सूचीबद्ध करें"
+
+#: Menu
+msgid "Find junk files"
+msgstr "जंक फ़ाइलें खोजें"
+
+#: Menu
+msgid "Find empty files"
+msgstr "खाली फ़ाइलें खोजें"
+
+#: Menu
+msgid "Flatten directory structure"
+msgstr "निर्देशिका संरचना सपाट करें"
+
+#: Menu
+msgid "Generate MD5 file"
+msgstr "MD5 फ़ाइल उत्पन्न करें"
+
+#: Menu
+msgid "Generate SHA1 file"
+msgstr "SHA1 फ़ाइल उत्पन्न करें"
+
+#: Menu
+msgid "Generate SHA256 file"
+msgstr "SHA256 फ़ाइल उत्पन्न करें"
+
+#: Menu
+msgid "Generate SHA512 file"
+msgstr "SHA512 फ़ाइल उत्पन्न करें"
+
+#: Menu
+msgid "Git: Clone URLs"
+msgstr "Git: URL क्लोन करें"
+
+#: Menu
+msgid "Git: Open repository website"
+msgstr "Git: रिपॉजिटरी वेबसाइट खोलें"
+
+#: Menu
+msgid "Git: Reset and pull"
+msgstr "Git: रीसेट करें और पुल करें"
+
+#: Menu
+msgid "Decrypt"
+msgstr "डिक्रिप्ट करें"
+
+#: Menu
+msgid "Encrypt with password"
+msgstr "पासवर्ड के साथ एन्क्रिप्ट करें"
+
+#: Menu
+msgid "Encrypt with password (ASCII)"
+msgstr "पासवर्ड के साथ एन्क्रिप्ट करें (ASCII)"
+
+#: Menu
+msgid "Encrypt with keys"
+msgstr "कुंजी के साथ एन्क्रिप्ट करें"
+
+#: Menu
+msgid "Encrypt with keys (ASCII)"
+msgstr "कुंजी के साथ एन्क्रिप्ट करें (ASCII)"
+
+#: Menu
+msgid "Import keys"
+msgstr "कुंजी आयात करें"
+
+#: Menu
+msgid "Sign"
+msgstr "हस्ताक्षर करें"
+
+#: Menu
+msgid "Sign (ASCII)"
+msgstr "हस्ताक्षर करें (ASCII)"
+
+#: Menu
+msgid "Sign (detached signature)"
+msgstr "हस्ताक्षर करें (डिटैच्ड सिग्नेचर)"
+
+#: Menu
+msgid "Verify signature"
+msgstr "हस्ताक्षर सत्यापित करें"
+
+#: Menu
+msgid "Image: Add watermark (center)"
+msgstr "छवि: वॉटरमार्क जोड़ें (केंद्र)"
+
+#: Menu
+msgid "Image: Add watermark (north)"
+msgstr "छवि: वॉटरमार्क जोड़ें (उत्तर)"
+
+#: Menu
+msgid "Image: Add watermark (northeast)"
+msgstr "छवि: वॉटरमार्क जोड़ें (उत्तर-पूर्व)"
+
+#: Menu
+msgid "Image: Add watermark (northwest)"
+msgstr "छवि: वॉटरमार्क जोड़ें (उत्तर-पश्चिम)"
+
+#: Menu
+msgid "Image: Add watermark (south)"
+msgstr "छवि: वॉटरमार्क जोड़ें (दक्षिण)"
+
+#: Menu
+msgid "Image: Add watermark (southeast)"
+msgstr "छवि: वॉटरमार्क जोड़ें (दक्षिण-पूर्व)"
+
+#: Menu
+msgid "Image: Add watermark (southwest)"
+msgstr "छवि: वॉटरमार्क जोड़ें (दक्षिण-पश्चिम)"
+
+#: Menu
+msgid "Image: Automatic crop"
+msgstr "छवि: स्वचालित क्रॉप"
+
+#: Menu
+msgid "Image: Automatic crop (15 pct)"
+msgstr "छवि: स्वचालित क्रॉप (15 प्रतिशत)"
+
+#: Menu
+msgid "Image: Background to alpha"
+msgstr "छवि: बैकग्राउंड को अल्फ़ा बनाएँ"
+
+#: Menu
+msgid "Image: Background to alpha (15 pct)"
+msgstr "छवि: बैकग्राउंड को अल्फ़ा बनाएँ (15 प्रतिशत)"
+
+#: Menu
+msgid "Image: Color alpha to black"
+msgstr "छवि: रंग अल्फ़ा को काला बनाएँ"
+
+#: Menu
+msgid "Image: Color alpha to magenta"
+msgstr "छवि: रंग अल्फ़ा को मैजेंटा बनाएँ"
+
+#: Menu
+msgid "Image: Color alpha to white"
+msgstr "छवि: रंग अल्फ़ा को सफेद बनाएँ"
+
+#: Menu
+msgid "Image: Color black to alpha"
+msgstr "छवि: रंग काला को अल्फ़ा बनाएँ"
+
+#: Menu
+msgid "Image: Color black to alpha (15 pct)"
+msgstr "छवि: रंग काला को अल्फ़ा बनाएँ (15 प्रतिशत)"
+
+#: Menu
+msgid "Image: Color magenta to alpha"
+msgstr "छवि: रंग मैजेंटा को अल्फ़ा बनाएँ"
+
+#: Menu
+msgid "Image: Color magenta to alpha (15 pct)"
+msgstr "छवि: रंग मैजेंटा को अल्फ़ा बनाएँ (15 प्रतिशत)"
+
+#: Menu
+msgid "Image: Colorspace to gray"
+msgstr "छवि: कलरस्पेस को ग्रे बनाएँ"
+
+#: Menu
+msgid "Image: Color white to alpha"
+msgstr "छवि: रंग सफेद को अल्फ़ा बनाएँ"
+
+#: Menu
+msgid "Image: Color white to alpha (15 pct)"
+msgstr "छवि: रंग सफेद को अल्फ़ा बनाएँ (15 प्रतिशत)"
+
+#: Menu
+msgid "Image: Combine into a GIF"
+msgstr "छवि: GIF में संयोजित करें"
+
+#: Menu
+msgid "Image: Combine into a PDF"
+msgstr "छवि: PDF में संयोजित करें"
+
+#: Menu
+msgid "Image: Convert to AVIF"
+msgstr "छवि: AVIF में कन्वर्ट करें"
+
+#: Menu
+msgid "Image: Convert to GIF"
+msgstr "छवि: GIF में कन्वर्ट करें"
+
+#: Menu
+msgid "Image: Convert to HEIC"
+msgstr "छवि: HEIC में कन्वर्ट करें"
+
+#: Menu
+msgid "Image: Convert to JPG"
+msgstr "छवि: JPG में कन्वर्ट करें"
+
+#: Menu
+msgid "Image: Convert to JXL"
+msgstr "छवि: JXL में कन्वर्ट करें"
+
+#: Menu
+msgid "Image: Convert to PNG"
+msgstr "छवि: PNG में कन्वर्ट करें"
+
+#: Menu
+msgid "Image: Convert to TIFF"
+msgstr "छवि: TIFF में कन्वर्ट करें"
+
+#: Menu
+msgid "Image: Convert to WebP"
+msgstr "छवि: WebP में कन्वर्ट करें"
+
+#: Menu
+msgid "Image: Create PNG icon (64 px)"
+msgstr "छवि: PNG आइकन बनाएँ (64 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (128 px)"
+msgstr "छवि: PNG आइकन बनाएँ (128 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (256 px)"
+msgstr "छवि: PNG आइकन बनाएँ (256 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (512 px)"
+msgstr "छवि: PNG आइकन बनाएँ (512 px)"
+
+#: Menu
+msgid "Image: Desaturate"
+msgstr "छवि: डिसेचुरेट करें"
+
+#: Menu
+msgid "Image: Export to PDF"
+msgstr "छवि: PDF में निर्यात करें"
+
+#: Menu
+msgid "Image: Find similar (65 pct)"
+msgstr "छवि: समान खोजें (65 प्रतिशत)"
+
+#: Menu
+msgid "Image: Find similar (75 pct)"
+msgstr "छवि: समान खोजें (75 प्रतिशत)"
+
+#: Menu
+msgid "Image: Find similar (85 pct)"
+msgstr "छवि: समान खोजें (85 प्रतिशत)"
+
+#: Menu
+msgid "Image: Find similar (95 pct)"
+msgstr "छवि: समान खोजें (95 प्रतिशत)"
+
+#: Menu
+msgid "Image: Flip (horizontal)"
+msgstr "छवि: पलटें (क्षैतिज)"
+
+#: Menu
+msgid "Image: Flip (vertical)"
+msgstr "छवि: पलटें (ऊर्ध्वाधर)"
+
+#: Menu
+msgid "Image: Generate multiple hues"
+msgstr "छवि: एकाधिक रंगत उत्पन्न करें"
+
+#: Menu
+msgid "Image: Optimize PNG"
+msgstr "छवि: PNG अनुकूलित करें"
+
+#: Menu
+msgid "Image: Perform OCR (English)"
+msgstr "छवि: OCR करें (अंग्रेज़ी)"
+
+#: Menu
+msgid "Image: Perform OCR (French)"
+msgstr "छवि: OCR करें (फ़्रेंच)"
+
+#: Menu
+msgid "Image: Perform OCR (German)"
+msgstr "छवि: OCR करें (जर्मन)"
+
+#: Menu
+msgid "Image: Perform OCR (Italian)"
+msgstr "छवि: OCR करें (इतालवी)"
+
+#: Menu
+msgid "Image: Perform OCR (Portuguese)"
+msgstr "छवि: OCR करें (पुर्तगाली)"
+
+#: Menu
+msgid "Image: Perform OCR (Russian)"
+msgstr "छवि: OCR करें (रूसी)"
+
+#: Menu
+msgid "Image: Perform OCR (Spanish)"
+msgstr "छवि: OCR करें (स्पेनिश)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 500kB max)"
+msgstr "छवि: कम करें (JPG, अधिकतम 500kB)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 1000kB max)"
+msgstr "छवि: कम करें (JPG, अधिकतम 1000kB)"
+
+#: Menu
+msgid "Image: Remove metadata"
+msgstr "छवि: मेटाडेटा हटाएँ"
+
+#: Menu
+msgid "Image: Rename from metadata"
+msgstr "छवि: मेटाडेटा से नाम बदलें"
+
+#: Menu
+msgid "Image: Resize (25 pct)"
+msgstr "छवि: आकार बदलें (25 प्रतिशत)"
+
+#: Menu
+msgid "Image: Resize (50 pct)"
+msgstr "छवि: आकार बदलें (50 प्रतिशत)"
+
+#: Menu
+msgid "Image: Resize (75 pct)"
+msgstr "छवि: आकार बदलें (75 प्रतिशत)"
+
+#: Menu
+msgid "Image: Resize (512x512)"
+msgstr "छवि: आकार बदलें (512x512)"
+
+#: Menu
+msgid "Image: Resize (1080x1080)"
+msgstr "छवि: आकार बदलें (1080x1080)"
+
+#: Menu
+msgid "Image: Resize (1920x1080)"
+msgstr "छवि: आकार बदलें (1920x1080)"
+
+#: Menu
+msgid "Image: Resize (2560x1440)"
+msgstr "छवि: आकार बदलें (2560x1440)"
+
+#: Menu
+msgid "Image: Resize (3840x2160)"
+msgstr "छवि: आकार बदलें (3840x2160)"
+
+#: Menu
+msgid "Image: Rotate (90 deg)"
+msgstr "छवि: घुमाएँ (90 डिग्री)"
+
+#: Menu
+msgid "Image: Rotate (180 deg)"
+msgstr "छवि: घुमाएँ (180 डिग्री)"
+
+#: Menu
+msgid "Image: Rotate (270 deg)"
+msgstr "छवि: घुमाएँ (270 डिग्री)"
+
+#: Menu
+msgid "Image: Split into 2 (horizontal)"
+msgstr "छवि: 2 में विभाजित करें (क्षैतिज)"
+
+#: Menu
+msgid "Image: Split into 2 (vertical)"
+msgstr "छवि: 2 में विभाजित करें (ऊर्ध्वाधर)"
+
+#: Menu
+msgid "Image: Split into 4"
+msgstr "छवि: 4 में विभाजित करें"
+
+#: Menu
+msgid "Image: Stack (horizontal)"
+msgstr "छवि: स्टैक करें (क्षैतिज)"
+
+#: Menu
+msgid "Image: Stack (vertical)"
+msgstr "छवि: स्टैक करें (ऊर्ध्वाधर)"
+
+#: Menu
+msgid "IP: Scanner"
+msgstr "IP: स्कैनर"
+
+#: Menu
+msgid "List hard links"
+msgstr "हार्ड लिंक सूचीबद्ध करें"
+
+#: Menu
+msgid "List largest directories"
+msgstr "सबसे बड़ी निर्देशिकाएँ सूचीबद्ध करें"
+
+#: Menu
+msgid "List largest files"
+msgstr "सबसे बड़ी फ़ाइलें सूचीबद्ध करें"
+
+#: Menu
+msgid "List permissions and owners"
+msgstr "अनुमतियाँ और मालिक सूचीबद्ध करें"
+
+#: Menu
+msgid "List recent files"
+msgstr "हाल की फ़ाइलें सूचीबद्ध करें"
+
+#: Menu
+msgid "List symbolic links"
+msgstr "सिंबोलिक लिंक सूचीबद्ध करें"
+
+#: Menu
+msgid "Media: Concatenate files"
+msgstr "मीडिया: फ़ाइलें संयोजित करें"
+
+#: Menu
+msgid "Media: Remove metadata"
+msgstr "मीडिया: मेटाडेटा हटाएँ"
+
+#: Menu
+msgid "Media: Show basic metadata"
+msgstr "मीडिया: बेसिक मेटाडेटा दिखाएँ"
+
+#: Menu
+msgid "MP3: (artist - title) Name to ID3"
+msgstr "MP3: (कलाकार - शीर्षक) नाम से ID3"
+
+#: Menu
+msgid "MP3: (artist - title) ID3 to Name"
+msgstr "MP3: (कलाकार - शीर्षक) ID3 से नाम"
+
+#: Menu
+msgid "MP3: Volume maximize (recursive)"
+msgstr "MP3: वॉल्यूम अधिकतम करें (पुनरावर्ती)"
+
+#: Menu
+msgid "MP3: Volume normalize (recursive)"
+msgstr "MP3: वॉल्यूम सामान्य करें (पुनरावर्ती)"
+
+#: Menu
+msgid "MP3: Show encoding details"
+msgstr "MP3: एन्कोडिंग विवरण दिखाएँ"
+
+#: Menu
+msgid "Open item location"
+msgstr "आइटम स्थान खोलें"
+
+#: Menu
+msgid "Paste as hard link"
+msgstr "हार्ड लिंक के रूप में पेस्ट करें"
+
+#: Menu
+msgid "Paste as symbolic link"
+msgstr "सिंबोलिक लिंक के रूप में पेस्ट करें"
+
+#: Menu
+msgid "Paste clipboard content"
+msgstr "क्लिपबोर्ड सामग्री पेस्ट करें"
+
+#: Menu
+msgid "PDF: Add watermark (over)"
+msgstr "PDF: वॉटरमार्क जोड़ें (ऊपर)"
+
+#: Menu
+msgid "PDF: Add watermark (under)"
+msgstr "PDF: वॉटरमार्क जोड़ें (नीचे)"
+
+#: Menu
+msgid "PDF: Combine multiple PDFs"
+msgstr "PDF: एकाधिक PDF संयोजित करें"
+
+#: Menu
+msgid "PDF: Convert to PDFA-2b"
+msgstr "PDF: PDFA-2b में कन्वर्ट करें"
+
+#: Menu
+msgid "PDF: Remove password"
+msgstr "PDF: पासवर्ड हटाएँ"
+
+#: Menu
+msgid "PDF: Set a password"
+msgstr "PDF: पासवर्ड सेट करें"
+
+#: Menu
+msgid "PDF: Extract images"
+msgstr "PDF: छवियाँ निकालें"
+
+#: Menu
+msgid "PDF: Find annotated PDFs"
+msgstr "PDF: एनोटेटेड PDF खोजें"
+
+#: Menu
+msgid "PDF: Find non-linearized PDFs"
+msgstr "PDF: गैर-रैखिकृत PDF खोजें"
+
+#: Menu
+msgid "PDF: Find non-searchable PDFs"
+msgstr "PDF: गैर-खोज योग्य PDF खोजें"
+
+#: Menu
+msgid "PDF: Find password-protected PDFs"
+msgstr "PDF: पासवर्ड-सुरक्षित PDF खोजें"
+
+#: Menu
+msgid "PDF: Find signed PDFs"
+msgstr "PDF: हस्ताक्षरित PDF खोजें"
+
+#: Menu
+msgid "PDF: Layout (landscape, 1x2)"
+msgstr "PDF: लेआउट (लैंडस्केप, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x1)"
+msgstr "PDF: लेआउट (लैंडस्केप, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x2)"
+msgstr "PDF: लेआउट (लैंडस्केप, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x4)"
+msgstr "PDF: लेआउट (लैंडस्केप, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 4x2)"
+msgstr "PDF: लेआउट (लैंडस्केप, 4x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 1x2)"
+msgstr "PDF: लेआउट (पोर्ट्रेट, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x1)"
+msgstr "PDF: लेआउट (पोर्ट्रेट, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x2)"
+msgstr "PDF: लेआउट (पोर्ट्रेट, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x4)"
+msgstr "PDF: लेआउट (पोर्ट्रेट, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 4x2)"
+msgstr "PDF: लेआउट (पोर्ट्रेट, 4x2)"
+
+#: Menu
+msgid "PDF: Optimize for web (linearize)"
+msgstr "PDF: वेब के लिए अनुकूलित करें (रैखिक करें)"
+
+#: Menu
+msgid "PDF: Set size (A3)"
+msgstr "PDF: आकार सेट करें (A3)"
+
+#: Menu
+msgid "PDF: Set size (A4)"
+msgstr "PDF: आकार सेट करें (A4)"
+
+#: Menu
+msgid "PDF: Set size (A5)"
+msgstr "PDF: आकार सेट करें (A5)"
+
+#: Menu
+msgid "PDF: Set size (US Legal)"
+msgstr "PDF: आकार सेट करें (US Legal)"
+
+#: Menu
+msgid "PDF: Set size (US Letter)"
+msgstr "PDF: आकार सेट करें (US Letter)"
+
+#: Menu
+msgid "PDF: Perform OCR (English)"
+msgstr "PDF: OCR करें (अंग्रेज़ी)"
+
+#: Menu
+msgid "PDF: Perform OCR (French)"
+msgstr "PDF: OCR करें (फ़्रेंच)"
+
+#: Menu
+msgid "PDF: Perform OCR (German)"
+msgstr "PDF: OCR करें (जर्मन)"
+
+#: Menu
+msgid "PDF: Perform OCR (Italian)"
+msgstr "PDF: OCR करें (इतालवी)"
+
+#: Menu
+msgid "PDF: Perform OCR (Portuguese)"
+msgstr "PDF: OCR करें (पुर्तगाली)"
+
+#: Menu
+msgid "PDF: Perform OCR (Russian)"
+msgstr "PDF: OCR करें (रूसी)"
+
+#: Menu
+msgid "PDF: Perform OCR (Spanish)"
+msgstr "PDF: OCR करें (स्पेनिश)"
+
+#: Menu
+msgid "PDF: Reduce (150 dpi, e-book)"
+msgstr "PDF: कम करें (150 dpi, ई-बुक)"
+
+#: Menu
+msgid "PDF: Reduce (300 dpi, printer)"
+msgstr "PDF: कम करें (300 dpi, प्रिंटर)"
+
+#: Menu
+msgid "PDF: Remove annotations"
+msgstr "PDF: एनोटेशन हटाएँ"
+
+#: Menu
+msgid "PDF: Remove metadata"
+msgstr "PDF: मेटाडेटा हटाएँ"
+
+#: Menu
+msgid "PDF: Rotate (90 deg)"
+msgstr "PDF: घुमाएँ (90 डिग्री)"
+
+#: Menu
+msgid "PDF: Rotate (180 deg)"
+msgstr "PDF: घुमाएँ (180 डिग्री)"
+
+#: Menu
+msgid "PDF: Rotate (270 deg)"
+msgstr "PDF: घुमाएँ (270 डिग्री)"
+
+#: Menu
+msgid "PDF: Show signatures"
+msgstr "PDF: हस्ताक्षर दिखाएँ"
+
+#: Menu
+msgid "PDF: Split into single-page PDFs"
+msgstr "PDF: एकल-पृष्ठ PDF में विभाजित करें"
+
+#: Menu
+msgid "Rename: Remove accents"
+msgstr "नाम बदलें: एक्सेंट हटाएँ"
+
+#: Menu
+msgid "Rename: Remove parentheses blocks"
+msgstr "नाम बदलें: कोष्ठक ब्लॉक हटाएँ"
+
+#: Menu
+msgid "Rename: Change spaces to dashes"
+msgstr "नाम बदलें: रिक्त स्थान को डैश में बदलें"
+
+#: Menu
+msgid "Rename: Change dashes to spaces"
+msgstr "नाम बदलें: डैश को रिक्त स्थान में बदलें"
+
+#: Menu
+msgid "Rename: To lowercase"
+msgstr "नाम बदलें: लोअरकेस में"
+
+#: Menu
+msgid "Rename: To lowercase (recursive)"
+msgstr "नाम बदलें: लोअरकेस में (पुनरावर्ती)"
+
+#: Menu
+msgid "Rename: To sentence case"
+msgstr "नाम बदलें: वाक्य केस में"
+
+#: Menu
+msgid "Rename: To title case"
+msgstr "नाम बदलें: टाइटल केस में"
+
+#: Menu
+msgid "Rename: To uppercase"
+msgstr "नाम बदलें: अपरकेस में"
+
+#: Menu
+msgid "Rename: To uppercase (recursive)"
+msgstr "नाम बदलें: अपरकेस में (पुनरावर्ती)"
+
+#: Menu
+msgid "Reset permissions (recursive)"
+msgstr "अनुमतियाँ रीसेट करें (पुनरावर्ती)"
+
+#: Menu
+msgid "Scan for malware (via ClamAV)"
+msgstr "मैलवेयर के लिए स्कैन करें (ClamAV के माध्यम से)"
+
+#: Menu
+msgid "Scan for malware (via Lenspect)"
+msgstr "मैलवेयर के लिए स्कैन करें (Lenspect के माध्यम से)"
+
+#: Menu
+msgid "Show files information"
+msgstr "फ़ाइल जानकारी दिखाएँ"
+
+#: Menu
+msgid "Show files metadata"
+msgstr "फ़ाइल मेटाडेटा दिखाएँ"
+
+#: Menu
+msgid "Show files MIME type"
+msgstr "फ़ाइल MIME प्रकार दिखाएँ"
+
+#: Menu
+msgid "Show media information"
+msgstr "मीडिया जानकारी दिखाएँ"
+
+#: Menu
+msgid "SVG: Compress to SVGZ"
+msgstr "SVG: SVGZ में संपीड़ित करें"
+
+#: Menu
+msgid "SVG: Decompress SVGZ"
+msgstr "SVG: SVGZ डीकंप्रेस करें"
+
+#: Menu
+msgid "SVG: Export to PDF"
+msgstr "SVG: PDF में निर्यात करें"
+
+#: Menu
+msgid "SVG: Export to PNG (256 px)"
+msgstr "SVG: PNG में निर्यात करें (256 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (512 px)"
+msgstr "SVG: PNG में निर्यात करें (512 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (1024 px)"
+msgstr "SVG: PNG में निर्यात करें (1024 px)"
+
+#: Menu
+msgid "SVG: Replace fonts to Charter"
+msgstr "SVG: फ़ॉन्ट्स को चार्टर से बदलें"
+
+#: Menu
+msgid "SVG: Replace fonts to Helvetica"
+msgstr "SVG: फ़ॉन्ट्स को हेल्वेटिका से बदलें"
+
+#: Menu
+msgid "SVG: Replace fonts to Times"
+msgstr "SVG: फ़ॉन्ट्स को टाइम्स से बदलें"
+
+#: Menu
+msgid "Terminal"
+msgstr "टर्मिनल"
+
+#: Menu
+msgid "Text: Concatenate multiple files"
+msgstr "पाठ: एकाधिक फ़ाइलें संयोजित करें"
+
+#: Menu
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "पाठ: टैब को 4 रिक्त स्थान में बदलें"
+
+#: Menu
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "पाठ: सामान्यीकृत करें (UTF-8, पुनरावर्ती)"
+
+#: Menu
+msgid "Text: Encode to UTF-8"
+msgstr "पाठ: UTF-8 में एन्कोड करें"
+
+#: Menu
+msgid "Text: List encodings"
+msgstr "पाठ: एन्कोडिंग सूचीबद्ध करें"
+
+#: Menu
+msgid "Text: List issues"
+msgstr "पाठ: समस्याएँ सूचीबद्ध करें"
+
+#: Menu
+msgid "Text: List invalid chars"
+msgstr "पाठ: अमान्य वर्ण सूचीबद्ध करें"
+
+#: Menu
+msgid "Text: List line breaks"
+msgstr "पाठ: लाइन ब्रेक सूचीबद्ध करें"
+
+#: Menu
+msgid "Text: List line counts"
+msgstr "पाठ: लाइन गिनती सूचीबद्ध करें"
+
+#: Menu
+msgid "Text: List line lengths"
+msgstr "पाठ: पंक्ति लंबाई सूचीबद्ध करें"
+
+#: Menu
+msgid "Text: List word counts"
+msgstr "पाठ: पंक्ति गणना सूचीबद्ध करें"
+
+#: Menu
+msgid "Text: Remove trailing spaces"
+msgstr "पाठ: ट्रेलिंग रिक्त स्थान हटाएँ"
+
+#: Menu
+msgid "Text: Remove accents"
+msgstr "पाठ: एक्सेंट हटाएँ"
+
+#: Menu
+msgid "URL: Check HTTP status"
+msgstr "URL: HTTP स्थिति जाँचें"
+
+#: Menu
+msgid "URL: Download file"
+msgstr "URL: फ़ाइल डाउनलोड करें"
+
+#: Menu
+msgid "URL: Show HTTP headers"
+msgstr "URL: HTTP हेडर दिखाएँ"
+
+#: Menu
+msgid "Verify MD5 file"
+msgstr "MD5 फ़ाइल सत्यापित करें"
+
+#: Menu
+msgid "Verify SHA1 file"
+msgstr "SHA1 फ़ाइल सत्यापित करें"
+
+#: Menu
+msgid "Verify SHA256 file"
+msgstr "SHA256 फ़ाइल सत्यापित करें"
+
+#: Menu
+msgid "Verify SHA512 file"
+msgstr "SHA512 फ़ाइल सत्यापित करें"
+
+#: Menu
+msgid "Video: Aspect to 1:1"
+msgstr "वीडियो: पहलू 1:1 करें"
+
+#: Menu
+msgid "Video: Aspect to 4:3"
+msgstr "वीडियो: पहलू 4:3 करें"
+
+#: Menu
+msgid "Video: Aspect to 16:9"
+msgstr "वीडियो: पहलू 16:9 करें"
+
+#: Menu
+msgid "Video: Aspect to 16:10"
+msgstr "वीडियो: पहलू 16:10 करें"
+
+#: Menu
+msgid "Video: Convert to MKV"
+msgstr "वीडियो: MKV में कन्वर्ट करें"
+
+#: Menu
+msgid "Video: Convert to MKV (copy)"
+msgstr "वीडियो: MKV में कन्वर्ट करें (कॉपी)"
+
+#: Menu
+msgid "Video: Convert to MP4"
+msgstr "वीडियो: MP4 में कन्वर्ट करें"
+
+#: Menu
+msgid "Video: Convert to MP4 (copy)"
+msgstr "वीडियो: MP4 में कन्वर्ट करें (कॉपी)"
+
+#: Menu
+msgid "Video: Export frames (1 FPS)"
+msgstr "वीडियो: फ़्रेम निर्यात करें (1 FPS)"
+
+#: Menu
+msgid "Video: Export frames (5 FPS)"
+msgstr "वीडियो: फ़्रेम निर्यात करें (5 FPS)"
+
+#: Menu
+msgid "Video: Export frames (10 FPS)"
+msgstr "वीडियो: फ़्रेम निर्यात करें (10 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF"
+msgstr "वीडियो: GIF में निर्यात करें"
+
+#: Menu
+msgid "Video: Extract audio"
+msgstr "वीडियो: ऑडियो निकालें"
+
+#: Menu
+msgid "Video: Flip (horizontal)"
+msgstr "वीडियो: पलटें (क्षैतिज)"
+
+#: Menu
+msgid "Video: Flip (vertical)"
+msgstr "वीडियो: पलटें (ऊर्ध्वाधर)"
+
+#: Menu
+msgid "Video: Frame rate to 30 FPS"
+msgstr "वीडियो: फ़्रेम दर 30 FPS करें"
+
+#: Menu
+msgid "Video: Frame rate to 60 FPS"
+msgstr "वीडियो: फ़्रेम दर 60 FPS करें"
+
+#: Menu
+msgid "Video: Remove audio"
+msgstr "वीडियो: ऑडियो हटाएँ"
+
+#: Menu
+msgid "Video: Resize (25 pct)"
+msgstr "वीडियो: आकार बदलें (25 प्रतिशत)"
+
+#: Menu
+msgid "Video: Resize (50 pct)"
+msgstr "वीडियो: आकार बदलें (50 प्रतिशत)"
+
+#: Menu
+msgid "Video: Resize (75 pct)"
+msgstr "वीडियो: आकार बदलें (75 प्रतिशत)"
+
+#: Menu
+msgid "Video: Rotate (90 deg)"
+msgstr "वीडियो: घुमाएँ (90 डिग्री)"
+
+#: Menu
+msgid "Video: Rotate (180 deg)"
+msgstr "वीडियो: घुमाएँ (180 डिग्री)"
+
+#: Menu
+msgid "Video: Rotate (270 deg)"
+msgstr "वीडियो: घुमाएँ (270 डिग्री)"
+
+#: Menu
+msgid "Video: Speed to 0.5"
+msgstr "वीडियो: गति 0.5 करें"
+
+#: Menu
+msgid "Video: Speed to 1.5"
+msgstr "वीडियो: गति 1.5 करें"
+
+#: Menu
+msgid "Video: Speed to 2.0"
+msgstr "वीडियो: गति 2.0 करें"
+
+#: install.sh
+msgid "Check for basic dependencies"
+msgstr "बेसिक निर्भरताएँ जाँचें"
+
+#: install.sh
+msgid "Remove previously installed scripts"
+msgstr "पहले इंस्टॉल किए गए स्क्रिप्ट हटाएँ"
+
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr "कीबोर्ड एक्सेलेरेटर इंस्टॉल करें"
+
+#: install.sh
+msgid "Close the file manager to reload configurations"
+msgstr "कॉन्फ़िगरेशन पुनः लोड करने के लिए फ़ाइल प्रबंधक बंद करें"
+
+#: install.sh
+msgid "Add shortcuts to the application menu"
+msgstr "एप्लिकेशन मेनू में शॉर्टकट जोड़ें"
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr "Homebrew इंस्टॉल करें (वैकल्पिक)"
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr "चुनें कि कौन सी स्क्रिप्ट श्रेणियाँ इंस्टॉल करनी हैं"
+
+#: install.sh
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr "विकल्प चुनें (चेक करने के लिए <SPACE>, पुष्टि करने के लिए <ENTER>):"
+
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr "गैर-संवादात्मक मोड में इंस्टॉल कर रहा है..."
+
+#: install.sh
+msgid "Installing:"
+msgstr "इंस्टॉल कर रहा है:"
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr "एप्लिकेशन मेनू शॉर्टकट इंस्टॉल कर रहा है:"
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr "इंस्टालेशन सफलतापूर्वक पूर्ण हुआ!"
+
+#: install.sh
+msgid "Checking for basic dependencies:"
+msgstr "बेसिक निर्भरताएँ जाँच रहा है:"
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr "सभी निर्भरताएँ पहले से संतुष्ट हैं।"
+
+#: install.sh
+msgid "Copying files..."
+msgstr "फ़ाइलें कॉपी कर रहा है..."
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr "कीबोर्ड एक्सेलेरेटर इंस्टॉल कर रहा है..."
+
+#: install.sh
+msgid "Scripts"
+msgstr "स्क्रिप्ट"
+
+#: install.sh
+msgid "Creating shortcuts to the application menu..."
+msgstr "एप्लिकेशन मेनू के लिए शॉर्टकट बना रहा है..."
+
+#: install.sh
+msgid "Creating GNOME Shell application folder..."
+msgstr "GNOME Shell एप्लिकेशन फ़ोल्डर बना रहा है..."
+
+#: install.sh
+msgid "Installing actions in the context menu..."
+msgstr "संदर्भ मेनू में क्रियाएँ इंस्टॉल कर रहा है..."
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr "फ़ाइल प्रबंधक बंद कर रहा है..."
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr "Homebrew इंस्टॉल कर रहा है:"
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr "Homebrew पहले से इंस्टॉल है।"
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr "Homebrew इंस्टॉल कर रहा है:"
+
+#: install.sh
+msgid "Downloading the package..."
+msgstr "पैकेज डाउनलोड कर रहा है..."
+
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr "कोई पैकेज मैनेजर नहीं मिला!"
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr "Homebrew इंस्टालेशन विफल रहा!"
+
+#~ msgid "EOF"
+#~ msgstr "EOF"
