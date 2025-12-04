@@ -1,0 +1,1982 @@
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Enhanced File Manager Actions for Linux\n"
+"POT-Creation-Date: 2025-11-13 12:12-0300\n"
+"PO-Revision-Date: 2025-12-04 00:00+0900\n"
+"Last-Translator: \n"
+"Language-Team: Korean\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Manual Translation\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Done!"
+msgstr "완료!"
+
+msgid "files"
+msgstr "파일"
+
+msgid "Would you like to continue?"
+msgstr "계속하시겠습니까?"
+
+msgid "directories"
+msgstr "디렉토리"
+
+msgid "items"
+msgstr "항목"
+
+msgid "The command failed."
+msgstr "명령이 실패했습니다."
+
+msgid "The output file does not exist."
+msgstr "출력 파일이 존재하지 않습니다."
+
+msgid "Finished with errors! See the log:"
+msgstr "오류와 함께 완료되었습니다! 로그를 확인하세요:"
+
+msgid "Your system does not support clipboard operations."
+msgstr "시스템이 클립보드 작업을 지원하지 않습니다."
+
+msgid "Could not find a package for:"
+msgstr "패키지를 찾을 수 없습니다:"
+
+msgid "The following packages are missing:"
+msgstr "다음 패키지가 누락되었습니다:"
+
+msgid "Would you like to install them?"
+msgstr "설치하시겠습니까?"
+
+msgid "Installing the packages. Please, wait..."
+msgstr "패키지를 설치하는 중입니다. 잠시만 기다려 주세요..."
+
+msgid "The package was installed, but a system reboot is required."
+msgstr "패키지가 설치되었지만 시스템 재부팅이 필요합니다."
+
+msgid "Could not install the package:"
+msgstr "패키지를 설치할 수 없습니다:"
+
+msgid "This action will delete the selected items."
+msgstr "이 작업은 선택한 항목을 삭제합니다."
+
+msgid "Total selected:"
+msgstr "선택된 전체:"
+
+msgid "Total:"
+msgstr "전체:"
+
+msgid "Some items could not be deleted."
+msgstr "일부 항목을 삭제할 수 없습니다."
+
+msgid "All items were successfully deleted!"
+msgstr "모든 항목이 성공적으로 삭제되었습니다!"
+
+msgid "Could not access the directory:"
+msgstr "디렉토리에 접근할 수 없습니다:"
+
+msgid "The destination file already exists."
+msgstr "대상 파일이 이미 존재합니다."
+
+msgid "Unable to move."
+msgstr "이동할 수 없습니다."
+
+msgid "OK"
+msgstr "확인"
+
+msgid "Cancel"
+msgstr "취소"
+
+msgid "(Empty)"
+msgstr "(비어 있음)"
+
+msgid "Select the ones to open:"
+msgstr "열 항목을 선택하세요:"
+
+msgid "Select the ones to reveal in the file manager:"
+msgstr "파일 관리자에서 표시할 항목을 선택하세요:"
+
+msgid "Select the ones to open in the web browser:"
+msgstr "웹 브라우저에서 열 항목을 선택하세요:"
+
+msgid "Select the ones to delete:"
+msgstr "삭제할 항목을 선택하세요:"
+
+msgid "Password"
+msgstr "비밀번호"
+
+msgid "Type your password:"
+msgstr "비밀번호를 입력하세요:"
+
+msgid "The password can not be empty!"
+msgstr "비밀번호는 비워둘 수 없습니다!"
+
+msgid "Yes"
+msgstr "예"
+
+msgid "No"
+msgstr "아니오"
+
+msgid "Finished! The output files are in:"
+msgstr "완료! 출력 파일 위치:"
+
+msgid "Finished, but there is nothing to do."
+msgstr "완료되었지만 수행할 작업이 없습니다."
+
+msgid "Finished!"
+msgstr "완료!"
+
+msgid "Running the task. Please, wait..."
+msgstr "작업을 실행하는 중입니다. 잠시만 기다려 주세요..."
+
+msgid "No default application is set for the type:"
+msgstr "유형에 대한 기본 응용 프로그램이 설정되지 않았습니다:"
+
+msgid "Could not find the executable to open MIME type:"
+msgstr "MIME 유형을 열 실행 파일을 찾을 수 없습니다:"
+
+msgid "Batch mode detected."
+msgstr "일괄 모드가 감지되었습니다."
+
+msgid "Each file inside this directory will be processed individually."
+msgstr "이 디렉토리 내의 각 파일이 개별적으로 처리됩니다."
+
+msgid "files or directories"
+msgstr "파일 또는 디렉토리"
+
+msgid "You must select files with extension:"
+msgstr "다음 확장자를 가진 파일을 선택해야 합니다:"
+
+msgid "Invalid input file!"
+msgstr "유효하지 않은 입력 파일입니다!"
+
+msgid "You must select"
+msgstr "선택해야 합니다"
+
+msgid "You must select at least"
+msgstr "최소한 선택해야 합니다"
+
+msgid "You must select up to"
+msgstr "최대 선택 가능:"
+
+msgid "Could not find the output directory!"
+msgstr "출력 디렉토리를 찾을 수 없습니다!"
+
+msgid "Accessed recently"
+msgstr "최근 접근"
+
+msgid "File"
+msgstr "파일"
+
+msgid "Count"
+msgstr "개수"
+
+msgid "Char"
+msgstr "문자"
+
+msgid "Line"
+msgstr "줄"
+
+msgid "Issues"
+msgstr "문제"
+
+msgid "Encoding"
+msgstr "인코딩"
+
+msgid "There are no valid paths in the clipboard!"
+msgstr "클립보드에 유효한 경로가 없습니다!"
+
+msgid "links"
+msgstr "링크"
+
+msgid "Inode"
+msgstr "아이노드"
+
+msgid "Link"
+msgstr "링크"
+
+msgid "Unsupported clipboard type."
+msgstr "지원되지 않는 클립보드 유형입니다."
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr "이 작업은 선택한 파일과 디렉토리를 재귀적으로 이름 변경합니다."
+
+msgid "PDF files"
+msgstr "PDF 파일"
+
+msgid "Select a PDF to use as the watermark"
+msgstr "워터마크로 사용할 PDF를 선택하세요"
+
+msgid "Signature"
+msgstr "서명"
+
+msgid "Malware"
+msgstr "악성코드"
+
+msgid "Mode"
+msgstr "모드"
+
+msgid "Bit rate"
+msgstr "비트레이트"
+
+msgid "Sampling rate"
+msgstr "샘플링 레이트"
+
+msgid "Channels"
+msgstr "채널"
+
+msgid "Duration"
+msgstr "재생 시간"
+
+msgid "Album"
+msgstr "앨범"
+
+msgid "Artist"
+msgstr "아티스트"
+
+msgid "Title"
+msgstr "제목"
+
+msgid "Quality"
+msgstr "품질"
+
+msgid "Image files"
+msgstr "이미지 파일"
+
+msgid "Select an image to use as the watermark"
+msgstr "워터마크로 사용할 이미지를 선택하세요"
+
+msgid "Key files"
+msgstr "키 파일"
+
+msgid "Select a key file to import"
+msgstr "가져올 키 파일을 선택하세요"
+
+msgid "No secret keys were found."
+msgstr "비밀 키를 찾을 수 없습니다."
+
+msgid "Would you like to import a key now?"
+msgstr "지금 키를 가져오시겠습니까?"
+
+msgid "Failed to import the key!"
+msgstr "키 가져오기에 실패했습니다!"
+
+msgid "Select a user:"
+msgstr "사용자를 선택하세요:"
+
+msgid "User"
+msgstr "사용자"
+
+msgid "Name"
+msgstr "이름"
+
+msgid "E-mail"
+msgstr "이메일"
+
+msgid "Created"
+msgstr "생성됨"
+
+msgid "Expires"
+msgstr "만료"
+
+msgid "You must select a user!"
+msgstr "사용자를 선택해야 합니다!"
+
+msgid "No public keys were found."
+msgstr "공개 키를 찾을 수 없습니다."
+
+msgid "Select one or more users:"
+msgstr "하나 이상의 사용자를 선택하세요:"
+
+msgid "You must select at least one user!"
+msgstr "최소 한 명의 사용자를 선택해야 합니다!"
+
+msgid "Directory"
+msgstr "디렉토리"
+
+msgid "Size"
+msgstr "크기"
+
+msgid "Group"
+msgstr "그룹"
+
+msgid "Item"
+msgstr "항목"
+
+msgid "Octal"
+msgstr "8진수"
+
+msgid "Type"
+msgstr "유형"
+
+msgid "You must select only two images to compare!"
+msgstr "비교할 이미지 두 개만 선택해야 합니다!"
+
+msgid "You must select only two PDFs to compare!"
+msgstr "비교할 PDF 두 개만 선택해야 합니다!"
+
+msgid "You must select only two binary files to compare!"
+msgstr "비교할 바이너리 파일 두 개만 선택해야 합니다!"
+
+msgid "No items were selected!"
+msgstr "선택된 항목이 없습니다!"
+
+msgid "No directories were selected!"
+msgstr "선택된 디렉토리가 없습니다!"
+
+msgid "The selected items are identical."
+msgstr "선택한 항목이 동일합니다."
+
+msgid "The selected images has same pixel values."
+msgstr "선택한 이미지의 픽셀 값이 동일합니다."
+
+msgid "MIME"
+msgstr "MIME"
+
+msgid "This action will move all files from subdirectories to the root of the selected directory."
+msgstr "이 작업은 하위 디렉토리의 모든 파일을 선택한 디렉토리의 루트로 이동합니다."
+
+msgid "This action will reset the permissions recursively."
+msgstr "이 작업은 권한을 재귀적으로 재설정합니다."
+
+msgid "Date"
+msgstr "날짜"
+
+msgid "Time"
+msgstr "시간"
+
+msgid "Select the output filename:"
+msgstr "출력 파일명을 선택하세요:"
+
+msgid "Filename"
+msgstr "파일명"
+
+msgid "Status"
+msgstr "상태"
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr "클립보드나 선택한 파일에 유효한 URL이 없습니다!"
+
+msgid "IPs"
+msgstr "IP 주소"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Ping"
+msgstr "핑"
+
+msgid "Ports"
+msgstr "포트"
+
+msgid "Hostname"
+msgstr "호스트명"
+
+msgid "Example"
+msgstr "예시"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "IP 주소 또는 IP 범위를 입력하세요."
+
+msgid "There are no valid IPs in the input!"
+msgstr "입력에 유효한 IP가 없습니다!"
+
+msgid "Enter the URLs."
+msgstr "URL을 입력하세요."
+
+msgid "There are no valid URLs in the input!"
+msgstr "입력에 유효한 URL이 없습니다!"
+
+msgid "No remote URL found."
+msgstr "원격 URL을 찾을 수 없습니다."
+
+msgid "URLs"
+msgstr "URL"
+
+msgid "HTTP code"
+msgstr "HTTP 코드"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "(No differences)"
+msgstr "(차이 없음)"
+
+msgid "(No line break)"
+msgstr "(줄 바꿈 없음)"
+
+msgid "(No response)"
+msgstr "(응답 없음)"
+
+msgid "Checksum mismatch."
+msgstr "체크섬이 일치하지 않습니다."
+
+msgid "File does not exist."
+msgstr "파일이 존재하지 않습니다."
+
+msgid "High"
+msgstr "높음"
+
+msgid "Low"
+msgstr "낮음"
+
+msgid "Medium"
+msgstr "중간"
+
+msgid "Online"
+msgstr "온라인"
+
+msgid "Offline"
+msgstr "오프라인"
+
+msgid "Valid signature"
+msgstr "유효한 서명"
+
+msgid "Invalid signature"
+msgstr "유효하지 않은 서명"
+
+msgid "Missing key"
+msgstr "키 누락"
+
+msgid "Missing data file"
+msgstr "데이터 파일 누락"
+
+msgid "Revoked key"
+msgstr "폐기된 키"
+
+msgid "Expired key"
+msgstr "만료된 키"
+
+msgid "Expired signature"
+msgstr "만료된 서명"
+
+msgid "Unknown algorithm"
+msgstr "알 수 없는 알고리즘"
+
+msgid "Key ID"
+msgstr "키 ID"
+
+msgid "Enter the password for the archive:"
+msgstr "압축 파일의 비밀번호를 입력하세요:"
+
+msgid "Select the output directory"
+msgstr "출력 디렉토리를 선택하세요"
+
+msgid "Select input directories"
+msgstr "입력 디렉토리를 선택하세요"
+
+msgid "Select input files"
+msgstr "입력 파일을 선택하세요"
+
+#: Menu
+msgid "Archive"
+msgstr "압축"
+
+#: Menu
+msgid "Audio and Video"
+msgstr "오디오 및 비디오"
+
+#: Menu
+msgid "Checksum"
+msgstr "체크섬"
+
+#: Menu
+msgid "Clipboard"
+msgstr "클립보드"
+
+#: Menu
+msgid "Directories and Files"
+msgstr "디렉토리 및 파일"
+
+#: Menu
+msgid "Document"
+msgstr "문서"
+
+#: Menu
+msgid "Encryption"
+msgstr "암호화"
+
+#: Menu
+msgid "Image"
+msgstr "이미지"
+
+#: Menu
+msgid "Links"
+msgstr "링크"
+
+#: Menu
+msgid "Network and Internet"
+msgstr "네트워크 및 인터넷"
+
+#: Menu
+msgid "Open with"
+msgstr "연결 프로그램"
+
+#: Menu
+msgid "Plain text"
+msgstr "일반 텍스트"
+
+#: Menu
+msgid "Rename files"
+msgstr "파일 이름 바꾸기"
+
+#: Menu
+msgid "Security and Recovery"
+msgstr "보안 및 복구"
+
+#: Menu
+msgid "Audio and Video: Tools"
+msgstr "오디오 및 비디오: 도구"
+
+#: Menu
+msgid "Audio: Channels"
+msgstr "오디오: 채널"
+
+#: Menu
+msgid "Audio: Convert"
+msgstr "오디오: 변환"
+
+#: Menu
+msgid "Audio: Effects"
+msgstr "오디오: 효과"
+
+#: Menu
+msgid "Audio: MP3 files"
+msgstr "오디오: MP3 파일"
+
+#: Menu
+msgid "Audio: Quality"
+msgstr "오디오: 품질"
+
+#: Menu
+msgid "Document: Convert"
+msgstr "문서: 변환"
+
+#: Menu
+msgid "Document: Print"
+msgstr "문서: 인쇄"
+
+#: Menu
+msgid "Image: Color"
+msgstr "이미지: 색상"
+
+#: Menu
+msgid "Image: Combine, Split"
+msgstr "이미지: 결합, 분할"
+
+#: Menu
+msgid "Image: Convert"
+msgstr "이미지: 변환"
+
+#: Menu
+msgid "Image: Crop, Resize"
+msgstr "이미지: 자르기, 크기 조정"
+
+#: Menu
+msgid "Image: Flip, Rotate"
+msgstr "이미지: 뒤집기, 회전"
+
+#: Menu
+msgid "Image: Icons"
+msgstr "이미지: 아이콘"
+
+#: Menu
+msgid "Image: Metadata, Exif"
+msgstr "이미지: 메타데이터, Exif"
+
+#: Menu
+msgid "Image: Optimize, Reduce"
+msgstr "이미지: 최적화, 축소"
+
+#: Menu
+msgid "Image: Similarity"
+msgstr "이미지: 유사도"
+
+#: Menu
+msgid "Image: SVG files"
+msgstr "이미지: SVG 파일"
+
+#: Menu
+msgid "Image: Text recognition (OCR)"
+msgstr "이미지: 텍스트 인식 (OCR)"
+
+#: Menu
+msgid "Image: Transparency"
+msgstr "이미지: 투명도"
+
+#: Menu
+msgid "Image: Watermark"
+msgstr "이미지: 워터마크"
+
+#: Menu
+msgid "PDF: Annotations"
+msgstr "PDF: 주석"
+
+#: Menu
+msgid "PDF: Combine, Split"
+msgstr "PDF: 결합, 분할"
+
+#: Menu
+msgid "PDF: Security"
+msgstr "PDF: 보안"
+
+#: Menu
+msgid "PDF: Multiple-page layout"
+msgstr "PDF: 다중 페이지 레이아웃"
+
+#: Menu
+msgid "PDF: Optimize, Reduce"
+msgstr "PDF: 최적화, 축소"
+
+#: Menu
+msgid "PDF: Page size"
+msgstr "PDF: 페이지 크기"
+
+#: Menu
+msgid "PDF: Rotate"
+msgstr "PDF: 회전"
+
+#: Menu
+msgid "PDF: Signatures"
+msgstr "PDF: 서명"
+
+#: Menu
+msgid "PDF: Text recognition (OCR)"
+msgstr "PDF: 텍스트 인식 (OCR)"
+
+#: Menu
+msgid "PDF: Tools"
+msgstr "PDF: 도구"
+
+#: Menu
+msgid "PDF: Watermark"
+msgstr "PDF: 워터마크"
+
+#: Menu
+msgid "Video: Aspect ratio"
+msgstr "비디오: 화면 비율"
+
+#: Menu
+msgid "Video: Audio track"
+msgstr "비디오: 오디오 트랙"
+
+#: Menu
+msgid "Video: Convert"
+msgstr "비디오: 변환"
+
+#: Menu
+msgid "Video: Export frames"
+msgstr "비디오: 프레임 내보내기"
+
+#: Menu
+msgid "Video: Flip, Rotate"
+msgstr "비디오: 뒤집기, 회전"
+
+#: Menu
+msgid "Video: Frame rate"
+msgstr "비디오: 프레임률"
+
+#: Menu
+msgid "Video: Resize"
+msgstr "비디오: 크기 조정"
+
+#: Menu
+msgid "Video: Speed"
+msgstr "비디오: 속도"
+
+#: Menu
+msgid "Audio: Check quality"
+msgstr "오디오: 품질 확인"
+
+#: Menu
+msgid "Audio: Convert to FLAC"
+msgstr "오디오: FLAC로 변환"
+
+#: Menu
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "오디오: MP3로 변환 (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (192 kbps)"
+msgstr "오디오: MP3로 변환 (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (320 kbps)"
+msgstr "오디오: MP3로 변환 (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "오디오: OGG로 변환 (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (192 kbps)"
+msgstr "오디오: OGG로 변환 (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (320 kbps)"
+msgstr "오디오: OGG로 변환 (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "오디오: OPUS로 변환 (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (192 kbps)"
+msgstr "오디오: OPUS로 변환 (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (320 kbps)"
+msgstr "오디오: OPUS로 변환 (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to WAV"
+msgstr "오디오: WAV로 변환"
+
+#: Menu
+msgid "Audio: Fade-in"
+msgstr "오디오: 페이드 인"
+
+#: Menu
+msgid "Audio: Fade-out"
+msgstr "오디오: 페이드 아웃"
+
+#: Menu
+msgid "Audio: Mix channels to mono"
+msgstr "오디오: 채널을 모노로 믹스"
+
+#: Menu
+msgid "Audio: Mix two files"
+msgstr "오디오: 두 파일 믹스"
+
+#: Menu
+msgid "Audio: Volume normalize"
+msgstr "오디오: 볼륨 정규화"
+
+#: Menu
+msgid "Audio: Produce a spectrogram"
+msgstr "오디오: 스펙트로그램 생성"
+
+#: Menu
+msgid "Audio: Remove silence (sections)"
+msgstr "오디오: 무음 제거 (구간)"
+
+#: Menu
+msgid "Audio: Silence noise"
+msgstr "오디오: 노이즈 억제"
+
+#: Menu
+msgid "Audio: Remove silence (extremities)"
+msgstr "오디오: 무음 제거 (앞뒤)"
+
+#: Menu
+msgid "Create backup (via Rsync)"
+msgstr "백업 생성 (Rsync 사용)"
+
+#: Menu
+msgid "Code Editor"
+msgstr "코드 편집기"
+
+#: Menu
+msgid "Compare items"
+msgstr "항목 비교"
+
+#: Menu
+msgid "Compare items (via Diff)"
+msgstr "항목 비교 (Diff 사용)"
+
+#: Menu
+msgid "Compress to '7z'"
+msgstr "'7z'로 압축"
+
+#: Menu
+msgid "Compress to '7z' with password"
+msgstr "비밀번호로 '7z'로 압축"
+
+#: Menu
+msgid "Compress to 'tar.gz'"
+msgstr "'tar.gz'로 압축"
+
+#: Menu
+msgid "Compress to 'tar.xz'"
+msgstr "'tar.xz'로 압축"
+
+#: Menu
+msgid "Compress to 'tar.zst'"
+msgstr "'tar.zst'로 압축"
+
+#: Menu
+msgid "Compress to 'zip'"
+msgstr "'zip'로 압축"
+
+#: Menu
+msgid "Compress to 'zip' with password"
+msgstr "비밀번호로 'zip'로 압축"
+
+#: Menu
+msgid "Compute all checksums"
+msgstr "모든 체크섬 계산"
+
+#: Menu
+msgid "Compute MD5"
+msgstr "MD5 계산"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "SHA1 계산"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "SHA256 계산"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "SHA512 계산"
+
+#: Menu
+msgid "Copy file contents"
+msgstr "파일 내용 복사"
+
+#: Menu
+msgid "Copy file names"
+msgstr "파일 이름 복사"
+
+#: Menu
+msgid "Copy file names (recursive)"
+msgstr "파일 이름 복사 (재귀적)"
+
+#: Menu
+msgid "Copy file paths"
+msgstr "파일 경로 복사"
+
+#: Menu
+msgid "Copy file paths (recursive)"
+msgstr "파일 경로 복사 (재귀적)"
+
+#: Menu
+msgid "Create hard link here"
+msgstr "여기에 하드 링크 생성"
+
+#: Menu
+msgid "Create hard link to..."
+msgstr "하드 링크 생성..."
+
+#: Menu
+msgid "Create symbolic link here"
+msgstr "여기에 심볼릭 링크 생성"
+
+#: Menu
+msgid "Create symbolic link to..."
+msgstr "심볼릭 링크 생성..."
+
+#: Menu
+msgid "Disk Usage Analyzer"
+msgstr "디스크 사용량 분석기"
+
+#: Menu
+msgid "Document: Convert to DOCX"
+msgstr "문서: DOCX로 변환"
+
+#: Menu
+msgid "Document: Convert to EPUB"
+msgstr "문서: EPUB로 변환"
+
+#: Menu
+msgid "Document: Convert to Markdown"
+msgstr "문서: 마크다운으로 변환"
+
+#: Menu
+msgid "Document: Convert to ODP"
+msgstr "문서: ODP로 변환"
+
+#: Menu
+msgid "Document: Convert to ODS"
+msgstr "문서: ODS로 변환"
+
+#: Menu
+msgid "Document: Convert to ODT"
+msgstr "문서: ODT로 변환"
+
+#: Menu
+msgid "Document: Convert to PDF"
+msgstr "문서: PDF로 변환"
+
+#: Menu
+msgid "Document: Convert to PPTX"
+msgstr "문서: PPTX로 변환"
+
+#: Menu
+msgid "Document: Convert to TXT"
+msgstr "문서: TXT로 변환"
+
+#: Menu
+msgid "Document: Convert to XLSX"
+msgstr "문서: XLSX로 변환"
+
+#: Menu
+msgid "Document: Print (A4)"
+msgstr "문서: 인쇄 (A4)"
+
+#: Menu
+msgid "Document: Print (US Legal)"
+msgstr "문서: 인쇄 (US Legal)"
+
+#: Menu
+msgid "Document: Print (US Letter)"
+msgstr "문서: 인쇄 (US Letter)"
+
+#: Menu
+msgid "Extract here"
+msgstr "여기에 압축 풀기"
+
+#: Menu
+msgid "File carving (via Foremost)"
+msgstr "파일 복구 (Foremost 사용)"
+
+#: Menu
+msgid "File carving (via PhotoRec)"
+msgstr "파일 복구 (PhotoRec 사용)"
+
+#: Menu
+msgid "Find broken links"
+msgstr "손상된 링크 찾기"
+
+#: Menu
+msgid "Find duplicate files"
+msgstr "중복 파일 찾기"
+
+#: Menu
+msgid "Find empty directories"
+msgstr "빈 디렉토리 찾기"
+
+#: Menu
+msgid "List hidden files"
+msgstr "숨김 파일 나열"
+
+#: Menu
+msgid "Find junk files"
+msgstr "임시 파일 찾기"
+
+#: Menu
+msgid "Find empty files"
+msgstr "빈 파일 찾기"
+
+#: Menu
+msgid "Flatten directory structure"
+msgstr "디렉토리 구조 평탄화"
+
+#: Menu
+msgid "Generate MD5 file"
+msgstr "MD5 파일 생성"
+
+#: Menu
+msgid "Generate SHA1 file"
+msgstr "SHA1 파일 생성"
+
+#: Menu
+msgid "Generate SHA256 file"
+msgstr "SHA256 파일 생성"
+
+#: Menu
+msgid "Generate SHA512 file"
+msgstr "SHA512 파일 생성"
+
+#: Menu
+msgid "Git: Clone URLs"
+msgstr "Git: URL 복제"
+
+#: Menu
+msgid "Git: Open repository website"
+msgstr "Git: 저장소 웹사이트 열기"
+
+#: Menu
+msgid "Git: Reset and pull"
+msgstr "Git: 재설정 및 풀"
+
+#: Menu
+msgid "Decrypt"
+msgstr "복호화"
+
+#: Menu
+msgid "Encrypt with password"
+msgstr "비밀번호로 암호화"
+
+#: Menu
+msgid "Encrypt with password (ASCII)"
+msgstr "비밀번호로 암호화 (ASCII)"
+
+#: Menu
+msgid "Encrypt with keys"
+msgstr "키로 암호화"
+
+#: Menu
+msgid "Encrypt with keys (ASCII)"
+msgstr "키로 암호화 (ASCII)"
+
+#: Menu
+msgid "Import keys"
+msgstr "키 가져오기"
+
+#: Menu
+msgid "Sign"
+msgstr "서명"
+
+#: Menu
+msgid "Sign (ASCII)"
+msgstr "서명 (ASCII)"
+
+#: Menu
+msgid "Sign (detached signature)"
+msgstr "서명 (분리된 서명)"
+
+#: Menu
+msgid "Verify signature"
+msgstr "서명 확인"
+
+#: Menu
+msgid "Image: Add watermark (center)"
+msgstr "이미지: 워터마크 추가 (중앙)"
+
+#: Menu
+msgid "Image: Add watermark (north)"
+msgstr "이미지: 워터마크 추가 (상단)"
+
+#: Menu
+msgid "Image: Add watermark (northeast)"
+msgstr "이미지: 워터마크 추가 (우측 상단)"
+
+#: Menu
+msgid "Image: Add watermark (northwest)"
+msgstr "이미지: 워터마크 추가 (좌측 상단)"
+
+#: Menu
+msgid "Image: Add watermark (south)"
+msgstr "이미지: 워터마크 추가 (하단)"
+
+#: Menu
+msgid "Image: Add watermark (southeast)"
+msgstr "이미지: 워터마크 추가 (우측 하단)"
+
+#: Menu
+msgid "Image: Add watermark (southwest)"
+msgstr "이미지: 워터마크 추가 (좌측 하단)"
+
+#: Menu
+msgid "Image: Automatic crop"
+msgstr "이미지: 자동 자르기"
+
+#: Menu
+msgid "Image: Automatic crop (15 pct)"
+msgstr "이미지: 자동 자르기 (15%)"
+
+#: Menu
+msgid "Image: Background to alpha"
+msgstr "이미지: 배경을 투명으로"
+
+#: Menu
+msgid "Image: Background to alpha (15 pct)"
+msgstr "이미지: 배경을 투명으로 (15%)"
+
+#: Menu
+msgid "Image: Color alpha to black"
+msgstr "이미지: 투명 영역을 검은색으로"
+
+#: Menu
+msgid "Image: Color alpha to magenta"
+msgstr "이미지: 투명 영역을 마젠타로"
+
+#: Menu
+msgid "Image: Color alpha to white"
+msgstr "이미지: 투명 영역을 흰색으로"
+
+#: Menu
+msgid "Image: Color black to alpha"
+msgstr "이미지: 검은색을 투명으로"
+
+#: Menu
+msgid "Image: Color black to alpha (15 pct)"
+msgstr "이미지: 검은색을 투명으로 (15%)"
+
+#: Menu
+msgid "Image: Color magenta to alpha"
+msgstr "이미지: 마젠타를 투명으로"
+
+#: Menu
+msgid "Image: Color magenta to alpha (15 pct)"
+msgstr "이미지: 마젠타를 투명으로 (15%)"
+
+#: Menu
+msgid "Image: Colorspace to gray"
+msgstr "이미지: 색 공간을 회색으로"
+
+#: Menu
+msgid "Image: Color white to alpha"
+msgstr "이미지: 흰색을 투명으로"
+
+#: Menu
+msgid "Image: Color white to alpha (15 pct)"
+msgstr "이미지: 흰색을 투명으로 (15%)"
+
+#: Menu
+msgid "Image: Combine into a GIF"
+msgstr "이미지: GIF로 결합"
+
+#: Menu
+msgid "Image: Combine into a PDF"
+msgstr "이미지: PDF로 결합"
+
+#: Menu
+msgid "Image: Convert to AVIF"
+msgstr "이미지: AVIF로 변환"
+
+#: Menu
+msgid "Image: Convert to GIF"
+msgstr "이미지: GIF로 변환"
+
+#: Menu
+msgid "Image: Convert to HEIC"
+msgstr "이미지: HEIC로 변환"
+
+#: Menu
+msgid "Image: Convert to JPG"
+msgstr "이미지: JPG로 변환"
+
+#: Menu
+msgid "Image: Convert to JXL"
+msgstr "이미지: JXL로 변환"
+
+#: Menu
+msgid "Image: Convert to PNG"
+msgstr "이미지: PNG로 변환"
+
+#: Menu
+msgid "Image: Convert to TIFF"
+msgstr "이미지: TIFF로 변환"
+
+#: Menu
+msgid "Image: Convert to WebP"
+msgstr "이미지: WebP로 변환"
+
+#: Menu
+msgid "Image: Create PNG icon (64 px)"
+msgstr "이미지: PNG 아이콘 생성 (64px)"
+
+#: Menu
+msgid "Image: Create PNG icon (128 px)"
+msgstr "이미지: PNG 아이콘 생성 (128px)"
+
+#: Menu
+msgid "Image: Create PNG icon (256 px)"
+msgstr "이미지: PNG 아이콘 생성 (256px)"
+
+#: Menu
+msgid "Image: Create PNG icon (512 px)"
+msgstr "이미지: PNG 아이콘 생성 (512px)"
+
+#: Menu
+msgid "Image: Desaturate"
+msgstr "이미지: 채도 낮추기"
+
+#: Menu
+msgid "Image: Export to PDF"
+msgstr "이미지: PDF로 내보내기"
+
+#: Menu
+msgid "Image: Find similar (65 pct)"
+msgstr "이미지: 유사 항목 찾기 (65%)"
+
+#: Menu
+msgid "Image: Find similar (75 pct)"
+msgstr "이미지: 유사 항목 찾기 (75%)"
+
+#: Menu
+msgid "Image: Find similar (85 pct)"
+msgstr "이미지: 유사 항목 찾기 (85%)"
+
+#: Menu
+msgid "Image: Find similar (95 pct)"
+msgstr "이미지: 유사 항목 찾기 (95%)"
+
+#: Menu
+msgid "Image: Flip (horizontal)"
+msgstr "이미지: 뒤집기 (가로)"
+
+#: Menu
+msgid "Image: Flip (vertical)"
+msgstr "이미지: 뒤집기 (세로)"
+
+#: Menu
+msgid "Image: Generate multiple hues"
+msgstr "이미지: 다양한 색조 생성"
+
+#: Menu
+msgid "Image: Optimize PNG"
+msgstr "이미지: PNG 최적화"
+
+#: Menu
+msgid "Image: Perform OCR (English)"
+msgstr "이미지: OCR 수행 (영어)"
+
+#: Menu
+msgid "Image: Perform OCR (French)"
+msgstr "이미지: OCR 수행 (프랑스어)"
+
+#: Menu
+msgid "Image: Perform OCR (German)"
+msgstr "이미지: OCR 수행 (독일어)"
+
+#: Menu
+msgid "Image: Perform OCR (Italian)"
+msgstr "이미지: OCR 수행 (이탈리아어)"
+
+#: Menu
+msgid "Image: Perform OCR (Portuguese)"
+msgstr "이미지: OCR 수행 (포르투갈어)"
+
+#: Menu
+msgid "Image: Perform OCR (Russian)"
+msgstr "이미지: OCR 수행 (러시아어)"
+
+#: Menu
+msgid "Image: Perform OCR (Spanish)"
+msgstr "이미지: OCR 수행 (스페인어)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 500kB max)"
+msgstr "이미지: 축소 (JPG, 최대 500kB)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 1000kB max)"
+msgstr "이미지: 축소 (JPG, 최대 1000kB)"
+
+#: Menu
+msgid "Image: Remove metadata"
+msgstr "이미지: 메타데이터 제거"
+
+#: Menu
+msgid "Image: Rename from metadata"
+msgstr "이미지: 메타데이터로 이름 변경"
+
+#: Menu
+msgid "Image: Resize (25 pct)"
+msgstr "이미지: 크기 조정 (25%)"
+
+#: Menu
+msgid "Image: Resize (50 pct)"
+msgstr "이미지: 크기 조정 (50%)"
+
+#: Menu
+msgid "Image: Resize (75 pct)"
+msgstr "이미지: 크기 조정 (75%)"
+
+#: Menu
+msgid "Image: Resize (512x512)"
+msgstr "이미지: 크기 조정 (512x512)"
+
+#: Menu
+msgid "Image: Resize (1080x1080)"
+msgstr "이미지: 크기 조정 (1080x1080)"
+
+#: Menu
+msgid "Image: Resize (1920x1080)"
+msgstr "이미지: 크기 조정 (1920x1080)"
+
+#: Menu
+msgid "Image: Resize (2560x1440)"
+msgstr "이미지: 크기 조정 (2560x1440)"
+
+#: Menu
+msgid "Image: Resize (3840x2160)"
+msgstr "이미지: 크기 조정 (3840x2160)"
+
+#: Menu
+msgid "Image: Rotate (90 deg)"
+msgstr "이미지: 회전 (90도)"
+
+#: Menu
+msgid "Image: Rotate (180 deg)"
+msgstr "이미지: 회전 (180도)"
+
+#: Menu
+msgid "Image: Rotate (270 deg)"
+msgstr "이미지: 회전 (270도)"
+
+#: Menu
+msgid "Image: Split into 2 (horizontal)"
+msgstr "이미지: 2개로 분할 (가로)"
+
+#: Menu
+msgid "Image: Split into 2 (vertical)"
+msgstr "이미지: 2개로 분할 (세로)"
+
+#: Menu
+msgid "Image: Split into 4"
+msgstr "이미지: 4개로 분할"
+
+#: Menu
+msgid "Image: Stack (horizontal)"
+msgstr "이미지: 쌓기 (가로)"
+
+#: Menu
+msgid "Image: Stack (vertical)"
+msgstr "이미지: 쌓기 (세로)"
+
+#: Menu
+msgid "IP: Scanner"
+msgstr "IP: 스캐너"
+
+#: Menu
+msgid "List hard links"
+msgstr "하드 링크 나열"
+
+#: Menu
+msgid "List largest directories"
+msgstr "가장 큰 디렉토리 나열"
+
+#: Menu
+msgid "List largest files"
+msgstr "가장 큰 파일 나열"
+
+#: Menu
+msgid "List permissions and owners"
+msgstr "권한 및 소유자 나열"
+
+#: Menu
+msgid "List recent files"
+msgstr "최근 파일 나열"
+
+#: Menu
+msgid "List symbolic links"
+msgstr "심볼릭 링크 나열"
+
+#: Menu
+msgid "Media: Concatenate files"
+msgstr "미디어: 파일 연결"
+
+#: Menu
+msgid "Media: Remove metadata"
+msgstr "미디어: 메타데이터 제거"
+
+#: Menu
+msgid "Media: Show basic metadata"
+msgstr "미디어: 기본 메타데이터 표시"
+
+#: Menu
+msgid "MP3: (artist - title) Name to ID3"
+msgstr "MP3: (아티스트 - 제목) 이름을 ID3로"
+
+#: Menu
+msgid "MP3: (artist - title) ID3 to Name"
+msgstr "MP3: (아티스트 - 제목) ID3를 이름으로"
+
+#: Menu
+msgid "MP3: Volume maximize (recursive)"
+msgstr "MP3: 볼륨 최대화 (재귀적)"
+
+#: Menu
+msgid "MP3: Volume normalize (recursive)"
+msgstr "MP3: 볼륨 정규화 (재귀적)"
+
+#: Menu
+msgid "MP3: Show encoding details"
+msgstr "MP3: 인코딩 세부 정보 표시"
+
+#: Menu
+msgid "Open item location"
+msgstr "항목 위치 열기"
+
+#: Menu
+msgid "Paste as hard link"
+msgstr "하드 링크로 붙여넣기"
+
+#: Menu
+msgid "Paste as symbolic link"
+msgstr "심볼릭 링크로 붙여넣기"
+
+#: Menu
+msgid "Paste clipboard content"
+msgstr "클립보드 내용 붙여넣기"
+
+#: Menu
+msgid "PDF: Add watermark (over)"
+msgstr "PDF: 워터마크 추가 (위에)"
+
+#: Menu
+msgid "PDF: Add watermark (under)"
+msgstr "PDF: 워터마크 추가 (아래에)"
+
+#: Menu
+msgid "PDF: Combine multiple PDFs"
+msgstr "PDF: 여러 PDF 결합"
+
+#: Menu
+msgid "PDF: Convert to PDFA-2b"
+msgstr "PDF: PDFA-2b로 변환"
+
+#: Menu
+msgid "PDF: Remove password"
+msgstr "PDF: 비밀번호 제거"
+
+#: Menu
+msgid "PDF: Set a password"
+msgstr "PDF: 비밀번호 설정"
+
+#: Menu
+msgid "PDF: Extract images"
+msgstr "PDF: 이미지 추출"
+
+#: Menu
+msgid "PDF: Find annotated PDFs"
+msgstr "PDF: 주석이 있는 PDF 찾기"
+
+#: Menu
+msgid "PDF: Find non-linearized PDFs"
+msgstr "PDF: 선형화되지 않은 PDF 찾기"
+
+#: Menu
+msgid "PDF: Find non-searchable PDFs"
+msgstr "PDF: 검색 불가능한 PDF 찾기"
+
+#: Menu
+msgid "PDF: Find password-protected PDFs"
+msgstr "PDF: 비밀번호로 보호된 PDF 찾기"
+
+#: Menu
+msgid "PDF: Find signed PDFs"
+msgstr "PDF: 서명된 PDF 찾기"
+
+#: Menu
+msgid "PDF: Layout (landscape, 1x2)"
+msgstr "PDF: 레이아웃 (가로, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x1)"
+msgstr "PDF: 레이아웃 (가로, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x2)"
+msgstr "PDF: 레이아웃 (가로, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x4)"
+msgstr "PDF: 레이아웃 (가로, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 4x2)"
+msgstr "PDF: 레이아웃 (가로, 4x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 1x2)"
+msgstr "PDF: 레이아웃 (세로, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x1)"
+msgstr "PDF: 레이아웃 (세로, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x2)"
+msgstr "PDF: 레이아웃 (세로, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x4)"
+msgstr "PDF: 레이아웃 (세로, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 4x2)"
+msgstr "PDF: 레이아웃 (세로, 4x2)"
+
+#: Menu
+msgid "PDF: Optimize for web (linearize)"
+msgstr "PDF: 웹용 최적화 (선형화)"
+
+#: Menu
+msgid "PDF: Set size (A3)"
+msgstr "PDF: 크기 설정 (A3)"
+
+#: Menu
+msgid "PDF: Set size (A4)"
+msgstr "PDF: 크기 설정 (A4)"
+
+#: Menu
+msgid "PDF: Set size (A5)"
+msgstr "PDF: 크기 설정 (A5)"
+
+#: Menu
+msgid "PDF: Set size (US Legal)"
+msgstr "PDF: 크기 설정 (US Legal)"
+
+#: Menu
+msgid "PDF: Set size (US Letter)"
+msgstr "PDF: 크기 설정 (US Letter)"
+
+#: Menu
+msgid "PDF: Perform OCR (English)"
+msgstr "PDF: OCR 수행 (영어)"
+
+#: Menu
+msgid "PDF: Perform OCR (French)"
+msgstr "PDF: OCR 수행 (프랑스어)"
+
+#: Menu
+msgid "PDF: Perform OCR (German)"
+msgstr "PDF: OCR 수행 (독일어)"
+
+#: Menu
+msgid "PDF: Perform OCR (Italian)"
+msgstr "PDF: OCR 수행 (이탈리아어)"
+
+#: Menu
+msgid "PDF: Perform OCR (Portuguese)"
+msgstr "PDF: OCR 수행 (포르투갈어)"
+
+#: Menu
+msgid "PDF: Perform OCR (Russian)"
+msgstr "PDF: OCR 수행 (러시아어)"
+
+#: Menu
+msgid "PDF: Perform OCR (Spanish)"
+msgstr "PDF: OCR 수행 (스페인어)"
+
+#: Menu
+msgid "PDF: Reduce (150 dpi, e-book)"
+msgstr "PDF: 축소 (150 dpi, 전자책)"
+
+#: Menu
+msgid "PDF: Reduce (300 dpi, printer)"
+msgstr "PDF: 축소 (300 dpi, 프린터)"
+
+#: Menu
+msgid "PDF: Remove annotations"
+msgstr "PDF: 주석 제거"
+
+#: Menu
+msgid "PDF: Remove metadata"
+msgstr "PDF: 메타데이터 제거"
+
+#: Menu
+msgid "PDF: Rotate (90 deg)"
+msgstr "PDF: 회전 (90도)"
+
+#: Menu
+msgid "PDF: Rotate (180 deg)"
+msgstr "PDF: 회전 (180도)"
+
+#: Menu
+msgid "PDF: Rotate (270 deg)"
+msgstr "PDF: 회전 (270도)"
+
+#: Menu
+msgid "PDF: Show signatures"
+msgstr "PDF: 서명 표시"
+
+#: Menu
+msgid "PDF: Split into single-page PDFs"
+msgstr "PDF: 단일 페이지 PDF로 분할"
+
+#: Menu
+msgid "Rename: Remove accents"
+msgstr "이름 변경: 악센트 제거"
+
+#: Menu
+msgid "Rename: Remove parentheses blocks"
+msgstr "이름 변경: 괄호 블록 제거"
+
+#: Menu
+msgid "Rename: Change spaces to dashes"
+msgstr "이름 변경: 공백을 대시로 변경"
+
+#: Menu
+msgid "Rename: Change dashes to spaces"
+msgstr "이름 변경: 대시를 공백으로 변경"
+
+#: Menu
+msgid "Rename: To lowercase"
+msgstr "이름 변경: 소문자로"
+
+#: Menu
+msgid "Rename: To lowercase (recursive)"
+msgstr "이름 변경: 소문자로 (재귀적)"
+
+#: Menu
+msgid "Rename: To sentence case"
+msgstr "이름 변경: 문장형으로"
+
+#: Menu
+msgid "Rename: To title case"
+msgstr "이름 변경: 제목형으로"
+
+#: Menu
+msgid "Rename: To uppercase"
+msgstr "이름 변경: 대문자로"
+
+#: Menu
+msgid "Rename: To uppercase (recursive)"
+msgstr "이름 변경: 대문자로 (재귀적)"
+
+#: Menu
+msgid "Reset permissions (recursive)"
+msgstr "권한 재설정 (재귀적)"
+
+#: Menu
+msgid "Scan for malware (via ClamAV)"
+msgstr "악성코드 검사 (ClamAV 사용)"
+
+#: Menu
+msgid "Scan for malware (via Lenspect)"
+msgstr "악성코드 검사 (Lenspect 사용)"
+
+#: Menu
+msgid "Show files information"
+msgstr "파일 정보 표시"
+
+#: Menu
+msgid "Show files metadata"
+msgstr "파일 메타데이터 표시"
+
+#: Menu
+msgid "Show files MIME type"
+msgstr "파일 MIME 유형 표시"
+
+#: Menu
+msgid "Show media information"
+msgstr "미디어 정보 표시"
+
+#: Menu
+msgid "SVG: Compress to SVGZ"
+msgstr "SVG: SVGZ로 압축"
+
+#: Menu
+msgid "SVG: Decompress SVGZ"
+msgstr "SVG: SVGZ 압축 해제"
+
+#: Menu
+msgid "SVG: Export to PDF"
+msgstr "SVG: PDF로 내보내기"
+
+#: Menu
+msgid "SVG: Export to PNG (256 px)"
+msgstr "SVG: PNG로 내보내기 (256px)"
+
+#: Menu
+msgid "SVG: Export to PNG (512 px)"
+msgstr "SVG: PNG로 내보내기 (512px)"
+
+#: Menu
+msgid "SVG: Export to PNG (1024 px)"
+msgstr "SVG: PNG로 내보내기 (1024px)"
+
+#: Menu
+msgid "SVG: Replace fonts to Charter"
+msgstr "SVG: 글꼴을 Charter로 변경"
+
+#: Menu
+msgid "SVG: Replace fonts to Helvetica"
+msgstr "SVG: 글꼴을 Helvetica로 변경"
+
+#: Menu
+msgid "SVG: Replace fonts to Times"
+msgstr "SVG: 글꼴을 Times로 변경"
+
+#: Menu
+msgid "Terminal"
+msgstr "터미널"
+
+#: Menu
+msgid "Text: Concatenate multiple files"
+msgstr "텍스트: 여러 파일 연결"
+
+#: Menu
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "텍스트: 탭을 4개 공백으로 변환"
+
+#: Menu
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "텍스트: 정규화 (UTF-8, 재귀적)"
+
+#: Menu
+msgid "Text: Encode to UTF-8"
+msgstr "텍스트: UTF-8로 인코딩"
+
+#: Menu
+msgid "Text: List encodings"
+msgstr "텍스트: 인코딩 나열"
+
+#: Menu
+msgid "Text: List issues"
+msgstr "텍스트: 문제 나열"
+
+#: Menu
+msgid "Text: List invalid chars"
+msgstr "텍스트: 잘못된 문자 나열"
+
+#: Menu
+msgid "Text: List line breaks"
+msgstr "텍스트: 줄 바꿈 나열"
+
+#: Menu
+msgid "Text: List line counts"
+msgstr "텍스트: 줄 수 나열"
+
+#: Menu
+msgid "Text: List line lengths"
+msgstr "텍스트: 줄 길이 나열"
+
+#: Menu
+msgid "Text: List word counts"
+msgstr "텍스트: 단어 수 나열"
+
+#: Menu
+msgid "Text: Remove trailing spaces"
+msgstr "텍스트: 후행 공백 제거"
+
+#: Menu
+msgid "Text: Remove accents"
+msgstr "텍스트: 악센트 제거"
+
+#: Menu
+msgid "URL: Check HTTP status"
+msgstr "URL: HTTP 상태 확인"
+
+#: Menu
+msgid "URL: Download file"
+msgstr "URL: 파일 다운로드"
+
+#: Menu
+msgid "URL: Show HTTP headers"
+msgstr "URL: HTTP 헤더 표시"
+
+#: Menu
+msgid "Verify MD5 file"
+msgstr "MD5 파일 확인"
+
+#: Menu
+msgid "Verify SHA1 file"
+msgstr "SHA1 파일 확인"
+
+#: Menu
+msgid "Verify SHA256 file"
+msgstr "SHA256 파일 확인"
+
+#: Menu
+msgid "Verify SHA512 file"
+msgstr "SHA512 파일 확인"
+
+#: Menu
+msgid "Video: Aspect to 1:1"
+msgstr "비디오: 화면 비율 1:1"
+
+#: Menu
+msgid "Video: Aspect to 4:3"
+msgstr "비디오: 화면 비율 4:3"
+
+#: Menu
+msgid "Video: Aspect to 16:9"
+msgstr "비디오: 화면 비율 16:9"
+
+#: Menu
+msgid "Video: Aspect to 16:10"
+msgstr "비디오: 화면 비율 16:10"
+
+#: Menu
+msgid "Video: Convert to MKV"
+msgstr "비디오: MKV로 변환"
+
+#: Menu
+msgid "Video: Convert to MKV (copy)"
+msgstr "비디오: MKV로 변환 (복사)"
+
+#: Menu
+msgid "Video: Convert to MP4"
+msgstr "비디오: MP4로 변환"
+
+#: Menu
+msgid "Video: Convert to MP4 (copy)"
+msgstr "비디오: MP4로 변환 (복사)"
+
+#: Menu
+msgid "Video: Export frames (1 FPS)"
+msgstr "비디오: 프레임 내보내기 (1 FPS)"
+
+#: Menu
+msgid "Video: Export frames (5 FPS)"
+msgstr "비디오: 프레임 내보내기 (5 FPS)"
+
+#: Menu
+msgid "Video: Export frames (10 FPS)"
+msgstr "비디오: 프레임 내보내기 (10 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF"
+msgstr "비디오: GIF로 내보내기"
+
+#: Menu
+msgid "Video: Extract audio"
+msgstr "비디오: 오디오 추출"
+
+#: Menu
+msgid "Video: Flip (horizontal)"
+msgstr "비디오: 뒤집기 (가로)"
+
+#: Menu
+msgid "Video: Flip (vertical)"
+msgstr "비디오: 뒤집기 (세로)"
+
+#: Menu
+msgid "Video: Frame rate to 30 FPS"
+msgstr "비디오: 프레임률 30 FPS로"
+
+#: Menu
+msgid "Video: Frame rate to 60 FPS"
+msgstr "비디오: 프레임률 60 FPS로"
+
+#: Menu
+msgid "Video: Remove audio"
+msgstr "비디오: 오디오 제거"
+
+#: Menu
+msgid "Video: Resize (25 pct)"
+msgstr "비디오: 크기 조정 (25%)"
+
+#: Menu
+msgid "Video: Resize (50 pct)"
+msgstr "비디오: 크기 조정 (50%)"
+
+#: Menu
+msgid "Video: Resize (75 pct)"
+msgstr "비디오: 크기 조정 (75%)"
+
+#: Menu
+msgid "Video: Rotate (90 deg)"
+msgstr "비디오: 회전 (90도)"
+
+#: Menu
+msgid "Video: Rotate (180 deg)"
+msgstr "비디오: 회전 (180도)"
+
+#: Menu
+msgid "Video: Rotate (270 deg)"
+msgstr "비디오: 회전 (270도)"
+
+#: Menu
+msgid "Video: Speed to 0.5"
+msgstr "비디오: 속도 0.5배"
+
+#: Menu
+msgid "Video: Speed to 1.5"
+msgstr "비디오: 속도 1.5배"
+
+#: Menu
+msgid "Video: Speed to 2.0"
+msgstr "비디오: 속도 2.0배"
+
+#: install.sh
+msgid "Check for basic dependencies"
+msgstr "기본 종속성 확인"
+
+#: install.sh
+msgid "Remove previously installed scripts"
+msgstr "이전에 설치된 스크립트 제거"
+
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr "키보드 가속기 설치"
+
+#: install.sh
+msgid "Close the file manager to reload configurations"
+msgstr "구성을 다시 로드하기 위해 파일 관리자 닫기"
+
+#: install.sh
+msgid "Add shortcuts to the application menu"
+msgstr "응용 프로그램 메뉴에 바로 가기 추가"
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr "Homebrew 설치 (선택 사항)"
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr "설치할 스크립트 범주 선택"
+
+#: install.sh
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr "옵션 선택 (<SPACE> 체크, <ENTER> 확인):"
+
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr "비대화형 모드로 설치 중..."
+
+#: install.sh
+msgid "Installing:"
+msgstr "설치 중:"
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr "응용 프로그램 메뉴 바로 가기 설치 중:"
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr "설치가 성공적으로 완료되었습니다!"
+
+#: install.sh
+msgid "Checking for basic dependencies:"
+msgstr "기본 종속성 확인 중:"
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr "모든 종속성이 이미 충족되었습니다."
+
+#: install.sh
+msgid "Copying files..."
+msgstr "파일 복사 중..."
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr "키보드 가속기 설치 중..."
+
+#: install.sh
+msgid "Scripts"
+msgstr "스크립트"
+
+#: install.sh
+msgid "Creating shortcuts to the application menu..."
+msgstr "응용 프로그램 메뉴에 바로 가기 생성 중..."
+
+#: install.sh
+msgid "Creating GNOME Shell application folder..."
+msgstr "GNOME Shell 응용 프로그램 폴더 생성 중..."
+
+#: install.sh
+msgid "Installing actions in the context menu..."
+msgstr "상황에 맞는 메뉴에 작업 설치 중..."
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr "파일 관리자 닫는 중..."
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr "Homebrew 설치 중:"
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr "Homebrew가 이미 설치되어 있습니다."
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr "Homebrew 설치 위치:"
+
+#: install.sh
+msgid "Downloading the package..."
+msgstr "패키지 다운로드 중..."
+
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr "패키지 관리자를 찾을 수 없습니다!"
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr "Homebrew 설치에 실패했습니다!"
+
+#~ msgid "EOF"
+#~ msgstr "EOF"
