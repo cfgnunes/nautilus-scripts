@@ -768,7 +768,7 @@ msgstr "Áudio: Silenciar ruído"
 
 #: Menu
 msgid "Audio: Remove silence (extremities)"
-msgstr "Áudio: Remover silêncio (extermidades)"
+msgstr "Áudio: Remover silêncio (extremidades)"
 
 #: Menu
 msgid "Create backup (via Rsync)"
