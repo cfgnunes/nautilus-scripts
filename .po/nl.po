@@ -173,12 +173,6 @@ msgstr "Bestand"
 msgid "Count"
 msgstr "Aantal"
 
-msgid "Char"
-msgstr "Tekens"
-
-msgid "Line"
-msgstr "Regels"
-
 msgid "Issues"
 msgstr "Problemen"
 
@@ -1705,10 +1699,6 @@ msgstr "Tekst: tekensets tonen"
 #: Menu
 msgid "Text: List issues"
 msgstr "Tekst: problemen tonen"
-
-#: Menu
-msgid "Text: List invalid chars"
-msgstr "Tekst: ongeldige tekens tonen"
 
 #: Menu
 msgid "Text: List line breaks"

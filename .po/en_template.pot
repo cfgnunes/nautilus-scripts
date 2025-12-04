@@ -172,12 +172,6 @@ msgstr ""
 msgid "Count"
 msgstr ""
 
-msgid "Char"
-msgstr ""
-
-msgid "Line"
-msgstr ""
-
 msgid "Issues"
 msgstr ""
 
@@ -1703,10 +1697,6 @@ msgstr ""
 
 #: Menu
 msgid "Text: List issues"
-msgstr ""
-
-#: Menu
-msgid "Text: List invalid chars"
 msgstr ""
 
 #: Menu

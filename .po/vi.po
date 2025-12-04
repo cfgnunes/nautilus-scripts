@@ -173,12 +173,6 @@ msgstr "Tệp"
 msgid "Count"
 msgstr "Số lượng"
 
-msgid "Char"
-msgstr "Ký tự"
-
-msgid "Line"
-msgstr "Dòng"
-
 msgid "Issues"
 msgstr "Vấn đề"
 
@@ -1705,10 +1699,6 @@ msgstr "Văn bản: Liệt kê mã hóa"
 #: Menu
 msgid "Text: List issues"
 msgstr "Văn bản: Liệt kê vấn đề"
-
-#: Menu
-msgid "Text: List invalid chars"
-msgstr "Văn bản: Liệt kê ký tự không hợp lệ"
 
 #: Menu
 msgid "Text: List line breaks"

@@ -173,12 +173,6 @@ msgstr "Arquivo"
 msgid "Count"
 msgstr "Contagem"
 
-msgid "Char"
-msgstr "Caractere"
-
-msgid "Line"
-msgstr "Linha"
-
 msgid "Issues"
 msgstr "Problemas"
 
@@ -1705,10 +1699,6 @@ msgstr "Texto: Listar codificações"
 #: Menu
 msgid "Text: List issues"
 msgstr "Texto: Listar problemas"
-
-#: Menu
-msgid "Text: List invalid chars"
-msgstr "Texto: Listar caracteres inválidos"
 
 #: Menu
 msgid "Text: List line breaks"

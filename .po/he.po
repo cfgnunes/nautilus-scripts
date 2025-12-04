@@ -173,12 +173,6 @@ msgstr "קובץ"
 msgid "Count"
 msgstr "מספר"
 
-msgid "Char"
-msgstr "תו"
-
-msgid "Line"
-msgstr "שורה"
-
 msgid "Issues"
 msgstr "בעיות"
 
@@ -1705,10 +1699,6 @@ msgstr "טקסט: הצגת שיטות קידוד"
 #: Menu
 msgid "Text: List issues"
 msgstr "טקסט: הצגת בעיות"
-
-#: Menu
-msgid "Text: List invalid chars"
-msgstr "טקסט: הצגת תווים לא תקניים"
 
 #: Menu
 msgid "Text: List line breaks"

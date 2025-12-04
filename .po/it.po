@@ -173,12 +173,6 @@ msgstr "File"
 msgid "Count"
 msgstr "Conteggio"
 
-msgid "Char"
-msgstr "Carattere"
-
-msgid "Line"
-msgstr "Riga"
-
 msgid "Issues"
 msgstr "Problemi"
 
@@ -1705,10 +1699,6 @@ msgstr "Testo: Elenca codifiche"
 #: Menu
 msgid "Text: List issues"
 msgstr "Testo: Elenca problemi"
-
-#: Menu
-msgid "Text: List invalid chars"
-msgstr "Testo: Elenca caratteri non validi"
 
 #: Menu
 msgid "Text: List line breaks"

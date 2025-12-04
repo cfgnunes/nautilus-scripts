@@ -1898,11 +1898,6 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_empty "$std_output"
 
-    script_test="Plain text/Text: List invalid chars"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_empty "$std_output"
-
     script_test="Plain text/Text: Remove trailing spaces"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"

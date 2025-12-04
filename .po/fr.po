@@ -173,12 +173,6 @@ msgstr "Fichier"
 msgid "Count"
 msgstr "Nombre"
 
-msgid "Char"
-msgstr "Caractère"
-
-msgid "Line"
-msgstr "Ligne"
-
 msgid "Issues"
 msgstr "Problèmes"
 
@@ -1705,10 +1699,6 @@ msgstr "Texte: Lister les encodages"
 #: Menu
 msgid "Text: List issues"
 msgstr "Texte: Lister les problèmes"
-
-#: Menu
-msgid "Text: List invalid chars"
-msgstr "Texte: Lister les caractères invalides"
 
 #: Menu
 msgid "Text: List line breaks"

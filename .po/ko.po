@@ -173,12 +173,6 @@ msgstr "파일"
 msgid "Count"
 msgstr "개수"
 
-msgid "Char"
-msgstr "문자"
-
-msgid "Line"
-msgstr "줄"
-
 msgid "Issues"
 msgstr "문제"
 
@@ -1705,10 +1699,6 @@ msgstr "텍스트: 인코딩 나열"
 #: Menu
 msgid "Text: List issues"
 msgstr "텍스트: 문제 나열"
-
-#: Menu
-msgid "Text: List invalid chars"
-msgstr "텍스트: 잘못된 문자 나열"
 
 #: Menu
 msgid "Text: List line breaks"

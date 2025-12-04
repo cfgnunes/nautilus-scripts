@@ -173,12 +173,6 @@ msgstr "Файл"
 msgid "Count"
 msgstr "Количество"
 
-msgid "Char"
-msgstr "Символ"
-
-msgid "Line"
-msgstr "Строка"
-
 msgid "Issues"
 msgstr "Проблемы"
 
@@ -1705,10 +1699,6 @@ msgstr "Текст: показать кодировки"
 #: Menu
 msgid "Text: List issues"
 msgstr "Текст: показать проблемы"
-
-#: Menu
-msgid "Text: List invalid chars"
-msgstr "Текст: показать недопустимые символы"
 
 #: Menu
 msgid "Text: List line breaks"

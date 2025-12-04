@@ -173,12 +173,6 @@ msgstr "文件"
 msgid "Count"
 msgstr "计数"
 
-msgid "Char"
-msgstr "字符"
-
-msgid "Line"
-msgstr "行"
-
 msgid "Issues"
 msgstr "问题"
 
@@ -1705,10 +1699,6 @@ msgstr "文本：列出编码"
 #: Menu
 msgid "Text: List issues"
 msgstr "文本：列出问题"
-
-#: Menu
-msgid "Text: List invalid chars"
-msgstr "文本：列出无效字符"
 
 #: Menu
 msgid "Text: List line breaks"

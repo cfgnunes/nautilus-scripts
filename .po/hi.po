@@ -173,12 +173,6 @@ msgstr "फ़ाइल"
 msgid "Count"
 msgstr "गिनती"
 
-msgid "Char"
-msgstr "अक्षर"
-
-msgid "Line"
-msgstr "पंक्ति"
-
 msgid "Issues"
 msgstr "समस्याएँ"
 
@@ -1705,10 +1699,6 @@ msgstr "पाठ: एन्कोडिंग सूचीबद्ध कर�
 #: Menu
 msgid "Text: List issues"
 msgstr "पाठ: समस्याएँ सूचीबद्ध करें"
-
-#: Menu
-msgid "Text: List invalid chars"
-msgstr "पाठ: अमान्य वर्ण सूचीबद्ध करें"
 
 #: Menu
 msgid "Text: List line breaks"
