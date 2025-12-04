@@ -4,7 +4,7 @@
 # This file centralizes dependency definitions for the scripts.
 
 #------------------------------------------------------------------------------
-#region DEPENDENCIES_MAP
+#region PKG_MAP
 #------------------------------------------------------------------------------
 
 # This array defines the mapping between a dependency key and its corresponding
@@ -16,7 +16,7 @@
 #     part after '~' represents the package name used for installation
 #     verification. This is useful in systems like NixOS, where the installed
 #     package name may differ from the one provided during installation.
-declare -A DEPENDENCIES_MAP=(
+declare -A PKG_MAP=(
     ["7za"]="
         termux: p7zip
         apt:    p7zip-full

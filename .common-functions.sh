@@ -555,7 +555,7 @@ _check_dependencies() {
 
             # Retrieve the package names from '.pkg-map.sh'.
             package_names=$(_deps_get_dependency_value \
-                "$dep_key" "$pkg_manager" "DEPENDENCIES_MAP")
+                "$dep_key" "$pkg_manager" "PKG_MAP")
 
             if [[ -n "$package_names" ]]; then
                 definitions_found="true"
