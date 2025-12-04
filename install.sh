@@ -881,7 +881,7 @@ _install_scripts() {
 
     # Always copy important files and directories.
     cp -- "$SCRIPT_DIR/.common-functions.sh" "$INSTALL_DIR"
-    cp -- "$SCRIPT_DIR/.dependencies.sh" "$INSTALL_DIR"
+    cp -- "$SCRIPT_DIR/.pkg-map.sh" "$INSTALL_DIR"
     cp -r -- "$SCRIPT_DIR/.po" "$INSTALL_DIR"
 
     # Copy scripts by category. If the user selected specific categories, only
