@@ -1068,7 +1068,7 @@ msgstr "Bild: Automatischer Zuschnitt"
 
 #: Menu
 msgid "Image: Automatic crop (15 pct)"
-msgstr "Bild: Automatischer Zuschnitt (15％)"
+msgstr "Bild: Automatischer Zuschnitt (15 pct)"
 
 #: Menu
 msgid "Image: Background to alpha"
@@ -1076,7 +1076,7 @@ msgstr "Bild: Hintergrund zu Alpha"
 
 #: Menu
 msgid "Image: Background to alpha (15 pct)"
-msgstr "Bild: Hintergrund zu Alpha (15％)"
+msgstr "Bild: Hintergrund zu Alpha (15 pct)"
 
 #: Menu
 msgid "Image: Color alpha to black"
@@ -1096,7 +1096,7 @@ msgstr "Bild: Schwarz zu Alpha"
 
 #: Menu
 msgid "Image: Color black to alpha (15 pct)"
-msgstr "Bild: Schwarz zu Alpha (15％)"
+msgstr "Bild: Schwarz zu Alpha (15 pct)"
 
 #: Menu
 msgid "Image: Color magenta to alpha"
@@ -1104,7 +1104,7 @@ msgstr "Bild: Magenta zu Alpha"
 
 #: Menu
 msgid "Image: Color magenta to alpha (15 pct)"
-msgstr "Bild: Magenta zu Alpha (15％)"
+msgstr "Bild: Magenta zu Alpha (15 pct)"
 
 #: Menu
 msgid "Image: Colorspace to gray"
@@ -1116,7 +1116,7 @@ msgstr "Bild: Weiß zu Alpha"
 
 #: Menu
 msgid "Image: Color white to alpha (15 pct)"
-msgstr "Bild: Weiß zu Alpha (15％)"
+msgstr "Bild: Weiß zu Alpha (15 pct)"
 
 #: Menu
 msgid "Image: Combine into a GIF"
@@ -1184,19 +1184,19 @@ msgstr "Bild: Als PDF exportieren"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"
-msgstr "Bild: Ähnliche finden (65％)"
+msgstr "Bild: Ähnliche finden (65 pct)"
 
 #: Menu
 msgid "Image: Find similar (75 pct)"
-msgstr "Bild: Ähnliche finden (75％)"
+msgstr "Bild: Ähnliche finden (75 pct)"
 
 #: Menu
 msgid "Image: Find similar (85 pct)"
-msgstr "Bild: Ähnliche finden (85％)"
+msgstr "Bild: Ähnliche finden (85 pct)"
 
 #: Menu
 msgid "Image: Find similar (95 pct)"
-msgstr "Bild: Ähnliche finden (95％)"
+msgstr "Bild: Ähnliche finden (95 pct)"
 
 #: Menu
 msgid "Image: Flip (horizontal)"
@@ -1260,15 +1260,15 @@ msgstr "Bild: Nach Metadaten umbenennen"
 
 #: Menu
 msgid "Image: Resize (25 pct)"
-msgstr "Bild: Größe ändern (25％)"
+msgstr "Bild: Größe ändern (25 pct)"
 
 #: Menu
 msgid "Image: Resize (50 pct)"
-msgstr "Bild: Größe ändern (50％)"
+msgstr "Bild: Größe ändern (50 pct)"
 
 #: Menu
 msgid "Image: Resize (75 pct)"
-msgstr "Bild: Größe ändern (75％)"
+msgstr "Bild: Größe ändern (75 pct)"
 
 #: Menu
 msgid "Image: Resize (512x512)"
@@ -1836,15 +1836,15 @@ msgstr "Video: Audio entfernen"
 
 #: Menu
 msgid "Video: Resize (25 pct)"
-msgstr "Video: Größe ändern (25％)"
+msgstr "Video: Größe ändern (25 pct)"
 
 #: Menu
 msgid "Video: Resize (50 pct)"
-msgstr "Video: Größe ändern (50％)"
+msgstr "Video: Größe ändern (50 pct)"
 
 #: Menu
 msgid "Video: Resize (75 pct)"
-msgstr "Video: Größe ändern (75％)"
+msgstr "Video: Größe ändern (75 pct)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"
