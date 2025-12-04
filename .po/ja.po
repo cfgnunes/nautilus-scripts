@@ -4,14 +4,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enhanced File Manager Actions for Linux\n"
 "POT-Creation-Date: 2025-12-03 12:12-0300\n"
-"PO-Revision-Date: 2025-12-03 22:05-0300\n"
+"PO-Revision-Date: 2025-12-04 21:02+0900\n"
 "Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
 "Language-Team: \n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Done!"
@@ -26,6 +26,7 @@ msgstr "続行しますか？"
 msgid "directories"
 msgstr "ディレクトリ"
 
+#, fuzzy
 msgid "items"
 msgstr "アイテム"
 
@@ -35,6 +36,7 @@ msgstr "コマンドが失敗しました。"
 msgid "The output file does not exist."
 msgstr "出力ファイルが存在しません。"
 
+#, fuzzy
 msgid "Finished with errors! See the log:"
 msgstr "エラーで終了しました！ログを参照："
 
@@ -42,7 +44,7 @@ msgid "Your system does not support clipboard operations."
 msgstr "お使いのシステムはクリップボード操作に対応していません。"
 
 msgid "Could not find a package for:"
-msgstr "パッケージが見つかりませんでした："
+msgstr "以下の操作のためのパッケージが見つかりませんでした："
 
 msgid "The following packages are missing:"
 msgstr "以下のパッケージが不足しています："
@@ -92,6 +94,7 @@ msgstr "キャンセル"
 msgid "(Empty)"
 msgstr "(空)"
 
+#, fuzzy
 msgid "Select the ones to open:"
 msgstr "開くものを選択："
 
@@ -131,9 +134,11 @@ msgstr "完了！"
 msgid "Running the task. Please, wait..."
 msgstr "タスクを実行中です。お待ちください..."
 
+#, fuzzy
 msgid "No default application is set for the type:"
 msgstr "このタイプのデフォルトアプリケーションが設定されていません："
 
+#, fuzzy
 msgid "Could not find the executable to open MIME type:"
 msgstr "MIMEタイプを開く実行ファイルが見つかりませんでした："
 
@@ -191,12 +196,14 @@ msgstr "クリップボードに有効なパスがありません！"
 msgid "links"
 msgstr "リンク"
 
+#, fuzzy
 msgid "Inode"
 msgstr "inode"
 
 msgid "Link"
 msgstr "リンク"
 
+#, fuzzy
 msgid "Unsupported clipboard type."
 msgstr "サポートされていないクリップボードタイプです。"
 
@@ -378,7 +385,7 @@ msgid "Example"
 msgstr "例"
 
 msgid "Enter IP addresses or IP ranges."
-msgstr "IPアドレスまたはIP範囲を入力してください。"
+msgstr "IPアドレスまたはアドレスの範囲を入力してください。"
 
 msgid "There are no valid IPs in the input!"
 msgstr "入力に有効なIPアドレスがありません！"
@@ -572,7 +579,7 @@ msgstr "画像：変換"
 
 #: Menu
 msgid "Image: Crop, Resize"
-msgstr "画像：切り抜き・リサイズ"
+msgstr "画像：切り抜き・サイズ変更"
 
 #: Menu
 msgid "Image: Flip, Rotate"
@@ -680,7 +687,7 @@ msgstr "動画：フレームレート"
 
 #: Menu
 msgid "Video: Resize"
-msgstr "動画：リサイズ"
+msgstr "動画：サイズ変更"
 
 #: Menu
 msgid "Video: Speed"
@@ -752,11 +759,11 @@ msgstr "音声：2つのファイルをミックス"
 
 #: Menu
 msgid "Audio: Volume normalize"
-msgstr "音声：音量正規化"
+msgstr "音声：音量の正規化"
 
 #: Menu
 msgid "Audio: Produce a spectrogram"
-msgstr "音声：スペクトログラムを生成"
+msgstr "音声：スペクトル画像を生成"
 
 #: Menu
 msgid "Audio: Remove silence (sections)"
@@ -779,10 +786,12 @@ msgid "Code Editor"
 msgstr "コードエディター"
 
 #: Menu
+#, fuzzy
 msgid "Compare items"
 msgstr "アイテムを比較"
 
 #: Menu
+#, fuzzy
 msgid "Compare items (via Diff)"
 msgstr "アイテムを比較 (Diffを使用)"
 
@@ -792,11 +801,11 @@ msgstr "'7z'に圧縮"
 
 #: Menu
 msgid "Compress to '7z' with password"
-msgstr "パスワード付きで'7z'に圧縮"
+msgstr "パスワード付きの'7z'に圧縮"
 
 #: Menu
 msgid "Compress to 'tar.gz'"
-msgstr "'tar.gz'に圧縮"
+msgstr "'tar.gz'へ圧縮"
 
 #: Menu
 msgid "Compress to 'tar.xz'"
@@ -812,7 +821,7 @@ msgstr "'zip'に圧縮"
 
 #: Menu
 msgid "Compress to 'zip' with password"
-msgstr "パスワード付きで'zip'に圧縮"
+msgstr "パスワード付きの'zip'に圧縮"
 
 #: Menu
 msgid "Compute all checksums"
@@ -836,7 +845,7 @@ msgstr "SHA512を計算"
 
 #: Menu
 msgid "Copy file contents"
-msgstr "ファイル内容をコピー"
+msgstr "ファイルの内容をコピー"
 
 #: Menu
 msgid "Copy file names"
@@ -952,7 +961,7 @@ msgstr "空のディレクトリを検索"
 
 #: Menu
 msgid "List hidden files"
-msgstr "隠しファイルをリスト"
+msgstr "隠しファイルを一覧表示"
 
 #: Menu
 msgid "Find junk files"
@@ -996,7 +1005,7 @@ msgstr "Git：リセットしてプル"
 
 #: Menu
 msgid "Decrypt"
-msgstr "復号"
+msgstr "復号化"
 
 #: Menu
 msgid "Encrypt with password"
@@ -1040,27 +1049,27 @@ msgstr "画像：透かしを追加（中央）"
 
 #: Menu
 msgid "Image: Add watermark (north)"
-msgstr "画像：透かしを追加（北）"
+msgstr "画像：透かしを追加（中央上）"
 
 #: Menu
 msgid "Image: Add watermark (northeast)"
-msgstr "画像：透かしを追加（北東）"
+msgstr "画像：透かしを追加（右上）"
 
 #: Menu
 msgid "Image: Add watermark (northwest)"
-msgstr "画像：透かしを追加（北西）"
+msgstr "画像：透かしを追加（左上）"
 
 #: Menu
 msgid "Image: Add watermark (south)"
-msgstr "画像：透かしを追加（南）"
+msgstr "画像：透かしを追加（中央下）"
 
 #: Menu
 msgid "Image: Add watermark (southeast)"
-msgstr "画像：透かしを追加（南東）"
+msgstr "画像：透かしを追加（右下）"
 
 #: Menu
 msgid "Image: Add watermark (southwest)"
-msgstr "画像：透かしを追加（南西）"
+msgstr "画像：透かしを追加（左下）"
 
 #: Menu
 msgid "Image: Automatic crop"
@@ -1080,15 +1089,15 @@ msgstr "画像：背景をアルファに変換 (15％)"
 
 #: Menu
 msgid "Image: Color alpha to black"
-msgstr "画像：アルファ色を黒に変換"
+msgstr "画像：アルファを黒に変換"
 
 #: Menu
 msgid "Image: Color alpha to magenta"
-msgstr "画像：アルファ色をマゼンタに変換"
+msgstr "画像：アルファをマゼンタに変換"
 
 #: Menu
 msgid "Image: Color alpha to white"
-msgstr "画像：アルファ色を白に変換"
+msgstr "画像：アルファを白に変換"
 
 #: Menu
 msgid "Image: Color black to alpha"
@@ -1260,35 +1269,35 @@ msgstr "画像：メタデータから名前変更"
 
 #: Menu
 msgid "Image: Resize (25 pct)"
-msgstr "画像：リサイズ (25％)"
+msgstr "画像：サイズ変更 (25％)"
 
 #: Menu
 msgid "Image: Resize (50 pct)"
-msgstr "画像：リサイズ (50％)"
+msgstr "画像：サイズ変更 (50％)"
 
 #: Menu
 msgid "Image: Resize (75 pct)"
-msgstr "画像：リサイズ (75％)"
+msgstr "画像：サイズ変更 (75％)"
 
 #: Menu
 msgid "Image: Resize (512x512)"
-msgstr "画像：リサイズ (512x512)"
+msgstr "画像：サイズ変更 (512x512)"
 
 #: Menu
 msgid "Image: Resize (1080x1080)"
-msgstr "画像：リサイズ (1080x1080)"
+msgstr "画像：サイズ変更 (1080x1080)"
 
 #: Menu
 msgid "Image: Resize (1920x1080)"
-msgstr "画像：リサイズ (1920x1080)"
+msgstr "画像：サイズ変更 (1920x1080)"
 
 #: Menu
 msgid "Image: Resize (2560x1440)"
-msgstr "画像：リサイズ (2560x1440)"
+msgstr "画像：サイズ変更 (2560x1440)"
 
 #: Menu
 msgid "Image: Resize (3840x2160)"
-msgstr "画像：リサイズ (3840x2160)"
+msgstr "画像：サイズ変更 (3840x2160)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"
@@ -1315,10 +1324,12 @@ msgid "Image: Split into 4"
 msgstr "画像：4つに分割"
 
 #: Menu
+#, fuzzy
 msgid "Image: Stack (horizontal)"
 msgstr "画像：スタック (水平)"
 
 #: Menu
+#, fuzzy
 msgid "Image: Stack (vertical)"
 msgstr "画像：スタック (垂直)"
 
@@ -1328,27 +1339,27 @@ msgstr "IP：スキャナー"
 
 #: Menu
 msgid "List hard links"
-msgstr "ハードリンクをリスト"
+msgstr "ハードリンクを一覧表示"
 
 #: Menu
 msgid "List largest directories"
-msgstr "最大のディレクトリをリスト"
+msgstr "大きい順にディレクトリを一覧表示"
 
 #: Menu
 msgid "List largest files"
-msgstr "最大のファイルをリスト"
+msgstr "大きい順にファイルを一覧表示"
 
 #: Menu
 msgid "List permissions and owners"
-msgstr "権限と所有者をリスト"
+msgstr "権限と所有者を一覧表示"
 
 #: Menu
 msgid "List recent files"
-msgstr "最近のファイルをリスト"
+msgstr "最近のファイルを一覧表示"
 
 #: Menu
 msgid "List symbolic links"
-msgstr "シンボリックリンクをリスト"
+msgstr "シンボリックリンクを一覧表示"
 
 #: Menu
 msgid "Media: Concatenate files"
@@ -1360,7 +1371,7 @@ msgstr "メディア：メタデータを削除"
 
 #: Menu
 msgid "Media: Show basic metadata"
-msgstr "メディア：基本メタデータを表示"
+msgstr "メディア：基本のメタデータを表示"
 
 #: Menu
 msgid "MP3: (artist - title) Name to ID3"
@@ -1372,15 +1383,15 @@ msgstr "MP3：(アーティスト - タイトル) ID3を名前へ"
 
 #: Menu
 msgid "MP3: Volume maximize (recursive)"
-msgstr "MP3：音量最大化 (再帰的)"
+msgstr "MP3：音量の最大化 (再帰的)"
 
 #: Menu
 msgid "MP3: Volume normalize (recursive)"
-msgstr "MP3：音量正規化 (再帰的)"
+msgstr "MP3：音量の正規化 (再帰的)"
 
 #: Menu
 msgid "MP3: Show encoding details"
-msgstr "MP3：エンコード詳細を表示"
+msgstr "MP3：エンコードの詳細を表示"
 
 #: Menu
 msgid "Open item location"
@@ -1428,23 +1439,23 @@ msgstr "PDF：画像を抽出"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"
-msgstr "PDF：注釈付きPDFを検索"
+msgstr "PDF：注釈付きのPDFを検索"
 
 #: Menu
 msgid "PDF: Find non-linearized PDFs"
-msgstr "PDF：非線形化PDFを検索"
+msgstr "PDF：線形化されていないPDFを検索"
 
 #: Menu
 msgid "PDF: Find non-searchable PDFs"
-msgstr "PDF：非検索可能PDFを検索"
+msgstr "PDF：検索可能でないPDFを検索"
 
 #: Menu
 msgid "PDF: Find password-protected PDFs"
-msgstr "PDF：パスワード保護PDFを検索"
+msgstr "PDF：パスワードで保護されたPDFを検索"
 
 #: Menu
 msgid "PDF: Find signed PDFs"
-msgstr "PDF：署名済みPDFを検索"
+msgstr "PDF：署名済みのPDFを検索"
 
 #: Menu
 msgid "PDF: Layout (landscape, 1x2)"
@@ -1540,11 +1551,11 @@ msgstr "PDF：OCRを実行 (スペイン語)"
 
 #: Menu
 msgid "PDF: Reduce (150 dpi, e-book)"
-msgstr "PDF：縮小 (150 dpi, 電子書籍)"
+msgstr "PDF：解像度を下げる (150 dpi, 電子書籍)"
 
 #: Menu
 msgid "PDF: Reduce (300 dpi, printer)"
-msgstr "PDF：縮小 (300 dpi, プリンター)"
+msgstr "PDF：解像度を下げる (300 dpi, プリンター)"
 
 #: Menu
 msgid "PDF: Remove annotations"
@@ -1572,7 +1583,7 @@ msgstr "PDF：署名を表示"
 
 #: Menu
 msgid "PDF: Split into single-page PDFs"
-msgstr "PDF：単一ページのPDFに分割"
+msgstr "PDF：単一ページごとのPDFに分割"
 
 #: Menu
 msgid "Rename: Remove accents"
@@ -1680,7 +1691,7 @@ msgstr "SVG：フォントをTimesに置換"
 
 #: Menu
 msgid "Terminal"
-msgstr "ターミナル"
+msgstr "端末"
 
 #: Menu
 msgid "Text: Concatenate multiple files"
@@ -1700,31 +1711,31 @@ msgstr "テキスト：UTF-8にエンコード"
 
 #: Menu
 msgid "Text: List encodings"
-msgstr "テキスト：エンコーディングをリスト"
+msgstr "テキスト：エンコーディングを一覧表示"
 
 #: Menu
 msgid "Text: List issues"
-msgstr "テキスト：問題をリスト"
+msgstr "テキスト：問題を一覧表示"
 
 #: Menu
 msgid "Text: List invalid chars"
-msgstr "テキスト：無効な文字をリスト"
+msgstr "テキスト：無効な文字を一覧表示"
 
 #: Menu
 msgid "Text: List line breaks"
-msgstr "テキスト：改行をリスト"
+msgstr "テキスト：改行を一覧表示"
 
 #: Menu
 msgid "Text: List line counts"
-msgstr "テキスト：行数をリスト"
+msgstr "テキスト：行数を一覧表示"
 
 #: Menu
 msgid "Text: List line lengths"
-msgstr "テキスト：行の長さをリスト"
+msgstr "テキスト：行の長さを一覧表示"
 
 #: Menu
 msgid "Text: List word counts"
-msgstr "テキスト：単語数をリスト"
+msgstr "テキスト：単語数を一覧表示"
 
 #: Menu
 msgid "Text: Remove trailing spaces"
@@ -1836,15 +1847,15 @@ msgstr "動画：音声を削除"
 
 #: Menu
 msgid "Video: Resize (25 pct)"
-msgstr "動画：リサイズ (25％)"
+msgstr "動画：サイズ変更 (25％)"
 
 #: Menu
 msgid "Video: Resize (50 pct)"
-msgstr "動画：リサイズ (50％)"
+msgstr "動画：サイズ変更 (50％)"
 
 #: Menu
 msgid "Video: Resize (75 pct)"
-msgstr "動画：リサイズ (75％)"
+msgstr "動画：サイズ変更 (75％)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"
@@ -1884,7 +1895,7 @@ msgstr "キーボードアクセラレータをインストール"
 
 #: install.sh
 msgid "Close the file manager to reload configurations"
-msgstr "設定を再読み込みするにはファイルマネージャーを閉じてください"
+msgstr "設定を再読み込みするためにファイルマネージャーを閉じる"
 
 #: install.sh
 msgid "Add shortcuts to the application menu"
