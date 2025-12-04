@@ -920,11 +920,11 @@ msgstr "Document: afdrukken (A4)"
 
 #: Menu
 msgid "Document: Print (US Legal)"
-msgstr "Document: afdrukken (Amerikaanse aanmaning)"
+msgstr "Document: afdrukken (US Legal)"
 
 #: Menu
 msgid "Document: Print (US Letter)"
-msgstr "Document: afdrukken (Amerikaanse brief)"
+msgstr "Document: afdrukken (US Letter)"
 
 #: Menu
 msgid "Extract here"
@@ -1584,19 +1584,19 @@ msgstr "Naam wĳzigen: vierkante haken wissen"
 
 #: Menu
 msgid "Rename: Change spaces to dashes"
-msgstr "Naam wĳzigen: spaties omzetten naar streepjes"
+msgstr "Naam wĳzigen: spaties → streepjes"
 
 #: Menu
 msgid "Rename: Change dashes to spaces"
-msgstr "Naam wĳzigen: streepjes omzetten naar spaties"
+msgstr "Naam wĳzigen: streepjes → spaties"
 
 #: Menu
 msgid "Rename: To lowercase"
-msgstr "Naam wĳzigen: omzetten naar kleine letters"
+msgstr "Naam wĳzigen: kleine letters"
 
 #: Menu
 msgid "Rename: To lowercase (recursive)"
-msgstr "Naam wĳzigen: omzetten naar kleine letters (recursief)"
+msgstr "Naam wĳzigen: kleine letters (recursief)"
 
 #: Menu
 msgid "Rename: To sentence case"
@@ -1608,11 +1608,11 @@ msgstr "Naam wĳzigen: beginhoofdletter (ieder woord)"
 
 #: Menu
 msgid "Rename: To uppercase"
-msgstr "Naam wĳzigen: omzetten naar hoofdletters"
+msgstr "Naam wĳzigen: hoofdletters"
 
 #: Menu
 msgid "Rename: To uppercase (recursive)"
-msgstr "Naam wĳzigen: omzetten naar hoofdletters (recursief)"
+msgstr "Naam wĳzigen: hoofdletters (recursief)"
 
 #: Menu
 msgid "Reset permissions (recursive)"
@@ -1668,15 +1668,15 @@ msgstr "SVG: exporteren naar png (1024 px)"
 
 #: Menu
 msgid "SVG: Replace fonts to Charter"
-msgstr "SVG: lettertypen vervangen door Charter"
+msgstr "SVG: lettertypen → Charter"
 
 #: Menu
 msgid "SVG: Replace fonts to Helvetica"
-msgstr "SVG: lettertypen vervangen door Helvetica"
+msgstr "SVG: lettertypen → Helvetica"
 
 #: Menu
 msgid "SVG: Replace fonts to Times"
-msgstr "SVG: lettertypen vervangen door Times"
+msgstr "SVG: lettertypen → Times"
 
 #: Menu
 msgid "Terminal"
@@ -1688,7 +1688,7 @@ msgstr "Tekst: bestanden samenvoegen"
 
 #: Menu
 msgid "Text: Convert tabs to 4 spaces"
-msgstr "Tekst: tabs omzetten naar 4 spaties"
+msgstr "Tekst: tabs → 4 spaties"
 
 #: Menu
 msgid "Text: Normalize (UTF-8, recursive)"
