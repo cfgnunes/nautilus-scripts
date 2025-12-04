@@ -914,7 +914,7 @@ declare -A DEPENDENCIES_MAP=(
         nix:    tesseract
         zypper: tesseract tesseract-ocr-traineddata-$TEMP_DATA_TASK
         guix:
-        xbps:   tesseract tesseract-ocr-$TEMP_DATA_TASK
+        xbps:   tesseract-ocr tesseract-ocr-$TEMP_DATA_TASK
         brew:
     "
 
