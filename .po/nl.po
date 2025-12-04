@@ -1068,7 +1068,7 @@ msgstr "Afbeelding: automatisch bijsnijden"
 
 #: Menu
 msgid "Image: Automatic crop (15 pct)"
-msgstr "Afbeelding: automatisch bijsnijden (15 pct.)"
+msgstr "Afbeelding: automatisch bijsnijden (15％)"
 
 #: Menu
 msgid "Image: Background to alpha"
@@ -1076,7 +1076,7 @@ msgstr "Afbeelding: achtergrond doorzichtig maken"
 
 #: Menu
 msgid "Image: Background to alpha (15 pct)"
-msgstr "Afbeelding: achtergrond doorzichtig maken (15 pct.)"
+msgstr "Afbeelding: achtergrond doorzichtig maken (15％)"
 
 #: Menu
 msgid "Image: Color alpha to black"
@@ -1096,7 +1096,7 @@ msgstr "Afbeelding: zwart → doorzichtig"
 
 #: Menu
 msgid "Image: Color black to alpha (15 pct)"
-msgstr "Afbeelding: zwart → doorzichtig (15 pct.)"
+msgstr "Afbeelding: zwart → doorzichtig (15％)"
 
 #: Menu
 msgid "Image: Color magenta to alpha"
@@ -1104,7 +1104,7 @@ msgstr "Afbeelding: magenta → doorzichtig"
 
 #: Menu
 msgid "Image: Color magenta to alpha (15 pct)"
-msgstr "Afbeelding: magenta → doorzichtig (15 pct.)"
+msgstr "Afbeelding: magenta → doorzichtig (15％)"
 
 #: Menu
 msgid "Image: Colorspace to gray"
@@ -1116,7 +1116,7 @@ msgstr "Afbeelding: wit → doorzichtig"
 
 #: Menu
 msgid "Image: Color white to alpha (15 pct)"
-msgstr "Afbeelding: wit → doorzichtig (15 pct.)"
+msgstr "Afbeelding: wit → doorzichtig (15％)"
 
 #: Menu
 msgid "Image: Combine into a GIF"
@@ -1184,19 +1184,19 @@ msgstr "Afbeelding: exporteren naar pdf"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"
-msgstr "Afbeelding: vergelijkbare zoeken (65 pct.)"
+msgstr "Afbeelding: vergelijkbare zoeken (65％)"
 
 #: Menu
 msgid "Image: Find similar (75 pct)"
-msgstr "Afbeelding: vergelijkbare zoeken (75 pct.)"
+msgstr "Afbeelding: vergelijkbare zoeken (75％)"
 
 #: Menu
 msgid "Image: Find similar (85 pct)"
-msgstr "Afbeelding: vergelijkbare zoeken (85 pct.)"
+msgstr "Afbeelding: vergelijkbare zoeken (85％)"
 
 #: Menu
 msgid "Image: Find similar (95 pct)"
-msgstr "Afbeelding: vergelijkbare zoeken (95 pct.)"
+msgstr "Afbeelding: vergelijkbare zoeken (95％)"
 
 #: Menu
 msgid "Image: Flip (horizontal)"
@@ -1260,15 +1260,15 @@ msgstr "Afbeelding: naam wĳzigen a.d.h.v. metagegevens"
 
 #: Menu
 msgid "Image: Resize (25 pct)"
-msgstr "Afbeelding: grootte aanpassen (25 pct.)"
+msgstr "Afbeelding: grootte aanpassen (25％)"
 
 #: Menu
 msgid "Image: Resize (50 pct)"
-msgstr "Afbeelding: grootte aanpassen (50 pct.)"
+msgstr "Afbeelding: grootte aanpassen (50％)"
 
 #: Menu
 msgid "Image: Resize (75 pct)"
-msgstr "Afbeelding: grootte aanpassen (75 pct.)"
+msgstr "Afbeelding: grootte aanpassen (75％)"
 
 #: Menu
 msgid "Image: Resize (512x512)"
@@ -1836,15 +1836,15 @@ msgstr "Video: audio wissen"
 
 #: Menu
 msgid "Video: Resize (25 pct)"
-msgstr "Video: grootte aanpassen (25 pct.)"
+msgstr "Video: grootte aanpassen (25％)"
 
 #: Menu
 msgid "Video: Resize (50 pct)"
-msgstr "Video: grootte aanpassen (50 pct.)"
+msgstr "Video: grootte aanpassen (50％)"
 
 #: Menu
 msgid "Video: Resize (75 pct)"
-msgstr "Video: grootte aanpassen (75 pct.)"
+msgstr "Video: grootte aanpassen (75％)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"

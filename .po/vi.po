@@ -1068,7 +1068,7 @@ msgstr "Hình ảnh: Cắt tự động"
 
 #: Menu
 msgid "Image: Automatic crop (15 pct)"
-msgstr "Hình ảnh: Cắt tự động (15%)"
+msgstr "Hình ảnh: Cắt tự động (15％)"
 
 #: Menu
 msgid "Image: Background to alpha"
@@ -1076,7 +1076,7 @@ msgstr "Hình ảnh: Nền thành alpha"
 
 #: Menu
 msgid "Image: Background to alpha (15 pct)"
-msgstr "Hình ảnh: Nền thành alpha (15%)"
+msgstr "Hình ảnh: Nền thành alpha (15％)"
 
 #: Menu
 msgid "Image: Color alpha to black"
@@ -1096,7 +1096,7 @@ msgstr "Hình ảnh: Chuyển màu đen thành alpha"
 
 #: Menu
 msgid "Image: Color black to alpha (15 pct)"
-msgstr "Hình ảnh: Chuyển màu đen thành alpha (15%)"
+msgstr "Hình ảnh: Chuyển màu đen thành alpha (15％)"
 
 #: Menu
 msgid "Image: Color magenta to alpha"
@@ -1104,7 +1104,7 @@ msgstr "Hình ảnh: Chuyển magenta thành alpha"
 
 #: Menu
 msgid "Image: Color magenta to alpha (15 pct)"
-msgstr "Hình ảnh: Chuyển magenta thành alpha (15%)"
+msgstr "Hình ảnh: Chuyển magenta thành alpha (15％)"
 
 #: Menu
 msgid "Image: Colorspace to gray"
@@ -1116,7 +1116,7 @@ msgstr "Hình ảnh: Chuyển trắng thành alpha"
 
 #: Menu
 msgid "Image: Color white to alpha (15 pct)"
-msgstr "Hình ảnh: Chuyển trắng thành alpha (15%)"
+msgstr "Hình ảnh: Chuyển trắng thành alpha (15％)"
 
 #: Menu
 msgid "Image: Combine into a GIF"
@@ -1184,19 +1184,19 @@ msgstr "Hình ảnh: Xuất sang PDF"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"
-msgstr "Hình ảnh: Tìm tương tự (65%)"
+msgstr "Hình ảnh: Tìm tương tự (65％)"
 
 #: Menu
 msgid "Image: Find similar (75 pct)"
-msgstr "Hình ảnh: Tìm tương tự (75%)"
+msgstr "Hình ảnh: Tìm tương tự (75％)"
 
 #: Menu
 msgid "Image: Find similar (85 pct)"
-msgstr "Hình ảnh: Tìm tương tự (85%)"
+msgstr "Hình ảnh: Tìm tương tự (85％)"
 
 #: Menu
 msgid "Image: Find similar (95 pct)"
-msgstr "Hình ảnh: Tìm tương tự (95%)"
+msgstr "Hình ảnh: Tìm tương tự (95％)"
 
 #: Menu
 msgid "Image: Flip (horizontal)"
@@ -1260,15 +1260,15 @@ msgstr "Hình ảnh: Đổi tên từ metadata"
 
 #: Menu
 msgid "Image: Resize (25 pct)"
-msgstr "Hình ảnh: Thay đổi kích thước (25%)"
+msgstr "Hình ảnh: Thay đổi kích thước (25％)"
 
 #: Menu
 msgid "Image: Resize (50 pct)"
-msgstr "Hình ảnh: Thay đổi kích thước (50%)"
+msgstr "Hình ảnh: Thay đổi kích thước (50％)"
 
 #: Menu
 msgid "Image: Resize (75 pct)"
-msgstr "Hình ảnh: Thay đổi kích thước (75%)"
+msgstr "Hình ảnh: Thay đổi kích thước (75％)"
 
 #: Menu
 msgid "Image: Resize (512x512)"
@@ -1836,15 +1836,15 @@ msgstr "Video: Loại bỏ âm thanh"
 
 #: Menu
 msgid "Video: Resize (25 pct)"
-msgstr "Video: Thay đổi kích thước (25%)"
+msgstr "Video: Thay đổi kích thước (25％)"
 
 #: Menu
 msgid "Video: Resize (50 pct)"
-msgstr "Video: Thay đổi kích thước (50%)"
+msgstr "Video: Thay đổi kích thước (50％)"
 
 #: Menu
 msgid "Video: Resize (75 pct)"
-msgstr "Video: Thay đổi kích thước (75%)"
+msgstr "Video: Thay đổi kích thước (75％)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"

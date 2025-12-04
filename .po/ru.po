@@ -1068,7 +1068,7 @@ msgstr "Изображение: автоматическая обрезка"
 
 #: Menu
 msgid "Image: Automatic crop (15 pct)"
-msgstr "Изображение: автоматическая обрезка (15%)"
+msgstr "Изображение: автоматическая обрезка (15％)"
 
 #: Menu
 msgid "Image: Background to alpha"
@@ -1076,7 +1076,7 @@ msgstr "Изображение: фон в альфа-канал"
 
 #: Menu
 msgid "Image: Background to alpha (15 pct)"
-msgstr "Изображение: фон в альфа-канал (15%)"
+msgstr "Изображение: фон в альфа-канал (15％)"
 
 #: Menu
 msgid "Image: Color alpha to black"
@@ -1096,7 +1096,7 @@ msgstr "Изображение: черный цвет в альфа-канал"
 
 #: Menu
 msgid "Image: Color black to alpha (15 pct)"
-msgstr "Изображение: черный цвет в альфа-канал (15%)"
+msgstr "Изображение: черный цвет в альфа-канал (15％)"
 
 #: Menu
 msgid "Image: Color magenta to alpha"
@@ -1104,7 +1104,7 @@ msgstr "Изображение: пурпурный цвет в альфа-кан
 
 #: Menu
 msgid "Image: Color magenta to alpha (15 pct)"
-msgstr "Изображение: пурпурный цвет в альфа-канал (15%)"
+msgstr "Изображение: пурпурный цвет в альфа-канал (15％)"
 
 #: Menu
 msgid "Image: Colorspace to gray"
@@ -1116,7 +1116,7 @@ msgstr "Изображение: белый цвет в альфа-канал"
 
 #: Menu
 msgid "Image: Color white to alpha (15 pct)"
-msgstr "Изображение: белый цвет в альфа-канал (15%)"
+msgstr "Изображение: белый цвет в альфа-канал (15％)"
 
 #: Menu
 msgid "Image: Combine into a GIF"
@@ -1184,19 +1184,19 @@ msgstr "Изображение: экспортировать в PDF"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"
-msgstr "Изображение: найти похожие (65%)"
+msgstr "Изображение: найти похожие (65％)"
 
 #: Menu
 msgid "Image: Find similar (75 pct)"
-msgstr "Изображение: найти похожие (75%)"
+msgstr "Изображение: найти похожие (75％)"
 
 #: Menu
 msgid "Image: Find similar (85 pct)"
-msgstr "Изображение: найти похожие (85%)"
+msgstr "Изображение: найти похожие (85％)"
 
 #: Menu
 msgid "Image: Find similar (95 pct)"
-msgstr "Изображение: найти похожие (95%)"
+msgstr "Изображение: найти похожие (95％)"
 
 #: Menu
 msgid "Image: Flip (horizontal)"
@@ -1260,15 +1260,15 @@ msgstr "Изображение: переименовать по метаданн
 
 #: Menu
 msgid "Image: Resize (25 pct)"
-msgstr "Изображение: изменить размер (25%)"
+msgstr "Изображение: изменить размер (25％)"
 
 #: Menu
 msgid "Image: Resize (50 pct)"
-msgstr "Изображение: изменить размер (50%)"
+msgstr "Изображение: изменить размер (50％)"
 
 #: Menu
 msgid "Image: Resize (75 pct)"
-msgstr "Изображение: изменить размер (75%)"
+msgstr "Изображение: изменить размер (75％)"
 
 #: Menu
 msgid "Image: Resize (512x512)"
@@ -1836,15 +1836,15 @@ msgstr "Видео: удалить аудио"
 
 #: Menu
 msgid "Video: Resize (25 pct)"
-msgstr "Видео: изменить размер (25%)"
+msgstr "Видео: изменить размер (25％)"
 
 #: Menu
 msgid "Video: Resize (50 pct)"
-msgstr "Видео: изменить размер (50%)"
+msgstr "Видео: изменить размер (50％)"
 
 #: Menu
 msgid "Video: Resize (75 pct)"
-msgstr "Видео: изменить размер (75%)"
+msgstr "Видео: изменить размер (75％)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"

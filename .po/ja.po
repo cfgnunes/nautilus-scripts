@@ -1068,7 +1068,7 @@ msgstr "画像：自動切り抜き"
 
 #: Menu
 msgid "Image: Automatic crop (15 pct)"
-msgstr "画像：自動切り抜き (15%)"
+msgstr "画像：自動切り抜き (15％)"
 
 #: Menu
 msgid "Image: Background to alpha"
@@ -1076,7 +1076,7 @@ msgstr "画像：背景をアルファに変換"
 
 #: Menu
 msgid "Image: Background to alpha (15 pct)"
-msgstr "画像：背景をアルファに変換 (15%)"
+msgstr "画像：背景をアルファに変換 (15％)"
 
 #: Menu
 msgid "Image: Color alpha to black"
@@ -1096,7 +1096,7 @@ msgstr "画像：黒をアルファに変換"
 
 #: Menu
 msgid "Image: Color black to alpha (15 pct)"
-msgstr "画像：黒をアルファに変換 (15%)"
+msgstr "画像：黒をアルファに変換 (15％)"
 
 #: Menu
 msgid "Image: Color magenta to alpha"
@@ -1104,7 +1104,7 @@ msgstr "画像：マゼンタをアルファに変換"
 
 #: Menu
 msgid "Image: Color magenta to alpha (15 pct)"
-msgstr "画像：マゼンタをアルファに変換 (15%)"
+msgstr "画像：マゼンタをアルファに変換 (15％)"
 
 #: Menu
 msgid "Image: Colorspace to gray"
@@ -1116,7 +1116,7 @@ msgstr "画像：白をアルファに変換"
 
 #: Menu
 msgid "Image: Color white to alpha (15 pct)"
-msgstr "画像：白をアルファに変換 (15%)"
+msgstr "画像：白をアルファに変換 (15％)"
 
 #: Menu
 msgid "Image: Combine into a GIF"
@@ -1184,19 +1184,19 @@ msgstr "画像：PDFにエクスポート"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"
-msgstr "画像：類似を検索 (65%)"
+msgstr "画像：類似を検索 (65％)"
 
 #: Menu
 msgid "Image: Find similar (75 pct)"
-msgstr "画像：類似を検索 (75%)"
+msgstr "画像：類似を検索 (75％)"
 
 #: Menu
 msgid "Image: Find similar (85 pct)"
-msgstr "画像：類似を検索 (85%)"
+msgstr "画像：類似を検索 (85％)"
 
 #: Menu
 msgid "Image: Find similar (95 pct)"
-msgstr "画像：類似を検索 (95%)"
+msgstr "画像：類似を検索 (95％)"
 
 #: Menu
 msgid "Image: Flip (horizontal)"
@@ -1260,15 +1260,15 @@ msgstr "画像：メタデータから名前変更"
 
 #: Menu
 msgid "Image: Resize (25 pct)"
-msgstr "画像：リサイズ (25%)"
+msgstr "画像：リサイズ (25％)"
 
 #: Menu
 msgid "Image: Resize (50 pct)"
-msgstr "画像：リサイズ (50%)"
+msgstr "画像：リサイズ (50％)"
 
 #: Menu
 msgid "Image: Resize (75 pct)"
-msgstr "画像：リサイズ (75%)"
+msgstr "画像：リサイズ (75％)"
 
 #: Menu
 msgid "Image: Resize (512x512)"
@@ -1836,15 +1836,15 @@ msgstr "動画：音声を削除"
 
 #: Menu
 msgid "Video: Resize (25 pct)"
-msgstr "動画：リサイズ (25%)"
+msgstr "動画：リサイズ (25％)"
 
 #: Menu
 msgid "Video: Resize (50 pct)"
-msgstr "動画：リサイズ (50%)"
+msgstr "動画：リサイズ (50％)"
 
 #: Menu
 msgid "Video: Resize (75 pct)"
-msgstr "動画：リサイズ (75%)"
+msgstr "動画：リサイズ (75％)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"
