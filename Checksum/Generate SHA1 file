@@ -21,13 +21,10 @@ _main() {
         file_1=$(_get_element "$input_files" "1")
         file_1=$(basename -- "$file_1")
         options+=$file_1
-        options+=".sha1"
-        options+="$FIELD_SEPARATOR"
+        options+=".sha1"$'\n'
     fi
-    options+="sha1sum.txt"
-    options+="$FIELD_SEPARATOR"
-    options+="checksums.sha1"
-    options+="$FIELD_SEPARATOR"
+    options+="sha1sum.txt"$'\n'
+    options+="checksums.sha1"$'\n'
     options+="SHA1SUMS"
 
     output_file=$(_display_select_box "$options" \

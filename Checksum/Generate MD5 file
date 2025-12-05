@@ -21,13 +21,10 @@ _main() {
         file_1=$(_get_element "$input_files" "1")
         file_1=$(basename -- "$file_1")
         options+=$file_1
-        options+=".md5"
-        options+="$FIELD_SEPARATOR"
+        options+=".md5"$'\n'
     fi
-    options+="md5sum.txt"
-    options+="$FIELD_SEPARATOR"
-    options+="checksums.md5"
-    options+="$FIELD_SEPARATOR"
+    options+="md5sum.txt"$'\n'
+    options+="checksums.md5"$'\n'
     options+="MD5SUMS"
 
     output_file=$(_display_select_box "$options" \
