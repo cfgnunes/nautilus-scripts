@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enhanced File Manager Actions for Linux\n"
 "POT-Creation-Date: 2025-12-03 12:12-0300\n"
-"PO-Revision-Date: 2025-12-04 21:02+0900\n"
+"PO-Revision-Date: 2025-12-05 14:17+0900\n"
 "Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
 "Language-Team: \n"
 "Language: ja\n"
@@ -26,7 +26,6 @@ msgstr "続行しますか？"
 msgid "directories"
 msgstr "ディレクトリ"
 
-#, fuzzy
 msgid "items"
 msgstr "アイテム"
 
@@ -36,7 +35,6 @@ msgstr "コマンドが失敗しました。"
 msgid "The output file does not exist."
 msgstr "出力ファイルが存在しません。"
 
-#, fuzzy
 msgid "Finished with errors! See the log:"
 msgstr "エラーで終了しました！ログを参照："
 
@@ -94,7 +92,6 @@ msgstr "キャンセル"
 msgid "(Empty)"
 msgstr "(空)"
 
-#, fuzzy
 msgid "Select the ones to open:"
 msgstr "開くものを選択："
 
@@ -134,11 +131,9 @@ msgstr "完了！"
 msgid "Running the task. Please, wait..."
 msgstr "タスクを実行中です。お待ちください..."
 
-#, fuzzy
 msgid "No default application is set for the type:"
 msgstr "このタイプのデフォルトアプリケーションが設定されていません："
 
-#, fuzzy
 msgid "Could not find the executable to open MIME type:"
 msgstr "MIMEタイプを開く実行ファイルが見つかりませんでした："
 
@@ -164,7 +159,7 @@ msgid "You must select at least"
 msgstr "少なくとも選択する必要があります："
 
 msgid "You must select up to"
-msgstr "最大で選択する必要があります："
+msgstr "最大で選択できる数："
 
 msgid "Could not find the output directory!"
 msgstr "出力ディレクトリが見つかりません！"
@@ -196,14 +191,12 @@ msgstr "クリップボードに有効なパスがありません！"
 msgid "links"
 msgstr "リンク"
 
-#, fuzzy
 msgid "Inode"
 msgstr "inode"
 
 msgid "Link"
 msgstr "リンク"
 
-#, fuzzy
 msgid "Unsupported clipboard type."
 msgstr "サポートされていないクリップボードタイプです。"
 
@@ -786,14 +779,12 @@ msgid "Code Editor"
 msgstr "コードエディター"
 
 #: Menu
-#, fuzzy
 msgid "Compare items"
-msgstr "アイテムを比較"
+msgstr "選択した項目を比較"
 
 #: Menu
-#, fuzzy
 msgid "Compare items (via Diff)"
-msgstr "アイテムを比較 (Diffを使用)"
+msgstr "選択した項目を比較 (Diffを使用)"
 
 #: Menu
 msgid "Compress to '7z'"
@@ -1324,14 +1315,12 @@ msgid "Image: Split into 4"
 msgstr "画像：4つに分割"
 
 #: Menu
-#, fuzzy
 msgid "Image: Stack (horizontal)"
-msgstr "画像：スタック (水平)"
+msgstr "画像：並べる (水平)"
 
 #: Menu
-#, fuzzy
 msgid "Image: Stack (vertical)"
-msgstr "画像：スタック (垂直)"
+msgstr "画像：並べる (垂直)"
 
 #: Menu
 msgid "IP: Scanner"
