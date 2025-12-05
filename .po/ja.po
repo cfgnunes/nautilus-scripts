@@ -173,12 +173,6 @@ msgstr "ファイル"
 msgid "Count"
 msgstr "数"
 
-msgid "Char"
-msgstr "文字"
-
-msgid "Line"
-msgstr "行"
-
 msgid "Issues"
 msgstr "問題"
 
@@ -1705,10 +1699,6 @@ msgstr "テキスト：エンコーディングを一覧表示"
 #: Menu
 msgid "Text: List issues"
 msgstr "テキスト：問題を一覧表示"
-
-#: Menu
-msgid "Text: List invalid chars"
-msgstr "テキスト：無効な文字を一覧表示"
 
 #: Menu
 msgid "Text: List line breaks"
