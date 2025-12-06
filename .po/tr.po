@@ -1,0 +1,1988 @@
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Enhanced File Manager Actions for Linux\n"
+"POT-Creation-Date: 2025-11-13 12:12-0300\n"
+"PO-Revision-Date: 2025-12-06 22:05-0300\n"
+"Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
+"Language-Team: \n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Done!"
+msgstr "Tamamlandı!"
+
+msgid "files"
+msgstr "dosya"
+
+msgid "Would you like to continue?"
+msgstr "Devam etmek istiyor musunuz?"
+
+msgid "directories"
+msgstr "dizin"
+
+msgid "items"
+msgstr "öğe"
+
+msgid "The command failed."
+msgstr "Komut başarısız oldu."
+
+msgid "The output file does not exist."
+msgstr "Çıktı dosyası mevcut değil."
+
+msgid "Finished with errors! See the log:"
+msgstr "Hatalarla tamamlandı! Günlüğe bakın:"
+
+msgid "Your system does not support clipboard operations."
+msgstr "Sisteminiz pano işlemlerini desteklemiyor."
+
+msgid "Could not find a package for:"
+msgstr "Şunun için paket bulunamadı:"
+
+msgid "The following packages are missing:"
+msgstr "Aşağıdaki paketler eksik:"
+
+msgid "Would you like to install them?"
+msgstr "Onları yüklemek ister misiniz?"
+
+msgid "Installing the packages. Please, wait..."
+msgstr "Paketler yükleniyor. Lütfen bekleyin..."
+
+msgid "The package was installed, but a system reboot is required."
+msgstr "Paket yüklendi, ancak sistem yeniden başlatma gerekiyor."
+
+msgid "Could not install the package:"
+msgstr "Paket yüklenemedi:"
+
+msgid "This action will delete the selected items."
+msgstr "Bu işlem, seçili öğeleri silecektir."
+
+msgid "Total selected:"
+msgstr "Toplam seçili:"
+
+msgid "Total:"
+msgstr "Toplam:"
+
+msgid "Some items could not be deleted."
+msgstr "Bazı öğeler silinemedi."
+
+msgid "All items were successfully deleted!"
+msgstr "Tüm öğeler başarıyla silindi!"
+
+msgid "Could not access the directory:"
+msgstr "Dizine erişilemedi:"
+
+msgid "The destination file already exists."
+msgstr "Hedef dosya zaten mevcut."
+
+msgid "Unable to move."
+msgstr "Taşınamıyor."
+
+msgid "OK"
+msgstr "Tamam"
+
+msgid "Cancel"
+msgstr "İptal"
+
+msgid "(Empty)"
+msgstr "(Boş)"
+
+msgid "Select the ones to open:"
+msgstr "Açılacakları seçin:"
+
+msgid "Select the ones to reveal in the file manager:"
+msgstr "Dosya yöneticisinde gösterilecekleri seçin:"
+
+msgid "Select the ones to open in the web browser:"
+msgstr "Web tarayıcısında açılacakları seçin:"
+
+msgid "Select the ones to delete:"
+msgstr "Silinecekleri seçin:"
+
+msgid "Password"
+msgstr "Parola"
+
+msgid "Type your password:"
+msgstr "Parolanızı yazın:"
+
+msgid "The password can not be empty!"
+msgstr "Parola boş olamaz!"
+
+msgid "Yes"
+msgstr "Evet"
+
+msgid "No"
+msgstr "Hayır"
+
+msgid "Finished! The output files are in:"
+msgstr "Tamamlandı! Çıktı dosyaları şurada:"
+
+msgid "Finished, but there is nothing to do."
+msgstr "Tamamlandı, ancak yapacak bir şey yok."
+
+msgid "Finished!"
+msgstr "Tamamlandı!"
+
+msgid "Running the task. Please, wait..."
+msgstr "Görev çalıştırılıyor. Lütfen bekleyin..."
+
+msgid "No default application is set for the type:"
+msgstr "Bu tür için varsayılan uygulama ayarlanmamış:"
+
+msgid "Could not find the executable to open MIME type:"
+msgstr "MIME türünü açacak çalıştırılabilir bulunamadı:"
+
+msgid "Batch mode detected."
+msgstr "Toplu iş modu algılandı."
+
+msgid "Each file inside this directory will be processed individually."
+msgstr "Bu dizindeki her dosya ayrı ayrı işlenecektir."
+
+msgid "files or directories"
+msgstr "dosya veya dizin"
+
+msgid "You must select files with extension:"
+msgstr "Şu uzantılı dosyaları seçmelisiniz:"
+
+msgid "Invalid input file!"
+msgstr "Geçersiz girdi dosyası!"
+
+msgid "You must select"
+msgstr "Şunu seçmelisiniz"
+
+msgid "You must select at least"
+msgstr "En az şunu seçmelisiniz"
+
+msgid "You must select up to"
+msgstr "En fazla şunu seçmelisiniz"
+
+msgid "Could not find the output directory!"
+msgstr "Çıktı dizini bulunamadı!"
+
+msgid "Accessed recently"
+msgstr "Son erişilen"
+
+msgid "File"
+msgstr "Dosya"
+
+msgid "Count"
+msgstr "Sayı"
+
+msgid "Issues"
+msgstr "Sorunlar"
+
+msgid "Encoding"
+msgstr "Kodlama"
+
+msgid "There are no valid paths in the clipboard!"
+msgstr "Panoda geçerli bir yol yok!"
+
+msgid "links"
+msgstr "bağlantı"
+
+msgid "Inode"
+msgstr "Düğüm"
+
+msgid "Link"
+msgstr "Bağlantı"
+
+msgid "Unsupported clipboard type."
+msgstr "Desteklenmeyen pano türü."
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr "Bu işlem, seçili dosya ve dizinleri özyinelemeli olarak yeniden adlandıracaktır."
+
+msgid "PDF files"
+msgstr "PDF dosyaları"
+
+msgid "Select a PDF to use as the watermark"
+msgstr "Filigran olarak kullanılacak bir PDF seçin"
+
+msgid "Signature"
+msgstr "İmza"
+
+msgid "Malware"
+msgstr "Kötü amaçlı yazılım"
+
+msgid "Mode"
+msgstr "Kip"
+
+msgid "Bit rate"
+msgstr "Bit hızı"
+
+msgid "Sampling rate"
+msgstr "Örnekleme hızı"
+
+msgid "Channels"
+msgstr "Kanallar"
+
+msgid "Duration"
+msgstr "Süre"
+
+msgid "Album"
+msgstr "Albüm"
+
+msgid "Artist"
+msgstr "Sanatçı"
+
+msgid "Title"
+msgstr "Başlık"
+
+msgid "Quality"
+msgstr "Kalite"
+
+msgid "Image files"
+msgstr "Görüntü dosyaları"
+
+msgid "Select an image to use as the watermark"
+msgstr "Filigran olarak kullanılacak bir görüntü seçin"
+
+msgid "Key files"
+msgstr "Anahtar dosyaları"
+
+msgid "Select a key file to import"
+msgstr "İçe aktarılacak bir anahtar dosyası seçin"
+
+msgid "No secret keys were found."
+msgstr "Gizli anahtar bulunamadı."
+
+msgid "Would you like to import a key now?"
+msgstr "Şimdi bir anahtar içe aktarmak ister misiniz?"
+
+msgid "Failed to import the key!"
+msgstr "Anahtar içe aktarılamadı!"
+
+msgid "Select a user:"
+msgstr "Bir kullanıcı seçin:"
+
+msgid "User"
+msgstr "Kullanıcı"
+
+msgid "Name"
+msgstr "Ad"
+
+msgid "E-mail"
+msgstr "E-posta"
+
+msgid "Created"
+msgstr "Oluşturulma"
+
+msgid "Expires"
+msgstr "Son geçerlilik"
+
+msgid "You must select a user!"
+msgstr "Bir kullanıcı seçmelisiniz!"
+
+msgid "No public keys were found."
+msgstr "Genel anahtar bulunamadı."
+
+msgid "Select one or more users:"
+msgstr "Bir veya daha fazla kullanıcı seçin:"
+
+msgid "You must select at least one user!"
+msgstr "En az bir kullanıcı seçmelisiniz!"
+
+msgid "Directory"
+msgstr "Dizin"
+
+msgid "Size"
+msgstr "Boyut"
+
+msgid "Group"
+msgstr "Grup"
+
+msgid "Item"
+msgstr "Öğe"
+
+msgid "Octal"
+msgstr "Sekizli"
+
+msgid "Type"
+msgstr "Tür"
+
+msgid "You must select only two images to compare!"
+msgstr "Karşılaştırmak için yalnızca iki görüntü seçmelisiniz!"
+
+msgid "You must select only two PDFs to compare!"
+msgstr "Karşılaştırmak için yalnızca iki PDF seçmelisiniz!"
+
+msgid "You must select only two binary files to compare!"
+msgstr "Karşılaştırmak için yalnızca iki ikili dosya seçmelisiniz!"
+
+msgid "No items were selected!"
+msgstr "Hiçbir öğe seçilmedi!"
+
+msgid "No directories were selected!"
+msgstr "Hiçbir dizin seçilmedi!"
+
+msgid "The selected items are identical."
+msgstr "Seçili öğeler aynı."
+
+msgid "The selected images has same pixel values."
+msgstr "Seçili görüntüler aynı piksel değerlerine sahip."
+
+msgid "MIME"
+msgstr "MIME"
+
+msgid "This action will move all files from subdirectories to the root of the selected directory."
+msgstr "Bu işlem, tüm dosyaları alt dizinlerden seçili dizinin köküne taşıyacaktır."
+
+msgid "This action will reset the permissions recursively."
+msgstr "Bu işlem, izinleri özyinelemeli olarak sıfırlayacaktır."
+
+msgid "Date"
+msgstr "Tarih"
+
+msgid "Time"
+msgstr "Zaman"
+
+msgid "Select the output filename:"
+msgstr "Çıktı dosya adını seçin:"
+
+msgid "Filename"
+msgstr "Dosya adı"
+
+msgid "Status"
+msgstr "Durum"
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr "Panoda veya seçili dosyalarda geçerli bir URL yok!"
+
+msgid "IPs"
+msgstr "IP'ler"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Ping"
+msgstr "Ping"
+
+msgid "Ports"
+msgstr "Portlar"
+
+msgid "Hostname"
+msgstr "Ana bilgisayar adı"
+
+msgid "Example"
+msgstr "Örnek"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "IP adresleri veya IP aralıkları girin."
+
+msgid "There are no valid IPs in the input!"
+msgstr "Girdide geçerli bir IP yok!"
+
+msgid "Enter the URLs."
+msgstr "URL'leri girin."
+
+msgid "There are no valid URLs in the input!"
+msgstr "Girdide geçerli bir URL yok!"
+
+msgid "No remote URL found."
+msgstr "Uzak URL bulunamadı."
+
+msgid "URLs"
+msgstr "URL'ler"
+
+msgid "HTTP code"
+msgstr "HTTP kodu"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "(No differences)"
+msgstr "(Fark yok)"
+
+msgid "(No line break)"
+msgstr "(Satır sonu yok)"
+
+msgid "(No response)"
+msgstr "(Yanıt yok)"
+
+msgid "Checksum mismatch."
+msgstr "Sağlama toplamı uyuşmuyor."
+
+msgid "File does not exist."
+msgstr "Dosya mevcut değil."
+
+msgid "High"
+msgstr "Yüksek"
+
+msgid "Low"
+msgstr "Düşük"
+
+msgid "Medium"
+msgstr "Orta"
+
+msgid "Online"
+msgstr "Çevrimiçi"
+
+msgid "Offline"
+msgstr "Çevrimdışı"
+
+msgid "Valid signature"
+msgstr "Geçerli imza"
+
+msgid "Invalid signature"
+msgstr "Geçersiz imza"
+
+msgid "Missing key"
+msgstr "Eksik anahtar"
+
+msgid "Missing data file"
+msgstr "Eksik veri dosyası"
+
+msgid "Revoked key"
+msgstr "İptal edilmiş anahtar"
+
+msgid "Expired key"
+msgstr "Süresi dolmuş anahtar"
+
+msgid "Expired signature"
+msgstr "Süresi dolmuş imza"
+
+msgid "Unknown algorithm"
+msgstr "Bilinmeyen algoritma"
+
+msgid "Key ID"
+msgstr "Anahtar Kimliği"
+
+msgid "Enter the password for the archive:"
+msgstr "Arşiv parolasını girin:"
+
+msgid "Select the output directory"
+msgstr "Çıktı dizinini seçin"
+
+msgid "Select input directories"
+msgstr "Girdi dizinlerini seçin"
+
+msgid "Select input files"
+msgstr "Girdi dosyalarını seçin"
+
+#: Menu
+msgid "Archive"
+msgstr "Arşiv"
+
+#: Menu
+msgid "Audio and Video"
+msgstr "Ses ve Video"
+
+#: Menu
+msgid "Checksum"
+msgstr "Sağlama Toplamı"
+
+#: Menu
+msgid "Clipboard"
+msgstr "Pano"
+
+#: Menu
+msgid "Directories and Files"
+msgstr "Dizinler ve Dosyalar"
+
+#: Menu
+msgid "Document"
+msgstr "Belge"
+
+#: Menu
+msgid "Encryption"
+msgstr "Şifreleme"
+
+#: Menu
+msgid "Image"
+msgstr "Görüntü"
+
+#: Menu
+msgid "Links"
+msgstr "Bağlantılar"
+
+#: Menu
+msgid "Network and Internet"
+msgstr "Ağ ve İnternet"
+
+#: Menu
+msgid "Open with"
+msgstr "Şununla aç"
+
+#: Menu
+msgid "Plain text"
+msgstr "Düz metin"
+
+#: Menu
+msgid "Rename files"
+msgstr "Dosyaları yeniden adlandır"
+
+#: Menu
+msgid "Security and Recovery"
+msgstr "Güvenlik ve Kurtarma"
+
+#: Menu
+msgid "Audio and Video: Tools"
+msgstr "Ses ve Video: Araçlar"
+
+#: Menu
+msgid "Audio: Channels"
+msgstr "Ses: Kanallar"
+
+#: Menu
+msgid "Audio: Convert"
+msgstr "Ses: Dönüştür"
+
+#: Menu
+msgid "Audio: Effects"
+msgstr "Ses: Efektler"
+
+#: Menu
+msgid "Audio: MP3 files"
+msgstr "Ses: MP3 dosyaları"
+
+#: Menu
+msgid "Audio: Quality"
+msgstr "Ses: Kalite"
+
+#: Menu
+msgid "Document: Convert"
+msgstr "Belge: Dönüştür"
+
+#: Menu
+msgid "Document: Print"
+msgstr "Belge: Yazdır"
+
+#: Menu
+msgid "Image: Color"
+msgstr "Görüntü: Renk"
+
+#: Menu
+msgid "Image: Combine, Split"
+msgstr "Görüntü: Birleştir, Ayır"
+
+#: Menu
+msgid "Image: Convert"
+msgstr "Görüntü: Dönüştür"
+
+#: Menu
+msgid "Image: Crop, Resize"
+msgstr "Görüntü: Kırp, Boyutlandır"
+
+#: Menu
+msgid "Image: Flip, Rotate"
+msgstr "Görüntü: Çevir, Döndür"
+
+#: Menu
+msgid "Image: Icons"
+msgstr "Görüntü: Simgeler"
+
+#: Menu
+msgid "Image: Metadata, Exif"
+msgstr "Görüntü: Meta veri, Exif"
+
+#: Menu
+msgid "Image: Optimize, Reduce"
+msgstr "Görüntü: Optimize et, Küçült"
+
+#: Menu
+msgid "Image: Similarity"
+msgstr "Görüntü: Benzerlik"
+
+#: Menu
+msgid "Image: SVG files"
+msgstr "Görüntü: SVG dosyaları"
+
+#: Menu
+msgid "Image: Text recognition (OCR)"
+msgstr "Görüntü: Metin tanıma (OCR)"
+
+#: Menu
+msgid "Image: Transparency"
+msgstr "Görüntü: Şeffaflık"
+
+#: Menu
+msgid "Image: Watermark"
+msgstr "Görüntü: Filigran"
+
+#: Menu
+msgid "PDF: Annotations"
+msgstr "PDF: Açıklamalar"
+
+#: Menu
+msgid "PDF: Combine, Split"
+msgstr "PDF: Birleştir, Ayır"
+
+#: Menu
+msgid "PDF: Security"
+msgstr "PDF: Güvenlik"
+
+#: Menu
+msgid "PDF: Multiple-page layout"
+msgstr "PDF: Çok sayfalı düzen"
+
+#: Menu
+msgid "PDF: Optimize, Reduce"
+msgstr "PDF: Optimize et, Küçült"
+
+#: Menu
+msgid "PDF: Page size"
+msgstr "PDF: Sayfa boyutu"
+
+#: Menu
+msgid "PDF: Rotate"
+msgstr "PDF: Döndür"
+
+#: Menu
+msgid "PDF: Signatures"
+msgstr "PDF: İmzalar"
+
+#: Menu
+msgid "PDF: Text recognition (OCR)"
+msgstr "PDF: Metin tanıma (OCR)"
+
+#: Menu
+msgid "PDF: Tools"
+msgstr "PDF: Araçlar"
+
+#: Menu
+msgid "PDF: Watermark"
+msgstr "PDF: Filigran"
+
+#: Menu
+msgid "Video: Aspect ratio"
+msgstr "Video: En-boy oranı"
+
+#: Menu
+msgid "Video: Audio track"
+msgstr "Video: Ses parçası"
+
+#: Menu
+msgid "Video: Convert"
+msgstr "Video: Dönüştür"
+
+#: Menu
+msgid "Video: Export frames"
+msgstr "Video: Kareleri dışa aktar"
+
+#: Menu
+msgid "Video: Flip, Rotate"
+msgstr "Video: Çevir, Döndür"
+
+#: Menu
+msgid "Video: Frame rate"
+msgstr "Video: Kare hızı"
+
+#: Menu
+msgid "Video: Resize"
+msgstr "Video: Boyutlandır"
+
+#: Menu
+msgid "Video: Speed"
+msgstr "Video: Hız"
+
+#: Menu
+msgid "Audio: Check quality"
+msgstr "Ses: Kaliteyi kontrol et"
+
+#: Menu
+msgid "Audio: Convert to FLAC"
+msgstr "Ses: FLAC'e dönüştür"
+
+#: Menu
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "Ses: MP3'e dönüştür (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (192 kbps)"
+msgstr "Ses: MP3'e dönüştür (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (320 kbps)"
+msgstr "Ses: MP3'e dönüştür (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "Ses: OGG'ye dönüştür (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (192 kbps)"
+msgstr "Ses: OGG'ye dönüştür (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (320 kbps)"
+msgstr "Ses: OGG'ye dönüştür (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "Ses: OPUS'a dönüştür (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (192 kbps)"
+msgstr "Ses: OPUS'a dönüştür (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (320 kbps)"
+msgstr "Ses: OPUS'a dönüştür (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to WAV"
+msgstr "Ses: WAV'a dönüştür"
+
+#: Menu
+msgid "Audio: Fade-in"
+msgstr "Ses: Fade-in (Açılma)"
+
+#: Menu
+msgid "Audio: Fade-out"
+msgstr "Ses: Fade-out (Kapanma)"
+
+#: Menu
+msgid "Audio: Mix channels to mono"
+msgstr "Ses: Kanalları mono'ya karıştır"
+
+#: Menu
+msgid "Audio: Mix two files"
+msgstr "Ses: İki dosyayı karıştır"
+
+#: Menu
+msgid "Audio: Volume normalize"
+msgstr "Ses: Ses seviyesini normalleştir"
+
+#: Menu
+msgid "Audio: Produce a spectrogram"
+msgstr "Ses: Spektrogram oluştur"
+
+#: Menu
+msgid "Audio: Remove silence (sections)"
+msgstr "Ses: Sessizliği kaldır (bölümler)"
+
+#: Menu
+msgid "Audio: Silence noise"
+msgstr "Ses: Gürültüyü sessizleştir"
+
+#: Menu
+msgid "Audio: Remove silence (extremities)"
+msgstr "Ses: Sessizliği kaldır (uçlar)"
+
+#: Menu
+msgid "Create backup (via Rsync)"
+msgstr "Yedek oluştur (Rsync ile)"
+
+#: Menu
+msgid "Code Editor"
+msgstr "Kod Düzenleyici"
+
+#: Menu
+msgid "Compare items"
+msgstr "Öğeleri karşılaştır"
+
+#: Menu
+msgid "Compare items (via Diff)"
+msgstr "Öğeleri karşılaştır (Diff ile)"
+
+#: Menu
+msgid "Compress to '7z'"
+msgstr "'7z' olarak sıkıştır"
+
+#: Menu
+msgid "Compress to '7z' with password"
+msgstr "Parolalı '7z' olarak sıkıştır"
+
+#: Menu
+msgid "Compress to 'tar.gz'"
+msgstr "'tar.gz' olarak sıkıştır"
+
+#: Menu
+msgid "Compress to 'tar.xz'"
+msgstr "'tar.xz' olarak sıkıştır"
+
+#: Menu
+msgid "Compress to 'tar.zst'"
+msgstr "'tar.zst' olarak sıkıştır"
+
+#: Menu
+msgid "Compress to 'zip'"
+msgstr "'zip' olarak sıkıştır"
+
+#: Menu
+msgid "Compress to 'zip' with password"
+msgstr "Parolalı 'zip' olarak sıkıştır"
+
+#: Menu
+msgid "Compute all checksums"
+msgstr "Tüm sağlama toplamlarını hesapla"
+
+#: Menu
+msgid "Compute MD5"
+msgstr "MD5 hesapla"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "SHA1 hesapla"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "SHA256 hesapla"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "SHA512 hesapla"
+
+#: Menu
+msgid "Copy file contents"
+msgstr "Dosya içeriklerini kopyala"
+
+#: Menu
+msgid "Copy file names"
+msgstr "Dosya adlarını kopyala"
+
+#: Menu
+msgid "Copy file names (recursive)"
+msgstr "Dosya adlarını kopyala (özyinelemeli)"
+
+#: Menu
+msgid "Copy file paths"
+msgstr "Dosya yollarını kopyala"
+
+#: Menu
+msgid "Copy file paths (recursive)"
+msgstr "Dosya yollarını kopyala (özyinelemeli)"
+
+#: Menu
+msgid "Create hard link here"
+msgstr "Buraya sabit bağlantı oluştur"
+
+#: Menu
+msgid "Create hard link to..."
+msgstr "Şuraya sabit bağlantı oluştur..."
+
+#: Menu
+msgid "Create symbolic link here"
+msgstr "Buraya sembolik bağlantı oluştur"
+
+#: Menu
+msgid "Create symbolic link to..."
+msgstr "Şuraya sembolik bağlantı oluştur..."
+
+#: Menu
+msgid "Disk Usage Analyzer"
+msgstr "Disk Kullanım Analizcisi"
+
+#: Menu
+msgid "Document: Convert to DOCX"
+msgstr "Belge: DOCX'e dönüştür"
+
+#: Menu
+msgid "Document: Convert to EPUB"
+msgstr "Belge: EPUB'a dönüştür"
+
+#: Menu
+msgid "Document: Convert to Markdown"
+msgstr "Belge: Markdown'a dönüştür"
+
+#: Menu
+msgid "Document: Convert to ODP"
+msgstr "Belge: ODP'ye dönüştür"
+
+#: Menu
+msgid "Document: Convert to ODS"
+msgstr "Belge: ODS'ye dönüştür"
+
+#: Menu
+msgid "Document: Convert to ODT"
+msgstr "Belge: ODT'ye dönüştür"
+
+#: Menu
+msgid "Document: Convert to PDF"
+msgstr "Belge: PDF'e dönüştür"
+
+#: Menu
+msgid "Document: Convert to PPTX"
+msgstr "Belge: PPTX'e dönüştür"
+
+#: Menu
+msgid "Document: Convert to TXT"
+msgstr "Belge: TXT'ye dönüştür"
+
+#: Menu
+msgid "Document: Convert to XLSX"
+msgstr "Belge: XLSX'e dönüştür"
+
+#: Menu
+msgid "Document: Print (A4)"
+msgstr "Belge: Yazdır (A4)"
+
+#: Menu
+msgid "Document: Print (US Legal)"
+msgstr "Belge: Yazdır (US Legal)"
+
+#: Menu
+msgid "Document: Print (US Letter)"
+msgstr "Belge: Yazdır (US Letter)"
+
+#: Menu
+msgid "Extract here"
+msgstr "Buraya çıkar"
+
+#: Menu
+msgid "File carving (via Foremost)"
+msgstr "Dosya kazıma (Foremost ile)"
+
+#: Menu
+msgid "File carving (via PhotoRec)"
+msgstr "Dosya kazıma (PhotoRec ile)"
+
+#: Menu
+msgid "Find broken links"
+msgstr "Kırık bağlantıları bul"
+
+#: Menu
+msgid "Find duplicate files"
+msgstr "Yinelenen dosyaları bul"
+
+#: Menu
+msgid "Find empty directories"
+msgstr "Boş dizinleri bul"
+
+#: Menu
+msgid "List hidden files"
+msgstr "Gizli dosyaları listele"
+
+#: Menu
+msgid "Find junk files"
+msgstr "Önemsiz dosyaları bul"
+
+#: Menu
+msgid "Find empty files"
+msgstr "Boş dosyaları bul"
+
+#: Menu
+msgid "Flatten directory structure"
+msgstr "Dizin yapısını düzleştir"
+
+#: Menu
+msgid "Generate MD5 file"
+msgstr "MD5 dosyası oluştur"
+
+#: Menu
+msgid "Generate SHA1 file"
+msgstr "SHA1 dosyası oluştur"
+
+#: Menu
+msgid "Generate SHA256 file"
+msgstr "SHA256 dosyası oluştur"
+
+#: Menu
+msgid "Generate SHA512 file"
+msgstr "SHA512 dosyası oluştur"
+
+#: Menu
+msgid "Git: Clone URLs"
+msgstr "Git: URL'leri klonla"
+
+#: Menu
+msgid "Git: Open repository website"
+msgstr "Git: Depo web sitesini aç"
+
+#: Menu
+msgid "Git: Reset and pull"
+msgstr "Git: Sıfırla ve çek"
+
+#: Menu
+msgid "Decrypt"
+msgstr "Şifresini çöz"
+
+#: Menu
+msgid "Encrypt with password"
+msgstr "Parola ile şifrele"
+
+#: Menu
+msgid "Encrypt with password (ASCII)"
+msgstr "Parola ile şifrele (ASCII)"
+
+#: Menu
+msgid "Encrypt with keys"
+msgstr "Anahtarlarla şifrele"
+
+#: Menu
+msgid "Encrypt with keys (ASCII)"
+msgstr "Anahtarlarla şifrele (ASCII)"
+
+#: Menu
+msgid "Import keys"
+msgstr "Anahtarları içe aktar"
+
+#: Menu
+msgid "Sign"
+msgstr "İmzala"
+
+#: Menu
+msgid "Sign (ASCII)"
+msgstr "İmzala (ASCII)"
+
+#: Menu
+msgid "Sign (detached signature)"
+msgstr "İmzala (ayrık imza)"
+
+#: Menu
+msgid "Verify signature"
+msgstr "İmzayı doğrula"
+
+#: Menu
+msgid "Image: Add watermark (center)"
+msgstr "Görüntü: Filigran ekle (merkez)"
+
+#: Menu
+msgid "Image: Add watermark (north)"
+msgstr "Görüntü: Filigran ekle (kuzey)"
+
+#: Menu
+msgid "Image: Add watermark (northeast)"
+msgstr "Görüntü: Filigran ekle (kuzeydoğu)"
+
+#: Menu
+msgid "Image: Add watermark (northwest)"
+msgstr "Görüntü: Filigran ekle (kuzeybatı)"
+
+#: Menu
+msgid "Image: Add watermark (south)"
+msgstr "Görüntü: Filigran ekle (güney)"
+
+#: Menu
+msgid "Image: Add watermark (southeast)"
+msgstr "Görüntü: Filigran ekle (güneydoğu)"
+
+#: Menu
+msgid "Image: Add watermark (southwest)"
+msgstr "Görüntü: Filigran ekle (güneybatı)"
+
+#: Menu
+msgid "Image: Automatic crop"
+msgstr "Görüntü: Otomatik kırpma"
+
+#: Menu
+msgid "Image: Automatic crop (15 pct)"
+msgstr "Görüntü: Otomatik kırpma (15 pct)"
+
+#: Menu
+msgid "Image: Background to alpha"
+msgstr "Görüntü: Arka planı alfa yap"
+
+#: Menu
+msgid "Image: Background to alpha (15 pct)"
+msgstr "Görüntü: Arka planı alfa yap (15 pct)"
+
+#: Menu
+msgid "Image: Color alpha to black"
+msgstr "Görüntü: Alfa rengini siyah yap"
+
+#: Menu
+msgid "Image: Color alpha to magenta"
+msgstr "Görüntü: Alfa rengini macenta yap"
+
+#: Menu
+msgid "Image: Color alpha to white"
+msgstr "Görüntü: Alfa rengini beyaz yap"
+
+#: Menu
+msgid "Image: Color black to alpha"
+msgstr "Görüntü: Siyah rengini alfa yap"
+
+#: Menu
+msgid "Image: Color black to alpha (15 pct)"
+msgstr "Görüntü: Siyah rengini alfa yap (15 pct)"
+
+#: Menu
+msgid "Image: Color magenta to alpha"
+msgstr "Görüntü: Macenta rengini alfa yap"
+
+#: Menu
+msgid "Image: Color magenta to alpha (15 pct)"
+msgstr "Görüntü: Macenta rengini alfa yap (15 pct)"
+
+#: Menu
+msgid "Image: Colorspace to gray"
+msgstr "Görüntü: Renk uzayını gri tonlamaya çevir"
+
+#: Menu
+msgid "Image: Color white to alpha"
+msgstr "Görüntü: Beyaz rengini alfa yap"
+
+#: Menu
+msgid "Image: Color white to alpha (15 pct)"
+msgstr "Görüntü: Beyaz rengini alfa yap (15 pct)"
+
+#: Menu
+msgid "Image: Combine into a GIF"
+msgstr "Görüntü: GIF olarak birleştir"
+
+#: Menu
+msgid "Image: Combine into a PDF"
+msgstr "Görüntü: PDF olarak birleştir"
+
+#: Menu
+msgid "Image: Convert to AVIF"
+msgstr "Görüntü: AVIF'e dönüştür"
+
+#: Menu
+msgid "Image: Convert to GIF"
+msgstr "Görüntü: GIF'e dönüştür"
+
+#: Menu
+msgid "Image: Convert to HEIC"
+msgstr "Görüntü: HEIC'e dönüştür"
+
+#: Menu
+msgid "Image: Convert to JPG"
+msgstr "Görüntü: JPG'ye dönüştür"
+
+#: Menu
+msgid "Image: Convert to JXL"
+msgstr "Görüntü: JXL'ye dönüştür"
+
+#: Menu
+msgid "Image: Convert to PNG"
+msgstr "Görüntü: PNG'ye dönüştür"
+
+#: Menu
+msgid "Image: Convert to TIFF"
+msgstr "Görüntü: TIFF'e dönüştür"
+
+#: Menu
+msgid "Image: Convert to WebP"
+msgstr "Görüntü: WebP'ye dönüştür"
+
+#: Menu
+msgid "Image: Create PNG icon (64 px)"
+msgstr "Görüntü: PNG simgesi oluştur (64 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (128 px)"
+msgstr "Görüntü: PNG simgesi oluştur (128 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (256 px)"
+msgstr "Görüntü: PNG simgesi oluştur (256 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (512 px)"
+msgstr "Görüntü: PNG simgesi oluştur (512 px)"
+
+#: Menu
+msgid "Image: Desaturate"
+msgstr "Görüntü: Doygunluğu azalt"
+
+#: Menu
+msgid "Image: Export to PDF"
+msgstr "Görüntü: PDF'e dışa aktar"
+
+#: Menu
+msgid "Image: Find similar (65 pct)"
+msgstr "Görüntü: Benzerlerini bul (65 pct)"
+
+#: Menu
+msgid "Image: Find similar (75 pct)"
+msgstr "Görüntü: Benzerlerini bul (75 pct)"
+
+#: Menu
+msgid "Image: Find similar (85 pct)"
+msgstr "Görüntü: Benzerlerini bul (85 pct)"
+
+#: Menu
+msgid "Image: Find similar (95 pct)"
+msgstr "Görüntü: Benzerlerini bul (95 pct)"
+
+#: Menu
+msgid "Image: Flip (horizontal)"
+msgstr "Görüntü: Çevir (yatay)"
+
+#: Menu
+msgid "Image: Flip (vertical)"
+msgstr "Görüntü: Çevir (dikey)"
+
+#: Menu
+msgid "Image: Generate multiple hues"
+msgstr "Görüntü: Birden fazla ton oluştur"
+
+#: Menu
+msgid "Image: Optimize PNG"
+msgstr "Görüntü: PNG'yi optimize et"
+
+#: Menu
+msgid "Image: Perform OCR (English)"
+msgstr "Görüntü: OCR yap (İngilizce)"
+
+#: Menu
+msgid "Image: Perform OCR (French)"
+msgstr "Görüntü: OCR yap (Fransızca)"
+
+#: Menu
+msgid "Image: Perform OCR (German)"
+msgstr "Görüntü: OCR yap (Almanca)"
+
+#: Menu
+msgid "Image: Perform OCR (Italian)"
+msgstr "Görüntü: OCR yap (İtalyanca)"
+
+#: Menu
+msgid "Image: Perform OCR (Portuguese)"
+msgstr "Görüntü: OCR yap (Portekizce)"
+
+#: Menu
+msgid "Image: Perform OCR (Russian)"
+msgstr "Görüntü: OCR yap (Rusça)"
+
+#: Menu
+msgid "Image: Perform OCR (Spanish)"
+msgstr "Görüntü: OCR yap (İspanyolca)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 500kB max)"
+msgstr "Görüntü: Küçült (JPG, maks. 500kB)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 1000kB max)"
+msgstr "Görüntü: Küçült (JPG, maks. 1000kB)"
+
+#: Menu
+msgid "Image: Remove metadata"
+msgstr "Görüntü: Meta verileri kaldır"
+
+#: Menu
+msgid "Image: Rename from metadata"
+msgstr "Görüntü: Meta verilerden yeniden adlandır"
+
+#: Menu
+msgid "Image: Resize (25 pct)"
+msgstr "Görüntü: Boyutlandır (25 pct)"
+
+#: Menu
+msgid "Image: Resize (50 pct)"
+msgstr "Görüntü: Boyutlandır (50 pct)"
+
+#: Menu
+msgid "Image: Resize (75 pct)"
+msgstr "Görüntü: Boyutlandır (75 pct)"
+
+#: Menu
+msgid "Image: Resize (512x512)"
+msgstr "Görüntü: Boyutlandır (512x512)"
+
+#: Menu
+msgid "Image: Resize (1080x1080)"
+msgstr "Görüntü: Boyutlandır (1080x1080)"
+
+#: Menu
+msgid "Image: Resize (1920x1080)"
+msgstr "Görüntü: Boyutlandır (1920x1080)"
+
+#: Menu
+msgid "Image: Resize (2560x1440)"
+msgstr "Görüntü: Boyutlandır (2560x1440)"
+
+#: Menu
+msgid "Image: Resize (3840x2160)"
+msgstr "Görüntü: Boyutlandır (3840x2160)"
+
+#: Menu
+msgid "Image: Rotate (90 deg)"
+msgstr "Görüntü: Döndür (90 derece)"
+
+#: Menu
+msgid "Image: Rotate (180 deg)"
+msgstr "Görüntü: Döndür (180 derece)"
+
+#: Menu
+msgid "Image: Rotate (270 deg)"
+msgstr "Görüntü: Döndür (270 derece)"
+
+#: Menu
+msgid "Image: Split into 2 (horizontal)"
+msgstr "Görüntü: 2'ye ayır (yatay)"
+
+#: Menu
+msgid "Image: Split into 2 (vertical)"
+msgstr "Görüntü: 2'ye ayır (dikey)"
+
+#: Menu
+msgid "Image: Split into 4"
+msgstr "Görüntü: 4'e ayır"
+
+#: Menu
+msgid "Image: Stack (horizontal)"
+msgstr "Görüntü: Yığ (yatay)"
+
+#: Menu
+msgid "Image: Stack (vertical)"
+msgstr "Görüntü: Yığ (dikey)"
+
+#: Menu
+msgid "IP: Scanner"
+msgstr "IP: Tarayıcı"
+
+#: Menu
+msgid "List hard links"
+msgstr "Sabit bağlantıları listele"
+
+#: Menu
+msgid "List largest directories"
+msgstr "En büyük dizinleri listele"
+
+#: Menu
+msgid "List largest files"
+msgstr "En büyük dosyaları listele"
+
+#: Menu
+msgid "List permissions and owners"
+msgstr "İzinleri ve sahipleri listele"
+
+#: Menu
+msgid "List recent files"
+msgstr "Son dosyaları listele"
+
+#: Menu
+msgid "List symbolic links"
+msgstr "Sembolik bağlantıları listele"
+
+#: Menu
+msgid "Media: Concatenate files"
+msgstr "Ortam: Dosyaları birleştir"
+
+#: Menu
+msgid "Media: Remove metadata"
+msgstr "Ortam: Meta verileri kaldır"
+
+#: Menu
+msgid "Media: Show basic metadata"
+msgstr "Ortam: Temel meta verileri göster"
+
+#: Menu
+msgid "MP3: (artist - title) Name to ID3"
+msgstr "MP3: (sanatçı - başlık) İsmi ID3'e yaz"
+
+#: Menu
+msgid "MP3: (artist - title) ID3 to Name"
+msgstr "MP3: (sanatçı - başlık) ID3'ten İsme"
+
+#: Menu
+msgid "MP3: Volume maximize (recursive)"
+msgstr "MP3: Sesi maksimize et (özyinelemeli)"
+
+#: Menu
+msgid "MP3: Volume normalize (recursive)"
+msgstr "MP3: Ses seviyesini normalleştir (özyinelemeli)"
+
+#: Menu
+msgid "MP3: Show encoding details"
+msgstr "MP3: Kodlama detaylarını göster"
+
+#: Menu
+msgid "Open item location"
+msgstr "Öğe konumunu aç"
+
+#: Menu
+msgid "Paste as hard link"
+msgstr "Sabit bağlantı olarak yapıştır"
+
+#: Menu
+msgid "Paste as symbolic link"
+msgstr "Sembolik bağlantı olarak yapıştır"
+
+#: Menu
+msgid "Paste clipboard content"
+msgstr "Pano içeriğini yapıştır"
+
+#: Menu
+msgid "PDF: Add watermark (over)"
+msgstr "PDF: Filigran ekle (üzerine)"
+
+#: Menu
+msgid "PDF: Add watermark (under)"
+msgstr "PDF: Filigran ekle (altına)"
+
+#: Menu
+msgid "PDF: Combine multiple PDFs"
+msgstr "PDF: Birden fazla PDF'i birleştir"
+
+#: Menu
+msgid "PDF: Convert to PDFA-2b"
+msgstr "PDF: PDFA-2b'ye dönüştür"
+
+#: Menu
+msgid "PDF: Remove password"
+msgstr "PDF: Parolayı kaldır"
+
+#: Menu
+msgid "PDF: Set a password"
+msgstr "PDF: Parola belirle"
+
+#: Menu
+msgid "PDF: Extract images"
+msgstr "PDF: Görüntüleri çıkar"
+
+#: Menu
+msgid "PDF: Find annotated PDFs"
+msgstr "PDF: Açıklamalı PDF'leri bul"
+
+#: Menu
+msgid "PDF: Find non-linearized PDFs"
+msgstr "PDF: Doğrusal olmayan PDF'leri bul"
+
+#: Menu
+msgid "PDF: Find non-searchable PDFs"
+msgstr "PDF: Aranamayan PDF'leri bul"
+
+#: Menu
+msgid "PDF: Find password-protected PDFs"
+msgstr "PDF: Parola korumalı PDF'leri bul"
+
+#: Menu
+msgid "PDF: Find signed PDFs"
+msgstr "PDF: İmzalı PDF'leri bul"
+
+#: Menu
+msgid "PDF: Layout (landscape, 1x2)"
+msgstr "PDF: Düzen (yatay, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x1)"
+msgstr "PDF: Düzen (yatay, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x2)"
+msgstr "PDF: Düzen (yatay, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x4)"
+msgstr "PDF: Düzen (yatay, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 4x2)"
+msgstr "PDF: Düzen (yatay, 4x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 1x2)"
+msgstr "PDF: Düzen (dikey, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x1)"
+msgstr "PDF: Düzen (dikey, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x2)"
+msgstr "PDF: Düzen (dikey, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x4)"
+msgstr "PDF: Düzen (dikey, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 4x2)"
+msgstr "PDF: Düzen (dikey, 4x2)"
+
+#: Menu
+msgid "PDF: Optimize for web (linearize)"
+msgstr "PDF: Web için optimize et (doğrusallaştır)"
+
+#: Menu
+msgid "PDF: Set size (A3)"
+msgstr "PDF: Boyut belirle (A3)"
+
+#: Menu
+msgid "PDF: Set size (A4)"
+msgstr "PDF: Boyut belirle (A4)"
+
+#: Menu
+msgid "PDF: Set size (A5)"
+msgstr "PDF: Boyut belirle (A5)"
+
+#: Menu
+msgid "PDF: Set size (US Legal)"
+msgstr "PDF: Boyut belirle (US Legal)"
+
+#: Menu
+msgid "PDF: Set size (US Letter)"
+msgstr "PDF: Boyut belirle (US Letter)"
+
+#: Menu
+msgid "PDF: Perform OCR (English)"
+msgstr "PDF: OCR yap (İngilizce)"
+
+#: Menu
+msgid "PDF: Perform OCR (French)"
+msgstr "PDF: OCR yap (Fransızca)"
+
+#: Menu
+msgid "PDF: Perform OCR (German)"
+msgstr "PDF: OCR yap (Almanca)"
+
+#: Menu
+msgid "PDF: Perform OCR (Italian)"
+msgstr "PDF: OCR yap (İtalyanca)"
+
+#: Menu
+msgid "PDF: Perform OCR (Portuguese)"
+msgstr "PDF: OCR yap (Portekizce)"
+
+#: Menu
+msgid "PDF: Perform OCR (Russian)"
+msgstr "PDF: OCR yap (Rusça)"
+
+#: Menu
+msgid "PDF: Perform OCR (Spanish)"
+msgstr "PDF: OCR yap (İspanyolca)"
+
+#: Menu
+msgid "PDF: Reduce (150 dpi, e-book)"
+msgstr "PDF: Küçült (150 dpi, e-kitap)"
+
+#: Menu
+msgid "PDF: Reduce (300 dpi, printer)"
+msgstr "PDF: Küçült (300 dpi, yazıcı)"
+
+#: Menu
+msgid "PDF: Remove annotations"
+msgstr "PDF: Açıklamaları kaldır"
+
+#: Menu
+msgid "PDF: Remove metadata"
+msgstr "PDF: Meta verileri kaldır"
+
+#: Menu
+msgid "PDF: Rotate (90 deg)"
+msgstr "PDF: Döndür (90 derece)"
+
+#: Menu
+msgid "PDF: Rotate (180 deg)"
+msgstr "PDF: Döndür (180 derece)"
+
+#: Menu
+msgid "PDF: Rotate (270 deg)"
+msgstr "PDF: Döndür (270 derece)"
+
+#: Menu
+msgid "PDF: Show signatures"
+msgstr "PDF: İmzaları göster"
+
+#: Menu
+msgid "PDF: Split into single-page PDFs"
+msgstr "PDF: Tek sayfalık PDF'lere ayır"
+
+#: Menu
+msgid "Rename: Remove accents"
+msgstr "Yeniden adlandır: Vurguları kaldır"
+
+#: Menu
+msgid "Rename: Remove parentheses blocks"
+msgstr "Yeniden adlandır: Parantez bloklarını kaldır"
+
+#: Menu
+msgid "Rename: Change spaces to dashes"
+msgstr "Yeniden adlandır: Boşlukları tireye çevir"
+
+#: Menu
+msgid "Rename: Change dashes to spaces"
+msgstr "Yeniden adlandır: Tireleri boşluğa çevir"
+
+#: Menu
+msgid "Rename: To lowercase"
+msgstr "Yeniden adlandır: Küçük harfe çevir"
+
+#: Menu
+msgid "Rename: To lowercase (recursive)"
+msgstr "Yeniden adlandır: Küçük harfe çevir (özyinelemeli)"
+
+#: Menu
+msgid "Rename: To sentence case"
+msgstr "Yeniden adlandır: Cümle düzenine çevir"
+
+#: Menu
+msgid "Rename: To title case"
+msgstr "Yeniden adlandır: Başlık düzenine çevir"
+
+#: Menu
+msgid "Rename: To uppercase"
+msgstr "Yeniden adlandır: Büyük harfe çevir"
+
+#: Menu
+msgid "Rename: To uppercase (recursive)"
+msgstr "Yeniden adlandır: Büyük harfe çevir (özyinelemeli)"
+
+#: Menu
+msgid "Reset permissions (recursive)"
+msgstr "İzinleri sıfırla (özyinelemeli)"
+
+#: Menu
+msgid "Scan for malware (via ClamAV)"
+msgstr "Kötü amaçlı yazılım tara (ClamAV ile)"
+
+#: Menu
+msgid "Scan for malware (via Lenspect)"
+msgstr "Kötü amaçlı yazılım tara (Lenspect ile)"
+
+#: Menu
+msgid "Show files information"
+msgstr "Dosya bilgilerini göster"
+
+#: Menu
+msgid "Show files metadata"
+msgstr "Dosya meta verilerini göster"
+
+#: Menu
+msgid "Show files MIME type"
+msgstr "Dosya MIME türlerini göster"
+
+#: Menu
+msgid "Show media information"
+msgstr "Ortam bilgilerini göster"
+
+#: Menu
+msgid "SVG: Compress to SVGZ"
+msgstr "SVG: SVGZ olarak sıkıştır"
+
+#: Menu
+msgid "SVG: Decompress SVGZ"
+msgstr "SVG: SVGZ'yi aç"
+
+#: Menu
+msgid "SVG: Export to PDF"
+msgstr "SVG: PDF'e dışa aktar"
+
+#: Menu
+msgid "SVG: Export to PNG (256 px)"
+msgstr "SVG: PNG'ye dışa aktar (256 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (512 px)"
+msgstr "SVG: PNG'ye dışa aktar (512 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (1024 px)"
+msgstr "SVG: PNG'ye dışa aktar (1024 px)"
+
+#: Menu
+msgid "SVG: Replace fonts to Charter"
+msgstr "SVG: Yazı tiplerini Charter ile değiştir"
+
+#: Menu
+msgid "SVG: Replace fonts to Helvetica"
+msgstr "SVG: Yazı tiplerini Helvetica ile değiştir"
+
+#: Menu
+msgid "SVG: Replace fonts to Times"
+msgstr "SVG: Yazı tiplerini Times ile değiştir"
+
+#: Menu
+msgid "Terminal"
+msgstr "Terminal"
+
+#: Menu
+msgid "Text: Concatenate multiple files"
+msgstr "Metin: Birden fazla dosyayı birleştir"
+
+#: Menu
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "Metin: Sekmeleri 4 boşluğa çevir"
+
+#: Menu
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "Metin: Normalleştir (UTF-8, özyinelemeli)"
+
+#: Menu
+msgid "Text: Encode to UTF-8"
+msgstr "Metin: UTF-8'e kodla"
+
+#: Menu
+msgid "Text: List encodings"
+msgstr "Metin: Kodlamaları listele"
+
+#: Menu
+msgid "Text: List issues"
+msgstr "Metin: Sorunları listele"
+
+#: Menu
+msgid "Text: List line breaks"
+msgstr "Metin: Satır sonlarını listele"
+
+#: Menu
+msgid "Text: List line counts"
+msgstr "Metin: Satır sayılarını listele"
+
+#: Menu
+msgid "Text: List line lengths"
+msgstr "Metin: Satır uzunluklarını listele"
+
+#: Menu
+msgid "Text: List word counts"
+msgstr "Metin: Kelime sayılarını listele"
+
+#: Menu
+msgid "Text: Remove trailing spaces"
+msgstr "Metin: Sondaki boşlukları kaldır"
+
+#: Menu
+msgid "Text: Remove accents"
+msgstr "Metin: Vurguları kaldır"
+
+#: Menu
+msgid "URL: Check HTTP status"
+msgstr "URL: HTTP durumunu kontrol et"
+
+#: Menu
+msgid "URL: Download file"
+msgstr "URL: Dosya indir"
+
+#: Menu
+msgid "URL: Show HTTP headers"
+msgstr "URL: HTTP başlıklarını göster"
+
+#: Menu
+msgid "Verify MD5 file"
+msgstr "MD5 dosyasını doğrula"
+
+#: Menu
+msgid "Verify SHA1 file"
+msgstr "SHA1 dosyasını doğrula"
+
+#: Menu
+msgid "Verify SHA256 file"
+msgstr "SHA256 dosyasını doğrula"
+
+#: Menu
+msgid "Verify SHA512 file"
+msgstr "SHA512 dosyasını doğrula"
+
+#: Menu
+msgid "Video: Aspect to 1:1"
+msgstr "Video: En-boy oranını 1:1 yap"
+
+#: Menu
+msgid "Video: Aspect to 4:3"
+msgstr "Video: En-boy oranını 4:3 yap"
+
+#: Menu
+msgid "Video: Aspect to 16:9"
+msgstr "Video: En-boy oranını 16:9 yap"
+
+#: Menu
+msgid "Video: Aspect to 16:10"
+msgstr "Video: En-boy oranını 16:10 yap"
+
+#: Menu
+msgid "Video: Convert to MKV"
+msgstr "Video: MKV'ye dönüştür"
+
+#: Menu
+msgid "Video: Convert to MKV (copy)"
+msgstr "Video: MKV'ye dönüştür (kopyala)"
+
+#: Menu
+msgid "Video: Convert to MP4"
+msgstr "Video: MP4'e dönüştür"
+
+#: Menu
+msgid "Video: Convert to MP4 (copy)"
+msgstr "Video: MP4'e dönüştür (kopyala)"
+
+#: Menu
+msgid "Video: Convert to WebM"
+msgstr "Video: WebM'e dönüştür"
+
+#: Menu
+msgid "Video: Convert to WebM (copy)"
+msgstr "Video: WebM'e dönüştür (kopyala)"
+
+#: Menu
+msgid "Video: Export frames (1 FPS)"
+msgstr "Video: Kareleri dışa aktar (1 FPS)"
+
+#: Menu
+msgid "Video: Export frames (5 FPS)"
+msgstr "Video: Kareleri dışa aktar (5 FPS)"
+
+#: Menu
+msgid "Video: Export frames (10 FPS)"
+msgstr "Video: Kareleri dışa aktar (10 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (1 FPS)"
+msgstr "Video: GIF'e dışa aktar (1 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (5 FPS)"
+msgstr "Video: GIF'e dışa aktar (5 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (10 FPS)"
+msgstr "Video: GIF'e dışa aktar (10 FPS)"
+
+#: Menu
+msgid "Video: Extract audio"
+msgstr "Video: Ses çıkar"
+
+#: Menu
+msgid "Video: Flip (horizontal)"
+msgstr "Video: Çevir (yatay)"
+
+#: Menu
+msgid "Video: Flip (vertical)"
+msgstr "Video: Çevir (dikey)"
+
+#: Menu
+msgid "Video: Frame rate to 30 FPS"
+msgstr "Video: Kare hızını 30 FPS yap"
+
+#: Menu
+msgid "Video: Frame rate to 60 FPS"
+msgstr "Video: Kare hızını 60 FPS yap"
+
+#: Menu
+msgid "Video: Remove audio"
+msgstr "Video: Sesi kaldır"
+
+#: Menu
+msgid "Video: Resize (25 pct)"
+msgstr "Video: Boyutlandır (25 pct)"
+
+#: Menu
+msgid "Video: Resize (50 pct)"
+msgstr "Video: Boyutlandır (50 pct)"
+
+#: Menu
+msgid "Video: Resize (75 pct)"
+msgstr "Video: Boyutlandır (75 pct)"
+
+#: Menu
+msgid "Video: Rotate (90 deg)"
+msgstr "Video: Döndür (90 derece)"
+
+#: Menu
+msgid "Video: Rotate (180 deg)"
+msgstr "Video: Döndür (180 derece)"
+
+#: Menu
+msgid "Video: Rotate (270 deg)"
+msgstr "Video: Döndür (270 derece)"
+
+#: Menu
+msgid "Video: Speed to 0.5"
+msgstr "Video: Hızını 0.5 yap"
+
+#: Menu
+msgid "Video: Speed to 1.5"
+msgstr "Video: Hızını 1.5 yap"
+
+#: Menu
+msgid "Video: Speed to 2.0"
+msgstr "Video: Hızını 2.0 yap"
+
+#: install.sh
+msgid "Check for basic dependencies"
+msgstr "Temel bağımlılıkları kontrol et"
+
+#: install.sh
+msgid "Remove previously installed scripts"
+msgstr "Önceden yüklenmiş betikleri kaldır"
+
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr "Klavye hızlandırıcılarını yükle"
+
+#: install.sh
+msgid "Close the file manager to reload configurations"
+msgstr "Yapılandırmaları yeniden yüklemek için dosya yöneticisini kapatın"
+
+#: install.sh
+msgid "Add shortcuts to the application menu"
+msgstr "Uygulama menüsüne kısayollar ekle"
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr "Homebrew yükle (isteğe bağlı)"
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr "Hangi betik kategorilerinin yükleneceğini seçin"
+
+#: install.sh
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr "Seçenekleri seçin (<SPACE> ile işaretleyin, <ENTER> ile onaylayın):"
+
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr "Etkileşimsiz modda yükleniyor..."
+
+#: install.sh
+msgid "Installing:"
+msgstr "Yükleniyor:"
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr "Uygulama menüsü kısayolları yükleniyor:"
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr "Kurulum başarıyla tamamlandı!"
+
+#: install.sh
+msgid "Checking for basic dependencies:"
+msgstr "Temel bağımlılıklar kontrol ediliyor:"
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr "Tüm bağımlılıklar zaten karşılanmış."
+
+#: install.sh
+msgid "Copying files..."
+msgstr "Dosyalar kopyalanıyor..."
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr "Klavye hızlandırıcıları yükleniyor..."
+
+#: install.sh
+msgid "Scripts"
+msgstr "Betikler"
+
+#: install.sh
+msgid "Creating shortcuts to the application menu..."
+msgstr "Uygulama menüsüne kısayollar oluşturuluyor..."
+
+#: install.sh
+msgid "Creating GNOME Shell application folder..."
+msgstr "GNOME Shell uygulama klasörü oluşturuluyor..."
+
+#: install.sh
+msgid "Installing actions in the context menu..."
+msgstr "İçerik menüsüne eylemler yükleniyor..."
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr "Dosya yöneticisi kapatılıyor..."
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr "Homebrew yükleniyor:"
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr "Homebrew zaten yüklü."
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr "Homebrew şuraya yükleniyor:"
+
+#: install.sh
+msgid "Downloading the package..."
+msgstr "Paket indiriliyor..."
+
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr "Bir paket yöneticisi bulunamadı!"
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr "Homebrew kurulumu başarısız!"
+
+#~ msgid "EOF"
+#~ msgstr "EOF"
