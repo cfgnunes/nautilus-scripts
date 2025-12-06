@@ -27,7 +27,7 @@ _main_task() {
     local std_output=""
     local frame_rate=10
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=gif")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=gif; par_suffix='($frame_rate FPS)'")
 
     # Run the main process.
     std_output=$(ffmpeg -hide_banner -y -i "$input_file" -filter:v "fps=$frame_rate,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 -- "$output_file" 2>&1)

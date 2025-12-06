@@ -422,10 +422,22 @@ _main() {
     __test_file_nonempty "$output_file (2).webm"
     __test_file_empty "$std_output"
 
+    script_test="Audio and Video/Video: Convert/Video: Export to GIF (1 FPS)"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file (1 FPS).gif"
+    __test_file_empty "$std_output"
+
+    script_test="Audio and Video/Video: Convert/Video: Export to GIF (5 FPS)"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file (5 FPS).gif"
+    __test_file_empty "$std_output"
+
     script_test="Audio and Video/Video: Convert/Video: Export to GIF (10 FPS)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.gif"
+    __test_file_nonempty "$output_file (10 FPS).gif"
     __test_file_empty "$std_output"
 
     rm -rf "$temp_dir/Output"
