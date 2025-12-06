@@ -1785,6 +1785,14 @@ msgid "Video: Convert to MP4 (copy)"
 msgstr "וידאו: המרה לקובץ MP4 (עותק)"
 
 #: Menu
+msgid "Video: Convert to WebM"
+msgstr "וידאו: המרה לקובץ WebM"
+
+#: Menu
+msgid "Video: Convert to WebM (copy)"
+msgstr "וידאו: המרה לקובץ WebM (עותק)"
+
+#: Menu
 msgid "Video: Export frames (1 FPS)"
 msgstr "וידאו: ייצוא תמוניות (1 FPS)"
 

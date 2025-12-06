@@ -1785,6 +1785,14 @@ msgid "Video: Convert to MP4 (copy)"
 msgstr "वीडियो: MP4 में कन्वर्ट करें (कॉपी)"
 
 #: Menu
+msgid "Video: Convert to WebM"
+msgstr "वीडियो: WebM में कन्वर्ट करें"
+
+#: Menu
+msgid "Video: Convert to WebM (copy)"
+msgstr "वीडियो: WebM में कन्वर्ट करें (कॉपी)"
+
+#: Menu
 msgid "Video: Export frames (1 FPS)"
 msgstr "वीडियो: फ़्रेम निर्यात करें (1 FPS)"
 

@@ -1785,6 +1785,14 @@ msgid "Video: Convert to MP4 (copy)"
 msgstr "動画：MP4に変換 (コピー)"
 
 #: Menu
+msgid "Video: Convert to WebM"
+msgstr "動画：WebMに変換"
+
+#: Menu
+msgid "Video: Convert to WebM (copy)"
+msgstr "動画：WebMに変換 (コピー)"
+
+#: Menu
 msgid "Video: Export frames (1 FPS)"
 msgstr "動画：フレームをエクスポート (1 FPS)"
 

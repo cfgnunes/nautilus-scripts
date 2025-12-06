@@ -1785,6 +1785,14 @@ msgid "Video: Convert to MP4 (copy)"
 msgstr "视频：转换为MP4（复制）"
 
 #: Menu
+msgid "Video: Convert to WebM"
+msgstr "视频：转换为WebM"
+
+#: Menu
+msgid "Video: Convert to WebM (copy)"
+msgstr "视频：转换为WebM（复制）"
+
+#: Menu
 msgid "Video: Export frames (1 FPS)"
 msgstr "视频：导出帧（1 FPS）"
 

@@ -410,6 +410,18 @@ _main() {
     __test_file_nonempty "$output_file (3).mp4"
     __test_file_empty "$std_output"
 
+    script_test="Audio and Video/Video: Convert/Video: Convert to WebM"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.webm"
+    __test_file_empty "$std_output"
+
+    script_test="Audio and Video/Video: Convert/Video: Convert to WebM (copy)"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file (2).webm"
+    __test_file_empty "$std_output"
+
     script_test="Audio and Video/Video: Convert/Video: Export to GIF"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
