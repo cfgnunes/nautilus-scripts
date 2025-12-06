@@ -182,7 +182,7 @@ _resolve_host() {
     fi
 
     # If not found locally, try online resolution.
-    hostname=$(dig -x "$ip" +short)
+    hostname=$(dig -x "$ip" +short | head -n 1)
 
     # shellcheck disable=SC2001
     hostname=$(sed "s|\.$||" <<<"$hostname")
