@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "ffmpeg"
     _display_wait_box
-    input_files=$(_get_files "par_type=file; par_select_mime=video/")
+    input_files=$(_get_files "par_type=file; par_select_mime=video/|image/")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
