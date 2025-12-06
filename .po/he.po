@@ -1805,8 +1805,8 @@ msgid "Video: Export frames (10 FPS)"
 msgstr "וידאו: ייצוא תמוניות (10 FPS)"
 
 #: Menu
-msgid "Video: Export to GIF"
-msgstr "וידאו: ייצוא כקובץ GIF"
+msgid "Video: Export to GIF (10 FPS)"
+msgstr "וידאו: ייצוא כקובץ GIF (10 FPS)"
 
 #: Menu
 msgid "Video: Extract audio"

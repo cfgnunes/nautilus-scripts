@@ -422,7 +422,7 @@ _main() {
     __test_file_nonempty "$output_file (2).webm"
     __test_file_empty "$std_output"
 
-    script_test="Audio and Video/Video: Convert/Video: Export to GIF"
+    script_test="Audio and Video/Video: Convert/Video: Export to GIF (10 FPS)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.gif"

@@ -1805,8 +1805,8 @@ msgid "Video: Export frames (10 FPS)"
 msgstr "비디오: 프레임 내보내기 (10 FPS)"
 
 #: Menu
-msgid "Video: Export to GIF"
-msgstr "비디오: GIF로 내보내기"
+msgid "Video: Export to GIF (10 FPS)"
+msgstr "비디오: GIF로 내보내기 (10 FPS)"
 
 #: Menu
 msgid "Video: Extract audio"
