@@ -1794,15 +1794,15 @@ msgstr "Wideo: Konwertuj na WebM (kopiuj)"
 
 #: Menu
 msgid "Video: Export frames (1 FPS)"
-msgstr "Wideo: Eksportuj klatki (1 klatka/s)"
+msgstr "Wideo: Eksportuj klatki (1 FPS)"
 
 #: Menu
 msgid "Video: Export frames (5 FPS)"
-msgstr "Wideo: Eksportuj klatki (5 klatek/s)"
+msgstr "Wideo: Eksportuj klatki (5 FPS)"
 
 #: Menu
 msgid "Video: Export frames (10 FPS)"
-msgstr "Wideo: Eksportuj klatki (10 klatek/s)"
+msgstr "Wideo: Eksportuj klatki (10 FPS)"
 
 #: Menu
 msgid "Video: Export to GIF"
@@ -1822,11 +1822,11 @@ msgstr "Wideo: Odbij (pionowo)"
 
 #: Menu
 msgid "Video: Frame rate to 30 FPS"
-msgstr "Wideo: Liczba klatek na 30 klatek/s"
+msgstr "Wideo: Liczba klatek na 30 FPS"
 
 #: Menu
 msgid "Video: Frame rate to 60 FPS"
-msgstr "Wideo: Liczba klatek na 60 klatek/s"
+msgstr "Wideo: Liczba klatek na 60 FPS"
 
 #: Menu
 msgid "Video: Remove audio"
