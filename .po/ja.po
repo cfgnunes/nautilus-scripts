@@ -281,8 +281,8 @@ msgstr "ユーザーを選択する必要があります！"
 msgid "No public keys were found."
 msgstr "公開鍵が見つかりませんでした。"
 
-msgid "Select one or more users:"
-msgstr "1つ以上のユーザーを選択："
+msgid "Select one or more users (to encrypt):"
+msgstr "1つ以上のユーザーを選択（暗号化するため）："
 
 msgid "You must select at least one user!"
 msgstr "少なくとも1人のユーザーを選択する必要があります！"

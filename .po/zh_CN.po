@@ -281,8 +281,8 @@ msgstr "必须选择一个用户！"
 msgid "No public keys were found."
 msgstr "未找到公钥。"
 
-msgid "Select one or more users:"
-msgstr "选择一个或多个用户："
+msgid "Select one or more users (to encrypt):"
+msgstr "选择一个或多个用户（用于加密）："
 
 msgid "You must select at least one user!"
 msgstr "必须至少选择一个用户！"
