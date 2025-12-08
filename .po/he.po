@@ -1010,11 +1010,11 @@ msgstr "הצפנה עם מפתחות (ASCII)"
 
 #: Menu
 msgid "Encrypt with keys & Sign"
-msgstr "להצפין עם מפתחות ולחתום"
+msgstr "הצפנה עם מפתחות וחתימה"
 
 #: Menu
 msgid "Encrypt with keys & Sign (ASCII)"
-msgstr "להצפין עם מפתחות ולחתום (ASCII)"
+msgstr "הצפנה עם מפתחות וחתימה (ASCII)"
 
 #: Menu
 msgid "Import keys"
@@ -1034,7 +1034,7 @@ msgstr "חתימה (חתימה מנותקת)"
 
 #: Menu
 msgid "Verify signature"
-msgstr "אימות חתימה"
+msgstr "בדיקת חתימה"
 
 #: Menu
 msgid "Image: Add watermark (center)"
