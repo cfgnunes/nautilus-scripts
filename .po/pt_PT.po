@@ -281,8 +281,8 @@ msgstr "Deve selecionar um utilizador!"
 msgid "No public keys were found."
 msgstr "Nenhuma chave pública foi encontrada."
 
-msgid "Select one or more users (to encrypt):"
-msgstr "Selecione um ou mais utilizadores (para cifrar):"
+msgid "Select one or more users (encrypt):"
+msgstr "Selecione um ou mais utilizadores (cifrar):"
 
 msgid "You must select at least one user!"
 msgstr "Deve selecionar pelo menos um utilizador!"
