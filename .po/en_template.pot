@@ -1008,14 +1008,6 @@ msgid "Encrypt with keys (ASCII)"
 msgstr ""
 
 #: Menu
-msgid "Encrypt with keys & Sign"
-msgstr ""
-
-#: Menu
-msgid "Encrypt with keys & Sign (ASCII)"
-msgstr ""
-
-#: Menu
 msgid "Import keys"
 msgstr ""
 
@@ -1029,6 +1021,14 @@ msgstr ""
 
 #: Menu
 msgid "Sign (detached signature)"
+msgstr ""
+
+#: Menu
+msgid "Sign & Encrypt with keys"
+msgstr ""
+
+#: Menu
+msgid "Sign & Encrypt with keys (ASCII)"
 msgstr ""
 
 #: Menu

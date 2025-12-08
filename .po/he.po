@@ -1009,28 +1009,28 @@ msgid "Encrypt with keys (ASCII)"
 msgstr "הצפנה עם מפתחות (ASCII)"
 
 #: Menu
-msgid "Encrypt with keys & Sign"
-msgstr "הצפנה עם מפתחות וחתימה"
-
-#: Menu
-msgid "Encrypt with keys & Sign (ASCII)"
-msgstr "הצפנה עם מפתחות וחתימה (ASCII)"
-
-#: Menu
 msgid "Import keys"
 msgstr "ייבוא מפתחות"
 
 #: Menu
 msgid "Sign"
-msgstr "חתימה"
+msgstr "חתום"
 
 #: Menu
 msgid "Sign (ASCII)"
-msgstr "חתימה (ASCII)"
+msgstr "חתום (ASCII)"
 
 #: Menu
 msgid "Sign (detached signature)"
-msgstr "חתימה (חתימה מנותקת)"
+msgstr "חתום (חתימה מנותקת)"
+
+#: Menu
+msgid "Sign & Encrypt with keys"
+msgstr "חתום והצפן עם מפתחות"
+
+#: Menu
+msgid "Sign & Encrypt with keys (ASCII)"
+msgstr "חתום והצפן עם מפתחות (ASCII)"
 
 #: Menu
 msgid "Verify signature"

@@ -1009,14 +1009,6 @@ msgid "Encrypt with keys (ASCII)"
 msgstr "Mit Schlüsseln verschlüsseln (ASCII)"
 
 #: Menu
-msgid "Encrypt with keys & Sign"
-msgstr "Mit Schlüsseln verschlüsseln und signieren"
-
-#: Menu
-msgid "Encrypt with keys & Sign (ASCII)"
-msgstr "Mit Schlüsseln verschlüsseln und signieren (ASCII)"
-
-#: Menu
 msgid "Import keys"
 msgstr "Schlüssel importieren"
 
@@ -1031,6 +1023,14 @@ msgstr "Signieren (ASCII)"
 #: Menu
 msgid "Sign (detached signature)"
 msgstr "Signieren (abgetrennte Signatur)"
+
+#: Menu
+msgid "Sign & Encrypt with keys"
+msgstr "Signieren und mit Schlüsseln verschlüsseln"
+
+#: Menu
+msgid "Sign & Encrypt with keys (ASCII)"
+msgstr "Signieren und mit Schlüsseln verschlüsseln (ASCII)"
 
 #: Menu
 msgid "Verify signature"
