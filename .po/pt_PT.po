@@ -281,8 +281,8 @@ msgstr "Deve selecionar um utilizador!"
 msgid "No public keys were found."
 msgstr "Nenhuma chave pública foi encontrada."
 
-msgid "Select one or more users:"
-msgstr "Selecione um ou mais utilizadores:"
+msgid "Select one or more users (to encrypt):"
+msgstr "Selecione um ou mais utilizadores (para cifrar):"
 
 msgid "You must select at least one user!"
 msgstr "Deve selecionar pelo menos um utilizador!"
@@ -490,7 +490,7 @@ msgstr "Documento"
 
 #: Menu
 msgid "Encryption"
-msgstr "Criptografia"
+msgstr "Cifra"
 
 #: Menu
 msgid "Image"
@@ -990,23 +990,23 @@ msgstr "Git: Reset e pull"
 
 #: Menu
 msgid "Decrypt"
-msgstr "Descriptografar"
+msgstr "Decifrar"
 
 #: Menu
 msgid "Encrypt with password"
-msgstr "Criptografar com palavra-passe"
+msgstr "Cifrar com palavra-passe"
 
 #: Menu
 msgid "Encrypt with password (ASCII)"
-msgstr "Criptografar com palavra-passe (ASCII)"
+msgstr "Cifrar com palavra-passe (ASCII)"
 
 #: Menu
 msgid "Encrypt with keys"
-msgstr "Criptografar com chaves"
+msgstr "Cifrar com chaves"
 
 #: Menu
 msgid "Encrypt with keys (ASCII)"
-msgstr "Criptografar com chaves (ASCII)"
+msgstr "Cifrar com chaves (ASCII)"
 
 #: Menu
 msgid "Import keys"
@@ -1026,11 +1026,11 @@ msgstr "Assinar (assinatura separada)"
 
 #: Menu
 msgid "Sign & Encrypt with keys"
-msgstr "Assinar e criptografar com chaves"
+msgstr "Assinar e cifrar com chaves"
 
 #: Menu
 msgid "Sign & Encrypt with keys (ASCII)"
-msgstr "Assinar e criptografar com chaves (ASCII)"
+msgstr "Assinar e cifrar com chaves (ASCII)"
 
 #: Menu
 msgid "Verify signature"
