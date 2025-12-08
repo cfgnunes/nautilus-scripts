@@ -14,7 +14,7 @@ _main() {
     _display_wait_box
     input_files=$(_get_files "par_type=all")
 
-    _get_keys_id
+    _get_keys_id_encrypt
 
     # Check output directory only after displaying dialog boxes to the user.
     output_dir=$(_get_output_dir "par_use_same_dir=true")
@@ -120,7 +120,7 @@ _import_key() {
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
-_get_keys_id() {
+_get_keys_id_encrypt() {
     local msg=""
 
     local keys=""
