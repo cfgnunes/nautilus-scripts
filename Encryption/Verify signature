@@ -54,8 +54,18 @@ _main_task() {
     local timestamp=""
     local line=""
 
+    _is_encrypted() {
+        LC_ALL=C gpg --list-packets "$1" 2>/dev/null | grep -qF "encrypted"
+    }
+
     # Run the main process.
-    std_output=$(LC_ALL=C gpg --yes --status-fd=1 --verify -- "$input_file" 2>&1)
+    if _is_encrypted "$input_file"; then
+        std_output=$(LC_ALL=C gpg --yes --status-fd=1 --decrypt -- \
+            "$input_file" 2>&1)
+    else
+        std_output=$(LC_ALL=C gpg --yes --status-fd=1 --verify -- \
+            "$input_file" 2>&1)
+    fi
 
     if grep -qF "[GNUPG:] GOODSIG" <<<"$std_output"; then
         status="🟢 __MSG_Valid__"
