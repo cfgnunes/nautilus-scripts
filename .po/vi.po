@@ -1009,6 +1009,14 @@ msgid "Encrypt with keys (ASCII)"
 msgstr "Mã hóa bằng khóa (ASCII)"
 
 #: Menu
+msgid "Encrypt with keys & Sign"
+msgstr "Mã hóa bằng khóa và ký"
+
+#: Menu
+msgid "Encrypt with keys & Sign (ASCII)"
+msgstr "Mã hóa bằng khóa và ký (ASCII)"
+
+#: Menu
 msgid "Import keys"
 msgstr "Nhập khóa"
 

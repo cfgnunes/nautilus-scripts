@@ -1009,6 +1009,14 @@ msgid "Encrypt with keys (ASCII)"
 msgstr "使用密钥加密（ASCII）"
 
 #: Menu
+msgid "Encrypt with keys & Sign"
+msgstr "使用密钥加密并签名"
+
+#: Menu
+msgid "Encrypt with keys & Sign (ASCII)"
+msgstr "使用密钥加密并签名（ASCII）"
+
+#: Menu
 msgid "Import keys"
 msgstr "导入密钥"
 

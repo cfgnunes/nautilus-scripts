@@ -1009,6 +1009,14 @@ msgid "Encrypt with keys (ASCII)"
 msgstr "鍵で暗号化 (ASCII)"
 
 #: Menu
+msgid "Encrypt with keys & Sign"
+msgstr "鍵で暗号化して署名"
+
+#: Menu
+msgid "Encrypt with keys & Sign (ASCII)"
+msgstr "鍵で暗号化して署名 (ASCII)"
+
+#: Menu
 msgid "Import keys"
 msgstr "鍵をインポート"
 

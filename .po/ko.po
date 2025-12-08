@@ -1009,6 +1009,14 @@ msgid "Encrypt with keys (ASCII)"
 msgstr "키로 암호화 (ASCII)"
 
 #: Menu
+msgid "Encrypt with keys & Sign"
+msgstr "키로 암호화 및 서명"
+
+#: Menu
+msgid "Encrypt with keys & Sign (ASCII)"
+msgstr "키로 암호화 및 서명 (ASCII)"
+
+#: Menu
 msgid "Import keys"
 msgstr "키 가져오기"
 

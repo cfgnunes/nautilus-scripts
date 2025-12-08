@@ -1009,6 +1009,14 @@ msgid "Encrypt with keys (ASCII)"
 msgstr "कुंजी के साथ एन्क्रिप्ट करें (ASCII)"
 
 #: Menu
+msgid "Encrypt with keys & Sign"
+msgstr "कुंजियों के साथ एन्क्रिप्ट करें और साइन करें"
+
+#: Menu
+msgid "Encrypt with keys & Sign (ASCII)"
+msgstr "कुंजियों के साथ एन्क्रिप्ट करें और साइन करें (ASCII)"
+
+#: Menu
 msgid "Import keys"
 msgstr "कुंजी आयात करें"
 

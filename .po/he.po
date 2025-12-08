@@ -1009,6 +1009,14 @@ msgid "Encrypt with keys (ASCII)"
 msgstr "הצפנה עם מפתחות (ASCII)"
 
 #: Menu
+msgid "Encrypt with keys & Sign"
+msgstr "להצפין עם מפתחות ולחתום"
+
+#: Menu
+msgid "Encrypt with keys & Sign (ASCII)"
+msgstr "להצפין עם מפתחות ולחתום (ASCII)"
+
+#: Menu
 msgid "Import keys"
 msgstr "ייבוא מפתחות"
 

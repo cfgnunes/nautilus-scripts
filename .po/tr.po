@@ -1009,6 +1009,14 @@ msgid "Encrypt with keys (ASCII)"
 msgstr "Anahtarlarla şifrele (ASCII)"
 
 #: Menu
+msgid "Encrypt with keys & Sign"
+msgstr "Anahtarlarla şifrele ve imzala"
+
+#: Menu
+msgid "Encrypt with keys & Sign (ASCII)"
+msgstr "Anahtarlarla şifrele ve imzala (ASCII)"
+
+#: Menu
 msgid "Import keys"
 msgstr "Anahtarları içe aktar"
 
