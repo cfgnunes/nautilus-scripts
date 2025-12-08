@@ -1010,11 +1010,11 @@ msgstr "Zaszyfruj kluczami (ASCII)"
 
 #: Menu
 msgid "Encrypt with keys & Sign"
-msgstr "Szyfruj kluczami i podpisz"
+msgstr "Zaszyfruj kluczami i podpisz"
 
 #: Menu
 msgid "Encrypt with keys & Sign (ASCII)"
-msgstr "Szyfruj kluczami i podpisz (ASCII)"
+msgstr "Zaszyfruj kluczami i podpisz (ASCII)"
 
 #: Menu
 msgid "Import keys"
