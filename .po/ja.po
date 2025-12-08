@@ -257,8 +257,8 @@ msgstr "今すぐ鍵をインポートしますか？"
 msgid "Failed to import the key!"
 msgstr "鍵のインポートに失敗しました！"
 
-msgid "Select a user:"
-msgstr "ユーザーを選択："
+msgid "Select a user (sign):"
+msgstr "ユーザーを選択（署名）："
 
 msgid "User"
 msgstr "ユーザー"

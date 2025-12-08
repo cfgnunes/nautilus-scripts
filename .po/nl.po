@@ -257,8 +257,8 @@ msgstr "Wilt u een sleutel importeren?"
 msgid "Failed to import the key!"
 msgstr "De sleutel kan niet worden geïmporteerd!"
 
-msgid "Select a user:"
-msgstr "Kies een gebruiker:"
+msgid "Select a user (sign):"
+msgstr "Kies een gebruiker (ondertekenen):"
 
 msgid "User"
 msgstr "Gebruiker"

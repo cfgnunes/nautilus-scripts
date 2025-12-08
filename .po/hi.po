@@ -257,8 +257,8 @@ msgstr "क्या आप अभी एक कुंजी आयात कर
 msgid "Failed to import the key!"
 msgstr "कुंजी आयात करने में विफल!"
 
-msgid "Select a user:"
-msgstr "एक उपयोगकर्ता चुनें:"
+msgid "Select a user (sign):"
+msgstr "हस्ताक्षर के लिए उपयोगकर्ता चुनें:"
 
 msgid "User"
 msgstr "उपयोगकर्ता"

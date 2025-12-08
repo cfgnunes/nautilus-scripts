@@ -257,8 +257,8 @@ msgstr "Хотите импортировать ключ сейчас?"
 msgid "Failed to import the key!"
 msgstr "Не удалось импортировать ключ!"
 
-msgid "Select a user:"
-msgstr "Выберите пользователя:"
+msgid "Select a user (sign):"
+msgstr "Выберите пользователя (подписать):"
 
 msgid "User"
 msgstr "Пользователь"

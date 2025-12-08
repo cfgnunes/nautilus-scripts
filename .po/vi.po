@@ -257,8 +257,8 @@ msgstr "Bạn có muốn nhập khóa ngay bây giờ không?"
 msgid "Failed to import the key!"
 msgstr "Nhập khóa thất bại!"
 
-msgid "Select a user:"
-msgstr "Chọn một người dùng:"
+msgid "Select a user (sign):"
+msgstr "Chọn một người dùng (ký):"
 
 msgid "User"
 msgstr "Người dùng"

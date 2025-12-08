@@ -257,8 +257,8 @@ msgstr "Şimdi bir anahtar içe aktarmak ister misiniz?"
 msgid "Failed to import the key!"
 msgstr "Anahtar içe aktarılamadı!"
 
-msgid "Select a user:"
-msgstr "Bir kullanıcı seçin:"
+msgid "Select a user (sign):"
+msgstr "Bir kullanıcı seçin (i̇mzala):"
 
 msgid "User"
 msgstr "Kullanıcı"

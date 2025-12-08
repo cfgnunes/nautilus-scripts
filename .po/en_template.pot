@@ -256,7 +256,7 @@ msgstr ""
 msgid "Failed to import the key!"
 msgstr ""
 
-msgid "Select a user:"
+msgid "Select a user (sign):"
 msgstr ""
 
 msgid "User"

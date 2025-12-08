@@ -257,8 +257,8 @@ msgstr "是否立即导入密钥？"
 msgid "Failed to import the key!"
 msgstr "导入密钥失败！"
 
-msgid "Select a user:"
-msgstr "选择用户："
+msgid "Select a user (sign):"
+msgstr "选择用户（签名）："
 
 msgid "User"
 msgstr "用户"

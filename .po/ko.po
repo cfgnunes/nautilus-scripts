@@ -257,8 +257,8 @@ msgstr "지금 키를 가져오시겠습니까?"
 msgid "Failed to import the key!"
 msgstr "키 가져오기에 실패했습니다!"
 
-msgid "Select a user:"
-msgstr "사용자를 선택하세요:"
+msgid "Select a user (sign):"
+msgstr "사용자 선택 (서명):"
 
 msgid "User"
 msgstr "사용자"

@@ -257,8 +257,8 @@ msgstr "Deseja importar uma chave agora?"
 msgid "Failed to import the key!"
 msgstr "Falha ao importar a chave!"
 
-msgid "Select a user:"
-msgstr "Selecione um utilizador:"
+msgid "Select a user (sign):"
+msgstr "Selecione um utilizador (assinar):"
 
 msgid "User"
 msgstr "Utilizador"

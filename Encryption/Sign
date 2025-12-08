@@ -137,7 +137,7 @@ _get_key_id() {
     TEMP_DATA_TASK=$(_display_select_box "$keys" \
         "--column:$(_i18n 'Name'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Created'),--column:$(_i18n 'Expires'),--column:$(_i18n 'Key ID')" \
         "radiolist" "first" \
-        "$(_i18n 'Select a user:')")
+        "$(_i18n 'Select a user (sign):')")
 
     if [[ -z "$TEMP_DATA_TASK" ]]; then
         msg="$(_i18n 'You must select a user!')"

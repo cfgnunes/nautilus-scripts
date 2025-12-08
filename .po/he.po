@@ -257,8 +257,8 @@ msgstr "האם ברצונך לייבא מפתח כעת?"
 msgid "Failed to import the key!"
 msgstr "ייבוא המפתח נכשל!"
 
-msgid "Select a user:"
-msgstr "נא לבחור משתמש:"
+msgid "Select a user (sign):"
+msgstr "בחר משתמש (חתום):"
 
 msgid "User"
 msgstr "משתמש"
