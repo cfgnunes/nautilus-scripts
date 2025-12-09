@@ -92,11 +92,8 @@ _run_gpg() {
         recipients+=("--recipient=$id")
     done
 
-    std_output=$(gpg \
-        --batch \
-        --yes \
-        --encrypt \
-        "${recipients[@]}" \
+    std_output=$(gpg --batch --yes \
+        --encrypt "${recipients[@]}" \
         --armor \
         --output "$output_file" \
         -- "$input_file" 2>&1)
@@ -164,7 +161,8 @@ _get_ids_encrypt() {
 }
 
 _get_public_keys() {
-    gpg --list-public-keys --with-colons | awk -F: '
+    {
+        LC_ALL=C gpg --list-public-keys --with-colons | awk -F: '
         # When the main key is found.
         $1=="pub" {
             keyid=$5
@@ -177,6 +175,7 @@ _get_public_keys() {
             close(cmd)
 
             # Format expiration date (may be empty).
+            expire=""
             if (expire_ts != "") {
                 cmd2="date -d @" expire_ts " +\"%Y-%m-%d\""
                 cmd2 | getline expire
@@ -186,11 +185,12 @@ _get_public_keys() {
 
         # Extract name and email.
         $1=="uid" {
-            match($10, /(.*) <(.*)>/, arr)
-            name=arr[1]
-            email=arr[2]
+            split($10, a, " <|>")
+            name=a[1]
+            email=a[2]
             print name ":" email ":" created ":" expire ":" keyid
         }'
+    } 2>/dev/null
 }
 
 _main "$@"

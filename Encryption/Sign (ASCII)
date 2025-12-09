@@ -39,9 +39,7 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=append; par_extension=asc")
 
     # Run the main process.
-    std_output=$(gpg \
-        --batch \
-        --yes \
+    std_output=$(gpg --batch --yes \
         --clearsign \
         --local-user "$id_sign" \
         --output "$output_file" \
@@ -111,7 +109,8 @@ _get_id_sign() {
 }
 
 _get_secret_keys() {
-    gpg --list-secret-keys --with-colons | awk -F: '
+    {
+        LC_ALL=C gpg --list-secret-keys --with-colons | awk -F: '
         # When the main key is found.
         $1=="sec" {
             keyid=$5
@@ -124,6 +123,7 @@ _get_secret_keys() {
             close(cmd)
 
             # Format expiration date (may be empty).
+            expire=""
             if (expire_ts != "") {
                 cmd2="date -d @" expire_ts " +\"%Y-%m-%d\""
                 cmd2 | getline expire
@@ -133,11 +133,12 @@ _get_secret_keys() {
 
         # Extract name and email.
         $1=="uid" {
-            match($10, /(.*) <(.*)>/, arr)
-            name=arr[1]
-            email=arr[2]
+            split($10, a, " <|>")
+            name=a[1]
+            email=a[2]
             print name ":" email ":" created ":" expire ":" keyid
         }'
+    } 2>/dev/null
 }
 
 _main "$@"
