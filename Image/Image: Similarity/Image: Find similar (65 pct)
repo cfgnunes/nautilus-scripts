@@ -231,7 +231,8 @@ _compare_images() {
 
     # Convert RMSE (error) into similarity (1 - error).
     local similarity=""
-    similarity=$(awk -v e="$value" 'BEGIN{sim=1-e; if(sim<0) sim=0; print sim}')
+    similarity=$(LC_ALL=C awk -v e="$value" \
+        'BEGIN{sim=1-e; if(sim<0) sim=0; print sim}')
 
     printf "%s" "$similarity"
 }
