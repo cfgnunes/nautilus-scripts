@@ -19,9 +19,8 @@ _main() {
     _display_wait_box
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
-    export -f _get_command _run_command
-
     # Execute the function '_main_task' for each file in parallel.
+    export -f _get_command _run_command
     _run_task_parallel "$input_files" "$output_dir"
     _display_result_box "$output_dir"
 }

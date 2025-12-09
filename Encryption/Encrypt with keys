@@ -21,9 +21,7 @@ _main() {
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
-    export -f \
-        _main_task \
-        _run_gpg
+    export -f _main_task _run_gpg
     _run_function_parallel \
         "_main_task '{}' '$output_dir' '$ids_encrypt'" \
         "$input_files" "$FIELD_SEPARATOR" ""

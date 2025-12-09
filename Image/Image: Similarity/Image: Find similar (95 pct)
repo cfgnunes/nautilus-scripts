@@ -36,16 +36,15 @@ _main_task() {
     local threshold="0.95"
     local fp_file="fp.png"
 
-    export -f \
-        _compare_fingerprints \
-        _compare_images \
-        _generate_fingerprint
-
     # -------------------------------------------------------------------------
     # Step 1: Compute the fingerprints.
     # -------------------------------------------------------------------------
 
     # Execute the function '_generate_fingerprint' for each file in parallel.
+    export -f \
+        _compare_fingerprints \
+        _compare_images \
+        _generate_fingerprint
     _run_function_parallel \
         "_generate_fingerprint '{}'" "$input_files" "$FIELD_SEPARATOR"
 

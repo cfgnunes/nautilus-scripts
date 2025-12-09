@@ -14,10 +14,8 @@ _main() {
     _display_wait_box
     input_files=$(_get_files "par_type=all")
 
-    # Export functions to be used inside new shells (when using 'xargs').
-    export -f _resolve_host
-
     # Execute the function '_main_task' for each ip in parallel (127 threads).
+    export -f _resolve_host
     _run_task_parallel "$(_prepare_input "$input_files")" "$output_dir" "127"
 
     local std_output=""
