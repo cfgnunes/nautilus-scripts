@@ -14,21 +14,26 @@ _main() {
     _display_wait_box
     input_files=$(_get_files "par_type=all")
 
-    _get_keys_id_encrypt
+    local ids_encrypt=""
+    ids_encrypt=$(_get_ids_encrypt)
 
     # Check output directory only after displaying dialog boxes to the user.
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
-    export -f _run_gpg
-
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" "$output_dir"
+    export -f \
+        _main_task \
+        _run_gpg
+    _run_function_parallel \
+        "_main_task '{}' '$output_dir' '$ids_encrypt'" \
+        "$input_files" "$FIELD_SEPARATOR" ""
     _display_result_box "$output_dir"
 }
 
 _main_task() {
     local input_file=$1
     local output_dir=$2
+    local ids_encrypt=$3
     local output_file=""
 
     # Determine if the input is a directory or a file.
@@ -60,7 +65,7 @@ _main_task() {
         _directory_pop || return 1
 
         # Encrypt the archived file using GPG.
-        _run_gpg "$temp_archive" "$output_file"
+        _run_gpg "$temp_archive" "$output_file" "$ids_encrypt"
 
         # Remove the temporary directory (local directory).
         rm -rf -- "$temp_dir_local"
@@ -69,21 +74,22 @@ _main_task() {
         output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=append; par_extension=asc")
 
         # Encrypt the input file directly using GPG.
-        _run_gpg "$input_file" "$output_file"
+        _run_gpg "$input_file" "$output_file" "$ids_encrypt"
     fi
 }
 
 _run_gpg() {
     local input_file=$1
     local output_file=$2
+    local ids_encrypt=$3
     local std_output=""
 
     IFS=$FIELD_SEPARATOR
 
     local recipients=()
-    local user=""
-    for user in $TEMP_DATA_TASK; do
-        recipients+=("--recipient=$user")
+    local id=""
+    for id in $ids_encrypt; do
+        recipients+=("--recipient=$id")
     done
 
     std_output=$(gpg \
@@ -120,8 +126,9 @@ _import_key() {
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
-_get_keys_id_encrypt() {
+_get_ids_encrypt() {
     local msg=""
+    local ids_encrypt=""
 
     local keys=""
     keys=$(_get_public_keys)
@@ -142,16 +149,18 @@ _get_keys_id_encrypt() {
     fi
 
     keys=$(tr ":" "$FIELD_SEPARATOR" <<<"$keys")
-    TEMP_DATA_TASK=$(_display_select_box "$keys" \
+    ids_encrypt=$(_display_select_box "$keys" \
         "--column:$(_i18n 'Name'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Created'),--column:$(_i18n 'Expires'),--column:$(_i18n 'Key ID')" \
         "checkbox" "first_if_one" \
         "$(_i18n 'Select one or more users (encrypt):')")
 
-    if [[ -z "$TEMP_DATA_TASK" ]]; then
+    if [[ -z "$ids_encrypt" ]]; then
         msg="$(_i18n 'You must select at least one user!')"
         _display_error_box "$msg"
         _exit_script
     fi
+
+    printf "%s" "$ids_encrypt"
 }
 
 _get_public_keys() {

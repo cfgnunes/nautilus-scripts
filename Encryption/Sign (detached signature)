@@ -14,19 +14,25 @@ _main() {
     _display_wait_box
     input_files=$(_get_files "par_type=file")
 
-    _get_key_id_sign
+    local id_sign=""
+    id_sign=$(_get_id_sign)
 
     # Check output directory only after displaying dialog boxes to the user.
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" "$output_dir"
+    export -f \
+        _main_task
+    _run_function_parallel \
+        "_main_task '{}' '$output_dir' '$id_sign'" \
+        "$input_files" "$FIELD_SEPARATOR" ""
     _display_result_box "$output_dir"
 }
 
 _main_task() {
     local input_file=$1
     local output_dir=$2
+    local id_sign=$3
     local output_file=""
     local std_output=""
 
@@ -37,9 +43,10 @@ _main_task() {
         --batch \
         --yes \
         --detach-sign \
-        --local-user "$TEMP_DATA_TASK" \
+        --local-user "$id_sign" \
         --output "$output_file" \
         -- "$input_file" 2>&1)
+
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
@@ -66,8 +73,9 @@ _import_key() {
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
-_get_key_id_sign() {
+_get_id_sign() {
     local msg=""
+    local id_sign=""
 
     local keys=""
     keys=$(_get_secret_keys)
@@ -88,16 +96,18 @@ _get_key_id_sign() {
     fi
 
     keys=$(tr ":" "$FIELD_SEPARATOR" <<<"$keys")
-    TEMP_DATA_TASK=$(_display_select_box "$keys" \
+    id_sign=$(_display_select_box "$keys" \
         "--column:$(_i18n 'Name'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Created'),--column:$(_i18n 'Expires'),--column:$(_i18n 'Key ID')" \
         "radiolist" "first" \
         "$(_i18n 'Select a user (sign):')")
 
-    if [[ -z "$TEMP_DATA_TASK" ]]; then
+    if [[ -z "$id_sign" ]]; then
         msg="$(_i18n 'You must select a user!')"
         _display_error_box "$msg"
         _exit_script
     fi
+
+    printf "%s" "$id_sign"
 }
 
 _get_secret_keys() {
