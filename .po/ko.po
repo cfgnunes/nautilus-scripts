@@ -865,7 +865,7 @@ msgid "Create symbolic link to..."
 msgstr "심볼릭 링크 생성..."
 
 #: Menu
-msgid "Disk Usage Analyzer"
+msgid "Disk usage analyzer"
 msgstr "디스크 사용량 분석기"
 
 #: Menu

@@ -865,7 +865,7 @@ msgid "Create symbolic link to..."
 msgstr "Snelkoppeling maken naar…"
 
 #: Menu
-msgid "Disk Usage Analyzer"
+msgid "Disk usage analyzer"
 msgstr "Schijfgebruik analyseren"
 
 #: Menu

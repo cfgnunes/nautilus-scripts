@@ -865,8 +865,8 @@ msgid "Create symbolic link to..."
 msgstr "Criar link simbólico para..."
 
 #: Menu
-msgid "Disk Usage Analyzer"
-msgstr "Analisador de Uso de Disco"
+msgid "Disk usage analyzer"
+msgstr "Analisador de uso de disco"
 
 #: Menu
 msgid "Document: Convert to DOCX"

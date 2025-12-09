@@ -62,7 +62,7 @@ While numerous *Nautilus Scripts* are available for file managers on the web, ma
 | ------------------- | --------------------------------- |
 | `F3`                | Code Editor                       |
 | `F4`                | Terminal                          |
-| `F7`                | Disk Usage Analyzer               |
+| `F7`                | Disk usage analyzer               |
 | `<Control>E`        | Extract here                      |
 | `<Control><Alt>G`   | Compress to 'tar.gz'              |
 | `<Control><Alt>S`   | Compress to 'tar.zst'             |

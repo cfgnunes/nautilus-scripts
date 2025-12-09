@@ -865,7 +865,7 @@ msgid "Create symbolic link to..."
 msgstr "יצירת קישור סימבולי במיקום..."
 
 #: Menu
-msgid "Disk Usage Analyzer"
+msgid "Disk usage analyzer"
 msgstr "מנתח השימוש בכונן"
 
 #: Menu

@@ -865,8 +865,8 @@ msgid "Create symbolic link to..."
 msgstr "创建符号链接到..."
 
 #: Menu
-msgid "Disk Usage Analyzer"
-msgstr "磁盘使用分析器"
+msgid "Disk usage analyzer"
+msgstr "磁盘占用分析器"
 
 #: Menu
 msgid "Document: Convert to DOCX"
