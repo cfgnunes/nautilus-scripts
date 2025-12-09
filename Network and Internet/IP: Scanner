@@ -163,7 +163,7 @@ _resolve_host() {
     local hostname=""
 
     # Try local resolution.
-    hostname=$(grep -F "$ip" </etc/hosts | awk '{print $2}' | head -n1)
+    hostname=$(grep -F "$ip" </etc/hosts | awk 'NR==1 {print $2; exit}')
 
     if [[ -n "$hostname" ]]; then
         printf "%s" "$hostname"
@@ -172,7 +172,7 @@ _resolve_host() {
 
     # Try SSH config files.
     hostname=$(grep -i -r -h -B3 "Hostname .*$ip" "$HOME/.ssh/" 2>/dev/null |
-        grep -i "Host " | awk '{print $2}' | head -n 1)
+        grep -i "Host " | awk 'NR==1 {print $2; exit}')
 
     if [[ -n "$hostname" ]]; then
         printf "%s" "$hostname"
