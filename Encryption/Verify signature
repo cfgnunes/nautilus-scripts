@@ -55,15 +55,16 @@ _main_task() {
     local line=""
 
     _is_encrypted() {
-        LC_ALL=C gpg --list-packets "$1" 2>/dev/null | grep -qF "encrypted"
+        LC_ALL=C gpg --batch --yes --list-packets "$1" 2>/dev/null |
+            grep -qF "encrypted"
     }
 
     # Run the main process.
     if _is_encrypted "$input_file"; then
-        std_output=$(LC_ALL=C gpg --yes --status-fd=1 --decrypt -- \
-            "$input_file" 2>&1)
+        std_output=$(LC_ALL=C gpg --batch --yes --status-fd=1 --decrypt \
+            --output /dev/null -- "$input_file" 2>&1)
     else
-        std_output=$(LC_ALL=C gpg --yes --status-fd=1 --verify -- \
+        std_output=$(LC_ALL=C gpg --batch --yes --status-fd=1 --verify -- \
             "$input_file" 2>&1)
     fi
 
