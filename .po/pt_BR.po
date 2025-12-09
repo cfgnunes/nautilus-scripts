@@ -478,7 +478,7 @@ msgstr "Checksum"
 
 #: Menu
 msgid "Clipboard"
-msgstr "Área de Transferência"
+msgstr "Área de transferência"
 
 #: Menu
 msgid "Directories and Files"
