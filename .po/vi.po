@@ -769,7 +769,7 @@ msgid "Create backup (via Rsync)"
 msgstr "Tạo bản sao lưu (qua Rsync)"
 
 #: Menu
-msgid "Code Editor"
+msgid "Code editor"
 msgstr "Trình soạn thảo mã"
 
 #: Menu

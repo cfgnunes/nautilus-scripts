@@ -1826,7 +1826,7 @@ _main() {
     #region Open with
     #--------------------------------------------------------------------------
 
-    #script_test="Open with/Code Editor"
+    #script_test="Open with/Code editor"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"

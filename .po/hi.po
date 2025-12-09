@@ -769,7 +769,7 @@ msgid "Create backup (via Rsync)"
 msgstr "बैकअप बनाएँ (Rsync के माध्यम से)"
 
 #: Menu
-msgid "Code Editor"
+msgid "Code editor"
 msgstr "कोड संपादक"
 
 #: Menu

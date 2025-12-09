@@ -769,7 +769,7 @@ msgid "Create backup (via Rsync)"
 msgstr "Backup erstellen (via Rsync)"
 
 #: Menu
-msgid "Code Editor"
+msgid "Code editor"
 msgstr "Code-Editor"
 
 #: Menu

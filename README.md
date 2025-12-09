@@ -60,7 +60,7 @@ While numerous *Nautilus Scripts* are available for file managers on the web, ma
 
 | Key                 | Action                            |
 | ------------------- | --------------------------------- |
-| `F3`                | Code Editor                       |
+| `F3`                | Code editor                       |
 | `F4`                | Terminal                          |
 | `F7`                | Disk usage analyzer               |
 | `<Control>E`        | Extract here                      |

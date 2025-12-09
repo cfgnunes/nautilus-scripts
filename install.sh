@@ -48,7 +48,7 @@ COMPATIBLE_FILE_MANAGERS=(
 
 # Ignored application menu shortcuts during install.
 IGNORE_APPS_SHORTCUTS=(
-    ! -iname "Code Editor"
+    ! -iname "Code editor"
     ! -iname "Disk usage analyzer"
     ! -iname "Terminal"
     ! -iname "Extract here"

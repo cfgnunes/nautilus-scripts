@@ -769,8 +769,8 @@ msgid "Create backup (via Rsync)"
 msgstr "Yedek oluştur (Rsync ile)"
 
 #: Menu
-msgid "Code Editor"
-msgstr "Kod Düzenleyici"
+msgid "Code editor"
+msgstr "Kod düzenleyici"
 
 #: Menu
 msgid "Compare items"
