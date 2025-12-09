@@ -466,7 +466,7 @@ msgstr "Selecione os ficheiros de entrada"
 
 #: Menu
 msgid "Archive"
-msgstr "Compressão"
+msgstr "Compactação"
 
 #: Menu
 msgid "Audio and Video"
