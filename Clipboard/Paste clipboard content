@@ -25,14 +25,11 @@ _save_file_from_clipboard() {
 
     # Determine which clipboard tool is available (Wayland or X11) and list the
     # available clipboard data types (MIME types).
-    local clipboard_tool=""
     local clipboard_types=""
     if [[ "${XDG_SESSION_TYPE:-}" == "wayland" ]]; then
-        clipboard_tool="wl-paste"
-        clipboard_types=$($clipboard_tool --list-types 2>/dev/null)
+        clipboard_types=$(wl-paste --list-types 2>/dev/null)
     else
-        clipboard_tool="xclip"
-        clipboard_types=$($clipboard_tool -selection clipboard -t TARGETS -o 2>/dev/null)
+        clipboard_types=$(xclip -selection clipboard -t TARGETS -o 2>/dev/null)
     fi
 
     # Define a mapping between MIME types and file extensions.
@@ -49,6 +46,9 @@ _save_file_from_clipboard() {
         ["text/markdown"]="md"
         ["text/uri-list"]="uri"
         ["text/x-shellscript"]="sh"
+        ["UTF8_STRING"]="txt"
+        ["STRING"]="txt"
+        ["TEXT"]="txt"
     )
 
     # Find the first supported MIME type in clipboard data.
@@ -75,10 +75,10 @@ _save_file_from_clipboard() {
     output_file=$(_get_output_filename "$basename.$ext" "$output_dir" "par_extension_opt=preserve")
 
     # Extract clipboard content and save to output file.
-    if [[ "$clipboard_tool" == "wl-paste" ]]; then
-        $clipboard_tool --no-newline --type "$supported_type" >"$output_file" 2>/dev/null
+    if [[ "${XDG_SESSION_TYPE:-}" == "wayland" ]]; then
+        wl-paste --no-newline --type "$supported_type" >"$output_file" 2>/dev/null
     else
-        $clipboard_tool -selection clipboard -t "$supported_type" -o >"$output_file" 2>/dev/null
+        xclip -selection clipboard -t "$supported_type" -o >"$output_file" 2>/dev/null
     fi
     _check_output "$?" "" "" "$output_file" || return 1
 
