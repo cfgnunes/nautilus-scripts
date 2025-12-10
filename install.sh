@@ -1483,7 +1483,7 @@ _close_filemanager() {
         # NOTE: 'pcmanfm-qt' does not reload automatically after quitting.
         # We need to capture its current launch command to restart it.
         local session_cmd=""
-        session_cmd=$(pgrep -a "$FILE_MANAGER" | head -n1 | cut -d " " -f 2-)
+        session_cmd=$(pgrep -a "$FILE_MANAGER" | head -n 1 | cut -d " " -f 2-)
 
         # Kill all existing 'pcmanfm-qt' processes.
         killall "$FILE_MANAGER" &>/dev/null

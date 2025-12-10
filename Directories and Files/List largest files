@@ -9,6 +9,7 @@ source "$ROOT_DIR/.common-functions.sh"
 _main() {
     local input_files=""
     local std_output=""
+    local max_item_list=30
 
     # Execute initial checks.
     _check_dependencies ""
@@ -20,7 +21,7 @@ _main() {
     std_output=$(find $input_files \
         ! -path "$IGNORE_FIND_PATH" \
         -type f -printf "%s$FIELD_SEPARATOR%p\n" 2>/dev/null |
-        sort -n -r | head -n 15 |
+        sort -n -r | head -n "$max_item_list" |
         numfmt --to=iec --suffix=B --delimiter="$FIELD_SEPARATOR" --field=1)
 
     std_output=$(_text_remove_pwd "$std_output")
