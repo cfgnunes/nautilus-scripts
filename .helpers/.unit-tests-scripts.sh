@@ -137,6 +137,12 @@ _main() {
     __test_file_nonempty "$output_file.zip"
     __test_file_empty "$std_output"
 
+    #script_test="Archive/Compress to 'zip' with password"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_dir1" >"$std_output"
+    #__test_file_nonempty "$output_file.zip"
+    #__test_file_empty "$std_output"
+
     script_test="Archive/Extract here"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$output_file.zip" >"$std_output"
@@ -294,22 +300,33 @@ _main() {
     __test_file_nonempty "$output_file (no silence) (2).mp3"
     __test_file_empty "$std_output"
 
-    #script_test="Audio and Video/Audio: MP3 files/MP3: Maximize gain (recursive)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file.mp3.bak"
-    #__test_file_empty "$std_output"
+    script_test="Audio and Video/Audio: MP3 files/MP3: (artist - title) Name to ID3"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_empty "$std_output"
 
-    #script_test="Audio and Video/Audio: MP3 files/MP3: Normalize gain (recursive)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file.mp3.bak"
-    #__test_file_empty "$std_output"
+    script_test="Audio and Video/Audio: MP3 files/MP3: (artist - title) ID3 to Name"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$temp_dir/ - Test audio.mp3"
+    __test_file_empty "$std_output"
 
     script_test="Audio and Video/Audio: MP3 files/MP3: Show encoding details"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"
+
+    #script_test="Audio and Video/Audio: MP3 files/MP3: Volume maximize (recursive)"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file.mp3.bak"
+    #__test_file_empty "$std_output"
+
+    #script_test="Audio and Video/Audio: MP3 files/MP3: Volume normalize (recursive)"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file.mp3.bak"
+    #__test_file_empty "$std_output"
 
     script_test="Audio and Video/Audio: Quality/Audio: Check quality"
     __echo_script "$script_test"
@@ -320,17 +337,6 @@ _main() {
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.png"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: MP3 files/MP3: (artist - title) Name to ID3"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: MP3 files/MP3: (artist - title) ID3 to Name"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/ - Test audio.mp3"
     __test_file_empty "$std_output"
 
     #endregion
@@ -403,6 +409,24 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.webm"
     __test_file_empty "$std_output"
+
+    #script_test="Audio and Video/Video: Convert/Video: Convert to MKV (Copy)"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file.mkv"
+    #__test_file_empty "$std_output"
+
+    #script_test="Audio and Video/Video: Convert/Video: Convert to MP4 (Copy)"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file (2).mp4"
+    #__test_file_empty "$std_output"
+
+    #script_test="Audio and Video/Video: Convert/Video: Convert to WebM (Copy)"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file.webm"
+    #__test_file_empty "$std_output"
 
     script_test="Audio and Video/Video: Convert/Video: Export to GIF (1 FPS)"
     __echo_script "$script_test"
@@ -681,6 +705,12 @@ _main() {
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
+    #script_test="Encryption/Import keys"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file"
+    #__test_file_empty "$std_output"
+
     #script_test="Encryption/Encrypt with keys"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
@@ -712,6 +742,18 @@ _main() {
     #__test_file_empty "$std_output"
 
     #script_test="Encryption/Sign (detached signature)"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file"
+    #__test_file_empty "$std_output"
+
+    #script_test="Encryption/Sign & Encrypt with keys"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file"
+    #__test_file_empty "$std_output"
+
+    #script_test="Encryption/Sign & Encrypt with keys (ASCII)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
@@ -994,6 +1036,12 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file (no metadata).png"
     __test_file_empty "$std_output"
+
+    #script_test="Image/Image: Metadata, Exif/Image: Rename from metadata"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file (no metadata).png"
+    #__test_file_empty "$std_output"
 
     #script_test="Image/Image: Similarity/Image: Find similar (65 pct)"
     #__echo_script "$script_test"
@@ -1941,6 +1989,12 @@ _main() {
     #region Security and Recovery
     #--------------------------------------------------------------------------
 
+    #script_test="Security and Recovery/Create backup (via Rsync)"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file"
+    #__test_file_empty "$std_output"
+
     #script_test="Security and Recovery/File carving (via Foremost)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
@@ -1954,6 +2008,12 @@ _main() {
     #__test_file_empty "$std_output"
 
     #script_test="Security and Recovery/Scan for malware (via ClamAV)"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file"
+    #__test_file_empty "$std_output"
+
+    #script_test="Security and Recovery/Scan for malware (via Lenspect)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
