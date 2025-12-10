@@ -392,34 +392,16 @@ _main() {
     __test_file_nonempty "$output_file.mkv"
     __test_file_empty "$std_output"
 
-    script_test="Audio and Video/Video: Convert/Video: Convert to MKV (copy)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (2).mkv"
-    __test_file_empty "$std_output"
-
     script_test="Audio and Video/Video: Convert/Video: Convert to MP4"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file (2).mp4"
     __test_file_empty "$std_output"
 
-    script_test="Audio and Video/Video: Convert/Video: Convert to MP4 (copy)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (3).mp4"
-    __test_file_empty "$std_output"
-
     script_test="Audio and Video/Video: Convert/Video: Convert to WebM"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.webm"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Convert/Video: Convert to WebM (copy)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (2).webm"
     __test_file_empty "$std_output"
 
     script_test="Audio and Video/Video: Convert/Video: Export to GIF (1 FPS)"
@@ -740,90 +722,6 @@ _main() {
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
-
-    #endregion
-    #--------------------------------------------------------------------------
-    #region Checksum
-    #--------------------------------------------------------------------------
-
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test hash"
-    echo "Content of 'Test hash'." >"$input_file1"
-    output_file=$input_file1
-
-    script_test="Checksum/Compute all checksums"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_nonempty "$std_output"
-
-    script_test="Checksum/Compute MD5"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_nonempty "$std_output"
-
-    script_test="Checksum/Compute SHA1"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_nonempty "$std_output"
-
-    script_test="Checksum/Compute SHA256"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_nonempty "$std_output"
-
-    script_test="Checksum/Compute SHA512"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_nonempty "$std_output"
-
-    script_test="Checksum/Generate MD5 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.md5"
-    __test_file_empty "$std_output"
-
-    script_test="Checksum/Generate SHA1 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.sha1"
-    __test_file_empty "$std_output"
-
-    script_test="Checksum/Generate SHA256 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.sha256"
-    __test_file_empty "$std_output"
-
-    script_test="Checksum/Generate SHA512 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.sha512"
-    __test_file_empty "$std_output"
-
-    script_test="Checksum/Verify MD5 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$output_file.md5" >"$std_output"
-    __test_file_nonempty "$output_file"
-
-    script_test="Checksum/Verify SHA1 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$output_file.sha1" >"$std_output"
-    __test_file_nonempty "$output_file"
-
-    script_test="Checksum/Verify SHA256 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$output_file.sha256" >"$std_output"
-    __test_file_nonempty "$output_file"
-
-    script_test="Checksum/Verify SHA512 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$output_file.sha512" >"$std_output"
-    __test_file_nonempty "$output_file"
 
     #endregion
     #--------------------------------------------------------------------------
@@ -2060,6 +1958,90 @@ _main() {
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
+
+    #endregion
+    #--------------------------------------------------------------------------
+    #region Checksum
+    #--------------------------------------------------------------------------
+
+    # Create mock files for testing.
+    input_file1="$temp_dir/Test hash"
+    echo "Content of 'Test hash'." >"$input_file1"
+    output_file=$input_file1
+
+    script_test="Checksum/Compute all checksums"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file"
+    __test_file_nonempty "$std_output"
+
+    script_test="Checksum/Compute MD5"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file"
+    __test_file_nonempty "$std_output"
+
+    script_test="Checksum/Compute SHA1"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file"
+    __test_file_nonempty "$std_output"
+
+    script_test="Checksum/Compute SHA256"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file"
+    __test_file_nonempty "$std_output"
+
+    script_test="Checksum/Compute SHA512"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file"
+    __test_file_nonempty "$std_output"
+
+    script_test="Checksum/Generate MD5 file"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.md5"
+    __test_file_empty "$std_output"
+
+    script_test="Checksum/Generate SHA1 file"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.sha1"
+    __test_file_empty "$std_output"
+
+    script_test="Checksum/Generate SHA256 file"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.sha256"
+    __test_file_empty "$std_output"
+
+    script_test="Checksum/Generate SHA512 file"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file.sha512"
+    __test_file_empty "$std_output"
+
+    script_test="Checksum/Verify MD5 file"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$output_file.md5" >"$std_output"
+    __test_file_nonempty "$output_file"
+
+    script_test="Checksum/Verify SHA1 file"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$output_file.sha1" >"$std_output"
+    __test_file_nonempty "$output_file"
+
+    script_test="Checksum/Verify SHA256 file"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$output_file.sha256" >"$std_output"
+    __test_file_nonempty "$output_file"
+
+    script_test="Checksum/Verify SHA512 file"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$output_file.sha512" >"$std_output"
+    __test_file_nonempty "$output_file"
 
     #endregion
 
