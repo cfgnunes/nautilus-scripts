@@ -549,10 +549,6 @@ msgid "Document: Convert"
 msgstr "Belge: Dönüştür"
 
 #: Menu
-msgid "Document: Print"
-msgstr "Belge: Yazdır"
-
-#: Menu
 msgid "Image: Color"
 msgstr "Görüntü: Renk"
 
@@ -907,18 +903,6 @@ msgstr "Belge: TXT'ye dönüştür"
 #: Menu
 msgid "Document: Convert to XLSX"
 msgstr "Belge: XLSX'e dönüştür"
-
-#: Menu
-msgid "Document: Print (A4)"
-msgstr "Belge: Yazdır (A4)"
-
-#: Menu
-msgid "Document: Print (US Legal)"
-msgstr "Belge: Yazdır (US Legal)"
-
-#: Menu
-msgid "Document: Print (US Letter)"
-msgstr "Belge: Yazdır (US Letter)"
 
 #: Menu
 msgid "Extract here"

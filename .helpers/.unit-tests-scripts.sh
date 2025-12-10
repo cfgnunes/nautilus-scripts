@@ -1355,24 +1355,6 @@ _main() {
     #__test_file_nonempty "$output_file.pptx"
     #__test_file_empty "$std_output"
 
-    #script_test="Document/Document: Print/Document: Print (A4)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/Document: Print/Document: Print (US Legal)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/Document: Print/Document: Print (US Letter)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
     #endregion
     #--------------------------------------------------------------------------
     #region Document: PDF

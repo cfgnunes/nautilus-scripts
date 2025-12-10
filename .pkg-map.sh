@@ -414,18 +414,6 @@ declare -A PKG_MAP=(
         brew:   lhasa
     "
 
-    ["lp"]="
-        termux: cups
-        apt:    cups-client
-        dnf:    cups-client
-        pacman: cups
-        nix:    cups
-        zypper: cups
-        guix:   cups
-        xbps:   cups
-        brew:
-    "
-
     ["lrzip"]="
         termux: lrzip
         apt:    lrzip

@@ -549,10 +549,6 @@ msgid "Document: Convert"
 msgstr "Dokument: Konwertuj"
 
 #: Menu
-msgid "Document: Print"
-msgstr "Dokument: Drukuj"
-
-#: Menu
 msgid "Image: Color"
 msgstr "Obraz: Kolor"
 
@@ -907,18 +903,6 @@ msgstr "Dokument: Konwertuj na TXT"
 #: Menu
 msgid "Document: Convert to XLSX"
 msgstr "Dokument: Konwertuj na XLSX"
-
-#: Menu
-msgid "Document: Print (A4)"
-msgstr "Dokument: Drukuj (A4)"
-
-#: Menu
-msgid "Document: Print (US Legal)"
-msgstr "Dokument: Drukuj (US Legal)"
-
-#: Menu
-msgid "Document: Print (US Letter)"
-msgstr "Dokument: Drukuj (US Letter)"
 
 #: Menu
 msgid "Extract here"

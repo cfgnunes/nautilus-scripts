@@ -549,10 +549,6 @@ msgid "Document: Convert"
 msgstr "문서: 변환"
 
 #: Menu
-msgid "Document: Print"
-msgstr "문서: 인쇄"
-
-#: Menu
 msgid "Image: Color"
 msgstr "이미지: 색상"
 
@@ -907,18 +903,6 @@ msgstr "문서: TXT로 변환"
 #: Menu
 msgid "Document: Convert to XLSX"
 msgstr "문서: XLSX로 변환"
-
-#: Menu
-msgid "Document: Print (A4)"
-msgstr "문서: 인쇄 (A4)"
-
-#: Menu
-msgid "Document: Print (US Legal)"
-msgstr "문서: 인쇄 (US Legal)"
-
-#: Menu
-msgid "Document: Print (US Letter)"
-msgstr "문서: 인쇄 (US Letter)"
 
 #: Menu
 msgid "Extract here"

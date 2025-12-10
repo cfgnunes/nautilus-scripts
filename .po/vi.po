@@ -549,10 +549,6 @@ msgid "Document: Convert"
 msgstr "Tài liệu: Chuyển đổi"
 
 #: Menu
-msgid "Document: Print"
-msgstr "Tài liệu: In"
-
-#: Menu
 msgid "Image: Color"
 msgstr "Hình ảnh: Màu sắc"
 
@@ -907,18 +903,6 @@ msgstr "Tài liệu: Chuyển sang TXT"
 #: Menu
 msgid "Document: Convert to XLSX"
 msgstr "Tài liệu: Chuyển sang XLSX"
-
-#: Menu
-msgid "Document: Print (A4)"
-msgstr "Tài liệu: In (A4)"
-
-#: Menu
-msgid "Document: Print (US Legal)"
-msgstr "Tài liệu: In (US Legal)"
-
-#: Menu
-msgid "Document: Print (US Letter)"
-msgstr "Tài liệu: In (US Letter)"
 
 #: Menu
 msgid "Extract here"

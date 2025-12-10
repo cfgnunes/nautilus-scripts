@@ -549,10 +549,6 @@ msgid "Document: Convert"
 msgstr "מסמך: המרה"
 
 #: Menu
-msgid "Document: Print"
-msgstr "מסמך: הדפסה"
-
-#: Menu
 msgid "Image: Color"
 msgstr "תמונה: צבע"
 
@@ -907,18 +903,6 @@ msgstr "מסמך: המרה לקובץ TXT"
 #: Menu
 msgid "Document: Convert to XLSX"
 msgstr "מסמך: המרה לקובץ XLSX"
-
-#: Menu
-msgid "Document: Print (A4)"
-msgstr "מסמך: הדפסה (A4)"
-
-#: Menu
-msgid "Document: Print (US Legal)"
-msgstr "מסמך: הדפסה (US Legal)"
-
-#: Menu
-msgid "Document: Print (US Letter)"
-msgstr "מסמך: הדפסה (US Letter)"
 
 #: Menu
 msgid "Extract here"

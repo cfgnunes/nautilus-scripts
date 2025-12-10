@@ -549,10 +549,6 @@ msgid "Document: Convert"
 msgstr "दस्तावेज़: कन्वर्ट करें"
 
 #: Menu
-msgid "Document: Print"
-msgstr "दस्तावेज़: प्रिंट करें"
-
-#: Menu
 msgid "Image: Color"
 msgstr "छवि: रंग"
 
@@ -907,18 +903,6 @@ msgstr "दस्तावेज़: TXT में कन्वर्ट कर�
 #: Menu
 msgid "Document: Convert to XLSX"
 msgstr "दस्तावेज़: XLSX में कन्वर्ट करें"
-
-#: Menu
-msgid "Document: Print (A4)"
-msgstr "दस्तावेज़: प्रिंट करें (A4)"
-
-#: Menu
-msgid "Document: Print (US Legal)"
-msgstr "दस्तावेज़: प्रिंट करें (US Legal)"
-
-#: Menu
-msgid "Document: Print (US Letter)"
-msgstr "दस्तावेज़: प्रिंट करें (US Letter)"
 
 #: Menu
 msgid "Extract here"

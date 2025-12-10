@@ -549,10 +549,6 @@ msgid "Document: Convert"
 msgstr "ドキュメント：変換"
 
 #: Menu
-msgid "Document: Print"
-msgstr "ドキュメント：印刷"
-
-#: Menu
 msgid "Image: Color"
 msgstr "画像：色"
 
@@ -907,18 +903,6 @@ msgstr "ドキュメント：TXTに変換"
 #: Menu
 msgid "Document: Convert to XLSX"
 msgstr "ドキュメント：XLSXに変換"
-
-#: Menu
-msgid "Document: Print (A4)"
-msgstr "ドキュメント：印刷 (A4)"
-
-#: Menu
-msgid "Document: Print (US Legal)"
-msgstr "ドキュメント：印刷 (USリーガル)"
-
-#: Menu
-msgid "Document: Print (US Letter)"
-msgstr "ドキュメント：印刷 (USレター)"
 
 #: Menu
 msgid "Extract here"
