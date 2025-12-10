@@ -1,6 +1,6 @@
 # Enhanced File Manager Actions for Linux
 
-A collection of file manager actions that enhance your workflow. Useful right-click options to simplify common tasks across GNOME, KDE, Xfce, and more.
+A set of file manager actions that enhance your workflow. Useful right-click options to simplify common tasks across GNOME, KDE, Xfce, and more.
 
 [![Release](https://img.shields.io/github/v/release/cfgnunes/fm-scripts?labelColor=333333&color=339933)](#installation)
 [![Stars](https://img.shields.io/github/stars/cfgnunes/fm-scripts?style=flat&labelColor=333333&color=339933)](#installation)
