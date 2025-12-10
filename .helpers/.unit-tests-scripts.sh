@@ -300,17 +300,6 @@ _main() {
     __test_file_nonempty "$output_file (no silence) (2).mp3"
     __test_file_empty "$std_output"
 
-    script_test="Audio and Video/Audio: MP3 files/MP3: (artist - title) Name to ID3"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: MP3 files/MP3: (artist - title) ID3 to Name"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/ - Test audio.mp3"
-    __test_file_empty "$std_output"
-
     script_test="Audio and Video/Audio: MP3 files/MP3: Show encoding details"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
@@ -337,6 +326,17 @@ _main() {
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.png"
+    __test_file_empty "$std_output"
+
+    script_test="Audio and Video/Audio: MP3 files/MP3: (artist - title) Name to ID3"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_empty "$std_output"
+
+    script_test="Audio and Video/Audio: MP3 files/MP3: (artist - title) ID3 to Name"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$temp_dir/ - Test audio.mp3"
     __test_file_empty "$std_output"
 
     #endregion
