@@ -464,6 +464,9 @@ msgstr "选择输入目录"
 msgid "Select input files"
 msgstr "选择输入文件"
 
+msgid "Open"
+msgstr "打开"
+
 #: Menu
 msgid "Archive"
 msgstr "归档"

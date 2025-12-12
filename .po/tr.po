@@ -464,6 +464,9 @@ msgstr "Girdi dizinlerini seçin"
 msgid "Select input files"
 msgstr "Girdi dosyalarını seçin"
 
+msgid "Open"
+msgstr "Aç"
+
 #: Menu
 msgid "Archive"
 msgstr "Arşiv"

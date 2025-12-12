@@ -464,6 +464,9 @@ msgstr "입력 디렉토리를 선택하세요"
 msgid "Select input files"
 msgstr "입력 파일을 선택하세요"
 
+msgid "Open"
+msgstr "열기"
+
 #: Menu
 msgid "Archive"
 msgstr "압축"

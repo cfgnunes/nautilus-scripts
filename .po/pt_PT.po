@@ -464,6 +464,9 @@ msgstr "Selecione os diretórios de entrada"
 msgid "Select input files"
 msgstr "Selecione os ficheiros de entrada"
 
+msgid "Open"
+msgstr "Abrir"
+
 #: Menu
 msgid "Archive"
 msgstr "Compactação"

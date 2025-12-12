@@ -464,6 +464,9 @@ msgstr "Kies de invoermappen"
 msgid "Select input files"
 msgstr "Kies de invoerbestanden"
 
+msgid "Open"
+msgstr "Openen"
+
 #: Menu
 msgid "Archive"
 msgstr "Archief"

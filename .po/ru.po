@@ -464,6 +464,9 @@ msgstr "Выберите входные каталоги"
 msgid "Select input files"
 msgstr "Выберите входные файлы"
 
+msgid "Open"
+msgstr "Открыть"
+
 #: Menu
 msgid "Archive"
 msgstr "Архив"

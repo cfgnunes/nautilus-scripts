@@ -464,6 +464,9 @@ msgstr "Chọn thư mục đầu vào"
 msgid "Select input files"
 msgstr "Chọn tệp đầu vào"
 
+msgid "Open"
+msgstr "Mở"
+
 #: Menu
 msgid "Archive"
 msgstr "Lưu trữ"

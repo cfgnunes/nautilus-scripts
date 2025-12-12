@@ -463,6 +463,9 @@ msgstr ""
 msgid "Select input files"
 msgstr ""
 
+msgid "Open"
+msgstr ""
+
 #: Menu
 msgid "Archive"
 msgstr ""
