@@ -81,6 +81,7 @@ While numerous *Nautilus Scripts* are available for file managers on the web, ma
 | `<Control><Alt>C`   | Copy file names                   |
 | `<Control><Alt>V`   | Paste clipboard content           |
 | `<Control><Shift>V` | Paste as symbolic link            |
+| `<Control><Shift>B` | Create backup (via Rsync)         |
 | `<Control><Shift>C` | Compare items                     |
 | `<Control><Shift>O` | Open item location                |
 | `<Control><Shift>H` | Compute all checksums             |
