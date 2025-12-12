@@ -323,7 +323,7 @@ _logs_consolidate() {
     log_file=$(_str_human_readable_path "$log_file_output")
     local msg=""
     msg="$(_i18n 'Finished with errors! See the log:')"
-    _display_error_box "$msg $log_file"
+    _display_error_box "$msg $log_file" "$log_file_output"
 
     _exit_script
 }
@@ -1696,8 +1696,11 @@ _display_file_selection_box() {
 #
 # PARAMETERS:
 #   $1 (message): The error message to display.
+#   $2 (open_item): Optional. A file or directory to open when the user clicks
+#                   the action button in the notification.
 _display_error_box() {
     local message=$1
+    local open_item=${2:-}
 
     local btn_ok=""
     btn_ok="$(_i18n 'OK')"
@@ -1708,7 +1711,7 @@ _display_error_box() {
         echo -e "$MSG_ERROR $message" >&2
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _display_gdbus_notify "dialog-error" "$(_get_script_name)" \
-            "$message" "2"
+            "$message" "2" "$open_item"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" \
             --width="$GUI_INFO_WIDTH" --text="$message" \
@@ -1734,8 +1737,11 @@ _display_error_box() {
 #
 # PARAMETERS:
 #   $1 (message): The information message to display.
+#   $2 (open_item): Optional. A file or directory to open when the user clicks
+#                   the action button in the notification.
 _display_info_box() {
     local message=$1
+    local open_item=${2:-}
 
     local btn_ok=""
     btn_ok="$(_i18n 'OK')"
@@ -1746,7 +1752,7 @@ _display_info_box() {
         echo -e "$MSG_INFO $message" >&2
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _display_gdbus_notify "dialog-information" "$(_get_script_name)" \
-            "$message" "1"
+            "$message" "1" "$open_item"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" \
             --width="$GUI_INFO_WIDTH" --text="$message" \
@@ -1894,7 +1900,7 @@ _display_select_box_action() {
     # Open the selected items.
     if ((items_count > 0)) && [[ -n "$selected_items" ]]; then
         case "$par_action" in
-        "open_file") xdg-open "$selected_items" ;;
+        "open_file") xdg-open "$selected_items" &>/dev/null & ;;
         "open_location")
             _open_items_locations "$selected_items" "$par_resolve_links"
             ;;
@@ -2312,7 +2318,7 @@ _display_result_box() {
             local dir_label=""
             dir_label=$(_str_human_readable_path "$output_dir")
             msg="$(_i18n 'Finished! The output files are in:')"
-            _display_info_box "$msg $dir_label"
+            _display_info_box "$msg $dir_label" "$output_dir"
         else
             msg="$(_i18n 'Finished, but there is nothing to do.')"
             _display_info_box "$msg"
@@ -2473,20 +2479,50 @@ _display_unlock() {
 #   $2 (title): The title of the notification.
 #   $3 (body): The main message to be displayed in the notification.
 #   $4 (urgency): Optional. The urgency level of the notification.
+#   $5 (open_item): Optional. A file or directory to open when the user clicks
+#                   the action button in the notification.
 _display_gdbus_notify() {
     local icon=$1
     local title=$2
     local body=$3
     local urgency=${4:-1} # Default urgency is 1 (normal).
+    local open_item=${5:-}
     local app_name=$title
     local method="Notify"
     local interface="org.freedesktop.Notifications"
     local object_path="/org/freedesktop/Notifications"
 
     # Use 'gdbus' to send the notification.
-    gdbus call --session --dest "$interface" --object-path "$object_path" \
-        --method "$interface.$method" "$app_name" 0 "$icon" "$title" "$body" \
-        "[]" "{\"urgency\": <$urgency>}" 5000 &>/dev/null
+    if [[ -z "$open_item" ]] || _is_qt_desktop; then
+        gdbus call --session --dest "$interface" \
+            --object-path "$object_path" \
+            --method "$interface.$method" \
+            "$app_name" 0 "$icon" "$title" "$body" \
+            "[]" "{\"urgency\": <$urgency>}" 5000 &>/dev/null
+    else
+        local action_id=""
+        action_id="__CMD_OpenDir__${$}"
+        local msg=""
+        msg="$(_i18n 'Open')"
+
+        gdbus call --session --dest "$interface" \
+            --object-path "$object_path" \
+            --method "$interface.$method" \
+            "$app_name" 0 "$icon" "$title" "$body" \
+            "[\"$action_id\", \"$msg\"]" \
+            "{\"urgency\": <$urgency>}" 5000 &>/dev/null
+
+        # Monitor for the action invoked by the user.
+        local line=""
+        timeout 10s \
+            dbus-monitor "interface='$interface',member='ActionInvoked'" |
+            while read -r line; do
+                if [[ "$line" == *"$action_id"* ]]; then
+                    xdg-open "$open_item" &>/dev/null &
+                    break
+                fi
+            done
+    fi
 }
 
 #endregion
