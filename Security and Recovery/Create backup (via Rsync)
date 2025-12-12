@@ -20,6 +20,9 @@ _main() {
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
+    # Execute a flush to guarantee data is physically written,
+    # especially important for USB media.
+    sync
     _display_result_box "$output_dir"
 }
 
@@ -48,11 +51,11 @@ _main_task() {
     # Perform incremental backup with rsync.
     if [[ -n "$old_version_dir" && -d "$old_version_dir" ]]; then
         # If a previous backup exists, use it as incremental reference.
-        std_output=$(rsync --archive --progress --hard-links --delete \
+        std_output=$(rsync --archive --quiet --hard-links --delete \
             --link-dest="$old_version_dir" \
             -- "$input_file" "$version_dir" 2>&1)
     else
-        std_output=$(rsync --archive --progress --hard-links --delete \
+        std_output=$(rsync --archive --quiet --hard-links --delete \
             -- "$input_file" "$version_dir" 2>&1)
     fi
 
