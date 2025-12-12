@@ -1009,11 +1009,11 @@ msgid "Sign (detached signature)"
 msgstr "서명 (분리된 서명)"
 
 #: Menu
-msgid "Sign & Encrypt with keys"
+msgid "Sign and Encrypt with keys"
 msgstr "서명하고 키로 암호화"
 
 #: Menu
-msgid "Sign & Encrypt with keys (ASCII)"
+msgid "Sign and Encrypt with keys (ASCII)"
 msgstr "서명하고 키로 암호화 (ASCII)"
 
 #: Menu

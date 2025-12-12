@@ -1009,11 +1009,11 @@ msgid "Sign (detached signature)"
 msgstr "Ký (chữ ký tách rời)"
 
 #: Menu
-msgid "Sign & Encrypt with keys"
+msgid "Sign and Encrypt with keys"
 msgstr "Ký và mã hóa bằng khóa"
 
 #: Menu
-msgid "Sign & Encrypt with keys (ASCII)"
+msgid "Sign and Encrypt with keys (ASCII)"
 msgstr "Ký và mã hóa bằng khóa (ASCII)"
 
 #: Menu

@@ -1009,11 +1009,11 @@ msgid "Sign (detached signature)"
 msgstr "हस्ताक्षर करें (डिटैच्ड सिग्नेचर)"
 
 #: Menu
-msgid "Sign & Encrypt with keys"
+msgid "Sign and Encrypt with keys"
 msgstr "हस्ताक्षर करें और कुंजियों के साथ एन्क्रिप्ट करें"
 
 #: Menu
-msgid "Sign & Encrypt with keys (ASCII)"
+msgid "Sign and Encrypt with keys (ASCII)"
 msgstr "हस्ताक्षर करें और कुंजियों के साथ एन्क्रिप्ट करें (ASCII)"
 
 #: Menu

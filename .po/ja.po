@@ -1009,11 +1009,11 @@ msgid "Sign (detached signature)"
 msgstr "署名 (分離署名)"
 
 #: Menu
-msgid "Sign & Encrypt with keys"
+msgid "Sign and Encrypt with keys"
 msgstr "署名して鍵で暗号化"
 
 #: Menu
-msgid "Sign & Encrypt with keys (ASCII)"
+msgid "Sign and Encrypt with keys (ASCII)"
 msgstr "署名して鍵で暗号化 (ASCII)"
 
 #: Menu

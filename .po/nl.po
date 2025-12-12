@@ -1009,11 +1009,11 @@ msgid "Sign (detached signature)"
 msgstr "Ondertekenen (losse handtekening)"
 
 #: Menu
-msgid "Sign & Encrypt with keys"
+msgid "Sign and Encrypt with keys"
 msgstr "Ondertekenen en versleutelen met sleutels"
 
 #: Menu
-msgid "Sign & Encrypt with keys (ASCII)"
+msgid "Sign and Encrypt with keys (ASCII)"
 msgstr "Ondertekenen en versleutelen met sleutels (ASCII)"
 
 #: Menu

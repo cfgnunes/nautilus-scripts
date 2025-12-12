@@ -1009,11 +1009,11 @@ msgid "Sign (detached signature)"
 msgstr "İmzala (ayrık imza)"
 
 #: Menu
-msgid "Sign & Encrypt with keys"
+msgid "Sign and Encrypt with keys"
 msgstr "İmzala ve anahtarlarla şifrele (ASCII)"
 
 #: Menu
-msgid "Sign & Encrypt with keys (ASCII)"
+msgid "Sign and Encrypt with keys (ASCII)"
 msgstr "İmzala ve anahtarlarla şifrele (ASCII)"
 
 #: Menu
