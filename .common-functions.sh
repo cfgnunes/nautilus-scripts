@@ -6,7 +6,7 @@
 # AUTHOR: Cristiano Fraga G. Nunes
 # REPOSITORY: https://github.com/cfgnunes/fm-scripts
 # LICENSE: MIT License
-# VERSION: 30.11.3
+# VERSION: 30.11.4
 # =============================================================================
 
 # This file contains shared functions and constants sourced by all scripts.
