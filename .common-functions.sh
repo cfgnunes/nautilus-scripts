@@ -98,7 +98,7 @@ INPUT_FILES=$*
 # (e.g., passwords, configuration values).
 TEMP_DATA_TASK=""
 
-# Associative array that stores translation key-value pairs loaded
+# Array that stores translation key-value pairs loaded
 # from PO files during i18n initialization by '_i18n_initialize'.
 declare -A I18N_DATA=()
 
@@ -204,14 +204,14 @@ _exit_script() {
 # FUNCTION: _check_output
 #
 # DESCRIPTION:
-# This function validates the success of a command or process based on its
+# This function checks the output of a command or process based on its
 # exit code and output. It logs errors if the command fails or if an
 # expected output file is missing.
 #
 # PARAMETERS:
 #   $1 (exit_code): The exit code returned by the command or process.
 #   $2 (std_output): The standard output or error from the command.
-#   $3 (input_file): The input file associated (if applicable).
+#   $3 (input_file): The input file (if applicable).
 #   $4 (output_file): The expected output file to verify its existence.
 #
 # RETURNS:
@@ -244,14 +244,11 @@ _check_output() {
 # FUNCTION: _log_error
 #
 # DESCRIPTION:
-# This function writes an error log entry with a specified message,
-# including details such as the input file, output file, and terminal
-# output. The entry is saved to a temporary log file.
+# This function writes an temporary log error file with a specified message.
 #
 # PARAMETERS:
 #   $1 (message): The error message to be logged.
-#   $2 (input_file): The path of the input file associated with the
-#      operation.
+#   $2 (input_file): The path of the input file.
 #   $3 (std_output): The standard output or result from the operation
 #      that will be logged.
 #   $4 (output_file): The path of the output file associated with the
@@ -285,10 +282,10 @@ _log_error() {
 # FUNCTION: _logs_consolidate
 #
 # DESCRIPTION:
-# This function gathers all error logs from a temporary directory and
-# compiles them into a single consolidated log file. If any error logs are
-# found, it displays an error message indicating the location of the
-# consolidated log file and terminates the script.
+# This function compiles all error logs from a temporary directory and into a
+# single consolidated log file. If any error logs are found, it displays an
+# error message indicating the location of the consolidated log file and
+# terminates the script.
 #
 # PARAMETERS:
 #   $1 (output_dir): Optional. The directory where the consolidated log
@@ -355,8 +352,7 @@ _run_task_parallel() {
 # DESCRIPTION:
 # This function executes a given Bash expression or command in parallel for
 # a list of input items. It uses 'xargs' to distribute execution across
-# multiple processes, allowing concurrent processing and improved performance
-# on multi-core systems.
+# multiple processes.
 #
 # PARAMETERS:
 #   $1 (expression): The Bash expression or command to execute for each item.
@@ -619,12 +615,12 @@ _check_dependencies() {
 #
 # DESCRIPTION:
 #   Retrieves the value associated with a specific key-subkey pair from an
-#   associative array.
+#   array.
 #
 # PARAMETERS:
 #   $1 (key): The key whose value is being queried.
 #   $2 (pkg_manager): The package manager to match.
-#   $3 (_input_array): The name of the associative array that contains
+#   $3 (_input_array): The name of the array that contains
 #      the mappings (<subkey>:<value> pairs).
 #
 # RETURNS:
@@ -638,15 +634,15 @@ _deps_get_dependency_value() {
 
     # Source the configuration file that defines the mapping between commands,
     # packages, and package managers. This file is used by the scripts to check
-    # and resolve their own dependencies.
+    # and resolve their dependencies.
     if [[ ! -v "PACKAGE_NAME" ]]; then
         source "$ROOT_DIR/.pkg-map.sh"
     fi
 
-    # Retrieve the raw value from the associative array.
+    # Retrieve the raw value from the array.
     pairs=${_input_array[$key]:-}
 
-    # Remove leading, trailing, and duplicate spaces.
+    # Remove leading, trailing and duplicate spaces.
     pairs=$(_str_collapse_char "$pairs" " ")
 
     # If the key does not exist or has no associated values, return failure.
@@ -663,7 +659,7 @@ _deps_get_dependency_value() {
         local subkey="${pair%%:*}"
         local value="${pair#*:}"
 
-        # Remove leading, trailing, and duplicate spaces.
+        # Remove leading, trailing and duplicate spaces.
         subkey=$(_str_collapse_char "$subkey" " ")
         value=$(_str_collapse_char "$value" " ")
 
@@ -705,7 +701,7 @@ _deps_install_missing_packages() {
 
     [[ -z "$packages_install" ]] && return
 
-    # Remove leading, trailing, and duplicate spaces.
+    # Remove leading, trailing and duplicate spaces.
     packages_install=$(_str_collapse_char "$packages_install" " ")
 
     # Format the package names for display.
@@ -1155,8 +1151,7 @@ _directory_push() {
 # FUNCTION: _find_filtered_files
 #
 # DESCRIPTION:
-# This function filters a list of files or directories based on various
-# user-specified criteria, such as file type, extensions, and recursion.
+# This function filters a list of files or directories.
 #
 # PARAMETERS:
 #   $1 (input_files): A space-separated string containing file or
@@ -2842,8 +2837,8 @@ _set_clipboard_file() {
 # FUNCTION: _translate_to_gvfs_path
 #
 # DESCRIPTION:
-#   Converts a remote URI (such as sftp://host/path or smb://server/share/path)
-#   into the corresponding GVfs-mounted path under '/run/user/<uid>/gvfs/'.
+# Converts a remote URI into the corresponding GVfs-mounted path under
+# '/run/user/<uid>/gvfs/'.
 _translate_to_gvfs_path() {
     local uri=$1
     local uid=""
@@ -2890,10 +2885,9 @@ _translate_to_gvfs_path() {
 # FUNCTION: _get_filenames_filemanager
 #
 # DESCRIPTION:
-# This function retrieves a list of selected filenames or URIs from a file
-# manager (such as Nautilus, Nemo, or Caja) and processes the input
-# accordingly. If no selection is detected, it falls back to using a
-# standard input file list.
+# This function retrieves a list of selected filenames or URIs from a
+# file manager and processes the input accordingly. If no selection is
+# detected, it falls back to using a standard input file list.
 _get_filenames_filemanager() {
     local input_files=""
 
@@ -3199,9 +3193,7 @@ _validate_file_mime_parallel() {
 # FUNCTION: _validate_files_count
 #
 # DESCRIPTION:
-# This function validates the number of selected files or directories based
-# on several criteria, such as type, extension, MIME type, and minimum or
-# maximum item count.
+# This function validates the number of selected files or directories.
 #
 # PARAMETERS:
 #   $1 (input_files): A space-separated string containing the paths of
@@ -3977,7 +3969,7 @@ _i18n_initialize() {
 # DESCRIPTION:
 # This function reads a PO (Portable Object) file line by line,
 # extracting the translation strings and storing them in the
-# associative array '$I18N_DATA'.
+# array '$I18N_DATA'.
 #
 # PARAMETERS:
 #   $1 (po_file): Path to the .po file to be loaded.
@@ -4001,7 +3993,7 @@ _i18n_load_file() {
             val="${val#\"}"
             ;;
         "")
-            # End of entry: store in associative array.
+            # End of entry: store in array.
             if [[ -n "$key" ]] && [[ -n "$val" ]]; then
                 I18N_DATA["$key"]="$val"
                 key=""
