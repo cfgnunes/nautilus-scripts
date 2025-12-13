@@ -201,7 +201,7 @@ _compare_fingerprints() {
 #   $1 (fp1): Path to the first image.
 #   $2 (fp2): Path to the second image.
 #
-# RETURNS:
+# Returns:
 #   Prints a numeric similarity value between 0.0 (completely different)
 #   and 1.0 (identical).
 _compare_images() {

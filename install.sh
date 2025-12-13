@@ -487,7 +487,7 @@ _i18n_initialize() {
 # the system by iterating through a predefined list of supported file
 # managers defined in '$COMPATIBLE_FILE_MANAGERS'.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If at least one compatible file manager is found.
 #   "1" (false): If no compatible file manager is found.
 _check_exist_filemanager() {

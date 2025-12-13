@@ -213,7 +213,7 @@ _exit_script() {
 #   $3 (input_file): The input file (if applicable).
 #   $4 (output_file): The expected output file to verify its existence.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If the command was successful and the output file exists.
 #   "1" (false): If the command failed or the output file does not exist.
 _check_output() {
@@ -455,7 +455,7 @@ _run_function_parallel() {
 # Parameters:
 #   $1 (command_check): The name of the command to verify.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If the command is available.
 #   "1" (false): If the command is not available.
 _command_exists() {
@@ -622,7 +622,7 @@ _check_dependencies() {
 #   $3 (_input_array): The name of the array that contains
 #      the mappings (<subkey>:<value> pairs).
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If a matching value is found and printed.
 #   "1" (false): If no matching value is found.
 _deps_get_dependency_value() {
@@ -979,7 +979,7 @@ _deps_check_rpm_ostree_requires_reboot() {
 #      - "zypper"       : For openSUSE systems.
 #   $2 (package): The name of the package to check.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If the package is installed.
 #   "1" (false): If the package is not installed or an error occurs.
 _deps_is_package_installed() {
@@ -1114,7 +1114,7 @@ _delete_items() {
 # This function pops the top directory off the directory stack and changes
 # to the previous directory.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If the directory was successfully popped and changed.
 #   "1" (false): If there was an error popping the directory.
 _directory_pop() {
@@ -1132,7 +1132,7 @@ _directory_pop() {
 #   $1 (directory): The target directory to push onto the directory stack
 #      and navigate to.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If the directory was successfully pushed and changed.
 #   "1" (false): If there was an error pushing the directory.
 _directory_push() {
@@ -1428,7 +1428,7 @@ _make_temp_file() {
 #   $2 (file_src): The path to the source file to be moved.
 #   $3 (file_dst): The destination path where the file should be moved.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If the operation is successful or if the source and
 #       destination are the same file.
 #   "1" (false): If the move fails.
@@ -1578,7 +1578,7 @@ _get_working_directory() {
 # Parameters:
 #   $1 (directory): The path of the directory to check.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If the directory is empty.
 #   "1" (false): If the directory contains any files or subdirectories.
 _is_directory_empty() {
@@ -2107,7 +2107,7 @@ _display_input_text_box() {
 # Parameters:
 #   $1 (message): A message to display as a prompt for the password.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If the password is successfully obtained.
 #   "1" (false): If the user cancels the input or an error occurs.
 _display_password_box() {
@@ -2149,7 +2149,7 @@ _display_password_box() {
 # This function prompts the user to enter a password and ensures the
 # password is not empty.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If the password is successfully obtained.
 #   "1" (false): If the user cancels the input or an error occurs.
 _display_password_box_define() {
@@ -2178,7 +2178,7 @@ _display_password_box_define() {
 # Parameters:
 #   $1 (message): The question message to display to the user.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If the user responds with 'yes' or 'y'.
 #   "1" (false): If the user responds with 'no' or 'n', or if an error.
 _display_question_box() {
@@ -2531,7 +2531,7 @@ _display_gdbus_notify() {
 #   $1 (_apps): An array of application names to check, in order of
 #      preference.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If an available application is found, prints its name.
 #   "1" (false): If no applications from the list are found.
 _get_available_app() {
@@ -2554,7 +2554,7 @@ _get_available_app() {
 # This function detects the default or an available file manager on the
 # system.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If a file manager is found, prints its name.
 #   "1" (false): If no file manager is found.
 _get_available_file_manager() {
@@ -2629,7 +2629,7 @@ _get_script_name() {
 # pattern "_SCRIPT_SELECTED_URIS", which is set by these file managers when
 # running user-defined scripts.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If running inside a file manager session.
 #   "1" (false): If not running inside one of these file managers.
 _is_file_manager_session() {
@@ -2644,7 +2644,7 @@ _is_file_manager_session() {
 # environment variable is set, which is typically present in GUI sessions
 # (e.g., X11 or Wayland).
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If is a GUI session.
 #   "1" (false): If is not a GUI session.
 _is_gui_session() {
@@ -2660,7 +2660,7 @@ _is_gui_session() {
 # This function determines whether the current desktop environment
 # (as specified by the XDG_CURRENT_DESKTOP variable) is Qt-based.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If the desktop is Qt-based.
 #   "1" (false): Otherwise.
 _is_qt_desktop() {
@@ -2715,7 +2715,7 @@ _unset_global_variables_file_manager() {
 #   $2 (quiet, optional): If set to 'true', the function will return 1 on
 #      errors without displaying any dialog or exiting. Default is 'false'.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If the default application is found, prints its executable.
 #   "1" (false): If no default application is set or found.
 _xdg_get_default_app() {
@@ -3690,7 +3690,7 @@ _storage_text_write_ln() {
 #   $1 (input_items): A string containing items separated by the
 #      '$FIELD_SEPARATOR' variable.
 #
-# RETURNS:
+# Returns:
 #   - A string containing the items separated by newlines.
 _convert_delimited_string_to_text() {
     local input_items=$1
@@ -3711,7 +3711,7 @@ _convert_delimited_string_to_text() {
 # Parameters:
 #   $1 (input_items): A string containing items separated by newlines.
 #
-# RETURNS:
+# Returns:
 #   - A string containing the items separated by the '$FIELD_SEPARATOR'
 #   variable.
 _convert_text_to_delimited_string() {
@@ -3823,7 +3823,7 @@ _text_remove_empty_lines() {
 #   $1 (input_text): The input string that may contain the current
 #      working directory path.
 #
-# RETURNS:
+# Returns:
 #   - The modified string with the working directory replaced by ".", or
 #     the original string if the working directory is not found.
 #
@@ -3867,7 +3867,7 @@ _text_sort() {
 # Parameters:
 #   $1 (uri_encoded): The URI-encoded string that needs to be decoded.
 #
-# RETURNS:
+# Returns:
 #   - The decoded URI string, with percent-encoded characters replaced and
 #     the "file://" prefix removed.
 #
@@ -4033,7 +4033,7 @@ _i18n() {
 # This function adds the running script to the history of recently accessed
 # scripts.
 #
-# RETURNS:
+# Returns:
 #   "0" (true): If the script was added successfully.
 #   "1" (false): If there was an error adding the script.
 _recent_scripts_add() {
