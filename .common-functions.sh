@@ -734,7 +734,7 @@ _deps_install_missing_packages() {
 # package manager defined for each one. The input list must contain
 # pairs in the format "<pkg_manager>:<package>" separated by spaces.
 #
-# Example:
+# EXAMPLE:
 # _deps_install_packages "apt-get:curl dnf:wget brew:git"
 #
 # Supported package managers:
@@ -1265,9 +1265,6 @@ _get_filename_extension() {
 #
 # PARAMETERS:
 #   $1 (filename): The filename from which to strip the extension.
-#
-# RETURNS:
-#   - The filename without its extension.
 _strip_filename_extension() {
     local filename=$1
     local extension=""
@@ -1376,9 +1373,6 @@ _get_filename_next_suffix() {
 # and returns its path. The directory is created using 'mktemp', and the
 # directory for the temporary directory is specified by the '$TEMP_DIR_TASK'
 # variable.
-#
-# Output:
-#   - The full path to the newly created temporary directory.
 _make_temp_dir() {
     mktemp --directory --tmpdir="$TEMP_DIR_TASK"
 }
@@ -1395,9 +1389,6 @@ _make_temp_dir() {
 #   $1 (output_dir): The directory where the temporary directory will be
 #      created.
 #   $2 (basename): The prefix for the temporary directory name.
-#
-# Output:
-#   - The full path to the newly created temporary directory.
 _make_temp_dir_local() {
     local output_dir=$1
     local basename=$2
@@ -1420,9 +1411,6 @@ _make_temp_dir_local() {
 # and returns its path. The file is created using 'mktemp', and the
 # directory for the temporary file is specified by the '$TEMP_DIR_TASK'
 # variable.
-#
-# Output:
-#   - The full path to the newly created temporary file.
 _make_temp_file() {
     mktemp --tmpdir="$TEMP_DIR_TASK" 2>/dev/null
 }
@@ -1449,8 +1437,7 @@ _make_temp_file() {
 # RETURNS:
 #   "0" (true): If the operation is successful or if the source and
 #       destination are the same file.
-#   "1" (false): If any required parameters are missing, if the move
-#       fails, or if an invalid conflict parameter is provided.
+#   "1" (false): If the move fails.
 _move_file() {
     local par_when_conflict=${1:-"skip"}
     local file_src=$2
@@ -1547,9 +1534,6 @@ _move_file() {
 # falls back to other methods. If the working directory cannot be obtained
 # from the file manager or input files, it defaults to the current
 # directory.
-#
-# Output:
-#   - The determined working directory.
 _get_working_directory() {
     local working_dir=""
 
@@ -2579,12 +2563,6 @@ _get_available_app() {
 # RETURNS:
 #   "0" (true): If a file manager is found, prints its name.
 #   "1" (false): If no file manager is found.
-#
-# BEHAVIOR:
-#   1. Attempts to get the system's default file manager using
-#      '_xdg_get_default_app' for the 'inode/directory' MIME type.
-#   2. If none is found, iterates through a predefined list of common file
-#      managers and returns the first one that is installed.
 _get_available_file_manager() {
     local available_app=""
     local default_app=""
@@ -2746,11 +2724,6 @@ _unset_global_variables_file_manager() {
 # RETURNS:
 #   "0" (true): If the default application is found, prints its executable.
 #   "1" (false): If no default application is set or found.
-#
-# EXAMPLE:
-#   - Input: 'application/pdf'
-#   - Output: The function prints the default application's executable for
-#     opening PDF files (e.g., 'evince' or 'okular').
 _xdg_get_default_app() {
     local mime=$1
     local quiet=${2:-"false"}
@@ -3863,14 +3836,10 @@ _text_remove_empty_lines() {
 #   - The modified string with the working directory replaced by ".", or
 #     the original string if the working directory is not found.
 #
-# EXAMPLES:
+# EXAMPLE:
 #   - Input: "/home/user/project/file.txt" (assuming current directory is
 #     "/home/user/project")
 #   - Output: "./file.txt"
-#
-#   - Input: "/etc/config" (assuming current directory is
-#     "/home/user/project")
-#   - Output: "/etc/config"
 _text_remove_pwd() {
     local input_text=$1
     local working_dir=""
@@ -3892,9 +3861,6 @@ _text_remove_pwd() {
 # PARAMETERS:
 #   $1 (input_text): The input text to be sorted, where each line is
 #      treated as a separate string.
-#
-# RETURNS:
-#   - The sorted text with each line in the correct order.
 _text_sort() {
     local input_text=$1
 
