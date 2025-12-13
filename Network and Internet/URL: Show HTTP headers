@@ -56,9 +56,9 @@ _main_task() {
     _storage_text_write_ln "$status __MSG_URL__: $input_file"$'\n'"$std_output"$'\n'
 }
 
-# FUNCTION: _extract_urls
+# Function: _extract_urls
 #
-# DESCRIPTION:
+# Description:
 # This function extracts unique URLs or domain-like strings from input text.
 # It matches three main types:
 #  - URLs with IP addresses (with optional port and path)

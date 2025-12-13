@@ -17,13 +17,13 @@ _main() {
     _display_result_box ""
 }
 
-# FUNCTION: _main_task
+# Function: _main_task
 #
-# DESCRIPTION:
+# Description:
 #   Main logic of the script. Generates image fingerprints, compares their
 #   similarities, removes duplicates, and displays the matching images.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_files): A delimited string containing the image files.
 #
 # STEPS:
@@ -120,13 +120,13 @@ _main_task() {
     done
 }
 
-# FUNCTION: _generate_fingerprint
+# Function: _generate_fingerprint
 #
-# DESCRIPTION:
+# Description:
 #   Generates a visual fingerprint (small normalized representation)
 #   for an image file to allow fast visual similarity comparisons.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_file): The full path to the input image file.
 #
 # OUTPUT:
@@ -155,16 +155,16 @@ _generate_fingerprint() {
         "$temp_dir/$fp_file"
 }
 
-# FUNCTION: _compare_fingerprints
+# Function: _compare_fingerprints
 #
-# DESCRIPTION:
+# Description:
 # This function compares two image fingerprints and determines whether they
 # represent duplicate or near-duplicate images based on a similarity threshold.
 # It uses the function '_compare_images' to compute the similarity score
 # between the reference and comparison fingerprints. The similarity metric
 # ranges from 0.0 (completely different) to 1.0 (identical).
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (fp_reference): The reference fingerprint file.
 #   $2 (fp_compare): The fingerprint file to compare against the reference.
 #   $3 (threshold): Threshold for comparison.
@@ -191,13 +191,13 @@ _compare_fingerprints() {
     fi
 }
 
-# FUNCTION: _compare_images
+# Function: _compare_images
 #
-# DESCRIPTION:
+# Description:
 #   Compares two images using RMSE (Root Mean Square Error)
 #   and converts the result into a similarity score (0 to 1).
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (fp1): Path to the first image.
 #   $2 (fp2): Path to the second image.
 #

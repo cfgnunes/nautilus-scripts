@@ -17,9 +17,9 @@ _main() {
     _compare "$input_files"
 }
 
-# FUNCTION: _compare
+# Function: _compare
 #
-# DESCRIPTION:
+# Description:
 # This function compares files based on their MIME types and available
 # commands. It supports two or three files depending on the command and
 # file type.
@@ -92,9 +92,9 @@ _compare() {
     esac
 }
 
-# FUNCTION: _compare_hexa
+# Function: _compare_hexa
 #
-# DESCRIPTION:
+# Description:
 # This function compares binary files in hexadecimal format and handle
 # modifications. It converts files to hex view, compares them, and allows
 # editing or saving changes.
@@ -152,9 +152,9 @@ _compare_hexa() {
     _move_file "safe_overwrite" "$file_2_modified" "$file_2"
 }
 
-# FUNCTION: _compare_identical
+# Function: _compare_identical
 #
-# DESCRIPTION:
+# Description:
 # This function checks if two or three specified items (files or
 # directories) are identical. If all selected items are identical, displays
 # a message and exits the script.
@@ -192,9 +192,9 @@ _compare_identical() {
     fi
 }
 
-# FUNCTION: _compare_images
+# Function: _compare_images
 #
-# DESCRIPTION:
+# Description:
 # This function compares two images using ImageMagick. If the images are
 # identical, it displays a message and exits the script. Otherwise, it
 # generates a visual diff and opens it with an image viewer.
@@ -273,9 +273,9 @@ _compare_images() {
     fi
 }
 
-# FUNCTION: _get_command
+# Function: _get_command
 #
-# DESCRIPTION:
+# Description:
 # This function determines the appropriate command for comparing files or
 # directories. The selection is based on the file type, the number of files
 # to compare, and system availability of commands.
@@ -317,9 +317,9 @@ _get_command() {
     printf "%s" "$command"
 }
 
-# FUNCTION: _get_hex_ideal_cols
+# Function: _get_hex_ideal_cols
 #
-# DESCRIPTION:
+# Description:
 # This function determines the ideal number of columns for a hexadecimal
 # display. The column width is chosen to evenly divide the size difference
 # between files, ensuring a more organized and visually coherent hex dump.
@@ -341,9 +341,9 @@ _get_hex_ideal_cols() {
     printf "%s" "$cols"
 }
 
-# FUNCTION: _get_difference
+# Function: _get_difference
 #
-# DESCRIPTION:
+# Description:
 # This function calculates the absolute difference between two numbers. The
 # result is always a positive value, regardless of the order of the inputs.
 _get_difference() {
@@ -358,9 +358,9 @@ _get_difference() {
     fi
 }
 
-# FUNCTION: _get_file_size
+# Function: _get_file_size
 #
-# DESCRIPTION:
+# Description:
 # This function returns the size of a file in bytes.
 _get_file_size() {
     stat --format="%s" "$1" 2>/dev/null

@@ -480,9 +480,9 @@ _i18n_initialize() {
 #region Validation and checks
 #------------------------------------------------------------------------------
 
-# FUNCTION: _check_exist_filemanager
+# Function: _check_exist_filemanager
 #
-# DESCRIPTION:
+# Description:
 # This function checks if at least one compatible file manager exists in
 # the system by iterating through a predefined list of supported file
 # managers defined in '$COMPATIBLE_FILE_MANAGERS'.
@@ -547,9 +547,9 @@ _tee_file() {
     tee -- "$1" >/dev/null
 }
 
-# FUNCTION: _item_create_backup
+# Function: _item_create_backup
 #
-# DESCRIPTION:
+# Description:
 # This function creates a backup of a file (append .bak) if it exists.
 _item_create_backup() {
     local item=$1
@@ -559,9 +559,9 @@ _item_create_backup() {
     fi
 }
 
-# FUNCTION: _delete_items
+# Function: _delete_items
 #
-# DESCRIPTION:
+# Description:
 # This function deletes or trash items, using the best available method.
 _delete_items() {
     local items=$1
@@ -668,9 +668,9 @@ _get_parameters_command_line() {
     done
 }
 
-# FUNCTION: _get_par_value
+# Function: _get_par_value
 #
-# DESCRIPTION:
+# Description:
 # This function extracts the value of a given parameter from a script file.
 # It searches for "parameter=value" inside the file, then returns only the
 # value.
@@ -861,9 +861,9 @@ _install_packages() {
 #region Install scripts
 #------------------------------------------------------------------------------
 
-# FUNCTION: _install_scripts
+# Function: _install_scripts
 #
-# DESCRIPTION:
+# Description:
 # This function installs scripts into the target directory.
 # Steps:
 #   1. Optionally remove any previously installed scripts.
@@ -961,9 +961,9 @@ _create_links() {
 #region Keyboard accellerators
 #------------------------------------------------------------------------------
 
-# FUNCTION: _install_accels
+# Function: _install_accels
 #
-# DESCRIPTION:
+# Description:
 # Install keyboard accelerators for specific file managers.
 _install_accels() {
     _echo_info "> ($FILE_MANAGER) $(_i18n 'Installing keyboard accelerators...')"
@@ -1207,9 +1207,9 @@ _create_gnome_application_folder() {
 #region File manager actions (context menus)
 #------------------------------------------------------------------------------
 
-# FUNCTION: _install_actions
+# Function: _install_actions
 #
-# DESCRIPTION:
+# Description:
 # This function install actions (context menus) for supported
 # file managers. Delegates to the appropriate function depending on
 # the detected file manager.
@@ -1446,9 +1446,9 @@ _install_actions_thunar() {
 #region Close filemanager
 #------------------------------------------------------------------------------
 
-# FUNCTION: _close_filemanager
+# Function: _close_filemanager
 #
-# DESCRIPTION:
+# Description:
 # This function closes the current file manager so that it reloads its
 # configurations. For most file managers, the `-q` option is used to quit
 # gracefully.
@@ -1511,9 +1511,9 @@ _close_filemanager() {
 #region Homebrew
 #------------------------------------------------------------------------------
 
-# FUNCTION: _install_homebrew
+# Function: _install_homebrew
 #
-# DESCRIPTION:
+# Description:
 # This function installs Homebrew if the user requested it and it is not
 # already installed.
 _install_homebrew() {
@@ -1572,9 +1572,9 @@ _install_homebrew() {
 #region Online installation
 #------------------------------------------------------------------------------
 
-# FUNCTION: _bootstrap_repository
+# Function: _bootstrap_repository
 #
-# DESCRIPTION:
+# Description:
 # This function ensures that the repository files are available before
 # running the installation.
 _bootstrap_repository() {

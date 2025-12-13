@@ -19,9 +19,9 @@ _main() {
     _display_result_box ""
 }
 
-# FUNCTION: _convert_git_to_web_url
+# Function: _convert_git_to_web_url
 #
-# DESCRIPTION:
+# Description:
 # This function converts a Git remote URL into a web-compatible URL for
 # browser access.
 #
@@ -57,9 +57,9 @@ _convert_git_to_web_url() {
     printf "%s" "$web_url"
 }
 
-# FUNCTION: _open_repository_website
+# Function: _open_repository_website
 #
-# DESCRIPTION:
+# Description:
 # This function opens the website corresponding to the remote Git
 # repository for one or more directories.
 #

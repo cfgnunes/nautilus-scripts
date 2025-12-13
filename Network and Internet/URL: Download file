@@ -32,9 +32,9 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
-# FUNCTION: _extract_urls
+# Function: _extract_urls
 #
-# DESCRIPTION:
+# Description:
 # This function extracts unique URLs or domain-like strings from input text.
 # It matches three main types:
 #  - URLs with IP addresses (with optional port and path)

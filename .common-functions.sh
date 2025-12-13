@@ -9,7 +9,7 @@
 # VERSION: 30.12.1
 # =============================================================================
 
-# This file contains shared functions and constants sourced by all scripts.
+# This file contains functions and constants sourced by scripts.
 
 set -u
 
@@ -42,7 +42,7 @@ TEMP_CONTROL_WAIT_BOX_DELAY="$TEMP_DIR/control_wait_box_delay"
 TEMP_CONTROL_WAIT_BOX_FIFO="$TEMP_DIR/control_wait_box_fifo"
 TEMP_DATA_TEXT_BOX="$TEMP_DIR/data_text_box"
 
-# Message tags for displaying status messages on terminal.
+# Message tags for displaying messages on terminal.
 MSG_ERROR="[\033[0;31mFAILED\033[0m]"
 MSG_INFO="[\033[0;32m INFO \033[0m]"
 
@@ -87,8 +87,7 @@ readonly \
 #region Global variables
 #------------------------------------------------------------------------------
 
-# Internal Field Separator used for splitting fields based on the
-# value defined in $FIELD_SEPARATOR.
+# Internal Field Separator based on the value defined in $FIELD_SEPARATOR.
 IFS=$FIELD_SEPARATOR
 
 # List of all input files passed as positional parameters.
@@ -107,7 +106,7 @@ declare -A I18N_DATA=()
 #region Build the structure of the '$TEMP_DIR'
 #------------------------------------------------------------------------------
 
-# DESCRIPTION:
+# Description:
 #
 #   '$TEMP_DIR_FILENAME_LOCKS':
 #       This directory is used to store temporary lock directories created by
@@ -144,9 +143,9 @@ mkdir -p "$TEMP_DIR_TASK"
 #region Core utilities
 #------------------------------------------------------------------------------
 
-# FUNCTION: _cleanup_on_exit
+# Function: _cleanup_on_exit
 #
-# DESCRIPTION:
+# Description:
 # This function performs cleanup tasks when the script exits. It is
 # designed to safely and efficiently remove temporary directories or files
 # that were created during the script's execution.
@@ -175,9 +174,9 @@ _cleanup_on_exit() {
 }
 trap _cleanup_on_exit EXIT
 
-# FUNCTION: _exit_script
+# Function: _exit_script
 #
-# DESCRIPTION:
+# Description:
 # This function is responsible for safely exiting the script by terminating all
 # child processes associated with the current script and printing an exit
 # message to the terminal.
@@ -201,14 +200,14 @@ _exit_script() {
     xargs kill <<<"$child_pids" 2>/dev/null
 }
 
-# FUNCTION: _check_output
+# Function: _check_output
 #
-# DESCRIPTION:
+# Description:
 # This function checks the output of a command or process based on its
 # exit code and output. It logs errors if the command fails or if an
 # expected output file is missing.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (exit_code): The exit code returned by the command or process.
 #   $2 (std_output): The standard output or error from the command.
 #   $3 (input_file): The input file (if applicable).
@@ -241,12 +240,12 @@ _check_output() {
     return 0
 }
 
-# FUNCTION: _log_error
+# Function: _log_error
 #
-# DESCRIPTION:
+# Description:
 # This function writes an temporary log error file with a specified message.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (message): The error message to be logged.
 #   $2 (input_file): The path of the input file.
 #   $3 (std_output): The standard output or result from the operation
@@ -279,15 +278,15 @@ _log_error() {
     } >"$log_temp_file"
 }
 
-# FUNCTION: _logs_consolidate
+# Function: _logs_consolidate
 #
-# DESCRIPTION:
+# Description:
 # This function compiles all error logs from a temporary directory and into a
 # single consolidated log file. If any error logs are found, it displays an
 # error message indicating the location of the consolidated log file and
 # terminates the script.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (output_dir): Optional. The directory where the consolidated log
 #      file will be saved. If not specified, a default directory is used.
 _logs_consolidate() {
@@ -325,13 +324,13 @@ _logs_consolidate() {
     _exit_script
 }
 
-# FUNCTION: _run_task_parallel
+# Function: _run_task_parallel
 #
-# DESCRIPTION:
+# Description:
 # This function runs a task in parallel for a set of input files, using a
 # specified output directory for results.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_files): A field-separated list of file paths to process.
 #   $2 (output_dir): The directory where the output files will be stored.
 #   $3 (max_procs): Optional. Maximum number of parallel processes to use.
@@ -347,14 +346,14 @@ _run_task_parallel() {
         "$max_procs"
 }
 
-# FUNCTION: _run_function_parallel
+# Function: _run_function_parallel
 #
-# DESCRIPTION:
+# Description:
 # This function executes a given Bash expression or command in parallel for
 # a list of input items. It uses 'xargs' to distribute execution across
 # multiple processes.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (expression): The Bash expression or command to execute for each item.
 #      The '{}' placeholder inside the expression will be replaced by the
 #      current item being processed.
@@ -448,12 +447,12 @@ _run_function_parallel() {
 #region Dependency management
 #------------------------------------------------------------------------------
 
-# FUNCTION: _command_exists
+# Function: _command_exists
 #
-# DESCRIPTION:
+# Description:
 # This function checks whether a given command is available on the system.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (command_check): The name of the command to verify.
 #
 # RETURNS:
@@ -465,15 +464,15 @@ _command_exists() {
     command -v "$command_check" &>/dev/null || return 1
 }
 
-# FUNCTION: _check_dependencies_clipboard
+# Function: _check_dependencies_clipboard
 #
-# DESCRIPTION:
+# Description:
 # This function ensures that clipboard-related dependencies are available
 # according to the current display session type (Wayland or X11). Detects the
 # session type and adds the proper clipboard tool ('wl-paste' for Wayland or
 # 'xclip' for X11) to the dependency list.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (dep_keys): Base list of dependency keys to check before adding
 #   session-specific clipboard dependencies.
 _check_dependencies_clipboard() {
@@ -506,14 +505,14 @@ _check_dependencies_clipboard() {
     _check_dependencies "$dep_keys_final"
 }
 
-# FUNCTION: _check_dependencies
+# Function: _check_dependencies
 #
-# DESCRIPTION:
+# Description:
 # This function ensures that all required dependencies are available for the
 # scripts. Checks each dependency key, determines the correct package for the
 # active package manager, and installs missing packages if necessary.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (dep_keys): A list of dependency keys. The list can be delimited either
 #      by a space ' ', a comma ',' or by a newline '\n'. These keys and its
 #      values are defined on file '.pkg-map.sh'.
@@ -611,13 +610,13 @@ _check_dependencies() {
     _deps_install_missing_packages "$packages_install" "$post_install_full"
 }
 
-# FUNCTION: _deps_get_dependency_value
+# Function: _deps_get_dependency_value
 #
-# DESCRIPTION:
+# Description:
 #   Retrieves the value associated with a specific key-subkey pair from an
 #   array.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (key): The key whose value is being queried.
 #   $2 (pkg_manager): The package manager to match.
 #   $3 (_input_array): The name of the array that contains
@@ -694,7 +693,7 @@ _deps_get_dependency_value() {
     return 1
 }
 
-# FUNCTION: _deps_install_missing_packages
+# Function: _deps_install_missing_packages
 _deps_install_missing_packages() {
     local packages_install=$1
     local post_install=$2
@@ -723,14 +722,14 @@ _deps_install_missing_packages() {
     _deps_installation_check "$packages_install"
 }
 
-# FUNCTION: _deps_install_packages
+# Function: _deps_install_packages
 #
-# DESCRIPTION:
+# Description:
 # This function installs specified packages using the corresponding
 # package manager defined for each one. The input list must contain
 # pairs in the format "<pkg_manager>:<package>" separated by spaces.
 #
-# EXAMPLE:
+# Example:
 # _deps_install_packages "apt-get:curl dnf:wget brew:git"
 #
 # Supported package managers:
@@ -745,7 +744,7 @@ _deps_install_missing_packages() {
 # - "xbps-install"  : For Void Linux systems.
 # - "zypper"        : For openSUSE systems.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (pkg_list): A space-separated list of "<pkg_manager>:<package>" pairs.
 #   $2 (post_install): Optional command executed after all installations.
 _deps_install_packages() {
@@ -898,15 +897,15 @@ _deps_install_packages() {
     _close_wait_box
 }
 
-# FUNCTION: _deps_installation_check
+# Function: _deps_installation_check
 #
-# DESCRIPTION:
+# Description:
 # This function verifies whether the specified packages were successfully
 # installed using their respective package managers. It checks each pair in the
 # format "<pkg_manager>:<package>" one by one, ensuring that all dependencies
 # are properly installed before proceeding.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (pairs_check): A space-separated list of "<pkg_manager>:<package>".
 _deps_installation_check() {
     local pairs=$1
@@ -937,14 +936,14 @@ _deps_installation_check() {
     done
 }
 
-# FUNCTION: _deps_check_rpm_ostree_requires_reboot
+# Function: _deps_check_rpm_ostree_requires_reboot
 #
-# DESCRIPTION:
+# Description:
 # This function checks if a package installed via 'rpm-ostree' requires
 # a system reboot to take effect. If the package is found in the current
 # deployment list, it indicates that a reboot is necessary.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (package): The name of the package to check.
 _deps_check_rpm_ostree_requires_reboot() {
     local package=$1
@@ -959,13 +958,13 @@ _deps_check_rpm_ostree_requires_reboot() {
     fi
 }
 
-# FUNCTION: _deps_is_package_installed
+# Function: _deps_is_package_installed
 #
-# DESCRIPTION:
+# Description:
 # This function checks if a specific package is installed using the given
 # package manager.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (pkg_manager): The package manager to use for the check.
 #      Supported values:
 #      - "apt-get"      : For Debian/Ubuntu systems.
@@ -1056,9 +1055,9 @@ _deps_is_package_installed() {
 #region File and directory management
 #------------------------------------------------------------------------------
 
-# FUNCTION: _delete_items
+# Function: _delete_items
 #
-# DESCRIPTION:
+# Description:
 # This function deletes specified files or directories, either by moving
 # them to the trash (if supported) or by permanently deleting them.
 _delete_items() {
@@ -1109,9 +1108,9 @@ _delete_items() {
     fi
 }
 
-# FUNCTION: _directory_pop
+# Function: _directory_pop
 #
-# DESCRIPTION:
+# Description:
 # This function pops the top directory off the directory stack and changes
 # to the previous directory.
 #
@@ -1123,13 +1122,13 @@ _directory_pop() {
     return 0
 }
 
-# FUNCTION: _directory_push
+# Function: _directory_push
 #
-# DESCRIPTION:
+# Description:
 # This function pushes the specified directory onto the directory stack and
 # changes to it.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (directory): The target directory to push onto the directory stack
 #      and navigate to.
 #
@@ -1148,12 +1147,12 @@ _directory_push() {
     return 0
 }
 
-# FUNCTION: _find_filtered_files
+# Function: _find_filtered_files
 #
-# DESCRIPTION:
+# Description:
 # This function filters a list of files or directories.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_files): A space-separated string containing file or
 #      directory paths to filter. These paths are passed to the 'find'
 #      command.
@@ -1169,7 +1168,7 @@ _directory_push() {
 #   $5 (par_find_parameters): Optional. Additional parameters to be
 #      passed directly to the 'find' command.
 #
-# EXAMPLE:
+# Example:
 #   - Input: "dir1 dir2", "file", "", "txt|pdf", "true"
 #   - Output: A list of files with extensions ".txt" or ".pdf" from the
 #     directories "dir1" and "dir2", searched recursively.
@@ -1220,12 +1219,12 @@ _find_filtered_files() {
     _str_collapse_char "$filtered_files" "$FIELD_SEPARATOR"
 }
 
-# FUNCTION: _get_dirname
+# Function: _get_dirname
 #
-# DESCRIPTION:
+# Description:
 # This function extracts the directory path from a given file path.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_filename): The full path or relative path to the file.
 _get_dirname() {
     local input_filename=$1
@@ -1236,12 +1235,12 @@ _get_dirname() {
     printf "%s" "$dir"
 }
 
-# FUNCTION: _get_filename_extension
+# Function: _get_filename_extension
 #
-# DESCRIPTION:
+# Description:
 # This function extracts the file extension from a given filename.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (filename): The input filename (can be absolute or relative).
 _get_filename_extension() {
     local filename=$1
@@ -1252,13 +1251,13 @@ _get_filename_extension() {
         "(\.tar)?\.[a-z0-9_~-]{0,15}$" <<<"$filename"
 }
 
-# FUNCTION: _strip_filename_extension
+# Function: _strip_filename_extension
 #
-# DESCRIPTION:
+# Description:
 # This function removes the file extension from a given filename, if one
 # exists.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (filename): The filename from which to strip the extension.
 _strip_filename_extension() {
     local filename=$1
@@ -1275,12 +1274,12 @@ _strip_filename_extension() {
     printf "%s" "$filename"
 }
 
-# FUNCTION: _get_filename_full_path
+# Function: _get_filename_full_path
 #
-# DESCRIPTION:
+# Description:
 # This function returns the full absolute path of a given filename.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_filename): The input filename or relative path.
 _get_filename_full_path() {
     local input_filename=$1
@@ -1295,9 +1294,9 @@ _get_filename_full_path() {
     printf "%s" "$full_path"
 }
 
-# FUNCTION: _get_filename_next_suffix
+# Function: _get_filename_next_suffix
 #
-# DESCRIPTION:
+# Description:
 # This function generates a unique filename by adding a numeric suffix (e.g.
 # "file (2)", "file (3)", ...) if a file with the same name already exists.
 # This function is designed to work safely when multiple processes run
@@ -1310,7 +1309,7 @@ _get_filename_full_path() {
 # create a directory with a given name at any instant. If another process tries
 # to create the same directory at the same time, it will fail immediately.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (filename): The input filename or path. This can be an absolute or
 #      relative filename. If the input file has an extension, it will be
 #      stripped for the purpose of generating the new filename.
@@ -1361,9 +1360,9 @@ _get_filename_next_suffix() {
     printf "%s" "$filename"
 }
 
-# FUNCTION: _make_temp_dir
+# Function: _make_temp_dir
 #
-# DESCRIPTION:
+# Description:
 # This function creates a temporary directory in the '$TEMP_DIR_TASK' directory
 # and returns its path. The directory is created using 'mktemp', and the
 # directory for the temporary directory is specified by the '$TEMP_DIR_TASK'
@@ -1372,15 +1371,15 @@ _make_temp_dir() {
     mktemp --directory --tmpdir="$TEMP_DIR_TASK"
 }
 
-# FUNCTION: _make_temp_dir_local
+# Function: _make_temp_dir_local
 #
-# DESCRIPTION:
+# Description:
 # This function creates a temporary directory in a specified location and
 # returns its path. The directory is created using 'mktemp', with a custom
 # prefix (basename). It also generates a temporary file to track the
 # directory to be removed later.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (output_dir): The directory where the temporary directory will be
 #      created.
 #   $2 (basename): The prefix for the temporary directory name.
@@ -1399,9 +1398,9 @@ _make_temp_dir_local() {
     printf "%s" "$temp_dir"
 }
 
-# FUNCTION: _make_temp_file
+# Function: _make_temp_file
 #
-# DESCRIPTION:
+# Description:
 # This function creates a temporary file in the '$TEMP_DIR_TASK' directory
 # and returns its path. The file is created using 'mktemp', and the
 # directory for the temporary file is specified by the '$TEMP_DIR_TASK'
@@ -1410,14 +1409,14 @@ _make_temp_file() {
     mktemp --tmpdir="$TEMP_DIR_TASK" 2>/dev/null
 }
 
-# FUNCTION: _move_file
+# Function: _move_file
 #
-# DESCRIPTION:
+# Description:
 # This function moves a file from the source location to the destination,
 # with options to handle conflicts when the destination file already
 # exists.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (par_when_conflict): Optional, default: "skip". Defines the
 #      behavior when the destination file already exists.
 #      Supported values:
@@ -1519,9 +1518,9 @@ _move_file() {
     return 0
 }
 
-# FUNCTION: _get_working_directory
+# Function: _get_working_directory
 #
-# DESCRIPTION:
+# Description:
 # This function attempts to determine the current working directory in a
 # variety of ways, based on the available environment variables or input
 # files. It first checks if the file manager (e.g., Nautilus, Nemo, or
@@ -1571,12 +1570,12 @@ _get_working_directory() {
     printf "%s" "$working_dir"
 }
 
-# FUNCTION: _is_directory_empty
+# Function: _is_directory_empty
 #
-# DESCRIPTION:
+# Description:
 # This function checks if a given directory is empty.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (directory): The path of the directory to check.
 #
 # RETURNS:
@@ -1597,19 +1596,19 @@ _is_directory_empty() {
 #region User interface
 #------------------------------------------------------------------------------
 
-# FUNCTION: _display_file_selection_box
+# Function: _display_file_selection_box
 #
-# DESCRIPTION:
+# Description:
 # This function presents a graphical interface to allow the user to select
 # a file.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (title): Optional. Title of the window.
 #   $2 (file_filter): Optional. File filter pattern.
 #   $3 (parameters): A string containing key-value pairs that configure
 #      the function's behavior. Example: 'par_multiple=true'.
 #
-# PARAMETERS OPTIONS:
+# Parameters OPTIONS:
 #   - "par_multiple": Enable multiple selection ('true' or 'false').
 #   - "par_directory_only": Enable directory-only ('true' or 'false').
 _display_file_selection_box() {
@@ -1667,13 +1666,13 @@ _display_file_selection_box() {
     printf "%s" "$selected_items"
 }
 
-# FUNCTION: _display_error_box
+# Function: _display_error_box
 #
-# DESCRIPTION:
+# Description:
 # This function displays an error message to the user, adapting to the
 # available environment.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (message): The error message to display.
 #   $2 (open_item): Optional. A file or directory to open when the user clicks
 #                   the action button in the notification.
@@ -1708,13 +1707,13 @@ _display_error_box() {
     _display_unlock
 }
 
-# FUNCTION: _display_info_box
+# Function: _display_info_box
 #
-# DESCRIPTION:
+# Description:
 # This function displays an information message to the user, adapting to
 # the available environment.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (message): The information message to display.
 #   $2 (open_item): Optional. A file or directory to open when the user clicks
 #                   the action button in the notification.
@@ -1749,18 +1748,18 @@ _display_info_box() {
     _display_unlock
 }
 
-# FUNCTION: _display_list_box
+# Function: _display_list_box
 #
-# DESCRIPTION:
+# Description:
 # This function displays a list box with selectable items, adapting to the
 # available environment.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (list): A string containing the items to display in the list.
 #   $1 (parameters): A string containing key-value pairs that configure
 #      the function's behavior. Example: 'par_item_name=files'.
 #
-# PARAMETERS OPTIONS:
+# Parameters OPTIONS:
 #   - "par_columns": Column definitions for the list, typically in the
 #      format "--column:<name>,--column:<name>".
 #   - "par_item_name": A string representing the name of the items in the
@@ -1817,7 +1816,7 @@ _display_list_box() {
     fi
 }
 
-# FUNCTION: _display_list_box_terminal
+# Function: _display_list_box_terminal
 _display_list_box_terminal() {
     local list=$1
 
@@ -1830,7 +1829,7 @@ _display_list_box_terminal() {
     fi
 }
 
-# FUNCTION: _display_select_box_action
+# Function: _display_select_box_action
 _display_select_box_action() {
     local list=$1
     local par_columns=$2
@@ -1889,7 +1888,7 @@ _display_select_box_action() {
     fi
 }
 
-# FUNCTION: _display_select_box
+# Function: _display_select_box
 _display_select_box() {
     local list=$1
     local par_columns=$2
@@ -2033,7 +2032,7 @@ _display_select_box() {
     printf "%s" "$selected_items"
 }
 
-# FUNCTION: _display_list_box_xmessage
+# Function: _display_list_box_xmessage
 _display_list_box_xmessage() {
     local list=$1
     local par_columns=$2
@@ -2055,14 +2054,14 @@ _display_list_box_xmessage() {
     _display_unlock
 }
 
-# FUNCTION: _display_input_text_box
+# Function: _display_input_text_box
 #
-# DESCRIPTION:
+# Description:
 # This function displays an input text dialog (GUI or terminal) to request
 # a text value from the user. It supports an optional default value and
 # returns the user's input.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (message): The message or prompt to display to the user.
 #   $2 (default_value): Optional default text to prefill the input field.
 _display_input_text_box() {
@@ -2099,13 +2098,13 @@ _display_input_text_box() {
     printf "%s" "$input"
 }
 
-# FUNCTION: _display_password_box
+# Function: _display_password_box
 #
-# DESCRIPTION:
+# Description:
 # This function prompts the user to enter a password, either via the
 # terminal or a graphical dialog box.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (message): A message to display as a prompt for the password.
 #
 # RETURNS:
@@ -2144,9 +2143,9 @@ _display_password_box() {
     printf "%s" "$password"
 }
 
-# FUNCTION: _display_password_box_define
+# Function: _display_password_box_define
 #
-# DESCRIPTION:
+# Description:
 # This function prompts the user to enter a password and ensures the
 # password is not empty.
 #
@@ -2170,13 +2169,13 @@ _display_password_box_define() {
     printf "%s" "$password"
 }
 
-# FUNCTION: _display_question_box
+# Function: _display_question_box
 #
-# DESCRIPTION:
+# Description:
 # This function prompts the user with a yes/no question and returns the
 # user's response.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (message): The question message to display to the user.
 #
 # RETURNS:
@@ -2219,13 +2218,13 @@ _display_question_box() {
     return 0
 }
 
-# FUNCTION: _display_text_box
+# Function: _display_text_box
 #
-# DESCRIPTION:
+# Description:
 # This function displays a message to the user in a text box, either in the
 # terminal or using a GUI dialog.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (message): The message to display.
 _display_text_box() {
     local message=$1
@@ -2269,13 +2268,13 @@ _display_text_box() {
     _display_unlock
 }
 
-# FUNCTION: _display_result_box
+# Function: _display_result_box
 #
-# DESCRIPTION:
+# Description:
 # This function displays a result summary at the end of a process,
 # including error checking and output directory information.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (output_dir): The directory where output files are stored or
 #      expected to be.
 _display_result_box() {
@@ -2308,13 +2307,13 @@ _display_result_box() {
     fi
 }
 
-# FUNCTION: _display_wait_box
+# Function: _display_wait_box
 #
-# DESCRIPTION:
+# Description:
 # This function displays a wait box to inform the user that a task is
 # running and they need to wait.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (open_delay): Optional. The delay (in seconds) before the wait box
 #      is shown. Defaults to 2 seconds if not provided.
 _display_wait_box() {
@@ -2325,13 +2324,13 @@ _display_wait_box() {
     _display_wait_box_message "$msg" "$open_delay"
 }
 
-# FUNCTION: _display_wait_box_message
+# Function: _display_wait_box_message
 #
-# DESCRIPTION:
+# Description:
 # This function displays a wait box (progress indicator) to inform the user
 # that a task is in progress.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (message): The message to display inside the wait box (e.g.,
 #      "Running the task. Please, wait...").
 #   $2 (open_delay): Optional. The delay (in seconds) before the wait box
@@ -2410,9 +2409,9 @@ _display_wait_box_message() {
     fi
 }
 
-# FUNCTION: _close_wait_box
+# Function: _close_wait_box
 #
-# DESCRIPTION:
+# Description:
 # This function is responsible for closing any open 'wait box' (progress
 # indicators) that were displayed during the execution of a task.
 _close_wait_box() {
@@ -2427,9 +2426,9 @@ _close_wait_box() {
     fi
 }
 
-# FUNCTION: _display_lock
+# Function: _display_lock
 #
-# DESCRIPTION:
+# Description:
 # This function creates a temporary lock file used to indicate that the
 # wait box should not be opened at this time. In this case,
 # '_display_wait_box' will wait until '_display_unlock' is executed.
@@ -2437,23 +2436,23 @@ _display_lock() {
     touch -- "$TEMP_CONTROL_DISPLAY_LOCKED"
 }
 
-# FUNCTION: _display_unlock
+# Function: _display_unlock
 #
-# DESCRIPTION:
+# Description:
 # This function removes the temporary lock file created by '_display_lock'.
 # By doing so, it signals that the wait box can now be displayed.
 _display_unlock() {
     rm -f -- "$TEMP_CONTROL_DISPLAY_LOCKED"
 }
 
-# FUNCTION: _display_gdbus_notify
+# Function: _display_gdbus_notify
 #
-# DESCRIPTION:
+# Description:
 # This function sends a desktop notification using the 'gdbus' tool, which
 # interfaces with the D-Bus notification system (specifically the
 # 'org.freedesktop.Notifications' service).
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (icon): The icon to display with the notification.
 #   $2 (title): The title of the notification.
 #   $3 (body): The main message to be displayed in the notification.
@@ -2521,14 +2520,14 @@ _display_gdbus_notify() {
 #region System and environment
 #------------------------------------------------------------------------------
 
-# FUNCTION: _get_available_app
+# Function: _get_available_app
 #
-# DESCRIPTION:
+# Description:
 # This function iterates through a list of applications and returns the
 # first one that is available. It relies on the helper function
 # '_command_exists' to check for the existence of each command.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (_apps): An array of application names to check, in order of
 #      preference.
 #
@@ -2549,9 +2548,9 @@ _get_available_app() {
     return 1
 }
 
-# FUNCTION: _get_available_file_manager
+# Function: _get_available_file_manager
 #
-# DESCRIPTION:
+# Description:
 # This function detects the default or an available file manager on the
 # system.
 #
@@ -2602,9 +2601,9 @@ _get_available_file_manager() {
     return 1
 }
 
-# FUNCTION: _get_script_name
+# Function: _get_script_name
 #
-# DESCRIPTION:
+# Description:
 # This function returns the name of the currently executing script. It uses
 # the 'basename' command to extract the script's filename from the full
 # path provided by '$0'.
@@ -2621,9 +2620,9 @@ _get_script_name() {
     _i18n "$script_name"
 }
 
-# FUNCTION: _is_file_manager_session
+# Function: _is_file_manager_session
 #
-# DESCRIPTION:
+# Description:
 # This function checks whether the script is being executed from within a
 # file manager action specifically in GNOME Files (Nautilus), Nemo, or Caja.
 # The detection is done by checking if any environment variable matches the
@@ -2637,9 +2636,9 @@ _is_file_manager_session() {
     compgen -v | grep --quiet -m1 "_SCRIPT_SELECTED_URIS$"
 }
 
-# FUNCTION: _is_gui_session
+# Function: _is_gui_session
 #
-# DESCRIPTION:
+# Description:
 # This function checks whether the script is running in a graphical user
 # interface (GUI) session. It does so by checking if the 'DISPLAY'
 # environment variable is set, which is typically present in GUI sessions
@@ -2655,9 +2654,9 @@ _is_gui_session() {
     return 1
 }
 
-# FUNCTION: _is_qt_desktop
+# Function: _is_qt_desktop
 #
-# DESCRIPTION:
+# Description:
 # This function determines whether the current desktop environment
 # (as specified by the XDG_CURRENT_DESKTOP variable) is Qt-based.
 #
@@ -2684,18 +2683,18 @@ _is_qt_desktop() {
     return 1
 }
 
-# FUNCTION: _get_max_procs
+# Function: _get_max_procs
 #
-# DESCRIPTION:
+# Description:
 # This function returns the maximum number of processing units (CPU cores)
 # available on the system.
 _get_max_procs() {
     nproc --all 2>/dev/null
 }
 
-# FUNCTION: _unset_global_variables_file_manager
+# Function: _unset_global_variables_file_manager
 #
-# DESCRIPTION:
+# Description:
 # This function unset global variables that may have been set by different
 # file managers (Nautilus, Nemo, Caja) during script execution.
 _unset_global_variables_file_manager() {
@@ -2705,13 +2704,13 @@ _unset_global_variables_file_manager() {
     done < <(compgen -v | grep "_SCRIPT_")
 }
 
-# FUNCTION: _xdg_get_default_app
+# Function: _xdg_get_default_app
 #
-# DESCRIPTION:
+# Description:
 # This function retrieves the default application associated with a
 # specific MIME type using the 'xdg-mime' command.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (mime): MIME type (e.g., 'application/pdf', 'image/png').
 #   $2 (quiet, optional): If set to 'true', the function will return 1 on
 #      errors without displaying any dialog or exiting. Default is 'false'.
@@ -2783,9 +2782,9 @@ _xdg_get_default_app() {
 #region Clipboard management
 #------------------------------------------------------------------------------
 
-# FUNCTION: _get_clipboard_data
+# Function: _get_clipboard_data
 #
-# DESCRIPTION:
+# Description:
 # This function retrieves the current content of the clipboard, adapting
 # the method according to the session type.
 _get_clipboard_data() {
@@ -2795,13 +2794,13 @@ _get_clipboard_data() {
     esac
 }
 
-# FUNCTION: _set_clipboard_data
+# Function: _set_clipboard_data
 #
-# DESCRIPTION:
+# Description:
 # This function sets the content of the clipboard with the provided input
 # data, adapting the method according to the session type.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (data): The text string to be copied into the clipboard.
 _set_clipboard_data() {
     local data=$1
@@ -2812,13 +2811,13 @@ _set_clipboard_data() {
     esac
 }
 
-# FUNCTION: _set_clipboard_file
+# Function: _set_clipboard_file
 #
-# DESCRIPTION:
+# Description:
 # This function sets the content of the clipboard with the provided input
 # file, adapting the method according to the session type.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_file): The file to be copied into the clipboard.
 _set_clipboard_file() {
     local input_file=$1
@@ -2834,9 +2833,9 @@ _set_clipboard_file() {
 #region Input files
 #------------------------------------------------------------------------------
 
-# FUNCTION: _translate_to_gvfs_path
+# Function: _translate_to_gvfs_path
 #
-# DESCRIPTION:
+# Description:
 # Converts a remote URI into the corresponding GVfs-mounted path under
 # '/run/user/<uid>/gvfs/'.
 _translate_to_gvfs_path() {
@@ -2882,9 +2881,9 @@ _translate_to_gvfs_path() {
     printf "$gvfs_path"
 }
 
-# FUNCTION: _get_filenames_filemanager
+# Function: _get_filenames_filemanager
 #
-# DESCRIPTION:
+# Description:
 # This function retrieves a list of selected filenames or URIs from a
 # file manager and processes the input accordingly. If no selection is
 # detected, it falls back to using a standard input file list.
@@ -2948,20 +2947,20 @@ _get_filenames_filemanager() {
     printf "%s" "$input_files"
 }
 
-# FUNCTION: _get_files
+# Function: _get_files
 #
-# DESCRIPTION:
+# Description:
 # This function retrieves a list of files or directories based on the
 # provided parameters and performs various filtering, validation, and
 # sorting operations. The input files can be filtered by type, extension,
 # mime type, etc. It also supports recursive directory expansion and
 # validation of file conflicts.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (parameters): A string containing key-value pairs that configure
 #      the function's behavior. Example: 'par_type=file; par_min_items=2'.
 #
-# PARAMETERS OPTIONS:
+# Parameters OPTIONS:
 #   - "par_type": Specifies the type of items to filter.
 #      Supported values:
 #      - "file" (default): Filters files.
@@ -3103,15 +3102,15 @@ _get_files() {
     printf "%s" "$input_files"
 }
 
-# FUNCTION: _validate_file_mime
+# Function: _validate_file_mime
 #
-# DESCRIPTION:
+# Description:
 # This function validates the MIME type and optionally the encoding of a
 # given file. It checks whether the file's MIME type matches a specified
 # pattern (regex) and, if provided, whether the file's encoding matches
 # another specified pattern.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_file): The path to the file that is being validated. This
 #      is the file whose MIME type will be checked.
 #   $2 (par_select_mime): A MIME type pattern (or regular expression)
@@ -3147,15 +3146,15 @@ _validate_file_mime() {
     _storage_text_write "$input_file$FIELD_SEPARATOR"
 }
 
-# FUNCTION: _validate_file_mime_parallel
+# Function: _validate_file_mime_parallel
 #
-# DESCRIPTION:
+# Description:
 # This function validates the MIME types of multiple files in parallel,
 # based on a specified MIME type pattern. It processes a list of file paths
 # concurrently using `xargs` and calls the `_validate_file_mime` function
 # for each file.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_files): A space-separated string containing the paths of
 #      the files to validate. These files will be checked for the MIME type
 #      pattern.
@@ -3167,7 +3166,7 @@ _validate_file_mime() {
 #      expression) used to validate the files' encodings. If this parameter
 #      is empty, no encoding validation is performed.
 #
-# EXAMPLE:
+# Example:
 #   - Input: File paths "file1.txt file2.png", MIME pattern "text/plain".
 #   - Output: If "file1.txt" has a MIME type of "text/plain", it will be
 #     included in the output, but "file2.png" will be excluded if its MIME
@@ -3190,12 +3189,12 @@ _validate_file_mime_parallel() {
     _str_collapse_char "$input_files" "$FIELD_SEPARATOR"
 }
 
-# FUNCTION: _validate_files_count
+# Function: _validate_files_count
 #
-# DESCRIPTION:
+# Description:
 # This function validates the number of selected files or directories.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_files): A space-separated string containing the paths of
 #      files or directories to be validated.
 #   $2 (par_type): A string indicating the type of items to validate.
@@ -3214,7 +3213,7 @@ _validate_file_mime_parallel() {
 #   $7 (par_recursive): A string indicating whether the validation should
 #      be recursive. If 'true', directories will be searched recursively.
 #
-# EXAMPLE:
+# Example:
 #   - Input: "dir1 dir2", "file", "txt|pdf", "", 1, 5, "true"
 #   - Output: The function checks if the directories "dir1" and "dir2"
 #     contain at least 1 and no more than 5 ".txt" or ".pdf" files,
@@ -3282,18 +3281,18 @@ _validate_files_count() {
 #region Output files
 #------------------------------------------------------------------------------
 
-# FUNCTION: _get_output_dir
+# Function: _get_output_dir
 #
-# DESCRIPTION:
+# Description:
 # This function determines and returns the appropriate output directory
 # path based on the provided parameters and the system's available
 # directories.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (parameters): A string containing key-value pairs that configure
 #      the function's behavior. Example: 'par_use_same_dir=true'.
 #
-# PARAMETERS OPTIONS:
+# Parameters OPTIONS:
 #   - "par_use_same_dir": If set to 'true', the function uses the base
 #     directory (e.g., current working directory or an alternative with write
 #     permissions) as the output directory. If 'false' or not set, a new
@@ -3342,22 +3341,22 @@ _get_output_dir() {
     printf "%s" "$output_dir"
 }
 
-# FUNCTION: _get_output_filename
+# Function: _get_output_filename
 #
-# DESCRIPTION:
+# Description:
 # This function generates the output filename based on the given input
 # file, output directory, and a set of optional parameters. It allows for
 # customization of the output filename by adding prefixes, suffixes, and
 # selecting how the file extension should be handled.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_file): The input file for which the output filename will be
 #      generated.
 #   $2 (output_dir): The directory where the output file will be placed.
 #   $3 (parameters): A string containing optional parameters that define
 #      how the output filename should be constructed.
 #
-# PARAMETERS OPTIONS:
+# Parameters OPTIONS:
 #   - "par_extension_opt": Specifies how to handle the file extension.
 #      Supported values:
 #      - "append": Append a new extension 'par_extension' to the existing
@@ -3441,13 +3440,13 @@ _get_output_filename() {
     printf "%s" "$output_file"
 }
 
-# FUNCTION: _open_items_locations
+# Function: _open_items_locations
 #
-# DESCRIPTION:
+# Description:
 # This function opens the locations of selected items in the appropriate
 # file manager.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (items): A space-separated list of file or directory paths whose
 #      locations will be opened. Paths can be relative or absolute.
 #   $2 (resolve_links): A boolean-like string ('true' or 'false')
@@ -3519,12 +3518,12 @@ _open_items_locations() {
     esac
 }
 
-# FUNCTION: _open_urls
+# Function: _open_urls
 #
-# DESCRIPTION:
+# Description:
 # This function opens a list of URLs in the system's default web browser.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (urls): A space-separated list of URLs to be opened. Each URL
 #      should be a valid web address (e.g., "http://example.com").
 _open_urls() {
@@ -3551,12 +3550,12 @@ _open_urls() {
 #region File identification
 #------------------------------------------------------------------------------
 
-# FUNCTION: _get_file_encoding
+# Function: _get_file_encoding
 #
-# DESCRIPTION:
+# Description:
 # This function retrieves the MIME encoding of a specified file.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (filename): The path to the file whose encoding is to be
 #      determined.
 _get_file_encoding() {
@@ -3573,12 +3572,12 @@ _get_file_encoding() {
     printf "%s" "$std_output"
 }
 
-# FUNCTION: _get_file_mime
+# Function: _get_file_mime
 #
-# DESCRIPTION:
+# Description:
 # This function retrieves the MIME type of a specified file.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (filename): The path to the file whose MIME is to be determined.
 _get_file_mime() {
     local filename=$1
@@ -3594,15 +3593,15 @@ _get_file_mime() {
     printf "%s" "$std_output"
 }
 
-# FUNCTION: _get_items_count
+# Function: _get_items_count
 #
-# DESCRIPTION:
+# Description:
 # This function counts the number of items in a string, where items are
 # separated by a specific field separator. It assumes that the input string
 # contains a list of items separated by the value of the variable
 # '$FIELD_SEPARATOR'.
 #
-# PARAMETERS:
+# Parameters:
 # - $1 (input_files): A string containing a list of items separated by
 #   the defined '$FIELD_SEPARATOR'.
 _get_items_count() {
@@ -3622,17 +3621,17 @@ _get_items_count() {
 #region Storage text management
 #------------------------------------------------------------------------------
 
-# FUNCTION: _storage_text_clean
+# Function: _storage_text_clean
 #
-# DESCRIPTION:
+# Description:
 # This function clears all temporary text storage files.
 _storage_text_clean() {
     rm -f -- "$TEMP_DIR_STORAGE_TEXT/"* 2>/dev/null
 }
 
-# FUNCTION: _storage_text_read_all
+# Function: _storage_text_read_all
 #
-# DESCRIPTION:
+# Description:
 # This function concatenates and outputs the content of all temporary text
 # storage files, from largest to smallest.
 _storage_text_read_all() {
@@ -3640,12 +3639,12 @@ _storage_text_read_all() {
         sort -n -r | cut -d " " -f 2 - | xargs -r cat --
 }
 
-# FUNCTION: _storage_text_write
+# Function: _storage_text_write
 #
-# DESCRIPTION:
+# Description:
 # This function writes a given input text to temporary text storage files.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_text): The text to be stored in a temporary file.
 _storage_text_write() {
     local input_text=$1
@@ -3661,9 +3660,9 @@ _storage_text_write() {
     printf "%s" "$input_text" >"$temp_file"
 }
 
-# FUNCTION: _storage_text_write_ln
+# Function: _storage_text_write_ln
 #
-# DESCRIPTION:
+# Description:
 # This function writes a given input text, followed by a newline character,
 # to a temporary text storage file.
 _storage_text_write_ln() {
@@ -3681,13 +3680,13 @@ _storage_text_write_ln() {
 #region String and text processing
 #------------------------------------------------------------------------------
 
-# FUNCTION: _convert_delimited_string_to_text
+# Function: _convert_delimited_string_to_text
 #
-# DESCRIPTION:
+# Description:
 # This function converts a delimited string of items into
 # newline-separated text.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_items): A string containing items separated by the
 #      '$FIELD_SEPARATOR' variable.
 #
@@ -3703,13 +3702,13 @@ _convert_delimited_string_to_text() {
     printf "%s" "$input_items"
 }
 
-# FUNCTION: _convert_text_to_delimited_string
+# Function: _convert_text_to_delimited_string
 #
-# DESCRIPTION:
+# Description:
 # This function converts newline-separated text into a delimited string of
 # items.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_items): A string containing items separated by newlines.
 #
 # RETURNS:
@@ -3725,26 +3724,26 @@ _convert_text_to_delimited_string() {
     _str_collapse_char "$input_items" "$FIELD_SEPARATOR"
 }
 
-# FUNCTION: _get_element
+# Function: _get_element
 #
-# DESCRIPTION:
+# Description:
 # Extracts the Nth field from a delimited string using the global
 # '$FIELD_SEPARATOR' as the delimiter.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (list): The input string containing delimited fields.
 #   $2 (n): The field index (1-based) to extract from the input string.
 _get_element() {
     cut -d "$FIELD_SEPARATOR" -f "$2" <<<"$1"
 }
 
-# FUNCTION: _str_collapse_char
+# Function: _str_collapse_char
 #
-# DESCRIPTION:
+# Description:
 # This function collapses consecutive occurrences of a given character
 # into a single one and removes any leading or trailing occurrences of it.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_str): The input string to be processed.
 #   $2 (char): The character to collapse and trim from the string.
 _str_collapse_char() {
@@ -3758,12 +3757,12 @@ _str_collapse_char() {
     sed "$sed_p1; $sed_p2; $sed_p3" <<<"$input_str"
 }
 
-# FUNCTION: _str_sort
+# Function: _str_sort
 #
-# DESCRIPTION:
+# Description:
 # This function sorts elements from a string based on a given separator.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_str): The input string containing elements to be sorted.
 #   $2 (separator): The character used to separate elements in the string.
 #   $3 (unique): Optional flag ("true" or "false") to remove duplicates.
@@ -3781,13 +3780,13 @@ _str_sort() {
     _str_collapse_char "$input_str" "$separator"
 }
 
-# FUNCTION: _str_human_readable_path
+# Function: _str_human_readable_path
 #
-# DESCRIPTION:
+# Description:
 # This function transforms a given file path into a more human-readable
 # format.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_path): The input file path to process.
 _str_human_readable_path() {
     local input_path=$1
@@ -3807,20 +3806,20 @@ _str_human_readable_path() {
     printf "%s" "$output_path"
 }
 
-# FUNCTION: _text_remove_empty_lines
+# Function: _text_remove_empty_lines
 _text_remove_empty_lines() {
     local input_text=$1
 
     grep -v "^\s*$" <<<"$input_text"
 }
 
-# FUNCTION: _text_remove_pwd
+# Function: _text_remove_pwd
 #
-# DESCRIPTION:
+# Description:
 # This function replaces the current working directory path in a given
 # string with a dot ('.') for brevity.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_text): The input string that may contain the current
 #      working directory path.
 #
@@ -3828,7 +3827,7 @@ _text_remove_empty_lines() {
 #   - The modified string with the working directory replaced by ".", or
 #     the original string if the working directory is not found.
 #
-# EXAMPLE:
+# Example:
 #   - Input: "/home/user/project/file.txt" (assuming current directory is
 #     "/home/user/project")
 #   - Output: "./file.txt"
@@ -3844,13 +3843,13 @@ _text_remove_pwd() {
     fi
 }
 
-# FUNCTION: _text_sort
+# Function: _text_sort
 #
-# DESCRIPTION:
+# Description:
 # This function sorts the lines of a given text input in a version-aware
 # manner.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (input_text): The input text to be sorted, where each line is
 #      treated as a separate string.
 _text_sort() {
@@ -3859,20 +3858,20 @@ _text_sort() {
     sort --version-sort <<<"$input_text"
 }
 
-# FUNCTION: _text_uri_decode
+# Function: _text_uri_decode
 #
-# DESCRIPTION:
+# Description:
 # This function decodes a URI-encoded string by converting percent-encoded
 # characters back to their original form.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (uri_encoded): The URI-encoded string that needs to be decoded.
 #
 # RETURNS:
 #   - The decoded URI string, with percent-encoded characters replaced and
 #     the "file://" prefix removed.
 #
-# EXAMPLE:
+# Example:
 #   - Input: "file:///home/user%20name/file%20name.txt"
 #   - Output: "/home/user name/file name.txt"
 _text_uri_decode() {
@@ -3890,14 +3889,14 @@ _text_uri_decode() {
 #region External application wrappers
 #------------------------------------------------------------------------------
 
-# FUNCTION: _cmd_magick_convert
+# Function: _cmd_magick_convert
 #
-# DESCRIPTION:
+# Description:
 # This function executes ImageMagick's "convert" command in a
 # version-compatible way. In ImageMagick 7+, the main executable is "magick".
 # In ImageMagick 6 (legacy version), the command "convert" is used directly.
 #
-# PARAMETERS:
+# Parameters:
 #   $@ : Arguments to be passed to the convert command.
 _cmd_magick_convert() {
     if _command_exists "magick"; then
@@ -3907,7 +3906,7 @@ _cmd_magick_convert() {
     fi
 }
 
-# FUNCTION: _initialize_homebrew
+# Function: _initialize_homebrew
 #
 # Initializes the Homebrew environment if it is installed in the user's local
 # directory. This function ensures Homebrew commands are available in the
@@ -3934,9 +3933,9 @@ _initialize_homebrew() {
 #region Internationalization (i18n)
 #------------------------------------------------------------------------------
 
-# FUNCTION: _i18n_initialize
+# Function: _i18n_initialize
 #
-# DESCRIPTION:
+# Description:
 # This function initializes the internationalization (i18n) system by
 # determining the current language from the system and loading the
 # corresponding '.po' translation file into the '$I18N_DATA' array.
@@ -3964,14 +3963,14 @@ _i18n_initialize() {
     fi
 }
 
-# FUNCTION: _i18n_load_file
+# Function: _i18n_load_file
 #
-# DESCRIPTION:
+# Description:
 # This function reads a PO (Portable Object) file line by line,
 # extracting the translation strings and storing them in the
 # array '$I18N_DATA'.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (po_file): Path to the .po file to be loaded.
 _i18n_load_file() {
     local po_file=$1
@@ -4004,14 +4003,14 @@ _i18n_load_file() {
     done <"$po_file"
 }
 
-# FUNCTION: _i18n
+# Function: _i18n
 #
-# DESCRIPTION:
+# Description:
 # This function returns the translated version of a given string using
 # the '$I18N_DATA' array loaded. If a translation is not available, it
 # returns the original string.
 #
-# PARAMETERS:
+# Parameters:
 #   $1 (msgid): The string to be translated.
 _i18n() {
     local msgid=$1
@@ -4028,9 +4027,9 @@ _i18n() {
 #region Scripts recent history
 #------------------------------------------------------------------------------
 
-# FUNCTION: _recent_scripts_add
+# Function: _recent_scripts_add
 #
-# DESCRIPTION:
+# Description:
 # This function adds the running script to the history of recently accessed
 # scripts.
 #
