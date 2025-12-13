@@ -1711,7 +1711,7 @@ _display_error_box() {
         echo -e "$MSG_ERROR $message" >&2
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _display_gdbus_notify "dialog-error" "$(_get_script_name)" \
-            "$message" "2" "$open_item"
+            "$message" "1" "$open_item" "false"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" \
             --width="$GUI_INFO_WIDTH" --text="$message" \
@@ -1752,7 +1752,7 @@ _display_info_box() {
         echo -e "$MSG_INFO $message" >&2
     elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
         _display_gdbus_notify "dialog-information" "$(_get_script_name)" \
-            "$message" "1" "$open_item"
+            "$message" "1" "$open_item" "true"
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" \
             --width="$GUI_INFO_WIDTH" --text="$message" \
@@ -2479,14 +2479,21 @@ _display_unlock() {
 #   $2 (title): The title of the notification.
 #   $3 (body): The main message to be displayed in the notification.
 #   $4 (urgency): Optional. The urgency level of the notification.
+#                 0 = low
+#                 1 = normal (default)
+#                 2 = critical
 #   $5 (open_item): Optional. A file or directory to open when the user clicks
 #                   the action button in the notification.
+#   $6 (transient): Optional. A boolean-like string ('true' or 'false')
+#                   indicating whether the notification should be transient.
+#                   Defaults to 'false'.
 _display_gdbus_notify() {
     local icon=$1
     local title=$2
     local body=$3
-    local urgency=${4:-1} # Default urgency is 1 (normal).
+    local urgency=${4:-1}
     local open_item=${5:-}
+    local transient=${6:-"false"}
     local app_name=$title
     local method="Notify"
     local interface="org.freedesktop.Notifications"
@@ -2494,23 +2501,28 @@ _display_gdbus_notify() {
 
     # Use 'gdbus' to send the notification.
     if [[ -z "$open_item" ]] || _is_qt_desktop; then
+        # Display a simple notification without action.
         gdbus call --session --dest "$interface" \
             --object-path "$object_path" \
             --method "$interface.$method" \
             "$app_name" 0 "$icon" "$title" "$body" \
-            "[]" "{\"urgency\": <$urgency>}" 5000 &>/dev/null
+            "[]" \
+            "{'transient': <$transient>, 'urgency': <$urgency>}" \
+            5000 &>/dev/null
     else
         local action_id=""
         action_id="__CMD_OpenDir__${$}"
         local msg=""
         msg="$(_i18n 'Open')"
 
+        # Display the notification with an action button.
         gdbus call --session --dest "$interface" \
             --object-path "$object_path" \
             --method "$interface.$method" \
             "$app_name" 0 "$icon" "$title" "$body" \
-            "[\"$action_id\", \"$msg\"]" \
-            "{\"urgency\": <$urgency>}" 5000 &>/dev/null
+            "['$action_id', '$msg']" \
+            "{'transient': <$transient>, 'urgency': <$urgency>}" \
+            5000 &>/dev/null
 
         # Monitor for the action invoked by the user.
         local line=""
