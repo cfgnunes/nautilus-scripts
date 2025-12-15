@@ -2,11 +2,11 @@
 # shellcheck disable=SC2001
 
 # =============================================================================
-# PROJECT: Enhanced File Manager Actions for Linux
-# AUTHOR: Cristiano Fraga G. Nunes
-# REPOSITORY: https://github.com/cfgnunes/fm-scripts
-# LICENSE: MIT License
-# VERSION: 30.12.1
+# Project: Enhanced File Manager Actions for Linux
+# Author: Cristiano Fraga G. Nunes
+# Repository: https://github.com/cfgnunes/fm-scripts
+# License: MIT License
+# Version: 30.12.1
 # =============================================================================
 
 # This file contains functions and constants sourced by scripts.
@@ -107,28 +107,23 @@ declare -A I18N_DATA=()
 #------------------------------------------------------------------------------
 
 # Description:
-#
-#   '$TEMP_DIR_FILENAME_LOCKS':
+#   - '$TEMP_DIR_FILENAME_LOCKS':
 #       This directory is used to store temporary lock directories created by
 #       the '_get_filename_next_suffix' function during concurrent executions.
 #       Each process creates a uniquely named subdirectory here (using
 #       'mkdir'), which acts as a lightweight synchronization mechanism. The
 #       idea to prevent name conflicts by race conditions when multiple
 #       processes attempt to generate filenames simultaneously.
-#
-#   '$TEMP_DIR_ITEMS_TO_REMOVE':
+#   - '$TEMP_DIR_ITEMS_TO_REMOVE':
 #       This directory is used for temporary items scheduled for removal after
 #       the scripts' tasks finish executing.
-#
-#   '$TEMP_DIR_LOGS'
+#   - '$TEMP_DIR_LOGS'
 #       This directory stores temporary error logs generated during
 #       the execution of the scripts.
-#
-#   '$TEMP_DIR_STORAGE_TEXT':
+#   - '$TEMP_DIR_STORAGE_TEXT':
 #       This directory stores text files from output data produced by parallel
 #       tasks during the execution of the scripts.
-#
-#   '$TEMP_DIR_TASK':
+#   - '$TEMP_DIR_TASK':
 #       This directory is used by the '_make_temp_dir' and '_make_temp_file'
 #       functions to store temporary files created during the scripts' tasks.
 
@@ -1290,7 +1285,6 @@ _get_filename_full_path() {
 # concurrently, preventing race conditions that could otherwise lead to
 # duplicated or overwritten files.
 #
-# HOW IT WORKS:
 # To avoid race conditions, this function uses 'mkdir' as a synchronization.
 # The command 'mkdir' is ATOMIC, meaning that only one process can successfully
 # create a directory with a given name at any instant. If another process tries
@@ -2587,13 +2581,9 @@ _get_available_file_manager() {
 # Function: _get_script_name
 #
 # Description:
-# This function returns the name of the currently executing script. It uses
-# the 'basename' command to extract the script's filename from the full
-# path provided by '$0'.
-#
-# If the script starts with two digits followed by a space (e.g., "01 My
-# Script"), used in naming of 'Accessed recently' directory, that prefix is
-# removed.
+# This function returns the name of the executing script. It uses the
+# 'basename' command to extract the script's filename from the full path
+# provided by '$0'.
 _get_script_name() {
     local script_name=""
     script_name=$(basename -- "$0")
@@ -3666,8 +3656,8 @@ _storage_text_write_ln() {
 # Function: _convert_delimited_string_to_text
 #
 # Description:
-# This function converts a delimited string of items into
-# newline-separated text.
+# This function converts a delimited string of items into newline-separated
+# text.
 #
 # Parameters:
 #   $1 (input_items): A string containing items separated by the
@@ -3806,10 +3796,6 @@ _text_remove_empty_lines() {
 #   $1 (input_text): The input string that may contain the current
 #      working directory path.
 #
-# Returns:
-#   - The modified string with the working directory replaced by ".", or
-#     the original string if the working directory is not found.
-#
 # Example:
 #   - Input: "/home/user/project/file.txt" (assuming current directory is
 #     "/home/user/project")
@@ -3849,10 +3835,6 @@ _text_sort() {
 #
 # Parameters:
 #   $1 (uri_encoded): The URI-encoded string that needs to be decoded.
-#
-# Returns:
-#   - The decoded URI string, with percent-encoded characters replaced and
-#     the "file://" prefix removed.
 #
 # Example:
 #   - Input: "file:///home/user%20name/file%20name.txt"

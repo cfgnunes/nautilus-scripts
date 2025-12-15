@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 # =============================================================================
-# PROJECT: Enhanced File Manager Actions for Linux
-# AUTHOR: Cristiano Fraga G. Nunes
-# REPOSITORY: https://github.com/cfgnunes/fm-scripts
-# LICENSE: MIT License
-# VERSION: 30.12.1
+# Project: Enhanced File Manager Actions for Linux
+# Author: Cristiano Fraga G. Nunes
+# Repository: https://github.com/cfgnunes/fm-scripts
+# License: MIT License
+# Version: 30.12.1
 # =============================================================================
 
 set -u

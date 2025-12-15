@@ -35,7 +35,7 @@ _main_task() {
     std_output=$(LC_ALL=C pdfsig -- "$input_file" 2>/dev/null)
 
     if [[ "$std_output" == *"Signature #"* ]]; then
-        # FORMAT THE OUTPUT:
+        # Format the output.
         # Remove irrelevant information.
         std_output=$(grep --ignore-case -v "^Digital Signature Info of: " <<<"$std_output")
 

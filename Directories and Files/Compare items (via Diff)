@@ -27,7 +27,7 @@ _main() {
     # Run the main process.
     std_output=$(diff --no-dereference --brief --recursive --exclude=".git" -- "$file_1" "$file_2" 2>&1)
 
-    # FORMAT THE OUTPUT:
+    # Format the output.
     std_output=$(_text_remove_pwd "$std_output")
     std_output=$(_text_sort "$std_output")
 
