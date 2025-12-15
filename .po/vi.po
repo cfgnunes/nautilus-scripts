@@ -95,7 +95,7 @@ msgstr "(Trống)"
 msgid "Select the ones to open:"
 msgstr "Chọn những mục để mở:"
 
-msgid "Select the ones to reveal in the file manager:"
+msgid "Select the ones to show in the file manager:"
 msgstr "Chọn những mục để hiển thị trong trình quản lý tệp:"
 
 msgid "Select the ones to open in the web browser:"

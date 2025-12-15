@@ -95,7 +95,7 @@ msgstr "(खाली)"
 msgid "Select the ones to open:"
 msgstr "खोलने के लिए चुनें:"
 
-msgid "Select the ones to reveal in the file manager:"
+msgid "Select the ones to show in the file manager:"
 msgstr "फ़ाइल प्रबंधक में दिखाने के लिए चुनें:"
 
 msgid "Select the ones to open in the web browser:"

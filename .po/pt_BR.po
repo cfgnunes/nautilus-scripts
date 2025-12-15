@@ -95,8 +95,8 @@ msgstr "(Vazio)"
 msgid "Select the ones to open:"
 msgstr "Selecione quais deseja abrir:"
 
-msgid "Select the ones to reveal in the file manager:"
-msgstr "Selecione quais deseja mostrar no gerenciador de arquivos:"
+msgid "Select the ones to show in the file manager:"
+msgstr "Selecione quais deseja exibir no gerenciador de arquivos:"
 
 msgid "Select the ones to open in the web browser:"
 msgstr "Selecione quais deseja abrir no navegador:"

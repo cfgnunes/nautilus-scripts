@@ -95,8 +95,8 @@ msgstr "(ריק)"
 msgid "Select the ones to open:"
 msgstr "נא לבחור מה לפתוח:"
 
-msgid "Select the ones to reveal in the file manager:"
-msgstr "נא לבחור מה להציג במנהל הקבצים:"
+msgid "Select the ones to show in the file manager:"
+msgstr "בחר את הפריטים להצגה במנהל הקבצים:"
 
 msgid "Select the ones to open in the web browser:"
 msgstr "נא לבחור מה לפתוח בדפדפן:"

@@ -95,7 +95,7 @@ msgstr "(비어 있음)"
 msgid "Select the ones to open:"
 msgstr "열 항목을 선택하세요:"
 
-msgid "Select the ones to reveal in the file manager:"
+msgid "Select the ones to show in the file manager:"
 msgstr "파일 관리자에서 표시할 항목을 선택하세요:"
 
 msgid "Select the ones to open in the web browser:"

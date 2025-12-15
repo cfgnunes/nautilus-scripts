@@ -95,7 +95,7 @@ msgstr "(空)"
 msgid "Select the ones to open:"
 msgstr "開くものを選択："
 
-msgid "Select the ones to reveal in the file manager:"
+msgid "Select the ones to show in the file manager:"
 msgstr "ファイルマネージャーで表示するものを選択："
 
 msgid "Select the ones to open in the web browser:"

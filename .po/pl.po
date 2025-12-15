@@ -95,7 +95,7 @@ msgstr "(Pusty)"
 msgid "Select the ones to open:"
 msgstr "Wybierz te, które chcesz otworzyć:"
 
-msgid "Select the ones to reveal in the file manager:"
+msgid "Select the ones to show in the file manager:"
 msgstr "Wybierz te, które chcesz pokazać w menedżerze plików:"
 
 msgid "Select the ones to open in the web browser:"

@@ -1816,7 +1816,7 @@ _display_select_box_action() {
             msg="$(_i18n 'Select the ones to open:')"
             ;;
         "open_location")
-            msg="$(_i18n 'Select the ones to reveal in the file manager:')"
+            msg="$(_i18n 'Select the ones to show in the file manager:')"
             ;;
         "open_url")
             msg="$(_i18n 'Select the ones to open in the web browser:')"

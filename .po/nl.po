@@ -95,7 +95,7 @@ msgstr "(leeg)"
 msgid "Select the ones to open:"
 msgstr "Kies de te openen items:"
 
-msgid "Select the ones to reveal in the file manager:"
+msgid "Select the ones to show in the file manager:"
 msgstr "Kies de in de bestandsbeheerder te tonen items:"
 
 msgid "Select the ones to open in the web browser:"

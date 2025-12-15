@@ -94,7 +94,7 @@ msgstr ""
 msgid "Select the ones to open:"
 msgstr ""
 
-msgid "Select the ones to reveal in the file manager:"
+msgid "Select the ones to show in the file manager:"
 msgstr ""
 
 msgid "Select the ones to open in the web browser:"

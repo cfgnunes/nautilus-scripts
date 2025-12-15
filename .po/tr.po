@@ -95,7 +95,7 @@ msgstr "(Boş)"
 msgid "Select the ones to open:"
 msgstr "Açılacakları seçin:"
 
-msgid "Select the ones to reveal in the file manager:"
+msgid "Select the ones to show in the file manager:"
 msgstr "Dosya yöneticisinde gösterilecekleri seçin:"
 
 msgid "Select the ones to open in the web browser:"

@@ -95,8 +95,8 @@ msgstr "(Vide)"
 msgid "Select the ones to open:"
 msgstr "Sélectionnez ceux à ouvrir:"
 
-msgid "Select the ones to reveal in the file manager:"
-msgstr "Sélectionnez ceux à révéler dans le gestionnaire de fichiers:"
+msgid "Select the ones to show in the file manager:"
+msgstr "Sélectionnez ceux à afficher dans le gestionnaire de fichiers :"
 
 msgid "Select the ones to open in the web browser:"
 msgstr "Sélectionnez ceux à ouvrir dans le navigateur web:"
