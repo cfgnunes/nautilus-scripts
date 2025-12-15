@@ -204,8 +204,8 @@ _exit_script() {
 #   $4 (output_file): The expected output file to verify its existence.
 #
 # Returns:
-#   "0" (true): If the command was successful and the output file exists.
-#   "1" (false): If the command failed or the output file does not exist.
+#   0 (true): If the command was successful and the output file exists.
+#   1 (false): If the command failed or the output file does not exist.
 _check_output() {
     local exit_code=$1
     local std_output=$2
@@ -444,8 +444,8 @@ _run_function_parallel() {
 #   $1 (command_check): The name of the command to verify.
 #
 # Returns:
-#   "0" (true): If the command is available.
-#   "1" (false): If the command is not available.
+#   0 (true): If the command is available.
+#   1 (false): If the command is not available.
 _command_exists() {
     local command_check=$1
 
@@ -607,8 +607,8 @@ _check_dependencies() {
 #      the mappings (<subkey>:<value> pairs).
 #
 # Returns:
-#   "0" (true): If a matching value is found and printed.
-#   "1" (false): If no matching value is found.
+#   0 (true): If a matching value is found and printed.
+#   1 (false): If no matching value is found.
 _deps_get_dependency_value() {
     local key=$1
     local pkg_manager=$2
@@ -950,8 +950,8 @@ _deps_check_rpm_ostree_requires_reboot() {
 #   $2 (package): The name of the package to check.
 #
 # Returns:
-#   "0" (true): If the package is installed.
-#   "1" (false): If the package is not installed or an error occurs.
+#   0 (true): If the package is installed.
+#   1 (false): If the package is not installed or an error occurs.
 _deps_is_package_installed() {
     local pkg_manager=$1
     local package=$2
@@ -1085,8 +1085,8 @@ _delete_items() {
 # previous directory.
 #
 # Returns:
-#   "0" (true): If the directory was successfully popped and changed.
-#   "1" (false): If there was an error popping the directory.
+#   0 (true): If the directory was successfully popped and changed.
+#   1 (false): If there was an error popping the directory.
 _directory_pop() {
     popd &>/dev/null || return 1
     return 0
@@ -1102,8 +1102,8 @@ _directory_pop() {
 #      and navigate to.
 #
 # Returns:
-#   "0" (true): If the directory was successfully pushed and changed.
-#   "1" (false): If there was an error pushing the directory.
+#   0 (true): If the directory was successfully pushed and changed.
+#   1 (false): If there was an error pushing the directory.
 _directory_push() {
     local directory=$1
 
@@ -1394,9 +1394,9 @@ _make_temp_file() {
 #   $3 (file_dst): The destination path where the file should be moved.
 #
 # Returns:
-#   "0" (true): If the operation is successful or if the source and
+#   0 (true): If the operation is successful or if the source and
 #       destination are the same file.
-#   "1" (false): If the move fails.
+#   1 (false): If the move fails.
 _move_file() {
     local par_when_conflict=${1:-"skip"}
     local file_src=$2
@@ -1539,8 +1539,8 @@ _get_working_directory() {
 #   $1 (directory): The path of the directory to check.
 #
 # Returns:
-#   "0" (true): If the directory is empty.
-#   "1" (false): If the directory contains any files or subdirectories.
+#   0 (true): If the directory is empty.
+#   1 (false): If the directory contains any files or subdirectories.
 _is_directory_empty() {
     local directory=$1
 
@@ -2063,8 +2063,8 @@ _display_input_text_box() {
 #   $1 (message): A message to display as a prompt for the password.
 #
 # Returns:
-#   "0" (true): If the password is successfully obtained.
-#   "1" (false): If the user cancels the input or an error occurs.
+#   0 (true): If the password is successfully obtained.
+#   1 (false): If the user cancels the input or an error occurs.
 _display_password_box() {
     local message=$1
     local password=""
@@ -2105,8 +2105,8 @@ _display_password_box() {
 # is not empty.
 #
 # Returns:
-#   "0" (true): If the password is successfully obtained.
-#   "1" (false): If the user cancels the input or an error occurs.
+#   0 (true): If the password is successfully obtained.
+#   1 (false): If the user cancels the input or an error occurs.
 _display_password_box_define() {
     local password=""
     local msg=""
@@ -2134,8 +2134,8 @@ _display_password_box_define() {
 #   $1 (message): The question message to display to the user.
 #
 # Returns:
-#   "0" (true): If the user responds with 'yes' or 'y'.
-#   "1" (false): If the user responds with 'no' or 'n', or if an error.
+#   0 (true): If the user responds with 'yes' or 'y'.
+#   1 (false): If the user responds with 'no' or 'n', or if an error.
 _display_question_box() {
     local message=$1
     local response=""
@@ -2487,8 +2487,8 @@ _display_gdbus_notify() {
 #      preference.
 #
 # Returns:
-#   "0" (true): If an available application is found, prints its name.
-#   "1" (false): If no applications from the list are found.
+#   0 (true): If an available application is found, prints its name.
+#   1 (false): If no applications from the list are found.
 _get_available_app() {
     local -n _apps=$1
 
@@ -2510,8 +2510,8 @@ _get_available_app() {
 # system.
 #
 # Returns:
-#   "0" (true): If a file manager is found, prints its name.
-#   "1" (false): If no file manager is found.
+#   0 (true): If a file manager is found, prints its name.
+#   1 (false): If no file manager is found.
 _get_available_file_manager() {
     local available_app=""
     local default_app=""
@@ -2581,8 +2581,8 @@ _get_script_name() {
 # running user-defined scripts.
 #
 # Returns:
-#   "0" (true): If running inside a file manager session.
-#   "1" (false): If not running inside one of these file managers.
+#   0 (true): If running inside a file manager session.
+#   1 (false): If not running inside one of these file managers.
 _is_file_manager_session() {
     compgen -v | grep --quiet -m1 "_SCRIPT_SELECTED_URIS$"
 }
@@ -2596,8 +2596,8 @@ _is_file_manager_session() {
 # (e.g., X11 or Wayland).
 #
 # Returns:
-#   "0" (true): If is a GUI session.
-#   "1" (false): If is not a GUI session.
+#   0 (true): If is a GUI session.
+#   1 (false): If is not a GUI session.
 _is_gui_session() {
     if [[ -n "${DISPLAY:-}" ]]; then
         return 0
@@ -2612,8 +2612,8 @@ _is_gui_session() {
 # (as defined by the XDG_CURRENT_DESKTOP variable) is Qt-based.
 #
 # Returns:
-#   "0" (true): If the desktop is Qt-based.
-#   "1" (false): Otherwise.
+#   0 (true): If the desktop is Qt-based.
+#   1 (false): Otherwise.
 _is_qt_desktop() {
     local qt_desktops=("kde" "lxqt" "tde" "trinity" "razor" "lumina")
     local current_desktop=""
@@ -2667,8 +2667,8 @@ _unset_global_variables_file_manager() {
 #      errors without displaying any dialog or exiting. Default is 'false'.
 #
 # Returns:
-#   "0" (true): If the default application is found, prints its executable.
-#   "1" (false): If no default application is set or found.
+#   0 (true): If the default application is found, prints its executable.
+#   1 (false): If no default application is set or found.
 _xdg_get_default_app() {
     local mime=$1
     local quiet=${2:-"false"}
@@ -3974,8 +3974,8 @@ _i18n() {
 # scripts.
 #
 # Returns:
-#   "0" (true): If the script was added successfully.
-#   "1" (false): If there was an error adding the script.
+#   0 (true): If the script was added successfully.
+#   1 (false): If there was an error adding the script.
 _recent_scripts_add() {
     local running_script=$0
     local dir=""

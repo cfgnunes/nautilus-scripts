@@ -488,8 +488,8 @@ _i18n_initialize() {
 # managers defined in '$COMPATIBLE_FILE_MANAGERS'.
 #
 # Returns:
-#   "0" (true): If at least one compatible file manager is found.
-#   "1" (false): If no compatible file manager is found.
+#   0 (true): If at least one compatible file manager is found.
+#   1 (false): If no compatible file manager is found.
 _check_exist_filemanager() {
     local file_manager=""
     for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
