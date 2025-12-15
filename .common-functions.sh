@@ -577,7 +577,7 @@ _check_dependencies() {
             continue
         fi
 
-        # Retrieve optional post-install command.
+        # Retrieve post-install command.
         post_install=$(_deps_get_dependency_value \
             "$package" "$pkg_manager" "POST_INSTALL")
 
@@ -713,7 +713,7 @@ _deps_install_missing_packages() {
 #
 # Parameters:
 #   $1 (pkg_list): A space-separated list of "<pkg_manager>:<package>" pairs.
-#   $2 (post_install): Optional command executed after all installations.
+#   $2 (post_install): Optional. Command executed after all installations.
 #
 # Example:
 # _deps_install_packages "apt-get:curl dnf:wget brew:git"
@@ -844,9 +844,9 @@ _deps_install_packages() {
 
         # Execute installation.
         if [[ -n "$cmd_inst" ]]; then
-            # Process optional post-install commands (if any). Each entry must
-            # follow the format "<pkg_manager>:<commands>" and be separated by
-            # newline characters '\n'.
+            # Process post-install commands (if any). Each entry must follow
+            # the format "<pkg_manager>:<commands>" and be separated by newline
+            # characters '\n'.
             if [[ -n "$post_install" ]]; then
                 local post_install_sel=""
                 post_install_sel=$(grep "^$pkg_manager:" <<<"$post_install")
@@ -2014,12 +2014,11 @@ _display_list_box_xmessage() {
 #
 # Description:
 #   This function displays an input text dialog (GUI or terminal) to request a
-#   text value from the user. It supports an optional default value and returns
-#   the user's input.
+#   text value from the user.
 #
 # Parameters:
 #   $1 (message): The message or prompt to display to the user.
-#   $2 (default_value): Optional default text to prefill the input field.
+#   $2 (default_value): Optional. Default text to prefill the input field.
 _display_input_text_box() {
     local message=$1
     local default_value=${2:-""}
@@ -2337,7 +2336,7 @@ _display_wait_box_message() {
                 sleep 0.5
             done
 
-            # Optional delay before showing the 'wait_box'.
+            # Delay before showing the 'wait_box'.
             sleep "$open_delay"
 
             # Check if the task has already finished.
@@ -2663,7 +2662,7 @@ _unset_global_variables_file_manager() {
 #
 # Parameters:
 #   $1 (mime): MIME type (e.g., 'application/pdf', 'image/png').
-#   $2 (quiet, optional): If set to 'true', the function will return 1 on
+#   $2 (quiet): Optional. If set to 'true', the function will return 1 on
 #      errors without displaying any dialog or exiting. Default is 'false'.
 #
 # Returns:
@@ -3062,10 +3061,10 @@ _get_files() {
 # Parameters:
 #   $1 (input_file): The path to the file that is being validated. This is the
 #      file whose MIME type will be checked.
-#   $2 (par_select_mime): A MIME type pattern (or regular expression) used to
-#      validate the file's MIME type. If this parameter is empty, MIME type
-#      validation is skipped.
-#   $3 (par_skip_encoding): An optional encoding pattern (or regular
+#   $2 (par_select_mime): Optional. A MIME type pattern (or regular expression)
+#      used to validate the file's MIME type. If this parameter is empty, MIME
+#      type validation is skipped.
+#   $3 (par_skip_encoding): Optional. The encoding pattern (or regular
 #      expression) used to validate the file's encoding. If this parameter is
 #      empty, encoding validation is skipped.
 _validate_file_mime() {
@@ -3107,10 +3106,11 @@ _validate_file_mime() {
 #   $1 (input_files): A space-separated string containing the paths of the
 #      files to validate. These files will be checked for the MIME type
 #      pattern.
-#   $2 (par_select_mime): The MIME type pattern (or regular expression) used to
-#      validate the files' MIME types. If this parameter is empty, no MIME type
-#      validation is performed, and all input files are returned as valid.
-#   $3 (par_skip_encoding): An optional encoding pattern (or regular
+#   $2 (par_select_mime): Optional. The MIME type pattern (or regular
+#      expression) used to validate the files' MIME types. If this parameter is
+#      empty, no MIME type validation is performed, and all input files are
+#      returned as valid.
+#   $3 (par_skip_encoding): Optional. The encoding pattern (or regular
 #      expression) used to validate the files' encodings. If this parameter is
 #      empty, no encoding validation is performed.
 #
@@ -3292,16 +3292,16 @@ _get_output_dir() {
 #
 # Description:
 #   This function generates the output filename based on the given input file,
-#   output directory, and a set of optional parameters. It allows for
-#   customization of the output filename by adding prefixes, suffixes, and
-#   selecting how the file extension should be handled.
+#   output directory, and a set of parameters. It allows for customization of
+#   the output filename by adding prefixes, suffixes, and selecting how the
+#   file extension should be handled.
 #
 # Parameters:
 #   $1 (input_file): The input file for which the output filename will be
 #      generated.
 #   $2 (output_dir): The directory where the output file will be placed.
-#   $3 (parameters): A string containing optional parameters that define
-#      how the output filename should be constructed.
+#   $3 (parameters): A string containing parameters that define how the output
+#      filename should be constructed.
 #
 # Options in '$parameters':
 #   - "par_extension_opt": Specifies how to handle the file extension.
@@ -3712,7 +3712,7 @@ _str_collapse_char() {
 # Parameters:
 #   $1 (input_str): The input string containing elements to be sorted.
 #   $2 (separator): The character used to separate elements in the string.
-#   $3 (unique): Optional flag ("true" or "false") to remove duplicates.
+#   $3 (unique): Optional. Flag ("true" or "false") to remove duplicates.
 _str_sort() {
     local input_str=$1
     local separator=$2
