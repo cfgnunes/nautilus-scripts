@@ -482,10 +482,10 @@ _i18n_initialize() {
 
 # Function: _check_exist_filemanager
 #
-# Purpose:
-# This function checks if at least one compatible file manager exists in
-# the system by iterating through a predefined list of supported file
-# managers defined in '$COMPATIBLE_FILE_MANAGERS'.
+# Description:
+# This function checks if at least one compatible file manager exists in the
+# system by iterating through a predefined list of supported file managers
+# defined in '$COMPATIBLE_FILE_MANAGERS'.
 #
 # Returns:
 #   0 (true): If at least one compatible file manager is found.
@@ -549,7 +549,7 @@ _tee_file() {
 
 # Function: _item_create_backup
 #
-# Purpose:
+# Description:
 # This function creates a backup of a file (append .bak) if it exists.
 _item_create_backup() {
     local item=$1
@@ -561,7 +561,7 @@ _item_create_backup() {
 
 # Function: _delete_items
 #
-# Purpose:
+# Description:
 # This function deletes or trash items, using the best available method.
 _delete_items() {
     local items=$1
@@ -670,10 +670,9 @@ _get_parameters_command_line() {
 
 # Function: _get_par_value
 #
-# Purpose:
-# This function extracts the value of a given parameter from a script file.
-# It searches for "parameter=value" inside the file, then returns only the
-# value.
+# Description:
+# This function extracts the value of a given parameter from a script file. It
+# searches for "parameter=value" inside the file, then returns only the value.
 _get_par_value() {
     local filename=$1
     local parameter=$2
@@ -863,7 +862,7 @@ _install_packages() {
 
 # Function: _install_scripts
 #
-# Purpose:
+# Description:
 # This function installs scripts into the target directory.
 # Steps:
 #   1. Optionally remove any previously installed scripts.
@@ -963,7 +962,7 @@ _create_links() {
 
 # Function: _install_accels
 #
-# Purpose:
+# Description:
 # Install keyboard accelerators for specific file managers.
 _install_accels() {
     _echo_info "> ($FILE_MANAGER) $(_i18n 'Installing keyboard accelerators...')"
@@ -1209,10 +1208,9 @@ _create_gnome_application_folder() {
 
 # Function: _install_actions
 #
-# Purpose:
-# This function install actions (context menus) for supported
-# file managers. Delegates to the appropriate function depending on
-# the detected file manager.
+# Description:
+# This function install actions (context menus) for supported file managers.
+# Delegates to the appropriate function depending on the detected file manager.
 _install_actions() {
     _echo_info "> ($FILE_MANAGER) $(_i18n 'Installing actions in the context menu...')"
 
@@ -1448,7 +1446,7 @@ _install_actions_thunar() {
 
 # Function: _close_filemanager
 #
-# Purpose:
+# Description:
 # This function closes the current file manager so that it reloads its
 # configurations. For most file managers, the `-q` option is used to quit
 # gracefully.
@@ -1513,7 +1511,7 @@ _close_filemanager() {
 
 # Function: _install_homebrew
 #
-# Purpose:
+# Description:
 # This function installs Homebrew if the user requested it and it is not
 # already installed.
 _install_homebrew() {
@@ -1574,9 +1572,9 @@ _install_homebrew() {
 
 # Function: _bootstrap_repository
 #
-# Purpose:
-# This function ensures that the repository files are available before
-# running the installation.
+# Description:
+# This function ensures that the repository files are available before running
+# the installation.
 _bootstrap_repository() {
     local repo_owner="cfgnunes"
     local repo_name="fm-scripts"

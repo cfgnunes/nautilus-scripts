@@ -19,10 +19,10 @@ _main() {
 
 # Function: _compare
 #
-# Purpose:
+# Description:
 # This function compares files based on their MIME types and available
-# commands. It supports two or three files depending on the command and
-# file type.
+# commands. It supports two or three files depending on the command and file
+# type.
 _compare() {
     local input_files=$1      # Input files separated by '$FIELD_SEPARATOR'.
     local num_files_compare=2 # Default number of files to compare.
@@ -94,7 +94,7 @@ _compare() {
 
 # Function: _compare_hexa
 #
-# Purpose:
+# Description:
 # This function compares binary files in hexadecimal format and handle
 # modifications. It converts files to hex view, compares them, and allows
 # editing or saving changes.
@@ -154,10 +154,10 @@ _compare_hexa() {
 
 # Function: _compare_identical
 #
-# Purpose:
-# This function checks if two or three defined items (files or
-# directories) are identical. If all selected items are identical, displays
-# a message and exits the script.
+# Description:
+# This function checks if two or three defined items (files or directories) are
+# identical. If all selected items are identical, displays a message and exits
+# the script.
 _compare_identical() {
     local file_1=$1
     local file_2=$2
@@ -194,7 +194,7 @@ _compare_identical() {
 
 # Function: _compare_images
 #
-# Purpose:
+# Description:
 # This function compares two images using ImageMagick. If the images are
 # identical, it displays a message and exits the script. Otherwise, it
 # generates a visual diff and opens it with an image viewer.
@@ -275,10 +275,10 @@ _compare_images() {
 
 # Function: _get_command
 #
-# Purpose:
+# Description:
 # This function determines the appropriate command for comparing files or
-# directories. The selection is based on the file type, the number of files
-# to compare, and system availability of commands.
+# directories. The selection is based on the file type, the number of files to
+# compare, and system availability of commands.
 _get_command() {
     local input_file=$1        # The file to analyze for MIME type or encoding.
     local num_files_compare=$2 # The number of files to compare (2 or 3).
@@ -319,7 +319,7 @@ _get_command() {
 
 # Function: _get_hex_ideal_cols
 #
-# Purpose:
+# Description:
 # This function determines the ideal number of columns for a hexadecimal
 # display. The column width is chosen to evenly divide the size difference
 # between files, ensuring a more organized and visually coherent hex dump.
@@ -343,7 +343,7 @@ _get_hex_ideal_cols() {
 
 # Function: _get_difference
 #
-# Purpose:
+# Description:
 # This function calculates the absolute difference between two numbers. The
 # result is always a positive value, regardless of the order of the inputs.
 _get_difference() {
@@ -360,7 +360,7 @@ _get_difference() {
 
 # Function: _get_file_size
 #
-# Purpose:
+# Description:
 # This function returns the size of a file in bytes.
 _get_file_size() {
     stat --format="%s" "$1" 2>/dev/null

@@ -34,7 +34,7 @@ _main_task() {
 
 # Function: _extract_urls
 #
-# Purpose:
+# Description:
 # This function extracts unique URLs or domain-like strings from input text.
 # It matches three main types:
 #  - URLs with IP addresses (with optional port and path)

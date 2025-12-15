@@ -19,7 +19,7 @@ _main() {
 
 # Function: _main_task
 #
-# Purpose:
+# Description:
 # Main logic of the script. Generates image fingerprints, compares their
 # similarities, removes duplicates, and displays the matching images.
 #
@@ -122,7 +122,7 @@ _main_task() {
 
 # Function: _generate_fingerprint
 #
-# Purpose:
+# Description:
 # Generates a visual fingerprint (small normalized representation) for an image
 # file to allow fast visual similarity comparisons.
 #
@@ -157,7 +157,7 @@ _generate_fingerprint() {
 
 # Function: _compare_fingerprints
 #
-# Purpose:
+# Description:
 # This function compares two image fingerprints and determines whether they
 # represent duplicate or near-duplicate images based on a similarity threshold.
 # It uses the function '_compare_images' to compute the similarity score
@@ -193,7 +193,7 @@ _compare_fingerprints() {
 
 # Function: _compare_images
 #
-# Purpose:
+# Description:
 # Compares two images using RMSE (Root Mean Square Error) and converts the
 # result into a similarity score (0 to 1).
 #
