@@ -2983,14 +2983,12 @@ _get_files() {
         printf "%s" "$(basename -- "$input_files")" |
         grep --quiet --ignore-case --word-regexp "batch"; then
 
-        # HACK: Batch mode. This workaround allows the scripts to
-        # handle cases with a large input list of files. In this case,
-        # just select a single directory with a name that includes the
-        # word 'batch'. Then, the scripts operate on the files within
-        # the selected directory. This addresses the error: "Could not
-        # start application: Failed to execute child process "/bin/sh"
-        # (Argument list too long)".
-
+        # HACK: Batch mode. This workaround allows the scripts to handle cases
+        # with a large input list of files. In this case, just select a single
+        # directory with a name that includes the word 'batch'. Then, the
+        # scripts operate on the files within the selected directory. This
+        # addresses the error: "Could not start application: Failed to execute
+        # child process "/bin/sh" (Argument list too long)".
         local msg=""
         msg+="$(_i18n 'Batch mode detected.') "
         msg+="$(_i18n 'Each file inside this directory will be processed individually.')"
@@ -3906,8 +3904,8 @@ _i18n_initialize() {
 # Function: _i18n_load_file
 #
 # Description:
-#   This function reads a PO (Portable Object) file line by line, extracting the
-#   translation strings and storing them in the array '$I18N_DATA'.
+#   This function reads a PO (Portable Object) file line by line, extracting
+#   the translation strings and storing them in the array '$I18N_DATA'.
 #
 # Parameters:
 #   $1 (po_file): Path to the .po file to be loaded.
