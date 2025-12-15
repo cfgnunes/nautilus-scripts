@@ -46,8 +46,6 @@ _main_task() {
 #  - https://example.com/path
 #  - www.google.com
 #  - example.org
-#
-# The function sorts and deduplicates the matches before printing.
 _extract_urls() {
     local data=$1
     local re_ip="https?://(?:[0-9]{1,3}\.){3}[0-9]{1,3}"
