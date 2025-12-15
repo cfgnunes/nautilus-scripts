@@ -2464,7 +2464,7 @@ _display_gdbus_notify() {
             while read -r line; do
                 if [[ "$line" == *"$action_id"* ]]; then
                     xdg-open "$open_item" &>/dev/null &
-                    break
+                    _exit_script
                 fi
             done
     fi
