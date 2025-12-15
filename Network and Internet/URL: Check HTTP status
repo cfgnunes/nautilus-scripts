@@ -63,11 +63,11 @@ _main_task() {
 # Function: _extract_urls
 #
 # Description:
-# This function extracts unique URLs or domain-like strings from input text.
-# It matches three main types:
-#  - URLs with IP addresses (with optional port and path)
-#  - URLs with domain names (with optional port, path, or subdomains)
-#  - Plain domain names, with or without "www."
+#   This function extracts unique URLs or domain-like strings from input text.
+#   It matches three main types:
+#    - URLs with IP addresses (with optional port and path)
+#    - URLs with domain names (with optional port, path, or subdomains)
+#    - Plain domain names, with or without "www."
 #
 # Example matches:
 #  - http://192.168.0.1:8080/api

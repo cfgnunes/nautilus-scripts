@@ -158,11 +158,11 @@ _generate_fingerprint() {
 # Function: _compare_fingerprints
 #
 # Description:
-# This function compares two image fingerprints and determines whether they
-# represent duplicate or near-duplicate images based on a similarity threshold.
-# It uses the function '_compare_images' to compute the similarity score
-# between the reference and comparison fingerprints. The similarity metric
-# ranges from 0.0 (completely different) to 1.0 (identical).
+#   This function compares two image fingerprints and determines whether they
+#   represent duplicate or near-duplicate images based on a similarity
+#   threshold. It uses the function '_compare_images' to compute the similarity
+#   score between the reference and comparison fingerprints. The similarity
+#   metric ranges from 0.0 (completely different) to 1.0 (identical).
 #
 # Parameters:
 #   $1 (fp_reference): The reference fingerprint file.
