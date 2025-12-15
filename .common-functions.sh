@@ -613,8 +613,7 @@ _check_dependencies() {
 # Function: _deps_get_dependency_value
 #
 # Description:
-#   Retrieves the value associated with a specific key-subkey pair from an
-#   array.
+# Retrieves the value associated with a specific key-subkey pair from an array.
 #
 # Parameters:
 #   $1 (key): The key whose value is being queried.
@@ -729,24 +728,12 @@ _deps_install_missing_packages() {
 # package manager defined for each one. The input list must contain
 # pairs in the format "<pkg_manager>:<package>" separated by spaces.
 #
-# Example:
-# _deps_install_packages "apt-get:curl dnf:wget brew:git"
-#
-# Supported package managers:
-# - "apt-get"       : For Debian/Ubuntu systems.
-# - "brew"          : For Homebrew package manager.
-# - "dnf"           : For Fedora/RHEL systems.
-# - "flatpak"       : For Flatpak packages.
-# - "guix"          : For GNU Guix systems.
-# - "nix-env"       : For Nix-based systems.
-# - "pacman"        : For Arch Linux systems.
-# - "rpm-ostree"    : For Fedora Atomic systems.
-# - "xbps-install"  : For Void Linux systems.
-# - "zypper"        : For openSUSE systems.
-#
 # Parameters:
 #   $1 (pkg_list): A space-separated list of "<pkg_manager>:<package>" pairs.
 #   $2 (post_install): Optional command executed after all installations.
+#
+# Example:
+# _deps_install_packages "apt-get:curl dnf:wget brew:git"
 _deps_install_packages() {
     local pairs=$1
     local post_install=$2
@@ -1608,7 +1595,7 @@ _is_directory_empty() {
 #   $3 (parameters): A string containing key-value pairs that configure
 #      the function's behavior. Example: 'par_multiple=true'.
 #
-# Parameters OPTIONS:
+# Options in '$parameters':
 #   - "par_multiple": Enable multiple selection ('true' or 'false').
 #   - "par_directory_only": Enable directory-only ('true' or 'false').
 _display_file_selection_box() {
@@ -1759,7 +1746,7 @@ _display_info_box() {
 #   $1 (parameters): A string containing key-value pairs that configure
 #      the function's behavior. Example: 'par_item_name=files'.
 #
-# Parameters OPTIONS:
+# Options in '$parameters':
 #   - "par_columns": Column definitions for the list, typically in the
 #      format "--column:<name>,--column:<name>".
 #   - "par_item_name": A string representing the name of the items in the
@@ -1816,7 +1803,6 @@ _display_list_box() {
     fi
 }
 
-# Function: _display_list_box_terminal
 _display_list_box_terminal() {
     local list=$1
 
@@ -1829,7 +1815,6 @@ _display_list_box_terminal() {
     fi
 }
 
-# Function: _display_select_box_action
 _display_select_box_action() {
     local list=$1
     local par_columns=$2
@@ -1888,7 +1873,6 @@ _display_select_box_action() {
     fi
 }
 
-# Function: _display_select_box
 _display_select_box() {
     local list=$1
     local par_columns=$2
@@ -2032,7 +2016,6 @@ _display_select_box() {
     printf "%s" "$selected_items"
 }
 
-# Function: _display_list_box_xmessage
 _display_list_box_xmessage() {
     local list=$1
     local par_columns=$2
@@ -2960,7 +2943,7 @@ _get_filenames_filemanager() {
 #   $1 (parameters): A string containing key-value pairs that configure
 #      the function's behavior. Example: 'par_type=file; par_min_items=2'.
 #
-# Parameters OPTIONS:
+# Options in '$parameters':
 #   - "par_type": Specifies the type of items to filter.
 #      Supported values:
 #      - "file" (default): Filters files.
@@ -3292,7 +3275,7 @@ _validate_files_count() {
 #   $1 (parameters): A string containing key-value pairs that configure
 #      the function's behavior. Example: 'par_use_same_dir=true'.
 #
-# Parameters OPTIONS:
+# Options in '$parameters':
 #   - "par_use_same_dir": If set to 'true', the function uses the base
 #     directory (e.g., current working directory or an alternative with write
 #     permissions) as the output directory. If 'false' or not set, a new
@@ -3356,7 +3339,7 @@ _get_output_dir() {
 #   $3 (parameters): A string containing optional parameters that define
 #      how the output filename should be constructed.
 #
-# Parameters OPTIONS:
+# Options in '$parameters':
 #   - "par_extension_opt": Specifies how to handle the file extension.
 #      Supported values:
 #      - "append": Append a new extension 'par_extension' to the existing
