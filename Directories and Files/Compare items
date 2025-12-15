@@ -133,7 +133,7 @@ _compare_hexa() {
     sed -i "s|^[^:]*: ||g" "$file_1_hex"
     sed -i "s|^[^:]*: ||g" "$file_2_hex"
 
-    # Use the specified comparison command to compare or edit the hex dumps.
+    # Use the defined comparison command to compare or edit the hex dumps.
     $command -- "$file_1_hex" "$file_2_hex"
 
     # Simplify the hex dumps for further processing (plain hex dump format).
@@ -155,7 +155,7 @@ _compare_hexa() {
 # Function: _compare_identical
 #
 # Purpose:
-# This function checks if two or three specified items (files or
+# This function checks if two or three defined items (files or
 # directories) are identical. If all selected items are identical, displays
 # a message and exits the script.
 _compare_identical() {

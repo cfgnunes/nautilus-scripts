@@ -233,7 +233,7 @@ _check_output() {
 # Function: _log_error
 #
 # Purpose:
-# This function writes a temporary log error file with a specified message.
+# This function writes a temporary log error file with a message.
 #
 # Parameters:
 #   $1 (message): The error message to be logged.
@@ -276,7 +276,7 @@ _log_error() {
 #
 # Parameters:
 #   $1 (output_dir): Optional. The directory where the consolidated log
-#      file will be saved. If not specified, a default directory is used.
+#      file will be saved.
 _logs_consolidate() {
     local output_dir=$1
     local log_file_output="$output_dir/$PREFIX_ERROR_LOG_FILE.log"
@@ -315,8 +315,8 @@ _logs_consolidate() {
 # Function: _run_task_parallel
 #
 # Purpose:
-# This function runs a task in parallel for a list of input files, using a
-# specified output directory.
+# This function runs a task in parallel for a list of input files, using an
+# output directory.
 #
 # Parameters:
 #   $1 (input_files): A field-separated list of file paths to process.
@@ -455,7 +455,7 @@ _command_exists() {
 # Function: _check_dependencies_clipboard
 #
 # Purpose:
-# This function ensures that clipboard-related dependencies are available
+# This function checks that clipboard-related dependencies are available
 # according to the current display session type.
 #
 # Parameters:
@@ -494,9 +494,8 @@ _check_dependencies_clipboard() {
 # Function: _check_dependencies
 #
 # Purpose:
-# This function ensures that required dependencies are available for the
-# scripts. Checks each dependency key, determines the correct package for the
-# active package manager, and installs missing packages if necessary.
+# This function checks each dependency key, determines the correct package for
+# the active package manager, and installs missing packages if necessary.
 #
 # Parameters:
 #   $1 (dep_keys): A list of dependency keys. The list can be delimited either
@@ -655,11 +654,10 @@ _deps_get_dependency_value() {
             ;;
         esac
 
-        # Special handling for Termux (Android). Since Termux (on Android) uses
-        # its own package ecosystem and may share paths with 'proot-distro'
-        # containers, we ensure it's a real Termux session by checking that
-        # the '$subkey' is "termux", '$HOME' contains "com.termux", and the
-        # system reports "Android".
+        # Special handling for Termux (Android): Since Termux uses its own
+        # package ecosystem and may share paths with 'proot-distro', check if
+        # it's a real Termux session by checking that the '$subkey' is
+        # "termux", '$HOME' contains "com.termux", and the system is "Android".
         if [[ "$subkey" == "termux" ]] &&
             [[ "${HOME:-}" == *"com.termux"* ]] &&
             [[ "$(uname -o)" == "Android" ]]; then
@@ -709,8 +707,8 @@ _deps_install_missing_packages() {
 # Function: _deps_install_packages
 #
 # Purpose:
-# This function installs specified packages using the corresponding package
-# manager defined for each one. The input list must contain pairs in the format
+# This function installs packages using the corresponding package manager
+# defined for each one. The input list must contain pairs in the format
 # "<pkg_manager>:<package>" separated by spaces.
 #
 # Parameters:
@@ -872,10 +870,10 @@ _deps_install_packages() {
 # Function: _deps_installation_check
 #
 # Purpose:
-# This function verifies whether the specified packages were successfully
-# installed using their respective package managers. It checks each pair in the
-# format "<pkg_manager>:<package>" one by one, ensuring that all dependencies
-# are properly installed before proceeding.
+# This function verifies whether the packages were successfully installed using
+# their respective package managers. It checks each pair in the format
+# "<pkg_manager>:<package>" one by one, ensuring that all dependencies are
+# properly installed before proceeding.
 #
 # Parameters:
 #   $1 (pairs_check): A space-separated list of "<pkg_manager>:<package>".
@@ -1030,8 +1028,8 @@ _deps_is_package_installed() {
 # Function: _delete_items
 #
 # Purpose:
-# This function deletes specified files or directories, either by moving them
-# to the trash (if supported) or by permanently deleting them.
+# This function deletes files or directories, either by moving them to the
+# trash (if supported) or by permanently deleting them.
 _delete_items() {
     local items=$1
 
@@ -1083,8 +1081,8 @@ _delete_items() {
 # Function: _directory_pop
 #
 # Purpose:
-# This function pops the top directory off the directory stack and changes to
-# the previous directory.
+# This function pops the top directory off the stack and changes to the
+# previous directory.
 #
 # Returns:
 #   "0" (true): If the directory was successfully popped and changed.
@@ -1097,11 +1095,10 @@ _directory_pop() {
 # Function: _directory_push
 #
 # Purpose:
-# This function pushes the specified directory onto the directory stack and
-# changes to it.
+# This function pushes the directory onto the stack and changes to it.
 #
 # Parameters:
-#   $1 (directory): The target directory to push onto the directory stack
+#   $1 (directory): The target directory to push onto the stack
 #      and navigate to.
 #
 # Returns:
@@ -1335,7 +1332,7 @@ _get_filename_next_suffix() {
 # Purpose:
 # This function creates a temporary directory in the '$TEMP_DIR_TASK' directory
 # and returns its path. The directory is created using 'mktemp', and the
-# directory for the temporary directory is specified by the '$TEMP_DIR_TASK'
+# directory for the temporary directory is defined by the '$TEMP_DIR_TASK'
 # variable.
 _make_temp_dir() {
     mktemp --directory --tmpdir="$TEMP_DIR_TASK"
@@ -1344,10 +1341,10 @@ _make_temp_dir() {
 # Function: _make_temp_dir_local
 #
 # Purpose:
-# This function creates a temporary directory in a specified location and
-# returns its path. The directory is created using 'mktemp', with a custom
-# prefix (basename). It also generates a temporary file to track the directory
-# to be removed later.
+# This function creates a temporary directory in a location and returns its
+# path. The directory is created using 'mktemp', with a custom prefix
+# (basename). It also generates a temporary file to track the directory to be
+# removed later.
 #
 # Parameters:
 #   $1 (output_dir): The directory where the temporary directory will be
@@ -1373,7 +1370,7 @@ _make_temp_dir_local() {
 # Purpose:
 # This function creates a temporary file in the '$TEMP_DIR_TASK' directory and
 # returns its path. The file is created using 'mktemp', and the directory for
-# the temporary file is specified by the '$TEMP_DIR_TASK' variable.
+# the temporary file is defined by the '$TEMP_DIR_TASK' variable.
 _make_temp_file() {
     mktemp --tmpdir="$TEMP_DIR_TASK" 2>/dev/null
 }
@@ -2104,7 +2101,7 @@ _display_password_box() {
 # Function: _display_password_box_define
 #
 # Purpose:
-# This function prompts the user to enter a password and ensures the password
+# This function prompts the user to enter a password and checks if the password
 # is not empty.
 #
 # Returns:
@@ -2325,7 +2322,7 @@ _display_wait_box_message() {
         btn_cancel="$(_i18n 'Cancel')"
 
         # Launch a background thread for Zenity 'wait box':
-        #   - Waits for the specified delay.
+        #   - Waits for the defined delay.
         #   - Opens the Zenity 'wait box' if the control flag still exists.
         #   - If Zenity 'wait box' fails or is cancelled, exit the script.
         # shellcheck disable=SC2002
@@ -2612,7 +2609,7 @@ _is_gui_session() {
 #
 # Purpose:
 # This function determines whether the current desktop environment
-# (as specified by the XDG_CURRENT_DESKTOP variable) is Qt-based.
+# (as defined by the XDG_CURRENT_DESKTOP variable) is Qt-based.
 #
 # Returns:
 #   "0" (true): If the desktop is Qt-based.
@@ -3060,9 +3057,9 @@ _get_files() {
 #
 # Purpose:
 # This function validates the MIME type and optionally the encoding of a given
-# file. It checks whether the file's MIME type matches a specified pattern
+# file. It checks whether the file's MIME type matches a defined pattern
 # (regex) and, if provided, whether the file's encoding matches another
-# specified pattern.
+# pattern.
 #
 # Parameters:
 #   $1 (input_file): The path to the file that is being validated. This is the
@@ -3104,7 +3101,7 @@ _validate_file_mime() {
 #
 # Purpose:
 # This function validates the MIME types of multiple files in parallel, based
-# on a specified MIME type pattern. It processes a list of file paths
+# on a defined MIME type pattern. It processes a list of file paths
 # concurrently using `xargs` and calls the `_validate_file_mime` function for
 # each file.
 #
@@ -3505,7 +3502,7 @@ _open_urls() {
 # Function: _get_file_encoding
 #
 # Purpose:
-# This function retrieves the MIME encoding of a specified file.
+# This function retrieves the MIME encoding of a file.
 #
 # Parameters:
 #   $1 (filename): The path to the file whose encoding is to be
@@ -3527,7 +3524,7 @@ _get_file_encoding() {
 # Function: _get_file_mime
 #
 # Purpose:
-# This function retrieves the MIME type of a specified file.
+# This function retrieves the MIME type of a file.
 #
 # Parameters:
 #   $1 (filename): The path to the file whose MIME is to be determined.
@@ -3852,10 +3849,9 @@ _cmd_magick_convert() {
 
 # Function: _initialize_homebrew
 #
-# Initializes the Homebrew environment if it is installed in the user's local
-# directory. This function ensures Homebrew commands are available in the
-# current shell session and configures environment variables to make it run
-# quietly and without analytics.
+# Purpose:
+# This function initializes the Homebrew environment if it is installed in the
+# user's local directory.
 _initialize_homebrew() {
     # Skip initialization if Homebrew is already available in 'PATH'.
     [[ -n "${HOMEBREW_PREFIX:-}" ]] && return
@@ -3987,7 +3983,7 @@ _recent_scripts_add() {
 
     # Part 1: Add the link.
 
-    # Ensure that the '$dir' exists and is writable.
+    # Check that the '$dir' exists and is writable.
     if [[ ! -d "$dir" ]]; then
         mkdir -p "$dir"
     else
