@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2001
 
-#==============================================================================
+# =============================================================================
 # Project: Enhanced File Manager Actions for Linux
 # Author: Cristiano Fraga G. Nunes
 # Repository: https://github.com/cfgnunes/fm-scripts
 # License: MIT License
 # Version: 30.12.1
-#==============================================================================
+# =============================================================================
 
 # This file contains functions and constants sourced by scripts.
 

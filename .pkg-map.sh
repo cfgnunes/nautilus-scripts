@@ -3,19 +3,15 @@
 
 # This file centralizes dependency definitions for the scripts.
 
-#------------------------------------------------------------------------------
-#region PKG_MAP
-#------------------------------------------------------------------------------
-
-# This array defines the mapping between a dependency key and its corresponding
-# package names across different package managers.
+# Description:
+#   This array defines the mapping between a dependency key and its corresponding
+#   package names across different package managers.
 #
-# Note:
-#   - If the package name contains the '~' character, it means that the part
-#     before '~' represents the package name used for installation, while the
-#     part after '~' represents the package name used for installation
-#     verification. This is useful in systems like NixOS, where the installed
-#     package name may differ from the one provided during installation.
+# Note: If the package name contains the '~' character, it means that the part
+# before '~' represents the package name used for installation, while the part
+# after '~' represents the package name used for installation verification.
+# This is useful in systems like NixOS, where the installed package name may
+# differ from the one provided during installation.
 declare -A PKG_MAP=(
     ["7za"]="
         termux: p7zip
@@ -946,18 +942,12 @@ declare -A PKG_MAP=(
     "
 )
 
-#endregion
-#------------------------------------------------------------------------------
-#region POST_INSTALL
-#------------------------------------------------------------------------------
-
-# This array defines commands that need to be executed after a package is
-# installed. These commands are usually required for proper initialization,
-# configuration, or updates that the package manager alone does not handle.
+# Description:
+#   This array defines commands that need to be executed after a package is
+#   installed. These commands are usually required for proper initialization,
+#   configuration, or updates that the package manager alone does not handle.
 declare -A POST_INSTALL=(
     ["clamav"]='*:rm -f /var/log/clamav/freshclam.log; sed -i "/^NotifyClamd/d" /etc/clamav/freshclam.conf 2>/dev/null; freshclam --quiet'
 
     ["imagemagick"]='*:find /etc -type f -path "/etc/ImageMagick-*/policy.xml" 2>/dev/null -exec sed -i -e "s/rights=\"none\" pattern=\"PDF\"/rights=\"read|write\" pattern=\"PDF\"/g" -e "s/name=\"disk\" value=\".GiB\"/name=\"disk\" value=\"8GiB\"/g" {} +'
 )
-
-#endregion
