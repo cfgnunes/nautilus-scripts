@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2001
 
-# =============================================================================
+#==============================================================================
 # Project: Enhanced File Manager Actions for Linux
 # Author: Cristiano Fraga G. Nunes
 # Repository: https://github.com/cfgnunes/fm-scripts
 # License: MIT License
 # Version: 30.12.1
-# =============================================================================
+#==============================================================================
 
 # This file contains functions and constants sourced by scripts.
 
@@ -3059,20 +3059,20 @@ _get_files() {
 # Function: _validate_file_mime
 #
 # Purpose:
-# This function validates the MIME type and optionally the encoding of a
-# given file. It checks whether the file's MIME type matches a specified
-# pattern (regex) and, if provided, whether the file's encoding matches
-# another specified pattern.
+# This function validates the MIME type and optionally the encoding of a given
+# file. It checks whether the file's MIME type matches a specified pattern
+# (regex) and, if provided, whether the file's encoding matches another
+# specified pattern.
 #
 # Parameters:
-#   $1 (input_file): The path to the file that is being validated. This
-#      is the file whose MIME type will be checked.
-#   $2 (par_select_mime): A MIME type pattern (or regular expression)
-#      used to validate the file's MIME type. If this parameter is empty,
-#      MIME type validation is skipped.
+#   $1 (input_file): The path to the file that is being validated. This is the
+#      file whose MIME type will be checked.
+#   $2 (par_select_mime): A MIME type pattern (or regular expression) used to
+#      validate the file's MIME type. If this parameter is empty, MIME type
+#      validation is skipped.
 #   $3 (par_skip_encoding): An optional encoding pattern (or regular
-#      expression) used to validate the file's encoding. If this parameter
-#      is empty, encoding validation is skipped.
+#      expression) used to validate the file's encoding. If this parameter is
+#      empty, encoding validation is skipped.
 _validate_file_mime() {
     local input_file=$1
     local par_select_mime=$2
@@ -3103,22 +3103,21 @@ _validate_file_mime() {
 # Function: _validate_file_mime_parallel
 #
 # Purpose:
-# This function validates the MIME types of multiple files in parallel,
-# based on a specified MIME type pattern. It processes a list of file paths
-# concurrently using `xargs` and calls the `_validate_file_mime` function
-# for each file.
+# This function validates the MIME types of multiple files in parallel, based
+# on a specified MIME type pattern. It processes a list of file paths
+# concurrently using `xargs` and calls the `_validate_file_mime` function for
+# each file.
 #
 # Parameters:
-#   $1 (input_files): A space-separated string containing the paths of
-#      the files to validate. These files will be checked for the MIME type
+#   $1 (input_files): A space-separated string containing the paths of the
+#      files to validate. These files will be checked for the MIME type
 #      pattern.
-#   $2 (par_select_mime): The MIME type pattern (or regular expression)
-#      used to validate the files' MIME types. If this parameter is empty,
-#      no MIME type validation is performed, and all input files are
-#      returned as valid.
+#   $2 (par_select_mime): The MIME type pattern (or regular expression) used to
+#      validate the files' MIME types. If this parameter is empty, no MIME type
+#      validation is performed, and all input files are returned as valid.
 #   $3 (par_skip_encoding): An optional encoding pattern (or regular
-#      expression) used to validate the files' encodings. If this parameter
-#      is empty, no encoding validation is performed.
+#      expression) used to validate the files' encodings. If this parameter is
+#      empty, no encoding validation is performed.
 #
 # Example:
 #   - Input: File paths "file1.txt file2.png", MIME pattern "text/plain".
@@ -3156,16 +3155,16 @@ _validate_file_mime_parallel() {
 #      - "file": Validate files only.
 #      - "directory": Validate directories only.
 #      - "all": Validate both files and directories.
-#   $3 (par_select_extension): A pipe-separated list of file extensions
-#      to filter the files. Files must have one of these extensions.
-#   $4 (par_select_mime): A string representing MIME types to filter the
-#      files by. Only files with matching MIME types are selected.
-#   $5 (par_min_items): The minimum number of valid items required. If
-#      fewer valid items are selected, an error is displayed.
-#   $6 (par_max_items): The maximum number of valid items allowed. If
-#      more valid items are selected, an error is displayed.
-#   $7 (par_recursive): A string indicating whether the validation should
-#      be recursive. If 'true', directories will be searched recursively.
+#   $3 (par_select_extension): A pipe-separated list of file extensions to
+#      filter the files. Files must have one of these extensions.
+#   $4 (par_select_mime): A string representing MIME types to filter the files
+#      by. Only files with matching MIME types are selected.
+#   $5 (par_min_items): The minimum number of valid items required. If fewer
+#      valid items are selected, an error is displayed.
+#   $6 (par_max_items): The maximum number of valid items allowed. If more
+#      valid items are selected, an error is displayed.
+#   $7 (par_recursive): A string indicating whether the validation should be
+#      recursive. If 'true', directories will be searched recursively.
 #
 # Example:
 #   - Input: "dir1 dir2", "file", "txt|pdf", "", 1, 5, "true"
@@ -3238,9 +3237,8 @@ _validate_files_count() {
 # Function: _get_output_dir
 #
 # Purpose:
-# This function determines and returns the appropriate output directory
-# path based on the provided parameters and the system's available
-# directories.
+# This function determines and returns the appropriate output directory path
+# based on the provided parameters and the system's available directories.
 #
 # Parameters:
 #   $1 (parameters): A string containing key-value pairs that configure
@@ -3397,15 +3395,15 @@ _get_output_filename() {
 # Function: _open_items_locations
 #
 # Purpose:
-# This function opens the locations of selected items in the appropriate
-# file manager.
+# This function opens the locations of selected items in the appropriate file
+# manager.
 #
 # Parameters:
 #   $1 (items): A space-separated list of file or directory paths whose
 #      locations will be opened. Paths can be relative or absolute.
-#   $2 (resolve_links): A boolean-like string ('true' or 'false')
-#      indicating whether symbolic links in the provided paths should be
-#      resolved to their target locations before opening.
+#   $2 (resolve_links): A boolean-like string ('true' or 'false') indicating
+#      whether symbolic links in the provided paths should be resolved to their
+#      target locations before opening.
 _open_items_locations() {
     local items=$1
     local par_resolve_links=$2
