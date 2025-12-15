@@ -20,13 +20,13 @@ _main() {
 # Function: _main_task
 #
 # Description:
-#   Main logic of the script. Generates image fingerprints, compares their
-#   similarities, removes duplicates, and displays the matching images.
+# Main logic of the script. Generates image fingerprints, compares their
+# similarities, removes duplicates, and displays the matching images.
 #
 # Parameters:
 #   $1 (input_files): A delimited string containing the image files.
 #
-# STEPS:
+# Steps:
 #   1. Generate fingerprints for all input images in parallel.
 #   2. Compare each pair of fingerprints using RMSE (converted to similarity).
 #   3. Group and remove duplicate images based on the similarity threshold.
@@ -123,13 +123,13 @@ _main_task() {
 # Function: _generate_fingerprint
 #
 # Description:
-#   Generates a visual fingerprint (small normalized representation)
-#   for an image file to allow fast visual similarity comparisons.
+# Generates a visual fingerprint (small normalized representation) for an image
+# file to allow fast visual similarity comparisons.
 #
 # Parameters:
 #   $1 (input_file): The full path to the input image file.
 #
-# OUTPUT:
+# Returns:
 #   - Saves the fingerprint as 'fp.png' in a temporary directory.
 #   - Saves the original file path as 'fp.png.txt' alongside the fingerprint.
 _generate_fingerprint() {
@@ -194,8 +194,8 @@ _compare_fingerprints() {
 # Function: _compare_images
 #
 # Description:
-#   Compares two images using RMSE (Root Mean Square Error)
-#   and converts the result into a similarity score (0 to 1).
+# Compares two images using RMSE (Root Mean Square Error) and converts the
+# result into a similarity score (0 to 1).
 #
 # Parameters:
 #   $1 (fp1): Path to the first image.
