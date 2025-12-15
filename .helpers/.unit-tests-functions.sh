@@ -95,7 +95,7 @@ __test_equal() {
     fi
     printf "\\033[33mFunction:\\033[0m "
     printf "%s" "${FUNCNAME[1]}"
-    printf "\n         \\033[33mDescription:\\033[0m "
+    printf "\n         \\033[33mPurpose:\\033[0m "
     printf "%s" "$description" | sed -z "s|\n|\\\n|g" | cat -A
     printf "\n"
 

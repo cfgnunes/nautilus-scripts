@@ -21,7 +21,7 @@ _main() {
 
 # Function: _convert_git_to_web_url
 #
-# Description:
+# Purpose:
 # This function converts a Git remote URL into a web-compatible URL for
 # browser access.
 #
@@ -59,7 +59,7 @@ _convert_git_to_web_url() {
 
 # Function: _open_repository_website
 #
-# Description:
+# Purpose:
 # This function opens the website corresponding to the remote Git
 # repository for one or more directories.
 #

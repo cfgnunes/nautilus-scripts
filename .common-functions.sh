@@ -97,8 +97,8 @@ INPUT_FILES=$*
 # (e.g., passwords, configuration values).
 TEMP_DATA_TASK=""
 
-# Array that stores translation key-value pairs loaded
-# from PO files during i18n initialization by '_i18n_initialize'.
+# Array that stores translation key-value pairs loaded from PO files during
+# i18n initialization by '_i18n_initialize'.
 declare -A I18N_DATA=()
 
 #endregion
@@ -107,25 +107,22 @@ declare -A I18N_DATA=()
 #------------------------------------------------------------------------------
 
 # Description:
-#   - '$TEMP_DIR_FILENAME_LOCKS':
-#       This directory is used to store temporary lock directories created by
-#       the '_get_filename_next_suffix' function during concurrent executions.
-#       Each process creates a uniquely named subdirectory here (using
-#       'mkdir'), which acts as a lightweight synchronization mechanism. The
-#       idea to prevent name conflicts by race conditions when multiple
-#       processes attempt to generate filenames simultaneously.
-#   - '$TEMP_DIR_ITEMS_TO_REMOVE':
-#       This directory is used for temporary items scheduled for removal after
-#       the scripts' tasks finish executing.
-#   - '$TEMP_DIR_LOGS'
-#       This directory stores temporary error logs generated during
-#       the execution of the scripts.
-#   - '$TEMP_DIR_STORAGE_TEXT':
-#       This directory stores text files from output data produced by parallel
-#       tasks during the execution of the scripts.
-#   - '$TEMP_DIR_TASK':
-#       This directory is used by the '_make_temp_dir' and '_make_temp_file'
-#       functions to store temporary files created during the scripts' tasks.
+# - '$TEMP_DIR_FILENAME_LOCKS': This directory is used to store temporary
+#     lock directories created by the '_get_filename_next_suffix' function
+#     during concurrent executions. Each process creates a uniquely named
+#     subdirectory here (using 'mkdir'), which acts as a lightweight
+#     synchronization mechanism. The idea to prevent name conflicts by race
+#     conditions when multiple processes attempt to generate filenames
+#     simultaneously.
+# - '$TEMP_DIR_ITEMS_TO_REMOVE': This directory is used for temporary items
+#     scheduled for removal after the scripts' tasks finish executing.
+# - '$TEMP_DIR_LOGS' This directory stores temporary error logs generated
+#     during the execution of the scripts.
+# - '$TEMP_DIR_STORAGE_TEXT': This directory stores text files from output
+#     data produced by parallel tasks during the execution of the scripts.
+# - '$TEMP_DIR_TASK': This directory is used by the '_make_temp_dir' and
+#     '_make_temp_file' functions to store temporary files created during the
+#     scripts' tasks.
 
 mkdir -p "$TEMP_DIR_FILENAME_LOCKS"
 mkdir -p "$TEMP_DIR_ITEMS_TO_REMOVE"
@@ -140,10 +137,10 @@ mkdir -p "$TEMP_DIR_TASK"
 
 # Function: _cleanup_on_exit
 #
-# Description:
-# This function performs cleanup tasks when the script exits. It is
-# designed to safely and efficiently remove temporary directories or files
-# that were created during the script's execution.
+# Purpose:
+# This function performs cleanup tasks when the script exits. Its removes
+# temporary directories or files that were created during the script's
+# execution.
 _cleanup_on_exit() {
     # Remove local temporary dirs or files.
     local items_to_remove=""
@@ -171,10 +168,8 @@ trap _cleanup_on_exit EXIT
 
 # Function: _exit_script
 #
-# Description:
-# This function is responsible for safely exiting the script by terminating all
-# child processes associated with the current script and printing an exit
-# message to the terminal.
+# Purpose:
+# This function exits the script by terminating all processes.
 _exit_script() {
     _close_wait_box
 
@@ -197,7 +192,7 @@ _exit_script() {
 
 # Function: _check_output
 #
-# Description:
+# Purpose:
 # This function checks the output of a command or process based on its
 # exit code and output. It logs errors if the command fails or if an
 # expected output file is missing.
@@ -237,8 +232,8 @@ _check_output() {
 
 # Function: _log_error
 #
-# Description:
-# This function writes an temporary log error file with a specified message.
+# Purpose:
+# This function writes a temporary log error file with a specified message.
 #
 # Parameters:
 #   $1 (message): The error message to be logged.
@@ -275,11 +270,9 @@ _log_error() {
 
 # Function: _logs_consolidate
 #
-# Description:
+# Purpose:
 # This function compiles all error logs from a temporary directory and into a
-# single consolidated log file. If any error logs are found, it displays an
-# error message indicating the location of the consolidated log file and
-# terminates the script.
+# single consolidated log file.
 #
 # Parameters:
 #   $1 (output_dir): Optional. The directory where the consolidated log
@@ -321,9 +314,9 @@ _logs_consolidate() {
 
 # Function: _run_task_parallel
 #
-# Description:
-# This function runs a task in parallel for a set of input files, using a
-# specified output directory for results.
+# Purpose:
+# This function runs a task in parallel for a list of input files, using a
+# specified output directory.
 #
 # Parameters:
 #   $1 (input_files): A field-separated list of file paths to process.
@@ -343,7 +336,7 @@ _run_task_parallel() {
 
 # Function: _run_function_parallel
 #
-# Description:
+# Purpose:
 # This function executes a given Bash expression or command in parallel for
 # a list of input items. It uses 'xargs' to distribute execution across
 # multiple processes.
@@ -444,7 +437,7 @@ _run_function_parallel() {
 
 # Function: _command_exists
 #
-# Description:
+# Purpose:
 # This function checks whether a given command is available on the system.
 #
 # Parameters:
@@ -461,11 +454,9 @@ _command_exists() {
 
 # Function: _check_dependencies_clipboard
 #
-# Description:
+# Purpose:
 # This function ensures that clipboard-related dependencies are available
-# according to the current display session type (Wayland or X11). Detects the
-# session type and adds the proper clipboard tool ('wl-paste' for Wayland or
-# 'xclip' for X11) to the dependency list.
+# according to the current display session type.
 #
 # Parameters:
 #   $1 (dep_keys): Base list of dependency keys to check before adding
@@ -502,8 +493,8 @@ _check_dependencies_clipboard() {
 
 # Function: _check_dependencies
 #
-# Description:
-# This function ensures that all required dependencies are available for the
+# Purpose:
+# This function ensures that required dependencies are available for the
 # scripts. Checks each dependency key, determines the correct package for the
 # active package manager, and installs missing packages if necessary.
 #
@@ -607,7 +598,7 @@ _check_dependencies() {
 
 # Function: _deps_get_dependency_value
 #
-# Description:
+# Purpose:
 # Retrieves the value associated with a specific key-subkey pair from an array.
 #
 # Parameters:
@@ -687,7 +678,6 @@ _deps_get_dependency_value() {
     return 1
 }
 
-# Function: _deps_install_missing_packages
 _deps_install_missing_packages() {
     local packages_install=$1
     local post_install=$2
@@ -718,10 +708,10 @@ _deps_install_missing_packages() {
 
 # Function: _deps_install_packages
 #
-# Description:
-# This function installs specified packages using the corresponding
-# package manager defined for each one. The input list must contain
-# pairs in the format "<pkg_manager>:<package>" separated by spaces.
+# Purpose:
+# This function installs specified packages using the corresponding package
+# manager defined for each one. The input list must contain pairs in the format
+# "<pkg_manager>:<package>" separated by spaces.
 #
 # Parameters:
 #   $1 (pkg_list): A space-separated list of "<pkg_manager>:<package>" pairs.
@@ -881,7 +871,7 @@ _deps_install_packages() {
 
 # Function: _deps_installation_check
 #
-# Description:
+# Purpose:
 # This function verifies whether the specified packages were successfully
 # installed using their respective package managers. It checks each pair in the
 # format "<pkg_manager>:<package>" one by one, ensuring that all dependencies
@@ -920,9 +910,9 @@ _deps_installation_check() {
 
 # Function: _deps_check_rpm_ostree_requires_reboot
 #
-# Description:
-# This function checks if a package installed via 'rpm-ostree' requires
-# a system reboot to take effect. If the package is found in the current
+# Purpose:
+# This function checks if a package installed via 'rpm-ostree' requires a
+# system reboot to take effect. If the package is found in the current
 # deployment list, it indicates that a reboot is necessary.
 #
 # Parameters:
@@ -942,7 +932,7 @@ _deps_check_rpm_ostree_requires_reboot() {
 
 # Function: _deps_is_package_installed
 #
-# Description:
+# Purpose:
 # This function checks if a specific package is installed using the given
 # package manager.
 #
@@ -1039,9 +1029,9 @@ _deps_is_package_installed() {
 
 # Function: _delete_items
 #
-# Description:
-# This function deletes specified files or directories, either by moving
-# them to the trash (if supported) or by permanently deleting them.
+# Purpose:
+# This function deletes specified files or directories, either by moving them
+# to the trash (if supported) or by permanently deleting them.
 _delete_items() {
     local items=$1
 
@@ -1092,9 +1082,9 @@ _delete_items() {
 
 # Function: _directory_pop
 #
-# Description:
-# This function pops the top directory off the directory stack and changes
-# to the previous directory.
+# Purpose:
+# This function pops the top directory off the directory stack and changes to
+# the previous directory.
 #
 # Returns:
 #   "0" (true): If the directory was successfully popped and changed.
@@ -1106,7 +1096,7 @@ _directory_pop() {
 
 # Function: _directory_push
 #
-# Description:
+# Purpose:
 # This function pushes the specified directory onto the directory stack and
 # changes to it.
 #
@@ -1131,7 +1121,7 @@ _directory_push() {
 
 # Function: _find_filtered_files
 #
-# Description:
+# Purpose:
 # This function filters a list of files or directories.
 #
 # Parameters:
@@ -1203,7 +1193,7 @@ _find_filtered_files() {
 
 # Function: _get_dirname
 #
-# Description:
+# Purpose:
 # This function extracts the directory path from a given file path.
 #
 # Parameters:
@@ -1219,7 +1209,7 @@ _get_dirname() {
 
 # Function: _get_filename_extension
 #
-# Description:
+# Purpose:
 # This function extracts the file extension from a given filename.
 #
 # Parameters:
@@ -1235,9 +1225,8 @@ _get_filename_extension() {
 
 # Function: _strip_filename_extension
 #
-# Description:
-# This function removes the file extension from a given filename, if one
-# exists.
+# Purpose:
+# This function removes the extension from a given filename.
 #
 # Parameters:
 #   $1 (filename): The filename from which to strip the extension.
@@ -1258,7 +1247,7 @@ _strip_filename_extension() {
 
 # Function: _get_filename_full_path
 #
-# Description:
+# Purpose:
 # This function returns the full absolute path of a given filename.
 #
 # Parameters:
@@ -1278,7 +1267,7 @@ _get_filename_full_path() {
 
 # Function: _get_filename_next_suffix
 #
-# Description:
+# Purpose:
 # This function generates a unique filename by adding a numeric suffix (e.g.
 # "file (2)", "file (3)", ...) if a file with the same name already exists.
 # This function is designed to work safely when multiple processes run
@@ -1343,7 +1332,7 @@ _get_filename_next_suffix() {
 
 # Function: _make_temp_dir
 #
-# Description:
+# Purpose:
 # This function creates a temporary directory in the '$TEMP_DIR_TASK' directory
 # and returns its path. The directory is created using 'mktemp', and the
 # directory for the temporary directory is specified by the '$TEMP_DIR_TASK'
@@ -1354,11 +1343,11 @@ _make_temp_dir() {
 
 # Function: _make_temp_dir_local
 #
-# Description:
+# Purpose:
 # This function creates a temporary directory in a specified location and
 # returns its path. The directory is created using 'mktemp', with a custom
-# prefix (basename). It also generates a temporary file to track the
-# directory to be removed later.
+# prefix (basename). It also generates a temporary file to track the directory
+# to be removed later.
 #
 # Parameters:
 #   $1 (output_dir): The directory where the temporary directory will be
@@ -1381,21 +1370,19 @@ _make_temp_dir_local() {
 
 # Function: _make_temp_file
 #
-# Description:
-# This function creates a temporary file in the '$TEMP_DIR_TASK' directory
-# and returns its path. The file is created using 'mktemp', and the
-# directory for the temporary file is specified by the '$TEMP_DIR_TASK'
-# variable.
+# Purpose:
+# This function creates a temporary file in the '$TEMP_DIR_TASK' directory and
+# returns its path. The file is created using 'mktemp', and the directory for
+# the temporary file is specified by the '$TEMP_DIR_TASK' variable.
 _make_temp_file() {
     mktemp --tmpdir="$TEMP_DIR_TASK" 2>/dev/null
 }
 
 # Function: _move_file
 #
-# Description:
-# This function moves a file from the source location to the destination,
-# with options to handle conflicts when the destination file already
-# exists.
+# Purpose:
+# This function moves a file from the source location to the destination, with
+# options to handle conflicts when the destination file already exists.
 #
 # Parameters:
 #   $1 (par_when_conflict): Optional, default: "skip". Defines the
@@ -1501,14 +1488,9 @@ _move_file() {
 
 # Function: _get_working_directory
 #
-# Description:
-# This function attempts to determine the current working directory in a
-# variety of ways, based on the available environment variables or input
-# files. It first checks if the file manager (e.g., Nautilus, Nemo, or
-# Caja) provides the current URI (directory) of the script. If not, it
-# falls back to other methods. If the working directory cannot be obtained
-# from the file manager or input files, it defaults to the current
-# directory.
+# Purpose:
+# This function attempts to determine the current working directory based on
+# the available environment variables or input files.
 _get_working_directory() {
     local working_dir=""
 
@@ -1553,7 +1535,7 @@ _get_working_directory() {
 
 # Function: _is_directory_empty
 #
-# Description:
+# Purpose:
 # This function checks if a given directory is empty.
 #
 # Parameters:
@@ -1579,9 +1561,8 @@ _is_directory_empty() {
 
 # Function: _display_file_selection_box
 #
-# Description:
-# This function presents a graphical interface to allow the user to select
-# a file.
+# Purpose:
+# This function display a GUI dialog box to allow the user to select a file.
 #
 # Parameters:
 #   $1 (title): Optional. Title of the window.
@@ -1649,7 +1630,7 @@ _display_file_selection_box() {
 
 # Function: _display_error_box
 #
-# Description:
+# Purpose:
 # This function displays an error message to the user, adapting to the
 # available environment.
 #
@@ -1690,9 +1671,9 @@ _display_error_box() {
 
 # Function: _display_info_box
 #
-# Description:
-# This function displays an information message to the user, adapting to
-# the available environment.
+# Purpose:
+# This function displays an information message to the user, adapting to the
+# available environment.
 #
 # Parameters:
 #   $1 (message): The information message to display.
@@ -1731,7 +1712,7 @@ _display_info_box() {
 
 # Function: _display_list_box
 #
-# Description:
+# Purpose:
 # This function displays a list box with selectable items, adapting to the
 # available environment.
 #
@@ -2033,10 +2014,10 @@ _display_list_box_xmessage() {
 
 # Function: _display_input_text_box
 #
-# Description:
-# This function displays an input text dialog (GUI or terminal) to request
-# a text value from the user. It supports an optional default value and
-# returns the user's input.
+# Purpose:
+# This function displays an input text dialog (GUI or terminal) to request a
+# text value from the user. It supports an optional default value and returns
+# the user's input.
 #
 # Parameters:
 #   $1 (message): The message or prompt to display to the user.
@@ -2077,9 +2058,9 @@ _display_input_text_box() {
 
 # Function: _display_password_box
 #
-# Description:
-# This function prompts the user to enter a password, either via the
-# terminal or a graphical dialog box.
+# Purpose:
+# This function prompts the user to enter a password, either via the terminal
+# or a graphical dialog box.
 #
 # Parameters:
 #   $1 (message): A message to display as a prompt for the password.
@@ -2122,9 +2103,9 @@ _display_password_box() {
 
 # Function: _display_password_box_define
 #
-# Description:
-# This function prompts the user to enter a password and ensures the
-# password is not empty.
+# Purpose:
+# This function prompts the user to enter a password and ensures the password
+# is not empty.
 #
 # Returns:
 #   "0" (true): If the password is successfully obtained.
@@ -2148,9 +2129,9 @@ _display_password_box_define() {
 
 # Function: _display_question_box
 #
-# Description:
-# This function prompts the user with a yes/no question and returns the
-# user's response.
+# Purpose:
+# This function prompts the user with a yes/no question and returns the user's
+# response.
 #
 # Parameters:
 #   $1 (message): The question message to display to the user.
@@ -2197,7 +2178,7 @@ _display_question_box() {
 
 # Function: _display_text_box
 #
-# Description:
+# Purpose:
 # This function displays a message to the user in a text box, either in the
 # terminal or using a GUI dialog.
 #
@@ -2247,7 +2228,7 @@ _display_text_box() {
 
 # Function: _display_result_box
 #
-# Description:
+# Purpose:
 # This function displays a result summary at the end of a process,
 # including error checking and output directory information.
 #
@@ -2286,7 +2267,7 @@ _display_result_box() {
 
 # Function: _display_wait_box
 #
-# Description:
+# Purpose:
 # This function displays a wait box to inform the user that a task is
 # running and they need to wait.
 #
@@ -2303,7 +2284,7 @@ _display_wait_box() {
 
 # Function: _display_wait_box_message
 #
-# Description:
+# Purpose:
 # This function displays a wait box (progress indicator) to inform the user
 # that a task is in progress.
 #
@@ -2388,7 +2369,7 @@ _display_wait_box_message() {
 
 # Function: _close_wait_box
 #
-# Description:
+# Purpose:
 # This function is responsible for closing any open 'wait box' (progress
 # indicators) that were displayed during the execution of a task.
 _close_wait_box() {
@@ -2405,7 +2386,7 @@ _close_wait_box() {
 
 # Function: _display_lock
 #
-# Description:
+# Purpose:
 # This function creates a temporary lock file used to indicate that the
 # wait box should not be opened at this time. In this case,
 # '_display_wait_box' will wait until '_display_unlock' is executed.
@@ -2415,7 +2396,7 @@ _display_lock() {
 
 # Function: _display_unlock
 #
-# Description:
+# Purpose:
 # This function removes the temporary lock file created by '_display_lock'.
 # By doing so, it signals that the wait box can now be displayed.
 _display_unlock() {
@@ -2424,7 +2405,7 @@ _display_unlock() {
 
 # Function: _display_gdbus_notify
 #
-# Description:
+# Purpose:
 # This function sends a desktop notification using the 'gdbus' tool, which
 # interfaces with the D-Bus notification system (specifically the
 # 'org.freedesktop.Notifications' service).
@@ -2499,7 +2480,7 @@ _display_gdbus_notify() {
 
 # Function: _get_available_app
 #
-# Description:
+# Purpose:
 # This function iterates through a list of applications and returns the
 # first one that is available. It relies on the helper function
 # '_command_exists' to check for the existence of each command.
@@ -2527,7 +2508,7 @@ _get_available_app() {
 
 # Function: _get_available_file_manager
 #
-# Description:
+# Purpose:
 # This function detects the default or an available file manager on the
 # system.
 #
@@ -2580,7 +2561,7 @@ _get_available_file_manager() {
 
 # Function: _get_script_name
 #
-# Description:
+# Purpose:
 # This function returns the name of the executing script. It uses the
 # 'basename' command to extract the script's filename from the full path
 # provided by '$0'.
@@ -2595,7 +2576,7 @@ _get_script_name() {
 
 # Function: _is_file_manager_session
 #
-# Description:
+# Purpose:
 # This function checks whether the script is being executed from within a
 # file manager action specifically in GNOME Files (Nautilus), Nemo, or Caja.
 # The detection is done by checking if any environment variable matches the
@@ -2611,7 +2592,7 @@ _is_file_manager_session() {
 
 # Function: _is_gui_session
 #
-# Description:
+# Purpose:
 # This function checks whether the script is running in a graphical user
 # interface (GUI) session. It does so by checking if the 'DISPLAY'
 # environment variable is set, which is typically present in GUI sessions
@@ -2629,7 +2610,7 @@ _is_gui_session() {
 
 # Function: _is_qt_desktop
 #
-# Description:
+# Purpose:
 # This function determines whether the current desktop environment
 # (as specified by the XDG_CURRENT_DESKTOP variable) is Qt-based.
 #
@@ -2658,7 +2639,7 @@ _is_qt_desktop() {
 
 # Function: _get_max_procs
 #
-# Description:
+# Purpose:
 # This function returns the maximum number of processing units (CPU cores)
 # available on the system.
 _get_max_procs() {
@@ -2667,7 +2648,7 @@ _get_max_procs() {
 
 # Function: _unset_global_variables_file_manager
 #
-# Description:
+# Purpose:
 # This function unset global variables that may have been set by different
 # file managers (Nautilus, Nemo, Caja) during script execution.
 _unset_global_variables_file_manager() {
@@ -2679,7 +2660,7 @@ _unset_global_variables_file_manager() {
 
 # Function: _xdg_get_default_app
 #
-# Description:
+# Purpose:
 # This function retrieves the default application associated with a
 # specific MIME type using the 'xdg-mime' command.
 #
@@ -2757,7 +2738,7 @@ _xdg_get_default_app() {
 
 # Function: _get_clipboard_data
 #
-# Description:
+# Purpose:
 # This function retrieves the current content of the clipboard, adapting
 # the method according to the session type.
 _get_clipboard_data() {
@@ -2769,7 +2750,7 @@ _get_clipboard_data() {
 
 # Function: _set_clipboard_data
 #
-# Description:
+# Purpose:
 # This function sets the content of the clipboard with the provided input
 # data, adapting the method according to the session type.
 #
@@ -2786,7 +2767,7 @@ _set_clipboard_data() {
 
 # Function: _set_clipboard_file
 #
-# Description:
+# Purpose:
 # This function sets the content of the clipboard with the provided input
 # file, adapting the method according to the session type.
 #
@@ -2808,7 +2789,7 @@ _set_clipboard_file() {
 
 # Function: _translate_to_gvfs_path
 #
-# Description:
+# Purpose:
 # Converts a remote URI into the corresponding GVfs-mounted path under
 # '/run/user/<uid>/gvfs/'.
 _translate_to_gvfs_path() {
@@ -2856,7 +2837,7 @@ _translate_to_gvfs_path() {
 
 # Function: _get_filenames_filemanager
 #
-# Description:
+# Purpose:
 # This function retrieves a list of selected filenames or URIs from a
 # file manager and processes the input accordingly. If no selection is
 # detected, it falls back to using a standard input file list.
@@ -2922,7 +2903,7 @@ _get_filenames_filemanager() {
 
 # Function: _get_files
 #
-# Description:
+# Purpose:
 # This function retrieves a list of files or directories based on the
 # provided parameters and performs various filtering, validation, and
 # sorting operations. The input files can be filtered by type, extension,
@@ -3077,7 +3058,7 @@ _get_files() {
 
 # Function: _validate_file_mime
 #
-# Description:
+# Purpose:
 # This function validates the MIME type and optionally the encoding of a
 # given file. It checks whether the file's MIME type matches a specified
 # pattern (regex) and, if provided, whether the file's encoding matches
@@ -3121,7 +3102,7 @@ _validate_file_mime() {
 
 # Function: _validate_file_mime_parallel
 #
-# Description:
+# Purpose:
 # This function validates the MIME types of multiple files in parallel,
 # based on a specified MIME type pattern. It processes a list of file paths
 # concurrently using `xargs` and calls the `_validate_file_mime` function
@@ -3164,7 +3145,7 @@ _validate_file_mime_parallel() {
 
 # Function: _validate_files_count
 #
-# Description:
+# Purpose:
 # This function validates the number of selected files or directories.
 #
 # Parameters:
@@ -3256,7 +3237,7 @@ _validate_files_count() {
 
 # Function: _get_output_dir
 #
-# Description:
+# Purpose:
 # This function determines and returns the appropriate output directory
 # path based on the provided parameters and the system's available
 # directories.
@@ -3316,7 +3297,7 @@ _get_output_dir() {
 
 # Function: _get_output_filename
 #
-# Description:
+# Purpose:
 # This function generates the output filename based on the given input
 # file, output directory, and a set of optional parameters. It allows for
 # customization of the output filename by adding prefixes, suffixes, and
@@ -3415,7 +3396,7 @@ _get_output_filename() {
 
 # Function: _open_items_locations
 #
-# Description:
+# Purpose:
 # This function opens the locations of selected items in the appropriate
 # file manager.
 #
@@ -3493,7 +3474,7 @@ _open_items_locations() {
 
 # Function: _open_urls
 #
-# Description:
+# Purpose:
 # This function opens a list of URLs in the system's default web browser.
 #
 # Parameters:
@@ -3525,7 +3506,7 @@ _open_urls() {
 
 # Function: _get_file_encoding
 #
-# Description:
+# Purpose:
 # This function retrieves the MIME encoding of a specified file.
 #
 # Parameters:
@@ -3547,7 +3528,7 @@ _get_file_encoding() {
 
 # Function: _get_file_mime
 #
-# Description:
+# Purpose:
 # This function retrieves the MIME type of a specified file.
 #
 # Parameters:
@@ -3568,7 +3549,7 @@ _get_file_mime() {
 
 # Function: _get_items_count
 #
-# Description:
+# Purpose:
 # This function counts the number of items in a string, where items are
 # separated by a specific field separator. It assumes that the input string
 # contains a list of items separated by the value of the variable
@@ -3596,7 +3577,7 @@ _get_items_count() {
 
 # Function: _storage_text_clean
 #
-# Description:
+# Purpose:
 # This function clears all temporary text storage files.
 _storage_text_clean() {
     rm -f -- "$TEMP_DIR_STORAGE_TEXT/"* 2>/dev/null
@@ -3604,7 +3585,7 @@ _storage_text_clean() {
 
 # Function: _storage_text_read_all
 #
-# Description:
+# Purpose:
 # This function concatenates and outputs the content of all temporary text
 # storage files, from largest to smallest.
 _storage_text_read_all() {
@@ -3614,7 +3595,7 @@ _storage_text_read_all() {
 
 # Function: _storage_text_write
 #
-# Description:
+# Purpose:
 # This function writes a given input text to temporary text storage files.
 #
 # Parameters:
@@ -3635,7 +3616,7 @@ _storage_text_write() {
 
 # Function: _storage_text_write_ln
 #
-# Description:
+# Purpose:
 # This function writes a given input text, followed by a newline character,
 # to a temporary text storage file.
 _storage_text_write_ln() {
@@ -3655,7 +3636,7 @@ _storage_text_write_ln() {
 
 # Function: _convert_delimited_string_to_text
 #
-# Description:
+# Purpose:
 # This function converts a delimited string of items into newline-separated
 # text.
 #
@@ -3677,7 +3658,7 @@ _convert_delimited_string_to_text() {
 
 # Function: _convert_text_to_delimited_string
 #
-# Description:
+# Purpose:
 # This function converts newline-separated text into a delimited string of
 # items.
 #
@@ -3699,7 +3680,7 @@ _convert_text_to_delimited_string() {
 
 # Function: _get_element
 #
-# Description:
+# Purpose:
 # Extracts the Nth field from a delimited string using the global
 # '$FIELD_SEPARATOR' as the delimiter.
 #
@@ -3712,7 +3693,7 @@ _get_element() {
 
 # Function: _str_collapse_char
 #
-# Description:
+# Purpose:
 # This function collapses consecutive occurrences of a given character
 # into a single one and removes any leading or trailing occurrences of it.
 #
@@ -3732,7 +3713,7 @@ _str_collapse_char() {
 
 # Function: _str_sort
 #
-# Description:
+# Purpose:
 # This function sorts elements from a string based on a given separator.
 #
 # Parameters:
@@ -3755,7 +3736,7 @@ _str_sort() {
 
 # Function: _str_human_readable_path
 #
-# Description:
+# Purpose:
 # This function transforms a given file path into a more human-readable
 # format.
 #
@@ -3788,7 +3769,7 @@ _text_remove_empty_lines() {
 
 # Function: _text_remove_pwd
 #
-# Description:
+# Purpose:
 # This function replaces the current working directory path in a given
 # string with a dot ('.') for brevity.
 #
@@ -3814,7 +3795,7 @@ _text_remove_pwd() {
 
 # Function: _text_sort
 #
-# Description:
+# Purpose:
 # This function sorts the lines of a given text input in a version-aware
 # manner.
 #
@@ -3829,7 +3810,7 @@ _text_sort() {
 
 # Function: _text_uri_decode
 #
-# Description:
+# Purpose:
 # This function decodes a URI-encoded string by converting percent-encoded
 # characters back to their original form.
 #
@@ -3856,7 +3837,7 @@ _text_uri_decode() {
 
 # Function: _cmd_magick_convert
 #
-# Description:
+# Purpose:
 # This function executes ImageMagick's "convert" command in a
 # version-compatible way. In ImageMagick 7+, the main executable is "magick".
 # In ImageMagick 6 (legacy version), the command "convert" is used directly.
@@ -3900,7 +3881,7 @@ _initialize_homebrew() {
 
 # Function: _i18n_initialize
 #
-# Description:
+# Purpose:
 # This function initializes the internationalization (i18n) system by
 # determining the current language from the system and loading the
 # corresponding '.po' translation file into the '$I18N_DATA' array.
@@ -3930,7 +3911,7 @@ _i18n_initialize() {
 
 # Function: _i18n_load_file
 #
-# Description:
+# Purpose:
 # This function reads a PO (Portable Object) file line by line,
 # extracting the translation strings and storing them in the
 # array '$I18N_DATA'.
@@ -3970,7 +3951,7 @@ _i18n_load_file() {
 
 # Function: _i18n
 #
-# Description:
+# Purpose:
 # This function returns the translated version of a given string using
 # the '$I18N_DATA' array loaded. If a translation is not available, it
 # returns the original string.
@@ -3994,7 +3975,7 @@ _i18n() {
 
 # Function: _recent_scripts_add
 #
-# Description:
+# Purpose:
 # This function adds the running script to the history of recently accessed
 # scripts.
 #
