@@ -96,7 +96,8 @@ _save_file_from_clipboard() {
 # Function: _detect_text_language
 #
 # Description:
-# Infers the programming language of a text file based on its shebang line.
+#   This function infers the programming language of a text file based on its
+#   shebang line.
 #
 # Parameters:
 #   $1 (file): Path to the text file to analyze.

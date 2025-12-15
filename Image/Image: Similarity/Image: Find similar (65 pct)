@@ -20,8 +20,8 @@ _main() {
 # Function: _main_task
 #
 # Description:
-# Main logic of the script. Generates image fingerprints, compares their
-# similarities, removes duplicates, and displays the matching images.
+#   This function generates image fingerprints, compares their similarities,
+#   removes duplicates, and displays the matching images.
 #
 # Parameters:
 #   $1 (input_files): A delimited string containing the image files.

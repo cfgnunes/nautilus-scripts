@@ -36,7 +36,6 @@ _main_task() {
     # Run the main process.
     std_output=$(LC_ALL=C exiftool -- "$input_file" 2>/dev/null)
 
-    # Format the output.
     # Remove any extra spaces before colons ":".
     # shellcheck disable=SC2001
     std_output=$(sed "s| \+: |: |g" <<<"$std_output")
