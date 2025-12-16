@@ -140,12 +140,6 @@ _uninstall_directory "$HOME/.local/apps/homebrew"
 _remove_gnome_application_folder() {
     local folder_name="Scripts"
 
-    # Exit if not running under GNOME.
-    if [[ -z "${XDG_CURRENT_DESKTOP:-}" ||
-        "${XDG_CURRENT_DESKTOP,,}" != *"gnome"* ]]; then
-        return
-    fi
-
     # Check gsettings and schema availability.
     if ! command -v gsettings &>/dev/null || ! gsettings list-schemas |
         grep -qxF "org.gnome.desktop.app-folders"; then

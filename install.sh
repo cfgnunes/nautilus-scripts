@@ -717,7 +717,8 @@ _check_dependencies() {
     # Packages for dialogs.
     if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
         if ! _command_exists "zenity" && ! _command_exists "yad"; then
-            if [[ "${XDG_CURRENT_DESKTOP,,}" == *"gnome"* ]]; then
+            if [[ "${XDG_CURRENT_DESKTOP,,}" == *"gnome"* ||
+                "${XDG_CURRENT_DESKTOP,,}" == *"cosmic"* ]]; then
                 packages+="zenity "
             else
                 packages+="yad "
@@ -1156,13 +1157,6 @@ _create_gnome_application_folder() {
     local folder_name="Scripts"
     local translated_folder_name=""
     translated_folder_name=$(_i18n "$folder_name")
-    # Configure the application folder in GNOME.
-
-    # Exit if not running under GNOME.
-    if [[ -z "${XDG_CURRENT_DESKTOP:-}" ||
-        "${XDG_CURRENT_DESKTOP,,}" != *"gnome"* ]]; then
-        return
-    fi
 
     # Check if 'gsettings' is available and the GNOME schemas are present. If
     # not, skip folder creation.
