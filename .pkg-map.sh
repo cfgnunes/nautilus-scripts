@@ -92,7 +92,7 @@ declare -A PKG_MAP=(
         pacman: bzip3
         nix:    bzip3
         zypper: bzip3
-        guix:   bzip3
+        guix:
         xbps:   bzip3
         brew:   bzip3
     "
@@ -188,7 +188,7 @@ declare -A PKG_MAP=(
         pacman: dar
         nix:    dar
         zypper: dar
-        guix:   dar
+        guix:
         xbps:   dar
         brew:   dar
     "
@@ -212,7 +212,7 @@ declare -A PKG_MAP=(
         pacman: bind
         nix:    dnsutils
         zypper: bind-utils
-        guix:   bind-utils
+        guix:   bind
         xbps:   bind
         brew:   bind
     "
