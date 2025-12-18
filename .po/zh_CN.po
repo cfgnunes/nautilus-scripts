@@ -1656,6 +1656,10 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG：导出为PNG（1024像素）"
 
 #: Menu
+msgid "SVG: Optimize"
+msgstr "SVG：优化"
+
+#: Menu
 msgid "SVG: Replace fonts to Charter"
 msgstr "SVG：替换字体为Charter"
 

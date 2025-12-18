@@ -1201,7 +1201,7 @@ msgstr "תמונה: יצירת גוונים מרובים"
 
 #: Menu
 msgid "Image: Optimize PNG"
-msgstr "תמונה: מיטוב גודל תמונה מסוג PNG"
+msgstr "תמונה: מיטוב PNG"
 
 #: Menu
 msgid "Image: Perform OCR (English)"
@@ -1654,6 +1654,10 @@ msgstr "קובץ SVG: ייצוא כקובץ PNG ‏(512 נק׳)"
 #: Menu
 msgid "SVG: Export to PNG (1024 px)"
 msgstr "קובץ SVG: ייצוא כקובץ PNG ‏(1024 נק׳)"
+
+#: Menu
+msgid "SVG: Optimize"
+msgstr "SVG: מיטוב"
 
 #: Menu
 msgid "SVG: Replace fonts to Charter"

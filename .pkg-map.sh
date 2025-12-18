@@ -878,6 +878,18 @@ declare -A PKG_MAP=(
         brew:
     "
 
+    ["scour"]="
+        termux:
+        apt:    scour
+        dnf:    python3-scour
+        pacman: scour
+        nix:    scour
+        zypper: scour
+        guix:   python-scour
+        xbps:   python3-scour
+        brew:
+    "
+
     ["sox"]="
         termux: sox
         apt:    sox libsox-fmt-mp3

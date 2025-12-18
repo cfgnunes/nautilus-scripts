@@ -1656,6 +1656,10 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG: PNG로 내보내기 (1024px)"
 
 #: Menu
+msgid "SVG: Optimize"
+msgstr "SVG: 최적화"
+
+#: Menu
 msgid "SVG: Replace fonts to Charter"
 msgstr "SVG: 글꼴을 Charter로 변경"
 

@@ -1656,6 +1656,10 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG: PNG में निर्यात करें (1024 px)"
 
 #: Menu
+msgid "SVG: Optimize"
+msgstr "SVG: अनुकूलित करें"
+
+#: Menu
 msgid "SVG: Replace fonts to Charter"
 msgstr "SVG: फ़ॉन्ट्स को चार्टर से बदलें"
 
