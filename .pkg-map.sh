@@ -813,7 +813,7 @@ declare -A PKG_MAP=(
         pacman: texlive-binextra
         nix:    texlivePackages.latexmk~latexmk
         zypper: texlive-latexmk
-        guix:
+        guix:   texlive-bin
         xbps:   texlive-latexmk
         brew:
     "
@@ -873,7 +873,7 @@ declare -A PKG_MAP=(
         pacman: texlive-basic texlive-binextra texlive-latexextra
         nix:    texliveSmall~texlive texlivePackages.pdfjam~pdfjam
         zypper: texlive-pdfjam-bin
-        guix:
+        guix:   texlive-bin
         xbps:   texlive
         brew:
     "
@@ -947,7 +947,8 @@ declare -A PKG_MAP=(
             texlive-collection-publishers \
             texlive-collection-mathscience \
             texlive-collection-xetex
-        guix:
+        guix: \
+            texlive
         xbps: \
             texlive-bin
         brew:
