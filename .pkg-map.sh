@@ -4,8 +4,8 @@
 # This file centralizes dependency definitions for the scripts.
 
 # Description:
-#   This array defines the mapping between a dependency key and its corresponding
-#   package names across different package managers.
+#   This array defines the mapping between a dependency key and its
+#   corresponding package names across different package managers.
 #
 # Note: If the package name contains the '~' character, it means that the part
 # before '~' represents the package name used for installation, while the part
