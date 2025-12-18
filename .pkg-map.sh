@@ -909,7 +909,7 @@ declare -A PKG_MAP=(
         pacman: tesseract tesseract-data-$TEMP_DATA_TASK
         nix:    tesseract
         zypper: tesseract tesseract-ocr-traineddata-$TEMP_DATA_TASK
-        guix:
+        guix:   tesseract-ocr
         xbps:   tesseract-ocr tesseract-ocr-$TEMP_DATA_TASK
         brew:
     "
