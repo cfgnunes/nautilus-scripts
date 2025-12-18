@@ -915,42 +915,34 @@ declare -A PKG_MAP=(
     "
 
     ["texlive"]="
-        termux: \
-            texlive-bin
-        apt: \
-            texlive \
-            texlive-fonts-extra \
-            texlive-latex-extra \
-            texlive-publishers \
-            texlive-science \
-            texlive-xetex
-        dnf: \
-            texlive-base \
-            texlive-collection-fontsextra \
-            texlive-collection-latexextra \
-            texlive-collection-publishers \
-            texlive-collection-mathscience \
-            texlive-collection-xetex
-        pacman: \
-            texlive-basic \
-            texlive-fontsextra \
-            texlive-latexextra \
-            texlive-publishers \
-            texlive-mathscience \
-            texlive-xetex
-        nix: \
-            texliveFull~texlive
-        zypper: \
-            texlive-collection-basic \
-            texlive-collection-fontsextra \
-            texlive-collection-latexextra \
-            texlive-collection-publishers \
-            texlive-collection-mathscience \
-            texlive-collection-xetex
-        guix: \
-            texlive
-        xbps: \
-            texlive-bin
+        termux: texlive-bin
+        apt:    texlive \
+                texlive-fonts-extra \
+                texlive-latex-extra \
+                texlive-publishers \
+                texlive-science \
+                texlive-xetex
+        dnf:    texlive-base \
+                texlive-collection-fontsextra \
+                texlive-collection-latexextra \
+                texlive-collection-publishers \
+                texlive-collection-mathscience \
+                texlive-collection-xetex
+        pacman: texlive-basic \
+                texlive-fontsextra \
+                texlive-latexextra \
+                texlive-publishers \
+                texlive-mathscience \
+                texlive-xetex
+        nix:    texliveFull~texlive
+        zypper: texlive-collection-basic \
+                texlive-collection-fontsextra \
+                texlive-collection-latexextra \
+                texlive-collection-publishers \
+                texlive-collection-mathscience \
+                texlive-collection-xetex
+        guix:   texlive
+        xbps:   texlive-bin
         brew:
     "
 )
