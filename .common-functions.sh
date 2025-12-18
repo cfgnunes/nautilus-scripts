@@ -751,6 +751,7 @@ _deps_install_packages() {
     for pkg_manager in "${!pkg_map[@]}"; do
         local packages="${pkg_map[$pkg_manager]}"
         packages=$(_str_collapse_char "$packages" " ")
+        packages=$(sed "s|~[^ ]*||g" <<<"$packages")
         [[ -z "$packages" ]] && continue
 
         cmd_inst=""
@@ -813,7 +814,6 @@ _deps_install_packages() {
             if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
                 nix_channel="nixos"
             fi
-            packages=$(sed "s|~[^ ]*||g" <<<"$packages")
 
             # Prefix packages with their channel namespace.
             nix_packages="$nix_channel.$packages"
