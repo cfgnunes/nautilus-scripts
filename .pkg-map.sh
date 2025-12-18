@@ -884,7 +884,7 @@ declare -A PKG_MAP=(
         dnf:    python3-scour
         pacman: scour
         nix:    scour
-        zypper: scour
+        zypper: python3-scour~scour
         guix:   python-scour
         xbps:   python3-scour
         brew:
