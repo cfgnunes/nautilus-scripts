@@ -15,7 +15,7 @@
 declare -A PKG_MAP=(
     ["7za"]="
         termux: p7zip
-        apt:    p7zip-full
+        apt:    p7zip
         dnf:    p7zip
         pacman: p7zip
         nix:    p7zip
