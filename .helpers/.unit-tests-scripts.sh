@@ -1701,19 +1701,19 @@ _main() {
 
     # Create mock files for testing.
     input_file1="$temp_dir/Test internet.txt"
-    echo "https://github.com/cfgnunes/fm-scripts.git" >"$input_file1"
+    echo "https://github.com/cfgnunes/nautilus-scripts.git" >"$input_file1"
 
     script_test="Network and Internet/Git: Clone URLs"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/fm-scripts/README.md"
+    __test_file_nonempty "$temp_dir/nautilus-scripts/README.md"
     __test_file_empty "$std_output"
 
-    rm -- "$temp_dir/fm-scripts/README.md"
+    rm -- "$temp_dir/nautilus-scripts/README.md"
     script_test="Network and Internet/Git: Reset and pull"
     __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir/fm-scripts" >"$std_output"
-    __test_file_nonempty "$temp_dir/fm-scripts/README.md"
+    bash "$ROOT_DIR/$script_test" "$temp_dir/nautilus-scripts" >"$std_output"
+    __test_file_nonempty "$temp_dir/nautilus-scripts/README.md"
     __test_file_empty "$std_output"
 
     #script_test="Network and Internet/Git: Open repository website"
@@ -1733,7 +1733,7 @@ _main() {
 
     # Create mock files for testing.
     input_file1="$temp_dir/Test internet.txt"
-    echo "https://github.com/cfgnunes/fm-scripts.git" >"$input_file1"
+    echo "https://github.com/cfgnunes/nautilus-scripts.git" >"$input_file1"
 
     script_test="Network and Internet/URL: Check HTTP status"
     __echo_script "$script_test"

@@ -4,7 +4,7 @@
 # =============================================================================
 # Project: Enhanced File Manager Actions for Linux
 # Author: Cristiano Fraga G. Nunes
-# Repository: https://github.com/cfgnunes/fm-scripts
+# Repository: https://github.com/cfgnunes/nautilus-scripts
 # License: MIT License
 # Version: 30.13
 # =============================================================================
