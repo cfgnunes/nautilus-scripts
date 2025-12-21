@@ -12,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies ""
     _display_wait_box
-    input_files=$(_get_files "par_type=file")
+    input_files=$(_get_files "par_type=all")
     output_dir=$(_display_file_selection_box \
         "$(_i18n 'Select the output directory')" \
         "" "par_directory_only=true")
@@ -31,7 +31,7 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve")
 
     # Run the main process.
-    std_output=$(ln -- "$input_file" "$output_file" 2>&1)
+    std_output=$(cp --archive --link -- "$input_file" "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
