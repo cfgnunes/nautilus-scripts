@@ -124,6 +124,7 @@ Special thanks to everyone who contributed to the translation of this project:
 - 🇳🇱 **Heimen Stoffels (@Vistaus)** - Dutch.
 - 🇰🇷 **Yun Juhwan (@g-yunjh)** - Korean.
 - 🇯🇵 **Camegone (@camegone)** - Japanese.
+- 🇹🇷 **Yaşar Çiv (@yasarciv)** - Turkish.
 
 ### Contributors
 
