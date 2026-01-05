@@ -141,6 +141,7 @@ trap _on_exit EXIT
 _main() {
     local cat_defaults=()
     local cat_dirs=()
+    local cat_dirs_translated=()
     local cat_selected=()
     local menu_defaults=()
     local menu_labels=()
@@ -233,13 +234,14 @@ _main() {
     local dir=""
     while IFS= read -r -d $'\0' dir; do
         cat_dirs+=("$dir")
+        cat_dirs_translated+=("$(_i18n "$dir")")
     done < <(_list_scripts_categories)
 
     # If requested, let the user select which categories to install.
     if [[ "$OPT_CHOOSE_CATEGORIES" == "true" ]]; then
         _echo ""
         _echo "$(_i18n 'Select the options (<SPACE> to check, <ENTER> to confirm):')"
-        _multiselect_menu cat_selected cat_dirs cat_defaults
+        _multiselect_menu cat_selected cat_dirs_translated cat_defaults
     fi
 
     #region Step 1: Check for basic dependencies
