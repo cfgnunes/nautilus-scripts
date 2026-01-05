@@ -1035,9 +1035,6 @@ _install_accels_gnome2() {
         printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenAlternate" "")'
         # Disable the shortcut for 'OpenInNewTab' (<control><shift>o).
         printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenInNewTab" "")'
-        # Disable the shortcut for 'Show Hide Extra Pane' (F3).
-        printf "%s\n" '(gtk_accel_path "<Actions>/NavigationActions/Show Hide Extra Pane" "")'
-        printf "%s\n" '(gtk_accel_path "<Actions>/ShellActions/Show Hide Extra Pane" "")'
 
         local filename=""
         while IFS= read -r -d $'\0' filename; do
