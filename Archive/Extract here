@@ -93,7 +93,7 @@ _get_command() {
     local _cmds_lzo=("lzop")
     local _cmds_msi=("unar")
     local _cmds_pak=("unar")
-    local _cmds_rar=("unrar" "unar" "bsdtar")
+    local _cmds_rar=("unrar" "7za" "unar" "bsdtar")
     local _cmds_rpm=("bsdtar")
     local _cmds_sit=("unar")
     local _cmds_sqsh=("unsquashfs")
