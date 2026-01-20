@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2086
-# install_keyboard_shortcut=F12
+# install_keyboard_shortcut=F7
 
 # Source the script '.common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
