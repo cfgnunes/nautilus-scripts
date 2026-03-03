@@ -90,6 +90,7 @@ While numerous *Nautilus Scripts* are available for file managers on the web, ma
 | `<Control><Shift>G` | Git: Clone URLs                   |
 | `<Control><Shift>R` | Git: Reset and pull               |
 | `<Control><Shift>X` | URL: Download file                |
+| `<Shift><Alt>V`     | Create hard link here             |
 
 ## Compatibility
 
