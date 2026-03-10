@@ -38,6 +38,7 @@ _open_app() {
         "terminology"
         "uxterm"
         "termit"
+        "foot"
     )
     available_app=$(_get_available_app "apps")
 
