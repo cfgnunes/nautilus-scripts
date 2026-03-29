@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+# install_keyboard_shortcut=<Shift>F4
+
+# Source the script '.common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/.common-functions.sh"
+
+_main() {
+    local input_files=""
+
+    # Execute initial checks.
+    _check_dependencies "tmux"
+    input_files=$(_get_files "par_type=directory; par_max_items=20")
+    _unset_global_variables_file_manager
+
+    # Run the main process.
+    _open_app "$input_files"
+}
+
+_open_app() {
+    local input_files=$1
+    local session_name="script_$$"
+
+    _build_tmux_session "$session_name" "$input_files"
+    _open_terminal "$session_name"
+}
+
+_build_tmux_session() {
+    local session_name=$1
+    local input_files=$2
+
+    local first_session="true"
+    local dir_1=""
+    dir_1=$(_get_element "$input_files" "1")
+
+    cd -- "$dir_1" || exit 1
+    tmux new-session -d -s "$session_name"
+
+    for input_file in $input_files; do
+        if [[ $first_session = "true" ]]; then
+            first_session="false"
+        else
+            cd -- "$input_file" || continue
+            tmux split-window -t "$session_name"
+            tmux select-layout -t "$session_name" tiled >/dev/null
+        fi
+    done
+
+    tmux setw -t "$session_name" synchronize-panes on
+    tmux select-pane -t "$session_name:0.0"
+}
+
+_open_terminal() {
+    local session_name=$1
+    local available_app=""
+    # shellcheck disable=SC2034
+    local apps=(
+        "ptyxis"
+        "gnome-terminal"
+        "kgx"
+        "konsole"
+        "xfce4-terminal"
+        "mate-terminal"
+        "xterm"
+        "kitty"
+        "alacritty"
+        "terminator"
+        "qterminal"
+        "deepin-terminal"
+        "terminology"
+        "uxterm"
+        "termit"
+        "foot"
+    )
+    available_app=$(_get_available_app "apps")
+
+    # Build SSH command, with optional remote path.
+    local tmux_cmd="tmux attach-session -t $session_name"
+    case "$available_app" in
+    ptyxis)
+        $available_app --new-window -- bash -c "$tmux_cmd" &
+        ;;
+    gnome-terminal | kgx | mate-terminal)
+        $available_app -- bash -c "$tmux_cmd" &
+        ;;
+    konsole | xfce4-terminal)
+        $available_app --hold -e "$tmux_cmd" &
+        ;;
+    *)
+        # Generic fallback.
+        $available_app -e "$tmux_cmd" &
+        ;;
+    esac
+}
+
+_main "$@"

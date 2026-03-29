@@ -945,6 +945,18 @@ declare -A PKG_MAP=(
         xbps:   texlive-bin
         brew:
     "
+
+    ["tmux"]="
+        termux: tmux
+        apt:    tmux
+        dnf:    tmux
+        pacman: tmux
+        nix:    tmux
+        zypper: tmux
+        guix:   tmux
+        xbps:   tmux
+        brew:   tmux
+    "
 )
 
 # Description:
