@@ -1676,6 +1676,10 @@ msgid "Terminal"
 msgstr "终端"
 
 #: Menu
+msgid "Terminal (synced panes)"
+msgstr "终端（同步窗格）"
+
+#: Menu
 msgid "Text: Concatenate multiple files"
 msgstr "文本：合并多个文件"
 

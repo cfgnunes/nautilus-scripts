@@ -1676,6 +1676,10 @@ msgid "Terminal"
 msgstr "Terminal"
 
 #: Menu
+msgid "Terminal (synced panes)"
+msgstr "Terminal (eşzamanlı paneller)"
+
+#: Menu
 msgid "Text: Concatenate multiple files"
 msgstr "Metin: Birden fazla dosyayı birleştir"
 

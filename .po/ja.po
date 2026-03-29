@@ -1673,7 +1673,11 @@ msgstr "SVG：フォントをTimesに置換"
 
 #: Menu
 msgid "Terminal"
-msgstr "端末"
+msgstr "ターミナル"
+
+#: Menu
+msgid "Terminal (synced panes)"
+msgstr "ターミナル（同期されたペイン）"
 
 #: Menu
 msgid "Text: Concatenate multiple files"

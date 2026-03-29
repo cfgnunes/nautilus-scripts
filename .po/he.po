@@ -1676,6 +1676,10 @@ msgid "Terminal"
 msgstr "מסוף"
 
 #: Menu
+msgid "Terminal (synced panes)"
+msgstr "מסוף (חלוניות מסונכרנות)"
+
+#: Menu
 msgid "Text: Concatenate multiple files"
 msgstr "טקסט: שרשור קבצים מרובים"
 

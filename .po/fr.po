@@ -1676,6 +1676,10 @@ msgid "Terminal"
 msgstr "Terminal"
 
 #: Menu
+msgid "Terminal (synced panes)"
+msgstr "Terminal (volets synchronisés)"
+
+#: Menu
 msgid "Text: Concatenate multiple files"
 msgstr "Texte: Concaténer plusieurs fichiers"
 

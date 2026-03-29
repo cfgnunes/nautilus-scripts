@@ -1676,6 +1676,10 @@ msgid "Terminal"
 msgstr "टर्मिनल"
 
 #: Menu
+msgid "Terminal (synced panes)"
+msgstr "टर्मिनल (सिंक किए गए पैन)"
+
+#: Menu
 msgid "Text: Concatenate multiple files"
 msgstr "पाठ: एकाधिक फ़ाइलें संयोजित करें"
 
