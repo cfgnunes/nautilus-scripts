@@ -404,11 +404,11 @@ msgstr "（无换行）"
 msgid "(No response)"
 msgstr "（无响应）"
 
-msgid "Checksum mismatch."
-msgstr "校验和不匹配。"
+msgid "Checksum error"
+msgstr "校验和错误"
 
-msgid "File does not exist."
-msgstr "文件不存在。"
+msgid "File does not exist"
+msgstr "文件不存在"
 
 msgid "High"
 msgstr "高"

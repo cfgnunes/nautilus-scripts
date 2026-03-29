@@ -403,10 +403,10 @@ msgstr ""
 msgid "(No response)"
 msgstr ""
 
-msgid "Checksum mismatch."
+msgid "Checksum error"
 msgstr ""
 
-msgid "File does not exist."
+msgid "File does not exist"
 msgstr ""
 
 msgid "High"

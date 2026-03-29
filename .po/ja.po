@@ -404,11 +404,11 @@ msgstr "(改行なし)"
 msgid "(No response)"
 msgstr "(応答なし)"
 
-msgid "Checksum mismatch."
-msgstr "チェックサムが一致しません。"
+msgid "Checksum error"
+msgstr "チェックサムエラー"
 
-msgid "File does not exist."
-msgstr "ファイルが存在しません。"
+msgid "File does not exist"
+msgstr "ファイルが存在しません"
 
 msgid "High"
 msgstr "高"

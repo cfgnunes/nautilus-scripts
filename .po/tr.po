@@ -404,11 +404,11 @@ msgstr "(Satır sonu yok)"
 msgid "(No response)"
 msgstr "(Yanıt yok)"
 
-msgid "Checksum mismatch."
-msgstr "Sağlama toplamı uyuşmuyor."
+msgid "Checksum error"
+msgstr "Sağlama toplamı hatası"
 
-msgid "File does not exist."
-msgstr "Dosya mevcut değil."
+msgid "File does not exist"
+msgstr "Dosya mevcut değil"
 
 msgid "High"
 msgstr "Yüksek"

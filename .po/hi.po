@@ -404,11 +404,11 @@ msgstr "(कोई लाइन ब्रेक नहीं)"
 msgid "(No response)"
 msgstr "(कोई प्रतिक्रिया नहीं)"
 
-msgid "Checksum mismatch."
-msgstr "चेकसम बेमेल।"
+msgid "Checksum error"
+msgstr "चेकसम त्रुटि"
 
-msgid "File does not exist."
-msgstr "फ़ाइल मौजूद नहीं है।"
+msgid "File does not exist"
+msgstr "फ़ाइल मौजूद नहीं है"
 
 msgid "High"
 msgstr "उच्च"

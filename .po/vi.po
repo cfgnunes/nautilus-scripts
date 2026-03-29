@@ -404,11 +404,11 @@ msgstr "(Không có xuống dòng)"
 msgid "(No response)"
 msgstr "(Không có phản hồi)"
 
-msgid "Checksum mismatch."
-msgstr "Sai checksum."
+msgid "Checksum error"
+msgstr "Lỗi tổng kiểm tra"
 
-msgid "File does not exist."
-msgstr "Tệp không tồn tại."
+msgid "File does not exist"
+msgstr "Tệp không tồn tại"
 
 msgid "High"
 msgstr "Cao"

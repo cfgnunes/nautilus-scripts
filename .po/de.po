@@ -404,11 +404,11 @@ msgstr "(Kein Zeilenumbruch)"
 msgid "(No response)"
 msgstr "(Keine Antwort)"
 
-msgid "Checksum mismatch."
-msgstr "Prüfsumme stimmt nicht überein."
+msgid "Checksum error"
+msgstr "Prüfsummenfehler"
 
-msgid "File does not exist."
-msgstr "Datei existiert nicht."
+msgid "File does not exist"
+msgstr "Datei existiert nicht"
 
 msgid "High"
 msgstr "Hoch"

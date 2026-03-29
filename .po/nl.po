@@ -404,11 +404,11 @@ msgstr "(geen regel-einde)"
 msgid "(No response)"
 msgstr "(geen antwoord)"
 
-msgid "Checksum mismatch."
-msgstr "De controlesom komt niet overeen."
+msgid "Checksum error"
+msgstr "Controlesomfout"
 
-msgid "File does not exist."
-msgstr "Het bestand bestaat niet."
+msgid "File does not exist"
+msgstr "Het bestand bestaat niet"
 
 msgid "High"
 msgstr "Hoog"

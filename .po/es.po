@@ -404,11 +404,11 @@ msgstr "(Sin salto de línea)"
 msgid "(No response)"
 msgstr "(Sin respuesta)"
 
-msgid "Checksum mismatch."
-msgstr "La suma de verificación no coincide."
+msgid "Checksum error"
+msgstr "Error de suma de verificación"
 
-msgid "File does not exist."
-msgstr "El archivo no existe."
+msgid "File does not exist"
+msgstr "El archivo no existe"
 
 msgid "High"
 msgstr "Alta"

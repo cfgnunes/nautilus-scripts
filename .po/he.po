@@ -404,11 +404,11 @@ msgstr "(אין ירידת שורות)"
 msgid "(No response)"
 msgstr "(אין תגובה)"
 
-msgid "Checksum mismatch."
-msgstr "סכום הביקורת אינו תואם."
+msgid "Checksum error"
+msgstr "שגיאת סכום ביקורת"
 
-msgid "File does not exist."
-msgstr "הקובץ אינו קיים."
+msgid "File does not exist"
+msgstr "הקובץ אינו קיים"
 
 msgid "High"
 msgstr "גבוה"

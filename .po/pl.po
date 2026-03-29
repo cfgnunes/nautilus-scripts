@@ -404,11 +404,11 @@ msgstr "(Brak podziału wiersza)"
 msgid "(No response)"
 msgstr "(Brak odpowiedzi)"
 
-msgid "Checksum mismatch."
-msgstr "Niezgodna suma kontrolna."
+msgid "Checksum error"
+msgstr "Błąd sumy kontrolnej"
 
-msgid "File does not exist."
-msgstr "Plik nie istnieje."
+msgid "File does not exist"
+msgstr "Plik nie istnieje"
 
 msgid "High"
 msgstr "Wysoki"

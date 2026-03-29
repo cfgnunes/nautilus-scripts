@@ -404,11 +404,11 @@ msgstr "(Нет разрыва строки)"
 msgid "(No response)"
 msgstr "(Нет ответа)"
 
-msgid "Checksum mismatch."
-msgstr "Несоответствие контрольной суммы."
+msgid "Checksum error"
+msgstr "Ошибка контрольной суммы"
 
-msgid "File does not exist."
-msgstr "Файл не существует."
+msgid "File does not exist"
+msgstr "Файл не существует"
 
 msgid "High"
 msgstr "Высокий"

@@ -404,11 +404,11 @@ msgstr "(줄 바꿈 없음)"
 msgid "(No response)"
 msgstr "(응답 없음)"
 
-msgid "Checksum mismatch."
-msgstr "체크섬이 일치하지 않습니다."
+msgid "Checksum error"
+msgstr "체크섬 오류"
 
-msgid "File does not exist."
-msgstr "파일이 존재하지 않습니다."
+msgid "File does not exist"
+msgstr "파일이 존재하지 않습니다"
 
 msgid "High"
 msgstr "높음"
