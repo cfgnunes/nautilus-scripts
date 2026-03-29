@@ -35,8 +35,14 @@ _build_tmux_session() {
     dir_1=$(_get_element "$input_files" "1")
 
     cd -- "$dir_1" || exit 1
+    # Create a new tmux session in detached mode.
     tmux new-session -d -s "$session_name"
+    # Enable synchronized panes for the session.
+    tmux setw -t "$session_name" synchronize-panes on
+    # Enable mouse support.
     tmux set-option -g mouse on
+    # Enable keyboard shortcuts for synchronized panes (CTRL+B and '=').
+    tmux bind = setw synchronize-panes
 
     for input_file in $input_files; do
         if [[ $first_session = "true" ]]; then
@@ -48,7 +54,7 @@ _build_tmux_session() {
         fi
     done
 
-    tmux setw -t "$session_name" synchronize-panes on
+    # Select the first pane.
     tmux select-pane -t "$session_name:0.0"
 }
 
