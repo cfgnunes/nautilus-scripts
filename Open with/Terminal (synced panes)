@@ -20,7 +20,7 @@ _main() {
 
 _open_app() {
     local input_files=$1
-    local session_name="script_$$"
+    local session_name="s$$"
 
     _build_tmux_session "$session_name" "$input_files"
     _open_terminal "$session_name"
