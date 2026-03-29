@@ -15,6 +15,13 @@ _main() {
     input_files=$(_get_files "par_type=all; par_max_items=20")
     _unset_global_variables_file_manager
 
+    # Run the main process.
+    _open_app "$input_files"
+}
+
+_open_app() {
+    local input_files=$1
+
     # Check if the first file is a binary file.
     local file_1=""
     file_1=$(_get_element "$input_files" "1")
