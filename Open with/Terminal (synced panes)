@@ -75,7 +75,6 @@ _open_terminal() {
     )
     available_app=$(_get_available_app "apps")
 
-    # Build SSH command, with optional remote path.
     local tmux_cmd="tmux attach-session -t $session_name"
     case "$available_app" in
     ptyxis)
