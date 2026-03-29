@@ -36,6 +36,7 @@ _build_tmux_session() {
 
     cd -- "$dir_1" || exit 1
     tmux new-session -d -s "$session_name"
+    tmux set-option -g mouse on
 
     for input_file in $input_files; do
         if [[ $first_session = "true" ]]; then
