@@ -91,7 +91,7 @@ _main_task() {
     # Step 7: Clean up obsolete local branches.
     # Removes branches that no longer exist in the remote repository.
     # -------------------------------------------------------------------------
-    local skip_branches="desenv|develop|homolog|main|master|prod|ufrn"
+    local skip_branches="desenv|develop|main|master"
     local local_branches""
     local remote_branches=""
     local merged_branches=""
