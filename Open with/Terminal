@@ -64,14 +64,17 @@ _open_app() {
             # Build SSH command, with optional remote path.
             local ssh_cmd="ssh -t $remote_host \"cd $remote_path/; exec bash\""
             case "$available_app" in
+            gnome-terminal | mate-terminal)
+                $available_app -- bash -c "$ssh_cmd" &
+                ;;
             ptyxis)
                 $available_app --new-window -- bash -c "$ssh_cmd" &
                 ;;
-            gnome-terminal | kgx | mate-terminal)
-                $available_app -- bash -c "$ssh_cmd" &
-                ;;
             konsole | xfce4-terminal)
                 $available_app --hold -e "$ssh_cmd" &
+                ;;
+            kitty | foot | alacritty)
+                $available_app -e bash -c "$ssh_cmd" &
                 ;;
             *)
                 # Generic fallback.

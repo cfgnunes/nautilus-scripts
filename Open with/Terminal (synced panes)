@@ -78,14 +78,17 @@ _open_terminal() {
 
     local tmux_cmd="tmux attach-session -t $session_name"
     case "$available_app" in
+    gnome-terminal | mate-terminal)
+        $available_app -- bash -c "$tmux_cmd" &
+        ;;
     ptyxis)
         $available_app --new-window -- bash -c "$tmux_cmd" &
         ;;
-    gnome-terminal | kgx | mate-terminal)
-        $available_app -- bash -c "$tmux_cmd" &
-        ;;
     konsole | xfce4-terminal)
         $available_app --hold -e "$tmux_cmd" &
+        ;;
+    kitty | foot | alacritty)
+        $available_app -e bash -c "$tmux_cmd" &
         ;;
     *)
         # Generic fallback.
