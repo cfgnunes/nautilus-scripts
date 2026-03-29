@@ -25,9 +25,9 @@ _main() {
     # shellcheck disable=SC2001
     std_output=$(sed "s|__MSG_Ok__|$(_i18n 'Ok')|g" <<<"$std_output")
     # shellcheck disable=SC2001
-    std_output=$(sed "s|__MSG_Mismatch__|$(_i18n 'Checksum mismatch.')|g" <<<"$std_output")
+    std_output=$(sed "s|__MSG_Mismatch__|$(_i18n 'Checksum error')|g" <<<"$std_output")
     # shellcheck disable=SC2001
-    std_output=$(sed "s|__MSG_NotFound__|$(_i18n 'File does not exist.')|g" <<<"$std_output")
+    std_output=$(sed "s|__MSG_NotFound__|$(_i18n 'File does not exist')|g" <<<"$std_output")
 
     _display_list_box "$std_output" "par_item_name=$(_i18n 'files'); par_columns='--column:$(_i18n 'Status'),--column:$(_i18n 'File')'; par_action=open_location; par_check_type=checkbox"
 }
