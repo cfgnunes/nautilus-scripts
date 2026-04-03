@@ -6,7 +6,7 @@
 # Author: Cristiano Fraga G. Nunes
 # Repository: https://github.com/cfgnunes/nautilus-scripts
 # License: MIT License
-# Version: 30.15
+# Version: 30.15.1
 # =============================================================================
 
 # This file contains functions and constants sourced by scripts.
