@@ -728,6 +728,15 @@ _check_dependencies() {
         fi
     fi
 
+    if _command_exists "nautilus"; then
+        if _command_exists "apt-get"; then packages+="python3-nautilus "; fi
+        if _command_exists "dnf"; then packages+="nautilus-python "; fi
+        if _command_exists "pacman"; then packages+="nautilus-python "; fi
+        if _command_exists "zypper"; then packages+="python3-nautilus "; fi
+        if _command_exists "rpm-ostree"; then packages+="nautilus-python "; fi
+        if _command_exists "xbps-install"; then packages+="nautilus-python "; fi
+    fi
+
     if _command_exists "nix-env"; then
         # Package manager 'nix-env': For Nix-based systems.
         _command_exists "pgrep" || packages+="procps "
@@ -1211,7 +1220,7 @@ _install_actions() {
     _echo_info "> ($FILE_MANAGER) $(_i18n 'Installing actions in the context menu...')"
 
     case "$FILE_MANAGER" in
-    "nautilus") _create_links "$INSTALL_HOME/.local/share/nautilus/scripts" ;;
+    "nautilus") _install_actions_nautilus ;;
     "caja") _create_links "$INSTALL_HOME/.config/caja/scripts" ;;
     "nemo") _create_links "$INSTALL_HOME/.local/share/nemo/scripts" ;;
     "dolphin") _install_actions_kio_servicemenus ;;
@@ -1219,6 +1228,16 @@ _install_actions() {
     "thunar") _install_actions_thunar ;;
     "krusader") _install_actions_kio_servicemenus ;;
     esac
+}
+
+_install_actions_nautilus() {
+    _create_links "$INSTALL_HOME/.local/share/nautilus/scripts"
+    
+    local python_ext_path="$INSTALL_HOME/.local/share/nautilus-python/extensions"
+    mkdir --parents -- "$python_ext_path"
+    if [[ -f "$SCRIPT_DIR/.helpers/dynamic_scripts.py" ]]; then
+        cp -- "$SCRIPT_DIR/.helpers/dynamic_scripts.py" "$python_ext_path/" 2>/dev/null || true
+    fi
 }
 
 _install_actions_kio_servicemenus() {
