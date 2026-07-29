@@ -322,7 +322,7 @@ msgstr ""
 msgid "The selected items are identical."
 msgstr ""
 
-msgid "The selected images has same pixel values."
+msgid "The selected images have same pixel values."
 msgstr ""
 
 msgid "MIME"

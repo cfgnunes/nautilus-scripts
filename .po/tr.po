@@ -323,7 +323,7 @@ msgstr "Hiçbir dizin seçilmedi!"
 msgid "The selected items are identical."
 msgstr "Seçili öğeler aynı."
 
-msgid "The selected images has same pixel values."
+msgid "The selected images have same pixel values."
 msgstr "Seçili görüntüler aynı piksel değerlerine sahip."
 
 msgid "MIME"

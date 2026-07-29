@@ -323,7 +323,7 @@ msgstr "कोई निर्देशिका चयनित नहीं �
 msgid "The selected items are identical."
 msgstr "चुने गए आइटम समान हैं।"
 
-msgid "The selected images has same pixel values."
+msgid "The selected images have same pixel values."
 msgstr "चुनी गई छवियों के पिक्सेल मान समान हैं।"
 
 msgid "MIME"

@@ -323,7 +323,7 @@ msgstr "Nie wybrano żadnych katalogów!"
 msgid "The selected items are identical."
 msgstr "Wybrane elementy są identyczne."
 
-msgid "The selected images has same pixel values."
+msgid "The selected images have same pixel values."
 msgstr "Wybrane obrazy mają te same wartości pikseli."
 
 msgid "MIME"

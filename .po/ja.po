@@ -323,7 +323,7 @@ msgstr "ディレクトリが選択されていません！"
 msgid "The selected items are identical."
 msgstr "選択したアイテムは同一です。"
 
-msgid "The selected images has same pixel values."
+msgid "The selected images have same pixel values."
 msgstr "選択した画像のピクセル値は同じです。"
 
 msgid "MIME"

@@ -323,7 +323,7 @@ msgstr "לא נבחרו ספריות!"
 msgid "The selected items are identical."
 msgstr "הפריטים שנבחרו זהים."
 
-msgid "The selected images has same pixel values."
+msgid "The selected images have same pixel values."
 msgstr "לתמונות שנבחרו יש ערכי פיקסלים זהים."
 
 msgid "MIME"

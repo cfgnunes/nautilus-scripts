@@ -323,7 +323,7 @@ msgstr "Er zijn geen mappen geselecteerd!"
 msgid "The selected items are identical."
 msgstr "De gekozen items zijn identiek."
 
-msgid "The selected images has same pixel values."
+msgid "The selected images have same pixel values."
 msgstr "De gekozen items hebben dezelfde pixelwaarden."
 
 msgid "MIME"

@@ -323,7 +323,7 @@ msgstr "未选择任何目录！"
 msgid "The selected items are identical."
 msgstr "所选项目完全相同。"
 
-msgid "The selected images has same pixel values."
+msgid "The selected images have same pixel values."
 msgstr "所选图像具有相同的像素值。"
 
 msgid "MIME"

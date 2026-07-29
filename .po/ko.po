@@ -323,7 +323,7 @@ msgstr "선택된 디렉토리가 없습니다!"
 msgid "The selected items are identical."
 msgstr "선택한 항목이 동일합니다."
 
-msgid "The selected images has same pixel values."
+msgid "The selected images have same pixel values."
 msgstr "선택한 이미지의 픽셀 값이 동일합니다."
 
 msgid "MIME"
