@@ -616,7 +616,7 @@ msgid "PDF: Security"
 msgstr "PDF: Segurança"
 
 #: Menu
-msgid "PDF: Multiple-page layout"
+msgid "PDF: Multi-page layout"
 msgstr "PDF: Layout de múltiplas páginas"
 
 #: Menu
