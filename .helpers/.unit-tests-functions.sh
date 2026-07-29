@@ -854,6 +854,7 @@ __run_str_human_readable_path() {
 
     if [[ -n "${HOME:-}" ]]; then
         input="$HOME/Documents/file.txt"
+        # shellcheck disable=SC2088
         expected_output="~/Documents/file.txt"
         output=$(_str_human_readable_path "$input")
         __test_equal "Home directory shortened." "$expected_output" "$output"
