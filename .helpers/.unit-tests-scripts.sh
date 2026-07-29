@@ -1272,19 +1272,19 @@ _main() {
     __test_file_nonempty "$output_file (optimized).svg"
     __test_file_empty "$std_output"
 
-    script_test="Image/Image: SVG files/SVG: Replace fonts to Charter"
+    script_test="Image/Image: SVG files/SVG: Replace fonts with Charter"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file (font Charter).svg"
     __test_file_empty "$std_output"
 
-    script_test="Image/Image: SVG files/SVG: Replace fonts to Helvetica"
+    script_test="Image/Image: SVG files/SVG: Replace fonts with Helvetica"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file (font Helvetica).svg"
     __test_file_empty "$std_output"
 
-    script_test="Image/Image: SVG files/SVG: Replace fonts to Times"
+    script_test="Image/Image: SVG files/SVG: Replace fonts with Times"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file (font Times).svg"

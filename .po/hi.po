@@ -1664,15 +1664,15 @@ msgid "SVG: Optimize"
 msgstr "SVG: अनुकूलित करें"
 
 #: Menu
-msgid "SVG: Replace fonts to Charter"
+msgid "SVG: Replace fonts with Charter"
 msgstr "SVG: फ़ॉन्ट्स को चार्टर से बदलें"
 
 #: Menu
-msgid "SVG: Replace fonts to Helvetica"
+msgid "SVG: Replace fonts with Helvetica"
 msgstr "SVG: फ़ॉन्ट्स को हेल्वेटिका से बदलें"
 
 #: Menu
-msgid "SVG: Replace fonts to Times"
+msgid "SVG: Replace fonts with Times"
 msgstr "SVG: फ़ॉन्ट्स को टाइम्स से बदलें"
 
 #: Menu

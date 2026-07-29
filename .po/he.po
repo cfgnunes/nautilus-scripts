@@ -1664,15 +1664,15 @@ msgid "SVG: Optimize"
 msgstr "SVG: מיטוב"
 
 #: Menu
-msgid "SVG: Replace fonts to Charter"
+msgid "SVG: Replace fonts with Charter"
 msgstr "קובץ SVG: החלפת הגופנים לגופן Charter"
 
 #: Menu
-msgid "SVG: Replace fonts to Helvetica"
+msgid "SVG: Replace fonts with Helvetica"
 msgstr "קובץ SVG: החלפת הגופנים לגופן Helvetica"
 
 #: Menu
-msgid "SVG: Replace fonts to Times"
+msgid "SVG: Replace fonts with Times"
 msgstr "קובץ SVG: החלפת הגופנים לגופן Times"
 
 #: Menu

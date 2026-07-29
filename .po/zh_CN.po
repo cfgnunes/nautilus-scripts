@@ -1664,15 +1664,15 @@ msgid "SVG: Optimize"
 msgstr "SVG：优化"
 
 #: Menu
-msgid "SVG: Replace fonts to Charter"
+msgid "SVG: Replace fonts with Charter"
 msgstr "SVG：替换字体为Charter"
 
 #: Menu
-msgid "SVG: Replace fonts to Helvetica"
+msgid "SVG: Replace fonts with Helvetica"
 msgstr "SVG：替换字体为Helvetica"
 
 #: Menu
-msgid "SVG: Replace fonts to Times"
+msgid "SVG: Replace fonts with Times"
 msgstr "SVG：替换字体为Times"
 
 #: Menu

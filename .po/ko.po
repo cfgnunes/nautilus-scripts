@@ -1664,15 +1664,15 @@ msgid "SVG: Optimize"
 msgstr "SVG: 최적화"
 
 #: Menu
-msgid "SVG: Replace fonts to Charter"
+msgid "SVG: Replace fonts with Charter"
 msgstr "SVG: 글꼴을 Charter로 변경"
 
 #: Menu
-msgid "SVG: Replace fonts to Helvetica"
+msgid "SVG: Replace fonts with Helvetica"
 msgstr "SVG: 글꼴을 Helvetica로 변경"
 
 #: Menu
-msgid "SVG: Replace fonts to Times"
+msgid "SVG: Replace fonts with Times"
 msgstr "SVG: 글꼴을 Times로 변경"
 
 #: Menu
