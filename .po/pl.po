@@ -1429,7 +1429,7 @@ msgstr "PDF: Znajdź nielinearyzowane PDF"
 
 #: Menu
 msgid "PDF: Find non-searchable PDFs"
-str "PDF: Znajdź nieszukane PDF"
+msgstr "PDF: Znajdź nieszukalne PDF"
 
 #: Menu
 msgid "PDF: Find password-protected PDFs"

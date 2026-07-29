@@ -135,10 +135,10 @@ msgid "No default application is set for the type:"
 msgstr "לא נבחר יישום ברירת מחדל לסוג:"
 
 msgid "Could not find an application for the MIME type:"
-msgstr "לא היה ניתן למצוא קובץ אצווה לפתיחת סוג הקובץ:"
+msgstr "לא ניתן למצוא יישום לפתיחת סוג MIME:"
 
 msgid "Batch mode detected."
-msgstr "זוהה מצב כמותי."
+msgstr "זוהה מצב אצווה."
 
 msgid "Each file inside this directory will be processed individually."
 msgstr "כל קובץ בתיקייה זו יעבור עיבוד בנפרד."
@@ -300,7 +300,7 @@ msgid "Item"
 msgstr "פריטים"
 
 msgid "Octal"
-msgstr ""
+msgstr "אוקטלי"
 
 msgid "Type"
 msgstr "סוג"
@@ -1421,23 +1421,23 @@ msgstr "קובץ PDF: חילוץ תמונות"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"
-msgstr "קובץ PDF: הצגת קובצי PDF עם הערות"
+msgstr "קובץ PDF: איתור קובצי PDF עם הערות"
 
 #: Menu
 msgid "PDF: Find non-linearized PDFs"
-msgstr "קובץ PDF: הצגת קובצי PDF שאינם לינאריים"
+msgstr "קובץ PDF: איתור קובצי PDF שאינם לינאריים"
 
 #: Menu
 msgid "PDF: Find non-searchable PDFs"
-msgstr "קובץ PDF: הצגת קובצי PDF שלא ניתן לאתר"
+msgstr "קובץ PDF: איתור קובצי PDF שאינם ניתנים לחיפוש"
 
 #: Menu
 msgid "PDF: Find password-protected PDFs"
-msgstr "קובץ PDF: הצגת קובצי PDF מוגנים בסיסמה"
+msgstr "קובץ PDF: איתור קובצי PDF מוגנים בסיסמה"
 
 #: Menu
 msgid "PDF: Find signed PDFs"
-msgstr "קובץ SVG: איתור קובצי PDF חתומים"
+msgstr "קובץ PDF: איתור קובצי PDF חתומים"
 
 #: Menu
 msgid "PDF: Layout (landscape, 1x2)"
@@ -1573,7 +1573,7 @@ msgstr "שינוי שם: הסרת סימנים דיאקריטיים מהאותי
 
 #: Menu
 msgid "Rename: Remove parenthetical blocks"
-msgstr ""
+msgstr "שינוי שם: הסרת תוכן בסוגריים"
 
 #: Menu
 msgid "Rename: Change spaces to dashes"

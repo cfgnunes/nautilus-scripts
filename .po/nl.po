@@ -138,7 +138,7 @@ msgid "Could not find an application for the MIME type:"
 msgstr "Er is geen programma aangetroffen dat dit mimetype kan openen:"
 
 msgid "Batch mode detected."
-msgstr "Reeks aangetroffen."
+msgstr "Batchmodus gedetecteerd."
 
 msgid "Each file inside this directory will be processed individually."
 msgstr "Ieder bestand in deze map zal individueel worden behandeld."
@@ -1573,7 +1573,7 @@ msgstr "Naam wĳzigen: accenten wissen"
 
 #: Menu
 msgid "Rename: Remove parenthetical blocks"
-msgstr "Naam wĳzigen: vierkante haken wissen"
+msgstr "Naam wĳzigen: haakjes wissen"
 
 #: Menu
 msgid "Rename: Change spaces to dashes"
