@@ -1896,11 +1896,11 @@ msgid "Install keyboard accelerators"
 msgstr "התקנת קיצורי מקשים"
 
 #: install.sh
-msgid "Close the file manager to reload configurations"
+msgid "Close the file manager to reload configuration"
 msgstr "יש לסגור את מנהל הקבצים בשביל לטעון מחדש את הגדרות התצורה"
 
 #: install.sh
-msgid "Add shortcuts to the application menu"
+msgid "Add shortcuts in the application menu"
 msgstr "הוספת קיצורים לתפריט היישומים"
 
 #: install.sh
@@ -1952,7 +1952,7 @@ msgid "Scripts"
 msgstr "סקריפטים להרצה"
 
 #: install.sh
-msgid "Creating shortcuts to the application menu..."
+msgid "Creating shortcuts in the application menu..."
 msgstr "הקיצורים נוצרים בתפריט היישומים..."
 
 #: install.sh

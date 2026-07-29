@@ -1896,11 +1896,11 @@ msgid "Install keyboard accelerators"
 msgstr "कीबोर्ड एक्सेलेरेटर इंस्टॉल करें"
 
 #: install.sh
-msgid "Close the file manager to reload configurations"
+msgid "Close the file manager to reload configuration"
 msgstr "कॉन्फ़िगरेशन पुनः लोड करने के लिए फ़ाइल प्रबंधक बंद करें"
 
 #: install.sh
-msgid "Add shortcuts to the application menu"
+msgid "Add shortcuts in the application menu"
 msgstr "एप्लिकेशन मेनू में शॉर्टकट जोड़ें"
 
 #: install.sh
@@ -1952,7 +1952,7 @@ msgid "Scripts"
 msgstr "स्क्रिप्ट"
 
 #: install.sh
-msgid "Creating shortcuts to the application menu..."
+msgid "Creating shortcuts in the application menu..."
 msgstr "एप्लिकेशन मेनू के लिए शॉर्टकट बना रहा है..."
 
 #: install.sh

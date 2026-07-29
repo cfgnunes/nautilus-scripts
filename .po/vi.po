@@ -1896,11 +1896,11 @@ msgid "Install keyboard accelerators"
 msgstr "Cài đặt phím tắt bàn phím"
 
 #: install.sh
-msgid "Close the file manager to reload configurations"
+msgid "Close the file manager to reload configuration"
 msgstr "Đóng trình quản lý tệp để nạp lại cấu hình"
 
 #: install.sh
-msgid "Add shortcuts to the application menu"
+msgid "Add shortcuts in the application menu"
 msgstr "Thêm phím tắt vào menu ứng dụng"
 
 #: install.sh
@@ -1952,7 +1952,7 @@ msgid "Scripts"
 msgstr "Các script"
 
 #: install.sh
-msgid "Creating shortcuts to the application menu..."
+msgid "Creating shortcuts in the application menu..."
 msgstr "Đang tạo phím tắt vào menu ứng dụng..."
 
 #: install.sh

@@ -1896,11 +1896,11 @@ msgid "Install keyboard accelerators"
 msgstr "키보드 가속기 설치"
 
 #: install.sh
-msgid "Close the file manager to reload configurations"
+msgid "Close the file manager to reload configuration"
 msgstr "구성을 다시 로드하기 위해 파일 관리자 닫기"
 
 #: install.sh
-msgid "Add shortcuts to the application menu"
+msgid "Add shortcuts in the application menu"
 msgstr "응용 프로그램 메뉴에 바로 가기 추가"
 
 #: install.sh
@@ -1952,7 +1952,7 @@ msgid "Scripts"
 msgstr "스크립트"
 
 #: install.sh
-msgid "Creating shortcuts to the application menu..."
+msgid "Creating shortcuts in the application menu..."
 msgstr "응용 프로그램 메뉴에 바로 가기 생성 중..."
 
 #: install.sh

@@ -1896,11 +1896,11 @@ msgid "Install keyboard accelerators"
 msgstr "Installer les raccourcis clavier"
 
 #: install.sh
-msgid "Close the file manager to reload configurations"
+msgid "Close the file manager to reload configuration"
 msgstr "Fermez le gestionnaire de fichiers pour recharger les configurations"
 
 #: install.sh
-msgid "Add shortcuts to the application menu"
+msgid "Add shortcuts in the application menu"
 msgstr "Ajouter des raccourcis au menu d'application"
 
 #: install.sh
@@ -1952,7 +1952,7 @@ msgid "Scripts"
 msgstr "Scripts"
 
 #: install.sh
-msgid "Creating shortcuts to the application menu..."
+msgid "Creating shortcuts in the application menu..."
 msgstr "Création des raccourcis vers le menu d'application..."
 
 #: install.sh

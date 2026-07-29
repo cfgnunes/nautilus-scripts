@@ -1896,11 +1896,11 @@ msgid "Install keyboard accelerators"
 msgstr "キーボードアクセラレータをインストール"
 
 #: install.sh
-msgid "Close the file manager to reload configurations"
+msgid "Close the file manager to reload configuration"
 msgstr "設定を再読み込みするためにファイルマネージャーを閉じる"
 
 #: install.sh
-msgid "Add shortcuts to the application menu"
+msgid "Add shortcuts in the application menu"
 msgstr "アプリケーションメニューにショートカットを追加"
 
 #: install.sh
@@ -1952,7 +1952,7 @@ msgid "Scripts"
 msgstr "スクリプト"
 
 #: install.sh
-msgid "Creating shortcuts to the application menu..."
+msgid "Creating shortcuts in the application menu..."
 msgstr "アプリケーションメニューへのショートカットを作成中..."
 
 #: install.sh

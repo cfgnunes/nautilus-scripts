@@ -1896,11 +1896,11 @@ msgid "Install keyboard accelerators"
 msgstr "安装键盘加速器"
 
 #: install.sh
-msgid "Close the file manager to reload configurations"
+msgid "Close the file manager to reload configuration"
 msgstr "关闭文件管理器以重新加载配置"
 
 #: install.sh
-msgid "Add shortcuts to the application menu"
+msgid "Add shortcuts in the application menu"
 msgstr "添加快捷方式到应用程序菜单"
 
 #: install.sh
@@ -1952,7 +1952,7 @@ msgid "Scripts"
 msgstr "脚本"
 
 #: install.sh
-msgid "Creating shortcuts to the application menu..."
+msgid "Creating shortcuts in the application menu..."
 msgstr "正在创建应用程序菜单的快捷方式..."
 
 #: install.sh

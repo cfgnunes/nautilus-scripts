@@ -1896,11 +1896,11 @@ msgid "Install keyboard accelerators"
 msgstr "Sneltoetsen vastleggen"
 
 #: install.sh
-msgid "Close the file manager to reload configurations"
+msgid "Close the file manager to reload configuration"
 msgstr "Sluit de bestandsbeheerder om de instellingen te herladen"
 
 #: install.sh
-msgid "Add shortcuts to the application menu"
+msgid "Add shortcuts in the application menu"
 msgstr "Snelkoppelingen toevoegen aan toepassingsmenu"
 
 #: install.sh
@@ -1952,7 +1952,7 @@ msgid "Scripts"
 msgstr "Scripts"
 
 #: install.sh
-msgid "Creating shortcuts to the application menu..."
+msgid "Creating shortcuts in the application menu..."
 msgstr "Bezig met toevoegen van snelkoppelingen…"
 
 #: install.sh

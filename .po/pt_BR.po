@@ -1896,11 +1896,11 @@ msgid "Install keyboard accelerators"
 msgstr "Instalar teclas de atalho"
 
 #: install.sh
-msgid "Close the file manager to reload configurations"
+msgid "Close the file manager to reload configuration"
 msgstr "Fechar o gerenciador de arquivos para recarregar configurações"
 
 #: install.sh
-msgid "Add shortcuts to the application menu"
+msgid "Add shortcuts in the application menu"
 msgstr "Adicionar atalhos no menu de aplicativos"
 
 #: install.sh
@@ -1952,7 +1952,7 @@ msgid "Scripts"
 msgstr "Scripts"
 
 #: install.sh
-msgid "Creating shortcuts to the application menu..."
+msgid "Creating shortcuts in the application menu..."
 msgstr "Criando atalhos no menu de aplicativos..."
 
 #: install.sh

@@ -179,8 +179,8 @@ _main() {
         "$(_i18n 'Check for basic dependencies')"
         "$(_i18n 'Remove previously installed scripts')"
         "$(_i18n 'Install keyboard accelerators')"
-        "$(_i18n 'Close the file manager to reload configurations')"
-        "$(_i18n 'Add shortcuts to the application menu')"
+        "$(_i18n 'Close the file manager to reload configuration')"
+        "$(_i18n 'Add shortcuts in the application menu')"
         "$(_i18n 'Install Homebrew (optional)')"
         "$(_i18n 'Choose which script categories to install')"
     )
@@ -654,8 +654,8 @@ _get_parameters_command_line() {
             echo "  -K, --no-install-shortcuts      Do not install keyboard accelerators."
             echo "  -n, --non-interactive           Run without prompts."
             echo "  -q, --quiet                     Suppress all output (silent mode)."
-            echo "  -s, --install-app-shortcuts     Add shortcuts to the application menu."
-            echo "  -S, --no-install-app-shortcuts  Do not add shortcuts to the application menu."
+            echo "  -s, --install-app-shortcuts     Add shortcuts in the application menu."
+            echo "  -S, --no-install-app-shortcuts  Do not add shortcuts in the application menu."
             echo "  -h, --help                      Show this help message and exit."
             echo
             exit 0
@@ -1115,7 +1115,7 @@ _install_application_shortcuts() {
     local submenu=""
     local app_menus_path="$INSTALL_HOME/$INSTALL_APPS_SHORTCUTS_PATH"
 
-    _echo_info "> $(_i18n 'Creating shortcuts to the application menu...')"
+    _echo_info "> $(_i18n 'Creating shortcuts in the application menu...')"
 
     # Remove previously installed '.desktop' files.
     rm -rf -- "$app_menus_path" 2>/dev/null
