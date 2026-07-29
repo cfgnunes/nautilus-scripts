@@ -1572,7 +1572,7 @@ msgid "Rename: Remove accents"
 msgstr "Đổi tên: Xóa dấu"
 
 #: Menu
-msgid "Rename: Remove parentheses blocks"
+msgid "Rename: Remove parenthetical blocks"
 msgstr "Đổi tên: Xóa nội dung trong ngoặc"
 
 #: Menu

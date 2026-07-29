@@ -57,39 +57,39 @@ While numerous *Nautilus Scripts* are available for file managers on the web, ma
 
 ## Keyboard accelerators
 
-| Key                 | Action                            |
-| ------------------- | --------------------------------- |
-| `F4`                | Terminal                          |
-| `F7`                | Code editor                       |
-| `F12`               | Disk usage analyzer               |
-| `<Control>E`        | Extract here                      |
-| `<Control><Alt>G`   | Compress to 'tar.gz'              |
-| `<Control><Alt>S`   | Compress to 'tar.zst'             |
-| `<Control><Alt>X`   | Compress to 'tar.xz'              |
-| `<Control><Alt>Z`   | Compress to 'zip'                 |
-| `<Control><Alt>I`   | Show files information            |
-| `<Control><Alt>M`   | Show files MIME type              |
-| `<Control><Alt>0`   | Find empty files                  |
-| `<Control><Alt>J`   | Find junk files                   |
-| `<Control><Alt>U`   | Find duplicate files              |
-| `<Control><Alt>H`   | List hidden files                 |
-| `<Control><Alt>P`   | List permissions and owners       |
-| `<Control><Alt>B`   | List largest files                |
-| `<Control><Alt>R`   | List recent files                 |
-| `<Control><Alt>W`   | Text: List issues                 |
-| `<Control><Alt>C`   | Copy file names                   |
-| `<Control><Alt>V`   | Paste clipboard content           |
-| `<Control><Shift>V` | Paste as symbolic link            |
-| `<Control><Shift>B` | Create backup (via Rsync)         |
-| `<Control><Shift>C` | Compare items                     |
-| `<Control><Shift>O` | Open item location                |
-| `<Control><Shift>H` | Compute all checksums             |
-| `<Control><Shift>E` | Find empty directories            |
-| `<Control><Shift>P` | Rename: Remove parentheses blocks |
-| `<Control><Shift>G` | Git: Clone URLs                   |
-| `<Control><Shift>R` | Git: Reset and pull               |
-| `<Control><Shift>X` | URL: Download file                |
-| `<Shift><Alt>V`     | Create hard link here             |
+| Key                 | Action                              |
+| ------------------- | ----------------------------------- |
+| `F4`                | Terminal                            |
+| `F7`                | Code editor                         |
+| `F12`               | Disk usage analyzer                 |
+| `<Control>E`        | Extract here                        |
+| `<Control><Alt>G`   | Compress to 'tar.gz'                |
+| `<Control><Alt>S`   | Compress to 'tar.zst'               |
+| `<Control><Alt>X`   | Compress to 'tar.xz'                |
+| `<Control><Alt>Z`   | Compress to 'zip'                   |
+| `<Control><Alt>I`   | Show files information              |
+| `<Control><Alt>M`   | Show files MIME type                |
+| `<Control><Alt>0`   | Find empty files                    |
+| `<Control><Alt>J`   | Find junk files                     |
+| `<Control><Alt>U`   | Find duplicate files                |
+| `<Control><Alt>H`   | List hidden files                   |
+| `<Control><Alt>P`   | List permissions and owners         |
+| `<Control><Alt>B`   | List largest files                  |
+| `<Control><Alt>R`   | List recent files                   |
+| `<Control><Alt>W`   | Text: List issues                   |
+| `<Control><Alt>C`   | Copy file names                     |
+| `<Control><Alt>V`   | Paste clipboard content             |
+| `<Control><Shift>V` | Paste as symbolic link              |
+| `<Control><Shift>B` | Create backup (via Rsync)           |
+| `<Control><Shift>C` | Compare items                       |
+| `<Control><Shift>O` | Open item location                  |
+| `<Control><Shift>H` | Compute all checksums               |
+| `<Control><Shift>E` | Find empty directories              |
+| `<Control><Shift>P` | Rename: Remove parenthetical blocks |
+| `<Control><Shift>G` | Git: Clone URLs                     |
+| `<Control><Shift>R` | Git: Reset and pull                 |
+| `<Control><Shift>X` | URL: Download file                  |
+| `<Shift><Alt>V`     | Create hard link here               |
 
 ## Compatibility
 

@@ -1572,7 +1572,7 @@ msgid "Rename: Remove accents"
 msgstr "Naam wĳzigen: accenten wissen"
 
 #: Menu
-msgid "Rename: Remove parentheses blocks"
+msgid "Rename: Remove parenthetical blocks"
 msgstr "Naam wĳzigen: vierkante haken wissen"
 
 #: Menu

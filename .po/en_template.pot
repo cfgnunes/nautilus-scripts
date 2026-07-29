@@ -1571,7 +1571,7 @@ msgid "Rename: Remove accents"
 msgstr ""
 
 #: Menu
-msgid "Rename: Remove parentheses blocks"
+msgid "Rename: Remove parenthetical blocks"
 msgstr ""
 
 #: Menu

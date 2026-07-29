@@ -1572,7 +1572,7 @@ msgid "Rename: Remove accents"
 msgstr "名前変更：アクセント記号を削除"
 
 #: Menu
-msgid "Rename: Remove parentheses blocks"
+msgid "Rename: Remove parenthetical blocks"
 msgstr "名前変更：括弧内の文字を削除"
 
 #: Menu
