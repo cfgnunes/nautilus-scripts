@@ -1122,7 +1122,7 @@ _directory_push() {
 #   This function filters a list of files or directories.
 #
 # Parameters:
-#   $1 (input_files): A space-separated string containing file or
+#   $1 (input_files): A field-separated string containing file or
 #      directory paths to filter. These paths are passed to the 'find'
 #      command.
 #   $2 (par_type): A string specifying the type of file to search for.
@@ -1920,7 +1920,7 @@ _display_select_box() {
     # Get the system limit for arguments.
     local arg_max=""
     local msg_size=""
-    local safet_margin=65536 # Reserve space for extra args.
+    local safe_margin=65536 # Reserve space for extra args.
     arg_max=$(getconf "ARG_MAX")
     msg_size=$(printf "%s" "$list" | wc -c)
 
@@ -1930,7 +1930,7 @@ _display_select_box() {
     btn_cancel="$(_i18n 'Cancel')"
 
     _display_lock
-    if ((msg_size > arg_max - safet_margin)); then
+    if ((msg_size > arg_max - safe_margin)); then
         list=$(tr "$FIELD_SEPARATOR" "\n" <<<"$list")
 
         # HACK: Workaround for '--list'. Use stdin instead of passing
@@ -2593,8 +2593,9 @@ _is_file_manager_session() {
 #
 # Description:
 #   This function checks whether the script is running in a graphical user
-#   interface (GUI) session. It does so by checking if the 'DISPLAY'
-#   environment variable is set, which is typically present in GUI sessions.
+#   interface (GUI) session. It does so by checking if the 'DISPLAY' or
+#   'WAYLAND_DISPLAY' environment variable is set, which is typically present
+#   in GUI sessions.
 #
 # Returns:
 #   0 (true): If is a GUI session.
@@ -3105,7 +3106,7 @@ _validate_file_mime() {
 #   each file.
 #
 # Parameters:
-#   $1 (input_files): A space-separated string containing the paths of the
+#   $1 (input_files): A field-separated string containing the paths of the
 #      files to validate. These files will be checked for the MIME type
 #      pattern.
 #   $2 (par_select_mime): Optional. The MIME type pattern (or regular
@@ -3396,7 +3397,7 @@ _get_output_filename() {
 #   manager.
 #
 # Parameters:
-#   $1 (items): A space-separated list of file or directory paths whose
+#   $1 (items): A field-separated list of file or directory paths whose
 #      locations will be opened. Paths can be relative or absolute.
 #   $2 (resolve_links): A boolean-like string ('true' or 'false') indicating
 #      whether symbolic links in the provided paths should be resolved to their
@@ -3417,7 +3418,11 @@ _open_items_locations() {
     local working_dir=""
     working_dir=$(_get_working_directory)
     if [[ -n "$working_dir" ]]; then
+        # Convert the list of items to a newline-separated list and
+        # restore the absolute paths.
+        items=$(tr "$FIELD_SEPARATOR" "\n" <<<"$items")
         items=$(sed "s|^\(\./\)\?\([^/].*\)|$working_dir/\2|" <<<"$items")
+        items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$items")
     fi
 
     # Prepare items to be opened by the file manager.
@@ -3473,7 +3478,7 @@ _open_items_locations() {
 #   This function opens a list of URLs in the system's default web browser.
 #
 # Parameters:
-#   $1 (urls): A space-separated list of URLs to be opened. Each URL
+#   $1 (urls): A field-separated list of URLs to be opened. Each URL
 #      should be a valid web address (e.g., "http://example.com").
 _open_urls() {
     local urls=$1
