@@ -124,8 +124,8 @@ _compare_hexa() {
     # Convert the binary files into hexadecimal format for comparison.
     local file_1_hex=""
     local file_2_hex=""
-    file_1_hex="$TEMP_DIR_TASK/$(basename -- "$file_1")"
-    file_2_hex="$TEMP_DIR_TASK/$(basename -- "$file_2")"
+    file_1_hex="$TEMP_DIR_TASK/1_$(basename -- "$file_1")"
+    file_2_hex="$TEMP_DIR_TASK/2_$(basename -- "$file_2")"
     xxd -c "$cols" "$file_1" "$file_1_hex"
     xxd -c "$cols" "$file_2" "$file_2_hex"
 
@@ -221,7 +221,7 @@ _compare_images() {
     # Check if the two images have identical pixel values.
     if __cmd_magick_compare -metric AE -- "$file_1" "$file_2" null: &>/dev/null; then
         local msg=""
-        msg="$(_i18n 'The selected images has same pixel values.')"
+        msg="$(_i18n 'The selected images have same pixel values.')"
         _display_info_box "$msg"
         _exit_script
     fi
