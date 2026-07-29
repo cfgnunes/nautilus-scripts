@@ -190,6 +190,7 @@ __run_source_common_functions() {
     __test_equal "Check GUI_BOX_WIDTH." "900" "$GUI_BOX_WIDTH"
     __test_equal "Check ACCESSED_RECENTLY_LINKS_TO_KEEP." "10" \
         "$ACCESSED_RECENTLY_LINKS_TO_KEEP"
+    # shellcheck disable=SC2153
     __test_path_exists "Check TEMP_DIR exists." "true" "$TEMP_DIR"
     __test_path_exists "Check TEMP_DIR_LOGS exists." "true" "$TEMP_DIR_LOGS"
     __test_path_exists "Check TEMP_DIR_TASK exists." "true" "$TEMP_DIR_TASK"
@@ -1137,10 +1138,11 @@ EOF
 __run_get_max_procs() {
     local output=""
     local expected_min=1
+    local result="false"
 
     output=$(_get_max_procs)
-    __test_equal "Returns a positive integer." "true" \
-        "$(((output >= expected_min)) && echo true || echo false)"
+    ((output >= expected_min)) && result="true"
+    __test_equal "Returns a positive integer." "true" "$result"
 }
 
 __run_logs_consolidate() {
