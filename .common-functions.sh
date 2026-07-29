@@ -744,7 +744,7 @@ _deps_install_packages() {
     fi
 
     local msg=""
-    msg="$(_i18n 'Installing the packages. Please, wait...')"
+    msg="$(_i18n 'Installing the packages. Please wait...')"
     _display_wait_box_message "$msg" "0"
 
     # Iterate over each detected package manager.
@@ -2118,7 +2118,7 @@ _display_password_box_define() {
 
     # Check if '$password' is not empty.
     if [[ -z "$password" ]]; then
-        msg="$(_i18n 'The password can not be empty!')"
+        msg="$(_i18n 'The password cannot be empty!')"
         _display_error_box "$msg"
         return 1
     fi
@@ -2276,7 +2276,7 @@ _display_result_box() {
 _display_wait_box() {
     local open_delay=${1:-"2"}
     local msg=""
-    msg="$(_i18n 'Running the task. Please, wait...')"
+    msg="$(_i18n 'Running the task. Please wait...')"
 
     _display_wait_box_message "$msg" "$open_delay"
 }
@@ -2289,7 +2289,7 @@ _display_wait_box() {
 #
 # Parameters:
 #   $1 (message): The message to display inside the wait box (e.g.,
-#      "Running the task. Please, wait...").
+#      "Running the task. Please wait...").
 #   $2 (open_delay): Optional. The delay (in seconds) before the wait box
 #      is shown. Defaults to 2 seconds if not provided.
 _display_wait_box_message() {
@@ -3200,7 +3200,7 @@ _validate_files_count() {
     # Check if there is at least one valid file.
     if ((valid_items_count == 0)); then
         if [[ -n "$par_select_extension" ]]; then
-            msg="$(_i18n 'You must select files with extension:')"
+            msg="$(_i18n 'You must select files with the extension:')"
             _display_error_box "$msg $extension_label!"
         else
             if [[ -n "$par_select_mime" ]] || [[ -z "$par_type" ]]; then

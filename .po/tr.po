@@ -50,7 +50,7 @@ msgstr "Aşağıdaki paketler eksik:"
 msgid "Would you like to install them?"
 msgstr "Onları yüklemek ister misiniz?"
 
-msgid "Installing the packages. Please, wait..."
+msgid "Installing the packages. Please wait..."
 msgstr "Paketler yükleniyor. Lütfen bekleyin..."
 
 msgid "The package was installed, but a system reboot is required."
@@ -110,7 +110,7 @@ msgstr "Parola"
 msgid "Type your password:"
 msgstr "Parolanızı yazın:"
 
-msgid "The password can not be empty!"
+msgid "The password cannot be empty!"
 msgstr "Parola boş olamaz!"
 
 msgid "Yes"
@@ -128,7 +128,7 @@ msgstr "Tamamlandı, ancak yapacak bir şey yok."
 msgid "Finished!"
 msgstr "Tamamlandı!"
 
-msgid "Running the task. Please, wait..."
+msgid "Running the task. Please wait..."
 msgstr "Görev çalıştırılıyor. Lütfen bekleyin..."
 
 msgid "No default application is set for the type:"
@@ -146,7 +146,7 @@ msgstr "Bu dizindeki her dosya ayrı ayrı işlenecektir."
 msgid "files or directories"
 msgstr "dosya veya dizin"
 
-msgid "You must select files with extension:"
+msgid "You must select files with the extension:"
 msgstr "Şu uzantılı dosyaları seçmelisiniz:"
 
 msgid "Invalid input file!"
@@ -323,7 +323,7 @@ msgstr "Hiçbir dizin seçilmedi!"
 msgid "The selected items are identical."
 msgstr "Seçili öğeler aynı."
 
-msgid "The selected images have same pixel values."
+msgid "The selected images have the same pixel values."
 msgstr "Seçili görüntüler aynı piksel değerlerine sahip."
 
 msgid "MIME"

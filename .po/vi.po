@@ -50,7 +50,7 @@ msgstr "Các gói sau bị thiếu:"
 msgid "Would you like to install them?"
 msgstr "Bạn có muốn cài đặt chúng không?"
 
-msgid "Installing the packages. Please, wait..."
+msgid "Installing the packages. Please wait..."
 msgstr "Đang cài đặt các gói. Vui lòng chờ..."
 
 msgid "The package was installed, but a system reboot is required."
@@ -110,7 +110,7 @@ msgstr "Mật khẩu"
 msgid "Type your password:"
 msgstr "Nhập mật khẩu của bạn:"
 
-msgid "The password can not be empty!"
+msgid "The password cannot be empty!"
 msgstr "Mật khẩu không được để trống!"
 
 msgid "Yes"
@@ -128,7 +128,7 @@ msgstr "Hoàn tất, nhưng không có gì để làm."
 msgid "Finished!"
 msgstr "Hoàn tất!"
 
-msgid "Running the task. Please, wait..."
+msgid "Running the task. Please wait..."
 msgstr "Đang chạy tác vụ. Vui lòng chờ..."
 
 msgid "No default application is set for the type:"
@@ -146,7 +146,7 @@ msgstr "Mỗi tệp trong thư mục này sẽ được xử lý riêng lẻ."
 msgid "files or directories"
 msgstr "tệp hoặc thư mục"
 
-msgid "You must select files with extension:"
+msgid "You must select files with the extension:"
 msgstr "Bạn phải chọn các tệp có phần mở rộng:"
 
 msgid "Invalid input file!"
@@ -323,7 +323,7 @@ msgstr "Không có thư mục nào được chọn!"
 msgid "The selected items are identical."
 msgstr "Các mục được chọn giống nhau."
 
-msgid "The selected images have same pixel values."
+msgid "The selected images have the same pixel values."
 msgstr "Các ảnh được chọn có giá trị điểm ảnh giống nhau."
 
 msgid "MIME"

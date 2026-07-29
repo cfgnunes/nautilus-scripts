@@ -221,7 +221,7 @@ _compare_images() {
     # Check if the two images have identical pixel values.
     if __cmd_magick_compare -metric AE -- "$file_1" "$file_2" null: &>/dev/null; then
         local msg=""
-        msg="$(_i18n 'The selected images have same pixel values.')"
+        msg="$(_i18n 'The selected images have the same pixel values.')"
         _display_info_box "$msg"
         _exit_script
     fi

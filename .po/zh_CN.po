@@ -50,7 +50,7 @@ msgstr "以下软件包缺失："
 msgid "Would you like to install them?"
 msgstr "是否安装它们？"
 
-msgid "Installing the packages. Please, wait..."
+msgid "Installing the packages. Please wait..."
 msgstr "正在安装软件包，请稍候..."
 
 msgid "The package was installed, but a system reboot is required."
@@ -110,7 +110,7 @@ msgstr "密码"
 msgid "Type your password:"
 msgstr "输入密码："
 
-msgid "The password can not be empty!"
+msgid "The password cannot be empty!"
 msgstr "密码不能为空！"
 
 msgid "Yes"
@@ -128,7 +128,7 @@ msgstr "完成，但无需执行任何操作。"
 msgid "Finished!"
 msgstr "完成！"
 
-msgid "Running the task. Please, wait..."
+msgid "Running the task. Please wait..."
 msgstr "正在执行任务，请稍候..."
 
 msgid "No default application is set for the type:"
@@ -146,7 +146,7 @@ msgstr "此目录内的每个文件都将被单独处理。"
 msgid "files or directories"
 msgstr "文件或目录"
 
-msgid "You must select files with extension:"
+msgid "You must select files with the extension:"
 msgstr "必须选择扩展名为以下类型的文件："
 
 msgid "Invalid input file!"
@@ -323,7 +323,7 @@ msgstr "未选择任何目录！"
 msgid "The selected items are identical."
 msgstr "所选项目完全相同。"
 
-msgid "The selected images have same pixel values."
+msgid "The selected images have the same pixel values."
 msgstr "所选图像具有相同的像素值。"
 
 msgid "MIME"

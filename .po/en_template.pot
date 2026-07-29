@@ -49,7 +49,7 @@ msgstr ""
 msgid "Would you like to install them?"
 msgstr ""
 
-msgid "Installing the packages. Please, wait..."
+msgid "Installing the packages. Please wait..."
 msgstr ""
 
 msgid "The package was installed, but a system reboot is required."
@@ -109,7 +109,7 @@ msgstr ""
 msgid "Type your password:"
 msgstr ""
 
-msgid "The password can not be empty!"
+msgid "The password cannot be empty!"
 msgstr ""
 
 msgid "Yes"
@@ -127,7 +127,7 @@ msgstr ""
 msgid "Finished!"
 msgstr ""
 
-msgid "Running the task. Please, wait..."
+msgid "Running the task. Please wait..."
 msgstr ""
 
 msgid "No default application is set for the type:"
@@ -145,7 +145,7 @@ msgstr ""
 msgid "files or directories"
 msgstr ""
 
-msgid "You must select files with extension:"
+msgid "You must select files with the extension:"
 msgstr ""
 
 msgid "Invalid input file!"
@@ -322,7 +322,7 @@ msgstr ""
 msgid "The selected items are identical."
 msgstr ""
 
-msgid "The selected images have same pixel values."
+msgid "The selected images have the same pixel values."
 msgstr ""
 
 msgid "MIME"

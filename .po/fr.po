@@ -50,7 +50,7 @@ msgstr "Les paquets suivants sont manquants:"
 msgid "Would you like to install them?"
 msgstr "Voulez-vous les installer ?"
 
-msgid "Installing the packages. Please, wait..."
+msgid "Installing the packages. Please wait..."
 msgstr "Installation des paquets. Veuillez patienter..."
 
 msgid "The package was installed, but a system reboot is required."
@@ -110,7 +110,7 @@ msgstr "Mot de passe"
 msgid "Type your password:"
 msgstr "Tapez votre mot de passe:"
 
-msgid "The password can not be empty!"
+msgid "The password cannot be empty!"
 msgstr "Le mot de passe ne peut pas être vide !"
 
 msgid "Yes"
@@ -128,7 +128,7 @@ msgstr "Terminé, mais il n'y a rien à faire."
 msgid "Finished!"
 msgstr "Terminé !"
 
-msgid "Running the task. Please, wait..."
+msgid "Running the task. Please wait..."
 msgstr "Exécution de la tâche. Veuillez patienter..."
 
 msgid "No default application is set for the type:"
@@ -146,7 +146,7 @@ msgstr "Chaque fichier dans ce répertoire sera traité individuellement."
 msgid "files or directories"
 msgstr "fichiers ou répertoires"
 
-msgid "You must select files with extension:"
+msgid "You must select files with the extension:"
 msgstr "Vous devez sélectionner des fichiers avec l'extension:"
 
 msgid "Invalid input file!"
@@ -323,7 +323,7 @@ msgstr "Aucun répertoire n’a été sélectionné !"
 msgid "The selected items are identical."
 msgstr "Les éléments sélectionnés sont identiques."
 
-msgid "The selected images have same pixel values."
+msgid "The selected images have the same pixel values."
 msgstr "Les images sélectionnées ont les mêmes valeurs de pixels."
 
 msgid "MIME"

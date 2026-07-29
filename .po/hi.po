@@ -50,7 +50,7 @@ msgstr "निम्नलिखित पैकेज गायब हैं:"
 msgid "Would you like to install them?"
 msgstr "क्या आप उन्हें इंस्टॉल करना चाहेंगे?"
 
-msgid "Installing the packages. Please, wait..."
+msgid "Installing the packages. Please wait..."
 msgstr "पैकेज इंस्टॉल किए जा रहे हैं। कृपया प्रतीक्षा करें..."
 
 msgid "The package was installed, but a system reboot is required."
@@ -110,7 +110,7 @@ msgstr "पासवर्ड"
 msgid "Type your password:"
 msgstr "अपना पासवर्ड टाइप करें:"
 
-msgid "The password can not be empty!"
+msgid "The password cannot be empty!"
 msgstr "पासवर्ड खाली नहीं हो सकता!"
 
 msgid "Yes"
@@ -128,7 +128,7 @@ msgstr "पूर्ण, लेकिन करने के लिए कुछ
 msgid "Finished!"
 msgstr "पूर्ण!"
 
-msgid "Running the task. Please, wait..."
+msgid "Running the task. Please wait..."
 msgstr "कार्य चल रहा है। कृपया प्रतीक्षा करें..."
 
 msgid "No default application is set for the type:"
@@ -146,7 +146,7 @@ msgstr "इस निर्देशिका के अंदर की प्�
 msgid "files or directories"
 msgstr "फ़ाइलें या निर्देशिकाएँ"
 
-msgid "You must select files with extension:"
+msgid "You must select files with the extension:"
 msgstr "आपको इस एक्सटेंशन वाली फ़ाइलें चुननी होंगी:"
 
 msgid "Invalid input file!"
@@ -323,7 +323,7 @@ msgstr "कोई निर्देशिका चयनित नहीं �
 msgid "The selected items are identical."
 msgstr "चुने गए आइटम समान हैं।"
 
-msgid "The selected images have same pixel values."
+msgid "The selected images have the same pixel values."
 msgstr "चुनी गई छवियों के पिक्सेल मान समान हैं।"
 
 msgid "MIME"

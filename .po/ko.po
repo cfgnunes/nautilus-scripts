@@ -50,7 +50,7 @@ msgstr "다음 패키지가 누락되었습니다:"
 msgid "Would you like to install them?"
 msgstr "설치하시겠습니까?"
 
-msgid "Installing the packages. Please, wait..."
+msgid "Installing the packages. Please wait..."
 msgstr "패키지를 설치하는 중입니다. 잠시만 기다려 주세요..."
 
 msgid "The package was installed, but a system reboot is required."
@@ -110,7 +110,7 @@ msgstr "비밀번호"
 msgid "Type your password:"
 msgstr "비밀번호를 입력하세요:"
 
-msgid "The password can not be empty!"
+msgid "The password cannot be empty!"
 msgstr "비밀번호는 비워둘 수 없습니다!"
 
 msgid "Yes"
@@ -128,7 +128,7 @@ msgstr "완료되었지만 수행할 작업이 없습니다."
 msgid "Finished!"
 msgstr "완료!"
 
-msgid "Running the task. Please, wait..."
+msgid "Running the task. Please wait..."
 msgstr "작업을 실행하는 중입니다. 잠시만 기다려 주세요..."
 
 msgid "No default application is set for the type:"
@@ -146,7 +146,7 @@ msgstr "이 디렉토리 내의 각 파일이 개별적으로 처리됩니다."
 msgid "files or directories"
 msgstr "파일 또는 디렉토리"
 
-msgid "You must select files with extension:"
+msgid "You must select files with the extension:"
 msgstr "다음 확장자를 가진 파일을 선택해야 합니다:"
 
 msgid "Invalid input file!"
@@ -323,7 +323,7 @@ msgstr "선택된 디렉토리가 없습니다!"
 msgid "The selected items are identical."
 msgstr "선택한 항목이 동일합니다."
 
-msgid "The selected images have same pixel values."
+msgid "The selected images have the same pixel values."
 msgstr "선택한 이미지의 픽셀 값이 동일합니다."
 
 msgid "MIME"
