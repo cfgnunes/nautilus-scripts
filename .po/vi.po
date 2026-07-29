@@ -134,7 +134,7 @@ msgstr "Đang chạy tác vụ. Vui lòng chờ..."
 msgid "No default application is set for the type:"
 msgstr "Không có ứng dụng mặc định cho loại này:"
 
-msgid "Could not find an executable to open the MIME type:"
+msgid "Could not find an application for the MIME type:"
 msgstr "Không tìm thấy chương trình thực thi để mở loại MIME:"
 
 msgid "Batch mode detected."

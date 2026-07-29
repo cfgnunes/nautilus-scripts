@@ -133,7 +133,7 @@ msgstr ""
 msgid "No default application is set for the type:"
 msgstr ""
 
-msgid "Could not find an executable to open the MIME type:"
+msgid "Could not find an application for the MIME type:"
 msgstr ""
 
 msgid "Batch mode detected."

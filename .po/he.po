@@ -134,7 +134,7 @@ msgstr "המשימה מתבצעת. נא להמתין..."
 msgid "No default application is set for the type:"
 msgstr "לא נבחר יישום ברירת מחדל לסוג:"
 
-msgid "Could not find an executable to open the MIME type:"
+msgid "Could not find an application for the MIME type:"
 msgstr "לא היה ניתן למצוא קובץ אצווה לפתיחת סוג הקובץ:"
 
 msgid "Batch mode detected."

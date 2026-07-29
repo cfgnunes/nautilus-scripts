@@ -134,7 +134,7 @@ msgstr "Esecuzione dell'operazione. Attendi, per favore..."
 msgid "No default application is set for the type:"
 msgstr "Nessuna applicazione predefinita è impostata per il tipo:"
 
-msgid "Could not find an executable to open the MIME type:"
+msgid "Could not find an application for the MIME type:"
 msgstr "Impossibile trovare l'eseguibile per aprire il tipo MIME:"
 
 msgid "Batch mode detected."

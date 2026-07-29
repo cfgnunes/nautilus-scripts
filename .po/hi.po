@@ -134,7 +134,7 @@ msgstr "कार्य चल रहा है। कृपया प्रत�
 msgid "No default application is set for the type:"
 msgstr "इस प्रकार के लिए कोई डिफ़ॉल्ट एप्लिकेशन सेट नहीं है:"
 
-msgid "Could not find an executable to open the MIME type:"
+msgid "Could not find an application for the MIME type:"
 msgstr "MIME प्रकार खोलने के लिए निष्पादन योग्य फ़ाइल नहीं मिली:"
 
 msgid "Batch mode detected."

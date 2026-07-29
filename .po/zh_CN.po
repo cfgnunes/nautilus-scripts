@@ -134,7 +134,7 @@ msgstr "正在执行任务，请稍候..."
 msgid "No default application is set for the type:"
 msgstr "未为此类型设置默认应用程序："
 
-msgid "Could not find an executable to open the MIME type:"
+msgid "Could not find an application for the MIME type:"
 msgstr "找不到打开MIME类型的可执行文件："
 
 msgid "Batch mode detected."
