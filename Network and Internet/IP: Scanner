@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Source the script '.common-functions.sh'.
+# Source the file '.common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
@@ -14,7 +14,7 @@ _main() {
     _display_wait_box
     input_files=$(_get_files "par_type=all")
 
-    # Execute the function '_main_task' for each ip in parallel (127 threads).
+    # Execute the function '_main_task' for each ip in parallel (127 processes).
     export -f _resolve_host
     _run_task_parallel "$(_prepare_input "$input_files")" "$output_dir" "127"
 

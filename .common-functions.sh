@@ -270,8 +270,8 @@ _log_error() {
 # Function: _logs_consolidate
 #
 # Description:
-#   This function compiles all error logs from a temporary directory and into a
-#   single consolidated log file.
+#   This function compiles all error logs from a temporary directory and saves
+#   them into a single consolidated log file.
 #
 # Parameters:
 #   $1 (output_dir): Optional. The directory where the consolidated log
@@ -295,7 +295,7 @@ _logs_consolidate() {
     # If the file already exists, add a suffix.
     log_file_output=$(_get_filename_next_suffix "$log_file_output")
 
-    # Compile log errors in a single file.
+    # Compile errors logs in a single file.
     {
         printf "Script: '%s'.\n" "$(_get_script_name)"
         printf "Total errors: %s.\n\n" "$log_files_count"
@@ -2323,7 +2323,7 @@ _display_wait_box_message() {
         local btn_cancel=""
         btn_cancel="$(_i18n 'Cancel')"
 
-        # Launch a background thread for Zenity 'wait box':
+        # Launch a background process for Zenity 'wait box':
         #   - Waits for the defined delay.
         #   - Opens the Zenity 'wait box' if the control flag still exists.
         #   - If Zenity 'wait box' fails or is cancelled, exit the script.
