@@ -2722,7 +2722,7 @@ _xdg_get_default_app() {
         if [[ "$quiet" == "true" ]]; then
             return 1
         fi
-        msg="$(_i18n 'Could not find the executable to open MIME type:')"
+        msg="$(_i18n 'Could not find an executable to open the MIME type:')"
         _display_error_box "$msg '$mime'!"
         _exit_script
     fi

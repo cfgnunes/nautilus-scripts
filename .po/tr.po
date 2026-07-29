@@ -134,7 +134,7 @@ msgstr "Görev çalıştırılıyor. Lütfen bekleyin..."
 msgid "No default application is set for the type:"
 msgstr "Bu tür için varsayılan uygulama ayarlanmamış:"
 
-msgid "Could not find the executable to open MIME type:"
+msgid "Could not find an executable to open the MIME type:"
 msgstr "MIME türünü açacak çalıştırılabilir bulunamadı:"
 
 msgid "Batch mode detected."

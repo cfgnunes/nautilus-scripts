@@ -134,7 +134,7 @@ msgstr "Bezig met uitvoeren van taak…"
 msgid "No default application is set for the type:"
 msgstr "Er is geen standaardtoepassing ingesteld voor:"
 
-msgid "Could not find the executable to open MIME type:"
+msgid "Could not find an executable to open the MIME type:"
 msgstr "Er is geen programma aangetroffen dat dit mimetype kan openen:"
 
 msgid "Batch mode detected."
