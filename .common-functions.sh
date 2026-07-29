@@ -1355,6 +1355,8 @@ _make_temp_dir_local() {
     local output_dir=$1
     local basename=$2
     local temp_dir=""
+    local item_remove=""
+
     temp_dir=$(mktemp --directory \
         --tmpdir="$output_dir" "$basename.XXXXXXXX.tmp")
 
@@ -2598,7 +2600,7 @@ _is_file_manager_session() {
 #   0 (true): If is a GUI session.
 #   1 (false): If is not a GUI session.
 _is_gui_session() {
-    if [[ -n "${DISPLAY:-}" ]]; then
+    if [[ -n "${DISPLAY:-}" ]] || [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
         return 0
     fi
     return 1
@@ -4051,6 +4053,6 @@ _initialize_homebrew
 
 # If running from a supported file manager and the scripts directory is
 # writable, update the list of recently accessed scripts.
-if _is_file_manager_session && [[ -w $SCRIPT_DIR ]]; then
+if _is_file_manager_session && [[ -w "$SCRIPT_DIR" ]]; then
     _recent_scripts_add
 fi
