@@ -14,7 +14,7 @@ _main() {
     _check_dependencies ""
     input_files=$(_get_files "par_type=file")
 
-    # Defalt password for testing encrypted archives.
+    # Default password for testing encrypted archives.
     TEMP_DATA_TASK="null"
 
     # Execute the function '_get_dependencies' for each file in parallel.
@@ -376,7 +376,6 @@ _run_command() {
     "tar,lzma") std_output=$(tar --extract --lzma --file="$input_file" 2>&1) ;;
     "tar,lzop") std_output=$(tar --extract --lzop --file="$input_file" 2>&1) ;;
     "tar,xz") std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
-    "tar,z") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
     "tar,zstd") std_output=$(zstd -f -d -c -- "$input_file" | tar xf -) ;;
     "tar") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
     "unar")
