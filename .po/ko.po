@@ -368,8 +368,8 @@ msgstr "포트"
 msgid "Hostname"
 msgstr "호스트명"
 
-msgid "Example"
-msgstr "예시"
+msgid "Example:"
+msgstr "예시："
 
 msgid "Enter IP addresses or IP ranges."
 msgstr "IP 주소 또는 IP 범위를 입력하세요."

@@ -368,8 +368,8 @@ msgstr "Portas"
 msgid "Hostname"
 msgstr "Nome do anfitrião"
 
-msgid "Example"
-msgstr "Exemplo"
+msgid "Example:"
+msgstr "Exemplo:"
 
 msgid "Enter IP addresses or IP ranges."
 msgstr "Introduza endereços IP ou intervalos de IP."

@@ -368,8 +368,8 @@ msgstr "端口"
 msgid "Hostname"
 msgstr "主机名"
 
-msgid "Example"
-msgstr "示例"
+msgid "Example:"
+msgstr "示例："
 
 msgid "Enter IP addresses or IP ranges."
 msgstr "输入 IP 地址或 IP 范围。"

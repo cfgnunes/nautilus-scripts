@@ -23,7 +23,7 @@ _main() {
 
     # Translate some strings from the '$std_output'.
     # shellcheck disable=SC2001
-    std_output=$(sed "s|__MSG_Ok__|$(_i18n 'Ok')|g" <<<"$std_output")
+    std_output=$(sed "s|__MSG_OK__|$(_i18n 'OK')|g" <<<"$std_output")
     # shellcheck disable=SC2001
     std_output=$(sed "s|__MSG_Mismatch__|$(_i18n 'Checksum error')|g" <<<"$std_output")
     # shellcheck disable=SC2001
@@ -68,7 +68,7 @@ _verify_checksum() {
         return 1
     fi
 
-    status="🟢 __MSG_Ok__"
+    status="🟢 __MSG_OK__"
     _storage_text_write_ln "$status$FIELD_SEPARATOR$saved_file"
 }
 

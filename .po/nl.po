@@ -368,8 +368,8 @@ msgstr "Poorten"
 msgid "Hostname"
 msgstr "Hostnaam"
 
-msgid "Example"
-msgstr "Voorbeeld"
+msgid "Example:"
+msgstr "Voorbeeld:"
 
 msgid "Enter IP addresses or IP ranges."
 msgstr "Voer IP-adressen of -bereiken in."

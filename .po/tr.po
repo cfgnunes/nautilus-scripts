@@ -368,8 +368,8 @@ msgstr "Portlar"
 msgid "Hostname"
 msgstr "Ana bilgisayar adı"
 
-msgid "Example"
-msgstr "Örnek"
+msgid "Example:"
+msgstr "Örnek:"
 
 msgid "Enter IP addresses or IP ranges."
 msgstr "IP adresleri veya IP aralıkları girin."

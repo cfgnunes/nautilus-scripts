@@ -368,8 +368,8 @@ msgstr "Cổng"
 msgid "Hostname"
 msgstr "Tên máy"
 
-msgid "Example"
-msgstr "Ví dụ"
+msgid "Example:"
+msgstr "Ví dụ:"
 
 msgid "Enter IP addresses or IP ranges."
 msgstr "Nhập địa chỉ IP hoặc dải IP."

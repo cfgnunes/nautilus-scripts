@@ -368,8 +368,8 @@ msgstr "פתחות"
 msgid "Hostname"
 msgstr "שם מארח"
 
-msgid "Example"
-msgstr "דוגמה"
+msgid "Example:"
+msgstr "דוגמה："
 
 msgid "Enter IP addresses or IP ranges."
 msgstr "נא להקליד כתובות IP או טווחי כתובות IP."
@@ -1991,5 +1991,5 @@ msgstr "לא נמצא מנהל חבילות!"
 msgid "Homebrew installation failed!"
 msgstr "נכשלה התקנת Homebrew!"
 
-msgid "EOF"
-msgstr "EOF"
+#~ msgid "EOF"
+#~ msgstr "EOF"

@@ -368,8 +368,8 @@ msgstr "पोर्ट"
 msgid "Hostname"
 msgstr "होस्टनाम"
 
-msgid "Example"
-msgstr "उदाहरण"
+msgid "Example:"
+msgstr "उदाहरण:"
 
 msgid "Enter IP addresses or IP ranges."
 msgstr "IP पते या IP रेंज दर्ज करें।"
