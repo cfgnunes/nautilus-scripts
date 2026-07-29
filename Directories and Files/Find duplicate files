@@ -30,7 +30,7 @@ _main() {
         # Skip any line that contains a .git directory before processing.
         /\.git\// { next }
 
-        # Increment ID only for first-occurence.
+        # Increment ID only for first-occurrence.
         /^DUPTYPE_FIRST_OCCURRENCE/ { id++ }
 
         # Process all DUPTYPE_ lines.

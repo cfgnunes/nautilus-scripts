@@ -460,7 +460,7 @@ _i18n_initialize() {
     fi
 
     local lang_full="${LANG%%.*}"      # e.g. 'pt_BR.UTF-8' to 'pt_BR'.
-    local lang_base="${lang_full%%_*}" # e.g. 'pt_BR to' 'pt'.
+    local lang_base="${lang_full%%_*}" # e.g. 'pt_BR' to 'pt'.
     local po_file=""
 
     # Try full locale first (e.g. pt_BR.po).
@@ -564,12 +564,12 @@ _item_create_backup() {
 # Function: _delete_items
 #
 # Description:
-#   This function deletes or trash items, using the best available method.
+#   This function deletes or trashes items, using the best available method.
 _delete_items() {
     local items=$1
 
     # Attempt to remove empty directories directly (rmdir only removes empty
-    # dirs, silently fails otherwise) This avoids sending empty folders to the
+    # dirs, silently fails otherwise). This avoids sending empty folders to the
     # trash and deletes them outright.
     # shellcheck disable=SC2086
     rmdir -- $items &>/dev/null

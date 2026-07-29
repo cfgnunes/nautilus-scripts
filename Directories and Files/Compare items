@@ -95,7 +95,7 @@ _compare() {
 # Function: _compare_hexa
 #
 # Description:
-#   This function compares binary files in hexadecimal format and handle
+#   This function compares binary files in hexadecimal format and handles
 #   modifications. It converts files to hex view, compares them, and allows
 #   editing or saving changes.
 _compare_hexa() {

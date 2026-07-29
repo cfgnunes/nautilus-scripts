@@ -111,11 +111,11 @@ declare -A I18N_DATA=()
 #     directories created by the '_get_filename_next_suffix' function during
 #     concurrent executions. Each process creates a uniquely named subdirectory
 #     here (using 'mkdir'), which acts as a lightweight synchronization
-#     mechanism. The idea to prevent name conflicts by race conditions when
+#     mechanism. The idea is to prevent name conflicts by race conditions when
 #     multiple processes attempt to generate filenames simultaneously.
 # - '$TEMP_DIR_ITEMS_TO_REMOVE': This directory is used for temporary items
 #     scheduled for removal after the scripts' tasks finish executing.
-# - '$TEMP_DIR_LOGS' This directory stores temporary error logs generated
+# - '$TEMP_DIR_LOGS': This directory stores temporary error logs generated
 #     during the execution of the scripts.
 # - '$TEMP_DIR_STORAGE_TEXT': This directory stores text files from output data
 #     produced by parallel tasks during the execution of the scripts.
@@ -137,7 +137,7 @@ mkdir -p "$TEMP_DIR_TASK"
 # Function: _cleanup_on_exit
 #
 # Description:
-#   This function performs cleanup tasks when the script exits. Its removes
+#   This function performs cleanup tasks when the script exits. It removes all
 #   temporary directories or files that were created during the script's
 #   execution.
 _cleanup_on_exit() {
@@ -1562,7 +1562,7 @@ _is_directory_empty() {
 # Function: _display_file_selection_box
 #
 # Description:
-#   This function display a GUI dialog box to allow the user to select a file.
+#   This function displays a GUI dialog box to allow the user to select a file.
 #
 # Parameters:
 #   $1 (title): Optional. Title of the window.
@@ -1877,7 +1877,7 @@ _display_select_box() {
     fi
 
     if [[ -z "$list" ]]; then
-        # NOTE: Some Zenity versions crash  with
+        # NOTE: Some Zenity versions crash with
         # an empty list (Segmentation fault).
         list=" "
     else
@@ -3891,7 +3891,7 @@ _i18n_initialize() {
     fi
 
     local lang_full="${LANG%%.*}"      # e.g. 'pt_BR.UTF-8' to 'pt_BR'.
-    local lang_base="${lang_full%%_*}" # e.g. 'pt_BR to' 'pt'.
+    local lang_base="${lang_full%%_*}" # e.g. 'pt_BR' to 'pt'.
     local po_file=""
 
     # Try full locale first (e.g. pt_BR.po).
