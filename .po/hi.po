@@ -1412,7 +1412,7 @@ msgid "PDF: Remove password"
 msgstr "PDF: पासवर्ड हटाएँ"
 
 #: Menu
-msgid "PDF: Set a password"
+msgid "PDF: Set password"
 msgstr "PDF: पासवर्ड सेट करें"
 
 #: Menu
