@@ -241,6 +241,12 @@ msgstr ""
 msgid "Select an image to use as the watermark"
 msgstr ""
 
+msgid "Enter target size (e.g., 800x600):"
+msgstr ""
+
+msgid "Invalid size! Use the format WxH, e.g. 800x600."
+msgstr ""
+
 msgid "Key files"
 msgstr ""
 

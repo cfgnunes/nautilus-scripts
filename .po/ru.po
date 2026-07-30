@@ -242,6 +242,12 @@ msgstr "Файлы изображений"
 msgid "Select an image to use as the watermark"
 msgstr "Выберите изображение для использования в качестве водяного знака"
 
+msgid "Enter target size (e.g., 800x600):"
+msgstr "Введите желаемое разрешение (например 800x600)"
+
+msgid "Invalid size! Use the format WxH, e.g. 800x600."
+msgstr "Неправильный формат. Используйте формат ВхШ, например 800x600"
+
 msgid "Key files"
 msgstr "Файлы ключей"
 
