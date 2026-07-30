@@ -1733,7 +1733,7 @@ _main() {
     input_file1="$temp_dir/Test internet.txt"
     echo "127.0.0.1" >"$input_file1"
 
-    script_test="Network and Internet/IP: Scanner"
+    script_test="Network and Internet/IP: Scan hosts"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"

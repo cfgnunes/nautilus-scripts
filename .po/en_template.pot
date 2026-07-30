@@ -1311,7 +1311,7 @@ msgid "Image: Stack (vertical)"
 msgstr ""
 
 #: Menu
-msgid "IP: Scanner"
+msgid "IP: Scan hosts"
 msgstr ""
 
 #: Menu

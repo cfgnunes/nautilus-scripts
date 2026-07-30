@@ -1312,7 +1312,7 @@ msgid "Image: Stack (vertical)"
 msgstr "Görüntü: Yığ (dikey)"
 
 #: Menu
-msgid "IP: Scanner"
+msgid "IP: Scan hosts"
 msgstr "IP: Tarayıcı"
 
 #: Menu

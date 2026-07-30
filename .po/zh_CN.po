@@ -1312,7 +1312,7 @@ msgid "Image: Stack (vertical)"
 msgstr "图像：堆叠（垂直）"
 
 #: Menu
-msgid "IP: Scanner"
+msgid "IP: Scan hosts"
 msgstr "IP：扫描器"
 
 #: Menu

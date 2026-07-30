@@ -1312,7 +1312,7 @@ msgid "Image: Stack (vertical)"
 msgstr "תמונה: ערימה (אנכית)"
 
 #: Menu
-msgid "IP: Scanner"
+msgid "IP: Scan hosts"
 msgstr "כתובות IP: סורק"
 
 #: Menu

@@ -1312,8 +1312,8 @@ msgid "Image: Stack (vertical)"
 msgstr "Afbeelding: stapelen (verticaal)"
 
 #: Menu
-msgid "IP: Scanner"
-msgstr "IP: scanner"
+msgid "IP: Scan hosts"
+msgstr "IP: Scan hosts"
 
 #: Menu
 msgid "List hard links"

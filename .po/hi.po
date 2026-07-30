@@ -1312,7 +1312,7 @@ msgid "Image: Stack (vertical)"
 msgstr "छवि: स्टैक करें (ऊर्ध्वाधर)"
 
 #: Menu
-msgid "IP: Scanner"
+msgid "IP: Scan hosts"
 msgstr "IP: स्कैनर"
 
 #: Menu
