@@ -29,7 +29,7 @@ _main() {
 
 _reset_permissions() {
     local input_files=$1
-    local new_pemission=""
+    local new_permission=""
     local std_output=""
     local find_args=""
 
@@ -79,68 +79,68 @@ _reset_permissions() {
     # -------------------------------------------------------------------------
     # Step 1: Sensitive directories first (700).
     # -------------------------------------------------------------------------
-    new_pemission=700
+    new_permission=700
     for dir_pattern in "${sensitive_dirs[@]}"; do
         # shellcheck disable=SC2086
         find $input_files \
             ! -path "$IGNORE_FIND_PATH" \
             -type d -name "$dir_pattern" \
-            -exec chmod "$new_pemission" -- {} +
+            -exec chmod "$new_permission" -- {} +
     done
 
     # -------------------------------------------------------------------------
     # Step 2: Files inside sensitive directories (600).
     # -------------------------------------------------------------------------
-    new_pemission=600
+    new_permission=600
     for dir_pattern in "${sensitive_dirs[@]}"; do
         # shellcheck disable=SC2086
         find $input_files \
             ! -path "$IGNORE_FIND_PATH" \
             -type f -path "*/$dir_pattern/*" \
-            -exec chmod "$new_pemission" -- {} +
+            -exec chmod "$new_permission" -- {} +
     done
 
     # -------------------------------------------------------------------------
     # Step 3: Directories inside sensitive directories (700).
     # -------------------------------------------------------------------------
-    new_pemission=700
+    new_permission=700
     for dir_pattern in "${sensitive_dirs[@]}"; do
         # shellcheck disable=SC2086
         find $input_files \
             ! -path "$IGNORE_FIND_PATH" \
             -type d -path "*/$dir_pattern/*" \
-            -exec chmod "$new_pemission" -- {} +
+            -exec chmod "$new_permission" -- {} +
     done
 
     # -------------------------------------------------------------------------
     # Step 4: Other directories (0777 - umask).
     # -------------------------------------------------------------------------
-    new_pemission=$(printf "%04o" "$((0777 - $(umask)))")
+    new_permission=$(printf "%04o" "$((0777 - $(umask)))")
     # shellcheck disable=SC2206
     find_args=($input_files ! -path "$IGNORE_FIND_PATH")
     for pattern in "${sensitive_dirs[@]}"; do
         find_args+=(! -path "*/$pattern/*" ! -name "$pattern")
     done
-    find_args+=(-type d -exec chmod "$new_pemission" -- {} +)
+    find_args+=(-type d -exec chmod "$new_permission" -- {} +)
     std_output=$(find "${find_args[@]}" 2>&1)
     _check_output "$?" "$std_output" "" ""
 
     # -------------------------------------------------------------------------
     # Step 5: Sensitive files (600).
     # -------------------------------------------------------------------------
-    new_pemission=600
+    new_permission=600
     for pattern in "${sensitive_files[@]}"; do
         # shellcheck disable=SC2086
         find $input_files \
             ! -path "$IGNORE_FIND_PATH" \
             -type f -name "$pattern" \
-            -exec chmod "$new_pemission" -- {} +
+            -exec chmod "$new_permission" -- {} +
     done
 
     # -------------------------------------------------------------------------
     # Step 6: Other files (0666 - umask).
     # -------------------------------------------------------------------------
-    new_pemission=$(printf "%04o" "$((0666 - $(umask)))")
+    new_permission=$(printf "%04o" "$((0666 - $(umask)))")
     # shellcheck disable=SC2206
     find_args=($input_files ! -path "$IGNORE_FIND_PATH")
     for pattern in "${sensitive_dirs[@]}"; do
@@ -149,7 +149,7 @@ _reset_permissions() {
     for pattern in "${sensitive_files[@]}"; do
         find_args+=(! -name "$pattern")
     done
-    find_args+=(-type f -exec chmod "$new_pemission" -- {} +)
+    find_args+=(-type f -exec chmod "$new_permission" -- {} +)
     std_output=$(find "${find_args[@]}" 2>&1)
     _check_output "$?" "$std_output" "" ""
 }
