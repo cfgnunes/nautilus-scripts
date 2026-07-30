@@ -67,8 +67,8 @@ While numerous *Nautilus Scripts* are available for file managers on the web, ma
 | `<Control><Alt>S`   | Compress to 'tar.zst'               |
 | `<Control><Alt>X`   | Compress to 'tar.xz'                |
 | `<Control><Alt>Z`   | Compress to 'zip'                   |
-| `<Control><Alt>I`   | Show files information              |
-| `<Control><Alt>M`   | Show files MIME type                |
+| `<Control><Alt>I`   | Show file information               |
+| `<Control><Alt>M`   | Show file MIME type                 |
 | `<Control><Alt>0`   | Find empty files                    |
 | `<Control><Alt>J`   | Find junk files                     |
 | `<Control><Alt>U`   | Find duplicate files                |

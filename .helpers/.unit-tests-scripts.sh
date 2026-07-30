@@ -289,7 +289,7 @@ _main() {
     __test_file_nonempty "$output_file (no silence).mp3"
     __test_file_empty "$std_output"
 
-    script_test="Audio and Video/Audio: Effects/Audio: Silence noise"
+    script_test="Audio and Video/Audio: Effects/Audio: Mute noise"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file (noise silenced).mp3"
@@ -668,17 +668,17 @@ _main() {
     #bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     #__test_file_empty "$std_output"
 
-    script_test="Directories and Files/Show files information"
+    script_test="Directories and Files/Show file information"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Directories and Files/Show files metadata"
+    script_test="Directories and Files/Show file metadata"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Directories and Files/Show files MIME type"
+    script_test="Directories and Files/Show file MIME type"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
     __test_file_nonempty "$std_output"

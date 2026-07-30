@@ -756,7 +756,7 @@ msgid "Audio: Remove silence (sections)"
 msgstr "音频：移除静音（开头和结尾）"
 
 #: Menu
-msgid "Audio: Silence noise"
+msgid "Audio: Mute noise"
 msgstr "音频：静音降噪"
 
 #: Menu
@@ -1620,15 +1620,15 @@ msgid "Scan for malware (via Lenspect)"
 msgstr "扫描恶意软件（通过Lenspect）"
 
 #: Menu
-msgid "Show files information"
+msgid "Show file information"
 msgstr "显示文件信息"
 
 #: Menu
-msgid "Show files metadata"
+msgid "Show file metadata"
 msgstr "显示文件元数据"
 
 #: Menu
-msgid "Show files MIME type"
+msgid "Show file MIME type"
 msgstr "显示文件MIME类型"
 
 #: Menu

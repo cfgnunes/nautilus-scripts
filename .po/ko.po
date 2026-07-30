@@ -756,7 +756,7 @@ msgid "Audio: Remove silence (sections)"
 msgstr "오디오: 무음 제거 (구간)"
 
 #: Menu
-msgid "Audio: Silence noise"
+msgid "Audio: Mute noise"
 msgstr "오디오: 노이즈 억제"
 
 #: Menu
@@ -1620,15 +1620,15 @@ msgid "Scan for malware (via Lenspect)"
 msgstr "악성코드 검사 (Lenspect 사용)"
 
 #: Menu
-msgid "Show files information"
+msgid "Show file information"
 msgstr "파일 정보 표시"
 
 #: Menu
-msgid "Show files metadata"
+msgid "Show file metadata"
 msgstr "파일 메타데이터 표시"
 
 #: Menu
-msgid "Show files MIME type"
+msgid "Show file MIME type"
 msgstr "파일 MIME 유형 표시"
 
 #: Menu

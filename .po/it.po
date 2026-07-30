@@ -756,7 +756,7 @@ msgid "Audio: Remove silence (sections)"
 msgstr "Audio: Rimuovi silenzio (sezioni)"
 
 #: Menu
-msgid "Audio: Silence noise"
+msgid "Audio: Mute noise"
 msgstr "Audio: Riduci rumore"
 
 #: Menu
@@ -1620,15 +1620,15 @@ msgid "Scan for malware (via Lenspect)"
 msgstr "Scansione malware (via Lenspect)"
 
 #: Menu
-msgid "Show files information"
+msgid "Show file information"
 msgstr "Mostra informazioni file"
 
 #: Menu
-msgid "Show files metadata"
+msgid "Show file metadata"
 msgstr "Mostra metadati file"
 
 #: Menu
-msgid "Show files MIME type"
+msgid "Show file MIME type"
 msgstr "Mostra tipo MIME file"
 
 #: Menu

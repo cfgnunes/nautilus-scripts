@@ -756,7 +756,7 @@ msgid "Audio: Remove silence (sections)"
 msgstr "Âm thanh: Loại bỏ đoạn im lặng (phần giữa)"
 
 #: Menu
-msgid "Audio: Silence noise"
+msgid "Audio: Mute noise"
 msgstr "Âm thanh: Giảm nhiễu"
 
 #: Menu
@@ -1620,15 +1620,15 @@ msgid "Scan for malware (via Lenspect)"
 msgstr "Quét phần mềm độc hại (qua Lenspect)"
 
 #: Menu
-msgid "Show files information"
+msgid "Show file information"
 msgstr "Hiển thị thông tin tệp"
 
 #: Menu
-msgid "Show files metadata"
+msgid "Show file metadata"
 msgstr "Hiển thị metadata tệp"
 
 #: Menu
-msgid "Show files MIME type"
+msgid "Show file MIME type"
 msgstr "Hiển thị loại MIME của tệp"
 
 #: Menu

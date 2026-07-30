@@ -756,7 +756,7 @@ msgid "Audio: Remove silence (sections)"
 msgstr "Ses: Sessizliği kaldır (bölümler)"
 
 #: Menu
-msgid "Audio: Silence noise"
+msgid "Audio: Mute noise"
 msgstr "Ses: Gürültüyü sessizleştir"
 
 #: Menu
@@ -1620,15 +1620,15 @@ msgid "Scan for malware (via Lenspect)"
 msgstr "Kötü amaçlı yazılım tara (Lenspect ile)"
 
 #: Menu
-msgid "Show files information"
+msgid "Show file information"
 msgstr "Dosya bilgilerini göster"
 
 #: Menu
-msgid "Show files metadata"
+msgid "Show file metadata"
 msgstr "Dosya meta verilerini göster"
 
 #: Menu
-msgid "Show files MIME type"
+msgid "Show file MIME type"
 msgstr "Dosya MIME türlerini göster"
 
 #: Menu
