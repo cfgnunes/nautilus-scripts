@@ -1012,11 +1012,11 @@ msgid "Sign (detached signature)"
 msgstr "חתום (חתימה מנותקת)"
 
 #: Menu
-msgid "Sign and Encrypt with keys"
+msgid "Sign and encrypt with keys"
 msgstr "חתום והצפן עם מפתחות"
 
 #: Menu
-msgid "Sign and Encrypt with keys (ASCII)"
+msgid "Sign and encrypt with keys (ASCII)"
 msgstr "חתום והצפן עם מפתחות (ASCII)"
 
 #: Menu

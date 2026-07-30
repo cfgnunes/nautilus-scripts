@@ -1012,11 +1012,11 @@ msgid "Sign (detached signature)"
 msgstr "Firmar (firma separada)"
 
 #: Menu
-msgid "Sign and Encrypt with keys"
+msgid "Sign and encrypt with keys"
 msgstr "Firmar y cifrar con claves"
 
 #: Menu
-msgid "Sign and Encrypt with keys (ASCII)"
+msgid "Sign and encrypt with keys (ASCII)"
 msgstr "Firmar y cifrar con claves (ASCII)"
 
 #: Menu

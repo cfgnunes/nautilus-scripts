@@ -1011,11 +1011,11 @@ msgid "Sign (detached signature)"
 msgstr ""
 
 #: Menu
-msgid "Sign and Encrypt with keys"
+msgid "Sign and encrypt with keys"
 msgstr ""
 
 #: Menu
-msgid "Sign and Encrypt with keys (ASCII)"
+msgid "Sign and encrypt with keys (ASCII)"
 msgstr ""
 
 #: Menu
