@@ -1384,7 +1384,7 @@ msgid "Paste as symbolic link"
 msgstr "シンボリックリンクとして貼り付け"
 
 #: Menu
-msgid "Paste clipboard content"
+msgid "Paste clipboard contents"
 msgstr "クリップボードの内容を貼り付け"
 
 #: Menu

@@ -1383,7 +1383,7 @@ msgid "Paste as symbolic link"
 msgstr ""
 
 #: Menu
-msgid "Paste clipboard content"
+msgid "Paste clipboard contents"
 msgstr ""
 
 #: Menu

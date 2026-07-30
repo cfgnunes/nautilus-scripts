@@ -1384,7 +1384,7 @@ msgid "Paste as symbolic link"
 msgstr "Sembolik bağlantı olarak yapıştır"
 
 #: Menu
-msgid "Paste clipboard content"
+msgid "Paste clipboard contents"
 msgstr "Pano içeriğini yapıştır"
 
 #: Menu

@@ -1384,7 +1384,7 @@ msgid "Paste as symbolic link"
 msgstr "심볼릭 링크로 붙여넣기"
 
 #: Menu
-msgid "Paste clipboard content"
+msgid "Paste clipboard contents"
 msgstr "클립보드 내용 붙여넣기"
 
 #: Menu

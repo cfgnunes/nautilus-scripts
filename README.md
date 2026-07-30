@@ -78,7 +78,7 @@ While numerous *Nautilus Scripts* are available for file managers on the web, ma
 | `<Control><Alt>R`   | List recent files                   |
 | `<Control><Alt>W`   | Text: List issues                   |
 | `<Control><Alt>C`   | Copy file names                     |
-| `<Control><Alt>V`   | Paste clipboard content             |
+| `<Control><Alt>V`   | Paste clipboard contents            |
 | `<Control><Shift>V` | Paste as symbolic link              |
 | `<Control><Shift>B` | Create backup (via Rsync)           |
 | `<Control><Shift>C` | Compare items                       |

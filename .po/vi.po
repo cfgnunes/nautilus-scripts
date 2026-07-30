@@ -1384,7 +1384,7 @@ msgid "Paste as symbolic link"
 msgstr "Dán dưới dạng liên kết tượng trưng"
 
 #: Menu
-msgid "Paste clipboard content"
+msgid "Paste clipboard contents"
 msgstr "Dán nội dung bộ nhớ tạm"
 
 #: Menu

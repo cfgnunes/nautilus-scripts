@@ -1384,7 +1384,7 @@ msgid "Paste as symbolic link"
 msgstr "Wklej jako dowiązanie symboliczne"
 
 #: Menu
-msgid "Paste clipboard content"
+msgid "Paste clipboard contents"
 msgstr "Wklej zawartość schowka"
 
 #: Menu

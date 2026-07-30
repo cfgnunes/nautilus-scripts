@@ -1384,7 +1384,7 @@ msgid "Paste as symbolic link"
 msgstr "Вставить как символическую ссылку"
 
 #: Menu
-msgid "Paste clipboard content"
+msgid "Paste clipboard contents"
 msgstr "Вставить содержимое буфера обмена"
 
 #: Menu

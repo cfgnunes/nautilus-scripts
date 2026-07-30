@@ -1384,7 +1384,7 @@ msgid "Paste as symbolic link"
 msgstr "הדבקה בתור קישור סימבולי"
 
 #: Menu
-msgid "Paste clipboard content"
+msgid "Paste clipboard contents"
 msgstr "הדבקת התוכן מלוח הגזירים"
 
 #: Menu
