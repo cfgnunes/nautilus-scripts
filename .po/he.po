@@ -744,7 +744,7 @@ msgid "Audio: Mix two files"
 msgstr "שמע: ערבול שני קבצים"
 
 #: Menu
-msgid "Audio: Volume normalize"
+msgid "Audio: Normalize volume"
 msgstr "שמע: נרמול עוצמת השמע"
 
 #: Menu
@@ -1360,11 +1360,11 @@ msgid "MP3: (artist - title) ID3 to Name"
 msgstr "קובץ MP3: (אומן - כותרת) המרת ID3 לשֵׁם"
 
 #: Menu
-msgid "MP3: Volume maximize (recursive)"
+msgid "MP3: Maximize volume (recursive)"
 msgstr "שמע: הגברה לעוצמת השמע המרבית (רקורסיבית)"
 
 #: Menu
-msgid "MP3: Volume normalize (recursive)"
+msgid "MP3: Normalize volume (recursive)"
 msgstr "שמע: נרמול עוצמת השמע (רקורסיבי)"
 
 #: Menu

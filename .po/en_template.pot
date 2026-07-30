@@ -743,7 +743,7 @@ msgid "Audio: Mix two files"
 msgstr ""
 
 #: Menu
-msgid "Audio: Volume normalize"
+msgid "Audio: Normalize volume"
 msgstr ""
 
 #: Menu
@@ -1359,11 +1359,11 @@ msgid "MP3: (artist - title) ID3 to Name"
 msgstr ""
 
 #: Menu
-msgid "MP3: Volume maximize (recursive)"
+msgid "MP3: Maximize volume (recursive)"
 msgstr ""
 
 #: Menu
-msgid "MP3: Volume normalize (recursive)"
+msgid "MP3: Normalize volume (recursive)"
 msgstr ""
 
 #: Menu

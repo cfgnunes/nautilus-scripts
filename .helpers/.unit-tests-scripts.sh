@@ -277,7 +277,7 @@ _main() {
     __test_file_nonempty "$output_file (fade-out).mp3"
     __test_file_empty "$std_output"
 
-    script_test="Audio and Video/Audio: Effects/Audio: Volume normalize"
+    script_test="Audio and Video/Audio: Effects/Audio: Normalize volume"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file (normalized).mp3"
@@ -306,13 +306,13 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    #script_test="Audio and Video/Audio: MP3 files/MP3: Volume maximize (recursive)"
+    #script_test="Audio and Video/Audio: MP3 files/MP3: Maximize volume (recursive)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file.mp3.bak"
     #__test_file_empty "$std_output"
 
-    #script_test="Audio and Video/Audio: MP3 files/MP3: Volume normalize (recursive)"
+    #script_test="Audio and Video/Audio: MP3 files/MP3: Normalize volume (recursive)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     #__test_file_nonempty "$output_file.mp3.bak"
