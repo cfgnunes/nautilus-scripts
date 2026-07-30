@@ -748,7 +748,7 @@ msgid "Audio: Normalize volume"
 msgstr "Audio: Normalizza volume"
 
 #: Menu
-msgid "Audio: Produce a spectrogram"
+msgid "Audio: Produce spectrogram"
 msgstr "Audio: Genera uno spettrogramma"
 
 #: Menu
@@ -1108,11 +1108,11 @@ msgid "Image: Color white to alpha (15 pct)"
 msgstr "Immagine: Colore bianco in alfa (15 pct)"
 
 #: Menu
-msgid "Image: Combine into a GIF"
+msgid "Image: Combine into GIF"
 msgstr "Immagine: Combina in un GIF"
 
 #: Menu
-msgid "Image: Combine into a PDF"
+msgid "Image: Combine into PDF"
 msgstr "Immagine: Combina in un PDF"
 
 #: Menu

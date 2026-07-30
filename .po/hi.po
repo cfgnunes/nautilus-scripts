@@ -748,7 +748,7 @@ msgid "Audio: Normalize volume"
 msgstr "ऑडियो: वॉल्यूम सामान्य करें"
 
 #: Menu
-msgid "Audio: Produce a spectrogram"
+msgid "Audio: Produce spectrogram"
 msgstr "ऑडियो: स्पेक्ट्रोग्राम बनाएँ"
 
 #: Menu
@@ -1108,11 +1108,11 @@ msgid "Image: Color white to alpha (15 pct)"
 msgstr "छवि: रंग सफेद को अल्फ़ा बनाएँ (15 प्रतिशत)"
 
 #: Menu
-msgid "Image: Combine into a GIF"
+msgid "Image: Combine into GIF"
 msgstr "छवि: GIF में संयोजित करें"
 
 #: Menu
-msgid "Image: Combine into a PDF"
+msgid "Image: Combine into PDF"
 msgstr "छवि: PDF में संयोजित करें"
 
 #: Menu

@@ -748,7 +748,7 @@ msgid "Audio: Normalize volume"
 msgstr "오디오: 볼륨 정규화"
 
 #: Menu
-msgid "Audio: Produce a spectrogram"
+msgid "Audio: Produce spectrogram"
 msgstr "오디오: 스펙트로그램 생성"
 
 #: Menu
@@ -1108,11 +1108,11 @@ msgid "Image: Color white to alpha (15 pct)"
 msgstr "이미지: 흰색을 투명으로 (15%)"
 
 #: Menu
-msgid "Image: Combine into a GIF"
+msgid "Image: Combine into GIF"
 msgstr "이미지: GIF로 결합"
 
 #: Menu
-msgid "Image: Combine into a PDF"
+msgid "Image: Combine into PDF"
 msgstr "이미지: PDF로 결합"
 
 #: Menu

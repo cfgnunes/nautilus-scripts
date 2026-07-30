@@ -748,7 +748,7 @@ msgid "Audio: Normalize volume"
 msgstr "音声：音量の正規化"
 
 #: Menu
-msgid "Audio: Produce a spectrogram"
+msgid "Audio: Produce spectrogram"
 msgstr "音声：スペクトル画像を生成"
 
 #: Menu
@@ -1108,11 +1108,11 @@ msgid "Image: Color white to alpha (15 pct)"
 msgstr "画像：白をアルファに変換 (15％)"
 
 #: Menu
-msgid "Image: Combine into a GIF"
+msgid "Image: Combine into GIF"
 msgstr "画像：GIFに結合"
 
 #: Menu
-msgid "Image: Combine into a PDF"
+msgid "Image: Combine into PDF"
 msgstr "画像：PDFに結合"
 
 #: Menu

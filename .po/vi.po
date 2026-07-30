@@ -748,7 +748,7 @@ msgid "Audio: Normalize volume"
 msgstr "Âm thanh: Chuẩn hóa âm lượng"
 
 #: Menu
-msgid "Audio: Produce a spectrogram"
+msgid "Audio: Produce spectrogram"
 msgstr "Âm thanh: Tạo phổ tần (spectrogram)"
 
 #: Menu
@@ -1108,11 +1108,11 @@ msgid "Image: Color white to alpha (15 pct)"
 msgstr "Hình ảnh: Chuyển trắng thành alpha (15 pct)"
 
 #: Menu
-msgid "Image: Combine into a GIF"
+msgid "Image: Combine into GIF"
 msgstr "Hình ảnh: Kết hợp thành GIF"
 
 #: Menu
-msgid "Image: Combine into a PDF"
+msgid "Image: Combine into PDF"
 msgstr "Hình ảnh: Kết hợp thành PDF"
 
 #: Menu

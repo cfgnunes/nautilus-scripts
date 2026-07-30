@@ -748,7 +748,7 @@ msgid "Audio: Normalize volume"
 msgstr "Ses: Ses seviyesini normalleştir"
 
 #: Menu
-msgid "Audio: Produce a spectrogram"
+msgid "Audio: Produce spectrogram"
 msgstr "Ses: Spektrogram oluştur"
 
 #: Menu
@@ -1108,11 +1108,11 @@ msgid "Image: Color white to alpha (15 pct)"
 msgstr "Görüntü: Beyaz rengini alfa yap (15 pct)"
 
 #: Menu
-msgid "Image: Combine into a GIF"
+msgid "Image: Combine into GIF"
 msgstr "Görüntü: GIF olarak birleştir"
 
 #: Menu
-msgid "Image: Combine into a PDF"
+msgid "Image: Combine into PDF"
 msgstr "Görüntü: PDF olarak birleştir"
 
 #: Menu

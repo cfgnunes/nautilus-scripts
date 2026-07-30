@@ -323,7 +323,7 @@ _main() {
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"
 
-    script_test="Audio and Video/Audio: Quality/Audio: Produce a spectrogram"
+    script_test="Audio and Video/Audio: Quality/Audio: Produce spectrogram"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file.png"
@@ -801,13 +801,13 @@ _main() {
     __test_file_nonempty "$temp_dir/Output/Test image (2).png"
     __test_file_empty "$std_output"
 
-    script_test="Image/Image: Combine, Split/Image: Combine into a GIF"
+    script_test="Image/Image: Combine, Split/Image: Combine into GIF"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" "$input_file2" >"$std_output"
     __test_file_nonempty "$temp_dir/Animated image.gif"
     __test_file_empty "$std_output"
 
-    script_test="Image/Image: Combine, Split/Image: Combine into a PDF"
+    script_test="Image/Image: Combine, Split/Image: Combine into PDF"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" "$input_file2" >"$std_output"
     __test_file_nonempty "$temp_dir/Combined images.pdf"
