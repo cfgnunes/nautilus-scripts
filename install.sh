@@ -275,7 +275,7 @@ _main() {
             continue
         fi
 
-        #region Step 3.1: Install the the actions
+        #region Step 3.1: Install the actions
         _install_actions
         #endregion
 
@@ -962,7 +962,7 @@ _create_links() {
 
 #endregion
 #------------------------------------------------------------------------------
-#region Keyboard accellerators
+#region Keyboard accelerators
 #------------------------------------------------------------------------------
 
 # Function: _install_accels
