@@ -23,7 +23,7 @@ _main() {
     # Execute the function '_main_task' for each file in parallel.
     export -f _main_task _run_gpg
     _run_function_parallel \
-        "_main_task '{}' '$output_dir' '$id_sign'" \
+        "_main_task '{}' '$(_escape_single_quotes "$output_dir")' '$id_sign'" \
         "$input_files" "$FIELD_SEPARATOR" ""
     _display_result_box "$output_dir"
 }

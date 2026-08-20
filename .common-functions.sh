@@ -147,7 +147,7 @@ _cleanup_on_exit() {
 
     # Escape single quotes in filenames to handle them correctly in 'xargs'
     # with 'bash -c'.
-    items_to_remove=$(sed -z "s|'|'\\\''|g" <<<"$items_to_remove")
+    items_to_remove=$(_escape_single_quotes "$items_to_remove")
 
     printf "%s" "$items_to_remove" | xargs \
         --no-run-if-empty \
@@ -311,6 +311,18 @@ _logs_consolidate() {
     _exit_script
 }
 
+# Function: _escape_single_quotes
+#
+# Description:
+#   This function escapes single quotes in a string so it can be safely
+#   embedded in a single-quoted argument passed to 'xargs' with 'bash -c'.
+#
+# Parameters:
+#   $1 (input_str): The string to escape.
+_escape_single_quotes() {
+    sed -z "s|'|'\\\''|g" <<<"$1"
+}
+
 # Function: _run_task_parallel
 #
 # Description:
@@ -325,6 +337,10 @@ _run_task_parallel() {
     local input_files=$1
     local output_dir=$2
     local max_procs=${3:-""}
+
+    # Escape single quotes in the output directory to handle them correctly in
+    # 'xargs' with 'bash -c'.
+    output_dir=$(_escape_single_quotes "$output_dir")
 
     # Execute the function '_main_task' for each file in parallel.
     export -f _main_task
@@ -418,7 +434,7 @@ _run_function_parallel() {
 
     # Escape single quotes in items to handle them correctly in 'xargs'
     # with 'bash -c'.
-    items=$(sed -z "s|'|'\\\''|g" <<<"$items")
+    items=$(_escape_single_quotes "$items")
 
     # Execute the given expression in parallel for each item.
     printf "%s" "$items" | xargs \
