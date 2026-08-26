@@ -17,7 +17,7 @@ set -u
 #region Constants
 #------------------------------------------------------------------------------
 
-ACCESSED_RECENTLY_LINKS_TO_KEEP=10
+ACCESSED_RECENTLY_LINKS_TO_KEEP=15
 FIELD_SEPARATOR=$'\r'          # The main field separator.
 GUI_BOX_HEIGHT=550             # Height of the GUI dialog boxes.
 GUI_BOX_WIDTH=900              # Width of the GUI dialog boxes.
