@@ -1064,6 +1064,10 @@ _delete_items() {
         return
     fi
 
+    # Disable pathname expansion so names like '*' or '?' are not expanded
+    # when '$items' is unquoted (IFS splits only on '$FIELD_SEPARATOR').
+    set -f
+
     # shellcheck disable=SC2086
     if _command_exists "gio"; then
         gio trash -- $items 2>/dev/null
@@ -1083,6 +1087,7 @@ _delete_items() {
             failed_items+="$item"$'\n'
         fi
     done
+    set +f
 
     if [[ -n "$failed_items" ]]; then
         msg="$(_i18n 'Some items could not be deleted.')"
@@ -2846,8 +2851,7 @@ _translate_to_gvfs_path() {
     fi
     gvfs_path=${gvfs_path//%/\\x}
 
-    # shellcheck disable=SC2059
-    printf "$gvfs_path"
+    printf '%b' "$gvfs_path"
 }
 
 # Function: _get_filenames_filemanager
@@ -3441,6 +3445,10 @@ _open_items_locations() {
         items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$items")
     fi
 
+    # Disable pathname expansion so names like '*' or '?' are not expanded
+    # when '$items' is unquoted (IFS splits only on '$FIELD_SEPARATOR').
+    set -f
+
     # Prepare items to be opened by the file manager.
     local items_open=""
     local item=""
@@ -3486,6 +3494,7 @@ _open_items_locations() {
         done
         ;;
     esac
+    set +f
 }
 
 # Function: _open_urls
@@ -3842,8 +3851,7 @@ _text_uri_decode() {
     uri_encoded=${uri_encoded//%/\\x}
     uri_encoded=${uri_encoded//file:\/\//}
 
-    # shellcheck disable=SC2059
-    printf "$uri_encoded"
+    printf '%b' "$uri_encoded"
 }
 
 #endregion

@@ -812,6 +812,21 @@ __run_text_uri_decode() {
     expected_output="/plain/path"
     output=$(_text_uri_decode "$input")
     __test_equal "$input" "$expected_output" "$output"
+
+    input="file:///tmp/50%25.pdf"
+    expected_output="/tmp/50%.pdf"
+    output=$(_text_uri_decode "$input")
+    __test_equal "$input" "$expected_output" "$output"
+
+    input="file:///tmp/100%25%20complete.txt"
+    expected_output="/tmp/100% complete.txt"
+    output=$(_text_uri_decode "$input")
+    __test_equal "$input" "$expected_output" "$output"
+
+    input="file:///tmp/report%25s.txt"
+    expected_output="/tmp/report%s.txt"
+    output=$(_text_uri_decode "$input")
+    __test_equal "$input" "$expected_output" "$output"
 }
 
 __run_text_remove_pwd() {
@@ -887,6 +902,11 @@ __run_translate_to_gvfs_path() {
     expected_output="/run/user/${uid}/gvfs/smb-share:server=server,share=share"
     output=$(_translate_to_gvfs_path "$input")
     __test_equal "SMB URI without path." "$expected_output" "$output"
+
+    input="sftp://host.example/tmp/50%25.pdf"
+    expected_output="/run/user/${uid}/gvfs/sftp:host=host.example/tmp/50%.pdf"
+    output=$(_translate_to_gvfs_path "$input")
+    __test_equal "SFTP URI with percent in filename." "$expected_output" "$output"
 }
 
 __run_command_exists() {

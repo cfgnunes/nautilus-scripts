@@ -568,6 +568,10 @@ _item_create_backup() {
 _delete_items() {
     local items=$1
 
+    # Disable pathname expansion so names like '*' or '?' are not expanded
+    # when '$items' is unquoted.
+    set -f
+
     # Attempt to remove empty directories directly (rmdir only removes empty
     # dirs, silently fails otherwise). This avoids sending empty folders to the
     # trash and deletes them outright.
@@ -584,6 +588,7 @@ _delete_items() {
     else
         rm -rf -- $items 2>/dev/null
     fi
+    set +f
 }
 
 #endregion
@@ -911,8 +916,10 @@ _install_scripts() {
 _create_links() {
     local destination_dir=$1
 
-    # Remove previous scripts if requested.
-    if [[ "$OPT_REMOVE_SCRIPTS" == "true" ]]; then
+    # Remove previous scripts if requested. Never trash the source tree when
+    # installing from the file-manager scripts directory itself.
+    if [[ "$OPT_REMOVE_SCRIPTS" == "true" ]] &&
+        [[ "$destination_dir" != "$SCRIPT_DIR" ]]; then
         _delete_items "$destination_dir"
     else
         # Remove broken links.
