@@ -20,46 +20,76 @@ _main() {
     std_output=$(find -L $input_files \
         ! -path "$IGNORE_FIND_PATH" \
         \( \
+        -type d -iname "__MACOSX" -o \
         -type d -iname "__pycache__" -o \
+        -type d -iname ".AppleDouble" -o \
         -type d -iname ".caltrash" -o \
+        -type d -iname ".DocumentRevisions-V100" -o \
         -type d -iname ".fseventsd" -o \
         -type d -iname ".gradle" -o \
         -type d -iname ".idea" -o \
+        -type d -iname ".ipynb_checkpoints" -o \
         -type d -iname ".mypy_cache" -o \
         -type d -iname ".pytest_cache" -o \
+        -type d -iname ".ruff_cache" -o \
         -type d -iname ".Spotlight-V100" -o \
         -type d -iname ".TemporaryItems" -o \
         -type d -iname ".trash" -o \
+        -type d -iname ".Trash-*" -o \
+        -type d -iname ".Trashes" -o \
         -type d -iname "*.tmp" -o \
+        -type d -iname "\$RECYCLE.BIN" -o \
         -type d -iname "latex.out" -o \
         -type f -iname "._*" -o \
+        -type f -iname ".#*" -o \
+        -type f -iname ".*.kate-swp" -o \
         -type f -iname ".*.swo" -o \
         -type f -iname ".*.swp" -o \
+        -type f -iname ".apdisk" -o \
+        -type f -iname ".directory" -o \
         -type f -iname ".DS_Store*" -o \
+        -type f -iname ".eslintcache" -o \
         -type f -iname ".fseventsd-uuid" -o \
         -type f -iname ".goutputstream-*" -o \
+        -type f -iname ".localized" -o \
+        -type f -iname ".LSOverride" -o \
+        -type f -iname ".nfs*" -o \
+        -type f -iname ".stylelintcache" -o \
         -type f -iname ".VolumeIcon.icns" -o \
         -type f -iname "*-jvsc-*.ipynb" -o \
         -type f -iname "*.~*" -o \
+        -type f -iname "*.aria2" -o \
         -type f -iname "*.autosave.xopp" -o \
         -type f -iname "*.class" -o \
         -type f -iname "*.crdownload" -o \
+        -type f -iname "*.filepart" -o \
         -type f -iname "*.fuse_hidden*" -o \
-        -type f -iname "*.lock" -o \
         -type f -iname "*.log.lck" -o \
         -type f -iname "*.log" -o \
         -type f -iname "*.old" -o \
+        -type f -iname "*.opdownload" -o \
         -type f -iname "*.orig" -o \
         -type f -iname "*.part" -o \
+        -type f -iname "*.partial" -o \
         -type f -iname "*.pid" -o \
         -type f -iname "*.pyc" -o \
         -type f -iname "*.pyo" -o \
         -type f -iname "*.tmp" -o \
+        -type f -iname "*.unconfirmed" -o \
+        -type f -iname "*.un~" -o \
+        -type f -iname "*:encryptable" -o \
+        -type f -iname "*:Zone.Identifier" -o \
+        -type f -iname "*~" -o \
+        -type f -iname "#*#" -o \
         -type f -iname "~lock.*" -o \
         -type f -iname "condaenv.*.requirements.txt" -o \
         -type f -iname "desktop.ini" -o \
         -type f -iname "ehthumbs.db" -o \
+        -type f -iname "ehthumbs_vista.db" -o \
+        -type f -iname "hs_err_pid*" -o \
+        -type f -iname "nohup.out" -o \
         -type f -iname "npm-debug.log*" -o \
+        -type f -iname "ssh-copy-id.*" -o \
         -type f -iname "Thumbs.db" -o \
         -type f -iname "yarn-*.log*" \
         \) -printf "%p\n" 2>/dev/null)
