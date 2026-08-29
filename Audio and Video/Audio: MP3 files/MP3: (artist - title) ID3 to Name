@@ -33,6 +33,10 @@ _main_task() {
     tag_artist=$(grep -m1 "^Performer:" <<<"$std_output" | cut -d ":" -f 2-)
     tag_title=$(grep -m1 "^Title:" <<<"$std_output" | cut -d ":" -f 2-)
 
+    # EXT4 filenames cannot contain '/'.
+    tag_artist=${tag_artist//\//, }
+    tag_title=${tag_title//\//, }
+
     # Rename the file.
     local dir_file=""
     dir_file=$(_get_dirname "$input_file")
