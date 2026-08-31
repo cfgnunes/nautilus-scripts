@@ -1580,6 +1580,14 @@ msgid "Rename: Remove parenthetical blocks"
 msgstr "Renomear: Remover blocos de parênteses"
 
 #: Menu
+msgid "Rename: Remove prefixes"
+msgstr "Renomear: Remover prefixos"
+
+#: Menu
+msgid "Rename: Remove suffixes"
+msgstr "Renomear: Remover sufixos"
+
+#: Menu
 msgid "Rename: Change spaces to dashes"
 msgstr "Renomear: Trocar espaços por travessões"
 

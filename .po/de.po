@@ -1580,6 +1580,14 @@ msgid "Rename: Remove parenthetical blocks"
 msgstr "Umbenennen: Inhalt in Klammern entfernen"
 
 #: Menu
+msgid "Rename: Remove prefixes"
+msgstr "Umbenennen: Präfixe entfernen"
+
+#: Menu
+msgid "Rename: Remove suffixes"
+msgstr "Umbenennen: Suffixe entfernen"
+
+#: Menu
 msgid "Rename: Change spaces to dashes"
 msgstr "Umbenennen: Leerzeichen in Bindestriche ändern"
 

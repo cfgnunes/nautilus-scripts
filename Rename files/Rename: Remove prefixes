@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+# Source the file '.common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/.common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _check_dependencies ""
+    _display_wait_box
+    input_files=$(_get_files "par_type=all")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+    _display_result_box ""
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local dir=""
+    local filename=""
+    local filename_base=""
+    local filename_extension=""
+    local words=()
+    local prefix_regex='^(\([^)]*\)|\[[^]]*\])[[:space:]]+(.*)$'
+
+    dir=$(dirname -- "$input_file")
+    filename=$(basename -- "$input_file")
+
+    # Directories do not have an extension.
+    if [[ -d "$input_file" ]]; then
+        filename_base=$filename
+        filename_extension=""
+    else
+        filename_base=$(_strip_filename_extension "$filename")
+        filename_extension=$(_get_filename_extension "$filename")
+    fi
+
+    # Remove a leading "(...)" or "[...]" block as a single prefix, otherwise
+    # the first space-separated word. Skip if that would leave fewer than 2 words.
+    if [[ "$filename_base" =~ $prefix_regex ]]; then
+        filename_base="${BASH_REMATCH[2]}"
+        read -r -a words <<<"$filename_base"
+        if ((${#words[@]} < 2)); then
+            return 0
+        fi
+        output_file="${words[*]}$filename_extension"
+    else
+        read -r -a words <<<"$filename_base"
+        if ((${#words[@]} <= 2)); then
+            return 0
+        fi
+        words=("${words[@]:1}")
+        output_file="${words[*]}$filename_extension"
+    fi
+
+    # Run the main process.
+    _move_file "skip" "$input_file" "$dir/$output_file" || return 1
+}
+
+_main "$@"

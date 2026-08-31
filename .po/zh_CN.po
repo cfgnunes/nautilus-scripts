@@ -1580,6 +1580,14 @@ msgid "Rename: Remove parenthetical blocks"
 msgstr "重命名：删除括号中的内容"
 
 #: Menu
+msgid "Rename: Remove prefixes"
+msgstr "重命名：移除前缀"
+
+#: Menu
+msgid "Rename: Remove suffixes"
+msgstr "重命名：移除后缀"
+
+#: Menu
 msgid "Rename: Change spaces to dashes"
 msgstr "重命名：将空格改为短横线"
 

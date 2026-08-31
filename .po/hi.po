@@ -1580,6 +1580,14 @@ msgid "Rename: Remove parenthetical blocks"
 msgstr "नाम बदलें: कोष्ठक ब्लॉक हटाएँ"
 
 #: Menu
+msgid "Rename: Remove prefixes"
+msgstr "नाम बदलें: उपसर्ग हटाएँ"
+
+#: Menu
+msgid "Rename: Remove suffixes"
+msgstr "नाम बदलें: प्रत्यय हटाएँ"
+
+#: Menu
 msgid "Rename: Change spaces to dashes"
 msgstr "नाम बदलें: रिक्त स्थान को डैश में बदलें"
 

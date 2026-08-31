@@ -1579,6 +1579,14 @@ msgid "Rename: Remove parenthetical blocks"
 msgstr ""
 
 #: Menu
+msgid "Rename: Remove prefixes"
+msgstr ""
+
+#: Menu
+msgid "Rename: Remove suffixes"
+msgstr ""
+
+#: Menu
 msgid "Rename: Change spaces to dashes"
 msgstr ""
 

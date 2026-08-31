@@ -1580,6 +1580,14 @@ msgid "Rename: Remove parenthetical blocks"
 msgstr "שינוי שם: הסרת תוכן בסוגריים"
 
 #: Menu
+msgid "Rename: Remove prefixes"
+msgstr "שינוי שם: הסרת קידומות"
+
+#: Menu
+msgid "Rename: Remove suffixes"
+msgstr "שינוי שם: הסרת סיומות"
+
+#: Menu
 msgid "Rename: Change spaces to dashes"
 msgstr "שינוי שם: המרת רווחים למקפים"
 

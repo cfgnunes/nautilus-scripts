@@ -1580,6 +1580,14 @@ msgid "Rename: Remove parenthetical blocks"
 msgstr "Zmień nazwę: Usuń bloki w nawiasach"
 
 #: Menu
+msgid "Rename: Remove prefixes"
+msgstr "Zmień nazwę: Usuń prefiksy"
+
+#: Menu
+msgid "Rename: Remove suffixes"
+msgstr "Zmień nazwę: Usuń sufiksy"
+
+#: Menu
 msgid "Rename: Change spaces to dashes"
 msgstr "Zmień nazwę: Zamień spacje na myślniki"
 

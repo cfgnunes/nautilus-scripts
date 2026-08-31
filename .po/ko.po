@@ -1580,6 +1580,14 @@ msgid "Rename: Remove parenthetical blocks"
 msgstr "이름 변경: 괄호 블록 제거"
 
 #: Menu
+msgid "Rename: Remove prefixes"
+msgstr "이름 변경: 접두사 제거"
+
+#: Menu
+msgid "Rename: Remove suffixes"
+msgstr "이름 변경: 접미사 제거"
+
+#: Menu
 msgid "Rename: Change spaces to dashes"
 msgstr "이름 변경: 공백을 대시로 변경"
 

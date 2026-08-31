@@ -1580,6 +1580,14 @@ msgid "Rename: Remove parenthetical blocks"
 msgstr "Đổi tên: Xóa nội dung trong ngoặc"
 
 #: Menu
+msgid "Rename: Remove prefixes"
+msgstr "Đổi tên: Xóa tiền tố"
+
+#: Menu
+msgid "Rename: Remove suffixes"
+msgstr "Đổi tên: Xóa hậu tố"
+
+#: Menu
 msgid "Rename: Change spaces to dashes"
 msgstr "Đổi tên: Đổi khoảng trắng thành dấu gạch"
 
