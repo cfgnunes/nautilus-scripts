@@ -1568,6 +1568,10 @@ msgid "PDF: Split into single-page PDFs"
 msgstr "PDF: Diviser en PDF à page unique"
 
 #: Menu
+msgid "Rename: Add MD5 prefix"
+msgstr "Renommer: Ajouter préfixe MD5"
+
+#: Menu
 msgid "Rename: Remove accents"
 msgstr "Renommer: Supprimer accents"
 

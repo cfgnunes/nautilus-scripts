@@ -1568,6 +1568,10 @@ msgid "PDF: Split into single-page PDFs"
 msgstr "PDF：単一ページごとのPDFに分割"
 
 #: Menu
+msgid "Rename: Add MD5 prefix"
+msgstr "名前変更：MD5プレフィックスを追加"
+
+#: Menu
 msgid "Rename: Remove accents"
 msgstr "名前変更：アクセント記号を削除"
 
