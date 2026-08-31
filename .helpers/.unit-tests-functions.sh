@@ -188,7 +188,7 @@ __run_source_common_functions() {
     __test_equal "Check IGNORE_FIND_PATH." "*.git/*" "$IGNORE_FIND_PATH"
     __test_equal "Check GUI_BOX_HEIGHT." "550" "$GUI_BOX_HEIGHT"
     __test_equal "Check GUI_BOX_WIDTH." "900" "$GUI_BOX_WIDTH"
-    __test_equal "Check ACCESSED_RECENTLY_LINKS_TO_KEEP." "10" \
+    __test_equal "Check ACCESSED_RECENTLY_LINKS_TO_KEEP." "15" \
         "$ACCESSED_RECENTLY_LINKS_TO_KEEP"
     # shellcheck disable=SC2153
     __test_path_exists "Check TEMP_DIR exists." "true" "$TEMP_DIR"
