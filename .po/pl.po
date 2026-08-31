@@ -242,6 +242,12 @@ msgstr "Pliki graficzne"
 msgid "Select an image to use as the watermark"
 msgstr "Wybierz obraz do użycia jako znak wodny"
 
+msgid "Enter the target size."
+msgstr "Wprowadź rozmiar."
+
+msgid "Invalid size!"
+msgstr "Nieprawidłowy rozmiar!"
+
 msgid "Key files"
 msgstr "Pliki kluczy"
 
@@ -1278,6 +1284,10 @@ msgstr "Obraz: Zmień rozmiar (2560x1440)"
 #: Menu
 msgid "Image: Resize (3840x2160)"
 msgstr "Obraz: Zmień rozmiar (3840x2160)"
+
+#: Menu
+msgid "Image: Resize (custom size)"
+msgstr "Obraz: Zmień rozmiar (rozmiar niestandardowy)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

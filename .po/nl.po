@@ -242,6 +242,12 @@ msgstr "Afbeeldingsbestanden"
 msgid "Select an image to use as the watermark"
 msgstr "Kies een afbeelding om als watermerk te gebruiken"
 
+msgid "Enter the target size."
+msgstr "Voer de grootte in."
+
+msgid "Invalid size!"
+msgstr "Ongeldige grootte!"
+
 msgid "Key files"
 msgstr "Sleutelbestanden"
 
@@ -1278,6 +1284,10 @@ msgstr "Afbeelding: grootte aanpassen (2560x1440)"
 #: Menu
 msgid "Image: Resize (3840x2160)"
 msgstr "Afbeelding: grootte aanpassen (3840x2160)"
+
+#: Menu
+msgid "Image: Resize (custom size)"
+msgstr "Afbeelding: grootte aanpassen (aangepaste grootte)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

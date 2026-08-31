@@ -242,6 +242,12 @@ msgstr "Görüntü dosyaları"
 msgid "Select an image to use as the watermark"
 msgstr "Filigran olarak kullanılacak bir görüntü seçin"
 
+msgid "Enter the target size."
+msgstr "Boyutu girin."
+
+msgid "Invalid size!"
+msgstr "Geçersiz boyut!"
+
 msgid "Key files"
 msgstr "Anahtar dosyaları"
 
@@ -1278,6 +1284,10 @@ msgstr "Görüntü: Boyutlandır (2560x1440)"
 #: Menu
 msgid "Image: Resize (3840x2160)"
 msgstr "Görüntü: Boyutlandır (3840x2160)"
+
+#: Menu
+msgid "Image: Resize (custom size)"
+msgstr "Görüntü: Boyutlandır (özel boyut)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

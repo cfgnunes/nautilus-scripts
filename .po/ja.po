@@ -242,6 +242,12 @@ msgstr "画像ファイル"
 msgid "Select an image to use as the watermark"
 msgstr "透かしとして使用する画像を選択"
 
+msgid "Enter the target size."
+msgstr "サイズを入力してください。"
+
+msgid "Invalid size!"
+msgstr "無効なサイズです！"
+
 msgid "Key files"
 msgstr "鍵ファイル"
 
@@ -1278,6 +1284,10 @@ msgstr "画像：サイズ変更 (2560x1440)"
 #: Menu
 msgid "Image: Resize (3840x2160)"
 msgstr "画像：サイズ変更 (3840x2160)"
+
+#: Menu
+msgid "Image: Resize (custom size)"
+msgstr "画像：サイズ変更 (カスタムサイズ)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

@@ -242,6 +242,12 @@ msgstr "Bilddateien"
 msgid "Select an image to use as the watermark"
 msgstr "Wählen Sie ein Bild als Wasserzeichen aus"
 
+msgid "Enter the target size."
+msgstr "Geben Sie die Größe ein."
+
+msgid "Invalid size!"
+msgstr "Ungültige Größe!"
+
 msgid "Key files"
 msgstr "Schlüsseldateien"
 
@@ -1278,6 +1284,10 @@ msgstr "Bild: Größe ändern (2560x1440)"
 #: Menu
 msgid "Image: Resize (3840x2160)"
 msgstr "Bild: Größe ändern (3840x2160)"
+
+#: Menu
+msgid "Image: Resize (custom size)"
+msgstr "Bild: Größe ändern (benutzerdefinierte Größe)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

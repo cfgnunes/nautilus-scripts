@@ -242,6 +242,12 @@ msgstr "图像文件"
 msgid "Select an image to use as the watermark"
 msgstr "选择一张图像作为水印"
 
+msgid "Enter the target size."
+msgstr "请输入尺寸。"
+
+msgid "Invalid size!"
+msgstr "尺寸无效！"
+
 msgid "Key files"
 msgstr "密钥文件"
 
@@ -1278,6 +1284,10 @@ msgstr "图像：调整尺寸（2560x1440）"
 #: Menu
 msgid "Image: Resize (3840x2160)"
 msgstr "图像：调整尺寸（3840x2160）"
+
+#: Menu
+msgid "Image: Resize (custom size)"
+msgstr "图像：调整尺寸（自定义尺寸）"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

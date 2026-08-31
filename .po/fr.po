@@ -242,6 +242,12 @@ msgstr "Fichiers image"
 msgid "Select an image to use as the watermark"
 msgstr "Sélectionnez une image à utiliser comme filigrane"
 
+msgid "Enter the target size."
+msgstr "Entrez la taille."
+
+msgid "Invalid size!"
+msgstr "Taille invalide !"
+
 msgid "Key files"
 msgstr "Fichiers de clés"
 
@@ -1278,6 +1284,10 @@ msgstr "Image: Redimensionner (2560x1440)"
 #: Menu
 msgid "Image: Resize (3840x2160)"
 msgstr "Image: Redimensionner (3840x2160)"
+
+#: Menu
+msgid "Image: Resize (custom size)"
+msgstr "Image: Redimensionner (taille personnalisée)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

@@ -241,10 +241,10 @@ msgstr ""
 msgid "Select an image to use as the watermark"
 msgstr ""
 
-msgid "Enter target size (e.g., 800x600):"
+msgid "Enter the target size."
 msgstr ""
 
-msgid "Invalid size! Use the format WxH, e.g. 800x600."
+msgid "Invalid size!"
 msgstr ""
 
 msgid "Key files"
@@ -1282,6 +1282,10 @@ msgstr ""
 
 #: Menu
 msgid "Image: Resize (3840x2160)"
+msgstr ""
+
+#: Menu
+msgid "Image: Resize (custom size)"
 msgstr ""
 
 #: Menu

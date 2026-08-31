@@ -1,38 +1,36 @@
 #!/usr/bin/env bash
 
-# Source the script '.common-functions.sh'.
+# Source the file '.common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
-
-# Declare dimension globally so parallel subshells/functions can read it
-DIMENSION=""
 
 _main() {
     local input_files=""
     local output_dir=""
     local msg=""
 
+    # Target size (WxH). Exported later so parallel tasks can read it.
+    DIMENSION=""
+
     # Execute initial checks.
     _command_exists "magick" || _check_dependencies "convert"
 
     input_files=$(_get_files "par_type=file; par_select_mime=image/")
-    [ -z "$input_files" ] && return 1
+    [[ -z "$input_files" ]] && return 1
 
-    msg="$(_i18n 'Enter target size (e.g., 800x600):')"
+    msg="$(_i18n 'Enter the target size.')"
+    msg+="\n\n"
+    msg+="$(_i18n 'Example:') 800x600"
     DIMENSION=$(_display_input_text_box "$msg" "")
 
-    # Strip all whitespace (leading, trailing, and internal)
-    DIMENSION="${DIMENSION//[[:space:]]/}"
-    [ -z "$DIMENSION" ] && return 1
-
-    # Validate the format strictly as "WxH" (digits only) and prevent 'bad' command 
-    # to be passed further down the pipeline
-    if [[ ! "$DIMENSION" =~ ^[0-9]+x[0-9]+$ ]]; then
-        msg="$(_i18n 'Invalid size! Use the format WxH, e.g. 800x600.')"
+    # Parse two numbers with any separator and normalize to WxH.
+    if [[ ! "$DIMENSION" =~ ^[[:space:]]*([0-9]+)[^0-9]+([0-9]+)[[:space:]]*$ ]]; then
+        msg="$(_i18n 'Invalid size!')"
         _display_error_box "$msg"
         _exit_script
     fi
+    DIMENSION="${BASH_REMATCH[1]}x${BASH_REMATCH[2]}"
 
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
@@ -51,15 +49,13 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    # Ensure DIMENSION isn't blank
-    if [ -z "$DIMENSION" ]; then
-        echo "Error: Dimension is empty" >&2
+    if [[ -z "$DIMENSION" ]]; then
         return 1
     fi
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($DIMENSION)'")
 
-    # Run the main process using explicit string quoting for the caret (^) operator
+    # Run the main process.
     std_output=$(_cmd_magick_convert "$input_file" -resize "${DIMENSION}^" -gravity center -crop "${DIMENSION}+0+0" -strip +repage "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }

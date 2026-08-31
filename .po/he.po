@@ -242,6 +242,12 @@ msgstr "קובצי תמונות"
 msgid "Select an image to use as the watermark"
 msgstr "נא לבחור תמונה שתשמש כסימן המים"
 
+msgid "Enter the target size."
+msgstr "נא למלא את הגודל."
+
+msgid "Invalid size!"
+msgstr "הגודל אינו תקני!"
+
 msgid "Key files"
 msgstr "קובצי מפתחות"
 
@@ -1278,6 +1284,10 @@ msgstr "תמונה: שינוי גודל (2560x1440)"
 #: Menu
 msgid "Image: Resize (3840x2160)"
 msgstr "תמונה: שינוי גודל (3840x2160)"
+
+#: Menu
+msgid "Image: Resize (custom size)"
+msgstr "תמונה: שינוי גודל (גודל מותאם אישית)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"
