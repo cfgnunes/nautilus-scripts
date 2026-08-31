@@ -48,13 +48,13 @@ _main_task() {
     if [[ "$filename_base" =~ $suffix_regex ]]; then
         filename_base="${BASH_REMATCH[1]}"
         read -r -a words <<<"$filename_base"
-        if ((${#words[@]} < 2)); then
+        if ((${#words[@]} < 1)); then
             return 0
         fi
         output_file="${words[*]}$filename_extension"
     else
         read -r -a words <<<"$filename_base"
-        if ((${#words[@]} <= 2)); then
+        if ((${#words[@]} <= 1)); then
             return 0
         fi
         unset "words[-1]"
