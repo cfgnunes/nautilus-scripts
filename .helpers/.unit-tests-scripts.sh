@@ -930,18 +930,6 @@ _main() {
     __test_file_nonempty "$output_file (75 pct).png"
     __test_file_empty "$std_output"
 
-    script_test="Image/Image: Crop, Resize/Image: Resize (512x512)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (512x512).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Crop, Resize/Image: Resize (1080x1080)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (1080x1080).png"
-    __test_file_empty "$std_output"
-
     script_test="Image/Image: Crop, Resize/Image: Resize (1920x1080)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"

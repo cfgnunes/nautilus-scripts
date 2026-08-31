@@ -1266,14 +1266,6 @@ msgid "Image: Resize (75 pct)"
 msgstr "Изображение: изменить размер (75 pct)"
 
 #: Menu
-msgid "Image: Resize (512x512)"
-msgstr "Изображение: изменить размер (512x512)"
-
-#: Menu
-msgid "Image: Resize (1080x1080)"
-msgstr "Изображение: изменить размер (1080x1080)"
-
-#: Menu
 msgid "Image: Resize (1920x1080)"
 msgstr "Изображение: изменить размер (1920x1080)"
 

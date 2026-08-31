@@ -1266,14 +1266,6 @@ msgid "Image: Resize (75 pct)"
 msgstr "छवि: आकार बदलें (75 प्रतिशत)"
 
 #: Menu
-msgid "Image: Resize (512x512)"
-msgstr "छवि: आकार बदलें (512x512)"
-
-#: Menu
-msgid "Image: Resize (1080x1080)"
-msgstr "छवि: आकार बदलें (1080x1080)"
-
-#: Menu
 msgid "Image: Resize (1920x1080)"
 msgstr "छवि: आकार बदलें (1920x1080)"
 

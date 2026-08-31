@@ -1266,14 +1266,6 @@ msgid "Image: Resize (75 pct)"
 msgstr "Görüntü: Boyutlandır (75 pct)"
 
 #: Menu
-msgid "Image: Resize (512x512)"
-msgstr "Görüntü: Boyutlandır (512x512)"
-
-#: Menu
-msgid "Image: Resize (1080x1080)"
-msgstr "Görüntü: Boyutlandır (1080x1080)"
-
-#: Menu
 msgid "Image: Resize (1920x1080)"
 msgstr "Görüntü: Boyutlandır (1920x1080)"
 
