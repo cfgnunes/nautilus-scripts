@@ -1874,17 +1874,6 @@ _main() {
     __test_file_empty "$std_output"
 
     # Create mock files for testing.
-    input_file1="$temp_dir/Test rename parentheses (suffix 1) (suffix 2).txt"
-    output_file="$temp_dir/Test rename parentheses.txt"
-    echo "Content of 'Test'." >"$input_file1"
-
-    script_test="Rename files/Rename: Remove parenthetical blocks"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_empty "$std_output"
-
-    # Create mock files for testing.
     input_file1="$temp_dir/Test rename extra.txt"
     output_file="$temp_dir/Test rename.txt"
     echo "Content of 'Test'." >"$input_file1"

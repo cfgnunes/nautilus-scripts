@@ -1578,10 +1578,6 @@ msgid "Rename: Remove accents"
 msgstr "שינוי שם: הסרת סימנים דיאקריטיים מהאותיות"
 
 #: Menu
-msgid "Rename: Remove parenthetical blocks"
-msgstr "שינוי שם: הסרת תוכן בסוגריים"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "שינוי שם: הסרת קידומות"
 

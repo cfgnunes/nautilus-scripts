@@ -1578,10 +1578,6 @@ msgid "Rename: Remove accents"
 msgstr "重命名：移除重音符号"
 
 #: Menu
-msgid "Rename: Remove parenthetical blocks"
-msgstr "重命名：删除括号中的内容"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "重命名：移除前缀"
 

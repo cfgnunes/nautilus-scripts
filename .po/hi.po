@@ -1578,10 +1578,6 @@ msgid "Rename: Remove accents"
 msgstr "नाम बदलें: एक्सेंट हटाएँ"
 
 #: Menu
-msgid "Rename: Remove parenthetical blocks"
-msgstr "नाम बदलें: कोष्ठक ब्लॉक हटाएँ"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "नाम बदलें: उपसर्ग हटाएँ"
 

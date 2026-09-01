@@ -1578,10 +1578,6 @@ msgid "Rename: Remove accents"
 msgstr "Renommer: Supprimer accents"
 
 #: Menu
-msgid "Rename: Remove parenthetical blocks"
-msgstr "Renommer: Supprimer blocs entre parenthèses"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "Renommer: Supprimer préfixes"
 

@@ -1578,10 +1578,6 @@ msgid "Rename: Remove accents"
 msgstr "이름 변경: 악센트 제거"
 
 #: Menu
-msgid "Rename: Remove parenthetical blocks"
-msgstr "이름 변경: 괄호 블록 제거"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "이름 변경: 접두사 제거"
 

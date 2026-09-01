@@ -1578,10 +1578,6 @@ msgid "Rename: Remove accents"
 msgstr "Naam wĳzigen: accenten wissen"
 
 #: Menu
-msgid "Rename: Remove parenthetical blocks"
-msgstr "Naam wĳzigen: haakjes wissen"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "Naam wĳzigen: voorvoegsels wissen"
 
