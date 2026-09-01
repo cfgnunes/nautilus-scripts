@@ -32,7 +32,6 @@ _main() {
     fi
     DIMENSION="${BASH_REMATCH[1]}x${BASH_REMATCH[2]}"
 
-
     _display_wait_box
 
     export DIMENSION
