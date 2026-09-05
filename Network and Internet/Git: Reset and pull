@@ -63,15 +63,38 @@ _main_task() {
     # -------------------------------------------------------------------------
     # Step 4: Determine and checkout the correct branch.
     # Tries to detect the current branch, falling back to the remote's default.
+    # If the remote-tracking branch no longer exists, switch to the default
+    # and delete the orphan local branch.
     # -------------------------------------------------------------------------
+    local skip_branches="desenv|develop|main|master"
+    local default_branch=""
+    local orphan_branch=""
+
+    default_branch=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's|^origin/||')
+    if [[ -z "$default_branch" ]]; then
+        default_branch=$(git remote show origin | grep "HEAD branch" | sed "s|.*: ||")
+    fi
+
     branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
     if [[ -z "$branch" ]]; then
-        branch=$(git remote show origin | grep "HEAD branch" | sed "s|.*: ||")
+        branch="$default_branch"
+    fi
+
+    # Remote branch is gone: move to the default branch first.
+    if ! git rev-parse --verify --quiet "refs/remotes/origin/$branch" >/dev/null; then
+        orphan_branch="$branch"
+        branch="$default_branch"
     fi
 
     # Switch to the detected branch.
     std_output=$(git switch "$branch" 2>&1 || git checkout "$branch" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    # Delete the orphan local branch after leaving it (cannot delete HEAD).
+    if [[ -n "$orphan_branch" && "$orphan_branch" != "$branch" && ! "$orphan_branch" =~ ^($skip_branches)$ ]]; then
+        std_output=$(git branch --delete --force "$orphan_branch" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "" || return 1
+    fi
 
     # -------------------------------------------------------------------------
     # Step 5: Force reset to match the remote branch exactly.
@@ -91,7 +114,6 @@ _main_task() {
     # Step 7: Clean up obsolete local branches.
     # Removes branches that no longer exist in the remote repository.
     # -------------------------------------------------------------------------
-    local skip_branches="desenv|develop|main|master"
     local local_branches""
     local remote_branches=""
     local merged_branches=""
