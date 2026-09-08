@@ -380,14 +380,8 @@ msgstr "예시："
 msgid "Enter IP addresses or IP ranges."
 msgstr "IP 주소 또는 IP 범위를 입력하세요."
 
-msgid "There are no valid IPs in the input!"
-msgstr "입력에 유효한 IP가 없습니다!"
-
 msgid "Enter the URLs."
 msgstr "URL을 입력하세요."
-
-msgid "There are no valid URLs in the input!"
-msgstr "입력에 유효한 URL이 없습니다!"
 
 msgid "No remote URL found."
 msgstr "원격 URL을 찾을 수 없습니다."

@@ -380,14 +380,8 @@ msgstr "उदाहरण:"
 msgid "Enter IP addresses or IP ranges."
 msgstr "IP पते या IP रेंज दर्ज करें।"
 
-msgid "There are no valid IPs in the input!"
-msgstr "इनपुट में कोई वैध IP नहीं हैं!"
-
 msgid "Enter the URLs."
 msgstr "URL दर्ज करें।"
-
-msgid "There are no valid URLs in the input!"
-msgstr "इनपुट में कोई वैध URL नहीं हैं!"
 
 msgid "No remote URL found."
 msgstr "कोई रिमोट URL नहीं मिला।"

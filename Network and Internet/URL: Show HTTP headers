@@ -107,7 +107,7 @@ _prepare_input() {
     fi
 
     if [[ -z "$urls" ]]; then
-        msg="$(_i18n 'There are no valid URLs in the input!')"
+        msg="$(_i18n 'Invalid input!')"
         _display_error_box "$msg"
         _exit_script
     fi

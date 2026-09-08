@@ -380,14 +380,8 @@ msgstr "דוגמה："
 msgid "Enter IP addresses or IP ranges."
 msgstr "נא להקליד כתובות IP או טווחי כתובות IP."
 
-msgid "There are no valid IPs in the input!"
-msgstr "לא הוקלדו כתובות IP תקינות!"
-
 msgid "Enter the URLs."
 msgstr "נא למלא את הכתובות."
-
-msgid "There are no valid URLs in the input!"
-msgstr "לא הוקלדו כתובות תקינות!"
 
 msgid "No remote URL found."
 msgstr "לא נמצאה כתובת מרוחקת."

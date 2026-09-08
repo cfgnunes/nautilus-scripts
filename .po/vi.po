@@ -380,14 +380,8 @@ msgstr "Ví dụ:"
 msgid "Enter IP addresses or IP ranges."
 msgstr "Nhập địa chỉ IP hoặc dải IP."
 
-msgid "There are no valid IPs in the input!"
-msgstr "Không có IP hợp lệ trong dữ liệu nhập!"
-
 msgid "Enter the URLs."
 msgstr "Nhập các URL."
-
-msgid "There are no valid URLs in the input!"
-msgstr "Không có URL hợp lệ trong dữ liệu nhập!"
 
 msgid "No remote URL found."
 msgstr "Không tìm thấy URL từ xa."

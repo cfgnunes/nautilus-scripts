@@ -380,14 +380,8 @@ msgstr "Exemple:"
 msgid "Enter IP addresses or IP ranges."
 msgstr "Entrez les adresses IP ou les plages d'IP."
 
-msgid "There are no valid IPs in the input!"
-msgstr "Il n'y a pas d'IP valides dans l'entrée !"
-
 msgid "Enter the URLs."
 msgstr "Entrez les URL."
-
-msgid "There are no valid URLs in the input!"
-msgstr "Il n'y a pas d'URL valides dans l'entrée !"
 
 msgid "No remote URL found."
 msgstr "Aucune URL distante trouvée."

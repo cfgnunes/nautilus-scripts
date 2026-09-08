@@ -380,14 +380,8 @@ msgstr "例："
 msgid "Enter IP addresses or IP ranges."
 msgstr "IPアドレスまたはアドレスの範囲を入力してください。"
 
-msgid "There are no valid IPs in the input!"
-msgstr "入力に有効なIPアドレスがありません！"
-
 msgid "Enter the URLs."
 msgstr "URLを入力してください。"
-
-msgid "There are no valid URLs in the input!"
-msgstr "入力に有効なURLがありません！"
 
 msgid "No remote URL found."
 msgstr "リモートURLが見つかりません。"
