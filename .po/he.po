@@ -1164,6 +1164,10 @@ msgid "Image: Create PNG icon (512 px)"
 msgstr "תמונה: יצירת סמל בקובץ PNG ‏(512 נק׳)"
 
 #: Menu
+msgid "Image: Create PNG icon (custom)"
+msgstr "תמונה: יצירת סמל בקובץ PNG (מותאם אישית)"
+
+#: Menu
 msgid "Image: Desaturate"
 msgstr "תמונה: הפחתת רווייה"
 
@@ -1664,6 +1668,10 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr "קובץ SVG: ייצוא כקובץ PNG ‏(1024 נק׳)"
 
 #: Menu
+msgid "SVG: Export to PNG (custom)"
+msgstr "קובץ SVG: ייצוא כקובץ PNG (מותאם אישית)"
+
+#: Menu
 msgid "SVG: Optimize"
 msgstr "SVG: מיטוב"
 
@@ -1862,6 +1870,10 @@ msgstr "וידאו: שינוי גודל (50 pct)"
 #: Menu
 msgid "Video: Resize (75 pct)"
 msgstr "וידאו: שינוי גודל (75 pct)"
+
+#: Menu
+msgid "Video: Resize (custom)"
+msgstr "וידאו: שינוי גודל (מותאם אישית)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"

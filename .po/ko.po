@@ -1164,6 +1164,10 @@ msgid "Image: Create PNG icon (512 px)"
 msgstr "이미지: PNG 아이콘 생성 (512px)"
 
 #: Menu
+msgid "Image: Create PNG icon (custom)"
+msgstr "이미지: PNG 아이콘 생성 (사용자 지정)"
+
+#: Menu
 msgid "Image: Desaturate"
 msgstr "이미지: 채도 낮추기"
 
@@ -1664,6 +1668,10 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG: PNG로 내보내기 (1024px)"
 
 #: Menu
+msgid "SVG: Export to PNG (custom)"
+msgstr "SVG: PNG로 내보내기 (사용자 지정)"
+
+#: Menu
 msgid "SVG: Optimize"
 msgstr "SVG: 최적화"
 
@@ -1862,6 +1870,10 @@ msgstr "비디오: 크기 조정 (50%)"
 #: Menu
 msgid "Video: Resize (75 pct)"
 msgstr "비디오: 크기 조정 (75%)"
+
+#: Menu
+msgid "Video: Resize (custom)"
+msgstr "비디오: 크기 조정 (사용자 지정)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"

@@ -1164,6 +1164,10 @@ msgid "Image: Create PNG icon (512 px)"
 msgstr "Bild: PNG-Icon erstellen (512 px)"
 
 #: Menu
+msgid "Image: Create PNG icon (custom)"
+msgstr "Bild: PNG-Icon erstellen (benutzerdefiniert)"
+
+#: Menu
 msgid "Image: Desaturate"
 msgstr "Bild: Entsättigen"
 
@@ -1664,6 +1668,10 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG: Als PNG exportieren (1024 px)"
 
 #: Menu
+msgid "SVG: Export to PNG (custom)"
+msgstr "SVG: Als PNG exportieren (benutzerdefiniert)"
+
+#: Menu
 msgid "SVG: Optimize"
 msgstr "SVG: Optimieren"
 
@@ -1862,6 +1870,10 @@ msgstr "Video: Größe ändern (50 pct)"
 #: Menu
 msgid "Video: Resize (75 pct)"
 msgstr "Video: Größe ändern (75 pct)"
+
+#: Menu
+msgid "Video: Resize (custom)"
+msgstr "Video: Größe ändern (benutzerdefiniert)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"

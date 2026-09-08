@@ -1164,6 +1164,10 @@ msgid "Image: Create PNG icon (512 px)"
 msgstr "图像：创建PNG图标（512像素）"
 
 #: Menu
+msgid "Image: Create PNG icon (custom)"
+msgstr "图像：创建PNG图标（自定义）"
+
+#: Menu
 msgid "Image: Desaturate"
 msgstr "图像：去饱和度"
 
@@ -1664,6 +1668,10 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG：导出为PNG（1024像素）"
 
 #: Menu
+msgid "SVG: Export to PNG (custom)"
+msgstr "SVG：导出为PNG（自定义）"
+
+#: Menu
 msgid "SVG: Optimize"
 msgstr "SVG：优化"
 
@@ -1862,6 +1870,10 @@ msgstr "视频：调整大小（50％）"
 #: Menu
 msgid "Video: Resize (75 pct)"
 msgstr "视频：调整大小（75％）"
+
+#: Menu
+msgid "Video: Resize (custom)"
+msgstr "视频：调整大小（自定义）"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"

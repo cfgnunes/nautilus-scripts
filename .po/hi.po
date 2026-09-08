@@ -1164,6 +1164,10 @@ msgid "Image: Create PNG icon (512 px)"
 msgstr "छवि: PNG आइकन बनाएँ (512 px)"
 
 #: Menu
+msgid "Image: Create PNG icon (custom)"
+msgstr "छवि: PNG आइकन बनाएँ (अनुकूलित)"
+
+#: Menu
 msgid "Image: Desaturate"
 msgstr "छवि: डिसेचुरेट करें"
 
@@ -1664,6 +1668,10 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG: PNG में निर्यात करें (1024 px)"
 
 #: Menu
+msgid "SVG: Export to PNG (custom)"
+msgstr "SVG: PNG में निर्यात करें (अनुकूलित)"
+
+#: Menu
 msgid "SVG: Optimize"
 msgstr "SVG: अनुकूलित करें"
 
@@ -1862,6 +1870,10 @@ msgstr "वीडियो: आकार बदलें (50 प्रतिश�
 #: Menu
 msgid "Video: Resize (75 pct)"
 msgstr "वीडियो: आकार बदलें (75 प्रतिशत)"
+
+#: Menu
+msgid "Video: Resize (custom)"
+msgstr "वीडियो: आकार बदलें (अनुकूलित)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"

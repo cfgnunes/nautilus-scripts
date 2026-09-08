@@ -1164,6 +1164,10 @@ msgid "Image: Create PNG icon (512 px)"
 msgstr "Görüntü: PNG simgesi oluştur (512 px)"
 
 #: Menu
+msgid "Image: Create PNG icon (custom)"
+msgstr "Görüntü: PNG simgesi oluştur (özel)"
+
+#: Menu
 msgid "Image: Desaturate"
 msgstr "Görüntü: Doygunluğu azalt"
 
@@ -1664,6 +1668,10 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG: PNG'ye dışa aktar (1024 px)"
 
 #: Menu
+msgid "SVG: Export to PNG (custom)"
+msgstr "SVG: PNG'ye dışa aktar (özel)"
+
+#: Menu
 msgid "SVG: Optimize"
 msgstr "SVG: Optimize Et"
 
@@ -1862,6 +1870,10 @@ msgstr "Video: Boyutlandır (50 pct)"
 #: Menu
 msgid "Video: Resize (75 pct)"
 msgstr "Video: Boyutlandır (75 pct)"
+
+#: Menu
+msgid "Video: Resize (custom)"
+msgstr "Video: Boyutlandır (özel)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"

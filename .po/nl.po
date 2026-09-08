@@ -1164,6 +1164,10 @@ msgid "Image: Create PNG icon (512 px)"
 msgstr "Afbeelding: png-pictogram maken (512 px)"
 
 #: Menu
+msgid "Image: Create PNG icon (custom)"
+msgstr "Afbeelding: png-pictogram maken (aangepast)"
+
+#: Menu
 msgid "Image: Desaturate"
 msgstr "Afbeelding: ontkleuren"
 
@@ -1664,6 +1668,10 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG: exporteren naar png (1024 px)"
 
 #: Menu
+msgid "SVG: Export to PNG (custom)"
+msgstr "SVG: exporteren naar png (aangepast)"
+
+#: Menu
 msgid "SVG: Optimize"
 msgstr "SVG: Optimaliseren"
 
@@ -1862,6 +1870,10 @@ msgstr "Video: grootte aanpassen (50 pct)"
 #: Menu
 msgid "Video: Resize (75 pct)"
 msgstr "Video: grootte aanpassen (75 pct)"
+
+#: Menu
+msgid "Video: Resize (custom)"
+msgstr "Video: grootte aanpassen (aangepast)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"

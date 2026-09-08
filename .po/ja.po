@@ -1164,6 +1164,10 @@ msgid "Image: Create PNG icon (512 px)"
 msgstr "画像：PNGアイコンを作成 (512 px)"
 
 #: Menu
+msgid "Image: Create PNG icon (custom)"
+msgstr "画像：PNGアイコンを作成 (カスタム)"
+
+#: Menu
 msgid "Image: Desaturate"
 msgstr "画像：彩度を下げる"
 
@@ -1664,6 +1668,10 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG：PNGにエクスポート (1024 px)"
 
 #: Menu
+msgid "SVG: Export to PNG (custom)"
+msgstr "SVG：PNGにエクスポート (カスタム)"
+
+#: Menu
 msgid "SVG: Optimize"
 msgstr "SVG：最適化"
 
@@ -1862,6 +1870,10 @@ msgstr "動画：サイズ変更 (50％)"
 #: Menu
 msgid "Video: Resize (75 pct)"
 msgstr "動画：サイズ変更 (75％)"
+
+#: Menu
+msgid "Video: Resize (custom)"
+msgstr "動画：サイズ変更 (カスタム)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"

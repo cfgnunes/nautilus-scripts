@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+
+# Source the file '.common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/.common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+    local msg=""
+
+    # Target height in pixels. Exported later so parallel tasks can read it.
+    DIMENSION=""
+
+    # Execute initial checks.
+    _check_dependencies "inkscape"
+
+    input_files=$(_get_files "par_type=file; par_select_mime='image/svg+xml|application/gzip'")
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
+
+    msg="$(_i18n 'Enter the target size.')"
+    msg+="\n\n"
+    msg+="$(_i18n 'Example:') 512"
+    DIMENSION=$(_display_input_text_box "$msg" "")
+
+    # Parse a single number (height in pixels).
+    if [[ ! "$DIMENSION" =~ ^[[:space:]]*([0-9]+)[[:space:]]*$ ]]; then
+        msg="$(_i18n 'Invalid input!')"
+        _display_error_box "$msg"
+        _exit_script
+    fi
+    DIMENSION="${BASH_REMATCH[1]}"
+
+    _display_wait_box
+
+    export DIMENSION
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+
+    if [[ -z "$DIMENSION" ]]; then
+        return 1
+    fi
+
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=png; par_suffix='($DIMENSION px)'")
+
+    # Run the main process.
+
+    local inkscape_ver=""
+    local inkscape_ver_old="1.0"
+    inkscape_ver=$(inkscape --version 2>/dev/null | cut -d " " -f 2)
+    if printf "%s\n%s" "$inkscape_ver" "$inkscape_ver_old" |
+        sort --version-sort | head -n 1 | grep -qxF "$inkscape_ver"; then
+        # Old Inkscape version.
+        std_output=$(inkscape --without-gui --export-area-drawing --file="$input_file" --export-height=$DIMENSION --export-png="$output_file" 2>&1)
+    else
+        # New Inkscape version.
+        std_output=$(inkscape --export-area-drawing --export-height=$DIMENSION --export-filename="$output_file" -- "$input_file" 2>&1)
+    fi
+
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+}
+
+_main "$@"

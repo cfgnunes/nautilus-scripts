@@ -1164,6 +1164,10 @@ msgid "Image: Create PNG icon (512 px)"
 msgstr "Hình ảnh: Tạo biểu tượng PNG (512 px)"
 
 #: Menu
+msgid "Image: Create PNG icon (custom)"
+msgstr "Hình ảnh: Tạo biểu tượng PNG (tùy chỉnh)"
+
+#: Menu
 msgid "Image: Desaturate"
 msgstr "Hình ảnh: Khử bão hòa"
 
@@ -1664,6 +1668,10 @@ msgid "SVG: Export to PNG (1024 px)"
 msgstr "SVG: Xuất sang PNG (1024 px)"
 
 #: Menu
+msgid "SVG: Export to PNG (custom)"
+msgstr "SVG: Xuất sang PNG (tùy chỉnh)"
+
+#: Menu
 msgid "SVG: Optimize"
 msgstr "SVG: Tối ưu hóa"
 
@@ -1862,6 +1870,10 @@ msgstr "Video: Thay đổi kích thước (50 pct)"
 #: Menu
 msgid "Video: Resize (75 pct)"
 msgstr "Video: Thay đổi kích thước (75 pct)"
+
+#: Menu
+msgid "Video: Resize (custom)"
+msgstr "Video: Thay đổi kích thước (tùy chỉnh)"
 
 #: Menu
 msgid "Video: Rotate (90 deg)"
