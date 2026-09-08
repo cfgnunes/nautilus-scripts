@@ -1348,6 +1348,10 @@ msgid "Media: Show basic metadata"
 msgstr "Media: Hiển thị metadata cơ bản"
 
 #: Menu
+msgid "Media: Show information"
+msgstr "Media: Hiển thị thông tin"
+
+#: Menu
 msgid "MP3: (artist - title) Name to ID3"
 msgstr "MP3: (nghệ sĩ - tiêu đề) Tên -> ID3"
 
@@ -1634,10 +1638,6 @@ msgstr "Hiển thị metadata tệp"
 #: Menu
 msgid "Show file MIME type"
 msgstr "Hiển thị loại MIME của tệp"
-
-#: Menu
-msgid "Show media information"
-msgstr "Hiển thị thông tin media"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

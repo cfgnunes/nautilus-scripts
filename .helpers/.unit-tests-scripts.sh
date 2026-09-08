@@ -165,7 +165,7 @@ _main() {
         "$input_file1" &>/dev/null
     cp -- "$input_file1" "$input_file2"
 
-    script_test="Directories and Files/Show media information"
+    script_test="Audio and Video/Audio and Video: Tools/Media: Show information"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$std_output"

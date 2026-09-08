@@ -1348,6 +1348,10 @@ msgid "Media: Show basic metadata"
 msgstr "मीडिया: बेसिक मेटाडेटा दिखाएँ"
 
 #: Menu
+msgid "Media: Show information"
+msgstr "मीडिया: जानकारी दिखाएँ"
+
+#: Menu
 msgid "MP3: (artist - title) Name to ID3"
 msgstr "MP3: (कलाकार - शीर्षक) नाम से ID3"
 
@@ -1634,10 +1638,6 @@ msgstr "फ़ाइल मेटाडेटा दिखाएँ"
 #: Menu
 msgid "Show file MIME type"
 msgstr "फ़ाइल MIME प्रकार दिखाएँ"
-
-#: Menu
-msgid "Show media information"
-msgstr "मीडिया जानकारी दिखाएँ"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

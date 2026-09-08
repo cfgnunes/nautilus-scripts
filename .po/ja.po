@@ -1348,6 +1348,10 @@ msgid "Media: Show basic metadata"
 msgstr "メディア：基本のメタデータを表示"
 
 #: Menu
+msgid "Media: Show information"
+msgstr "メディア：情報を表示"
+
+#: Menu
 msgid "MP3: (artist - title) Name to ID3"
 msgstr "MP3：(アーティスト - タイトル) 名前をID3に"
 
@@ -1634,10 +1638,6 @@ msgstr "ファイルのメタデータを表示"
 #: Menu
 msgid "Show file MIME type"
 msgstr "ファイルのMIMEタイプを表示"
-
-#: Menu
-msgid "Show media information"
-msgstr "メディア情報を表示"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

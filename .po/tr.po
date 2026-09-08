@@ -1348,6 +1348,10 @@ msgid "Media: Show basic metadata"
 msgstr "Ortam: Temel meta verileri göster"
 
 #: Menu
+msgid "Media: Show information"
+msgstr "Ortam: Bilgileri göster"
+
+#: Menu
 msgid "MP3: (artist - title) Name to ID3"
 msgstr "MP3: (sanatçı - başlık) İsmi ID3'e yaz"
 
@@ -1634,10 +1638,6 @@ msgstr "Dosya meta verilerini göster"
 #: Menu
 msgid "Show file MIME type"
 msgstr "Dosya MIME türlerini göster"
-
-#: Menu
-msgid "Show media information"
-msgstr "Ortam bilgilerini göster"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"
