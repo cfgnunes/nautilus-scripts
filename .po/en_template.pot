@@ -1147,10 +1147,6 @@ msgid "Image: Convert to WebP"
 msgstr ""
 
 #: Menu
-msgid "Image: Create PNG icon (64 px)"
-msgstr ""
-
-#: Menu
 msgid "Image: Create PNG icon (128 px)"
 msgstr ""
 

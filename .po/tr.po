@@ -1148,10 +1148,6 @@ msgid "Image: Convert to WebP"
 msgstr "Görüntü: WebP'ye dönüştür"
 
 #: Menu
-msgid "Image: Create PNG icon (64 px)"
-msgstr "Görüntü: PNG simgesi oluştur (64 px)"
-
-#: Menu
 msgid "Image: Create PNG icon (128 px)"
 msgstr "Görüntü: PNG simgesi oluştur (128 px)"
 

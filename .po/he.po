@@ -1148,10 +1148,6 @@ msgid "Image: Convert to WebP"
 msgstr "תמונה: המרה לקובץ WebP"
 
 #: Menu
-msgid "Image: Create PNG icon (64 px)"
-msgstr "תמונה: יצירת סמל בקובץ PNG ‏(64 נק׳)"
-
-#: Menu
 msgid "Image: Create PNG icon (128 px)"
 msgstr "תמונה: יצירת סמל בקובץ PNG ‏(128 נק׳)"
 
