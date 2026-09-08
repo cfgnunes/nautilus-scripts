@@ -245,8 +245,8 @@ msgstr "워터마크로 사용할 이미지를 선택하세요"
 msgid "Enter the target size."
 msgstr "크기를 입력하세요."
 
-msgid "Invalid size!"
-msgstr "유효하지 않은 크기입니다!"
+msgid "Invalid input!"
+msgstr "유효하지 않은 입력입니다!"
 
 msgid "Key files"
 msgstr "키 파일"
@@ -1278,8 +1278,8 @@ msgid "Image: Resize (3840x2160)"
 msgstr "이미지: 크기 조정 (3840x2160)"
 
 #: Menu
-msgid "Image: Resize (custom size)"
-msgstr "이미지: 크기 조정 (사용자 지정 크기)"
+msgid "Image: Resize (custom)"
+msgstr "이미지: 크기 조정 (사용자 지정)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

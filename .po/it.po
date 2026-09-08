@@ -245,8 +245,8 @@ msgstr "Seleziona un'immagine da usare come filigrana"
 msgid "Enter the target size."
 msgstr "Inserisci le dimensioni."
 
-msgid "Invalid size!"
-msgstr "Dimensione non valida!"
+msgid "Invalid input!"
+msgstr "Input non valido!"
 
 msgid "Key files"
 msgstr "File chiave"
@@ -1278,8 +1278,8 @@ msgid "Image: Resize (3840x2160)"
 msgstr "Immagine: Ridimensiona (3840x2160)"
 
 #: Menu
-msgid "Image: Resize (custom size)"
-msgstr "Immagine: Ridimensiona (dimensione personalizzata)"
+msgid "Image: Resize (custom)"
+msgstr "Immagine: Ridimensiona (personalizzato)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

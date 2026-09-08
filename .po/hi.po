@@ -245,8 +245,8 @@ msgstr "वॉटरमार्क के रूप में उपयोग �
 msgid "Enter the target size."
 msgstr "आकार दर्ज करें।"
 
-msgid "Invalid size!"
-msgstr "अमान्य आकार!"
+msgid "Invalid input!"
+msgstr "अमान्य इनपुट!"
 
 msgid "Key files"
 msgstr "कुंजी फ़ाइलें"
@@ -1278,8 +1278,8 @@ msgid "Image: Resize (3840x2160)"
 msgstr "छवि: आकार बदलें (3840x2160)"
 
 #: Menu
-msgid "Image: Resize (custom size)"
-msgstr "छवि: आकार बदलें (अनुकूलित आकार)"
+msgid "Image: Resize (custom)"
+msgstr "छवि: आकार बदलें (अनुकूलित)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

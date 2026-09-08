@@ -244,7 +244,7 @@ msgstr ""
 msgid "Enter the target size."
 msgstr ""
 
-msgid "Invalid size!"
+msgid "Invalid input!"
 msgstr ""
 
 msgid "Key files"
@@ -1277,7 +1277,7 @@ msgid "Image: Resize (3840x2160)"
 msgstr ""
 
 #: Menu
-msgid "Image: Resize (custom size)"
+msgid "Image: Resize (custom)"
 msgstr ""
 
 #: Menu

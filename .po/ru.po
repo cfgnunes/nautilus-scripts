@@ -245,8 +245,8 @@ msgstr "Выберите изображение для использовани�
 msgid "Enter the target size."
 msgstr "Введите размер."
 
-msgid "Invalid size!"
-msgstr "Неправильный размер!"
+msgid "Invalid input!"
+msgstr "Неверный ввод!"
 
 msgid "Key files"
 msgstr "Файлы ключей"
@@ -1278,8 +1278,8 @@ msgid "Image: Resize (3840x2160)"
 msgstr "Изображение: изменить размер (3840x2160)"
 
 #: Menu
-msgid "Image: Resize (custom size)"
-msgstr "Изображение: изменить размер (произвольный размер)"
+msgid "Image: Resize (custom)"
+msgstr "Изображение: изменить размер (произвольно)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

@@ -26,7 +26,7 @@ _main() {
 
     # Parse two numbers with any separator and normalize to WxH.
     if [[ ! "$DIMENSION" =~ ^[[:space:]]*([0-9]+)[^0-9]+([0-9]+)[[:space:]]*$ ]]; then
-        msg="$(_i18n 'Invalid size!')"
+        msg="$(_i18n 'Invalid input!')"
         _display_error_box "$msg"
         _exit_script
     fi

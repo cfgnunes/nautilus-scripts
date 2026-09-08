@@ -245,8 +245,8 @@ msgstr "Wybierz obraz do użycia jako znak wodny"
 msgid "Enter the target size."
 msgstr "Wprowadź rozmiar."
 
-msgid "Invalid size!"
-msgstr "Nieprawidłowy rozmiar!"
+msgid "Invalid input!"
+msgstr "Nieprawidłowe dane wejściowe!"
 
 msgid "Key files"
 msgstr "Pliki kluczy"
@@ -1278,8 +1278,8 @@ msgid "Image: Resize (3840x2160)"
 msgstr "Obraz: Zmień rozmiar (3840x2160)"
 
 #: Menu
-msgid "Image: Resize (custom size)"
-msgstr "Obraz: Zmień rozmiar (rozmiar niestandardowy)"
+msgid "Image: Resize (custom)"
+msgstr "Obraz: Zmień rozmiar (niestandardowy)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

@@ -245,8 +245,8 @@ msgstr "Chọn một ảnh để dùng làm watermark"
 msgid "Enter the target size."
 msgstr "Nhập kích thước."
 
-msgid "Invalid size!"
-msgstr "Kích thước không hợp lệ!"
+msgid "Invalid input!"
+msgstr "Đầu vào không hợp lệ!"
 
 msgid "Key files"
 msgstr "Tệp khóa"
@@ -1278,8 +1278,8 @@ msgid "Image: Resize (3840x2160)"
 msgstr "Hình ảnh: Thay đổi kích thước (3840x2160)"
 
 #: Menu
-msgid "Image: Resize (custom size)"
-msgstr "Hình ảnh: Thay đổi kích thước (kích thước tùy chỉnh)"
+msgid "Image: Resize (custom)"
+msgstr "Hình ảnh: Thay đổi kích thước (tùy chỉnh)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

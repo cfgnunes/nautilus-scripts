@@ -245,8 +245,8 @@ msgstr "透かしとして使用する画像を選択"
 msgid "Enter the target size."
 msgstr "サイズを入力してください。"
 
-msgid "Invalid size!"
-msgstr "無効なサイズです！"
+msgid "Invalid input!"
+msgstr "無効な入力です！"
 
 msgid "Key files"
 msgstr "鍵ファイル"
@@ -1278,8 +1278,8 @@ msgid "Image: Resize (3840x2160)"
 msgstr "画像：サイズ変更 (3840x2160)"
 
 #: Menu
-msgid "Image: Resize (custom size)"
-msgstr "画像：サイズ変更 (カスタムサイズ)"
+msgid "Image: Resize (custom)"
+msgstr "画像：サイズ変更 (カスタム)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"

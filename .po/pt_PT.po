@@ -245,8 +245,8 @@ msgstr "Selecione uma imagem para usar como marca de água"
 msgid "Enter the target size."
 msgstr "Introduza o tamanho."
 
-msgid "Invalid size!"
-msgstr "Tamanho inválido!"
+msgid "Invalid input!"
+msgstr "Entrada inválida!"
 
 msgid "Key files"
 msgstr "Ficheiros de chave"
@@ -1278,8 +1278,8 @@ msgid "Image: Resize (3840x2160)"
 msgstr "Imagem: Redimensionar (3840x2160)"
 
 #: Menu
-msgid "Image: Resize (custom size)"
-msgstr "Imagem: Redimensionar (tamanho personalizado)"
+msgid "Image: Resize (custom)"
+msgstr "Imagem: Redimensionar (personalizado)"
 
 #: Menu
 msgid "Image: Rotate (90 deg)"
