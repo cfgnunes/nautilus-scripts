@@ -634,7 +634,7 @@ _deps_get_dependency_value() {
     # Source the configuration file that defines the mapping between commands,
     # packages, and package managers. This file is used by the scripts to check
     # and resolve their dependencies.
-    if [[ ! -v "PACKAGE_NAME" ]]; then
+    if [[ ! -v PKG_MAP ]]; then
         source "$ROOT_DIR/.pkg-map.sh"
     fi
 
@@ -1670,7 +1670,7 @@ _display_error_box() {
     if ! _is_gui_session; then
         # For non-GUI sessions, simply print the message to the console.
         echo -e "$MSG_ERROR $message" >&2
-    elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
+    elif [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
         _display_gdbus_notify "dialog-error" "$(_get_script_name)" \
             "$message" "1" "$open_item" "false"
     elif _command_exists "zenity"; then
@@ -1711,7 +1711,7 @@ _display_info_box() {
     if ! _is_gui_session; then
         # For non-GUI sessions, simply print the message to the console.
         echo -e "$MSG_INFO $message" >&2
-    elif [[ -n "$DBUS_SESSION_BUS_ADDRESS" ]]; then
+    elif [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
         _display_gdbus_notify "dialog-information" "$(_get_script_name)" \
             "$message" "1" "$open_item" "true"
     elif _command_exists "zenity"; then
@@ -3884,6 +3884,9 @@ _cmd_magick_convert() {
 _initialize_homebrew() {
     # Skip initialization if Homebrew is already available in 'PATH'.
     [[ -n "${HOMEBREW_PREFIX:-}" ]] && return
+
+    # Skip initialization if '$HOME' is undefined.
+    [[ -z "${HOME:-}" ]] && return
 
     local homebrew_dir="$HOME/.local/apps/homebrew"
     local brew_cmd="$homebrew_dir/bin/brew"

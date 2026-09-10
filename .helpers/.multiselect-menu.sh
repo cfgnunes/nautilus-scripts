@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Code based on: https://unix.stackexchange.com/a/673436
-# Version: 2025-10-31
+# Version: 2026-09-10
 
 # Keyboard commands:
 #  <enter>: Confirms the current selection of options.
@@ -65,6 +65,9 @@ _multiselect_menu() {
         exit 1
     }
 
+    local start_row=""
+    local last_row=""
+
     # Ensure the cursor is back on upon a ctrl+c during read -s.
     trap "__on_ctrl_c" SIGINT
 
@@ -85,8 +88,6 @@ _multiselect_menu() {
     done
 
     # Determine the current screen position for overwriting the options.
-    local start_row=""
-    local last_row=""
     last_row=$(__get_cursor_row)
     start_row=$((last_row - ${#_options[@]}))
 

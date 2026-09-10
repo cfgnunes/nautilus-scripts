@@ -4,6 +4,9 @@ set -u
 
 INSTALL_NAME_DIR="scripts"
 
+# Use the home directory from the passwd database if '$HOME' is undefined.
+HOME=${HOME:-$(eval echo ~)}
+
 #------------------------------------------------------------------------------
 #region Helper functions
 #------------------------------------------------------------------------------

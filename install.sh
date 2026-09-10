@@ -94,6 +94,9 @@ readonly \
 # Use current username if '$USER' is undefined.
 USER=${USER:-$(id -un)}
 
+# Use the home directory from the passwd database if '$HOME' is undefined.
+HOME=${HOME:-$(eval echo ~)}
+
 #endregion
 #------------------------------------------------------------------------------
 #region Global variables
