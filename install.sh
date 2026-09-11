@@ -172,7 +172,7 @@ _main() {
     if [[ ! -f "$SCRIPT_DIR/.common-functions.sh" ]]; then
         _log "[INF] Running remote installer."
         _bootstrap_repository "$@"
-        exit 0
+        exit $?
     fi
     _log_system_info
     _i18n_initialize
@@ -1615,6 +1615,7 @@ _bootstrap_repository() {
 
     # Identify the extracted directory.
     local extracted_dir
+    local install_exit=0
     extracted_dir=$(
         find "$temp_dir" -maxdepth 1 -type d -name "${repo_name}*" | head -n 1
     )
@@ -1630,8 +1631,10 @@ _bootstrap_repository() {
     _echo ""
     cd "$extracted_dir" || exit 1
     bash install.sh "$@"
+    install_exit=$?
 
     rm -rf -- "$temp_dir"
+    return "$install_exit"
 }
 #endregion
 #endregion
