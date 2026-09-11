@@ -60,6 +60,7 @@ While numerous *Nautilus Scripts* are available for file managers on the web, ma
 | Key                 | Action                      |
 | ------------------- | --------------------------- |
 | `F4`                | Terminal                    |
+| `<Shift>F4`         | Terminal (synced panes)     |
 | `F7`                | Code editor                 |
 | `F12`               | Disk usage analyzer         |
 | `<Control>E`        | Extract here                |
@@ -89,7 +90,7 @@ While numerous *Nautilus Scripts* are available for file managers on the web, ma
 | `<Control><Shift>G` | Git: Clone URLs             |
 | `<Control><Shift>R` | Git: Reset and pull         |
 | `<Control><Shift>X` | URL: Download file          |
-| `<Shift><Alt>V`     | Create hard link here       |
+| `<Shift><Alt>V`     | Paste as hard link          |
 
 ## Compatibility
 
