@@ -26,12 +26,12 @@ _main_task() {
     local output_file=""
     local std_output=""
 
+    local error_message=""
+    error_message="Could not find the audio format from the video."
+
     # Get the audio format from the video.
     local audio_format=""
     audio_format=$(ffprobe -hide_banner -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$input_file")
-
-    local error_message=""
-    error_message="Could not find the audio format from the video."
     _check_output "$?" "$error_message" "$input_file" "$output_file" || return 1
 
     if [[ -z "$audio_format" ]]; then
