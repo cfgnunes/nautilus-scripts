@@ -160,7 +160,10 @@ _remove_gnome_application_folder() {
     # Remove the folder name if it exists.
     if [[ "$current_folders" == *"'$folder_name'"* ]]; then
         local new_list=""
-        new_list=$(sed "s/'$folder_name'//g; s/, ,/,/g; s/ ,/,/g; s/\[,/[ /; s/, \]/]/" <<<"$current_folders" | tr -s ' ')
+        new_list=$(sed -E \
+            "s/'$folder_name'[[:space:]]*,[[:space:]]*//; s/,[[:space:]]*'$folder_name'//; s/'$folder_name'//" \
+            <<<"$current_folders")
+        new_list=$(sed -E "s/\[[[:space:]]*\]/[]/; s/\[''\]/[]/" <<<"$new_list")
         gsettings set org.gnome.desktop.app-folders folder-children "$new_list" &>/dev/null
     fi
 }

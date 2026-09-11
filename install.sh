@@ -1181,9 +1181,15 @@ _create_gnome_application_folder() {
     local current_folders=""
     current_folders=$(gsettings get org.gnome.desktop.app-folders folder-children)
     if [[ "$current_folders" != *"'$folder_name'"* ]]; then
-        # shellcheck disable=SC2001
+        local new_list=""
+        if [[ "$current_folders" == "[]" || "$current_folders" == "@as []" ]]; then
+            new_list="['$folder_name']"
+        else
+            # shellcheck disable=SC2001
+            new_list=$(sed "s/]/, '$folder_name']/" <<<"$current_folders")
+        fi
         gsettings set \
-            org.gnome.desktop.app-folders folder-children "$(sed "s/]/,'$folder_name']/" <<<"$current_folders")" &>/dev/null
+            org.gnome.desktop.app-folders folder-children "$new_list" &>/dev/null
     fi
 
     # Set the display name for the new GNOME application folder.
