@@ -44,7 +44,8 @@ _main_task() {
 
     # -------------------------------------------------------------------------
     # Step 2: Clean working directory.
-    # Remove all untracked, ignored, and temporary files/directories.
+    # Remove untracked and ignored files/directories,
+    # then discard local changes.
     # -------------------------------------------------------------------------
     std_output=$(git clean -xdf 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
@@ -54,17 +55,17 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # -------------------------------------------------------------------------
-    # Step 3: Fetch updates from all remotes and tags.
-    # Ensures the local metadata is fully up to date.
+    # Step 3: Fetch from all remotes, including tags.
+    # Prune stale remote-tracking branches and tags.
     # -------------------------------------------------------------------------
     std_output=$(git fetch --all --tags --prune --prune-tags --force 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # -------------------------------------------------------------------------
     # Step 4: Determine and checkout the correct branch.
-    # Tries to detect the current branch, falling back to the remote's default.
-    # If the remote-tracking branch no longer exists, switch to the default
-    # and delete the orphan local branch.
+    # Use the current branch, or the remote default if HEAD is detached.
+    # If origin no longer has that branch, switch to the default and delete
+    # the orphan local branch (except desenv, develop, main, master).
     # -------------------------------------------------------------------------
     local skip_branches="desenv|develop|main|master"
     local default_branch=""
@@ -104,15 +105,16 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # -------------------------------------------------------------------------
-    # Step 6: Pull latest changes, ignoring conflicts.
-    # The '--strategy-option theirs' flag prefers remote changes automatically.
+    # Step 6: Pull from origin using a merge (not a rebase).
+    # On conflicts, '--strategy-option theirs' keeps the remote version.
+    # Pull errors are ignored so the remaining cleanup can still run.
     # -------------------------------------------------------------------------
     std_output=$(git pull origin "$branch" --rebase=false --strategy-option theirs 2>&1 || true)
     _check_output "0" "$std_output" "$input_file" "" || true
 
     # -------------------------------------------------------------------------
-    # Step 7: Clean up obsolete local branches.
-    # Removes branches that no longer exist in the remote repository.
+    # Step 7: Delete local branches that are not on the remote.
+    # Names in skip_branches (desenv, develop, main, master) are never deleted.
     # -------------------------------------------------------------------------
     local local_branches""
     local remote_branches=""
@@ -123,7 +125,7 @@ _main_task() {
     local_branches=$(git branch --format="%(refname:short)")
     merged_branches=$(grep -vE "($skip_branches)" <<<"$local_branches")
 
-    # Delete branches missing from the remote.
+    # Force-delete unprotected local branches missing from origin.
     for merged_branch in $merged_branches; do
         if ! grep -qxF "$merged_branch" <<<"$remote_branches"; then
             std_output=$(git branch --delete --force "$merged_branch" 2>&1)
@@ -132,9 +134,9 @@ _main_task() {
     done
 
     # -------------------------------------------------------------------------
-    # Step 8: Optimize repository and clean logs.
+    # Step 8: Expire all reflog entries and run garbage collection.
     # -------------------------------------------------------------------------
-    # Remove old reflog entries to reduce repository size.
+    # Expire all reflog entries immediately (--expire=now).
     std_output=$(git reflog expire --expire=now --all 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
