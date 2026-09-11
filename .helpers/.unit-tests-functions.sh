@@ -94,6 +94,7 @@ _main() {
     __run_move_file_errors
     __run_i18n_initialize
     __run_storage_text_edge_cases
+    __run_get_session_type
 
     rm -rf -- "$_TEMP_DIR"
 
@@ -1331,6 +1332,22 @@ __run_i18n_initialize() {
     else
         unset "LANG"
     fi
+}
+
+__run_get_session_type() {
+    local output=""
+
+    output=$(XDG_SESSION_TYPE="wayland" _get_session_type)
+    __test_equal "Wayland from XDG_SESSION_TYPE." "wayland" "$output"
+
+    output=$(XDG_SESSION_TYPE="x11" _get_session_type)
+    __test_equal "X11 from XDG_SESSION_TYPE." "x11" "$output"
+
+    output=$(XDG_SESSION_TYPE="" WAYLAND_DISPLAY="" DISPLAY=":0" _get_session_type)
+    __test_equal "X11 fallback from DISPLAY." "x11" "$output"
+
+    output=$(XDG_SESSION_TYPE="" WAYLAND_DISPLAY="wayland-0" DISPLAY="" _get_session_type)
+    __test_equal "Wayland fallback from WAYLAND_DISPLAY." "wayland" "$output"
 }
 
 #endregion
