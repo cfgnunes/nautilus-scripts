@@ -1857,8 +1857,8 @@ _main() {
     #--------------------------------------------------------------------------
 
     # Create mock files for testing.
-    input_file1="$temp_dir/Test réname.txt"
-    output_file="$temp_dir/Test rename.txt"
+    input_file1="$temp_dir/Test réname accents.txt"
+    output_file="$temp_dir/Test rename accents.txt"
     echo "Content of 'Test'." >"$input_file1"
 
     script_test="Rename files/Rename: Remove accents"
@@ -1868,8 +1868,8 @@ _main() {
     __test_file_empty "$std_output"
 
     # Create mock files for testing.
-    input_file1="$temp_dir/Test rename extra.txt"
-    output_file="$temp_dir/Test rename.txt"
+    input_file1="$temp_dir/Test rename suffixes extra.txt"
+    output_file="$temp_dir/Test rename suffixes.txt"
     echo "Content of 'Test'." >"$input_file1"
 
     script_test="Rename files/Rename: Remove suffixes"
@@ -1880,8 +1880,8 @@ _main() {
 
     # Create mock files for testing.
     rm -f -- "$output_file"
-    input_file1="$temp_dir/Test rename (suffix extra).txt"
-    output_file="$temp_dir/Test rename.txt"
+    input_file1="$temp_dir/Test rename suffixes2 (suffix extra).txt"
+    output_file="$temp_dir/Test rename suffixes2.txt"
     echo "Content of 'Test'." >"$input_file1"
 
     script_test="Rename files/Rename: Remove suffixes"
@@ -1892,8 +1892,8 @@ _main() {
 
     # Create mock files for testing.
     rm -f -- "$output_file"
-    input_file1="$temp_dir/Extra Test rename.txt"
-    output_file="$temp_dir/Test rename.txt"
+    input_file1="$temp_dir/Extra Test rename prefixes.txt"
+    output_file="$temp_dir/Test rename prefixes.txt"
     echo "Content of 'Test'." >"$input_file1"
 
     script_test="Rename files/Rename: Remove prefixes"
@@ -1904,8 +1904,8 @@ _main() {
 
     # Create mock files for testing.
     rm -f -- "$output_file"
-    input_file1="$temp_dir/(prefix extra) Test rename.txt"
-    output_file="$temp_dir/Test rename.txt"
+    input_file1="$temp_dir/(prefix extra) Test rename prefixes2.txt"
+    output_file="$temp_dir/Test rename prefixes2.txt"
     echo "Content of 'Test'." >"$input_file1"
 
     script_test="Rename files/Rename: Remove prefixes"
