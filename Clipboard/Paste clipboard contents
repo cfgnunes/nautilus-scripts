@@ -88,7 +88,7 @@ _save_file_from_clipboard() {
 
         # If a specific language is detected, rename the file accordingly.
         if [[ "$ext" != "txt" ]]; then
-            _move_file "rename" "$output_file" "$basename.$ext"
+            _move_file "rename" "$output_file" "$output_dir/$basename.$ext"
         fi
     fi
 }
