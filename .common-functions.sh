@@ -480,17 +480,8 @@ _check_dependencies_clipboard() {
     local dep_keys=$1
     local dep_keys_final="$dep_keys "
 
-    # Try to determine the session type.
-    local session_type="${XDG_SESSION_TYPE:-}"
-
-    # Fallback detection in case '$XDG_SESSION_TYPE' is empty.
-    if [[ -z "$session_type" ]]; then
-        if [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
-            session_type="wayland"
-        elif [[ -n "${DISPLAY:-}" ]]; then
-            session_type="x11"
-        fi
-    fi
+    local session_type=""
+    session_type=$(_get_session_type)
 
     case "$session_type" in
     "wayland") dep_keys_final+="wl-paste" ;;
@@ -2756,13 +2747,34 @@ _xdg_get_default_app() {
 #region Clipboard management
 #------------------------------------------------------------------------------
 
+# Function: _get_session_type
+#
+# Description:
+#   This function returns the current display session type. It prefers
+#   '$XDG_SESSION_TYPE' and falls back to '$WAYLAND_DISPLAY' / '$DISPLAY'
+#   when that variable is unset or empty.
+_get_session_type() {
+    local session_type=""
+    session_type=${XDG_SESSION_TYPE:-}
+
+    if [[ -z "$session_type" ]]; then
+        if [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
+            session_type="wayland"
+        elif [[ -n "${DISPLAY:-}" ]]; then
+            session_type="x11"
+        fi
+    fi
+
+    printf "%s" "$session_type"
+}
+
 # Function: _get_clipboard_data
 #
 # Description:
 #   This function retrieves the current content of the clipboard, adapting the
 #   method according to the session type.
 _get_clipboard_data() {
-    case "${XDG_SESSION_TYPE:-}" in
+    case "$(_get_session_type)" in
     "wayland") wl-paste 2>/dev/null ;;
     "x11") xclip -quiet -selection clipboard -o 2>/dev/null ;;
     esac
@@ -2779,7 +2791,7 @@ _get_clipboard_data() {
 _set_clipboard_data() {
     local data=$1
 
-    case "${XDG_SESSION_TYPE:-}" in
+    case "$(_get_session_type)" in
     "wayland") printf "%s" "$data" | wl-copy 2>/dev/null ;;
     "x11") printf "%s" "$data" | xclip -selection clipboard -i 2>/dev/null ;;
     esac
@@ -2796,7 +2808,7 @@ _set_clipboard_data() {
 _set_clipboard_file() {
     local input_file=$1
 
-    case "${XDG_SESSION_TYPE:-}" in
+    case "$(_get_session_type)" in
     "wayland") wl-copy <"$input_file" 2>/dev/null ;;
     "x11") xclip -selection clipboard -i <"$input_file" 2>/dev/null ;;
     esac
