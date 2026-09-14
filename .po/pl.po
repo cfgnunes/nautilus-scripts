@@ -896,6 +896,10 @@ msgid "Document: Convert to PDF"
 msgstr "Dokument: Konwertuj na PDF"
 
 #: Menu
+msgid "Document: Convert to PDF (landscape)"
+msgstr "Dokument: Konwertuj na PDF (poziomy)"
+
+#: Menu
 msgid "Document: Convert to PPTX"
 msgstr "Dokument: Konwertuj na PPTX"
 

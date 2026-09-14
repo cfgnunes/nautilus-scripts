@@ -896,6 +896,10 @@ msgid "Document: Convert to PDF"
 msgstr "ドキュメント：PDFに変換"
 
 #: Menu
+msgid "Document: Convert to PDF (landscape)"
+msgstr "ドキュメント：PDFに変換 (横向き)"
+
+#: Menu
 msgid "Document: Convert to PPTX"
 msgstr "ドキュメント：PPTXに変換"
 

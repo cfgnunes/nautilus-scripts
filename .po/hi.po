@@ -896,6 +896,10 @@ msgid "Document: Convert to PDF"
 msgstr "दस्तावेज़: PDF में कन्वर्ट करें"
 
 #: Menu
+msgid "Document: Convert to PDF (landscape)"
+msgstr "दस्तावेज़: PDF में कन्वर्ट करें (लैंडस्केप)"
+
+#: Menu
 msgid "Document: Convert to PPTX"
 msgstr "दस्तावेज़: PPTX में कन्वर्ट करें"
 
