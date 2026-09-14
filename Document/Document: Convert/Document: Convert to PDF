@@ -193,7 +193,7 @@ _run_command() {
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "pandoc")
-        std_output=$(pandoc --standalone -o "$output_file" -- "$input_file" 2>&1)
+        std_output=$(pandoc -V "geometry:a4paper,margin=1.5cm" --standalone -o "$output_file" -- "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     esac
