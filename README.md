@@ -14,13 +14,13 @@ A set of file manager actions that enhance your workflow. Useful right-click opt
 
 You can use either **curl** or **wget**. Choose **one** of the following commands and run it in your terminal:
 
-#### 🚀 Using `curl`
+####  Using `curl`
 
 ```bash
 bash -c "$(curl -fsSL https://cfgnunes.github.io/nautilus-scripts/install.sh)"
 ```
 
-#### 🚀 Using `wget`
+####  Using `wget`
 
 ```bash
 bash -c "$(wget -qO- https://cfgnunes.github.io/nautilus-scripts/install.sh)"
@@ -57,40 +57,40 @@ While numerous *Nautilus Scripts* are available for file managers on the web, ma
 
 ## Keyboard accelerators
 
-| Key                 | Action                      |
-| ------------------- | --------------------------- |
-| `F4`                | Terminal                    |
-| `<Shift>F4`         | Terminal (synced panes)     |
-| `F7`                | Code editor                 |
-| `F12`               | Disk usage analyzer         |
-| `<Control>E`        | Extract here                |
-| `<Control><Alt>G`   | Compress to 'tar.gz'        |
-| `<Control><Alt>S`   | Compress to 'tar.zst'       |
-| `<Control><Alt>X`   | Compress to 'tar.xz'        |
-| `<Control><Alt>Z`   | Compress to 'zip'           |
-| `<Control><Alt>I`   | Show file information       |
-| `<Control><Alt>M`   | Show file MIME type         |
-| `<Control><Alt>0`   | Find empty files            |
-| `<Control><Alt>J`   | Find junk files             |
-| `<Control><Alt>U`   | Find duplicate files        |
-| `<Control><Alt>H`   | List hidden files           |
-| `<Control><Alt>P`   | List permissions and owners |
-| `<Control><Alt>B`   | List largest files          |
-| `<Control><Alt>R`   | List recent files           |
-| `<Control><Alt>W`   | Text: List issues           |
-| `<Control><Alt>C`   | Copy file names             |
-| `<Control><Alt>V`   | Paste clipboard contents    |
-| `<Control><Shift>V` | Paste as symbolic link      |
-| `<Control><Shift>B` | Create backup (via Rsync)   |
-| `<Control><Shift>C` | Compare items               |
-| `<Control><Shift>O` | Open item location          |
-| `<Control><Shift>H` | Compute all checksums       |
-| `<Control><Shift>E` | Find empty directories      |
-| `<Control><Shift>P` | Rename: Remove suffixes     |
-| `<Control><Shift>G` | Git: Clone URLs             |
-| `<Control><Shift>R` | Git: Reset and pull         |
-| `<Control><Shift>X` | URL: Download file          |
-| `<Shift><Alt>V`     | Paste as hard link          |
+| Key                                               | Action                      |
+| ------------------------------------------------- | --------------------------- |
+| <kbd>F4</kbd>                                     | Terminal                    |
+| <kbd>Shift</kbd> + <kbd>F4</kbd>                  | Terminal (synced panes)     |
+| <kbd>F7</kbd>                                     | Code editor                 |
+| <kbd>F12</kbd>                                    | Disk usage analyzer         |
+| <kbd>Ctrl</kbd> + <kbd>E</kbd>                    | Extract here                |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>G</kbd>   | Compress to 'tar.gz'        |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>S</kbd>   | Compress to 'tar.zst'       |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>X</kbd>   | Compress to 'tar.xz'        |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Z</kbd>   | Compress to 'zip'           |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>I</kbd>   | Show file information       |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>M</kbd>   | Show file MIME type         |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>0</kbd>   | Find empty files            |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>J</kbd>   | Find junk files             |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>U</kbd>   | Find duplicate files        |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>H</kbd>   | List hidden files           |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>P</kbd>   | List permissions and owners |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>B</kbd>   | List largest files          |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd>   | List recent files           |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>W</kbd>   | Text: List issues           |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>C</kbd>   | Copy file names             |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>V</kbd>   | Paste clipboard contents    |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd> | Paste as symbolic link      |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> | Create backup (via Rsync)   |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> | Compare items               |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd> | Open item location          |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd> | Compute all checksums       |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> | Find empty directories      |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> | Rename: Remove suffixes     |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd> | Git: Clone URLs             |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> | Git: Reset and pull         |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> | URL: Download file          |
+| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>V</kbd>  | Paste as hard link          |
 
 ## Compatibility
 
@@ -126,6 +126,7 @@ Special thanks to everyone who contributed to the translation of this project:
 - 🇰🇷 **Yun Juhwan (@g-yunjh)** - Korean.
 - 🇯🇵 **Camegone (@camegone)** - Japanese.
 - 🇹🇷 **Yaşar Çiv (@yasarciv)** - Turkish.
+- 🇬🇪 **Temuri Doghonadze (@NorwayFun)** - Georgian.
 
 ### Contributors
 
