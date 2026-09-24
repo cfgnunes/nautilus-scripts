@@ -27,7 +27,7 @@ msgid "directories"
 msgstr "საქაღალდეები"
 
 msgid "items"
-msgstr "ელემენტი"
+msgstr "ელემენტები"
 
 msgid "The command failed."
 msgstr "ბრძანება ჩავარდა."
@@ -42,7 +42,7 @@ msgid "Your system does not support clipboard operations."
 msgstr "თქვენს სისტემას ბუფერის ოპერაციების მხარდაჭერა არ აქვს."
 
 msgid "Could not find a package for:"
-msgstr "ვერ ვიპოვე პაკეტი მოთხოვნისთვის:"
+msgstr "ვერ ვიპოვე პაკეტი ამისთვის:"
 
 msgid "The following packages are missing:"
 msgstr "შემდეგი პაკეტები ნაკლულია:"
@@ -54,13 +54,13 @@ msgid "Installing the packages. Please wait..."
 msgstr "მიმდინარეობს პაკეტების დაყენება - მოითმინეთ..."
 
 msgid "The package was installed, but a system reboot is required."
-msgstr "პაკეტი დაყენებულია, მაგრამ მას სისტემის გადატვირთვა სჭირდება."
+msgstr "პაკეტი დაყენებულია, მაგრამ საჭიროა სისტემის გადატვირთვა."
 
 msgid "Could not install the package:"
 msgstr "პაკეტის დაყენების შეცდომა:"
 
 msgid "This action will delete the selected items."
-msgstr "ეს ეს ქმედება მონიშნულ ელემენტებს წაშლის."
+msgstr "ეს ქმედება მონიშნულ ელემენტებს წაშლის."
 
 msgid "Total selected:"
 msgstr "სულ მონიშნული:"
@@ -69,13 +69,13 @@ msgid "Total:"
 msgstr "სულ:"
 
 msgid "Some items could not be deleted."
-msgstr "ზოგიერთი ელემენტის წაშლა შეუძლებელია."
+msgstr "ზოგიერთი ელემენტი ვერ წაიშალა."
 
 msgid "All items were successfully deleted!"
 msgstr "ყველა ელემენტი წარმატებით წაიშალა!"
 
 msgid "Could not access the directory:"
-msgstr "წვდომა აკრძალულია საქაღალდესთან:"
+msgstr "საქაღალდესთან წვდომა ვერ მოხერხდა:"
 
 msgid "The destination file already exists."
 msgstr "სამიზნე ფაილი უკვე არსებობს."
@@ -84,7 +84,7 @@ msgid "Unable to move."
 msgstr "გადატანა შეუძლებელია."
 
 msgid "OK"
-msgstr "დიახ"
+msgstr "კარგი"
 
 msgid "Cancel"
 msgstr "გაუქმება"
@@ -159,7 +159,7 @@ msgid "You must select at least"
 msgstr "უნდა აირჩიოთ, სულ ცოტა"
 
 msgid "You must select up to"
-msgstr "უნდა აირჩიოთ მაქს"
+msgstr "უნდა აირჩიოთ არაუმეტეს"
 
 msgid "Could not find the output directory!"
 msgstr "გამოტანის საქაღალდის პოვნა შეუძლებელია!"
@@ -192,11 +192,10 @@ msgid "Link"
 msgstr "ბმული"
 
 msgid "Unsupported clipboard type."
-msgstr "არასწორი ბუფერის ტიპი."
+msgstr "ბუფერის ეს ტიპი მხარდაჭერილი არაა."
 
 msgid "This action will rename the selected files and directories recursively."
-msgstr ""
-"ეს ქმედება მონიშნულ ფაილებს და საქაღალდეებს სახელს რეკურსიულად გადაარქმევეს."
+msgstr "ეს ქმედება მონიშნულ ფაილებსა და საქაღალდეებს სახელს რეკურსიულად გადაარქმევს."
 
 msgid "PDF files"
 msgstr "PDF ფაილები"
@@ -232,7 +231,7 @@ msgid "Artist"
 msgstr "შემსრულებელი"
 
 msgid "Title"
-msgstr "თანამდებობა"
+msgstr "სათაური"
 
 msgid "Quality"
 msgstr "ხარისხი"
@@ -301,7 +300,7 @@ msgid "Size"
 msgstr "ზომა"
 
 msgid "Group"
-msgstr "დაჯგუფება"
+msgstr "ჯგუფი"
 
 msgid "Item"
 msgstr "ელემენტი"
@@ -322,10 +321,10 @@ msgid "You must select only two binary files to compare!"
 msgstr "შესადარებლად, მხოლოდ, ორი ბინარული ფაილი უნდა აირჩიოთ!"
 
 msgid "No items were selected!"
-msgstr "მონიშნული ჩანაწერების გარეშე!"
+msgstr "ელემენტები მონიშნული არ არის!"
 
 msgid "No directories were selected!"
-msgstr "მონიშნული საქაღალდეების გარეშე!"
+msgstr "საქაღალდეები მონიშნული არ არის!"
 
 msgid "The selected items are identical."
 msgstr "არჩეული ელემენტები იდენტურია."
@@ -336,11 +335,8 @@ msgstr "მონიშნულ გამოსახულებებს ი�
 msgid "MIME"
 msgstr "MIME"
 
-msgid ""
-"This action will move all files from subdirectories to the root of the "
-"selected directory."
-msgstr ""
-"ეს ქმედება ქვესაქაღალდეებიდან ყველა ფაილს მონიშნულ საქაღალდეში გადაიტანს."
+msgid "This action will move all files from subdirectories to the root of the selected directory."
+msgstr "ეს ქმედება ქვესაქაღალდეებიდან ყველა ფაილს მონიშნულ საქაღალდეში გადაიტანს."
 
 msgid "This action will reset the permissions recursively."
 msgstr "ეს ქმედება წვდომებს რეკურსიულად ჩამოყრის."
@@ -388,7 +384,7 @@ msgid "Enter the URLs."
 msgstr "შეიყვანეთ URL-ები."
 
 msgid "No remote URL found."
-msgstr "დაშორებული URL აღმოჩენილი არაა."
+msgstr "დაშორებული რეპოზიტორიის URL აღმოჩენილი არაა."
 
 msgid "URLs"
 msgstr "URL-ები"
@@ -427,7 +423,7 @@ msgid "Online"
 msgstr "ხაზზე"
 
 msgid "Offline"
-msgstr "ინტერნეტგარეშე"
+msgstr "ხაზგარეშე"
 
 msgid "Valid signature"
 msgstr "სწორი ხელმოწერა"
@@ -439,7 +435,7 @@ msgid "Missing key"
 msgstr "აკლია გასაღები"
 
 msgid "Missing data file"
-msgstr "ნაკლული მონაცემთა ფაილი"
+msgstr "აკლია მონაცემების ფაილი"
 
 msgid "Revoked key"
 msgstr "გაუქმებული გასაღები"
@@ -513,7 +509,7 @@ msgstr "ქსელი და ინტერნეტი"
 
 #: Menu
 msgid "Open with"
-msgstr "გამხსნელი პროგრამა"
+msgstr "გახსნა პროგრამით"
 
 #: Menu
 msgid "Plain text"
@@ -573,7 +569,7 @@ msgstr "გამოსახულება: ამოჭრა, ზომი�
 
 #: Menu
 msgid "Image: Flip, Rotate"
-msgstr "გამოსახულება: მობრუნება, გადაბრუნება"
+msgstr "გამოსახულება: გადაბრუნება, მობრუნება"
 
 #: Menu
 msgid "Image: Icons"
@@ -737,7 +733,7 @@ msgstr "აუდიო: ხმის თანდათან აწევა"
 
 #: Menu
 msgid "Audio: Fade-out"
-msgstr "აუდიო: მიავლება"
+msgstr "აუდიო: ხმის თანდათან დაწევა"
 
 #: Menu
 msgid "Audio: Mix channels to mono"
@@ -765,7 +761,7 @@ msgstr "აუდიო: ხმაურის დადუმება"
 
 #: Menu
 msgid "Audio: Remove silence (extremities)"
-msgstr "აუდიო: სიჩუმის წაშლა (ექსტრემალურები)"
+msgstr "აუდიო: სიჩუმის წაშლა (კიდეები)"
 
 #: Menu
 msgid "Create backup (via Rsync)"
@@ -837,19 +833,19 @@ msgstr "ფაილის შემცველობის კოპირე�
 
 #: Menu
 msgid "Copy file names"
-msgstr "ფაილის სახელების კოპირება"
+msgstr "ფაილების სახელების კოპირება"
 
 #: Menu
 msgid "Copy file names (recursive)"
-msgstr "ფაილის სახელების კოპირება (რეკურსიულად)"
+msgstr "ფაილების სახელების კოპირება (რეკურსიულად)"
 
 #: Menu
 msgid "Copy file paths"
-msgstr "ფაილის ბილიკების კოპირება"
+msgstr "ფაილების ბილიკების კოპირება"
 
 #: Menu
 msgid "Copy file paths (recursive)"
-msgstr "ფაილის ბილიკების კოპირება (რეკურსიულად)"
+msgstr "ფაილების ბილიკების კოპირება (რეკურსიულად)"
 
 #: Menu
 msgid "Create hard link here"
@@ -857,7 +853,7 @@ msgstr "მყარი ბმულის შექმნა აქ"
 
 #: Menu
 msgid "Create hard link to..."
-msgstr "მყარი ბმულის შექმნა სად..."
+msgstr "მყარი ბმულის შექმნა მდებარეობაზე..."
 
 #: Menu
 msgid "Create symbolic link here"
@@ -865,7 +861,7 @@ msgstr "სიმბმულის შექმნა აქ"
 
 #: Menu
 msgid "Create symbolic link to..."
-msgstr "სიმბმულის შექმნა სად..."
+msgstr "სიმბმულის შექმნა მდებარეობაზე..."
 
 #: Menu
 msgid "Disk usage analyzer"
@@ -901,7 +897,7 @@ msgstr "დოკუმენტი: გადაყვანა ფორმა
 
 #: Menu
 msgid "Document: Convert to PDF (landscape)"
-msgstr "დოკუმენტი: გადაყვანა ფორმატში PDF (ლანდშაფტი)"
+msgstr "დოკუმენტი: გადაყვანა ფორმატში PDF (ალბომური)"
 
 #: Menu
 msgid "Document: Convert to PPTX"
@@ -945,7 +941,7 @@ msgstr "დამალული ფაილების სია"
 
 #: Menu
 msgid "Find junk files"
-msgstr "ნაგავი ფაილების პოვნა"
+msgstr "უსარგებლო ფაილების პოვნა"
 
 #: Menu
 msgid "Find empty files"
@@ -1017,7 +1013,7 @@ msgstr "ხელმოწერა (ASCII)"
 
 #: Menu
 msgid "Sign (detached signature)"
-msgstr "ხელმოწერა (მოხსნილი ხელმოწერა)"
+msgstr "ხელმოწერა (განცალკევებული ხელმოწერა)"
 
 #: Menu
 msgid "Sign and encrypt with keys"
@@ -1065,7 +1061,7 @@ msgstr "გამოსახულება: ავტომატური ა
 
 #: Menu
 msgid "Image: Automatic crop (15 pct)"
-msgstr "გამოსახულება: ავტომატური ამოჭრა (15%)"
+msgstr "გამოსახულება: ავტომატური ამოჭრა (15 პროც)"
 
 #: Menu
 msgid "Image: Background to alpha"
@@ -1073,7 +1069,7 @@ msgstr "გამოსახულება: ფონი ალფაში"
 
 #: Menu
 msgid "Image: Background to alpha (15 pct)"
-msgstr "გამოსახულება: ფონი ალფაში (15%)"
+msgstr "გამოსახულება: ფონი ალფაში (15 პროც)"
 
 #: Menu
 msgid "Image: Color alpha to black"
@@ -1093,15 +1089,15 @@ msgstr "გამოსახულება: ფერის შავი ა�
 
 #: Menu
 msgid "Image: Color black to alpha (15 pct)"
-msgstr "გამოსახულება: ფერის შავი ალფაში (15%)"
+msgstr "გამოსახულება: ფერის შავი ალფაში (15 პროც)"
 
 #: Menu
 msgid "Image: Color magenta to alpha"
-msgstr "გამოსახულება: ფუქსინისფერი ალფაში"
+msgstr "გამოსახულება: ფერის ფუქსინისფერი ალფაში"
 
 #: Menu
 msgid "Image: Color magenta to alpha (15 pct)"
-msgstr "გამოსახულება: ფუქსინისფერი ალფაში (15%)"
+msgstr "გამოსახულება: ფერის ფუქსინისფერი ალფაში (15 პროც)"
 
 #: Menu
 msgid "Image: Colorspace to gray"
@@ -1113,7 +1109,7 @@ msgstr "გამოსახულება: ფერის თეთრი �
 
 #: Menu
 msgid "Image: Color white to alpha (15 pct)"
-msgstr "გამოსახულება: ფერის თეთრი ალფაში (15%)"
+msgstr "გამოსახულება: ფერის თეთრი ალფაში (15 პროც)"
 
 #: Menu
 msgid "Image: Combine into GIF"
@@ -1157,19 +1153,19 @@ msgstr "გამოსახულება: WebP-ში გადაყვა�
 
 #: Menu
 msgid "Image: Create PNG icon (128 px)"
-msgstr "გამოსახულება: PNG ხატულას შექმნა (128 პიქს)"
+msgstr "გამოსახულება: PNG ხატულის შექმნა (128 პიქს)"
 
 #: Menu
 msgid "Image: Create PNG icon (256 px)"
-msgstr "გამოსახულება: PNG ხატულას შექმნა (256 პიქს)"
+msgstr "გამოსახულება: PNG ხატულის შექმნა (256 პიქს)"
 
 #: Menu
 msgid "Image: Create PNG icon (512 px)"
-msgstr "გამოსახულება: PNG ხატულას შექმნა (512 პიქს)"
+msgstr "გამოსახულება: PNG ხატულის შექმნა (512 პიქს)"
 
 #: Menu
 msgid "Image: Create PNG icon (custom)"
-msgstr "გამოსახულება: PNG ხატულას შექმნა (მორგებული)"
+msgstr "გამოსახულება: PNG ხატულის შექმნა (მორგებული)"
 
 #: Menu
 msgid "Image: Desaturate"
@@ -1181,19 +1177,19 @@ msgstr "გამოსახულება: PDF-ში გატანა"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"
-msgstr "გამოსახულება: მსგავსების პოვნა (65%)"
+msgstr "გამოსახულება: მსგავსების პოვნა (65 პროც)"
 
 #: Menu
 msgid "Image: Find similar (75 pct)"
-msgstr "გამოსახულება: მსგავსების პოვნა (75%)"
+msgstr "გამოსახულება: მსგავსების პოვნა (75 პროც)"
 
 #: Menu
 msgid "Image: Find similar (85 pct)"
-msgstr "გამოსახულება: მსგავსების პოვნა (85%)"
+msgstr "გამოსახულება: მსგავსების პოვნა (85 პროც)"
 
 #: Menu
 msgid "Image: Find similar (95 pct)"
-msgstr "გამოსახულება: მსგავსების პოვნა (95%)"
+msgstr "გამოსახულება: მსგავსების პოვნა (95 პროც)"
 
 #: Menu
 msgid "Image: Flip (horizontal)"
@@ -1257,15 +1253,15 @@ msgstr "გამოსახულება: სახელის გადა
 
 #: Menu
 msgid "Image: Resize (25 pct)"
-msgstr "გამოსახულება: ზომის შეცვლა (25%)"
+msgstr "გამოსახულება: ზომის შეცვლა (25 პროც)"
 
 #: Menu
 msgid "Image: Resize (50 pct)"
-msgstr "გამოსახულება: ზომის შეცვლა (50%)"
+msgstr "გამოსახულება: ზომის შეცვლა (50 პროც)"
 
 #: Menu
 msgid "Image: Resize (75 pct)"
-msgstr "გამოსახულება: ზომის შეცვლა (75%)"
+msgstr "გამოსახულება: ზომის შეცვლა (75 პროც)"
 
 #: Menu
 msgid "Image: Resize (1920x1080)"
@@ -1313,7 +1309,7 @@ msgstr "გამოსახულება: შეკრება (ჰორ�
 
 #: Menu
 msgid "Image: Stack (vertical)"
-msgstr "გამოსახულება: შეკრება (ვერტიკალური)"
+msgstr "გამოსახულება: შეკრება (ვერტიკალურად)"
 
 #: Menu
 msgid "IP: Scan hosts"
@@ -1361,11 +1357,11 @@ msgstr "მედია: ინფორმაციის ჩვენება
 
 #: Menu
 msgid "MP3: (artist - title) Name to ID3"
-msgstr "MP3: (შემსრულებელი - სახელი) სახელი ID3-ში"
+msgstr "MP3: (შემსრულებელი - სათაური) სახელი ID3-ში"
 
 #: Menu
 msgid "MP3: (artist - title) ID3 to Name"
-msgstr "MP3: (შემსრულებელი - სახელი) ID3 სახელში"
+msgstr "MP3: (შემსრულებელი - სათაური) ID3 სახელში"
 
 #: Menu
 msgid "MP3: Maximize volume (recursive)"
@@ -1437,7 +1433,7 @@ msgstr "PDF: არაგაწრფევებული PDF-ების პ�
 
 #: Menu
 msgid "PDF: Find non-searchable PDFs"
-msgstr "PDF: PDF-ების პოვნა, რომლებშიც ძებნა გამორთულია"
+msgstr "PDF: უტექსტო PDF-ების პოვნა"
 
 #: Menu
 msgid "PDF: Find password-protected PDFs"
@@ -1449,43 +1445,43 @@ msgstr "PDF: ხელმოწერილი PDF-ების პოვნა"
 
 #: Menu
 msgid "PDF: Layout (landscape, 1x2)"
-msgstr "PDF: განლაგება (ლანდშაფტი, 1x2)"
+msgstr "PDF: განლაგება (ალბომური, 1x2)"
 
 #: Menu
 msgid "PDF: Layout (landscape, 2x1)"
-msgstr "PDF: განლაგება (ლანდშაფტი, 2x1)"
+msgstr "PDF: განლაგება (ალბომური, 2x1)"
 
 #: Menu
 msgid "PDF: Layout (landscape, 2x2)"
-msgstr "PDF: განლაგება (ლანდშაფტი, 1x2)"
+msgstr "PDF: განლაგება (ალბომური, 2x2)"
 
 #: Menu
 msgid "PDF: Layout (landscape, 2x4)"
-msgstr "PDF: განლაგება (ლანდშაფტი, 1x4)"
+msgstr "PDF: განლაგება (ალბომური, 2x4)"
 
 #: Menu
 msgid "PDF: Layout (landscape, 4x2)"
-msgstr "PDF: განლაგება (ლანდშაფტი, 4x2)"
+msgstr "PDF: განლაგება (ალბომური, 4x2)"
 
 #: Menu
 msgid "PDF: Layout (portrait, 1x2)"
-msgstr "PDF: განლაგება (პორტრეტი, 1x2)"
+msgstr "PDF: განლაგება (პორტრეტული, 1x2)"
 
 #: Menu
 msgid "PDF: Layout (portrait, 2x1)"
-msgstr "PDF: განლაგება (პორტრეტი, 2x1)"
+msgstr "PDF: განლაგება (პორტრეტული, 2x1)"
 
 #: Menu
 msgid "PDF: Layout (portrait, 2x2)"
-msgstr "PDF: განლაგება (პორტრეტი, 2x2)"
+msgstr "PDF: განლაგება (პორტრეტული, 2x2)"
 
 #: Menu
 msgid "PDF: Layout (portrait, 2x4)"
-msgstr "PDF: განლაგება (პორტრეტი, 2x4)"
+msgstr "PDF: განლაგება (პორტრეტული, 2x4)"
 
 #: Menu
 msgid "PDF: Layout (portrait, 4x2)"
-msgstr "PDF: განლაგება (პორტრეტი, 4x2)"
+msgstr "PDF: განლაგება (პორტრეტული, 4x2)"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
@@ -1697,7 +1693,7 @@ msgstr "ტერმინალი"
 
 #: Menu
 msgid "Terminal (synced panes)"
-msgstr "ტერმინალი (სინქრონიზებული პანელები"
+msgstr "ტერმინალი (სინქრონიზებული პანელები)"
 
 #: Menu
 msgid "Text: Concatenate multiple files"
@@ -1865,15 +1861,15 @@ msgstr "ვიდეო: აუდიოს მოცილება"
 
 #: Menu
 msgid "Video: Resize (25 pct)"
-msgstr "ვიდეო: ზომის შეცვლა (25%)"
+msgstr "ვიდეო: ზომის შეცვლა (25 პროც)"
 
 #: Menu
 msgid "Video: Resize (50 pct)"
-msgstr "ვიდეო: ზომის შეცვლა (50%)"
+msgstr "ვიდეო: ზომის შეცვლა (50 პროც)"
 
 #: Menu
 msgid "Video: Resize (75 pct)"
-msgstr "ვიდეო: ზომის შეცვლა (75%)"
+msgstr "ვიდეო: ზომის შეცვლა (75 პროც)"
 
 #: Menu
 msgid "Video: Resize (custom)"
@@ -1929,7 +1925,7 @@ msgstr "Homebrew-ის დაყენება (არასავალდე
 
 #: install.sh
 msgid "Choose which script categories to install"
-msgstr "აირჩიეთ, რომელი სკრიპტის კატეგორიების დაყენება გნებავთ"
+msgstr "აირჩიეთ, რომელი სკრიპტების კატეგორიების დაყენება გნებავთ"
 
 #: install.sh
 msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
@@ -1937,7 +1933,7 @@ msgstr "აირჩიეთ პარამეტრები (<SPACE> ას�
 
 #: install.sh
 msgid "Installing in non-interactive mode..."
-msgstr "დაყენება არაინტერაქტიურ რეჟიმში..."
+msgstr "დაყენება არაინტერაქტიულ რეჟიმში..."
 
 #: install.sh
 msgid "Installing:"
@@ -1997,7 +1993,7 @@ msgstr "Homebrew უკვე დაყენებულია."
 
 #: install.sh
 msgid "Installing Homebrew to:"
-msgstr "Homebrew-ის დაყენება სად:"
+msgstr "Homebrew-ის დაყენება მდებარეობაზე:"
 
 #: install.sh
 msgid "Downloading the package..."
