@@ -106,7 +106,7 @@ While numerous *Nautilus Scripts* are available for file managers on the web, ma
 
 ## Batch mode for large file selections
 
-For very large selections (e.g., 10,000 input files), use **batch mode**: place everything inside a folder named `batch` and run the action on that folder. The scripts will process the files individually and avoid the "argument list too long" error.
+For very large selections (e.g., 10,000 input files), use **batch mode**: place all the input files in a folder whose name contains the word `batch`, then run the action on that folder. The scripts will process the files individually, avoiding the "argument list too long" error.
 
 ## Acknowledgments
 
