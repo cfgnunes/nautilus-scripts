@@ -1,0 +1,2015 @@
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Enhanced File Manager Actions for Linux\n"
+"POT-Creation-Date: 2025-11-13 12:12-0300\n"
+"PO-Revision-Date: 2026-09-24 07:46+0200\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"Language-Team: Georgian <(nothing)>\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Done!"
+msgstr "მზადაა!"
+
+msgid "files"
+msgstr "ფაილები"
+
+msgid "Would you like to continue?"
+msgstr "გაგრძელებთ?"
+
+msgid "directories"
+msgstr "საქაღალდეები"
+
+msgid "items"
+msgstr "ელემენტი"
+
+msgid "The command failed."
+msgstr "ბრძანება ჩავარდა."
+
+msgid "The output file does not exist."
+msgstr "გამოტანის ფაილი არ არსებობს."
+
+msgid "Finished with errors! See the log:"
+msgstr "დასრულდა შეცდომებით! იხილეთ ჟურნალი:"
+
+msgid "Your system does not support clipboard operations."
+msgstr "თქვენს სისტემას ბუფერის ოპერაციების მხარდაჭერა არ აქვს."
+
+msgid "Could not find a package for:"
+msgstr "ვერ ვიპოვე პაკეტი მოთხოვნისთვის:"
+
+msgid "The following packages are missing:"
+msgstr "შემდეგი პაკეტები ნაკლულია:"
+
+msgid "Would you like to install them?"
+msgstr "გნებავთ მათი დაყენება?"
+
+msgid "Installing the packages. Please wait..."
+msgstr "მიმდინარეობს პაკეტების დაყენება - მოითმინეთ..."
+
+msgid "The package was installed, but a system reboot is required."
+msgstr "პაკეტი დაყენებულია, მაგრამ მას სისტემის გადატვირთვა სჭირდება."
+
+msgid "Could not install the package:"
+msgstr "პაკეტის დაყენების შეცდომა:"
+
+msgid "This action will delete the selected items."
+msgstr "ეს ეს ქმედება მონიშნულ ელემენტებს წაშლის."
+
+msgid "Total selected:"
+msgstr "სულ მონიშნული:"
+
+msgid "Total:"
+msgstr "სულ:"
+
+msgid "Some items could not be deleted."
+msgstr "ზოგიერთი ელემენტის წაშლა შეუძლებელია."
+
+msgid "All items were successfully deleted!"
+msgstr "ყველა ელემენტი წარმატებით წაიშალა!"
+
+msgid "Could not access the directory:"
+msgstr "წვდომა აკრძალულია საქაღალდესთან:"
+
+msgid "The destination file already exists."
+msgstr "სამიზნე ფაილი უკვე არსებობს."
+
+msgid "Unable to move."
+msgstr "გადატანა შეუძლებელია."
+
+msgid "OK"
+msgstr "დიახ"
+
+msgid "Cancel"
+msgstr "გაუქმება"
+
+msgid "(Empty)"
+msgstr "(ცარიელი)"
+
+msgid "Select the ones to open:"
+msgstr "მონიშნეთ გასახსნელები:"
+
+msgid "Select the ones to show in the file manager:"
+msgstr "მონიშნეთ ფაილების მმართველში გასახსნელები:"
+
+msgid "Select the ones to open in the web browser:"
+msgstr "მონიშნეთ ბრაუზერში გასახსნელები:"
+
+msgid "Select the ones to delete:"
+msgstr "მონიშნეთ წასაშლელები:"
+
+msgid "Password"
+msgstr "პაროლი"
+
+msgid "Type your password:"
+msgstr "აკრიფეთ თქვენი პაროლი:"
+
+msgid "The password cannot be empty!"
+msgstr "პაროლი ცარიელი ვერ იქნება!"
+
+msgid "Yes"
+msgstr "დიახ"
+
+msgid "No"
+msgstr "არა"
+
+msgid "Finished! The output files are in:"
+msgstr "დასრულდა! გამოტანის ფაილების პოვნა შეგიძლიათ:"
+
+msgid "Finished, but there is nothing to do."
+msgstr "დასრულდა, მაგრამ გასაკეთებელი არაფერია."
+
+msgid "Finished!"
+msgstr "დასრულდა!"
+
+msgid "Running the task. Please wait..."
+msgstr "ამოცანის შესრულება. მოითმინეთ..."
+
+msgid "No default application is set for the type:"
+msgstr "ნაგულისხმევი აპლიკაცია დაყენებული არაა ტიპისთვის:"
+
+msgid "Could not find an application for the MIME type:"
+msgstr "ვერ ვიპოვე აპლიკაცია MIME ტიპისთვის:"
+
+msgid "Batch mode detected."
+msgstr "აღმოჩენილია პაკეტური რეჟიმი."
+
+msgid "Each file inside this directory will be processed individually."
+msgstr "თითოეული ფაილი ამ საქაღალდეში ცალ-ცალკე დამუშავდება."
+
+msgid "files or directories"
+msgstr "ფაილები, ან საქაღალდეები"
+
+msgid "You must select files with the extension:"
+msgstr "უნდა აირჩიოთ ფაილები გაფართოებით:"
+
+msgid "Invalid input file!"
+msgstr "არასწორი შეყვანის ფაილი!"
+
+msgid "You must select"
+msgstr "უნდა აირჩიოთ"
+
+msgid "You must select at least"
+msgstr "უნდა აირჩიოთ, სულ ცოტა"
+
+msgid "You must select up to"
+msgstr "უნდა აირჩიოთ მაქს"
+
+msgid "Could not find the output directory!"
+msgstr "გამოტანის საქაღალდის პოვნა შეუძლებელია!"
+
+msgid "Accessed recently"
+msgstr "გახსნეს ახლახან"
+
+msgid "File"
+msgstr "ფაილი"
+
+msgid "Count"
+msgstr "რაოდენობა"
+
+msgid "Issues"
+msgstr "პრობლემები"
+
+msgid "Encoding"
+msgstr "კოდირება"
+
+msgid "There are no valid paths in the clipboard!"
+msgstr "ბუფერში სწორი ბილიკები არაა!"
+
+msgid "links"
+msgstr "ბმულები"
+
+msgid "Inode"
+msgstr "Inode"
+
+msgid "Link"
+msgstr "ბმული"
+
+msgid "Unsupported clipboard type."
+msgstr "არასწორი ბუფერის ტიპი."
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr ""
+"ეს ქმედება მონიშნულ ფაილებს და საქაღალდეებს სახელს რეკურსიულად გადაარქმევეს."
+
+msgid "PDF files"
+msgstr "PDF ფაილები"
+
+msgid "Select a PDF to use as the watermark"
+msgstr "აირჩიეთ ჭვირნიშნად გამოსაყენებელი PDF ფაილი"
+
+msgid "Signature"
+msgstr "ხელმოწერა"
+
+msgid "Malware"
+msgstr "მავნე პროგრამა"
+
+msgid "Mode"
+msgstr "რეჟიმი"
+
+msgid "Bit rate"
+msgstr "ბიტური სიჩქარე"
+
+msgid "Sampling rate"
+msgstr "დისკრეტიზაციის სიხშირე"
+
+msgid "Channels"
+msgstr "არხები"
+
+msgid "Duration"
+msgstr "ხანგრძლივობა"
+
+msgid "Album"
+msgstr "ალბომი"
+
+msgid "Artist"
+msgstr "შემსრულებელი"
+
+msgid "Title"
+msgstr "თანამდებობა"
+
+msgid "Quality"
+msgstr "ხარისხი"
+
+msgid "Image files"
+msgstr "გამოსახულების ფაილები"
+
+msgid "Select an image to use as the watermark"
+msgstr "აირჩიეთ ჭვირნიშნად გამოსაყენებელი გამოსახულება"
+
+msgid "Enter the target size."
+msgstr "შეიყვანეთ სამიზნე ზომა."
+
+msgid "Invalid input!"
+msgstr "არასწორი შეყვანა!"
+
+msgid "Key files"
+msgstr "გასაღების ფაილები"
+
+msgid "Select a key file to import"
+msgstr "აირჩიეთ შემოსატანი გასაღების ფაილი"
+
+msgid "No secret keys were found."
+msgstr "საიდუმლო გასაღებები აღმოჩენილი არაა."
+
+msgid "Would you like to import a key now?"
+msgstr "გნებავთ გასაღების ახლავე შემოტანა?"
+
+msgid "Failed to import the key!"
+msgstr "გასაღების შემოტანის შეცდომა!"
+
+msgid "Select a user (sign):"
+msgstr "აირჩიეთ მომხმარებელი (ხელმოწერა):"
+
+msgid "User"
+msgstr "მომხმარებელი"
+
+msgid "Name"
+msgstr "სახელი"
+
+msgid "E-mail"
+msgstr "ელფოსტა"
+
+msgid "Created"
+msgstr "შექმნილია"
+
+msgid "Expires"
+msgstr "ვადა"
+
+msgid "You must select a user!"
+msgstr "მომხმარებელი უნდა აირჩიოთ!"
+
+msgid "No public keys were found."
+msgstr "საჯარო გასაღებები აღმოჩენილი არაა."
+
+msgid "Select one or more users (encrypt):"
+msgstr "აირჩიეთ ერთი, ან მეტი მომხმარებელი (დაშიფვრა):"
+
+msgid "You must select at least one user!"
+msgstr "უნდა აირჩიოთ, სულ ცოტა, ერთი მომხმარებელი!"
+
+msgid "Directory"
+msgstr "საქაღალდე"
+
+msgid "Size"
+msgstr "ზომა"
+
+msgid "Group"
+msgstr "დაჯგუფება"
+
+msgid "Item"
+msgstr "ელემენტი"
+
+msgid "Octal"
+msgstr "რვაობითი"
+
+msgid "Type"
+msgstr "ტიპი"
+
+msgid "You must select only two images to compare!"
+msgstr "შესადარებლად, მხოლოდ, ორი გამოსახულება უნდა აირჩიოთ!"
+
+msgid "You must select only two PDFs to compare!"
+msgstr "შესადარებლად, მხოლოდ, ორი PDF ფაილი უნდა აირჩიოთ!"
+
+msgid "You must select only two binary files to compare!"
+msgstr "შესადარებლად, მხოლოდ, ორი ბინარული ფაილი უნდა აირჩიოთ!"
+
+msgid "No items were selected!"
+msgstr "მონიშნული ჩანაწერების გარეშე!"
+
+msgid "No directories were selected!"
+msgstr "მონიშნული საქაღალდეების გარეშე!"
+
+msgid "The selected items are identical."
+msgstr "არჩეული ელემენტები იდენტურია."
+
+msgid "The selected images have the same pixel values."
+msgstr "მონიშნულ გამოსახულებებს იგივე პიქსელის მნიშვნელობები აქვთ."
+
+msgid "MIME"
+msgstr "MIME"
+
+msgid ""
+"This action will move all files from subdirectories to the root of the "
+"selected directory."
+msgstr ""
+"ეს ქმედება ქვესაქაღალდეებიდან ყველა ფაილს მონიშნულ საქაღალდეში გადაიტანს."
+
+msgid "This action will reset the permissions recursively."
+msgstr "ეს ქმედება წვდომებს რეკურსიულად ჩამოყრის."
+
+msgid "Date"
+msgstr "თარიღი"
+
+msgid "Time"
+msgstr "დრო"
+
+msgid "Select the output filename:"
+msgstr "აირჩიეთ გამოტანის ფაილის სახელი:"
+
+msgid "Filename"
+msgstr "ფაილის სახელი"
+
+msgid "Status"
+msgstr "სტატუსი"
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr "მონიშნულ ფაილებში, ან ბუფერში სწორი URL-ები აღმოჩენილი არაა!"
+
+msgid "IPs"
+msgstr "IP-ები"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Ping"
+msgstr "პინგი"
+
+msgid "Ports"
+msgstr "პორტები"
+
+msgid "Hostname"
+msgstr "ჰოსტის სახელი"
+
+msgid "Example:"
+msgstr "მაგალითი:"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "შეიყვანეთ IP მისამართები, ან IP დიაპაზონები."
+
+msgid "Enter the URLs."
+msgstr "შეიყვანეთ URL-ები."
+
+msgid "No remote URL found."
+msgstr "დაშორებული URL აღმოჩენილი არაა."
+
+msgid "URLs"
+msgstr "URL-ები"
+
+msgid "HTTP code"
+msgstr "HTTP-ის კოდი"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "(No differences)"
+msgstr "(სხვაობების გარეშე)"
+
+msgid "(No line break)"
+msgstr "(ხაზის გადატანის გარეშე)"
+
+msgid "(No response)"
+msgstr "(პასუხის გარეშე)"
+
+msgid "Checksum error"
+msgstr "საკონტროლო ჯამის შეცდომა"
+
+msgid "File does not exist"
+msgstr "ფაილი არ არსებობს"
+
+msgid "High"
+msgstr "მაღალი"
+
+msgid "Low"
+msgstr "დაბალი"
+
+msgid "Medium"
+msgstr "საშუალო"
+
+msgid "Online"
+msgstr "ხაზზე"
+
+msgid "Offline"
+msgstr "ინტერნეტგარეშე"
+
+msgid "Valid signature"
+msgstr "სწორი ხელმოწერა"
+
+msgid "Invalid signature"
+msgstr "არასწორი ხელმოწერა"
+
+msgid "Missing key"
+msgstr "აკლია გასაღები"
+
+msgid "Missing data file"
+msgstr "ნაკლული მონაცემთა ფაილი"
+
+msgid "Revoked key"
+msgstr "გაუქმებული გასაღები"
+
+msgid "Expired key"
+msgstr "ვადაგასული გასაღები"
+
+msgid "Expired signature"
+msgstr "ვადაგასული ხელმოწერა"
+
+msgid "Unknown algorithm"
+msgstr "უცნობი ალგორითმი"
+
+msgid "Key ID"
+msgstr "გასაღების ID"
+
+msgid "Enter the password for the archive:"
+msgstr "შეიყვანეთ არქივის პაროლი:"
+
+msgid "Select the output directory"
+msgstr "აირჩიეთ გამოტანის საქაღალდე"
+
+msgid "Select input directories"
+msgstr "აირჩიეთ შეყვანის საქაღალდეები"
+
+msgid "Select input files"
+msgstr "აირჩიეთ შეყვანის ფაილები"
+
+msgid "Open"
+msgstr "გახსნა"
+
+#: Menu
+msgid "Archive"
+msgstr "არქივი"
+
+#: Menu
+msgid "Audio and Video"
+msgstr "აუდიო და ვიდეო"
+
+#: Menu
+msgid "Checksum"
+msgstr "საკონტროლო ჯამი"
+
+#: Menu
+msgid "Clipboard"
+msgstr "გაცვლის ბუფერი"
+
+#: Menu
+msgid "Directories and Files"
+msgstr "საქაღალდეები და ფაილები"
+
+#: Menu
+msgid "Document"
+msgstr "დოკუმენტი"
+
+#: Menu
+msgid "Encryption"
+msgstr "დაშიფვრა"
+
+#: Menu
+msgid "Image"
+msgstr "გამოსახულება"
+
+#: Menu
+msgid "Links"
+msgstr "ბმულები"
+
+#: Menu
+msgid "Network and Internet"
+msgstr "ქსელი და ინტერნეტი"
+
+#: Menu
+msgid "Open with"
+msgstr "გამხსნელი პროგრამა"
+
+#: Menu
+msgid "Plain text"
+msgstr "უბრალო ტექსტი"
+
+#: Menu
+msgid "Rename files"
+msgstr "ფაილების სახელის გადარქმევა"
+
+#: Menu
+msgid "Security and Recovery"
+msgstr "უსაფრთხოება და აღდგენა"
+
+#: Menu
+msgid "Audio and Video: Tools"
+msgstr "აუდიო და ვიდეო: ხელსაწყოები"
+
+#: Menu
+msgid "Audio: Channels"
+msgstr "აუდიო: არხები"
+
+#: Menu
+msgid "Audio: Convert"
+msgstr "აუდიო: გადაყვანა"
+
+#: Menu
+msgid "Audio: Effects"
+msgstr "აუდიო: ეფექტები"
+
+#: Menu
+msgid "Audio: MP3 files"
+msgstr "აუდიო: MP3 ფაილები"
+
+#: Menu
+msgid "Audio: Quality"
+msgstr "აუდიო: ხარისხი"
+
+#: Menu
+msgid "Document: Convert"
+msgstr "დოკუმენტი: გადაყვანა"
+
+#: Menu
+msgid "Image: Color"
+msgstr "გამოსახულება: ფერი"
+
+#: Menu
+msgid "Image: Combine, Split"
+msgstr "გამოსახულება: გაერთიანება, გაყოფა"
+
+#: Menu
+msgid "Image: Convert"
+msgstr "გამოსახულება: გადაყვანა"
+
+#: Menu
+msgid "Image: Crop, Resize"
+msgstr "გამოსახულება: ამოჭრა, ზომის შეცვლა"
+
+#: Menu
+msgid "Image: Flip, Rotate"
+msgstr "გამოსახულება: მობრუნება, გადაბრუნება"
+
+#: Menu
+msgid "Image: Icons"
+msgstr "გამოსახულება: ხატულები"
+
+#: Menu
+msgid "Image: Metadata, Exif"
+msgstr "გამოსახულება: მეტამონაცემები, Exif"
+
+#: Menu
+msgid "Image: Optimize, Reduce"
+msgstr "გამოსახულება: ოპტიმიზაცია, შემცირება"
+
+#: Menu
+msgid "Image: Similarity"
+msgstr "გამოსახულება: მსგავსება"
+
+#: Menu
+msgid "Image: SVG files"
+msgstr "გამოსახულება: SVG ფაილები"
+
+#: Menu
+msgid "Image: Text recognition (OCR)"
+msgstr "გამოსახულება: ტექსტის ამოცნობა (OCR)"
+
+#: Menu
+msgid "Image: Transparency"
+msgstr "გამოსახულება: გამჭვირვალობა"
+
+#: Menu
+msgid "Image: Watermark"
+msgstr "გამოსახულება: ჭვირნიშანი"
+
+#: Menu
+msgid "PDF: Annotations"
+msgstr "PDF: ანოტაციები"
+
+#: Menu
+msgid "PDF: Combine, Split"
+msgstr "PDF: გაერთიანება, გაყოფა"
+
+#: Menu
+msgid "PDF: Security"
+msgstr "PDF: უსაფრთხოება"
+
+#: Menu
+msgid "PDF: Multi-page layout"
+msgstr "PDF: მრავალგვერდიანი განლაგება"
+
+#: Menu
+msgid "PDF: Optimize, Reduce"
+msgstr "PDF: ოპტიმიზაცია, შემცირება"
+
+#: Menu
+msgid "PDF: Page size"
+msgstr "PDF: გვერდის ზომა"
+
+#: Menu
+msgid "PDF: Rotate"
+msgstr "PDF: შებრუნება"
+
+#: Menu
+msgid "PDF: Signatures"
+msgstr "PDF: ხელმოწერები"
+
+#: Menu
+msgid "PDF: Text recognition (OCR)"
+msgstr "PDF: ტექსტის ამოცნობა (OCR)"
+
+#: Menu
+msgid "PDF: Tools"
+msgstr "PDF: ხელსაწყოები"
+
+#: Menu
+msgid "PDF: Watermark"
+msgstr "PDF: ჭვირნიშანი"
+
+#: Menu
+msgid "Video: Aspect ratio"
+msgstr "ვიდეო: გვერდების ფარდობა"
+
+#: Menu
+msgid "Video: Audio track"
+msgstr "ვიდეო: აუდიობილიკი"
+
+#: Menu
+msgid "Video: Convert"
+msgstr "ვიდეო: გადაყვანა"
+
+#: Menu
+msgid "Video: Export frames"
+msgstr "ვიდეო: კადრების გატანა"
+
+#: Menu
+msgid "Video: Flip, Rotate"
+msgstr "ვიდეო: გადაბრუნება, მობრუნება"
+
+#: Menu
+msgid "Video: Frame rate"
+msgstr "ვიდეო: კადრების სიხშირე"
+
+#: Menu
+msgid "Video: Resize"
+msgstr "ვიდეო: ზომის შეცვლა"
+
+#: Menu
+msgid "Video: Speed"
+msgstr "ვიდეო: სიჩქარე"
+
+#: Menu
+msgid "Audio: Check quality"
+msgstr "აუდიო: ხარისხის შემოწმება"
+
+#: Menu
+msgid "Audio: Convert to FLAC"
+msgstr "აუდიო: FLAC-ში გადაყვანა"
+
+#: Menu
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "აუდიო: MP3-ში (48 კბ/წმ) გადაყვანა"
+
+#: Menu
+msgid "Audio: Convert to MP3 (192 kbps)"
+msgstr "აუდიო: MP3-ში (192 კბ/წმ) გადაყვანა"
+
+#: Menu
+msgid "Audio: Convert to MP3 (320 kbps)"
+msgstr "აუდიო: MP3-ში (320 კბ/წმ) გადაყვანა"
+
+#: Menu
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "აუდიო: OGG-ში (48 კბ/წმ) გადაყვანა"
+
+#: Menu
+msgid "Audio: Convert to OGG (192 kbps)"
+msgstr "აუდიო: OGG-ში (192 კბ/წმ) გადაყვანა"
+
+#: Menu
+msgid "Audio: Convert to OGG (320 kbps)"
+msgstr "აუდიო: OGG-ში (320 კბ/წმ) გადაყვანა"
+
+#: Menu
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "აუდიო: OPUS-ში (48 კბ/წმ) გადაყვანა"
+
+#: Menu
+msgid "Audio: Convert to OPUS (192 kbps)"
+msgstr "აუდიო: OPUS-ში (192 კბ/წმ) გადაყვანა"
+
+#: Menu
+msgid "Audio: Convert to OPUS (320 kbps)"
+msgstr "აუდიო: OPUS-ში (320 კბ/წმ) გადაყვანა"
+
+#: Menu
+msgid "Audio: Convert to WAV"
+msgstr "აუდიო: WAV-ში გადაყვანა"
+
+#: Menu
+msgid "Audio: Fade-in"
+msgstr "აუდიო: ხმის თანდათან აწევა"
+
+#: Menu
+msgid "Audio: Fade-out"
+msgstr "აუდიო: მიავლება"
+
+#: Menu
+msgid "Audio: Mix channels to mono"
+msgstr "აუდიო: არხების შერევა მონომდე"
+
+#: Menu
+msgid "Audio: Mix two files"
+msgstr "აუდიო: ორი ფაილის შერევა"
+
+#: Menu
+msgid "Audio: Normalize volume"
+msgstr "აუდიო: ხმის ნორმალიზაცია"
+
+#: Menu
+msgid "Audio: Produce spectrogram"
+msgstr "აუდიო: სპექტროგრამის შექმნა"
+
+#: Menu
+msgid "Audio: Remove silence (sections)"
+msgstr "აუდიო: სიჩუმის წაშლა (სექციები)"
+
+#: Menu
+msgid "Audio: Mute noise"
+msgstr "აუდიო: ხმაურის დადუმება"
+
+#: Menu
+msgid "Audio: Remove silence (extremities)"
+msgstr "აუდიო: სიჩუმის წაშლა (ექსტრემალურები)"
+
+#: Menu
+msgid "Create backup (via Rsync)"
+msgstr "მარქაფის შექმნა (Rsync-ით)"
+
+#: Menu
+msgid "Code editor"
+msgstr "კოდის რედაქტორი"
+
+#: Menu
+msgid "Compare items"
+msgstr "ელემენტების შედარება"
+
+#: Menu
+msgid "Compare items (via Diff)"
+msgstr "ელემენტების შედარება (Diff-ით)"
+
+#: Menu
+msgid "Compress to '7z'"
+msgstr "შეკუმშვა ფორმატში '7z'"
+
+#: Menu
+msgid "Compress to '7z' with password"
+msgstr "შეკუმშვა ფორმატში '7z', პაროლით"
+
+#: Menu
+msgid "Compress to 'tar.gz'"
+msgstr "შეკუმშვა ფორმატში 'tar.gz'"
+
+#: Menu
+msgid "Compress to 'tar.xz'"
+msgstr "შეკუმშვა ფორმატში 'tar.xz'"
+
+#: Menu
+msgid "Compress to 'tar.zst'"
+msgstr "შეკუმშვა ფორმატში 'tar.zst'"
+
+#: Menu
+msgid "Compress to 'zip'"
+msgstr "შეკუმშვა ფორმატში 'zip'"
+
+#: Menu
+msgid "Compress to 'zip' with password"
+msgstr "შეკუმშვა ფორმატში 'zip', პაროლით"
+
+#: Menu
+msgid "Compute all checksums"
+msgstr "ყველა საკონტროლო ჯამის გამოთვლა"
+
+#: Menu
+msgid "Compute MD5"
+msgstr "MD5-ის გამოთვლა"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "SHA1-ის გამოთვლა"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "SHA256-ის გამოთვლა"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "SHA512-ის გამოთვლა"
+
+#: Menu
+msgid "Copy file contents"
+msgstr "ფაილის შემცველობის კოპირება"
+
+#: Menu
+msgid "Copy file names"
+msgstr "ფაილის სახელების კოპირება"
+
+#: Menu
+msgid "Copy file names (recursive)"
+msgstr "ფაილის სახელების კოპირება (რეკურსიულად)"
+
+#: Menu
+msgid "Copy file paths"
+msgstr "ფაილის ბილიკების კოპირება"
+
+#: Menu
+msgid "Copy file paths (recursive)"
+msgstr "ფაილის ბილიკების კოპირება (რეკურსიულად)"
+
+#: Menu
+msgid "Create hard link here"
+msgstr "მყარი ბმულის შექმნა აქ"
+
+#: Menu
+msgid "Create hard link to..."
+msgstr "მყარი ბმულის შექმნა სად..."
+
+#: Menu
+msgid "Create symbolic link here"
+msgstr "სიმბმულის შექმნა აქ"
+
+#: Menu
+msgid "Create symbolic link to..."
+msgstr "სიმბმულის შექმნა სად..."
+
+#: Menu
+msgid "Disk usage analyzer"
+msgstr "დისკის მოხმარების ანალიზატორი"
+
+#: Menu
+msgid "Document: Convert to DOCX"
+msgstr "დოკუმენტი: გადაყვანა ფორმატში DOCX"
+
+#: Menu
+msgid "Document: Convert to EPUB"
+msgstr "დოკუმენტი: გადაყვანა ფორმატში EPUB"
+
+#: Menu
+msgid "Document: Convert to Markdown"
+msgstr "დოკუმენტი: გადაყვანა ფორმატში Markdown"
+
+#: Menu
+msgid "Document: Convert to ODP"
+msgstr "დოკუმენტი: გადაყვანა ფორმატში ODP"
+
+#: Menu
+msgid "Document: Convert to ODS"
+msgstr "დოკუმენტი: გადაყვანა ფორმატში ODS"
+
+#: Menu
+msgid "Document: Convert to ODT"
+msgstr "დოკუმენტი: გადაყვანა ფორმატში ODT"
+
+#: Menu
+msgid "Document: Convert to PDF"
+msgstr "დოკუმენტი: გადაყვანა ფორმატში PDF"
+
+#: Menu
+msgid "Document: Convert to PDF (landscape)"
+msgstr "დოკუმენტი: გადაყვანა ფორმატში PDF (ლანდშაფტი)"
+
+#: Menu
+msgid "Document: Convert to PPTX"
+msgstr "დოკუმენტი: გადაყვანა ფორმატში PPTX"
+
+#: Menu
+msgid "Document: Convert to TXT"
+msgstr "დოკუმენტი: გადაყვანა ფორმატში TXT"
+
+#: Menu
+msgid "Document: Convert to XLSX"
+msgstr "დოკუმენტი: გადაყვანა ფორმატში XLSX"
+
+#: Menu
+msgid "Extract here"
+msgstr "აქ გაშლა"
+
+#: Menu
+msgid "File carving (via Foremost)"
+msgstr "ფაილის ამოკვეთა (Foremost-ით)"
+
+#: Menu
+msgid "File carving (via PhotoRec)"
+msgstr "ფაილის ამოკვეთა (PhotoRec-ით)"
+
+#: Menu
+msgid "Find broken links"
+msgstr "გაფუჭებული ბმულების პოვნა"
+
+#: Menu
+msgid "Find duplicate files"
+msgstr "დუბლირებული ფაილების პოვნა"
+
+#: Menu
+msgid "Find empty directories"
+msgstr "ცარიელი საქაღალდეების პოვნა"
+
+#: Menu
+msgid "List hidden files"
+msgstr "დამალული ფაილების სია"
+
+#: Menu
+msgid "Find junk files"
+msgstr "ნაგავი ფაილების პოვნა"
+
+#: Menu
+msgid "Find empty files"
+msgstr "ცარიელი ფაილების პოვნა"
+
+#: Menu
+msgid "Flatten directory structure"
+msgstr "საქაღალდეების სტრუქტურის გაბრტყელება"
+
+#: Menu
+msgid "Generate MD5 file"
+msgstr "MD5 ფაილის გენერაცია"
+
+#: Menu
+msgid "Generate SHA1 file"
+msgstr "SHA1 ფაილის გენერაცია"
+
+#: Menu
+msgid "Generate SHA256 file"
+msgstr "SHA256 ფაილის გენერაცია"
+
+#: Menu
+msgid "Generate SHA512 file"
+msgstr "SHA512 ფაილის გენერაცია"
+
+#: Menu
+msgid "Git: Clone URLs"
+msgstr "Git: URL-ების დაკლონვა"
+
+#: Menu
+msgid "Git: Open repository website"
+msgstr "Git: რეპოზიტორიის ვებსაიტის გახსნა"
+
+#: Menu
+msgid "Git: Reset and pull"
+msgstr "Git: ჩამოყრა და პული"
+
+#: Menu
+msgid "Decrypt"
+msgstr "გაშიფვრა"
+
+#: Menu
+msgid "Encrypt with password"
+msgstr "დაშიფვრა პაროლით"
+
+#: Menu
+msgid "Encrypt with password (ASCII)"
+msgstr "დაშიფვრა პაროლით (ASCII)"
+
+#: Menu
+msgid "Encrypt with keys"
+msgstr "დაშიფვრა გასაღებებით"
+
+#: Menu
+msgid "Encrypt with keys (ASCII)"
+msgstr "დაშიფვრა გასაღებებით (ASCII)"
+
+#: Menu
+msgid "Import keys"
+msgstr "გასაღებების შემოტანა"
+
+#: Menu
+msgid "Sign"
+msgstr "ხელმოწერა"
+
+#: Menu
+msgid "Sign (ASCII)"
+msgstr "ხელმოწერა (ASCII)"
+
+#: Menu
+msgid "Sign (detached signature)"
+msgstr "ხელმოწერა (მოხსნილი ხელმოწერა)"
+
+#: Menu
+msgid "Sign and encrypt with keys"
+msgstr "ხელმოწერა და გასაღებებით დაშიფვრა"
+
+#: Menu
+msgid "Sign and encrypt with keys (ASCII)"
+msgstr "ხელმოწერა და გასაღებებით დაშიფვრა (ASCII)"
+
+#: Menu
+msgid "Verify signature"
+msgstr "ხელმოწერის გადამოწმება"
+
+#: Menu
+msgid "Image: Add watermark (center)"
+msgstr "გამოსახულება: ჭვირნიშნის დამატება (ცენტრში)"
+
+#: Menu
+msgid "Image: Add watermark (north)"
+msgstr "გამოსახულება: ჭვირნიშნის დამატება (ჩრდილოეთში)"
+
+#: Menu
+msgid "Image: Add watermark (northeast)"
+msgstr "გამოსახულება: ჭვირნიშნის დამატება (ჩრდილოაღმოსავლეთში)"
+
+#: Menu
+msgid "Image: Add watermark (northwest)"
+msgstr "გამოსახულება: ჭვირნიშნის დამატება (ჩრდილოდასავლეთში)"
+
+#: Menu
+msgid "Image: Add watermark (south)"
+msgstr "გამოსახულება: ჭვირნიშნის დამატება (სამხრეთში)"
+
+#: Menu
+msgid "Image: Add watermark (southeast)"
+msgstr "გამოსახულება: ჭვირნიშნის დამატება (სამხრეთაღმოსავლეთში)"
+
+#: Menu
+msgid "Image: Add watermark (southwest)"
+msgstr "გამოსახულება: ჭვირნიშნის დამატება (სამხრეთდასავლეთში)"
+
+#: Menu
+msgid "Image: Automatic crop"
+msgstr "გამოსახულება: ავტომატური ამოჭრა"
+
+#: Menu
+msgid "Image: Automatic crop (15 pct)"
+msgstr "გამოსახულება: ავტომატური ამოჭრა (15%)"
+
+#: Menu
+msgid "Image: Background to alpha"
+msgstr "გამოსახულება: ფონი ალფაში"
+
+#: Menu
+msgid "Image: Background to alpha (15 pct)"
+msgstr "გამოსახულება: ფონი ალფაში (15%)"
+
+#: Menu
+msgid "Image: Color alpha to black"
+msgstr "გამოსახულება: ფერის ალფა შავში"
+
+#: Menu
+msgid "Image: Color alpha to magenta"
+msgstr "გამოსახულება: ფერის ალფა ფუქსინისფერში"
+
+#: Menu
+msgid "Image: Color alpha to white"
+msgstr "გამოსახულება: ფერის ალფა თეთრში"
+
+#: Menu
+msgid "Image: Color black to alpha"
+msgstr "გამოსახულება: ფერის შავი ალფაში"
+
+#: Menu
+msgid "Image: Color black to alpha (15 pct)"
+msgstr "გამოსახულება: ფერის შავი ალფაში (15%)"
+
+#: Menu
+msgid "Image: Color magenta to alpha"
+msgstr "გამოსახულება: ფუქსინისფერი ალფაში"
+
+#: Menu
+msgid "Image: Color magenta to alpha (15 pct)"
+msgstr "გამოსახულება: ფუქსინისფერი ალფაში (15%)"
+
+#: Menu
+msgid "Image: Colorspace to gray"
+msgstr "გამოსახულება: ფერთა სივრცე ნაცრისფერში"
+
+#: Menu
+msgid "Image: Color white to alpha"
+msgstr "გამოსახულება: ფერის თეთრი ალფაში"
+
+#: Menu
+msgid "Image: Color white to alpha (15 pct)"
+msgstr "გამოსახულება: ფერის თეთრი ალფაში (15%)"
+
+#: Menu
+msgid "Image: Combine into GIF"
+msgstr "გამოსახულება: GIF-ში გაერთიანება"
+
+#: Menu
+msgid "Image: Combine into PDF"
+msgstr "გამოსახულება: PDF-ში გაერთიანება"
+
+#: Menu
+msgid "Image: Convert to AVIF"
+msgstr "გამოსახულება: AVIF-ში გადაყვანა"
+
+#: Menu
+msgid "Image: Convert to GIF"
+msgstr "გამოსახულება: GIF-ში გადაყვანა"
+
+#: Menu
+msgid "Image: Convert to HEIC"
+msgstr "გამოსახულება: HEIC-ში გადაყვანა"
+
+#: Menu
+msgid "Image: Convert to JPG"
+msgstr "გამოსახულება: JPG-ში გადაყვანა"
+
+#: Menu
+msgid "Image: Convert to JXL"
+msgstr "გამოსახულება: JXL-ში გადაყვანა"
+
+#: Menu
+msgid "Image: Convert to PNG"
+msgstr "გამოსახულება: PNG-ში გადაყვანა"
+
+#: Menu
+msgid "Image: Convert to TIFF"
+msgstr "გამოსახულება: TIFF-ში გადაყვანა"
+
+#: Menu
+msgid "Image: Convert to WebP"
+msgstr "გამოსახულება: WebP-ში გადაყვანა"
+
+#: Menu
+msgid "Image: Create PNG icon (128 px)"
+msgstr "გამოსახულება: PNG ხატულას შექმნა (128 პიქს)"
+
+#: Menu
+msgid "Image: Create PNG icon (256 px)"
+msgstr "გამოსახულება: PNG ხატულას შექმნა (256 პიქს)"
+
+#: Menu
+msgid "Image: Create PNG icon (512 px)"
+msgstr "გამოსახულება: PNG ხატულას შექმნა (512 პიქს)"
+
+#: Menu
+msgid "Image: Create PNG icon (custom)"
+msgstr "გამოსახულება: PNG ხატულას შექმნა (მორგებული)"
+
+#: Menu
+msgid "Image: Desaturate"
+msgstr "გამოსახულება: დესატურაცია"
+
+#: Menu
+msgid "Image: Export to PDF"
+msgstr "გამოსახულება: PDF-ში გატანა"
+
+#: Menu
+msgid "Image: Find similar (65 pct)"
+msgstr "გამოსახულება: მსგავსების პოვნა (65%)"
+
+#: Menu
+msgid "Image: Find similar (75 pct)"
+msgstr "გამოსახულება: მსგავსების პოვნა (75%)"
+
+#: Menu
+msgid "Image: Find similar (85 pct)"
+msgstr "გამოსახულება: მსგავსების პოვნა (85%)"
+
+#: Menu
+msgid "Image: Find similar (95 pct)"
+msgstr "გამოსახულება: მსგავსების პოვნა (95%)"
+
+#: Menu
+msgid "Image: Flip (horizontal)"
+msgstr "გამოსახულება: გადაბრუნება (ჰორიზონტალურად)"
+
+#: Menu
+msgid "Image: Flip (vertical)"
+msgstr "გამოსახულება: გადაბრუნება (ვერტიკალურად)"
+
+#: Menu
+msgid "Image: Generate multiple hues"
+msgstr "გამოსახულება: ერთზე მეტი ტონის გენერაცია"
+
+#: Menu
+msgid "Image: Optimize PNG"
+msgstr "გამოსახულება: PNG-ის ოპტიმიზაცია"
+
+#: Menu
+msgid "Image: Perform OCR (English)"
+msgstr "გამოსახულება: OCR-ის გაშვება (ინგლისური)"
+
+#: Menu
+msgid "Image: Perform OCR (French)"
+msgstr "გამოსახულება: OCR-ის გაშვება (ფრანგული)"
+
+#: Menu
+msgid "Image: Perform OCR (German)"
+msgstr "გამოსახულება: OCR-ის გაშვება (გერმანული)"
+
+#: Menu
+msgid "Image: Perform OCR (Italian)"
+msgstr "გამოსახულება: OCR-ის გაშვება (იტალიური)"
+
+#: Menu
+msgid "Image: Perform OCR (Portuguese)"
+msgstr "გამოსახულება: OCR-ის გაშვება (პორტუგალიური)"
+
+#: Menu
+msgid "Image: Perform OCR (Russian)"
+msgstr "გამოსახულება: OCR-ის გაშვება (რუსული)"
+
+#: Menu
+msgid "Image: Perform OCR (Spanish)"
+msgstr "გამოსახულება: OCR-ის გაშვება (ესპანური)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 500kB max)"
+msgstr "გამოსახულება: შემცირება (JPG, 500კბ მაქს.)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 1000kB max)"
+msgstr "გამოსახულება: შემცირება (JPG, 1000კბ მაქს.)"
+
+#: Menu
+msgid "Image: Remove metadata"
+msgstr "გამოსახულება: მეტამონაცემების წაშლა"
+
+#: Menu
+msgid "Image: Rename from metadata"
+msgstr "გამოსახულება: სახელის გადარქმევა მეტამონაცემებიდან"
+
+#: Menu
+msgid "Image: Resize (25 pct)"
+msgstr "გამოსახულება: ზომის შეცვლა (25%)"
+
+#: Menu
+msgid "Image: Resize (50 pct)"
+msgstr "გამოსახულება: ზომის შეცვლა (50%)"
+
+#: Menu
+msgid "Image: Resize (75 pct)"
+msgstr "გამოსახულება: ზომის შეცვლა (75%)"
+
+#: Menu
+msgid "Image: Resize (1920x1080)"
+msgstr "გამოსახულება: ზომის შეცვლა (1920x1080)"
+
+#: Menu
+msgid "Image: Resize (2560x1440)"
+msgstr "გამოსახულება: ზომის შეცვლა (2560x1440)"
+
+#: Menu
+msgid "Image: Resize (3840x2160)"
+msgstr "გამოსახულება: ზომის შეცვლა (3840x2160)"
+
+#: Menu
+msgid "Image: Resize (custom)"
+msgstr "გამოსახულება: ზომის შეცვლა (მორგებული)"
+
+#: Menu
+msgid "Image: Rotate (90 deg)"
+msgstr "გამოსახულება: მობრუნება (90 გრად)"
+
+#: Menu
+msgid "Image: Rotate (180 deg)"
+msgstr "გამოსახულება: მობრუნება (180 გრად)"
+
+#: Menu
+msgid "Image: Rotate (270 deg)"
+msgstr "გამოსახულება: მობრუნება (270 გრად)"
+
+#: Menu
+msgid "Image: Split into 2 (horizontal)"
+msgstr "გამოსახულება: ორად გაყოფა (ჰორიზონტალურად)"
+
+#: Menu
+msgid "Image: Split into 2 (vertical)"
+msgstr "გამოსახულება: ორად გაყოფა (ვერტიკალურად)"
+
+#: Menu
+msgid "Image: Split into 4"
+msgstr "გამოსახულება: ოთხად გაყოფა"
+
+#: Menu
+msgid "Image: Stack (horizontal)"
+msgstr "გამოსახულება: შეკრება (ჰორიზონტალურად)"
+
+#: Menu
+msgid "Image: Stack (vertical)"
+msgstr "გამოსახულება: შეკრება (ვერტიკალური)"
+
+#: Menu
+msgid "IP: Scan hosts"
+msgstr "IP: ჰოსტების სკანირება"
+
+#: Menu
+msgid "List hard links"
+msgstr "მყარი ბმულების სია"
+
+#: Menu
+msgid "List largest directories"
+msgstr "უდიდესი საქაღალდეების სია"
+
+#: Menu
+msgid "List largest files"
+msgstr "უდიდესი ფაილების სია"
+
+#: Menu
+msgid "List permissions and owners"
+msgstr "წვდომებისა და მფლობელების სია"
+
+#: Menu
+msgid "List recent files"
+msgstr "უახლესი ფაილების სია"
+
+#: Menu
+msgid "List symbolic links"
+msgstr "სიმბმულების სია"
+
+#: Menu
+msgid "Media: Concatenate files"
+msgstr "მედია: ფაილების შეერთება"
+
+#: Menu
+msgid "Media: Remove metadata"
+msgstr "მედია: მეტამონაცემების წაშლა"
+
+#: Menu
+msgid "Media: Show basic metadata"
+msgstr "მედია: საბაზისო მეტამონაცემების ჩვენება"
+
+#: Menu
+msgid "Media: Show information"
+msgstr "მედია: ინფორმაციის ჩვენება"
+
+#: Menu
+msgid "MP3: (artist - title) Name to ID3"
+msgstr "MP3: (შემსრულებელი - სახელი) სახელი ID3-ში"
+
+#: Menu
+msgid "MP3: (artist - title) ID3 to Name"
+msgstr "MP3: (შემსრულებელი - სახელი) ID3 სახელში"
+
+#: Menu
+msgid "MP3: Maximize volume (recursive)"
+msgstr "MP3: ხმის ბოლომდე აწევა (რეკურსიული)"
+
+#: Menu
+msgid "MP3: Normalize volume (recursive)"
+msgstr "MP3: ხმის ნორმალიზაცია (რეკურსიული)"
+
+#: Menu
+msgid "MP3: Show encoding details"
+msgstr "MP3: კოდირების დეტალების ჩვენება"
+
+#: Menu
+msgid "Open item location"
+msgstr "ელემენტის მდებარეობის გახსნა"
+
+#: Menu
+msgid "Paste as hard link"
+msgstr "ჩასმა მყარი ბმულის სახით"
+
+#: Menu
+msgid "Paste as symbolic link"
+msgstr "ჩასმა სიმბმულის სახით"
+
+#: Menu
+msgid "Paste clipboard contents"
+msgstr "ბუფერის შემცველობის ჩასმა"
+
+#: Menu
+msgid "PDF: Add watermark (over)"
+msgstr "PDF: ჭვირნიშნის დამატება (ზემოდან)"
+
+#: Menu
+msgid "PDF: Add watermark (under)"
+msgstr "PDF: ჭვირნიშნის დამატება (ქვემოდან)"
+
+#: Menu
+msgid "PDF: Combine multiple PDFs"
+msgstr "PDF: რამდენიმე PDF-ის გაერთიანება"
+
+#: Menu
+msgid "PDF: Convert to grayscale"
+msgstr "PDF: ნაცრისფერში გადაყვანა"
+
+#: Menu
+msgid "PDF: Convert to PDFA-2b"
+msgstr "PDF: PDFA-2b-ში გადაყვანა"
+
+#: Menu
+msgid "PDF: Remove password"
+msgstr "PDF: პაროლის მოცილება"
+
+#: Menu
+msgid "PDF: Set password"
+msgstr "PDF: პაროლის დაყენება"
+
+#: Menu
+msgid "PDF: Extract images"
+msgstr "PDF: გამოსახულებების ამოღება"
+
+#: Menu
+msgid "PDF: Find annotated PDFs"
+msgstr "PDF: ანოტაციის მქონე PDF-ების პოვნა"
+
+#: Menu
+msgid "PDF: Find non-linearized PDFs"
+msgstr "PDF: არაგაწრფევებული PDF-ების პოვნა"
+
+#: Menu
+msgid "PDF: Find non-searchable PDFs"
+msgstr "PDF: PDF-ების პოვნა, რომლებშიც ძებნა გამორთულია"
+
+#: Menu
+msgid "PDF: Find password-protected PDFs"
+msgstr "PDF: პაროლით დაცული PDF-ების პოვნა"
+
+#: Menu
+msgid "PDF: Find signed PDFs"
+msgstr "PDF: ხელმოწერილი PDF-ების პოვნა"
+
+#: Menu
+msgid "PDF: Layout (landscape, 1x2)"
+msgstr "PDF: განლაგება (ლანდშაფტი, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x1)"
+msgstr "PDF: განლაგება (ლანდშაფტი, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x2)"
+msgstr "PDF: განლაგება (ლანდშაფტი, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x4)"
+msgstr "PDF: განლაგება (ლანდშაფტი, 1x4)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 4x2)"
+msgstr "PDF: განლაგება (ლანდშაფტი, 4x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 1x2)"
+msgstr "PDF: განლაგება (პორტრეტი, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x1)"
+msgstr "PDF: განლაგება (პორტრეტი, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x2)"
+msgstr "PDF: განლაგება (პორტრეტი, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x4)"
+msgstr "PDF: განლაგება (პორტრეტი, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 4x2)"
+msgstr "PDF: განლაგება (პორტრეტი, 4x2)"
+
+#: Menu
+msgid "PDF: Optimize for web (linearize)"
+msgstr "PDF: ოპტიმიზაცია ვებისთვის (გაწრფევება)"
+
+#: Menu
+msgid "PDF: Set size (A3)"
+msgstr "PDF: ზომის დაყენება (A3)"
+
+#: Menu
+msgid "PDF: Set size (A4)"
+msgstr "PDF: ზომის დაყენება (A4)"
+
+#: Menu
+msgid "PDF: Set size (A5)"
+msgstr "PDF: ზომის დაყენება (A5)"
+
+#: Menu
+msgid "PDF: Set size (US Legal)"
+msgstr "PDF: ზომის დაყენება (აშშ ოფიციალური)"
+
+#: Menu
+msgid "PDF: Set size (US Letter)"
+msgstr "PDF: ზომის დაყენება (აშშ წერილი)"
+
+#: Menu
+msgid "PDF: Perform OCR (English)"
+msgstr "PDF: OCR-ის გაშვება (ინგლისური)"
+
+#: Menu
+msgid "PDF: Perform OCR (French)"
+msgstr "PDF: OCR-ის გაშვება (ფრანგული)"
+
+#: Menu
+msgid "PDF: Perform OCR (German)"
+msgstr "PDF: OCR-ის გაშვება (გერმანული)"
+
+#: Menu
+msgid "PDF: Perform OCR (Italian)"
+msgstr "PDF: OCR-ის გაშვება (იტალიური)"
+
+#: Menu
+msgid "PDF: Perform OCR (Portuguese)"
+msgstr "PDF: OCR-ის გაშვება (პორტუგალიური)"
+
+#: Menu
+msgid "PDF: Perform OCR (Russian)"
+msgstr "PDF: OCR-ის გაშვება (რუსული)"
+
+#: Menu
+msgid "PDF: Perform OCR (Spanish)"
+msgstr "PDF: OCR-ის გაშვება (ესპანური)"
+
+#: Menu
+msgid "PDF: Reduce (150 dpi, e-book)"
+msgstr "PDF: შემცირება (150 dpi, ელწიგნი)"
+
+#: Menu
+msgid "PDF: Reduce (300 dpi, printer)"
+msgstr "PDF: შემცირება (300 dpi, პრინტერი)"
+
+#: Menu
+msgid "PDF: Remove annotations"
+msgstr "PDF: ანოტაციების წაშლა"
+
+#: Menu
+msgid "PDF: Remove metadata"
+msgstr "PDF: მეტამონაცემების წაშლა"
+
+#: Menu
+msgid "PDF: Rotate (90 deg)"
+msgstr "PDF: მობრუნება (90 გრად)"
+
+#: Menu
+msgid "PDF: Rotate (180 deg)"
+msgstr "PDF: მობრუნება (180 გრად)"
+
+#: Menu
+msgid "PDF: Rotate (270 deg)"
+msgstr "PDF: მობრუნება (270 გრად)"
+
+#: Menu
+msgid "PDF: Show signatures"
+msgstr "PDF: ხელმოწერების ჩვენება"
+
+#: Menu
+msgid "PDF: Split into single-page PDFs"
+msgstr "PDF: დაყოფა ერთგვერდიან PDF-ებად"
+
+#: Menu
+msgid "Rename: Add MD5 prefix"
+msgstr "სახელის გადარქმევა: MD5 პრეფიქსის დამატება"
+
+#: Menu
+msgid "Rename: Remove accents"
+msgstr "სახელის გადარქმევა: აქცენტების მოცილება"
+
+#: Menu
+msgid "Rename: Remove prefixes"
+msgstr "სახელის გადარქმევა: პრეფიქსების მოცილება"
+
+#: Menu
+msgid "Rename: Remove suffixes"
+msgstr "სახელის გადარქმევა: სუფიქსების მოცილება"
+
+#: Menu
+msgid "Rename: Change spaces to dashes"
+msgstr "სახელის გადარქმევა: ჰარეების ტირეთი ჩანაცვლება"
+
+#: Menu
+msgid "Rename: Change dashes to spaces"
+msgstr "სახელის გადარქმევა: ტირეების ჰარეთი ჩანაცვლება"
+
+#: Menu
+msgid "Rename: To lowercase"
+msgstr "სახელის გადარქმევა: მხედრულში გადაყვანა"
+
+#: Menu
+msgid "Rename: To lowercase (recursive)"
+msgstr "სახელის გადარქმევა: მხედრულში გადაყვანა (რეკურსიული)"
+
+#: Menu
+msgid "Rename: To sentence case"
+msgstr "სახელის გადარქმევა: წინადადების რეგისტრში"
+
+#: Menu
+msgid "Rename: To title case"
+msgstr "სახელის გადარქმევა: სათაურის რეგისტრში"
+
+#: Menu
+msgid "Rename: To uppercase"
+msgstr "სახელის გადარქმევა: მთავრულში გადაყვანა"
+
+#: Menu
+msgid "Rename: To uppercase (recursive)"
+msgstr "სახელის გადარქმევა: მთავრულში გადაყვანა (რეკურსიული)"
+
+#: Menu
+msgid "Reset permissions (recursive)"
+msgstr "წვდომების ჩამოყრა (რეკურსიული)"
+
+#: Menu
+msgid "Scan for malware (via ClamAV)"
+msgstr "მავნე პროგრამების ძებნა (ClamAV-ით)"
+
+#: Menu
+msgid "Scan for malware (via Lenspect)"
+msgstr "მავნე პროგრამების ძებნა (Lenspect-ით)"
+
+#: Menu
+msgid "Show file information"
+msgstr "ფაილის ინფორმაციის ჩვენება"
+
+#: Menu
+msgid "Show file metadata"
+msgstr "ფაილის მეტამონაცემების ჩვენება"
+
+#: Menu
+msgid "Show file MIME type"
+msgstr "ფაილის MIME ტიპის ჩვენება"
+
+#: Menu
+msgid "SVG: Compress to SVGZ"
+msgstr "SVG: შეკუმშვა SVGZ-ში"
+
+#: Menu
+msgid "SVG: Decompress SVGZ"
+msgstr "SVG: SVGZ-ის გაშლა"
+
+#: Menu
+msgid "SVG: Export to PDF"
+msgstr "SVG: PDF-ში გატანა"
+
+#: Menu
+msgid "SVG: Export to PNG (256 px)"
+msgstr "SVG: PNG-ში გატანა (256 პიქს)"
+
+#: Menu
+msgid "SVG: Export to PNG (512 px)"
+msgstr "SVG: PNG-ში გატანა (512 პიქს)"
+
+#: Menu
+msgid "SVG: Export to PNG (1024 px)"
+msgstr "SVG: PNG-ში გატანა (1024 პიქს)"
+
+#: Menu
+msgid "SVG: Export to PNG (custom)"
+msgstr "SVG: PNG-ში გატანა (მორგებული)"
+
+#: Menu
+msgid "SVG: Optimize"
+msgstr "SVG: ოპტიმიზაცია"
+
+#: Menu
+msgid "SVG: Replace fonts with Charter"
+msgstr "SVG: ფონტების ჩანაცვლება Charter-ით"
+
+#: Menu
+msgid "SVG: Replace fonts with Helvetica"
+msgstr "SVG: ფონტების ჩანაცვლება Helvetica-ით"
+
+#: Menu
+msgid "SVG: Replace fonts with Times"
+msgstr "SVG: ფონტების ჩანაცვლება Times-ით"
+
+#: Menu
+msgid "Terminal"
+msgstr "ტერმინალი"
+
+#: Menu
+msgid "Terminal (synced panes)"
+msgstr "ტერმინალი (სინქრონიზებული პანელები"
+
+#: Menu
+msgid "Text: Concatenate multiple files"
+msgstr "ტექსტი: ერთზე მეტი ფაილის შეერთება"
+
+#: Menu
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "ტექსტი: ტაბულაციის გადაყვანა 4 ჰარეში"
+
+#: Menu
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "ტექსტი: ნორმალიზაცია (UTF-8, რეკურსიული)"
+
+#: Menu
+msgid "Text: Encode to UTF-8"
+msgstr "ტექსტი: გადაყვანა UTF-8-ში"
+
+#: Menu
+msgid "Text: List encodings"
+msgstr "ტექსტი: კოდირებების სია"
+
+#: Menu
+msgid "Text: List issues"
+msgstr "ტექსტი: პრობლემების სია"
+
+#: Menu
+msgid "Text: List line breaks"
+msgstr "ტექსტი: ხაზის გადატანების სია"
+
+#: Menu
+msgid "Text: List line counts"
+msgstr "ტექსტი: ხაზების რაოდენობის სია"
+
+#: Menu
+msgid "Text: List line lengths"
+msgstr "ტექსტი: ხაზის სიგრძეების სია"
+
+#: Menu
+msgid "Text: List word counts"
+msgstr "ტექსტი: სიტყვების რაოდენობის სია"
+
+#: Menu
+msgid "Text: Remove trailing spaces"
+msgstr "ტექსტი: ბოლოში მიწერილი ჰარეების მოცილება"
+
+#: Menu
+msgid "Text: Remove accents"
+msgstr "ტექსტი: აქცენტების მოცილება"
+
+#: Menu
+msgid "URL: Check HTTP status"
+msgstr "URL: HTTP სტატუსის შემოწმება"
+
+#: Menu
+msgid "URL: Download file"
+msgstr "URL: ფაილის გადმოწერა"
+
+#: Menu
+msgid "URL: Show HTTP headers"
+msgstr "URL: HTTP თავსართების ჩვენება"
+
+#: Menu
+msgid "Verify MD5 file"
+msgstr "MD5 ფაილის გადამოწმება"
+
+#: Menu
+msgid "Verify SHA1 file"
+msgstr "SHA1 ფაილის გადამოწმება"
+
+#: Menu
+msgid "Verify SHA256 file"
+msgstr "SHA256 ფაილის გადამოწმება"
+
+#: Menu
+msgid "Verify SHA512 file"
+msgstr "SHA512 ფაილის გადამოწმება"
+
+#: Menu
+msgid "Video: Aspect to 1:1"
+msgstr "ვიდეო: ფარდობა 1:1-ში"
+
+#: Menu
+msgid "Video: Aspect to 4:3"
+msgstr "ვიდეო: ფარდობა 4:3-ში"
+
+#: Menu
+msgid "Video: Aspect to 16:9"
+msgstr "ვიდეო: ფარდობა 16:9-ში"
+
+#: Menu
+msgid "Video: Aspect to 16:10"
+msgstr "ვიდეო: ფარდობა 16:10-ში"
+
+#: Menu
+msgid "Video: Convert to MKV"
+msgstr "ვიდეო: გადაყვანა MKV-ში"
+
+#: Menu
+msgid "Video: Convert to MKV (copy)"
+msgstr "ვიდეო: გადაყვანა MKV-ში (კოპირება)"
+
+#: Menu
+msgid "Video: Convert to MP4"
+msgstr "ვიდეო: გადაყვანა MP4-ში"
+
+#: Menu
+msgid "Video: Convert to MP4 (copy)"
+msgstr "ვიდეო: გადაყვანა MP4-ში (კოპირება)"
+
+#: Menu
+msgid "Video: Convert to WebM"
+msgstr "ვიდეო: გადაყვანა WebM-ში"
+
+#: Menu
+msgid "Video: Convert to WebM (copy)"
+msgstr "ვიდეო: გადაყვანა WebM-ში (კოპირება)"
+
+#: Menu
+msgid "Video: Export frames (1 FPS)"
+msgstr "ვიდეო: კადრების გატანა (1 კადრ/წმ)"
+
+#: Menu
+msgid "Video: Export frames (5 FPS)"
+msgstr "ვიდეო: კადრების გატანა (5 კადრ/წმ)"
+
+#: Menu
+msgid "Video: Export frames (10 FPS)"
+msgstr "ვიდეო: კადრების გატანა (10 კადრ/წმ)"
+
+#: Menu
+msgid "Video: Export to GIF (1 FPS)"
+msgstr "ვიდეო: GIF-ში გატანა (1 კადრ/წმ)"
+
+#: Menu
+msgid "Video: Export to GIF (5 FPS)"
+msgstr "ვიდეო: GIF-ში გატანა (5 კადრ/წმ)"
+
+#: Menu
+msgid "Video: Export to GIF (10 FPS)"
+msgstr "ვიდეო: GIF-ში გატანა (10 კადრ/წმ)"
+
+#: Menu
+msgid "Video: Extract audio"
+msgstr "ვიდეო: აუდიოს ამოღება"
+
+#: Menu
+msgid "Video: Flip (horizontal)"
+msgstr "ვიდეო: გადაბრუნება (ჰორიზონტალურად)"
+
+#: Menu
+msgid "Video: Flip (vertical)"
+msgstr "ვიდეო: გადაბრუნება (ვერტიკალურად)"
+
+#: Menu
+msgid "Video: Frame rate to 30 FPS"
+msgstr "ვიდეო: კადრების სიხშირე 30 კადრ/წმ-ზე"
+
+#: Menu
+msgid "Video: Frame rate to 60 FPS"
+msgstr "ვიდეო: კადრების სიხშირე 60 კადრ/წმ-ზე"
+
+#: Menu
+msgid "Video: Remove audio"
+msgstr "ვიდეო: აუდიოს მოცილება"
+
+#: Menu
+msgid "Video: Resize (25 pct)"
+msgstr "ვიდეო: ზომის შეცვლა (25%)"
+
+#: Menu
+msgid "Video: Resize (50 pct)"
+msgstr "ვიდეო: ზომის შეცვლა (50%)"
+
+#: Menu
+msgid "Video: Resize (75 pct)"
+msgstr "ვიდეო: ზომის შეცვლა (75%)"
+
+#: Menu
+msgid "Video: Resize (custom)"
+msgstr "ვიდეო: ზომის შეცვლა (მორგებული)"
+
+#: Menu
+msgid "Video: Rotate (90 deg)"
+msgstr "ვიდეო: მობრუნება (90 გრად)"
+
+#: Menu
+msgid "Video: Rotate (180 deg)"
+msgstr "ვიდეო: მობრუნება (180 გრად)"
+
+#: Menu
+msgid "Video: Rotate (270 deg)"
+msgstr "ვიდეო: მობრუნება (270 გრად)"
+
+#: Menu
+msgid "Video: Speed to 0.5"
+msgstr "ვიდეო: სიჩქარე 0.5-ზე"
+
+#: Menu
+msgid "Video: Speed to 1.5"
+msgstr "ვიდეო: სიჩქარე 1.5-ზე"
+
+#: Menu
+msgid "Video: Speed to 2.0"
+msgstr "ვიდეო: სიჩქარე 2.0-ზე"
+
+#: install.sh
+msgid "Check for basic dependencies"
+msgstr "ძირითადი დამოკიდებულებების შემოწმება"
+
+#: install.sh
+msgid "Remove previously installed scripts"
+msgstr "ადრე დაყენებული სკრიპტების წაშლა"
+
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr "კლავიატურის მალსახმობების დაყენება"
+
+#: install.sh
+msgid "Close the file manager to reload configuration"
+msgstr "კონფიგურაციის თავიდან ჩასატვირთად დახურეთ ფაილების მმართველი"
+
+#: install.sh
+msgid "Add shortcuts in the application menu"
+msgstr "მალსახმობების დამატება აპლიკაციის მენიუში"
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr "Homebrew-ის დაყენება (არასავალდებულო)"
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr "აირჩიეთ, რომელი სკრიპტის კატეგორიების დაყენება გნებავთ"
+
+#: install.sh
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr "აირჩიეთ პარამეტრები (<SPACE> ასარჩევად, <ENTER> დასადასტურებლად):"
+
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr "დაყენება არაინტერაქტიურ რეჟიმში..."
+
+#: install.sh
+msgid "Installing:"
+msgstr "დაყენება:"
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr "აპლიკაციის მენიუს მალსახმობების დაყენება:"
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr "დაყენების ოპერაცია წარმატებით დასრულდა!"
+
+#: install.sh
+msgid "Checking for basic dependencies:"
+msgstr "ძირითადი დამოკიდებულებების შემოწმება:"
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr "ყველა დამოკიდებულება უკვე დაკმაყოფილებულია."
+
+#: install.sh
+msgid "Copying files..."
+msgstr "მიმდინარეობს ფაილების კოპირება..."
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr "კლავიატურის მალსახმობების დაყენება..."
+
+#: install.sh
+msgid "Scripts"
+msgstr "სკრიპტები"
+
+#: install.sh
+msgid "Creating shortcuts in the application menu..."
+msgstr "მიმდინარეობს მალსახმობების შექმნა აპლიკაციის მენიუში..."
+
+#: install.sh
+msgid "Creating GNOME Shell application folder..."
+msgstr "GNOME Shell-ის აპლიკაციის საქაღალდის შექმნა..."
+
+#: install.sh
+msgid "Installing actions in the context menu..."
+msgstr "ქმედებების დაყენება კონტექსტურ მენიუში..."
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr "ფაილების მმართველის დახურვა..."
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr "Homebrew-ის დაყენება:"
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr "Homebrew უკვე დაყენებულია."
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr "Homebrew-ის დაყენება სად:"
+
+#: install.sh
+msgid "Downloading the package..."
+msgstr "პაკეტის გადმოწერა..."
+
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr "პაკეტების მმართველის პოვნა შეუძლებელია!"
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr "Homebrew-ის დაყენება ჩავარდა!"
+
+msgid "EOF"
+msgstr "EOF"
