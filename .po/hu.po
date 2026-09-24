@@ -1,0 +1,2011 @@
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Enhanced File Manager Actions for Linux\n"
+"POT-Creation-Date: 2025-11-13 12:12-0300\n"
+"PO-Revision-Date: 2026-09-24 09:50-0300\n"
+"Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
+"Language-Team: \n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Done!"
+msgstr "Kész!"
+
+msgid "files"
+msgstr "fájlok"
+
+msgid "Would you like to continue?"
+msgstr "Szeretné folytatni?"
+
+msgid "directories"
+msgstr "könyvtárak"
+
+msgid "items"
+msgstr "elemek"
+
+msgid "The command failed."
+msgstr "A parancs sikertelen volt."
+
+msgid "The output file does not exist."
+msgstr "A kimeneti fájl nem létezik."
+
+msgid "Finished with errors! See the log:"
+msgstr "Hibákkal fejeződött be! Lásd a naplót:"
+
+msgid "Your system does not support clipboard operations."
+msgstr "A rendszer nem támogatja a vágólapműveleteket."
+
+msgid "Could not find a package for:"
+msgstr "Nem található csomag ehhez:"
+
+msgid "The following packages are missing:"
+msgstr "A következő csomagok hiányoznak:"
+
+msgid "Would you like to install them?"
+msgstr "Szeretné telepíteni őket?"
+
+msgid "Installing the packages. Please wait..."
+msgstr "Csomagok telepítése. Kis türelmet..."
+
+msgid "The package was installed, but a system reboot is required."
+msgstr "A csomag települt, de a rendszer újraindítása szükséges."
+
+msgid "Could not install the package:"
+msgstr "A csomag telepítése sikertelen:"
+
+msgid "This action will delete the selected items."
+msgstr "Ez a művelet törli a kijelölt elemeket."
+
+msgid "Total selected:"
+msgstr "Kijelölve összesen:"
+
+msgid "Total:"
+msgstr "Összesen:"
+
+msgid "Some items could not be deleted."
+msgstr "Néhány elemet nem sikerült törölni."
+
+msgid "All items were successfully deleted!"
+msgstr "Minden elem sikeresen törölve!"
+
+msgid "Could not access the directory:"
+msgstr "A könyvtár nem érhető el:"
+
+msgid "The destination file already exists."
+msgstr "A célfájl már létezik."
+
+msgid "Unable to move."
+msgstr "Nem helyezhető át."
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Cancel"
+msgstr "Mégse"
+
+msgid "(Empty)"
+msgstr "(Üres)"
+
+msgid "Select the ones to open:"
+msgstr "Válassza ki a megnyitandókat:"
+
+msgid "Select the ones to show in the file manager:"
+msgstr "Válassza ki a fájlkezelőben megjelenítendőket:"
+
+msgid "Select the ones to open in the web browser:"
+msgstr "Válassza ki a webböngészőben megnyitandókat:"
+
+msgid "Select the ones to delete:"
+msgstr "Válassza ki a törlendőket:"
+
+msgid "Password"
+msgstr "Jelszó"
+
+msgid "Type your password:"
+msgstr "Adja meg a jelszót:"
+
+msgid "The password cannot be empty!"
+msgstr "A jelszó nem lehet üres!"
+
+msgid "Yes"
+msgstr "Igen"
+
+msgid "No"
+msgstr "Nem"
+
+msgid "Finished! The output files are in:"
+msgstr "Kész! A kimeneti fájlok helye:"
+
+msgid "Finished, but there is nothing to do."
+msgstr "Befejezve, de nincs teendő."
+
+msgid "Finished!"
+msgstr "Kész!"
+
+msgid "Running the task. Please wait..."
+msgstr "A feladat fut. Kis türelmet..."
+
+msgid "No default application is set for the type:"
+msgstr "Nincs alapértelmezett alkalmazás ehhez a típushoz:"
+
+msgid "Could not find an application for the MIME type:"
+msgstr "Nem található alkalmazás ehhez a MIME-típushoz:"
+
+msgid "Batch mode detected."
+msgstr "Kötegelt mód észlelve."
+
+msgid "Each file inside this directory will be processed individually."
+msgstr "A könyvtár minden fájlja külön lesz feldolgozva."
+
+msgid "files or directories"
+msgstr "fájlok vagy könyvtárak"
+
+msgid "You must select files with the extension:"
+msgstr "Ilyen kiterjesztésű fájlokat kell kijelölnie:"
+
+msgid "Invalid input file!"
+msgstr "Érvénytelen bemeneti fájl!"
+
+msgid "You must select"
+msgstr "Ki kell jelölnie"
+
+msgid "You must select at least"
+msgstr "Ki kell jelölnie legalább"
+
+msgid "You must select up to"
+msgstr "Ki kell jelölnie legfeljebb"
+
+msgid "Could not find the output directory!"
+msgstr "A kimeneti könyvtár nem található!"
+
+msgid "Accessed recently"
+msgstr "Nemrég megnyitva"
+
+msgid "File"
+msgstr "Fájl"
+
+msgid "Count"
+msgstr "Darab"
+
+msgid "Issues"
+msgstr "Hibák"
+
+msgid "Encoding"
+msgstr "Kódolás"
+
+msgid "There are no valid paths in the clipboard!"
+msgstr "Nincs érvényes elérési út a vágólapon!"
+
+msgid "links"
+msgstr "hivatkozások"
+
+msgid "Inode"
+msgstr "Inode"
+
+msgid "Link"
+msgstr "Hivatkozás"
+
+msgid "Unsupported clipboard type."
+msgstr "Nem támogatott vágólaptípus."
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr "Ez a művelet rekurzívan átnevezi a kijelölt fájlokat és könyvtárakat."
+
+msgid "PDF files"
+msgstr "PDF-fájlok"
+
+msgid "Select a PDF to use as the watermark"
+msgstr "Válasszon egy PDF-et vízjelnek"
+
+msgid "Signature"
+msgstr "Aláírás"
+
+msgid "Malware"
+msgstr "Kártevő"
+
+msgid "Mode"
+msgstr "Mód"
+
+msgid "Bit rate"
+msgstr "Bitsebesség"
+
+msgid "Sampling rate"
+msgstr "Mintavételi frekvencia"
+
+msgid "Channels"
+msgstr "Csatornák"
+
+msgid "Duration"
+msgstr "Időtartam"
+
+msgid "Album"
+msgstr "Album"
+
+msgid "Artist"
+msgstr "Előadó"
+
+msgid "Title"
+msgstr "Cím"
+
+msgid "Quality"
+msgstr "Minőség"
+
+msgid "Image files"
+msgstr "Képfájlok"
+
+msgid "Select an image to use as the watermark"
+msgstr "Válasszon egy képet vízjelnek"
+
+msgid "Enter the target size."
+msgstr "Adja meg a célméretet."
+
+msgid "Invalid input!"
+msgstr "Érvénytelen bemenet!"
+
+msgid "Key files"
+msgstr "Kulcsfájlok"
+
+msgid "Select a key file to import"
+msgstr "Válasszon egy importálandó kulcsfájlt"
+
+msgid "No secret keys were found."
+msgstr "Nem találhatók titkos kulcsok."
+
+msgid "Would you like to import a key now?"
+msgstr "Szeretne most importálni egy kulcsot?"
+
+msgid "Failed to import the key!"
+msgstr "A kulcs importálása sikertelen!"
+
+msgid "Select a user (sign):"
+msgstr "Válasszon egy felhasználót (aláírás):"
+
+msgid "User"
+msgstr "Felhasználó"
+
+msgid "Name"
+msgstr "Név"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "Created"
+msgstr "Létrehozva"
+
+msgid "Expires"
+msgstr "Lejár"
+
+msgid "You must select a user!"
+msgstr "Ki kell jelölnie egy felhasználót!"
+
+msgid "No public keys were found."
+msgstr "Nem találhatók nyilvános kulcsok."
+
+msgid "Select one or more users (encrypt):"
+msgstr "Válasszon egy vagy több felhasználót (titkosítás):"
+
+msgid "You must select at least one user!"
+msgstr "Legalább egy felhasználót ki kell jelölnie!"
+
+msgid "Directory"
+msgstr "Könyvtár"
+
+msgid "Size"
+msgstr "Méret"
+
+msgid "Group"
+msgstr "Csoport"
+
+msgid "Item"
+msgstr "Elem"
+
+msgid "Octal"
+msgstr "Oktális"
+
+msgid "Type"
+msgstr "Típus"
+
+msgid "You must select only two images to compare!"
+msgstr "Az összehasonlításhoz pontosan két képet kell kijelölnie!"
+
+msgid "You must select only two PDFs to compare!"
+msgstr "Az összehasonlításhoz pontosan két PDF-et kell kijelölnie!"
+
+msgid "You must select only two binary files to compare!"
+msgstr "Az összehasonlításhoz pontosan két bináris fájlt kell kijelölnie!"
+
+msgid "No items were selected!"
+msgstr "Nincs kijelölt elem!"
+
+msgid "No directories were selected!"
+msgstr "Nincs kijelölt könyvtár!"
+
+msgid "The selected items are identical."
+msgstr "A kijelölt elemek azonosak."
+
+msgid "The selected images have the same pixel values."
+msgstr "A kijelölt képek pixelértékei megegyeznek."
+
+msgid "MIME"
+msgstr "MIME"
+
+msgid "This action will move all files from subdirectories to the root of the selected directory."
+msgstr "Ez a művelet az alkönyvtárak minden fájlját a kijelölt könyvtár gyökerébe helyezi."
+
+msgid "This action will reset the permissions recursively."
+msgstr "Ez a művelet rekurzívan visszaállítja a jogosultságokat."
+
+msgid "Date"
+msgstr "Dátum"
+
+msgid "Time"
+msgstr "Idő"
+
+msgid "Select the output filename:"
+msgstr "Válassza ki a kimeneti fájl nevét:"
+
+msgid "Filename"
+msgstr "Fájlnév"
+
+msgid "Status"
+msgstr "Állapot"
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr "Nincs érvényes URL a vágólapon vagy a kijelölt fájlokban!"
+
+msgid "IPs"
+msgstr "IP-címek"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Ping"
+msgstr "Ping"
+
+msgid "Ports"
+msgstr "Portok"
+
+msgid "Hostname"
+msgstr "Gazdanév"
+
+msgid "Example:"
+msgstr "Példa:"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "Adjon meg IP-címeket vagy IP-tartományokat."
+
+msgid "Enter the URLs."
+msgstr "Adja meg az URL-eket."
+
+msgid "No remote URL found."
+msgstr "Nem található távoli URL."
+
+msgid "URLs"
+msgstr "URL-ek"
+
+msgid "HTTP code"
+msgstr "HTTP-kód"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "(No differences)"
+msgstr "(Nincs eltérés)"
+
+msgid "(No line break)"
+msgstr "(Nincs sortörés)"
+
+msgid "(No response)"
+msgstr "(Nincs válasz)"
+
+msgid "Checksum error"
+msgstr "Ellenőrzőösszeg-hiba"
+
+msgid "File does not exist"
+msgstr "A fájl nem létezik"
+
+msgid "High"
+msgstr "Magas"
+
+msgid "Low"
+msgstr "Alacsony"
+
+msgid "Medium"
+msgstr "Közepes"
+
+msgid "Online"
+msgstr "Online"
+
+msgid "Offline"
+msgstr "Offline"
+
+msgid "Valid signature"
+msgstr "Érvényes aláírás"
+
+msgid "Invalid signature"
+msgstr "Érvénytelen aláírás"
+
+msgid "Missing key"
+msgstr "Hiányzó kulcs"
+
+msgid "Missing data file"
+msgstr "Hiányzó adatfájl"
+
+msgid "Revoked key"
+msgstr "Visszavont kulcs"
+
+msgid "Expired key"
+msgstr "Lejárt kulcs"
+
+msgid "Expired signature"
+msgstr "Lejárt aláírás"
+
+msgid "Unknown algorithm"
+msgstr "Ismeretlen algoritmus"
+
+msgid "Key ID"
+msgstr "Kulcsazonosító"
+
+msgid "Enter the password for the archive:"
+msgstr "Adja meg az archívum jelszavát:"
+
+msgid "Select the output directory"
+msgstr "Válassza ki a kimeneti könyvtárat"
+
+msgid "Select input directories"
+msgstr "Válassza ki a bemeneti könyvtárakat"
+
+msgid "Select input files"
+msgstr "Válassza ki a bemeneti fájlokat"
+
+msgid "Open"
+msgstr "Megnyitás"
+
+#: Menu
+msgid "Archive"
+msgstr "Archívum"
+
+#: Menu
+msgid "Audio and Video"
+msgstr "Hang és videó"
+
+#: Menu
+msgid "Checksum"
+msgstr "Ellenőrzőösszeg"
+
+#: Menu
+msgid "Clipboard"
+msgstr "Vágólap"
+
+#: Menu
+msgid "Directories and Files"
+msgstr "Könyvtárak és fájlok"
+
+#: Menu
+msgid "Document"
+msgstr "Dokumentum"
+
+#: Menu
+msgid "Encryption"
+msgstr "Titkosítás"
+
+#: Menu
+msgid "Image"
+msgstr "Kép"
+
+#: Menu
+msgid "Links"
+msgstr "Hivatkozások"
+
+#: Menu
+msgid "Network and Internet"
+msgstr "Hálózat és internet"
+
+#: Menu
+msgid "Open with"
+msgstr "Megnyitás ezzel"
+
+#: Menu
+msgid "Plain text"
+msgstr "Egyszerű szöveg"
+
+#: Menu
+msgid "Rename files"
+msgstr "Fájlok átnevezése"
+
+#: Menu
+msgid "Security and Recovery"
+msgstr "Biztonság és helyreállítás"
+
+#: Menu
+msgid "Audio and Video: Tools"
+msgstr "Hang és videó: eszközök"
+
+#: Menu
+msgid "Audio: Channels"
+msgstr "Hang: csatornák"
+
+#: Menu
+msgid "Audio: Convert"
+msgstr "Hang: konvertálás"
+
+#: Menu
+msgid "Audio: Effects"
+msgstr "Hang: effektusok"
+
+#: Menu
+msgid "Audio: MP3 files"
+msgstr "Hang: MP3-fájlok"
+
+#: Menu
+msgid "Audio: Quality"
+msgstr "Hang: minőség"
+
+#: Menu
+msgid "Document: Convert"
+msgstr "Dokumentum: konvertálás"
+
+#: Menu
+msgid "Image: Color"
+msgstr "Kép: szín"
+
+#: Menu
+msgid "Image: Combine, Split"
+msgstr "Kép: egyesítés, felosztás"
+
+#: Menu
+msgid "Image: Convert"
+msgstr "Kép: konvertálás"
+
+#: Menu
+msgid "Image: Crop, Resize"
+msgstr "Kép: vágás, átméretezés"
+
+#: Menu
+msgid "Image: Flip, Rotate"
+msgstr "Kép: tükrözés, forgatás"
+
+#: Menu
+msgid "Image: Icons"
+msgstr "Kép: ikonok"
+
+#: Menu
+msgid "Image: Metadata, Exif"
+msgstr "Kép: metaadatok, Exif"
+
+#: Menu
+msgid "Image: Optimize, Reduce"
+msgstr "Kép: optimalizálás, csökkentés"
+
+#: Menu
+msgid "Image: Similarity"
+msgstr "Kép: hasonlóság"
+
+#: Menu
+msgid "Image: SVG files"
+msgstr "Kép: SVG-fájlok"
+
+#: Menu
+msgid "Image: Text recognition (OCR)"
+msgstr "Kép: szövegfelismerés (OCR)"
+
+#: Menu
+msgid "Image: Transparency"
+msgstr "Kép: átlátszóság"
+
+#: Menu
+msgid "Image: Watermark"
+msgstr "Kép: vízjel"
+
+#: Menu
+msgid "PDF: Annotations"
+msgstr "PDF: jegyzetek"
+
+#: Menu
+msgid "PDF: Combine, Split"
+msgstr "PDF: egyesítés, felosztás"
+
+#: Menu
+msgid "PDF: Security"
+msgstr "PDF: biztonság"
+
+#: Menu
+msgid "PDF: Multi-page layout"
+msgstr "PDF: többoldalas elrendezés"
+
+#: Menu
+msgid "PDF: Optimize, Reduce"
+msgstr "PDF: optimalizálás, csökkentés"
+
+#: Menu
+msgid "PDF: Page size"
+msgstr "PDF: oldalméret"
+
+#: Menu
+msgid "PDF: Rotate"
+msgstr "PDF: forgatás"
+
+#: Menu
+msgid "PDF: Signatures"
+msgstr "PDF: aláírások"
+
+#: Menu
+msgid "PDF: Text recognition (OCR)"
+msgstr "PDF: szövegfelismerés (OCR)"
+
+#: Menu
+msgid "PDF: Tools"
+msgstr "PDF: eszközök"
+
+#: Menu
+msgid "PDF: Watermark"
+msgstr "PDF: vízjel"
+
+#: Menu
+msgid "Video: Aspect ratio"
+msgstr "Videó: képarány"
+
+#: Menu
+msgid "Video: Audio track"
+msgstr "Videó: hangsáv"
+
+#: Menu
+msgid "Video: Convert"
+msgstr "Videó: konvertálás"
+
+#: Menu
+msgid "Video: Export frames"
+msgstr "Videó: képkockák exportálása"
+
+#: Menu
+msgid "Video: Flip, Rotate"
+msgstr "Videó: tükrözés, forgatás"
+
+#: Menu
+msgid "Video: Frame rate"
+msgstr "Videó: képkockasebesség"
+
+#: Menu
+msgid "Video: Resize"
+msgstr "Videó: átméretezés"
+
+#: Menu
+msgid "Video: Speed"
+msgstr "Videó: sebesség"
+
+#: Menu
+msgid "Audio: Check quality"
+msgstr "Hang: minőség ellenőrzése"
+
+#: Menu
+msgid "Audio: Convert to FLAC"
+msgstr "Hang: konvertálás ide FLAC"
+
+#: Menu
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "Hang: konvertálás ide MP3 (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (192 kbps)"
+msgstr "Hang: konvertálás ide MP3 (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (320 kbps)"
+msgstr "Hang: konvertálás ide MP3 (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "Hang: konvertálás ide OGG (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (192 kbps)"
+msgstr "Hang: konvertálás ide OGG (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (320 kbps)"
+msgstr "Hang: konvertálás ide OGG (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "Hang: konvertálás ide OPUS (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (192 kbps)"
+msgstr "Hang: konvertálás ide OPUS (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (320 kbps)"
+msgstr "Hang: konvertálás ide OPUS (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to WAV"
+msgstr "Hang: konvertálás ide WAV"
+
+#: Menu
+msgid "Audio: Fade-in"
+msgstr "Hang: fokozatos erősítés"
+
+#: Menu
+msgid "Audio: Fade-out"
+msgstr "Hang: fokozatos halkítás"
+
+#: Menu
+msgid "Audio: Mix channels to mono"
+msgstr "Hang: csatornák keverése monóba"
+
+#: Menu
+msgid "Audio: Mix two files"
+msgstr "Hang: két fájl keverése"
+
+#: Menu
+msgid "Audio: Normalize volume"
+msgstr "Hang: hangerő normalizálása"
+
+#: Menu
+msgid "Audio: Produce spectrogram"
+msgstr "Hang: spektrogram készítése"
+
+#: Menu
+msgid "Audio: Remove silence (sections)"
+msgstr "Hang: csend eltávolítása (szakaszok)"
+
+#: Menu
+msgid "Audio: Mute noise"
+msgstr "Hang: zaj némítása"
+
+#: Menu
+msgid "Audio: Remove silence (extremities)"
+msgstr "Hang: csend eltávolítása (végeken)"
+
+#: Menu
+msgid "Create backup (via Rsync)"
+msgstr "Biztonsági mentés (Rsync)"
+
+#: Menu
+msgid "Code editor"
+msgstr "Kódszerkesztő"
+
+#: Menu
+msgid "Compare items"
+msgstr "Elemek összehasonlítása"
+
+#: Menu
+msgid "Compare items (via Diff)"
+msgstr "Elemek összehasonlítása (Diff)"
+
+#: Menu
+msgid "Compress to '7z'"
+msgstr "Tömörítés „7z” formátumba"
+
+#: Menu
+msgid "Compress to '7z' with password"
+msgstr "Tömörítés „7z” formátumba jelszóval"
+
+#: Menu
+msgid "Compress to 'tar.gz'"
+msgstr "Tömörítés „tar.gz” formátumba"
+
+#: Menu
+msgid "Compress to 'tar.xz'"
+msgstr "Tömörítés „tar.xz” formátumba"
+
+#: Menu
+msgid "Compress to 'tar.zst'"
+msgstr "Tömörítés „tar.zst” formátumba"
+
+#: Menu
+msgid "Compress to 'zip'"
+msgstr "Tömörítés „zip” formátumba"
+
+#: Menu
+msgid "Compress to 'zip' with password"
+msgstr "Tömörítés „zip” formátumba jelszóval"
+
+#: Menu
+msgid "Compute all checksums"
+msgstr "Minden ellenőrzőösszeg kiszámítása"
+
+#: Menu
+msgid "Compute MD5"
+msgstr "Kiszámítás MD5"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "Kiszámítás SHA1"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "Kiszámítás SHA256"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "Kiszámítás SHA512"
+
+#: Menu
+msgid "Copy file contents"
+msgstr "Fájltartalom másolása"
+
+#: Menu
+msgid "Copy file names"
+msgstr "Fájlnevek másolása"
+
+#: Menu
+msgid "Copy file names (recursive)"
+msgstr "Fájlnevek másolása (rekurzív)"
+
+#: Menu
+msgid "Copy file paths"
+msgstr "Fájlútvonalak másolása"
+
+#: Menu
+msgid "Copy file paths (recursive)"
+msgstr "Fájlútvonalak másolása (rekurzív)"
+
+#: Menu
+msgid "Create hard link here"
+msgstr "Hard link létrehozása itt"
+
+#: Menu
+msgid "Create hard link to..."
+msgstr "Hard link létrehozása ide..."
+
+#: Menu
+msgid "Create symbolic link here"
+msgstr "Szimbolikus link létrehozása itt"
+
+#: Menu
+msgid "Create symbolic link to..."
+msgstr "Szimbolikus link létrehozása ide..."
+
+#: Menu
+msgid "Disk usage analyzer"
+msgstr "Lemezhasználat-elemző"
+
+#: Menu
+msgid "Document: Convert to DOCX"
+msgstr "Dokumentum: konvertálás ide DOCX"
+
+#: Menu
+msgid "Document: Convert to EPUB"
+msgstr "Dokumentum: konvertálás ide EPUB"
+
+#: Menu
+msgid "Document: Convert to Markdown"
+msgstr "Dokumentum: konvertálás ide Markdown"
+
+#: Menu
+msgid "Document: Convert to ODP"
+msgstr "Dokumentum: konvertálás ide ODP"
+
+#: Menu
+msgid "Document: Convert to ODS"
+msgstr "Dokumentum: konvertálás ide ODS"
+
+#: Menu
+msgid "Document: Convert to ODT"
+msgstr "Dokumentum: konvertálás ide ODT"
+
+#: Menu
+msgid "Document: Convert to PDF"
+msgstr "Dokumentum: konvertálás ide PDF"
+
+#: Menu
+msgid "Document: Convert to PDF (landscape)"
+msgstr "Dokumentum: konvertálás ide PDF (fekvő)"
+
+#: Menu
+msgid "Document: Convert to PPTX"
+msgstr "Dokumentum: konvertálás ide PPTX"
+
+#: Menu
+msgid "Document: Convert to TXT"
+msgstr "Dokumentum: konvertálás ide TXT"
+
+#: Menu
+msgid "Document: Convert to XLSX"
+msgstr "Dokumentum: konvertálás ide XLSX"
+
+#: Menu
+msgid "Extract here"
+msgstr "Kibontás ide"
+
+#: Menu
+msgid "File carving (via Foremost)"
+msgstr "Fájlhelyreállítás (Foremost)"
+
+#: Menu
+msgid "File carving (via PhotoRec)"
+msgstr "Fájlhelyreállítás (PhotoRec)"
+
+#: Menu
+msgid "Find broken links"
+msgstr "Hibás hivatkozások keresése"
+
+#: Menu
+msgid "Find duplicate files"
+msgstr "Duplikált fájlok keresése"
+
+#: Menu
+msgid "Find empty directories"
+msgstr "Üres könyvtárak keresése"
+
+#: Menu
+msgid "List hidden files"
+msgstr "Rejtett fájlok listázása"
+
+#: Menu
+msgid "Find junk files"
+msgstr "Felesleges fájlok keresése"
+
+#: Menu
+msgid "Find empty files"
+msgstr "Üres fájlok keresése"
+
+#: Menu
+msgid "Flatten directory structure"
+msgstr "Könyvtárszerkezet lapítása"
+
+#: Menu
+msgid "Generate MD5 file"
+msgstr "Fájl létrehozása MD5"
+
+#: Menu
+msgid "Generate SHA1 file"
+msgstr "Fájl létrehozása SHA1"
+
+#: Menu
+msgid "Generate SHA256 file"
+msgstr "Fájl létrehozása SHA256"
+
+#: Menu
+msgid "Generate SHA512 file"
+msgstr "Fájl létrehozása SHA512"
+
+#: Menu
+msgid "Git: Clone URLs"
+msgstr "Git: URL-ek klónozása"
+
+#: Menu
+msgid "Git: Open repository website"
+msgstr "Git: tároló webhelyének megnyitása"
+
+#: Menu
+msgid "Git: Reset and pull"
+msgstr "Git: visszaállítás és letöltés"
+
+#: Menu
+msgid "Decrypt"
+msgstr "Visszafejtés"
+
+#: Menu
+msgid "Encrypt with password"
+msgstr "Titkosítás jelszóval"
+
+#: Menu
+msgid "Encrypt with password (ASCII)"
+msgstr "Titkosítás jelszóval (ASCII)"
+
+#: Menu
+msgid "Encrypt with keys"
+msgstr "Titkosítás kulcsokkal"
+
+#: Menu
+msgid "Encrypt with keys (ASCII)"
+msgstr "Titkosítás kulcsokkal (ASCII)"
+
+#: Menu
+msgid "Import keys"
+msgstr "Kulcsok importálása"
+
+#: Menu
+msgid "Sign"
+msgstr "Aláírás"
+
+#: Menu
+msgid "Sign (ASCII)"
+msgstr "Aláírás (ASCII)"
+
+#: Menu
+msgid "Sign (detached signature)"
+msgstr "Aláírás (külön aláírás)"
+
+#: Menu
+msgid "Sign and encrypt with keys"
+msgstr "Aláírás és titkosítás kulcsokkal"
+
+#: Menu
+msgid "Sign and encrypt with keys (ASCII)"
+msgstr "Aláírás és titkosítás kulcsokkal (ASCII)"
+
+#: Menu
+msgid "Verify signature"
+msgstr "Aláírás ellenőrzése"
+
+#: Menu
+msgid "Image: Add watermark (center)"
+msgstr "Kép: vízjel hozzáadása (közép)"
+
+#: Menu
+msgid "Image: Add watermark (north)"
+msgstr "Kép: vízjel hozzáadása (észak)"
+
+#: Menu
+msgid "Image: Add watermark (northeast)"
+msgstr "Kép: vízjel hozzáadása (északkelet)"
+
+#: Menu
+msgid "Image: Add watermark (northwest)"
+msgstr "Kép: vízjel hozzáadása (északnyugat)"
+
+#: Menu
+msgid "Image: Add watermark (south)"
+msgstr "Kép: vízjel hozzáadása (dél)"
+
+#: Menu
+msgid "Image: Add watermark (southeast)"
+msgstr "Kép: vízjel hozzáadása (délkelet)"
+
+#: Menu
+msgid "Image: Add watermark (southwest)"
+msgstr "Kép: vízjel hozzáadása (délnyugat)"
+
+#: Menu
+msgid "Image: Automatic crop"
+msgstr "Kép: automatikus vágás"
+
+#: Menu
+msgid "Image: Automatic crop (15 pct)"
+msgstr "Kép: automatikus vágás (15 pct)"
+
+#: Menu
+msgid "Image: Background to alpha"
+msgstr "Kép: háttér alfává"
+
+#: Menu
+msgid "Image: Background to alpha (15 pct)"
+msgstr "Kép: háttér alfává (15 pct)"
+
+#: Menu
+msgid "Image: Color alpha to black"
+msgstr "Kép: alfa feketévé"
+
+#: Menu
+msgid "Image: Color alpha to magenta"
+msgstr "Kép: alfa magentává"
+
+#: Menu
+msgid "Image: Color alpha to white"
+msgstr "Kép: alfa fehérré"
+
+#: Menu
+msgid "Image: Color black to alpha"
+msgstr "Kép: fekete alfává"
+
+#: Menu
+msgid "Image: Color black to alpha (15 pct)"
+msgstr "Kép: fekete alfává (15 pct)"
+
+#: Menu
+msgid "Image: Color magenta to alpha"
+msgstr "Kép: magenta alfává"
+
+#: Menu
+msgid "Image: Color magenta to alpha (15 pct)"
+msgstr "Kép: magenta alfává (15 pct)"
+
+#: Menu
+msgid "Image: Colorspace to gray"
+msgstr "Kép: színtér szürkére"
+
+#: Menu
+msgid "Image: Color white to alpha"
+msgstr "Kép: fehér alfává"
+
+#: Menu
+msgid "Image: Color white to alpha (15 pct)"
+msgstr "Kép: fehér alfává (15 pct)"
+
+#: Menu
+msgid "Image: Combine into GIF"
+msgstr "Kép: egyesítés GIF-be"
+
+#: Menu
+msgid "Image: Combine into PDF"
+msgstr "Kép: egyesítés PDF-be"
+
+#: Menu
+msgid "Image: Convert to AVIF"
+msgstr "Kép: konvertálás ide AVIF"
+
+#: Menu
+msgid "Image: Convert to GIF"
+msgstr "Kép: konvertálás ide GIF"
+
+#: Menu
+msgid "Image: Convert to HEIC"
+msgstr "Kép: konvertálás ide HEIC"
+
+#: Menu
+msgid "Image: Convert to JPG"
+msgstr "Kép: konvertálás ide JPG"
+
+#: Menu
+msgid "Image: Convert to JXL"
+msgstr "Kép: konvertálás ide JXL"
+
+#: Menu
+msgid "Image: Convert to PNG"
+msgstr "Kép: konvertálás ide PNG"
+
+#: Menu
+msgid "Image: Convert to TIFF"
+msgstr "Kép: konvertálás ide TIFF"
+
+#: Menu
+msgid "Image: Convert to WebP"
+msgstr "Kép: konvertálás ide WebP"
+
+#: Menu
+msgid "Image: Create PNG icon (128 px)"
+msgstr "Kép: PNG-ikon létrehozása (128 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (256 px)"
+msgstr "Kép: PNG-ikon létrehozása (256 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (512 px)"
+msgstr "Kép: PNG-ikon létrehozása (512 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (custom)"
+msgstr "Kép: PNG-ikon létrehozása (egyéni)"
+
+#: Menu
+msgid "Image: Desaturate"
+msgstr "Kép: telítettség csökkentése"
+
+#: Menu
+msgid "Image: Export to PDF"
+msgstr "Kép: exportálás PDF-be"
+
+#: Menu
+msgid "Image: Find similar (65 pct)"
+msgstr "Kép: hasonlók keresése (65 pct)"
+
+#: Menu
+msgid "Image: Find similar (75 pct)"
+msgstr "Kép: hasonlók keresése (75 pct)"
+
+#: Menu
+msgid "Image: Find similar (85 pct)"
+msgstr "Kép: hasonlók keresése (85 pct)"
+
+#: Menu
+msgid "Image: Find similar (95 pct)"
+msgstr "Kép: hasonlók keresése (95 pct)"
+
+#: Menu
+msgid "Image: Flip (horizontal)"
+msgstr "Kép: tükrözés (vízszintes)"
+
+#: Menu
+msgid "Image: Flip (vertical)"
+msgstr "Kép: tükrözés (függőleges)"
+
+#: Menu
+msgid "Image: Generate multiple hues"
+msgstr "Kép: több árnyalat létrehozása"
+
+#: Menu
+msgid "Image: Optimize PNG"
+msgstr "Kép: PNG optimalizálása"
+
+#: Menu
+msgid "Image: Perform OCR (English)"
+msgstr "Kép: OCR futtatása (angol)"
+
+#: Menu
+msgid "Image: Perform OCR (French)"
+msgstr "Kép: OCR futtatása (francia)"
+
+#: Menu
+msgid "Image: Perform OCR (German)"
+msgstr "Kép: OCR futtatása (német)"
+
+#: Menu
+msgid "Image: Perform OCR (Italian)"
+msgstr "Kép: OCR futtatása (olasz)"
+
+#: Menu
+msgid "Image: Perform OCR (Portuguese)"
+msgstr "Kép: OCR futtatása (portugál)"
+
+#: Menu
+msgid "Image: Perform OCR (Russian)"
+msgstr "Kép: OCR futtatása (orosz)"
+
+#: Menu
+msgid "Image: Perform OCR (Spanish)"
+msgstr "Kép: OCR futtatása (spanyol)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 500kB max)"
+msgstr "Kép: csökkentés (JPG, max. 500 kB)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 1000kB max)"
+msgstr "Kép: csökkentés (JPG, max. 1000 kB)"
+
+#: Menu
+msgid "Image: Remove metadata"
+msgstr "Kép: metaadatok eltávolítása"
+
+#: Menu
+msgid "Image: Rename from metadata"
+msgstr "Kép: átnevezés metaadatok alapján"
+
+#: Menu
+msgid "Image: Resize (25 pct)"
+msgstr "Kép: átméretezés (25 pct)"
+
+#: Menu
+msgid "Image: Resize (50 pct)"
+msgstr "Kép: átméretezés (50 pct)"
+
+#: Menu
+msgid "Image: Resize (75 pct)"
+msgstr "Kép: átméretezés (75 pct)"
+
+#: Menu
+msgid "Image: Resize (1920x1080)"
+msgstr "Kép: átméretezés (1920x1080)"
+
+#: Menu
+msgid "Image: Resize (2560x1440)"
+msgstr "Kép: átméretezés (2560x1440)"
+
+#: Menu
+msgid "Image: Resize (3840x2160)"
+msgstr "Kép: átméretezés (3840x2160)"
+
+#: Menu
+msgid "Image: Resize (custom)"
+msgstr "Kép: átméretezés (egyéni)"
+
+#: Menu
+msgid "Image: Rotate (90 deg)"
+msgstr "Kép: forgatás (90°)"
+
+#: Menu
+msgid "Image: Rotate (180 deg)"
+msgstr "Kép: forgatás (180°)"
+
+#: Menu
+msgid "Image: Rotate (270 deg)"
+msgstr "Kép: forgatás (270°)"
+
+#: Menu
+msgid "Image: Split into 2 (horizontal)"
+msgstr "Kép: felosztás 2 részre (vízszintes)"
+
+#: Menu
+msgid "Image: Split into 2 (vertical)"
+msgstr "Kép: felosztás 2 részre (függőleges)"
+
+#: Menu
+msgid "Image: Split into 4"
+msgstr "Kép: felosztás 4 részre"
+
+#: Menu
+msgid "Image: Stack (horizontal)"
+msgstr "Kép: egymás mellé (vízszintes)"
+
+#: Menu
+msgid "Image: Stack (vertical)"
+msgstr "Kép: egymás alá (függőleges)"
+
+#: Menu
+msgid "IP: Scan hosts"
+msgstr "IP: gazdák vizsgálata"
+
+#: Menu
+msgid "List hard links"
+msgstr "Hard linkek listázása"
+
+#: Menu
+msgid "List largest directories"
+msgstr "Legnagyobb könyvtárak listázása"
+
+#: Menu
+msgid "List largest files"
+msgstr "Legnagyobb fájlok listázása"
+
+#: Menu
+msgid "List permissions and owners"
+msgstr "Jogosultságok és tulajdonosok listázása"
+
+#: Menu
+msgid "List recent files"
+msgstr "Legutóbbi fájlok listázása"
+
+#: Menu
+msgid "List symbolic links"
+msgstr "Szimbolikus linkek listázása"
+
+#: Menu
+msgid "Media: Concatenate files"
+msgstr "Média: fájlok összefűzése"
+
+#: Menu
+msgid "Media: Remove metadata"
+msgstr "Média: metaadatok eltávolítása"
+
+#: Menu
+msgid "Media: Show basic metadata"
+msgstr "Média: alapvető metaadatok megjelenítése"
+
+#: Menu
+msgid "Media: Show information"
+msgstr "Média: információk megjelenítése"
+
+#: Menu
+msgid "MP3: (artist - title) Name to ID3"
+msgstr "MP3: (előadó - cím) név ID3-ba"
+
+#: Menu
+msgid "MP3: (artist - title) ID3 to Name"
+msgstr "MP3: (előadó - cím) ID3 névvé"
+
+#: Menu
+msgid "MP3: Maximize volume (recursive)"
+msgstr "MP3: hangerő maximalizálása (rekurzív)"
+
+#: Menu
+msgid "MP3: Normalize volume (recursive)"
+msgstr "MP3: hangerő normalizálása (rekurzív)"
+
+#: Menu
+msgid "MP3: Show encoding details"
+msgstr "MP3: kódolás részleteinek megjelenítése"
+
+#: Menu
+msgid "Open item location"
+msgstr "Elem helyének megnyitása"
+
+#: Menu
+msgid "Paste as hard link"
+msgstr "Beillesztés hard linkként"
+
+#: Menu
+msgid "Paste as symbolic link"
+msgstr "Beillesztés szimbolikus linkként"
+
+#: Menu
+msgid "Paste clipboard contents"
+msgstr "Vágólap tartalmának beillesztése"
+
+#: Menu
+msgid "PDF: Add watermark (over)"
+msgstr "PDF: vízjel hozzáadása (felül)"
+
+#: Menu
+msgid "PDF: Add watermark (under)"
+msgstr "PDF: vízjel hozzáadása (alul)"
+
+#: Menu
+msgid "PDF: Combine multiple PDFs"
+msgstr "PDF: több PDF egyesítése"
+
+#: Menu
+msgid "PDF: Convert to grayscale"
+msgstr "PDF: konvertálás szürkeárnyalatosra"
+
+#: Menu
+msgid "PDF: Convert to PDFA-2b"
+msgstr "PDF: konvertálás PDFA-2b formátumra"
+
+#: Menu
+msgid "PDF: Remove password"
+msgstr "PDF: jelszó eltávolítása"
+
+#: Menu
+msgid "PDF: Set password"
+msgstr "PDF: jelszó beállítása"
+
+#: Menu
+msgid "PDF: Extract images"
+msgstr "PDF: képek kibontása"
+
+#: Menu
+msgid "PDF: Find annotated PDFs"
+msgstr "PDF: jegyzetekkel ellátott PDF-ek keresése"
+
+#: Menu
+msgid "PDF: Find non-linearized PDFs"
+msgstr "PDF: nem linearizált PDF-ek keresése"
+
+#: Menu
+msgid "PDF: Find non-searchable PDFs"
+msgstr "PDF: nem kereshető PDF-ek keresése"
+
+#: Menu
+msgid "PDF: Find password-protected PDFs"
+msgstr "PDF: jelszóval védett PDF-ek keresése"
+
+#: Menu
+msgid "PDF: Find signed PDFs"
+msgstr "PDF: aláírt PDF-ek keresése"
+
+#: Menu
+msgid "PDF: Layout (landscape, 1x2)"
+msgstr "PDF: elrendezés (fekvő, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x1)"
+msgstr "PDF: elrendezés (fekvő, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x2)"
+msgstr "PDF: elrendezés (fekvő, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x4)"
+msgstr "PDF: elrendezés (fekvő, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 4x2)"
+msgstr "PDF: elrendezés (fekvő, 4x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 1x2)"
+msgstr "PDF: elrendezés (álló, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x1)"
+msgstr "PDF: elrendezés (álló, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x2)"
+msgstr "PDF: elrendezés (álló, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x4)"
+msgstr "PDF: elrendezés (álló, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 4x2)"
+msgstr "PDF: elrendezés (álló, 4x2)"
+
+#: Menu
+msgid "PDF: Optimize for web (linearize)"
+msgstr "PDF: optimalizálás webre (linearizálás)"
+
+#: Menu
+msgid "PDF: Set size (A3)"
+msgstr "PDF: méret beállítása (A3)"
+
+#: Menu
+msgid "PDF: Set size (A4)"
+msgstr "PDF: méret beállítása (A4)"
+
+#: Menu
+msgid "PDF: Set size (A5)"
+msgstr "PDF: méret beállítása (A5)"
+
+#: Menu
+msgid "PDF: Set size (US Legal)"
+msgstr "PDF: méret beállítása (US Legal)"
+
+#: Menu
+msgid "PDF: Set size (US Letter)"
+msgstr "PDF: méret beállítása (US Letter)"
+
+#: Menu
+msgid "PDF: Perform OCR (English)"
+msgstr "PDF: OCR futtatása (angol)"
+
+#: Menu
+msgid "PDF: Perform OCR (French)"
+msgstr "PDF: OCR futtatása (francia)"
+
+#: Menu
+msgid "PDF: Perform OCR (German)"
+msgstr "PDF: OCR futtatása (német)"
+
+#: Menu
+msgid "PDF: Perform OCR (Italian)"
+msgstr "PDF: OCR futtatása (olasz)"
+
+#: Menu
+msgid "PDF: Perform OCR (Portuguese)"
+msgstr "PDF: OCR futtatása (portugál)"
+
+#: Menu
+msgid "PDF: Perform OCR (Russian)"
+msgstr "PDF: OCR futtatása (orosz)"
+
+#: Menu
+msgid "PDF: Perform OCR (Spanish)"
+msgstr "PDF: OCR futtatása (spanyol)"
+
+#: Menu
+msgid "PDF: Reduce (150 dpi, e-book)"
+msgstr "PDF: csökkentés (150 dpi, e-könyv)"
+
+#: Menu
+msgid "PDF: Reduce (300 dpi, printer)"
+msgstr "PDF: csökkentés (300 dpi, nyomtató)"
+
+#: Menu
+msgid "PDF: Remove annotations"
+msgstr "PDF: jegyzetek eltávolítása"
+
+#: Menu
+msgid "PDF: Remove metadata"
+msgstr "PDF: metaadatok eltávolítása"
+
+#: Menu
+msgid "PDF: Rotate (90 deg)"
+msgstr "PDF: forgatás (90°)"
+
+#: Menu
+msgid "PDF: Rotate (180 deg)"
+msgstr "PDF: forgatás (180°)"
+
+#: Menu
+msgid "PDF: Rotate (270 deg)"
+msgstr "PDF: forgatás (270°)"
+
+#: Menu
+msgid "PDF: Show signatures"
+msgstr "PDF: aláírások megjelenítése"
+
+#: Menu
+msgid "PDF: Split into single-page PDFs"
+msgstr "PDF: felosztás egyoldalas PDF-ekre"
+
+#: Menu
+msgid "Rename: Add MD5 prefix"
+msgstr "Átnevezés: MD5 előtag hozzáadása"
+
+#: Menu
+msgid "Rename: Remove accents"
+msgstr "Átnevezés: ékezetek eltávolítása"
+
+#: Menu
+msgid "Rename: Remove prefixes"
+msgstr "Átnevezés: előtagok eltávolítása"
+
+#: Menu
+msgid "Rename: Remove suffixes"
+msgstr "Átnevezés: utótagok eltávolítása"
+
+#: Menu
+msgid "Rename: Change spaces to dashes"
+msgstr "Átnevezés: szóközök kötőjelekké"
+
+#: Menu
+msgid "Rename: Change dashes to spaces"
+msgstr "Átnevezés: kötőjelek szóközökké"
+
+#: Menu
+msgid "Rename: To lowercase"
+msgstr "Átnevezés: kisbetűsre"
+
+#: Menu
+msgid "Rename: To lowercase (recursive)"
+msgstr "Átnevezés: kisbetűsre (rekurzív)"
+
+#: Menu
+msgid "Rename: To sentence case"
+msgstr "Átnevezés: mondatkezdő nagybetű"
+
+#: Menu
+msgid "Rename: To title case"
+msgstr "Átnevezés: címszerű nagybetű"
+
+#: Menu
+msgid "Rename: To uppercase"
+msgstr "Átnevezés: nagybetűsre"
+
+#: Menu
+msgid "Rename: To uppercase (recursive)"
+msgstr "Átnevezés: nagybetűsre (rekurzív)"
+
+#: Menu
+msgid "Reset permissions (recursive)"
+msgstr "Jogosultságok visszaállítása (rekurzív)"
+
+#: Menu
+msgid "Scan for malware (via ClamAV)"
+msgstr "Kártevőkeresés (ClamAV)"
+
+#: Menu
+msgid "Scan for malware (via Lenspect)"
+msgstr "Kártevőkeresés (Lenspect)"
+
+#: Menu
+msgid "Show file information"
+msgstr "Fájlinformációk megjelenítése"
+
+#: Menu
+msgid "Show file metadata"
+msgstr "Fájl metaadatainak megjelenítése"
+
+#: Menu
+msgid "Show file MIME type"
+msgstr "Fájl MIME-típusának megjelenítése"
+
+#: Menu
+msgid "SVG: Compress to SVGZ"
+msgstr "SVG: tömörítés SVGZ-be"
+
+#: Menu
+msgid "SVG: Decompress SVGZ"
+msgstr "SVG: SVGZ kibontása"
+
+#: Menu
+msgid "SVG: Export to PDF"
+msgstr "SVG: exportálás PDF-be"
+
+#: Menu
+msgid "SVG: Export to PNG (256 px)"
+msgstr "SVG: exportálás PNG-be (256 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (512 px)"
+msgstr "SVG: exportálás PNG-be (512 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (1024 px)"
+msgstr "SVG: exportálás PNG-be (1024 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (custom)"
+msgstr "SVG: exportálás PNG-be (egyéni)"
+
+#: Menu
+msgid "SVG: Optimize"
+msgstr "SVG: optimalizálás"
+
+#: Menu
+msgid "SVG: Replace fonts with Charter"
+msgstr "SVG: betűtípusok cseréje Charterre"
+
+#: Menu
+msgid "SVG: Replace fonts with Helvetica"
+msgstr "SVG: betűtípusok cseréje Helveticára"
+
+#: Menu
+msgid "SVG: Replace fonts with Times"
+msgstr "SVG: betűtípusok cseréje Timesre"
+
+#: Menu
+msgid "Terminal"
+msgstr "Terminál"
+
+#: Menu
+msgid "Terminal (synced panes)"
+msgstr "Terminál (szinkronizált panelek)"
+
+#: Menu
+msgid "Text: Concatenate multiple files"
+msgstr "Szöveg: több fájl összefűzése"
+
+#: Menu
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "Szöveg: tabulátorok 4 szóközre"
+
+#: Menu
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "Szöveg: normalizálás (UTF-8, rekurzív)"
+
+#: Menu
+msgid "Text: Encode to UTF-8"
+msgstr "Szöveg: kódolás UTF-8-ra"
+
+#: Menu
+msgid "Text: List encodings"
+msgstr "Szöveg: kódolások listázása"
+
+#: Menu
+msgid "Text: List issues"
+msgstr "Szöveg: hibák listázása"
+
+#: Menu
+msgid "Text: List line breaks"
+msgstr "Szöveg: sortörések listázása"
+
+#: Menu
+msgid "Text: List line counts"
+msgstr "Szöveg: sorszámok listázása"
+
+#: Menu
+msgid "Text: List line lengths"
+msgstr "Szöveg: sorhosszak listázása"
+
+#: Menu
+msgid "Text: List word counts"
+msgstr "Szöveg: szószámok listázása"
+
+#: Menu
+msgid "Text: Remove trailing spaces"
+msgstr "Szöveg: záró szóközök eltávolítása"
+
+#: Menu
+msgid "Text: Remove accents"
+msgstr "Szöveg: ékezetek eltávolítása"
+
+#: Menu
+msgid "URL: Check HTTP status"
+msgstr "URL: HTTP-állapot ellenőrzése"
+
+#: Menu
+msgid "URL: Download file"
+msgstr "URL: fájl letöltése"
+
+#: Menu
+msgid "URL: Show HTTP headers"
+msgstr "URL: HTTP-fejlécek megjelenítése"
+
+#: Menu
+msgid "Verify MD5 file"
+msgstr "Fájl ellenőrzése MD5"
+
+#: Menu
+msgid "Verify SHA1 file"
+msgstr "Fájl ellenőrzése SHA1"
+
+#: Menu
+msgid "Verify SHA256 file"
+msgstr "Fájl ellenőrzése SHA256"
+
+#: Menu
+msgid "Verify SHA512 file"
+msgstr "Fájl ellenőrzése SHA512"
+
+#: Menu
+msgid "Video: Aspect to 1:1"
+msgstr "Videó: képarány 1:1"
+
+#: Menu
+msgid "Video: Aspect to 4:3"
+msgstr "Videó: képarány 4:3"
+
+#: Menu
+msgid "Video: Aspect to 16:9"
+msgstr "Videó: képarány 16:9"
+
+#: Menu
+msgid "Video: Aspect to 16:10"
+msgstr "Videó: képarány 16:10"
+
+#: Menu
+msgid "Video: Convert to MKV"
+msgstr "Videó: konvertálás ide MKV"
+
+#: Menu
+msgid "Video: Convert to MKV (copy)"
+msgstr "Videó: konvertálás MKV formátumra (másolat)"
+
+#: Menu
+msgid "Video: Convert to MP4"
+msgstr "Videó: konvertálás ide MP4"
+
+#: Menu
+msgid "Video: Convert to MP4 (copy)"
+msgstr "Videó: konvertálás MP4 formátumra (másolat)"
+
+#: Menu
+msgid "Video: Convert to WebM"
+msgstr "Videó: konvertálás ide WebM"
+
+#: Menu
+msgid "Video: Convert to WebM (copy)"
+msgstr "Videó: konvertálás WebM formátumra (másolat)"
+
+#: Menu
+msgid "Video: Export frames (1 FPS)"
+msgstr "Videó: képkockák exportálása (1 FPS)"
+
+#: Menu
+msgid "Video: Export frames (5 FPS)"
+msgstr "Videó: képkockák exportálása (5 FPS)"
+
+#: Menu
+msgid "Video: Export frames (10 FPS)"
+msgstr "Videó: képkockák exportálása (10 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (1 FPS)"
+msgstr "Videó: exportálás GIF-be (1 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (5 FPS)"
+msgstr "Videó: exportálás GIF-be (5 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (10 FPS)"
+msgstr "Videó: exportálás GIF-be (10 FPS)"
+
+#: Menu
+msgid "Video: Extract audio"
+msgstr "Videó: hang kibontása"
+
+#: Menu
+msgid "Video: Flip (horizontal)"
+msgstr "Videó: tükrözés (vízszintes)"
+
+#: Menu
+msgid "Video: Flip (vertical)"
+msgstr "Videó: tükrözés (függőleges)"
+
+#: Menu
+msgid "Video: Frame rate to 30 FPS"
+msgstr "Videó: képkockasebesség 30 FPS"
+
+#: Menu
+msgid "Video: Frame rate to 60 FPS"
+msgstr "Videó: képkockasebesség 60 FPS"
+
+#: Menu
+msgid "Video: Remove audio"
+msgstr "Videó: hang eltávolítása"
+
+#: Menu
+msgid "Video: Resize (25 pct)"
+msgstr "Videó: átméretezés (25 pct)"
+
+#: Menu
+msgid "Video: Resize (50 pct)"
+msgstr "Videó: átméretezés (50 pct)"
+
+#: Menu
+msgid "Video: Resize (75 pct)"
+msgstr "Videó: átméretezés (75 pct)"
+
+#: Menu
+msgid "Video: Resize (custom)"
+msgstr "Videó: átméretezés (egyéni)"
+
+#: Menu
+msgid "Video: Rotate (90 deg)"
+msgstr "Videó: forgatás (90°)"
+
+#: Menu
+msgid "Video: Rotate (180 deg)"
+msgstr "Videó: forgatás (180°)"
+
+#: Menu
+msgid "Video: Rotate (270 deg)"
+msgstr "Videó: forgatás (270°)"
+
+#: Menu
+msgid "Video: Speed to 0.5"
+msgstr "Videó: sebesség 0.5"
+
+#: Menu
+msgid "Video: Speed to 1.5"
+msgstr "Videó: sebesség 1.5"
+
+#: Menu
+msgid "Video: Speed to 2.0"
+msgstr "Videó: sebesség 2.0"
+
+#: install.sh
+msgid "Check for basic dependencies"
+msgstr "Alapvető függőségek ellenőrzése"
+
+#: install.sh
+msgid "Remove previously installed scripts"
+msgstr "Korábban telepített szkriptek eltávolítása"
+
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr "Gyorsbillentyűk telepítése"
+
+#: install.sh
+msgid "Close the file manager to reload configuration"
+msgstr "A fájlkezelő bezárása a beállítások újratöltéséhez"
+
+#: install.sh
+msgid "Add shortcuts in the application menu"
+msgstr "Parancsikonok hozzáadása az alkalmazásmenühöz"
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr "Homebrew telepítése (nem kötelező)"
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr "Válassza ki a telepítendő szkriptkategóriákat"
+
+#: install.sh
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr "Válassza ki a lehetőségeket (<SZÓKÖZ> a kijelöléshez, <ENTER> a megerősítéshez):"
+
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr "Telepítés nem interaktív módban..."
+
+#: install.sh
+msgid "Installing:"
+msgstr "Telepítés:"
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr "Alkalmazásmenü-parancsikonok telepítése:"
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr "A telepítés sikeresen befejeződött!"
+
+#: install.sh
+msgid "Checking for basic dependencies:"
+msgstr "Alapvető függőségek ellenőrzése:"
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr "Minden függőség teljesül."
+
+#: install.sh
+msgid "Copying files..."
+msgstr "Fájlok másolása..."
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr "Gyorsbillentyűk telepítése..."
+
+#: install.sh
+msgid "Scripts"
+msgstr "Szkriptek"
+
+#: install.sh
+msgid "Creating shortcuts in the application menu..."
+msgstr "Parancsikonok létrehozása az alkalmazásmenüben..."
+
+#: install.sh
+msgid "Creating GNOME Shell application folder..."
+msgstr "GNOME Shell alkalmazásmappa létrehozása..."
+
+#: install.sh
+msgid "Installing actions in the context menu..."
+msgstr "Műveletek telepítése a helyi menübe..."
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr "A fájlkezelő bezárása..."
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr "Homebrew telepítése:"
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr "A Homebrew már telepítve van."
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr "Homebrew telepítése ide:"
+
+#: install.sh
+msgid "Downloading the package..."
+msgstr "A csomag letöltése..."
+
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr "Nem található csomagkezelő!"
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr "A Homebrew telepítése sikertelen!"
+
+#~ msgid "EOF"
+#~ msgstr "EOF"

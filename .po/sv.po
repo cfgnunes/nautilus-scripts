@@ -1,0 +1,2011 @@
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Enhanced File Manager Actions for Linux\n"
+"POT-Creation-Date: 2025-11-13 12:12-0300\n"
+"PO-Revision-Date: 2026-09-24 09:50-0300\n"
+"Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
+"Language-Team: \n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Done!"
+msgstr "Klart!"
+
+msgid "files"
+msgstr "filer"
+
+msgid "Would you like to continue?"
+msgstr "Vill du fortsätta?"
+
+msgid "directories"
+msgstr "kataloger"
+
+msgid "items"
+msgstr "objekt"
+
+msgid "The command failed."
+msgstr "Kommandot misslyckades."
+
+msgid "The output file does not exist."
+msgstr "Utdatafilen finns inte."
+
+msgid "Finished with errors! See the log:"
+msgstr "Avslutades med fel! Se loggen:"
+
+msgid "Your system does not support clipboard operations."
+msgstr "Systemet har inte stöd för urklippsåtgärder."
+
+msgid "Could not find a package for:"
+msgstr "Kunde inte hitta ett paket för:"
+
+msgid "The following packages are missing:"
+msgstr "Följande paket saknas:"
+
+msgid "Would you like to install them?"
+msgstr "Vill du installera dem?"
+
+msgid "Installing the packages. Please wait..."
+msgstr "Installerar paketen. Vänta..."
+
+msgid "The package was installed, but a system reboot is required."
+msgstr "Paketet installerades, men systemet måste startas om."
+
+msgid "Could not install the package:"
+msgstr "Kunde inte installera paketet:"
+
+msgid "This action will delete the selected items."
+msgstr "Den här åtgärden tar bort de markerade objekten."
+
+msgid "Total selected:"
+msgstr "Totalt markerade:"
+
+msgid "Total:"
+msgstr "Totalt:"
+
+msgid "Some items could not be deleted."
+msgstr "Vissa objekt kunde inte tas bort."
+
+msgid "All items were successfully deleted!"
+msgstr "Alla objekt togs bort!"
+
+msgid "Could not access the directory:"
+msgstr "Kunde inte komma åt katalogen:"
+
+msgid "The destination file already exists."
+msgstr "Målfilen finns redan."
+
+msgid "Unable to move."
+msgstr "Det gick inte att flytta."
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgid "(Empty)"
+msgstr "(Tomt)"
+
+msgid "Select the ones to open:"
+msgstr "Välj vilka som ska öppnas:"
+
+msgid "Select the ones to show in the file manager:"
+msgstr "Välj vilka som ska visas i filhanteraren:"
+
+msgid "Select the ones to open in the web browser:"
+msgstr "Välj vilka som ska öppnas i webbläsaren:"
+
+msgid "Select the ones to delete:"
+msgstr "Välj vilka som ska tas bort:"
+
+msgid "Password"
+msgstr "Lösenord"
+
+msgid "Type your password:"
+msgstr "Ange lösenordet:"
+
+msgid "The password cannot be empty!"
+msgstr "Lösenordet får inte vara tomt!"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nej"
+
+msgid "Finished! The output files are in:"
+msgstr "Klart! Utdatafilerna finns i:"
+
+msgid "Finished, but there is nothing to do."
+msgstr "Klart, men det finns inget att göra."
+
+msgid "Finished!"
+msgstr "Klart!"
+
+msgid "Running the task. Please wait..."
+msgstr "Kör uppgiften. Vänta..."
+
+msgid "No default application is set for the type:"
+msgstr "Inget standardprogram är inställt för typen:"
+
+msgid "Could not find an application for the MIME type:"
+msgstr "Kunde inte hitta ett program för MIME-typen:"
+
+msgid "Batch mode detected."
+msgstr "Batch-läge identifierat."
+
+msgid "Each file inside this directory will be processed individually."
+msgstr "Varje fil i den här katalogen bearbetas var för sig."
+
+msgid "files or directories"
+msgstr "filer eller kataloger"
+
+msgid "You must select files with the extension:"
+msgstr "Du måste välja filer med filändelsen:"
+
+msgid "Invalid input file!"
+msgstr "Ogiltig indatafil!"
+
+msgid "You must select"
+msgstr "Du måste välja"
+
+msgid "You must select at least"
+msgstr "Du måste välja minst"
+
+msgid "You must select up to"
+msgstr "Du måste välja högst"
+
+msgid "Could not find the output directory!"
+msgstr "Kunde inte hitta utdatakatalogen!"
+
+msgid "Accessed recently"
+msgstr "Användes nyligen"
+
+msgid "File"
+msgstr "Fil"
+
+msgid "Count"
+msgstr "Antal"
+
+msgid "Issues"
+msgstr "Problem"
+
+msgid "Encoding"
+msgstr "Kodning"
+
+msgid "There are no valid paths in the clipboard!"
+msgstr "Det finns inga giltiga sökvägar i urklipp!"
+
+msgid "links"
+msgstr "länkar"
+
+msgid "Inode"
+msgstr "Inode"
+
+msgid "Link"
+msgstr "Länk"
+
+msgid "Unsupported clipboard type."
+msgstr "Urklippstypen stöds inte."
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr "Den här åtgärden byter namn på de markerade filerna och katalogerna rekursivt."
+
+msgid "PDF files"
+msgstr "PDF-filer"
+
+msgid "Select a PDF to use as the watermark"
+msgstr "Välj en PDF att använda som vattenstämpel"
+
+msgid "Signature"
+msgstr "Signatur"
+
+msgid "Malware"
+msgstr "Skadlig kod"
+
+msgid "Mode"
+msgstr "Läge"
+
+msgid "Bit rate"
+msgstr "Bithastighet"
+
+msgid "Sampling rate"
+msgstr "Samplingsfrekvens"
+
+msgid "Channels"
+msgstr "Kanaler"
+
+msgid "Duration"
+msgstr "Varaktighet"
+
+msgid "Album"
+msgstr "Album"
+
+msgid "Artist"
+msgstr "Artist"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Quality"
+msgstr "Kvalitet"
+
+msgid "Image files"
+msgstr "Bildfiler"
+
+msgid "Select an image to use as the watermark"
+msgstr "Välj en bild att använda som vattenstämpel"
+
+msgid "Enter the target size."
+msgstr "Ange målstorleken."
+
+msgid "Invalid input!"
+msgstr "Ogiltig inmatning!"
+
+msgid "Key files"
+msgstr "Nyckelfiler"
+
+msgid "Select a key file to import"
+msgstr "Välj en nyckelfil att importera"
+
+msgid "No secret keys were found."
+msgstr "Inga hemliga nycklar hittades."
+
+msgid "Would you like to import a key now?"
+msgstr "Vill du importera en nyckel nu?"
+
+msgid "Failed to import the key!"
+msgstr "Det gick inte att importera nyckeln!"
+
+msgid "Select a user (sign):"
+msgstr "Välj en användare (signera):"
+
+msgid "User"
+msgstr "Användare"
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "E-mail"
+msgstr "E-post"
+
+msgid "Created"
+msgstr "Skapad"
+
+msgid "Expires"
+msgstr "Upphör"
+
+msgid "You must select a user!"
+msgstr "Du måste välja en användare!"
+
+msgid "No public keys were found."
+msgstr "Inga publika nycklar hittades."
+
+msgid "Select one or more users (encrypt):"
+msgstr "Välj en eller flera användare (kryptera):"
+
+msgid "You must select at least one user!"
+msgstr "Du måste välja minst en användare!"
+
+msgid "Directory"
+msgstr "Katalog"
+
+msgid "Size"
+msgstr "Storlek"
+
+msgid "Group"
+msgstr "Grupp"
+
+msgid "Item"
+msgstr "Objekt"
+
+msgid "Octal"
+msgstr "Oktalt"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "You must select only two images to compare!"
+msgstr "Du måste välja exakt två bilder att jämföra!"
+
+msgid "You must select only two PDFs to compare!"
+msgstr "Du måste välja exakt två PDF-filer att jämföra!"
+
+msgid "You must select only two binary files to compare!"
+msgstr "Du måste välja exakt två binärfiler att jämföra!"
+
+msgid "No items were selected!"
+msgstr "Inga objekt valdes!"
+
+msgid "No directories were selected!"
+msgstr "Inga kataloger valdes!"
+
+msgid "The selected items are identical."
+msgstr "De markerade objekten är identiska."
+
+msgid "The selected images have the same pixel values."
+msgstr "De markerade bilderna har samma pixelvärden."
+
+msgid "MIME"
+msgstr "MIME"
+
+msgid "This action will move all files from subdirectories to the root of the selected directory."
+msgstr "Den här åtgärden flyttar alla filer från underkataloger till roten av den markerade katalogen."
+
+msgid "This action will reset the permissions recursively."
+msgstr "Den här åtgärden återställer behörigheterna rekursivt."
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Time"
+msgstr "Tid"
+
+msgid "Select the output filename:"
+msgstr "Välj utdatafilens namn:"
+
+msgid "Filename"
+msgstr "Filnamn"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr "Det finns inga giltiga URL:er i urklipp eller i de markerade filerna!"
+
+msgid "IPs"
+msgstr "IP-adresser"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Ping"
+msgstr "Ping"
+
+msgid "Ports"
+msgstr "Portar"
+
+msgid "Hostname"
+msgstr "Värdnamn"
+
+msgid "Example:"
+msgstr "Exempel:"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "Ange IP-adresser eller IP-intervall."
+
+msgid "Enter the URLs."
+msgstr "Ange URL:erna."
+
+msgid "No remote URL found."
+msgstr "Ingen fjärr-URL hittades."
+
+msgid "URLs"
+msgstr "URL:er"
+
+msgid "HTTP code"
+msgstr "HTTP-kod"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "(No differences)"
+msgstr "(Inga skillnader)"
+
+msgid "(No line break)"
+msgstr "(Ingen radbrytning)"
+
+msgid "(No response)"
+msgstr "(Inget svar)"
+
+msgid "Checksum error"
+msgstr "Kontrollsummefel"
+
+msgid "File does not exist"
+msgstr "Filen finns inte"
+
+msgid "High"
+msgstr "Hög"
+
+msgid "Low"
+msgstr "Låg"
+
+msgid "Medium"
+msgstr "Medel"
+
+msgid "Online"
+msgstr "Online"
+
+msgid "Offline"
+msgstr "Offline"
+
+msgid "Valid signature"
+msgstr "Giltig signatur"
+
+msgid "Invalid signature"
+msgstr "Ogiltig signatur"
+
+msgid "Missing key"
+msgstr "Nyckel saknas"
+
+msgid "Missing data file"
+msgstr "Datafil saknas"
+
+msgid "Revoked key"
+msgstr "Återkallad nyckel"
+
+msgid "Expired key"
+msgstr "Utgången nyckel"
+
+msgid "Expired signature"
+msgstr "Utgången signatur"
+
+msgid "Unknown algorithm"
+msgstr "Okänd algoritm"
+
+msgid "Key ID"
+msgstr "Nyckel-ID"
+
+msgid "Enter the password for the archive:"
+msgstr "Ange lösenordet för arkivet:"
+
+msgid "Select the output directory"
+msgstr "Välj utdatakatalogen"
+
+msgid "Select input directories"
+msgstr "Välj indatakataloger"
+
+msgid "Select input files"
+msgstr "Välj indatafiler"
+
+msgid "Open"
+msgstr "Öppna"
+
+#: Menu
+msgid "Archive"
+msgstr "Arkiv"
+
+#: Menu
+msgid "Audio and Video"
+msgstr "Ljud och video"
+
+#: Menu
+msgid "Checksum"
+msgstr "Kontrollsumma"
+
+#: Menu
+msgid "Clipboard"
+msgstr "Urklipp"
+
+#: Menu
+msgid "Directories and Files"
+msgstr "Kataloger och filer"
+
+#: Menu
+msgid "Document"
+msgstr "Dokument"
+
+#: Menu
+msgid "Encryption"
+msgstr "Kryptering"
+
+#: Menu
+msgid "Image"
+msgstr "Bild"
+
+#: Menu
+msgid "Links"
+msgstr "Länkar"
+
+#: Menu
+msgid "Network and Internet"
+msgstr "Nätverk och internet"
+
+#: Menu
+msgid "Open with"
+msgstr "Öppna med"
+
+#: Menu
+msgid "Plain text"
+msgstr "Oformaterad text"
+
+#: Menu
+msgid "Rename files"
+msgstr "Byt namn på filer"
+
+#: Menu
+msgid "Security and Recovery"
+msgstr "Säkerhet och återställning"
+
+#: Menu
+msgid "Audio and Video: Tools"
+msgstr "Ljud och video: verktyg"
+
+#: Menu
+msgid "Audio: Channels"
+msgstr "Ljud: kanaler"
+
+#: Menu
+msgid "Audio: Convert"
+msgstr "Ljud: konvertera"
+
+#: Menu
+msgid "Audio: Effects"
+msgstr "Ljud: effekter"
+
+#: Menu
+msgid "Audio: MP3 files"
+msgstr "Ljud: MP3-filer"
+
+#: Menu
+msgid "Audio: Quality"
+msgstr "Ljud: kvalitet"
+
+#: Menu
+msgid "Document: Convert"
+msgstr "Dokument: konvertera"
+
+#: Menu
+msgid "Image: Color"
+msgstr "Bild: färg"
+
+#: Menu
+msgid "Image: Combine, Split"
+msgstr "Bild: kombinera, dela"
+
+#: Menu
+msgid "Image: Convert"
+msgstr "Bild: konvertera"
+
+#: Menu
+msgid "Image: Crop, Resize"
+msgstr "Bild: beskära, ändra storlek"
+
+#: Menu
+msgid "Image: Flip, Rotate"
+msgstr "Bild: vänd, rotera"
+
+#: Menu
+msgid "Image: Icons"
+msgstr "Bild: ikoner"
+
+#: Menu
+msgid "Image: Metadata, Exif"
+msgstr "Bild: metadata, Exif"
+
+#: Menu
+msgid "Image: Optimize, Reduce"
+msgstr "Bild: optimera, minska"
+
+#: Menu
+msgid "Image: Similarity"
+msgstr "Bild: likhet"
+
+#: Menu
+msgid "Image: SVG files"
+msgstr "Bild: SVG-filer"
+
+#: Menu
+msgid "Image: Text recognition (OCR)"
+msgstr "Bild: textigenkänning (OCR)"
+
+#: Menu
+msgid "Image: Transparency"
+msgstr "Bild: genomskinlighet"
+
+#: Menu
+msgid "Image: Watermark"
+msgstr "Bild: vattenstämpel"
+
+#: Menu
+msgid "PDF: Annotations"
+msgstr "PDF: anteckningar"
+
+#: Menu
+msgid "PDF: Combine, Split"
+msgstr "PDF: kombinera, dela"
+
+#: Menu
+msgid "PDF: Security"
+msgstr "PDF: säkerhet"
+
+#: Menu
+msgid "PDF: Multi-page layout"
+msgstr "PDF: flersidig layout"
+
+#: Menu
+msgid "PDF: Optimize, Reduce"
+msgstr "PDF: optimera, minska"
+
+#: Menu
+msgid "PDF: Page size"
+msgstr "PDF: sidstorlek"
+
+#: Menu
+msgid "PDF: Rotate"
+msgstr "PDF: rotera"
+
+#: Menu
+msgid "PDF: Signatures"
+msgstr "PDF: signaturer"
+
+#: Menu
+msgid "PDF: Text recognition (OCR)"
+msgstr "PDF: textigenkänning (OCR)"
+
+#: Menu
+msgid "PDF: Tools"
+msgstr "PDF: verktyg"
+
+#: Menu
+msgid "PDF: Watermark"
+msgstr "PDF: vattenstämpel"
+
+#: Menu
+msgid "Video: Aspect ratio"
+msgstr "Video: bildformat"
+
+#: Menu
+msgid "Video: Audio track"
+msgstr "Video: ljudspår"
+
+#: Menu
+msgid "Video: Convert"
+msgstr "Video: konvertera"
+
+#: Menu
+msgid "Video: Export frames"
+msgstr "Video: exportera bildrutor"
+
+#: Menu
+msgid "Video: Flip, Rotate"
+msgstr "Video: vänd, rotera"
+
+#: Menu
+msgid "Video: Frame rate"
+msgstr "Video: bildfrekvens"
+
+#: Menu
+msgid "Video: Resize"
+msgstr "Video: ändra storlek"
+
+#: Menu
+msgid "Video: Speed"
+msgstr "Video: hastighet"
+
+#: Menu
+msgid "Audio: Check quality"
+msgstr "Ljud: kontrollera kvalitet"
+
+#: Menu
+msgid "Audio: Convert to FLAC"
+msgstr "Ljud: konvertera till FLAC"
+
+#: Menu
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "Ljud: konvertera till MP3 (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (192 kbps)"
+msgstr "Ljud: konvertera till MP3 (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (320 kbps)"
+msgstr "Ljud: konvertera till MP3 (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "Ljud: konvertera till OGG (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (192 kbps)"
+msgstr "Ljud: konvertera till OGG (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (320 kbps)"
+msgstr "Ljud: konvertera till OGG (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "Ljud: konvertera till OPUS (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (192 kbps)"
+msgstr "Ljud: konvertera till OPUS (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (320 kbps)"
+msgstr "Ljud: konvertera till OPUS (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to WAV"
+msgstr "Ljud: konvertera till WAV"
+
+#: Menu
+msgid "Audio: Fade-in"
+msgstr "Ljud: intoning"
+
+#: Menu
+msgid "Audio: Fade-out"
+msgstr "Ljud: uttoning"
+
+#: Menu
+msgid "Audio: Mix channels to mono"
+msgstr "Ljud: blanda kanaler till mono"
+
+#: Menu
+msgid "Audio: Mix two files"
+msgstr "Ljud: blanda två filer"
+
+#: Menu
+msgid "Audio: Normalize volume"
+msgstr "Ljud: normalisera volym"
+
+#: Menu
+msgid "Audio: Produce spectrogram"
+msgstr "Ljud: skapa spektrogram"
+
+#: Menu
+msgid "Audio: Remove silence (sections)"
+msgstr "Ljud: ta bort tystnad (avsnitt)"
+
+#: Menu
+msgid "Audio: Mute noise"
+msgstr "Ljud: dämpa brus"
+
+#: Menu
+msgid "Audio: Remove silence (extremities)"
+msgstr "Ljud: ta bort tystnad (ändar)"
+
+#: Menu
+msgid "Create backup (via Rsync)"
+msgstr "Skapa säkerhetskopia (via Rsync)"
+
+#: Menu
+msgid "Code editor"
+msgstr "Kodredigerare"
+
+#: Menu
+msgid "Compare items"
+msgstr "Jämför objekt"
+
+#: Menu
+msgid "Compare items (via Diff)"
+msgstr "Jämför objekt (via Diff)"
+
+#: Menu
+msgid "Compress to '7z'"
+msgstr "Komprimera till '7z'"
+
+#: Menu
+msgid "Compress to '7z' with password"
+msgstr "Komprimera till '7z' med lösenord"
+
+#: Menu
+msgid "Compress to 'tar.gz'"
+msgstr "Komprimera till 'tar.gz'"
+
+#: Menu
+msgid "Compress to 'tar.xz'"
+msgstr "Komprimera till 'tar.xz'"
+
+#: Menu
+msgid "Compress to 'tar.zst'"
+msgstr "Komprimera till 'tar.zst'"
+
+#: Menu
+msgid "Compress to 'zip'"
+msgstr "Komprimera till 'zip'"
+
+#: Menu
+msgid "Compress to 'zip' with password"
+msgstr "Komprimera till 'zip' med lösenord"
+
+#: Menu
+msgid "Compute all checksums"
+msgstr "Beräkna alla kontrollsummor"
+
+#: Menu
+msgid "Compute MD5"
+msgstr "Beräkna MD5"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "Beräkna SHA1"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "Beräkna SHA256"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "Beräkna SHA512"
+
+#: Menu
+msgid "Copy file contents"
+msgstr "Kopiera filinnehåll"
+
+#: Menu
+msgid "Copy file names"
+msgstr "Kopiera filnamn"
+
+#: Menu
+msgid "Copy file names (recursive)"
+msgstr "Kopiera filnamn (rekursivt)"
+
+#: Menu
+msgid "Copy file paths"
+msgstr "Kopiera filsökvägar"
+
+#: Menu
+msgid "Copy file paths (recursive)"
+msgstr "Kopiera filsökvägar (rekursivt)"
+
+#: Menu
+msgid "Create hard link here"
+msgstr "Skapa hård länk här"
+
+#: Menu
+msgid "Create hard link to..."
+msgstr "Skapa hård länk till..."
+
+#: Menu
+msgid "Create symbolic link here"
+msgstr "Skapa symbolisk länk här"
+
+#: Menu
+msgid "Create symbolic link to..."
+msgstr "Skapa symbolisk länk till..."
+
+#: Menu
+msgid "Disk usage analyzer"
+msgstr "Analys av diskanvändning"
+
+#: Menu
+msgid "Document: Convert to DOCX"
+msgstr "Dokument: konvertera till DOCX"
+
+#: Menu
+msgid "Document: Convert to EPUB"
+msgstr "Dokument: konvertera till EPUB"
+
+#: Menu
+msgid "Document: Convert to Markdown"
+msgstr "Dokument: konvertera till Markdown"
+
+#: Menu
+msgid "Document: Convert to ODP"
+msgstr "Dokument: konvertera till ODP"
+
+#: Menu
+msgid "Document: Convert to ODS"
+msgstr "Dokument: konvertera till ODS"
+
+#: Menu
+msgid "Document: Convert to ODT"
+msgstr "Dokument: konvertera till ODT"
+
+#: Menu
+msgid "Document: Convert to PDF"
+msgstr "Dokument: konvertera till PDF"
+
+#: Menu
+msgid "Document: Convert to PDF (landscape)"
+msgstr "Dokument: konvertera till PDF (liggande)"
+
+#: Menu
+msgid "Document: Convert to PPTX"
+msgstr "Dokument: konvertera till PPTX"
+
+#: Menu
+msgid "Document: Convert to TXT"
+msgstr "Dokument: konvertera till TXT"
+
+#: Menu
+msgid "Document: Convert to XLSX"
+msgstr "Dokument: konvertera till XLSX"
+
+#: Menu
+msgid "Extract here"
+msgstr "Extrahera här"
+
+#: Menu
+msgid "File carving (via Foremost)"
+msgstr "Filåterställning (via Foremost)"
+
+#: Menu
+msgid "File carving (via PhotoRec)"
+msgstr "Filåterställning (via PhotoRec)"
+
+#: Menu
+msgid "Find broken links"
+msgstr "Hitta trasiga länkar"
+
+#: Menu
+msgid "Find duplicate files"
+msgstr "Hitta dubblettfiler"
+
+#: Menu
+msgid "Find empty directories"
+msgstr "Hitta tomma kataloger"
+
+#: Menu
+msgid "List hidden files"
+msgstr "Lista dolda filer"
+
+#: Menu
+msgid "Find junk files"
+msgstr "Hitta skräpfiler"
+
+#: Menu
+msgid "Find empty files"
+msgstr "Hitta tomma filer"
+
+#: Menu
+msgid "Flatten directory structure"
+msgstr "Platta ut katalogstruktur"
+
+#: Menu
+msgid "Generate MD5 file"
+msgstr "Generera fil MD5"
+
+#: Menu
+msgid "Generate SHA1 file"
+msgstr "Generera fil SHA1"
+
+#: Menu
+msgid "Generate SHA256 file"
+msgstr "Generera fil SHA256"
+
+#: Menu
+msgid "Generate SHA512 file"
+msgstr "Generera fil SHA512"
+
+#: Menu
+msgid "Git: Clone URLs"
+msgstr "Git: klona URL:er"
+
+#: Menu
+msgid "Git: Open repository website"
+msgstr "Git: öppna arkivets webbplats"
+
+#: Menu
+msgid "Git: Reset and pull"
+msgstr "Git: återställ och hämta"
+
+#: Menu
+msgid "Decrypt"
+msgstr "Dekryptera"
+
+#: Menu
+msgid "Encrypt with password"
+msgstr "Kryptera med lösenord"
+
+#: Menu
+msgid "Encrypt with password (ASCII)"
+msgstr "Kryptera med lösenord (ASCII)"
+
+#: Menu
+msgid "Encrypt with keys"
+msgstr "Kryptera med nycklar"
+
+#: Menu
+msgid "Encrypt with keys (ASCII)"
+msgstr "Kryptera med nycklar (ASCII)"
+
+#: Menu
+msgid "Import keys"
+msgstr "Importera nycklar"
+
+#: Menu
+msgid "Sign"
+msgstr "Signera"
+
+#: Menu
+msgid "Sign (ASCII)"
+msgstr "Signera (ASCII)"
+
+#: Menu
+msgid "Sign (detached signature)"
+msgstr "Signera (fristående signatur)"
+
+#: Menu
+msgid "Sign and encrypt with keys"
+msgstr "Signera och kryptera med nycklar"
+
+#: Menu
+msgid "Sign and encrypt with keys (ASCII)"
+msgstr "Signera och kryptera med nycklar (ASCII)"
+
+#: Menu
+msgid "Verify signature"
+msgstr "Verifiera signatur"
+
+#: Menu
+msgid "Image: Add watermark (center)"
+msgstr "Bild: lägg till vattenstämpel (mitten)"
+
+#: Menu
+msgid "Image: Add watermark (north)"
+msgstr "Bild: lägg till vattenstämpel (norr)"
+
+#: Menu
+msgid "Image: Add watermark (northeast)"
+msgstr "Bild: lägg till vattenstämpel (nordost)"
+
+#: Menu
+msgid "Image: Add watermark (northwest)"
+msgstr "Bild: lägg till vattenstämpel (nordväst)"
+
+#: Menu
+msgid "Image: Add watermark (south)"
+msgstr "Bild: lägg till vattenstämpel (söder)"
+
+#: Menu
+msgid "Image: Add watermark (southeast)"
+msgstr "Bild: lägg till vattenstämpel (sydost)"
+
+#: Menu
+msgid "Image: Add watermark (southwest)"
+msgstr "Bild: lägg till vattenstämpel (sydväst)"
+
+#: Menu
+msgid "Image: Automatic crop"
+msgstr "Bild: automatisk beskärning"
+
+#: Menu
+msgid "Image: Automatic crop (15 pct)"
+msgstr "Bild: automatisk beskärning (15 pct)"
+
+#: Menu
+msgid "Image: Background to alpha"
+msgstr "Bild: bakgrund till alfa"
+
+#: Menu
+msgid "Image: Background to alpha (15 pct)"
+msgstr "Bild: bakgrund till alfa (15 pct)"
+
+#: Menu
+msgid "Image: Color alpha to black"
+msgstr "Bild: alfa till svart"
+
+#: Menu
+msgid "Image: Color alpha to magenta"
+msgstr "Bild: alfa till magenta"
+
+#: Menu
+msgid "Image: Color alpha to white"
+msgstr "Bild: alfa till vitt"
+
+#: Menu
+msgid "Image: Color black to alpha"
+msgstr "Bild: svart till alfa"
+
+#: Menu
+msgid "Image: Color black to alpha (15 pct)"
+msgstr "Bild: svart till alfa (15 pct)"
+
+#: Menu
+msgid "Image: Color magenta to alpha"
+msgstr "Bild: magenta till alfa"
+
+#: Menu
+msgid "Image: Color magenta to alpha (15 pct)"
+msgstr "Bild: magenta till alfa (15 pct)"
+
+#: Menu
+msgid "Image: Colorspace to gray"
+msgstr "Bild: färgrymd till grått"
+
+#: Menu
+msgid "Image: Color white to alpha"
+msgstr "Bild: vitt till alfa"
+
+#: Menu
+msgid "Image: Color white to alpha (15 pct)"
+msgstr "Bild: vitt till alfa (15 pct)"
+
+#: Menu
+msgid "Image: Combine into GIF"
+msgstr "Bild: kombinera till GIF"
+
+#: Menu
+msgid "Image: Combine into PDF"
+msgstr "Bild: kombinera till PDF"
+
+#: Menu
+msgid "Image: Convert to AVIF"
+msgstr "Bild: konvertera till AVIF"
+
+#: Menu
+msgid "Image: Convert to GIF"
+msgstr "Bild: konvertera till GIF"
+
+#: Menu
+msgid "Image: Convert to HEIC"
+msgstr "Bild: konvertera till HEIC"
+
+#: Menu
+msgid "Image: Convert to JPG"
+msgstr "Bild: konvertera till JPG"
+
+#: Menu
+msgid "Image: Convert to JXL"
+msgstr "Bild: konvertera till JXL"
+
+#: Menu
+msgid "Image: Convert to PNG"
+msgstr "Bild: konvertera till PNG"
+
+#: Menu
+msgid "Image: Convert to TIFF"
+msgstr "Bild: konvertera till TIFF"
+
+#: Menu
+msgid "Image: Convert to WebP"
+msgstr "Bild: konvertera till WebP"
+
+#: Menu
+msgid "Image: Create PNG icon (128 px)"
+msgstr "Bild: skapa PNG-ikon (128 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (256 px)"
+msgstr "Bild: skapa PNG-ikon (256 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (512 px)"
+msgstr "Bild: skapa PNG-ikon (512 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (custom)"
+msgstr "Bild: skapa PNG-ikon (anpassad)"
+
+#: Menu
+msgid "Image: Desaturate"
+msgstr "Bild: minska mättnad"
+
+#: Menu
+msgid "Image: Export to PDF"
+msgstr "Bild: exportera till PDF"
+
+#: Menu
+msgid "Image: Find similar (65 pct)"
+msgstr "Bild: hitta liknande (65 pct)"
+
+#: Menu
+msgid "Image: Find similar (75 pct)"
+msgstr "Bild: hitta liknande (75 pct)"
+
+#: Menu
+msgid "Image: Find similar (85 pct)"
+msgstr "Bild: hitta liknande (85 pct)"
+
+#: Menu
+msgid "Image: Find similar (95 pct)"
+msgstr "Bild: hitta liknande (95 pct)"
+
+#: Menu
+msgid "Image: Flip (horizontal)"
+msgstr "Bild: vänd (horisontellt)"
+
+#: Menu
+msgid "Image: Flip (vertical)"
+msgstr "Bild: vänd (vertikalt)"
+
+#: Menu
+msgid "Image: Generate multiple hues"
+msgstr "Bild: generera flera nyanser"
+
+#: Menu
+msgid "Image: Optimize PNG"
+msgstr "Bild: optimera PNG"
+
+#: Menu
+msgid "Image: Perform OCR (English)"
+msgstr "Bild: gör OCR (engelska)"
+
+#: Menu
+msgid "Image: Perform OCR (French)"
+msgstr "Bild: gör OCR (franska)"
+
+#: Menu
+msgid "Image: Perform OCR (German)"
+msgstr "Bild: gör OCR (tyska)"
+
+#: Menu
+msgid "Image: Perform OCR (Italian)"
+msgstr "Bild: gör OCR (italienska)"
+
+#: Menu
+msgid "Image: Perform OCR (Portuguese)"
+msgstr "Bild: gör OCR (portugisiska)"
+
+#: Menu
+msgid "Image: Perform OCR (Russian)"
+msgstr "Bild: gör OCR (ryska)"
+
+#: Menu
+msgid "Image: Perform OCR (Spanish)"
+msgstr "Bild: gör OCR (spanska)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 500kB max)"
+msgstr "Bild: minska (JPG, max 500 kB)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 1000kB max)"
+msgstr "Bild: minska (JPG, max 1000 kB)"
+
+#: Menu
+msgid "Image: Remove metadata"
+msgstr "Bild: ta bort metadata"
+
+#: Menu
+msgid "Image: Rename from metadata"
+msgstr "Bild: byt namn från metadata"
+
+#: Menu
+msgid "Image: Resize (25 pct)"
+msgstr "Bild: ändra storlek (25 pct)"
+
+#: Menu
+msgid "Image: Resize (50 pct)"
+msgstr "Bild: ändra storlek (50 pct)"
+
+#: Menu
+msgid "Image: Resize (75 pct)"
+msgstr "Bild: ändra storlek (75 pct)"
+
+#: Menu
+msgid "Image: Resize (1920x1080)"
+msgstr "Bild: ändra storlek (1920x1080)"
+
+#: Menu
+msgid "Image: Resize (2560x1440)"
+msgstr "Bild: ändra storlek (2560x1440)"
+
+#: Menu
+msgid "Image: Resize (3840x2160)"
+msgstr "Bild: ändra storlek (3840x2160)"
+
+#: Menu
+msgid "Image: Resize (custom)"
+msgstr "Bild: ändra storlek (anpassad)"
+
+#: Menu
+msgid "Image: Rotate (90 deg)"
+msgstr "Bild: rotera (90°)"
+
+#: Menu
+msgid "Image: Rotate (180 deg)"
+msgstr "Bild: rotera (180°)"
+
+#: Menu
+msgid "Image: Rotate (270 deg)"
+msgstr "Bild: rotera (270°)"
+
+#: Menu
+msgid "Image: Split into 2 (horizontal)"
+msgstr "Bild: dela i 2 (horisontellt)"
+
+#: Menu
+msgid "Image: Split into 2 (vertical)"
+msgstr "Bild: dela i 2 (vertikalt)"
+
+#: Menu
+msgid "Image: Split into 4"
+msgstr "Bild: dela i 4"
+
+#: Menu
+msgid "Image: Stack (horizontal)"
+msgstr "Bild: stapla (horisontellt)"
+
+#: Menu
+msgid "Image: Stack (vertical)"
+msgstr "Bild: stapla (vertikalt)"
+
+#: Menu
+msgid "IP: Scan hosts"
+msgstr "IP: skanna värdar"
+
+#: Menu
+msgid "List hard links"
+msgstr "Lista hårda länkar"
+
+#: Menu
+msgid "List largest directories"
+msgstr "Lista största katalogerna"
+
+#: Menu
+msgid "List largest files"
+msgstr "Lista största filerna"
+
+#: Menu
+msgid "List permissions and owners"
+msgstr "Lista behörigheter och ägare"
+
+#: Menu
+msgid "List recent files"
+msgstr "Lista senaste filer"
+
+#: Menu
+msgid "List symbolic links"
+msgstr "Lista symboliska länkar"
+
+#: Menu
+msgid "Media: Concatenate files"
+msgstr "Media: sammanfoga filer"
+
+#: Menu
+msgid "Media: Remove metadata"
+msgstr "Media: ta bort metadata"
+
+#: Menu
+msgid "Media: Show basic metadata"
+msgstr "Media: visa grundläggande metadata"
+
+#: Menu
+msgid "Media: Show information"
+msgstr "Media: visa information"
+
+#: Menu
+msgid "MP3: (artist - title) Name to ID3"
+msgstr "MP3: (artist - titel) namn till ID3"
+
+#: Menu
+msgid "MP3: (artist - title) ID3 to Name"
+msgstr "MP3: (artist - titel) ID3 till namn"
+
+#: Menu
+msgid "MP3: Maximize volume (recursive)"
+msgstr "MP3: maximera volym (rekursivt)"
+
+#: Menu
+msgid "MP3: Normalize volume (recursive)"
+msgstr "MP3: normalisera volym (rekursivt)"
+
+#: Menu
+msgid "MP3: Show encoding details"
+msgstr "MP3: visa kodningsdetaljer"
+
+#: Menu
+msgid "Open item location"
+msgstr "Öppna objektets plats"
+
+#: Menu
+msgid "Paste as hard link"
+msgstr "Klistra in som hård länk"
+
+#: Menu
+msgid "Paste as symbolic link"
+msgstr "Klistra in som symbolisk länk"
+
+#: Menu
+msgid "Paste clipboard contents"
+msgstr "Klistra in urklippets innehåll"
+
+#: Menu
+msgid "PDF: Add watermark (over)"
+msgstr "PDF: lägg till vattenstämpel (ovanpå)"
+
+#: Menu
+msgid "PDF: Add watermark (under)"
+msgstr "PDF: lägg till vattenstämpel (under)"
+
+#: Menu
+msgid "PDF: Combine multiple PDFs"
+msgstr "PDF: kombinera flera PDF-filer"
+
+#: Menu
+msgid "PDF: Convert to grayscale"
+msgstr "PDF: konvertera till gråskala"
+
+#: Menu
+msgid "PDF: Convert to PDFA-2b"
+msgstr "PDF: konvertera till PDFA-2b"
+
+#: Menu
+msgid "PDF: Remove password"
+msgstr "PDF: ta bort lösenord"
+
+#: Menu
+msgid "PDF: Set password"
+msgstr "PDF: ange lösenord"
+
+#: Menu
+msgid "PDF: Extract images"
+msgstr "PDF: extrahera bilder"
+
+#: Menu
+msgid "PDF: Find annotated PDFs"
+msgstr "PDF: hitta kommenterade PDF-filer"
+
+#: Menu
+msgid "PDF: Find non-linearized PDFs"
+msgstr "PDF: hitta icke-lineariserade PDF-filer"
+
+#: Menu
+msgid "PDF: Find non-searchable PDFs"
+msgstr "PDF: hitta icke-sökbara PDF-filer"
+
+#: Menu
+msgid "PDF: Find password-protected PDFs"
+msgstr "PDF: hitta lösenordsskyddade PDF-filer"
+
+#: Menu
+msgid "PDF: Find signed PDFs"
+msgstr "PDF: hitta signerade PDF-filer"
+
+#: Menu
+msgid "PDF: Layout (landscape, 1x2)"
+msgstr "PDF: layout (liggande, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x1)"
+msgstr "PDF: layout (liggande, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x2)"
+msgstr "PDF: layout (liggande, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x4)"
+msgstr "PDF: layout (liggande, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 4x2)"
+msgstr "PDF: layout (liggande, 4x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 1x2)"
+msgstr "PDF: layout (stående, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x1)"
+msgstr "PDF: layout (stående, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x2)"
+msgstr "PDF: layout (stående, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x4)"
+msgstr "PDF: layout (stående, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 4x2)"
+msgstr "PDF: layout (stående, 4x2)"
+
+#: Menu
+msgid "PDF: Optimize for web (linearize)"
+msgstr "PDF: optimera för webben (linearisera)"
+
+#: Menu
+msgid "PDF: Set size (A3)"
+msgstr "PDF: ange storlek (A3)"
+
+#: Menu
+msgid "PDF: Set size (A4)"
+msgstr "PDF: ange storlek (A4)"
+
+#: Menu
+msgid "PDF: Set size (A5)"
+msgstr "PDF: ange storlek (A5)"
+
+#: Menu
+msgid "PDF: Set size (US Legal)"
+msgstr "PDF: ange storlek (US Legal)"
+
+#: Menu
+msgid "PDF: Set size (US Letter)"
+msgstr "PDF: ange storlek (US Letter)"
+
+#: Menu
+msgid "PDF: Perform OCR (English)"
+msgstr "PDF: gör OCR (engelska)"
+
+#: Menu
+msgid "PDF: Perform OCR (French)"
+msgstr "PDF: gör OCR (franska)"
+
+#: Menu
+msgid "PDF: Perform OCR (German)"
+msgstr "PDF: gör OCR (tyska)"
+
+#: Menu
+msgid "PDF: Perform OCR (Italian)"
+msgstr "PDF: gör OCR (italienska)"
+
+#: Menu
+msgid "PDF: Perform OCR (Portuguese)"
+msgstr "PDF: gör OCR (portugisiska)"
+
+#: Menu
+msgid "PDF: Perform OCR (Russian)"
+msgstr "PDF: gör OCR (ryska)"
+
+#: Menu
+msgid "PDF: Perform OCR (Spanish)"
+msgstr "PDF: gör OCR (spanska)"
+
+#: Menu
+msgid "PDF: Reduce (150 dpi, e-book)"
+msgstr "PDF: minska (150 dpi, e-bok)"
+
+#: Menu
+msgid "PDF: Reduce (300 dpi, printer)"
+msgstr "PDF: minska (300 dpi, skrivare)"
+
+#: Menu
+msgid "PDF: Remove annotations"
+msgstr "PDF: ta bort anteckningar"
+
+#: Menu
+msgid "PDF: Remove metadata"
+msgstr "PDF: ta bort metadata"
+
+#: Menu
+msgid "PDF: Rotate (90 deg)"
+msgstr "PDF: rotera (90°)"
+
+#: Menu
+msgid "PDF: Rotate (180 deg)"
+msgstr "PDF: rotera (180°)"
+
+#: Menu
+msgid "PDF: Rotate (270 deg)"
+msgstr "PDF: rotera (270°)"
+
+#: Menu
+msgid "PDF: Show signatures"
+msgstr "PDF: visa signaturer"
+
+#: Menu
+msgid "PDF: Split into single-page PDFs"
+msgstr "PDF: dela upp i ensidiga PDF-filer"
+
+#: Menu
+msgid "Rename: Add MD5 prefix"
+msgstr "Byt namn: lägg till MD5-prefix"
+
+#: Menu
+msgid "Rename: Remove accents"
+msgstr "Byt namn: ta bort accenter"
+
+#: Menu
+msgid "Rename: Remove prefixes"
+msgstr "Byt namn: ta bort prefix"
+
+#: Menu
+msgid "Rename: Remove suffixes"
+msgstr "Byt namn: ta bort suffix"
+
+#: Menu
+msgid "Rename: Change spaces to dashes"
+msgstr "Byt namn: blanksteg till bindestreck"
+
+#: Menu
+msgid "Rename: Change dashes to spaces"
+msgstr "Byt namn: bindestreck till blanksteg"
+
+#: Menu
+msgid "Rename: To lowercase"
+msgstr "Byt namn: till gemener"
+
+#: Menu
+msgid "Rename: To lowercase (recursive)"
+msgstr "Byt namn: till gemener (rekursivt)"
+
+#: Menu
+msgid "Rename: To sentence case"
+msgstr "Byt namn: till mening"
+
+#: Menu
+msgid "Rename: To title case"
+msgstr "Byt namn: till titel"
+
+#: Menu
+msgid "Rename: To uppercase"
+msgstr "Byt namn: till versaler"
+
+#: Menu
+msgid "Rename: To uppercase (recursive)"
+msgstr "Byt namn: till versaler (rekursivt)"
+
+#: Menu
+msgid "Reset permissions (recursive)"
+msgstr "Återställ behörigheter (rekursivt)"
+
+#: Menu
+msgid "Scan for malware (via ClamAV)"
+msgstr "Sök efter skadlig kod (via ClamAV)"
+
+#: Menu
+msgid "Scan for malware (via Lenspect)"
+msgstr "Sök efter skadlig kod (via Lenspect)"
+
+#: Menu
+msgid "Show file information"
+msgstr "Visa filinformation"
+
+#: Menu
+msgid "Show file metadata"
+msgstr "Visa filmetadata"
+
+#: Menu
+msgid "Show file MIME type"
+msgstr "Visa filens MIME-typ"
+
+#: Menu
+msgid "SVG: Compress to SVGZ"
+msgstr "SVG: komprimera till SVGZ"
+
+#: Menu
+msgid "SVG: Decompress SVGZ"
+msgstr "SVG: dekomprimera SVGZ"
+
+#: Menu
+msgid "SVG: Export to PDF"
+msgstr "SVG: exportera till PDF"
+
+#: Menu
+msgid "SVG: Export to PNG (256 px)"
+msgstr "SVG: exportera till PNG (256 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (512 px)"
+msgstr "SVG: exportera till PNG (512 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (1024 px)"
+msgstr "SVG: exportera till PNG (1024 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (custom)"
+msgstr "SVG: exportera till PNG (anpassad)"
+
+#: Menu
+msgid "SVG: Optimize"
+msgstr "SVG: optimera"
+
+#: Menu
+msgid "SVG: Replace fonts with Charter"
+msgstr "SVG: ersätt teckensnitt med Charter"
+
+#: Menu
+msgid "SVG: Replace fonts with Helvetica"
+msgstr "SVG: ersätt teckensnitt med Helvetica"
+
+#: Menu
+msgid "SVG: Replace fonts with Times"
+msgstr "SVG: ersätt teckensnitt med Times"
+
+#: Menu
+msgid "Terminal"
+msgstr "Terminal"
+
+#: Menu
+msgid "Terminal (synced panes)"
+msgstr "Terminal (synkade paneler)"
+
+#: Menu
+msgid "Text: Concatenate multiple files"
+msgstr "Text: sammanfoga flera filer"
+
+#: Menu
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "Text: konvertera tabbar till 4 blanksteg"
+
+#: Menu
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "Text: normalisera (UTF-8, rekursivt)"
+
+#: Menu
+msgid "Text: Encode to UTF-8"
+msgstr "Text: koda till UTF-8"
+
+#: Menu
+msgid "Text: List encodings"
+msgstr "Text: lista kodningar"
+
+#: Menu
+msgid "Text: List issues"
+msgstr "Text: lista problem"
+
+#: Menu
+msgid "Text: List line breaks"
+msgstr "Text: lista radbrytningar"
+
+#: Menu
+msgid "Text: List line counts"
+msgstr "Text: lista radantal"
+
+#: Menu
+msgid "Text: List line lengths"
+msgstr "Text: lista radlängder"
+
+#: Menu
+msgid "Text: List word counts"
+msgstr "Text: lista ordantal"
+
+#: Menu
+msgid "Text: Remove trailing spaces"
+msgstr "Text: ta bort avslutande blanksteg"
+
+#: Menu
+msgid "Text: Remove accents"
+msgstr "Text: ta bort accenter"
+
+#: Menu
+msgid "URL: Check HTTP status"
+msgstr "URL: kontrollera HTTP-status"
+
+#: Menu
+msgid "URL: Download file"
+msgstr "URL: hämta fil"
+
+#: Menu
+msgid "URL: Show HTTP headers"
+msgstr "URL: visa HTTP-rubriker"
+
+#: Menu
+msgid "Verify MD5 file"
+msgstr "Verifiera fil MD5"
+
+#: Menu
+msgid "Verify SHA1 file"
+msgstr "Verifiera fil SHA1"
+
+#: Menu
+msgid "Verify SHA256 file"
+msgstr "Verifiera fil SHA256"
+
+#: Menu
+msgid "Verify SHA512 file"
+msgstr "Verifiera fil SHA512"
+
+#: Menu
+msgid "Video: Aspect to 1:1"
+msgstr "Video: bildformat 1:1"
+
+#: Menu
+msgid "Video: Aspect to 4:3"
+msgstr "Video: bildformat 4:3"
+
+#: Menu
+msgid "Video: Aspect to 16:9"
+msgstr "Video: bildformat 16:9"
+
+#: Menu
+msgid "Video: Aspect to 16:10"
+msgstr "Video: bildformat 16:10"
+
+#: Menu
+msgid "Video: Convert to MKV"
+msgstr "Video: konvertera till MKV"
+
+#: Menu
+msgid "Video: Convert to MKV (copy)"
+msgstr "Video: konvertera till MKV (kopia)"
+
+#: Menu
+msgid "Video: Convert to MP4"
+msgstr "Video: konvertera till MP4"
+
+#: Menu
+msgid "Video: Convert to MP4 (copy)"
+msgstr "Video: konvertera till MP4 (kopia)"
+
+#: Menu
+msgid "Video: Convert to WebM"
+msgstr "Video: konvertera till WebM"
+
+#: Menu
+msgid "Video: Convert to WebM (copy)"
+msgstr "Video: konvertera till WebM (kopia)"
+
+#: Menu
+msgid "Video: Export frames (1 FPS)"
+msgstr "Video: exportera bildrutor (1 FPS)"
+
+#: Menu
+msgid "Video: Export frames (5 FPS)"
+msgstr "Video: exportera bildrutor (5 FPS)"
+
+#: Menu
+msgid "Video: Export frames (10 FPS)"
+msgstr "Video: exportera bildrutor (10 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (1 FPS)"
+msgstr "Video: exportera till GIF (1 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (5 FPS)"
+msgstr "Video: exportera till GIF (5 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (10 FPS)"
+msgstr "Video: exportera till GIF (10 FPS)"
+
+#: Menu
+msgid "Video: Extract audio"
+msgstr "Video: extrahera ljud"
+
+#: Menu
+msgid "Video: Flip (horizontal)"
+msgstr "Video: vänd (horisontellt)"
+
+#: Menu
+msgid "Video: Flip (vertical)"
+msgstr "Video: vänd (vertikalt)"
+
+#: Menu
+msgid "Video: Frame rate to 30 FPS"
+msgstr "Video: bildfrekvens 30 FPS"
+
+#: Menu
+msgid "Video: Frame rate to 60 FPS"
+msgstr "Video: bildfrekvens 60 FPS"
+
+#: Menu
+msgid "Video: Remove audio"
+msgstr "Video: ta bort ljud"
+
+#: Menu
+msgid "Video: Resize (25 pct)"
+msgstr "Video: ändra storlek (25 pct)"
+
+#: Menu
+msgid "Video: Resize (50 pct)"
+msgstr "Video: ändra storlek (50 pct)"
+
+#: Menu
+msgid "Video: Resize (75 pct)"
+msgstr "Video: ändra storlek (75 pct)"
+
+#: Menu
+msgid "Video: Resize (custom)"
+msgstr "Video: ändra storlek (anpassad)"
+
+#: Menu
+msgid "Video: Rotate (90 deg)"
+msgstr "Video: rotera (90°)"
+
+#: Menu
+msgid "Video: Rotate (180 deg)"
+msgstr "Video: rotera (180°)"
+
+#: Menu
+msgid "Video: Rotate (270 deg)"
+msgstr "Video: rotera (270°)"
+
+#: Menu
+msgid "Video: Speed to 0.5"
+msgstr "Video: hastighet 0.5"
+
+#: Menu
+msgid "Video: Speed to 1.5"
+msgstr "Video: hastighet 1.5"
+
+#: Menu
+msgid "Video: Speed to 2.0"
+msgstr "Video: hastighet 2.0"
+
+#: install.sh
+msgid "Check for basic dependencies"
+msgstr "Kontrollera grundläggande beroenden"
+
+#: install.sh
+msgid "Remove previously installed scripts"
+msgstr "Ta bort tidigare installerade skript"
+
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr "Installera tangentbordsgenvägar"
+
+#: install.sh
+msgid "Close the file manager to reload configuration"
+msgstr "Stäng filhanteraren för att läsa om konfigurationen"
+
+#: install.sh
+msgid "Add shortcuts in the application menu"
+msgstr "Lägg till genvägar i programmenyn"
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr "Installera Homebrew (valfritt)"
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr "Välj vilka skriptkategorier som ska installeras"
+
+#: install.sh
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr "Välj alternativen (<MELLANSLAG> för att markera, <ENTER> för att bekräfta):"
+
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr "Installerar i icke-interaktivt läge..."
+
+#: install.sh
+msgid "Installing:"
+msgstr "Installerar:"
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr "Installerar genvägar i programmenyn:"
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr "Installationen slutfördes!"
+
+#: install.sh
+msgid "Checking for basic dependencies:"
+msgstr "Kontrollerar grundläggande beroenden:"
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr "Alla beroenden är redan uppfyllda."
+
+#: install.sh
+msgid "Copying files..."
+msgstr "Kopierar filer..."
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr "Installerar tangentbordsgenvägar..."
+
+#: install.sh
+msgid "Scripts"
+msgstr "Skript"
+
+#: install.sh
+msgid "Creating shortcuts in the application menu..."
+msgstr "Skapar genvägar i programmenyn..."
+
+#: install.sh
+msgid "Creating GNOME Shell application folder..."
+msgstr "Skapar programmapp i GNOME Shell..."
+
+#: install.sh
+msgid "Installing actions in the context menu..."
+msgstr "Installerar åtgärder i snabbmenyn..."
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr "Stänger filhanteraren..."
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr "Installerar Homebrew:"
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr "Homebrew är redan installerat."
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr "Installerar Homebrew till:"
+
+#: install.sh
+msgid "Downloading the package..."
+msgstr "Hämtar paketet..."
+
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr "Kunde inte hitta en pakethanterare!"
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr "Installationen av Homebrew misslyckades!"
+
+#~ msgid "EOF"
+#~ msgstr "EOF"

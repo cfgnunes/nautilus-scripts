@@ -1,0 +1,2011 @@
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Enhanced File Manager Actions for Linux\n"
+"POT-Creation-Date: 2025-11-13 12:12-0300\n"
+"PO-Revision-Date: 2026-09-24 09:50-0300\n"
+"Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
+"Language-Team: \n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Done!"
+msgstr "Hotovo!"
+
+msgid "files"
+msgstr "soubory"
+
+msgid "Would you like to continue?"
+msgstr "Chcete pokračovat?"
+
+msgid "directories"
+msgstr "adresáře"
+
+msgid "items"
+msgstr "položky"
+
+msgid "The command failed."
+msgstr "Příkaz se nezdařil."
+
+msgid "The output file does not exist."
+msgstr "Výstupní soubor neexistuje."
+
+msgid "Finished with errors! See the log:"
+msgstr "Dokončeno s chybami! Viz protokol:"
+
+msgid "Your system does not support clipboard operations."
+msgstr "Váš systém nepodporuje operace se schránkou."
+
+msgid "Could not find a package for:"
+msgstr "Nepodařilo se najít balíček pro:"
+
+msgid "The following packages are missing:"
+msgstr "Chybí následující balíčky:"
+
+msgid "Would you like to install them?"
+msgstr "Chcete je nainstalovat?"
+
+msgid "Installing the packages. Please wait..."
+msgstr "Instalace balíčků. Čekejte prosím..."
+
+msgid "The package was installed, but a system reboot is required."
+msgstr "Balíček byl nainstalován, ale je nutné restartovat systém."
+
+msgid "Could not install the package:"
+msgstr "Balíček se nepodařilo nainstalovat:"
+
+msgid "This action will delete the selected items."
+msgstr "Tato akce smaže vybrané položky."
+
+msgid "Total selected:"
+msgstr "Celkem vybráno:"
+
+msgid "Total:"
+msgstr "Celkem:"
+
+msgid "Some items could not be deleted."
+msgstr "Některé položky se nepodařilo smazat."
+
+msgid "All items were successfully deleted!"
+msgstr "Všechny položky byly úspěšně smazány!"
+
+msgid "Could not access the directory:"
+msgstr "K adresáři se nepodařilo získat přístup:"
+
+msgid "The destination file already exists."
+msgstr "Cílový soubor již existuje."
+
+msgid "Unable to move."
+msgstr "Nelze přesunout."
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Cancel"
+msgstr "Zrušit"
+
+msgid "(Empty)"
+msgstr "(Prázdné)"
+
+msgid "Select the ones to open:"
+msgstr "Vyberte ty, které se mají otevřít:"
+
+msgid "Select the ones to show in the file manager:"
+msgstr "Vyberte ty, které se mají zobrazit ve správci souborů:"
+
+msgid "Select the ones to open in the web browser:"
+msgstr "Vyberte ty, které se mají otevřít ve webovém prohlížeči:"
+
+msgid "Select the ones to delete:"
+msgstr "Vyberte ty, které se mají smazat:"
+
+msgid "Password"
+msgstr "Heslo"
+
+msgid "Type your password:"
+msgstr "Zadejte heslo:"
+
+msgid "The password cannot be empty!"
+msgstr "Heslo nesmí být prázdné!"
+
+msgid "Yes"
+msgstr "Ano"
+
+msgid "No"
+msgstr "Ne"
+
+msgid "Finished! The output files are in:"
+msgstr "Hotovo! Výstupní soubory jsou v:"
+
+msgid "Finished, but there is nothing to do."
+msgstr "Dokončeno, ale není co dělat."
+
+msgid "Finished!"
+msgstr "Hotovo!"
+
+msgid "Running the task. Please wait..."
+msgstr "Úloha probíhá. Čekejte prosím..."
+
+msgid "No default application is set for the type:"
+msgstr "Pro tento typ není nastavena výchozí aplikace:"
+
+msgid "Could not find an application for the MIME type:"
+msgstr "Nepodařilo se najít aplikaci pro typ MIME:"
+
+msgid "Batch mode detected."
+msgstr "Zjištěn dávkový režim."
+
+msgid "Each file inside this directory will be processed individually."
+msgstr "Každý soubor v tomto adresáři bude zpracován jednotlivě."
+
+msgid "files or directories"
+msgstr "soubory nebo adresáře"
+
+msgid "You must select files with the extension:"
+msgstr "Musíte vybrat soubory s příponou:"
+
+msgid "Invalid input file!"
+msgstr "Neplatný vstupní soubor!"
+
+msgid "You must select"
+msgstr "Musíte vybrat"
+
+msgid "You must select at least"
+msgstr "Musíte vybrat alespoň"
+
+msgid "You must select up to"
+msgstr "Musíte vybrat nejvýše"
+
+msgid "Could not find the output directory!"
+msgstr "Nepodařilo se najít výstupní adresář!"
+
+msgid "Accessed recently"
+msgstr "Naposledy použito"
+
+msgid "File"
+msgstr "Soubor"
+
+msgid "Count"
+msgstr "Počet"
+
+msgid "Issues"
+msgstr "Problémy"
+
+msgid "Encoding"
+msgstr "Kódování"
+
+msgid "There are no valid paths in the clipboard!"
+msgstr "Ve schránce nejsou žádné platné cesty!"
+
+msgid "links"
+msgstr "odkazy"
+
+msgid "Inode"
+msgstr "Inode"
+
+msgid "Link"
+msgstr "Odkaz"
+
+msgid "Unsupported clipboard type."
+msgstr "Nepodporovaný typ schránky."
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr "Tato akce rekurzivně přejmenuje vybrané soubory a adresáře."
+
+msgid "PDF files"
+msgstr "Soubory PDF"
+
+msgid "Select a PDF to use as the watermark"
+msgstr "Vyberte PDF, které se použije jako vodoznak"
+
+msgid "Signature"
+msgstr "Podpis"
+
+msgid "Malware"
+msgstr "Malware"
+
+msgid "Mode"
+msgstr "Režim"
+
+msgid "Bit rate"
+msgstr "Bitový tok"
+
+msgid "Sampling rate"
+msgstr "Vzorkovací frekvence"
+
+msgid "Channels"
+msgstr "Kanály"
+
+msgid "Duration"
+msgstr "Doba trvání"
+
+msgid "Album"
+msgstr "Album"
+
+msgid "Artist"
+msgstr "Interpret"
+
+msgid "Title"
+msgstr "Název"
+
+msgid "Quality"
+msgstr "Kvalita"
+
+msgid "Image files"
+msgstr "Soubory obrázků"
+
+msgid "Select an image to use as the watermark"
+msgstr "Vyberte obrázek, který se použije jako vodoznak"
+
+msgid "Enter the target size."
+msgstr "Zadejte cílovou velikost."
+
+msgid "Invalid input!"
+msgstr "Neplatný vstup!"
+
+msgid "Key files"
+msgstr "Soubory klíčů"
+
+msgid "Select a key file to import"
+msgstr "Vyberte soubor klíče k importu"
+
+msgid "No secret keys were found."
+msgstr "Nebyly nalezeny žádné tajné klíče."
+
+msgid "Would you like to import a key now?"
+msgstr "Chcete nyní importovat klíč?"
+
+msgid "Failed to import the key!"
+msgstr "Import klíče se nezdařil!"
+
+msgid "Select a user (sign):"
+msgstr "Vyberte uživatele (podpis):"
+
+msgid "User"
+msgstr "Uživatel"
+
+msgid "Name"
+msgstr "Jméno"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "Created"
+msgstr "Vytvořeno"
+
+msgid "Expires"
+msgstr "Vyprší"
+
+msgid "You must select a user!"
+msgstr "Musíte vybrat uživatele!"
+
+msgid "No public keys were found."
+msgstr "Nebyly nalezeny žádné veřejné klíče."
+
+msgid "Select one or more users (encrypt):"
+msgstr "Vyberte jednoho nebo více uživatelů (šifrování):"
+
+msgid "You must select at least one user!"
+msgstr "Musíte vybrat alespoň jednoho uživatele!"
+
+msgid "Directory"
+msgstr "Adresář"
+
+msgid "Size"
+msgstr "Velikost"
+
+msgid "Group"
+msgstr "Skupina"
+
+msgid "Item"
+msgstr "Položka"
+
+msgid "Octal"
+msgstr "Osmičkový"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "You must select only two images to compare!"
+msgstr "Pro porovnání musíte vybrat právě dva obrázky!"
+
+msgid "You must select only two PDFs to compare!"
+msgstr "Pro porovnání musíte vybrat právě dva soubory PDF!"
+
+msgid "You must select only two binary files to compare!"
+msgstr "Pro porovnání musíte vybrat právě dva binární soubory!"
+
+msgid "No items were selected!"
+msgstr "Nebyly vybrány žádné položky!"
+
+msgid "No directories were selected!"
+msgstr "Nebyly vybrány žádné adresáře!"
+
+msgid "The selected items are identical."
+msgstr "Vybrané položky jsou stejné."
+
+msgid "The selected images have the same pixel values."
+msgstr "Vybrané obrázky mají stejné hodnoty pixelů."
+
+msgid "MIME"
+msgstr "MIME"
+
+msgid "This action will move all files from subdirectories to the root of the selected directory."
+msgstr "Tato akce přesune všechny soubory z podadresářů do kořene vybraného adresáře."
+
+msgid "This action will reset the permissions recursively."
+msgstr "Tato akce rekurzivně obnoví oprávnění."
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Time"
+msgstr "Čas"
+
+msgid "Select the output filename:"
+msgstr "Vyberte název výstupního souboru:"
+
+msgid "Filename"
+msgstr "Název souboru"
+
+msgid "Status"
+msgstr "Stav"
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr "Ve schránce ani ve vybraných souborech nejsou žádné platné adresy URL!"
+
+msgid "IPs"
+msgstr "Adresy IP"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Ping"
+msgstr "Ping"
+
+msgid "Ports"
+msgstr "Porty"
+
+msgid "Hostname"
+msgstr "Název hostitele"
+
+msgid "Example:"
+msgstr "Příklad:"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "Zadejte adresy IP nebo rozsahy IP."
+
+msgid "Enter the URLs."
+msgstr "Zadejte adresy URL."
+
+msgid "No remote URL found."
+msgstr "Nebyla nalezena žádná vzdálená adresa URL."
+
+msgid "URLs"
+msgstr "Adresy URL"
+
+msgid "HTTP code"
+msgstr "Kód HTTP"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "(No differences)"
+msgstr "(Žádné rozdíly)"
+
+msgid "(No line break)"
+msgstr "(Bez zalomení řádku)"
+
+msgid "(No response)"
+msgstr "(Žádná odpověď)"
+
+msgid "Checksum error"
+msgstr "Chyba kontrolního součtu"
+
+msgid "File does not exist"
+msgstr "Soubor neexistuje"
+
+msgid "High"
+msgstr "Vysoká"
+
+msgid "Low"
+msgstr "Nízká"
+
+msgid "Medium"
+msgstr "Střední"
+
+msgid "Online"
+msgstr "Online"
+
+msgid "Offline"
+msgstr "Offline"
+
+msgid "Valid signature"
+msgstr "Platný podpis"
+
+msgid "Invalid signature"
+msgstr "Neplatný podpis"
+
+msgid "Missing key"
+msgstr "Chybějící klíč"
+
+msgid "Missing data file"
+msgstr "Chybějící datový soubor"
+
+msgid "Revoked key"
+msgstr "Odvolaný klíč"
+
+msgid "Expired key"
+msgstr "Prošlý klíč"
+
+msgid "Expired signature"
+msgstr "Prošlý podpis"
+
+msgid "Unknown algorithm"
+msgstr "Neznámý algoritmus"
+
+msgid "Key ID"
+msgstr "ID klíče"
+
+msgid "Enter the password for the archive:"
+msgstr "Zadejte heslo k archivu:"
+
+msgid "Select the output directory"
+msgstr "Vyberte výstupní adresář"
+
+msgid "Select input directories"
+msgstr "Vyberte vstupní adresáře"
+
+msgid "Select input files"
+msgstr "Vyberte vstupní soubory"
+
+msgid "Open"
+msgstr "Otevřít"
+
+#: Menu
+msgid "Archive"
+msgstr "Archiv"
+
+#: Menu
+msgid "Audio and Video"
+msgstr "Zvuk a video"
+
+#: Menu
+msgid "Checksum"
+msgstr "Kontrolní součet"
+
+#: Menu
+msgid "Clipboard"
+msgstr "Schránka"
+
+#: Menu
+msgid "Directories and Files"
+msgstr "Adresáře a soubory"
+
+#: Menu
+msgid "Document"
+msgstr "Dokument"
+
+#: Menu
+msgid "Encryption"
+msgstr "Šifrování"
+
+#: Menu
+msgid "Image"
+msgstr "Obrázek"
+
+#: Menu
+msgid "Links"
+msgstr "Odkazy"
+
+#: Menu
+msgid "Network and Internet"
+msgstr "Síť a internet"
+
+#: Menu
+msgid "Open with"
+msgstr "Otevřít pomocí"
+
+#: Menu
+msgid "Plain text"
+msgstr "Prostý text"
+
+#: Menu
+msgid "Rename files"
+msgstr "Přejmenovat soubory"
+
+#: Menu
+msgid "Security and Recovery"
+msgstr "Zabezpečení a obnova"
+
+#: Menu
+msgid "Audio and Video: Tools"
+msgstr "Zvuk a video: nástroje"
+
+#: Menu
+msgid "Audio: Channels"
+msgstr "Zvuk: kanály"
+
+#: Menu
+msgid "Audio: Convert"
+msgstr "Zvuk: převod"
+
+#: Menu
+msgid "Audio: Effects"
+msgstr "Zvuk: efekty"
+
+#: Menu
+msgid "Audio: MP3 files"
+msgstr "Zvuk: soubory MP3"
+
+#: Menu
+msgid "Audio: Quality"
+msgstr "Zvuk: kvalita"
+
+#: Menu
+msgid "Document: Convert"
+msgstr "Dokument: převod"
+
+#: Menu
+msgid "Image: Color"
+msgstr "Obrázek: barva"
+
+#: Menu
+msgid "Image: Combine, Split"
+msgstr "Obrázek: sloučit, rozdělit"
+
+#: Menu
+msgid "Image: Convert"
+msgstr "Obrázek: převod"
+
+#: Menu
+msgid "Image: Crop, Resize"
+msgstr "Obrázek: oříznout, změnit velikost"
+
+#: Menu
+msgid "Image: Flip, Rotate"
+msgstr "Obrázek: převrátit, otočit"
+
+#: Menu
+msgid "Image: Icons"
+msgstr "Obrázek: ikony"
+
+#: Menu
+msgid "Image: Metadata, Exif"
+msgstr "Obrázek: metadata, Exif"
+
+#: Menu
+msgid "Image: Optimize, Reduce"
+msgstr "Obrázek: optimalizovat, zmenšit"
+
+#: Menu
+msgid "Image: Similarity"
+msgstr "Obrázek: podobnost"
+
+#: Menu
+msgid "Image: SVG files"
+msgstr "Obrázek: soubory SVG"
+
+#: Menu
+msgid "Image: Text recognition (OCR)"
+msgstr "Obrázek: rozpoznávání textu (OCR)"
+
+#: Menu
+msgid "Image: Transparency"
+msgstr "Obrázek: průhlednost"
+
+#: Menu
+msgid "Image: Watermark"
+msgstr "Obrázek: vodoznak"
+
+#: Menu
+msgid "PDF: Annotations"
+msgstr "PDF: anotace"
+
+#: Menu
+msgid "PDF: Combine, Split"
+msgstr "PDF: sloučit, rozdělit"
+
+#: Menu
+msgid "PDF: Security"
+msgstr "PDF: zabezpečení"
+
+#: Menu
+msgid "PDF: Multi-page layout"
+msgstr "PDF: vícestránkové rozložení"
+
+#: Menu
+msgid "PDF: Optimize, Reduce"
+msgstr "PDF: optimalizovat, zmenšit"
+
+#: Menu
+msgid "PDF: Page size"
+msgstr "PDF: velikost stránky"
+
+#: Menu
+msgid "PDF: Rotate"
+msgstr "PDF: otočit"
+
+#: Menu
+msgid "PDF: Signatures"
+msgstr "PDF: podpisy"
+
+#: Menu
+msgid "PDF: Text recognition (OCR)"
+msgstr "PDF: rozpoznávání textu (OCR)"
+
+#: Menu
+msgid "PDF: Tools"
+msgstr "PDF: nástroje"
+
+#: Menu
+msgid "PDF: Watermark"
+msgstr "PDF: vodoznak"
+
+#: Menu
+msgid "Video: Aspect ratio"
+msgstr "Video: poměr stran"
+
+#: Menu
+msgid "Video: Audio track"
+msgstr "Video: zvuková stopa"
+
+#: Menu
+msgid "Video: Convert"
+msgstr "Video: převod"
+
+#: Menu
+msgid "Video: Export frames"
+msgstr "Video: export snímků"
+
+#: Menu
+msgid "Video: Flip, Rotate"
+msgstr "Video: převrátit, otočit"
+
+#: Menu
+msgid "Video: Frame rate"
+msgstr "Video: snímková frekvence"
+
+#: Menu
+msgid "Video: Resize"
+msgstr "Video: změnit velikost"
+
+#: Menu
+msgid "Video: Speed"
+msgstr "Video: rychlost"
+
+#: Menu
+msgid "Audio: Check quality"
+msgstr "Zvuk: zkontrolovat kvalitu"
+
+#: Menu
+msgid "Audio: Convert to FLAC"
+msgstr "Zvuk: převést na FLAC"
+
+#: Menu
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "Zvuk: převést na MP3 (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (192 kbps)"
+msgstr "Zvuk: převést na MP3 (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (320 kbps)"
+msgstr "Zvuk: převést na MP3 (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "Zvuk: převést na OGG (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (192 kbps)"
+msgstr "Zvuk: převést na OGG (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (320 kbps)"
+msgstr "Zvuk: převést na OGG (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "Zvuk: převést na OPUS (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (192 kbps)"
+msgstr "Zvuk: převést na OPUS (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (320 kbps)"
+msgstr "Zvuk: převést na OPUS (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to WAV"
+msgstr "Zvuk: převést na WAV"
+
+#: Menu
+msgid "Audio: Fade-in"
+msgstr "Zvuk: náběh"
+
+#: Menu
+msgid "Audio: Fade-out"
+msgstr "Zvuk: doznění"
+
+#: Menu
+msgid "Audio: Mix channels to mono"
+msgstr "Zvuk: smíchat kanály do mono"
+
+#: Menu
+msgid "Audio: Mix two files"
+msgstr "Zvuk: smíchat dva soubory"
+
+#: Menu
+msgid "Audio: Normalize volume"
+msgstr "Zvuk: normalizovat hlasitost"
+
+#: Menu
+msgid "Audio: Produce spectrogram"
+msgstr "Zvuk: vytvořit spektrogram"
+
+#: Menu
+msgid "Audio: Remove silence (sections)"
+msgstr "Zvuk: odstranit ticho (úseky)"
+
+#: Menu
+msgid "Audio: Mute noise"
+msgstr "Zvuk: potlačit šum"
+
+#: Menu
+msgid "Audio: Remove silence (extremities)"
+msgstr "Zvuk: odstranit ticho (okraje)"
+
+#: Menu
+msgid "Create backup (via Rsync)"
+msgstr "Vytvořit zálohu (přes Rsync)"
+
+#: Menu
+msgid "Code editor"
+msgstr "Editor kódu"
+
+#: Menu
+msgid "Compare items"
+msgstr "Porovnat položky"
+
+#: Menu
+msgid "Compare items (via Diff)"
+msgstr "Porovnat položky (přes Diff)"
+
+#: Menu
+msgid "Compress to '7z'"
+msgstr "Komprimovat do „7z“"
+
+#: Menu
+msgid "Compress to '7z' with password"
+msgstr "Komprimovat do „7z“ s heslem"
+
+#: Menu
+msgid "Compress to 'tar.gz'"
+msgstr "Komprimovat do „tar.gz“"
+
+#: Menu
+msgid "Compress to 'tar.xz'"
+msgstr "Komprimovat do „tar.xz“"
+
+#: Menu
+msgid "Compress to 'tar.zst'"
+msgstr "Komprimovat do „tar.zst“"
+
+#: Menu
+msgid "Compress to 'zip'"
+msgstr "Komprimovat do „zip“"
+
+#: Menu
+msgid "Compress to 'zip' with password"
+msgstr "Komprimovat do „zip“ s heslem"
+
+#: Menu
+msgid "Compute all checksums"
+msgstr "Vypočítat všechny kontrolní součty"
+
+#: Menu
+msgid "Compute MD5"
+msgstr "Vypočítat MD5"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "Vypočítat SHA1"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "Vypočítat SHA256"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "Vypočítat SHA512"
+
+#: Menu
+msgid "Copy file contents"
+msgstr "Kopírovat obsah souborů"
+
+#: Menu
+msgid "Copy file names"
+msgstr "Kopírovat názvy souborů"
+
+#: Menu
+msgid "Copy file names (recursive)"
+msgstr "Kopírovat názvy souborů (rekurzivně)"
+
+#: Menu
+msgid "Copy file paths"
+msgstr "Kopírovat cesty k souborům"
+
+#: Menu
+msgid "Copy file paths (recursive)"
+msgstr "Kopírovat cesty k souborům (rekurzivně)"
+
+#: Menu
+msgid "Create hard link here"
+msgstr "Vytvořit pevný odkaz zde"
+
+#: Menu
+msgid "Create hard link to..."
+msgstr "Vytvořit pevný odkaz na..."
+
+#: Menu
+msgid "Create symbolic link here"
+msgstr "Vytvořit symbolický odkaz zde"
+
+#: Menu
+msgid "Create symbolic link to..."
+msgstr "Vytvořit symbolický odkaz na..."
+
+#: Menu
+msgid "Disk usage analyzer"
+msgstr "Analyzátor využití disku"
+
+#: Menu
+msgid "Document: Convert to DOCX"
+msgstr "Dokument: převést na DOCX"
+
+#: Menu
+msgid "Document: Convert to EPUB"
+msgstr "Dokument: převést na EPUB"
+
+#: Menu
+msgid "Document: Convert to Markdown"
+msgstr "Dokument: převést na Markdown"
+
+#: Menu
+msgid "Document: Convert to ODP"
+msgstr "Dokument: převést na ODP"
+
+#: Menu
+msgid "Document: Convert to ODS"
+msgstr "Dokument: převést na ODS"
+
+#: Menu
+msgid "Document: Convert to ODT"
+msgstr "Dokument: převést na ODT"
+
+#: Menu
+msgid "Document: Convert to PDF"
+msgstr "Dokument: převést na PDF"
+
+#: Menu
+msgid "Document: Convert to PDF (landscape)"
+msgstr "Dokument: převést na PDF (na šířku)"
+
+#: Menu
+msgid "Document: Convert to PPTX"
+msgstr "Dokument: převést na PPTX"
+
+#: Menu
+msgid "Document: Convert to TXT"
+msgstr "Dokument: převést na TXT"
+
+#: Menu
+msgid "Document: Convert to XLSX"
+msgstr "Dokument: převést na XLSX"
+
+#: Menu
+msgid "Extract here"
+msgstr "Rozbalit sem"
+
+#: Menu
+msgid "File carving (via Foremost)"
+msgstr "Obnova souborů (přes Foremost)"
+
+#: Menu
+msgid "File carving (via PhotoRec)"
+msgstr "Obnova souborů (přes PhotoRec)"
+
+#: Menu
+msgid "Find broken links"
+msgstr "Najít nefunkční odkazy"
+
+#: Menu
+msgid "Find duplicate files"
+msgstr "Najít duplicitní soubory"
+
+#: Menu
+msgid "Find empty directories"
+msgstr "Najít prázdné adresáře"
+
+#: Menu
+msgid "List hidden files"
+msgstr "Vypsat skryté soubory"
+
+#: Menu
+msgid "Find junk files"
+msgstr "Najít nepotřebné soubory"
+
+#: Menu
+msgid "Find empty files"
+msgstr "Najít prázdné soubory"
+
+#: Menu
+msgid "Flatten directory structure"
+msgstr "Zploštit strukturu adresářů"
+
+#: Menu
+msgid "Generate MD5 file"
+msgstr "Vytvořit soubor MD5"
+
+#: Menu
+msgid "Generate SHA1 file"
+msgstr "Vytvořit soubor SHA1"
+
+#: Menu
+msgid "Generate SHA256 file"
+msgstr "Vytvořit soubor SHA256"
+
+#: Menu
+msgid "Generate SHA512 file"
+msgstr "Vytvořit soubor SHA512"
+
+#: Menu
+msgid "Git: Clone URLs"
+msgstr "Git: klonovat adresy URL"
+
+#: Menu
+msgid "Git: Open repository website"
+msgstr "Git: otevřít web úložiště"
+
+#: Menu
+msgid "Git: Reset and pull"
+msgstr "Git: obnovit a stáhnout"
+
+#: Menu
+msgid "Decrypt"
+msgstr "Dešifrovat"
+
+#: Menu
+msgid "Encrypt with password"
+msgstr "Šifrovat heslem"
+
+#: Menu
+msgid "Encrypt with password (ASCII)"
+msgstr "Šifrovat heslem (ASCII)"
+
+#: Menu
+msgid "Encrypt with keys"
+msgstr "Šifrovat klíči"
+
+#: Menu
+msgid "Encrypt with keys (ASCII)"
+msgstr "Šifrovat klíči (ASCII)"
+
+#: Menu
+msgid "Import keys"
+msgstr "Importovat klíče"
+
+#: Menu
+msgid "Sign"
+msgstr "Podepsat"
+
+#: Menu
+msgid "Sign (ASCII)"
+msgstr "Podepsat (ASCII)"
+
+#: Menu
+msgid "Sign (detached signature)"
+msgstr "Podepsat (oddělený podpis)"
+
+#: Menu
+msgid "Sign and encrypt with keys"
+msgstr "Podepsat a šifrovat klíči"
+
+#: Menu
+msgid "Sign and encrypt with keys (ASCII)"
+msgstr "Podepsat a šifrovat klíči (ASCII)"
+
+#: Menu
+msgid "Verify signature"
+msgstr "Ověřit podpis"
+
+#: Menu
+msgid "Image: Add watermark (center)"
+msgstr "Obrázek: přidat vodoznak (střed)"
+
+#: Menu
+msgid "Image: Add watermark (north)"
+msgstr "Obrázek: přidat vodoznak (sever)"
+
+#: Menu
+msgid "Image: Add watermark (northeast)"
+msgstr "Obrázek: přidat vodoznak (severovýchod)"
+
+#: Menu
+msgid "Image: Add watermark (northwest)"
+msgstr "Obrázek: přidat vodoznak (severozápad)"
+
+#: Menu
+msgid "Image: Add watermark (south)"
+msgstr "Obrázek: přidat vodoznak (jih)"
+
+#: Menu
+msgid "Image: Add watermark (southeast)"
+msgstr "Obrázek: přidat vodoznak (jihovýchod)"
+
+#: Menu
+msgid "Image: Add watermark (southwest)"
+msgstr "Obrázek: přidat vodoznak (jihozápad)"
+
+#: Menu
+msgid "Image: Automatic crop"
+msgstr "Obrázek: automatické oříznutí"
+
+#: Menu
+msgid "Image: Automatic crop (15 pct)"
+msgstr "Obrázek: automatické oříznutí (15 pct)"
+
+#: Menu
+msgid "Image: Background to alpha"
+msgstr "Obrázek: pozadí na alfa"
+
+#: Menu
+msgid "Image: Background to alpha (15 pct)"
+msgstr "Obrázek: pozadí na alfa (15 pct)"
+
+#: Menu
+msgid "Image: Color alpha to black"
+msgstr "Obrázek: alfa na černou"
+
+#: Menu
+msgid "Image: Color alpha to magenta"
+msgstr "Obrázek: alfa na purpurovou"
+
+#: Menu
+msgid "Image: Color alpha to white"
+msgstr "Obrázek: alfa na bílou"
+
+#: Menu
+msgid "Image: Color black to alpha"
+msgstr "Obrázek: černá na alfa"
+
+#: Menu
+msgid "Image: Color black to alpha (15 pct)"
+msgstr "Obrázek: černá na alfa (15 pct)"
+
+#: Menu
+msgid "Image: Color magenta to alpha"
+msgstr "Obrázek: purpurová na alfa"
+
+#: Menu
+msgid "Image: Color magenta to alpha (15 pct)"
+msgstr "Obrázek: purpurová na alfa (15 pct)"
+
+#: Menu
+msgid "Image: Colorspace to gray"
+msgstr "Obrázek: barevný prostor na šedou"
+
+#: Menu
+msgid "Image: Color white to alpha"
+msgstr "Obrázek: bílá na alfa"
+
+#: Menu
+msgid "Image: Color white to alpha (15 pct)"
+msgstr "Obrázek: bílá na alfa (15 pct)"
+
+#: Menu
+msgid "Image: Combine into GIF"
+msgstr "Obrázek: sloučit do GIF"
+
+#: Menu
+msgid "Image: Combine into PDF"
+msgstr "Obrázek: sloučit do PDF"
+
+#: Menu
+msgid "Image: Convert to AVIF"
+msgstr "Obrázek: převést na AVIF"
+
+#: Menu
+msgid "Image: Convert to GIF"
+msgstr "Obrázek: převést na GIF"
+
+#: Menu
+msgid "Image: Convert to HEIC"
+msgstr "Obrázek: převést na HEIC"
+
+#: Menu
+msgid "Image: Convert to JPG"
+msgstr "Obrázek: převést na JPG"
+
+#: Menu
+msgid "Image: Convert to JXL"
+msgstr "Obrázek: převést na JXL"
+
+#: Menu
+msgid "Image: Convert to PNG"
+msgstr "Obrázek: převést na PNG"
+
+#: Menu
+msgid "Image: Convert to TIFF"
+msgstr "Obrázek: převést na TIFF"
+
+#: Menu
+msgid "Image: Convert to WebP"
+msgstr "Obrázek: převést na WebP"
+
+#: Menu
+msgid "Image: Create PNG icon (128 px)"
+msgstr "Obrázek: vytvořit ikonu PNG (128 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (256 px)"
+msgstr "Obrázek: vytvořit ikonu PNG (256 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (512 px)"
+msgstr "Obrázek: vytvořit ikonu PNG (512 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (custom)"
+msgstr "Obrázek: vytvořit ikonu PNG (vlastní)"
+
+#: Menu
+msgid "Image: Desaturate"
+msgstr "Obrázek: odsaturovat"
+
+#: Menu
+msgid "Image: Export to PDF"
+msgstr "Obrázek: exportovat do PDF"
+
+#: Menu
+msgid "Image: Find similar (65 pct)"
+msgstr "Obrázek: najít podobné (65 pct)"
+
+#: Menu
+msgid "Image: Find similar (75 pct)"
+msgstr "Obrázek: najít podobné (75 pct)"
+
+#: Menu
+msgid "Image: Find similar (85 pct)"
+msgstr "Obrázek: najít podobné (85 pct)"
+
+#: Menu
+msgid "Image: Find similar (95 pct)"
+msgstr "Obrázek: najít podobné (95 pct)"
+
+#: Menu
+msgid "Image: Flip (horizontal)"
+msgstr "Obrázek: převrátit (vodorovně)"
+
+#: Menu
+msgid "Image: Flip (vertical)"
+msgstr "Obrázek: převrátit (svisle)"
+
+#: Menu
+msgid "Image: Generate multiple hues"
+msgstr "Obrázek: vytvořit více odstínů"
+
+#: Menu
+msgid "Image: Optimize PNG"
+msgstr "Obrázek: optimalizovat PNG"
+
+#: Menu
+msgid "Image: Perform OCR (English)"
+msgstr "Obrázek: rozpoznat text (angličtina)"
+
+#: Menu
+msgid "Image: Perform OCR (French)"
+msgstr "Obrázek: rozpoznat text (francouzština)"
+
+#: Menu
+msgid "Image: Perform OCR (German)"
+msgstr "Obrázek: rozpoznat text (němčina)"
+
+#: Menu
+msgid "Image: Perform OCR (Italian)"
+msgstr "Obrázek: rozpoznat text (italština)"
+
+#: Menu
+msgid "Image: Perform OCR (Portuguese)"
+msgstr "Obrázek: rozpoznat text (portugalština)"
+
+#: Menu
+msgid "Image: Perform OCR (Russian)"
+msgstr "Obrázek: rozpoznat text (ruština)"
+
+#: Menu
+msgid "Image: Perform OCR (Spanish)"
+msgstr "Obrázek: rozpoznat text (španělština)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 500kB max)"
+msgstr "Obrázek: zmenšit (JPG, max. 500 kB)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 1000kB max)"
+msgstr "Obrázek: zmenšit (JPG, max. 1000 kB)"
+
+#: Menu
+msgid "Image: Remove metadata"
+msgstr "Obrázek: odstranit metadata"
+
+#: Menu
+msgid "Image: Rename from metadata"
+msgstr "Obrázek: přejmenovat podle metadat"
+
+#: Menu
+msgid "Image: Resize (25 pct)"
+msgstr "Obrázek: změnit velikost (25 pct)"
+
+#: Menu
+msgid "Image: Resize (50 pct)"
+msgstr "Obrázek: změnit velikost (50 pct)"
+
+#: Menu
+msgid "Image: Resize (75 pct)"
+msgstr "Obrázek: změnit velikost (75 pct)"
+
+#: Menu
+msgid "Image: Resize (1920x1080)"
+msgstr "Obrázek: změnit velikost (1920x1080)"
+
+#: Menu
+msgid "Image: Resize (2560x1440)"
+msgstr "Obrázek: změnit velikost (2560x1440)"
+
+#: Menu
+msgid "Image: Resize (3840x2160)"
+msgstr "Obrázek: změnit velikost (3840x2160)"
+
+#: Menu
+msgid "Image: Resize (custom)"
+msgstr "Obrázek: změnit velikost (vlastní)"
+
+#: Menu
+msgid "Image: Rotate (90 deg)"
+msgstr "Obrázek: otočit (90°)"
+
+#: Menu
+msgid "Image: Rotate (180 deg)"
+msgstr "Obrázek: otočit (180°)"
+
+#: Menu
+msgid "Image: Rotate (270 deg)"
+msgstr "Obrázek: otočit (270°)"
+
+#: Menu
+msgid "Image: Split into 2 (horizontal)"
+msgstr "Obrázek: rozdělit na 2 (vodorovně)"
+
+#: Menu
+msgid "Image: Split into 2 (vertical)"
+msgstr "Obrázek: rozdělit na 2 (svisle)"
+
+#: Menu
+msgid "Image: Split into 4"
+msgstr "Obrázek: rozdělit na 4"
+
+#: Menu
+msgid "Image: Stack (horizontal)"
+msgstr "Obrázek: složit (vodorovně)"
+
+#: Menu
+msgid "Image: Stack (vertical)"
+msgstr "Obrázek: složit (svisle)"
+
+#: Menu
+msgid "IP: Scan hosts"
+msgstr "IP: skenovat hostitele"
+
+#: Menu
+msgid "List hard links"
+msgstr "Vypsat pevné odkazy"
+
+#: Menu
+msgid "List largest directories"
+msgstr "Vypsat největší adresáře"
+
+#: Menu
+msgid "List largest files"
+msgstr "Vypsat největší soubory"
+
+#: Menu
+msgid "List permissions and owners"
+msgstr "Vypsat oprávnění a vlastníky"
+
+#: Menu
+msgid "List recent files"
+msgstr "Vypsat nedávné soubory"
+
+#: Menu
+msgid "List symbolic links"
+msgstr "Vypsat symbolické odkazy"
+
+#: Menu
+msgid "Media: Concatenate files"
+msgstr "Média: spojit soubory"
+
+#: Menu
+msgid "Media: Remove metadata"
+msgstr "Média: odstranit metadata"
+
+#: Menu
+msgid "Media: Show basic metadata"
+msgstr "Média: zobrazit základní metadata"
+
+#: Menu
+msgid "Media: Show information"
+msgstr "Média: zobrazit informace"
+
+#: Menu
+msgid "MP3: (artist - title) Name to ID3"
+msgstr "MP3: (interpret - název) název do ID3"
+
+#: Menu
+msgid "MP3: (artist - title) ID3 to Name"
+msgstr "MP3: (interpret - název) ID3 do názvu"
+
+#: Menu
+msgid "MP3: Maximize volume (recursive)"
+msgstr "MP3: maximalizovat hlasitost (rekurzivně)"
+
+#: Menu
+msgid "MP3: Normalize volume (recursive)"
+msgstr "MP3: normalizovat hlasitost (rekurzivně)"
+
+#: Menu
+msgid "MP3: Show encoding details"
+msgstr "MP3: zobrazit podrobnosti kódování"
+
+#: Menu
+msgid "Open item location"
+msgstr "Otevřít umístění položky"
+
+#: Menu
+msgid "Paste as hard link"
+msgstr "Vložit jako pevný odkaz"
+
+#: Menu
+msgid "Paste as symbolic link"
+msgstr "Vložit jako symbolický odkaz"
+
+#: Menu
+msgid "Paste clipboard contents"
+msgstr "Vložit obsah schránky"
+
+#: Menu
+msgid "PDF: Add watermark (over)"
+msgstr "PDF: přidat vodoznak (navrch)"
+
+#: Menu
+msgid "PDF: Add watermark (under)"
+msgstr "PDF: přidat vodoznak (pod)"
+
+#: Menu
+msgid "PDF: Combine multiple PDFs"
+msgstr "PDF: sloučit více PDF"
+
+#: Menu
+msgid "PDF: Convert to grayscale"
+msgstr "PDF: převést na stupně šedi"
+
+#: Menu
+msgid "PDF: Convert to PDFA-2b"
+msgstr "PDF: převést na PDFA-2b"
+
+#: Menu
+msgid "PDF: Remove password"
+msgstr "PDF: odebrat heslo"
+
+#: Menu
+msgid "PDF: Set password"
+msgstr "PDF: nastavit heslo"
+
+#: Menu
+msgid "PDF: Extract images"
+msgstr "PDF: extrahovat obrázky"
+
+#: Menu
+msgid "PDF: Find annotated PDFs"
+msgstr "PDF: najít anotované PDF"
+
+#: Menu
+msgid "PDF: Find non-linearized PDFs"
+msgstr "PDF: najít nelinearizované PDF"
+
+#: Menu
+msgid "PDF: Find non-searchable PDFs"
+msgstr "PDF: najít neprohledávatelné PDF"
+
+#: Menu
+msgid "PDF: Find password-protected PDFs"
+msgstr "PDF: najít PDF chráněné heslem"
+
+#: Menu
+msgid "PDF: Find signed PDFs"
+msgstr "PDF: najít podepsané PDF"
+
+#: Menu
+msgid "PDF: Layout (landscape, 1x2)"
+msgstr "PDF: rozložení (na šířku, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x1)"
+msgstr "PDF: rozložení (na šířku, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x2)"
+msgstr "PDF: rozložení (na šířku, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x4)"
+msgstr "PDF: rozložení (na šířku, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 4x2)"
+msgstr "PDF: rozložení (na šířku, 4x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 1x2)"
+msgstr "PDF: rozložení (na výšku, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x1)"
+msgstr "PDF: rozložení (na výšku, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x2)"
+msgstr "PDF: rozložení (na výšku, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x4)"
+msgstr "PDF: rozložení (na výšku, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 4x2)"
+msgstr "PDF: rozložení (na výšku, 4x2)"
+
+#: Menu
+msgid "PDF: Optimize for web (linearize)"
+msgstr "PDF: optimalizovat pro web (linearizovat)"
+
+#: Menu
+msgid "PDF: Set size (A3)"
+msgstr "PDF: nastavit velikost (A3)"
+
+#: Menu
+msgid "PDF: Set size (A4)"
+msgstr "PDF: nastavit velikost (A4)"
+
+#: Menu
+msgid "PDF: Set size (A5)"
+msgstr "PDF: nastavit velikost (A5)"
+
+#: Menu
+msgid "PDF: Set size (US Legal)"
+msgstr "PDF: nastavit velikost (US Legal)"
+
+#: Menu
+msgid "PDF: Set size (US Letter)"
+msgstr "PDF: nastavit velikost (US Letter)"
+
+#: Menu
+msgid "PDF: Perform OCR (English)"
+msgstr "PDF: rozpoznat text (angličtina)"
+
+#: Menu
+msgid "PDF: Perform OCR (French)"
+msgstr "PDF: rozpoznat text (francouzština)"
+
+#: Menu
+msgid "PDF: Perform OCR (German)"
+msgstr "PDF: rozpoznat text (němčina)"
+
+#: Menu
+msgid "PDF: Perform OCR (Italian)"
+msgstr "PDF: rozpoznat text (italština)"
+
+#: Menu
+msgid "PDF: Perform OCR (Portuguese)"
+msgstr "PDF: rozpoznat text (portugalština)"
+
+#: Menu
+msgid "PDF: Perform OCR (Russian)"
+msgstr "PDF: rozpoznat text (ruština)"
+
+#: Menu
+msgid "PDF: Perform OCR (Spanish)"
+msgstr "PDF: rozpoznat text (španělština)"
+
+#: Menu
+msgid "PDF: Reduce (150 dpi, e-book)"
+msgstr "PDF: zmenšit (150 dpi, e-kniha)"
+
+#: Menu
+msgid "PDF: Reduce (300 dpi, printer)"
+msgstr "PDF: zmenšit (300 dpi, tiskárna)"
+
+#: Menu
+msgid "PDF: Remove annotations"
+msgstr "PDF: odstranit anotace"
+
+#: Menu
+msgid "PDF: Remove metadata"
+msgstr "PDF: odstranit metadata"
+
+#: Menu
+msgid "PDF: Rotate (90 deg)"
+msgstr "PDF: otočit (90°)"
+
+#: Menu
+msgid "PDF: Rotate (180 deg)"
+msgstr "PDF: otočit (180°)"
+
+#: Menu
+msgid "PDF: Rotate (270 deg)"
+msgstr "PDF: otočit (270°)"
+
+#: Menu
+msgid "PDF: Show signatures"
+msgstr "PDF: zobrazit podpisy"
+
+#: Menu
+msgid "PDF: Split into single-page PDFs"
+msgstr "PDF: rozdělit na jednostránkové PDF"
+
+#: Menu
+msgid "Rename: Add MD5 prefix"
+msgstr "Přejmenovat: přidat předponu MD5"
+
+#: Menu
+msgid "Rename: Remove accents"
+msgstr "Přejmenovat: odstranit diakritiku"
+
+#: Menu
+msgid "Rename: Remove prefixes"
+msgstr "Přejmenovat: odstranit předpony"
+
+#: Menu
+msgid "Rename: Remove suffixes"
+msgstr "Přejmenovat: odstranit přípony"
+
+#: Menu
+msgid "Rename: Change spaces to dashes"
+msgstr "Přejmenovat: mezery na pomlčky"
+
+#: Menu
+msgid "Rename: Change dashes to spaces"
+msgstr "Přejmenovat: pomlčky na mezery"
+
+#: Menu
+msgid "Rename: To lowercase"
+msgstr "Přejmenovat: na malá písmena"
+
+#: Menu
+msgid "Rename: To lowercase (recursive)"
+msgstr "Přejmenovat: na malá písmena (rekurzivně)"
+
+#: Menu
+msgid "Rename: To sentence case"
+msgstr "Přejmenovat: jako věta"
+
+#: Menu
+msgid "Rename: To title case"
+msgstr "Přejmenovat: jako nadpis"
+
+#: Menu
+msgid "Rename: To uppercase"
+msgstr "Přejmenovat: na velká písmena"
+
+#: Menu
+msgid "Rename: To uppercase (recursive)"
+msgstr "Přejmenovat: na velká písmena (rekurzivně)"
+
+#: Menu
+msgid "Reset permissions (recursive)"
+msgstr "Obnovit oprávnění (rekurzivně)"
+
+#: Menu
+msgid "Scan for malware (via ClamAV)"
+msgstr "Vyhledat malware (přes ClamAV)"
+
+#: Menu
+msgid "Scan for malware (via Lenspect)"
+msgstr "Vyhledat malware (přes Lenspect)"
+
+#: Menu
+msgid "Show file information"
+msgstr "Zobrazit informace o souboru"
+
+#: Menu
+msgid "Show file metadata"
+msgstr "Zobrazit metadata souboru"
+
+#: Menu
+msgid "Show file MIME type"
+msgstr "Zobrazit typ MIME souboru"
+
+#: Menu
+msgid "SVG: Compress to SVGZ"
+msgstr "SVG: komprimovat do SVGZ"
+
+#: Menu
+msgid "SVG: Decompress SVGZ"
+msgstr "SVG: dekomprimovat SVGZ"
+
+#: Menu
+msgid "SVG: Export to PDF"
+msgstr "SVG: exportovat do PDF"
+
+#: Menu
+msgid "SVG: Export to PNG (256 px)"
+msgstr "SVG: exportovat do PNG (256 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (512 px)"
+msgstr "SVG: exportovat do PNG (512 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (1024 px)"
+msgstr "SVG: exportovat do PNG (1024 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (custom)"
+msgstr "SVG: exportovat do PNG (vlastní)"
+
+#: Menu
+msgid "SVG: Optimize"
+msgstr "SVG: optimalizovat"
+
+#: Menu
+msgid "SVG: Replace fonts with Charter"
+msgstr "SVG: nahradit písma za Charter"
+
+#: Menu
+msgid "SVG: Replace fonts with Helvetica"
+msgstr "SVG: nahradit písma za Helvetica"
+
+#: Menu
+msgid "SVG: Replace fonts with Times"
+msgstr "SVG: nahradit písma za Times"
+
+#: Menu
+msgid "Terminal"
+msgstr "Terminál"
+
+#: Menu
+msgid "Terminal (synced panes)"
+msgstr "Terminál (synchronizované panely)"
+
+#: Menu
+msgid "Text: Concatenate multiple files"
+msgstr "Text: spojit více souborů"
+
+#: Menu
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "Text: převést tabulátory na 4 mezery"
+
+#: Menu
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "Text: normalizovat (UTF-8, rekurzivně)"
+
+#: Menu
+msgid "Text: Encode to UTF-8"
+msgstr "Text: kódovat do UTF-8"
+
+#: Menu
+msgid "Text: List encodings"
+msgstr "Text: vypsat kódování"
+
+#: Menu
+msgid "Text: List issues"
+msgstr "Text: vypsat problémy"
+
+#: Menu
+msgid "Text: List line breaks"
+msgstr "Text: vypsat zalomení řádků"
+
+#: Menu
+msgid "Text: List line counts"
+msgstr "Text: vypsat počty řádků"
+
+#: Menu
+msgid "Text: List line lengths"
+msgstr "Text: vypsat délky řádků"
+
+#: Menu
+msgid "Text: List word counts"
+msgstr "Text: vypsat počty slov"
+
+#: Menu
+msgid "Text: Remove trailing spaces"
+msgstr "Text: odstranit koncové mezery"
+
+#: Menu
+msgid "Text: Remove accents"
+msgstr "Text: odstranit diakritiku"
+
+#: Menu
+msgid "URL: Check HTTP status"
+msgstr "URL: zkontrolovat stav HTTP"
+
+#: Menu
+msgid "URL: Download file"
+msgstr "URL: stáhnout soubor"
+
+#: Menu
+msgid "URL: Show HTTP headers"
+msgstr "URL: zobrazit hlavičky HTTP"
+
+#: Menu
+msgid "Verify MD5 file"
+msgstr "Ověřit soubor MD5"
+
+#: Menu
+msgid "Verify SHA1 file"
+msgstr "Ověřit soubor SHA1"
+
+#: Menu
+msgid "Verify SHA256 file"
+msgstr "Ověřit soubor SHA256"
+
+#: Menu
+msgid "Verify SHA512 file"
+msgstr "Ověřit soubor SHA512"
+
+#: Menu
+msgid "Video: Aspect to 1:1"
+msgstr "Video: poměr stran 1:1"
+
+#: Menu
+msgid "Video: Aspect to 4:3"
+msgstr "Video: poměr stran 4:3"
+
+#: Menu
+msgid "Video: Aspect to 16:9"
+msgstr "Video: poměr stran 16:9"
+
+#: Menu
+msgid "Video: Aspect to 16:10"
+msgstr "Video: poměr stran 16:10"
+
+#: Menu
+msgid "Video: Convert to MKV"
+msgstr "Video: převést na MKV"
+
+#: Menu
+msgid "Video: Convert to MKV (copy)"
+msgstr "Video: převést na MKV (kopie)"
+
+#: Menu
+msgid "Video: Convert to MP4"
+msgstr "Video: převést na MP4"
+
+#: Menu
+msgid "Video: Convert to MP4 (copy)"
+msgstr "Video: převést na MP4 (kopie)"
+
+#: Menu
+msgid "Video: Convert to WebM"
+msgstr "Video: převést na WebM"
+
+#: Menu
+msgid "Video: Convert to WebM (copy)"
+msgstr "Video: převést na WebM (kopie)"
+
+#: Menu
+msgid "Video: Export frames (1 FPS)"
+msgstr "Video: exportovat snímky (1 FPS)"
+
+#: Menu
+msgid "Video: Export frames (5 FPS)"
+msgstr "Video: exportovat snímky (5 FPS)"
+
+#: Menu
+msgid "Video: Export frames (10 FPS)"
+msgstr "Video: exportovat snímky (10 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (1 FPS)"
+msgstr "Video: exportovat do GIF (1 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (5 FPS)"
+msgstr "Video: exportovat do GIF (5 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (10 FPS)"
+msgstr "Video: exportovat do GIF (10 FPS)"
+
+#: Menu
+msgid "Video: Extract audio"
+msgstr "Video: extrahovat zvuk"
+
+#: Menu
+msgid "Video: Flip (horizontal)"
+msgstr "Video: převrátit (vodorovně)"
+
+#: Menu
+msgid "Video: Flip (vertical)"
+msgstr "Video: převrátit (svisle)"
+
+#: Menu
+msgid "Video: Frame rate to 30 FPS"
+msgstr "Video: snímková frekvence 30 FPS"
+
+#: Menu
+msgid "Video: Frame rate to 60 FPS"
+msgstr "Video: snímková frekvence 60 FPS"
+
+#: Menu
+msgid "Video: Remove audio"
+msgstr "Video: odebrat zvuk"
+
+#: Menu
+msgid "Video: Resize (25 pct)"
+msgstr "Video: změnit velikost (25 pct)"
+
+#: Menu
+msgid "Video: Resize (50 pct)"
+msgstr "Video: změnit velikost (50 pct)"
+
+#: Menu
+msgid "Video: Resize (75 pct)"
+msgstr "Video: změnit velikost (75 pct)"
+
+#: Menu
+msgid "Video: Resize (custom)"
+msgstr "Video: změnit velikost (vlastní)"
+
+#: Menu
+msgid "Video: Rotate (90 deg)"
+msgstr "Video: otočit (90°)"
+
+#: Menu
+msgid "Video: Rotate (180 deg)"
+msgstr "Video: otočit (180°)"
+
+#: Menu
+msgid "Video: Rotate (270 deg)"
+msgstr "Video: otočit (270°)"
+
+#: Menu
+msgid "Video: Speed to 0.5"
+msgstr "Video: rychlost 0.5"
+
+#: Menu
+msgid "Video: Speed to 1.5"
+msgstr "Video: rychlost 1.5"
+
+#: Menu
+msgid "Video: Speed to 2.0"
+msgstr "Video: rychlost 2.0"
+
+#: install.sh
+msgid "Check for basic dependencies"
+msgstr "Zkontrolovat základní závislosti"
+
+#: install.sh
+msgid "Remove previously installed scripts"
+msgstr "Odebrat dříve nainstalované skripty"
+
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr "Nainstalovat klávesové zkratky"
+
+#: install.sh
+msgid "Close the file manager to reload configuration"
+msgstr "Zavřít správce souborů pro opětovné načtení konfigurace"
+
+#: install.sh
+msgid "Add shortcuts in the application menu"
+msgstr "Přidat zástupce do nabídky aplikací"
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr "Nainstalovat Homebrew (volitelné)"
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr "Zvolte, které kategorie skriptů se mají nainstalovat"
+
+#: install.sh
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr "Vyberte možnosti (<MEZERNÍK> pro zaškrtnutí, <ENTER> pro potvrzení):"
+
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr "Instalace v neinteraktivním režimu..."
+
+#: install.sh
+msgid "Installing:"
+msgstr "Instalace:"
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr "Instalace zástupců v nabídce aplikací:"
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr "Instalace byla úspěšně dokončena!"
+
+#: install.sh
+msgid "Checking for basic dependencies:"
+msgstr "Kontrola základních závislostí:"
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr "Všechny závislosti jsou již splněny."
+
+#: install.sh
+msgid "Copying files..."
+msgstr "Kopírování souborů..."
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr "Instalace klávesových zkratek..."
+
+#: install.sh
+msgid "Scripts"
+msgstr "Skripty"
+
+#: install.sh
+msgid "Creating shortcuts in the application menu..."
+msgstr "Vytváření zástupců v nabídce aplikací..."
+
+#: install.sh
+msgid "Creating GNOME Shell application folder..."
+msgstr "Vytváření složky aplikací v GNOME Shell..."
+
+#: install.sh
+msgid "Installing actions in the context menu..."
+msgstr "Instalace akcí do kontextové nabídky..."
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr "Zavírání správce souborů..."
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr "Instalace Homebrew:"
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr "Homebrew je již nainstalován."
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr "Instalace Homebrew do:"
+
+#: install.sh
+msgid "Downloading the package..."
+msgstr "Stahování balíčku..."
+
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr "Nepodařilo se najít správce balíčků!"
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr "Instalace Homebrew se nezdařila!"
+
+#~ msgid "EOF"
+#~ msgstr "EOF"

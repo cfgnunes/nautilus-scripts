@@ -1,0 +1,2011 @@
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Enhanced File Manager Actions for Linux\n"
+"POT-Creation-Date: 2025-11-13 12:12-0300\n"
+"PO-Revision-Date: 2026-09-24 09:50-0300\n"
+"Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
+"Language-Team: \n"
+"Language: uk_UA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Done!"
+msgstr "Готово!"
+
+msgid "files"
+msgstr "файли"
+
+msgid "Would you like to continue?"
+msgstr "Бажаєте продовжити?"
+
+msgid "directories"
+msgstr "каталоги"
+
+msgid "items"
+msgstr "елементи"
+
+msgid "The command failed."
+msgstr "Не вдалося виконати команду."
+
+msgid "The output file does not exist."
+msgstr "Вихідний файл не існує."
+
+msgid "Finished with errors! See the log:"
+msgstr "Завершено з помилками! Див. журнал:"
+
+msgid "Your system does not support clipboard operations."
+msgstr "Ваша система не підтримує операції з буфером обміну."
+
+msgid "Could not find a package for:"
+msgstr "Не вдалося знайти пакунок для:"
+
+msgid "The following packages are missing:"
+msgstr "Відсутні такі пакунки:"
+
+msgid "Would you like to install them?"
+msgstr "Бажаєте їх встановити?"
+
+msgid "Installing the packages. Please wait..."
+msgstr "Встановлення пакунків. Зачекайте..."
+
+msgid "The package was installed, but a system reboot is required."
+msgstr "Пакунок встановлено, але потрібно перезавантажити систему."
+
+msgid "Could not install the package:"
+msgstr "Не вдалося встановити пакунок:"
+
+msgid "This action will delete the selected items."
+msgstr "Ця дія видалить вибрані елементи."
+
+msgid "Total selected:"
+msgstr "Усього вибрано:"
+
+msgid "Total:"
+msgstr "Усього:"
+
+msgid "Some items could not be deleted."
+msgstr "Деякі елементи не вдалося видалити."
+
+msgid "All items were successfully deleted!"
+msgstr "Усі елементи успішно видалено!"
+
+msgid "Could not access the directory:"
+msgstr "Не вдалося отримати доступ до каталогу:"
+
+msgid "The destination file already exists."
+msgstr "Файл призначення вже існує."
+
+msgid "Unable to move."
+msgstr "Не вдалося перемістити."
+
+msgid "OK"
+msgstr "Гаразд"
+
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgid "(Empty)"
+msgstr "(Порожньо)"
+
+msgid "Select the ones to open:"
+msgstr "Виберіть, які відкрити:"
+
+msgid "Select the ones to show in the file manager:"
+msgstr "Виберіть, які показати у файловому менеджері:"
+
+msgid "Select the ones to open in the web browser:"
+msgstr "Виберіть, які відкрити у веббраузері:"
+
+msgid "Select the ones to delete:"
+msgstr "Виберіть, які видалити:"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Type your password:"
+msgstr "Введіть пароль:"
+
+msgid "The password cannot be empty!"
+msgstr "Пароль не може бути порожнім!"
+
+msgid "Yes"
+msgstr "Так"
+
+msgid "No"
+msgstr "Ні"
+
+msgid "Finished! The output files are in:"
+msgstr "Готово! Вихідні файли містяться в:"
+
+msgid "Finished, but there is nothing to do."
+msgstr "Завершено, але немає що робити."
+
+msgid "Finished!"
+msgstr "Готово!"
+
+msgid "Running the task. Please wait..."
+msgstr "Виконання завдання. Зачекайте..."
+
+msgid "No default application is set for the type:"
+msgstr "Для цього типу не задано типову програму:"
+
+msgid "Could not find an application for the MIME type:"
+msgstr "Не вдалося знайти програму для типу MIME:"
+
+msgid "Batch mode detected."
+msgstr "Виявлено пакетний режим."
+
+msgid "Each file inside this directory will be processed individually."
+msgstr "Кожен файл у цьому каталозі буде оброблено окремо."
+
+msgid "files or directories"
+msgstr "файли або каталоги"
+
+msgid "You must select files with the extension:"
+msgstr "Потрібно вибрати файли з розширенням:"
+
+msgid "Invalid input file!"
+msgstr "Неприпустимий вхідний файл!"
+
+msgid "You must select"
+msgstr "Потрібно вибрати"
+
+msgid "You must select at least"
+msgstr "Потрібно вибрати щонайменше"
+
+msgid "You must select up to"
+msgstr "Потрібно вибрати не більше"
+
+msgid "Could not find the output directory!"
+msgstr "Не вдалося знайти вихідний каталог!"
+
+msgid "Accessed recently"
+msgstr "Недавно відкриті"
+
+msgid "File"
+msgstr "Файл"
+
+msgid "Count"
+msgstr "Кількість"
+
+msgid "Issues"
+msgstr "Проблеми"
+
+msgid "Encoding"
+msgstr "Кодування"
+
+msgid "There are no valid paths in the clipboard!"
+msgstr "У буфері обміну немає дійсних шляхів!"
+
+msgid "links"
+msgstr "посилання"
+
+msgid "Inode"
+msgstr "Інод"
+
+msgid "Link"
+msgstr "Посилання"
+
+msgid "Unsupported clipboard type."
+msgstr "Непідтримуваний тип буфера обміну."
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr "Ця дія рекурсивно перейменує вибрані файли та каталоги."
+
+msgid "PDF files"
+msgstr "Файли PDF"
+
+msgid "Select a PDF to use as the watermark"
+msgstr "Виберіть PDF для водяного знака"
+
+msgid "Signature"
+msgstr "Підпис"
+
+msgid "Malware"
+msgstr "Зловмисне ПЗ"
+
+msgid "Mode"
+msgstr "Режим"
+
+msgid "Bit rate"
+msgstr "Бітрейт"
+
+msgid "Sampling rate"
+msgstr "Частота дискретизації"
+
+msgid "Channels"
+msgstr "Канали"
+
+msgid "Duration"
+msgstr "Тривалість"
+
+msgid "Album"
+msgstr "Альбом"
+
+msgid "Artist"
+msgstr "Виконавець"
+
+msgid "Title"
+msgstr "Назва"
+
+msgid "Quality"
+msgstr "Якість"
+
+msgid "Image files"
+msgstr "Файли зображень"
+
+msgid "Select an image to use as the watermark"
+msgstr "Виберіть зображення для водяного знака"
+
+msgid "Enter the target size."
+msgstr "Введіть цільовий розмір."
+
+msgid "Invalid input!"
+msgstr "Неприпустимі дані!"
+
+msgid "Key files"
+msgstr "Файли ключів"
+
+msgid "Select a key file to import"
+msgstr "Виберіть файл ключа для імпорту"
+
+msgid "No secret keys were found."
+msgstr "Секретних ключів не знайдено."
+
+msgid "Would you like to import a key now?"
+msgstr "Бажаєте імпортувати ключ зараз?"
+
+msgid "Failed to import the key!"
+msgstr "Не вдалося імпортувати ключ!"
+
+msgid "Select a user (sign):"
+msgstr "Виберіть користувача (підпис):"
+
+msgid "User"
+msgstr "Користувач"
+
+msgid "Name"
+msgstr "Ім’я"
+
+msgid "E-mail"
+msgstr "Ел. пошта"
+
+msgid "Created"
+msgstr "Створено"
+
+msgid "Expires"
+msgstr "Закінчується"
+
+msgid "You must select a user!"
+msgstr "Потрібно вибрати користувача!"
+
+msgid "No public keys were found."
+msgstr "Відкритих ключів не знайдено."
+
+msgid "Select one or more users (encrypt):"
+msgstr "Виберіть одного або кількох користувачів (шифрування):"
+
+msgid "You must select at least one user!"
+msgstr "Потрібно вибрати щонайменше одного користувача!"
+
+msgid "Directory"
+msgstr "Каталог"
+
+msgid "Size"
+msgstr "Розмір"
+
+msgid "Group"
+msgstr "Група"
+
+msgid "Item"
+msgstr "Елемент"
+
+msgid "Octal"
+msgstr "Вісімковий"
+
+msgid "Type"
+msgstr "Тип"
+
+msgid "You must select only two images to compare!"
+msgstr "Для порівняння потрібно вибрати лише два зображення!"
+
+msgid "You must select only two PDFs to compare!"
+msgstr "Для порівняння потрібно вибрати лише два PDF!"
+
+msgid "You must select only two binary files to compare!"
+msgstr "Для порівняння потрібно вибрати лише два двійкові файли!"
+
+msgid "No items were selected!"
+msgstr "Елементи не вибрано!"
+
+msgid "No directories were selected!"
+msgstr "Каталоги не вибрано!"
+
+msgid "The selected items are identical."
+msgstr "Вибрані елементи однакові."
+
+msgid "The selected images have the same pixel values."
+msgstr "Вибрані зображення мають однакові значення пікселів."
+
+msgid "MIME"
+msgstr "MIME"
+
+msgid "This action will move all files from subdirectories to the root of the selected directory."
+msgstr "Ця дія перемістить усі файли з підкаталогів у корінь вибраного каталогу."
+
+msgid "This action will reset the permissions recursively."
+msgstr "Ця дія рекурсивно скине дозволи."
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Time"
+msgstr "Час"
+
+msgid "Select the output filename:"
+msgstr "Виберіть ім’я вихідного файлу:"
+
+msgid "Filename"
+msgstr "Ім’я файлу"
+
+msgid "Status"
+msgstr "Стан"
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr "У буфері обміну та у вибраних файлах немає дійсних URL!"
+
+msgid "IPs"
+msgstr "IP-адреси"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Ping"
+msgstr "Пінг"
+
+msgid "Ports"
+msgstr "Порти"
+
+msgid "Hostname"
+msgstr "Ім’я хоста"
+
+msgid "Example:"
+msgstr "Приклад:"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "Введіть IP-адреси або діапазони IP."
+
+msgid "Enter the URLs."
+msgstr "Введіть URL-адреси."
+
+msgid "No remote URL found."
+msgstr "Віддалену URL-адресу не знайдено."
+
+msgid "URLs"
+msgstr "URL-адреси"
+
+msgid "HTTP code"
+msgstr "Код HTTP"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "(No differences)"
+msgstr "(Немає відмінностей)"
+
+msgid "(No line break)"
+msgstr "(Немає розриву рядка)"
+
+msgid "(No response)"
+msgstr "(Немає відповіді)"
+
+msgid "Checksum error"
+msgstr "Помилка контрольної суми"
+
+msgid "File does not exist"
+msgstr "Файл не існує"
+
+msgid "High"
+msgstr "Висока"
+
+msgid "Low"
+msgstr "Низька"
+
+msgid "Medium"
+msgstr "Середня"
+
+msgid "Online"
+msgstr "У мережі"
+
+msgid "Offline"
+msgstr "Поза мережею"
+
+msgid "Valid signature"
+msgstr "Дійсний підпис"
+
+msgid "Invalid signature"
+msgstr "Недійсний підпис"
+
+msgid "Missing key"
+msgstr "Відсутній ключ"
+
+msgid "Missing data file"
+msgstr "Відсутній файл даних"
+
+msgid "Revoked key"
+msgstr "Відкликаний ключ"
+
+msgid "Expired key"
+msgstr "Прострочений ключ"
+
+msgid "Expired signature"
+msgstr "Прострочений підпис"
+
+msgid "Unknown algorithm"
+msgstr "Невідомий алгоритм"
+
+msgid "Key ID"
+msgstr "Ідентифікатор ключа"
+
+msgid "Enter the password for the archive:"
+msgstr "Введіть пароль до архіву:"
+
+msgid "Select the output directory"
+msgstr "Виберіть вихідний каталог"
+
+msgid "Select input directories"
+msgstr "Виберіть вхідні каталоги"
+
+msgid "Select input files"
+msgstr "Виберіть вхідні файли"
+
+msgid "Open"
+msgstr "Відкрити"
+
+#: Menu
+msgid "Archive"
+msgstr "Архів"
+
+#: Menu
+msgid "Audio and Video"
+msgstr "Аудіо та відео"
+
+#: Menu
+msgid "Checksum"
+msgstr "Контрольна сума"
+
+#: Menu
+msgid "Clipboard"
+msgstr "Буфер обміну"
+
+#: Menu
+msgid "Directories and Files"
+msgstr "Каталоги та файли"
+
+#: Menu
+msgid "Document"
+msgstr "Документ"
+
+#: Menu
+msgid "Encryption"
+msgstr "Шифрування"
+
+#: Menu
+msgid "Image"
+msgstr "Зображення"
+
+#: Menu
+msgid "Links"
+msgstr "Посилання"
+
+#: Menu
+msgid "Network and Internet"
+msgstr "Мережа та інтернет"
+
+#: Menu
+msgid "Open with"
+msgstr "Відкрити за допомогою"
+
+#: Menu
+msgid "Plain text"
+msgstr "Звичайний текст"
+
+#: Menu
+msgid "Rename files"
+msgstr "Перейменувати файли"
+
+#: Menu
+msgid "Security and Recovery"
+msgstr "Безпека та відновлення"
+
+#: Menu
+msgid "Audio and Video: Tools"
+msgstr "Аудіо та відео: інструменти"
+
+#: Menu
+msgid "Audio: Channels"
+msgstr "Аудіо: канали"
+
+#: Menu
+msgid "Audio: Convert"
+msgstr "Аудіо: перетворення"
+
+#: Menu
+msgid "Audio: Effects"
+msgstr "Аудіо: ефекти"
+
+#: Menu
+msgid "Audio: MP3 files"
+msgstr "Аудіо: файли MP3"
+
+#: Menu
+msgid "Audio: Quality"
+msgstr "Аудіо: якість"
+
+#: Menu
+msgid "Document: Convert"
+msgstr "Документ: перетворення"
+
+#: Menu
+msgid "Image: Color"
+msgstr "Зображення: колір"
+
+#: Menu
+msgid "Image: Combine, Split"
+msgstr "Зображення: об’єднати, розділити"
+
+#: Menu
+msgid "Image: Convert"
+msgstr "Зображення: перетворення"
+
+#: Menu
+msgid "Image: Crop, Resize"
+msgstr "Зображення: обрізати, змінити розмір"
+
+#: Menu
+msgid "Image: Flip, Rotate"
+msgstr "Зображення: віддзеркалити, повернути"
+
+#: Menu
+msgid "Image: Icons"
+msgstr "Зображення: піктограми"
+
+#: Menu
+msgid "Image: Metadata, Exif"
+msgstr "Зображення: метадані, Exif"
+
+#: Menu
+msgid "Image: Optimize, Reduce"
+msgstr "Зображення: оптимізувати, зменшити"
+
+#: Menu
+msgid "Image: Similarity"
+msgstr "Зображення: схожість"
+
+#: Menu
+msgid "Image: SVG files"
+msgstr "Зображення: файли SVG"
+
+#: Menu
+msgid "Image: Text recognition (OCR)"
+msgstr "Зображення: розпізнавання тексту (OCR)"
+
+#: Menu
+msgid "Image: Transparency"
+msgstr "Зображення: прозорість"
+
+#: Menu
+msgid "Image: Watermark"
+msgstr "Зображення: водяний знак"
+
+#: Menu
+msgid "PDF: Annotations"
+msgstr "PDF: анотації"
+
+#: Menu
+msgid "PDF: Combine, Split"
+msgstr "PDF: об’єднати, розділити"
+
+#: Menu
+msgid "PDF: Security"
+msgstr "PDF: безпека"
+
+#: Menu
+msgid "PDF: Multi-page layout"
+msgstr "PDF: багатосторінковий макет"
+
+#: Menu
+msgid "PDF: Optimize, Reduce"
+msgstr "PDF: оптимізувати, зменшити"
+
+#: Menu
+msgid "PDF: Page size"
+msgstr "PDF: розмір сторінки"
+
+#: Menu
+msgid "PDF: Rotate"
+msgstr "PDF: повернути"
+
+#: Menu
+msgid "PDF: Signatures"
+msgstr "PDF: підписи"
+
+#: Menu
+msgid "PDF: Text recognition (OCR)"
+msgstr "PDF: розпізнавання тексту (OCR)"
+
+#: Menu
+msgid "PDF: Tools"
+msgstr "PDF: інструменти"
+
+#: Menu
+msgid "PDF: Watermark"
+msgstr "PDF: водяний знак"
+
+#: Menu
+msgid "Video: Aspect ratio"
+msgstr "Відео: співвідношення сторін"
+
+#: Menu
+msgid "Video: Audio track"
+msgstr "Відео: звукова доріжка"
+
+#: Menu
+msgid "Video: Convert"
+msgstr "Відео: перетворення"
+
+#: Menu
+msgid "Video: Export frames"
+msgstr "Відео: експорт кадрів"
+
+#: Menu
+msgid "Video: Flip, Rotate"
+msgstr "Відео: віддзеркалити, повернути"
+
+#: Menu
+msgid "Video: Frame rate"
+msgstr "Відео: частота кадрів"
+
+#: Menu
+msgid "Video: Resize"
+msgstr "Відео: змінити розмір"
+
+#: Menu
+msgid "Video: Speed"
+msgstr "Відео: швидкість"
+
+#: Menu
+msgid "Audio: Check quality"
+msgstr "Аудіо: перевірити якість"
+
+#: Menu
+msgid "Audio: Convert to FLAC"
+msgstr "Аудіо: перетворити на FLAC"
+
+#: Menu
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "Аудіо: перетворити на MP3 (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (192 kbps)"
+msgstr "Аудіо: перетворити на MP3 (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (320 kbps)"
+msgstr "Аудіо: перетворити на MP3 (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "Аудіо: перетворити на OGG (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (192 kbps)"
+msgstr "Аудіо: перетворити на OGG (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (320 kbps)"
+msgstr "Аудіо: перетворити на OGG (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "Аудіо: перетворити на OPUS (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (192 kbps)"
+msgstr "Аудіо: перетворити на OPUS (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (320 kbps)"
+msgstr "Аудіо: перетворити на OPUS (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to WAV"
+msgstr "Аудіо: перетворити на WAV"
+
+#: Menu
+msgid "Audio: Fade-in"
+msgstr "Аудіо: наростання"
+
+#: Menu
+msgid "Audio: Fade-out"
+msgstr "Аудіо: згасання"
+
+#: Menu
+msgid "Audio: Mix channels to mono"
+msgstr "Аудіо: звести канали в моно"
+
+#: Menu
+msgid "Audio: Mix two files"
+msgstr "Аудіо: змішати два файли"
+
+#: Menu
+msgid "Audio: Normalize volume"
+msgstr "Аудіо: нормалізувати гучність"
+
+#: Menu
+msgid "Audio: Produce spectrogram"
+msgstr "Аудіо: створити спектрограму"
+
+#: Menu
+msgid "Audio: Remove silence (sections)"
+msgstr "Аудіо: прибрати тишу (фрагменти)"
+
+#: Menu
+msgid "Audio: Mute noise"
+msgstr "Аудіо: приглушити шум"
+
+#: Menu
+msgid "Audio: Remove silence (extremities)"
+msgstr "Аудіо: прибрати тишу (краї)"
+
+#: Menu
+msgid "Create backup (via Rsync)"
+msgstr "Створити резервну копію (через Rsync)"
+
+#: Menu
+msgid "Code editor"
+msgstr "Редактор коду"
+
+#: Menu
+msgid "Compare items"
+msgstr "Порівняти елементи"
+
+#: Menu
+msgid "Compare items (via Diff)"
+msgstr "Порівняти елементи (через Diff)"
+
+#: Menu
+msgid "Compress to '7z'"
+msgstr "Стиснути в «7z»"
+
+#: Menu
+msgid "Compress to '7z' with password"
+msgstr "Стиснути в «7z» з паролем"
+
+#: Menu
+msgid "Compress to 'tar.gz'"
+msgstr "Стиснути в «tar.gz»"
+
+#: Menu
+msgid "Compress to 'tar.xz'"
+msgstr "Стиснути в «tar.xz»"
+
+#: Menu
+msgid "Compress to 'tar.zst'"
+msgstr "Стиснути в «tar.zst»"
+
+#: Menu
+msgid "Compress to 'zip'"
+msgstr "Стиснути в «zip»"
+
+#: Menu
+msgid "Compress to 'zip' with password"
+msgstr "Стиснути в «zip» з паролем"
+
+#: Menu
+msgid "Compute all checksums"
+msgstr "Обчислити всі контрольні суми"
+
+#: Menu
+msgid "Compute MD5"
+msgstr "Обчислити MD5"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "Обчислити SHA1"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "Обчислити SHA256"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "Обчислити SHA512"
+
+#: Menu
+msgid "Copy file contents"
+msgstr "Копіювати вміст файлів"
+
+#: Menu
+msgid "Copy file names"
+msgstr "Копіювати імена файлів"
+
+#: Menu
+msgid "Copy file names (recursive)"
+msgstr "Копіювати імена файлів (рекурсивно)"
+
+#: Menu
+msgid "Copy file paths"
+msgstr "Копіювати шляхи до файлів"
+
+#: Menu
+msgid "Copy file paths (recursive)"
+msgstr "Копіювати шляхи до файлів (рекурсивно)"
+
+#: Menu
+msgid "Create hard link here"
+msgstr "Створити жорстке посилання тут"
+
+#: Menu
+msgid "Create hard link to..."
+msgstr "Створити жорстке посилання до..."
+
+#: Menu
+msgid "Create symbolic link here"
+msgstr "Створити символічне посилання тут"
+
+#: Menu
+msgid "Create symbolic link to..."
+msgstr "Створити символічне посилання до..."
+
+#: Menu
+msgid "Disk usage analyzer"
+msgstr "Аналізатор використання диска"
+
+#: Menu
+msgid "Document: Convert to DOCX"
+msgstr "Документ: перетворити на DOCX"
+
+#: Menu
+msgid "Document: Convert to EPUB"
+msgstr "Документ: перетворити на EPUB"
+
+#: Menu
+msgid "Document: Convert to Markdown"
+msgstr "Документ: перетворити на Markdown"
+
+#: Menu
+msgid "Document: Convert to ODP"
+msgstr "Документ: перетворити на ODP"
+
+#: Menu
+msgid "Document: Convert to ODS"
+msgstr "Документ: перетворити на ODS"
+
+#: Menu
+msgid "Document: Convert to ODT"
+msgstr "Документ: перетворити на ODT"
+
+#: Menu
+msgid "Document: Convert to PDF"
+msgstr "Документ: перетворити на PDF"
+
+#: Menu
+msgid "Document: Convert to PDF (landscape)"
+msgstr "Документ: перетворити на PDF (альбомна)"
+
+#: Menu
+msgid "Document: Convert to PPTX"
+msgstr "Документ: перетворити на PPTX"
+
+#: Menu
+msgid "Document: Convert to TXT"
+msgstr "Документ: перетворити на TXT"
+
+#: Menu
+msgid "Document: Convert to XLSX"
+msgstr "Документ: перетворити на XLSX"
+
+#: Menu
+msgid "Extract here"
+msgstr "Видобути сюди"
+
+#: Menu
+msgid "File carving (via Foremost)"
+msgstr "Відновлення файлів (через Foremost)"
+
+#: Menu
+msgid "File carving (via PhotoRec)"
+msgstr "Відновлення файлів (через PhotoRec)"
+
+#: Menu
+msgid "Find broken links"
+msgstr "Знайти пошкоджені посилання"
+
+#: Menu
+msgid "Find duplicate files"
+msgstr "Знайти файли-дублікати"
+
+#: Menu
+msgid "Find empty directories"
+msgstr "Знайти порожні каталоги"
+
+#: Menu
+msgid "List hidden files"
+msgstr "Показати приховані файли"
+
+#: Menu
+msgid "Find junk files"
+msgstr "Знайти зайві файли"
+
+#: Menu
+msgid "Find empty files"
+msgstr "Знайти порожні файли"
+
+#: Menu
+msgid "Flatten directory structure"
+msgstr "Спростити структуру каталогів"
+
+#: Menu
+msgid "Generate MD5 file"
+msgstr "Створити файл MD5"
+
+#: Menu
+msgid "Generate SHA1 file"
+msgstr "Створити файл SHA1"
+
+#: Menu
+msgid "Generate SHA256 file"
+msgstr "Створити файл SHA256"
+
+#: Menu
+msgid "Generate SHA512 file"
+msgstr "Створити файл SHA512"
+
+#: Menu
+msgid "Git: Clone URLs"
+msgstr "Git: клонувати URL"
+
+#: Menu
+msgid "Git: Open repository website"
+msgstr "Git: відкрити сайт репозиторію"
+
+#: Menu
+msgid "Git: Reset and pull"
+msgstr "Git: скинути та отримати"
+
+#: Menu
+msgid "Decrypt"
+msgstr "Розшифрувати"
+
+#: Menu
+msgid "Encrypt with password"
+msgstr "Зашифрувати паролем"
+
+#: Menu
+msgid "Encrypt with password (ASCII)"
+msgstr "Зашифрувати паролем (ASCII)"
+
+#: Menu
+msgid "Encrypt with keys"
+msgstr "Зашифрувати ключами"
+
+#: Menu
+msgid "Encrypt with keys (ASCII)"
+msgstr "Зашифрувати ключами (ASCII)"
+
+#: Menu
+msgid "Import keys"
+msgstr "Імпортувати ключі"
+
+#: Menu
+msgid "Sign"
+msgstr "Підписати"
+
+#: Menu
+msgid "Sign (ASCII)"
+msgstr "Підписати (ASCII)"
+
+#: Menu
+msgid "Sign (detached signature)"
+msgstr "Підписати (окремий підпис)"
+
+#: Menu
+msgid "Sign and encrypt with keys"
+msgstr "Підписати та зашифрувати ключами"
+
+#: Menu
+msgid "Sign and encrypt with keys (ASCII)"
+msgstr "Підписати та зашифрувати ключами (ASCII)"
+
+#: Menu
+msgid "Verify signature"
+msgstr "Перевірити підпис"
+
+#: Menu
+msgid "Image: Add watermark (center)"
+msgstr "Зображення: додати водяний знак (центр)"
+
+#: Menu
+msgid "Image: Add watermark (north)"
+msgstr "Зображення: додати водяний знак (північ)"
+
+#: Menu
+msgid "Image: Add watermark (northeast)"
+msgstr "Зображення: додати водяний знак (північний схід)"
+
+#: Menu
+msgid "Image: Add watermark (northwest)"
+msgstr "Зображення: додати водяний знак (північний захід)"
+
+#: Menu
+msgid "Image: Add watermark (south)"
+msgstr "Зображення: додати водяний знак (південь)"
+
+#: Menu
+msgid "Image: Add watermark (southeast)"
+msgstr "Зображення: додати водяний знак (південний схід)"
+
+#: Menu
+msgid "Image: Add watermark (southwest)"
+msgstr "Зображення: додати водяний знак (південний захід)"
+
+#: Menu
+msgid "Image: Automatic crop"
+msgstr "Зображення: автоматичне обрізання"
+
+#: Menu
+msgid "Image: Automatic crop (15 pct)"
+msgstr "Зображення: автоматичне обрізання (15 pct)"
+
+#: Menu
+msgid "Image: Background to alpha"
+msgstr "Зображення: тло в альфа-канал"
+
+#: Menu
+msgid "Image: Background to alpha (15 pct)"
+msgstr "Зображення: тло в альфа-канал (15 pct)"
+
+#: Menu
+msgid "Image: Color alpha to black"
+msgstr "Зображення: альфа-канал у чорний"
+
+#: Menu
+msgid "Image: Color alpha to magenta"
+msgstr "Зображення: альфа-канал у мадженту"
+
+#: Menu
+msgid "Image: Color alpha to white"
+msgstr "Зображення: альфа-канал у білий"
+
+#: Menu
+msgid "Image: Color black to alpha"
+msgstr "Зображення: чорний в альфа-канал"
+
+#: Menu
+msgid "Image: Color black to alpha (15 pct)"
+msgstr "Зображення: чорний в альфа-канал (15 pct)"
+
+#: Menu
+msgid "Image: Color magenta to alpha"
+msgstr "Зображення: маджента в альфа-канал"
+
+#: Menu
+msgid "Image: Color magenta to alpha (15 pct)"
+msgstr "Зображення: маджента в альфа-канал (15 pct)"
+
+#: Menu
+msgid "Image: Colorspace to gray"
+msgstr "Зображення: колірний простір у сірий"
+
+#: Menu
+msgid "Image: Color white to alpha"
+msgstr "Зображення: білий в альфа-канал"
+
+#: Menu
+msgid "Image: Color white to alpha (15 pct)"
+msgstr "Зображення: білий в альфа-канал (15 pct)"
+
+#: Menu
+msgid "Image: Combine into GIF"
+msgstr "Зображення: об’єднати в GIF"
+
+#: Menu
+msgid "Image: Combine into PDF"
+msgstr "Зображення: об’єднати в PDF"
+
+#: Menu
+msgid "Image: Convert to AVIF"
+msgstr "Зображення: перетворити на AVIF"
+
+#: Menu
+msgid "Image: Convert to GIF"
+msgstr "Зображення: перетворити на GIF"
+
+#: Menu
+msgid "Image: Convert to HEIC"
+msgstr "Зображення: перетворити на HEIC"
+
+#: Menu
+msgid "Image: Convert to JPG"
+msgstr "Зображення: перетворити на JPG"
+
+#: Menu
+msgid "Image: Convert to JXL"
+msgstr "Зображення: перетворити на JXL"
+
+#: Menu
+msgid "Image: Convert to PNG"
+msgstr "Зображення: перетворити на PNG"
+
+#: Menu
+msgid "Image: Convert to TIFF"
+msgstr "Зображення: перетворити на TIFF"
+
+#: Menu
+msgid "Image: Convert to WebP"
+msgstr "Зображення: перетворити на WebP"
+
+#: Menu
+msgid "Image: Create PNG icon (128 px)"
+msgstr "Зображення: створити піктограму PNG (128 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (256 px)"
+msgstr "Зображення: створити піктограму PNG (256 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (512 px)"
+msgstr "Зображення: створити піктограму PNG (512 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (custom)"
+msgstr "Зображення: створити піктограму PNG (власний)"
+
+#: Menu
+msgid "Image: Desaturate"
+msgstr "Зображення: знебарвити"
+
+#: Menu
+msgid "Image: Export to PDF"
+msgstr "Зображення: експортувати в PDF"
+
+#: Menu
+msgid "Image: Find similar (65 pct)"
+msgstr "Зображення: знайти схожі (65 pct)"
+
+#: Menu
+msgid "Image: Find similar (75 pct)"
+msgstr "Зображення: знайти схожі (75 pct)"
+
+#: Menu
+msgid "Image: Find similar (85 pct)"
+msgstr "Зображення: знайти схожі (85 pct)"
+
+#: Menu
+msgid "Image: Find similar (95 pct)"
+msgstr "Зображення: знайти схожі (95 pct)"
+
+#: Menu
+msgid "Image: Flip (horizontal)"
+msgstr "Зображення: віддзеркалити (горизонтально)"
+
+#: Menu
+msgid "Image: Flip (vertical)"
+msgstr "Зображення: віддзеркалити (вертикально)"
+
+#: Menu
+msgid "Image: Generate multiple hues"
+msgstr "Зображення: створити кілька відтінків"
+
+#: Menu
+msgid "Image: Optimize PNG"
+msgstr "Зображення: оптимізувати PNG"
+
+#: Menu
+msgid "Image: Perform OCR (English)"
+msgstr "Зображення: розпізнати текст (англійська)"
+
+#: Menu
+msgid "Image: Perform OCR (French)"
+msgstr "Зображення: розпізнати текст (французька)"
+
+#: Menu
+msgid "Image: Perform OCR (German)"
+msgstr "Зображення: розпізнати текст (німецька)"
+
+#: Menu
+msgid "Image: Perform OCR (Italian)"
+msgstr "Зображення: розпізнати текст (італійська)"
+
+#: Menu
+msgid "Image: Perform OCR (Portuguese)"
+msgstr "Зображення: розпізнати текст (португальська)"
+
+#: Menu
+msgid "Image: Perform OCR (Russian)"
+msgstr "Зображення: розпізнати текст (російська)"
+
+#: Menu
+msgid "Image: Perform OCR (Spanish)"
+msgstr "Зображення: розпізнати текст (іспанська)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 500kB max)"
+msgstr "Зображення: зменшити (JPG, макс. 500 kB)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 1000kB max)"
+msgstr "Зображення: зменшити (JPG, макс. 1000 kB)"
+
+#: Menu
+msgid "Image: Remove metadata"
+msgstr "Зображення: видалити метадані"
+
+#: Menu
+msgid "Image: Rename from metadata"
+msgstr "Зображення: перейменувати за метаданими"
+
+#: Menu
+msgid "Image: Resize (25 pct)"
+msgstr "Зображення: змінити розмір (25 pct)"
+
+#: Menu
+msgid "Image: Resize (50 pct)"
+msgstr "Зображення: змінити розмір (50 pct)"
+
+#: Menu
+msgid "Image: Resize (75 pct)"
+msgstr "Зображення: змінити розмір (75 pct)"
+
+#: Menu
+msgid "Image: Resize (1920x1080)"
+msgstr "Зображення: змінити розмір (1920x1080)"
+
+#: Menu
+msgid "Image: Resize (2560x1440)"
+msgstr "Зображення: змінити розмір (2560x1440)"
+
+#: Menu
+msgid "Image: Resize (3840x2160)"
+msgstr "Зображення: змінити розмір (3840x2160)"
+
+#: Menu
+msgid "Image: Resize (custom)"
+msgstr "Зображення: змінити розмір (власний)"
+
+#: Menu
+msgid "Image: Rotate (90 deg)"
+msgstr "Зображення: повернути (90°)"
+
+#: Menu
+msgid "Image: Rotate (180 deg)"
+msgstr "Зображення: повернути (180°)"
+
+#: Menu
+msgid "Image: Rotate (270 deg)"
+msgstr "Зображення: повернути (270°)"
+
+#: Menu
+msgid "Image: Split into 2 (horizontal)"
+msgstr "Зображення: розділити на 2 (горизонтально)"
+
+#: Menu
+msgid "Image: Split into 2 (vertical)"
+msgstr "Зображення: розділити на 2 (вертикально)"
+
+#: Menu
+msgid "Image: Split into 4"
+msgstr "Зображення: розділити на 4"
+
+#: Menu
+msgid "Image: Stack (horizontal)"
+msgstr "Зображення: скласти (горизонтально)"
+
+#: Menu
+msgid "Image: Stack (vertical)"
+msgstr "Зображення: скласти (вертикально)"
+
+#: Menu
+msgid "IP: Scan hosts"
+msgstr "IP: сканувати вузли"
+
+#: Menu
+msgid "List hard links"
+msgstr "Показати жорсткі посилання"
+
+#: Menu
+msgid "List largest directories"
+msgstr "Показати найбільші каталоги"
+
+#: Menu
+msgid "List largest files"
+msgstr "Показати найбільші файли"
+
+#: Menu
+msgid "List permissions and owners"
+msgstr "Показати дозволи та власників"
+
+#: Menu
+msgid "List recent files"
+msgstr "Показати недавні файли"
+
+#: Menu
+msgid "List symbolic links"
+msgstr "Показати символічні посилання"
+
+#: Menu
+msgid "Media: Concatenate files"
+msgstr "Медіа: з’єднати файли"
+
+#: Menu
+msgid "Media: Remove metadata"
+msgstr "Медіа: видалити метадані"
+
+#: Menu
+msgid "Media: Show basic metadata"
+msgstr "Медіа: показати основні метадані"
+
+#: Menu
+msgid "Media: Show information"
+msgstr "Медіа: показати відомості"
+
+#: Menu
+msgid "MP3: (artist - title) Name to ID3"
+msgstr "MP3: (виконавець - назва) ім’я у ID3"
+
+#: Menu
+msgid "MP3: (artist - title) ID3 to Name"
+msgstr "MP3: (виконавець - назва) ID3 в ім’я"
+
+#: Menu
+msgid "MP3: Maximize volume (recursive)"
+msgstr "MP3: максимізувати гучність (рекурсивно)"
+
+#: Menu
+msgid "MP3: Normalize volume (recursive)"
+msgstr "MP3: нормалізувати гучність (рекурсивно)"
+
+#: Menu
+msgid "MP3: Show encoding details"
+msgstr "MP3: показати відомості про кодування"
+
+#: Menu
+msgid "Open item location"
+msgstr "Відкрити розташування елемента"
+
+#: Menu
+msgid "Paste as hard link"
+msgstr "Вставити як жорстке посилання"
+
+#: Menu
+msgid "Paste as symbolic link"
+msgstr "Вставити як символічне посилання"
+
+#: Menu
+msgid "Paste clipboard contents"
+msgstr "Вставити вміст буфера обміну"
+
+#: Menu
+msgid "PDF: Add watermark (over)"
+msgstr "PDF: додати водяний знак (зверху)"
+
+#: Menu
+msgid "PDF: Add watermark (under)"
+msgstr "PDF: додати водяний знак (знизу)"
+
+#: Menu
+msgid "PDF: Combine multiple PDFs"
+msgstr "PDF: об’єднати кілька PDF"
+
+#: Menu
+msgid "PDF: Convert to grayscale"
+msgstr "PDF: перетворити на відтінки сірого"
+
+#: Menu
+msgid "PDF: Convert to PDFA-2b"
+msgstr "PDF: перетворити на PDFA-2b"
+
+#: Menu
+msgid "PDF: Remove password"
+msgstr "PDF: видалити пароль"
+
+#: Menu
+msgid "PDF: Set password"
+msgstr "PDF: встановити пароль"
+
+#: Menu
+msgid "PDF: Extract images"
+msgstr "PDF: видобути зображення"
+
+#: Menu
+msgid "PDF: Find annotated PDFs"
+msgstr "PDF: знайти PDF з анотаціями"
+
+#: Menu
+msgid "PDF: Find non-linearized PDFs"
+msgstr "PDF: знайти нелінеаризовані PDF"
+
+#: Menu
+msgid "PDF: Find non-searchable PDFs"
+msgstr "PDF: знайти PDF без пошуку"
+
+#: Menu
+msgid "PDF: Find password-protected PDFs"
+msgstr "PDF: знайти PDF, захищені паролем"
+
+#: Menu
+msgid "PDF: Find signed PDFs"
+msgstr "PDF: знайти підписані PDF"
+
+#: Menu
+msgid "PDF: Layout (landscape, 1x2)"
+msgstr "PDF: макет (альбомна, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x1)"
+msgstr "PDF: макет (альбомна, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x2)"
+msgstr "PDF: макет (альбомна, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x4)"
+msgstr "PDF: макет (альбомна, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 4x2)"
+msgstr "PDF: макет (альбомна, 4x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 1x2)"
+msgstr "PDF: макет (книжкова, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x1)"
+msgstr "PDF: макет (книжкова, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x2)"
+msgstr "PDF: макет (книжкова, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x4)"
+msgstr "PDF: макет (книжкова, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 4x2)"
+msgstr "PDF: макет (книжкова, 4x2)"
+
+#: Menu
+msgid "PDF: Optimize for web (linearize)"
+msgstr "PDF: оптимізувати для вебу (лінеаризувати)"
+
+#: Menu
+msgid "PDF: Set size (A3)"
+msgstr "PDF: встановити розмір (A3)"
+
+#: Menu
+msgid "PDF: Set size (A4)"
+msgstr "PDF: встановити розмір (A4)"
+
+#: Menu
+msgid "PDF: Set size (A5)"
+msgstr "PDF: встановити розмір (A5)"
+
+#: Menu
+msgid "PDF: Set size (US Legal)"
+msgstr "PDF: встановити розмір (US Legal)"
+
+#: Menu
+msgid "PDF: Set size (US Letter)"
+msgstr "PDF: встановити розмір (US Letter)"
+
+#: Menu
+msgid "PDF: Perform OCR (English)"
+msgstr "PDF: розпізнати текст (англійська)"
+
+#: Menu
+msgid "PDF: Perform OCR (French)"
+msgstr "PDF: розпізнати текст (французька)"
+
+#: Menu
+msgid "PDF: Perform OCR (German)"
+msgstr "PDF: розпізнати текст (німецька)"
+
+#: Menu
+msgid "PDF: Perform OCR (Italian)"
+msgstr "PDF: розпізнати текст (італійська)"
+
+#: Menu
+msgid "PDF: Perform OCR (Portuguese)"
+msgstr "PDF: розпізнати текст (португальська)"
+
+#: Menu
+msgid "PDF: Perform OCR (Russian)"
+msgstr "PDF: розпізнати текст (російська)"
+
+#: Menu
+msgid "PDF: Perform OCR (Spanish)"
+msgstr "PDF: розпізнати текст (іспанська)"
+
+#: Menu
+msgid "PDF: Reduce (150 dpi, e-book)"
+msgstr "PDF: зменшити (150 dpi, електронна книга)"
+
+#: Menu
+msgid "PDF: Reduce (300 dpi, printer)"
+msgstr "PDF: зменшити (300 dpi, принтер)"
+
+#: Menu
+msgid "PDF: Remove annotations"
+msgstr "PDF: видалити анотації"
+
+#: Menu
+msgid "PDF: Remove metadata"
+msgstr "PDF: видалити метадані"
+
+#: Menu
+msgid "PDF: Rotate (90 deg)"
+msgstr "PDF: повернути (90°)"
+
+#: Menu
+msgid "PDF: Rotate (180 deg)"
+msgstr "PDF: повернути (180°)"
+
+#: Menu
+msgid "PDF: Rotate (270 deg)"
+msgstr "PDF: повернути (270°)"
+
+#: Menu
+msgid "PDF: Show signatures"
+msgstr "PDF: показати підписи"
+
+#: Menu
+msgid "PDF: Split into single-page PDFs"
+msgstr "PDF: розділити на односторінкові PDF"
+
+#: Menu
+msgid "Rename: Add MD5 prefix"
+msgstr "Перейменувати: додати префікс MD5"
+
+#: Menu
+msgid "Rename: Remove accents"
+msgstr "Перейменувати: прибрати наголоси"
+
+#: Menu
+msgid "Rename: Remove prefixes"
+msgstr "Перейменувати: прибрати префікси"
+
+#: Menu
+msgid "Rename: Remove suffixes"
+msgstr "Перейменувати: прибрати суфікси"
+
+#: Menu
+msgid "Rename: Change spaces to dashes"
+msgstr "Перейменувати: пробіли на дефіси"
+
+#: Menu
+msgid "Rename: Change dashes to spaces"
+msgstr "Перейменувати: дефіси на пробіли"
+
+#: Menu
+msgid "Rename: To lowercase"
+msgstr "Перейменувати: на нижній регістр"
+
+#: Menu
+msgid "Rename: To lowercase (recursive)"
+msgstr "Перейменувати: на нижній регістр (рекурсивно)"
+
+#: Menu
+msgid "Rename: To sentence case"
+msgstr "Перейменувати: як у реченні"
+
+#: Menu
+msgid "Rename: To title case"
+msgstr "Перейменувати: як у заголовку"
+
+#: Menu
+msgid "Rename: To uppercase"
+msgstr "Перейменувати: на верхній регістр"
+
+#: Menu
+msgid "Rename: To uppercase (recursive)"
+msgstr "Перейменувати: на верхній регістр (рекурсивно)"
+
+#: Menu
+msgid "Reset permissions (recursive)"
+msgstr "Скинути дозволи (рекурсивно)"
+
+#: Menu
+msgid "Scan for malware (via ClamAV)"
+msgstr "Перевірити на зловмисне ПЗ (через ClamAV)"
+
+#: Menu
+msgid "Scan for malware (via Lenspect)"
+msgstr "Перевірити на зловмисне ПЗ (через Lenspect)"
+
+#: Menu
+msgid "Show file information"
+msgstr "Показати відомості про файл"
+
+#: Menu
+msgid "Show file metadata"
+msgstr "Показати метадані файлу"
+
+#: Menu
+msgid "Show file MIME type"
+msgstr "Показати тип MIME файлу"
+
+#: Menu
+msgid "SVG: Compress to SVGZ"
+msgstr "SVG: стиснути в SVGZ"
+
+#: Menu
+msgid "SVG: Decompress SVGZ"
+msgstr "SVG: розпакувати SVGZ"
+
+#: Menu
+msgid "SVG: Export to PDF"
+msgstr "SVG: експортувати в PDF"
+
+#: Menu
+msgid "SVG: Export to PNG (256 px)"
+msgstr "SVG: експортувати в PNG (256 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (512 px)"
+msgstr "SVG: експортувати в PNG (512 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (1024 px)"
+msgstr "SVG: експортувати в PNG (1024 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (custom)"
+msgstr "SVG: експортувати в PNG (власний)"
+
+#: Menu
+msgid "SVG: Optimize"
+msgstr "SVG: оптимізувати"
+
+#: Menu
+msgid "SVG: Replace fonts with Charter"
+msgstr "SVG: замінити шрифти на Charter"
+
+#: Menu
+msgid "SVG: Replace fonts with Helvetica"
+msgstr "SVG: замінити шрифти на Helvetica"
+
+#: Menu
+msgid "SVG: Replace fonts with Times"
+msgstr "SVG: замінити шрифти на Times"
+
+#: Menu
+msgid "Terminal"
+msgstr "Термінал"
+
+#: Menu
+msgid "Terminal (synced panes)"
+msgstr "Термінал (синхронізовані панелі)"
+
+#: Menu
+msgid "Text: Concatenate multiple files"
+msgstr "Текст: з’єднати кілька файлів"
+
+#: Menu
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "Текст: табуляції на 4 пробіли"
+
+#: Menu
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "Текст: нормалізувати (UTF-8, рекурсивно)"
+
+#: Menu
+msgid "Text: Encode to UTF-8"
+msgstr "Текст: кодувати в UTF-8"
+
+#: Menu
+msgid "Text: List encodings"
+msgstr "Текст: показати кодування"
+
+#: Menu
+msgid "Text: List issues"
+msgstr "Текст: показати проблеми"
+
+#: Menu
+msgid "Text: List line breaks"
+msgstr "Текст: показати розриви рядків"
+
+#: Menu
+msgid "Text: List line counts"
+msgstr "Текст: показати кількість рядків"
+
+#: Menu
+msgid "Text: List line lengths"
+msgstr "Текст: показати довжину рядків"
+
+#: Menu
+msgid "Text: List word counts"
+msgstr "Текст: показати кількість слів"
+
+#: Menu
+msgid "Text: Remove trailing spaces"
+msgstr "Текст: прибрати кінцеві пробіли"
+
+#: Menu
+msgid "Text: Remove accents"
+msgstr "Текст: прибрати наголоси"
+
+#: Menu
+msgid "URL: Check HTTP status"
+msgstr "URL: перевірити стан HTTP"
+
+#: Menu
+msgid "URL: Download file"
+msgstr "URL: завантажити файл"
+
+#: Menu
+msgid "URL: Show HTTP headers"
+msgstr "URL: показати заголовки HTTP"
+
+#: Menu
+msgid "Verify MD5 file"
+msgstr "Перевірити файл MD5"
+
+#: Menu
+msgid "Verify SHA1 file"
+msgstr "Перевірити файл SHA1"
+
+#: Menu
+msgid "Verify SHA256 file"
+msgstr "Перевірити файл SHA256"
+
+#: Menu
+msgid "Verify SHA512 file"
+msgstr "Перевірити файл SHA512"
+
+#: Menu
+msgid "Video: Aspect to 1:1"
+msgstr "Відео: співвідношення 1:1"
+
+#: Menu
+msgid "Video: Aspect to 4:3"
+msgstr "Відео: співвідношення 4:3"
+
+#: Menu
+msgid "Video: Aspect to 16:9"
+msgstr "Відео: співвідношення 16:9"
+
+#: Menu
+msgid "Video: Aspect to 16:10"
+msgstr "Відео: співвідношення 16:10"
+
+#: Menu
+msgid "Video: Convert to MKV"
+msgstr "Відео: перетворити на MKV"
+
+#: Menu
+msgid "Video: Convert to MKV (copy)"
+msgstr "Відео: перетворити на MKV (копія)"
+
+#: Menu
+msgid "Video: Convert to MP4"
+msgstr "Відео: перетворити на MP4"
+
+#: Menu
+msgid "Video: Convert to MP4 (copy)"
+msgstr "Відео: перетворити на MP4 (копія)"
+
+#: Menu
+msgid "Video: Convert to WebM"
+msgstr "Відео: перетворити на WebM"
+
+#: Menu
+msgid "Video: Convert to WebM (copy)"
+msgstr "Відео: перетворити на WebM (копія)"
+
+#: Menu
+msgid "Video: Export frames (1 FPS)"
+msgstr "Відео: експортувати кадри (1 FPS)"
+
+#: Menu
+msgid "Video: Export frames (5 FPS)"
+msgstr "Відео: експортувати кадри (5 FPS)"
+
+#: Menu
+msgid "Video: Export frames (10 FPS)"
+msgstr "Відео: експортувати кадри (10 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (1 FPS)"
+msgstr "Відео: експортувати в GIF (1 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (5 FPS)"
+msgstr "Відео: експортувати в GIF (5 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (10 FPS)"
+msgstr "Відео: експортувати в GIF (10 FPS)"
+
+#: Menu
+msgid "Video: Extract audio"
+msgstr "Відео: видобути аудіо"
+
+#: Menu
+msgid "Video: Flip (horizontal)"
+msgstr "Відео: віддзеркалити (горизонтально)"
+
+#: Menu
+msgid "Video: Flip (vertical)"
+msgstr "Відео: віддзеркалити (вертикально)"
+
+#: Menu
+msgid "Video: Frame rate to 30 FPS"
+msgstr "Відео: частота кадрів 30 FPS"
+
+#: Menu
+msgid "Video: Frame rate to 60 FPS"
+msgstr "Відео: частота кадрів 60 FPS"
+
+#: Menu
+msgid "Video: Remove audio"
+msgstr "Відео: видалити аудіо"
+
+#: Menu
+msgid "Video: Resize (25 pct)"
+msgstr "Відео: змінити розмір (25 pct)"
+
+#: Menu
+msgid "Video: Resize (50 pct)"
+msgstr "Відео: змінити розмір (50 pct)"
+
+#: Menu
+msgid "Video: Resize (75 pct)"
+msgstr "Відео: змінити розмір (75 pct)"
+
+#: Menu
+msgid "Video: Resize (custom)"
+msgstr "Відео: змінити розмір (власний)"
+
+#: Menu
+msgid "Video: Rotate (90 deg)"
+msgstr "Відео: повернути (90°)"
+
+#: Menu
+msgid "Video: Rotate (180 deg)"
+msgstr "Відео: повернути (180°)"
+
+#: Menu
+msgid "Video: Rotate (270 deg)"
+msgstr "Відео: повернути (270°)"
+
+#: Menu
+msgid "Video: Speed to 0.5"
+msgstr "Відео: швидкість 0.5"
+
+#: Menu
+msgid "Video: Speed to 1.5"
+msgstr "Відео: швидкість 1.5"
+
+#: Menu
+msgid "Video: Speed to 2.0"
+msgstr "Відео: швидкість 2.0"
+
+#: install.sh
+msgid "Check for basic dependencies"
+msgstr "Перевірити основні залежності"
+
+#: install.sh
+msgid "Remove previously installed scripts"
+msgstr "Видалити раніше встановлені скрипти"
+
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr "Встановити комбінації клавіш"
+
+#: install.sh
+msgid "Close the file manager to reload configuration"
+msgstr "Закрити файловий менеджер, щоб перезавантажити конфігурацію"
+
+#: install.sh
+msgid "Add shortcuts in the application menu"
+msgstr "Додати ярлики в меню програм"
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr "Встановити Homebrew (необов’язково)"
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr "Виберіть категорії скриптів для встановлення"
+
+#: install.sh
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr "Виберіть параметри (<ПРОБІЛ> — позначити, <ENTER> — підтвердити):"
+
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr "Встановлення в неінтерактивному режимі..."
+
+#: install.sh
+msgid "Installing:"
+msgstr "Встановлення:"
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr "Встановлення ярликів меню програм:"
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr "Встановлення успішно завершено!"
+
+#: install.sh
+msgid "Checking for basic dependencies:"
+msgstr "Перевірка основних залежностей:"
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr "Усі залежності вже задоволені."
+
+#: install.sh
+msgid "Copying files..."
+msgstr "Копіювання файлів..."
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr "Встановлення комбінацій клавіш..."
+
+#: install.sh
+msgid "Scripts"
+msgstr "Скрипти"
+
+#: install.sh
+msgid "Creating shortcuts in the application menu..."
+msgstr "Створення ярликів у меню програм..."
+
+#: install.sh
+msgid "Creating GNOME Shell application folder..."
+msgstr "Створення теки програм GNOME Shell..."
+
+#: install.sh
+msgid "Installing actions in the context menu..."
+msgstr "Встановлення дій у контекстне меню..."
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr "Закриття файлового менеджера..."
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr "Встановлення Homebrew:"
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr "Homebrew уже встановлено."
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr "Встановлення Homebrew до:"
+
+#: install.sh
+msgid "Downloading the package..."
+msgstr "Завантаження пакунка..."
+
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr "Не вдалося знайти менеджер пакунків!"
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr "Не вдалося встановити Homebrew!"
+
+#~ msgid "EOF"
+#~ msgstr "EOF"

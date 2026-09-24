@@ -1,0 +1,2011 @@
+# Translators: The string must NOT contain the "%" character and must be a single-line string.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Enhanced File Manager Actions for Linux\n"
+"POT-Creation-Date: 2025-11-13 12:12-0300\n"
+"PO-Revision-Date: 2026-09-24 09:50-0300\n"
+"Last-Translator: Cristiano Fraga G. Nunes <cfgnunes@gmail.com>\n"
+"Language-Team: \n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Done!"
+msgstr "Gata!"
+
+msgid "files"
+msgstr "fișiere"
+
+msgid "Would you like to continue?"
+msgstr "Doriți să continuați?"
+
+msgid "directories"
+msgstr "directoare"
+
+msgid "items"
+msgstr "elemente"
+
+msgid "The command failed."
+msgstr "Comanda a eșuat."
+
+msgid "The output file does not exist."
+msgstr "Fișierul de ieșire nu există."
+
+msgid "Finished with errors! See the log:"
+msgstr "Finalizat cu erori! Vedeți jurnalul:"
+
+msgid "Your system does not support clipboard operations."
+msgstr "Sistemul nu acceptă operații cu clipboardul."
+
+msgid "Could not find a package for:"
+msgstr "Nu s-a găsit un pachet pentru:"
+
+msgid "The following packages are missing:"
+msgstr "Lipsesc următoarele pachete:"
+
+msgid "Would you like to install them?"
+msgstr "Doriți să le instalați?"
+
+msgid "Installing the packages. Please wait..."
+msgstr "Se instalează pachetele. Așteptați..."
+
+msgid "The package was installed, but a system reboot is required."
+msgstr "Pachetul a fost instalat, dar este necesară repornirea sistemului."
+
+msgid "Could not install the package:"
+msgstr "Nu s-a putut instala pachetul:"
+
+msgid "This action will delete the selected items."
+msgstr "Această acțiune va șterge elementele selectate."
+
+msgid "Total selected:"
+msgstr "Total selectate:"
+
+msgid "Total:"
+msgstr "Total:"
+
+msgid "Some items could not be deleted."
+msgstr "Unele elemente nu au putut fi șterse."
+
+msgid "All items were successfully deleted!"
+msgstr "Toate elementele au fost șterse cu succes!"
+
+msgid "Could not access the directory:"
+msgstr "Nu s-a putut accesa directorul:"
+
+msgid "The destination file already exists."
+msgstr "Fișierul destinație există deja."
+
+msgid "Unable to move."
+msgstr "Nu se poate muta."
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Cancel"
+msgstr "Anulare"
+
+msgid "(Empty)"
+msgstr "(Gol)"
+
+msgid "Select the ones to open:"
+msgstr "Selectați-le pe cele de deschis:"
+
+msgid "Select the ones to show in the file manager:"
+msgstr "Selectați-le pe cele de afișat în gestionarul de fișiere:"
+
+msgid "Select the ones to open in the web browser:"
+msgstr "Selectați-le pe cele de deschis în browserul web:"
+
+msgid "Select the ones to delete:"
+msgstr "Selectați-le pe cele de șters:"
+
+msgid "Password"
+msgstr "Parolă"
+
+msgid "Type your password:"
+msgstr "Introduceți parola:"
+
+msgid "The password cannot be empty!"
+msgstr "Parola nu poate fi goală!"
+
+msgid "Yes"
+msgstr "Da"
+
+msgid "No"
+msgstr "Nu"
+
+msgid "Finished! The output files are in:"
+msgstr "Gata! Fișierele de ieșire sunt în:"
+
+msgid "Finished, but there is nothing to do."
+msgstr "Finalizat, dar nu este nimic de făcut."
+
+msgid "Finished!"
+msgstr "Gata!"
+
+msgid "Running the task. Please wait..."
+msgstr "Se execută sarcina. Așteptați..."
+
+msgid "No default application is set for the type:"
+msgstr "Nu este setată nicio aplicație implicită pentru tipul:"
+
+msgid "Could not find an application for the MIME type:"
+msgstr "Nu s-a găsit o aplicație pentru tipul MIME:"
+
+msgid "Batch mode detected."
+msgstr "S-a detectat modul în lot."
+
+msgid "Each file inside this directory will be processed individually."
+msgstr "Fiecare fișier din acest director va fi procesat individual."
+
+msgid "files or directories"
+msgstr "fișiere sau directoare"
+
+msgid "You must select files with the extension:"
+msgstr "Trebuie să selectați fișiere cu extensia:"
+
+msgid "Invalid input file!"
+msgstr "Fișier de intrare nevalid!"
+
+msgid "You must select"
+msgstr "Trebuie să selectați"
+
+msgid "You must select at least"
+msgstr "Trebuie să selectați cel puțin"
+
+msgid "You must select up to"
+msgstr "Trebuie să selectați cel mult"
+
+msgid "Could not find the output directory!"
+msgstr "Nu s-a găsit directorul de ieșire!"
+
+msgid "Accessed recently"
+msgstr "Accesate recent"
+
+msgid "File"
+msgstr "Fișier"
+
+msgid "Count"
+msgstr "Număr"
+
+msgid "Issues"
+msgstr "Probleme"
+
+msgid "Encoding"
+msgstr "Codare"
+
+msgid "There are no valid paths in the clipboard!"
+msgstr "Nu există căi valide în clipboard!"
+
+msgid "links"
+msgstr "legături"
+
+msgid "Inode"
+msgstr "Inode"
+
+msgid "Link"
+msgstr "Legătură"
+
+msgid "Unsupported clipboard type."
+msgstr "Tip de clipboard neacceptat."
+
+msgid "This action will rename the selected files and directories recursively."
+msgstr "Această acțiune va redenumi recursiv fișierele și directoarele selectate."
+
+msgid "PDF files"
+msgstr "Fișiere PDF"
+
+msgid "Select a PDF to use as the watermark"
+msgstr "Selectați un PDF de folosit ca filigran"
+
+msgid "Signature"
+msgstr "Semnătură"
+
+msgid "Malware"
+msgstr "Malware"
+
+msgid "Mode"
+msgstr "Mod"
+
+msgid "Bit rate"
+msgstr "Rată de biți"
+
+msgid "Sampling rate"
+msgstr "Rată de eșantionare"
+
+msgid "Channels"
+msgstr "Canale"
+
+msgid "Duration"
+msgstr "Durată"
+
+msgid "Album"
+msgstr "Album"
+
+msgid "Artist"
+msgstr "Artist"
+
+msgid "Title"
+msgstr "Titlu"
+
+msgid "Quality"
+msgstr "Calitate"
+
+msgid "Image files"
+msgstr "Fișiere imagine"
+
+msgid "Select an image to use as the watermark"
+msgstr "Selectați o imagine de folosit ca filigran"
+
+msgid "Enter the target size."
+msgstr "Introduceți dimensiunea țintă."
+
+msgid "Invalid input!"
+msgstr "Intrare nevalidă!"
+
+msgid "Key files"
+msgstr "Fișiere de chei"
+
+msgid "Select a key file to import"
+msgstr "Selectați un fișier de cheie de importat"
+
+msgid "No secret keys were found."
+msgstr "Nu s-au găsit chei secrete."
+
+msgid "Would you like to import a key now?"
+msgstr "Doriți să importați o cheie acum?"
+
+msgid "Failed to import the key!"
+msgstr "Importul cheii a eșuat!"
+
+msgid "Select a user (sign):"
+msgstr "Selectați un utilizator (semnare):"
+
+msgid "User"
+msgstr "Utilizator"
+
+msgid "Name"
+msgstr "Nume"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "Created"
+msgstr "Creat"
+
+msgid "Expires"
+msgstr "Expiră"
+
+msgid "You must select a user!"
+msgstr "Trebuie să selectați un utilizator!"
+
+msgid "No public keys were found."
+msgstr "Nu s-au găsit chei publice."
+
+msgid "Select one or more users (encrypt):"
+msgstr "Selectați unul sau mai mulți utilizatori (criptare):"
+
+msgid "You must select at least one user!"
+msgstr "Trebuie să selectați cel puțin un utilizator!"
+
+msgid "Directory"
+msgstr "Director"
+
+msgid "Size"
+msgstr "Dimensiune"
+
+msgid "Group"
+msgstr "Grup"
+
+msgid "Item"
+msgstr "Element"
+
+msgid "Octal"
+msgstr "Octal"
+
+msgid "Type"
+msgstr "Tip"
+
+msgid "You must select only two images to compare!"
+msgstr "Trebuie să selectați exact două imagini de comparat!"
+
+msgid "You must select only two PDFs to compare!"
+msgstr "Trebuie să selectați exact două PDF-uri de comparat!"
+
+msgid "You must select only two binary files to compare!"
+msgstr "Trebuie să selectați exact două fișiere binare de comparat!"
+
+msgid "No items were selected!"
+msgstr "Nu a fost selectat niciun element!"
+
+msgid "No directories were selected!"
+msgstr "Nu a fost selectat niciun director!"
+
+msgid "The selected items are identical."
+msgstr "Elementele selectate sunt identice."
+
+msgid "The selected images have the same pixel values."
+msgstr "Imaginile selectate au aceleași valori ale pixelilor."
+
+msgid "MIME"
+msgstr "MIME"
+
+msgid "This action will move all files from subdirectories to the root of the selected directory."
+msgstr "Această acțiune va muta toate fișierele din subdirectoare în rădăcina directorului selectat."
+
+msgid "This action will reset the permissions recursively."
+msgstr "Această acțiune va reseta permisiunile recursiv."
+
+msgid "Date"
+msgstr "Dată"
+
+msgid "Time"
+msgstr "Oră"
+
+msgid "Select the output filename:"
+msgstr "Selectați numele fișierului de ieșire:"
+
+msgid "Filename"
+msgstr "Nume fișier"
+
+msgid "Status"
+msgstr "Stare"
+
+msgid "There are no valid URLs in the clipboard or in the selected files!"
+msgstr "Nu există URL-uri valide în clipboard sau în fișierele selectate!"
+
+msgid "IPs"
+msgstr "Adrese IP"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Ping"
+msgstr "Ping"
+
+msgid "Ports"
+msgstr "Porturi"
+
+msgid "Hostname"
+msgstr "Nume gazdă"
+
+msgid "Example:"
+msgstr "Exemplu:"
+
+msgid "Enter IP addresses or IP ranges."
+msgstr "Introduceți adrese IP sau intervale IP."
+
+msgid "Enter the URLs."
+msgstr "Introduceți URL-urile."
+
+msgid "No remote URL found."
+msgstr "Nu s-a găsit niciun URL la distanță."
+
+msgid "URLs"
+msgstr "URL-uri"
+
+msgid "HTTP code"
+msgstr "Cod HTTP"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "(No differences)"
+msgstr "(Nicio diferență)"
+
+msgid "(No line break)"
+msgstr "(Fără sfârșit de linie)"
+
+msgid "(No response)"
+msgstr "(Niciun răspuns)"
+
+msgid "Checksum error"
+msgstr "Eroare de sumă de control"
+
+msgid "File does not exist"
+msgstr "Fișierul nu există"
+
+msgid "High"
+msgstr "Ridicată"
+
+msgid "Low"
+msgstr "Scăzută"
+
+msgid "Medium"
+msgstr "Medie"
+
+msgid "Online"
+msgstr "Online"
+
+msgid "Offline"
+msgstr "Offline"
+
+msgid "Valid signature"
+msgstr "Semnătură validă"
+
+msgid "Invalid signature"
+msgstr "Semnătură nevalidă"
+
+msgid "Missing key"
+msgstr "Cheie lipsă"
+
+msgid "Missing data file"
+msgstr "Fișier de date lipsă"
+
+msgid "Revoked key"
+msgstr "Cheie revocată"
+
+msgid "Expired key"
+msgstr "Cheie expirată"
+
+msgid "Expired signature"
+msgstr "Semnătură expirată"
+
+msgid "Unknown algorithm"
+msgstr "Algoritm necunoscut"
+
+msgid "Key ID"
+msgstr "ID cheie"
+
+msgid "Enter the password for the archive:"
+msgstr "Introduceți parola arhivei:"
+
+msgid "Select the output directory"
+msgstr "Selectați directorul de ieșire"
+
+msgid "Select input directories"
+msgstr "Selectați directoarele de intrare"
+
+msgid "Select input files"
+msgstr "Selectați fișierele de intrare"
+
+msgid "Open"
+msgstr "Deschide"
+
+#: Menu
+msgid "Archive"
+msgstr "Arhivă"
+
+#: Menu
+msgid "Audio and Video"
+msgstr "Audio și video"
+
+#: Menu
+msgid "Checksum"
+msgstr "Sumă de control"
+
+#: Menu
+msgid "Clipboard"
+msgstr "Clipboard"
+
+#: Menu
+msgid "Directories and Files"
+msgstr "Directoare și fișiere"
+
+#: Menu
+msgid "Document"
+msgstr "Document"
+
+#: Menu
+msgid "Encryption"
+msgstr "Criptare"
+
+#: Menu
+msgid "Image"
+msgstr "Imagine"
+
+#: Menu
+msgid "Links"
+msgstr "Legături"
+
+#: Menu
+msgid "Network and Internet"
+msgstr "Rețea și internet"
+
+#: Menu
+msgid "Open with"
+msgstr "Deschide cu"
+
+#: Menu
+msgid "Plain text"
+msgstr "Text simplu"
+
+#: Menu
+msgid "Rename files"
+msgstr "Redenumire fișiere"
+
+#: Menu
+msgid "Security and Recovery"
+msgstr "Securitate și recuperare"
+
+#: Menu
+msgid "Audio and Video: Tools"
+msgstr "Audio și video: instrumente"
+
+#: Menu
+msgid "Audio: Channels"
+msgstr "Audio: canale"
+
+#: Menu
+msgid "Audio: Convert"
+msgstr "Audio: conversie"
+
+#: Menu
+msgid "Audio: Effects"
+msgstr "Audio: efecte"
+
+#: Menu
+msgid "Audio: MP3 files"
+msgstr "Audio: fișiere MP3"
+
+#: Menu
+msgid "Audio: Quality"
+msgstr "Audio: calitate"
+
+#: Menu
+msgid "Document: Convert"
+msgstr "Document: conversie"
+
+#: Menu
+msgid "Image: Color"
+msgstr "Imagine: culoare"
+
+#: Menu
+msgid "Image: Combine, Split"
+msgstr "Imagine: combinare, împărțire"
+
+#: Menu
+msgid "Image: Convert"
+msgstr "Imagine: conversie"
+
+#: Menu
+msgid "Image: Crop, Resize"
+msgstr "Imagine: decupare, redimensionare"
+
+#: Menu
+msgid "Image: Flip, Rotate"
+msgstr "Imagine: oglindire, rotire"
+
+#: Menu
+msgid "Image: Icons"
+msgstr "Imagine: pictograme"
+
+#: Menu
+msgid "Image: Metadata, Exif"
+msgstr "Imagine: metadate, Exif"
+
+#: Menu
+msgid "Image: Optimize, Reduce"
+msgstr "Imagine: optimizare, reducere"
+
+#: Menu
+msgid "Image: Similarity"
+msgstr "Imagine: similitudine"
+
+#: Menu
+msgid "Image: SVG files"
+msgstr "Imagine: fișiere SVG"
+
+#: Menu
+msgid "Image: Text recognition (OCR)"
+msgstr "Imagine: recunoaștere text (OCR)"
+
+#: Menu
+msgid "Image: Transparency"
+msgstr "Imagine: transparență"
+
+#: Menu
+msgid "Image: Watermark"
+msgstr "Imagine: filigran"
+
+#: Menu
+msgid "PDF: Annotations"
+msgstr "PDF: adnotări"
+
+#: Menu
+msgid "PDF: Combine, Split"
+msgstr "PDF: combinare, împărțire"
+
+#: Menu
+msgid "PDF: Security"
+msgstr "PDF: securitate"
+
+#: Menu
+msgid "PDF: Multi-page layout"
+msgstr "PDF: așezare pe mai multe pagini"
+
+#: Menu
+msgid "PDF: Optimize, Reduce"
+msgstr "PDF: optimizare, reducere"
+
+#: Menu
+msgid "PDF: Page size"
+msgstr "PDF: dimensiune pagină"
+
+#: Menu
+msgid "PDF: Rotate"
+msgstr "PDF: rotire"
+
+#: Menu
+msgid "PDF: Signatures"
+msgstr "PDF: semnături"
+
+#: Menu
+msgid "PDF: Text recognition (OCR)"
+msgstr "PDF: recunoaștere text (OCR)"
+
+#: Menu
+msgid "PDF: Tools"
+msgstr "PDF: instrumente"
+
+#: Menu
+msgid "PDF: Watermark"
+msgstr "PDF: filigran"
+
+#: Menu
+msgid "Video: Aspect ratio"
+msgstr "Video: raport de aspect"
+
+#: Menu
+msgid "Video: Audio track"
+msgstr "Video: pistă audio"
+
+#: Menu
+msgid "Video: Convert"
+msgstr "Video: conversie"
+
+#: Menu
+msgid "Video: Export frames"
+msgstr "Video: export cadre"
+
+#: Menu
+msgid "Video: Flip, Rotate"
+msgstr "Video: oglindire, rotire"
+
+#: Menu
+msgid "Video: Frame rate"
+msgstr "Video: frecvență cadre"
+
+#: Menu
+msgid "Video: Resize"
+msgstr "Video: redimensionare"
+
+#: Menu
+msgid "Video: Speed"
+msgstr "Video: viteză"
+
+#: Menu
+msgid "Audio: Check quality"
+msgstr "Audio: verificare calitate"
+
+#: Menu
+msgid "Audio: Convert to FLAC"
+msgstr "Audio: conversie în FLAC"
+
+#: Menu
+msgid "Audio: Convert to MP3 (48 kbps)"
+msgstr "Audio: conversie în MP3 (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (192 kbps)"
+msgstr "Audio: conversie în MP3 (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to MP3 (320 kbps)"
+msgstr "Audio: conversie în MP3 (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (48 kbps)"
+msgstr "Audio: conversie în OGG (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (192 kbps)"
+msgstr "Audio: conversie în OGG (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OGG (320 kbps)"
+msgstr "Audio: conversie în OGG (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (48 kbps)"
+msgstr "Audio: conversie în OPUS (48 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (192 kbps)"
+msgstr "Audio: conversie în OPUS (192 kbps)"
+
+#: Menu
+msgid "Audio: Convert to OPUS (320 kbps)"
+msgstr "Audio: conversie în OPUS (320 kbps)"
+
+#: Menu
+msgid "Audio: Convert to WAV"
+msgstr "Audio: conversie în WAV"
+
+#: Menu
+msgid "Audio: Fade-in"
+msgstr "Audio: fade-in"
+
+#: Menu
+msgid "Audio: Fade-out"
+msgstr "Audio: fade-out"
+
+#: Menu
+msgid "Audio: Mix channels to mono"
+msgstr "Audio: mixare canale în mono"
+
+#: Menu
+msgid "Audio: Mix two files"
+msgstr "Audio: mixare două fișiere"
+
+#: Menu
+msgid "Audio: Normalize volume"
+msgstr "Audio: normalizare volum"
+
+#: Menu
+msgid "Audio: Produce spectrogram"
+msgstr "Audio: generare spectrogramă"
+
+#: Menu
+msgid "Audio: Remove silence (sections)"
+msgstr "Audio: eliminare liniște (secțiuni)"
+
+#: Menu
+msgid "Audio: Mute noise"
+msgstr "Audio: atenuare zgomot"
+
+#: Menu
+msgid "Audio: Remove silence (extremities)"
+msgstr "Audio: eliminare liniște (extremități)"
+
+#: Menu
+msgid "Create backup (via Rsync)"
+msgstr "Creare copie de rezervă (prin Rsync)"
+
+#: Menu
+msgid "Code editor"
+msgstr "Editor de cod"
+
+#: Menu
+msgid "Compare items"
+msgstr "Comparare elemente"
+
+#: Menu
+msgid "Compare items (via Diff)"
+msgstr "Comparare elemente (prin Diff)"
+
+#: Menu
+msgid "Compress to '7z'"
+msgstr "Comprimare în „7z”"
+
+#: Menu
+msgid "Compress to '7z' with password"
+msgstr "Comprimare în „7z” cu parolă"
+
+#: Menu
+msgid "Compress to 'tar.gz'"
+msgstr "Comprimare în „tar.gz”"
+
+#: Menu
+msgid "Compress to 'tar.xz'"
+msgstr "Comprimare în „tar.xz”"
+
+#: Menu
+msgid "Compress to 'tar.zst'"
+msgstr "Comprimare în „tar.zst”"
+
+#: Menu
+msgid "Compress to 'zip'"
+msgstr "Comprimare în „zip”"
+
+#: Menu
+msgid "Compress to 'zip' with password"
+msgstr "Comprimare în „zip” cu parolă"
+
+#: Menu
+msgid "Compute all checksums"
+msgstr "Calculare toate sumele de control"
+
+#: Menu
+msgid "Compute MD5"
+msgstr "Calculare MD5"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "Calculare SHA1"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "Calculare SHA256"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "Calculare SHA512"
+
+#: Menu
+msgid "Copy file contents"
+msgstr "Copiere conținut fișiere"
+
+#: Menu
+msgid "Copy file names"
+msgstr "Copiere nume fișiere"
+
+#: Menu
+msgid "Copy file names (recursive)"
+msgstr "Copiere nume fișiere (recursiv)"
+
+#: Menu
+msgid "Copy file paths"
+msgstr "Copiere căi fișiere"
+
+#: Menu
+msgid "Copy file paths (recursive)"
+msgstr "Copiere căi fișiere (recursiv)"
+
+#: Menu
+msgid "Create hard link here"
+msgstr "Creare legătură dură aici"
+
+#: Menu
+msgid "Create hard link to..."
+msgstr "Creare legătură dură către..."
+
+#: Menu
+msgid "Create symbolic link here"
+msgstr "Creare legătură simbolică aici"
+
+#: Menu
+msgid "Create symbolic link to..."
+msgstr "Creare legătură simbolică către..."
+
+#: Menu
+msgid "Disk usage analyzer"
+msgstr "Analizor utilizare disc"
+
+#: Menu
+msgid "Document: Convert to DOCX"
+msgstr "Document: conversie în DOCX"
+
+#: Menu
+msgid "Document: Convert to EPUB"
+msgstr "Document: conversie în EPUB"
+
+#: Menu
+msgid "Document: Convert to Markdown"
+msgstr "Document: conversie în Markdown"
+
+#: Menu
+msgid "Document: Convert to ODP"
+msgstr "Document: conversie în ODP"
+
+#: Menu
+msgid "Document: Convert to ODS"
+msgstr "Document: conversie în ODS"
+
+#: Menu
+msgid "Document: Convert to ODT"
+msgstr "Document: conversie în ODT"
+
+#: Menu
+msgid "Document: Convert to PDF"
+msgstr "Document: conversie în PDF"
+
+#: Menu
+msgid "Document: Convert to PDF (landscape)"
+msgstr "Document: conversie în PDF (peisaj)"
+
+#: Menu
+msgid "Document: Convert to PPTX"
+msgstr "Document: conversie în PPTX"
+
+#: Menu
+msgid "Document: Convert to TXT"
+msgstr "Document: conversie în TXT"
+
+#: Menu
+msgid "Document: Convert to XLSX"
+msgstr "Document: conversie în XLSX"
+
+#: Menu
+msgid "Extract here"
+msgstr "Extragere aici"
+
+#: Menu
+msgid "File carving (via Foremost)"
+msgstr "Recuperare fișiere (prin Foremost)"
+
+#: Menu
+msgid "File carving (via PhotoRec)"
+msgstr "Recuperare fișiere (prin PhotoRec)"
+
+#: Menu
+msgid "Find broken links"
+msgstr "Găsire legături defecte"
+
+#: Menu
+msgid "Find duplicate files"
+msgstr "Găsire fișiere duplicate"
+
+#: Menu
+msgid "Find empty directories"
+msgstr "Găsire directoare goale"
+
+#: Menu
+msgid "List hidden files"
+msgstr "Listare fișiere ascunse"
+
+#: Menu
+msgid "Find junk files"
+msgstr "Găsire fișiere nedorite"
+
+#: Menu
+msgid "Find empty files"
+msgstr "Găsire fișiere goale"
+
+#: Menu
+msgid "Flatten directory structure"
+msgstr "Aplatizare structură directoare"
+
+#: Menu
+msgid "Generate MD5 file"
+msgstr "Generare fișier MD5"
+
+#: Menu
+msgid "Generate SHA1 file"
+msgstr "Generare fișier SHA1"
+
+#: Menu
+msgid "Generate SHA256 file"
+msgstr "Generare fișier SHA256"
+
+#: Menu
+msgid "Generate SHA512 file"
+msgstr "Generare fișier SHA512"
+
+#: Menu
+msgid "Git: Clone URLs"
+msgstr "Git: clonare URL-uri"
+
+#: Menu
+msgid "Git: Open repository website"
+msgstr "Git: deschidere site depozit"
+
+#: Menu
+msgid "Git: Reset and pull"
+msgstr "Git: resetare și extragere"
+
+#: Menu
+msgid "Decrypt"
+msgstr "Decriptare"
+
+#: Menu
+msgid "Encrypt with password"
+msgstr "Criptare cu parolă"
+
+#: Menu
+msgid "Encrypt with password (ASCII)"
+msgstr "Criptare cu parolă (ASCII)"
+
+#: Menu
+msgid "Encrypt with keys"
+msgstr "Criptare cu chei"
+
+#: Menu
+msgid "Encrypt with keys (ASCII)"
+msgstr "Criptare cu chei (ASCII)"
+
+#: Menu
+msgid "Import keys"
+msgstr "Importare chei"
+
+#: Menu
+msgid "Sign"
+msgstr "Semnare"
+
+#: Menu
+msgid "Sign (ASCII)"
+msgstr "Semnare (ASCII)"
+
+#: Menu
+msgid "Sign (detached signature)"
+msgstr "Semnare (semnătură detașată)"
+
+#: Menu
+msgid "Sign and encrypt with keys"
+msgstr "Semnare și criptare cu chei"
+
+#: Menu
+msgid "Sign and encrypt with keys (ASCII)"
+msgstr "Semnare și criptare cu chei (ASCII)"
+
+#: Menu
+msgid "Verify signature"
+msgstr "Verificare semnătură"
+
+#: Menu
+msgid "Image: Add watermark (center)"
+msgstr "Imagine: adăugare filigran (centru)"
+
+#: Menu
+msgid "Image: Add watermark (north)"
+msgstr "Imagine: adăugare filigran (nord)"
+
+#: Menu
+msgid "Image: Add watermark (northeast)"
+msgstr "Imagine: adăugare filigran (nord-est)"
+
+#: Menu
+msgid "Image: Add watermark (northwest)"
+msgstr "Imagine: adăugare filigran (nord-vest)"
+
+#: Menu
+msgid "Image: Add watermark (south)"
+msgstr "Imagine: adăugare filigran (sud)"
+
+#: Menu
+msgid "Image: Add watermark (southeast)"
+msgstr "Imagine: adăugare filigran (sud-est)"
+
+#: Menu
+msgid "Image: Add watermark (southwest)"
+msgstr "Imagine: adăugare filigran (sud-vest)"
+
+#: Menu
+msgid "Image: Automatic crop"
+msgstr "Imagine: decupare automată"
+
+#: Menu
+msgid "Image: Automatic crop (15 pct)"
+msgstr "Imagine: decupare automată (15 pct)"
+
+#: Menu
+msgid "Image: Background to alpha"
+msgstr "Imagine: fundal în alfa"
+
+#: Menu
+msgid "Image: Background to alpha (15 pct)"
+msgstr "Imagine: fundal în alfa (15 pct)"
+
+#: Menu
+msgid "Image: Color alpha to black"
+msgstr "Imagine: alfa în negru"
+
+#: Menu
+msgid "Image: Color alpha to magenta"
+msgstr "Imagine: alfa în magenta"
+
+#: Menu
+msgid "Image: Color alpha to white"
+msgstr "Imagine: alfa în alb"
+
+#: Menu
+msgid "Image: Color black to alpha"
+msgstr "Imagine: negru în alfa"
+
+#: Menu
+msgid "Image: Color black to alpha (15 pct)"
+msgstr "Imagine: negru în alfa (15 pct)"
+
+#: Menu
+msgid "Image: Color magenta to alpha"
+msgstr "Imagine: magenta în alfa"
+
+#: Menu
+msgid "Image: Color magenta to alpha (15 pct)"
+msgstr "Imagine: magenta în alfa (15 pct)"
+
+#: Menu
+msgid "Image: Colorspace to gray"
+msgstr "Imagine: spațiu de culoare în gri"
+
+#: Menu
+msgid "Image: Color white to alpha"
+msgstr "Imagine: alb în alfa"
+
+#: Menu
+msgid "Image: Color white to alpha (15 pct)"
+msgstr "Imagine: alb în alfa (15 pct)"
+
+#: Menu
+msgid "Image: Combine into GIF"
+msgstr "Imagine: combinare în GIF"
+
+#: Menu
+msgid "Image: Combine into PDF"
+msgstr "Imagine: combinare în PDF"
+
+#: Menu
+msgid "Image: Convert to AVIF"
+msgstr "Imagine: conversie în AVIF"
+
+#: Menu
+msgid "Image: Convert to GIF"
+msgstr "Imagine: conversie în GIF"
+
+#: Menu
+msgid "Image: Convert to HEIC"
+msgstr "Imagine: conversie în HEIC"
+
+#: Menu
+msgid "Image: Convert to JPG"
+msgstr "Imagine: conversie în JPG"
+
+#: Menu
+msgid "Image: Convert to JXL"
+msgstr "Imagine: conversie în JXL"
+
+#: Menu
+msgid "Image: Convert to PNG"
+msgstr "Imagine: conversie în PNG"
+
+#: Menu
+msgid "Image: Convert to TIFF"
+msgstr "Imagine: conversie în TIFF"
+
+#: Menu
+msgid "Image: Convert to WebP"
+msgstr "Imagine: conversie în WebP"
+
+#: Menu
+msgid "Image: Create PNG icon (128 px)"
+msgstr "Imagine: creare pictogramă PNG (128 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (256 px)"
+msgstr "Imagine: creare pictogramă PNG (256 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (512 px)"
+msgstr "Imagine: creare pictogramă PNG (512 px)"
+
+#: Menu
+msgid "Image: Create PNG icon (custom)"
+msgstr "Imagine: creare pictogramă PNG (personalizat)"
+
+#: Menu
+msgid "Image: Desaturate"
+msgstr "Imagine: desaturare"
+
+#: Menu
+msgid "Image: Export to PDF"
+msgstr "Imagine: export în PDF"
+
+#: Menu
+msgid "Image: Find similar (65 pct)"
+msgstr "Imagine: găsire similare (65 pct)"
+
+#: Menu
+msgid "Image: Find similar (75 pct)"
+msgstr "Imagine: găsire similare (75 pct)"
+
+#: Menu
+msgid "Image: Find similar (85 pct)"
+msgstr "Imagine: găsire similare (85 pct)"
+
+#: Menu
+msgid "Image: Find similar (95 pct)"
+msgstr "Imagine: găsire similare (95 pct)"
+
+#: Menu
+msgid "Image: Flip (horizontal)"
+msgstr "Imagine: oglindire (orizontal)"
+
+#: Menu
+msgid "Image: Flip (vertical)"
+msgstr "Imagine: oglindire (vertical)"
+
+#: Menu
+msgid "Image: Generate multiple hues"
+msgstr "Imagine: generare mai multe nuanțe"
+
+#: Menu
+msgid "Image: Optimize PNG"
+msgstr "Imagine: optimizare PNG"
+
+#: Menu
+msgid "Image: Perform OCR (English)"
+msgstr "Imagine: efectuare OCR (engleză)"
+
+#: Menu
+msgid "Image: Perform OCR (French)"
+msgstr "Imagine: efectuare OCR (franceză)"
+
+#: Menu
+msgid "Image: Perform OCR (German)"
+msgstr "Imagine: efectuare OCR (germană)"
+
+#: Menu
+msgid "Image: Perform OCR (Italian)"
+msgstr "Imagine: efectuare OCR (italiană)"
+
+#: Menu
+msgid "Image: Perform OCR (Portuguese)"
+msgstr "Imagine: efectuare OCR (portugheză)"
+
+#: Menu
+msgid "Image: Perform OCR (Russian)"
+msgstr "Imagine: efectuare OCR (rusă)"
+
+#: Menu
+msgid "Image: Perform OCR (Spanish)"
+msgstr "Imagine: efectuare OCR (spaniolă)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 500kB max)"
+msgstr "Imagine: reducere (JPG, max. 500 kB)"
+
+#: Menu
+msgid "Image: Reduce (JPG, 1000kB max)"
+msgstr "Imagine: reducere (JPG, max. 1000 kB)"
+
+#: Menu
+msgid "Image: Remove metadata"
+msgstr "Imagine: eliminare metadate"
+
+#: Menu
+msgid "Image: Rename from metadata"
+msgstr "Imagine: redenumire din metadate"
+
+#: Menu
+msgid "Image: Resize (25 pct)"
+msgstr "Imagine: redimensionare (25 pct)"
+
+#: Menu
+msgid "Image: Resize (50 pct)"
+msgstr "Imagine: redimensionare (50 pct)"
+
+#: Menu
+msgid "Image: Resize (75 pct)"
+msgstr "Imagine: redimensionare (75 pct)"
+
+#: Menu
+msgid "Image: Resize (1920x1080)"
+msgstr "Imagine: redimensionare (1920x1080)"
+
+#: Menu
+msgid "Image: Resize (2560x1440)"
+msgstr "Imagine: redimensionare (2560x1440)"
+
+#: Menu
+msgid "Image: Resize (3840x2160)"
+msgstr "Imagine: redimensionare (3840x2160)"
+
+#: Menu
+msgid "Image: Resize (custom)"
+msgstr "Imagine: redimensionare (personalizat)"
+
+#: Menu
+msgid "Image: Rotate (90 deg)"
+msgstr "Imagine: rotire (90°)"
+
+#: Menu
+msgid "Image: Rotate (180 deg)"
+msgstr "Imagine: rotire (180°)"
+
+#: Menu
+msgid "Image: Rotate (270 deg)"
+msgstr "Imagine: rotire (270°)"
+
+#: Menu
+msgid "Image: Split into 2 (horizontal)"
+msgstr "Imagine: împărțire în 2 (orizontal)"
+
+#: Menu
+msgid "Image: Split into 2 (vertical)"
+msgstr "Imagine: împărțire în 2 (vertical)"
+
+#: Menu
+msgid "Image: Split into 4"
+msgstr "Imagine: împărțire în 4"
+
+#: Menu
+msgid "Image: Stack (horizontal)"
+msgstr "Imagine: stivuire (orizontal)"
+
+#: Menu
+msgid "Image: Stack (vertical)"
+msgstr "Imagine: stivuire (vertical)"
+
+#: Menu
+msgid "IP: Scan hosts"
+msgstr "IP: scanare gazde"
+
+#: Menu
+msgid "List hard links"
+msgstr "Listare legături dure"
+
+#: Menu
+msgid "List largest directories"
+msgstr "Listare cele mai mari directoare"
+
+#: Menu
+msgid "List largest files"
+msgstr "Listare cele mai mari fișiere"
+
+#: Menu
+msgid "List permissions and owners"
+msgstr "Listare permisiuni și proprietari"
+
+#: Menu
+msgid "List recent files"
+msgstr "Listare fișiere recente"
+
+#: Menu
+msgid "List symbolic links"
+msgstr "Listare legături simbolice"
+
+#: Menu
+msgid "Media: Concatenate files"
+msgstr "Media: concatenare fișiere"
+
+#: Menu
+msgid "Media: Remove metadata"
+msgstr "Media: eliminare metadate"
+
+#: Menu
+msgid "Media: Show basic metadata"
+msgstr "Media: afișare metadate de bază"
+
+#: Menu
+msgid "Media: Show information"
+msgstr "Media: afișare informații"
+
+#: Menu
+msgid "MP3: (artist - title) Name to ID3"
+msgstr "MP3: (artist - titlu) nume în ID3"
+
+#: Menu
+msgid "MP3: (artist - title) ID3 to Name"
+msgstr "MP3: (artist - titlu) ID3 în nume"
+
+#: Menu
+msgid "MP3: Maximize volume (recursive)"
+msgstr "MP3: maximizare volum (recursiv)"
+
+#: Menu
+msgid "MP3: Normalize volume (recursive)"
+msgstr "MP3: normalizare volum (recursiv)"
+
+#: Menu
+msgid "MP3: Show encoding details"
+msgstr "MP3: afișare detalii codare"
+
+#: Menu
+msgid "Open item location"
+msgstr "Deschidere locație element"
+
+#: Menu
+msgid "Paste as hard link"
+msgstr "Lipire ca legătură dură"
+
+#: Menu
+msgid "Paste as symbolic link"
+msgstr "Lipire ca legătură simbolică"
+
+#: Menu
+msgid "Paste clipboard contents"
+msgstr "Lipire conținut clipboard"
+
+#: Menu
+msgid "PDF: Add watermark (over)"
+msgstr "PDF: adăugare filigran (deasupra)"
+
+#: Menu
+msgid "PDF: Add watermark (under)"
+msgstr "PDF: adăugare filigran (dedesubt)"
+
+#: Menu
+msgid "PDF: Combine multiple PDFs"
+msgstr "PDF: combinare mai multe PDF-uri"
+
+#: Menu
+msgid "PDF: Convert to grayscale"
+msgstr "PDF: conversie în tonuri de gri"
+
+#: Menu
+msgid "PDF: Convert to PDFA-2b"
+msgstr "PDF: conversie în PDFA-2b"
+
+#: Menu
+msgid "PDF: Remove password"
+msgstr "PDF: eliminare parolă"
+
+#: Menu
+msgid "PDF: Set password"
+msgstr "PDF: setare parolă"
+
+#: Menu
+msgid "PDF: Extract images"
+msgstr "PDF: extragere imagini"
+
+#: Menu
+msgid "PDF: Find annotated PDFs"
+msgstr "PDF: găsire PDF-uri adnotate"
+
+#: Menu
+msgid "PDF: Find non-linearized PDFs"
+msgstr "PDF: găsire PDF-uri neliniarizate"
+
+#: Menu
+msgid "PDF: Find non-searchable PDFs"
+msgstr "PDF: găsire PDF-uri necăutabile"
+
+#: Menu
+msgid "PDF: Find password-protected PDFs"
+msgstr "PDF: găsire PDF-uri protejate cu parolă"
+
+#: Menu
+msgid "PDF: Find signed PDFs"
+msgstr "PDF: găsire PDF-uri semnate"
+
+#: Menu
+msgid "PDF: Layout (landscape, 1x2)"
+msgstr "PDF: așezare (peisaj, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x1)"
+msgstr "PDF: așezare (peisaj, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x2)"
+msgstr "PDF: așezare (peisaj, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 2x4)"
+msgstr "PDF: așezare (peisaj, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (landscape, 4x2)"
+msgstr "PDF: așezare (peisaj, 4x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 1x2)"
+msgstr "PDF: așezare (portret, 1x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x1)"
+msgstr "PDF: așezare (portret, 2x1)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x2)"
+msgstr "PDF: așezare (portret, 2x2)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 2x4)"
+msgstr "PDF: așezare (portret, 2x4)"
+
+#: Menu
+msgid "PDF: Layout (portrait, 4x2)"
+msgstr "PDF: așezare (portret, 4x2)"
+
+#: Menu
+msgid "PDF: Optimize for web (linearize)"
+msgstr "PDF: optimizare pentru web (liniarizare)"
+
+#: Menu
+msgid "PDF: Set size (A3)"
+msgstr "PDF: setare dimensiune (A3)"
+
+#: Menu
+msgid "PDF: Set size (A4)"
+msgstr "PDF: setare dimensiune (A4)"
+
+#: Menu
+msgid "PDF: Set size (A5)"
+msgstr "PDF: setare dimensiune (A5)"
+
+#: Menu
+msgid "PDF: Set size (US Legal)"
+msgstr "PDF: setare dimensiune (US Legal)"
+
+#: Menu
+msgid "PDF: Set size (US Letter)"
+msgstr "PDF: setare dimensiune (US Letter)"
+
+#: Menu
+msgid "PDF: Perform OCR (English)"
+msgstr "PDF: efectuare OCR (engleză)"
+
+#: Menu
+msgid "PDF: Perform OCR (French)"
+msgstr "PDF: efectuare OCR (franceză)"
+
+#: Menu
+msgid "PDF: Perform OCR (German)"
+msgstr "PDF: efectuare OCR (germană)"
+
+#: Menu
+msgid "PDF: Perform OCR (Italian)"
+msgstr "PDF: efectuare OCR (italiană)"
+
+#: Menu
+msgid "PDF: Perform OCR (Portuguese)"
+msgstr "PDF: efectuare OCR (portugheză)"
+
+#: Menu
+msgid "PDF: Perform OCR (Russian)"
+msgstr "PDF: efectuare OCR (rusă)"
+
+#: Menu
+msgid "PDF: Perform OCR (Spanish)"
+msgstr "PDF: efectuare OCR (spaniolă)"
+
+#: Menu
+msgid "PDF: Reduce (150 dpi, e-book)"
+msgstr "PDF: reducere (150 dpi, carte electronică)"
+
+#: Menu
+msgid "PDF: Reduce (300 dpi, printer)"
+msgstr "PDF: reducere (300 dpi, imprimantă)"
+
+#: Menu
+msgid "PDF: Remove annotations"
+msgstr "PDF: eliminare adnotări"
+
+#: Menu
+msgid "PDF: Remove metadata"
+msgstr "PDF: eliminare metadate"
+
+#: Menu
+msgid "PDF: Rotate (90 deg)"
+msgstr "PDF: rotire (90°)"
+
+#: Menu
+msgid "PDF: Rotate (180 deg)"
+msgstr "PDF: rotire (180°)"
+
+#: Menu
+msgid "PDF: Rotate (270 deg)"
+msgstr "PDF: rotire (270°)"
+
+#: Menu
+msgid "PDF: Show signatures"
+msgstr "PDF: afișare semnături"
+
+#: Menu
+msgid "PDF: Split into single-page PDFs"
+msgstr "PDF: împărțire în PDF-uri de o pagină"
+
+#: Menu
+msgid "Rename: Add MD5 prefix"
+msgstr "Redenumire: adăugare prefix MD5"
+
+#: Menu
+msgid "Rename: Remove accents"
+msgstr "Redenumire: eliminare accente"
+
+#: Menu
+msgid "Rename: Remove prefixes"
+msgstr "Redenumire: eliminare prefixe"
+
+#: Menu
+msgid "Rename: Remove suffixes"
+msgstr "Redenumire: eliminare sufixe"
+
+#: Menu
+msgid "Rename: Change spaces to dashes"
+msgstr "Redenumire: spații în cratime"
+
+#: Menu
+msgid "Rename: Change dashes to spaces"
+msgstr "Redenumire: cratime în spații"
+
+#: Menu
+msgid "Rename: To lowercase"
+msgstr "Redenumire: în minuscule"
+
+#: Menu
+msgid "Rename: To lowercase (recursive)"
+msgstr "Redenumire: în minuscule (recursiv)"
+
+#: Menu
+msgid "Rename: To sentence case"
+msgstr "Redenumire: ca în propoziție"
+
+#: Menu
+msgid "Rename: To title case"
+msgstr "Redenumire: ca în titlu"
+
+#: Menu
+msgid "Rename: To uppercase"
+msgstr "Redenumire: în majuscule"
+
+#: Menu
+msgid "Rename: To uppercase (recursive)"
+msgstr "Redenumire: în majuscule (recursiv)"
+
+#: Menu
+msgid "Reset permissions (recursive)"
+msgstr "Resetare permisiuni (recursiv)"
+
+#: Menu
+msgid "Scan for malware (via ClamAV)"
+msgstr "Scanare malware (prin ClamAV)"
+
+#: Menu
+msgid "Scan for malware (via Lenspect)"
+msgstr "Scanare malware (prin Lenspect)"
+
+#: Menu
+msgid "Show file information"
+msgstr "Afișare informații fișier"
+
+#: Menu
+msgid "Show file metadata"
+msgstr "Afișare metadate fișier"
+
+#: Menu
+msgid "Show file MIME type"
+msgstr "Afișare tip MIME fișier"
+
+#: Menu
+msgid "SVG: Compress to SVGZ"
+msgstr "SVG: comprimare în SVGZ"
+
+#: Menu
+msgid "SVG: Decompress SVGZ"
+msgstr "SVG: decomprimare SVGZ"
+
+#: Menu
+msgid "SVG: Export to PDF"
+msgstr "SVG: export în PDF"
+
+#: Menu
+msgid "SVG: Export to PNG (256 px)"
+msgstr "SVG: export în PNG (256 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (512 px)"
+msgstr "SVG: export în PNG (512 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (1024 px)"
+msgstr "SVG: export în PNG (1024 px)"
+
+#: Menu
+msgid "SVG: Export to PNG (custom)"
+msgstr "SVG: export în PNG (personalizat)"
+
+#: Menu
+msgid "SVG: Optimize"
+msgstr "SVG: optimizare"
+
+#: Menu
+msgid "SVG: Replace fonts with Charter"
+msgstr "SVG: înlocuire fonturi cu Charter"
+
+#: Menu
+msgid "SVG: Replace fonts with Helvetica"
+msgstr "SVG: înlocuire fonturi cu Helvetica"
+
+#: Menu
+msgid "SVG: Replace fonts with Times"
+msgstr "SVG: înlocuire fonturi cu Times"
+
+#: Menu
+msgid "Terminal"
+msgstr "Terminal"
+
+#: Menu
+msgid "Terminal (synced panes)"
+msgstr "Terminal (panouri sincronizate)"
+
+#: Menu
+msgid "Text: Concatenate multiple files"
+msgstr "Text: concatenare mai multe fișiere"
+
+#: Menu
+msgid "Text: Convert tabs to 4 spaces"
+msgstr "Text: conversie taburi în 4 spații"
+
+#: Menu
+msgid "Text: Normalize (UTF-8, recursive)"
+msgstr "Text: normalizare (UTF-8, recursiv)"
+
+#: Menu
+msgid "Text: Encode to UTF-8"
+msgstr "Text: codare în UTF-8"
+
+#: Menu
+msgid "Text: List encodings"
+msgstr "Text: listare codări"
+
+#: Menu
+msgid "Text: List issues"
+msgstr "Text: listare probleme"
+
+#: Menu
+msgid "Text: List line breaks"
+msgstr "Text: listare sfârșituri de linie"
+
+#: Menu
+msgid "Text: List line counts"
+msgstr "Text: listare număr de linii"
+
+#: Menu
+msgid "Text: List line lengths"
+msgstr "Text: listare lungimi de linie"
+
+#: Menu
+msgid "Text: List word counts"
+msgstr "Text: listare număr de cuvinte"
+
+#: Menu
+msgid "Text: Remove trailing spaces"
+msgstr "Text: eliminare spații finale"
+
+#: Menu
+msgid "Text: Remove accents"
+msgstr "Text: eliminare accente"
+
+#: Menu
+msgid "URL: Check HTTP status"
+msgstr "URL: verificare stare HTTP"
+
+#: Menu
+msgid "URL: Download file"
+msgstr "URL: descărcare fișier"
+
+#: Menu
+msgid "URL: Show HTTP headers"
+msgstr "URL: afișare antete HTTP"
+
+#: Menu
+msgid "Verify MD5 file"
+msgstr "Verificare fișier MD5"
+
+#: Menu
+msgid "Verify SHA1 file"
+msgstr "Verificare fișier SHA1"
+
+#: Menu
+msgid "Verify SHA256 file"
+msgstr "Verificare fișier SHA256"
+
+#: Menu
+msgid "Verify SHA512 file"
+msgstr "Verificare fișier SHA512"
+
+#: Menu
+msgid "Video: Aspect to 1:1"
+msgstr "Video: raport 1:1"
+
+#: Menu
+msgid "Video: Aspect to 4:3"
+msgstr "Video: raport 4:3"
+
+#: Menu
+msgid "Video: Aspect to 16:9"
+msgstr "Video: raport 16:9"
+
+#: Menu
+msgid "Video: Aspect to 16:10"
+msgstr "Video: raport 16:10"
+
+#: Menu
+msgid "Video: Convert to MKV"
+msgstr "Video: conversie în MKV"
+
+#: Menu
+msgid "Video: Convert to MKV (copy)"
+msgstr "Video: conversie în MKV (copie)"
+
+#: Menu
+msgid "Video: Convert to MP4"
+msgstr "Video: conversie în MP4"
+
+#: Menu
+msgid "Video: Convert to MP4 (copy)"
+msgstr "Video: conversie în MP4 (copie)"
+
+#: Menu
+msgid "Video: Convert to WebM"
+msgstr "Video: conversie în WebM"
+
+#: Menu
+msgid "Video: Convert to WebM (copy)"
+msgstr "Video: conversie în WebM (copie)"
+
+#: Menu
+msgid "Video: Export frames (1 FPS)"
+msgstr "Video: export cadre (1 FPS)"
+
+#: Menu
+msgid "Video: Export frames (5 FPS)"
+msgstr "Video: export cadre (5 FPS)"
+
+#: Menu
+msgid "Video: Export frames (10 FPS)"
+msgstr "Video: export cadre (10 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (1 FPS)"
+msgstr "Video: export în GIF (1 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (5 FPS)"
+msgstr "Video: export în GIF (5 FPS)"
+
+#: Menu
+msgid "Video: Export to GIF (10 FPS)"
+msgstr "Video: export în GIF (10 FPS)"
+
+#: Menu
+msgid "Video: Extract audio"
+msgstr "Video: extragere audio"
+
+#: Menu
+msgid "Video: Flip (horizontal)"
+msgstr "Video: oglindire (orizontal)"
+
+#: Menu
+msgid "Video: Flip (vertical)"
+msgstr "Video: oglindire (vertical)"
+
+#: Menu
+msgid "Video: Frame rate to 30 FPS"
+msgstr "Video: frecvență cadre 30 FPS"
+
+#: Menu
+msgid "Video: Frame rate to 60 FPS"
+msgstr "Video: frecvență cadre 60 FPS"
+
+#: Menu
+msgid "Video: Remove audio"
+msgstr "Video: eliminare audio"
+
+#: Menu
+msgid "Video: Resize (25 pct)"
+msgstr "Video: redimensionare (25 pct)"
+
+#: Menu
+msgid "Video: Resize (50 pct)"
+msgstr "Video: redimensionare (50 pct)"
+
+#: Menu
+msgid "Video: Resize (75 pct)"
+msgstr "Video: redimensionare (75 pct)"
+
+#: Menu
+msgid "Video: Resize (custom)"
+msgstr "Video: redimensionare (personalizat)"
+
+#: Menu
+msgid "Video: Rotate (90 deg)"
+msgstr "Video: rotire (90°)"
+
+#: Menu
+msgid "Video: Rotate (180 deg)"
+msgstr "Video: rotire (180°)"
+
+#: Menu
+msgid "Video: Rotate (270 deg)"
+msgstr "Video: rotire (270°)"
+
+#: Menu
+msgid "Video: Speed to 0.5"
+msgstr "Video: viteză 0.5"
+
+#: Menu
+msgid "Video: Speed to 1.5"
+msgstr "Video: viteză 1.5"
+
+#: Menu
+msgid "Video: Speed to 2.0"
+msgstr "Video: viteză 2.0"
+
+#: install.sh
+msgid "Check for basic dependencies"
+msgstr "Verificare dependențe de bază"
+
+#: install.sh
+msgid "Remove previously installed scripts"
+msgstr "Eliminare scripturi instalate anterior"
+
+#: install.sh
+msgid "Install keyboard accelerators"
+msgstr "Instalare acceleratori de tastatură"
+
+#: install.sh
+msgid "Close the file manager to reload configuration"
+msgstr "Închidere gestionar de fișiere pentru reîncărcarea configurației"
+
+#: install.sh
+msgid "Add shortcuts in the application menu"
+msgstr "Adăugare comenzi rapide în meniul de aplicații"
+
+#: install.sh
+msgid "Install Homebrew (optional)"
+msgstr "Instalare Homebrew (opțional)"
+
+#: install.sh
+msgid "Choose which script categories to install"
+msgstr "Alegeți categoriile de scripturi de instalat"
+
+#: install.sh
+msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"
+msgstr "Selectați opțiunile (<SPAȚIU> pentru a bifa, <ENTER> pentru a confirma):"
+
+#: install.sh
+msgid "Installing in non-interactive mode..."
+msgstr "Se instalează în modul neinteractiv..."
+
+#: install.sh
+msgid "Installing:"
+msgstr "Se instalează:"
+
+#: install.sh
+msgid "Installing application menu shortcuts:"
+msgstr "Se instalează comenzile rapide din meniul de aplicații:"
+
+#: install.sh
+msgid "Installation completed successfully!"
+msgstr "Instalarea s-a finalizat cu succes!"
+
+#: install.sh
+msgid "Checking for basic dependencies:"
+msgstr "Se verifică dependențele de bază:"
+
+#: install.sh
+msgid "All dependencies are already satisfied."
+msgstr "Toate dependențele sunt deja îndeplinite."
+
+#: install.sh
+msgid "Copying files..."
+msgstr "Se copiază fișierele..."
+
+#: install.sh
+msgid "Installing keyboard accelerators..."
+msgstr "Se instalează acceleratorii de tastatură..."
+
+#: install.sh
+msgid "Scripts"
+msgstr "Scripturi"
+
+#: install.sh
+msgid "Creating shortcuts in the application menu..."
+msgstr "Se creează comenzile rapide în meniul de aplicații..."
+
+#: install.sh
+msgid "Creating GNOME Shell application folder..."
+msgstr "Se creează folderul de aplicații GNOME Shell..."
+
+#: install.sh
+msgid "Installing actions in the context menu..."
+msgstr "Se instalează acțiunile în meniul contextual..."
+
+#: install.sh
+msgid "Closing the file manager..."
+msgstr "Se închide gestionarul de fișiere..."
+
+#: install.sh
+msgid "Installing Homebrew:"
+msgstr "Se instalează Homebrew:"
+
+#: install.sh
+msgid "Homebrew is already installed."
+msgstr "Homebrew este deja instalat."
+
+#: install.sh
+msgid "Installing Homebrew to:"
+msgstr "Se instalează Homebrew în:"
+
+#: install.sh
+msgid "Downloading the package..."
+msgstr "Se descarcă pachetul..."
+
+#: install.sh
+msgid "Could not find a package manager!"
+msgstr "Nu s-a găsit un gestionar de pachete!"
+
+#: install.sh
+msgid "Homebrew installation failed!"
+msgstr "Instalarea Homebrew a eșuat!"
+
+#~ msgid "EOF"
+#~ msgstr "EOF"
