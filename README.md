@@ -127,6 +127,7 @@ Special thanks to everyone who contributed to the translation of this project:
 - 🇯🇵 **Camegone (@camegone)** - Japanese.
 - 🇹🇷 **Yaşar Çiv (@yasarciv)** - Turkish.
 - 🇬🇪 **Temuri Doghonadze (@NorwayFun)** - Georgian.
+- 🇦🇿 **Jamal Ali** (@jamalkamaladdin) - Azerbaijani.
 
 ### Contributors
 
