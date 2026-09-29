@@ -1061,7 +1061,7 @@ msgstr "이미지: 자동 자르기"
 
 #: Menu
 msgid "Image: Automatic crop (15 pct)"
-msgstr "이미지: 자동 자르기 (15%)"
+msgstr "이미지: 자동 자르기 (15 pct)"
 
 #: Menu
 msgid "Image: Background to alpha"
@@ -1069,7 +1069,7 @@ msgstr "이미지: 배경을 투명으로"
 
 #: Menu
 msgid "Image: Background to alpha (15 pct)"
-msgstr "이미지: 배경을 투명으로 (15%)"
+msgstr "이미지: 배경을 투명으로 (15 pct)"
 
 #: Menu
 msgid "Image: Color alpha to black"
@@ -1089,7 +1089,7 @@ msgstr "이미지: 검은색을 투명으로"
 
 #: Menu
 msgid "Image: Color black to alpha (15 pct)"
-msgstr "이미지: 검은색을 투명으로 (15%)"
+msgstr "이미지: 검은색을 투명으로 (15 pct)"
 
 #: Menu
 msgid "Image: Color magenta to alpha"
@@ -1097,7 +1097,7 @@ msgstr "이미지: 마젠타를 투명으로"
 
 #: Menu
 msgid "Image: Color magenta to alpha (15 pct)"
-msgstr "이미지: 마젠타를 투명으로 (15%)"
+msgstr "이미지: 마젠타를 투명으로 (15 pct)"
 
 #: Menu
 msgid "Image: Colorspace to gray"
@@ -1109,7 +1109,7 @@ msgstr "이미지: 흰색을 투명으로"
 
 #: Menu
 msgid "Image: Color white to alpha (15 pct)"
-msgstr "이미지: 흰색을 투명으로 (15%)"
+msgstr "이미지: 흰색을 투명으로 (15 pct)"
 
 #: Menu
 msgid "Image: Combine into GIF"
@@ -1177,19 +1177,19 @@ msgstr "이미지: PDF로 내보내기"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"
-msgstr "이미지: 유사 항목 찾기 (65%)"
+msgstr "이미지: 유사 항목 찾기 (65 pct)"
 
 #: Menu
 msgid "Image: Find similar (75 pct)"
-msgstr "이미지: 유사 항목 찾기 (75%)"
+msgstr "이미지: 유사 항목 찾기 (75 pct)"
 
 #: Menu
 msgid "Image: Find similar (85 pct)"
-msgstr "이미지: 유사 항목 찾기 (85%)"
+msgstr "이미지: 유사 항목 찾기 (85 pct)"
 
 #: Menu
 msgid "Image: Find similar (95 pct)"
-msgstr "이미지: 유사 항목 찾기 (95%)"
+msgstr "이미지: 유사 항목 찾기 (95 pct)"
 
 #: Menu
 msgid "Image: Flip (horizontal)"
@@ -1253,15 +1253,15 @@ msgstr "이미지: 메타데이터로 이름 변경"
 
 #: Menu
 msgid "Image: Resize (25 pct)"
-msgstr "이미지: 크기 조정 (25%)"
+msgstr "이미지: 크기 조정 (25 pct)"
 
 #: Menu
 msgid "Image: Resize (50 pct)"
-msgstr "이미지: 크기 조정 (50%)"
+msgstr "이미지: 크기 조정 (50 pct)"
 
 #: Menu
 msgid "Image: Resize (75 pct)"
-msgstr "이미지: 크기 조정 (75%)"
+msgstr "이미지: 크기 조정 (75 pct)"
 
 #: Menu
 msgid "Image: Resize (1920x1080)"
@@ -1861,15 +1861,15 @@ msgstr "비디오: 오디오 제거"
 
 #: Menu
 msgid "Video: Resize (25 pct)"
-msgstr "비디오: 크기 조정 (25%)"
+msgstr "비디오: 크기 조정 (25 pct)"
 
 #: Menu
 msgid "Video: Resize (50 pct)"
-msgstr "비디오: 크기 조정 (50%)"
+msgstr "비디오: 크기 조정 (50 pct)"
 
 #: Menu
 msgid "Video: Resize (75 pct)"
-msgstr "비디오: 크기 조정 (75%)"
+msgstr "비디오: 크기 조정 (75 pct)"
 
 #: Menu
 msgid "Video: Resize (custom)"
