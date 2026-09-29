@@ -11,6 +11,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: \n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Done!"
@@ -56,7 +57,7 @@ msgid "The package was installed, but a system reboot is required."
 msgstr "Paket quraşdırıldı, lakin sistemi yenidən başlatmaq lazımdır."
 
 msgid "Could not install the package:"
-msgstr "Paket quraşdırılmadı:"
+msgstr "Paket quraşdırıla bilmədi:"
 
 msgid "This action will delete the selected items."
 msgstr "Bu əməliyyat seçilmiş elementləri siləcək."
@@ -68,10 +69,10 @@ msgid "Total:"
 msgstr "Cəmi:"
 
 msgid "Some items could not be deleted."
-msgstr "Bəzi elementlər silinmədi."
+msgstr "Bəzi elementlər silinə bilmədi."
 
 msgid "All items were successfully deleted!"
-msgstr "Bütün elementlər silindi!"
+msgstr "Bütün elementlər uğurla silindi!"
 
 msgid "Could not access the directory:"
 msgstr "Qovluğa giriş mümkün olmadı:"
@@ -89,7 +90,7 @@ msgid "Cancel"
 msgstr "Ləğv et"
 
 msgid "(Empty)"
-msgstr "(Boşdur)"
+msgstr "(Boş)"
 
 msgid "Select the ones to open:"
 msgstr "Açılacaq elementləri seçin:"
@@ -152,7 +153,7 @@ msgid "Invalid input file!"
 msgstr "Yanlış giriş faylı!"
 
 msgid "You must select"
-msgstr "Seçməlisiniz"
+msgstr "Seçilməlidir"
 
 msgid "You must select at least"
 msgstr "Ən azı bu sayda seçməlisiniz"
@@ -260,7 +261,7 @@ msgid "Would you like to import a key now?"
 msgstr "İndi açar idxal etmək istəyirsiniz?"
 
 msgid "Failed to import the key!"
-msgstr "Açar idxal edilmədi!"
+msgstr "Açar idxal edilə bilmədi!"
 
 msgid "Select a user (sign):"
 msgstr "İmza atacaq istifadəçini seçin:"
@@ -568,7 +569,7 @@ msgstr "Şəkil: Kəs, ölçüsünü dəyiş"
 
 #: Menu
 msgid "Image: Flip, Rotate"
-msgstr "Şəkil: Çevir, fırlat"
+msgstr "Şəkil: Əks etdir, fırlat"
 
 #: Menu
 msgid "Image: Icons"
@@ -664,7 +665,7 @@ msgstr "Video: Kadrları çıxar"
 
 #: Menu
 msgid "Video: Flip, Rotate"
-msgstr "Video: Çevir, fırlat"
+msgstr "Video: Əks etdir, fırlat"
 
 #: Menu
 msgid "Video: Frame rate"
@@ -852,7 +853,7 @@ msgstr "Burada sərt keçid yarat"
 
 #: Menu
 msgid "Create hard link to..."
-msgstr "Bura sərt keçid yarat..."
+msgstr "Seçilmiş qovluğa sərt keçid yarat..."
 
 #: Menu
 msgid "Create symbolic link here"
@@ -860,7 +861,7 @@ msgstr "Burada simvolik keçid yarat"
 
 #: Menu
 msgid "Create symbolic link to..."
-msgstr "Bura simvolik keçid yarat..."
+msgstr "Seçilmiş qovluğa simvolik keçid yarat..."
 
 #: Menu
 msgid "Disk usage analyzer"
@@ -1192,11 +1193,11 @@ msgstr "Şəkil: Oxşarlarını tap (95 faiz)"
 
 #: Menu
 msgid "Image: Flip (horizontal)"
-msgstr "Şəkil: Üfüqi çevir"
+msgstr "Şəkil: Üfüqi əks etdir"
 
 #: Menu
 msgid "Image: Flip (vertical)"
-msgstr "Şəkil: Şaquli çevir"
+msgstr "Şəkil: Şaquli əks etdir"
 
 #: Menu
 msgid "Image: Generate multiple hues"
@@ -1840,11 +1841,11 @@ msgstr "Video: Audionu çıxar"
 
 #: Menu
 msgid "Video: Flip (horizontal)"
-msgstr "Video: Üfüqi çevir"
+msgstr "Video: Üfüqi əks etdir"
 
 #: Menu
 msgid "Video: Flip (vertical)"
-msgstr "Video: Şaquli çevir"
+msgstr "Video: Şaquli əks etdir"
 
 #: Menu
 msgid "Video: Frame rate to 30 FPS"
@@ -1944,7 +1945,7 @@ msgstr "Tətbiq menyusu qısayolları quraşdırılır:"
 
 #: install.sh
 msgid "Installation completed successfully!"
-msgstr "Quraşdırma tamamlandı!"
+msgstr "Quraşdırma uğurla tamamlandı!"
 
 #: install.sh
 msgid "Checking for basic dependencies:"
@@ -2004,7 +2005,7 @@ msgstr "Paket meneceri tapılmadı!"
 
 #: install.sh
 msgid "Homebrew installation failed!"
-msgstr "Homebrew quraşdırılmadı!"
+msgstr "Homebrew quraşdırılması uğursuz oldu!"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"
