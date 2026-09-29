@@ -53,10 +53,55 @@ _main_task() {
     local time=""
     local timestamp=""
     local line=""
+    local data_file=""
 
     _is_encrypted() {
         LC_ALL=C gpg --batch --yes --list-packets "$1" 2>/dev/null |
             grep -qF "encrypted"
+    }
+
+    # A detached signature is either an ASCII "PGP SIGNATURE" block or a binary
+    # file that contains only signature packets. Clearsigned and embedded
+    # signatures keep their payload and must be verified alone.
+    _is_detached_signature() {
+        local file=$1
+        local header=""
+        local packets=""
+
+        # Binary OpenPGP starts with a packet tag, not "-". Reading a binary
+        # signature as text warns about embedded null bytes.
+        if [[ $(head -c 1 -- "$file" 2>/dev/null || true) == "-" ]]; then
+            header=$(head -n 1 -- "$file" 2>/dev/null || true)
+            header=${header%$'\r'}
+            if [[ "$header" == "-----BEGIN PGP SIGNATURE"* ]]; then
+                return 0
+            fi
+            if [[ "$header" == "-----BEGIN PGP "* ]]; then
+                return 1
+            fi
+        fi
+
+        packets=$(LC_ALL=C gpg --batch --yes --list-packets -- "$file" 2>/dev/null) || return 1
+        grep -qF ":signature packet:" <<<"$packets" || return 1
+        if grep -qE "^:(literal data|compressed|onepass_sig|encrypted)" <<<"$packets"; then
+            return 1
+        fi
+        return 0
+    }
+
+    _detached_data_file() {
+        local sigfile=$1
+        local candidate=""
+
+        case "$sigfile" in
+            *.sign) candidate="${sigfile%.sign}" ;;
+            *.sig) candidate="${sigfile%.sig}" ;;
+            *.asc) candidate="${sigfile%.asc}" ;;
+            *) return 1 ;;
+        esac
+
+        [[ -f "$candidate" && -r "$candidate" ]] || return 1
+        printf "%s" "$candidate"
     }
 
     # Run the main process.
@@ -64,8 +109,16 @@ _main_task() {
         std_output=$(LC_ALL=C gpg --batch --yes --status-fd=1 --decrypt \
             --output /dev/null -- "$input_file" 2>&1)
     else
-        std_output=$(LC_ALL=C gpg --batch --yes --status-fd=1 --verify -- \
-            "$input_file" 2>&1)
+        if _is_detached_signature "$input_file"; then
+            data_file=$(_detached_data_file "$input_file" || true)
+        fi
+        if [[ -n "$data_file" ]]; then
+            std_output=$(LC_ALL=C gpg --batch --yes --status-fd=1 --verify -- \
+                "$input_file" "$data_file" 2>&1)
+        else
+            std_output=$(LC_ALL=C gpg --batch --yes --status-fd=1 --verify -- \
+                "$input_file" 2>&1)
+        fi
     fi
 
     if grep -qF "[GNUPG:] GOODSIG" <<<"$std_output"; then
