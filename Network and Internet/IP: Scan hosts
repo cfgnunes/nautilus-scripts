@@ -11,7 +11,7 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "nmap ping dig"
-    _display_wait_box
+    _display_wait_box ""
     input_files=$(_get_files "par_type=all")
 
     # Execute the function '_main_task' for each ip in parallel (127 processes).
