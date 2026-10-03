@@ -105,7 +105,8 @@ _import_key() {
 
     input_file=$(_display_file_selection_box \
         "$(_i18n 'Select a key file to import')" \
-        "$(_i18n 'Key files') | *.asc *.gpg *.pgp")
+        "$(_i18n 'Key files') | *.asc *.gpg *.pgp" \
+        "par_multiple=true")
 
     # Get the ID from the key.
     key_id=$(LC_ALL=C gpg --with-colons --import-options show-only --import "$input_file" |
