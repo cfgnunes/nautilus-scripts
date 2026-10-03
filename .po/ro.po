@@ -1322,10 +1322,6 @@ msgid "List hard links"
 msgstr "Listare legături dure"
 
 #: Menu
-msgid "List largest directories"
-msgstr "Listare cele mai mari directoare"
-
-#: Menu
 msgid "List largest files"
 msgstr "Listare cele mai mari fișiere"
 

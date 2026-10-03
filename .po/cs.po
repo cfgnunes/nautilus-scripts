@@ -1322,10 +1322,6 @@ msgid "List hard links"
 msgstr "Vypsat pevné odkazy"
 
 #: Menu
-msgid "List largest directories"
-msgstr "Vypsat největší adresáře"
-
-#: Menu
 msgid "List largest files"
 msgstr "Vypsat největší soubory"
 

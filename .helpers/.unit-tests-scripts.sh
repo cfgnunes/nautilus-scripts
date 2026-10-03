@@ -642,11 +642,6 @@ _main() {
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
-    script_test="Directories and Files/List largest directories"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
-
     script_test="Directories and Files/List largest files"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"

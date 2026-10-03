@@ -1322,10 +1322,6 @@ msgid "List hard links"
 msgstr "Lista hårda länkar"
 
 #: Menu
-msgid "List largest directories"
-msgstr "Lista största katalogerna"
-
-#: Menu
 msgid "List largest files"
 msgstr "Lista största filerna"
 

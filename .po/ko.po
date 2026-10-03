@@ -1322,10 +1322,6 @@ msgid "List hard links"
 msgstr "하드 링크 나열"
 
 #: Menu
-msgid "List largest directories"
-msgstr "가장 큰 디렉토리 나열"
-
-#: Menu
 msgid "List largest files"
 msgstr "가장 큰 파일 나열"
 

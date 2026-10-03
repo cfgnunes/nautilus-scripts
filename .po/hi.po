@@ -1322,10 +1322,6 @@ msgid "List hard links"
 msgstr "हार्ड लिंक सूचीबद्ध करें"
 
 #: Menu
-msgid "List largest directories"
-msgstr "सबसे बड़ी निर्देशिकाएँ सूचीबद्ध करें"
-
-#: Menu
 msgid "List largest files"
 msgstr "सबसे बड़ी फ़ाइलें सूचीबद्ध करें"
 

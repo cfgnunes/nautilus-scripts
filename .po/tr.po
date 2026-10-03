@@ -1322,10 +1322,6 @@ msgid "List hard links"
 msgstr "Sabit bağlantıları listele"
 
 #: Menu
-msgid "List largest directories"
-msgstr "En büyük dizinleri listele"
-
-#: Menu
 msgid "List largest files"
 msgstr "En büyük dosyaları listele"
 

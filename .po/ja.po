@@ -1322,10 +1322,6 @@ msgid "List hard links"
 msgstr "ハードリンクを一覧表示"
 
 #: Menu
-msgid "List largest directories"
-msgstr "大きい順にディレクトリを一覧表示"
-
-#: Menu
 msgid "List largest files"
 msgstr "大きい順にファイルを一覧表示"
 

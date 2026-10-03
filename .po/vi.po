@@ -1322,10 +1322,6 @@ msgid "List hard links"
 msgstr "Liệt kê liên kết cứng"
 
 #: Menu
-msgid "List largest directories"
-msgstr "Liệt kê thư mục lớn nhất"
-
-#: Menu
 msgid "List largest files"
 msgstr "Liệt kê tệp lớn nhất"
 

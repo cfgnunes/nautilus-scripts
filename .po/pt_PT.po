@@ -1322,10 +1322,6 @@ msgid "List hard links"
 msgstr "Listar links físicos"
 
 #: Menu
-msgid "List largest directories"
-msgstr "Listar maiores diretórios"
-
-#: Menu
 msgid "List largest files"
 msgstr "Listar maiores ficheiros"
 

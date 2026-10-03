@@ -1322,10 +1322,6 @@ msgid "List hard links"
 msgstr "Hard linkek listázása"
 
 #: Menu
-msgid "List largest directories"
-msgstr "Legnagyobb könyvtárak listázása"
-
-#: Menu
 msgid "List largest files"
 msgstr "Legnagyobb fájlok listázása"
 

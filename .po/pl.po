@@ -1322,10 +1322,6 @@ msgid "List hard links"
 msgstr "Wyświetl twarde łącza"
 
 #: Menu
-msgid "List largest directories"
-msgstr "Wyświetl największe katalogi"
-
-#: Menu
 msgid "List largest files"
 msgstr "Wyświetl największe pliki"
 
