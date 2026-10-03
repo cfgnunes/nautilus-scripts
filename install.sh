@@ -55,7 +55,9 @@ IGNORE_APPS_SHORTCUTS=(
     ! -iname "Terminal (synced panes)"
     ! -iname "Extract here"
     ! -iname "Create hard link here"
+    ! -iname "Create hard link to..."
     ! -iname "Create symbolic link here"
+    ! -iname "Create symbolic link to..."
     ! -iname "Paste as hard link"
     ! -iname "Paste as symbolic link"
 )
