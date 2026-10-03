@@ -51,6 +51,7 @@ IGNORE_APPS_SHORTCUTS=(
     ! -iname "Code editor"
     ! -iname "Disk usage analyzer"
     ! -iname "Terminal"
+    ! -iname "Terminal (synced panes)"
     ! -iname "Extract here"
     ! -iname "Create hard link here"
     ! -iname "Create symbolic link here"
