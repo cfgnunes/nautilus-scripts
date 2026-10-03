@@ -48,6 +48,7 @@ COMPATIBLE_FILE_MANAGERS=(
 
 # Ignored application menu shortcuts during install.
 IGNORE_APPS_SHORTCUTS=(
+    ! -iname "Open item location"
     ! -iname "Code editor"
     ! -iname "Disk usage analyzer"
     ! -iname "Terminal"
@@ -57,7 +58,6 @@ IGNORE_APPS_SHORTCUTS=(
     ! -iname "Create symbolic link here"
     ! -iname "Paste as hard link"
     ! -iname "Paste as symbolic link"
-    ! -iname "Paste clipboard contents"
 )
 
 # Directories to be ignored during install.
