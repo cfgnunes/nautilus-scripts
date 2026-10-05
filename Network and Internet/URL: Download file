@@ -13,7 +13,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies_clipboard "axel"
     _display_wait_box ""
-    # NOTE: 'par_type=all' because the script will process the clipboard
+    # NOTE: Using 'par_type=all' because the script will process the clipboard
     # contents even when the file manager selects a file or directory.
     input_files=$(_get_files "par_type=all")
     output_dir=$(_get_output_dir "par_use_same_dir=true")

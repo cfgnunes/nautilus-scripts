@@ -1940,9 +1940,9 @@ _display_select_box() {
     if ((msg_size > arg_max - safe_margin)); then
         list=$(tr "$FIELD_SEPARATOR" "\n" <<<"$list")
 
-        # HACK: Workaround for '--list'. Use stdin instead of passing
-        # arguments directly. This avoids the "Argument list too long"
-        # error when '$list' is too large.
+        # HACK: Workaround for Zenity.
+        # Use stdin instead of passing arguments directly via '--list'. This
+        # avoids the "Argument list too long" error when '$list' is too large.
         # See: https://gitlab.gnome.org/GNOME/zenity/-/issues/117
         if _command_exists "zenity"; then
             # shellcheck disable=SC2086
