@@ -10,31 +10,26 @@ _main() {
     local output_dir=""
     local msg=""
 
-    # Target size (WxH). Exported later so parallel tasks can read it.
-    DIMENSION=""
-
     # Execute initial checks.
     _check_dependencies "ffmpeg"
-
     input_files=$(_get_files "par_type=file; par_select_mime=video/")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     msg="$(_i18n 'Enter the target size.')"
     msg+="\n\n"
     msg+="$(_i18n 'Example:') 800x600"
-    DIMENSION=$(_display_input_text_box "$msg" "")
+    TASK_DIMENSION=$(_display_input_text_box "$msg" "")
 
     # Parse two numbers with any separator and normalize to WxH.
-    if [[ ! "$DIMENSION" =~ ^[[:space:]]*([0-9]+)[^0-9]+([0-9]+)[[:space:]]*$ ]]; then
+    if [[ ! "$TASK_DIMENSION" =~ ^[[:space:]]*([0-9]+)[^0-9]+([0-9]+)[[:space:]]*$ ]]; then
         msg="$(_i18n 'Invalid input!')"
         _display_error_box "$msg"
         _exit_script
     fi
-    DIMENSION="${BASH_REMATCH[1]}x${BASH_REMATCH[2]}"
+    TASK_DIMENSION="${BASH_REMATCH[1]}x${BASH_REMATCH[2]}"
+    export TASK_DIMENSION
 
     _display_wait_box ""
-
-    export DIMENSION
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -49,14 +44,14 @@ _main_task() {
     local width=""
     local height=""
 
-    if [[ -z "$DIMENSION" ]]; then
+    if [[ -z "$TASK_DIMENSION" ]]; then
         return 1
     fi
 
-    width="${DIMENSION%x*}"
-    height="${DIMENSION#*x}"
+    width="${TASK_DIMENSION%x*}"
+    height="${TASK_DIMENSION#*x}"
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($DIMENSION)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($TASK_DIMENSION)'")
 
     # Run the main process.
     std_output=$(ffmpeg -hide_banner -y -i "$input_file" -filter:v "scale=${width}:${height}:force_original_aspect_ratio=increase,crop=${width}:${height}" -c:v mpeg4 -c:a copy -- "$output_file" 2>&1)
