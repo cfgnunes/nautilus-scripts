@@ -902,15 +902,15 @@ declare -A PKG_MAP=(
         brew:   sox
     "
 
-    ["tesseract-lang-$TASK_LANG"]="
+    ["tesseract-lang-${TASK_LANG:-}"]="
         termux: tesseract
-        apt:    tesseract-ocr tesseract-ocr-$TASK_LANG
-        dnf:    tesseract tesseract-langpack-$TASK_LANG
-        pacman: tesseract tesseract-data-$TASK_LANG
+        apt:    tesseract-ocr tesseract-ocr-${TASK_LANG:-}
+        dnf:    tesseract tesseract-langpack-${TASK_LANG:-}
+        pacman: tesseract tesseract-data-${TASK_LANG:-}
         nix:    tesseract
-        zypper: tesseract tesseract-ocr-traineddata-$TASK_LANG
+        zypper: tesseract tesseract-ocr-traineddata-${TASK_LANG:-}
         guix:   tesseract-ocr
-        xbps:   tesseract-ocr tesseract-ocr-$TASK_LANG
+        xbps:   tesseract-ocr tesseract-ocr-${TASK_LANG:-}
         brew:
     "
 
