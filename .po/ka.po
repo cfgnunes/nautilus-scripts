@@ -466,6 +466,9 @@ msgstr "აირჩიეთ შეყვანის საქაღალდ�
 msgid "Select input files"
 msgstr "აირჩიეთ შეყვანის ფაილები"
 
+msgid "Select input items"
+msgstr "აირჩიეთ შეყვანის ელემენტები"
+
 msgid "Open"
 msgstr "გახსნა"
 

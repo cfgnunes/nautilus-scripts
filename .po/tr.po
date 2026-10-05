@@ -466,6 +466,9 @@ msgstr "Girdi dizinlerini seçin"
 msgid "Select input files"
 msgstr "Girdi dosyalarını seçin"
 
+msgid "Select input items"
+msgstr "Girdi öğelerini seçin"
+
 msgid "Open"
 msgstr "Aç"
 

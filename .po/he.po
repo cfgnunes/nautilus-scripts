@@ -466,6 +466,9 @@ msgstr "בחירת תיקיות קלט"
 msgid "Select input files"
 msgstr "בחירת קובצי קלט"
 
+msgid "Select input items"
+msgstr "בחירת פריטי קלט"
+
 msgid "Open"
 msgstr "פתח"
 

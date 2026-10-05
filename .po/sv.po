@@ -466,6 +466,9 @@ msgstr "Välj indatakataloger"
 msgid "Select input files"
 msgstr "Välj indatafiler"
 
+msgid "Select input items"
+msgstr "Välj indataobjekt"
+
 msgid "Open"
 msgstr "Öppna"
 

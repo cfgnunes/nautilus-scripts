@@ -466,6 +466,9 @@ msgstr "Vyberte vstupní adresáře"
 msgid "Select input files"
 msgstr "Vyberte vstupní soubory"
 
+msgid "Select input items"
+msgstr "Vyberte vstupní položky"
+
 msgid "Open"
 msgstr "Otevřít"
 

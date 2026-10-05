@@ -466,6 +466,9 @@ msgstr "入力ディレクトリを選択"
 msgid "Select input files"
 msgstr "入力ファイルを選択"
 
+msgid "Select input items"
+msgstr "入力アイテムを選択"
+
 msgid "Open"
 msgstr "開く"
 

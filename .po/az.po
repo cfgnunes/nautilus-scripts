@@ -466,6 +466,9 @@ msgstr "Giriş qovluqlarını seçin"
 msgid "Select input files"
 msgstr "Giriş fayllarını seçin"
 
+msgid "Select input items"
+msgstr "Giriş elementlərini seçin"
+
 msgid "Open"
 msgstr "Aç"
 

@@ -466,6 +466,9 @@ msgstr "Selectați directoarele de intrare"
 msgid "Select input files"
 msgstr "Selectați fișierele de intrare"
 
+msgid "Select input items"
+msgstr "Selectați elementele de intrare"
+
 msgid "Open"
 msgstr "Deschide"
 

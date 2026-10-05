@@ -466,6 +466,9 @@ msgstr "Kies de invoermappen"
 msgid "Select input files"
 msgstr "Kies de invoerbestanden"
 
+msgid "Select input items"
+msgstr "Kies de invoeritems"
+
 msgid "Open"
 msgstr "Openen"
 

@@ -466,6 +466,9 @@ msgstr "Wybierz katalogi wejściowe"
 msgid "Select input files"
 msgstr "Wybierz pliki wejściowe"
 
+msgid "Select input items"
+msgstr "Wybierz elementy wejściowe"
+
 msgid "Open"
 msgstr "Otwórz"
 

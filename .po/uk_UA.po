@@ -466,6 +466,9 @@ msgstr "Виберіть вхідні каталоги"
 msgid "Select input files"
 msgstr "Виберіть вхідні файли"
 
+msgid "Select input items"
+msgstr "Виберіть вхідні елементи"
+
 msgid "Open"
 msgstr "Відкрити"
 

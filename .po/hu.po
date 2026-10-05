@@ -466,6 +466,9 @@ msgstr "Válassza ki a bemeneti könyvtárakat"
 msgid "Select input files"
 msgstr "Válassza ki a bemeneti fájlokat"
 
+msgid "Select input items"
+msgstr "Válassza ki a bemeneti elemeket"
+
 msgid "Open"
 msgstr "Megnyitás"
 

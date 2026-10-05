@@ -466,6 +466,9 @@ msgstr "इनपुट निर्देशिकाएँ चुनें"
 msgid "Select input files"
 msgstr "इनपुट फ़ाइलें चुनें"
 
+msgid "Select input items"
+msgstr "इनपुट आइटम चुनें"
+
 msgid "Open"
 msgstr "खोलें"
 

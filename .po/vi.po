@@ -466,6 +466,9 @@ msgstr "Chọn thư mục đầu vào"
 msgid "Select input files"
 msgstr "Chọn tệp đầu vào"
 
+msgid "Select input items"
+msgstr "Chọn mục đầu vào"
+
 msgid "Open"
 msgstr "Mở"
 
