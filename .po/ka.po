@@ -325,9 +325,6 @@ msgstr "შესადარებლად, მხოლოდ, ორი ბ�
 msgid "No items were selected!"
 msgstr "ელემენტები მონიშნული არ არის!"
 
-msgid "No directories were selected!"
-msgstr "საქაღალდეები მონიშნული არ არის!"
-
 msgid "The selected items are identical."
 msgstr "არჩეული ელემენტები იდენტურია."
 

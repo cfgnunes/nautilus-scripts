@@ -325,9 +325,6 @@ msgstr "比較するにはバイナリファイルを2つだけ選択する必�
 msgid "No items were selected!"
 msgstr "アイテムが選択されていません！"
 
-msgid "No directories were selected!"
-msgstr "ディレクトリが選択されていません！"
-
 msgid "The selected items are identical."
 msgstr "選択したアイテムは同一です。"
 

@@ -325,9 +325,6 @@ msgstr "तुलना करने के लिए आपको केवल 
 msgid "No items were selected!"
 msgstr "कोई आइटम चयनित नहीं किया गया!"
 
-msgid "No directories were selected!"
-msgstr "कोई निर्देशिका चयनित नहीं की गई!"
-
 msgid "The selected items are identical."
 msgstr "चुने गए आइटम समान हैं।"
 

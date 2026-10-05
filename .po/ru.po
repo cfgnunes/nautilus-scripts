@@ -325,9 +325,6 @@ msgstr "Вы должны выбрать только два двоичных ф
 msgid "No items were selected!"
 msgstr "Не выбраны элементы!"
 
-msgid "No directories were selected!"
-msgstr "Не выбраны каталоги!"
-
 msgid "The selected items are identical."
 msgstr "Выбранные элементы идентичны."
 

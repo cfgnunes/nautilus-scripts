@@ -325,9 +325,6 @@ msgstr "Müqayisə üçün yalnız iki ikili fayl seçməlisiniz!"
 msgid "No items were selected!"
 msgstr "Heç bir element seçilməyib!"
 
-msgid "No directories were selected!"
-msgstr "Heç bir qovluq seçilməyib!"
-
 msgid "The selected items are identical."
 msgstr "Seçilmiş elementlər eynidir."
 

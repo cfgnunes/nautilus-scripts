@@ -325,9 +325,6 @@ msgstr "Karşılaştırmak için yalnızca iki ikili dosya seçmelisiniz!"
 msgid "No items were selected!"
 msgstr "Hiçbir öğe seçilmedi!"
 
-msgid "No directories were selected!"
-msgstr "Hiçbir dizin seçilmedi!"
-
 msgid "The selected items are identical."
 msgstr "Seçili öğeler aynı."
 

@@ -325,9 +325,6 @@ msgstr "Pro porovnání musíte vybrat právě dva binární soubory!"
 msgid "No items were selected!"
 msgstr "Nebyly vybrány žádné položky!"
 
-msgid "No directories were selected!"
-msgstr "Nebyly vybrány žádné adresáře!"
-
 msgid "The selected items are identical."
 msgstr "Vybrané položky jsou stejné."
 

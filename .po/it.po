@@ -325,9 +325,6 @@ msgstr "Devi selezionare solo due file binari da confrontare!"
 msgid "No items were selected!"
 msgstr "Nessun elemento selezionato!"
 
-msgid "No directories were selected!"
-msgstr "Nessuna directory selezionata!"
-
 msgid "The selected items are identical."
 msgstr "Gli elementi selezionati sono identici."
 

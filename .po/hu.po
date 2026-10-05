@@ -325,9 +325,6 @@ msgstr "Az összehasonlításhoz pontosan két bináris fájlt kell kijelölnie!
 msgid "No items were selected!"
 msgstr "Nincs kijelölt elem!"
 
-msgid "No directories were selected!"
-msgstr "Nincs kijelölt könyvtár!"
-
 msgid "The selected items are identical."
 msgstr "A kijelölt elemek azonosak."
 

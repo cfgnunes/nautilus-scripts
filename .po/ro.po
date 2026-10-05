@@ -325,9 +325,6 @@ msgstr "Trebuie să selectați exact două fișiere binare de comparat!"
 msgid "No items were selected!"
 msgstr "Nu a fost selectat niciun element!"
 
-msgid "No directories were selected!"
-msgstr "Nu a fost selectat niciun director!"
-
 msgid "The selected items are identical."
 msgstr "Elementele selectate sunt identice."
 

@@ -325,9 +325,6 @@ msgstr "Для порівняння потрібно вибрати лише д�
 msgid "No items were selected!"
 msgstr "Елементи не вибрано!"
 
-msgid "No directories were selected!"
-msgstr "Каталоги не вибрано!"
-
 msgid "The selected items are identical."
 msgstr "Вибрані елементи однакові."
 

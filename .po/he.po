@@ -325,9 +325,6 @@ msgstr "יש לבחור שני קבצים בינריים בלבד להשוואה
 msgid "No items were selected!"
 msgstr "לא נבחרו פריטים!"
 
-msgid "No directories were selected!"
-msgstr "לא נבחרו ספריות!"
-
 msgid "The selected items are identical."
 msgstr "הפריטים שנבחרו זהים."
 

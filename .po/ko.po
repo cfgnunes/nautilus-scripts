@@ -325,9 +325,6 @@ msgstr "비교할 바이너리 파일 두 개만 선택해야 합니다!"
 msgid "No items were selected!"
 msgstr "선택된 항목이 없습니다!"
 
-msgid "No directories were selected!"
-msgstr "선택된 디렉토리가 없습니다!"
-
 msgid "The selected items are identical."
 msgstr "선택한 항목이 동일합니다."
 

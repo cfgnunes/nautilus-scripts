@@ -325,9 +325,6 @@ msgstr "Du måste välja exakt två binärfiler att jämföra!"
 msgid "No items were selected!"
 msgstr "Inga objekt valdes!"
 
-msgid "No directories were selected!"
-msgstr "Inga kataloger valdes!"
-
 msgid "The selected items are identical."
 msgstr "De markerade objekten är identiska."
 
