@@ -92,10 +92,6 @@ IFS=$FIELD_SEPARATOR
 # List of all input files passed as positional parameters.
 INPUT_FILES=$*
 
-# Variable used to share data between specific parallel task functions
-# (e.g., passwords, configuration values).
-TEMP_DATA_TASK=""
-
 # Array that stores translation key-value pairs loaded from PO files during
 # i18n initialization by '_i18n_initialize'.
 declare -A I18N_DATA=()
@@ -380,7 +376,6 @@ _run_function_parallel() {
         IGNORE_FIND_PATH \
         INPUT_FILES \
         TEMP_CONTROL_DISPLAY_LOCKED \
-        TEMP_DATA_TASK \
         TEMP_DATA_TEXT_BOX \
         TEMP_DIR_FILENAME_LOCKS \
         TEMP_DIR_ITEMS_TO_REMOVE \

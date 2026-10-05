@@ -14,9 +14,10 @@ _main() {
     _display_wait_box ""
     input_files=$(_get_files "par_type=file; par_select_extension=pdf")
 
-    TEMP_DATA_TASK=$(_display_file_selection_box \
+    TASK_WATERMARK=$(_display_file_selection_box \
         "$(_i18n 'Select a PDF to use as the watermark')" \
         "$(_i18n 'PDF files') | *.pdf" "")
+    export TASK_WATERMARK
 
     # Check output directory only after displaying dialog boxes to the user.
     output_dir=$(_get_output_dir "par_use_same_dir=true")
@@ -36,7 +37,7 @@ _main_task() {
 
     # Run the main process.
     # NOTE: Older 'qpdf' versions do not support '--' in the command line.
-    std_output=$(qpdf --overlay "$TEMP_DATA_TASK" --repeat=1 -- "$input_file" "$output_file" 2>&1)
+    std_output=$(qpdf --overlay "$TASK_WATERMARK" --repeat=1 -- "$input_file" "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
