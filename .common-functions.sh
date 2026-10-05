@@ -180,8 +180,8 @@ _exit_script() {
     child_pids=$(pstree -p "$script_pid" |
         grep --only-matching --perl-regexp "\(+\K[^)]+")
 
-    # NOTE: Use 'xargs' and kill to send the SIGTERM signal to all child
-    # processes, including the current script.
+    # NOTE: Use 'xargs' and kill to send the SIGTERM signal
+    # to all child processes, including the current script.
     # See: https://www.baeldung.com/linux/safely-exit-scripts
     xargs kill <<<"$child_pids" 2>/dev/null
 }
@@ -1885,8 +1885,7 @@ _display_select_box() {
     fi
 
     if [[ -z "$list" ]]; then
-        # NOTE: Some Zenity versions crash with
-        # an empty list (Segmentation fault).
+        # NOTE: Some Zenity versions crash with an empty list.
         list=" "
     else
         items_count=$(tr -cd "\n" <<<"$list" | wc -c)
@@ -2974,7 +2973,7 @@ _get_files() {
     eval "$parameters"
 
     # NOTE: Handle the case where no file was selected in the file manager, but
-    # 'par_type!=directory' or 'par_type=true'. This is particularly useful for
+    # 'par_type!=file' or 'par_recursive=true'. This is particularly useful for
     # scripts like 'Open with Terminal', where no file is selected but the
     # intention is to open the working directory.
     if (($(_get_items_count "$input_files") == 0)); then
