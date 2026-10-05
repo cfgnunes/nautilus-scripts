@@ -96,6 +96,11 @@ INPUT_FILES=$*
 # i18n initialization by '_i18n_initialize'.
 declare -A I18N_DATA=()
 
+# FIXME: The associative array 'I18N_DATA' is not exported to child processes.
+# Flag present only in this process. Parallel tasks use the '_i18n' function
+# without the associative array, and must not index it.
+I18N_READY=1
+
 # -----------------------------------------------------------------------------
 # SECTION: Build the structure of the '$TEMP_DIR'
 # -----------------------------------------------------------------------------
@@ -3905,7 +3910,7 @@ _initialize_homebrew() {
 #   determining the current language from the system and loading the
 #   corresponding '.po' translation file into the '$I18N_DATA' array.
 _i18n_initialize() {
-    # LANG not set: nothing to load
+    # LANG not set: nothing to load.
     if [[ -z "${LANG:-}" ]]; then
         return
     fi
@@ -3971,15 +3976,18 @@ _i18n_load_file() {
 #
 # Description:
 #   This function returns the translated version of a given string using the
-#   '$I18N_DATA' array loaded. If a translation is not available, it returns
-#   the original string.
+#   '$I18N_DATA' array loaded. If a translation is not available, or this
+#   process has no '$I18N_DATA' array, it returns the original string.
 #
 # Parameters:
 #   $1 (msgid): The string to be translated.
 _i18n() {
     local msgid=$1
 
-    if [[ -n "$msgid" ]] && [[ -n "${I18N_DATA[$msgid]:-}" ]]; then
+    # Index '$I18N_DATA' only when this process declared the array.
+    # Without 'declare -A', Bash evaluates the subscript as arithmetic.
+    if [[ -n "${I18N_READY:-}" ]] && [[ -n "$msgid" ]] &&
+        [[ -n "${I18N_DATA[$msgid]:-}" ]]; then
         printf "%s" "${I18N_DATA[$msgid]}"
     else
         printf "%s" "$msgid"
