@@ -2984,15 +2984,18 @@ _get_files() {
 
     # If still no files available, prompt user with selection dialog.
     if (($(_get_items_count "$input_files") == 0)); then
-        if [[ "$par_recursive" == "false" ]]; then
-            input_files=$(_display_file_selection_box \
-                "$(_i18n 'Select input items')" "" \
-                "par_multiple=true; par_select_type=$par_type")
-        else
-            input_files=$(_display_file_selection_box \
-                "$(_i18n 'Select input items')" "" \
-                "par_multiple=true; par_select_type=all")
-        fi
+        local select_type=$par_type
+        [[ "$par_recursive" == "true" ]] && select_type="all"
+
+        local msg_select_type=""
+        case "$select_type" in
+        "file") msg_select_type="$(_i18n 'Select input files')" ;;
+        "directory") msg_select_type="$(_i18n 'Select input directories')" ;;
+        "all") msg_select_type="$(_i18n 'Select input items')" ;;
+        esac
+
+        input_files=$(_display_file_selection_box "$msg_select_type" "" \
+            "par_multiple=true; par_select_type=$select_type")
     fi
 
     local find_parameters=""
