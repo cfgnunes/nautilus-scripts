@@ -1578,7 +1578,11 @@ _is_directory_empty() {
 #
 # Options in '$parameters':
 #   - "par_multiple": Enable multiple selection ('true' or 'false').
-#   - "par_directory_only": Enable directory-only ('true' or 'false').
+#   - "par_select_type": Specifies the type of items to select.
+#      Supported values:
+#      - "file" (default): Filters files.
+#      - "directory": Filters directories.
+#      - "all": Includes both files and directories.
 _display_file_selection_box() {
     local title=${1:-""}
     local file_filter=${2:-""}
@@ -1589,7 +1593,7 @@ _display_file_selection_box() {
 
     # Default values for input parameters.
     local par_multiple="false"
-    local par_directory_only="false"
+    local par_select_type="file"
 
     # Evaluate the values from the '$parameters' variable.
     eval "$parameters"
@@ -1604,11 +1608,13 @@ _display_file_selection_box() {
 
     [[ -z "$title" ]] && title=$(_get_script_name)
     [[ "$par_multiple" == "true" ]] && multiple_flag="--multiple"
-    [[ "$par_directory_only" == "true" ]] && directory_flag="--directory"
+    [[ "$par_select_type" != "file" ]] && directory_flag="--directory"
 
     _display_lock
     if _command_exists "zenity"; then
-        selected_items=$(GDK_DEBUG=no-portals zenity --title "$title" \
+        # FIXME: Zenity cannot select files and directories in the same dialog.
+        # See: https://gitlab.gnome.org/GNOME/zenity/-/issues/116
+        selected_items=$(zenity --title "$title" \
             --file-selection $multiple_flag $directory_flag \
             ${file_filter:+--file-filter="$file_filter"} \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
@@ -1623,11 +1629,7 @@ _display_file_selection_box() {
 
     selected_items=$(_str_collapse_char "$selected_items" "$FIELD_SEPARATOR")
     if [[ -z "$selected_items" ]]; then
-        if [[ "$par_directory_only" == "true" ]]; then
-            msg="$(_i18n 'No directories were selected!')"
-        else
-            msg="$(_i18n 'No items were selected!')"
-        fi
+        msg="$(_i18n 'No items were selected!')"
         _display_error_box "$msg"
         _exit_script
     fi
@@ -2988,17 +2990,14 @@ _get_files() {
 
     # If still no files available, prompt user with selection dialog.
     if (($(_get_items_count "$input_files") == 0)); then
-        if [[ "$par_type" == "directory" ]] &&
-            [[ "$par_recursive" == "false" ]]; then
-            # Select only directories.
+        if [[ "$par_recursive" == "false" ]]; then
             input_files=$(_display_file_selection_box \
-                "$(_i18n 'Select input directories')" "" \
-                "par_multiple=true; par_directory_only=true")
+                "$(_i18n 'Select input items')" "" \
+                "par_multiple=true; par_select_type=$par_type")
         else
-            # Select files or directories.
             input_files=$(_display_file_selection_box \
-                "$(_i18n 'Select input files')" "" \
-                "par_multiple=true; par_directory_only=false")
+                "$(_i18n 'Select input items')" "" \
+                "par_multiple=true; par_select_type=all")
         fi
     fi
 
@@ -3286,8 +3285,8 @@ _get_output_dir() {
     # prompt the user to manually select a directory.
     if [[ ! -w "$output_dir" || -z "$output_dir" ]]; then
         output_dir=$(_display_file_selection_box \
-            "$(_i18n 'Select the output directory')" "" \
-            "par_multiple=false; par_directory_only=true")
+            "$(_i18n 'Select the output directory')" \
+            "" "par_select_type=directory")
     fi
 
     # If the selected directory is still not writable, abort with an error.
