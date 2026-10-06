@@ -1100,7 +1100,7 @@ __run_deps_get_dependency_value() {
     __test_equal "Resolve apt-get package for 7za." "$expected_output" "$output"
 
     output=$(_deps_get_dependency_value "7za" "pkgx" "PKG_MAP")
-    expected_output="p7zip"
+    expected_output="github.com/p7zip-project/p7zip"
     __test_equal "Resolve pkgx package for 7za." "$expected_output" "$output"
 
     output=$(_deps_get_dependency_value "nonexistent_key_xyz" "apt-get" "PKG_MAP")
