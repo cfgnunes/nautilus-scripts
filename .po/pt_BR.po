@@ -245,7 +245,7 @@ msgid "Select an image to use as the watermark"
 msgstr "Selecione uma imagem para usar como marca d'água"
 
 msgid "Enter the target size."
-msgstr "Insira o tamanho."
+msgstr "Digite o tamanho."
 
 msgid "Invalid input!"
 msgstr "Entrada inválida!"
@@ -377,10 +377,10 @@ msgid "Example:"
 msgstr "Exemplo:"
 
 msgid "Enter IP addresses or IP ranges."
-msgstr "Digite endereços IP ou faixas de IP."
+msgstr "Digite os endereços IP ou faixas de IP."
 
 msgid "Enter the URLs."
-msgstr "Insira as URLs."
+msgstr "Digite as URLs."
 
 msgid "No remote URL found."
 msgstr "Nenhuma URL remota encontrada."
