@@ -1303,7 +1303,7 @@ msgstr "Imagem: Empilhar (vertical)"
 
 #: Menu
 msgid "IP: Scan hosts"
-msgstr "IP: Scan hosts"
+msgstr "IP: Verificar hosts"
 
 #: Menu
 msgid "List hard links"

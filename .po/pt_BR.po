@@ -1303,7 +1303,7 @@ msgstr "Imagem: Empilhar (vertical)"
 
 #: Menu
 msgid "IP: Scan hosts"
-msgstr "IP: Scan hosts"
+msgstr "IP: Verificar hosts"
 
 #: Menu
 msgid "List hard links"
@@ -1727,7 +1727,7 @@ msgstr "Texto: Remover acentos"
 
 #: Menu
 msgid "URL: Check HTTP status"
-msgstr "URL: Verificar status HTTP"
+msgstr "URL: Verificar estado HTTP"
 
 #: Menu
 msgid "URL: Download file"
