@@ -775,7 +775,7 @@ _deps_install_packages() {
 
             local pkg=""
             for pkg in $packages; do
-                cmd_inst+="pkgx +$pkg;"
+                cmd_inst+="pkgx --silent +$pkg;"
             done
             cmd_inst=$(_str_collapse_char "$cmd_inst" ";")
 
@@ -959,7 +959,7 @@ _deps_is_package_installed() {
         if [[ -d "$pkgx_packages_dir/$pkgx_package_path" ]]; then
             # Load the environment variables for the installed package.
             set -a
-            eval "$(pkgx +"$package")" &>/dev/null
+            eval "$(pkgx --silent +"$package")" &>/dev/null
             set +a
             return 0
         fi
