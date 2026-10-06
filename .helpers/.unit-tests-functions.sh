@@ -867,7 +867,7 @@ __run_str_human_readable_path() {
     output=$(_str_human_readable_path "$input")
     __test_equal "Relative path in working directory." "$expected_output" "$output"
 
-    if [[ -n "${HOME:-}" ]]; then
+    if [[ -n "$HOME" ]]; then
         input="$HOME/Documents/file.txt"
         # shellcheck disable=SC2088
         expected_output="~/Documents/file.txt"

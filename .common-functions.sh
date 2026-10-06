@@ -82,6 +82,9 @@ readonly \
     TEMP_DIR_STORAGE_TEXT \
     TEMP_DIR_TASK
 
+# Use the home directory from the passwd database if '$HOME' is undefined.
+HOME=${HOME:-$(eval echo ~)}
+
 # -----------------------------------------------------------------------------
 # SECTION: Global variables
 # -----------------------------------------------------------------------------
@@ -662,7 +665,7 @@ _deps_get_dependency_value() {
         # it's a real Termux session by checking that the '$subkey' is
         # "termux", '$HOME' contains "com.termux", and the system is "Android".
         if [[ "$subkey" == "termux" ]] &&
-            [[ "${HOME:-}" == *"com.termux"* ]] &&
+            [[ "$HOME" == *"com.termux"* ]] &&
             [[ "$(uname -o)" == "Android" ]]; then
             printf "%s" "$value"
             return 0
@@ -950,7 +953,7 @@ _deps_is_package_installed() {
         fi
         ;;
     "pkgx")
-        local pkgx_packages_dir="${HOME:-}/.pkgx"
+        local pkgx_packages_dir="$HOME/.pkgx"
         local pkgx_package_path=""
         pkgx_package_path=$(sed "s|@[A-Za-z0-9.-/]*||g" <<<"$package")
         if [[ -d "$pkgx_packages_dir/$pkgx_package_path" ]]; then
@@ -2693,7 +2696,7 @@ _xdg_get_default_app() {
 
     # Get standard XDG application directories.
     local xdg_dirs="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
-    if [[ -n "${HOME:-}" ]]; then
+    if [[ -n "$HOME" ]]; then
         xdg_dirs+=":$HOME/.local/share"
     fi
 
@@ -3770,7 +3773,7 @@ _str_human_readable_path() {
     output_path=$(_text_remove_pwd "$input_path")
 
     # Replace the absolute home directory path with '~/'.
-    if [[ -n ${HOME:-} ]]; then
+    if [[ -n "$HOME" ]]; then
         output_path=${output_path/#$HOME\//~\/}
     fi
 
@@ -3877,9 +3880,9 @@ _cmd_magick_convert() {
 #   directory.
 _pkgx_initialize() {
     # Skip initialization if '$HOME' is undefined.
-    [[ -z "${HOME:-}" ]] && return
+    [[ -z "$HOME" ]] && return
 
-    local pkgx_dir="${HOME:-}/.pkgx"
+    local pkgx_dir="$HOME/.pkgx"
     local pkgx_cmd="$pkgx_dir/pkgx"
 
     if [[ -x "$pkgx_cmd" ]] && ! _command_exists "pkgx"; then
