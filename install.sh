@@ -117,7 +117,7 @@ OPT_REMOVE_SCRIPTS="true"
 OPT_INSTALL_ACCELS="true"
 OPT_CLOSE_FILE_MANAGER="true"
 OPT_INSTALL_APP_SHORTCUTS="false"
-if uname -m 2>/dev/null | grep -qE "x86_64|aarch64"; then
+if uname -m 2>/dev/null | grep -q "x86_64"; then
     OPT_INSTALL_PKGX="true"
 else
     OPT_INSTALL_PKGX="false"
