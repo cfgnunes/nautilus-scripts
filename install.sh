@@ -1525,7 +1525,7 @@ _install_pkgx() {
     local tarball_regex=""
     arch=$(uname -m)
     case "$arch" in
-    "x86_64") tarball_regex="https://.*linux.*86\-64.*tar.gz" ;;
+    "x86_64") tarball_regex="https://.*linux.*86-64.*tar.gz" ;;
     "aarch64") tarball_regex="https://.*linux.*aarch64.*tar.gz" ;;
     *)
         _echo_error "> Unsupported architecture: $arch"
