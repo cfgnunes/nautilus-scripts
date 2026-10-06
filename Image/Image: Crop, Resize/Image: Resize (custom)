@@ -11,7 +11,7 @@ _main() {
     local msg=""
 
     # Execute initial checks.
-    _command_exists "magick" || _check_dependencies "convert"
+    _check_dependencies "magick"
     input_files=$(_get_files "par_type=file; par_select_mime=image/")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
@@ -48,7 +48,7 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($TASK_DIMENSION)'")
 
     # Run the main process.
-    std_output=$(_cmd_magick_convert "$input_file" -resize "${TASK_DIMENSION}^" -gravity center -crop "${TASK_DIMENSION}+0+0" -strip +repage "$output_file" 2>&1)
+    std_output=$(_cmd_magick convert "$input_file" -resize "${TASK_DIMENSION}^" -gravity center -crop "${TASK_DIMENSION}+0+0" -strip +repage "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

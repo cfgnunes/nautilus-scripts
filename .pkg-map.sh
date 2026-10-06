@@ -133,30 +133,6 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
-    ["compare"]="
-        termux: imagemagick
-        apt:    imagemagick
-        dnf:    ImageMagick
-        pacman: imagemagick
-        nix:    imagemagick
-        zypper: ImageMagick
-        guix:   imagemagick
-        xbps:   ImageMagick
-        pkgx:   imagemagick.org
-    "
-
-    ["convert"]="
-        termux: imagemagick
-        apt:    imagemagick
-        dnf:    ImageMagick
-        pacman: imagemagick
-        nix:    imagemagick
-        zypper: ImageMagick
-        guix:   imagemagick
-        xbps:   ImageMagick
-        pkgx:   imagemagick.org
-    "
-
     ["cpio"]="
         termux: cpio
         apt:    cpio
@@ -469,6 +445,18 @@ declare -A PKG_MAP=(
         guix:   lzop
         xbps:   lzop
         pkgx:
+    "
+
+    ["magick"]="
+        termux: imagemagick
+        apt:    imagemagick
+        dnf:    ImageMagick
+        pacman: imagemagick
+        nix:    imagemagick
+        zypper: ImageMagick
+        guix:   imagemagick
+        xbps:   ImageMagick
+        pkgx:   imagemagick.org
     "
 
     ["mediainfo"]="

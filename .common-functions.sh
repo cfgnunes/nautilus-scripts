@@ -395,7 +395,7 @@ _run_function_parallel() {
     # the parallel subprocesses executed by 'bash -c'.
     export -f \
         _check_output \
-        _cmd_magick_convert \
+        _cmd_magick \
         _command_exists \
         _convert_delimited_string_to_text \
         _convert_text_to_delimited_string \
@@ -3856,20 +3856,24 @@ _text_uri_decode() {
 # SECTION: External application wrappers
 # -----------------------------------------------------------------------------
 
-# Function: _cmd_magick_convert
+# Function: _cmd_magick
 #
 # Description:
-#   This function executes ImageMagick's "convert". In ImageMagick 7+, the main
-#   executable is "magick". In ImageMagick 6 (legacy version), the command
-#   "convert" is used directly.
+#   Executes an ImageMagick command. In ImageMagick 7+, commands are executed
+#   through the 'magick' executable. In ImageMagick 6, commands are executed
+#   directly.
 #
 # Parameters:
-#   $@ : Arguments to be passed to the convert command.
-_cmd_magick_convert() {
+#   $1 : ImageMagick command (e.g. 'convert', 'identify').
+#   $@ : Arguments to be passed to the command.
+_cmd_magick() {
+    local command="$1"
+    shift
+
     if _command_exists "magick"; then
-        magick "$@"
+        magick "$command" "$@"
     else
-        convert "$@"
+        "$command" "$@"
     fi
 }
 

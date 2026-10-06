@@ -9,7 +9,7 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _command_exists "magick" || _check_dependencies "convert"
+    _check_dependencies "magick"
     _display_wait_box "0"
     input_files=$(_get_files "par_type=file; par_recursive=true; par_select_extension='jpg|jpeg|png|gif|bmp|tiff|tif|webp|avif|heic'")
 
@@ -145,7 +145,7 @@ _generate_fingerprint() {
 
     # Generate a fingerprint image using ImageMagick transformations.
     # Inspiration: https://github.com/jhnc/findimagedupes
-    _cmd_magick_convert "$input_file" \
+    _cmd_magick convert "$input_file" \
         -resize 160x160\! \
         -modulate 100,0,100 \
         -blur 0x2 \
@@ -208,17 +208,9 @@ _compare_images() {
     local img1=$1
     local img2=$2
 
-    __cmd_magick_compare() {
-        if _command_exists "magick"; then
-            magick compare "$@"
-        else
-            compare "$@"
-        fi
-    }
-
     # Compute RMSE between two images.
     local rmse=""
-    rmse=$(__cmd_magick_compare -metric RMSE "$img1" "$img2" null: 2>&1)
+    rmse=$(_cmd_magick compare -metric RMSE "$img1" "$img2" null: 2>&1)
 
     # Extract the numeric RMSE value.
     local value=""

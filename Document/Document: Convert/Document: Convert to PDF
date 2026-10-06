@@ -48,9 +48,9 @@ _get_dependencies() {
         command=$(_get_command "$input_file")
 
         case $command in
-        "convert")
+        "magick")
             if ! _command_exists "magick"; then
-                dependencies+="convert"
+                dependencies+="magick"
             fi
             ;;
         "inkscape") dependencies+="inkscape" ;;
@@ -90,7 +90,7 @@ _get_command() {
     local command=""
 
     case "${input_file,,}" in
-    *.bmp | *.gif | *.jpeg | *.jpg | *.png | *.tif | *.tiff | *.webp) command="convert" ;;
+    *.bmp | *.gif | *.jpeg | *.jpg | *.png | *.tif | *.tiff | *.webp) command="magick" ;;
     *.doc | *.docx) command="libreoffice_writer" ;;
     *.htm | *.html) command="libreoffice_writer" ;;
     *.md | *.markdown) command="pandoc_latex" ;;
@@ -121,8 +121,8 @@ _run_command() {
 
     # Run the main process.
     case $command in
-    "convert")
-        std_output=$(_cmd_magick_convert "$input_file" "$output_file" 2>&1)
+    "magick")
+        std_output=$(_cmd_magick convert "$input_file" "$output_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "inkscape")

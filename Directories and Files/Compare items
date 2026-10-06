@@ -54,7 +54,7 @@ _compare() {
 
     # Execute the appropriate command based on the determined type.
     case $command in
-    "compare")
+    "magick")
         # Use ImageMagick's compare tool for image files.
         if ((num_files_compare > 2)); then
             msg="$(_i18n 'You must select only two images to compare!')"
@@ -202,24 +202,8 @@ _compare_images() {
     local file_1=$1
     local file_2=$2
 
-    __cmd_magick_compare() {
-        if _command_exists "magick"; then
-            magick compare "$@"
-        else
-            compare "$@"
-        fi
-    }
-
-    __cmd_magick_identify() {
-        if _command_exists "magick"; then
-            magick identify "$@"
-        else
-            identify "$@"
-        fi
-    }
-
     # Check if the two images have identical pixel values.
-    if __cmd_magick_compare -metric AE -- "$file_1" "$file_2" null: &>/dev/null; then
+    if _cmd_magick compare -metric AE -- "$file_1" "$file_2" null: &>/dev/null; then
         local msg=""
         msg="$(_i18n 'The selected images have the same pixel values.')"
         _display_info_box "$msg"
@@ -229,9 +213,9 @@ _compare_images() {
     # Retrieve the dimensions of each image (width x height format).
     local dimensions_1=""
     local dimensions_2=""
-    dimensions_1=$(__cmd_magick_identify -format "%wx%h" "$file_1" 2>&1)
+    dimensions_1=$(_cmd_magick identify -format "%wx%h" "$file_1" 2>&1)
     _check_output "$?" "$dimensions_1" "$file_1" "" || return 1
-    dimensions_2=$(__cmd_magick_identify -format "%wx%h" "$file_2" 2>&1)
+    dimensions_2=$(_cmd_magick identify -format "%wx%h" "$file_2" 2>&1)
     _check_output "$?" "$dimensions_2" "$file_2" "" || return 1
 
     # Create a temporary file for the visual diff output.
@@ -241,7 +225,7 @@ _compare_images() {
     # Compare the images based on their dimensions.
     if [[ "$dimensions_1" == "$dimensions_2" ]]; then
         # If dimensions are the same, use a grayscale diff for better clarity.
-        _cmd_magick_convert \
+        _cmd_magick convert \
             '(' "$file_1" -flatten -grayscale Rec709Luminance ')' \
             '(' "$file_2" -flatten -grayscale Rec709Luminance ')' \
             '(' -clone 0-1 -compose darken -composite ')' \
@@ -249,7 +233,7 @@ _compare_images() {
     else
         # If dimensions differ, generate a visual diff highlighting
         # differences.
-        __cmd_magick_compare -- "$file_1" "$file_2" -compose src "$temp_file"
+        _cmd_magick compare -- "$file_1" "$file_2" -compose src "$temp_file"
     fi
 
     # Determine the default image viewer to display the visual diff.
@@ -293,7 +277,7 @@ _get_command() {
     "application/pdf") command="diffpdf" ;;
     "inode/directory") command="meld" ;;
     "inode/x-empty") command="meld" ;;
-    "image/"*) command="compare" ;;
+    "image/"*) command="magick" ;;
     "text/"*) command="meld" ;;
     *)
         # For unknown MIME types, determine the file encoding.

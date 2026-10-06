@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _command_exists "magick" || _check_dependencies "convert"
+    _check_dependencies "magick"
     _display_wait_box ""
     input_files=$(_get_files "par_type=file; par_select_mime=image/; par_min_items=2; par_sort_list=true")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
@@ -29,7 +29,7 @@ _main_task() {
 
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(_cmd_magick_convert -delay 100 -loop 0 $input_files "$output_file" 2>&1)
+    std_output=$(_cmd_magick convert -delay 100 -loop 0 $input_files "$output_file" 2>&1)
     _check_output "$?" "$std_output" "" "$output_file" || return 1
 }
 
