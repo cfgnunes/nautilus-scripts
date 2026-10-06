@@ -1918,8 +1918,8 @@ msgid "Add shortcuts in the application menu"
 msgstr "アプリケーションメニューにショートカットを追加"
 
 #: install.sh
-msgid "Install Homebrew (optional)"
-msgstr "Homebrewをインストール (オプション)"
+msgid "Install pkgx (optional)"
+msgstr "pkgxをインストール (オプション)"
 
 #: install.sh
 msgid "Choose which script categories to install"
@@ -1982,16 +1982,16 @@ msgid "Closing the file manager..."
 msgstr "ファイルマネージャーを閉じています..."
 
 #: install.sh
-msgid "Installing Homebrew:"
-msgstr "Homebrewをインストール中:"
+msgid "Installing pkgx:"
+msgstr "pkgxをインストール中:"
 
 #: install.sh
-msgid "Homebrew is already installed."
-msgstr "Homebrewは既にインストールされています。"
+msgid "pkgx is already installed."
+msgstr "pkgxは既にインストールされています。"
 
 #: install.sh
-msgid "Installing Homebrew to:"
-msgstr "Homebrewをインストール先:"
+msgid "Installing pkgx to:"
+msgstr "pkgxをインストール先:"
 
 #: install.sh
 msgid "Downloading the package..."
@@ -2002,8 +2002,8 @@ msgid "Could not find a package manager!"
 msgstr "パッケージマネージャーが見つかりません！"
 
 #: install.sh
-msgid "Homebrew installation failed!"
-msgstr "Homebrewのインストールに失敗しました！"
+msgid "pkgx installation failed!"
+msgstr "pkgxのインストールに失敗しました！"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

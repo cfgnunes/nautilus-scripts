@@ -1918,8 +1918,8 @@ msgid "Add shortcuts in the application menu"
 msgstr "एप्लिकेशन मेनू में शॉर्टकट जोड़ें"
 
 #: install.sh
-msgid "Install Homebrew (optional)"
-msgstr "Homebrew इंस्टॉल करें (वैकल्पिक)"
+msgid "Install pkgx (optional)"
+msgstr "pkgx इंस्टॉल करें (वैकल्पिक)"
 
 #: install.sh
 msgid "Choose which script categories to install"
@@ -1982,16 +1982,16 @@ msgid "Closing the file manager..."
 msgstr "फ़ाइल प्रबंधक बंद कर रहा है..."
 
 #: install.sh
-msgid "Installing Homebrew:"
-msgstr "Homebrew इंस्टॉल कर रहा है:"
+msgid "Installing pkgx:"
+msgstr "pkgx इंस्टॉल कर रहा है:"
 
 #: install.sh
-msgid "Homebrew is already installed."
-msgstr "Homebrew पहले से इंस्टॉल है।"
+msgid "pkgx is already installed."
+msgstr "pkgx पहले से इंस्टॉल है।"
 
 #: install.sh
-msgid "Installing Homebrew to:"
-msgstr "Homebrew इंस्टॉल कर रहा है:"
+msgid "Installing pkgx to:"
+msgstr "pkgx इंस्टॉल कर रहा है:"
 
 #: install.sh
 msgid "Downloading the package..."
@@ -2002,8 +2002,8 @@ msgid "Could not find a package manager!"
 msgstr "कोई पैकेज मैनेजर नहीं मिला!"
 
 #: install.sh
-msgid "Homebrew installation failed!"
-msgstr "Homebrew इंस्टालेशन विफल रहा!"
+msgid "pkgx installation failed!"
+msgstr "pkgx इंस्टालेशन विफल रहा!"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

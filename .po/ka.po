@@ -1918,8 +1918,8 @@ msgid "Add shortcuts in the application menu"
 msgstr "მალსახმობების დამატება აპლიკაციის მენიუში"
 
 #: install.sh
-msgid "Install Homebrew (optional)"
-msgstr "Homebrew-ის დაყენება (არასავალდებულო)"
+msgid "Install pkgx (optional)"
+msgstr "pkgx-ის დაყენება (არასავალდებულო)"
 
 #: install.sh
 msgid "Choose which script categories to install"
@@ -1982,16 +1982,16 @@ msgid "Closing the file manager..."
 msgstr "ფაილების მმართველის დახურვა..."
 
 #: install.sh
-msgid "Installing Homebrew:"
-msgstr "Homebrew-ის დაყენება:"
+msgid "Installing pkgx:"
+msgstr "pkgx-ის დაყენება:"
 
 #: install.sh
-msgid "Homebrew is already installed."
-msgstr "Homebrew უკვე დაყენებულია."
+msgid "pkgx is already installed."
+msgstr "pkgx უკვე დაყენებულია."
 
 #: install.sh
-msgid "Installing Homebrew to:"
-msgstr "Homebrew-ის დაყენება მდებარეობაზე:"
+msgid "Installing pkgx to:"
+msgstr "pkgx-ის დაყენება მდებარეობაზე:"
 
 #: install.sh
 msgid "Downloading the package..."
@@ -2002,8 +2002,8 @@ msgid "Could not find a package manager!"
 msgstr "პაკეტების მმართველის პოვნა შეუძლებელია!"
 
 #: install.sh
-msgid "Homebrew installation failed!"
-msgstr "Homebrew-ის დაყენება ჩავარდა!"
+msgid "pkgx installation failed!"
+msgstr "pkgx-ის დაყენება ჩავარდა!"
 
 msgid "EOF"
 msgstr "EOF"

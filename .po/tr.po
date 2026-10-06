@@ -1918,8 +1918,8 @@ msgid "Add shortcuts in the application menu"
 msgstr "Uygulama menüsüne kısayollar ekle"
 
 #: install.sh
-msgid "Install Homebrew (optional)"
-msgstr "Homebrew yükle (isteğe bağlı)"
+msgid "Install pkgx (optional)"
+msgstr "pkgx yükle (isteğe bağlı)"
 
 #: install.sh
 msgid "Choose which script categories to install"
@@ -1982,16 +1982,16 @@ msgid "Closing the file manager..."
 msgstr "Dosya yöneticisi kapatılıyor..."
 
 #: install.sh
-msgid "Installing Homebrew:"
-msgstr "Homebrew yükleniyor:"
+msgid "Installing pkgx:"
+msgstr "pkgx yükleniyor:"
 
 #: install.sh
-msgid "Homebrew is already installed."
-msgstr "Homebrew zaten yüklü."
+msgid "pkgx is already installed."
+msgstr "pkgx zaten yüklü."
 
 #: install.sh
-msgid "Installing Homebrew to:"
-msgstr "Homebrew şuraya yükleniyor:"
+msgid "Installing pkgx to:"
+msgstr "pkgx şuraya yükleniyor:"
 
 #: install.sh
 msgid "Downloading the package..."
@@ -2002,8 +2002,8 @@ msgid "Could not find a package manager!"
 msgstr "Bir paket yöneticisi bulunamadı!"
 
 #: install.sh
-msgid "Homebrew installation failed!"
-msgstr "Homebrew kurulumu başarısız!"
+msgid "pkgx installation failed!"
+msgstr "pkgx kurulumu başarısız!"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

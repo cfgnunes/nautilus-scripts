@@ -1918,8 +1918,8 @@ msgid "Add shortcuts in the application menu"
 msgstr "Snelkoppelingen toevoegen aan toepassingsmenu"
 
 #: install.sh
-msgid "Install Homebrew (optional)"
-msgstr "Homebrew installeren (optioneel)"
+msgid "Install pkgx (optional)"
+msgstr "pkgx installeren (optioneel)"
 
 #: install.sh
 msgid "Choose which script categories to install"
@@ -1982,16 +1982,16 @@ msgid "Closing the file manager..."
 msgstr "Bezig met sluiten van bestandsbeheerder…"
 
 #: install.sh
-msgid "Installing Homebrew:"
-msgstr "Bezig met installeren van Homebrew:"
+msgid "Installing pkgx:"
+msgstr "Bezig met installeren van pkgx:"
 
 #: install.sh
-msgid "Homebrew is already installed."
-msgstr "Homebrew is al geïnstalleerd."
+msgid "pkgx is already installed."
+msgstr "pkgx is al geïnstalleerd."
 
 #: install.sh
-msgid "Installing Homebrew to:"
-msgstr "Bezig met installeren van Homebrew in:"
+msgid "Installing pkgx to:"
+msgstr "Bezig met installeren van pkgx in:"
 
 #: install.sh
 msgid "Downloading the package..."
@@ -2002,8 +2002,8 @@ msgid "Could not find a package manager!"
 msgstr "Er is geen pakketbeheerder aangetroffen!"
 
 #: install.sh
-msgid "Homebrew installation failed!"
-msgstr "Homebrew kan niet worden geïnstalleerd!"
+msgid "pkgx installation failed!"
+msgstr "pkgx kan niet worden geïnstalleerd!"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

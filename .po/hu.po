@@ -1918,8 +1918,8 @@ msgid "Add shortcuts in the application menu"
 msgstr "Parancsikonok hozzáadása az alkalmazásmenühöz"
 
 #: install.sh
-msgid "Install Homebrew (optional)"
-msgstr "Homebrew telepítése (nem kötelező)"
+msgid "Install pkgx (optional)"
+msgstr "pkgx telepítése (nem kötelező)"
 
 #: install.sh
 msgid "Choose which script categories to install"
@@ -1982,16 +1982,16 @@ msgid "Closing the file manager..."
 msgstr "A fájlkezelő bezárása..."
 
 #: install.sh
-msgid "Installing Homebrew:"
-msgstr "Homebrew telepítése:"
+msgid "Installing pkgx:"
+msgstr "pkgx telepítése:"
 
 #: install.sh
-msgid "Homebrew is already installed."
-msgstr "A Homebrew már telepítve van."
+msgid "pkgx is already installed."
+msgstr "A pkgx már telepítve van."
 
 #: install.sh
-msgid "Installing Homebrew to:"
-msgstr "Homebrew telepítése ide:"
+msgid "Installing pkgx to:"
+msgstr "pkgx telepítése ide:"
 
 #: install.sh
 msgid "Downloading the package..."
@@ -2002,8 +2002,8 @@ msgid "Could not find a package manager!"
 msgstr "Nem található csomagkezelő!"
 
 #: install.sh
-msgid "Homebrew installation failed!"
-msgstr "A Homebrew telepítése sikertelen!"
+msgid "pkgx installation failed!"
+msgstr "A pkgx telepítése sikertelen!"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

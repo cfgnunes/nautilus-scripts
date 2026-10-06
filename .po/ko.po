@@ -1918,8 +1918,8 @@ msgid "Add shortcuts in the application menu"
 msgstr "응용 프로그램 메뉴에 바로 가기 추가"
 
 #: install.sh
-msgid "Install Homebrew (optional)"
-msgstr "Homebrew 설치 (선택 사항)"
+msgid "Install pkgx (optional)"
+msgstr "pkgx 설치 (선택 사항)"
 
 #: install.sh
 msgid "Choose which script categories to install"
@@ -1982,16 +1982,16 @@ msgid "Closing the file manager..."
 msgstr "파일 관리자 닫는 중..."
 
 #: install.sh
-msgid "Installing Homebrew:"
-msgstr "Homebrew 설치 중:"
+msgid "Installing pkgx:"
+msgstr "pkgx 설치 중:"
 
 #: install.sh
-msgid "Homebrew is already installed."
-msgstr "Homebrew가 이미 설치되어 있습니다."
+msgid "pkgx is already installed."
+msgstr "pkgx가 이미 설치되어 있습니다."
 
 #: install.sh
-msgid "Installing Homebrew to:"
-msgstr "Homebrew 설치 위치:"
+msgid "Installing pkgx to:"
+msgstr "pkgx 설치 위치:"
 
 #: install.sh
 msgid "Downloading the package..."
@@ -2002,8 +2002,8 @@ msgid "Could not find a package manager!"
 msgstr "패키지 관리자를 찾을 수 없습니다!"
 
 #: install.sh
-msgid "Homebrew installation failed!"
-msgstr "Homebrew 설치에 실패했습니다!"
+msgid "pkgx installation failed!"
+msgstr "pkgx 설치에 실패했습니다!"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

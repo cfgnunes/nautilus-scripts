@@ -1918,8 +1918,8 @@ msgid "Add shortcuts in the application menu"
 msgstr "הוספת קיצורים לתפריט היישומים"
 
 #: install.sh
-msgid "Install Homebrew (optional)"
-msgstr "התקנת Homebrew (רשות)"
+msgid "Install pkgx (optional)"
+msgstr "התקנת pkgx (רשות)"
 
 #: install.sh
 msgid "Choose which script categories to install"
@@ -1982,16 +1982,16 @@ msgid "Closing the file manager..."
 msgstr "מנהל הקבצים נסגר..."
 
 #: install.sh
-msgid "Installing Homebrew:"
-msgstr "התקנת Homebrew:"
+msgid "Installing pkgx:"
+msgstr "התקנת pkgx:"
 
 #: install.sh
-msgid "Homebrew is already installed."
-msgstr "החבילה של Homebrew כבר מותקנת."
+msgid "pkgx is already installed."
+msgstr "החבילה של pkgx כבר מותקנת."
 
 #: install.sh
-msgid "Installing Homebrew to:"
-msgstr "התקנת Homebrew אל:"
+msgid "Installing pkgx to:"
+msgstr "התקנת pkgx אל:"
 
 #: install.sh
 msgid "Downloading the package..."
@@ -2002,8 +2002,8 @@ msgid "Could not find a package manager!"
 msgstr "לא נמצא מנהל חבילות!"
 
 #: install.sh
-msgid "Homebrew installation failed!"
-msgstr "נכשלה התקנת Homebrew!"
+msgid "pkgx installation failed!"
+msgstr "נכשלה התקנת pkgx!"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

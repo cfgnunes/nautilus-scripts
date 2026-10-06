@@ -1918,8 +1918,8 @@ msgid "Add shortcuts in the application menu"
 msgstr "Adăugare comenzi rapide în meniul de aplicații"
 
 #: install.sh
-msgid "Install Homebrew (optional)"
-msgstr "Instalare Homebrew (opțional)"
+msgid "Install pkgx (optional)"
+msgstr "Instalare pkgx (opțional)"
 
 #: install.sh
 msgid "Choose which script categories to install"
@@ -1982,16 +1982,16 @@ msgid "Closing the file manager..."
 msgstr "Se închide gestionarul de fișiere..."
 
 #: install.sh
-msgid "Installing Homebrew:"
-msgstr "Se instalează Homebrew:"
+msgid "Installing pkgx:"
+msgstr "Se instalează pkgx:"
 
 #: install.sh
-msgid "Homebrew is already installed."
-msgstr "Homebrew este deja instalat."
+msgid "pkgx is already installed."
+msgstr "pkgx este deja instalat."
 
 #: install.sh
-msgid "Installing Homebrew to:"
-msgstr "Se instalează Homebrew în:"
+msgid "Installing pkgx to:"
+msgstr "Se instalează pkgx în:"
 
 #: install.sh
 msgid "Downloading the package..."
@@ -2002,8 +2002,8 @@ msgid "Could not find a package manager!"
 msgstr "Nu s-a găsit un gestionar de pachete!"
 
 #: install.sh
-msgid "Homebrew installation failed!"
-msgstr "Instalarea Homebrew a eșuat!"
+msgid "pkgx installation failed!"
+msgstr "Instalarea pkgx a eșuat!"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

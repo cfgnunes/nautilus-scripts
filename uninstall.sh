@@ -44,8 +44,9 @@ _uninstall_file() {
 # -----------------------------------------------------------------------------
 
 # Close some file managers to release configuration files.
-nemo -q &>/dev/null
 caja -q &>/dev/null
+nautilus -q &>/dev/null
+nemo -q &>/dev/null
 thunar -q &>/dev/null
 
 # -----------------------------------------------------------------------------
@@ -120,11 +121,12 @@ find "$dir" -name "$INSTALL_NAME_DIR-*.desktop" -type f -delete 2>/dev/null
 _remove_empty_parent_dirs "$dir"
 
 # -----------------------------------------------------------------------------
-# SECTION: Package manager: Homebrew
+# SECTION: Package manager: pkgx
 # -----------------------------------------------------------------------------
 
-# Homebrew: Installed directory.
-_uninstall_directory "$HOME/.local/apps/homebrew"
+_uninstall_directory "$HOME/.cache/pkgx"
+_uninstall_directory "$HOME/.local/apps/pkgx"
+_uninstall_directory "$HOME/.pkgx"
 
 # -----------------------------------------------------------------------------
 # SECTION: GNOME Shell: application folder

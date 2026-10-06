@@ -117,7 +117,7 @@ OPT_REMOVE_SCRIPTS="true"
 OPT_INSTALL_ACCELS="true"
 OPT_CLOSE_FILE_MANAGER="true"
 OPT_INSTALL_APP_SHORTCUTS="false"
-OPT_INSTALL_HOMEBREW="false"
+OPT_INSTALL_PKGX="false"
 OPT_CHOOSE_CATEGORIES="false"
 # Default core options.
 OPT_INTERACTIVE_INSTALL="true"
@@ -185,7 +185,7 @@ _main() {
         "$(_i18n 'Install keyboard accelerators')"
         "$(_i18n 'Close the file manager to reload configuration')"
         "$(_i18n 'Add shortcuts in the application menu')"
-        "$(_i18n 'Install Homebrew (optional)')"
+        "$(_i18n 'Install pkgx (optional)')"
         "$(_i18n 'Choose which script categories to install')"
     )
 
@@ -196,7 +196,7 @@ _main() {
         "$OPT_INSTALL_ACCELS"
         "$OPT_CLOSE_FILE_MANAGER"
         "$OPT_INSTALL_APP_SHORTCUTS"
-        "$OPT_INSTALL_HOMEBREW"
+        "$OPT_INSTALL_PKGX"
         "$OPT_CHOOSE_CATEGORIES"
     )
 
@@ -221,7 +221,7 @@ _main() {
     OPT_INSTALL_ACCELS=${menu_selected[2]}
     OPT_CLOSE_FILE_MANAGER=${menu_selected[3]}
     OPT_INSTALL_APP_SHORTCUTS=${menu_selected[4]}
-    OPT_INSTALL_HOMEBREW=${menu_selected[5]}
+    OPT_INSTALL_PKGX=${menu_selected[5]}
     OPT_CHOOSE_CATEGORIES=${menu_selected[6]}
 
     _log_variable "OPT_INSTALL_BASIC_DEPS"
@@ -229,7 +229,7 @@ _main() {
     _log_variable "OPT_INSTALL_ACCELS"
     _log_variable "OPT_CLOSE_FILE_MANAGER"
     _log_variable "OPT_INSTALL_APP_SHORTCUTS"
-    _log_variable "OPT_INSTALL_HOMEBREW"
+    _log_variable "OPT_INSTALL_PKGX"
     _log_variable "OPT_CHOOSE_CATEGORIES"
     _log_variable "OPT_INTERACTIVE_INSTALL"
     _log_variable "OPT_QUIET_INSTALL"
@@ -297,9 +297,9 @@ _main() {
         _echo_info "> $(_i18n 'Done!')"
     fi
 
-    # Step 5: Install Homebrew (optional).
-    if [[ "$OPT_INSTALL_HOMEBREW" == "true" ]]; then
-        _install_homebrew
+    # Step 5: Install pkgx (optional).
+    if [[ "$OPT_INSTALL_PKGX" == "true" ]]; then
+        _install_pkgx
     fi
 
     _echo ""
@@ -620,8 +620,6 @@ _get_parameters_command_line() {
     # Read parameters from command line.
     while [[ $# -gt 0 ]]; do
         case "$1" in
-        -b | --install-homebrew) OPT_INSTALL_HOMEBREW="true" ;;
-        -B | --no-install-homebrew) OPT_INSTALL_HOMEBREW="false" ;;
         -c | --check-dependencies) OPT_INSTALL_BASIC_DEPS="true" ;;
         -C | --no-check-dependencies) OPT_INSTALL_BASIC_DEPS="false" ;;
         -d | --remove-scripts) OPT_REMOVE_SCRIPTS="true" ;;
@@ -631,14 +629,14 @@ _get_parameters_command_line() {
         -k | --install-shortcuts) OPT_INSTALL_ACCELS="true" ;;
         -K | --no-install-shortcuts) OPT_INSTALL_ACCELS="false" ;;
         -n | --non-interactive) OPT_INTERACTIVE_INSTALL="false" ;;
+        -p | --install-pkgx) OPT_INSTALL_PKGX="true" ;;
+        -P | --no-install-pkgx) OPT_INSTALL_PKGX="false" ;;
         -q | --quiet) OPT_QUIET_INSTALL="true" ;;
         -s | --install-app-shortcuts) OPT_INSTALL_APP_SHORTCUTS="true" ;;
         -S | --no-install-app-shortcuts) OPT_INSTALL_APP_SHORTCUTS="false" ;;
         -h | --help)
             echo "Usage: $0 [options]"
             echo
-            echo "  -b, --install-homebrew          Install Homebrew."
-            echo "  -B, --no-install-homebrew       Do not install Homebrew."
             echo "  -c, --check-dependencies        Check for basic dependencies."
             echo "  -C, --no-check-dependencies     Do not check for basic dependencies."
             echo "  -d, --remove-scripts            Remove previously installed scripts."
@@ -649,6 +647,8 @@ _get_parameters_command_line() {
             echo "  -K, --no-install-shortcuts      Do not install keyboard accelerators."
             echo "  -n, --non-interactive           Run without prompts."
             echo "  -q, --quiet                     Suppress all output (silent mode)."
+            echo "  -p, --install-pkgx              Install pkgx."
+            echo "  -P, --no-install-pkgx           Do not install pkgx."
             echo "  -s, --install-app-shortcuts     Add shortcuts in the application menu."
             echo "  -S, --no-install-app-shortcuts  Do not add shortcuts in the application menu."
             echo "  -h, --help                      Show this help message and exit."
@@ -1498,60 +1498,66 @@ _close_filemanager() {
 }
 
 # -----------------------------------------------------------------------------
-# SECTION: Homebrew
+# SECTION: pkgx
 # -----------------------------------------------------------------------------
 
-# Function: _install_homebrew
+# Function: _install_pkgx
 #
 # Description:
-#   This function installs Homebrew if the user requested it and it is not
+#   This function installs pkgx if the user requested it and it is not
 #   already installed.
-_install_homebrew() {
-
-    # Check if 'curl' or 'wget' is available.
-    local downloader=""
-    if _command_exists "curl"; then
-        downloader="curl"
-    elif _command_exists "wget"; then
-        downloader="wget"
-    else
-        _echo_error "Neither 'curl' nor 'wget' is installed! Please install one of them to continue."
-        exit 1
-    fi
+_install_pkgx() {
+    local pkgx_dir="$HOME/.local/apps/pkgx"
+    local pkgx_cmd="$pkgx_dir/pkgx"
+    local pkgx_url="https://api.github.com/repos/pkgxdev/pkgx/releases/latest"
 
     _echo ""
-    _echo_info "$(_i18n 'Installing Homebrew:')"
+    _echo_info "$(_i18n 'Installing pkgx:')"
 
-    # Homebrew install directory.
-    local homebrew_dir="$HOME/.local/apps/homebrew"
-    local brew_cmd="$homebrew_dir/bin/brew"
-
-    # Check if Homebrew is already installed.
-    if [[ -e "$brew_cmd" ]]; then
-        _echo_info "> $(_i18n 'Homebrew is already installed.')"
+    # Check if pkgx is already installed.
+    if [[ -x "$pkgx_cmd" ]]; then
+        _echo_info "> $(_i18n 'pkgx is already installed.')"
         _echo_info "> $(_i18n 'Done!')"
         return
     fi
 
-    _echo_info "> $(_i18n 'Installing Homebrew to:') ~/.local/apps/homebrew"
-    mkdir --parents -- "$homebrew_dir"
+    local arch=""
+    local tarball_regex=""
+    arch=$(uname -m)
+    case "$arch" in
+    "x86_64") tarball_regex="https://.*linux.*86\-64.*tar.gz" ;;
+    "aarch64") tarball_regex="https://.*linux.*aarch64.*tar.gz" ;;
+    *)
+        _echo_error "Unsupported architecture: $arch"
+        exit 1
+        ;;
+    esac
+
+    _echo_info "> $(_i18n 'Installing pkgx to:') ~/.local/apps/pkgx"
+    mkdir --parents -- "$pkgx_dir"
 
     _echo_info "> $(_i18n 'Downloading the package...')"
 
-    # Download and extract Homebrew.
-    {
-        local url="https://github.com/Homebrew/brew/tarball/main"
-        if [[ "$downloader" == "curl" ]]; then
-            curl -fsSL "$url" | tar -xz --strip-components=1 -C "$homebrew_dir"
-        else
-            wget -qO- "$url" | tar -xz --strip-components=1 -C "$homebrew_dir"
-        fi
-    } 2>/dev/null
+    # Download and extract pkgx.
+    if _command_exists "curl"; then
+        curl -fsSL "$pkgx_url" 2>/dev/null |
+            grep --only-matching -m1 "$tarball_regex" |
+            xargs curl -fsSL | tar xz -C "$pkgx_dir"
+    elif _command_exists "wget"; then
+        wget -qO- "$pkgx_url" 2>/dev/null |
+            grep --only-matching -m1 "$tarball_regex" |
+            xargs wget -qO- | tar xz -C "$pkgx_dir"
+    else
+        _echo_error "Neither 'curl' nor 'wget' is installed! Please install one of them to continue."
+        return 1
+    fi
 
     # Verify installation.
-    if [[ ! -e "$brew_cmd" ]]; then
-        _echo_error "$(_i18n 'Homebrew installation failed!')"
+    if [[ ! -e "$pkgx_cmd" ]]; then
+        _echo_error "$(_i18n 'pkgx installation failed!')"
         exit 1
+    else
+        chmod +x -- "$pkgx_cmd"
     fi
 
     _echo_info "> $(_i18n 'Done!')"

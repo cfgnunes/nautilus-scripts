@@ -1918,8 +1918,8 @@ msgid "Add shortcuts in the application menu"
 msgstr "Lägg till genvägar i programmenyn"
 
 #: install.sh
-msgid "Install Homebrew (optional)"
-msgstr "Installera Homebrew (valfritt)"
+msgid "Install pkgx (optional)"
+msgstr "Installera pkgx (valfritt)"
 
 #: install.sh
 msgid "Choose which script categories to install"
@@ -1982,16 +1982,16 @@ msgid "Closing the file manager..."
 msgstr "Stänger filhanteraren..."
 
 #: install.sh
-msgid "Installing Homebrew:"
-msgstr "Installerar Homebrew:"
+msgid "Installing pkgx:"
+msgstr "Installerar pkgx:"
 
 #: install.sh
-msgid "Homebrew is already installed."
-msgstr "Homebrew är redan installerat."
+msgid "pkgx is already installed."
+msgstr "pkgx är redan installerat."
 
 #: install.sh
-msgid "Installing Homebrew to:"
-msgstr "Installerar Homebrew till:"
+msgid "Installing pkgx to:"
+msgstr "Installerar pkgx till:"
 
 #: install.sh
 msgid "Downloading the package..."
@@ -2002,8 +2002,8 @@ msgid "Could not find a package manager!"
 msgstr "Kunde inte hitta en pakethanterare!"
 
 #: install.sh
-msgid "Homebrew installation failed!"
-msgstr "Installationen av Homebrew misslyckades!"
+msgid "pkgx installation failed!"
+msgstr "Installationen av pkgx misslyckades!"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

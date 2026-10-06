@@ -1918,8 +1918,8 @@ msgid "Add shortcuts in the application menu"
 msgstr "Přidat zástupce do nabídky aplikací"
 
 #: install.sh
-msgid "Install Homebrew (optional)"
-msgstr "Nainstalovat Homebrew (volitelné)"
+msgid "Install pkgx (optional)"
+msgstr "Nainstalovat pkgx (volitelné)"
 
 #: install.sh
 msgid "Choose which script categories to install"
@@ -1982,16 +1982,16 @@ msgid "Closing the file manager..."
 msgstr "Zavírání správce souborů..."
 
 #: install.sh
-msgid "Installing Homebrew:"
-msgstr "Instalace Homebrew:"
+msgid "Installing pkgx:"
+msgstr "Instalace pkgx:"
 
 #: install.sh
-msgid "Homebrew is already installed."
-msgstr "Homebrew je již nainstalován."
+msgid "pkgx is already installed."
+msgstr "pkgx je již nainstalován."
 
 #: install.sh
-msgid "Installing Homebrew to:"
-msgstr "Instalace Homebrew do:"
+msgid "Installing pkgx to:"
+msgstr "Instalace pkgx do:"
 
 #: install.sh
 msgid "Downloading the package..."
@@ -2002,8 +2002,8 @@ msgid "Could not find a package manager!"
 msgstr "Nepodařilo se najít správce balíčků!"
 
 #: install.sh
-msgid "Homebrew installation failed!"
-msgstr "Instalace Homebrew se nezdařila!"
+msgid "pkgx installation failed!"
+msgstr "Instalace pkgx se nezdařila!"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

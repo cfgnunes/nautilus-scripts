@@ -49,7 +49,7 @@ MSG_INFO="[\033[0;32m INFO \033[0m]"
 # Defines the priority order of package managers.
 PKG_MANAGER_PRIORITY=(
     "flatpak"
-    "brew"
+    "pkgx"
     "nix-env"
     "apt-get"
     "rpm-ostree"
@@ -719,7 +719,7 @@ _deps_install_missing_packages() {
 #   $2 (post_install): Optional. Command executed after all installations.
 #
 # Example:
-# _deps_install_packages "apt-get:curl dnf:wget brew:git"
+# _deps_install_packages "apt-get:curl dnf:wget pkgx:git"
 _deps_install_packages() {
     local pairs=$1
     local post_install=$2
@@ -766,39 +766,17 @@ _deps_install_packages() {
             cmd_inst+="apt-get update;"
             cmd_inst+="apt-get -y install $packages"
             ;;
-        "brew")
-            # Configure Homebrew for non-interactive and less verbose
-            # operation.
-            export HOMEBREW_VERBOSE=""
-            export HOMEBREW_NO_ANALYTICS=1
-            export HOMEBREW_NO_AUTO_UPDATE=1
-            export HOMEBREW_NO_COLOR=1
-            export HOMEBREW_NO_EMOJI=1
-            export HOMEBREW_NO_ENV_HINTS=1
-            export HOMEBREW_NO_GITHUB_API=1
-
+        "pkgx")
             # Replace spaces with '$FIELD_SEPARATOR' for iteration.
             packages=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
 
-            # Homebrew: prioritize precompiled bottles instead of source
-            # builds. Dependencies are installed first, followed by the main
-            # packages.
-
-            # Each package is installed separately because installing multiple
-            # packages at once can break dependency resolution when using
-            # '--force-bottle'.
             local pkg=""
             for pkg in $packages; do
-                # Install all dependencies (recursively) using bottles.
-                cmd_inst+="brew deps --topological $pkg 2>/dev/null | "
-                cmd_inst+="xargs --no-run-if-empty -I{} "
-                cmd_inst+="brew install --force-bottle {};"
-                # Install the requested packages themselves.
-                cmd_inst+="brew install --force-bottle $pkg;"
+                cmd_inst+="pkgx +$pkg;"
             done
             cmd_inst=$(_str_collapse_char "$cmd_inst" ";")
 
-            # Homebrew runs as a non-root user.
+            # pkgx runs as a non-root user.
             cmd_admin=""
             ;;
         "dnf")
@@ -941,7 +919,7 @@ _deps_check_rpm_ostree_requires_reboot() {
 #   $1 (pkg_manager): The package manager to use for the check.
 #      Supported values:
 #      - "apt-get"      : For Debian/Ubuntu systems.
-#      - "brew"         : For Homebrew package manager.
+#      - "pkgx"         : For pkgx tool.
 #      - "dnf"          : For Fedora/RHEL systems.
 #      - "flatpak"      : For Flatpak packages.
 #      - "guix"         : For GNU Guix systems.
@@ -962,7 +940,7 @@ _deps_is_package_installed() {
     # Keep only the package name after '~' for verification, used when install
     # and check package names differ (e.g., on NixOS).
     if [[ "$package" == *"~"* ]]; then
-        package=$(sed "s|[A-Za-z0-9.-]*~||g" <<<"$package")
+        package=$(sed "s|[A-Za-z0-9.-/]*~||g" <<<"$package")
     fi
 
     case "$pkg_manager" in
@@ -971,8 +949,15 @@ _deps_is_package_installed() {
             return 0
         fi
         ;;
-    "brew")
-        if brew list | grep -qxF "$package"; then
+    "pkgx")
+        local pkgx_packages_dir="${HOME:-}/.pkgx"
+        local pkgx_package_path=""
+        pkgx_package_path=$(sed "s|@[A-Za-z0-9.-/]*||g" <<<"$package")
+        if [[ -d "$pkgx_packages_dir/$pkgx_package_path" ]]; then
+            # Load the environment variables for the installed package.
+            set -a
+            eval "$(pkgx +"$package")" 2>/dev/null
+            set +a
             return 0
         fi
         ;;
@@ -2483,6 +2468,16 @@ _display_gdbus_notify() {
 # SECTION: System and environment
 # -----------------------------------------------------------------------------
 
+_add_path_env() {
+    local path=$1
+
+    if [[ -d "$path" ]] && [[ ":$PATH:" != *":$path:"* ]]; then
+        export PATH="$path:$PATH"
+        return 0
+    fi
+    return 1
+}
+
 # Function: _get_available_app
 #
 # Description:
@@ -3875,27 +3870,20 @@ _cmd_magick_convert() {
     fi
 }
 
-# Function: _initialize_homebrew
+# Function: _pkgx_initialize
 #
 # Description:
-#   This function initializes the Homebrew environment if it is installed in
-#   the user's local directory.
-_initialize_homebrew() {
-    # Skip initialization if Homebrew is already available in 'PATH'.
-    [[ -n "${HOMEBREW_PREFIX:-}" ]] && return
-
+#   This function initializes the pkgx if it is installed in the user's local
+#   directory.
+_pkgx_initialize() {
     # Skip initialization if '$HOME' is undefined.
     [[ -z "${HOME:-}" ]] && return
 
-    local homebrew_dir="$HOME/.local/apps/homebrew"
-    local brew_cmd="$homebrew_dir/bin/brew"
+    local pkgx_dir="${HOME:-}/.local/apps/pkgx"
+    local pkgx_cmd="$pkgx_dir/pkgx"
 
-    if [[ -f "$brew_cmd" ]]; then
-        # Skip initialization if 'curl' and 'git' are not available in 'PATH'.
-        if _command_exists "curl" && _command_exists "git"; then
-            # Load the Homebrew environment into the current shell session.
-            eval "$($brew_cmd shellenv)"
-        fi
+    if [[ -x "$pkgx_cmd" ]] && ! _command_exists "pkgx"; then
+        _add_path_env "$pkgx_dir"
     fi
 }
 
@@ -4078,8 +4066,8 @@ _recent_scripts_add() {
 
 _i18n_initialize
 
-# Initialize Homebrew environment if available.
-_initialize_homebrew
+# Initialize pkgx tool if available.
+_pkgx_initialize
 
 # If running from a supported file manager and the scripts directory is
 # writable, update the list of recently accessed scripts.

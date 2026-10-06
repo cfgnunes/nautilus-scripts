@@ -1918,8 +1918,8 @@ msgid "Add shortcuts in the application menu"
 msgstr "Додати ярлики в меню програм"
 
 #: install.sh
-msgid "Install Homebrew (optional)"
-msgstr "Встановити Homebrew (необов’язково)"
+msgid "Install pkgx (optional)"
+msgstr "Встановити pkgx (необов’язково)"
 
 #: install.sh
 msgid "Choose which script categories to install"
@@ -1982,16 +1982,16 @@ msgid "Closing the file manager..."
 msgstr "Закриття файлового менеджера..."
 
 #: install.sh
-msgid "Installing Homebrew:"
-msgstr "Встановлення Homebrew:"
+msgid "Installing pkgx:"
+msgstr "Встановлення pkgx:"
 
 #: install.sh
-msgid "Homebrew is already installed."
-msgstr "Homebrew уже встановлено."
+msgid "pkgx is already installed."
+msgstr "pkgx уже встановлено."
 
 #: install.sh
-msgid "Installing Homebrew to:"
-msgstr "Встановлення Homebrew до:"
+msgid "Installing pkgx to:"
+msgstr "Встановлення pkgx до:"
 
 #: install.sh
 msgid "Downloading the package..."
@@ -2002,8 +2002,8 @@ msgid "Could not find a package manager!"
 msgstr "Не вдалося знайти менеджер пакунків!"
 
 #: install.sh
-msgid "Homebrew installation failed!"
-msgstr "Не вдалося встановити Homebrew!"
+msgid "pkgx installation failed!"
+msgstr "Не вдалося встановити pkgx!"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

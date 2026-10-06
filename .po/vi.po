@@ -1918,8 +1918,8 @@ msgid "Add shortcuts in the application menu"
 msgstr "Thêm phím tắt vào menu ứng dụng"
 
 #: install.sh
-msgid "Install Homebrew (optional)"
-msgstr "Cài Homebrew (tùy chọn)"
+msgid "Install pkgx (optional)"
+msgstr "Cài pkgx (tùy chọn)"
 
 #: install.sh
 msgid "Choose which script categories to install"
@@ -1982,16 +1982,16 @@ msgid "Closing the file manager..."
 msgstr "Đang đóng trình quản lý tệp..."
 
 #: install.sh
-msgid "Installing Homebrew:"
-msgstr "Đang cài Homebrew:"
+msgid "Installing pkgx:"
+msgstr "Đang cài pkgx:"
 
 #: install.sh
-msgid "Homebrew is already installed."
-msgstr "Homebrew đã được cài đặt."
+msgid "pkgx is already installed."
+msgstr "pkgx đã được cài đặt."
 
 #: install.sh
-msgid "Installing Homebrew to:"
-msgstr "Cài Homebrew vào:"
+msgid "Installing pkgx to:"
+msgstr "Cài pkgx vào:"
 
 #: install.sh
 msgid "Downloading the package..."
@@ -2002,8 +2002,8 @@ msgid "Could not find a package manager!"
 msgstr "Không tìm thấy trình quản lý gói!"
 
 #: install.sh
-msgid "Homebrew installation failed!"
-msgstr "Cài Homebrew thất bại!"
+msgid "pkgx installation failed!"
+msgstr "Cài pkgx thất bại!"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

@@ -22,7 +22,7 @@ declare -A PKG_MAP=(
         zypper: 7zip
         guix:   p7zip
         xbps:   p7zip
-        brew:   p7zip
+        pkgx:   github.com/p7zip-project/p7zip
     "
 
     ["ar"]="
@@ -34,7 +34,7 @@ declare -A PKG_MAP=(
         zypper: binutils
         guix:   binutils
         xbps:   binutils
-        brew:   binutils
+        pkgx:   gnu.org/binutils
     "
 
     ["axel"]="
@@ -46,7 +46,7 @@ declare -A PKG_MAP=(
         zypper: axel
         guix:   axel
         xbps:   axel
-        brew:   axel
+        pkgx:
     "
 
     ["baobab"]="
@@ -58,7 +58,7 @@ declare -A PKG_MAP=(
         zypper: baobab
         guix:   baobab
         xbps:   baobab
-        brew:
+        pkgx:
     "
 
     ["bsdtar"]="
@@ -70,7 +70,7 @@ declare -A PKG_MAP=(
         zypper: bsdtar
         guix:   libarchive
         xbps:   bsdtar
-        brew:   libarchive
+        pkgx:   libarchive.org
     "
 
     ["bzip2"]="
@@ -82,7 +82,7 @@ declare -A PKG_MAP=(
         zypper: bzip2
         guix:   bzip2
         xbps:   bzip2
-        brew:   bzip2
+        pkgx:   sourceware.org/bzip2
     "
 
     ["bzip3"]="
@@ -94,7 +94,7 @@ declare -A PKG_MAP=(
         zypper: bzip3
         guix:
         xbps:   bzip3
-        brew:   bzip3
+        pkgx:
     "
 
     ["cabextract"]="
@@ -106,7 +106,7 @@ declare -A PKG_MAP=(
         zypper: cabextract
         guix:   cabextract
         xbps:   cabextract
-        brew:   cabextract
+        pkgx:
     "
 
     ["cjxl"]="
@@ -118,7 +118,7 @@ declare -A PKG_MAP=(
         zypper: libjxl-tools
         guix:   libjxl
         xbps:   libjxl-tools
-        brew:
+        pkgx:   jpeg.org/jpegxl openexr.com@3.4
     "
 
     ["clamscan"]="
@@ -130,7 +130,7 @@ declare -A PKG_MAP=(
         zypper: clamav
         guix:   clamav
         xbps:   clamav
-        brew:
+        pkgx:
     "
 
     ["compare"]="
@@ -142,7 +142,7 @@ declare -A PKG_MAP=(
         zypper: ImageMagick
         guix:   imagemagick
         xbps:   ImageMagick
-        brew:
+        pkgx:   imagemagick.org
     "
 
     ["convert"]="
@@ -154,7 +154,7 @@ declare -A PKG_MAP=(
         zypper: ImageMagick
         guix:   imagemagick
         xbps:   ImageMagick
-        brew:
+        pkgx:   imagemagick.org
     "
 
     ["cpio"]="
@@ -166,7 +166,7 @@ declare -A PKG_MAP=(
         zypper: cpio
         guix:   cpio
         xbps:   cpio
-        brew:   cpio
+        pkgx:
     "
 
     ["curl"]="
@@ -178,7 +178,7 @@ declare -A PKG_MAP=(
         zypper: curl
         guix:   curl
         xbps:   curl
-        brew:
+        pkgx:   curl.se
     "
 
     ["dar"]="
@@ -190,7 +190,7 @@ declare -A PKG_MAP=(
         zypper: dar
         guix:
         xbps:   dar
-        brew:   dar
+        pkgx:
     "
 
     ["diffpdf"]="
@@ -202,7 +202,7 @@ declare -A PKG_MAP=(
         zypper:
         guix:
         xbps:
-        brew:
+        pkgx:
     "
 
     ["dig"]="
@@ -214,7 +214,7 @@ declare -A PKG_MAP=(
         zypper: bind-utils
         guix:   bind
         xbps:   bind
-        brew:   bind
+        pkgx:   isc.org/bind9
     "
 
     ["exiftool"]="
@@ -226,7 +226,7 @@ declare -A PKG_MAP=(
         zypper: exiftool
         guix:   perl-image-exiftool
         xbps:   exiftool
-        brew:
+        pkgx:   exiftool.org
     "
 
     ["ffmpeg"]="
@@ -238,7 +238,7 @@ declare -A PKG_MAP=(
         zypper: ffmpeg
         guix:   ffmpeg
         xbps:   ffmpeg
-        brew:
+        pkgx:   ffmpeg.org
     "
 
     ["filelight"]="
@@ -250,7 +250,7 @@ declare -A PKG_MAP=(
         zypper: filelight
         guix:   filelight
         xbps:   filelight
-        brew:
+        pkgx:
     "
 
     ["foremost"]="
@@ -262,7 +262,7 @@ declare -A PKG_MAP=(
         zypper:
         guix:
         xbps:   foremost
-        brew:   foremost
+        pkgx:
     "
 
     ["ghex"]="
@@ -274,7 +274,7 @@ declare -A PKG_MAP=(
         zypper: ghex
         guix:   ghex
         xbps:   ghex
-        brew:
+        pkgx:
     "
 
     ["git"]="
@@ -286,7 +286,7 @@ declare -A PKG_MAP=(
         zypper: git
         guix:   git
         xbps:   git
-        brew:
+        pkgx:   git-scm.org
     "
 
     ["gpg"]="
@@ -298,7 +298,7 @@ declare -A PKG_MAP=(
         zypper: gpg2
         guix:   gnupg
         xbps:   gnupg
-        brew:
+        pkgx:   gnupg.org
     "
 
     ["gs"]="
@@ -310,7 +310,7 @@ declare -A PKG_MAP=(
         zypper: ghostscript
         guix:   ghostscript
         xbps:   ghostscript
-        brew:
+        pkgx:   ghostscript.com
     "
 
     ["gunzip"]="
@@ -322,7 +322,7 @@ declare -A PKG_MAP=(
         zypper: gzip
         guix:   gzip
         xbps:   gzip
-        brew:   gzip
+        pkgx:
     "
 
     ["gzip"]="
@@ -334,7 +334,7 @@ declare -A PKG_MAP=(
         zypper: gzip
         guix:   gzip
         xbps:   gzip
-        brew:   gzip
+        pkgx:
     "
 
     ["iconv"]="
@@ -346,7 +346,7 @@ declare -A PKG_MAP=(
         zypper: glibc
         guix:   glibc
         xbps:   glibc
-        brew:
+        pkgx:   gnu.org/glibc
     "
 
     ["id3v2"]="
@@ -358,7 +358,7 @@ declare -A PKG_MAP=(
         zypper: id3v2
         guix:
         xbps:   id3v2
-        brew:   id3v2
+        pkgx:
     "
 
     ["inkscape"]="
@@ -370,7 +370,7 @@ declare -A PKG_MAP=(
         zypper: inkscape
         guix:   inkscape
         xbps:   inkscape
-        brew:
+        pkgx:
     "
 
     ["kdiff3"]="
@@ -382,7 +382,7 @@ declare -A PKG_MAP=(
         zypper: kdiff3
         guix:
         xbps:   kdiff3
-        brew:
+        pkgx:
     "
 
     ["lenspect"]="
@@ -394,7 +394,7 @@ declare -A PKG_MAP=(
         zypper:
         guix:
         xbps:
-        brew:
+        pkgx:
         flatpak: io.github.vmkspv.lenspect
     "
 
@@ -407,7 +407,7 @@ declare -A PKG_MAP=(
         zypper: lhasa
         guix:   lhasa
         xbps:   lhasa
-        brew:   lhasa
+        pkgx:
     "
 
     ["lrzip"]="
@@ -419,7 +419,7 @@ declare -A PKG_MAP=(
         zypper: lrzip
         guix:   lrzip
         xbps:   lrzip
-        brew:   lrzip
+        pkgx:
     "
 
     ["lz4"]="
@@ -431,7 +431,7 @@ declare -A PKG_MAP=(
         zypper: lz4
         guix:   lz4
         xbps:   lz4
-        brew:   lz4
+        pkgx:   lz4.org
     "
 
     ["lzip"]="
@@ -443,7 +443,7 @@ declare -A PKG_MAP=(
         zypper: lzip
         guix:   lzip
         xbps:   lzip
-        brew:   lzip
+        pkgx:   nongnu.org/lzip
     "
 
     ["lzma"]="
@@ -455,7 +455,7 @@ declare -A PKG_MAP=(
         zypper: lzma
         guix:   xz
         xbps:   xz
-        brew:   xz
+        pkgx:   tukaani.org/xz
     "
 
     ["lzop"]="
@@ -467,7 +467,7 @@ declare -A PKG_MAP=(
         zypper: lzop
         guix:   lzop
         xbps:   lzop
-        brew:   lzop
+        pkgx:
     "
 
     ["mediainfo"]="
@@ -479,7 +479,7 @@ declare -A PKG_MAP=(
         zypper: mediainfo
         guix:   mediainfo
         xbps:   mediainfo
-        brew:
+        pkgx:
     "
 
     ["meld"]="
@@ -491,7 +491,7 @@ declare -A PKG_MAP=(
         zypper: meld
         guix:   meld
         xbps:   meld
-        brew:
+        pkgx:
     "
 
     ["mp3gain"]="
@@ -503,7 +503,7 @@ declare -A PKG_MAP=(
         zypper: mp3gain
         guix:
         xbps:
-        brew:   mp3gain
+        pkgx:
     "
 
     ["nmap"]="
@@ -515,7 +515,7 @@ declare -A PKG_MAP=(
         zypper: nmap
         guix:   nmap
         xbps:   nmap
-        brew:
+        pkgx:   nmap.org
     "
 
     ["okteta"]="
@@ -527,7 +527,7 @@ declare -A PKG_MAP=(
         zypper: okteta
         guix:   okteta
         xbps:   okteta
-        brew:
+        pkgx:
     "
 
     ["openssl"]="
@@ -539,7 +539,7 @@ declare -A PKG_MAP=(
         zypper: openssl
         guix:   openssl
         xbps:   openssl
-        brew:   openssl
+        pkgx:   openssl.org
     "
 
     ["optipng"]="
@@ -551,7 +551,7 @@ declare -A PKG_MAP=(
         zypper: optipng
         guix:   optipng
         xbps:   optipng
-        brew:   optipng
+        pkgx:   sf.net/optipng
     "
 
     ["pandoc"]="
@@ -563,7 +563,7 @@ declare -A PKG_MAP=(
         zypper: pandoc
         guix:   pandoc
         xbps:   pandoc
-        brew:   pandoc
+        pkgx:   pandoc.org
     "
 
     ["pdfinfo"]="
@@ -575,7 +575,7 @@ declare -A PKG_MAP=(
         zypper: poppler-tools
         guix:   poppler
         xbps:   poppler
-        brew:
+        pkgx:   poppler.freedesktop.org
     "
 
     ["perl"]="
@@ -587,7 +587,7 @@ declare -A PKG_MAP=(
         zypper: perl-base
         guix:   perl
         xbps:   perl
-        brew:   perl
+        pkgx:   perl.org
     "
 
     ["photorec"]="
@@ -599,7 +599,7 @@ declare -A PKG_MAP=(
         zypper: photorec
         guix:   testdisk
         xbps:   testdisk
-        brew:   testdisk
+        pkgx:
     "
 
     ["ping"]="
@@ -611,7 +611,7 @@ declare -A PKG_MAP=(
         zypper: iputils
         guix:   iputils
         xbps:   iputils
-        brew:   iputils
+        pkgx:   gnu.org/inetutils
     "
 
     ["qpdf"]="
@@ -623,7 +623,7 @@ declare -A PKG_MAP=(
         zypper: qpdf
         guix:   qpdf
         xbps:   qpdf
-        brew:   qpdf
+        pkgx:   qpdf.sourceforge.io
     "
 
     ["rdfind"]="
@@ -635,7 +635,7 @@ declare -A PKG_MAP=(
         zypper: rdfind
         guix:
         xbps:   rdfind
-        brew:   rdfind
+        pkgx:
     "
 
     ["rhash"]="
@@ -647,7 +647,7 @@ declare -A PKG_MAP=(
         zypper: rhash
         guix:   rhash
         xbps:   rhash
-        brew:   rhash
+        pkgx:   rhash.sourceforge.net
     "
 
     ["rsync"]="
@@ -659,7 +659,7 @@ declare -A PKG_MAP=(
         zypper: rsync
         guix:   rsync
         xbps:   rsync
-        brew:   rsync
+        pkgx:   rsync.samba.org
     "
 
     ["tar"]="
@@ -671,7 +671,7 @@ declare -A PKG_MAP=(
         zypper: tar
         guix:   tar
         xbps:   tar
-        brew:   gnu-tar
+        pkgx:   gnu.org/tar
     "
 
     ["unar"]="
@@ -683,7 +683,7 @@ declare -A PKG_MAP=(
         zypper: unar
         guix:
         xbps:   unar
-        brew:   unar
+        pkgx:
     "
 
     ["unrar"]="
@@ -695,7 +695,7 @@ declare -A PKG_MAP=(
         zypper: unrar
         guix:
         xbps:   unrar
-        brew:
+        pkgx:   rarlab.com
     "
 
     ["unsquashfs"]="
@@ -707,7 +707,7 @@ declare -A PKG_MAP=(
         zypper: squashfs
         guix:   squashfs-tools
         xbps:   squashfs-tools
-        brew:   squashfs
+        pkgx:   github.com/plougher/squashfs-tools
     "
 
     ["unzip"]="
@@ -719,7 +719,7 @@ declare -A PKG_MAP=(
         zypper: unzip
         guix:   unzip
         xbps:   unzip
-        brew:   unzip
+        pkgx:   info-zip.org/unzip
     "
 
     ["wl-paste"]="
@@ -731,7 +731,7 @@ declare -A PKG_MAP=(
         zypper: wl-clipboard
         guix:   wl-clipboard
         xbps:   wl-clipboard
-        brew:
+        pkgx:
     "
 
     ["xclip"]="
@@ -743,7 +743,7 @@ declare -A PKG_MAP=(
         zypper: xclip
         guix:   xclip
         xbps:   xclip
-        brew:
+        pkgx:
     "
 
     ["xorriso"]="
@@ -755,7 +755,7 @@ declare -A PKG_MAP=(
         zypper: xorriso
         guix:   xorriso
         xbps:   xorriso
-        brew:   xorriso
+        pkgx:
     "
 
     ["xxd"]="
@@ -767,7 +767,7 @@ declare -A PKG_MAP=(
         zypper: xxd
         guix:   xxd
         xbps:   xxd
-        brew:
+        pkgx:
     "
 
     ["xz"]="
@@ -779,7 +779,7 @@ declare -A PKG_MAP=(
         zypper: xz
         guix:   xz
         xbps:   xz
-        brew:   xz
+        pkgx:   tukaani.org/xz
     "
 
     ["zpaq"]="
@@ -791,7 +791,7 @@ declare -A PKG_MAP=(
         zypper: zpaq
         guix:   zpaq
         xbps:   zpaq
-        brew:   zpaq
+        pkgx:
     "
 
     ["zstd"]="
@@ -803,7 +803,7 @@ declare -A PKG_MAP=(
         zypper: zstd
         guix:   zstd
         xbps:   zstd
-        brew:   zstd
+        pkgx:   facebook.com/zstd
     "
 
     ["latexmk"]="
@@ -815,7 +815,7 @@ declare -A PKG_MAP=(
         zypper: texlive-latexmk
         guix:   texlive-bin
         xbps:   texlive-latexmk
-        brew:
+        pkgx:
     "
 
     ["localc"]="
@@ -827,7 +827,7 @@ declare -A PKG_MAP=(
         zypper: libreoffice-calc
         guix:   libreoffice
         xbps:   libreoffice-calc
-        brew:
+        pkgx:
     "
 
     ["loimpress"]="
@@ -839,7 +839,7 @@ declare -A PKG_MAP=(
         zypper: libreoffice-impress
         guix:   libreoffice
         xbps:   libreoffice-impress
-        brew:
+        pkgx:
     "
 
     ["lowriter"]="
@@ -851,7 +851,7 @@ declare -A PKG_MAP=(
         zypper: libreoffice-writer
         guix:   libreoffice
         xbps:   libreoffice-writer
-        brew:
+        pkgx:
     "
 
     ["ocrmypdf"]="
@@ -863,7 +863,7 @@ declare -A PKG_MAP=(
         zypper:
         guix:
         xbps:   python3-ocrmypdf
-        brew:
+        pkgx:   github.com/ocrmypdf/OCRmyPDF
     "
 
     ["pdfjam"]="
@@ -875,7 +875,7 @@ declare -A PKG_MAP=(
         zypper: texlive-pdfjam-bin
         guix:   texlive-bin
         xbps:   texlive
-        brew:
+        pkgx:
     "
 
     ["scour"]="
@@ -887,7 +887,7 @@ declare -A PKG_MAP=(
         zypper: python3-scour~scour
         guix:   python-scour
         xbps:   python3-scour
-        brew:
+        pkgx:
     "
 
     ["sox"]="
@@ -899,7 +899,7 @@ declare -A PKG_MAP=(
         zypper: sox
         guix:   sox
         xbps:   sox
-        brew:   sox
+        pkgx:
     "
 
     ["tesseract-lang-${TASK_LANG:-}"]="
@@ -911,7 +911,7 @@ declare -A PKG_MAP=(
         zypper: tesseract tesseract-ocr-traineddata-${TASK_LANG:-}
         guix:   tesseract-ocr
         xbps:   tesseract-ocr tesseract-ocr-${TASK_LANG:-}
-        brew:
+        pkgx:
     "
 
     ["texlive"]="
@@ -943,7 +943,7 @@ declare -A PKG_MAP=(
                 texlive-collection-xetex
         guix:   texlive
         xbps:   texlive-bin
-        brew:
+        pkgx:
     "
 
     ["tmux"]="
@@ -955,7 +955,7 @@ declare -A PKG_MAP=(
         zypper: tmux
         guix:   tmux
         xbps:   tmux
-        brew:   tmux
+        pkgx:   github.com/tmux/tmux
     "
 )
 
