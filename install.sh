@@ -117,7 +117,11 @@ OPT_REMOVE_SCRIPTS="true"
 OPT_INSTALL_ACCELS="true"
 OPT_CLOSE_FILE_MANAGER="true"
 OPT_INSTALL_APP_SHORTCUTS="false"
-OPT_INSTALL_PKGX="false"
+if uname -m 2>/dev/null | grep -qE "x86_64|aarch64"; then
+    OPT_INSTALL_PKGX="true"
+else
+    OPT_INSTALL_PKGX="false"
+fi
 OPT_CHOOSE_CATEGORIES="false"
 # Default core options.
 OPT_INTERACTIVE_INSTALL="true"
@@ -1521,8 +1525,8 @@ _install_pkgx() {
         return
     fi
 
-    local arch=""
     local tarball_regex=""
+    local arch=""
     arch=$(uname -m)
     case "$arch" in
     "x86_64") tarball_regex="https://.*linux.*86-64.*tar.gz" ;;
