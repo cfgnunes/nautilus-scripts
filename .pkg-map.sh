@@ -217,6 +217,7 @@ declare -A PKG_MAP=(
         pkgx:   isc.org/bind9
     "
 
+    # FIXME: The 'exiftool.org' of pkgx is not working.
     ["exiftool"]="
         termux: exiftool
         apt:    libimage-exiftool-perl
@@ -226,7 +227,7 @@ declare -A PKG_MAP=(
         zypper: exiftool
         guix:   perl-image-exiftool
         xbps:   exiftool
-        pkgx:   exiftool.org
+        pkgx:
     "
 
     ["ffmpeg"]="
