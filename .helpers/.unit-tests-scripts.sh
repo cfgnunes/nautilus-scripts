@@ -1216,12 +1216,6 @@ _main() {
     __test_file_nonempty "$output_file (1024 px).png"
     __test_file_empty "$std_output"
 
-    script_test="Image/Image: SVG files/SVG: Optimize"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (optimized).svg"
-    __test_file_empty "$std_output"
-
     script_test="Image/Image: SVG files/SVG: Replace fonts with Charter"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"

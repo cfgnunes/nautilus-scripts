@@ -1658,10 +1658,6 @@ msgid "SVG: Export to PNG (custom)"
 msgstr "SVG：PNGにエクスポート (カスタム)"
 
 #: Menu
-msgid "SVG: Optimize"
-msgstr "SVG：最適化"
-
-#: Menu
 msgid "SVG: Replace fonts with Charter"
 msgstr "SVG：フォントをCharterに置換"
 

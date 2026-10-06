@@ -1658,10 +1658,6 @@ msgid "SVG: Export to PNG (custom)"
 msgstr "SVG: exportálás PNG-be (egyéni)"
 
 #: Menu
-msgid "SVG: Optimize"
-msgstr "SVG: optimalizálás"
-
-#: Menu
 msgid "SVG: Replace fonts with Charter"
 msgstr "SVG: betűtípusok cseréje Charterre"
 

@@ -1658,10 +1658,6 @@ msgid "SVG: Export to PNG (custom)"
 msgstr "SVG: Exporter en PNG (personnalisé)"
 
 #: Menu
-msgid "SVG: Optimize"
-msgstr "SVG: Optimiser"
-
-#: Menu
 msgid "SVG: Replace fonts with Charter"
 msgstr "SVG: Remplacer les polices par Charter"
 

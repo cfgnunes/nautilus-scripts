@@ -1658,10 +1658,6 @@ msgid "SVG: Export to PNG (custom)"
 msgstr "SVG: PNG-ში გატანა (მორგებული)"
 
 #: Menu
-msgid "SVG: Optimize"
-msgstr "SVG: ოპტიმიზაცია"
-
-#: Menu
 msgid "SVG: Replace fonts with Charter"
 msgstr "SVG: ფონტების ჩანაცვლება Charter-ით"
 
