@@ -3879,7 +3879,7 @@ _pkgx_initialize() {
     # Skip initialization if '$HOME' is undefined.
     [[ -z "${HOME:-}" ]] && return
 
-    local pkgx_dir="${HOME:-}/.local/apps/pkgx"
+    local pkgx_dir="${HOME:-}/.pkgx"
     local pkgx_cmd="$pkgx_dir/pkgx"
 
     if [[ -x "$pkgx_cmd" ]] && ! _command_exists "pkgx"; then

@@ -1507,7 +1507,7 @@ _close_filemanager() {
 #   This function installs pkgx if the user requested it and it is not
 #   already installed.
 _install_pkgx() {
-    local pkgx_dir="$HOME/.local/apps/pkgx"
+    local pkgx_dir="$HOME/.pkgx"
     local pkgx_cmd="$pkgx_dir/pkgx"
     local pkgx_url="https://api.github.com/repos/pkgxdev/pkgx/releases/latest"
 
@@ -1533,7 +1533,7 @@ _install_pkgx() {
         ;;
     esac
 
-    _echo_info "> $(_i18n 'Installing pkgx to:') ~/.local/apps/pkgx"
+    _echo_info "> $(_i18n 'Installing pkgx to:') ~/.pkgx"
     mkdir --parents -- "$pkgx_dir"
 
     _echo_info "> $(_i18n 'Downloading the package...')"
