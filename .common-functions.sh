@@ -3871,8 +3871,13 @@ _cmd_magick() {
     shift
 
     if _command_exists "magick"; then
-        magick "$command" "$@"
+        if [[ "$command" == "convert" ]]; then
+            magick "$@"
+        else
+            magick "$command" "$@"
+        fi
     else
+        # ImageMagick 6: commands are executed directly.
         "$command" "$@"
     fi
 }
