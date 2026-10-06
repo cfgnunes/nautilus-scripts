@@ -220,24 +220,6 @@ _main() {
     __test_file_nonempty "$output_file (4).mp3"
     __test_file_empty "$std_output"
 
-    script_test="Audio and Video/Audio: Convert/Audio: Convert to OGG (192 kbps)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.ogg"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: Convert/Audio: Convert to OGG (320 kbps)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (2).ogg"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: Convert/Audio: Convert to OGG (48 kbps)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (3).ogg"
-    __test_file_empty "$std_output"
-
     script_test="Audio and Video/Audio: Convert/Audio: Convert to OPUS (192 kbps)"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"

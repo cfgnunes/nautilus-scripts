@@ -702,18 +702,6 @@ msgid "Audio: Convert to MP3 (320 kbps)"
 msgstr "Hang: konvertálás ide MP3 (320 kbps)"
 
 #: Menu
-msgid "Audio: Convert to OGG (48 kbps)"
-msgstr "Hang: konvertálás ide OGG (48 kbps)"
-
-#: Menu
-msgid "Audio: Convert to OGG (192 kbps)"
-msgstr "Hang: konvertálás ide OGG (192 kbps)"
-
-#: Menu
-msgid "Audio: Convert to OGG (320 kbps)"
-msgstr "Hang: konvertálás ide OGG (320 kbps)"
-
-#: Menu
 msgid "Audio: Convert to OPUS (48 kbps)"
 msgstr "Hang: konvertálás ide OPUS (48 kbps)"
 

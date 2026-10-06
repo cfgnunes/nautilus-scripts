@@ -702,18 +702,6 @@ msgid "Audio: Convert to MP3 (320 kbps)"
 msgstr "აუდიო: MP3-ში (320 კბ/წმ) გადაყვანა"
 
 #: Menu
-msgid "Audio: Convert to OGG (48 kbps)"
-msgstr "აუდიო: OGG-ში (48 კბ/წმ) გადაყვანა"
-
-#: Menu
-msgid "Audio: Convert to OGG (192 kbps)"
-msgstr "აუდიო: OGG-ში (192 კბ/წმ) გადაყვანა"
-
-#: Menu
-msgid "Audio: Convert to OGG (320 kbps)"
-msgstr "აუდიო: OGG-ში (320 კბ/წმ) გადაყვანა"
-
-#: Menu
 msgid "Audio: Convert to OPUS (48 kbps)"
 msgstr "აუდიო: OPUS-ში (48 კბ/წმ) გადაყვანა"
 

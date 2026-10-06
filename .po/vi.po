@@ -702,18 +702,6 @@ msgid "Audio: Convert to MP3 (320 kbps)"
 msgstr "Âm thanh: Chuyển thành MP3 (320 kbps)"
 
 #: Menu
-msgid "Audio: Convert to OGG (48 kbps)"
-msgstr "Âm thanh: Chuyển thành OGG (48 kbps)"
-
-#: Menu
-msgid "Audio: Convert to OGG (192 kbps)"
-msgstr "Âm thanh: Chuyển thành OGG (192 kbps)"
-
-#: Menu
-msgid "Audio: Convert to OGG (320 kbps)"
-msgstr "Âm thanh: Chuyển thành OGG (320 kbps)"
-
-#: Menu
 msgid "Audio: Convert to OPUS (48 kbps)"
 msgstr "Âm thanh: Chuyển thành OPUS (48 kbps)"
 

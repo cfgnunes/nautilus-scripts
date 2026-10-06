@@ -701,18 +701,6 @@ msgid "Audio: Convert to MP3 (320 kbps)"
 msgstr ""
 
 #: Menu
-msgid "Audio: Convert to OGG (48 kbps)"
-msgstr ""
-
-#: Menu
-msgid "Audio: Convert to OGG (192 kbps)"
-msgstr ""
-
-#: Menu
-msgid "Audio: Convert to OGG (320 kbps)"
-msgstr ""
-
-#: Menu
 msgid "Audio: Convert to OPUS (48 kbps)"
 msgstr ""
 
