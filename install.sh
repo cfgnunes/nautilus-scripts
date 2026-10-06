@@ -1528,8 +1528,8 @@ _install_pkgx() {
     "x86_64") tarball_regex="https://.*linux.*86\-64.*tar.gz" ;;
     "aarch64") tarball_regex="https://.*linux.*aarch64.*tar.gz" ;;
     *)
-        _echo_error "Unsupported architecture: $arch"
-        exit 1
+        _echo_error "> Unsupported architecture: $arch"
+        return 1
         ;;
     esac
 
@@ -1548,14 +1548,14 @@ _install_pkgx() {
             grep --only-matching -m1 "$tarball_regex" |
             xargs wget -qO- | tar xz -C "$pkgx_dir"
     else
-        _echo_error "Neither 'curl' nor 'wget' is installed! Please install one of them to continue."
+        _echo_error "> Neither 'curl' nor 'wget' is installed! Please install one of them to continue."
         return 1
     fi
 
     # Verify installation.
     if [[ ! -e "$pkgx_cmd" ]]; then
-        _echo_error "$(_i18n 'pkgx installation failed!')"
-        exit 1
+        _echo_error "> $(_i18n 'pkgx installation failed!')"
+        return 1
     else
         chmod +x -- "$pkgx_cmd"
     fi
