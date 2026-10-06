@@ -956,7 +956,7 @@ _deps_is_package_installed() {
         if [[ -d "$pkgx_packages_dir/$pkgx_package_path" ]]; then
             # Load the environment variables for the installed package.
             set -a
-            eval "$(pkgx +"$package")" 2>/dev/null
+            eval "$(pkgx +"$package")" &>/dev/null
             set +a
             return 0
         fi
