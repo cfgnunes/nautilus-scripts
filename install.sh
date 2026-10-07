@@ -1485,8 +1485,8 @@ _close_filemanager() {
                 "${XDG_CURRENT_DESKTOP,,}" == *"lxqt"* ]]; then
                 session_cmd=$(pgrep -a "$FILE_MANAGER" |
                     head -n 1 | cut -d " " -f 2-)
-                # Close pcmanfm.
-                "$FILE_MANAGER" -q &>/dev/null
+                # Kill all existing 'pcmanfm-qt' processes.
+                killall "$FILE_MANAGER" &>/dev/null
                 if [[ -n "$session_cmd" ]]; then
                     # shellcheck disable=SC2086
                     nohup $session_cmd &>/dev/null &
