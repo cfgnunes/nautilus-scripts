@@ -2208,8 +2208,7 @@ _display_text_box() {
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
         yad --title "$(_get_script_name)" --center \
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-            --button="${btn_cancel}:1" --button="${btn_ok}:0" \
-            --text-info --no-wrap \
+            --button="${btn_cancel}:1" --button="${btn_ok}:0" --text-info \
             --filename="$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
     elif _command_exists "xmessage"; then
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
