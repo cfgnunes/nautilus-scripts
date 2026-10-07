@@ -1902,11 +1902,11 @@ msgid "Add shortcuts in the application menu"
 msgstr "Добавить ярлыки в меню приложений"
 
 #: install.sh
-msgid "Install pkgx (optional)"
-msgstr "Установить pkgx (опционально)"
+msgid "Install pkgx for dependencies"
+msgstr "Установить pkgx для зависимостей"
 
 #: install.sh
-msgid "Choose which script categories to install"
+msgid "Choose script categories to install"
 msgstr "Выберите категории скриптов для установки"
 
 #: install.sh

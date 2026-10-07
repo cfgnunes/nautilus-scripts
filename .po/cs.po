@@ -1902,12 +1902,12 @@ msgid "Add shortcuts in the application menu"
 msgstr "Přidat zástupce do nabídky aplikací"
 
 #: install.sh
-msgid "Install pkgx (optional)"
-msgstr "Nainstalovat pkgx (volitelné)"
+msgid "Install pkgx for dependencies"
+msgstr "Nainstalovat pkgx pro závislosti"
 
 #: install.sh
-msgid "Choose which script categories to install"
-msgstr "Zvolte, které kategorie skriptů se mají nainstalovat"
+msgid "Choose script categories to install"
+msgstr "Zvolte kategorie skriptů k instalaci"
 
 #: install.sh
 msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"

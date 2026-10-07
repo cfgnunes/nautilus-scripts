@@ -1902,11 +1902,11 @@ msgid "Add shortcuts in the application menu"
 msgstr "添加快捷方式到应用程序菜单"
 
 #: install.sh
-msgid "Install pkgx (optional)"
-msgstr "安装 pkgx（可选）"
+msgid "Install pkgx for dependencies"
+msgstr "为依赖安装 pkgx"
 
 #: install.sh
-msgid "Choose which script categories to install"
+msgid "Choose script categories to install"
 msgstr "选择要安装的脚本类别"
 
 #: install.sh

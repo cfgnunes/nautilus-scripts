@@ -1902,11 +1902,11 @@ msgid "Add shortcuts in the application menu"
 msgstr "Adăugare comenzi rapide în meniul de aplicații"
 
 #: install.sh
-msgid "Install pkgx (optional)"
-msgstr "Instalare pkgx (opțional)"
+msgid "Install pkgx for dependencies"
+msgstr "Instalare pkgx pentru dependențe"
 
 #: install.sh
-msgid "Choose which script categories to install"
+msgid "Choose script categories to install"
 msgstr "Alegeți categoriile de scripturi de instalat"
 
 #: install.sh

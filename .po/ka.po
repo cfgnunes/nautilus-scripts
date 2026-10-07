@@ -1902,12 +1902,12 @@ msgid "Add shortcuts in the application menu"
 msgstr "მალსახმობების დამატება აპლიკაციის მენიუში"
 
 #: install.sh
-msgid "Install pkgx (optional)"
-msgstr "pkgx-ის დაყენება (არასავალდებულო)"
+msgid "Install pkgx for dependencies"
+msgstr "pkgx-ის დაყენება დამოკიდებულებებისთვის"
 
 #: install.sh
-msgid "Choose which script categories to install"
-msgstr "აირჩიეთ, რომელი სკრიპტების კატეგორიების დაყენება გნებავთ"
+msgid "Choose script categories to install"
+msgstr "აირჩიეთ დასაყენებელი სკრიპტების კატეგორიები"
 
 #: install.sh
 msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"

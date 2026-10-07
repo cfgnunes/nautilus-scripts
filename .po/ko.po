@@ -1902,11 +1902,11 @@ msgid "Add shortcuts in the application menu"
 msgstr "응용 프로그램 메뉴에 바로 가기 추가"
 
 #: install.sh
-msgid "Install pkgx (optional)"
-msgstr "pkgx 설치 (선택 사항)"
+msgid "Install pkgx for dependencies"
+msgstr "의존성을 위해 pkgx 설치"
 
 #: install.sh
-msgid "Choose which script categories to install"
+msgid "Choose script categories to install"
 msgstr "설치할 스크립트 범주 선택"
 
 #: install.sh

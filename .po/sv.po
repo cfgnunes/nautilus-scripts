@@ -1902,12 +1902,12 @@ msgid "Add shortcuts in the application menu"
 msgstr "Lägg till genvägar i programmenyn"
 
 #: install.sh
-msgid "Install pkgx (optional)"
-msgstr "Installera pkgx (valfritt)"
+msgid "Install pkgx for dependencies"
+msgstr "Installera pkgx för beroenden"
 
 #: install.sh
-msgid "Choose which script categories to install"
-msgstr "Välj vilka skriptkategorier som ska installeras"
+msgid "Choose script categories to install"
+msgstr "Välj skriptkategorier att installera"
 
 #: install.sh
 msgid "Select the options (<SPACE> to check, <ENTER> to confirm):"

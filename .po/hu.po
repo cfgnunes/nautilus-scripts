@@ -1902,11 +1902,11 @@ msgid "Add shortcuts in the application menu"
 msgstr "Parancsikonok hozzáadása az alkalmazásmenühöz"
 
 #: install.sh
-msgid "Install pkgx (optional)"
-msgstr "pkgx telepítése (nem kötelező)"
+msgid "Install pkgx for dependencies"
+msgstr "pkgx telepítése a függőségekhez"
 
 #: install.sh
-msgid "Choose which script categories to install"
+msgid "Choose script categories to install"
 msgstr "Válassza ki a telepítendő szkriptkategóriákat"
 
 #: install.sh
