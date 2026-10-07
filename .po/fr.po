@@ -746,8 +746,8 @@ msgid "Audio: Remove silence (sections)"
 msgstr "Audio: Supprimer les silences (sections)"
 
 #: Menu
-msgid "Audio: Mute noise"
-msgstr "Audio: Réduire le bruit"
+msgid "Audio: Filter noise"
+msgstr "Audio: Filtrer le bruit"
 
 #: Menu
 msgid "Audio: Remove silence (extremities)"

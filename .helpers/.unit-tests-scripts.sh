@@ -268,7 +268,7 @@ _main() {
     __test_file_nonempty "$output_file (no silence).mp3"
     __test_file_empty "$std_output"
 
-    script_test="Audio and Video/Audio: Effects/Audio: Mute noise"
+    script_test="Audio and Video/Audio: Effects/Audio: Filter noise"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
     __test_file_nonempty "$output_file (noise filtered).mp3"

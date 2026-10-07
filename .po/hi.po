@@ -746,8 +746,8 @@ msgid "Audio: Remove silence (sections)"
 msgstr "ऑडियो: मौन हटाएँ (अनुभाग)"
 
 #: Menu
-msgid "Audio: Mute noise"
-msgstr "ऑडियो: शोर शांत करें"
+msgid "Audio: Filter noise"
+msgstr "ऑडियो: शोर फ़िल्टर करें"
 
 #: Menu
 msgid "Audio: Remove silence (extremities)"

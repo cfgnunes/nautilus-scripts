@@ -746,8 +746,8 @@ msgid "Audio: Remove silence (sections)"
 msgstr "Zvuk: odstranit ticho (úseky)"
 
 #: Menu
-msgid "Audio: Mute noise"
-msgstr "Zvuk: potlačit šum"
+msgid "Audio: Filter noise"
+msgstr "Zvuk: filtrovat šum"
 
 #: Menu
 msgid "Audio: Remove silence (extremities)"

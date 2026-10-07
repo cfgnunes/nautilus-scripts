@@ -746,8 +746,8 @@ msgid "Audio: Remove silence (sections)"
 msgstr "Âm thanh: Loại bỏ đoạn im lặng (phần giữa)"
 
 #: Menu
-msgid "Audio: Mute noise"
-msgstr "Âm thanh: Giảm nhiễu"
+msgid "Audio: Filter noise"
+msgstr "Âm thanh: Lọc nhiễu"
 
 #: Menu
 msgid "Audio: Remove silence (extremities)"

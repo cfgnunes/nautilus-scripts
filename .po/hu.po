@@ -746,8 +746,8 @@ msgid "Audio: Remove silence (sections)"
 msgstr "Hang: csend eltávolítása (szakaszok)"
 
 #: Menu
-msgid "Audio: Mute noise"
-msgstr "Hang: zaj némítása"
+msgid "Audio: Filter noise"
+msgstr "Hang: zaj szűrése"
 
 #: Menu
 msgid "Audio: Remove silence (extremities)"
