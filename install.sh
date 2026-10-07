@@ -1462,13 +1462,12 @@ _close_filemanager() {
         $FILE_MANAGER -q &>/dev/null
         ;;
     "caja")
-        # Close Caja gracefully.
-        caja -q &>/dev/null
-
         # Reload the file manager in background to restore desktop session.
         if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
             # Only restart if running under MATE.
             if [[ "${XDG_CURRENT_DESKTOP,,}" == *"mate"* ]]; then
+                # Close Caja.
+                "$FILE_MANAGER" -q &>/dev/null
                 nohup "$FILE_MANAGER" --force-desktop \
                     --no-default-window &>/dev/null &
             fi
@@ -1478,16 +1477,16 @@ _close_filemanager() {
         # NOTE: 'pcmanfm-qt' does not reload automatically after quitting.
         # We need to capture its current launch command to restart it.
         local session_cmd=""
-        session_cmd=$(pgrep -a "$FILE_MANAGER" | head -n 1 | cut -d " " -f 2-)
-
-        # Kill all existing 'pcmanfm-qt' processes.
-        killall "$FILE_MANAGER" &>/dev/null
 
         # Reload the file manager in background to restore desktop session.
         if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
             # Only restart if running under LXDE or LXQT.
             if [[ "${XDG_CURRENT_DESKTOP,,}" == *"lxde"* ||
                 "${XDG_CURRENT_DESKTOP,,}" == *"lxqt"* ]]; then
+                session_cmd=$(pgrep -a "$FILE_MANAGER" |
+                    head -n 1 | cut -d " " -f 2-)
+                # Close pcmanfm.
+                "$FILE_MANAGER" -q &>/dev/null
                 if [[ -n "$session_cmd" ]]; then
                     # shellcheck disable=SC2086
                     nohup $session_cmd &>/dev/null &
