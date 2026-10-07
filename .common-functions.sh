@@ -2471,6 +2471,18 @@ _display_gdbus_notify() {
 # SECTION: System and environment
 # -----------------------------------------------------------------------------
 
+# Function: _add_path_env
+#
+# Description:
+#   This function adds a specified directory to the PATH environment variable
+#   if it exists and is not already included.
+#
+# Parameters:
+#   $1 (path): The directory path to add to the PATH environment variable.
+#
+# Returns:
+#   0 (true): If the directory was successfully added to PATH.
+#   1 (false): If the directory does not exist or is already in PATH.
 _add_path_env() {
     local path=$1
 
