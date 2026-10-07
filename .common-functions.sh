@@ -520,33 +520,57 @@ _check_dependencies() {
     local pairs=""
 
     # Step 2: Resolve the package names for each dependency key.
-    #
-    # This creates a list of pairs in the format "<pkg_manager>:<package>".
-    # The first available package manager in '$PKG_MANAGER_PRIORITY'
-    # that provides the dependency definition will be used.
     dep_keys=$(tr " " "$FIELD_SEPARATOR" <<<"$dep_keys")
     local dep_key=""
     for dep_key in $dep_keys; do
-        local package_names=""
-        _command_exists "$dep_key" && continue
-
-        # Try to find a defined package for an available package manager.
+        local all_installed="false"
         local definitions_found="false"
         local pkg_manager=""
+        local pkg_manager_sel=""
+        local pkg_names=""
+        local pkg_names_sel=""
+
         for pkg_manager in "${PKG_MANAGER_PRIORITY[@]}"; do
             if ! _command_exists "$pkg_manager"; then
                 continue
             fi
 
             # Retrieve the package names from '.pkg-map.sh'.
-            package_names=$(_deps_get_dependency_value \
+            pkg_names=$(_deps_get_dependency_value \
                 "$dep_key" "$pkg_manager" "PKG_MAP")
 
-            if [[ -n "$package_names" ]]; then
+            [[ -z "$pkg_names" ]] && continue
+
+            if [[ "$definitions_found" == "false" ]]; then
                 definitions_found="true"
-                break
+                pkg_manager_sel=$pkg_manager
+                pkg_names_sel=$pkg_names
             fi
+
+            # The manager satisfies the dependency when
+            # every mapped package is installed.
+            all_installed="true"
+            local package_name=""
+            local pkg_names_check=""
+            pkg_names_check=$(tr " " "$FIELD_SEPARATOR" <<<"$pkg_names")
+            for package_name in $pkg_names_check; do
+                if ! _deps_is_package_installed \
+                    "$pkg_manager" "$package_name"; then
+                    all_installed="false"
+                    break
+                fi
+            done
+
+            [[ "$all_installed" == "true" ]] && break
         done
+
+        # Dependency already satisfied by an installed package.
+        [[ "$all_installed" == "true" ]] && continue
+
+        # No mapped package is installed. A command already on 'PATH' still
+        # counts as satisfied, for example after a manual install.
+        _command_exists "$dep_key" && continue
+
         # Abort if no package definition was found.
         if [[ "$definitions_found" == "false" ]]; then
             local msg=""
@@ -556,11 +580,9 @@ _check_dependencies() {
         fi
 
         # Append resolved packages as "<pkg_manager>:<package>" pairs.
-        if [[ -n "$package_names" ]]; then
-            package_names=$(sed "s|^|$pkg_manager:|g" <<<"$package_names")
-            package_names=$(sed "s| | $pkg_manager:|g" <<<"$package_names")
-            pairs+=" $package_names"
-        fi
+        pkg_names_sel=$(sed "s|^|$pkg_manager_sel:|g" <<<"$pkg_names_sel")
+        pkg_names_sel=$(sed "s| | $pkg_manager_sel:|g" <<<"$pkg_names_sel")
+        pairs+=" $pkg_names_sel"
     done
 
     # Sort and prepare the list of package pairs.
