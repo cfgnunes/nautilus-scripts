@@ -802,22 +802,6 @@ msgid "Compute all checksums"
 msgstr "חישוב כל סכומי הביקורת"
 
 #: Menu
-msgid "Compute MD5"
-msgstr "חישוב קובץ MD5"
-
-#: Menu
-msgid "Compute SHA1"
-msgstr "חישוב קובץ SHA1"
-
-#: Menu
-msgid "Compute SHA256"
-msgstr "חישוב קובץ SHA256"
-
-#: Menu
-msgid "Compute SHA512"
-msgstr "חישוב קובץ SHA512"
-
-#: Menu
 msgid "Copy file contents"
 msgstr "העתקת תוכן הקובץ"
 

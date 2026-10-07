@@ -802,22 +802,6 @@ msgid "Compute all checksums"
 msgstr "Calcola tutti i checksum"
 
 #: Menu
-msgid "Compute MD5"
-msgstr "Calcola MD5"
-
-#: Menu
-msgid "Compute SHA1"
-msgstr "Calcola SHA1"
-
-#: Menu
-msgid "Compute SHA256"
-msgstr "Calcola SHA256"
-
-#: Menu
-msgid "Compute SHA512"
-msgstr "Calcola SHA512"
-
-#: Menu
 msgid "Copy file contents"
 msgstr "Copia contenuti file"
 

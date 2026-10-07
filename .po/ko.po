@@ -802,22 +802,6 @@ msgid "Compute all checksums"
 msgstr "모든 체크섬 계산"
 
 #: Menu
-msgid "Compute MD5"
-msgstr "MD5 계산"
-
-#: Menu
-msgid "Compute SHA1"
-msgstr "SHA1 계산"
-
-#: Menu
-msgid "Compute SHA256"
-msgstr "SHA256 계산"
-
-#: Menu
-msgid "Compute SHA512"
-msgstr "SHA512 계산"
-
-#: Menu
 msgid "Copy file contents"
 msgstr "파일 내용 복사"
 

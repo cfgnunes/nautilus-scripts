@@ -802,22 +802,6 @@ msgid "Compute all checksums"
 msgstr "すべてのチェックサムを計算"
 
 #: Menu
-msgid "Compute MD5"
-msgstr "MD5を計算"
-
-#: Menu
-msgid "Compute SHA1"
-msgstr "SHA1を計算"
-
-#: Menu
-msgid "Compute SHA256"
-msgstr "SHA256を計算"
-
-#: Menu
-msgid "Compute SHA512"
-msgstr "SHA512を計算"
-
-#: Menu
 msgid "Copy file contents"
 msgstr "ファイルの内容をコピー"
 

@@ -802,22 +802,6 @@ msgid "Compute all checksums"
 msgstr "सभी चेकसम गणना करें"
 
 #: Menu
-msgid "Compute MD5"
-msgstr "MD5 गणना करें"
-
-#: Menu
-msgid "Compute SHA1"
-msgstr "SHA1 गणना करें"
-
-#: Menu
-msgid "Compute SHA256"
-msgstr "SHA256 गणना करें"
-
-#: Menu
-msgid "Compute SHA512"
-msgstr "SHA512 गणना करें"
-
-#: Menu
 msgid "Copy file contents"
 msgstr "फ़ाइल सामग्री कॉपी करें"
 

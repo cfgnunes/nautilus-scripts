@@ -2007,30 +2007,6 @@ _main() {
     __test_file_nonempty "$output_file"
     __test_file_nonempty "$std_output"
 
-    script_test="Checksum/Compute MD5"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_nonempty "$std_output"
-
-    script_test="Checksum/Compute SHA1"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_nonempty "$std_output"
-
-    script_test="Checksum/Compute SHA256"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_nonempty "$std_output"
-
-    script_test="Checksum/Compute SHA512"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_nonempty "$std_output"
-
     script_test="Checksum/Generate MD5 file"
     __echo_script "$script_test"
     bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"

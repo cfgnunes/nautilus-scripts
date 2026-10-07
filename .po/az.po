@@ -802,22 +802,6 @@ msgid "Compute all checksums"
 msgstr "Bütün yoxlama cəmlərini hesabla"
 
 #: Menu
-msgid "Compute MD5"
-msgstr "MD5 hesabla"
-
-#: Menu
-msgid "Compute SHA1"
-msgstr "SHA1 hesabla"
-
-#: Menu
-msgid "Compute SHA256"
-msgstr "SHA256 hesabla"
-
-#: Menu
-msgid "Compute SHA512"
-msgstr "SHA512 hesabla"
-
-#: Menu
 msgid "Copy file contents"
 msgstr "Faylların məzmununu kopyala"
 

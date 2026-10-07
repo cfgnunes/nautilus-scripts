@@ -802,22 +802,6 @@ msgid "Compute all checksums"
 msgstr "Minden ellenőrzőösszeg kiszámítása"
 
 #: Menu
-msgid "Compute MD5"
-msgstr "Kiszámítás MD5"
-
-#: Menu
-msgid "Compute SHA1"
-msgstr "Kiszámítás SHA1"
-
-#: Menu
-msgid "Compute SHA256"
-msgstr "Kiszámítás SHA256"
-
-#: Menu
-msgid "Compute SHA512"
-msgstr "Kiszámítás SHA512"
-
-#: Menu
 msgid "Copy file contents"
 msgstr "Fájltartalom másolása"
 
