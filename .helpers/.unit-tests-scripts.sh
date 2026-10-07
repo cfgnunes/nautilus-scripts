@@ -389,22 +389,22 @@ _main() {
     __test_file_nonempty "$output_file.webm"
     __test_file_empty "$std_output"
 
-    #script_test="Audio and Video/Video: Convert/Video: Convert to MKV (Copy)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file.mkv"
-    #__test_file_empty "$std_output"
+    script_test="Audio and Video/Video: Convert/Video: Convert to MKV (copy)"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file (2).mkv"
+    __test_file_empty "$std_output"
 
-    #script_test="Audio and Video/Video: Convert/Video: Convert to MP4 (Copy)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file (2).mp4"
-    #__test_file_empty "$std_output"
+    script_test="Audio and Video/Video: Convert/Video: Convert to MP4 (copy)"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file (3).mp4"
+    __test_file_empty "$std_output"
 
-    #script_test="Audio and Video/Video: Convert/Video: Convert to WebM (Copy)"
+    #script_test="Audio and Video/Video: Convert/Video: Convert to WebM (copy)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file.webm"
+    #__test_file_nonempty "$output_file (2).webm"
     #__test_file_empty "$std_output"
 
     script_test="Audio and Video/Video: Convert/Video: Export to GIF (1 FPS)"
@@ -1019,10 +1019,24 @@ _main() {
     #__test_file_nonempty "$output_file"
     #__test_file_empty "$std_output"
 
+    # Generate an image with a large word so OCR has text to detect.
+    local font_file=""
+    font_file=$(fc-match -f '%{file}' sans 2>/dev/null || true)
+    if [[ ! -f "$font_file" || "${font_file##*/}" != *[Ss][Aa][Nn][Ss]* ]]; then
+        font_file=$(find /usr/share/fonts /usr/local/share/fonts \
+            "${XDG_DATA_HOME:-$HOME/.local/share}/fonts" \
+            -type f \( -iname '*sans*.ttf' -o -iname '*sans*.otf' \) \
+            -print -quit 2>/dev/null || true)
+    fi
+    ffmpeg -hide_banner -y \
+        -f lavfi -i color=c=white:s=900x240 \
+        -vf "drawtext=fontfile='${font_file}':text='HELLO':fontcolor=black:fontsize=140:x=(w-text_w)/2:y=(h-text_h)/2" \
+        -frames:v 1 -update 1 "$temp_dir/Test image OCR.png" &>/dev/null
+
     script_test="Image/Image: Text recognition (OCR)/Image: Perform OCR (English)"
     __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_empty "$output_file (OCR eng).txt"
+    bash "$ROOT_DIR/$script_test" "$temp_dir/Test image OCR.png" >"$std_output"
+    __test_file_nonempty "$temp_dir/Test image OCR (OCR eng).txt"
     __test_file_empty "$std_output"
 
     #script_test="Image/Image: Text recognition (OCR)/Image: Perform OCR (French)"
@@ -1952,6 +1966,20 @@ _main() {
     __test_file_nonempty "$output_file"
     __test_file_empty "$std_output"
 
+    # Create mock files for testing.
+    input_file1="$temp_dir/Test md5 prefix.txt"
+    echo "Content of 'Test'." >"$input_file1"
+    checksum=$(md5sum -- "$input_file1")
+    checksum=${checksum%%[$'\t ']*}
+    checksum=${checksum:0:4}
+    output_file="$temp_dir/($checksum) Test md5 prefix.txt"
+
+    script_test="Rename files/Rename: Add MD5 prefix"
+    __echo_script "$script_test"
+    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    __test_file_nonempty "$output_file"
+    __test_file_empty "$std_output"
+
     #script_test="Rename files/Rename: To uppercase (recursive)"
     #__echo_script "$script_test"
     #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
@@ -2031,29 +2059,35 @@ _main() {
     __test_file_nonempty "$output_file"
     __test_file_nonempty "$std_output"
 
-    script_test="Checksum/Generate MD5 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.md5"
-    __test_file_empty "$std_output"
+    #script_test="Checksum/Generate MD5 file"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file.md5"
+    #__test_file_empty "$std_output"
 
-    script_test="Checksum/Generate SHA1 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.sha1"
-    __test_file_empty "$std_output"
+    #script_test="Checksum/Generate SHA1 file"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file.sha1"
+    #__test_file_empty "$std_output"
 
-    script_test="Checksum/Generate SHA256 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.sha256"
-    __test_file_empty "$std_output"
+    #script_test="Checksum/Generate SHA256 file"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file.sha256"
+    #__test_file_empty "$std_output"
 
-    script_test="Checksum/Generate SHA512 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.sha512"
-    __test_file_empty "$std_output"
+    #script_test="Checksum/Generate SHA512 file"
+    #__echo_script "$script_test"
+    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
+    #__test_file_nonempty "$output_file.sha512"
+    #__test_file_empty "$std_output"
+
+    # Checksum files for the verify tests below.
+    md5sum -- "$input_file1" >"$output_file.md5"
+    sha1sum -- "$input_file1" >"$output_file.sha1"
+    sha256sum -- "$input_file1" >"$output_file.sha256"
+    sha512sum -- "$input_file1" >"$output_file.sha512"
 
     script_test="Checksum/Verify MD5 file"
     __echo_script "$script_test"
