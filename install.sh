@@ -1543,13 +1543,17 @@ _install_pkgx() {
 
     # Download and extract pkgx.
     if _command_exists "curl"; then
-        curl -fsSL "$pkgx_url" 2>/dev/null |
-            grep --only-matching -m1 "$tarball_regex" |
-            xargs curl -fsSL | tar xz -C "$pkgx_dir"
+        {
+            curl -fsSL "$pkgx_url" 2>/dev/null |
+                grep --only-matching -m1 "$tarball_regex" |
+                xargs curl -fsSL | tar xz -C "$pkgx_dir"
+        } 2>/dev/null
     elif _command_exists "wget"; then
-        wget -qO- "$pkgx_url" 2>/dev/null |
-            grep --only-matching -m1 "$tarball_regex" |
-            xargs wget -qO- | tar xz -C "$pkgx_dir"
+        {
+            wget -qO- "$pkgx_url" 2>/dev/null |
+                grep --only-matching -m1 "$tarball_regex" |
+                xargs wget -qO- | tar xz -C "$pkgx_dir"
+        } 2>/dev/null
     else
         _echo_error "> Neither 'curl' nor 'wget' is installed! Please install one of them to continue."
         return 1
