@@ -189,8 +189,8 @@ _main() {
         "$(_i18n 'Install keyboard accelerators')"
         "$(_i18n 'Close the file manager to reload configuration')"
         "$(_i18n 'Add shortcuts in the application menu')"
-        "$(_i18n 'Install pkgx (optional)')"
-        "$(_i18n 'Choose which script categories to install')"
+        "$(_i18n 'Install pkgx for dependencies')"
+        "$(_i18n 'Choose script categories to install')"
     )
 
     # Default states for the menu options.
@@ -651,7 +651,7 @@ _get_parameters_command_line() {
             echo "  -K, --no-install-shortcuts      Do not install keyboard accelerators."
             echo "  -n, --non-interactive           Run without prompts."
             echo "  -q, --quiet                     Suppress all output (silent mode)."
-            echo "  -p, --install-pkgx              Install pkgx."
+            echo "  -p, --install-pkgx              Install pkgx for dependencies."
             echo "  -P, --no-install-pkgx           Do not install pkgx."
             echo "  -s, --install-app-shortcuts     Add shortcuts in the application menu."
             echo "  -S, --no-install-app-shortcuts  Do not add shortcuts in the application menu."
