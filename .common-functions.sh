@@ -535,6 +535,11 @@ _check_dependencies() {
                 continue
             fi
 
+            # Skip pkgx if the binary cannot be executed without errors.
+            if [[ "$pkg_manager" == "pkgx" ]] && ! pkgx -v &>/dev/null; then
+                continue
+            fi
+
             # Retrieve the package names from '.pkg-map.sh'.
             pkg_names=$(_deps_get_dependency_value \
                 "$dep_key" "$pkg_manager" "PKG_MAP")
@@ -965,7 +970,7 @@ _deps_is_package_installed() {
     # Keep only the package name after '~' for verification, used when install
     # and check package names differ (e.g., on NixOS).
     if [[ "$package" == *"~"* ]]; then
-        package=$(sed "s|[A-Za-z0-9.-/]*~||g" <<<"$package")
+        package=$(sed "s|[A-Za-z0-9./-]*~||g" <<<"$package")
     fi
 
     case "$pkg_manager" in
@@ -977,7 +982,7 @@ _deps_is_package_installed() {
     "pkgx")
         local pkgx_packages_dir="$HOME/.pkgx"
         local pkgx_package_path=""
-        pkgx_package_path=$(sed "s|@[A-Za-z0-9.-/]*||g" <<<"$package")
+        pkgx_package_path=$(sed "s|@[A-Za-z0-9./-]*||g" <<<"$package")
         if [[ -d "$pkgx_packages_dir/$pkgx_package_path" ]]; then
             # Load the environment variables for the installed package.
             set -a
@@ -3919,7 +3924,9 @@ _cmd_magick() {
 #
 # Description:
 #   This function initializes the pkgx if it is installed in the user's local
-#   directory.
+#   directory. The binary is added to PATH only when it actually runs.
+#   An executable bit is not enough: the dynamic linker can reject pkgx when
+#   the system glibc is older than the one it was built against.
 _pkgx_initialize() {
     # Skip initialization if '$HOME' is undefined.
     [[ -z "$HOME" ]] && return
@@ -3927,7 +3934,9 @@ _pkgx_initialize() {
     local pkgx_dir="$HOME/.pkgx"
     local pkgx_cmd="$pkgx_dir/pkgx"
 
-    if [[ -x "$pkgx_cmd" ]] && ! _command_exists "pkgx"; then
+    if [[ -x "$pkgx_cmd" ]] &&
+        ! _command_exists "pkgx" &&
+        "$pkgx_cmd" --version &>/dev/null; then
         _add_path_env "$pkgx_dir"
     fi
 }
