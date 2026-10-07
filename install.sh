@@ -188,8 +188,8 @@ _main() {
         "$(_i18n 'Remove previously installed scripts')"
         "$(_i18n 'Install keyboard accelerators')"
         "$(_i18n 'Close the file manager to reload configuration')"
-        "$(_i18n 'Add shortcuts in the application menu')"
         "$(_i18n 'Install pkgx for dependencies')"
+        "$(_i18n 'Add shortcuts in the application menu')"
         "$(_i18n 'Choose script categories to install')"
     )
 
@@ -199,8 +199,8 @@ _main() {
         "$OPT_REMOVE_SCRIPTS"
         "$OPT_INSTALL_ACCELS"
         "$OPT_CLOSE_FILE_MANAGER"
-        "$OPT_INSTALL_APP_SHORTCUTS"
         "$OPT_INSTALL_PKGX"
+        "$OPT_INSTALL_APP_SHORTCUTS"
         "$OPT_CHOOSE_CATEGORIES"
     )
 
@@ -224,16 +224,16 @@ _main() {
     OPT_REMOVE_SCRIPTS=${menu_selected[1]}
     OPT_INSTALL_ACCELS=${menu_selected[2]}
     OPT_CLOSE_FILE_MANAGER=${menu_selected[3]}
-    OPT_INSTALL_APP_SHORTCUTS=${menu_selected[4]}
-    OPT_INSTALL_PKGX=${menu_selected[5]}
+    OPT_INSTALL_PKGX=${menu_selected[4]}
+    OPT_INSTALL_APP_SHORTCUTS=${menu_selected[5]}
     OPT_CHOOSE_CATEGORIES=${menu_selected[6]}
 
     _log_variable "OPT_INSTALL_BASIC_DEPS"
     _log_variable "OPT_REMOVE_SCRIPTS"
     _log_variable "OPT_INSTALL_ACCELS"
     _log_variable "OPT_CLOSE_FILE_MANAGER"
-    _log_variable "OPT_INSTALL_APP_SHORTCUTS"
     _log_variable "OPT_INSTALL_PKGX"
+    _log_variable "OPT_INSTALL_APP_SHORTCUTS"
     _log_variable "OPT_CHOOSE_CATEGORIES"
     _log_variable "OPT_INTERACTIVE_INSTALL"
     _log_variable "OPT_QUIET_INSTALL"
