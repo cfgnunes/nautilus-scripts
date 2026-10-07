@@ -117,7 +117,7 @@ OPT_REMOVE_SCRIPTS="true"
 OPT_INSTALL_ACCELS="true"
 OPT_CLOSE_FILE_MANAGER="true"
 OPT_INSTALL_APP_SHORTCUTS="false"
-if uname -m 2>/dev/null | grep -q "x86_64"; then
+if uname -m 2>/dev/null | grep -qE "x86_64|aarch64"; then
     OPT_INSTALL_PKGX="true"
 else
     OPT_INSTALL_PKGX="false"
@@ -308,7 +308,11 @@ _main() {
 
     _echo ""
     _echo_info "$(_i18n 'Installation completed successfully!')"
-    _log_finish
+
+    # Step 6: Move the temporary log file to the installation directory and
+    # remove the temporary directory.
+    mv -- "$INSTALL_LOG_TMP" "$INSTALL_DIR/$INSTALL_LOG_NAME" 2>/dev/null
+    rm -rf -- "$TEMP_DIR" 2>/dev/null
 }
 
 # -----------------------------------------------------------------------------
@@ -359,12 +363,6 @@ _print_date() {
 _log() {
     local message=$1
     printf "%s\n" "$(_print_date) $message" >>"$INSTALL_LOG_TMP"
-}
-
-_log_finish() {
-    local log_file="$INSTALL_DIR/$INSTALL_LOG_NAME"
-    touch -- "$log_file"
-    cat -- "$INSTALL_LOG_TMP" >>"$log_file"
 }
 
 _log_system_info() {
