@@ -852,7 +852,7 @@ declare -A PKG_MAP=(
         zypper:
         guix:
         xbps:   python3-ocrmypdf
-        pkgx:   github.com/ocrmypdf/OCRmyPDF
+        pkgx:   github.com/ocrmypdf/OCRmyPDF ghostscript.com
     "
 
     ["pdfjam"]="
