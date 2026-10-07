@@ -26,11 +26,13 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    __cmd_7za() {
+    __cmd_7z() {
         if _command_exists "7z"; then
-            7z "$@"
+            LC_ALL=C 7z "$@"
+        elif _command_exists "7za"; then
+            LC_ALL=C 7za "$@"
         else
-            7za "$@"
+            LC_ALL=C 7zr "$@"
         fi
     }
 
@@ -50,9 +52,9 @@ _main_task() {
         _directory_push "$input_file" || return 1
 
         # Check for available compression tools and compress the directory accordingly.
-        if _command_exists "7za"; then
-            std_output=$(__cmd_7za a -snl -mx9 "$output_file" -- . 2>&1)
-        elif _command_exists "bsdtar"; then
+        if _command_exists "7z" || _command_exists "7za" || _command_exists "7zr"; then
+            std_output=$(__cmd_7z a -snl -mx9 "$output_file" -- . 2>&1)
+        else
             std_output=$(bsdtar --strip-components 1 -a -cf "$output_file" -- . 2>&1)
         fi
     else
@@ -64,9 +66,9 @@ _main_task() {
         input_file_basename=$(basename -- "$input_file")
 
         # Check for available compression tools and compress the file accordingly.
-        if _command_exists "7za"; then
-            std_output=$(__cmd_7za a -snl -mx9 "$output_file" -- "$input_file_basename" 2>&1)
-        elif _command_exists "bsdtar"; then
+        if _command_exists "7z" || _command_exists "7za" || _command_exists "7zr"; then
+            std_output=$(__cmd_7z a -snl -mx9 "$output_file" -- "$input_file_basename" 2>&1)
+        else
             std_output=$(bsdtar -a -cf "$output_file" -- "$input_file_basename" 2>&1)
         fi
     fi

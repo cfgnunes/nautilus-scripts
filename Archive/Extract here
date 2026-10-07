@@ -295,11 +295,13 @@ _run_command() {
     __get_password() {
         _display_password_box "$(_i18n 'Enter the password for the archive:') '$(basename -- "$input_file")'"
     }
-    __cmd_7za() {
+    __cmd_7z() {
         if _command_exists "7z"; then
             LC_ALL=C 7z "$@"
-        else
+        elif _command_exists "7za"; then
             LC_ALL=C 7za "$@"
+        else
+            LC_ALL=C 7zr "$@"
         fi
     }
 
@@ -313,7 +315,7 @@ _run_command() {
 
     case "$command" in
     "7za")
-        std_output=$(__cmd_7za x -aoa -p"$TASK_PASSWORD" -- "$input_file" 2>&1)
+        std_output=$(__cmd_7z x -aoa -p"$TASK_PASSWORD" -- "$input_file" 2>&1)
         exit_code=$?
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "wrong password" <<<"$std_output"; then
@@ -321,7 +323,7 @@ _run_command() {
             __temp_dir_pop && __temp_dir_remove
             password=$(__get_password) || return 1
             __temp_dir_push || return 1
-            std_output=$(__cmd_7za x -aoa -p"$password" -- "$input_file" 2>&1)
+            std_output=$(__cmd_7z x -aoa -p"$password" -- "$input_file" 2>&1)
             exit_code=$?
         fi
         ;;
@@ -439,7 +441,7 @@ _run_command() {
 
         # Try to extract with '7za'.
         if ((exit_code != 0)); then
-            std_output=$(__cmd_7za x -aoa -- "$input_file" 2>&1)
+            std_output=$(__cmd_7z x -aoa -- "$input_file" 2>&1)
             exit_code=$?
         fi
 
