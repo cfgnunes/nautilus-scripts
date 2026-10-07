@@ -5,19 +5,53 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
+INSTALL_NAME_DIR="scripts"
+INSTALL_PATH="$HOME/.local/share/$INSTALL_NAME_DIR"
+MODEL_FILE="$INSTALL_PATH/sh.rnnn"
+MODEL_URL="https://raw.githubusercontent.com/GregorR/rnnoise-models/master/somnolent-hogwash-2018-09-01/sh.rnnn"
+
 _main() {
     local input_files=""
     local output_dir=""
 
     # Execute initial checks.
     _check_dependencies "ffmpeg"
+    _command_exists "wget" || _check_dependencies "curl"
+
     _display_wait_box ""
     input_files=$(_get_files "par_type=file; par_select_mime='audio/|video/'")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
+    _download_model
+
+    export MODEL_FILE
+
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
     _display_result_box "$output_dir"
+}
+
+_download_model() {
+    local msg=""
+    if [[ -f "$MODEL_FILE" ]]; then
+        return
+    fi
+
+    mkdir -p "$INSTALL_PATH"
+
+    if _command_exists "curl"; then
+        curl -fsSL --output "$TEMP_DIR_TASK/model" -- "$MODEL_URL" &>/dev/null &&
+            mv "$TEMP_DIR_TASK/model" "$MODEL_FILE"
+    else
+        wget -q -O "$TEMP_DIR_TASK/model" -- "$MODEL_URL" &>/dev/null &&
+            mv "$TEMP_DIR_TASK/model" "$MODEL_FILE"
+    fi
+
+    if [[ ! -f "$MODEL_FILE" ]]; then
+        msg="$(_i18n 'Could not download the file!')"
+        _display_error_box "$msg"
+        _exit_script
+    fi
 }
 
 _main_task() {
@@ -26,10 +60,10 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(noise silenced)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(noise filtered)'")
 
     # Run the main process.
-    std_output=$(ffmpeg -hide_banner -y -i "$input_file" -filter:a "compand=attacks=0:points=-80/-115|-30.1/-80|-30/-30|20/20" -- "$output_file" 2>&1)
+    std_output=$(ffmpeg -hide_banner -y -i "$input_file" -filter:a "arnndn=m=$MODEL_FILE,afftdn=nr=20" -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
