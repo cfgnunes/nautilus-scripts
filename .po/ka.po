@@ -802,6 +802,22 @@ msgid "Compute all checksums"
 msgstr "ყველა საკონტროლო ჯამის გამოთვლა"
 
 #: Menu
+msgid "Compute MD5"
+msgstr "MD5-ის გამოთვლა"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "SHA1-ის გამოთვლა"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "SHA256-ის გამოთვლა"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "SHA512-ის გამოთვლა"
+
+#: Menu
 msgid "Copy file contents"
 msgstr "ფაილის შემცველობის კოპირება"
 

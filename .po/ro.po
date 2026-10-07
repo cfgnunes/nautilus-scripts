@@ -802,6 +802,22 @@ msgid "Compute all checksums"
 msgstr "Calculare toate sumele de control"
 
 #: Menu
+msgid "Compute MD5"
+msgstr "Calculare MD5"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "Calculare SHA1"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "Calculare SHA256"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "Calculare SHA512"
+
+#: Menu
 msgid "Copy file contents"
 msgstr "Copiere conținut fișiere"
 

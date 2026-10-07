@@ -802,6 +802,22 @@ msgid "Compute all checksums"
 msgstr "Vypočítat všechny kontrolní součty"
 
 #: Menu
+msgid "Compute MD5"
+msgstr "Vypočítat MD5"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "Vypočítat SHA1"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "Vypočítat SHA256"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "Vypočítat SHA512"
+
+#: Menu
 msgid "Copy file contents"
 msgstr "Kopírovat obsah souborů"
 

@@ -802,6 +802,22 @@ msgid "Compute all checksums"
 msgstr "Tính tất cả checksum"
 
 #: Menu
+msgid "Compute MD5"
+msgstr "Tính MD5"
+
+#: Menu
+msgid "Compute SHA1"
+msgstr "Tính SHA1"
+
+#: Menu
+msgid "Compute SHA256"
+msgstr "Tính SHA256"
+
+#: Menu
+msgid "Compute SHA512"
+msgstr "Tính SHA512"
+
+#: Menu
 msgid "Copy file contents"
 msgstr "Sao chép nội dung tệp"
 
