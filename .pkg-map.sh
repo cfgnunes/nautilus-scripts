@@ -14,7 +14,7 @@
 # differ from the one provided during installation.
 declare -A PKG_MAP=(
     ["7za"]="
-        termux: p7zip
+        termux: 7zip
         apt:    p7zip
         dnf:    p7zip
         pacman: p7zip
