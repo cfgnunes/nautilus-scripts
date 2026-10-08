@@ -687,10 +687,10 @@ _deps_get_dependency_value() {
             ;;
         esac
 
-        # HACK: Workaround for Termux (Android). Since Termux uses its own
-        # package ecosystem and may share paths with 'proot-distro', check if
-        # it's a real Termux session by checking that the '$subkey' is
-        # "termux", '$HOME' contains "com.termux", and the system is "Android".
+        # HACK: Workaround for Termux (Android). Termux uses its own package
+        # ecosystem and may share paths with 'proot-distro'. Check if it's a
+        # real Termux session by checking that the '$subkey' is "termux",
+        # '$HOME' contains "com.termux", and the system is "Android".
         if [[ "$subkey" == "termux" ]] &&
             [[ "$HOME" == *"com.termux"* ]] &&
             [[ "$(uname -o)" == "Android" ]]; then
@@ -1900,7 +1900,8 @@ _display_select_box() {
     fi
 
     if [[ -z "$list" ]]; then
-        # NOTE: Some Zenity versions crash with an empty list.
+        # HACK: Workaround for Zenity.
+        # Some Zenity versions crash with an empty list.
         list=" "
     else
         items_count=$(tr -cd "\n" <<<"$list" | wc -c)

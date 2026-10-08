@@ -711,9 +711,10 @@ _check_dependencies() {
     _command_exists "pstree" || packages+="psmisc "
     _command_exists "xdg-open" || packages+="xdg-utils "
 
-    # HACK: Check if the 'file' command is available and functional.
-    # Some minimal Linux distributions (like Termux) may have a non-functional
-    # 'file' command, which can cause issues when running the scripts.
+    # HACK: Workaround for Termux (Android).
+    # Check if the 'file' command is available and functional. Some minimal
+    # Linux distributions (such as Termux) may have a non-functional 'file'
+    # command, which can cause issues when running the scripts.
     if ! _command_exists "file" ||
         ! file --brief --mime-type /dev/null >/dev/null 2>&1; then
         packages+="file "
@@ -750,7 +751,8 @@ _check_dependencies() {
     elif _command_exists "pacman"; then
         # Package manager 'pacman': For Arch Linux systems.
         _command_exists "pgrep" || packages+="procps "
-        # Force update GTK4 packages on Arch Linux (necessary sometimes).
+        # HACK: Workaround for Arch Linux.
+        # Force update GTK4 packages (necessary sometimes).
         if [[ "$packages" == *"zenity"* ]]; then
             packages+="gtk4 zlib glib2 "
         fi
@@ -766,7 +768,8 @@ _check_dependencies() {
     elif _command_exists "xbps-install"; then
         # Package manager 'xbps': For Void Linux systems.
         _command_exists "pgrep" || packages+="procps-ng "
-        # Update dependencies on Void Linux (necessary sometimes).
+        # HACK: Workaround for Void Linux.
+        # Force update some dependencies (necessary sometimes).
         if [[ "$packages" == *"yad"* ]]; then
             packages+="libavcodec6 libheif "
         fi
