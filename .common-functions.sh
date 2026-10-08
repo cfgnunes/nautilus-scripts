@@ -3513,12 +3513,12 @@ _open_items_locations() {
     "nautilus" | "caja" | "dolphin")
         # Open the directory of each item and select it.
         # shellcheck disable=SC2086
-        $file_manager --select $items_open &
+        $file_manager --select $items_open &>/dev/null &
         ;;
     "nemo" | "thunar")
         # Open the directory of each item (selection not supported).
         # shellcheck disable=SC2086
-        $file_manager $items_open &
+        $file_manager $items_open &>/dev/null &
         ;;
     *)
         # For other file managers (e.g., 'pcmanfm-qt'), open the directory of
@@ -3530,7 +3530,7 @@ _open_items_locations() {
             if [[ -z "$dir" ]]; then
                 continue
             fi
-            $file_manager "$dir" &
+            $file_manager "$dir" &>/dev/null &
         done
         ;;
     esac
