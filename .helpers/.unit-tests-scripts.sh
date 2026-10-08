@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-# Test all scripts.
+# Source the file '.common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/.common-functions.sh"
 
-_SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-_ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$_SCRIPT_DIR")
-_TESTS_DIR=$(mktemp --directory)
+# Test all scripts.
 
 # Disable GUI for testing on terminal.
 unset "DISPLAY"
@@ -63,7 +64,7 @@ __check_file_nonempty() {
 }
 
 __test_begin() {
-    temp_dir=$(mktemp --directory --tmpdir="$_TESTS_DIR" "test.XXXX")
+    temp_dir=$(mktemp --directory --tmpdir="$TEMP_DIR_TASK" "test.XXXX")
 
     local item=""
     local source=""
@@ -86,7 +87,7 @@ __run_script() {
     echo -e "[\033[36mSCRIPT\033[0m] $script"
     # The sentinel keeps trailing newlines, which command substitution removes.
     output=$(
-        bash "$_ROOT_DIR/$script" "$@"
+        bash "$ROOT_DIR/$script" "$@"
         printf x
     )
     output=${output%x}
@@ -143,63 +144,6 @@ __test_scripts_stdout() {
     done
 }
 
-__ensure_ffmpeg() {
-    if command -v ffmpeg &>/dev/null; then
-        return 0
-    fi
-
-    if ! command -v pkgx &>/dev/null &&
-        [[ -x "${HOME:-}/.pkgx/pkgx" ]] &&
-        "${HOME}/.pkgx/pkgx" -v &>/dev/null; then
-        export PATH="${HOME}/.pkgx:${PATH}"
-    fi
-
-    if command -v pkgx &>/dev/null && pkgx -v &>/dev/null; then
-        set -a
-        eval "$(pkgx --silent +ffmpeg.org)" &>/dev/null
-        set +a
-    fi
-    if command -v ffmpeg &>/dev/null; then
-        return 0
-    fi
-
-    local cmd=""
-    local use_sudo="true"
-    if [[ "${HOME:-}" == *"com.termux"* ]] && command -v pkg &>/dev/null; then
-        cmd="pkg install -y ffmpeg"
-        use_sudo="false"
-    elif command -v nix-env &>/dev/null; then
-        local nix_channel="nixpkgs"
-        if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
-            nix_channel="nixos"
-        fi
-        cmd="nix-env -iA $nix_channel.ffmpeg"
-        use_sudo="false"
-    elif command -v apt-get &>/dev/null; then
-        cmd="apt-get update; apt-get -y install ffmpeg"
-    elif command -v rpm-ostree &>/dev/null; then
-        cmd="rpm-ostree install ffmpeg-free"
-    elif command -v dnf &>/dev/null; then
-        cmd="dnf -y install ffmpeg-free"
-    elif command -v pacman &>/dev/null; then
-        cmd="pacman -Syy; pacman --noconfirm -S ffmpeg"
-    elif command -v zypper &>/dev/null; then
-        cmd="zypper refresh; zypper --non-interactive install ffmpeg"
-    elif command -v guix &>/dev/null; then
-        cmd="guix package -i ffmpeg"
-    elif command -v xbps-install &>/dev/null; then
-        cmd="xbps-install -S; xbps-install -y ffmpeg"
-    fi
-
-    [[ -z "$cmd" ]] && return 0
-    if [[ "$use_sudo" == "true" ]]; then
-        command -v sudo &>/dev/null || return 0
-        sudo bash -c "$cmd" &>/dev/null
-    else
-        bash -c "$cmd" &>/dev/null
-    fi
-}
-
 # -----------------------------------------------------------------------------
 # SECTION: Functions for generating fixtures
 # -----------------------------------------------------------------------------
@@ -233,17 +177,17 @@ __generate_fixture_zip() {
     local dest=$1
     local side=""
 
-    side=$(mktemp --directory --tmpdir="$_TESTS_DIR" "fixture.XXXX")
+    side=$(mktemp --directory --tmpdir="$TEMP_DIR_TASK" "fixture.XXXX")
     echo "Content of 'Test archive'." >"$side/Test archive 1"
     echo "Content of 'Test archive 2'." >"$side/Test archive 2"
     (
         cd -- "$side" || exit 1
-        if command -v "zip" &>/dev/null; then
+        if _command_exists "zip"; then
             zip --symlinks --quiet --recurse-paths "$dest" -- \
                 "Test archive 1" "Test archive 2"
-        elif command -v "7za" &>/dev/null; then
+        elif _command_exists "7za"; then
             7za a -snl "$dest" -- "Test archive 1" "Test archive 2" >/dev/null
-        elif command -v "bsdtar" &>/dev/null; then
+        elif _command_exists "bsdtar"; then
             bsdtar -a -cf "$dest" -- "Test archive 1" "Test archive 2"
         fi
     )
@@ -254,10 +198,10 @@ __generate_fixture_pdf() {
     local dest=$1
     local side=""
 
-    side=$(mktemp --directory --tmpdir="$_TESTS_DIR" "fixture.XXXX")
+    side=$(mktemp --directory --tmpdir="$TEMP_DIR_TASK" "fixture.XXXX")
     __generate_fixture_image "$side/page.png"
     cp -- "$side/page.png" "$side/page 2.png"
-    bash "$_ROOT_DIR/Image/Image: Combine, Split/Image: Combine into PDF" \
+    bash "$ROOT_DIR/Image/Image: Combine, Split/Image: Combine into PDF" \
         "$side/page.png" "$side/page 2.png" >/dev/null
     cp -- "$side/Combined images.pdf" "$dest"
     rm -rf -- "$side"
@@ -267,9 +211,9 @@ __generate_fixture_odt() {
     local dest=$1
     local side=""
 
-    side=$(mktemp --directory --tmpdir="$_TESTS_DIR" "fixture.XXXX")
+    side=$(mktemp --directory --tmpdir="$TEMP_DIR_TASK" "fixture.XXXX")
     echo "Content of 'Test document'." >"$side/Test document.txt"
-    bash "$_ROOT_DIR/Document/Document: Convert/Document: Convert to ODT" \
+    bash "$ROOT_DIR/Document/Document: Convert/Document: Convert to ODT" \
         "$side/Test document.txt" >/dev/null
     cp -- "$side/Test document.odt" "$dest"
     rm -rf -- "$side"
@@ -280,9 +224,9 @@ __generate_fixture_tagged_audio() {
     local source=$2
     local side=""
 
-    side=$(mktemp --directory --tmpdir="$_TESTS_DIR" "fixture.XXXX")
+    side=$(mktemp --directory --tmpdir="$TEMP_DIR_TASK" "fixture.XXXX")
     cp -- "$source" "$side/Test audio.mp3"
-    bash "$_ROOT_DIR/Audio and Video/Audio: MP3 files/MP3: (artist - title) Name to ID3" \
+    bash "$ROOT_DIR/Audio and Video/Audio: MP3 files/MP3: (artist - title) Name to ID3" \
         "$side/Test audio.mp3" >/dev/null
     cp -- "$side/Test audio.mp3" "$dest"
     rm -rf -- "$side"
@@ -320,12 +264,11 @@ _main() {
     local checksum=""
     local font_file=""
 
-    fixtures=$(mktemp --directory --tmpdir="$_TESTS_DIR" "fixtures.XXXX")
-    __ensure_ffmpeg
+    _check_dependencies "ffmpeg"
 
-    if command -v xdg-open &>/dev/null; then
-        xdg-open "$_TESTS_DIR" &>/dev/null &
-    fi
+    _open_items_locations "$TEMP_DIR_TASK/task" "true"
+
+    fixtures=$(mktemp --directory --tmpdir="$TEMP_DIR_TASK" "fixtures.XXXX")
 
     # -------------------------------------------------------------------------
     # SECTION: Archive
@@ -670,7 +613,7 @@ _main() {
 
     fixture_svg="$fixtures/Test image SVG.svg"
     fixture_svgz="$fixtures/Test image SVG.svgz"
-    cp -- "$_ROOT_DIR/screenshot.svg" "$fixture_svg"
+    cp -- "$ROOT_DIR/screenshot.svg" "$fixture_svg"
     gzip --no-name -c "$fixture_svg" >"$fixture_svgz"
 
     __test_scripts_file "$fixture_svg" "Test image SVG.svg" "empty" \
