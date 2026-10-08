@@ -2,10 +2,9 @@
 
 # Test all scripts.
 
-# Source the file '.common-functions.sh'.
-SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
-source "$ROOT_DIR/.common-functions.sh"
+_SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+_ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$_SCRIPT_DIR")
+_TESTS_DIR=$(mktemp --directory)
 
 # Disable GUI for testing on terminal.
 unset "DISPLAY"
@@ -25,14 +24,14 @@ _TOTAL_FAILED=0
 # SECTION: Test functions
 # -----------------------------------------------------------------------------
 
-__test_file_empty() {
+__check_file_empty() {
     local file=$1
 
     ((_TOTAL_TESTS++))
 
     if [[ -f "$file" && ! -s "$file" ]]; then
-        printf "[\033[32m PASS \033[0m] "
-        printf "\033[32mTest file (empty).\033[0m\n"
+        printf "[\033[36m PASS \033[0m] "
+        printf "\033[36mTest file (empty).\033[0m\n"
     else
         printf "[\033[31mFAILED\033[0m] "
         printf "\033[31mTest file (empty).\033[0m\n"
@@ -44,14 +43,14 @@ __test_file_empty() {
     fi
 }
 
-__test_file_nonempty() {
+__check_file_nonempty() {
     local file=$1
 
     ((_TOTAL_TESTS++))
 
     if [[ -f "$file" && -s "$file" ]]; then
-        printf "[\033[32m PASS \033[0m] "
-        printf "\033[32mTest file (non empty).\033[0m\n"
+        printf "[\033[36m PASS \033[0m] "
+        printf "\033[36mTest file (non empty).\033[0m\n"
     else
         printf "[\033[31mFAILED\033[0m] "
         printf "\033[31mTest file (non empty).\033[0m\n"
@@ -63,9 +62,240 @@ __test_file_nonempty() {
     fi
 }
 
-__echo_script() {
+__test_begin() {
+    temp_dir=$(mktemp --directory --tmpdir="$_TESTS_DIR" "test.XXXX")
+
+    local item=""
+    local source=""
+    local dest_name=""
+    for item in "$@"; do
+        source=${item%%::*}
+        dest_name=${item#*::}
+        cp -a -- "$source" "$temp_dir/$dest_name"
+    done
+}
+
+__run_script() {
+    local script=$1
+    shift
+
+    local output=""
+
+    printf '%s\n' "$script" >"$temp_dir/script_name.txt"
     echo
-    echo -e "[\033[36mSCRIPT\033[0m] $1"
+    echo -e "[\033[36mSCRIPT\033[0m] $script"
+    # The sentinel keeps trailing newlines, which command substitution removes.
+    output=$(
+        bash "$_ROOT_DIR/$script" "$@"
+        printf x
+    )
+    output=${output%x}
+    printf '%s' "$output" >"$temp_dir/std_output.txt"
+    std_output="$temp_dir/std_output.txt"
+}
+
+__test_script() {
+    local script=$1
+    local stdout_mode=$2
+    local expected_rel=$3
+    shift 3
+
+    __run_script "$script" "$@"
+
+    if [[ -n "$expected_rel" ]]; then
+        __check_file_nonempty "$temp_dir/$expected_rel"
+    fi
+
+    if [[ "$stdout_mode" == "empty" ]]; then
+        __check_file_empty "$std_output"
+    else
+        __check_file_nonempty "$std_output"
+    fi
+}
+
+__test_scripts_file() {
+    local fixture=$1
+    local input_name=$2
+    local stdout_mode=$3
+    shift 3
+
+    local spec=""
+    local script=""
+    local expected=""
+    for spec in "$@"; do
+        script=${spec%%|*}
+        expected=${spec#*|}
+        __test_begin "$fixture::$input_name"
+        __test_script "$script" "$stdout_mode" "$expected" \
+            "$temp_dir/$input_name"
+    done
+}
+
+__test_scripts_stdout() {
+    local fixture=$1
+    local input_name=$2
+    shift 2
+
+    local script=""
+    for script in "$@"; do
+        __test_begin "$fixture::$input_name"
+        __test_script "$script" "text" "" "$temp_dir/$input_name"
+    done
+}
+
+__ensure_ffmpeg() {
+    if command -v ffmpeg &>/dev/null; then
+        return 0
+    fi
+
+    if ! command -v pkgx &>/dev/null &&
+        [[ -x "${HOME:-}/.pkgx/pkgx" ]] &&
+        "${HOME}/.pkgx/pkgx" -v &>/dev/null; then
+        export PATH="${HOME}/.pkgx:${PATH}"
+    fi
+
+    if command -v pkgx &>/dev/null && pkgx -v &>/dev/null; then
+        set -a
+        eval "$(pkgx --silent +ffmpeg.org)" &>/dev/null
+        set +a
+    fi
+    if command -v ffmpeg &>/dev/null; then
+        return 0
+    fi
+
+    local cmd=""
+    local use_sudo="true"
+    if [[ "${HOME:-}" == *"com.termux"* ]] && command -v pkg &>/dev/null; then
+        cmd="pkg install -y ffmpeg"
+        use_sudo="false"
+    elif command -v nix-env &>/dev/null; then
+        local nix_channel="nixpkgs"
+        if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
+            nix_channel="nixos"
+        fi
+        cmd="nix-env -iA $nix_channel.ffmpeg"
+        use_sudo="false"
+    elif command -v apt-get &>/dev/null; then
+        cmd="apt-get update; apt-get -y install ffmpeg"
+    elif command -v rpm-ostree &>/dev/null; then
+        cmd="rpm-ostree install ffmpeg-free"
+    elif command -v dnf &>/dev/null; then
+        cmd="dnf -y install ffmpeg-free"
+    elif command -v pacman &>/dev/null; then
+        cmd="pacman -Syy; pacman --noconfirm -S ffmpeg"
+    elif command -v zypper &>/dev/null; then
+        cmd="zypper refresh; zypper --non-interactive install ffmpeg"
+    elif command -v guix &>/dev/null; then
+        cmd="guix package -i ffmpeg"
+    elif command -v xbps-install &>/dev/null; then
+        cmd="xbps-install -S; xbps-install -y ffmpeg"
+    fi
+
+    [[ -z "$cmd" ]] && return 0
+    if [[ "$use_sudo" == "true" ]]; then
+        command -v sudo &>/dev/null || return 0
+        sudo bash -c "$cmd" &>/dev/null
+    else
+        bash -c "$cmd" &>/dev/null
+    fi
+}
+
+# -----------------------------------------------------------------------------
+# SECTION: Functions for generating fixtures
+# -----------------------------------------------------------------------------
+
+__generate_fixture_audio() {
+    local dest=$1
+
+    ffmpeg -hide_banner -y \
+        -f lavfi -i "sine=frequency=440:duration=5" \
+        "$dest" &>/dev/null
+}
+
+__generate_fixture_video() {
+    local dest=$1
+
+    ffmpeg -hide_banner -y \
+        -f lavfi -i color=c=red:s=200x100:d=3:r=25 \
+        -f lavfi -i "sine=frequency=440:duration=3" \
+        -shortest "$dest" &>/dev/null
+}
+
+__generate_fixture_image() {
+    local dest=$1
+
+    ffmpeg -hide_banner -y \
+        -f lavfi -i color=c=red:s=200x100 -frames:v 1 \
+        -update 1 "$dest" &>/dev/null
+}
+
+__generate_fixture_zip() {
+    local dest=$1
+    local side=""
+
+    side=$(mktemp --directory --tmpdir="$_TESTS_DIR" "fixture.XXXX")
+    echo "Content of 'Test archive'." >"$side/Test archive 1"
+    echo "Content of 'Test archive 2'." >"$side/Test archive 2"
+    (
+        cd -- "$side" || exit 1
+        if command -v "zip" &>/dev/null; then
+            zip --symlinks --quiet --recurse-paths "$dest" -- \
+                "Test archive 1" "Test archive 2"
+        elif command -v "7za" &>/dev/null; then
+            7za a -snl "$dest" -- "Test archive 1" "Test archive 2" >/dev/null
+        elif command -v "bsdtar" &>/dev/null; then
+            bsdtar -a -cf "$dest" -- "Test archive 1" "Test archive 2"
+        fi
+    )
+    rm -rf -- "$side"
+}
+
+__generate_fixture_pdf() {
+    local dest=$1
+    local side=""
+
+    side=$(mktemp --directory --tmpdir="$_TESTS_DIR" "fixture.XXXX")
+    __generate_fixture_image "$side/page.png"
+    cp -- "$side/page.png" "$side/page 2.png"
+    bash "$_ROOT_DIR/Image/Image: Combine, Split/Image: Combine into PDF" \
+        "$side/page.png" "$side/page 2.png" >/dev/null
+    cp -- "$side/Combined images.pdf" "$dest"
+    rm -rf -- "$side"
+}
+
+__generate_fixture_odt() {
+    local dest=$1
+    local side=""
+
+    side=$(mktemp --directory --tmpdir="$_TESTS_DIR" "fixture.XXXX")
+    echo "Content of 'Test document'." >"$side/Test document.txt"
+    bash "$_ROOT_DIR/Document/Document: Convert/Document: Convert to ODT" \
+        "$side/Test document.txt" >/dev/null
+    cp -- "$side/Test document.odt" "$dest"
+    rm -rf -- "$side"
+}
+
+__generate_fixture_tagged_audio() {
+    local dest=$1
+    local source=$2
+    local side=""
+
+    side=$(mktemp --directory --tmpdir="$_TESTS_DIR" "fixture.XXXX")
+    cp -- "$source" "$side/Test audio.mp3"
+    bash "$_ROOT_DIR/Audio and Video/Audio: MP3 files/MP3: (artist - title) Name to ID3" \
+        "$side/Test audio.mp3" >/dev/null
+    cp -- "$side/Test audio.mp3" "$dest"
+    rm -rf -- "$side"
+}
+
+__generate_fixture_text() {
+    echo "Content." >"$temp_dir/Test file.txt"
+}
+
+__generate_fixture_archive_dir() {
+    mkdir -p -- "$temp_dir/Test archive"
+    echo "Content of 'Test archive'." >"$temp_dir/Test archive/Test archive 1"
+    echo "Content of 'Test archive 2'." >"$temp_dir/Test archive/Test archive 2"
 }
 
 # -----------------------------------------------------------------------------
@@ -73,954 +303,338 @@ __echo_script() {
 # -----------------------------------------------------------------------------
 
 _main() {
-    local script_test=""
-    local input_file1=""
-    local input_dir1=""
-    local input_file2=""
-    local output_file=""
-    local temp_dir=$TEMP_DIR_TASK
+    local temp_dir=""
+    local std_output=""
+    local fixtures=""
+    local fixture_audio=""
+    local fixture_audio_id3=""
+    local fixture_video=""
+    local fixture_image=""
+    local fixture_jpg=""
+    local fixture_svg=""
+    local fixture_svgz=""
+    local fixture_zip=""
+    local fixture_pdf=""
+    local fixture_odt=""
+    local fixture_text=""
+    local checksum=""
+    local font_file=""
 
-    local std_output="$temp_dir/std_output.txt"
-    touch -- "$std_output"
+    fixtures=$(mktemp --directory --tmpdir="$_TESTS_DIR" "fixtures.XXXX")
+    __ensure_ffmpeg
 
-    _check_dependencies "ffmpeg"
-
-    _open_items_locations "$std_output" "true"
+    if command -v xdg-open &>/dev/null; then
+        xdg-open "$_TESTS_DIR" &>/dev/null &
+    fi
 
     # -------------------------------------------------------------------------
     # SECTION: Archive
     # -------------------------------------------------------------------------
 
-    # Create mock files for testing.
-    input_dir1="$temp_dir/Test archive"
-    mkdir --parents -- "$input_dir1"
-    input_file1="$input_dir1/Test archive 1"
-    input_file2="$input_dir1/Test archive 2"
-    echo "Content of 'Test archive'." >"$input_file1"
-    echo "Content of 'Test archive 2'." >"$input_file2"
-    output_file=$input_dir1
+    # Disabled: Archive/Compress to '7z' with password
+    # Disabled: Archive/Compress to 'zip' with password
 
-    script_test="Archive/Compress to '7z'"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_dir1" >"$std_output"
-    __test_file_nonempty "$output_file.7z"
-    __test_file_empty "$std_output"
+    __test_begin
+    __generate_fixture_archive_dir
+    __test_script "Archive/Compress to '7z'" "empty" "Test archive.7z" \
+        "$temp_dir/Test archive"
 
-    #script_test="Archive/Compress to '7z' with password"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_dir1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    __test_begin
+    __generate_fixture_archive_dir
+    __test_script "Archive/Compress to 'tar.gz'" "empty" "Test archive.tar.gz" \
+        "$temp_dir/Test archive"
 
-    script_test="Archive/Compress to 'tar.gz'"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_dir1" >"$std_output"
-    __test_file_nonempty "$output_file.tar.gz"
-    __test_file_empty "$std_output"
+    __test_begin
+    __generate_fixture_archive_dir
+    __test_script "Archive/Compress to 'tar.xz'" "empty" "Test archive.tar.xz" \
+        "$temp_dir/Test archive"
 
-    script_test="Archive/Compress to 'tar.xz'"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_dir1" >"$std_output"
-    __test_file_nonempty "$output_file.tar.xz"
-    __test_file_empty "$std_output"
+    __test_begin
+    __generate_fixture_archive_dir
+    __test_script "Archive/Compress to 'tar.zst'" "empty" \
+        "Test archive.tar.zst" "$temp_dir/Test archive"
 
-    script_test="Archive/Compress to 'tar.zst'"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_dir1" >"$std_output"
-    __test_file_nonempty "$output_file.tar.zst"
-    __test_file_empty "$std_output"
+    __test_begin
+    __generate_fixture_archive_dir
+    __test_script "Archive/Compress to 'zip'" "empty" "Test archive.zip" \
+        "$temp_dir/Test archive"
 
-    script_test="Archive/Compress to 'zip'"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_dir1" >"$std_output"
-    __test_file_nonempty "$output_file.zip"
-    __test_file_empty "$std_output"
-
-    #script_test="Archive/Compress to 'zip' with password"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_dir1" >"$std_output"
-    #__test_file_nonempty "$output_file.zip"
-    #__test_file_empty "$std_output"
-
-    script_test="Archive/Extract here"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$output_file.zip" >"$std_output"
-    __test_file_nonempty "$output_file (2)/Test archive 1"
-    __test_file_empty "$std_output"
+    fixture_zip="$fixtures/Test archive.zip"
+    __generate_fixture_zip "$fixture_zip"
+    __test_begin "$fixture_zip::Test archive.zip"
+    __test_script "Archive/Extract here" "empty" \
+        "Test archive/Test archive 1" \
+        "$temp_dir/Test archive.zip"
 
     # -------------------------------------------------------------------------
     # SECTION: Audio
     # -------------------------------------------------------------------------
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test audio.mp3"
-    input_file2="$temp_dir/Test audio 2.mp3"
-    output_file="$temp_dir/Test audio"
+    # Disabled: Audio and Video/Audio: MP3 files/MP3: Maximize volume (recursive)
+    # Disabled: Audio and Video/Audio: MP3 files/MP3: Normalize volume (recursive)
 
-    ffmpeg -hide_banner -y \
-        -f lavfi -i "sine=frequency=440:duration=5" \
-        "$input_file1" &>/dev/null
-    cp -- "$input_file1" "$input_file2"
+    fixture_audio="$fixtures/Test audio.mp3"
+    __generate_fixture_audio "$fixture_audio"
 
-    script_test="Audio and Video/Audio and Video: Tools/Media: Show information"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$std_output"
+    __test_scripts_stdout "$fixture_audio" "Test audio.mp3" \
+        "Audio and Video/Audio and Video: Tools/Media: Show information" \
+        "Audio and Video/Audio and Video: Tools/Media: Show basic metadata"
 
-    script_test="Audio and Video/Audio and Video: Tools/Media: Show basic metadata"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$std_output"
+    __test_begin \
+        "$fixture_audio::Test audio.mp3" \
+        "$fixture_audio::Test audio 2.mp3"
+    __test_script \
+        "Audio and Video/Audio and Video: Tools/Media: Concatenate files" \
+        "empty" "Concatenated media.mp3" \
+        "$temp_dir/Test audio.mp3" "$temp_dir/Test audio 2.mp3"
 
-    script_test="Audio and Video/Audio and Video: Tools/Media: Concatenate files"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" "$input_file2" >"$std_output"
-    __test_file_nonempty "$temp_dir/Concatenated media.mp3"
-    __test_file_empty "$std_output"
+    __test_scripts_file "$fixture_audio" "Test audio.mp3" "empty" \
+        "Audio and Video/Audio and Video: Tools/Media: Remove metadata|Test audio (no metadata).mp3" \
+        "Audio and Video/Audio: Channels/Audio: Mix channels to mono|Test audio (mono).mp3" \
+        "Audio and Video/Audio: Convert/Audio: Convert to FLAC|Test audio.flac" \
+        "Audio and Video/Audio: Convert/Audio: Convert to MP3 (192 kbps)|Test audio (2).mp3" \
+        "Audio and Video/Audio: Convert/Audio: Convert to MP3 (320 kbps)|Test audio (2).mp3" \
+        "Audio and Video/Audio: Convert/Audio: Convert to MP3 (48 kbps)|Test audio (2).mp3" \
+        "Audio and Video/Audio: Convert/Audio: Convert to OPUS (192 kbps)|Test audio.opus" \
+        "Audio and Video/Audio: Convert/Audio: Convert to OPUS (320 kbps)|Test audio.opus" \
+        "Audio and Video/Audio: Convert/Audio: Convert to OPUS (48 kbps)|Test audio.opus" \
+        "Audio and Video/Audio: Convert/Audio: Convert to WAV|Test audio.wav" \
+        "Audio and Video/Audio: Effects/Audio: Fade-in|Test audio (fade-in).mp3" \
+        "Audio and Video/Audio: Effects/Audio: Fade-out|Test audio (fade-out).mp3" \
+        "Audio and Video/Audio: Effects/Audio: Normalize volume|Test audio (normalized).mp3" \
+        "Audio and Video/Audio: Effects/Audio: Remove silence (sections)|Test audio (no silence).mp3" \
+        "Audio and Video/Audio: Effects/Audio: Filter noise|Test audio (noise filtered).mp3" \
+        "Audio and Video/Audio: Effects/Audio: Remove silence (extremities)|Test audio (no silence).mp3"
 
-    script_test="Audio and Video/Audio and Video: Tools/Media: Remove metadata"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (no metadata).mp3"
-    __test_file_empty "$std_output"
+    __test_begin \
+        "$fixture_audio::Test audio.mp3" \
+        "$fixture_audio::Test audio 2.mp3"
+    __test_script "Audio and Video/Audio: Channels/Audio: Mix two files" \
+        "empty" "Mixed audio.wav" \
+        "$temp_dir/Test audio.mp3" "$temp_dir/Test audio 2.mp3"
 
-    script_test="Audio and Video/Audio: Channels/Audio: Mix channels to mono"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (mono).mp3"
-    __test_file_empty "$std_output"
+    __test_scripts_stdout "$fixture_audio" "Test audio.mp3" \
+        "Audio and Video/Audio: MP3 files/MP3: Show encoding details" \
+        "Audio and Video/Audio: Quality/Audio: Check quality"
 
-    script_test="Audio and Video/Audio: Channels/Audio: Mix two files"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" "$input_file2" >"$std_output"
-    __test_file_nonempty "$temp_dir/Mixed audio.wav"
-    __test_file_empty "$std_output"
+    __test_scripts_file "$fixture_audio" "Test audio.mp3" "empty" \
+        "Audio and Video/Audio: Quality/Audio: Produce spectrogram|Test audio.png"
 
-    script_test="Audio and Video/Audio: Convert/Audio: Convert to FLAC"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.flac"
-    __test_file_empty "$std_output"
+    __test_begin "$fixture_audio::Test audio.mp3"
+    __test_script \
+        "Audio and Video/Audio: MP3 files/MP3: (artist - title) Name to ID3" \
+        "empty" "" "$temp_dir/Test audio.mp3"
 
-    script_test="Audio and Video/Audio: Convert/Audio: Convert to MP3 (192 kbps)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (2).mp3"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: Convert/Audio: Convert to MP3 (320 kbps)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (3).mp3"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: Convert/Audio: Convert to MP3 (48 kbps)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (4).mp3"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: Convert/Audio: Convert to OPUS (192 kbps)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.opus"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: Convert/Audio: Convert to OPUS (320 kbps)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (2).opus"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: Convert/Audio: Convert to OPUS (48 kbps)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (3).opus"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: Convert/Audio: Convert to WAV"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.wav"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: Effects/Audio: Fade-in"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (fade-in).mp3"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: Effects/Audio: Fade-out"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (fade-out).mp3"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: Effects/Audio: Normalize volume"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (normalized).mp3"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: Effects/Audio: Remove silence (sections)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (no silence).mp3"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: Effects/Audio: Filter noise"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (noise filtered).mp3"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: Effects/Audio: Remove silence (extremities)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (no silence) (2).mp3"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: MP3 files/MP3: Show encoding details"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    #script_test="Audio and Video/Audio: MP3 files/MP3: Maximize volume (recursive)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file.mp3.bak"
-    #__test_file_empty "$std_output"
-
-    #script_test="Audio and Video/Audio: MP3 files/MP3: Normalize volume (recursive)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file.mp3.bak"
-    #__test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: Quality/Audio: Check quality"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    script_test="Audio and Video/Audio: Quality/Audio: Produce spectrogram"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.png"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: MP3 files/MP3: (artist - title) Name to ID3"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Audio: MP3 files/MP3: (artist - title) ID3 to Name"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/ - Test audio.mp3"
-    __test_file_empty "$std_output"
+    fixture_audio_id3="$fixtures/Test audio id3.mp3"
+    __generate_fixture_tagged_audio "$fixture_audio_id3" "$fixture_audio"
+    __test_begin "$fixture_audio_id3::Test audio.mp3"
+    __test_script \
+        "Audio and Video/Audio: MP3 files/MP3: (artist - title) ID3 to Name" \
+        "empty" " - Test audio.mp3" "$temp_dir/Test audio.mp3"
 
     # -------------------------------------------------------------------------
     # SECTION: Video
     # -------------------------------------------------------------------------
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test video.mp4"
-    input_file2="$temp_dir/Test video 2.mp4"
-    output_file="$temp_dir/Test video"
+    # Disabled: Audio and Video/Video: Convert/Video: Convert to WebM (copy)
 
-    # Generate a test video (red background with a 440 Hz sine tone).
-    ffmpeg -hide_banner -y \
-        -f lavfi -i color=c=red:s=200x100:d=3:r=25 \
-        -f lavfi -i "sine=frequency=440:duration=3" \
-        -shortest "$input_file1" &>/dev/null
-    cp -- "$input_file1" "$input_file2"
+    fixture_video="$fixtures/Test video.mp4"
+    __generate_fixture_video "$fixture_video"
 
-    script_test="Audio and Video/Video: Aspect ratio/Video: Aspect to 1:1"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (aspect 1:1).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Aspect ratio/Video: Aspect to 16:10"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (aspect 16:10).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Aspect ratio/Video: Aspect to 16:9"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (aspect 16:9).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Aspect ratio/Video: Aspect to 4:3"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (aspect 4:3).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Audio track/Video: Extract audio"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.m4a"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Audio track/Video: Remove audio"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (no audio).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Convert/Video: Convert to MKV"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.mkv"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Convert/Video: Convert to MP4"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (2).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Convert/Video: Convert to WebM"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.webm"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Convert/Video: Convert to MKV (copy)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (2).mkv"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Convert/Video: Convert to MP4 (copy)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (3).mp4"
-    __test_file_empty "$std_output"
-
-    #script_test="Audio and Video/Video: Convert/Video: Convert to WebM (copy)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file (2).webm"
-    #__test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Convert/Video: Export to GIF (1 FPS)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (1 FPS).gif"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Convert/Video: Export to GIF (5 FPS)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (5 FPS).gif"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Convert/Video: Export to GIF (10 FPS)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (10 FPS).gif"
-    __test_file_empty "$std_output"
-
-    rm -rf "$temp_dir/Output"
-    script_test="Audio and Video/Video: Export frames/Video: Export frames (1 FPS)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/Output/Test video.mp4_frame_00001.png"
-    __test_file_empty "$std_output"
-
-    rm -rf "$temp_dir/Output"
-    script_test="Audio and Video/Video: Export frames/Video: Export frames (10 FPS)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/Output/Test video.mp4_frame_00001.png"
-    __test_file_empty "$std_output"
-
-    rm -rf "$temp_dir/Output"
-    script_test="Audio and Video/Video: Export frames/Video: Export frames (5 FPS)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/Output/Test video.mp4_frame_00001.png"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Flip, Rotate/Video: Flip (horizontal)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (flipped-h).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Flip, Rotate/Video: Flip (vertical)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (flipped-v).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Flip, Rotate/Video: Rotate (180 deg)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (180 deg).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Flip, Rotate/Video: Rotate (270 deg)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (270 deg).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Flip, Rotate/Video: Rotate (90 deg)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (90 deg).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Frame rate/Video: Frame rate to 30 FPS"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (30 FPS).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Frame rate/Video: Frame rate to 60 FPS"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (60 FPS).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Resize/Video: Resize (25 pct)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (25 pct).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Resize/Video: Resize (50 pct)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (50 pct).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Resize/Video: Resize (75 pct)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (75 pct).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Speed/Video: Speed to 0.5"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (speed 0.5).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Speed/Video: Speed to 1.5"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (speed 1.5).mp4"
-    __test_file_empty "$std_output"
-
-    script_test="Audio and Video/Video: Speed/Video: Speed to 2.0"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (speed 2.0).mp4"
-    __test_file_empty "$std_output"
-
-    # -------------------------------------------------------------------------
-    # SECTION: Clipboard
-    # -------------------------------------------------------------------------
-
-    #script_test="Clipboard/Copy file contents"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Clipboard/Copy file names"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Clipboard/Copy file names (recursive)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Clipboard/Copy file paths"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Clipboard/Copy file paths (recursive)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Clipboard/Paste clipboard contents"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Directories and Files/Compare items"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    __test_scripts_file "$fixture_video" "Test video.mp4" "empty" \
+        "Audio and Video/Video: Aspect ratio/Video: Aspect to 1:1|Test video (aspect 1:1).mp4" \
+        "Audio and Video/Video: Aspect ratio/Video: Aspect to 16:10|Test video (aspect 16:10).mp4" \
+        "Audio and Video/Video: Aspect ratio/Video: Aspect to 16:9|Test video (aspect 16:9).mp4" \
+        "Audio and Video/Video: Aspect ratio/Video: Aspect to 4:3|Test video (aspect 4:3).mp4" \
+        "Audio and Video/Video: Audio track/Video: Extract audio|Test video.m4a" \
+        "Audio and Video/Video: Audio track/Video: Remove audio|Test video (no audio).mp4" \
+        "Audio and Video/Video: Convert/Video: Convert to MKV|Test video.mkv" \
+        "Audio and Video/Video: Convert/Video: Convert to MP4|Test video (2).mp4" \
+        "Audio and Video/Video: Convert/Video: Convert to WebM|Test video.webm" \
+        "Audio and Video/Video: Convert/Video: Convert to MKV (copy)|Test video.mkv" \
+        "Audio and Video/Video: Convert/Video: Convert to MP4 (copy)|Test video (2).mp4" \
+        "Audio and Video/Video: Convert/Video: Export to GIF (1 FPS)|Test video (1 FPS).gif" \
+        "Audio and Video/Video: Convert/Video: Export to GIF (5 FPS)|Test video (5 FPS).gif" \
+        "Audio and Video/Video: Convert/Video: Export to GIF (10 FPS)|Test video (10 FPS).gif" \
+        "Audio and Video/Video: Export frames/Video: Export frames (1 FPS)|Output/Test video.mp4_frame_00001.png" \
+        "Audio and Video/Video: Export frames/Video: Export frames (10 FPS)|Output/Test video.mp4_frame_00001.png" \
+        "Audio and Video/Video: Export frames/Video: Export frames (5 FPS)|Output/Test video.mp4_frame_00001.png" \
+        "Audio and Video/Video: Flip, Rotate/Video: Flip (horizontal)|Test video (flipped-h).mp4" \
+        "Audio and Video/Video: Flip, Rotate/Video: Flip (vertical)|Test video (flipped-v).mp4" \
+        "Audio and Video/Video: Flip, Rotate/Video: Rotate (180 deg)|Test video (180 deg).mp4" \
+        "Audio and Video/Video: Flip, Rotate/Video: Rotate (270 deg)|Test video (270 deg).mp4" \
+        "Audio and Video/Video: Flip, Rotate/Video: Rotate (90 deg)|Test video (90 deg).mp4" \
+        "Audio and Video/Video: Frame rate/Video: Frame rate to 30 FPS|Test video (30 FPS).mp4" \
+        "Audio and Video/Video: Frame rate/Video: Frame rate to 60 FPS|Test video (60 FPS).mp4" \
+        "Audio and Video/Video: Resize/Video: Resize (25 pct)|Test video (25 pct).mp4" \
+        "Audio and Video/Video: Resize/Video: Resize (50 pct)|Test video (50 pct).mp4" \
+        "Audio and Video/Video: Resize/Video: Resize (75 pct)|Test video (75 pct).mp4" \
+        "Audio and Video/Video: Speed/Video: Speed to 0.5|Test video (speed 0.5).mp4" \
+        "Audio and Video/Video: Speed/Video: Speed to 1.5|Test video (speed 1.5).mp4" \
+        "Audio and Video/Video: Speed/Video: Speed to 2.0|Test video (speed 2.0).mp4"
 
     # -------------------------------------------------------------------------
     # SECTION: Directories and Files
     # -------------------------------------------------------------------------
 
-    script_test="Directories and Files/Compare items (via Diff)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" "$input_file2" >"$std_output"
-    __test_file_nonempty "$std_output"
+    # Disabled: Directories and Files/Flatten directory structure
+    # Disabled: Directories and Files/Open item location
+    # Disabled: Directories and Files/Reset permissions (recursive)
+    # Disabled: Clipboard/Copy file contents
+    # Disabled: Clipboard/Copy file names
+    # Disabled: Clipboard/Copy file names (recursive)
+    # Disabled: Clipboard/Copy file paths
+    # Disabled: Clipboard/Copy file paths (recursive)
+    # Disabled: Clipboard/Paste clipboard contents
+    # Disabled: Directories and Files/Compare items
 
-    script_test="Directories and Files/Find duplicate files"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
+    __test_begin
+    echo "one" >"$temp_dir/file1.txt"
+    echo "two" >"$temp_dir/file2.txt"
+    __test_script "Directories and Files/Compare items (via Diff)" "text" "" \
+        "$temp_dir/file1.txt" "$temp_dir/file2.txt"
 
-    mkdir --parents -- "$temp_dir/Test empty dir"
-    script_test="Directories and Files/Find empty directories"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
+    __test_begin
+    echo "same" >"$temp_dir/a.txt"
+    cp -- "$temp_dir/a.txt" "$temp_dir/b.txt"
+    __test_script "Directories and Files/Find duplicate files" "text" "" \
+        "$temp_dir"
 
+    __test_begin
+    mkdir -p -- "$temp_dir/Test empty dir"
+    __test_script "Directories and Files/Find empty directories" "text" "" \
+        "$temp_dir"
+
+    __test_begin
     touch -- "$temp_dir/.Test hidden file"
-    script_test="Directories and Files/List hidden files"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
+    __test_script "Directories and Files/List hidden files" "text" "" \
+        "$temp_dir"
 
+    __test_begin
     touch -- "$temp_dir/Test junk file.log"
-    script_test="Directories and Files/Find junk files"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
+    __test_script "Directories and Files/Find junk files" "text" "" \
+        "$temp_dir"
 
-    script_test="Directories and Files/Find empty files"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
+    __test_begin
+    touch -- "$temp_dir/Test empty file"
+    __test_script "Directories and Files/Find empty files" "text" "" \
+        "$temp_dir"
 
-    script_test="Directories and Files/List recent files"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    #script_test="Directories and Files/Flatten directory structure"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    script_test="Directories and Files/List largest files"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    script_test="Directories and Files/List permissions and owners"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    #script_test="Directories and Files/Open item location"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Directories and Files/Reset permissions (recursive)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    #__test_file_empty "$std_output"
-
-    script_test="Directories and Files/Show file information"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    script_test="Directories and Files/Show file metadata"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    script_test="Directories and Files/Show file MIME type"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    # -------------------------------------------------------------------------
-    # SECTION: Encryption
-    # -------------------------------------------------------------------------
-
-    #script_test="Encryption/Decrypt"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Encryption/Encrypt with password"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Encryption/Encrypt with password (ASCII)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Encryption/Import keys"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Encryption/Encrypt with keys"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Encryption/Encrypt with keys (ASCII)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Encryption/Import key"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Encryption/Sign"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Encryption/Sign (ASCII)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Encryption/Sign (detached signature)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Encryption/Sign and encrypt with keys"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Encryption/Sign and encrypt with keys (ASCII)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Encryption/Verify signature"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    local dir_script=""
+    for dir_script in \
+        "Directories and Files/List recent files" \
+        "Directories and Files/List largest files" \
+        "Directories and Files/List permissions and owners" \
+        "Directories and Files/Show file information" \
+        "Directories and Files/Show file metadata" \
+        "Directories and Files/Show file MIME type"; do
+        __test_begin
+        __generate_fixture_text
+        __test_script "$dir_script" "text" "" "$temp_dir"
+    done
 
     # -------------------------------------------------------------------------
     # SECTION: Image
     # -------------------------------------------------------------------------
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test image.png"
-    input_file2="$temp_dir/Test image 2.png"
-    output_file="$temp_dir/Test image"
+    # Disabled: Image/Image: Metadata, Exif/Image: Rename from metadata
+    # Disabled: Image/Image: Similarity/Image: Find similar (65 pct)
+    # Disabled: Image/Image: Similarity/Image: Find similar (75 pct)
+    # Disabled: Image/Image: Similarity/Image: Find similar (85 pct)
+    # Disabled: Image/Image: Similarity/Image: Find similar (95 pct)
+    # Disabled: Image/Image: Text recognition (OCR)/Image: Perform OCR (French)
+    # Disabled: Image/Image: Text recognition (OCR)/Image: Perform OCR (German)
+    # Disabled: Image/Image: Text recognition (OCR)/Image: Perform OCR (Italian)
+    # Disabled: Image/Image: Text recognition (OCR)/Image: Perform OCR (Portuguese)
+    # Disabled: Image/Image: Text recognition (OCR)/Image: Perform OCR (Russian)
+    # Disabled: Image/Image: Text recognition (OCR)/Image: Perform OCR (Spanish)
+    # Disabled: Image/Image: Watermark/Image: Add watermark (center)
+    # Disabled: Image/Image: Watermark/Image: Add watermark (north)
+    # Disabled: Image/Image: Watermark/Image: Add watermark (northeast)
+    # Disabled: Image/Image: Watermark/Image: Add watermark (northwest)
+    # Disabled: Image/Image: Watermark/Image: Add watermark (south)
+    # Disabled: Image/Image: Watermark/Image: Add watermark (southeast)
+    # Disabled: Image/Image: Watermark/Image: Add watermark (southwest)
 
-    # Generate a test image.
-    ffmpeg -hide_banner -y \
-        -f lavfi -i color=c=red:s=200x100 -frames:v 1 \
-        -update 1 "$input_file1" &>/dev/null
-    cp -- "$input_file1" "$input_file2"
+    fixture_image="$fixtures/Test image.png"
+    fixture_jpg="$fixtures/Test image.jpg"
+    __generate_fixture_image "$fixture_image"
+    __generate_fixture_image "$fixture_jpg"
 
-    script_test="Image/Image: Color/Image: Colorspace to gray"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (grayscale).png"
-    __test_file_empty "$std_output"
+    __test_scripts_file "$fixture_image" "Test image.png" "empty" \
+        "Image/Image: Color/Image: Colorspace to gray|Test image (grayscale).png" \
+        "Image/Image: Color/Image: Desaturate|Test image (desaturated).png" \
+        "Image/Image: Color/Image: Generate multiple hues|Output/Test image (2).png"
 
-    script_test="Image/Image: Color/Image: Desaturate"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (desaturated).png"
-    __test_file_empty "$std_output"
+    __test_begin \
+        "$fixture_image::Test image.png" \
+        "$fixture_image::Test image 2.png"
+    __test_script "Image/Image: Combine, Split/Image: Combine into GIF" \
+        "empty" "Animated image.gif" \
+        "$temp_dir/Test image.png" "$temp_dir/Test image 2.png"
 
-    rm -rf "$temp_dir/Output"
-    script_test="Image/Image: Color/Image: Generate multiple hues"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/Output/Test image (2).png"
-    __test_file_empty "$std_output"
+    __test_begin \
+        "$fixture_image::Test image.png" \
+        "$fixture_image::Test image 2.png"
+    __test_script "Image/Image: Combine, Split/Image: Combine into PDF" \
+        "empty" "Combined images.pdf" \
+        "$temp_dir/Test image.png" "$temp_dir/Test image 2.png"
 
-    script_test="Image/Image: Combine, Split/Image: Combine into GIF"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" "$input_file2" >"$std_output"
-    __test_file_nonempty "$temp_dir/Animated image.gif"
-    __test_file_empty "$std_output"
+    __test_scripts_file "$fixture_image" "Test image.png" "empty" \
+        "Image/Image: Combine, Split/Image: Split into 2 (horizontal)|Output/Test image-0.png" \
+        "Image/Image: Combine, Split/Image: Split into 2 (vertical)|Output/Test image-0.png" \
+        "Image/Image: Combine, Split/Image: Split into 4|Output/Test image-0.png"
 
-    script_test="Image/Image: Combine, Split/Image: Combine into PDF"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" "$input_file2" >"$std_output"
-    __test_file_nonempty "$temp_dir/Combined images.pdf"
-    __test_file_empty "$std_output"
+    __test_begin \
+        "$fixture_image::Test image.png" \
+        "$fixture_image::Test image 2.png"
+    __test_script "Image/Image: Combine, Split/Image: Stack (horizontal)" \
+        "empty" "Stacked images (horizontal).png" \
+        "$temp_dir/Test image.png" "$temp_dir/Test image 2.png"
 
-    rm -rf "$temp_dir/Output"
-    script_test="Image/Image: Combine, Split/Image: Split into 2 (horizontal)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/Output/Test image-0.png"
-    __test_file_empty "$std_output"
+    __test_begin \
+        "$fixture_image::Test image.png" \
+        "$fixture_image::Test image 2.png"
+    __test_script "Image/Image: Combine, Split/Image: Stack (vertical)" \
+        "empty" "Stacked images (vertical).png" \
+        "$temp_dir/Test image.png" "$temp_dir/Test image 2.png"
 
-    rm -rf "$temp_dir/Output"
-    script_test="Image/Image: Combine, Split/Image: Split into 2 (vertical)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/Output/Test image-0.png"
-    __test_file_empty "$std_output"
+    __test_scripts_file "$fixture_image" "Test image.png" "empty" \
+        "Image/Image: Convert/Image: Convert to AVIF|Test image.avif" \
+        "Image/Image: Convert/Image: Convert to GIF|Test image.gif" \
+        "Image/Image: Convert/Image: Convert to JPG|Test image.jpg"
 
-    rm -rf "$temp_dir/Output"
-    script_test="Image/Image: Combine, Split/Image: Split into 4"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/Output/Test image-0.png"
-    __test_file_empty "$std_output"
+    __test_scripts_file "$fixture_jpg" "Test image.jpg" "empty" \
+        "Image/Image: Convert/Image: Convert to PNG|Test image.png"
 
-    script_test="Image/Image: Combine, Split/Image: Stack (horizontal)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" "$input_file2" >"$std_output"
-    __test_file_nonempty "$temp_dir/Stacked images (horizontal).png"
-    __test_file_empty "$std_output"
+    __test_scripts_file "$fixture_image" "Test image.png" "empty" \
+        "Image/Image: Convert/Image: Convert to TIFF|Test image.tif" \
+        "Image/Image: Convert/Image: Convert to HEIC|Test image.heic" \
+        "Image/Image: Convert/Image: Convert to JXL|Test image.jxl" \
+        "Image/Image: Convert/Image: Convert to WebP|Test image.webp" \
+        "Image/Image: Convert/Image: Export to PDF|Test image.pdf" \
+        "Image/Image: Crop, Resize/Image: Automatic crop|Test image (cropped).png" \
+        "Image/Image: Crop, Resize/Image: Automatic crop (15 pct)|Test image (cropped 15 pct).png" \
+        "Image/Image: Crop, Resize/Image: Resize (25 pct)|Test image (25 pct).png" \
+        "Image/Image: Crop, Resize/Image: Resize (50 pct)|Test image (50 pct).png" \
+        "Image/Image: Crop, Resize/Image: Resize (75 pct)|Test image (75 pct).png" \
+        "Image/Image: Crop, Resize/Image: Resize (1920x1080)|Test image (1920x1080).png" \
+        "Image/Image: Crop, Resize/Image: Resize (2560x1440)|Test image (2560x1440).png" \
+        "Image/Image: Crop, Resize/Image: Resize (3840x2160)|Test image (3840x2160).png" \
+        "Image/Image: Flip, Rotate/Image: Flip (horizontal)|Test image (flipped-h).png" \
+        "Image/Image: Flip, Rotate/Image: Flip (vertical)|Test image (flipped-v).png" \
+        "Image/Image: Flip, Rotate/Image: Rotate (180 deg)|Test image (180 deg).png" \
+        "Image/Image: Flip, Rotate/Image: Rotate (270 deg)|Test image (270 deg).png" \
+        "Image/Image: Flip, Rotate/Image: Rotate (90 deg)|Test image (90 deg).png" \
+        "Image/Image: Icons/Image: Create PNG icon (128 px)|Test image (icon 128 px).png" \
+        "Image/Image: Icons/Image: Create PNG icon (256 px)|Test image (icon 256 px).png" \
+        "Image/Image: Icons/Image: Create PNG icon (512 px)|Test image (icon 512 px).png" \
+        "Image/Image: Optimize, Reduce/Image: Optimize PNG|Test image (optimized).png" \
+        "Image/Image: Optimize, Reduce/Image: Reduce (JPG, 1000kB max)|Test image (reduced).jpg" \
+        "Image/Image: Optimize, Reduce/Image: Reduce (JPG, 500kB max)|Test image (reduced).jpg" \
+        "Image/Image: Metadata, Exif/Image: Remove metadata|Test image (no metadata).png"
 
-    script_test="Image/Image: Combine, Split/Image: Stack (vertical)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" "$input_file2" >"$std_output"
-    __test_file_nonempty "$temp_dir/Stacked images (vertical).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Convert/Image: Convert to AVIF"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.avif"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Convert/Image: Convert to GIF"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.gif"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Convert/Image: Convert to JPG"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.jpg"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Convert/Image: Convert to PNG"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$output_file.jpg" >"$std_output"
-    __test_file_nonempty "$output_file (2).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Convert/Image: Convert to TIFF"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.tif"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Convert/Image: Convert to HEIC"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.heic"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Convert/Image: Convert to JXL"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.jxl"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Convert/Image: Convert to WebP"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.webp"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Convert/Image: Export to PDF"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Crop, Resize/Image: Automatic crop"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (cropped).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Crop, Resize/Image: Automatic crop (15 pct)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (cropped 15 pct).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Crop, Resize/Image: Resize (25 pct)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (25 pct).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Crop, Resize/Image: Resize (50 pct)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (50 pct).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Crop, Resize/Image: Resize (75 pct)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (75 pct).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Crop, Resize/Image: Resize (1920x1080)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (1920x1080).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Crop, Resize/Image: Resize (2560x1440)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (2560x1440).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Crop, Resize/Image: Resize (3840x2160)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (3840x2160).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Flip, Rotate/Image: Flip (horizontal)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (flipped-h).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Flip, Rotate/Image: Flip (vertical)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (flipped-v).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Flip, Rotate/Image: Rotate (180 deg)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (180 deg).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Flip, Rotate/Image: Rotate (270 deg)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (270 deg).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Flip, Rotate/Image: Rotate (90 deg)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (90 deg).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Icons/Image: Create PNG icon (128 px)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (icon 128 px).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Icons/Image: Create PNG icon (256 px)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (icon 256 px).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Icons/Image: Create PNG icon (512 px)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (icon 512 px).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Optimize, Reduce/Image: Optimize PNG"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (optimized).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Optimize, Reduce/Image: Reduce (JPG, 1000kB max)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (reduced).jpg"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Optimize, Reduce/Image: Reduce (JPG, 500kB max)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (reduced) (2).jpg"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Metadata, Exif/Image: Remove metadata"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (no metadata).png"
-    __test_file_empty "$std_output"
-
-    #script_test="Image/Image: Metadata, Exif/Image: Rename from metadata"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file (no metadata).png"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: Similarity/Image: Find similar (65 pct)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: Similarity/Image: Find similar (75 pct)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: Similarity/Image: Find similar (85 pct)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: Similarity/Image: Find similar (95 pct)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    # Generate an image with a large word so OCR has text to detect.
-    local font_file=""
+    __test_begin
     font_file=$(fc-match -f '%{file}' sans 2>/dev/null || true)
     if [[ ! -f "$font_file" || "${font_file##*/}" != *[Ss][Aa][Nn][Ss]* ]]; then
         font_file=$(find /usr/share/fonts /usr/local/share/fonts \
@@ -1032,1082 +646,399 @@ _main() {
         -f lavfi -i color=c=white:s=900x240 \
         -vf "drawtext=fontfile='${font_file}':text='HELLO':fontcolor=black:fontsize=140:x=(w-text_w)/2:y=(h-text_h)/2" \
         -frames:v 1 -update 1 "$temp_dir/Test image OCR.png" &>/dev/null
+    __test_script \
+        "Image/Image: Text recognition (OCR)/Image: Perform OCR (English)" \
+        "empty" "Test image OCR (OCR eng).txt" \
+        "$temp_dir/Test image OCR.png"
 
-    script_test="Image/Image: Text recognition (OCR)/Image: Perform OCR (English)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir/Test image OCR.png" >"$std_output"
-    __test_file_nonempty "$temp_dir/Test image OCR (OCR eng).txt"
-    __test_file_empty "$std_output"
-
-    #script_test="Image/Image: Text recognition (OCR)/Image: Perform OCR (French)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: Text recognition (OCR)/Image: Perform OCR (German)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: Text recognition (OCR)/Image: Perform OCR (Italian)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: Text recognition (OCR)/Image: Perform OCR (Portuguese)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: Text recognition (OCR)/Image: Perform OCR (Russian)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: Text recognition (OCR)/Image: Perform OCR (Spanish)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    script_test="Image/Image: Transparency/Image: Background to alpha"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (alpha).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Transparency/Image: Background to alpha (15 pct)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (alpha 15 pct).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Transparency/Image: Color alpha to black"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (bg black).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Transparency/Image: Color alpha to magenta"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (bg magenta).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Transparency/Image: Color alpha to white"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (bg white).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Transparency/Image: Color black to alpha"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (alpha) (2).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Transparency/Image: Color black to alpha (15 pct)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (alpha 15 pct) (2).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Transparency/Image: Color magenta to alpha"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (alpha) (3).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Transparency/Image: Color magenta to alpha (15 pct)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (alpha 15 pct) (3).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Transparency/Image: Color white to alpha"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (alpha) (4).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: Transparency/Image: Color white to alpha (15 pct)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (alpha 15 pct) (4).png"
-    __test_file_empty "$std_output"
-
-    #script_test="Image/Image: Watermark/Image: Add watermark (center)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: Watermark/Image: Add watermark (north)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: Watermark/Image: Add watermark (northeast)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: Watermark/Image: Add watermark (northwest)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: Watermark/Image: Add watermark (south)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: Watermark/Image: Add watermark (southeast)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Image/Image: Watermark/Image: Add watermark (southwest)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    __test_scripts_file "$fixture_image" "Test image.png" "empty" \
+        "Image/Image: Transparency/Image: Background to alpha|Test image (alpha).png" \
+        "Image/Image: Transparency/Image: Background to alpha (15 pct)|Test image (alpha 15 pct).png" \
+        "Image/Image: Transparency/Image: Color alpha to black|Test image (bg black).png" \
+        "Image/Image: Transparency/Image: Color alpha to magenta|Test image (bg magenta).png" \
+        "Image/Image: Transparency/Image: Color alpha to white|Test image (bg white).png" \
+        "Image/Image: Transparency/Image: Color black to alpha|Test image (alpha).png" \
+        "Image/Image: Transparency/Image: Color black to alpha (15 pct)|Test image (alpha 15 pct).png" \
+        "Image/Image: Transparency/Image: Color magenta to alpha|Test image (alpha).png" \
+        "Image/Image: Transparency/Image: Color magenta to alpha (15 pct)|Test image (alpha 15 pct).png" \
+        "Image/Image: Transparency/Image: Color white to alpha|Test image (alpha).png" \
+        "Image/Image: Transparency/Image: Color white to alpha (15 pct)|Test image (alpha 15 pct).png"
 
     # -------------------------------------------------------------------------
     # SECTION: Image: SVG files
     # -------------------------------------------------------------------------
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test image SVG.svg"
-    input_file2="$temp_dir/Test image SVG 2.svg"
-    output_file="$temp_dir/Test image SVG"
-    cp -- "$ROOT_DIR/screenshot.svg" "$input_file1"
-    cp -- "$input_file1" "$input_file2"
+    fixture_svg="$fixtures/Test image SVG.svg"
+    fixture_svgz="$fixtures/Test image SVG.svgz"
+    cp -- "$_ROOT_DIR/screenshot.svg" "$fixture_svg"
+    gzip --no-name -c "$fixture_svg" >"$fixture_svgz"
 
-    script_test="Image/Image: SVG files/SVG: Compress to SVGZ"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.svgz"
-    __test_file_empty "$std_output"
+    __test_scripts_file "$fixture_svg" "Test image SVG.svg" "empty" \
+        "Image/Image: SVG files/SVG: Compress to SVGZ|Test image SVG.svgz" \
+        "Image/Image: SVG files/SVG: Export to PDF|Test image SVG.pdf" \
+        "Image/Image: SVG files/SVG: Export to PNG (256 px)|Test image SVG (256 px).png" \
+        "Image/Image: SVG files/SVG: Export to PNG (512 px)|Test image SVG (512 px).png" \
+        "Image/Image: SVG files/SVG: Export to PNG (1024 px)|Test image SVG (1024 px).png" \
+        "Image/Image: SVG files/SVG: Replace fonts with Charter|Test image SVG (font Charter).svg" \
+        "Image/Image: SVG files/SVG: Replace fonts with Helvetica|Test image SVG (font Helvetica).svg" \
+        "Image/Image: SVG files/SVG: Replace fonts with Times|Test image SVG (font Times).svg"
 
-    script_test="Image/Image: SVG files/SVG: Decompress SVGZ"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$output_file.svgz" >"$std_output"
-    __test_file_nonempty "$output_file (2).svg"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: SVG files/SVG: Export to PDF"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: SVG files/SVG: Export to PNG (256 px)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (256 px).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: SVG files/SVG: Export to PNG (512 px)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (512 px).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: SVG files/SVG: Export to PNG (1024 px)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (1024 px).png"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: SVG files/SVG: Replace fonts with Charter"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (font Charter).svg"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: SVG files/SVG: Replace fonts with Helvetica"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (font Helvetica).svg"
-    __test_file_empty "$std_output"
-
-    script_test="Image/Image: SVG files/SVG: Replace fonts with Times"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (font Times).svg"
-    __test_file_empty "$std_output"
+    __test_scripts_file "$fixture_svgz" "Test image SVG.svgz" "empty" \
+        "Image/Image: SVG files/SVG: Decompress SVGZ|Test image SVG.svg"
 
     # -------------------------------------------------------------------------
     # SECTION: Document
     # -------------------------------------------------------------------------
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test document.txt"
-    output_file="$temp_dir/Test document"
-    echo "Content of 'Test document'." >"$input_file1"
+    # Disabled: Document/Document: Convert/Document: Convert to ODS
+    # Disabled: Document/Document: Convert/Document: Convert to XLSX
+    # Disabled: Document/Document: Convert/Document: Convert to ODP
+    # Disabled: Document/Document: Convert/Document: Convert to PPTX
 
-    script_test="Document/Document: Convert/Document: Convert to ODT"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.odt"
-    __test_file_empty "$std_output"
+    __test_begin
+    echo "Content of 'Test document'." >"$temp_dir/Test document.txt"
+    __test_script "Document/Document: Convert/Document: Convert to ODT" \
+        "empty" "Test document.odt" "$temp_dir/Test document.txt"
 
-    input_file1="$temp_dir/Test document.odt"
-
-    script_test="Document/Document: Convert/Document: Convert to TXT"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (2).txt"
-    __test_file_empty "$std_output"
-
-    script_test="Document/Document: Convert/Document: Convert to EPUB"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.epub"
-    __test_file_empty "$std_output"
-
-    script_test="Document/Document: Convert/Document: Convert to Markdown"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.md"
-    __test_file_empty "$std_output"
-
-    script_test="Document/Document: Convert/Document: Convert to DOCX"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.docx"
-    __test_file_empty "$std_output"
-
-    script_test="Document/Document: Convert/Document: Convert to PDF"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/Document: Convert/Document: Convert to PDF (landscape)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (landscape).pdf"
-    __test_file_empty "$std_output"
-
-    #script_test="Document/Document: Convert/Document: Convert to ODS"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file.ods"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/Document: Convert/Document: Convert to XLSX"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file.xlsx"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/Document: Convert/Document: Convert to ODP"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file.odp"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/Document: Convert/Document: Convert to PPTX"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file.pptx"
-    #__test_file_empty "$std_output"
+    fixture_odt="$fixtures/Test document.odt"
+    __generate_fixture_odt "$fixture_odt"
+    __test_scripts_file "$fixture_odt" "Test document.odt" "empty" \
+        "Document/Document: Convert/Document: Convert to TXT|Test document.txt" \
+        "Document/Document: Convert/Document: Convert to EPUB|Test document.epub" \
+        "Document/Document: Convert/Document: Convert to Markdown|Test document.md" \
+        "Document/Document: Convert/Document: Convert to DOCX|Test document.docx" \
+        "Document/Document: Convert/Document: Convert to PDF|Test document.pdf" \
+        "Document/Document: Convert/Document: Convert to PDF (landscape)|Test document (landscape).pdf"
 
     # -------------------------------------------------------------------------
     # SECTION: Document: PDF
     # -------------------------------------------------------------------------
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test document PDF.pdf"
-    input_file2="$temp_dir/Test document PDF 2.pdf"
-    output_file="$temp_dir/Test document PDF"
-    cp -- "$temp_dir/Combined images.pdf" "$input_file1"
-    cp -- "$input_file1" "$input_file2"
+    # Disabled: Document/PDF: Security/PDF: Remove password
+    # Disabled: Document/PDF: Security/PDF: Set password
+    # Disabled: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (English)
+    # Disabled: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (French)
+    # Disabled: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (German)
+    # Disabled: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Italian)
+    # Disabled: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Portuguese)
+    # Disabled: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Russian)
+    # Disabled: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Spanish)
+    # Disabled: Document/PDF: Watermark/PDF: Add watermark (over)
+    # Disabled: Document/PDF: Watermark/PDF: Add watermark (under)
 
-    script_test="Document/PDF: Annotations/PDF: Find annotated PDFs"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_empty "$std_output"
+    fixture_pdf="$fixtures/Test document PDF.pdf"
+    __generate_fixture_pdf "$fixture_pdf"
 
-    script_test="Document/PDF: Annotations/PDF: Remove annotations"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (no annotations).pdf"
-    __test_file_empty "$std_output"
+    __test_begin "$fixture_pdf::Test document PDF.pdf"
+    __test_script "Document/PDF: Annotations/PDF: Find annotated PDFs" \
+        "empty" "" "$temp_dir"
 
-    script_test="Document/PDF: Combine, Split/PDF: Combine multiple PDFs"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" "$input_file2" >"$std_output"
-    __test_file_nonempty "$temp_dir/Combined documents.pdf"
-    __test_file_empty "$std_output"
+    __test_scripts_file "$fixture_pdf" "Test document PDF.pdf" "empty" \
+        "Document/PDF: Annotations/PDF: Remove annotations|Test document PDF (no annotations).pdf"
 
-    rm -rf "$temp_dir/Output"
-    script_test="Document/PDF: Combine, Split/PDF: Split into single-page PDFs"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/Output/Test document PDF.0001.pdf"
-    __test_file_empty "$std_output"
+    __test_begin \
+        "$fixture_pdf::Test document PDF.pdf" \
+        "$fixture_pdf::Test document PDF 2.pdf"
+    __test_script "Document/PDF: Combine, Split/PDF: Combine multiple PDFs" \
+        "empty" "Combined documents.pdf" \
+        "$temp_dir/Test document PDF.pdf" \
+        "$temp_dir/Test document PDF 2.pdf"
 
-    #script_test="Document/PDF: Security/PDF: Remove password"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file (decrypted).pdf"
-    #__test_file_empty "$std_output"
+    __test_scripts_file "$fixture_pdf" "Test document PDF.pdf" "empty" \
+        "Document/PDF: Combine, Split/PDF: Split into single-page PDFs|Output/Test document PDF.0001.pdf"
 
-    #script_test="Document/PDF: Security/PDF: Set password"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    __test_begin "$fixture_pdf::Test document PDF.pdf"
+    __test_script "Document/PDF: Security/PDF: Find password-protected PDFs" \
+        "empty" "" "$temp_dir"
 
-    script_test="Document/PDF: Security/PDF: Find password-protected PDFs"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_empty "$std_output"
+    __test_scripts_file "$fixture_pdf" "Test document PDF.pdf" "empty" \
+        "Document/PDF: Multi-page layout/PDF: Layout (landscape, 1x2)|Test document PDF (landscape, 1x2).pdf" \
+        "Document/PDF: Multi-page layout/PDF: Layout (landscape, 2x1)|Test document PDF (landscape, 2x1).pdf" \
+        "Document/PDF: Multi-page layout/PDF: Layout (landscape, 2x2)|Test document PDF (landscape, 2x2).pdf" \
+        "Document/PDF: Multi-page layout/PDF: Layout (landscape, 2x4)|Test document PDF (landscape, 2x4).pdf" \
+        "Document/PDF: Multi-page layout/PDF: Layout (landscape, 4x2)|Test document PDF (landscape, 4x2).pdf" \
+        "Document/PDF: Multi-page layout/PDF: Layout (portrait, 1x2)|Test document PDF (portrait, 1x2).pdf" \
+        "Document/PDF: Multi-page layout/PDF: Layout (portrait, 2x1)|Test document PDF (portrait, 2x1).pdf" \
+        "Document/PDF: Multi-page layout/PDF: Layout (portrait, 2x2)|Test document PDF (portrait, 2x2).pdf" \
+        "Document/PDF: Multi-page layout/PDF: Layout (portrait, 2x4)|Test document PDF (portrait, 2x4).pdf" \
+        "Document/PDF: Multi-page layout/PDF: Layout (portrait, 4x2)|Test document PDF (portrait, 4x2).pdf"
 
-    script_test="Document/PDF: Multi-page layout/PDF: Layout (landscape, 1x2)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (landscape, 1x2).pdf"
-    __test_file_empty "$std_output"
+    __test_begin "$fixture_pdf::Test document PDF.pdf"
+    __test_script "Document/PDF: Optimize, Reduce/PDF: Find non-linearized PDFs" \
+        "text" "" "$temp_dir"
 
-    script_test="Document/PDF: Multi-page layout/PDF: Layout (landscape, 2x1)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (landscape, 2x1).pdf"
-    __test_file_empty "$std_output"
+    __test_scripts_file "$fixture_pdf" "Test document PDF.pdf" "empty" \
+        "Document/PDF: Optimize, Reduce/PDF: Optimize for web (linearize)|Test document PDF (linearized).pdf" \
+        "Document/PDF: Optimize, Reduce/PDF: Reduce (150 dpi, e-book)|Test document PDF (150 dpi, e-book).pdf" \
+        "Document/PDF: Optimize, Reduce/PDF: Reduce (300 dpi, printer)|Test document PDF (300 dpi, printer).pdf" \
+        "Document/PDF: Page size/PDF: Set size (A3)|Test document PDF (A3).pdf" \
+        "Document/PDF: Page size/PDF: Set size (A4)|Test document PDF (A4).pdf" \
+        "Document/PDF: Page size/PDF: Set size (A5)|Test document PDF (A5).pdf" \
+        "Document/PDF: Page size/PDF: Set size (US Legal)|Test document PDF (US Legal).pdf" \
+        "Document/PDF: Page size/PDF: Set size (US Letter)|Test document PDF (US Letter).pdf" \
+        "Document/PDF: Rotate/PDF: Rotate (180 deg)|Test document PDF (180 deg).pdf" \
+        "Document/PDF: Rotate/PDF: Rotate (270 deg)|Test document PDF (270 deg).pdf" \
+        "Document/PDF: Rotate/PDF: Rotate (90 deg)|Test document PDF (90 deg).pdf"
 
-    script_test="Document/PDF: Multi-page layout/PDF: Layout (landscape, 2x2)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (landscape, 2x2).pdf"
-    __test_file_empty "$std_output"
+    __test_begin "$fixture_pdf::Test document PDF.pdf"
+    __test_script "Document/PDF: Signatures/PDF: Find signed PDFs" \
+        "empty" "" "$temp_dir"
 
-    script_test="Document/PDF: Multi-page layout/PDF: Layout (landscape, 2x4)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (landscape, 2x4).pdf"
-    __test_file_empty "$std_output"
+    __test_begin "$fixture_pdf::Test document PDF.pdf"
+    __test_script "Document/PDF: Signatures/PDF: Show signatures" \
+        "text" "" "$temp_dir"
 
-    script_test="Document/PDF: Multi-page layout/PDF: Layout (landscape, 4x2)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (landscape, 4x2).pdf"
-    __test_file_empty "$std_output"
+    __test_begin "$fixture_pdf::Test document PDF.pdf"
+    __test_script \
+        "Document/PDF: Text recognition (OCR)/PDF: Find non-searchable PDFs" \
+        "text" "" "$temp_dir"
 
-    script_test="Document/PDF: Multi-page layout/PDF: Layout (portrait, 1x2)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (portrait, 1x2).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Multi-page layout/PDF: Layout (portrait, 2x1)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (portrait, 2x1).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Multi-page layout/PDF: Layout (portrait, 2x2)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (portrait, 2x2).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Multi-page layout/PDF: Layout (portrait, 2x4)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (portrait, 2x4).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Multi-page layout/PDF: Layout (portrait, 4x2)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (portrait, 4x2).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Optimize, Reduce/PDF: Find non-linearized PDFs"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    script_test="Document/PDF: Optimize, Reduce/PDF: Optimize for web (linearize)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (linearized).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Optimize, Reduce/PDF: Reduce (150 dpi, e-book)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (150 dpi, e-book).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Optimize, Reduce/PDF: Reduce (300 dpi, printer)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (300 dpi, printer).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Page size/PDF: Set size (A3)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (A3).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Page size/PDF: Set size (A4)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (A4).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Page size/PDF: Set size (A5)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (A5).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Page size/PDF: Set size (US Legal)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (US Legal).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Page size/PDF: Set size (US Letter)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (US Letter).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Rotate/PDF: Rotate (180 deg)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (180 deg).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Rotate/PDF: Rotate (270 deg)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (270 deg).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Rotate/PDF: Rotate (90 deg)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (90 deg).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Signatures/PDF: Find signed PDFs"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Signatures/PDF: Show signatures"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    script_test="Document/PDF: Text recognition (OCR)/PDF: Find non-searchable PDFs"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    #script_test="Document/PDF: Text recognition (OCR)/PDF: Perform OCR (English)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/PDF: Text recognition (OCR)/PDF: Perform OCR (French)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/PDF: Text recognition (OCR)/PDF: Perform OCR (German)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Italian)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Portuguese)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Russian)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Spanish)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    script_test="Document/PDF: Tools/PDF: Convert to grayscale"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (grayscale).pdf"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Tools/PDF: Convert to PDFA-2b"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (PDFA-2b).pdf"
-    __test_file_empty "$std_output"
-
-    rm -rf "$temp_dir/Output"
-    script_test="Document/PDF: Tools/PDF: Extract images"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/Output/Test document PDF-000.png"
-    __test_file_empty "$std_output"
-
-    script_test="Document/PDF: Tools/PDF: Remove metadata"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (no metadata).pdf"
-    __test_file_empty "$std_output"
-
-    #script_test="Document/PDF: Watermark/PDF: Add watermark (over)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Document/PDF: Watermark/PDF: Add watermark (under)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    __test_scripts_file "$fixture_pdf" "Test document PDF.pdf" "empty" \
+        "Document/PDF: Tools/PDF: Convert to grayscale|Test document PDF (grayscale).pdf" \
+        "Document/PDF: Tools/PDF: Convert to PDFA-2b|Test document PDF (PDFA-2b).pdf" \
+        "Document/PDF: Tools/PDF: Extract images|Output/Test document PDF-000.png" \
+        "Document/PDF: Tools/PDF: Remove metadata|Test document PDF (no metadata).pdf"
 
     # -------------------------------------------------------------------------
     # SECTION: Links
     # -------------------------------------------------------------------------
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/link"
-    echo "Content of 'link'." >"$input_file1"
+    # Disabled: Links/Create hard link to...
+    # Disabled: Links/Create symbolic link to...
+    # Disabled: Links/Paste as hard link
+    # Disabled: Links/Paste as symbolic link
 
-    script_test="Links/Create hard link here"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/Hard link to link"
-    __test_file_empty "$std_output"
+    __test_begin
+    echo "Content of 'link'." >"$temp_dir/link"
+    __test_script "Links/Create hard link here" "empty" "Hard link to link" \
+        "$temp_dir/link"
 
-    #script_test="Links/Create hard link to..."
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    __test_begin
+    echo "Content of 'link'." >"$temp_dir/link"
+    __test_script "Links/Create symbolic link here" "empty" "Link to link" \
+        "$temp_dir/link"
 
-    script_test="Links/Create symbolic link here"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/Link to link"
-    __test_file_empty "$std_output"
+    __test_begin
+    echo "Content of 'link'." >"$temp_dir/link"
+    ln -- "$temp_dir/link" "$temp_dir/link-hard"
+    __test_script "Links/List hard links" "text" "" "$temp_dir"
 
-    #script_test="Links/Create symbolic link to..."
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    __test_begin
+    echo "Content of 'link'." >"$temp_dir/link"
+    ln -s -- "$temp_dir/link" "$temp_dir/link-sym"
+    __test_script "Links/List symbolic links" "text" "" "$temp_dir"
 
-    script_test="Links/List hard links"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    script_test="Links/List symbolic links"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    rm -- "$input_file1"
-    script_test="Links/Find broken links"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    #script_test="Links/Paste as hard link"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Links/Paste as symbolic link"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    __test_begin
+    echo "Content of 'link'." >"$temp_dir/link"
+    ln -s -- "$temp_dir/link" "$temp_dir/link-sym"
+    rm -- "$temp_dir/link"
+    __test_script "Links/Find broken links" "text" "" "$temp_dir"
 
     # -------------------------------------------------------------------------
     # SECTION: Network and Internet
     # -------------------------------------------------------------------------
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test internet.txt"
-    echo "https://github.com/cfgnunes/nautilus-scripts.git" >"$input_file1"
+    # Disabled: Network and Internet/Git: Open repository website
 
-    script_test="Network and Internet/Git: Clone URLs"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/nautilus-scripts/README.md"
-    __test_file_empty "$std_output"
+    __test_begin
+    echo "https://github.com/cfgnunes/nautilus-scripts.git" \
+        >"$temp_dir/Test internet.txt"
+    __test_script "Network and Internet/Git: Clone URLs" "empty" \
+        "nautilus-scripts/README.md" "$temp_dir/Test internet.txt"
 
+    __test_begin
+    git clone --quiet "https://github.com/cfgnunes/nautilus-scripts.git" \
+        "$temp_dir/nautilus-scripts"
     rm -- "$temp_dir/nautilus-scripts/README.md"
-    script_test="Network and Internet/Git: Reset and pull"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$temp_dir/nautilus-scripts" >"$std_output"
-    __test_file_nonempty "$temp_dir/nautilus-scripts/README.md"
-    __test_file_empty "$std_output"
+    __test_script "Network and Internet/Git: Reset and pull" "empty" \
+        "nautilus-scripts/README.md" "$temp_dir/nautilus-scripts"
 
-    #script_test="Network and Internet/Git: Open repository website"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    __test_begin
+    echo "127.0.0.1" >"$temp_dir/Test internet.txt"
+    __test_script "Network and Internet/IP: Scan hosts" "text" "" \
+        "$temp_dir/Test internet.txt"
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test internet.txt"
-    echo "127.0.0.1" >"$input_file1"
+    __test_begin
+    echo "https://github.com/cfgnunes/nautilus-scripts.git" \
+        >"$temp_dir/Test internet.txt"
+    __test_script "Network and Internet/URL: Check HTTP status" "text" "" \
+        "$temp_dir/Test internet.txt"
 
-    script_test="Network and Internet/IP: Scan hosts"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$std_output"
+    __test_begin
+    echo "https://www.rfc-editor.org/rfc/rfc2616.txt" \
+        >"$temp_dir/Test internet.txt"
+    __test_script "Network and Internet/URL: Download file" "empty" \
+        "rfc2616.txt" "$temp_dir/Test internet.txt"
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test internet.txt"
-    echo "https://github.com/cfgnunes/nautilus-scripts.git" >"$input_file1"
-
-    script_test="Network and Internet/URL: Check HTTP status"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test internet.txt"
-    echo "https://www.rfc-editor.org/rfc/rfc2616.txt" >"$input_file1"
-
-    script_test="Network and Internet/URL: Download file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$temp_dir/rfc2616.txt"
-    __test_file_empty "$std_output"
-
-    script_test="Network and Internet/URL: Show HTTP headers"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    # -------------------------------------------------------------------------
-    # SECTION: Open with
-    # -------------------------------------------------------------------------
-
-    #script_test="Open with/Code editor"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Open with/Disk usage analyzer"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Open with/Terminal"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    __test_begin
+    echo "https://www.rfc-editor.org/rfc/rfc2616.txt" \
+        >"$temp_dir/Test internet.txt"
+    __test_script "Network and Internet/URL: Show HTTP headers" "text" "" \
+        "$temp_dir/Test internet.txt"
 
     # -------------------------------------------------------------------------
     # SECTION: Plain text
     # -------------------------------------------------------------------------
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test text.txt"
-    input_file2="$temp_dir/Test text 2.txt"
-    output_file="$temp_dir/Test text"
-    echo "Content of 'Test text'." >"$input_file1"
-    echo "Content of 'Test text 2'." >"$input_file2"
+    fixture_text="$fixtures/Test text.txt"
+    echo "Content of 'Test text'." >"$fixture_text"
 
-    script_test="Plain text/Text: Encode to UTF-8"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (UTF-8).txt"
-    __test_file_empty "$std_output"
+    __test_scripts_file "$fixture_text" "Test text.txt" "empty" \
+        "Plain text/Text: Encode to UTF-8|Test text (UTF-8).txt" \
+        "Plain text/Text: Remove accents|Test text (no accents).txt" \
+        "Plain text/Text: Convert tabs to 4 spaces|Test text (4 spaces).txt"
 
-    script_test="Plain text/Text: Remove accents"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (no accents).txt"
-    __test_file_empty "$std_output"
+    __test_scripts_stdout "$fixture_text" "Test text.txt" \
+        "Plain text/Text: List encodings" \
+        "Plain text/Text: List line breaks" \
+        "Plain text/Text: List line counts" \
+        "Plain text/Text: List line lengths" \
+        "Plain text/Text: List word counts"
 
-    script_test="Plain text/Text: List encodings"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$std_output"
+    __test_begin \
+        "$fixture_text::Test text.txt" \
+        "$fixture_text::Test text 2.txt"
+    echo "Content of 'Test text 2'." >"$temp_dir/Test text 2.txt"
+    __test_script "Plain text/Text: Concatenate multiple files" "empty" \
+        "Concatenated files.txt" \
+        "$temp_dir/Test text.txt" "$temp_dir/Test text 2.txt"
 
-    script_test="Plain text/Text: Convert tabs to 4 spaces"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (4 spaces).txt"
-    __test_file_empty "$std_output"
-
-    script_test="Plain text/Text: List line breaks"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    script_test="Plain text/Text: List line counts"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    script_test="Plain text/Text: List line lengths"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    script_test="Plain text/Text: List word counts"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$std_output"
-
-    script_test="Plain text/Text: Concatenate multiple files"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" "$input_file2" >"$std_output"
-    __test_file_nonempty "$temp_dir/Concatenated files.txt"
-    __test_file_empty "$std_output"
-
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test text.txt"
-    output_file="$temp_dir/Test text"
+    __test_begin
     echo "Content of 'Test text'.(á)" |
-        iconv -f UTF-8 -t ISO-8859-1 >"$input_file1"
+        iconv -f UTF-8 -t ISO-8859-1 >"$temp_dir/Test text.txt"
+    __test_script "Plain text/Text: Normalize (UTF-8, recursive)" "empty" \
+        "Test text.txt.bak" "$temp_dir/Test text.txt"
 
-    script_test="Plain text/Text: Normalize (UTF-8, recursive)"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file.txt.bak"
-    __test_file_empty "$std_output"
+    __test_begin "$fixture_text::Test text.txt"
+    __test_script "Plain text/Text: List issues" "empty" "" \
+        "$temp_dir/Test text.txt"
 
-    script_test="Plain text/Text: List issues"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_empty "$std_output"
-
-    script_test="Plain text/Text: Remove trailing spaces"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file (no trailing).txt"
-    __test_file_empty "$std_output"
+    __test_scripts_file "$fixture_text" "Test text.txt" "empty" \
+        "Plain text/Text: Remove trailing spaces|Test text (no trailing).txt"
 
     # -------------------------------------------------------------------------
     # SECTION: Rename files
     # -------------------------------------------------------------------------
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test réname accents.txt"
-    output_file="$temp_dir/Test rename accents.txt"
-    echo "Content of 'Test'." >"$input_file1"
+    # Disabled: Rename files/Rename: To lowercase (recursive)
+    # Disabled: Rename files/Rename: To uppercase (recursive)
 
-    script_test="Rename files/Rename: Remove accents"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_empty "$std_output"
+    __test_begin
+    echo "Content of 'Test'." >"$temp_dir/Test réname accents.txt"
+    __test_script "Rename files/Rename: Remove accents" "empty" \
+        "Test rename accents.txt" "$temp_dir/Test réname accents.txt"
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test rename suffixes extra.txt"
-    output_file="$temp_dir/Test rename suffixes.txt"
-    echo "Content of 'Test'." >"$input_file1"
+    __test_begin
+    echo "Content of 'Test'." >"$temp_dir/Test rename suffixes extra.txt"
+    __test_script "Rename files/Rename: Remove suffixes" "empty" \
+        "Test rename suffixes.txt" \
+        "$temp_dir/Test rename suffixes extra.txt"
 
-    script_test="Rename files/Rename: Remove suffixes"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_empty "$std_output"
+    __test_begin
+    echo "Content of 'Test'." \
+        >"$temp_dir/Test rename suffixes2 (suffix extra).txt"
+    __test_script "Rename files/Rename: Remove suffixes" "empty" \
+        "Test rename suffixes2.txt" \
+        "$temp_dir/Test rename suffixes2 (suffix extra).txt"
 
-    # Create mock files for testing.
-    rm -f -- "$output_file"
-    input_file1="$temp_dir/Test rename suffixes2 (suffix extra).txt"
-    output_file="$temp_dir/Test rename suffixes2.txt"
-    echo "Content of 'Test'." >"$input_file1"
+    __test_begin
+    echo "Content of 'Test'." >"$temp_dir/Extra Test rename prefixes.txt"
+    __test_script "Rename files/Rename: Remove prefixes" "empty" \
+        "Test rename prefixes.txt" \
+        "$temp_dir/Extra Test rename prefixes.txt"
 
-    script_test="Rename files/Rename: Remove suffixes"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_empty "$std_output"
+    __test_begin
+    echo "Content of 'Test'." \
+        >"$temp_dir/(prefix extra) Test rename prefixes2.txt"
+    __test_script "Rename files/Rename: Remove prefixes" "empty" \
+        "Test rename prefixes2.txt" \
+        "$temp_dir/(prefix extra) Test rename prefixes2.txt"
 
-    # Create mock files for testing.
-    rm -f -- "$output_file"
-    input_file1="$temp_dir/Extra Test rename prefixes.txt"
-    output_file="$temp_dir/Test rename prefixes.txt"
-    echo "Content of 'Test'." >"$input_file1"
+    __test_begin
+    echo "Content of 'Test'." >"$temp_dir/Test rename.txt"
+    __test_script "Rename files/Rename: Change spaces to dashes" "empty" \
+        "Test-rename.txt" "$temp_dir/Test rename.txt"
 
-    script_test="Rename files/Rename: Remove prefixes"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_empty "$std_output"
+    __test_begin
+    echo "Content of 'Test'." >"$temp_dir/Test-rename.txt"
+    __test_script "Rename files/Rename: Change dashes to spaces" "empty" \
+        "Test rename.txt" "$temp_dir/Test-rename.txt"
 
-    # Create mock files for testing.
-    rm -f -- "$output_file"
-    input_file1="$temp_dir/(prefix extra) Test rename prefixes2.txt"
-    output_file="$temp_dir/Test rename prefixes2.txt"
-    echo "Content of 'Test'." >"$input_file1"
+    __test_begin
+    echo "Content of 'Test'." >"$temp_dir/Test rename.txt"
+    __test_script "Rename files/Rename: To lowercase" "empty" \
+        "test rename.txt" "$temp_dir/Test rename.txt"
 
-    script_test="Rename files/Rename: Remove prefixes"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_empty "$std_output"
+    __test_begin
+    echo "Content of 'Test'." >"$temp_dir/test rename.txt"
+    __test_script "Rename files/Rename: To sentence case" "empty" \
+        "Test rename.txt" "$temp_dir/test rename.txt"
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test rename.txt"
-    output_file="$temp_dir/Test-rename.txt"
-    echo "Content of 'Test'." >"$input_file1"
+    __test_begin
+    echo "Content of 'Test'." >"$temp_dir/test rename.txt"
+    __test_script "Rename files/Rename: To title case" "empty" \
+        "Test Rename.txt" "$temp_dir/test rename.txt"
 
-    script_test="Rename files/Rename: Change spaces to dashes"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_empty "$std_output"
+    __test_begin
+    echo "Content of 'Test'." >"$temp_dir/Test rename.txt"
+    __test_script "Rename files/Rename: To uppercase" "empty" \
+        "TEST RENAME.TXT" "$temp_dir/Test rename.txt"
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test-rename.txt"
-    output_file="$temp_dir/Test rename.txt"
-    echo "Content of 'Test'." >"$input_file1"
-
-    script_test="Rename files/Rename: Change dashes to spaces"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_empty "$std_output"
-
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test rename.txt"
-    output_file="$temp_dir/Test_rename.txt"
-    echo "Content of 'Test'." >"$input_file1"
-
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test rename.txt"
-    output_file="$temp_dir/test rename.txt"
-    echo "Content of 'Test'." >"$input_file1"
-
-    script_test="Rename files/Rename: To lowercase"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_empty "$std_output"
-
-    #script_test="Rename files/Rename: To lowercase (recursive)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    # Create mock files for testing.
-    input_file1="$temp_dir/test rename.txt"
-    output_file="$temp_dir/Test rename.txt"
-    echo "Content of 'Test'." >"$input_file1"
-
-    script_test="Rename files/Rename: To sentence case"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_empty "$std_output"
-
-    # Create mock files for testing.
-    input_file1="$temp_dir/test rename.txt"
-    output_file="$temp_dir/Test Rename.txt"
-    echo "Content of 'Test'." >"$input_file1"
-
-    script_test="Rename files/Rename: To title case"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_empty "$std_output"
-
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test rename.txt"
-    output_file="$temp_dir/TEST RENAME.TXT"
-    echo "Content of 'Test'." >"$input_file1"
-
-    script_test="Rename files/Rename: To uppercase"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_empty "$std_output"
-
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test md5 prefix.txt"
-    echo "Content of 'Test'." >"$input_file1"
-    checksum=$(md5sum -- "$input_file1")
+    __test_begin
+    echo "Content of 'Test'." >"$temp_dir/Test md5 prefix.txt"
+    checksum=$(md5sum -- "$temp_dir/Test md5 prefix.txt")
     checksum=${checksum%%[$'\t ']*}
     checksum=${checksum:0:4}
-    output_file="$temp_dir/($checksum) Test md5 prefix.txt"
-
-    script_test="Rename files/Rename: Add MD5 prefix"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_empty "$std_output"
-
-    #script_test="Rename files/Rename: To uppercase (recursive)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    # -------------------------------------------------------------------------
-    # SECTION: Security and Recovery
-    # -------------------------------------------------------------------------
-
-    #script_test="Security and Recovery/Create backup (via Rsync)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Security and Recovery/File carving (via Foremost)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Security and Recovery/File carving (via PhotoRec)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Security and Recovery/Scan for malware (via ClamAV)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
-
-    #script_test="Security and Recovery/Scan for malware (via Lenspect)"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file"
-    #__test_file_empty "$std_output"
+    __test_script "Rename files/Rename: Add MD5 prefix" "empty" \
+        "($checksum) Test md5 prefix.txt" \
+        "$temp_dir/Test md5 prefix.txt"
 
     # -------------------------------------------------------------------------
     # SECTION: Checksum
     # -------------------------------------------------------------------------
 
-    # Create mock files for testing.
-    input_file1="$temp_dir/Test hash"
-    echo "Content of 'Test hash'." >"$input_file1"
-    output_file=$input_file1
+    # Disabled: Checksum/Generate MD5 file
+    # Disabled: Checksum/Generate SHA1 file
+    # Disabled: Checksum/Generate SHA256 file
+    # Disabled: Checksum/Generate SHA512 file
 
-    script_test="Checksum/Compute all checksums"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_nonempty "$std_output"
+    local hash_script=""
+    for hash_script in \
+        "Checksum/Compute all checksums" \
+        "Checksum/Compute MD5" \
+        "Checksum/Compute SHA1" \
+        "Checksum/Compute SHA256" \
+        "Checksum/Compute SHA512"; do
+        __test_begin
+        echo "Content of 'Test hash'." >"$temp_dir/Test hash"
+        __run_script "$hash_script" "$temp_dir/Test hash"
+        __check_file_nonempty "$temp_dir/Test hash"
+        __check_file_nonempty "$std_output"
+    done
 
-    script_test="Checksum/Compute MD5"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_nonempty "$std_output"
+    __test_begin
+    echo "Content of 'Test hash'." >"$temp_dir/Test hash"
+    md5sum -- "$temp_dir/Test hash" >"$temp_dir/Test hash.md5"
+    __run_script "Checksum/Verify MD5 file" "$temp_dir/Test hash.md5"
+    __check_file_nonempty "$temp_dir/Test hash"
 
-    script_test="Checksum/Compute SHA1"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_nonempty "$std_output"
+    __test_begin
+    echo "Content of 'Test hash'." >"$temp_dir/Test hash"
+    sha1sum -- "$temp_dir/Test hash" >"$temp_dir/Test hash.sha1"
+    __run_script "Checksum/Verify SHA1 file" "$temp_dir/Test hash.sha1"
+    __check_file_nonempty "$temp_dir/Test hash"
 
-    script_test="Checksum/Compute SHA256"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_nonempty "$std_output"
+    __test_begin
+    echo "Content of 'Test hash'." >"$temp_dir/Test hash"
+    sha256sum -- "$temp_dir/Test hash" >"$temp_dir/Test hash.sha256"
+    __run_script "Checksum/Verify SHA256 file" "$temp_dir/Test hash.sha256"
+    __check_file_nonempty "$temp_dir/Test hash"
 
-    script_test="Checksum/Compute SHA512"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    __test_file_nonempty "$output_file"
-    __test_file_nonempty "$std_output"
-
-    #script_test="Checksum/Generate MD5 file"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file.md5"
-    #__test_file_empty "$std_output"
-
-    #script_test="Checksum/Generate SHA1 file"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file.sha1"
-    #__test_file_empty "$std_output"
-
-    #script_test="Checksum/Generate SHA256 file"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file.sha256"
-    #__test_file_empty "$std_output"
-
-    #script_test="Checksum/Generate SHA512 file"
-    #__echo_script "$script_test"
-    #bash "$ROOT_DIR/$script_test" "$input_file1" >"$std_output"
-    #__test_file_nonempty "$output_file.sha512"
-    #__test_file_empty "$std_output"
-
-    # Checksum files for the verify tests below.
-    md5sum -- "$input_file1" >"$output_file.md5"
-    sha1sum -- "$input_file1" >"$output_file.sha1"
-    sha256sum -- "$input_file1" >"$output_file.sha256"
-    sha512sum -- "$input_file1" >"$output_file.sha512"
-
-    script_test="Checksum/Verify MD5 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$output_file.md5" >"$std_output"
-    __test_file_nonempty "$output_file"
-
-    script_test="Checksum/Verify SHA1 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$output_file.sha1" >"$std_output"
-    __test_file_nonempty "$output_file"
-
-    script_test="Checksum/Verify SHA256 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$output_file.sha256" >"$std_output"
-    __test_file_nonempty "$output_file"
-
-    script_test="Checksum/Verify SHA512 file"
-    __echo_script "$script_test"
-    bash "$ROOT_DIR/$script_test" "$output_file.sha512" >"$std_output"
-    __test_file_nonempty "$output_file"
+    __test_begin
+    echo "Content of 'Test hash'." >"$temp_dir/Test hash"
+    sha512sum -- "$temp_dir/Test hash" >"$temp_dir/Test hash.sha512"
+    __run_script "Checksum/Verify SHA512 file" "$temp_dir/Test hash.sha512"
+    __check_file_nonempty "$temp_dir/Test hash"
 
     printf "\nFinished! "
     printf "Results: %s tests, %s failed.\n" "$_TOTAL_TESTS" "$_TOTAL_FAILED"
