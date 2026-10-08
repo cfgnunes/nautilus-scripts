@@ -708,9 +708,16 @@ _check_dependencies() {
 
     # Basic packages to run the script '.common-functions.sh'.
     _command_exists "basename" || packages+="coreutils "
-    _command_exists "file" || packages+="file "
     _command_exists "pstree" || packages+="psmisc "
     _command_exists "xdg-open" || packages+="xdg-utils "
+
+    # HACK: Check if the 'file' command is available and functional.
+    # Some minimal Linux distributions (like Termux) may have a non-functional
+    # 'file' command, which can cause issues when running the scripts.
+    if ! _command_exists "file" ||
+        ! file --brief --mime-type /dev/null >/dev/null 2>&1; then
+        packages+="file "
+    fi
 
     # Packages for dialogs.
     if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
@@ -1563,6 +1570,13 @@ _install_pkgx() {
         return 1
     else
         chmod +x -- "$pkgx_cmd"
+    fi
+
+    # Check if pkgx can run.
+    if ! "$pkgx_cmd" -v &>/dev/null; then
+        _echo_error "> $(_i18n 'pkgx cannot run on your system!')"
+        rm -rf -- "$pkgx_dir"
+        return 1
     fi
 
     _echo_info "> $(_i18n 'Done!')"

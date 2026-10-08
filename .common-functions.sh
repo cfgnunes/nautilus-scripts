@@ -687,7 +687,7 @@ _deps_get_dependency_value() {
             ;;
         esac
 
-        # Special handling for Termux (Android): Since Termux uses its own
+        # HACK: Workaround for Termux (Android). Since Termux uses its own
         # package ecosystem and may share paths with 'proot-distro', check if
         # it's a real Termux session by checking that the '$subkey' is
         # "termux", '$HOME' contains "com.termux", and the system is "Android".
@@ -3928,15 +3928,11 @@ _cmd_magick() {
 #   An executable bit is not enough: the dynamic linker can reject pkgx when
 #   the system glibc is older than the one it was built against.
 _pkgx_initialize() {
-    # Skip initialization if '$HOME' is undefined.
-    [[ -z "$HOME" ]] && return
-
     local pkgx_dir="$HOME/.pkgx"
     local pkgx_cmd="$pkgx_dir/pkgx"
 
-    if [[ -x "$pkgx_cmd" ]] &&
-        ! _command_exists "pkgx" &&
-        "$pkgx_cmd" --version &>/dev/null; then
+    if [[ -x "$pkgx_cmd" ]] && ! _command_exists "pkgx" &&
+        "$pkgx_cmd" -v &>/dev/null; then
         _add_path_env "$pkgx_dir"
     fi
 }
