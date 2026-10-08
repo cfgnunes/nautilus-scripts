@@ -249,7 +249,7 @@ __generate_fixture_archive_dir() {
 _main() {
     local temp_dir=""
     local std_output=""
-    local fixtures=""
+    local fixtures_dir="$TEMP_DIR_TASK/fixtures"
     local fixture_audio=""
     local fixture_audio_id3=""
     local fixture_video=""
@@ -268,7 +268,7 @@ _main() {
 
     _open_items_locations "$TEMP_DIR_TASK/task" "true"
 
-    fixtures=$(mktemp --directory --tmpdir="$TEMP_DIR_TASK" "fixtures.XXXX")
+    mkdir -p "$fixtures_dir"
 
     # -------------------------------------------------------------------------
     # SECTION: Archive
@@ -302,7 +302,7 @@ _main() {
     __test_script "Archive/Compress to 'zip'" "empty" "Test archive.zip" \
         "$temp_dir/Test archive"
 
-    fixture_zip="$fixtures/Test archive.zip"
+    fixture_zip="$fixtures_dir/Test archive.zip"
     __generate_fixture_zip "$fixture_zip"
     __test_begin "$fixture_zip::Test archive.zip"
     __test_script "Archive/Extract here" "empty" \
@@ -316,7 +316,7 @@ _main() {
     # Disabled: Audio and Video/Audio: MP3 files/MP3: Maximize volume (recursive)
     # Disabled: Audio and Video/Audio: MP3 files/MP3: Normalize volume (recursive)
 
-    fixture_audio="$fixtures/Test audio.mp3"
+    fixture_audio="$fixtures_dir/Test audio.mp3"
     __generate_fixture_audio "$fixture_audio"
 
     __test_scripts_stdout "$fixture_audio" "Test audio.mp3" \
@@ -368,7 +368,7 @@ _main() {
         "Audio and Video/Audio: MP3 files/MP3: (artist - title) Name to ID3" \
         "empty" "" "$temp_dir/Test audio.mp3"
 
-    fixture_audio_id3="$fixtures/Test audio id3.mp3"
+    fixture_audio_id3="$fixtures_dir/Test audio id3.mp3"
     __generate_fixture_tagged_audio "$fixture_audio_id3" "$fixture_audio"
     __test_begin "$fixture_audio_id3::Test audio.mp3"
     __test_script \
@@ -381,7 +381,7 @@ _main() {
 
     # Disabled: Audio and Video/Video: Convert/Video: Convert to WebM (copy)
 
-    fixture_video="$fixtures/Test video.mp4"
+    fixture_video="$fixtures_dir/Test video.mp4"
     __generate_fixture_video "$fixture_video"
 
     __test_scripts_file "$fixture_video" "Test video.mp4" "empty" \
@@ -499,8 +499,8 @@ _main() {
     # Disabled: Image/Image: Watermark/Image: Add watermark (southeast)
     # Disabled: Image/Image: Watermark/Image: Add watermark (southwest)
 
-    fixture_image="$fixtures/Test image.png"
-    fixture_jpg="$fixtures/Test image.jpg"
+    fixture_image="$fixtures_dir/Test image.png"
+    fixture_jpg="$fixtures_dir/Test image.jpg"
     __generate_fixture_image "$fixture_image"
     __generate_fixture_image "$fixture_jpg"
 
@@ -611,8 +611,8 @@ _main() {
     # SECTION: Image: SVG files
     # -------------------------------------------------------------------------
 
-    fixture_svg="$fixtures/Test image SVG.svg"
-    fixture_svgz="$fixtures/Test image SVG.svgz"
+    fixture_svg="$fixtures_dir/Test image SVG.svg"
+    fixture_svgz="$fixtures_dir/Test image SVG.svgz"
     cp -- "$ROOT_DIR/screenshot.svg" "$fixture_svg"
     gzip --no-name -c "$fixture_svg" >"$fixture_svgz"
 
@@ -643,7 +643,7 @@ _main() {
     __test_script "Document/Document: Convert/Document: Convert to ODT" \
         "empty" "Test document.odt" "$temp_dir/Test document.txt"
 
-    fixture_odt="$fixtures/Test document.odt"
+    fixture_odt="$fixtures_dir/Test document.odt"
     __generate_fixture_odt "$fixture_odt"
     __test_scripts_file "$fixture_odt" "Test document.odt" "empty" \
         "Document/Document: Convert/Document: Convert to TXT|Test document.txt" \
@@ -669,7 +669,7 @@ _main() {
     # Disabled: Document/PDF: Watermark/PDF: Add watermark (over)
     # Disabled: Document/PDF: Watermark/PDF: Add watermark (under)
 
-    fixture_pdf="$fixtures/Test document PDF.pdf"
+    fixture_pdf="$fixtures_dir/Test document PDF.pdf"
     __generate_fixture_pdf "$fixture_pdf"
 
     __test_begin "$fixture_pdf::Test document PDF.pdf"
@@ -823,7 +823,7 @@ _main() {
     # SECTION: Plain text
     # -------------------------------------------------------------------------
 
-    fixture_text="$fixtures/Test text.txt"
+    fixture_text="$fixtures_dir/Test text.txt"
     echo "Content of 'Test text'." >"$fixture_text"
 
     __test_scripts_file "$fixture_text" "Test text.txt" "empty" \
