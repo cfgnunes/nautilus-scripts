@@ -34,8 +34,8 @@ __check_file_empty() {
         printf "\033[90m[ PASS ]\033[0m "
         printf "\033[90mTest file (empty).\033[0m\n"
     else
-        printf "\033[95m[ FAIL ]\033[0m "
-        printf "\033[95mTest file (empty).\033[0m\n"
+        printf "\033[91m[ FAIL ]\033[0m "
+        printf "\033[91mTest file (empty).\033[0m\n"
         printf "\033[90m[ FILE ]\033[0m "
         printf "\033[90m"
         printf "%s" "$file" | sed -z "s|\n|\\\n|g" | cat -A
@@ -53,8 +53,8 @@ __check_file_nonempty() {
         printf "\033[90m[ PASS ]\033[0m "
         printf "\033[90mTest file (non empty).\033[0m\n"
     else
-        printf "\033[95m[ FAIL ]\033[0m "
-        printf "\033[95mTest file (non empty).\033[0m\n"
+        printf "\033[91m[ FAIL ]\033[0m "
+        printf "\033[91mTest file (non empty).\033[0m\n"
         printf "\033[90m[ FILE ]\033[0m "
         printf "\033[90m"
         printf "%s" "$file" | sed -z "s|\n|\\\n|g" | cat -A
