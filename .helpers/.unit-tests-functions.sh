@@ -130,7 +130,7 @@ __test_equal() {
     if [[ "$expected_output" == "$output" ]]; then
         printf "\033[90m[ PASS ]\033[0m "
     else
-        printf "\033[91m[ FAIL ]\033[0m "
+        printf "\033[95m[ FAIL ]\033[0m "
         ((_TOTAL_FAILED++))
     fi
     printf "\033[90mFunction:\033[0m "
@@ -140,10 +140,10 @@ __test_equal() {
     printf "\n"
 
     if [[ "$expected_output" != "$output" ]]; then
-        printf "\033[91mExpected output: "
+        printf "\033[95mExpected output: "
         printf "%s" "$expected_output" | sed -z "s|\n|\\\n|g" | cat -A
         printf "\033[0m\n"
-        printf "         \033[91mOutput: "
+        printf "         \033[95mOutput: "
         printf "%s" "$output" | sed -z "s|\n|\\\n|g" | cat -A
         printf "\033[0m\n"
     fi
@@ -162,7 +162,7 @@ __test_exit_code() {
     if ((expected_exit_code == exit_code)); then
         printf "\033[90m[ PASS ]\033[0m "
     else
-        printf "\033[91m[ FAIL ]\033[0m "
+        printf "\033[95m[ FAIL ]\033[0m "
         ((_TOTAL_FAILED++))
     fi
     printf "\033[90mFunction:\033[0m "
@@ -172,8 +172,8 @@ __test_exit_code() {
     printf "\n"
 
     if ((expected_exit_code != exit_code)); then
-        printf "\033[91mExpected exit code:\033[0m %s\n" "$expected_exit_code"
-        printf "         \033[91mExit code:\033[0m %s\n" "$exit_code"
+        printf "\033[95mExpected exit code:\033[0m %s\n" "$expected_exit_code"
+        printf "         \033[95mExit code:\033[0m %s\n" "$exit_code"
     fi
 }
 
