@@ -692,6 +692,7 @@ _deps_get_dependency_value() {
         # real Termux session by checking that the '$subkey' is "termux",
         # '$HOME' contains "com.termux", and the system is "Android".
         if [[ "$subkey" == "termux" ]] &&
+            [[ "$pkg_manager" == "apt-get" ]] &&
             [[ "$HOME" == *"com.termux"* ]] &&
             [[ "$(uname -o)" == "Android" ]]; then
             printf "%s" "$value"
