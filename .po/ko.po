@@ -1993,5 +1993,8 @@ msgstr "pkgx 설치에 실패했습니다!"
 msgid "pkgx cannot run on your system!"
 msgstr "pkgx를 시스템에서 실행할 수 없습니다!"
 
+msgid "Could not download the file!"
+msgstr "파일을 다운로드할 수 없습니다!"
+
 #~ msgid "EOF"
 #~ msgstr "EOF"

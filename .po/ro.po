@@ -1993,5 +1993,8 @@ msgstr "Instalarea pkgx a eșuat!"
 msgid "pkgx cannot run on your system!"
 msgstr "pkgx nu poate rula pe sistem!"
 
+msgid "Could not download the file!"
+msgstr "Nu s-a putut descărca fișierul!"
+
 #~ msgid "EOF"
 #~ msgstr "EOF"

@@ -1992,5 +1992,8 @@ msgstr ""
 msgid "pkgx cannot run on your system!"
 msgstr ""
 
+msgid "Could not download the file!"
+msgstr ""
+
 #~ msgid "EOF"
 #~ msgstr "EOF"

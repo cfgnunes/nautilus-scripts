@@ -1993,5 +1993,8 @@ msgstr "pkgx-ის დაყენება ჩავარდა!"
 msgid "pkgx cannot run on your system!"
 msgstr "pkgx თქვენს სისტემაზე ვერ გაეშვება!"
 
+msgid "Could not download the file!"
+msgstr "ფაილის გადმოწერა ვერ მოხერხდა!"
+
 msgid "EOF"
 msgstr "EOF"

@@ -1993,5 +1993,8 @@ msgstr "A instalação do pkgx falhou!"
 msgid "pkgx cannot run on your system!"
 msgstr "O pkgx não pode ser executado no seu sistema!"
 
+msgid "Could not download the file!"
+msgstr "Não foi possível transferir o ficheiro!"
+
 #~ msgid "EOF"
 #~ msgstr "EOF"

@@ -1993,5 +1993,8 @@ msgstr "Cài pkgx thất bại!"
 msgid "pkgx cannot run on your system!"
 msgstr "pkgx không thể chạy trên hệ thống của bạn!"
 
+msgid "Could not download the file!"
+msgstr "Không thể tải xuống tệp!"
+
 #~ msgid "EOF"
 #~ msgstr "EOF"

@@ -1993,5 +1993,8 @@ msgstr "pkgx quraşdırılması uğursuz oldu!"
 msgid "pkgx cannot run on your system!"
 msgstr "pkgx sisteminizdə işləyə bilmir!"
 
+msgid "Could not download the file!"
+msgstr "Faylı endirmək mümkün olmadı!"
+
 #~ msgid "EOF"
 #~ msgstr "EOF"
