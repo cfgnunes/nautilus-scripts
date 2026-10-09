@@ -1371,7 +1371,7 @@ __run_deps_get_dependency_value() {
     expected_output="bind"
     __test_equal "Map xbps to xbps-install." "$expected_output" "$output"
 
-    output=$(_deps_get_dependency_value "clamav" "dnf" "POST_INSTALL")
+    output=$(_deps_get_dependency_value "clamscan" "dnf" "POST_INSTALL")
     expected_output='rm -f /var/log/clamav/freshclam.log; sed -i "/^NotifyClamd/d" /etc/clamav/freshclam.conf 2>/dev/null; freshclam --quiet'
     __test_equal "Wildcard package manager in POST_INSTALL." \
         "$expected_output" "$output"

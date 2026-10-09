@@ -508,6 +508,7 @@ _check_dependencies_clipboard() {
 #      values are defined on file '.pkg-map.sh'.
 _check_dependencies() {
     local dep_keys=$1
+    local post_install_full=""
 
     [[ -z "$dep_keys" ]] && return
 
@@ -529,6 +530,8 @@ _check_dependencies() {
         local pkg_manager_sel=""
         local pkg_names=""
         local pkg_names_sel=""
+        local post_install=""
+        local post_install_sel=""
 
         for pkg_manager in "${PKG_MANAGER_PRIORITY[@]}"; do
             if ! _command_exists "$pkg_manager"; then
@@ -546,10 +549,15 @@ _check_dependencies() {
 
             [[ -z "$pkg_names" ]] && continue
 
+            # Retrieve the post install commands from '.pkg-map.sh'.
+            post_install=$(_deps_get_dependency_value \
+                "$dep_key" "$pkg_manager" "POST_INSTALL")
+
             if [[ "$definitions_found" == "false" ]]; then
                 definitions_found="true"
                 pkg_manager_sel=$pkg_manager
                 pkg_names_sel=$pkg_names
+                post_install_sel=$post_install
             fi
 
             # The manager satisfies the dependency when
@@ -584,17 +592,21 @@ _check_dependencies() {
             _exit_script
         fi
 
-        # Append resolved packages as "<pkg_manager>:<package>" pairs.
+        # Append resolved packages as "<pkg_manager>:<package> ..." pairs.
         pkg_names_sel=$(sed "s|^|$pkg_manager_sel:|g" <<<"$pkg_names_sel")
         pkg_names_sel=$(sed "s| | $pkg_manager_sel:|g" <<<"$pkg_names_sel")
         pairs+=" $pkg_names_sel"
+
+        # Append resolved post install commands as "cmd1;cmd2;cmd3;..." list.
+        if [[ -n "$post_install_sel" ]]; then
+            post_install_full+="$post_install_sel;"
+        fi
     done
 
     # Sort and prepare the list of package pairs.
     pairs=$(_str_sort "$pairs" " " "true")
 
     # Step 3: Verify which packages need installation.
-    local post_install_full=""
     local packages_install=""
 
     # Iterate over each "<pkg_manager>:<package>" pair.
@@ -603,25 +615,17 @@ _check_dependencies() {
     for pair in $pairs; do
         local pkg_manager="${pair%%:*}"
         local package="${pair#*:}"
-        local post_install=""
 
         # Skip if the package is already available.
         if _deps_is_package_installed "$pkg_manager" "$package"; then
             continue
         fi
 
-        # Retrieve post-install command.
-        post_install=$(_deps_get_dependency_value \
-            "$package" "$pkg_manager" "POST_INSTALL")
-
-        # Add package and post-install commands to the respective lists.
+        # Add package to the respective lists.
         [[ -n "$package" ]] && packages_install+=" $pkg_manager:$package"
-        if [[ -n "$post_install" ]]; then
-            # Append post-install commands. Each entry must follow the format
-            # "<pkg_manager>:<commands>" and be separated by '\n'.
-            post_install_full+="$pkg_manager:$post_install;"$'\n'
-        fi
     done
+
+    post_install_full=$(_str_collapse_char "$post_install_full" ";")
 
     # Step 4: Install missing packages and execute post-install actions.
     _deps_install_missing_packages "$packages_install" "$post_install_full"
@@ -856,18 +860,8 @@ _deps_install_packages() {
 
         # Execute installation.
         if [[ -n "$cmd_inst" ]]; then
-            # Process post-install commands (if any). Each entry must follow
-            # the format "<pkg_manager>:<commands>" and be separated by newline
-            # characters '\n'.
             if [[ -n "$post_install" ]]; then
-                local post_install_sel=""
-                post_install_sel=$(grep "^$pkg_manager:" <<<"$post_install")
-                post_install_sel=$(cut -d ":" -f 2- <<<"$post_install_sel")
-                post_install_sel=$(tr -d "\n" <<<"$post_install_sel")
-
-                if [[ -n "$post_install_sel" ]]; then
-                    cmd_inst="$cmd_inst; $post_install_sel"
-                fi
+                cmd_inst="$cmd_inst;$post_install"
             fi
 
             # If root privileges are required, prepend with 'sudo' or 'pkexec'.
