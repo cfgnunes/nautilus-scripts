@@ -258,7 +258,7 @@ _main() {
     local checksum=""
     local font_file=""
 
-    _check_dependencies "ffmpeg"
+    _check_dependencies "ffmpeg perl git gzip"
 
     _open_items_locations "$TEMP_DIR_TASK/task" "true"
 
