@@ -7,6 +7,12 @@ source "$ROOT_DIR/.common-functions.sh"
 
 # Test all scripts.
 
+# BUG: Ubuntu 20.04 - [SCRIPT] Audio and Video/Audio: Effects/Audio: Filter noise
+# BUG: Ubuntu 20.04 - [SCRIPT] Image/Image: Convert/Image: Convert to JXL
+# BUG: Ubuntu 22.04 - [SCRIPT] Image/Image: Convert/Image: Convert to JXL
+#    : Ubuntu 24.04 - All tests passed.
+#    : Debian 13    - All tests passed.
+
 # Disable GUI for testing on terminal.
 unset "DISPLAY"
 unset "WAYLAND_DISPLAY"
@@ -270,8 +276,8 @@ _main() {
     # SECTION: Archive
     # -------------------------------------------------------------------------
 
-    # Disabled: Archive/Compress to '7z' with password
-    # Disabled: Archive/Compress to 'zip' with password
+    # IGNORED: Archive/Compress to '7z' with password
+    # IGNORED: Archive/Compress to 'zip' with password
 
     __test_begin
     __generate_fixture_archive_dir
@@ -307,8 +313,8 @@ _main() {
     # SECTION: Audio
     # -------------------------------------------------------------------------
 
-    # Disabled: Audio and Video/Audio: MP3 files/MP3: Maximize volume (recursive)
-    # Disabled: Audio and Video/Audio: MP3 files/MP3: Normalize volume (recursive)
+    # IGNORED: Audio and Video/Audio: MP3 files/MP3: Maximize volume (recursive)
+    # IGNORED: Audio and Video/Audio: MP3 files/MP3: Normalize volume (recursive)
 
     __test_scripts_stdout "$fixture_mp3" "Test audio.mp3" \
         "Audio and Video/Audio and Video: Tools/Media: Show information" \
@@ -368,7 +374,7 @@ _main() {
     # SECTION: Video
     # -------------------------------------------------------------------------
 
-    # Disabled: Audio and Video/Video: Convert/Video: Convert to WebM (copy)
+    # IGNORED: Audio and Video/Video: Convert/Video: Convert to WebM (copy)
 
     __test_scripts_file "$fixture_mp4" "Test video.mp4" "empty" \
         "Audio and Video/Video: Aspect ratio/Video: Aspect to 1:1|Test video (aspect 1:1).mp4" \
@@ -406,16 +412,16 @@ _main() {
     # SECTION: Directories and Files
     # -------------------------------------------------------------------------
 
-    # Disabled: Directories and Files/Flatten directory structure
-    # Disabled: Directories and Files/Open item location
-    # Disabled: Directories and Files/Reset permissions (recursive)
-    # Disabled: Clipboard/Copy file contents
-    # Disabled: Clipboard/Copy file names
-    # Disabled: Clipboard/Copy file names (recursive)
-    # Disabled: Clipboard/Copy file paths
-    # Disabled: Clipboard/Copy file paths (recursive)
-    # Disabled: Clipboard/Paste clipboard contents
-    # Disabled: Directories and Files/Compare items
+    # IGNORED: Directories and Files/Flatten directory structure
+    # IGNORED: Directories and Files/Open item location
+    # IGNORED: Directories and Files/Reset permissions (recursive)
+    # IGNORED: Clipboard/Copy file contents
+    # IGNORED: Clipboard/Copy file names
+    # IGNORED: Clipboard/Copy file names (recursive)
+    # IGNORED: Clipboard/Copy file paths
+    # IGNORED: Clipboard/Copy file paths (recursive)
+    # IGNORED: Clipboard/Paste clipboard contents
+    # IGNORED: Directories and Files/Compare items
 
     __test_begin
     echo "one" >"$temp_dir/file1.txt"
@@ -466,24 +472,24 @@ _main() {
     # SECTION: Image
     # -------------------------------------------------------------------------
 
-    # Disabled: Image/Image: Metadata, Exif/Image: Rename from metadata
-    # Disabled: Image/Image: Similarity/Image: Find similar (65 pct)
-    # Disabled: Image/Image: Similarity/Image: Find similar (75 pct)
-    # Disabled: Image/Image: Similarity/Image: Find similar (85 pct)
-    # Disabled: Image/Image: Similarity/Image: Find similar (95 pct)
-    # Disabled: Image/Image: Text recognition (OCR)/Image: Perform OCR (French)
-    # Disabled: Image/Image: Text recognition (OCR)/Image: Perform OCR (German)
-    # Disabled: Image/Image: Text recognition (OCR)/Image: Perform OCR (Italian)
-    # Disabled: Image/Image: Text recognition (OCR)/Image: Perform OCR (Portuguese)
-    # Disabled: Image/Image: Text recognition (OCR)/Image: Perform OCR (Russian)
-    # Disabled: Image/Image: Text recognition (OCR)/Image: Perform OCR (Spanish)
-    # Disabled: Image/Image: Watermark/Image: Add watermark (center)
-    # Disabled: Image/Image: Watermark/Image: Add watermark (north)
-    # Disabled: Image/Image: Watermark/Image: Add watermark (northeast)
-    # Disabled: Image/Image: Watermark/Image: Add watermark (northwest)
-    # Disabled: Image/Image: Watermark/Image: Add watermark (south)
-    # Disabled: Image/Image: Watermark/Image: Add watermark (southeast)
-    # Disabled: Image/Image: Watermark/Image: Add watermark (southwest)
+    # IGNORED: Image/Image: Metadata, Exif/Image: Rename from metadata
+    # IGNORED: Image/Image: Similarity/Image: Find similar (65 pct)
+    # IGNORED: Image/Image: Similarity/Image: Find similar (75 pct)
+    # IGNORED: Image/Image: Similarity/Image: Find similar (85 pct)
+    # IGNORED: Image/Image: Similarity/Image: Find similar (95 pct)
+    # IGNORED: Image/Image: Text recognition (OCR)/Image: Perform OCR (French)
+    # IGNORED: Image/Image: Text recognition (OCR)/Image: Perform OCR (German)
+    # IGNORED: Image/Image: Text recognition (OCR)/Image: Perform OCR (Italian)
+    # IGNORED: Image/Image: Text recognition (OCR)/Image: Perform OCR (Portuguese)
+    # IGNORED: Image/Image: Text recognition (OCR)/Image: Perform OCR (Russian)
+    # IGNORED: Image/Image: Text recognition (OCR)/Image: Perform OCR (Spanish)
+    # IGNORED: Image/Image: Watermark/Image: Add watermark (center)
+    # IGNORED: Image/Image: Watermark/Image: Add watermark (north)
+    # IGNORED: Image/Image: Watermark/Image: Add watermark (northeast)
+    # IGNORED: Image/Image: Watermark/Image: Add watermark (northwest)
+    # IGNORED: Image/Image: Watermark/Image: Add watermark (south)
+    # IGNORED: Image/Image: Watermark/Image: Add watermark (southeast)
+    # IGNORED: Image/Image: Watermark/Image: Add watermark (southwest)
 
     __test_scripts_file "$fixture_png" "Test image.png" "empty" \
         "Image/Image: Color/Image: Colorspace to gray|Test image (grayscale).png" \
@@ -614,10 +620,10 @@ _main() {
     # SECTION: Document
     # -------------------------------------------------------------------------
 
-    # Disabled: Document/Document: Convert/Document: Convert to ODS
-    # Disabled: Document/Document: Convert/Document: Convert to XLSX
-    # Disabled: Document/Document: Convert/Document: Convert to ODP
-    # Disabled: Document/Document: Convert/Document: Convert to PPTX
+    # IGNORED: Document/Document: Convert/Document: Convert to ODS
+    # IGNORED: Document/Document: Convert/Document: Convert to XLSX
+    # IGNORED: Document/Document: Convert/Document: Convert to ODP
+    # IGNORED: Document/Document: Convert/Document: Convert to PPTX
 
     __test_begin
     echo "Content of 'Test document'." >"$temp_dir/Test document.txt"
@@ -636,17 +642,17 @@ _main() {
     # SECTION: Document: PDF
     # -------------------------------------------------------------------------
 
-    # Disabled: Document/PDF: Security/PDF: Remove password
-    # Disabled: Document/PDF: Security/PDF: Set password
-    # Disabled: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (English)
-    # Disabled: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (French)
-    # Disabled: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (German)
-    # Disabled: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Italian)
-    # Disabled: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Portuguese)
-    # Disabled: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Russian)
-    # Disabled: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Spanish)
-    # Disabled: Document/PDF: Watermark/PDF: Add watermark (over)
-    # Disabled: Document/PDF: Watermark/PDF: Add watermark (under)
+    # IGNORED: Document/PDF: Security/PDF: Remove password
+    # IGNORED: Document/PDF: Security/PDF: Set password
+    # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (English)
+    # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (French)
+    # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (German)
+    # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Italian)
+    # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Portuguese)
+    # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Russian)
+    # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Spanish)
+    # IGNORED: Document/PDF: Watermark/PDF: Add watermark (over)
+    # IGNORED: Document/PDF: Watermark/PDF: Add watermark (under)
 
     __test_begin "$fixture_pdf::Test document PDF.pdf"
     __test_script "Document/PDF: Annotations/PDF: Find annotated PDFs" \
@@ -722,10 +728,10 @@ _main() {
     # SECTION: Links
     # -------------------------------------------------------------------------
 
-    # Disabled: Links/Create hard link to...
-    # Disabled: Links/Create symbolic link to...
-    # Disabled: Links/Paste as hard link
-    # Disabled: Links/Paste as symbolic link
+    # IGNORED: Links/Create hard link to...
+    # IGNORED: Links/Create symbolic link to...
+    # IGNORED: Links/Paste as hard link
+    # IGNORED: Links/Paste as symbolic link
 
     __test_begin
     echo "Content of 'link'." >"$temp_dir/link"
@@ -757,7 +763,7 @@ _main() {
     # SECTION: Network and Internet
     # -------------------------------------------------------------------------
 
-    # Disabled: Network and Internet/Git: Open repository website
+    # IGNORED: Network and Internet/Git: Open repository website
 
     __test_begin
     echo "https://github.com/cfgnunes/nautilus-scripts.git" \
@@ -836,8 +842,8 @@ _main() {
     # SECTION: Rename files
     # -------------------------------------------------------------------------
 
-    # Disabled: Rename files/Rename: To lowercase (recursive)
-    # Disabled: Rename files/Rename: To uppercase (recursive)
+    # IGNORED: Rename files/Rename: To lowercase (recursive)
+    # IGNORED: Rename files/Rename: To uppercase (recursive)
 
     __test_begin
     echo "Content of 'Test'." >"$temp_dir/Test réname accents.txt"
@@ -913,10 +919,10 @@ _main() {
     # SECTION: Checksum
     # -------------------------------------------------------------------------
 
-    # Disabled: Checksum/Generate MD5 file
-    # Disabled: Checksum/Generate SHA1 file
-    # Disabled: Checksum/Generate SHA256 file
-    # Disabled: Checksum/Generate SHA512 file
+    # IGNORED: Checksum/Generate MD5 file
+    # IGNORED: Checksum/Generate SHA1 file
+    # IGNORED: Checksum/Generate SHA256 file
+    # IGNORED: Checksum/Generate SHA512 file
 
     local hash_script=""
     for hash_script in \
