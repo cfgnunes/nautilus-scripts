@@ -3912,13 +3912,13 @@ _cmd_magick() {
 
     if _command_exists "magick"; then
         if [[ "$command" == "convert" ]]; then
-            magick "$@"
+            LC_ALL=C magick "$@"
         else
-            magick "$command" "$@"
+            LC_ALL=C magick "$command" "$@"
         fi
     else
         # ImageMagick 6: commands are executed directly.
-        "$command" "$@"
+        LC_ALL=C "$command" "$@"
     fi
 }
 

@@ -73,7 +73,7 @@ _main_task() {
 
     default_branch=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's|^origin/||')
     if [[ -z "$default_branch" ]]; then
-        default_branch=$(git remote show origin | grep "HEAD branch" | sed "s|.*: ||")
+        default_branch=$(LC_ALL=C git remote show origin | grep "HEAD branch" | sed "s|.*: ||")
     fi
 
     branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
