@@ -173,7 +173,7 @@ __generate_fixture_image() {
         -update 1 "$dest" &>/dev/null
 }
 
-__generate_fixture_zip() {
+__generate_fixture_targz() {
     local dest=$1
     local side=""
 
@@ -182,14 +182,8 @@ __generate_fixture_zip() {
     echo "Content of 'Test archive 2'." >"$side/Test archive 2"
     (
         cd -- "$side" || exit 1
-        if _command_exists "zip"; then
-            zip --symlinks --quiet --recurse-paths "$dest" -- \
-                "Test archive 1" "Test archive 2"
-        elif _command_exists "7za"; then
-            7za a -snl "$dest" -- "Test archive 1" "Test archive 2" >/dev/null
-        elif _command_exists "bsdtar"; then
-            bsdtar -a -cf "$dest" -- "Test archive 1" "Test archive 2"
-        fi
+        tar --create --gzip --file="$dest" -- \
+            "Test archive 1" "Test archive 2"
     )
     rm -rf -- "$side"
 }
@@ -302,12 +296,12 @@ _main() {
     __test_script "Archive/Compress to 'zip'" "empty" "Test archive.zip" \
         "$temp_dir/Test archive"
 
-    fixture_zip="$fixtures_dir/Test archive.zip"
-    __generate_fixture_zip "$fixture_zip"
-    __test_begin "$fixture_zip::Test archive.zip"
+    fixture_zip="$fixtures_dir/Test archive.tar.gz"
+    __generate_fixture_targz "$fixture_zip"
+    __test_begin "$fixture_zip::Test archive.tar.gz"
     __test_script "Archive/Extract here" "empty" \
         "Test archive/Test archive 1" \
-        "$temp_dir/Test archive.zip"
+        "$temp_dir/Test archive.tar.gz"
 
     # -------------------------------------------------------------------------
     # SECTION: Audio
