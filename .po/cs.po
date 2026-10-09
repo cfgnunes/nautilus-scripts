@@ -1989,5 +1989,9 @@ msgstr "Nepodařilo se najít správce balíčků!"
 msgid "pkgx installation failed!"
 msgstr "Instalace pkgx se nezdařila!"
 
+#: install.sh
+msgid "pkgx cannot run on your system!"
+msgstr "pkgx nelze ve vašem systému spustit!"
+
 #~ msgid "EOF"
 #~ msgstr "EOF"

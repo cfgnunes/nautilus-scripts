@@ -1989,5 +1989,9 @@ msgstr "Không tìm thấy trình quản lý gói!"
 msgid "pkgx installation failed!"
 msgstr "Cài pkgx thất bại!"
 
+#: install.sh
+msgid "pkgx cannot run on your system!"
+msgstr "pkgx không thể chạy trên hệ thống của bạn!"
+
 #~ msgid "EOF"
 #~ msgstr "EOF"

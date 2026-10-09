@@ -1989,5 +1989,9 @@ msgstr "Bir paket yöneticisi bulunamadı!"
 msgid "pkgx installation failed!"
 msgstr "pkgx kurulumu başarısız!"
 
+#: install.sh
+msgid "pkgx cannot run on your system!"
+msgstr "pkgx sisteminizde çalıştırılamıyor!"
+
 #~ msgid "EOF"
 #~ msgstr "EOF"

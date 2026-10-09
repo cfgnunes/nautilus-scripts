@@ -1989,5 +1989,9 @@ msgstr "לא נמצא מנהל חבילות!"
 msgid "pkgx installation failed!"
 msgstr "נכשלה התקנת pkgx!"
 
+#: install.sh
+msgid "pkgx cannot run on your system!"
+msgstr "pkgx לא יכול לרוץ במערכת שלך!"
+
 #~ msgid "EOF"
 #~ msgstr "EOF"

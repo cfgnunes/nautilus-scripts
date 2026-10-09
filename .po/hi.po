@@ -1989,5 +1989,9 @@ msgstr "कोई पैकेज मैनेजर नहीं मिला!"
 msgid "pkgx installation failed!"
 msgstr "pkgx इंस्टालेशन विफल रहा!"
 
+#: install.sh
+msgid "pkgx cannot run on your system!"
+msgstr "pkgx आपके सिस्टम पर नहीं चल सकता!"
+
 #~ msgid "EOF"
 #~ msgstr "EOF"

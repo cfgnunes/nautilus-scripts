@@ -1989,5 +1989,9 @@ msgstr "პაკეტების მმართველის პოვნ�
 msgid "pkgx installation failed!"
 msgstr "pkgx-ის დაყენება ჩავარდა!"
 
+#: install.sh
+msgid "pkgx cannot run on your system!"
+msgstr "pkgx თქვენს სისტემაზე ვერ გაეშვება!"
+
 msgid "EOF"
 msgstr "EOF"

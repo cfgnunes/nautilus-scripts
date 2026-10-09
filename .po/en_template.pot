@@ -1988,5 +1988,9 @@ msgstr ""
 msgid "pkgx installation failed!"
 msgstr ""
 
+#: install.sh
+msgid "pkgx cannot run on your system!"
+msgstr ""
+
 #~ msgid "EOF"
 #~ msgstr "EOF"
