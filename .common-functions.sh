@@ -907,7 +907,7 @@ _deps_installation_check() {
 
         # If the package could not be installed, show an error and exit.
         msg="$(_i18n 'Could not install the package:')"
-        _display_error_box "$msg $package ($pkg_manager)!"
+        _display_error_box "$msg $package ($pkg_manager)"
         _exit_script
     done
 }
