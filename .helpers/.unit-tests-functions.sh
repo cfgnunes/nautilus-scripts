@@ -140,12 +140,12 @@ __test_equal() {
     printf "\n"
 
     if [[ "$expected_output" != "$output" ]]; then
-        printf "\033[91mExpected output:\033[0m "
+        printf "\033[91mExpected output: "
         printf "%s" "$expected_output" | sed -z "s|\n|\\\n|g" | cat -A
-        printf "\n"
-        printf "         \033[91mOutput:\033[0m "
+        printf "\033[0m\n"
+        printf "         \033[91mOutput: "
         printf "%s" "$output" | sed -z "s|\n|\\\n|g" | cat -A
-        printf "\n"
+        printf "\033[0m\n"
     fi
 }
 
