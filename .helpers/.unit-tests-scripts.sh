@@ -188,52 +188,44 @@ __generate_fixture_targz() {
     rm -rf -- "$side"
 }
 
-__generate_fixture_pdf() {
+__generate_fixture_audio_tag() {
     local dest=$1
     local side=""
 
     side=$(mktemp --directory --tmpdir="$TEMP_DIR_TASK" "fixture.XXXX")
-    __generate_fixture_image "$side/page.png"
-    cp -- "$side/page.png" "$side/page 2.png"
-    bash "$ROOT_DIR/Image/Image: Combine, Split/Image: Combine into PDF" \
-        "$side/page.png" "$side/page 2.png" >/dev/null
-    cp -- "$side/Combined images.pdf" "$dest"
-    rm -rf -- "$side"
-}
-
-__generate_fixture_odt() {
-    local dest=$1
-    local side=""
-
-    side=$(mktemp --directory --tmpdir="$TEMP_DIR_TASK" "fixture.XXXX")
-    echo "Content of 'Test document'." >"$side/Test document.txt"
-    bash "$ROOT_DIR/Document/Document: Convert/Document: Convert to ODT" \
-        "$side/Test document.txt" >/dev/null
-    cp -- "$side/Test document.odt" "$dest"
-    rm -rf -- "$side"
-}
-
-__generate_fixture_tagged_audio() {
-    local dest=$1
-    local source=$2
-    local side=""
-
-    side=$(mktemp --directory --tmpdir="$TEMP_DIR_TASK" "fixture.XXXX")
-    cp -- "$source" "$side/Test audio.mp3"
+    ffmpeg -hide_banner -y \
+        -f lavfi -i "sine=frequency=440:duration=5" \
+        "$side/artist - title.mp3" &>/dev/null
     bash "$ROOT_DIR/Audio and Video/Audio: MP3 files/MP3: (artist - title) Name to ID3" \
-        "$side/Test audio.mp3" >/dev/null
-    cp -- "$side/Test audio.mp3" "$dest"
+        "$side/artist - title.mp3" >/dev/null
+    cp -- "$side/artist - title.mp3" "$dest"
     rm -rf -- "$side"
 }
 
 __generate_fixture_text() {
-    echo "Content." >"$temp_dir/Test file.txt"
+    local dest=$1
+
+    echo "Content of 'Test text'." >"$dest"
 }
 
 __generate_fixture_archive_dir() {
     mkdir -p -- "$temp_dir/Test archive"
     echo "Content of 'Test archive'." >"$temp_dir/Test archive/Test archive 1"
     echo "Content of 'Test archive 2'." >"$temp_dir/Test archive/Test archive 2"
+}
+
+__download_file() {
+    local url=$1
+    local output_file=$2
+
+    if _command_exists "wget"; then
+        wget -q -O "$output_file" -- "$url"
+    elif _command_exists "curl"; then
+        curl -fsSL -o "$output_file" -- "$url"
+    else
+        echo "Error: Neither wget nor curl is installed."
+        return 1
+    fi
 }
 
 # -----------------------------------------------------------------------------
@@ -243,26 +235,36 @@ __generate_fixture_archive_dir() {
 _main() {
     local temp_dir=""
     local std_output=""
-    local fixtures_dir="$TEMP_DIR_TASK/fixtures"
-    local fixture_audio=""
-    local fixture_audio_id3=""
-    local fixture_video=""
-    local fixture_image=""
-    local fixture_jpg=""
+    local fixtures_dir="$ROOT_DIR/test"
+    local fixture_jpg="$fixtures_dir/Test image.jpg"
+    local fixture_mp3="$fixtures_dir/Test audio.mp3"
+    local fixture_mp3_tag="$fixtures_dir/Test audio id3.mp3"
+    local fixture_mp4="$fixtures_dir/Test video.mp4"
+    local fixture_odt="$fixtures_dir/Test document.odt"
+    local fixture_pdf="$fixtures_dir/Test document PDF.pdf"
+    local fixture_png="$fixtures_dir/Test image.png"
     local fixture_svg=""
     local fixture_svgz=""
-    local fixture_zip=""
-    local fixture_pdf=""
-    local fixture_odt=""
-    local fixture_text=""
+    local fixture_tgz="$fixtures_dir/Test archive.tar.gz"
+    local fixture_txt="$fixtures_dir/Test text.txt"
     local checksum=""
     local font_file=""
 
-    _check_dependencies "ffmpeg perl git gzip"
+    _check_dependencies "ffmpeg git gzip"
 
     _open_items_locations "$TEMP_DIR_TASK/task" "true"
 
-    mkdir -p "$fixtures_dir"
+    # Generate the fixtures.
+    mkdir -p -- "$fixtures_dir"
+    [[ ! -f "$fixture_jpg" ]] && __generate_fixture_image "$fixture_jpg"
+    [[ ! -f "$fixture_mp3" ]] && __generate_fixture_audio "$fixture_mp3"
+    [[ ! -f "$fixture_mp3_tag" ]] && __generate_fixture_audio_tag "$fixture_mp3_tag"
+    [[ ! -f "$fixture_mp4" ]] && __generate_fixture_video "$fixture_mp4"
+    [[ ! -f "$fixture_png" ]] && __generate_fixture_image "$fixture_png"
+    [[ ! -f "$fixture_tgz" ]] && __generate_fixture_targz "$fixture_tgz"
+    [[ ! -f "$fixture_txt" ]] && __generate_fixture_text "$fixture_txt"
+    [[ ! -f "$fixture_odt" ]] && __download_file "https://freetestdata.com/wp-content/uploads/2021/09/Free_Test_Data_100KB_ODT.odt" "$fixture_odt"
+    [[ ! -f "$fixture_pdf" ]] && __download_file "https://freetestdata.com/wp-content/uploads/2021/09/Free_Test_Data_100KB_PDF.pdf" "$fixture_pdf"
 
     # -------------------------------------------------------------------------
     # SECTION: Archive
@@ -296,9 +298,7 @@ _main() {
     __test_script "Archive/Compress to 'zip'" "empty" "Test archive.zip" \
         "$temp_dir/Test archive"
 
-    fixture_zip="$fixtures_dir/Test archive.tar.gz"
-    __generate_fixture_targz "$fixture_zip"
-    __test_begin "$fixture_zip::Test archive.tar.gz"
+    __test_begin "$fixture_tgz::Test archive.tar.gz"
     __test_script "Archive/Extract here" "empty" \
         "Test archive/Test archive 1" \
         "$temp_dir/Test archive.tar.gz"
@@ -310,22 +310,19 @@ _main() {
     # Disabled: Audio and Video/Audio: MP3 files/MP3: Maximize volume (recursive)
     # Disabled: Audio and Video/Audio: MP3 files/MP3: Normalize volume (recursive)
 
-    fixture_audio="$fixtures_dir/Test audio.mp3"
-    __generate_fixture_audio "$fixture_audio"
-
-    __test_scripts_stdout "$fixture_audio" "Test audio.mp3" \
+    __test_scripts_stdout "$fixture_mp3" "Test audio.mp3" \
         "Audio and Video/Audio and Video: Tools/Media: Show information" \
         "Audio and Video/Audio and Video: Tools/Media: Show basic metadata"
 
     __test_begin \
-        "$fixture_audio::Test audio.mp3" \
-        "$fixture_audio::Test audio 2.mp3"
+        "$fixture_mp3::Test audio.mp3" \
+        "$fixture_mp3::Test audio 2.mp3"
     __test_script \
         "Audio and Video/Audio and Video: Tools/Media: Concatenate files" \
         "empty" "Concatenated media.mp3" \
         "$temp_dir/Test audio.mp3" "$temp_dir/Test audio 2.mp3"
 
-    __test_scripts_file "$fixture_audio" "Test audio.mp3" "empty" \
+    __test_scripts_file "$fixture_mp3" "Test audio.mp3" "empty" \
         "Audio and Video/Audio and Video: Tools/Media: Remove metadata|Test audio (no metadata).mp3" \
         "Audio and Video/Audio: Channels/Audio: Mix channels to mono|Test audio (mono).mp3" \
         "Audio and Video/Audio: Convert/Audio: Convert to FLAC|Test audio.flac" \
@@ -344,30 +341,28 @@ _main() {
         "Audio and Video/Audio: Effects/Audio: Remove silence (extremities)|Test audio (no silence).mp3"
 
     __test_begin \
-        "$fixture_audio::Test audio.mp3" \
-        "$fixture_audio::Test audio 2.mp3"
+        "$fixture_mp3::Test audio.mp3" \
+        "$fixture_mp3::Test audio 2.mp3"
     __test_script "Audio and Video/Audio: Channels/Audio: Mix two files" \
         "empty" "Mixed audio.wav" \
         "$temp_dir/Test audio.mp3" "$temp_dir/Test audio 2.mp3"
 
-    __test_scripts_stdout "$fixture_audio" "Test audio.mp3" \
+    __test_scripts_stdout "$fixture_mp3" "Test audio.mp3" \
         "Audio and Video/Audio: MP3 files/MP3: Show encoding details" \
         "Audio and Video/Audio: Quality/Audio: Check quality"
 
-    __test_scripts_file "$fixture_audio" "Test audio.mp3" "empty" \
+    __test_scripts_file "$fixture_mp3" "Test audio.mp3" "empty" \
         "Audio and Video/Audio: Quality/Audio: Produce spectrogram|Test audio.png"
 
-    __test_begin "$fixture_audio::Test audio.mp3"
+    __test_begin "$fixture_mp3::Test audio.mp3"
     __test_script \
         "Audio and Video/Audio: MP3 files/MP3: (artist - title) Name to ID3" \
         "empty" "" "$temp_dir/Test audio.mp3"
 
-    fixture_audio_id3="$fixtures_dir/Test audio id3.mp3"
-    __generate_fixture_tagged_audio "$fixture_audio_id3" "$fixture_audio"
-    __test_begin "$fixture_audio_id3::Test audio.mp3"
+    __test_begin "$fixture_mp3_tag::Test audio.mp3"
     __test_script \
         "Audio and Video/Audio: MP3 files/MP3: (artist - title) ID3 to Name" \
-        "empty" " - Test audio.mp3" "$temp_dir/Test audio.mp3"
+        "empty" "artist - title.mp3" "$temp_dir/Test audio.mp3"
 
     # -------------------------------------------------------------------------
     # SECTION: Video
@@ -375,10 +370,7 @@ _main() {
 
     # Disabled: Audio and Video/Video: Convert/Video: Convert to WebM (copy)
 
-    fixture_video="$fixtures_dir/Test video.mp4"
-    __generate_fixture_video "$fixture_video"
-
-    __test_scripts_file "$fixture_video" "Test video.mp4" "empty" \
+    __test_scripts_file "$fixture_mp4" "Test video.mp4" "empty" \
         "Audio and Video/Video: Aspect ratio/Video: Aspect to 1:1|Test video (aspect 1:1).mp4" \
         "Audio and Video/Video: Aspect ratio/Video: Aspect to 16:10|Test video (aspect 16:10).mp4" \
         "Audio and Video/Video: Aspect ratio/Video: Aspect to 16:9|Test video (aspect 16:9).mp4" \
@@ -466,7 +458,7 @@ _main() {
         "Directories and Files/Show file metadata" \
         "Directories and Files/Show file MIME type"; do
         __test_begin
-        __generate_fixture_text
+        __generate_fixture_text "$temp_dir/Test file.txt"
         __test_script "$dir_script" "text" "" "$temp_dir"
     done
 
@@ -493,50 +485,45 @@ _main() {
     # Disabled: Image/Image: Watermark/Image: Add watermark (southeast)
     # Disabled: Image/Image: Watermark/Image: Add watermark (southwest)
 
-    fixture_image="$fixtures_dir/Test image.png"
-    fixture_jpg="$fixtures_dir/Test image.jpg"
-    __generate_fixture_image "$fixture_image"
-    __generate_fixture_image "$fixture_jpg"
-
-    __test_scripts_file "$fixture_image" "Test image.png" "empty" \
+    __test_scripts_file "$fixture_png" "Test image.png" "empty" \
         "Image/Image: Color/Image: Colorspace to gray|Test image (grayscale).png" \
         "Image/Image: Color/Image: Desaturate|Test image (desaturated).png" \
         "Image/Image: Color/Image: Generate multiple hues|Output/Test image (2).png"
 
     __test_begin \
-        "$fixture_image::Test image.png" \
-        "$fixture_image::Test image 2.png"
+        "$fixture_png::Test image.png" \
+        "$fixture_png::Test image 2.png"
     __test_script "Image/Image: Combine, Split/Image: Combine into GIF" \
         "empty" "Animated image.gif" \
         "$temp_dir/Test image.png" "$temp_dir/Test image 2.png"
 
     __test_begin \
-        "$fixture_image::Test image.png" \
-        "$fixture_image::Test image 2.png"
+        "$fixture_png::Test image.png" \
+        "$fixture_png::Test image 2.png"
     __test_script "Image/Image: Combine, Split/Image: Combine into PDF" \
         "empty" "Combined images.pdf" \
         "$temp_dir/Test image.png" "$temp_dir/Test image 2.png"
 
-    __test_scripts_file "$fixture_image" "Test image.png" "empty" \
+    __test_scripts_file "$fixture_png" "Test image.png" "empty" \
         "Image/Image: Combine, Split/Image: Split into 2 (horizontal)|Output/Test image-0.png" \
         "Image/Image: Combine, Split/Image: Split into 2 (vertical)|Output/Test image-0.png" \
         "Image/Image: Combine, Split/Image: Split into 4|Output/Test image-0.png"
 
     __test_begin \
-        "$fixture_image::Test image.png" \
-        "$fixture_image::Test image 2.png"
+        "$fixture_png::Test image.png" \
+        "$fixture_png::Test image 2.png"
     __test_script "Image/Image: Combine, Split/Image: Stack (horizontal)" \
         "empty" "Stacked images (horizontal).png" \
         "$temp_dir/Test image.png" "$temp_dir/Test image 2.png"
 
     __test_begin \
-        "$fixture_image::Test image.png" \
-        "$fixture_image::Test image 2.png"
+        "$fixture_png::Test image.png" \
+        "$fixture_png::Test image 2.png"
     __test_script "Image/Image: Combine, Split/Image: Stack (vertical)" \
         "empty" "Stacked images (vertical).png" \
         "$temp_dir/Test image.png" "$temp_dir/Test image 2.png"
 
-    __test_scripts_file "$fixture_image" "Test image.png" "empty" \
+    __test_scripts_file "$fixture_png" "Test image.png" "empty" \
         "Image/Image: Convert/Image: Convert to AVIF|Test image.avif" \
         "Image/Image: Convert/Image: Convert to GIF|Test image.gif" \
         "Image/Image: Convert/Image: Convert to JPG|Test image.jpg"
@@ -544,7 +531,7 @@ _main() {
     __test_scripts_file "$fixture_jpg" "Test image.jpg" "empty" \
         "Image/Image: Convert/Image: Convert to PNG|Test image.png"
 
-    __test_scripts_file "$fixture_image" "Test image.png" "empty" \
+    __test_scripts_file "$fixture_png" "Test image.png" "empty" \
         "Image/Image: Convert/Image: Convert to TIFF|Test image.tif" \
         "Image/Image: Convert/Image: Convert to HEIC|Test image.heic" \
         "Image/Image: Convert/Image: Convert to JXL|Test image.jxl" \
@@ -588,7 +575,7 @@ _main() {
         "empty" "Test image OCR (OCR eng).txt" \
         "$temp_dir/Test image OCR.png"
 
-    __test_scripts_file "$fixture_image" "Test image.png" "empty" \
+    __test_scripts_file "$fixture_png" "Test image.png" "empty" \
         "Image/Image: Transparency/Image: Background to alpha|Test image (alpha).png" \
         "Image/Image: Transparency/Image: Background to alpha (15 pct)|Test image (alpha 15 pct).png" \
         "Image/Image: Transparency/Image: Color alpha to black|Test image (bg black).png" \
@@ -637,8 +624,6 @@ _main() {
     __test_script "Document/Document: Convert/Document: Convert to ODT" \
         "empty" "Test document.odt" "$temp_dir/Test document.txt"
 
-    fixture_odt="$fixtures_dir/Test document.odt"
-    __generate_fixture_odt "$fixture_odt"
     __test_scripts_file "$fixture_odt" "Test document.odt" "empty" \
         "Document/Document: Convert/Document: Convert to TXT|Test document.txt" \
         "Document/Document: Convert/Document: Convert to EPUB|Test document.epub" \
@@ -662,9 +647,6 @@ _main() {
     # Disabled: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Spanish)
     # Disabled: Document/PDF: Watermark/PDF: Add watermark (over)
     # Disabled: Document/PDF: Watermark/PDF: Add watermark (under)
-
-    fixture_pdf="$fixtures_dir/Test document PDF.pdf"
-    __generate_fixture_pdf "$fixture_pdf"
 
     __test_begin "$fixture_pdf::Test document PDF.pdf"
     __test_script "Document/PDF: Annotations/PDF: Find annotated PDFs" \
@@ -728,12 +710,12 @@ _main() {
     __test_begin "$fixture_pdf::Test document PDF.pdf"
     __test_script \
         "Document/PDF: Text recognition (OCR)/PDF: Find non-searchable PDFs" \
-        "text" "" "$temp_dir"
+        "empty" "" "$temp_dir"
 
     __test_scripts_file "$fixture_pdf" "Test document PDF.pdf" "empty" \
         "Document/PDF: Tools/PDF: Convert to grayscale|Test document PDF (grayscale).pdf" \
         "Document/PDF: Tools/PDF: Convert to PDFA-2b|Test document PDF (PDFA-2b).pdf" \
-        "Document/PDF: Tools/PDF: Extract images|Output/Test document PDF-000.png" \
+        "Document/PDF: Tools/PDF: Extract images|Output/Test document PDF-000.jpg" \
         "Document/PDF: Tools/PDF: Remove metadata|Test document PDF (no metadata).pdf"
 
     # -------------------------------------------------------------------------
@@ -817,15 +799,12 @@ _main() {
     # SECTION: Plain text
     # -------------------------------------------------------------------------
 
-    fixture_text="$fixtures_dir/Test text.txt"
-    echo "Content of 'Test text'." >"$fixture_text"
-
-    __test_scripts_file "$fixture_text" "Test text.txt" "empty" \
+    __test_scripts_file "$fixture_txt" "Test text.txt" "empty" \
         "Plain text/Text: Encode to UTF-8|Test text (UTF-8).txt" \
         "Plain text/Text: Remove accents|Test text (no accents).txt" \
         "Plain text/Text: Convert tabs to 4 spaces|Test text (4 spaces).txt"
 
-    __test_scripts_stdout "$fixture_text" "Test text.txt" \
+    __test_scripts_stdout "$fixture_txt" "Test text.txt" \
         "Plain text/Text: List encodings" \
         "Plain text/Text: List line breaks" \
         "Plain text/Text: List line counts" \
@@ -833,8 +812,8 @@ _main() {
         "Plain text/Text: List word counts"
 
     __test_begin \
-        "$fixture_text::Test text.txt" \
-        "$fixture_text::Test text 2.txt"
+        "$fixture_txt::Test text.txt" \
+        "$fixture_txt::Test text 2.txt"
     echo "Content of 'Test text 2'." >"$temp_dir/Test text 2.txt"
     __test_script "Plain text/Text: Concatenate multiple files" "empty" \
         "Concatenated files.txt" \
@@ -846,11 +825,11 @@ _main() {
     __test_script "Plain text/Text: Normalize (UTF-8, recursive)" "empty" \
         "Test text.txt.bak" "$temp_dir/Test text.txt"
 
-    __test_begin "$fixture_text::Test text.txt"
+    __test_begin "$fixture_txt::Test text.txt"
     __test_script "Plain text/Text: List issues" "empty" "" \
         "$temp_dir/Test text.txt"
 
-    __test_scripts_file "$fixture_text" "Test text.txt" "empty" \
+    __test_scripts_file "$fixture_txt" "Test text.txt" "empty" \
         "Plain text/Text: Remove trailing spaces|Test text (no trailing).txt"
 
     # -------------------------------------------------------------------------
