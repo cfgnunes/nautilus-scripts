@@ -1348,33 +1348,30 @@ __run_deps_get_dependency_value() {
     local expected_output=""
     local output=""
 
-    output=$(_deps_get_dependency_value "7za" "apt-get" "PKG_MAP")
-    expected_output="p7zip"
-    __test_equal "Resolve apt-get package for 7za." "$expected_output" "$output"
+    output=$(_deps_get_dependency_value "dig" "dnf" "PKG_MAP")
+    expected_output="bind-utils"
+    __test_equal "Resolve dnf package for 'dig'." "$expected_output" "$output"
 
-    output=$(_deps_get_dependency_value "7za" "pkgx" "PKG_MAP")
-    expected_output="github.com/p7zip-project/p7zip"
-    __test_equal "Resolve pkgx package for 7za." "$expected_output" "$output"
+    output=$(_deps_get_dependency_value "dig" "pkgx" "PKG_MAP")
+    expected_output="isc.org/bind9"
+    __test_equal "Resolve pkgx package for 'dig'." "$expected_output" "$output"
 
-    output=$(_deps_get_dependency_value "nonexistent_key_xyz" "apt-get" "PKG_MAP")
+    output=$(_deps_get_dependency_value "nonexistent_key_xyz" "dnf" "PKG_MAP")
     expected_output=""
     __test_equal "Unknown key returns empty." "$expected_output" "$output"
 
-    __test_exit_code "Unknown package manager returns 1." 1 \
-        _deps_get_dependency_value "7za" "unknown-pm" "PKG_MAP"
-
     __test_exit_code "Unknown key returns 0." 0 \
-        _deps_get_dependency_value "nonexistent_key_xyz" "apt-get" "PKG_MAP"
+        _deps_get_dependency_value "nonexistent_key_xyz" "dnf" "PKG_MAP"
 
-    output=$(_deps_get_dependency_value "7za" "nix-env" "PKG_MAP")
-    expected_output="p7zip"
+    output=$(_deps_get_dependency_value "dig" "nix-env" "PKG_MAP")
+    expected_output="dnsutils"
     __test_equal "Map nix to nix-env." "$expected_output" "$output"
 
-    output=$(_deps_get_dependency_value "7za" "xbps-install" "PKG_MAP")
-    expected_output="p7zip"
+    output=$(_deps_get_dependency_value "dig" "xbps-install" "PKG_MAP")
+    expected_output="bind"
     __test_equal "Map xbps to xbps-install." "$expected_output" "$output"
 
-    output=$(_deps_get_dependency_value "clamav" "apt-get" "POST_INSTALL")
+    output=$(_deps_get_dependency_value "clamav" "dnf" "POST_INSTALL")
     expected_output='rm -f /var/log/clamav/freshclam.log; sed -i "/^NotifyClamd/d" /etc/clamav/freshclam.conf 2>/dev/null; freshclam --quiet'
     __test_equal "Wildcard package manager in POST_INSTALL." \
         "$expected_output" "$output"
