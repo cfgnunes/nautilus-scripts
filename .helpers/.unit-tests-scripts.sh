@@ -31,13 +31,13 @@ __check_file_empty() {
     ((_TOTAL_TESTS++))
 
     if [[ -f "$file" && ! -s "$file" ]]; then
-        printf "[\033[36m PASS \033[0m] "
-        printf "\033[36mTest file (empty).\033[0m\n"
+        printf "\033[90m[ PASS ]\033[0m "
+        printf "\033[90mTest file (empty).\033[0m\n"
     else
-        printf "[\033[31mFAILED\033[0m] "
-        printf "\033[31mTest file (empty).\033[0m\n"
-        printf "[\033[31m FILE \033[0m] "
-        printf "\033[31m"
+        printf "\033[91m[ FAIL ]\033[0m "
+        printf "\033[91mTest file (empty).\033[0m\n"
+        printf "\033[90m[ FILE ]\033[0m "
+        printf "\033[90m"
         printf "%s" "$file" | sed -z "s|\n|\\\n|g" | cat -A
         printf "\033[0m\n"
         ((_TOTAL_FAILED++))
@@ -50,13 +50,13 @@ __check_file_nonempty() {
     ((_TOTAL_TESTS++))
 
     if [[ -f "$file" && -s "$file" ]]; then
-        printf "[\033[36m PASS \033[0m] "
-        printf "\033[36mTest file (non empty).\033[0m\n"
+        printf "\033[90m[ PASS ]\033[0m "
+        printf "\033[90mTest file (non empty).\033[0m\n"
     else
-        printf "[\033[31mFAILED\033[0m] "
-        printf "\033[31mTest file (non empty).\033[0m\n"
-        printf "[\033[31m FILE \033[0m] "
-        printf "\033[31m"
+        printf "\033[91m[FAILED]\033[0m "
+        printf "\033[91mTest file (non empty).\033[0m\n"
+        printf "\033[90m[ FILE ]\033[0m "
+        printf "\033[90m"
         printf "%s" "$file" | sed -z "s|\n|\\\n|g" | cat -A
         printf "\033[0m\n"
         ((_TOTAL_FAILED++))
@@ -84,7 +84,7 @@ __run_script() {
 
     printf '%s\n' "$script" >"$temp_dir/script_name.txt"
     echo
-    echo -e "[\033[36mSCRIPT\033[0m] $script"
+    echo -e "\033[90m[SCRIPT] $script\033[0m"
     # The sentinel keeps trailing newlines, which command substitution removes.
     output=$(
         bash "$ROOT_DIR/$script" "$@"
