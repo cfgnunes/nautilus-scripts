@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "iconv"
+    _check_dependencies "perl"
     _display_wait_box ""
     input_files=$(_get_files "par_type=all")
 
@@ -30,7 +30,11 @@ _main_task() {
     filename=$(basename -- "$input_file")
 
     # Remove accents (transliterate).
-    output_file=$(iconv -f utf8 -t ascii//TRANSLIT <<<"$filename")
+    output_file=$(
+        set -o pipefail
+        piconv -f utf8 -t utf8 <<<"$filename" |
+            perl -CSD -MUnicode::Normalize -pe '$_ = NFD($_); s/\p{Mn}//g'
+    )
     _check_output "$?" "$output_file" "$input_file" "" || return 1
 
     # Run the main process.

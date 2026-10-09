@@ -842,7 +842,7 @@ _main() {
 
     __test_begin
     echo "Content of 'Test text'.(á)" |
-        iconv -f UTF-8 -t ISO-8859-1 >"$temp_dir/Test text.txt"
+        piconv -f UTF-8 -t ISO-8859-1 >"$temp_dir/Test text.txt"
     __test_script "Plain text/Text: Normalize (UTF-8, recursive)" "empty" \
         "Test text.txt.bak" "$temp_dir/Test text.txt"
 

@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "iconv"
+    _check_dependencies "perl"
     _display_wait_box ""
     input_files=$(_get_files "par_type=file; par_skip_extension='bak|pdf|svg'")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
@@ -24,7 +24,7 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local output_file=""
-    local encoding="ascii//TRANSLIT"
+    local encoding="utf-8"
 
     # NOTE: Sometimes 'file' command returns 'us-ascii' for 'utf-8' files.
     local input_encoding=""
@@ -37,7 +37,9 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(no accents)'")
 
     # Run the main process.
-    iconv -f "$input_encoding" "$input_file" -t "$encoding" >"$output_file"
+    set -o pipefail
+    piconv -f "$input_encoding" "$input_file" -t "$encoding" |
+        perl -CSD -MUnicode::Normalize -pe '$_ = NFD($_); s/\p{Mn}//g' >"$output_file"
     _check_output "$?" "" "$input_file" "$output_file" || return 1
 }
 

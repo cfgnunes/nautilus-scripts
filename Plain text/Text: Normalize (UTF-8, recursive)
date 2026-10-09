@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "iconv perl"
+    _check_dependencies "perl"
     _display_wait_box ""
     input_files=$(_get_files "par_type=file; par_recursive=true; par_skip_extension='bak|pdf|svg'")
 
@@ -25,7 +25,7 @@ _main_task() {
     local output_file=""
     local temp_file1=""
     local temp_file2=""
-    local encoding="utf-8//TRANSLIT"
+    local encoding="utf-8"
 
     # Work on a temporary file.
     temp_file1=$(_make_temp_file)
@@ -40,8 +40,8 @@ _main_task() {
     [[ "$input_encoding" == "us-ascii" ]] && input_encoding="utf-8"
 
     # Step 1: 'convert encoding to utf-8'.
-    iconv -f "$input_encoding" "$input_file" -t "$encoding" >"$temp_file1"
-    _check_output "$?" "iconv" "$input_file" "$temp_file1" || return 1
+    piconv -f "$input_encoding" "$input_file" -t "$encoding" >"$temp_file1"
+    _check_output "$?" "piconv" "$input_file" "$temp_file1" || return 1
 
     # Step 2: 'convert line breaks to Unix'.
     perl -pe "s/\r\n|\n|\r/\n/g" "$temp_file1" >"$temp_file2" 2>/dev/null

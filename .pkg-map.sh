@@ -313,18 +313,6 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
-    ["iconv"]="
-        termux: libiconv
-        apt:    libc-bin
-        dnf:    glibc-common
-        pacman: glibc
-        nix:    glibc
-        zypper: glibc
-        guix:   glibc
-        xbps:   glibc
-        pkgx:   gnu.org/glibc
-    "
-
     ["id3v2"]="
         termux: id3v2
         apt:    id3v2
