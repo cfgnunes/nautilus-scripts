@@ -135,7 +135,7 @@ __test_equal() {
     fi
     printf "\033[90mFunction:\033[0m "
     printf "%s" "${FUNCNAME[1]}"
-    printf "\n         \033[90mDescription:\033[0m "
+    printf "\n         \033[90mComments:\033[0m "
     printf "%s" "$description" | sed -z "s|\n|\\\n|g" | cat -A
     printf "\n"
 
@@ -167,7 +167,7 @@ __test_exit_code() {
     fi
     printf "\033[90mFunction:\033[0m "
     printf "%s" "${FUNCNAME[1]}"
-    printf "\n         \033[90mDescription:\033[0m "
+    printf "\n         \033[90mComments:\033[0m "
     printf "%s" "$description" | sed -z "s|\n|\\\n|g" | cat -A
     printf "\n"
 
