@@ -138,10 +138,6 @@ fi
 # -----------------------------------------------------------------------------
 
 _on_exit() {
-    local exit_code=$?
-    if [[ $exit_code -ne 0 ]]; then
-        _log "[ERR] Installation terminated with exit code $exit_code."
-    fi
     rm -rf -- "$TEMP_DIR" 2>/dev/null
 }
 trap _on_exit EXIT
@@ -363,8 +359,6 @@ _print_date() {
 
 _log() {
     local message=$1
-    [[ ! -f "$INSTALL_LOG_TMP" ]] && return
-
     printf "%s\n" "$(_print_date) $message" >>"$INSTALL_LOG_TMP"
 }
 
