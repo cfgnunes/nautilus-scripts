@@ -7,11 +7,17 @@ source "$ROOT_DIR/.common-functions.sh"
 
 # Test all scripts.
 
-# BUG: Ubuntu 20.04 - [SCRIPT] Audio and Video/Audio: Effects/Audio: Filter noise
-# BUG: Ubuntu 20.04 - [SCRIPT] Image/Image: Convert/Image: Convert to JXL
-# BUG: Ubuntu 22.04 - [SCRIPT] Image/Image: Convert/Image: Convert to JXL
-#    : Ubuntu 24.04 - All tests passed.
-#    : Debian 13    - All tests passed.
+# FAIL: (2020) Ubuntu 20.04 - [SCRIPT] Audio and Video/Audio: Effects/Audio: Filter noise
+# FAIL: (2020) Ubuntu 20.04 - [SCRIPT] Image/Image: Convert/Image: Convert to JXL
+# FAIL: (2021) Debian 11    - [SCRIPT] Image/Image: Convert/Image: Convert to JXL
+# FAIL: (2022) Ubuntu 22.04 - [SCRIPT] Image/Image: Convert/Image: Convert to JXL
+# PASS: (2023) Debian 12    - All tests passed.
+# PASS: (2024) Ubuntu 24.04 - All tests passed.
+# PASS: (2025) Debian 13    - All tests passed.
+# PASS: (2025) Fedora 42    - All tests passed.
+# PASS: (2026) Fedora 43    - All tests passed.
+# PASS: (2026) Fedora 44    - All tests passed.
+# PASS: (2026) Ubuntu 26.04 - All tests passed.
 
 # Disable GUI for testing on terminal.
 unset "DISPLAY"
