@@ -29,7 +29,8 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=jpg")
 
     # Run the main process.
-    std_output=$(_cmd_magick convert "$input_file" "$output_file" 2>&1)
+    std_output=$(_cmd_magick convert "$input_file" \
+        -background white -flatten "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
