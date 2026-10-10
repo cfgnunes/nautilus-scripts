@@ -31,8 +31,13 @@ _main_task() {
 
     # Run the main process.
     std_output=$(_cmd_magick convert "$input_file" \
-        -background white -flatten \
-        -resize "3840x2160>" -define "jpeg:extent=$size" "$output_file" 2>&1)
+        -background white \
+        -flatten \
+        -interlace Plane \
+        -quality 92 \
+        -resize "3840x2160>" \
+        -define "jpeg:extent=$size" \
+        "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
