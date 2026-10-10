@@ -363,6 +363,8 @@ _print_date() {
 
 _log() {
     local message=$1
+    [[ ! -f "$INSTALL_LOG_TMP" ]] && return
+
     printf "%s\n" "$(_print_date) $message" >>"$INSTALL_LOG_TMP"
 }
 
