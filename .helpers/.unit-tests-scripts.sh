@@ -75,6 +75,46 @@ __check_file_nonempty() {
     fi
 }
 
+__check_path_missing() {
+    local file=$1
+
+    ((_TOTAL_TESTS++))
+
+    if [[ ! -e "$file" ]]; then
+        printf "\033[90m[ PASS ]\033[0m "
+        printf "\033[90mTest file (missing).\033[0m\n"
+    else
+        printf "\033[91m[ FAIL ]\033[0m "
+        printf "\033[91mTest file (missing).\033[0m\n"
+        printf "\033[90m[ FILE ]\033[0m "
+        printf "\033[90m"
+        printf "%s" "$file" | sed -z "s|\n|\\\n|g" | cat -A
+        printf "\033[0m\n"
+        ((_TOTAL_FAILED++))
+    fi
+}
+
+__check_permission() {
+    local file=$1
+    local expected=$2
+    local actual=""
+
+    ((_TOTAL_TESTS++))
+    actual=$(stat -c %a -- "$file" 2>/dev/null || true)
+    expected=${expected#0}
+
+    if [[ "$actual" == "$expected" ]]; then
+        printf "\033[90m[ PASS ]\033[0m "
+        printf "\033[90mTest permission (%s).\033[0m\n" "$expected"
+    else
+        printf "\033[91m[ FAIL ]\033[0m "
+        printf "\033[91mTest permission (%s).\033[0m\n" "$expected"
+        printf "\033[90m[ FILE ]\033[0m "
+        printf "\033[90m%s (%s)\033[0m\n" "$file" "$actual"
+        ((_TOTAL_FAILED++))
+    fi
+}
+
 __test_begin() {
     temp_dir=$(mktemp --directory --tmpdir="$TEMP_DIR_TASK" "test.XXXX")
 
@@ -262,7 +302,7 @@ _main() {
     local checksum=""
     local font_file=""
 
-    _check_dependencies "ffmpeg git gzip"
+    _check_dependencies "ffmpeg git gzip exiftool"
 
     _open_items_locations "$TEMP_DIR_TASK/task" "true"
 
@@ -418,9 +458,7 @@ _main() {
     # SECTION: Directories and Files
     # -------------------------------------------------------------------------
 
-    # IGNORED: Directories and Files/Flatten directory structure
     # IGNORED: Directories and Files/Open item location
-    # IGNORED: Directories and Files/Reset permissions (recursive)
     # IGNORED: Clipboard/Copy file contents
     # IGNORED: Clipboard/Copy file names
     # IGNORED: Clipboard/Copy file names (recursive)
@@ -428,6 +466,67 @@ _main() {
     # IGNORED: Clipboard/Copy file paths (recursive)
     # IGNORED: Clipboard/Paste clipboard contents
     # IGNORED: Directories and Files/Compare items
+
+    __test_begin
+    mkdir -p -- "$temp_dir/Test flatten/Sub dir/Deep dir"
+    echo "Content of 'Keep file'." >"$temp_dir/Test flatten/Keep file.txt"
+    echo "Content of 'Nested file'." \
+        >"$temp_dir/Test flatten/Sub dir/Nested file.txt"
+    echo "Content of 'Deep file'." \
+        >"$temp_dir/Test flatten/Sub dir/Deep dir/Deep file.txt"
+    __test_script "Directories and Files/Flatten directory structure" "empty" \
+        "Test flatten/undo-flatten.sh" "$temp_dir/Test flatten"
+    __check_file_nonempty "$temp_dir/Test flatten/Keep file.txt"
+    __check_file_nonempty "$temp_dir/Test flatten/Nested file.txt"
+    __check_file_nonempty "$temp_dir/Test flatten/Deep file.txt"
+    __check_path_missing "$temp_dir/Test flatten/Sub dir"
+    (
+        cd -- "$temp_dir/Test flatten" || exit 1
+        bash undo-flatten.sh
+    )
+    __check_file_nonempty "$temp_dir/Test flatten/Keep file.txt"
+    __check_file_nonempty "$temp_dir/Test flatten/Sub dir/Nested file.txt"
+    __check_file_nonempty \
+        "$temp_dir/Test flatten/Sub dir/Deep dir/Deep file.txt"
+    __check_path_missing "$temp_dir/Test flatten/Nested file.txt"
+    __check_path_missing "$temp_dir/Test flatten/Deep file.txt"
+
+    __test_begin
+    mkdir -p -- "$temp_dir/Test permissions/Sub dir/.ssh/nested"
+    echo "Content of 'Normal file'." \
+        >"$temp_dir/Test permissions/Sub dir/Normal file.txt"
+    echo "Content of 'History'." >"$temp_dir/Test permissions/.bash_history"
+    echo "Content of 'Key'." >"$temp_dir/Test permissions/Sub dir/.ssh/id_rsa"
+    echo "Content of 'Note'." \
+        >"$temp_dir/Test permissions/Sub dir/.ssh/note.txt"
+    echo "Content of 'Nested'." \
+        >"$temp_dir/Test permissions/Sub dir/.ssh/nested/Nested file.txt"
+    chmod 000 -- "$temp_dir/Test permissions/Sub dir/Normal file.txt"
+    chmod 777 -- "$temp_dir/Test permissions" \
+        "$temp_dir/Test permissions/Sub dir" \
+        "$temp_dir/Test permissions/.bash_history" \
+        "$temp_dir/Test permissions/Sub dir/.ssh" \
+        "$temp_dir/Test permissions/Sub dir/.ssh/id_rsa" \
+        "$temp_dir/Test permissions/Sub dir/.ssh/note.txt" \
+        "$temp_dir/Test permissions/Sub dir/.ssh/nested" \
+        "$temp_dir/Test permissions/Sub dir/.ssh/nested/Nested file.txt"
+    local dir_mode=""
+    local file_mode=""
+    dir_mode=$(printf "%04o" "$((0777 - $(umask)))")
+    file_mode=$(printf "%04o" "$((0666 - $(umask)))")
+    __test_script "Directories and Files/Reset permissions (recursive)" \
+        "empty" "" "$temp_dir/Test permissions"
+    __check_permission "$temp_dir/Test permissions" "$dir_mode"
+    __check_permission "$temp_dir/Test permissions/Sub dir" "$dir_mode"
+    __check_permission "$temp_dir/Test permissions/Sub dir/Normal file.txt" \
+        "$file_mode"
+    __check_permission "$temp_dir/Test permissions/.bash_history" "600"
+    __check_permission "$temp_dir/Test permissions/Sub dir/.ssh" "700"
+    __check_permission "$temp_dir/Test permissions/Sub dir/.ssh/id_rsa" "600"
+    __check_permission "$temp_dir/Test permissions/Sub dir/.ssh/note.txt" "600"
+    __check_permission "$temp_dir/Test permissions/Sub dir/.ssh/nested" "700"
+    __check_permission \
+        "$temp_dir/Test permissions/Sub dir/.ssh/nested/Nested file.txt" "600"
 
     __test_begin
     echo "one" >"$temp_dir/file1.txt"
@@ -478,7 +577,6 @@ _main() {
     # SECTION: Image
     # -------------------------------------------------------------------------
 
-    # IGNORED: Image/Image: Metadata, Exif/Image: Rename from metadata
     # IGNORED: Image/Image: Similarity/Image: Find similar (65 pct)
     # IGNORED: Image/Image: Similarity/Image: Find similar (75 pct)
     # IGNORED: Image/Image: Similarity/Image: Find similar (85 pct)
@@ -569,6 +667,16 @@ _main() {
         "Image/Image: Optimize, Reduce/Image: Reduce (JPG, 1000kB max)|Test image (reduced).jpg" \
         "Image/Image: Optimize, Reduce/Image: Reduce (JPG, 500kB max)|Test image (reduced).jpg" \
         "Image/Image: Metadata, Exif/Image: Remove metadata|Test image (no metadata).png"
+
+    __test_begin "$fixture_jpg::Test image.jpg"
+    exiftool -overwrite_original \
+        -CreateDate="2020:01:02 03:04:05" \
+        -DateTimeOriginal="2020:01:02 03:04:05" \
+        -- "$temp_dir/Test image.jpg" >/dev/null
+    __test_script "Image/Image: Metadata, Exif/Image: Rename from metadata" \
+        "empty" "2020-01-02_03-04-05_Test image.jpg" \
+        "$temp_dir/Test image.jpg"
+    __check_path_missing "$temp_dir/Test image.jpg"
 
     __test_begin
     font_file=$(fc-match -f '%{file}' sans 2>/dev/null || true)
@@ -843,8 +951,23 @@ _main() {
     # SECTION: Rename files
     # -------------------------------------------------------------------------
 
-    # IGNORED: Rename files/Rename: To lowercase (recursive)
-    # IGNORED: Rename files/Rename: To uppercase (recursive)
+    __test_begin
+    mkdir -p -- "$temp_dir/Test Rename/Sub Dir"
+    echo "Content of 'Test'." >"$temp_dir/Test Rename/Top File.txt"
+    echo "Content of 'Test'." >"$temp_dir/Test Rename/Sub Dir/File Name.txt"
+    __test_script "Rename files/Rename: To lowercase (recursive)" "empty" \
+        "test rename/sub dir/file name.txt" "$temp_dir/Test Rename"
+    __check_file_nonempty "$temp_dir/test rename/top file.txt"
+    __check_path_missing "$temp_dir/Test Rename"
+
+    __test_begin
+    mkdir -p -- "$temp_dir/Test Rename/Sub Dir"
+    echo "Content of 'Test'." >"$temp_dir/Test Rename/Top File.txt"
+    echo "Content of 'Test'." >"$temp_dir/Test Rename/Sub Dir/File Name.txt"
+    __test_script "Rename files/Rename: To uppercase (recursive)" "empty" \
+        "TEST RENAME/SUB DIR/FILE NAME.TXT" "$temp_dir/Test Rename"
+    __check_file_nonempty "$temp_dir/TEST RENAME/TOP FILE.TXT"
+    __check_path_missing "$temp_dir/Test Rename"
 
     __test_begin
     echo "Content of 'Test'." >"$temp_dir/Test réname accents.txt"
