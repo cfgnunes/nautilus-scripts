@@ -60,7 +60,7 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(denoised)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(noise filtered)'")
 
     # Run the main process.
     std_output=$(ffmpeg -hide_banner -y -i "$input_file" -filter:a "arnndn=m=$MODEL_FILE" -- "$output_file" 2>&1)
