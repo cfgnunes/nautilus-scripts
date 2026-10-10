@@ -5,7 +5,7 @@
 # Author: Cristiano Fraga G. Nunes
 # Repository: https://github.com/cfgnunes/nautilus-scripts
 # License: MIT License
-# Version: 31.1.1
+# Version: 31.2
 # =============================================================================
 
 set -u
@@ -15,7 +15,7 @@ set -u
 # -----------------------------------------------------------------------------
 
 APP_NAME="Enhanced File Manager Actions for Linux"
-APP_VERSION="31.1.1"
+APP_VERSION="31.2"
 
 # Used in:
 #  - Directory where scripts are installed located at:
@@ -142,6 +142,7 @@ _on_exit() {
     if [[ $exit_code -ne 0 ]]; then
         _log "[ERR] Installation terminated with exit code $exit_code."
     fi
+    rm -rf -- "$TEMP_DIR" 2>/dev/null
 }
 trap _on_exit EXIT
 
