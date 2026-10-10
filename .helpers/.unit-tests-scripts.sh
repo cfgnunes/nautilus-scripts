@@ -7,11 +7,6 @@ source "$ROOT_DIR/.common-functions.sh"
 
 # Test all scripts.
 
-# FAIL: (2018) Ubuntu 18.04 - [SCRIPT] Archive/Compress to 'tar.zst'
-# FAIL: (2018) Ubuntu 18.04 - [SCRIPT] Audio and Video/Audio: Effects/Audio: Filter noise
-# FAIL: (2018) Ubuntu 18.04 - [SCRIPT] Document/Document: Convert/Document: Convert to Markdown
-# FAIL: (2018) Ubuntu 18.04 - [SCRIPT] Image/Image: Convert/Image: Convert to JXL
-# FAIL: (2018) Ubuntu 18.04 - [SCRIPT] Image/Image: Convert/Image: Convert to WebP
 # FAIL: (2020) Ubuntu 20.04 - [SCRIPT] Audio and Video/Audio: Effects/Audio: Filter noise
 # FAIL: (2020) Ubuntu 20.04 - [SCRIPT] Image/Image: Convert/Image: Convert to JXL
 # FAIL: (2021) Debian 11    - [SCRIPT] Image/Image: Convert/Image: Convert to JXL
