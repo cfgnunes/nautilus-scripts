@@ -30,7 +30,16 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=jpg; par_suffix='(reduced)'")
 
     # Run the main process.
-    std_output=$(_cmd_magick convert "$input_file" -resize "3840x2160>" -define "jpeg:extent=$size" "$output_file" 2>&1)
+    if [[ "$(_get_file_mime "$input_file")" == "image/png" ]]; then
+        # NOTE: JPEG has no alpha channel. Composite a PNG onto white so
+        # transparent pixels do not become black.
+        std_output=$(_cmd_magick convert "$input_file" \
+            -background white -flatten \
+            -resize "3840x2160>" -define "jpeg:extent=$size" "$output_file" 2>&1)
+    else
+        std_output=$(_cmd_magick convert "$input_file" \
+            -resize "3840x2160>" -define "jpeg:extent=$size" "$output_file" 2>&1)
+    fi
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
