@@ -626,10 +626,6 @@ msgid "PDF: Optimize, Reduce"
 msgstr "PDF: Tối ưu, Giảm kích thước"
 
 #: Menu
-msgid "PDF: Page size"
-msgstr "PDF: Kích thước trang"
-
-#: Menu
 msgid "PDF: Rotate"
 msgstr "PDF: Xoay"
 
@@ -1472,26 +1468,6 @@ msgstr "PDF: Bố cục (dọc, 4x2)"
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF: Tối ưu cho web (linearize)"
-
-#: Menu
-msgid "PDF: Set size (A3)"
-msgstr "PDF: Đặt kích thước (A3)"
-
-#: Menu
-msgid "PDF: Set size (A4)"
-msgstr "PDF: Đặt kích thước (A4)"
-
-#: Menu
-msgid "PDF: Set size (A5)"
-msgstr "PDF: Đặt kích thước (A5)"
-
-#: Menu
-msgid "PDF: Set size (US Legal)"
-msgstr "PDF: Đặt kích thước (US Legal)"
-
-#: Menu
-msgid "PDF: Set size (US Letter)"
-msgstr "PDF: Đặt kích thước (US Letter)"
 
 #: Menu
 msgid "PDF: Perform OCR (English)"

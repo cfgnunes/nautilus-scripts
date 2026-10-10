@@ -626,10 +626,6 @@ msgid "PDF: Optimize, Reduce"
 msgstr "PDF: Optimallaşdır, kiçilt"
 
 #: Menu
-msgid "PDF: Page size"
-msgstr "PDF: Səhifə ölçüsü"
-
-#: Menu
 msgid "PDF: Rotate"
 msgstr "PDF: Fırlat"
 
@@ -1472,26 +1468,6 @@ msgstr "PDF: Səhifə düzümü (şaquli, 4x2)"
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF: Veb üçün optimallaşdır (xəttiləşdir)"
-
-#: Menu
-msgid "PDF: Set size (A3)"
-msgstr "PDF: Səhifə ölçüsünü təyin et (A3)"
-
-#: Menu
-msgid "PDF: Set size (A4)"
-msgstr "PDF: Səhifə ölçüsünü təyin et (A4)"
-
-#: Menu
-msgid "PDF: Set size (A5)"
-msgstr "PDF: Səhifə ölçüsünü təyin et (A5)"
-
-#: Menu
-msgid "PDF: Set size (US Legal)"
-msgstr "PDF: Səhifə ölçüsünü təyin et (US Legal)"
-
-#: Menu
-msgid "PDF: Set size (US Letter)"
-msgstr "PDF: Səhifə ölçüsünü təyin et (US Letter)"
 
 #: Menu
 msgid "PDF: Perform OCR (English)"

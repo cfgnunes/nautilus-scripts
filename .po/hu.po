@@ -626,10 +626,6 @@ msgid "PDF: Optimize, Reduce"
 msgstr "PDF: optimalizálás, csökkentés"
 
 #: Menu
-msgid "PDF: Page size"
-msgstr "PDF: oldalméret"
-
-#: Menu
 msgid "PDF: Rotate"
 msgstr "PDF: forgatás"
 
@@ -1472,26 +1468,6 @@ msgstr "PDF: elrendezés (álló, 4x2)"
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF: optimalizálás webre (linearizálás)"
-
-#: Menu
-msgid "PDF: Set size (A3)"
-msgstr "PDF: méret beállítása (A3)"
-
-#: Menu
-msgid "PDF: Set size (A4)"
-msgstr "PDF: méret beállítása (A4)"
-
-#: Menu
-msgid "PDF: Set size (A5)"
-msgstr "PDF: méret beállítása (A5)"
-
-#: Menu
-msgid "PDF: Set size (US Legal)"
-msgstr "PDF: méret beállítása (US Legal)"
-
-#: Menu
-msgid "PDF: Set size (US Letter)"
-msgstr "PDF: méret beállítása (US Letter)"
 
 #: Menu
 msgid "PDF: Perform OCR (English)"

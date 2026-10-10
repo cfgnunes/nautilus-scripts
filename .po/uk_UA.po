@@ -626,10 +626,6 @@ msgid "PDF: Optimize, Reduce"
 msgstr "PDF: оптимізувати, зменшити"
 
 #: Menu
-msgid "PDF: Page size"
-msgstr "PDF: розмір сторінки"
-
-#: Menu
 msgid "PDF: Rotate"
 msgstr "PDF: повернути"
 
@@ -1472,26 +1468,6 @@ msgstr "PDF: макет (книжкова, 4x2)"
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF: оптимізувати для вебу (лінеаризувати)"
-
-#: Menu
-msgid "PDF: Set size (A3)"
-msgstr "PDF: встановити розмір (A3)"
-
-#: Menu
-msgid "PDF: Set size (A4)"
-msgstr "PDF: встановити розмір (A4)"
-
-#: Menu
-msgid "PDF: Set size (A5)"
-msgstr "PDF: встановити розмір (A5)"
-
-#: Menu
-msgid "PDF: Set size (US Legal)"
-msgstr "PDF: встановити розмір (US Legal)"
-
-#: Menu
-msgid "PDF: Set size (US Letter)"
-msgstr "PDF: встановити розмір (US Letter)"
 
 #: Menu
 msgid "PDF: Perform OCR (English)"

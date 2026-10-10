@@ -626,10 +626,6 @@ msgid "PDF: Optimize, Reduce"
 msgstr "PDF：最適化・縮小"
 
 #: Menu
-msgid "PDF: Page size"
-msgstr "PDF：ページサイズ"
-
-#: Menu
 msgid "PDF: Rotate"
 msgstr "PDF：回転"
 
@@ -1472,26 +1468,6 @@ msgstr "PDF：レイアウト (縦向き, 4x2)"
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF：Web用に最適化 (線形化)"
-
-#: Menu
-msgid "PDF: Set size (A3)"
-msgstr "PDF：サイズを設定 (A3)"
-
-#: Menu
-msgid "PDF: Set size (A4)"
-msgstr "PDF：サイズを設定 (A4)"
-
-#: Menu
-msgid "PDF: Set size (A5)"
-msgstr "PDF：サイズを設定 (A5)"
-
-#: Menu
-msgid "PDF: Set size (US Legal)"
-msgstr "PDF：サイズを設定 (USリーガル)"
-
-#: Menu
-msgid "PDF: Set size (US Letter)"
-msgstr "PDF：サイズを設定 (USレター)"
 
 #: Menu
 msgid "PDF: Perform OCR (English)"

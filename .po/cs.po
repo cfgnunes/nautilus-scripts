@@ -626,10 +626,6 @@ msgid "PDF: Optimize, Reduce"
 msgstr "PDF: optimalizovat, zmenšit"
 
 #: Menu
-msgid "PDF: Page size"
-msgstr "PDF: velikost stránky"
-
-#: Menu
 msgid "PDF: Rotate"
 msgstr "PDF: otočit"
 
@@ -1472,26 +1468,6 @@ msgstr "PDF: rozložení (na výšku, 4x2)"
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF: optimalizovat pro web (linearizovat)"
-
-#: Menu
-msgid "PDF: Set size (A3)"
-msgstr "PDF: nastavit velikost (A3)"
-
-#: Menu
-msgid "PDF: Set size (A4)"
-msgstr "PDF: nastavit velikost (A4)"
-
-#: Menu
-msgid "PDF: Set size (A5)"
-msgstr "PDF: nastavit velikost (A5)"
-
-#: Menu
-msgid "PDF: Set size (US Legal)"
-msgstr "PDF: nastavit velikost (US Legal)"
-
-#: Menu
-msgid "PDF: Set size (US Letter)"
-msgstr "PDF: nastavit velikost (US Letter)"
 
 #: Menu
 msgid "PDF: Perform OCR (English)"

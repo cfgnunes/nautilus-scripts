@@ -626,10 +626,6 @@ msgid "PDF: Optimize, Reduce"
 msgstr "PDF: Ottimizza, Riduci"
 
 #: Menu
-msgid "PDF: Page size"
-msgstr "PDF: Dimensione pagina"
-
-#: Menu
 msgid "PDF: Rotate"
 msgstr "PDF: Ruota"
 
@@ -1472,26 +1468,6 @@ msgstr "PDF: Layout (verticale, 4x2)"
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF: Ottimizza per web (linearizza)"
-
-#: Menu
-msgid "PDF: Set size (A3)"
-msgstr "PDF: Imposta dimensione (A3)"
-
-#: Menu
-msgid "PDF: Set size (A4)"
-msgstr "PDF: Imposta dimensione (A4)"
-
-#: Menu
-msgid "PDF: Set size (A5)"
-msgstr "PDF: Imposta dimensione (A5)"
-
-#: Menu
-msgid "PDF: Set size (US Legal)"
-msgstr "PDF: Imposta dimensione (US Legal)"
-
-#: Menu
-msgid "PDF: Set size (US Letter)"
-msgstr "PDF: Imposta dimensione (US Letter)"
 
 #: Menu
 msgid "PDF: Perform OCR (English)"

@@ -626,10 +626,6 @@ msgid "PDF: Optimize, Reduce"
 msgstr "קובץ PDF: מיטוב גודל, הקטנה"
 
 #: Menu
-msgid "PDF: Page size"
-msgstr "קובץ PDF: גודל עמוד"
-
-#: Menu
 msgid "PDF: Rotate"
 msgstr "קובץ PDF: סיבוב"
 
@@ -1472,26 +1468,6 @@ msgstr "קובץ PDF: פריסה (לאורך, 4x2)"
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "קובץ PDF: מיטוב להצגה בדפדפן (באופן לינארי)"
-
-#: Menu
-msgid "PDF: Set size (A3)"
-msgstr "קובץ PDF: קביעת גודל (A3)"
-
-#: Menu
-msgid "PDF: Set size (A4)"
-msgstr "קובץ PDF: קביעת גודל (A4)"
-
-#: Menu
-msgid "PDF: Set size (A5)"
-msgstr "קובץ PDF: קביעת גודל (A5)"
-
-#: Menu
-msgid "PDF: Set size (US Legal)"
-msgstr "קובץ PDF: קביעת גודל (US Legal)"
-
-#: Menu
-msgid "PDF: Set size (US Letter)"
-msgstr "קובץ PDF: קביעת גודל (US Letter)"
 
 #: Menu
 msgid "PDF: Perform OCR (English)"

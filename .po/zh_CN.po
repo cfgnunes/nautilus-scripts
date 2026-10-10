@@ -626,10 +626,6 @@ msgid "PDF: Optimize, Reduce"
 msgstr "PDF：优化、压缩"
 
 #: Menu
-msgid "PDF: Page size"
-msgstr "PDF：页面尺寸"
-
-#: Menu
 msgid "PDF: Rotate"
 msgstr "PDF：旋转"
 
@@ -1472,26 +1468,6 @@ msgstr "PDF：布局（纵向，4x2）"
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF：优化用于网页（线性化）"
-
-#: Menu
-msgid "PDF: Set size (A3)"
-msgstr "PDF：设置尺寸（A3）"
-
-#: Menu
-msgid "PDF: Set size (A4)"
-msgstr "PDF：设置尺寸（A4）"
-
-#: Menu
-msgid "PDF: Set size (A5)"
-msgstr "PDF：设置尺寸（A5）"
-
-#: Menu
-msgid "PDF: Set size (US Legal)"
-msgstr "PDF：设置尺寸（美国 Legal）"
-
-#: Menu
-msgid "PDF: Set size (US Letter)"
-msgstr "PDF：设置尺寸（美国 Letter）"
 
 #: Menu
 msgid "PDF: Perform OCR (English)"

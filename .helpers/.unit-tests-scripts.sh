@@ -702,11 +702,6 @@ _main() {
         "Document/PDF: Optimize, Reduce/PDF: Optimize for web (linearize)|Test document PDF (linearized).pdf" \
         "Document/PDF: Optimize, Reduce/PDF: Reduce (150 dpi, e-book)|Test document PDF (150 dpi, e-book).pdf" \
         "Document/PDF: Optimize, Reduce/PDF: Reduce (300 dpi, printer)|Test document PDF (300 dpi, printer).pdf" \
-        "Document/PDF: Page size/PDF: Set size (A3)|Test document PDF (A3).pdf" \
-        "Document/PDF: Page size/PDF: Set size (A4)|Test document PDF (A4).pdf" \
-        "Document/PDF: Page size/PDF: Set size (A5)|Test document PDF (A5).pdf" \
-        "Document/PDF: Page size/PDF: Set size (US Legal)|Test document PDF (US Legal).pdf" \
-        "Document/PDF: Page size/PDF: Set size (US Letter)|Test document PDF (US Letter).pdf" \
         "Document/PDF: Rotate/PDF: Rotate (180 deg)|Test document PDF (180 deg).pdf" \
         "Document/PDF: Rotate/PDF: Rotate (270 deg)|Test document PDF (270 deg).pdf" \
         "Document/PDF: Rotate/PDF: Rotate (90 deg)|Test document PDF (90 deg).pdf"
