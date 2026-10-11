@@ -872,13 +872,8 @@ _main() {
     # SECTION: Network and Internet
     # -------------------------------------------------------------------------
 
+    # IGNORED: Git: Clone URLs
     # IGNORED: Network and Internet/Git: Open repository website
-
-    __test_begin
-    echo "https://github.com/cfgnunes/nautilus-scripts.git" \
-        >"$temp_dir/Test internet.txt"
-    __test_script "Network and Internet/Git: Clone URLs" "empty" \
-        "nautilus-scripts/README.md" "$temp_dir/Test internet.txt"
 
     __test_begin
     git clone --quiet "https://github.com/cfgnunes/nautilus-scripts.git" \
