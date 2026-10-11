@@ -298,7 +298,7 @@ declare -A PKG_MAP=(
         zypper: gzip
         guix:   gzip
         xbps:   gzip
-        pkgx:
+        pkgx:   gzip
     "
 
     ["gzip"]="
