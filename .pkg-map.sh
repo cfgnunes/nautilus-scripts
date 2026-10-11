@@ -547,7 +547,7 @@ declare -A PKG_MAP=(
         apt:
         dnf:    golang-github-pdfcpu
         pacman: pdfcpu
-        nix:
+        nix:    pdfcpu
         zypper:
         guix:
         xbps:   pdfcpu
