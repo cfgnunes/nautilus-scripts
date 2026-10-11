@@ -542,6 +542,19 @@ declare -A PKG_MAP=(
         pkgx:   pandoc.org
     "
 
+    ["pdfcpu"]="
+        termux: pdfcpu
+        apt:
+        dnf:    golang-github-pdfcpu
+        pacman: pdfcpu
+        nix:
+        zypper:
+        guix:
+        xbps:   pdfcpu
+        pkgx:
+        precompiled: pdfcpu
+    "
+
     ["pdfinfo"]="
         termux: poppler
         apt:    poppler-utils
@@ -842,18 +855,6 @@ declare -A PKG_MAP=(
         pkgx:   github.com/ocrmypdf/OCRmyPDF ghostscript.com
     "
 
-    ["pdfjam"]="
-        termux: texlive-bin
-        apt:    texlive-extra-utils
-        dnf:    texlive-pdfjam
-        pacman: texlive-basic texlive-binextra texlive-latexextra
-        nix:    texliveSmall~texlive texlivePackages.pdfjam~pdfjam
-        zypper: texlive-pdfjam-bin
-        guix:   texlive-bin
-        xbps:   texlive
-        pkgx:
-    "
-
     ["sox"]="
         termux: sox
         apt:    sox libsox-fmt-mp3
@@ -931,4 +932,17 @@ declare -A POST_INSTALL=(
     ["clamscan"]='*:rm -f /var/log/clamav/freshclam.log; sed -i "/^NotifyClamd/d" /etc/clamav/freshclam.conf 2>/dev/null; freshclam --quiet'
 
     ["magick"]='*:find /etc -type f -path "/etc/ImageMagick-*/policy.xml" 2>/dev/null -exec sed -i -e "s/rights=\"none\" pattern=\"PDF\"/rights=\"read|write\" pattern=\"PDF\"/g" -e "s/name=\"disk\" value=\".GiB\"/name=\"disk\" value=\"8GiB\"/g" {} +'
+)
+
+# Description:
+#   This array defines download URLs for precompiled binaries that are not
+#   available through a package manager. Each entry maps a dependency key to
+#   architecture-specific URLs, selected from the machine architecture.
+declare -A PRECOMPILED_URL=(
+    ["pdfcpu"]="
+        x86_64:  https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.1/pdfcpu_0.16.1_Linux_x86_64.tar.xz
+        aarch64: https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.1/pdfcpu_0.16.1_Linux_arm64.tar.xz
+        armv71:   https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.1/pdfcpu_0.16.1_Linux_armv7.tar.xz
+        i386:    https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.1/pdfcpu_0.16.1_Linux_i386.tar.xz
+    "
 )

@@ -1426,44 +1426,28 @@ msgid "PDF: Find signed PDFs"
 msgstr "PDF: знайти підписані PDF"
 
 #: Menu
-msgid "PDF: Layout (landscape, 1x2)"
-msgstr "PDF: макет (альбомна, 1x2)"
+msgid "PDF: Layout (2 pages, landscape)"
+msgstr "PDF: макет (2 сторінки, альбомна)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x1)"
-msgstr "PDF: макет (альбомна, 2x1)"
+msgid "PDF: Layout (2 pages, portrait)"
+msgstr "PDF: макет (2 сторінки, книжкова)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x2)"
-msgstr "PDF: макет (альбомна, 2x2)"
+msgid "PDF: Layout (4 pages, landscape)"
+msgstr "PDF: макет (4 сторінки, альбомна)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x4)"
-msgstr "PDF: макет (альбомна, 2x4)"
+msgid "PDF: Layout (4 pages, portrait)"
+msgstr "PDF: макет (4 сторінки, книжкова)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 4x2)"
-msgstr "PDF: макет (альбомна, 4x2)"
+msgid "PDF: Layout (8 pages, landscape)"
+msgstr "PDF: макет (8 сторінок, альбомна)"
 
 #: Menu
-msgid "PDF: Layout (portrait, 1x2)"
-msgstr "PDF: макет (книжкова, 1x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x1)"
-msgstr "PDF: макет (книжкова, 2x1)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x2)"
-msgstr "PDF: макет (книжкова, 2x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x4)"
-msgstr "PDF: макет (книжкова, 2x4)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 4x2)"
-msgstr "PDF: макет (книжкова, 4x2)"
+msgid "PDF: Layout (8 pages, portrait)"
+msgstr "PDF: макет (8 сторінок, книжкова)"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"

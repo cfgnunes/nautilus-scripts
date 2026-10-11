@@ -1426,44 +1426,28 @@ msgid "PDF: Find signed PDFs"
 msgstr "PDF: Procurar PDFs assinados"
 
 #: Menu
-msgid "PDF: Layout (landscape, 1x2)"
-msgstr "PDF: Layout (paisagem, 1x2)"
+msgid "PDF: Layout (2 pages, landscape)"
+msgstr "PDF: Layout (2 páginas, paisagem)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x1)"
-msgstr "PDF: Layout (paisagem, 2x1)"
+msgid "PDF: Layout (2 pages, portrait)"
+msgstr "PDF: Layout (2 páginas, retrato)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x2)"
-msgstr "PDF: Layout (paisagem, 2x2)"
+msgid "PDF: Layout (4 pages, landscape)"
+msgstr "PDF: Layout (4 páginas, paisagem)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x4)"
-msgstr "PDF: Layout (paisagem, 2x4)"
+msgid "PDF: Layout (4 pages, portrait)"
+msgstr "PDF: Layout (4 páginas, retrato)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 4x2)"
-msgstr "PDF: Layout (paisagem, 4x2)"
+msgid "PDF: Layout (8 pages, landscape)"
+msgstr "PDF: Layout (8 páginas, paisagem)"
 
 #: Menu
-msgid "PDF: Layout (portrait, 1x2)"
-msgstr "PDF: Layout (retrato, 1x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x1)"
-msgstr "PDF: Layout (retrato, 2x1)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x2)"
-msgstr "PDF: Layout (retrato, 2x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x4)"
-msgstr "PDF: Layout (retrato, 2x4)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 4x2)"
-msgstr "PDF: Layout (retrato, 4x2)"
+msgid "PDF: Layout (8 pages, portrait)"
+msgstr "PDF: Layout (8 páginas, retrato)"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"

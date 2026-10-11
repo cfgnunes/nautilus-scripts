@@ -1426,44 +1426,28 @@ msgid "PDF: Find signed PDFs"
 msgstr "PDF: हस्ताक्षरित PDF खोजें"
 
 #: Menu
-msgid "PDF: Layout (landscape, 1x2)"
-msgstr "PDF: लेआउट (लैंडस्केप, 1x2)"
+msgid "PDF: Layout (2 pages, landscape)"
+msgstr "PDF: लेआउट (2 पृष्ठ, लैंडस्केप)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x1)"
-msgstr "PDF: लेआउट (लैंडस्केप, 2x1)"
+msgid "PDF: Layout (2 pages, portrait)"
+msgstr "PDF: लेआउट (2 पृष्ठ, पोर्ट्रेट)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x2)"
-msgstr "PDF: लेआउट (लैंडस्केप, 2x2)"
+msgid "PDF: Layout (4 pages, landscape)"
+msgstr "PDF: लेआउट (4 पृष्ठ, लैंडस्केप)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x4)"
-msgstr "PDF: लेआउट (लैंडस्केप, 2x4)"
+msgid "PDF: Layout (4 pages, portrait)"
+msgstr "PDF: लेआउट (4 पृष्ठ, पोर्ट्रेट)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 4x2)"
-msgstr "PDF: लेआउट (लैंडस्केप, 4x2)"
+msgid "PDF: Layout (8 pages, landscape)"
+msgstr "PDF: लेआउट (8 पृष्ठ, लैंडस्केप)"
 
 #: Menu
-msgid "PDF: Layout (portrait, 1x2)"
-msgstr "PDF: लेआउट (पोर्ट्रेट, 1x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x1)"
-msgstr "PDF: लेआउट (पोर्ट्रेट, 2x1)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x2)"
-msgstr "PDF: लेआउट (पोर्ट्रेट, 2x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x4)"
-msgstr "PDF: लेआउट (पोर्ट्रेट, 2x4)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 4x2)"
-msgstr "PDF: लेआउट (पोर्ट्रेट, 4x2)"
+msgid "PDF: Layout (8 pages, portrait)"
+msgstr "PDF: लेआउट (8 पृष्ठ, पोर्ट्रेट)"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"

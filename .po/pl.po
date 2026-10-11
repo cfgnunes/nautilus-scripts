@@ -1426,44 +1426,28 @@ msgid "PDF: Find signed PDFs"
 msgstr "PDF: Znajdź podpisane PDF"
 
 #: Menu
-msgid "PDF: Layout (landscape, 1x2)"
-msgstr "PDF: Układ (poziomy, 1x2)"
+msgid "PDF: Layout (2 pages, landscape)"
+msgstr "PDF: Układ (2 strony, poziomy)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x1)"
-msgstr "PDF: Układ (poziomy, 2x1)"
+msgid "PDF: Layout (2 pages, portrait)"
+msgstr "PDF: Układ (2 strony, pionowy)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x2)"
-msgstr "PDF: Układ (poziomy, 2x2)"
+msgid "PDF: Layout (4 pages, landscape)"
+msgstr "PDF: Układ (4 strony, poziomy)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x4)"
-msgstr "PDF: Układ (poziomy, 2x4)"
+msgid "PDF: Layout (4 pages, portrait)"
+msgstr "PDF: Układ (4 strony, pionowy)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 4x2)"
-msgstr "PDF: Układ (poziomy, 4x2)"
+msgid "PDF: Layout (8 pages, landscape)"
+msgstr "PDF: Układ (8 stron, poziomy)"
 
 #: Menu
-msgid "PDF: Layout (portrait, 1x2)"
-msgstr "PDF: Układ (pionowy, 1x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x1)"
-msgstr "PDF: Układ (pionowy, 2x1)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x2)"
-msgstr "PDF: Układ (pionowy, 2x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x4)"
-msgstr "PDF: Układ (pionowy, 2x4)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 4x2)"
-msgstr "PDF: Układ (pionowy, 4x2)"
+msgid "PDF: Layout (8 pages, portrait)"
+msgstr "PDF: Układ (8 stron, pionowy)"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"

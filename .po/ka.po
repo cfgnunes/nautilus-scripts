@@ -1426,44 +1426,28 @@ msgid "PDF: Find signed PDFs"
 msgstr "PDF: ხელმოწერილი PDF-ების პოვნა"
 
 #: Menu
-msgid "PDF: Layout (landscape, 1x2)"
-msgstr "PDF: განლაგება (ალბომური, 1x2)"
+msgid "PDF: Layout (2 pages, landscape)"
+msgstr "PDF: განლაგება (2 გვერდი, ალბომური)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x1)"
-msgstr "PDF: განლაგება (ალბომური, 2x1)"
+msgid "PDF: Layout (2 pages, portrait)"
+msgstr "PDF: განლაგება (2 გვერდი, პორტრეტული)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x2)"
-msgstr "PDF: განლაგება (ალბომური, 2x2)"
+msgid "PDF: Layout (4 pages, landscape)"
+msgstr "PDF: განლაგება (4 გვერდი, ალბომური)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x4)"
-msgstr "PDF: განლაგება (ალბომური, 2x4)"
+msgid "PDF: Layout (4 pages, portrait)"
+msgstr "PDF: განლაგება (4 გვერდი, პორტრეტული)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 4x2)"
-msgstr "PDF: განლაგება (ალბომური, 4x2)"
+msgid "PDF: Layout (8 pages, landscape)"
+msgstr "PDF: განლაგება (8 გვერდი, ალბომური)"
 
 #: Menu
-msgid "PDF: Layout (portrait, 1x2)"
-msgstr "PDF: განლაგება (პორტრეტული, 1x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x1)"
-msgstr "PDF: განლაგება (პორტრეტული, 2x1)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x2)"
-msgstr "PDF: განლაგება (პორტრეტული, 2x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x4)"
-msgstr "PDF: განლაგება (პორტრეტული, 2x4)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 4x2)"
-msgstr "PDF: განლაგება (პორტრეტული, 4x2)"
+msgid "PDF: Layout (8 pages, portrait)"
+msgstr "PDF: განლაგება (8 გვერდი, პორტრეტული)"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"

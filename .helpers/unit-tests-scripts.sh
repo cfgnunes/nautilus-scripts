@@ -791,16 +791,12 @@ _main() {
         "empty" "" "$temp_dir"
 
     __test_scripts_file "$fixture_pdf" "Test document PDF.pdf" "empty" \
-        "Document/PDF: Multi-page layout/PDF: Layout (landscape, 1x2)|Test document PDF (landscape, 1x2).pdf" \
-        "Document/PDF: Multi-page layout/PDF: Layout (landscape, 2x1)|Test document PDF (landscape, 2x1).pdf" \
-        "Document/PDF: Multi-page layout/PDF: Layout (landscape, 2x2)|Test document PDF (landscape, 2x2).pdf" \
-        "Document/PDF: Multi-page layout/PDF: Layout (landscape, 2x4)|Test document PDF (landscape, 2x4).pdf" \
-        "Document/PDF: Multi-page layout/PDF: Layout (landscape, 4x2)|Test document PDF (landscape, 4x2).pdf" \
-        "Document/PDF: Multi-page layout/PDF: Layout (portrait, 1x2)|Test document PDF (portrait, 1x2).pdf" \
-        "Document/PDF: Multi-page layout/PDF: Layout (portrait, 2x1)|Test document PDF (portrait, 2x1).pdf" \
-        "Document/PDF: Multi-page layout/PDF: Layout (portrait, 2x2)|Test document PDF (portrait, 2x2).pdf" \
-        "Document/PDF: Multi-page layout/PDF: Layout (portrait, 2x4)|Test document PDF (portrait, 2x4).pdf" \
-        "Document/PDF: Multi-page layout/PDF: Layout (portrait, 4x2)|Test document PDF (portrait, 4x2).pdf"
+        "Document/PDF: Multi-page layout/PDF: Layout (2 pages, landscape)|Test document PDF (2 pages, landscape).pdf" \
+        "Document/PDF: Multi-page layout/PDF: Layout (2 pages, portrait)|Test document PDF (2 pages, portrait).pdf" \
+        "Document/PDF: Multi-page layout/PDF: Layout (4 pages, landscape)|Test document PDF (4 pages, landscape).pdf" \
+        "Document/PDF: Multi-page layout/PDF: Layout (4 pages, portrait)|Test document PDF (4 pages, portrait).pdf" \
+        "Document/PDF: Multi-page layout/PDF: Layout (8 pages, landscape)|Test document PDF (8 pages, landscape).pdf" \
+        "Document/PDF: Multi-page layout/PDF: Layout (8 pages, portrait)|Test document PDF (8 pages, portrait).pdf"
 
     __test_begin "$fixture_pdf::Test document PDF.pdf"
     __test_script "Document/PDF: Optimize, Reduce/PDF: Find non-linearized PDFs" \

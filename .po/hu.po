@@ -1426,44 +1426,28 @@ msgid "PDF: Find signed PDFs"
 msgstr "PDF: aláírt PDF-ek keresése"
 
 #: Menu
-msgid "PDF: Layout (landscape, 1x2)"
-msgstr "PDF: elrendezés (fekvő, 1x2)"
+msgid "PDF: Layout (2 pages, landscape)"
+msgstr "PDF: elrendezés (2 oldal, fekvő)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x1)"
-msgstr "PDF: elrendezés (fekvő, 2x1)"
+msgid "PDF: Layout (2 pages, portrait)"
+msgstr "PDF: elrendezés (2 oldal, álló)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x2)"
-msgstr "PDF: elrendezés (fekvő, 2x2)"
+msgid "PDF: Layout (4 pages, landscape)"
+msgstr "PDF: elrendezés (4 oldal, fekvő)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x4)"
-msgstr "PDF: elrendezés (fekvő, 2x4)"
+msgid "PDF: Layout (4 pages, portrait)"
+msgstr "PDF: elrendezés (4 oldal, álló)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 4x2)"
-msgstr "PDF: elrendezés (fekvő, 4x2)"
+msgid "PDF: Layout (8 pages, landscape)"
+msgstr "PDF: elrendezés (8 oldal, fekvő)"
 
 #: Menu
-msgid "PDF: Layout (portrait, 1x2)"
-msgstr "PDF: elrendezés (álló, 1x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x1)"
-msgstr "PDF: elrendezés (álló, 2x1)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x2)"
-msgstr "PDF: elrendezés (álló, 2x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x4)"
-msgstr "PDF: elrendezés (álló, 2x4)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 4x2)"
-msgstr "PDF: elrendezés (álló, 4x2)"
+msgid "PDF: Layout (8 pages, portrait)"
+msgstr "PDF: elrendezés (8 oldal, álló)"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"

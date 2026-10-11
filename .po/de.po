@@ -1426,44 +1426,28 @@ msgid "PDF: Find signed PDFs"
 msgstr "PDF: Signierte PDFs finden"
 
 #: Menu
-msgid "PDF: Layout (landscape, 1x2)"
-msgstr "PDF: Layout (Querformat, 1x2)"
+msgid "PDF: Layout (2 pages, landscape)"
+msgstr "PDF: Layout (2 Seiten, Querformat)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x1)"
-msgstr "PDF: Layout (Querformat, 2x1)"
+msgid "PDF: Layout (2 pages, portrait)"
+msgstr "PDF: Layout (2 Seiten, Hochformat)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x2)"
-msgstr "PDF: Layout (Querformat, 2x2)"
+msgid "PDF: Layout (4 pages, landscape)"
+msgstr "PDF: Layout (4 Seiten, Querformat)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x4)"
-msgstr "PDF: Layout (Querformat, 2x4)"
+msgid "PDF: Layout (4 pages, portrait)"
+msgstr "PDF: Layout (4 Seiten, Hochformat)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 4x2)"
-msgstr "PDF: Layout (Querformat, 4x2)"
+msgid "PDF: Layout (8 pages, landscape)"
+msgstr "PDF: Layout (8 Seiten, Querformat)"
 
 #: Menu
-msgid "PDF: Layout (portrait, 1x2)"
-msgstr "PDF: Layout (Hochformat, 1x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x1)"
-msgstr "PDF: Layout (Hochformat, 2x1)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x2)"
-msgstr "PDF: Layout (Hochformat, 2x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x4)"
-msgstr "PDF: Layout (Hochformat, 2x4)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 4x2)"
-msgstr "PDF: Layout (Hochformat, 4x2)"
+msgid "PDF: Layout (8 pages, portrait)"
+msgstr "PDF: Layout (8 Seiten, Hochformat)"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"

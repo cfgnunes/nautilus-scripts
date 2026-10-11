@@ -10,18 +10,10 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "pdfjam"
+    _check_dependencies "pdfcpu"
     _display_wait_box ""
     input_files=$(_get_files "par_type=file; par_select_extension=pdf")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
-
-    # HACK: Workaround for 'pdfjam' on Nix environments.
-    if _command_exists "nix-shell"; then
-        local add_path=""
-        # shellcheck disable=SC2016
-        add_path=$(nix-shell -p texlivePackages.pdfjam --run 'echo $PATH' 2>/dev/null)
-        PATH="$PATH:$add_path"
-    fi
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -33,12 +25,13 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
-    local layout="2x2"
+    local pages="4"
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(portrait, $layout)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($pages pages, landscape)'")
 
     # Run the main process.
-    std_output=$(pdfjam --nup "$layout" --no-landscape --paper a4paper --outfile "$output_file" -- "$input_file" 2>&1)
+    # NOTE: Older 'pdfcpu' versions do not support '--' in the command line.
+    std_output=$(pdfcpu nup form:A4L,border:off,margin:0 "$output_file" "$pages" "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

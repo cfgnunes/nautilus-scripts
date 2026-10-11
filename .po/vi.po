@@ -1426,44 +1426,28 @@ msgid "PDF: Find signed PDFs"
 msgstr "PDF: Tìm PDF đã ký"
 
 #: Menu
-msgid "PDF: Layout (landscape, 1x2)"
-msgstr "PDF: Bố cục (ngang, 1x2)"
+msgid "PDF: Layout (2 pages, landscape)"
+msgstr "PDF: Bố cục (2 trang, ngang)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x1)"
-msgstr "PDF: Bố cục (ngang, 2x1)"
+msgid "PDF: Layout (2 pages, portrait)"
+msgstr "PDF: Bố cục (2 trang, dọc)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x2)"
-msgstr "PDF: Bố cục (ngang, 2x2)"
+msgid "PDF: Layout (4 pages, landscape)"
+msgstr "PDF: Bố cục (4 trang, ngang)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x4)"
-msgstr "PDF: Bố cục (ngang, 2x4)"
+msgid "PDF: Layout (4 pages, portrait)"
+msgstr "PDF: Bố cục (4 trang, dọc)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 4x2)"
-msgstr "PDF: Bố cục (ngang, 4x2)"
+msgid "PDF: Layout (8 pages, landscape)"
+msgstr "PDF: Bố cục (8 trang, ngang)"
 
 #: Menu
-msgid "PDF: Layout (portrait, 1x2)"
-msgstr "PDF: Bố cục (dọc, 1x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x1)"
-msgstr "PDF: Bố cục (dọc, 2x1)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x2)"
-msgstr "PDF: Bố cục (dọc, 2x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x4)"
-msgstr "PDF: Bố cục (dọc, 2x4)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 4x2)"
-msgstr "PDF: Bố cục (dọc, 4x2)"
+msgid "PDF: Layout (8 pages, portrait)"
+msgstr "PDF: Bố cục (8 trang, dọc)"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"

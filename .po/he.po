@@ -1426,44 +1426,28 @@ msgid "PDF: Find signed PDFs"
 msgstr "קובץ PDF: איתור קובצי PDF חתומים"
 
 #: Menu
-msgid "PDF: Layout (landscape, 1x2)"
-msgstr "קובץ PDF: פריסה (לרוחב, 1x2)"
+msgid "PDF: Layout (2 pages, landscape)"
+msgstr "קובץ PDF: פריסה (2 עמודים, לרוחב)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x1)"
-msgstr "קובץ PDF: פריסה (לרוחב, 2x1)"
+msgid "PDF: Layout (2 pages, portrait)"
+msgstr "קובץ PDF: פריסה (2 עמודים, לאורך)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x2)"
-msgstr "קובץ PDF: פריסה (לרוחב, 2x2)"
+msgid "PDF: Layout (4 pages, landscape)"
+msgstr "קובץ PDF: פריסה (4 עמודים, לרוחב)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x4)"
-msgstr "קובץ PDF: פריסה (לרוחב, 2x4)"
+msgid "PDF: Layout (4 pages, portrait)"
+msgstr "קובץ PDF: פריסה (4 עמודים, לאורך)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 4x2)"
-msgstr "קובץ PDF: פריסה (לרוחב, 4x2)"
+msgid "PDF: Layout (8 pages, landscape)"
+msgstr "קובץ PDF: פריסה (8 עמודים, לרוחב)"
 
 #: Menu
-msgid "PDF: Layout (portrait, 1x2)"
-msgstr "קובץ PDF: פריסה (לאורך, 1x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x1)"
-msgstr "קובץ PDF: פריסה (לאורך, 2x1)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x2)"
-msgstr "קובץ PDF: פריסה (לאורך, 2x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x4)"
-msgstr "קובץ PDF: פריסה (לאורך, 2x4)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 4x2)"
-msgstr "קובץ PDF: פריסה (לאורך, 4x2)"
+msgid "PDF: Layout (8 pages, portrait)"
+msgstr "קובץ PDF: פריסה (8 עמודים, לאורך)"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"

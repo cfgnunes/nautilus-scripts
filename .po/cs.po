@@ -1426,44 +1426,28 @@ msgid "PDF: Find signed PDFs"
 msgstr "PDF: najít podepsané PDF"
 
 #: Menu
-msgid "PDF: Layout (landscape, 1x2)"
-msgstr "PDF: rozložení (na šířku, 1x2)"
+msgid "PDF: Layout (2 pages, landscape)"
+msgstr "PDF: rozložení (2 stránky, na šířku)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x1)"
-msgstr "PDF: rozložení (na šířku, 2x1)"
+msgid "PDF: Layout (2 pages, portrait)"
+msgstr "PDF: rozložení (2 stránky, na výšku)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x2)"
-msgstr "PDF: rozložení (na šířku, 2x2)"
+msgid "PDF: Layout (4 pages, landscape)"
+msgstr "PDF: rozložení (4 stránky, na šířku)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 2x4)"
-msgstr "PDF: rozložení (na šířku, 2x4)"
+msgid "PDF: Layout (4 pages, portrait)"
+msgstr "PDF: rozložení (4 stránky, na výšku)"
 
 #: Menu
-msgid "PDF: Layout (landscape, 4x2)"
-msgstr "PDF: rozložení (na šířku, 4x2)"
+msgid "PDF: Layout (8 pages, landscape)"
+msgstr "PDF: rozložení (8 stránek, na šířku)"
 
 #: Menu
-msgid "PDF: Layout (portrait, 1x2)"
-msgstr "PDF: rozložení (na výšku, 1x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x1)"
-msgstr "PDF: rozložení (na výšku, 2x1)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x2)"
-msgstr "PDF: rozložení (na výšku, 2x2)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 2x4)"
-msgstr "PDF: rozložení (na výšku, 2x4)"
-
-#: Menu
-msgid "PDF: Layout (portrait, 4x2)"
-msgstr "PDF: rozložení (na výšku, 4x2)"
+msgid "PDF: Layout (8 pages, portrait)"
+msgstr "PDF: rozložení (8 stránek, na výšku)"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
