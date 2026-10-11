@@ -1549,9 +1549,9 @@ _install_pkgx() {
     # Download and extract pkgx.
     if _command_exists "curl"; then
         {
-            curl -fsSL "$pkgx_url" 2>/dev/null |
+            curl -fsL "$pkgx_url" 2>/dev/null |
                 grep --only-matching -m1 "$tarball_regex" |
-                xargs curl -fsSL | tar xz -C "$pkgx_dir"
+                xargs curl -fsL | tar xz -C "$pkgx_dir"
         } 2>/dev/null
     elif _command_exists "wget"; then
         {
@@ -1617,7 +1617,7 @@ _bootstrap_repository() {
     local tarball_url="https://github.com/${repo_owner}/${repo_name}/archive/refs/heads/${branch}.tar.gz"
     {
         if [[ "$downloader" == "curl" ]]; then
-            curl -fsSL "$tarball_url" | tar -xz -C "$temp_dir"
+            curl -fsL "$tarball_url" | tar -xz -C "$temp_dir"
         else
             wget -qO- "$tarball_url" | tar -xz -C "$temp_dir"
         fi
