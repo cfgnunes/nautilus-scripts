@@ -58,6 +58,7 @@ PKG_MANAGER_PRIORITY=(
     "zypper"
     "guix"
     "xbps-install"
+    "precompiled"
 )
 
 readonly \
@@ -534,7 +535,8 @@ _check_dependencies() {
         local post_install_sel=""
 
         for pkg_manager in "${PKG_MANAGER_PRIORITY[@]}"; do
-            if ! _command_exists "$pkg_manager"; then
+            if ! _command_exists "$pkg_manager" &&
+                [[ "$pkg_manager" != "precompiled" ]]; then
                 continue
             fi
 
@@ -856,6 +858,23 @@ _deps_install_packages() {
             cmd_inst+="zypper refresh;"
             cmd_inst+="zypper --non-interactive install $packages"
             ;;
+        "precompiled")
+            local install_dir="$HOME/.local/opt"
+            local architecture=""
+            architecture=$(uname -m 2>/dev/null)
+
+            # Replace spaces with '$FIELD_SEPARATOR' for iteration.
+            packages=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
+
+            local pkg=""
+            for pkg in $packages; do
+                local download_url=""
+                download_url=$(_deps_get_dependency_value \
+                    "$pkg" "$architecture" "PRECOMPILED_URL")
+                _tarball_install_url \
+                    "$install_dir" "$pkg" "$download_url"
+            done
+            ;;
         esac
 
         # Execute installation.
@@ -1029,8 +1048,107 @@ _deps_is_package_installed() {
             return 0
         fi
         ;;
+    "precompiled")
+        local app_packages_dir="$HOME/.local/opt"
+        if [[ -d "$app_packages_dir/$package" ]]; then
+            _add_path_env "$app_packages_dir/$package"
+            return 0
+        fi
+        ;;
     esac
     return 1
+}
+
+# Function: _download_file
+#
+# Description:
+#   This function downloads a file from a URL.
+#
+# Parameters:
+#   $1 (url): The URL of the file to download.
+#   $2 (output_file): The path where the downloaded file is written.
+_download_file() {
+    local url=$1
+    local output_file=$2
+
+    if [[ -z "$url" ]] || [[ -z "$output_file" ]]; then
+        return 1
+    fi
+
+    if _command_exists "curl"; then
+        curl --fail --silent --location --output "$output_file" \
+            "$url" &>/dev/null || return 1
+    elif _command_exists "wget"; then
+        wget --quiet --output-document="$output_file" \
+            "$url" &>/dev/null || return 1
+    elif _command_exists "axel"; then
+        axel --quiet --output="$output_file" \
+            "$url" &>/dev/null || return 1
+    else
+        return 1
+    fi
+}
+
+# Function: _tarball_install_url
+#
+# Description:
+#   This function downloads a tarball into an installation directory.
+#
+# Parameters:
+#   $1 (base_dir): The directory where the tarball is downloaded.
+#   $2 (output_dir): The directory where the archive contents are extracted.
+#      This path is relative to '$base_dir'.
+#   $3 (tarball_url): The URL of the tarball to download.
+_tarball_install_url() {
+    local base_dir=$1
+    local output_dir=$2
+    local tarball_url=$3
+    local tarball_file=""
+
+    if [[ -z "$base_dir" ]] || [[ -z "$output_dir" ]] ||
+        [[ -z "$tarball_url" ]]; then
+        return 1
+    fi
+
+    tarball_file=$(basename "$tarball_url")
+
+    mkdir --parents -- "$base_dir"
+    _directory_push "$base_dir" || return 1
+    _download_file "$tarball_url" "$tarball_file"
+    _tarball_extract "$tarball_file" "$output_dir" "true"
+    _directory_pop || return 1
+}
+
+# Function: _tarball_extract
+#
+# Description:
+#   This function extracts a tarball into a directory.
+#
+# Parameters:
+#   $1 (file): The path to the tarball to extract.
+#   $2 (output_dir): The directory where the archive contents are extracted.
+#   $3 (par_remove): Optional, default: "false". When "true", removes the
+#      tarball after extraction.
+_tarball_extract() {
+    local file=$1
+    local output_dir=$2
+    local par_remove=${3:-"false"}
+
+    mkdir --parents -- "$output_dir"
+
+    case $file in
+    *.tar.gz | *.tgz) tar --extract --gzip --file="$file" \
+        --strip-components=1 --directory="$output_dir" ;;
+    *.tar.xz | *.txz) tar --extract --xz --file="$file" \
+        --strip-components=1 --directory="$output_dir" ;;
+    *.tar.zst | *.tzst) tar --extract --zstd --file="$file" \
+        --strip-components=1 --directory="$output_dir" ;;
+    esac
+
+    # Remove the output directory when the extraction produced nothing.
+    rmdir -- "$output_dir" &>/dev/null
+
+    [[ "$par_remove" == "true" ]] && rm -f -- "$file"
 }
 
 # -----------------------------------------------------------------------------
@@ -2262,7 +2380,7 @@ _display_result_box() {
     if [[ -n "$output_dir" ]]; then
         # Try to remove the output directory (if it is empty).
         if [[ "$output_dir" == *"/$PREFIX_OUTPUT_DIR"* ]]; then
-            rmdir "$output_dir" &>/dev/null
+            rmdir -- "$output_dir" &>/dev/null
         fi
 
         # Check if the output directory still exists.
