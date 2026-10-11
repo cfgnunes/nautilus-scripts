@@ -804,17 +804,12 @@ _deps_install_packages() {
             cmd_inst+="apt-get -y install $packages"
             ;;
         "pkgx")
-            # Replace spaces with '$FIELD_SEPARATOR' for iteration.
-            packages=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
-
+            local pkgs=""
             local pkg=""
-            for pkg in $packages; do
-                cmd_inst+="pkgx --silent +$pkg;"
+            pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
+            for pkg in $pkgs; do
+                pkgx --silent +"$pkg"
             done
-            cmd_inst=$(_str_collapse_char "$cmd_inst" ";")
-
-            # pkgx runs as a non-root user.
-            cmd_admin=""
             ;;
         "dnf")
             cmd_inst+="dnf check-update;"
@@ -827,20 +822,16 @@ _deps_install_packages() {
             cmd_inst="guix package -i $packages"
             ;;
         "nix-env")
-            local nix_packages=""
             local nix_channel="nixpkgs"
             if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
                 nix_channel="nixos"
             fi
-
-            # Prefix packages with their channel namespace.
-            nix_packages="$nix_channel.$packages"
-            nix_packages=$(sed "s| $||g" <<<"$nix_packages")
-            nix_packages=$(sed "s| | $nix_channel.|g" <<<"$nix_packages")
-
-            cmd_inst+="nix-env -iA $nix_packages"
-            # Nix does not require root for installing user packages.
-            cmd_admin=""
+            local pkgs=""
+            local pkg=""
+            pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
+            for pkg in $pkgs; do
+                nix-env -iA "$nix_channel.$pkg"
+            done
             ;;
         "pacman")
             cmd_inst+="pacman -Syy;"
@@ -863,11 +854,10 @@ _deps_install_packages() {
             local architecture=""
             architecture=$(uname -m 2>/dev/null)
 
-            # Replace spaces with '$FIELD_SEPARATOR' for iteration.
-            packages=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
-
+            local pkgs=""
             local pkg=""
-            for pkg in $packages; do
+            pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
+            for pkg in $pkgs; do
                 local download_url=""
                 download_url=$(_deps_get_dependency_value \
                     "$pkg" "$architecture" "PRECOMPILED_URL")
