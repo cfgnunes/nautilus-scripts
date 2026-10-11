@@ -46,14 +46,8 @@ While numerous *Nautilus Scripts* are available for file managers on the web, ma
 - **Keyboard accelerators**: Provides keyboard shortcuts for some scripts.
 - **Easy access to recent scripts**: Includes a menu, _Accessed recently_, to quickly access recently used scripts.
 - **Category-based installation:** The installer allows you to choose which script categories you want to install, so there's no need to install everything.
-- **Log file**: Produces an `Errors.log` file when a task finishes with an error.
 - **File manager compatibility**: Designed for major file managers like GNOME Files (Nautilus), Nemo, Caja, Dolphin, and Thunar.
 - **Distro compatibility**: Works on major GNU/Linux distributions, such as Debian, Ubuntu, Fedora, and Arch Linux.
-- **Easy adaptation**: Scripts can be easily copied and adapted for other purposes.
-- **Bash implementation**: All scripts are implemented in Bash. So, the scripts work well in the shell (without a graphical interface) and file managers.
-- **Shell script validation**: All scripts have been checked using [ShellCheck](https://github.com/koalaman/shellcheck).
-
-**Design philosophy:** Fewer clicks, dependencies, and verbose notifications, with a simple and intuitive directory structure.
 
 ## Keyboard accelerators
 
