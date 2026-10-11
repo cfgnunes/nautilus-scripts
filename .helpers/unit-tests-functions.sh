@@ -335,7 +335,7 @@ __run_get_script_name() {
     local expected_output=""
     local output=""
 
-    expected_output=".unit-tests-functions.sh"
+    expected_output="unit-tests-functions.sh"
     output=$(_get_script_name)
     __test_equal "$expected_output" "$expected_output" "$output"
 }
