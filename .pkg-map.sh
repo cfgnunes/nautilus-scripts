@@ -942,7 +942,7 @@ declare -A PRECOMPILED_URL=(
     ["pdfcpu"]="
         x86_64:  https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.1/pdfcpu_0.16.1_Linux_x86_64.tar.xz
         aarch64: https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.1/pdfcpu_0.16.1_Linux_arm64.tar.xz
-        armv71:   https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.1/pdfcpu_0.16.1_Linux_armv7.tar.xz
+        armv71:  https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.1/pdfcpu_0.16.1_Linux_armv7.tar.xz
         i386:    https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.1/pdfcpu_0.16.1_Linux_i386.tar.xz
     "
 )
