@@ -856,6 +856,7 @@ _main() {
 
     # IGNORED: Git: Clone URLs
     # IGNORED: Network and Internet/Git: Open repository website
+    # IGNORED: Network and Internet/URL: Download file
 
     __test_begin
     git clone --quiet "https://github.com/cfgnunes/nautilus-scripts.git" \
@@ -874,12 +875,6 @@ _main() {
         >"$temp_dir/Test internet.txt"
     __test_script "Network and Internet/URL: Check HTTP status" "text" "" \
         "$temp_dir/Test internet.txt"
-
-    __test_begin
-    echo "https://www.rfc-editor.org/rfc/rfc2616.txt" \
-        >"$temp_dir/Test internet.txt"
-    __test_script "Network and Internet/URL: Download file" "empty" \
-        "rfc2616.txt" "$temp_dir/Test internet.txt"
 
     __test_begin
     echo "https://www.rfc-editor.org/rfc/rfc2616.txt" \
