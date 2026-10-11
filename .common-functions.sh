@@ -1077,13 +1077,13 @@ _download_file() {
 
     if _command_exists "curl"; then
         curl --fail --silent --location --output "$output_file" \
-            "$url" &>/dev/null || return 1
+            -- "$url" &>/dev/null || return 1
     elif _command_exists "wget"; then
         wget --quiet --output-document="$output_file" \
-            "$url" &>/dev/null || return 1
+            -- "$url" &>/dev/null || return 1
     elif _command_exists "axel"; then
         axel --quiet --output="$output_file" \
-            "$url" &>/dev/null || return 1
+            -- "$url" &>/dev/null || return 1
     else
         return 1
     fi

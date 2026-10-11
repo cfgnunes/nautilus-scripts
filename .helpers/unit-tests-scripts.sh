@@ -266,20 +266,6 @@ __generate_fixture_archive_dir() {
     echo "Content of 'Test archive 2'." >"$temp_dir/Test archive/Test archive 2"
 }
 
-__download_file() {
-    local url=$1
-    local output_file=$2
-
-    if _command_exists "wget"; then
-        wget -q -O "$output_file" -- "$url"
-    elif _command_exists "curl"; then
-        curl -fsSL -o "$output_file" -- "$url"
-    else
-        echo "Error: Neither wget nor curl is installed."
-        return 1
-    fi
-}
-
 # -----------------------------------------------------------------------------
 # SECTION: Tests
 # -----------------------------------------------------------------------------
@@ -315,8 +301,8 @@ _main() {
     [[ ! -f "$fixture_png" ]] && __generate_fixture_image "$fixture_png"
     [[ ! -f "$fixture_tgz" ]] && __generate_fixture_targz "$fixture_tgz"
     [[ ! -f "$fixture_txt" ]] && __generate_fixture_text "$fixture_txt"
-    [[ ! -f "$fixture_odt" ]] && __download_file "https://freetestdata.com/wp-content/uploads/2021/09/Free_Test_Data_100KB_ODT.odt" "$fixture_odt"
-    [[ ! -f "$fixture_pdf" ]] && __download_file "https://freetestdata.com/wp-content/uploads/2021/09/Free_Test_Data_100KB_PDF.pdf" "$fixture_pdf"
+    [[ ! -f "$fixture_odt" ]] && _download_file "https://freetestdata.com/wp-content/uploads/2021/09/Free_Test_Data_100KB_ODT.odt" "$fixture_odt"
+    [[ ! -f "$fixture_pdf" ]] && _download_file "https://freetestdata.com/wp-content/uploads/2021/09/Free_Test_Data_100KB_PDF.pdf" "$fixture_pdf"
 
     # -------------------------------------------------------------------------
     # SECTION: Archive

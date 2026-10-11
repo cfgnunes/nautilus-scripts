@@ -16,7 +16,6 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "ffmpeg"
-    _command_exists "wget" || _check_dependencies "curl"
 
     _display_wait_box ""
     input_files=$(_get_files "par_type=file; par_select_mime='audio/|video/'")
@@ -39,13 +38,7 @@ _download_model() {
 
     mkdir -p "$INSTALL_PATH"
 
-    if _command_exists "curl"; then
-        curl -fsSL --output "$TEMP_DIR_TASK/model" -- "$MODEL_URL" &>/dev/null &&
-            mv "$TEMP_DIR_TASK/model" "$MODEL_FILE"
-    else
-        wget -q -O "$TEMP_DIR_TASK/model" -- "$MODEL_URL" &>/dev/null &&
-            mv "$TEMP_DIR_TASK/model" "$MODEL_FILE"
-    fi
+    _download_file "$MODEL_URL" "$MODEL_FILE"
 
     if [[ ! -f "$MODEL_FILE" ]]; then
         msg="$(_i18n 'Could not download the file!')"
