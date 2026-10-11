@@ -4042,7 +4042,7 @@ _cmd_magick() {
 #   An executable bit is not enough: the dynamic linker can reject pkgx when
 #   the system glibc is older than the one it was built against.
 _pkgx_initialize() {
-    local pkgx_dir="$HOME/.pkgx"
+    local pkgx_dir="$HOME/.local/opt/pkgx"
     local pkgx_cmd="$pkgx_dir/pkgx"
 
     if [[ -x "$pkgx_cmd" ]] && ! _command_exists "pkgx" &&

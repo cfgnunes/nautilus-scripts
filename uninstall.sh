@@ -125,6 +125,7 @@ _remove_empty_parent_dirs "$dir"
 # -----------------------------------------------------------------------------
 
 _uninstall_directory "$HOME/.cache/pkgx"
+_uninstall_directory "$HOME/.local/opt/pkgx"
 _uninstall_directory "$HOME/.pkgx"
 
 # -----------------------------------------------------------------------------
