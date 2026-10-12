@@ -1516,6 +1516,7 @@ _close_filemanager() {
 _install_pkgx() {
     local pkgx_dir="$HOME/.local/opt/pkgx"
     local pkgx_cmd="$pkgx_dir/pkgx"
+    local pkgx_cmd_tmp="$TEMP_DIR/pkgx"
     local pkgx_url="https://api.github.com/repos/pkgxdev/pkgx/releases/latest"
 
     _echo ""
@@ -1540,9 +1541,6 @@ _install_pkgx() {
         ;;
     esac
 
-    _echo_info "> $(_i18n 'Installing pkgx to:') ~/.local/opt/pkgx"
-    mkdir --parents -- "$pkgx_dir"
-
     _echo_info "> $(_i18n 'Downloading the package...')"
 
     # Download and extract pkgx.
@@ -1550,33 +1548,34 @@ _install_pkgx() {
         {
             curl -fsL "$pkgx_url" 2>/dev/null |
                 grep --only-matching -m1 "$tarball_regex" |
-                xargs curl -fsL | tar xz -C "$pkgx_dir"
+                xargs curl -fsL | tar xz -C "$TEMP_DIR"
         } 2>/dev/null
-    elif _command_exists "wget"; then
+    else
         {
             wget -qO- "$pkgx_url" 2>/dev/null |
                 grep --only-matching -m1 "$tarball_regex" |
-                xargs wget -qO- | tar xz -C "$pkgx_dir"
+                xargs wget -qO- | tar xz -C "$TEMP_DIR"
         } 2>/dev/null
-    else
-        _echo_error "> Neither 'curl' nor 'wget' is installed! Please install one of them to continue."
-        return 1
     fi
 
     # Verify installation.
-    if [[ ! -e "$pkgx_cmd" ]]; then
+    if [[ ! -f "$pkgx_cmd_tmp" ]]; then
         _echo_error "> $(_i18n 'pkgx installation failed!')"
         return 1
-    else
-        chmod +x -- "$pkgx_cmd"
     fi
 
+    chmod +x -- "$pkgx_cmd_tmp"
+
     # Check if pkgx can run.
-    if ! "$pkgx_cmd" -v &>/dev/null; then
+    if ! "$pkgx_cmd_tmp" -v &>/dev/null; then
         _echo_error "> $(_i18n 'pkgx cannot run on your system!')"
-        rm -rf -- "$pkgx_dir"
         return 1
     fi
+
+    _echo_info "> $(_i18n 'Installing pkgx to:') ~/.local/opt/pkgx"
+
+    mkdir --parents -- "$pkgx_dir"
+    mv -- "$pkgx_cmd_tmp" "$pkgx_cmd"
 
     _echo_info "> $(_i18n 'Done!')"
 }
