@@ -1134,15 +1134,16 @@ _tarball_extract() {
     fi
 
     mkdir --parents -- "$output_dir"
-
-    case $file in
-    *.tar.gz | *.tgz) tar --extract --gzip --file="$file" \
-        --strip-components="$strip_components" --directory="$output_dir" ;;
-    *.tar.xz | *.txz) tar --extract --xz --file="$file" \
-        --strip-components="$strip_components" --directory="$output_dir" ;;
-    *.tar.zst | *.tzst) tar --extract --zstd --file="$file" \
-        --strip-components="$strip_components" --directory="$output_dir" ;;
-    esac
+    {
+        case $file in
+        *.tar.gz | *.tgz) tar --extract --gzip --file="$file" \
+            --strip-components="$strip_components" --directory="$output_dir" ;;
+        *.tar.xz | *.txz) tar --extract --xz --file="$file" \
+            --strip-components="$strip_components" --directory="$output_dir" ;;
+        *.tar.zst | *.tzst) tar --extract --zstd --file="$file" \
+            --strip-components="$strip_components" --directory="$output_dir" ;;
+        esac
+    } &>/dev/null
 
     # Remove the output directory when the extraction produced nothing.
     rmdir -- "$output_dir" &>/dev/null

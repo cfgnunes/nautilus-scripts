@@ -16,10 +16,10 @@ _remove_empty_parent_dirs() {
     local parent_dir=""
 
     # Remove the directory and parent directories recursively (if empty).
-    rmdir -- "$path" 2>/dev/null
+    rmdir -- "$path" &>/dev/null
     parent_dir=$(dirname -- "$path")
     while [[ "$parent_dir" != "$HOME" ]] && [[ "$parent_dir" != "/" ]]; do
-        rmdir -- "$parent_dir" 2>/dev/null || break
+        rmdir -- "$parent_dir" &>/dev/null || break
         parent_dir=$(dirname -- "$parent_dir")
     done
 }
