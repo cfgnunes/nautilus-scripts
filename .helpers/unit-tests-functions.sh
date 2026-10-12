@@ -218,11 +218,11 @@ __invoke_guarded() {
 
     (
         # Overridden only for this subshell; ShellCheck cannot see the calls.
-        # shellcheck disable=SC2317
+        # shellcheck disable=SC2329
         _display_error_box() {
             printf "%s" "$1" >"$message_file"
         }
-        # shellcheck disable=SC2317
+        # shellcheck disable=SC2329
         _exit_script() {
             exit 2
         }
