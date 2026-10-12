@@ -51,7 +51,7 @@ declare -A PKG_MAP=(
         zypper: axel
         guix:   axel
         xbps:   axel
-        pkgx:   axel
+        pkgx:   github.com/axel-download-accelerator/axel
     "
 
     ["baobab"]="
@@ -303,7 +303,7 @@ declare -A PKG_MAP=(
         zypper: gzip
         guix:   gzip
         xbps:   gzip
-        pkgx:   gzip
+        pkgx:   gnu.org/gzip
     "
 
     ["gzip"]="
@@ -315,7 +315,7 @@ declare -A PKG_MAP=(
         zypper: gzip
         guix:   gzip
         xbps:   gzip
-        pkgx:   gzip
+        pkgx:   gnu.org/gzip
     "
 
     ["id3v2"]="
@@ -556,7 +556,7 @@ declare -A PKG_MAP=(
         zypper:
         guix:
         xbps:   pdfcpu
-        pkgx:   pdfcpu
+        pkgx:   github.com/pdfcpu/pdfcpu
         precompiled: pdfcpu
     "
 
