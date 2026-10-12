@@ -1609,25 +1609,21 @@ _bootstrap_repository() {
 
     _echo_info "Downloading the installer package..."
 
-    # Create a temporary directory for the installation.
-    local temp_dir
-    temp_dir=$(mktemp --directory)
-
     # Download and extract the HEAD of the branch.
     local tarball_url="https://github.com/${repo_owner}/${repo_name}/archive/refs/heads/${branch}.tar.gz"
     {
         if [[ "$downloader" == "curl" ]]; then
-            curl -fsL "$tarball_url" | tar -xz -C "$temp_dir"
+            curl -fsL "$tarball_url" | tar -xz -C "$TEMP_DIR"
         else
-            wget -qO- "$tarball_url" | tar -xz -C "$temp_dir"
+            wget -qO- "$tarball_url" | tar -xz -C "$TEMP_DIR"
         fi
     } 2>/dev/null
 
     # Identify the extracted directory.
-    local extracted_dir
+    local extracted_dir=""
     local install_exit=0
     extracted_dir=$(
-        find "$temp_dir" -maxdepth 1 -type d -name "${repo_name}*" | head -n 1
+        find "$TEMP_DIR" -maxdepth 1 -type d -name "${repo_name}*" | head -n 1
     )
 
     # Validate extracted content.
@@ -1643,7 +1639,6 @@ _bootstrap_repository() {
     bash install.sh "$@"
     install_exit=$?
 
-    rm -rf -- "$temp_dir"
     return "$install_exit"
 }
 
