@@ -309,7 +309,6 @@ _main() {
     # Step 6: Move the temporary log file to the installation directory and
     # remove the temporary directory.
     mv -- "$INSTALL_LOG_TMP" "$INSTALL_DIR/$INSTALL_LOG_NAME" 2>/dev/null
-    rm -rf -- "$TEMP_DIR" 2>/dev/null
 }
 
 # -----------------------------------------------------------------------------
