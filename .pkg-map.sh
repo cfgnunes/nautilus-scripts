@@ -51,7 +51,7 @@ declare -A PKG_MAP=(
         zypper: axel
         guix:   axel
         xbps:   axel
-        pkgx:
+        pkgx:   axel
     "
 
     ["baobab"]="
@@ -556,7 +556,7 @@ declare -A PKG_MAP=(
         zypper:
         guix:
         xbps:   pdfcpu
-        pkgx:
+        pkgx:   pdfcpu
         precompiled: pdfcpu
     "
 
@@ -945,9 +945,9 @@ declare -A POST_INSTALL=(
 #   architecture-specific URLs, selected from the machine architecture.
 declare -A PRECOMPILED_URL=(
     ["pdfcpu"]="
-        x86_64:  https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.1/pdfcpu_0.16.1_Linux_x86_64.tar.xz
-        aarch64: https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.1/pdfcpu_0.16.1_Linux_arm64.tar.xz
-        armv71:  https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.1/pdfcpu_0.16.1_Linux_armv7.tar.xz
-        i386:    https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.1/pdfcpu_0.16.1_Linux_i386.tar.xz
+        x86_64:  https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.2/pdfcpu_0.16.2_Linux_x86_64.tar.xz
+        aarch64: https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.2/pdfcpu_0.16.2_Linux_arm64.tar.xz
+        armv71:  https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.2/pdfcpu_0.16.2_Linux_armv7.tar.xz
+        i386:    https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.2/pdfcpu_0.16.2_Linux_i386.tar.xz
     "
 )
