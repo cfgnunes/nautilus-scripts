@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "mp3gain"
+    _check_dependencies "mp3rgain"
     _display_wait_box ""
     input_files=$(_get_files "par_type=file; par_recursive=true; par_select_extension=mp3; par_skip_extension=bak")
 
@@ -32,7 +32,7 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "$temp_file" || return 1
 
     # Run the main process.
-    std_output=$(mp3gain -q -r -s s -c "$temp_file" 2>&1)
+    std_output=$(mp3rgain -q -r -s s -c "$temp_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$temp_file" || return 1
 
     # Move the temporary file to the output.

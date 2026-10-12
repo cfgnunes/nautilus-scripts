@@ -475,16 +475,17 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
-    ["mp3gain"]="
-        termux: mp3gain
-        apt:    mp3gain
-        dnf:    mp3gain
+    ["mp3rgain"]="
+        termux:
+        apt:
+        dnf:
         pacman:
-        nix:    mp3gain
-        zypper: mp3gain
+        nix:
+        zypper:
         guix:
         xbps:
-        pkgx:
+        pkgx:   github.com/M-Igashi/mp3rgain
+        precompiled: mp3rgain
     "
 
     ["nmap"]="
@@ -949,5 +950,10 @@ declare -A PRECOMPILED_URL=(
         aarch64: https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.2/pdfcpu_0.16.2_Linux_arm64.tar.xz
         armv71:  https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.2/pdfcpu_0.16.2_Linux_armv7.tar.xz
         i386:    https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.2/pdfcpu_0.16.2_Linux_i386.tar.xz
+    "
+
+    ["mp3rgain"]="
+        x86_64:  https://github.com/M-Igashi/mp3rgain/releases/download/v3.11.0/mp3rgain-v3.11.0-linux-x86_64.tar.gz
+        aarch64: https://github.com/M-Igashi/mp3rgain/releases/download/v3.11.0/mp3rgain-v3.11.0-linux-arm64.tar.gz
     "
 )
