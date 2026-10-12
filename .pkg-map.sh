@@ -642,7 +642,7 @@ declare -A PKG_MAP=(
         zypper: rdfind
         guix:   rdfind
         xbps:   rdfind
-        pkgx:
+        pkgx:   rdfind.pauldreik.se
     "
 
     ["rhash"]="
