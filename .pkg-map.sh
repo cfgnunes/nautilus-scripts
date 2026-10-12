@@ -965,7 +965,7 @@ declare -A PRECOMPILED_URL=(
     "
 
     ["mp3rgain"]="
-        x86_64:  https://github.com/M-Igashi/mp3rgain/releases/download/v3.11.0/mp3rgain-v3.11.0-linux-x86_64.tar.gz
-        aarch64: https://github.com/M-Igashi/mp3rgain/releases/download/v3.11.0/mp3rgain-v3.11.0-linux-arm64.tar.gz
+        x86_64:  https://github.com/M-Igashi/mp3rgain/releases/latest/download/mp3rgain-linux-x86_64.tar.gz
+        aarch64: https://github.com/M-Igashi/mp3rgain/releases/latest/download/mp3rgain-linux-arm64.tar.gz
     "
 )
