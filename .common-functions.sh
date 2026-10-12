@@ -808,7 +808,7 @@ _deps_install_packages() {
             local pkg=""
             pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
             for pkg in $pkgs; do
-                pkgx --silent +"$pkg"
+                pkgx --silent +"$pkg" &>/dev/null
             done
             ;;
         "dnf")
@@ -830,7 +830,7 @@ _deps_install_packages() {
             local pkg=""
             pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
             for pkg in $pkgs; do
-                nix-env -iA "$nix_channel.$pkg"
+                nix-env -iA "$nix_channel.$pkg" &>/dev/null
             done
             ;;
         "pacman")
