@@ -4,9 +4,9 @@
 # This file centralizes dependency definitions for the scripts.
 #
 # Sources:
-# https://pkgs.org
-# https://search.nixos.org/packages
-# https://hpc.guix.info/browse
+#   https://pkgs.org
+#   https://search.nixos.org/packages
+#   https://hpc.guix.info/browse
 
 # Description:
 #   This array defines the mapping between a dependency key and its
