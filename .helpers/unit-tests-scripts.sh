@@ -7,8 +7,6 @@ source "$ROOT_DIR/.common-functions.sh"
 
 # Test all scripts.
 
-# FAIL: (2020) Ubuntu 20.04 - [SCRIPT] Audio and Video/Audio: Effects/Audio: Filter noise
-# FAIL: (2020) Ubuntu 20.04 - [SCRIPT] Image/Image: Convert/Image: Convert to JXL
 # FAIL: (2021) Debian 11    - [SCRIPT] Image/Image: Convert/Image: Convert to JXL
 # FAIL: (2022) Ubuntu 22.04 - [SCRIPT] Image/Image: Convert/Image: Convert to JXL
 # PASS: (2023) Debian 12    - All tests passed.
