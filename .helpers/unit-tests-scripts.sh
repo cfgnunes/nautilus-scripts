@@ -98,7 +98,7 @@ __check_permission() {
     local actual=""
 
     ((_TOTAL_TESTS++))
-    actual=$(stat -c %a -- "$file" 2>/dev/null || true)
+    actual=$(stat -c %a -- "$file" 2>/dev/null)
     expected=${expected#0}
 
     if [[ "$actual" == "$expected" ]]; then
@@ -663,12 +663,12 @@ _main() {
     __check_path_missing "$temp_dir/Test image.jpg"
 
     __test_begin
-    font_file=$(fc-match -f '%{file}' sans 2>/dev/null || true)
+    font_file=$(fc-match -f '%{file}' sans 2>/dev/null)
     if [[ ! -f "$font_file" || "${font_file##*/}" != *[Ss][Aa][Nn][Ss]* ]]; then
         font_file=$(find /usr/share/fonts /usr/local/share/fonts \
             "${XDG_DATA_HOME:-$HOME/.local/share}/fonts" \
             -type f \( -iname '*sans*.ttf' -o -iname '*sans*.otf' \) \
-            -print -quit 2>/dev/null || true)
+            -print -quit 2>/dev/null)
     fi
     ffmpeg -hide_banner -y \
         -f lavfi -i color=c=white:s=900x240 \

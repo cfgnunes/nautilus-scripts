@@ -195,7 +195,7 @@ __save_script_env() {
     : >"$dest"
     while IFS= read -r var; do
         declare -p "$var" >>"$dest"
-    done < <(compgen -v | grep "_SCRIPT_" || true)
+    done < <(compgen -v | grep "_SCRIPT_")
 }
 
 __restore_script_env() {
@@ -204,7 +204,7 @@ __restore_script_env() {
 
     while IFS= read -r var; do
         unset "$var"
-    done < <(compgen -v | grep "_SCRIPT_" || true)
+    done < <(compgen -v | grep "_SCRIPT_")
 
     if [[ -s "$dest" ]]; then
         # shellcheck disable=SC1090

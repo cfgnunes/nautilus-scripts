@@ -70,8 +70,8 @@ _main_task() {
 
         # Binary OpenPGP starts with a packet tag, not "-". Reading a binary
         # signature as text warns about embedded null bytes.
-        if [[ $(head -c 1 -- "$file" 2>/dev/null || true) == "-" ]]; then
-            header=$(head -n 1 -- "$file" 2>/dev/null || true)
+        if [[ $(head -c 1 -- "$file" 2>/dev/null) == "-" ]]; then
+            header=$(head -n 1 -- "$file" 2>/dev/null)
             header=${header%$'\r'}
             if [[ "$header" == "-----BEGIN PGP SIGNATURE"* ]]; then
                 return 0
@@ -110,7 +110,7 @@ _main_task() {
             --output /dev/null -- "$input_file" 2>&1)
     else
         if _is_detached_signature "$input_file"; then
-            data_file=$(_detached_data_file "$input_file" || true)
+            data_file=$(_detached_data_file "$input_file")
         fi
         if [[ -n "$data_file" ]]; then
             std_output=$(LC_ALL=C gpg --batch --yes --status-fd=1 --verify -- \

@@ -29,7 +29,7 @@ _main_task() {
 
     # Check if the selected directory is a Git repository.
     local top_level=""
-    top_level=$(git -C "$input_file" rev-parse --show-toplevel 2>&1)
+    top_level=$(LC_ALL=C git -C "$input_file" rev-parse --show-toplevel 2>&1)
     _check_output "$?" "$top_level" "$input_file" "" || return 1
 
     # Move into the repository directory.
@@ -39,26 +39,26 @@ _main_task() {
     # Step 1: Ensure repository integrity.
     # Abort any unfinished merge or rebase to prevent conflicts.
     # -------------------------------------------------------------------------
-    git merge --abort &>/dev/null || true
-    git rebase --abort &>/dev/null || true
+    git merge --abort &>/dev/null
+    git rebase --abort &>/dev/null
 
     # -------------------------------------------------------------------------
     # Step 2: Clean working directory.
     # Remove untracked and ignored files/directories,
     # then discard local changes.
     # -------------------------------------------------------------------------
-    std_output=$(git clean -xdf 2>&1)
+    std_output=$(LC_ALL=C git clean -xdf 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Discard all local changes (reset to last committed state).
-    std_output=$(git reset --hard 2>&1)
+    std_output=$(LC_ALL=C git reset --hard 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # -------------------------------------------------------------------------
     # Step 3: Fetch from all remotes, including tags.
     # Prune stale remote-tracking branches and tags.
     # -------------------------------------------------------------------------
-    std_output=$(git fetch --all --tags --prune --prune-tags --force 2>&1)
+    std_output=$(LC_ALL=C git fetch --all --tags --prune --prune-tags --force 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # -------------------------------------------------------------------------
@@ -71,12 +71,12 @@ _main_task() {
     local default_branch=""
     local orphan_branch=""
 
-    default_branch=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's|^origin/||')
+    default_branch=$(LC_ALL=C git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's|^origin/||')
     if [[ -z "$default_branch" ]]; then
         default_branch=$(LC_ALL=C git remote show origin | grep "HEAD branch" | sed "s|.*: ||")
     fi
 
-    branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
+    branch=$(LC_ALL=C git symbolic-ref --short HEAD 2>/dev/null || echo "")
     if [[ -z "$branch" ]]; then
         branch="$default_branch"
     fi
@@ -88,12 +88,12 @@ _main_task() {
     fi
 
     # Switch to the detected branch.
-    std_output=$(git switch "$branch" 2>&1 || git checkout "$branch" 2>&1)
+    std_output=$(LC_ALL=C git switch "$branch" 2>&1 || git checkout "$branch" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Delete the orphan local branch after leaving it (cannot delete HEAD).
     if [[ -n "$orphan_branch" && "$orphan_branch" != "$branch" && ! "$orphan_branch" =~ ^($skip_branches)$ ]]; then
-        std_output=$(git branch --delete --force "$orphan_branch" 2>&1)
+        std_output=$(LC_ALL=C git branch --delete --force "$orphan_branch" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "" || return 1
     fi
 
@@ -101,7 +101,7 @@ _main_task() {
     # Step 5: Force reset to match the remote branch exactly.
     # Ensures the local repository is identical to 'origin/<branch>'.
     # -------------------------------------------------------------------------
-    std_output=$(git reset --hard "origin/$branch" 2>&1)
+    std_output=$(LC_ALL=C git reset --hard "origin/$branch" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # -------------------------------------------------------------------------
@@ -109,8 +109,8 @@ _main_task() {
     # On conflicts, '--strategy-option theirs' keeps the remote version.
     # Pull errors are ignored so the remaining cleanup can still run.
     # -------------------------------------------------------------------------
-    std_output=$(git pull origin "$branch" --rebase=false --strategy-option theirs 2>&1 || true)
-    _check_output "0" "$std_output" "$input_file" "" || true
+    std_output=$(LC_ALL=C git pull origin "$branch" --rebase=false --strategy-option theirs 2>&1)
+    _check_output "0" "$std_output" "$input_file" ""
 
     # -------------------------------------------------------------------------
     # Step 7: Delete local branches that are not on the remote.
@@ -121,14 +121,14 @@ _main_task() {
     local merged_branches=""
     local merged_branch=""
 
-    remote_branches=$(git branch -r --format="%(refname:short)" | sed 's|^origin/||')
-    local_branches=$(git branch --format="%(refname:short)")
+    remote_branches=$(LC_ALL=C git branch -r --format="%(refname:short)" | sed 's|^origin/||')
+    local_branches=$(LC_ALL=C git branch --format="%(refname:short)")
     merged_branches=$(grep -vE "($skip_branches)" <<<"$local_branches")
 
     # Force-delete unprotected local branches missing from origin.
     for merged_branch in $merged_branches; do
         if ! grep -qxF "$merged_branch" <<<"$remote_branches"; then
-            std_output=$(git branch --delete --force "$merged_branch" 2>&1)
+            std_output=$(LC_ALL=C git branch --delete --force "$merged_branch" 2>&1)
             _check_output "$?" "$std_output" "$input_file" "" || return 1
         fi
     done
@@ -137,11 +137,11 @@ _main_task() {
     # Step 8: Expire all reflog entries and run garbage collection.
     # -------------------------------------------------------------------------
     # Expire all reflog entries immediately (--expire=now).
-    std_output=$(git reflog expire --expire=now --all 2>&1)
+    std_output=$(LC_ALL=C git reflog expire --expire=now --all 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Run garbage collection to prune unnecessary files and optimize storage.
-    std_output=$(git gc --prune=all 2>&1)
+    std_output=$(LC_ALL=C git gc --prune=all 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Return to the previous directory.
