@@ -774,7 +774,7 @@ declare -A PKG_MAP=(
         zypper: xxd
         guix:   xxd
         xbps:   xxd
-        pkgx:
+        pkgx:   vim.org/xxd
     "
 
     ["xz"]="
