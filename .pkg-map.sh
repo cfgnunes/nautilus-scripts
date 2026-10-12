@@ -15,13 +15,13 @@
 declare -A PKG_MAP=(
     ["7za"]="
         termux: 7zip
-        apt:    p7zip
-        dnf:    p7zip
-        pacman: p7zip
+        apt:    7zip
+        dnf:    7zip
+        pacman: 7zip
         nix:    p7zip
         zypper: 7zip
-        guix:   p7zip
-        xbps:   p7zip
+        guix:   7zip
+        xbps:   7zip
         pkgx:   github.com/p7zip-project/p7zip
     "
 
@@ -92,7 +92,7 @@ declare -A PKG_MAP=(
         pacman: bzip3
         nix:    bzip3
         zypper: bzip3
-        guix:
+        guix:   bzip3
         xbps:   bzip3
         pkgx:
     "
@@ -176,7 +176,7 @@ declare -A PKG_MAP=(
         pacman: diffpdf
         nix:    diffpdf
         zypper:
-        guix:
+        guix:   diffpdf
         xbps:
         pkgx:
     "
@@ -622,7 +622,7 @@ declare -A PKG_MAP=(
         pacman: rdfind
         nix:    rdfind
         zypper: rdfind
-        guix:
+        guix:   rdfind
         xbps:   rdfind
         pkgx:
     "
