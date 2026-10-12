@@ -1123,16 +1123,25 @@ _tarball_extract() {
     local file=$1
     local output_dir=$2
     local par_remove=${3:-"false"}
+    local strip_components=0
+    local first_entry=""
+
+    # Detect whether the archive contains a top-level directory.
+    first_entry=$(tar --list --file="$file" | head -n 1)
+
+    if [[ "$first_entry" == */* ]]; then
+        strip_components=1
+    fi
 
     mkdir --parents -- "$output_dir"
 
     case $file in
     *.tar.gz | *.tgz) tar --extract --gzip --file="$file" \
-        --strip-components=1 --directory="$output_dir" ;;
+        --strip-components="$strip_components" --directory="$output_dir" ;;
     *.tar.xz | *.txz) tar --extract --xz --file="$file" \
-        --strip-components=1 --directory="$output_dir" ;;
+        --strip-components="$strip_components" --directory="$output_dir" ;;
     *.tar.zst | *.tzst) tar --extract --zstd --file="$file" \
-        --strip-components=1 --directory="$output_dir" ;;
+        --strip-components="$strip_components" --directory="$output_dir" ;;
     esac
 
     # Remove the output directory when the extraction produced nothing.
