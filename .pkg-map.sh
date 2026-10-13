@@ -147,7 +147,7 @@ declare -A PKG_MAP=(
         zypper: cpio
         guix:   cpio
         xbps:   cpio
-        pkgx:
+        pkgx:   gnu.org/cpio
     "
 
     ["curl"]="
@@ -460,7 +460,7 @@ declare -A PKG_MAP=(
         zypper: mediainfo
         guix:   mediainfo
         xbps:   mediainfo
-        pkgx:
+        pkgx:   mediaarea.net/mediainfo
     "
 
     ["meld"]="
@@ -606,7 +606,7 @@ declare -A PKG_MAP=(
         zypper: photorec
         guix:   testdisk
         xbps:   testdisk
-        pkgx:
+        pkgx:   cgsecurity.org/testdisk
     "
 
     ["ping"]="
