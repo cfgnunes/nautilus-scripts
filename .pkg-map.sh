@@ -123,7 +123,7 @@ declare -A PKG_MAP=(
         zypper: libjxl-tools
         guix:   libjxl
         xbps:   libjxl-tools
-        pkgx:   jpeg.org/jpegxl openexr.com@3.4
+        pkgx:   jpeg.org/jpegxl
     "
 
     ["clamscan"]="
