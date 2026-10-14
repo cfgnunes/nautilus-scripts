@@ -807,6 +807,7 @@ _deps_install_packages() {
             local pkgs=""
             local pkg=""
             pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
+            pkgx --sync &>/dev/null
             for pkg in $pkgs; do
                 pkgx --silent +"$pkg" &>/dev/null
             done
