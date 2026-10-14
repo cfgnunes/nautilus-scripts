@@ -1194,6 +1194,10 @@ msgid "Image: Optimize PNG"
 msgstr "תמונה: מיטוב PNG"
 
 #: Menu
+msgid "Image: Perform OCR (Afrikaans)"
+msgstr "תמונה: זיהוי טקסט (אפריקאנס)"
+
+#: Menu
 msgid "Image: Perform OCR (English)"
 msgstr "תמונה: זיהוי טקסט (אנגלית)"
 
@@ -1452,6 +1456,10 @@ msgstr "קובץ PDF: פריסה (8 עמודים, לאורך)"
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "קובץ PDF: מיטוב להצגה בדפדפן (באופן לינארי)"
+
+#: Menu
+msgid "PDF: Perform OCR (Afrikaans)"
+msgstr "קובץ PDF: זיהוי טקסט (אפריקאנס)"
 
 #: Menu
 msgid "PDF: Perform OCR (English)"

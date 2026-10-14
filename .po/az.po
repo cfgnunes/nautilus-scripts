@@ -1194,6 +1194,10 @@ msgid "Image: Optimize PNG"
 msgstr "Şəkil: PNG-ni optimallaşdır"
 
 #: Menu
+msgid "Image: Perform OCR (Afrikaans)"
+msgstr "Şəkil: Mətn tanı (OCR, afrikaans dili)"
+
+#: Menu
 msgid "Image: Perform OCR (English)"
 msgstr "Şəkil: Mətn tanı (OCR, ingilis dili)"
 
@@ -1452,6 +1456,10 @@ msgstr "PDF: Səhifə düzümü (8 səhifə, şaquli)"
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF: Veb üçün optimallaşdır (xəttiləşdir)"
+
+#: Menu
+msgid "PDF: Perform OCR (Afrikaans)"
+msgstr "PDF: Mətn tanı (OCR, afrikaans dili)"
 
 #: Menu
 msgid "PDF: Perform OCR (English)"

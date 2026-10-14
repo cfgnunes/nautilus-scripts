@@ -1194,6 +1194,10 @@ msgid "Image: Optimize PNG"
 msgstr "Immagine: Ottimizza PNG"
 
 #: Menu
+msgid "Image: Perform OCR (Afrikaans)"
+msgstr "Immagine: Esegui OCR (Afrikaans)"
+
+#: Menu
 msgid "Image: Perform OCR (English)"
 msgstr "Immagine: Esegui OCR (Inglese)"
 
@@ -1452,6 +1456,10 @@ msgstr "PDF: Layout (8 pagine, verticale)"
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF: Ottimizza per web (linearizza)"
+
+#: Menu
+msgid "PDF: Perform OCR (Afrikaans)"
+msgstr "PDF: Esegui OCR (Afrikaans)"
 
 #: Menu
 msgid "PDF: Perform OCR (English)"

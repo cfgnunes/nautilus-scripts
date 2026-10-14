@@ -1194,6 +1194,10 @@ msgid "Image: Optimize PNG"
 msgstr "画像：PNGを最適化"
 
 #: Menu
+msgid "Image: Perform OCR (Afrikaans)"
+msgstr "画像：OCRを実行 (アフリカーンス語)"
+
+#: Menu
 msgid "Image: Perform OCR (English)"
 msgstr "画像：OCRを実行 (英語)"
 
@@ -1452,6 +1456,10 @@ msgstr "PDF：レイアウト (8ページ, 縦向き)"
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF：Web用に最適化 (線形化)"
+
+#: Menu
+msgid "PDF: Perform OCR (Afrikaans)"
+msgstr "PDF：OCRを実行 (アフリカーンス語)"
 
 #: Menu
 msgid "PDF: Perform OCR (English)"

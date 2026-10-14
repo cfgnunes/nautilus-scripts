@@ -1194,6 +1194,10 @@ msgid "Image: Optimize PNG"
 msgstr "Obrázek: optimalizovat PNG"
 
 #: Menu
+msgid "Image: Perform OCR (Afrikaans)"
+msgstr "Obrázek: rozpoznat text (afrikánština)"
+
+#: Menu
 msgid "Image: Perform OCR (English)"
 msgstr "Obrázek: rozpoznat text (angličtina)"
 
@@ -1452,6 +1456,10 @@ msgstr "PDF: rozložení (8 stránek, na výšku)"
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF: optimalizovat pro web (linearizovat)"
+
+#: Menu
+msgid "PDF: Perform OCR (Afrikaans)"
+msgstr "PDF: rozpoznat text (afrikánština)"
 
 #: Menu
 msgid "PDF: Perform OCR (English)"

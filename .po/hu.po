@@ -1194,6 +1194,10 @@ msgid "Image: Optimize PNG"
 msgstr "Kép: PNG optimalizálása"
 
 #: Menu
+msgid "Image: Perform OCR (Afrikaans)"
+msgstr "Kép: OCR futtatása (afrikaans)"
+
+#: Menu
 msgid "Image: Perform OCR (English)"
 msgstr "Kép: OCR futtatása (angol)"
 
@@ -1452,6 +1456,10 @@ msgstr "PDF: elrendezés (8 oldal, álló)"
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
 msgstr "PDF: optimalizálás webre (linearizálás)"
+
+#: Menu
+msgid "PDF: Perform OCR (Afrikaans)"
+msgstr "PDF: OCR futtatása (afrikaans)"
 
 #: Menu
 msgid "PDF: Perform OCR (English)"
