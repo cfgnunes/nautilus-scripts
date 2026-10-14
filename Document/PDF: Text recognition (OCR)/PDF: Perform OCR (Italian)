@@ -10,9 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    TASK_LANG="ita"
-    export TASK_LANG
-    _check_dependencies "ocrmypdf tesseract-lang-$TASK_LANG"
+    _check_dependencies "ocrmypdf tesseract-lang-ita"
     _display_wait_box ""
     input_files=$(_get_files "par_type=file; par_select_extension=pdf")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
@@ -27,11 +25,12 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+    local lang="ita"
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(OCR $TASK_LANG)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(OCR $lang)'")
 
     # Run the main process.
-    std_output=$(ocrmypdf --l "$TASK_LANG" --output-type pdfa --skip-text --jobs "$(_get_max_procs)" -- "$input_file" "$output_file" 2>&1)
+    std_output=$(ocrmypdf --l "$lang" --output-type pdfa --skip-text --jobs "$(_get_max_procs)" -- "$input_file" "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

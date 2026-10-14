@@ -885,15 +885,99 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
-    ["tesseract-lang-${TASK_LANG:-}"]="
+    ["tesseract-lang-afr"]="
         termux: tesseract
-        apt:    tesseract-ocr tesseract-ocr-${TASK_LANG:-}
-        dnf:    tesseract tesseract-langpack-${TASK_LANG:-}
-        pacman: tesseract tesseract-data-${TASK_LANG:-}
+        apt:    tesseract-ocr tesseract-ocr-afr
+        dnf:    tesseract tesseract-langpack-afr
+        pacman: tesseract tesseract-data-afr
         nix:    tesseract
-        zypper: tesseract tesseract-ocr-traineddata-${TASK_LANG:-}
+        zypper: tesseract tesseract-ocr-traineddata-afr
         guix:   tesseract-ocr
-        xbps:   tesseract-ocr tesseract-ocr-${TASK_LANG:-}
+        xbps:   tesseract-ocr tesseract-ocr-afr
+        pkgx:
+    "
+
+    ["tesseract-lang-deu"]="
+        termux: tesseract
+        apt:    tesseract-ocr tesseract-ocr-deu
+        dnf:    tesseract tesseract-langpack-deu
+        pacman: tesseract tesseract-data-deu
+        nix:    tesseract
+        zypper: tesseract tesseract-ocr-traineddata-deu
+        guix:   tesseract-ocr
+        xbps:   tesseract-ocr tesseract-ocr-deu
+        pkgx:
+    "
+
+    ["tesseract-lang-eng"]="
+        termux: tesseract
+        apt:    tesseract-ocr tesseract-ocr-eng
+        dnf:    tesseract tesseract-langpack-eng
+        pacman: tesseract tesseract-data-eng
+        nix:    tesseract
+        zypper: tesseract tesseract-ocr-traineddata-eng
+        guix:   tesseract-ocr
+        xbps:   tesseract-ocr tesseract-ocr-eng
+        pkgx:
+    "
+
+    ["tesseract-lang-fra"]="
+        termux: tesseract
+        apt:    tesseract-ocr tesseract-ocr-fra
+        dnf:    tesseract tesseract-langpack-fra
+        pacman: tesseract tesseract-data-fra
+        nix:    tesseract
+        zypper: tesseract tesseract-ocr-traineddata-fra
+        guix:   tesseract-ocr
+        xbps:   tesseract-ocr tesseract-ocr-fra
+        pkgx:
+    "
+
+    ["tesseract-lang-ita"]="
+        termux: tesseract
+        apt:    tesseract-ocr tesseract-ocr-ita
+        dnf:    tesseract tesseract-langpack-ita
+        pacman: tesseract tesseract-data-ita
+        nix:    tesseract
+        zypper: tesseract tesseract-ocr-traineddata-ita
+        guix:   tesseract-ocr
+        xbps:   tesseract-ocr tesseract-ocr-ita
+        pkgx:
+    "
+
+    ["tesseract-lang-por"]="
+        termux: tesseract
+        apt:    tesseract-ocr tesseract-ocr-por
+        dnf:    tesseract tesseract-langpack-por
+        pacman: tesseract tesseract-data-por
+        nix:    tesseract
+        zypper: tesseract tesseract-ocr-traineddata-por
+        guix:   tesseract-ocr
+        xbps:   tesseract-ocr tesseract-ocr-por
+        pkgx:
+    "
+
+    ["tesseract-lang-rus"]="
+        termux: tesseract
+        apt:    tesseract-ocr tesseract-ocr-rus
+        dnf:    tesseract tesseract-langpack-rus
+        pacman: tesseract tesseract-data-rus
+        nix:    tesseract
+        zypper: tesseract tesseract-ocr-traineddata-rus
+        guix:   tesseract-ocr
+        xbps:   tesseract-ocr tesseract-ocr-rus
+        pkgx:
+    "
+
+    ["tesseract-lang-spa"]="
+        termux: tesseract
+        apt:    tesseract-ocr tesseract-ocr-spa
+        dnf:    tesseract tesseract-langpack-spa
+        pacman: tesseract tesseract-data-spa
+        nix:    tesseract
+        zypper: tesseract tesseract-ocr-traineddata-spa
+        guix:   tesseract-ocr
+        xbps:   tesseract-ocr tesseract-ocr-spa
         pkgx:
     "
 
