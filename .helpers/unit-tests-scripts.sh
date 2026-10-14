@@ -565,6 +565,7 @@ _main() {
     # IGNORED: Image/Image: Similarity/Image: Find similar (75 pct)
     # IGNORED: Image/Image: Similarity/Image: Find similar (85 pct)
     # IGNORED: Image/Image: Similarity/Image: Find similar (95 pct)
+    # IGNORED: Image/Image: Text recognition (OCR)/Image: Perform OCR (Afrikaans)
     # IGNORED: Image/Image: Text recognition (OCR)/Image: Perform OCR (French)
     # IGNORED: Image/Image: Text recognition (OCR)/Image: Perform OCR (German)
     # IGNORED: Image/Image: Text recognition (OCR)/Image: Perform OCR (Italian)
@@ -743,6 +744,7 @@ _main() {
     # IGNORED: Document/PDF: Security/PDF: Remove password
     # IGNORED: Document/PDF: Security/PDF: Set password
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (English)
+    # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Afrikaans+English)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (French)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (German)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Italian)
