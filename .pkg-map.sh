@@ -111,7 +111,7 @@ declare -A PKG_MAP=(
         zypper: cabextract
         guix:   cabextract
         xbps:   cabextract
-        pkgx:
+        pkgx:   github.com/kyz/libmspack
     "
 
     ["cjxl"]="
@@ -171,7 +171,7 @@ declare -A PKG_MAP=(
         zypper: dar
         guix:
         xbps:   dar
-        pkgx:
+        pkgx:   github.com/Edrusb/DAR
     "
 
     ["diffpdf"]="
@@ -750,7 +750,7 @@ declare -A PKG_MAP=(
         zypper: xorriso
         guix:   xorriso
         xbps:   xorriso
-        pkgx:
+        pkgx:   gnu.org/xorriso
     "
 
     ["xxd"]="
@@ -870,7 +870,7 @@ declare -A PKG_MAP=(
         zypper: sox
         guix:   sox
         xbps:   sox
-        pkgx:
+        pkgx:   sox.sourceforge.net codeberg.org/tenacityteam/libmad
     "
 
     ["tesseract-lang-afr"]="
