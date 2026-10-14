@@ -744,7 +744,7 @@ _main() {
     # IGNORED: Document/PDF: Security/PDF: Remove password
     # IGNORED: Document/PDF: Security/PDF: Set password
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (English)
-    # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Afrikaans+English)
+    # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Afrikaans)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (French)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (German)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Italian)
