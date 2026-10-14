@@ -807,7 +807,10 @@ _deps_install_packages() {
             local pkgs=""
             local pkg=""
             pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
-            pkgx --sync &>/dev/null
+
+            # HACK: Workaround for pkgx. Force update the cache.
+            rm -rf -- "$HOME/.cache/pkgx"
+
             for pkg in $pkgs; do
                 pkgx --silent +"$pkg" &>/dev/null
             done
