@@ -1526,8 +1526,8 @@ msgid "PDF: Split into single-page PDFs"
 msgstr "PDF: Tek sayfalık PDF'lere ayır"
 
 #: Menu
-msgid "Rename: Add MD5 prefix"
-msgstr "Yeniden adlandır: MD5 öneki ekle"
+msgid "Rename: Add CRC32 prefix"
+msgstr "Yeniden adlandır: CRC32 öneki ekle"
 
 #: Menu
 msgid "Rename: Remove prefixes"

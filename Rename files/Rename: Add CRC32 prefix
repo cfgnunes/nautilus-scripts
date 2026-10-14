@@ -31,17 +31,17 @@ _main_task() {
     dir=$(dirname -- "$input_file")
     filename=$(basename -- "$input_file")
 
-    # Skip files that already have a 4-hex MD5 prefix.
-    if [[ "$filename" =~ ^\([0-9a-fA-F]{4}\) ]]; then
+    # Skip files that already have an 8-hex CRC32 prefix.
+    if [[ "$filename" =~ ^\([0-9a-fA-F]{8}\) ]]; then
         return 0
     fi
 
     # Run the main process.
-    std_output=$(md5sum "$input_file" 2>&1)
+    std_output=$(cksum -a crc32b -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     checksum=${std_output%%[$'\t ']*}
-    checksum=${checksum:0:4}
+    printf -v checksum '%08x' "$checksum"
     output_file="($checksum) $filename"
 
     _move_file "skip" "$input_file" "$dir/$output_file" || return 1

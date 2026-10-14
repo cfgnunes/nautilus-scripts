@@ -997,13 +997,13 @@ _main() {
         "TEST RENAME.TXT" "$temp_dir/Test rename.txt"
 
     __test_begin
-    echo "Content of 'Test'." >"$temp_dir/Test md5 prefix.txt"
-    checksum=$(md5sum -- "$temp_dir/Test md5 prefix.txt")
+    echo "Content of 'Test'." >"$temp_dir/Test crc32 prefix.txt"
+    checksum=$(cksum -a crc32b -- "$temp_dir/Test crc32 prefix.txt")
     checksum=${checksum%%[$'\t ']*}
-    checksum=${checksum:0:4}
-    __test_script "Rename files/Rename: Add MD5 prefix" "empty" \
-        "($checksum) Test md5 prefix.txt" \
-        "$temp_dir/Test md5 prefix.txt"
+    printf -v checksum '%08x' "$checksum"
+    __test_script "Rename files/Rename: Add CRC32 prefix" "empty" \
+        "($checksum) Test crc32 prefix.txt" \
+        "$temp_dir/Test crc32 prefix.txt"
 
     # -------------------------------------------------------------------------
     # SECTION: Checksum

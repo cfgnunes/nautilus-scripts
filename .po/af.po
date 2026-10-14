@@ -1526,8 +1526,8 @@ msgid "PDF: Split into single-page PDFs"
 msgstr "PDF: Verdeel in enkelbladsy-PDF's"
 
 #: Menu
-msgid "Rename: Add MD5 prefix"
-msgstr "Hernoem: Voeg MD5-voorvoegsel by"
+msgid "Rename: Add CRC32 prefix"
+msgstr "Hernoem: Voeg CRC32-voorvoegsel by"
 
 #: Menu
 msgid "Rename: Remove prefixes"
