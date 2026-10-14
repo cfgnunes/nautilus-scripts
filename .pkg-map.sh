@@ -51,7 +51,7 @@ declare -A PKG_MAP=(
         zypper: axel
         guix:   axel
         xbps:   axel
-        pkgx:   github.com/axel-download-accelerator/axel
+        pkgx:
     "
 
     ["baobab"]="
