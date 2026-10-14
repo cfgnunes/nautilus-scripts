@@ -71,52 +71,46 @@ _get_command() {
     local command=""
 
     # Define the preferred commands for each type of archive.
-    local _cmds_7za=("7za" "unar" "bsdtar")
-    local _cmds_ace=("unar")
-    local _cmds_alz=("unar")
+    local _cmds_7za=("7za" "bsdtar")
     local _cmds_ar=("ar" "bsdtar")
-    local _cmds_arc=("unar")
-    local _cmds_arj=("unar")
-    local _cmds_bz=("bzip2" "unar" "7za")
+    local _cmds_arj=("7za")
+    local _cmds_bz=("bzip2" "7za")
     local _cmds_bz3=("bzip3")
-    local _cmds_cab=("cabextract" "bsdtar" "unar")
-    local _cmds_cpio=("cpio" "unar" "bsdtar")
+    local _cmds_cab=("cabextract" "bsdtar")
+    local _cmds_cpio=("cpio" "bsdtar")
     local _cmds_dar=("dar")
     local _cmds_deb=("ar")
     local _cmds_gpg=("gpg")
-    local _cmds_gz=("gzip" "unar" "7za")
+    local _cmds_gz=("gzip" "7za")
     local _cmds_iso=("xorriso" "bsdtar")
     local _cmds_lrz=("lrzip")
     local _cmds_lz=("lzip")
     local _cmds_lz4=("lz4")
-    local _cmds_lzh=("lha" "unar")
-    local _cmds_lzma=("xz" "unar")
+    local _cmds_lzh=("lha")
+    local _cmds_lzma=("xz")
     local _cmds_lzo=("lzop")
-    local _cmds_msi=("unar")
-    local _cmds_pak=("unar")
-    local _cmds_rar=("unrar" "7za" "unar" "bsdtar")
+    local _cmds_msi=("7za")
+    local _cmds_rar=("unrar" "7za" "bsdtar")
     local _cmds_rpm=("bsdtar")
-    local _cmds_sit=("unar")
     local _cmds_sqsh=("unsquashfs")
-    local _cmds_tar_bz=("tar,bzip2" "unar" "7za")
-    local _cmds_tar_gz=("tar,gzip" "unar" "7za")
+    local _cmds_tar_bz=("tar,bzip2" "7za")
+    local _cmds_tar_gz=("tar,gzip" "7za")
     local _cmds_tar_lrz=("tar,lrzip")
     local _cmds_tar_lz=("tar,lzip")
     local _cmds_tar_lz4=("tar,lz4")
-    local _cmds_tar_lzma=("tar,lzma" "unar" "7za")
+    local _cmds_tar_lzma=("tar,lzma" "7za")
     local _cmds_tar_lzo=("tar,lzop")
-    local _cmds_tar_xz=("tar,xz" "unar" "7za")
-    local _cmds_tar_z=("tar,gzip" "unar" "7za")
+    local _cmds_tar_xz=("tar,xz" "7za")
+    local _cmds_tar_z=("tar,gzip" "7za")
     local _cmds_tar_zst=("tar,zstd")
-    local _cmds_tar=("tar" "bsdtar" "unar" "7za")
-    local _cmds_xar=("unar" "bsdtar")
-    local _cmds_xz=("xz" "unar" "7za")
-    local _cmds_z=("gzip" "unar")
-    local _cmds_zip=("7za" "bsdtar" "unar" "unzip")
-    local _cmds_zoo=("unar")
+    local _cmds_tar=("tar" "bsdtar" "7za")
+    local _cmds_xar=("bsdtar")
+    local _cmds_xz=("xz" "7za")
+    local _cmds_z=("gzip")
+    local _cmds_zip=("7za" "bsdtar" "unzip")
     local _cmds_zpaq=("zpaq")
     local _cmds_zstd=("zstd")
-    local _cmds_unknown_file=("bsdtar,unar,7za")
+    local _cmds_unknown_file=("bsdtar,7za")
 
     # Determine the preferred commands based on the filename extension.
     case "${input_file,,}" in
@@ -132,10 +126,7 @@ _get_command() {
     *.tar.z | *.taz) pref_commands=("${_cmds_tar_z[@]}") ;;
     *.tar.zst | *.tzst) pref_commands=("${_cmds_tar_zst[@]}") ;;
     *.7z) pref_commands=("${_cmds_7za[@]}") ;;
-    *.ace) pref_commands=("${_cmds_ace[@]}") ;;
-    *.alz) pref_commands=("${_cmds_alz[@]}") ;;
     *.ar) pref_commands=("${_cmds_ar[@]}") ;;
-    *.arc) pref_commands=("${_cmds_arc[@]}") ;;
     *.arj) pref_commands=("${_cmds_arj[@]}") ;;
     *.bz | *.bz2) pref_commands=("${_cmds_bz[@]}") ;;
     *.bz3) pref_commands=("${_cmds_bz3[@]}") ;;
@@ -153,17 +144,14 @@ _get_command() {
     *.lzma) pref_commands=("${_cmds_lzma[@]}") ;;
     *.lzo) pref_commands=("${_cmds_lzo[@]}") ;;
     *.msi) pref_commands=("${_cmds_msi[@]}") ;;
-    *.pak) pref_commands=("${_cmds_pak[@]}") ;;
     *.rar) pref_commands=("${_cmds_rar[@]}") ;;
     *.rpm) pref_commands=("${_cmds_rpm[@]}") ;;
-    *.sit) pref_commands=("${_cmds_sit[@]}") ;;
     *.sqsh | *.squashfs | *.sfs) pref_commands=("${_cmds_sqsh[@]}") ;;
     *.tar | *.gtar | *.gem) pref_commands=("${_cmds_tar[@]}") ;;
     *.xar) pref_commands=("${_cmds_xar[@]}") ;;
     *.xz) pref_commands=("${_cmds_xz[@]}") ;;
     *.z) pref_commands=("${_cmds_z[@]}") ;;
     *.zip | *.apk | *.jar | *.ear) pref_commands=("${_cmds_zip[@]}") ;;
-    *.zoo) pref_commands=("${_cmds_zoo[@]}") ;;
     *.zpaq) pref_commands=("${_cmds_zpaq[@]}") ;;
     *.zst) pref_commands=("${_cmds_zstd[@]}") ;;
     *)
@@ -179,9 +167,6 @@ _get_command() {
         "application/vnd.ms-cab-compressed") pref_commands=("${_cmds_cab[@]}") ;;
         "application/vnd.squashfs") pref_commands=("${_cmds_sqsh[@]}") ;;
         "application/x-7z-compressed") pref_commands=("${_cmds_7za[@]}") ;;
-        "application/x-ace") pref_commands=("${_cmds_ace[@]}") ;;
-        "application/x-alz") pref_commands=("${_cmds_alz[@]}") ;;
-        "application/x-arc") pref_commands=("${_cmds_arc[@]}") ;;
         "application/x-archive") pref_commands=("${_cmds_ar[@]}") ;;
         "application/x-arj") pref_commands=("${_cmds_arj[@]}") ;;
         "application/x-bzip-compressed-tar") pref_commands=("${_cmds_tar_bz[@]}") ;;
@@ -205,10 +190,8 @@ _get_command() {
         "application/x-lzma") pref_commands=("${_cmds_lzma[@]}") ;;
         "application/x-lzop") pref_commands=("${_cmds_lzo[@]}") ;;
         "application/x-msi") pref_commands=("${_cmds_msi[@]}") ;;
-        "application/x-pak") pref_commands=("${_cmds_pak[@]}") ;;
         "application/x-rar" | "application/x-rar-compressed" | "application/vnd.rar") pref_commands=("${_cmds_rar[@]}") ;;
         "application/x-rpm") pref_commands=("${_cmds_rpm[@]}") ;;
-        "application/x-sit" | "application/x-stuffit" | "application/stuffit") pref_commands=("${_cmds_sit[@]}") ;;
         "application/x-tar") pref_commands=("${_cmds_tar[@]}") ;;
         "application/x-tarz") pref_commands=("${_cmds_tar_z[@]}") ;;
         "application/x-tzo") pref_commands=("${_cmds_tar_lzo[@]}") ;;
@@ -216,7 +199,6 @@ _get_command() {
         "application/x-xz-compressed-tar") pref_commands=("${_cmds_tar_xz[@]}") ;;
         "application/x-xz") pref_commands=("${_cmds_xz[@]}") ;;
         "application/x-zip" | "application/x-zip-compressed" | "application/zip" | "application/vnd.android.package-archive" | "application/java-archive") pref_commands=("${_cmds_zip[@]}") ;;
-        "application/x-zoo") pref_commands=("${_cmds_zoo[@]}") ;;
         "application/x-zstd-compressed-tar") pref_commands=("${_cmds_tar_zst[@]}") ;;
         "application/zstd") pref_commands=("${_cmds_zstd[@]}") ;;
         "application/octet-stream")
@@ -380,19 +362,6 @@ _run_command() {
     "tar,xz") std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
     "tar,zstd") std_output=$(zstd -f -d -c -- "$input_file" | tar xf -) ;;
     "tar") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
-    "unar")
-        std_output=$(LC_ALL=C unar -- "$input_file" 2>&1)
-        exit_code=$?
-
-        if ((exit_code != 0)) && grep --quiet --ignore-case "requires a password" <<<"$std_output"; then
-            local password=""
-            __temp_dir_pop && __temp_dir_remove
-            password=$(__get_password) || return 1
-            __temp_dir_push || return 1
-            std_output=$(LC_ALL=C unar -force-overwrite -password "$password" -- "$input_file" 2>&1)
-            exit_code=$?
-        fi
-        ;;
     "unrar")
         std_output=$(LC_ALL=C unrar x -p"$TASK_PASSWORD" -- "$input_file" 2>&1)
         exit_code=$?
@@ -424,18 +393,12 @@ _run_command() {
     "xz") xz -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
     "zpaq") std_output=$(zpaq x "$input_file" 2>&1) ;;
     "zstd") zstd -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
-    "bsdtar,unar,7za")
+    "bsdtar,7za")
         exit_code=1
         # Default extractor chain for unrecognized files.
         # Try to extract with 'bsdtar'.
         if ((exit_code != 0)); then
             std_output=$(bsdtar -xf "$input_file" 2>&1)
-            exit_code=$?
-        fi
-
-        # Try to extract with 'unar'.
-        if ((exit_code != 0)); then
-            std_output=$(unar -- "$input_file" 2>&1)
             exit_code=$?
         fi
 

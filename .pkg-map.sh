@@ -669,18 +669,6 @@ declare -A PKG_MAP=(
         pkgx:   gnu.org/tar
     "
 
-    ["unar"]="
-        termux: unar
-        apt:    unar
-        dnf:    unar
-        pacman: unarchiver
-        nix:    unar
-        zypper: unar
-        guix:
-        xbps:   unar
-        pkgx:
-    "
-
     ["unrar"]="
         termux: unrar
         apt:    unrar
