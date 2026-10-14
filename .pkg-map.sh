@@ -327,7 +327,7 @@ declare -A PKG_MAP=(
         zypper: id3v2
         guix:
         xbps:   id3v2
-        pkgx:
+        pkgx:   github.com/myers/id3v2
     "
 
     ["inkscape"]="
