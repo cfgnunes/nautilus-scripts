@@ -1530,10 +1530,6 @@ msgid "Rename: Add MD5 prefix"
 msgstr "სახელის გადარქმევა: MD5 პრეფიქსის დამატება"
 
 #: Menu
-msgid "Rename: Remove accents"
-msgstr "სახელის გადარქმევა: აქცენტების მოცილება"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "სახელის გადარქმევა: პრეფიქსების მოცილება"
 
@@ -1688,10 +1684,6 @@ msgstr "ტექსტი: სიტყვების რაოდენობ
 #: Menu
 msgid "Text: Remove trailing spaces"
 msgstr "ტექსტი: ბოლოში მიწერილი ჰარეების მოცილება"
-
-#: Menu
-msgid "Text: Remove accents"
-msgstr "ტექსტი: აქცენტების მოცილება"
 
 #: Menu
 msgid "URL: Check HTTP status"

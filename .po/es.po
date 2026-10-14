@@ -1530,10 +1530,6 @@ msgid "Rename: Add MD5 prefix"
 msgstr "Renombrar: Añadir prefijo MD5"
 
 #: Menu
-msgid "Rename: Remove accents"
-msgstr "Renombrar: Eliminar acentos"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "Renombrar: Eliminar prefijos"
 
@@ -1688,10 +1684,6 @@ msgstr "Texto: Contar palabras"
 #: Menu
 msgid "Text: Remove trailing spaces"
 msgstr "Texto: Eliminar espacios finales"
-
-#: Menu
-msgid "Text: Remove accents"
-msgstr "Texto: Eliminar acentos"
 
 #: Menu
 msgid "URL: Check HTTP status"

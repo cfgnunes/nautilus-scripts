@@ -1529,10 +1529,6 @@ msgid "Rename: Add MD5 prefix"
 msgstr ""
 
 #: Menu
-msgid "Rename: Remove accents"
-msgstr ""
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr ""
 
@@ -1686,10 +1682,6 @@ msgstr ""
 
 #: Menu
 msgid "Text: Remove trailing spaces"
-msgstr ""
-
-#: Menu
-msgid "Text: Remove accents"
 msgstr ""
 
 #: Menu

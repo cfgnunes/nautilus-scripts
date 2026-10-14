@@ -1530,10 +1530,6 @@ msgid "Rename: Add MD5 prefix"
 msgstr "Přejmenovat: přidat předponu MD5"
 
 #: Menu
-msgid "Rename: Remove accents"
-msgstr "Přejmenovat: odstranit diakritiku"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "Přejmenovat: odstranit předpony"
 
@@ -1688,10 +1684,6 @@ msgstr "Text: vypsat počty slov"
 #: Menu
 msgid "Text: Remove trailing spaces"
 msgstr "Text: odstranit koncové mezery"
-
-#: Menu
-msgid "Text: Remove accents"
-msgstr "Text: odstranit diakritiku"
 
 #: Menu
 msgid "URL: Check HTTP status"

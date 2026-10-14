@@ -585,18 +585,6 @@ declare -A PKG_MAP=(
         pkgx:   perl.org
     "
 
-    ["perl-unicode-normalize"]="
-        termux: perl
-        apt:    perl
-        dnf:    perl-Unicode-Normalize
-        pacman: perl
-        nix:    perl
-        zypper: perl-Unicode-Normalize
-        guix:   perl-unicode-normalize
-        xbps:   perl
-        pkgx:   perl.org
-    "
-
     ["photorec"]="
         termux: testdisk
         apt:    testdisk

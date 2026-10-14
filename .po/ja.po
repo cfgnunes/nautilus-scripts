@@ -1530,10 +1530,6 @@ msgid "Rename: Add MD5 prefix"
 msgstr "名前変更：MD5プレフィックスを追加"
 
 #: Menu
-msgid "Rename: Remove accents"
-msgstr "名前変更：アクセント記号を削除"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "名前変更：プレフィックスを削除"
 
@@ -1688,10 +1684,6 @@ msgstr "テキスト：単語数を一覧表示"
 #: Menu
 msgid "Text: Remove trailing spaces"
 msgstr "テキスト：末尾のスペースを削除"
-
-#: Menu
-msgid "Text: Remove accents"
-msgstr "テキスト：アクセント記号を削除"
 
 #: Menu
 msgid "URL: Check HTTP status"

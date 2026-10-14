@@ -1530,10 +1530,6 @@ msgid "Rename: Add MD5 prefix"
 msgstr "Перейменувати: додати префікс MD5"
 
 #: Menu
-msgid "Rename: Remove accents"
-msgstr "Перейменувати: прибрати наголоси"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "Перейменувати: прибрати префікси"
 
@@ -1688,10 +1684,6 @@ msgstr "Текст: показати кількість слів"
 #: Menu
 msgid "Text: Remove trailing spaces"
 msgstr "Текст: прибрати кінцеві пробіли"
-
-#: Menu
-msgid "Text: Remove accents"
-msgstr "Текст: прибрати наголоси"
 
 #: Menu
 msgid "URL: Check HTTP status"

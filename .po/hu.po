@@ -1530,10 +1530,6 @@ msgid "Rename: Add MD5 prefix"
 msgstr "Átnevezés: MD5 előtag hozzáadása"
 
 #: Menu
-msgid "Rename: Remove accents"
-msgstr "Átnevezés: ékezetek eltávolítása"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "Átnevezés: előtagok eltávolítása"
 
@@ -1688,10 +1684,6 @@ msgstr "Szöveg: szószámok listázása"
 #: Menu
 msgid "Text: Remove trailing spaces"
 msgstr "Szöveg: záró szóközök eltávolítása"
-
-#: Menu
-msgid "Text: Remove accents"
-msgstr "Szöveg: ékezetek eltávolítása"
 
 #: Menu
 msgid "URL: Check HTTP status"

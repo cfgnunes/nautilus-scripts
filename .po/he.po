@@ -1530,10 +1530,6 @@ msgid "Rename: Add MD5 prefix"
 msgstr "שינוי שם: הוספת קידומת MD5"
 
 #: Menu
-msgid "Rename: Remove accents"
-msgstr "שינוי שם: הסרת סימנים דיאקריטיים מהאותיות"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "שינוי שם: הסרת קידומות"
 
@@ -1688,10 +1684,6 @@ msgstr "טקסט: הצגת מספרי מילים"
 #: Menu
 msgid "Text: Remove trailing spaces"
 msgstr "שינוי שם: הסרת רווחים מיותרים"
-
-#: Menu
-msgid "Text: Remove accents"
-msgstr "טקסט: הסרת סימנים דיאקריטיים מהאותיות"
 
 #: Menu
 msgid "URL: Check HTTP status"

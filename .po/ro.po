@@ -1530,10 +1530,6 @@ msgid "Rename: Add MD5 prefix"
 msgstr "Redenumire: adăugare prefix MD5"
 
 #: Menu
-msgid "Rename: Remove accents"
-msgstr "Redenumire: eliminare accente"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "Redenumire: eliminare prefixe"
 
@@ -1688,10 +1684,6 @@ msgstr "Text: listare număr de cuvinte"
 #: Menu
 msgid "Text: Remove trailing spaces"
 msgstr "Text: eliminare spații finale"
-
-#: Menu
-msgid "Text: Remove accents"
-msgstr "Text: eliminare accente"
 
 #: Menu
 msgid "URL: Check HTTP status"

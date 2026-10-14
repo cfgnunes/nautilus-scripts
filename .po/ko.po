@@ -1530,10 +1530,6 @@ msgid "Rename: Add MD5 prefix"
 msgstr "이름 변경: MD5 접두사 추가"
 
 #: Menu
-msgid "Rename: Remove accents"
-msgstr "이름 변경: 악센트 제거"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "이름 변경: 접두사 제거"
 
@@ -1688,10 +1684,6 @@ msgstr "텍스트: 단어 수 나열"
 #: Menu
 msgid "Text: Remove trailing spaces"
 msgstr "텍스트: 후행 공백 제거"
-
-#: Menu
-msgid "Text: Remove accents"
-msgstr "텍스트: 악센트 제거"
 
 #: Menu
 msgid "URL: Check HTTP status"

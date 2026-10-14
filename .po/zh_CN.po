@@ -1530,10 +1530,6 @@ msgid "Rename: Add MD5 prefix"
 msgstr "重命名：添加 MD5 前缀"
 
 #: Menu
-msgid "Rename: Remove accents"
-msgstr "重命名：移除重音符号"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "重命名：移除前缀"
 
@@ -1688,10 +1684,6 @@ msgstr "文本：统计词数"
 #: Menu
 msgid "Text: Remove trailing spaces"
 msgstr "文本：删除行尾空格"
-
-#: Menu
-msgid "Text: Remove accents"
-msgstr "文本：移除重音符号"
 
 #: Menu
 msgid "URL: Check HTTP status"

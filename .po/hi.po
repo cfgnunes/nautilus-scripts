@@ -1530,10 +1530,6 @@ msgid "Rename: Add MD5 prefix"
 msgstr "नाम बदलें: MD5 उपसर्ग जोड़ें"
 
 #: Menu
-msgid "Rename: Remove accents"
-msgstr "नाम बदलें: एक्सेंट हटाएँ"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "नाम बदलें: उपसर्ग हटाएँ"
 
@@ -1688,10 +1684,6 @@ msgstr "पाठ: पंक्ति गणना सूचीबद्ध क�
 #: Menu
 msgid "Text: Remove trailing spaces"
 msgstr "पाठ: ट्रेलिंग रिक्त स्थान हटाएँ"
-
-#: Menu
-msgid "Text: Remove accents"
-msgstr "पाठ: एक्सेंट हटाएँ"
 
 #: Menu
 msgid "URL: Check HTTP status"

@@ -1530,10 +1530,6 @@ msgid "Rename: Add MD5 prefix"
 msgstr "Byt namn: lägg till MD5-prefix"
 
 #: Menu
-msgid "Rename: Remove accents"
-msgstr "Byt namn: ta bort accenter"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "Byt namn: ta bort prefix"
 
@@ -1688,10 +1684,6 @@ msgstr "Text: lista ordantal"
 #: Menu
 msgid "Text: Remove trailing spaces"
 msgstr "Text: ta bort avslutande blanksteg"
-
-#: Menu
-msgid "Text: Remove accents"
-msgstr "Text: ta bort accenter"
 
 #: Menu
 msgid "URL: Check HTTP status"

@@ -1530,10 +1530,6 @@ msgid "Rename: Add MD5 prefix"
 msgstr "Yeniden adlandır: MD5 öneki ekle"
 
 #: Menu
-msgid "Rename: Remove accents"
-msgstr "Yeniden adlandır: Vurguları kaldır"
-
-#: Menu
 msgid "Rename: Remove prefixes"
 msgstr "Yeniden adlandır: Önekleri kaldır"
 
@@ -1688,10 +1684,6 @@ msgstr "Metin: Kelime sayılarını listele"
 #: Menu
 msgid "Text: Remove trailing spaces"
 msgstr "Metin: Sondaki boşlukları kaldır"
-
-#: Menu
-msgid "Text: Remove accents"
-msgstr "Metin: Vurguları kaldır"
 
 #: Menu
 msgid "URL: Check HTTP status"

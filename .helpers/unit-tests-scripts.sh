@@ -888,7 +888,6 @@ _main() {
 
     __test_scripts_file "$fixture_txt" "Test text.txt" "empty" \
         "Plain text/Text: Encode to UTF-8|Test text (UTF-8).txt" \
-        "Plain text/Text: Remove accents|Test text (no accents).txt" \
         "Plain text/Text: Convert tabs to 4 spaces|Test text (4 spaces).txt"
 
     __test_scripts_stdout "$fixture_txt" "Test text.txt" \
@@ -940,11 +939,6 @@ _main() {
         "TEST RENAME/SUB DIR/FILE NAME.TXT" "$temp_dir/Test Rename"
     __check_file_nonempty "$temp_dir/TEST RENAME/TOP FILE.TXT"
     __check_path_missing "$temp_dir/Test Rename"
-
-    __test_begin
-    echo "Content of 'Test'." >"$temp_dir/Test réname accents.txt"
-    __test_script "Rename files/Rename: Remove accents" "empty" \
-        "Test rename accents.txt" "$temp_dir/Test réname accents.txt"
 
     __test_begin
     echo "Content of 'Test'." >"$temp_dir/Test rename suffixes extra.txt"
