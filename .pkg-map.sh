@@ -51,7 +51,7 @@ declare -A PKG_MAP=(
         zypper: axel
         guix:   axel
         xbps:   axel
-        pkgx:
+        pkgx:   github.com/axel-download-accelerator/axel
     "
 
     ["baobab"]="
@@ -99,7 +99,7 @@ declare -A PKG_MAP=(
         zypper: bzip3
         guix:   bzip3
         xbps:   bzip3
-        pkgx:
+        pkgx:   github.com/iczelia/bzip3
     "
 
     ["cabextract"]="
@@ -243,7 +243,7 @@ declare -A PKG_MAP=(
         zypper:
         guix:
         xbps:   foremost
-        pkgx:
+        pkgx:   github.com/korczis/foremost
     "
 
     ["ghex"]="
@@ -376,7 +376,7 @@ declare -A PKG_MAP=(
         zypper: lhasa
         guix:   lhasa
         xbps:   lhasa
-        pkgx:
+        pkgx:   fragglet.github.io/lhasa
     "
 
     ["lrzip"]="
@@ -388,7 +388,7 @@ declare -A PKG_MAP=(
         zypper: lrzip
         guix:   lrzip
         xbps:   lrzip
-        pkgx:
+        pkgx:   github.com/ckolivas/lrzip
     "
 
     ["lz4"]="
@@ -436,7 +436,7 @@ declare -A PKG_MAP=(
         zypper: lzop
         guix:   lzop
         xbps:   lzop
-        pkgx:
+        pkgx:   lzop.org
     "
 
     ["magick"]="
@@ -786,7 +786,7 @@ declare -A PKG_MAP=(
         zypper: zpaq
         guix:   zpaq
         xbps:   zpaq
-        pkgx:
+        pkgx:   github.com/zpaq/zpaq
     "
 
     ["zstd"]="
