@@ -810,6 +810,7 @@ _deps_install_packages() {
 
             # HACK: Workaround for pkgx. Force update the cache.
             rm -rf -- "$HOME/.cache/pkgx"
+            rm -rf -- "$HOME/.local/share/pkgx"
 
             for pkg in $pkgs; do
                 pkgx --silent +"$pkg" &>/dev/null
