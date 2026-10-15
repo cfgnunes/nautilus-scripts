@@ -570,7 +570,7 @@ declare -A PKG_MAP=(
         zypper: poppler-tools
         guix:   poppler
         xbps:   poppler
-        pkgx:   poppler.freedesktop.org
+        pkgx:
     "
 
     ["perl"]="
