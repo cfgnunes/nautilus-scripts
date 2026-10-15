@@ -42,7 +42,7 @@ _main_task() {
 
     # Run ping and extract only the result from the last ICMP packet.
     ping=$(LC_ALL=C ping -n -c 3 -W "$timeout_value" -- "$input_file" 2>/dev/null |
-        grep -E "icmp_seq=3" | grep -o "time=.*" | cut -d "=" -f 2)
+        grep --only-matching --perl-regexp "icmp_seq=3.*time=\K.*")
 
     # Perform an Nmap scan to detect open ports.
     ports=$(LC_ALL=C nmap -n -Pn -T4 --max-retries 1 --host-timeout "$timeout_value"s "$ip" 2>/dev/null |
