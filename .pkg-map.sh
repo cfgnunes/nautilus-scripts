@@ -1013,10 +1013,9 @@ declare -A POST_INSTALL=(
 )
 
 # Description:
-#   This array defines download URLs for precompiled binaries that are not
-#   available through a package manager. Each entry maps a dependency key to
-#   architecture-specific URLs, selected from the machine architecture.
-#   A value may be a full URL, or a GitHub in the format:
+#   This array defines download URLs for precompiled binaries. Each entry maps
+#   a dependency key to architecture-specific URLs, selected from the machine
+#   architecture. A value may be a full URL, or a GitHub in the format:
 #   "github:username/repository:regex".
 #   The regular expression selects the tarball URL from the latest release.
 declare -A PRECOMPILED_URL=(
