@@ -866,6 +866,7 @@ _deps_install_packages() {
                 local download_url=""
                 download_url=$(_deps_get_dependency_value \
                     "$pkg" "$architecture" "PRECOMPILED_URL")
+                download_url=$(_precompiled_resolve_url "$download_url")
                 _tarball_install_url \
                     "$install_dir" "$pkg" "$download_url"
             done
@@ -1082,6 +1083,61 @@ _download_file() {
     else
         return 1
     fi
+}
+
+# Function: _precompiled_resolve_url
+#
+# Description:
+#   This function resolves a precompiled download specification to a concrete
+#   tarball URL. A full URL is returned unchanged. A GitHub latest-release
+#   specification in the format "github:username/repository:regex" is resolved
+#   by querying the latest release and selecting the first asset URL that
+#   matches the regular expression.
+#
+# Parameters:
+#   $1 (spec): A full tarball URL, or a specification in the format
+#      "github:username/repository:regex".
+_precompiled_resolve_url() {
+    local spec=$1
+    local api_url=""
+    local regex=""
+    local repo=""
+    local resolved_url=""
+    local rest=""
+
+    if [[ "$spec" != github:* ]]; then
+        printf '%s' "$spec"
+        return 0
+    fi
+
+    rest="${spec#github:}"
+    repo="${rest%%:*}"
+    regex="${rest#*:}"
+
+    if [[ -z "$repo" ]] || [[ -z "$regex" ]] || [[ "$repo" == "$regex" ]]; then
+        return 1
+    fi
+
+    api_url="https://api.github.com/repos/${repo}/releases/latest"
+
+    if _command_exists "curl"; then
+        resolved_url=$(curl --fail --silent --location -- \
+            "$api_url" 2>/dev/null | grep --only-matching -m1 "$regex")
+    elif _command_exists "wget"; then
+        resolved_url=$(wget --quiet --output-document=- -- \
+            "$api_url" 2>/dev/null | grep --only-matching -m1 "$regex")
+    elif _command_exists "axel"; then
+        resolved_url=$(axel --quiet --output=/dev/stdout -- \
+            "$api_url" 2>/dev/null | grep --only-matching -m1 "$regex")
+    else
+        return 1
+    fi
+
+    if [[ -z "$resolved_url" ]]; then
+        return 1
+    fi
+
+    printf '%s' "$resolved_url"
 }
 
 # Function: _tarball_install_url

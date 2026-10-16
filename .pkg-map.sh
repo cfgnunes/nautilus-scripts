@@ -1016,16 +1016,19 @@ declare -A POST_INSTALL=(
 #   This array defines download URLs for precompiled binaries that are not
 #   available through a package manager. Each entry maps a dependency key to
 #   architecture-specific URLs, selected from the machine architecture.
+#   A value may be a full URL, or a GitHub in the format:
+#   "github:username/repository:regex".
+#   The regular expression selects the tarball URL from the latest release.
 declare -A PRECOMPILED_URL=(
     ["pdfcpu"]="
-        x86_64:  https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.2/pdfcpu_0.16.2_Linux_x86_64.tar.xz
-        aarch64: https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.2/pdfcpu_0.16.2_Linux_arm64.tar.xz
-        armv71:  https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.2/pdfcpu_0.16.2_Linux_armv7.tar.xz
-        i386:    https://github.com/pdfcpu/pdfcpu/releases/download/v0.16.2/pdfcpu_0.16.2_Linux_i386.tar.xz
+        x86_64:  github:pdfcpu/pdfcpu:http.*inux.*x86.64.tar.xz
+        aarch64: github:pdfcpu/pdfcpu:http.*inux.*arm64.tar.xz
+        armv71:  github:pdfcpu/pdfcpu:http.*inux.*armv7.tar.xz
+        i386:    github:pdfcpu/pdfcpu:http.*inux.*i386.tar.xz
     "
 
     ["mp3rgain"]="
-        x86_64:  https://github.com/M-Igashi/mp3rgain/releases/latest/download/mp3rgain-linux-x86_64.tar.gz
-        aarch64: https://github.com/M-Igashi/mp3rgain/releases/latest/download/mp3rgain-linux-arm64.tar.gz
+        x86_64:  github:M-Igashi/mp3rgain:http.*inux.*x86.64.tar.gz
+        aarch64: github:M-Igashi/mp3rgain:http.*inux.*arm64.tar.gz
     "
 )
