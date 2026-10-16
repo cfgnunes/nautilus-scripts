@@ -2,7 +2,6 @@
 
 A set of file manager actions that enhance your workflow. Useful right-click options to simplify common tasks across GNOME, KDE, Xfce, and more.
 
-[![Release](https://img.shields.io/github/v/release/cfgnunes/nautilus-scripts?labelColor=333333&color=339933)](#installation)
 [![Supported](https://img.shields.io/badge/Supported-GNOME%20%7C%20KDE%20%7C%20MATE%20%7C%20Xfce%20%7C%20Cinnamon%20%7C%20LXQt-339933?labelColor=333333)](#compatibility)
 
 [![Screenshot](https://cfgnunes.github.io/nautilus-scripts/screenshot.svg)](#installation)
