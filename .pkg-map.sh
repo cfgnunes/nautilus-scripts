@@ -27,7 +27,7 @@ declare -A PKG_MAP=(
         zypper: 7zip
         guix:   7zip
         xbps:   7zip
-        pkgx:   github.com/p7zip-project/p7zip
+        precompiled: 7zip
     "
 
     ["ar"]="
@@ -1019,15 +1019,19 @@ declare -A POST_INSTALL=(
 #   "github:username/repository:regex".
 #   The regular expression selects the tarball URL from the latest release.
 declare -A PRECOMPILED_URL=(
-    ["pdfcpu"]="
-        x86_64:  github:pdfcpu/pdfcpu:http.*inux.*x86.64.tar.xz
-        aarch64: github:pdfcpu/pdfcpu:http.*inux.*arm64.tar.xz
-        armv71:  github:pdfcpu/pdfcpu:http.*inux.*armv7.tar.xz
-        i386:    github:pdfcpu/pdfcpu:http.*inux.*i386.tar.xz
+    ["7za"]="
+        x86_64:  github:ip7z/7zip:https.*inux.*x64.tar.\w*
+        aarch64: github:ip7z/7zip:https.*inux.*arm64.tar.\w*
     "
 
     ["mp3rgain"]="
-        x86_64:  github:M-Igashi/mp3rgain:http.*inux.*x86.64.tar.gz
-        aarch64: github:M-Igashi/mp3rgain:http.*inux.*arm64.tar.gz
+        x86_64:  github:M-Igashi/mp3rgain:https.*inux.*x86.64.tar.\w*
+        aarch64: github:M-Igashi/mp3rgain:https.*inux.*arm64.tar.\w*
+    "
+
+    ["pdfcpu"]="
+        x86_64:  github:pdfcpu/pdfcpu:https.*inux.*x86.64.tar.\w*
+        aarch64: github:pdfcpu/pdfcpu:https.*inux.*arm64.tar.\w*
+        armv71:  github:pdfcpu/pdfcpu:https.*inux.*armv7.tar.\w*
     "
 )
