@@ -331,9 +331,6 @@ msgstr "De markerade objekten är identiska."
 msgid "The selected images have the same pixel values."
 msgstr "De markerade bilderna har samma pixelvärden."
 
-msgid "MIME"
-msgstr "MIME"
-
 msgid "This action will move all files from subdirectories to the root of the selected directory."
 msgstr "Den här åtgärden flyttar alla filer från underkataloger till roten av den markerade katalogen."
 
@@ -1588,10 +1585,6 @@ msgstr "Visa filinformation"
 #: Menu
 msgid "Show file metadata"
 msgstr "Visa filmetadata"
-
-#: Menu
-msgid "Show file MIME type"
-msgstr "Visa filens MIME-typ"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

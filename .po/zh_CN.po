@@ -331,9 +331,6 @@ msgstr "所选项目完全相同。"
 msgid "The selected images have the same pixel values."
 msgstr "所选图像具有相同的像素值。"
 
-msgid "MIME"
-msgstr "MIME"
-
 msgid "This action will move all files from subdirectories to the root of the selected directory."
 msgstr "此操作会将所有文件从子目录移动到所选目录的根目录。"
 
@@ -1588,10 +1585,6 @@ msgstr "显示文件信息"
 #: Menu
 msgid "Show file metadata"
 msgstr "显示文件元数据"
-
-#: Menu
-msgid "Show file MIME type"
-msgstr "显示文件MIME类型"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

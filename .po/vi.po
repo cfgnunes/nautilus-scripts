@@ -331,9 +331,6 @@ msgstr "Các mục được chọn giống nhau."
 msgid "The selected images have the same pixel values."
 msgstr "Các ảnh được chọn có giá trị điểm ảnh giống nhau."
 
-msgid "MIME"
-msgstr "MIME"
-
 msgid "This action will move all files from subdirectories to the root of the selected directory."
 msgstr "Hành động này sẽ di chuyển tất cả tệp từ các thư mục con về thư mục gốc đã chọn."
 
@@ -1588,10 +1585,6 @@ msgstr "Hiển thị thông tin tệp"
 #: Menu
 msgid "Show file metadata"
 msgstr "Hiển thị metadata tệp"
-
-#: Menu
-msgid "Show file MIME type"
-msgstr "Hiển thị loại MIME của tệp"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

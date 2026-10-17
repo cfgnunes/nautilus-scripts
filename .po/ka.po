@@ -331,9 +331,6 @@ msgstr "არჩეული ელემენტები იდენტუ�
 msgid "The selected images have the same pixel values."
 msgstr "მონიშნულ გამოსახულებებს იგივე პიქსელის მნიშვნელობები აქვთ."
 
-msgid "MIME"
-msgstr "MIME"
-
 msgid "This action will move all files from subdirectories to the root of the selected directory."
 msgstr "ეს ქმედება ქვესაქაღალდეებიდან ყველა ფაილს მონიშნულ საქაღალდეში გადაიტანს."
 
@@ -1588,10 +1585,6 @@ msgstr "ფაილის ინფორმაციის ჩვენებ�
 #: Menu
 msgid "Show file metadata"
 msgstr "ფაილის მეტამონაცემების ჩვენება"
-
-#: Menu
-msgid "Show file MIME type"
-msgstr "ფაილის MIME ტიპის ჩვენება"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

@@ -331,9 +331,6 @@ msgstr "Die gekose items is identies."
 msgid "The selected images have the same pixel values."
 msgstr "Die gekose beelde het dieselfde pikselwaardes."
 
-msgid "MIME"
-msgstr "MIME"
-
 msgid "This action will move all files from subdirectories to the root of the selected directory."
 msgstr "Hierdie aksie sal alle lêers uit subgidse na die wortel van die gekose gids skuif."
 
@@ -1588,10 +1585,6 @@ msgstr "Wys lêerinligting"
 #: Menu
 msgid "Show file metadata"
 msgstr "Wys lêermetagegewens"
-
-#: Menu
-msgid "Show file MIME type"
-msgstr "Wys lêer se MIME-tipe"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

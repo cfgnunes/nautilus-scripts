@@ -331,9 +331,6 @@ msgstr "चुने गए आइटम समान हैं।"
 msgid "The selected images have the same pixel values."
 msgstr "चुनी गई छवियों के पिक्सेल मान समान हैं।"
 
-msgid "MIME"
-msgstr "MIME"
-
 msgid "This action will move all files from subdirectories to the root of the selected directory."
 msgstr "यह क्रिया सभी फ़ाइलों को उपनिर्देशिकाओं से चुनी गई निर्देशिका की जड़ में ले जाएगी।"
 
@@ -1588,10 +1585,6 @@ msgstr "फ़ाइल जानकारी दिखाएँ"
 #: Menu
 msgid "Show file metadata"
 msgstr "फ़ाइल मेटाडेटा दिखाएँ"
-
-#: Menu
-msgid "Show file MIME type"
-msgstr "फ़ाइल MIME प्रकार दिखाएँ"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

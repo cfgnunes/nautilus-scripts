@@ -330,9 +330,6 @@ msgstr ""
 msgid "The selected images have the same pixel values."
 msgstr ""
 
-msgid "MIME"
-msgstr ""
-
 msgid "This action will move all files from subdirectories to the root of the selected directory."
 msgstr ""
 
@@ -1586,10 +1583,6 @@ msgstr ""
 
 #: Menu
 msgid "Show file metadata"
-msgstr ""
-
-#: Menu
-msgid "Show file MIME type"
 msgstr ""
 
 #: Menu

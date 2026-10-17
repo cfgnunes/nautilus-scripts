@@ -59,7 +59,7 @@ bash install.sh
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>X</kbd>   | Compress to 'tar.xz'        |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Z</kbd>   | Compress to 'zip'           |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>I</kbd>   | Show file information       |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>M</kbd>   | Show file MIME type         |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>M</kbd>   | Show file metadata          |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>0</kbd>   | Find empty files            |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>J</kbd>   | Find junk files             |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>U</kbd>   | Find duplicate files        |

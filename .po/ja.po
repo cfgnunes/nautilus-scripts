@@ -331,9 +331,6 @@ msgstr "選択したアイテムは同一です。"
 msgid "The selected images have the same pixel values."
 msgstr "選択した画像のピクセル値は同じです。"
 
-msgid "MIME"
-msgstr "MIME"
-
 msgid "This action will move all files from subdirectories to the root of the selected directory."
 msgstr "この操作は、サブディレクトリ内のすべてのファイルを選択したディレクトリのルートに移動します。"
 
@@ -1588,10 +1585,6 @@ msgstr "ファイル情報を表示"
 #: Menu
 msgid "Show file metadata"
 msgstr "ファイルのメタデータを表示"
-
-#: Menu
-msgid "Show file MIME type"
-msgstr "ファイルのMIMEタイプを表示"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

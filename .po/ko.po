@@ -331,9 +331,6 @@ msgstr "선택한 항목이 동일합니다."
 msgid "The selected images have the same pixel values."
 msgstr "선택한 이미지의 픽셀 값이 동일합니다."
 
-msgid "MIME"
-msgstr "MIME"
-
 msgid "This action will move all files from subdirectories to the root of the selected directory."
 msgstr "이 작업은 하위 디렉토리의 모든 파일을 선택한 디렉토리의 루트로 이동합니다."
 
@@ -1588,10 +1585,6 @@ msgstr "파일 정보 표시"
 #: Menu
 msgid "Show file metadata"
 msgstr "파일 메타데이터 표시"
-
-#: Menu
-msgid "Show file MIME type"
-msgstr "파일 MIME 유형 표시"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

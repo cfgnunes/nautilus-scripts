@@ -550,8 +550,7 @@ _main() {
         "Directories and Files/List largest files" \
         "Directories and Files/List permissions and owners" \
         "Directories and Files/Show file information" \
-        "Directories and Files/Show file metadata" \
-        "Directories and Files/Show file MIME type"; do
+        "Directories and Files/Show file metadata"; do
         __test_begin
         __generate_fixture_text "$temp_dir/Test file.txt"
         __test_script "$dir_script" "text" "" "$temp_dir"

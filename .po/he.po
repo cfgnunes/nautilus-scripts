@@ -331,9 +331,6 @@ msgstr "הפריטים שנבחרו זהים."
 msgid "The selected images have the same pixel values."
 msgstr "לתמונות שנבחרו יש ערכי פיקסלים זהים."
 
-msgid "MIME"
-msgstr "MIME"
-
 msgid "This action will move all files from subdirectories to the root of the selected directory."
 msgstr "פעולה זו תוציא את כל הקבצים מתיקיות המשנה ותעביר אותם לתוך התיקייה שנבחרה."
 
@@ -1588,10 +1585,6 @@ msgstr "הצגת מידע על הקבצים"
 #: Menu
 msgid "Show file metadata"
 msgstr "הצגת נתוני העל של הקבצים"
-
-#: Menu
-msgid "Show file MIME type"
-msgstr "הצגת ה־MIME type של הקבצים"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

@@ -331,9 +331,6 @@ msgstr "Elementele selectate sunt identice."
 msgid "The selected images have the same pixel values."
 msgstr "Imaginile selectate au aceleași valori ale pixelilor."
 
-msgid "MIME"
-msgstr "MIME"
-
 msgid "This action will move all files from subdirectories to the root of the selected directory."
 msgstr "Această acțiune va muta toate fișierele din subdirectoare în rădăcina directorului selectat."
 
@@ -1588,10 +1585,6 @@ msgstr "Afișare informații fișier"
 #: Menu
 msgid "Show file metadata"
 msgstr "Afișare metadate fișier"
-
-#: Menu
-msgid "Show file MIME type"
-msgstr "Afișare tip MIME fișier"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"

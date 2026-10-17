@@ -331,9 +331,6 @@ msgstr "Les éléments sélectionnés sont identiques."
 msgid "The selected images have the same pixel values."
 msgstr "Les images sélectionnées ont les mêmes valeurs de pixels."
 
-msgid "MIME"
-msgstr "MIME"
-
 msgid "This action will move all files from subdirectories to the root of the selected directory."
 msgstr "Cette action déplacera tous les fichiers des sous-répertoires vers la racine du répertoire sélectionné."
 
@@ -1588,10 +1585,6 @@ msgstr "Afficher les informations des fichiers"
 #: Menu
 msgid "Show file metadata"
 msgstr "Afficher les métadonnées des fichiers"
-
-#: Menu
-msgid "Show file MIME type"
-msgstr "Afficher le type MIME des fichiers"
 
 #: Menu
 msgid "SVG: Compress to SVGZ"
