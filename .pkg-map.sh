@@ -861,7 +861,7 @@ declare -A PKG_MAP=(
         pkgx:   sox.sourceforge.net codeberg.org/tenacityteam/libmad
     "
 
-    ["tesseract-lang-afr"]="
+    ["tesseract-ocr-afr"]="
         termux: tesseract
         apt:    tesseract-ocr tesseract-ocr-afr
         dnf:    tesseract tesseract-langpack-afr
@@ -873,7 +873,7 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
-    ["tesseract-lang-deu"]="
+    ["tesseract-ocr-deu"]="
         termux: tesseract
         apt:    tesseract-ocr tesseract-ocr-deu
         dnf:    tesseract tesseract-langpack-deu
@@ -885,7 +885,7 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
-    ["tesseract-lang-eng"]="
+    ["tesseract-ocr-eng"]="
         termux: tesseract
         apt:    tesseract-ocr tesseract-ocr-eng
         dnf:    tesseract tesseract-langpack-eng
@@ -897,7 +897,7 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
-    ["tesseract-lang-fra"]="
+    ["tesseract-ocr-fra"]="
         termux: tesseract
         apt:    tesseract-ocr tesseract-ocr-fra
         dnf:    tesseract tesseract-langpack-fra
@@ -909,7 +909,7 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
-    ["tesseract-lang-ita"]="
+    ["tesseract-ocr-ita"]="
         termux: tesseract
         apt:    tesseract-ocr tesseract-ocr-ita
         dnf:    tesseract tesseract-langpack-ita
@@ -921,7 +921,7 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
-    ["tesseract-lang-por"]="
+    ["tesseract-ocr-por"]="
         termux: tesseract
         apt:    tesseract-ocr tesseract-ocr-por
         dnf:    tesseract tesseract-langpack-por
@@ -933,7 +933,7 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
-    ["tesseract-lang-rus"]="
+    ["tesseract-ocr-rus"]="
         termux: tesseract
         apt:    tesseract-ocr tesseract-ocr-rus
         dnf:    tesseract tesseract-langpack-rus
@@ -945,7 +945,7 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
-    ["tesseract-lang-spa"]="
+    ["tesseract-ocr-spa"]="
         termux: tesseract
         apt:    tesseract-ocr tesseract-ocr-spa
         dnf:    tesseract tesseract-langpack-spa
