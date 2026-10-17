@@ -10,7 +10,6 @@
 
 # NOTE: Some package definitions were removed to prevent compatibility issues.
 # 'pkgx: exiftool.org' - Fails on Fedora.
-# 'pkgx: ffmpeg.org' - Fails on Fedora.
 # 'pkgx: github.com/p7zip-project/p7zip' - Outdated and unofficial package.
 # 'pkgx: gnu.org/inetutils' - Provides a 'ping' implementation that differs from those shipped by distributions.
 # 'pkgx: perl.org' - Fails on Fedora.
@@ -228,7 +227,7 @@ declare -A PKG_MAP=(
         zypper: ffmpeg
         guix:   ffmpeg
         xbps:   ffmpeg
-        pkgx:
+        pkgx:   ffmpeg.org
     "
 
     ["filelight"]="
