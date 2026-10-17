@@ -10,7 +10,12 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies ""
+    # NOTE: Older versions of 'cksum' do not support the -a option.
+    if cksum -a crc32b /dev/null &>/dev/null; then
+        _check_dependencies ""
+    else
+        _check_dependencies "rhash"
+    fi
     _display_wait_box ""
     input_files=$(_get_files "par_type=file")
 
@@ -24,9 +29,9 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local dir=""
-    local checksum=""
     local filename=""
     local std_output=""
+    local exit_code=0
 
     dir=$(dirname -- "$input_file")
     filename=$(basename -- "$input_file")
@@ -37,12 +42,17 @@ _main_task() {
     fi
 
     # Run the main process.
-    std_output=$(cksum -a crc32b -- "$input_file" 2>&1)
+    if cksum -a crc32b /dev/null &>/dev/null; then
+        std_output=$(cksum -a crc32b -- "$input_file" 2>&1)
+        exit_code=$?
+        std_output=${std_output%%[$'\t ']*}
+        printf -v std_output '%08x' "$std_output"
+    else
+        std_output=$(rhash --printf="%{crc32}" -- "$input_file" 2>&1)
+        exit_code=$?
+    fi
     _check_output "$?" "$std_output" "$input_file" "" || return 1
-
-    checksum=${std_output%%[$'\t ']*}
-    printf -v checksum '%08x' "$checksum"
-    output_file="($checksum) $filename"
+    output_file="($std_output) $filename"
 
     _move_file "skip" "$input_file" "$dir/$output_file" || return 1
 }

@@ -286,7 +286,7 @@ _main() {
     local checksum=""
     local font_file=""
 
-    _check_dependencies "ffmpeg git gzip exiftool"
+    _check_dependencies "ffmpeg git gzip exiftool rhash"
 
     _open_items_locations "$TEMP_DIR_TASK/task" "true"
 
@@ -1007,9 +1007,7 @@ _main() {
 
     __test_begin
     echo "Content of 'Test'." >"$temp_dir/Test crc32 prefix.txt"
-    checksum=$(cksum -a crc32b -- "$temp_dir/Test crc32 prefix.txt")
-    checksum=${checksum%%[$'\t ']*}
-    printf -v checksum '%08x' "$checksum"
+    checksum=$(rhash --printf="%{crc32}" -- "$temp_dir/Test crc32 prefix.txt")
     __test_script "Rename files/Rename: Add CRC32 prefix" "empty" \
         "($checksum) Test crc32 prefix.txt" \
         "$temp_dir/Test crc32 prefix.txt"
