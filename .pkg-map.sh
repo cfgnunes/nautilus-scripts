@@ -8,6 +8,14 @@
 #   https://search.nixos.org/packages
 #   https://hpc.guix.info/browse
 
+# NOTE: Some package definitions were removed to prevent compatibility issues.
+# 'pkgx: exiftool.org' - Fails on Fedora.
+# 'pkgx: ffmpeg.org' - Fails on Fedora.
+# 'pkgx: github.com/p7zip-project/p7zip' - Outdated and unofficial package.
+# 'pkgx: gnu.org/inetutils' - Provides a 'ping' implementation that differs from those shipped by distributions.
+# 'pkgx: perl.org' - Fails on Fedora.
+# 'pkgx: poppler.freedesktop.org' - Exports environment variables that alter Zenity's font settings.
+
 # Description:
 #   This array defines the mapping between a dependency key and its
 #   corresponding package names across different package managers.
@@ -27,6 +35,7 @@ declare -A PKG_MAP=(
         zypper: 7zip
         guix:   7zip
         xbps:   7zip
+        pkgx:
         precompiled: 7zip
     "
 
@@ -207,7 +216,7 @@ declare -A PKG_MAP=(
         zypper: exiftool
         guix:   perl-image-exiftool
         xbps:   exiftool
-        pkgx:   exiftool.org
+        pkgx:
     "
 
     ["ffmpeg"]="
@@ -219,7 +228,7 @@ declare -A PKG_MAP=(
         zypper: ffmpeg
         guix:   ffmpeg
         xbps:   ffmpeg
-        pkgx:   ffmpeg.org
+        pkgx:
     "
 
     ["filelight"]="
@@ -606,7 +615,7 @@ declare -A PKG_MAP=(
         zypper: perl-base
         guix:   perl
         xbps:   perl
-        pkgx:   perl.org
+        pkgx:
     "
 
     ["photorec"]="
