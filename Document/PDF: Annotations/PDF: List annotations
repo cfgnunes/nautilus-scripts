@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+# Source the file '.common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/.common-functions.sh"
+
+_main() {
+    local input_files=""
+
+    # Execute initial checks.
+    _check_dependencies "pdfannots jq"
+    _display_wait_box ""
+    input_files=$(_get_files "par_type=file; par_recursive=true; par_select_extension=pdf")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" ""
+
+    local std_output=""
+    std_output=$(_storage_text_read_all)
+
+    _display_list_box "$std_output" "par_item_name=$(_i18n 'annotations'); par_columns='--column:$(_i18n 'Text'),--column:$(_i18n 'Content'),--column:$(_i18n 'Author'),--column:$(_i18n 'Type'),--column:$(_i18n 'Color'),--column:$(_i18n 'Page'),--column:$(_i18n 'File')'; par_action=open_location; par_check_type=checkbox"
+}
+
+_main_task() {
+    local input_file=$1
+    local std_output=""
+    local file_label=""
+    file_label=$(_text_remove_pwd "$input_file")
+
+    # Skip Square annotations.
+    # Keep the first 50 characters of Content, Text, and Author, and append "..." when longer.
+    # Each line is "text, content, author, type, color, page, file".
+
+    # Run the main process.
+    std_output=$(pdfannots --format json "$input_file" 2>/dev/null |
+        jq -r \
+            --arg sep "$FIELD_SEPARATOR" \
+            --arg file_label "$file_label" '
+        def clean:
+            tostring
+            | gsub("\\s+"; " ")
+            | sub("^ "; "")
+            | sub(" $"; "")
+            | if length > 50 then .[0:50] + "..." else . end;
+        .[]
+        | (.contents // "" | clean) as $content
+        | (.text // "" | clean) as $text
+        | (.author // "" | clean) as $author
+        | select((.type // "") != "Square")
+        | [
+            $text,
+            $content,
+            $author,
+            (.type // "" | tostring),
+            (.color // "" | tostring),
+            (.page // "" | tostring),
+            $file_label
+          ]
+        | join($sep)
+    ' 2>/dev/null)
+
+    _storage_text_write_ln "$std_output"
+}
+
+_main "$@"

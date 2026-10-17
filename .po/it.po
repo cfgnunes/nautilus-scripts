@@ -466,6 +466,24 @@ msgstr "Seleziona elementi di input"
 msgid "Open"
 msgstr "Apri"
 
+msgid "annotations"
+msgstr "annotazioni"
+
+msgid "Content"
+msgstr "Contenuto"
+
+msgid "Text"
+msgstr "Testo"
+
+msgid "Author"
+msgstr "Autore"
+
+msgid "Color"
+msgstr "Colore"
+
+msgid "Page"
+msgstr "Pagina"
+
 #: Menu
 msgid "Archive"
 msgstr "Archivio"
@@ -1403,6 +1421,10 @@ msgid "PDF: Set password"
 msgstr "PDF: Imposta password"
 
 #: Menu
+msgid "PDF: Extract annotations"
+msgstr "PDF: Estrai annotazioni"
+
+#: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: Estrai immagini"
 
@@ -1449,6 +1471,10 @@ msgstr "PDF: Layout (8 pagine, orizzontale)"
 #: Menu
 msgid "PDF: Layout (8 pages, portrait)"
 msgstr "PDF: Layout (8 pagine, verticale)"
+
+#: Menu
+msgid "PDF: List annotations"
+msgstr "PDF: Elenca annotazioni"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"

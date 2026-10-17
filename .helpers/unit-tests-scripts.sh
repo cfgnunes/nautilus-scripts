@@ -754,6 +754,15 @@ _main() {
     # IGNORED: Document/PDF: Watermark/PDF: Add watermark (under)
 
     __test_begin "$fixture_pdf::Test document PDF.pdf"
+    __test_script "Document/PDF: Annotations/PDF: Extract annotations" \
+        "empty" "" "$temp_dir/Test document PDF.pdf"
+    __check_file_empty "$temp_dir/Test document PDF.md"
+
+    __test_begin "$fixture_pdf::Test document PDF.pdf"
+    __test_script "Document/PDF: Annotations/PDF: List annotations" \
+        "empty" "" "$temp_dir/Test document PDF.pdf"
+
+    __test_begin "$fixture_pdf::Test document PDF.pdf"
     __test_script "Document/PDF: Annotations/PDF: Find annotated PDFs" \
         "empty" "" "$temp_dir"
 

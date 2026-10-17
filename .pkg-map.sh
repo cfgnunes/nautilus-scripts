@@ -342,6 +342,18 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
+    ["jq"]="
+        termux: jq
+        apt:    jq
+        dnf:    jq
+        pacman: jq
+        nix:    jq
+        zypper: jq
+        guix:   jq
+        xbps:   jq
+        pkgx:   stedolan.github.io/jq
+    "
+
     ["kdiff3"]="
         termux:
         apt:    kdiff3
@@ -546,6 +558,18 @@ declare -A PKG_MAP=(
         guix:   pandoc
         xbps:   pandoc
         pkgx:   pandoc.org
+    "
+
+    ["pdfannots"]="
+        termux:
+        apt:
+        dnf:
+        pacman:
+        nix:
+        zypper:
+        guix:
+        xbps:
+        pkgx:   github.com/0xabu/pdfannots
     "
 
     ["pdfcpu"]="

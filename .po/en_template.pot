@@ -465,6 +465,24 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
+msgid "annotations"
+msgstr ""
+
+msgid "Content"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "Color"
+msgstr ""
+
+msgid "Page"
+msgstr ""
+
 #: Menu
 msgid "Archive"
 msgstr ""
@@ -1402,6 +1420,10 @@ msgid "PDF: Set password"
 msgstr ""
 
 #: Menu
+msgid "PDF: Extract annotations"
+msgstr ""
+
+#: Menu
 msgid "PDF: Extract images"
 msgstr ""
 
@@ -1447,6 +1469,10 @@ msgstr ""
 
 #: Menu
 msgid "PDF: Layout (8 pages, portrait)"
+msgstr ""
+
+#: Menu
+msgid "PDF: List annotations"
 msgstr ""
 
 #: Menu

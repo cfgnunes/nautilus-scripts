@@ -466,6 +466,24 @@ msgstr "Válassza ki a bemeneti elemeket"
 msgid "Open"
 msgstr "Megnyitás"
 
+msgid "annotations"
+msgstr "jegyzetek"
+
+msgid "Content"
+msgstr "Tartalom"
+
+msgid "Text"
+msgstr "Szöveg"
+
+msgid "Author"
+msgstr "Szerző"
+
+msgid "Color"
+msgstr "Szín"
+
+msgid "Page"
+msgstr "Oldal"
+
 #: Menu
 msgid "Archive"
 msgstr "Archívum"
@@ -1403,6 +1421,10 @@ msgid "PDF: Set password"
 msgstr "PDF: jelszó beállítása"
 
 #: Menu
+msgid "PDF: Extract annotations"
+msgstr "PDF: jegyzetek kibontása"
+
+#: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: képek kibontása"
 
@@ -1449,6 +1471,10 @@ msgstr "PDF: elrendezés (8 oldal, fekvő)"
 #: Menu
 msgid "PDF: Layout (8 pages, portrait)"
 msgstr "PDF: elrendezés (8 oldal, álló)"
+
+#: Menu
+msgid "PDF: List annotations"
+msgstr "PDF: jegyzetek listázása"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"

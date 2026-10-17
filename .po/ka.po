@@ -466,6 +466,24 @@ msgstr "აირჩიეთ შეყვანის ელემენტე�
 msgid "Open"
 msgstr "გახსნა"
 
+msgid "annotations"
+msgstr "ანოტაციები"
+
+msgid "Content"
+msgstr "შინაარსი"
+
+msgid "Text"
+msgstr "ტექსტი"
+
+msgid "Author"
+msgstr "ავტორი"
+
+msgid "Color"
+msgstr "ფერი"
+
+msgid "Page"
+msgstr "გვერდი"
+
 #: Menu
 msgid "Archive"
 msgstr "არქივი"
@@ -1403,6 +1421,10 @@ msgid "PDF: Set password"
 msgstr "PDF: პაროლის დაყენება"
 
 #: Menu
+msgid "PDF: Extract annotations"
+msgstr "PDF: ანოტაციების ამოღება"
+
+#: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: გამოსახულებების ამოღება"
 
@@ -1449,6 +1471,10 @@ msgstr "PDF: განლაგება (8 გვერდი, ალბომ�
 #: Menu
 msgid "PDF: Layout (8 pages, portrait)"
 msgstr "PDF: განლაგება (8 გვერდი, პორტრეტული)"
+
+#: Menu
+msgid "PDF: List annotations"
+msgstr "PDF: ანოტაციების სია"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"

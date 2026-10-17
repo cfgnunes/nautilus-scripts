@@ -466,6 +466,24 @@ msgstr "Selectați elementele de intrare"
 msgid "Open"
 msgstr "Deschide"
 
+msgid "annotations"
+msgstr "adnotări"
+
+msgid "Content"
+msgstr "Conținut"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Color"
+msgstr "Culoare"
+
+msgid "Page"
+msgstr "Pagină"
+
 #: Menu
 msgid "Archive"
 msgstr "Arhivă"
@@ -1403,6 +1421,10 @@ msgid "PDF: Set password"
 msgstr "PDF: setare parolă"
 
 #: Menu
+msgid "PDF: Extract annotations"
+msgstr "PDF: extragere adnotări"
+
+#: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: extragere imagini"
 
@@ -1449,6 +1471,10 @@ msgstr "PDF: așezare (8 pagini, peisaj)"
 #: Menu
 msgid "PDF: Layout (8 pages, portrait)"
 msgstr "PDF: așezare (8 pagini, portret)"
+
+#: Menu
+msgid "PDF: List annotations"
+msgstr "PDF: listare adnotări"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"

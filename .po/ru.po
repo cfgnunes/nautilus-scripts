@@ -466,6 +466,24 @@ msgstr "Выберите входные элементы"
 msgid "Open"
 msgstr "Открыть"
 
+msgid "annotations"
+msgstr "аннотации"
+
+msgid "Content"
+msgstr "Содержимое"
+
+msgid "Text"
+msgstr "Текст"
+
+msgid "Author"
+msgstr "Автор"
+
+msgid "Color"
+msgstr "Цвет"
+
+msgid "Page"
+msgstr "Страница"
+
 #: Menu
 msgid "Archive"
 msgstr "Архив"
@@ -1403,6 +1421,10 @@ msgid "PDF: Set password"
 msgstr "PDF: установить пароль"
 
 #: Menu
+msgid "PDF: Extract annotations"
+msgstr "PDF: извлечь аннотации"
+
+#: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: извлечь изображения"
 
@@ -1449,6 +1471,10 @@ msgstr "PDF: макет (8 страниц, альбомная)"
 #: Menu
 msgid "PDF: Layout (8 pages, portrait)"
 msgstr "PDF: макет (8 страниц, книжная)"
+
+#: Menu
+msgid "PDF: List annotations"
+msgstr "PDF: показать аннотации"
 
 #: Menu
 msgid "PDF: Optimize for web (linearize)"
