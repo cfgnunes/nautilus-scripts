@@ -44,6 +44,9 @@ _open_app() {
 
     # Iterate over each input file (directory).
     local input_file=""
+    # Disable pathname expansion so names like '*' or '?' are not expanded
+    # when '$input_files' is unquoted (IFS splits only on '$FIELD_SEPARATOR').
+    set -f
     for input_file in $input_files; do
         # Detect if it's a remote 'sftp' path.
         if [[ "$input_file" == *"sftp:"* ]]; then
@@ -92,6 +95,7 @@ _open_app() {
             fi
         fi
     done
+    set +f
 }
 
 _main "$@"
