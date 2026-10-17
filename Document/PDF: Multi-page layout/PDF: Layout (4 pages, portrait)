@@ -30,7 +30,7 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($pages pages, portrait)'")
 
     # Run the main process.
-    # NOTE: Older 'pdfcpu' versions do not support '--' in the command line.
+    # NOTE: Older versions of 'pdfcpu'do not support '--' in the command line.
     std_output=$(pdfcpu nup form:A4P,border:off,margin:0 "$output_file" "$pages" "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }

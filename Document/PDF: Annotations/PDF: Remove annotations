@@ -30,7 +30,7 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(no annotations)'")
 
     # Run the main process.
-    # NOTE: Older 'pdfcpu' versions do not support '--' in the command line.
+    # NOTE: Older versions of 'pdfcpu'do not support '--' in the command line.
     std_output=$(pdfcpu annotations remove "$input_file" "$output_file" 2>&1)
     exit_code=$?
 
