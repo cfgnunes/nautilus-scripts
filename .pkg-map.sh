@@ -9,10 +9,10 @@
 #   https://hpc.guix.info/browse
 
 # NOTE: Some package definitions were removed to prevent compatibility issues.
-# 'pkgx: exiftool.org' - Fails on Fedora.
-# 'pkgx: github.com/p7zip-project/p7zip' - Outdated and unofficial package.
+# 'pkgx: exiftool.org' - Fails on Fedora. See: https://github.com/pkgxdev/pantry/issues/14758
+# 'pkgx: github.com/p7zip-project/p7zip' - Outdated and unofficial package. See: https://github.com/pkgxdev/pantry/pull/14757
 # 'pkgx: gnu.org/inetutils' - Provides a 'ping' implementation that differs from those shipped by distributions.
-# 'pkgx: perl.org' - Fails on Fedora.
+# 'pkgx: perl.org' - Fails on Fedora. See: https://github.com/pkgxdev/pantry/issues/14758
 # 'pkgx: poppler.freedesktop.org' - Exports environment variables that alter Zenity's font settings.
 
 # Description:
