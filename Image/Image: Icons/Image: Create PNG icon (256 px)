@@ -45,6 +45,7 @@ _main_task() {
     filename_extension=$(_get_filename_extension "$input_file")
     if [[ "${filename_extension,,}" == ".svg"* ]]; then
 
+        # TODO: Remove legacy Inkscape compatibility code when support for versions < 1.0 is dropped.
         local inkscape_ver=""
         local inkscape_ver_old="1.0"
         inkscape_ver=$(inkscape --version 2>/dev/null | cut -d " " -f 2)

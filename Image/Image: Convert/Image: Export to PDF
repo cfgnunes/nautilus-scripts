@@ -87,6 +87,7 @@ _run_command() {
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "inkscape")
+        # TODO: Remove legacy Inkscape compatibility code when support for versions < 1.0 is dropped.
         local inkscape_ver=""
         local inkscape_ver_old="1.0"
         inkscape_ver=$(inkscape --version 2>/dev/null | cut -d " " -f 2)
