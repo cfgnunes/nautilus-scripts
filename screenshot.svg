@@ -1,976 +1,593 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   id="svg5"
    width="832.4408"
    height="575.4718"
    version="1.1"
    viewBox="0 0 220.25052 152.25695"
-   xml:space="preserve"
+   id="svg90"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:dc="http://purl.org/dc/elements/1.1/"><defs
-     id="defs1" /><title
-     id="title3146">Enhanced File Manager Actions for Linux</title><g
-     id="g3"><g
-       id="g4"><rect
-         id="rect1297"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs1" />
+  <title
+     id="title1">Enhanced File Manager Actions for Linux</title>
+  <g
+     id="g90">
+    <style
+       id="style1">
+  .back {
+    fill: #ffffff;
+    stroke: #cccccc;
+    stroke-width: 0.3;
+  }
+  .sel {
+    fill: #ececec;
+  }
+  .arr {
+    fill: none;
+    stroke: #b2b2b2;
+    stroke-width: 0.3;
+  }
+  .sep {
+    fill: none;
+    stroke: #b2b2b2;
+    stroke-width: 0.2;
+  }
+  .txt {
+    font-family: 'Adwaita Sans', Cantarell, 'Noto Sans', Arial, Helvetica, sans-serif;
+    font-size: 4px;
+    stroke-width: 0.2;
+  }
+  .cmn {
+    fill: #474042;
+  }
+  .cky {
+    fill: #939393;
+  }
+</style>
+    <g
+       id="g26">
+      <rect
          x="0.156385"
          y="0.15454286"
          width="73.770752"
          height="118.33511"
-         ry="2.8160999"
-         fill="#ffffff"
-         stroke="#cccccc"
-         stroke-width="0.31277"
-         rx="2.8160999" /><rect
-         id="rect8540"
+         ry="3"
+         rx="3"
+         class="back"
+         id="rect1" />
+      <rect
          x="1.8267608"
          y="10.531996"
          width="70.43"
          height="8.1196003"
-         ry="1.4339"
-         fill="#ececec"
-         rx="1.4339" /><text
-         id="text179"
+         ry="2"
+         rx="2"
+         class="sel"
+         id="rect2" />
+      <text
          x="4.7526908"
          y="7.158258"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177"
-           x="4.7526908"
-           y="7.158258"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Open</tspan></text><text
-         id="text179-3-7"
+         class="txt cmn"
+         id="text2">Open</text>
+      <text
          x="4.7526908"
          y="15.585796"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5"
-           x="4.7526908"
-           y="15.585796"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Scripts</tspan></text><text
-         id="text179-3-7-3-6-9"
+         class="txt cmn"
+         id="text3">Scripts</text>
+      <text
          x="4.7526908"
          y="27.490175"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1"
-           x="4.7526908"
-           y="27.490175"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Cut</tspan></text><text
-         id="text179-3-7-3-6-9-2"
+         class="txt cmn"
+         id="text4">Cut</text>
+      <text
          x="4.7526908"
          y="35.998199"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7"
-           x="4.7526908"
-           y="35.998199"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Copy</tspan></text><text
-         id="text179-3-7-3-6-9-2-0"
+         class="txt cmn"
+         id="text5">Copy</text>
+      <text
          x="4.7526908"
          y="44.506222"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-9"
-           x="4.7526908"
-           y="44.506222"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Move to...</tspan></text><text
-         id="text179-3-7-3-6-9-2-0-0"
+         class="txt cmn"
+         id="text6">Move to...</text>
+      <text
          x="4.7526908"
          y="90.371536"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-9-62"
-           x="4.7526908"
-           y="90.371536"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Move to Trash</tspan></text><text
-         id="text179-3-7-3-6-9-2-0-0-6"
+         class="txt cmn"
+         id="text7">Move to Trash</text>
+      <text
          x="4.7526908"
          y="64.926659"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-9-62-1"
-           x="4.7526908"
-           y="64.926659"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Rename...</tspan></text><text
-         id="text179-3-7-3-6-9-2-0-0-6-89"
+         class="txt cmn"
+         id="text8">Rename...</text>
+      <text
          x="58.246128"
          y="90.371536"
-         fill="#939393"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-9-62-1-73"
-           x="58.246128"
-           y="90.371536"
-           fill="#939393"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Delete</tspan></text><text
-         id="text179-3-7-3-6-9-2-0-0-6-89-2"
+         class="txt cky"
+         id="text9">Delete</text>
+      <text
          x="58.870892"
          y="35.998199"
-         fill="#939393"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-9-62-1-73-9"
-           x="58.870892"
-           y="35.998199"
-           fill="#939393"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Ctrl+C</tspan></text><text
-         id="text179-3-7-3-6-9-2-0-0-6-89-2-3"
+         class="txt cky"
+         id="text10">Ctrl+C</text>
+      <text
          x="58.863132"
          y="27.490175"
-         fill="#939393"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-9-62-1-73-9-1"
-           x="58.863132"
-           y="27.490175"
-           fill="#939393"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Ctrl+X</tspan></text><text
-         id="text179-3-7-3-6-9-2-0-0-6-89-2-3-9-7"
+         class="txt cky"
+         id="text11">Ctrl+X</text>
+      <text
          x="50.79546"
          y="114.14462"
-         fill="#939393"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-9-62-1-73-9-1-4-8"
-           x="50.79546"
-           y="114.14462"
-           fill="#939393"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Alt+Return</tspan></text><text
-         id="text179-3-7-3-6-9-2-0-0-6-89-6"
+         class="txt cky"
+         id="text12">Alt+Return</text>
+      <text
          x="65.80545"
          y="64.926659"
-         fill="#939393"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-9-62-1-73-1"
-           x="65.80545"
-           y="64.926659"
-           fill="#939393"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">F2</tspan></text><text
-         id="text179-3-7-3-6-9-2-0-0-6-8"
+         class="txt cky"
+         id="text13">F2</text>
+      <text
          x="4.7526908"
          y="81.889908"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-9-62-1-7"
-           x="4.7526908"
-           y="81.889908"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Compress...</tspan></text><text
-         id="text179-3-7-3-6-9-2-0-0-6-8-9"
+         class="txt cmn"
+         id="text14">Compress...</text>
+      <text
          x="4.7526908"
          y="73.408287"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-9-62-1-7-2"
-           x="4.7526908"
-           y="73.408287"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Paste Into Folder</tspan></text><text
-         id="text179-3-7-3-6-9-2-0-0-6-8-9-0-3"
+         class="txt cmn"
+         id="text15">Paste Into Folder</text>
+      <text
          x="4.7526908"
          y="102.1824"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-9-62-1-7-2-2-7"
-           x="4.7526908"
-           y="102.1824"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Open in Terminal</tspan></text><text
-         id="text179-3-7-3-6-9-2-0-0-6-8-9-0-3-5-2"
+         class="txt cmn"
+         id="text16">Open in Terminal</text>
+      <text
          x="4.7526908"
          y="114.14462"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-9-62-1-7-2-2-7-9-2"
-           x="4.7526908"
-           y="114.14462"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Properties</tspan></text><text
-         id="text179-3-7-3-6-9-2-0-3"
+         class="txt cmn"
+         id="text17">Properties</text>
+      <text
          x="4.7526908"
          y="53.014244"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-9-6"
-           x="4.7526908"
-           y="53.014244"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Copy to...</tspan></text><path
-         id="path7707"
+         class="txt cmn"
+         id="text18">Copy to...</text>
+      <path
          d="M 1.5227611,20.235443 H 72.559761"
-         fill="none"
-         stroke="#cccccc"
-         stroke-width="0.27939" /><path
-         id="path7707-9"
+         class="sep"
+         id="path18" />
+      <path
          d="M 1.5227611,57.588443 H 72.559761"
-         fill="none"
-         stroke="#cccccc"
-         stroke-width="0.27939" /><path
-         id="path7707-7"
+         class="sep"
+         id="path19" />
+      <path
          d="M 1.5227611,95.033387 H 72.559761"
-         fill="none"
-         stroke="#cccccc"
-         stroke-width="0.27939" /><path
-         id="path7707-8"
+         class="sep"
+         id="path20" />
+      <path
          d="M 1.5227611,106.88334 H 72.559761"
-         fill="none"
-         stroke="#cccccc"
-         stroke-width="0.27939" /><g
-         id="g10827"
+         class="sep"
+         id="path21" />
+      <g
          transform="translate(73.363761,8.5511464)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-7"
+         class="arr"
+         id="g23">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path22" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path23" />
+      </g>
+      <g
          transform="translate(73.363761,0.14760804)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-9"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-3"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g></g><g
-       id="g1"><rect
-         id="rect1297-9"
+         class="arr"
+         id="g25">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path24" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path25" />
+      </g>
+    </g>
+    <g
+       id="g74">
+      <rect
          x="73.247513"
          y="3.329443"
          width="73.7425"
          height="141.89326"
-         ry="3.3478"
-         fill="#ffffff"
-         stroke="#cccccc"
-         stroke-width="0.34102"
-         rx="3.3478" /><rect
-         id="rect8540-2"
+         ry="3"
+         rx="3"
+         class="back"
+         id="rect26" />
+      <rect
          x="74.903763"
          y="38.735294"
          width="70.43"
          height="8.1196003"
-         ry="1.4339"
-         fill="#ececec"
-         rx="1.4339" /><path
-         id="path7707-7-7"
+         ry="2"
+         rx="2"
+         class="sel"
+         id="rect27" />
+      <path
          d="M 74.603761,133.58172 H 145.64076"
-         fill="none"
-         stroke="#cccccc"
-         stroke-width="0.27939" /><g
-         id="g10827-73"
+         class="sep"
+         id="path27" />
+      <g
          transform="translate(144.95376,11.330443)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-73-2"
+         class="arr"
+         id="g29">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path28" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path29" />
+      </g>
+      <g
          transform="translate(144.95376,19.805443)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-9"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-3"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-73-1"
+         class="arr"
+         id="g31">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path30" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path31" />
+      </g>
+      <g
          transform="translate(144.95376,28.279443)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-94"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-7"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-73-8"
+         class="arr"
+         id="g33">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path32" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path33" />
+      </g>
+      <g
          transform="translate(144.95376,36.754443)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-4"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-5"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-73-0"
+         class="arr"
+         id="g35">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path34" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path35" />
+      </g>
+      <g
          transform="translate(144.95376,45.228443)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-3"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-6"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-73-10"
+         class="arr"
+         id="g37">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path36" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path37" />
+      </g>
+      <g
          transform="translate(144.95376,53.703443)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-6"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-32"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-73-06"
+         class="arr"
+         id="g39">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path38" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path39" />
+      </g>
+      <g
          transform="translate(144.95376,62.177443)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-1"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-55"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-73-4"
+         class="arr"
+         id="g41">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path40" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path41" />
+      </g>
+      <g
          transform="translate(144.95376,70.652443)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-7"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-65"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-73-6"
+         class="arr"
+         id="g43">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path42" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path43" />
+      </g>
+      <g
          transform="translate(144.95376,79.126443)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-93"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-74"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-73-5"
+         class="arr"
+         id="g45">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path44" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path45" />
+      </g>
+      <g
          transform="translate(144.95376,87.600443)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-2"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-54"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-73-7"
+         class="arr"
+         id="g47">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path46" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path47" />
+      </g>
+      <g
          transform="translate(144.95376,96.078443)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-44"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-30"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-73-78"
+         class="arr"
+         id="g49">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path48" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path49" />
+      </g>
+      <g
          transform="translate(144.95376,104.54844)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-68"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-8"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-73-43"
+         class="arr"
+         id="g51">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path50" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path51" />
+      </g>
+      <g
          transform="translate(144.95376,113.02844)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-14"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-9"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-73-20"
+         class="arr"
+         id="g53">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path52" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path53" />
+      </g>
+      <g
          transform="translate(144.95376,113.03172)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-689"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-2"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-73-66"
+         class="arr"
+         id="g55">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path54" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path55" />
+      </g>
+      <g
          transform="translate(144.95376,121.50172)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-49"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-50"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><g
-         id="g10827-73-48"
+         class="arr"
+         id="g57">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path56" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path57" />
+      </g>
+      <g
          transform="rotate(180,37.594881,7.5302215)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-71"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-72"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><text
-         id="text179-3-7-3-6-9-2-7"
+         class="arr"
+         id="g59">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path58" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path59" />
+      </g>
+      <text
          x="77.78907"
          y="18.675259"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8"
-           x="77.78907"
-           y="18.675259"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Accessed recently</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-92"
+         class="txt cmn"
+         id="text59">Accessed recently</text>
+      <text
          x="104.20106"
          y="10.298975"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-28"
-           x="104.20106"
-           y="10.298975"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Scripts</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-7"
+         class="txt cmn"
+         id="text60">Scripts</text>
+      <text
          x="77.78907"
          y="27.130102"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-4"
-           x="77.78907"
-           y="27.130102"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Archive</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-1"
+         class="txt cmn"
+         id="text61">Archive</text>
+      <text
          x="77.78907"
          y="35.584946"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-9"
-           x="77.78907"
-           y="35.584946"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Audio and Video</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-0"
+         class="txt cmn"
+         id="text62">Audio and Video</text>
+      <text
          x="77.78907"
          y="44.039791"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-98"
-           x="77.78907"
-           y="44.039791"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Checksum</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-8"
+         class="txt cmn"
+         id="text63">Checksum</text>
+      <text
          x="77.78907"
          y="52.494637"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-5"
-           x="77.78907"
-           y="52.494637"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Clipboard</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-84"
+         class="txt cmn"
+         id="text64">Clipboard</text>
+      <text
          x="77.78907"
          y="60.949478"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-3"
-           x="77.78907"
-           y="60.949478"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Directories and Files</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-71"
+         class="txt cmn"
+         id="text65">Directories and Files</text>
+      <text
          x="77.78907"
          y="69.404327"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-38"
-           x="77.78907"
-           y="69.404327"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Document</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-09"
+         class="txt cmn"
+         id="text66">Document</text>
+      <text
          x="77.78907"
          y="77.859169"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-7"
-           x="77.78907"
-           y="77.859169"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Encryption</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-9"
+         class="txt cmn"
+         id="text67">Encryption</text>
+      <text
          x="77.78907"
          y="86.314011"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-93"
-           x="77.78907"
-           y="86.314011"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Image</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-2"
+         class="txt cmn"
+         id="text68">Image</text>
+      <text
          x="77.78907"
          y="94.76886"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-43"
-           x="77.78907"
-           y="94.76886"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Links</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-712"
+         class="txt cmn"
+         id="text69">Links</text>
+      <text
          x="77.78907"
          y="103.2237"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-2"
-           x="77.78907"
-           y="103.2237"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Network and Internet</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-02"
+         class="txt cmn"
+         id="text70">Network and Internet</text>
+      <text
          x="77.78907"
          y="111.67854"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-1"
-           x="77.78907"
-           y="111.67854"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Open with</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-4"
+         class="txt cmn"
+         id="text71">Open with</text>
+      <text
          x="77.78907"
          y="120.13339"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-171"
-           x="77.78907"
-           y="120.13339"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Rename files</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-11"
+         class="txt cmn"
+         id="text72">Rename files</text>
+      <text
          x="77.78907"
          y="128.58823"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-70"
-           x="77.78907"
-           y="128.58823"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Security and Recovery</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-40"
+         class="txt cmn"
+         id="text73">Security and Recovery</text>
+      <text
          x="77.78907"
          y="140.2429"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-8"
-           x="77.78907"
-           y="140.2429"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Open Scripts Folder</tspan></text></g><g
-       id="g2"><rect
-         id="rect1297-9-6"
+         class="txt cmn"
+         id="text74">Open Scripts Folder</text>
+    </g>
+    <g
+       id="g89">
+      <rect
          x="146.32034"
          y="30.315443"
          width="73.776817"
          height="121.79"
-         ry="2.7075"
-         fill="#ffffff"
-         stroke="#cccccc"
-         stroke-width="0.3067"
-         rx="2.7075" /><rect
-         id="rect8540-2-1"
+         ry="3"
+         rx="3"
+         class="back"
+         id="rect74" />
+      <rect
          x="147.99376"
          y="99.418198"
          width="70.43"
          height="8.1196003"
-         ry="1.4339"
-         fill="#ececec"
-         rx="1.4339" /><g
-         id="g10827-73-48-8"
+         ry="2"
+         rx="2"
+         class="sel"
+         id="rect75" />
+      <g
          transform="rotate(180,74.135881,21.026221)"
-         fill="none"
-         stroke="#b2b2b2"
-         stroke-width="0.2"><path
-           id="path10328-6-71-4"
-           d="m -4.8536,4.2039 1.0993,1.904" /><path
-           id="path10328-3-1-72-8"
-           d="m -3.7543,5.9734 -1.0993,1.904" /></g><text
-         id="text179-3-7-3-6-9-2-7-10"
+         class="arr"
+         id="g76">
+        <path
+           d="m -4.8536,4.2039 1.0993,1.904"
+           id="path75" />
+        <path
+           d="m -3.7543,5.9734 -1.0993,1.904"
+           id="path76" />
+      </g>
+      <text
          x="150.87125"
          y="45.666019"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-30"
-           x="150.87125"
-           y="45.666019"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Compute all checksums</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-92-4"
+         class="txt cmn"
+         id="text76">Compute all checksums</text>
+      <text
          x="173.85384"
          y="37.289738"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-28-4"
-           x="173.85384"
-           y="37.289738"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Checksum</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-7-4"
+         class="txt cmn"
+         id="text77">Checksum</text>
+      <text
          x="150.87125"
          y="54.140587"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-4-4"
-           x="150.87125"
-           y="54.140587"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Compute MD5</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-1-7"
+         class="txt cmn"
+         id="text78">Compute MD5</text>
+      <text
          x="150.87125"
          y="62.615158"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-9-6"
-           x="150.87125"
-           y="62.615158"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Compute SHA1</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-0-3"
+         class="txt cmn"
+         id="text79">Compute SHA1</text>
+      <text
          x="150.87125"
          y="71.089729"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-98-1"
-           x="150.87125"
-           y="71.089729"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Compute SHA256</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-8-7"
+         class="txt cmn"
+         id="text80">Compute SHA256</text>
+      <text
          x="150.87125"
          y="79.564293"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-5-5"
-           x="150.87125"
-           y="79.564293"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Compute SHA512</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-84-9"
+         class="txt cmn"
+         id="text81">Compute SHA512</text>
+      <text
          x="150.87125"
          y="88.038864"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-3-6"
-           x="150.87125"
-           y="88.038864"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Generate MD5 file</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-71-2"
+         class="txt cmn"
+         id="text82">Generate MD5 file</text>
+      <text
          x="150.87125"
          y="96.513435"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-38-1"
-           x="150.87125"
-           y="96.513435"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Generate SHA1 file</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-09-7"
+         class="txt cmn"
+         id="text83">Generate SHA1 file</text>
+      <text
          x="150.87125"
          y="104.988"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-7-8"
-           x="150.87125"
-           y="104.988"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Generate SHA256 file</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-9-5"
+         class="txt cmn"
+         id="text84">Generate SHA256 file</text>
+      <text
          x="150.87125"
          y="113.46257"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-93-7"
-           x="150.87125"
-           y="113.46257"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Generate SHA512 file</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-2-4"
+         class="txt cmn"
+         id="text85">Generate SHA512 file</text>
+      <text
          x="150.87125"
          y="121.93714"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-43-1"
-           x="150.87125"
-           y="121.93714"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Verify MD5 file</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-712-8"
+         class="txt cmn"
+         id="text86">Verify MD5 file</text>
+      <text
          x="150.87125"
          y="130.4117"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-2-5"
-           x="150.87125"
-           y="130.4117"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Verify SHA1 file</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-02-9"
+         class="txt cmn"
+         id="text87">Verify SHA1 file</text>
+      <text
          x="150.87125"
          y="138.88628"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-1-7"
-           x="150.87125"
-           y="138.88628"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Verify SHA256 file</tspan></text><text
-         id="text179-3-7-3-6-9-2-7-75-5"
+         class="txt cmn"
+         id="text88">Verify SHA256 file</text>
+      <text
          x="150.87125"
          y="147.36084"
-         fill="#474042"
-         font-family="'Noto Sans'"
-         font-size="4px"
-         stroke-width="0.2"
-         xml:space="preserve"><tspan
-           id="tspan177-6-5-5-2-1-7-8-17-3"
-           x="150.87125"
-           y="147.36084"
-           fill="#474042"
-           font-family="'Noto Sans'"
-           font-size="4px"
-           stroke-width="0.2">Verify SHA512 file</tspan></text></g></g><metadata
-     id="metadata3144"><rdf:RDF><cc:Work
-         rdf:about=""><dc:title>Enhanced File Manager Actions for Linux</dc:title><dc:creator><cc:Agent><dc:title>Cristiano Fraga G. Nunes</dc:title></cc:Agent></dc:creator></cc:Work></rdf:RDF></metadata></svg>
+         class="txt cmn"
+         id="text89">Verify SHA512 file</text>
+    </g>
+  </g>
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Enhanced File Manager Actions for Linux</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Cristiano Fraga G. Nunes</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>
