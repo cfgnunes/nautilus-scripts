@@ -45,13 +45,15 @@ _main_task() {
     if cksum -a crc32b /dev/null &>/dev/null; then
         std_output=$(cksum -a crc32b -- "$input_file" 2>&1)
         exit_code=$?
-        std_output=${std_output%%[$'\t ']*}
-        printf -v std_output '%08x' "$std_output"
+        if ((exit_code == 0)); then
+            std_output=${std_output%%[$'\t ']*}
+            printf -v std_output '%08x' "$std_output"
+        fi
     else
         std_output=$(rhash --printf="%{crc32}" -- "$input_file" 2>&1)
         exit_code=$?
     fi
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    _check_output "$exit_code" "$std_output" "$input_file" "" || return 1
     output_file="($std_output) $filename"
 
     _move_file "skip" "$input_file" "$dir/$output_file" || return 1
