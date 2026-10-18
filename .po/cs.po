@@ -529,10 +529,6 @@ msgid "Open with"
 msgstr "Otevřít pomocí"
 
 #: Menu
-msgid "Plain text"
-msgstr "Prostý text"
-
-#: Menu
 msgid "Rename files"
 msgstr "Přejmenovat soubory"
 
@@ -567,6 +563,10 @@ msgstr "Zvuk: kvalita"
 #: Menu
 msgid "Document: Convert"
 msgstr "Dokument: převod"
+
+#: Menu
+msgid "Document: Text files"
+msgstr "Dokument: textové soubory"
 
 #: Menu
 msgid "Image: Color"

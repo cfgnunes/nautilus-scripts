@@ -528,10 +528,6 @@ msgid "Open with"
 msgstr ""
 
 #: Menu
-msgid "Plain text"
-msgstr ""
-
-#: Menu
 msgid "Rename files"
 msgstr ""
 
@@ -565,6 +561,10 @@ msgstr ""
 
 #: Menu
 msgid "Document: Convert"
+msgstr ""
+
+#: Menu
+msgid "Document: Text files"
 msgstr ""
 
 #: Menu

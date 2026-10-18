@@ -529,10 +529,6 @@ msgid "Open with"
 msgstr "გახსნა პროგრამით"
 
 #: Menu
-msgid "Plain text"
-msgstr "უბრალო ტექსტი"
-
-#: Menu
 msgid "Rename files"
 msgstr "ფაილების სახელის გადარქმევა"
 
@@ -567,6 +563,10 @@ msgstr "აუდიო: ხარისხი"
 #: Menu
 msgid "Document: Convert"
 msgstr "დოკუმენტი: გადაყვანა"
+
+#: Menu
+msgid "Document: Text files"
+msgstr "დოკუმენტი: ტექსტური ფაილები"
 
 #: Menu
 msgid "Image: Color"

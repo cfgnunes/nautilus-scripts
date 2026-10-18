@@ -529,10 +529,6 @@ msgid "Open with"
 msgstr "Mở bằng"
 
 #: Menu
-msgid "Plain text"
-msgstr "Văn bản thuần"
-
-#: Menu
 msgid "Rename files"
 msgstr "Đổi tên tệp"
 
@@ -567,6 +563,10 @@ msgstr "Âm thanh: Chất lượng"
 #: Menu
 msgid "Document: Convert"
 msgstr "Tài liệu: Chuyển đổi"
+
+#: Menu
+msgid "Document: Text files"
+msgstr "Tài liệu: Tệp văn bản"
 
 #: Menu
 msgid "Image: Color"

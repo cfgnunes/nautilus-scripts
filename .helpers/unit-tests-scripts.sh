@@ -825,6 +825,42 @@ _main() {
         "Document/PDF: Tools/PDF: Remove metadata|Test document PDF (no metadata).pdf"
 
     # -------------------------------------------------------------------------
+    # SECTION: Document: Text files
+    # -------------------------------------------------------------------------
+
+    __test_scripts_file "$fixture_txt" "Test text.txt" "empty" \
+        "Document/Document: Text files/Text: Encode to UTF-8|Test text (UTF-8).txt" \
+        "Document/Document: Text files/Text: Convert tabs to 4 spaces|Test text (4 spaces).txt"
+
+    __test_scripts_stdout "$fixture_txt" "Test text.txt" \
+        "Document/Document: Text files/Text: List encodings" \
+        "Document/Document: Text files/Text: List line breaks" \
+        "Document/Document: Text files/Text: List line counts" \
+        "Document/Document: Text files/Text: List line lengths" \
+        "Document/Document: Text files/Text: List word counts"
+
+    __test_begin \
+        "$fixture_txt::Test text.txt" \
+        "$fixture_txt::Test text 2.txt"
+    echo "Content of 'Test text 2'." >"$temp_dir/Test text 2.txt"
+    __test_script "Document/Document: Text files/Text: Concatenate multiple files" "empty" \
+        "Concatenated files.txt" \
+        "$temp_dir/Test text.txt" "$temp_dir/Test text 2.txt"
+
+    __test_begin
+    echo "Content of 'Test text'.(á)" |
+        piconv -f UTF-8 -t ISO-8859-1 >"$temp_dir/Test text.txt"
+    __test_script "Document/Document: Text files/Text: Normalize (UTF-8, recursive)" "empty" \
+        "Test text.txt.bak" "$temp_dir/Test text.txt"
+
+    __test_begin "$fixture_txt::Test text.txt"
+    __test_script "Document/Document: Text files/Text: List issues" "empty" "" \
+        "$temp_dir/Test text.txt"
+
+    __test_scripts_file "$fixture_txt" "Test text.txt" "empty" \
+        "Document/Document: Text files/Text: Remove trailing spaces|Test text (no trailing).txt"
+
+    # -------------------------------------------------------------------------
     # SECTION: Links
     # -------------------------------------------------------------------------
 
@@ -890,42 +926,6 @@ _main() {
         >"$temp_dir/Test internet.txt"
     __test_script "Network and Internet/URL: Show HTTP headers" "text" "" \
         "$temp_dir/Test internet.txt"
-
-    # -------------------------------------------------------------------------
-    # SECTION: Plain text
-    # -------------------------------------------------------------------------
-
-    __test_scripts_file "$fixture_txt" "Test text.txt" "empty" \
-        "Plain text/Text: Encode to UTF-8|Test text (UTF-8).txt" \
-        "Plain text/Text: Convert tabs to 4 spaces|Test text (4 spaces).txt"
-
-    __test_scripts_stdout "$fixture_txt" "Test text.txt" \
-        "Plain text/Text: List encodings" \
-        "Plain text/Text: List line breaks" \
-        "Plain text/Text: List line counts" \
-        "Plain text/Text: List line lengths" \
-        "Plain text/Text: List word counts"
-
-    __test_begin \
-        "$fixture_txt::Test text.txt" \
-        "$fixture_txt::Test text 2.txt"
-    echo "Content of 'Test text 2'." >"$temp_dir/Test text 2.txt"
-    __test_script "Plain text/Text: Concatenate multiple files" "empty" \
-        "Concatenated files.txt" \
-        "$temp_dir/Test text.txt" "$temp_dir/Test text 2.txt"
-
-    __test_begin
-    echo "Content of 'Test text'.(á)" |
-        piconv -f UTF-8 -t ISO-8859-1 >"$temp_dir/Test text.txt"
-    __test_script "Plain text/Text: Normalize (UTF-8, recursive)" "empty" \
-        "Test text.txt.bak" "$temp_dir/Test text.txt"
-
-    __test_begin "$fixture_txt::Test text.txt"
-    __test_script "Plain text/Text: List issues" "empty" "" \
-        "$temp_dir/Test text.txt"
-
-    __test_scripts_file "$fixture_txt" "Test text.txt" "empty" \
-        "Plain text/Text: Remove trailing spaces|Test text (no trailing).txt"
 
     # -------------------------------------------------------------------------
     # SECTION: Rename files

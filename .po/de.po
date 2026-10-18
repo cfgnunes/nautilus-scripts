@@ -529,10 +529,6 @@ msgid "Open with"
 msgstr "Öffnen mit"
 
 #: Menu
-msgid "Plain text"
-msgstr "Einfacher Text"
-
-#: Menu
 msgid "Rename files"
 msgstr "Dateien umbenennen"
 
@@ -567,6 +563,10 @@ msgstr "Audio: Qualität"
 #: Menu
 msgid "Document: Convert"
 msgstr "Dokument: Konvertieren"
+
+#: Menu
+msgid "Document: Text files"
+msgstr "Dokument: Textdateien"
 
 #: Menu
 msgid "Image: Color"

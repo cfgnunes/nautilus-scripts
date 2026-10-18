@@ -529,10 +529,6 @@ msgid "Open with"
 msgstr "연결 프로그램"
 
 #: Menu
-msgid "Plain text"
-msgstr "일반 텍스트"
-
-#: Menu
 msgid "Rename files"
 msgstr "파일 이름 바꾸기"
 
@@ -567,6 +563,10 @@ msgstr "오디오: 품질"
 #: Menu
 msgid "Document: Convert"
 msgstr "문서: 변환"
+
+#: Menu
+msgid "Document: Text files"
+msgstr "문서: 텍스트 파일"
 
 #: Menu
 msgid "Image: Color"

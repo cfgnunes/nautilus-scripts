@@ -529,10 +529,6 @@ msgid "Open with"
 msgstr "Şununla aç"
 
 #: Menu
-msgid "Plain text"
-msgstr "Düz metin"
-
-#: Menu
 msgid "Rename files"
 msgstr "Dosyaları yeniden adlandır"
 
@@ -567,6 +563,10 @@ msgstr "Ses: Kalite"
 #: Menu
 msgid "Document: Convert"
 msgstr "Belge: Dönüştür"
+
+#: Menu
+msgid "Document: Text files"
+msgstr "Belge: Metin dosyaları"
 
 #: Menu
 msgid "Image: Color"

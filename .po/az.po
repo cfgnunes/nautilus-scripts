@@ -529,10 +529,6 @@ msgid "Open with"
 msgstr "Bununla aç"
 
 #: Menu
-msgid "Plain text"
-msgstr "Sadə mətn"
-
-#: Menu
 msgid "Rename files"
 msgstr "Faylların adını dəyiş"
 
@@ -567,6 +563,10 @@ msgstr "Audio: Keyfiyyət"
 #: Menu
 msgid "Document: Convert"
 msgstr "Sənəd: Çevir"
+
+#: Menu
+msgid "Document: Text files"
+msgstr "Sənəd: Mətn faylları"
 
 #: Menu
 msgid "Image: Color"
