@@ -43,7 +43,7 @@ _verify_checksum() {
     saved_checksum=$(printf "%s" "$line" | cut -d " " -f1)
     saved_file=$(printf "%s" "$line" | cut -d " " -f3-)
 
-    # Replace % to %% with the 'printf' command.
+    # Escape '%' characters for the 'printf' command.
     saved_file=${saved_file//%/%%}
 
     # Some checksums start with '\', for filenames with '\n' or '\'.
