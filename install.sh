@@ -747,11 +747,6 @@ _check_dependencies() {
     elif _command_exists "pacman"; then
         # Package manager 'pacman': For Arch Linux systems.
         _command_exists "pgrep" || packages+="procps "
-        # HACK: Workaround for Arch Linux.
-        # Force update GTK4 packages (necessary sometimes).
-        if [[ "$packages" == *"zenity"* ]]; then
-            packages+="gtk4 zlib glib2 "
-        fi
         _install_packages "pacman" "$packages"
     elif _command_exists "zypper"; then
         # Package manager 'zypper': For openSUSE systems.
@@ -764,11 +759,6 @@ _check_dependencies() {
     elif _command_exists "xbps-install"; then
         # Package manager 'xbps': For Void Linux systems.
         _command_exists "pgrep" || packages+="procps-ng "
-        # HACK: Workaround for Void Linux.
-        # Force update some dependencies (necessary sometimes).
-        if [[ "$packages" == *"yad"* ]]; then
-            packages+="libavcodec6 libheif "
-        fi
         _install_packages "xbps-install" "$packages"
     else
         if [[ -n "$packages" ]]; then
