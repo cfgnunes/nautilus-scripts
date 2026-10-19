@@ -1499,10 +1499,11 @@ _get_filename_next_suffix() {
     while ((count < max_attempts)); do
 
         # Create a temporary lock directory under '$TEMP_DIR_FILENAME_LOCKS'.
-        # The directory name mirrors the candidate filename and serves as an
-        # atomic claim for that name.
-        local filename_lock="$TEMP_DIR_FILENAME_LOCKS/"
-        filename_lock+=$(basename -- "$filename_result")
+        # The directory name is a hash of the full path.
+        local lock_key=""
+        lock_key=$(readlink -f "$filename_result" | sha256sum 2>/dev/null)
+        lock_key=${lock_key%% *}
+        local filename_lock="$TEMP_DIR_FILENAME_LOCKS/$lock_key"
 
         # The 'mkdir' succeeds only if the directory does NOT already exist.
         # This makes the operation atomic:  only one process can succeed here.

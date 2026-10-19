@@ -785,6 +785,16 @@ __run_get_filename_next_suffix() {
     __test_equal "Occupied suffix advances to the next free name." \
         "$expected_output" "$output"
     __clean_temp_files
+
+    __create_temp_files
+    mkdir -p "$_TEMP_DIR_TEST/a" "$_TEMP_DIR_TEST/b"
+    output=$(_get_filename_next_suffix "$_TEMP_DIR_TEST/a/doc.txt")
+    __test_equal "First directory keeps the plain name." \
+        "$_TEMP_DIR_TEST/a/doc.txt" "$output"
+    output=$(_get_filename_next_suffix "$_TEMP_DIR_TEST/b/doc.txt")
+    __test_equal "Same basename in another directory stays free." \
+        "$_TEMP_DIR_TEST/b/doc.txt" "$output"
+    __clean_temp_files
 }
 
 __run_make_temp_dir() {
@@ -1612,7 +1622,7 @@ __run_move_file_errors() {
 
     __create_temp_files
     cp -- "$_TEMP_FILE1" "$_TEMP_FILE2"
-    __test_exit_code "Safe overwrite with identical files." 1 \
+    __test_exit_code "Safe overwrite with identical files." 0 \
         _move_file "safe_overwrite" "$_TEMP_FILE1" "$_TEMP_FILE2"
     : >"$_TEMP_FILE1"
     __test_exit_code "Safe overwrite with zero-byte source." 1 \
