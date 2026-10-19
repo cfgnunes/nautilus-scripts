@@ -180,25 +180,15 @@ _exit_script() {
 
     local child_pids=""
     local script_pid=$$
-    local self_pid=$BASHPID
 
     # Get the process ID (PID) of all child processes.
-    child_pids=$(pstree -p "$script_pid" 2>/dev/null |
-        grep --only-matching --perl-regexp "\(+\K[^)]+" || true)
+    child_pids=$(pstree -p "$script_pid" |
+        grep --only-matching --perl-regexp "\(+\K[^)]+")
 
-    # NOTE: Use 'xargs' and 'kill' to send the SIGTERM signal
-    # to all child processes.
+    # NOTE: Use 'xargs' and kill to send the SIGTERM signal
+    # to all child processes, including the current script.
     # See: https://www.baeldung.com/linux/safely-exit-scripts
-    if [[ -n "$child_pids" ]]; then
-        grep -F -x -v -- "$self_pid" <<<"$child_pids" |
-            xargs --no-run-if-empty kill 2>/dev/null || true
-    fi
-
-    # An 'exit' in a subshell does not stop the main script.
-    if [[ "$self_pid" != "$script_pid" ]]; then
-        kill "$script_pid" 2>/dev/null || true
-    fi
-    exit 1
+    xargs kill <<<"$child_pids" 2>/dev/null
 }
 
 # Function: _check_output
