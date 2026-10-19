@@ -69,7 +69,7 @@ bash install.sh
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd>   | List recent files           |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>W</kbd>   | Text: List issues           |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>C</kbd>   | Copy file names             |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>V</kbd>   | Paste clipboard contents    |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>V</kbd>   | Paste as hard link          |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd> | Paste as symbolic link      |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> | Create backup (via Rsync)   |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> | Compare items               |
@@ -80,7 +80,7 @@ bash install.sh
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd> | Git: Clone URLs             |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> | Git: Reset and pull         |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> | URL: Download file          |
-| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>V</kbd>  | Paste as hard link          |
+| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>V</kbd>  | Paste clipboard contents    |
 
 ## Compatibility
 
