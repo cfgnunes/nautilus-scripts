@@ -36,6 +36,11 @@ _main_task() {
     # Create the input list for the 'ffmpeg'.
     local temp_file=""
     temp_file=$(_make_temp_file)
+
+    # ffmpeg concat demuxer: a quote inside the path is '\'' .
+    local escaped_quote="'\\''"
+    input_files=${input_files//\'/$escaped_quote}
+
     input_files="file '$input_files'"
     # shellcheck disable=SC2001
     input_files=$(sed "s|$FIELD_SEPARATOR|'${FIELD_SEPARATOR}file '|g" <<<"$input_files")
