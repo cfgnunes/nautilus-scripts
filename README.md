@@ -61,6 +61,7 @@ bash install.sh
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>I</kbd>   | Show file information       |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>M</kbd>   | Show file metadata          |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>0</kbd>   | Find empty files            |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>E</kbd>   | Find empty directories      |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>J</kbd>   | Find junk files             |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>U</kbd>   | Find duplicate files        |
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>H</kbd>   | List hidden files           |
@@ -73,9 +74,8 @@ bash install.sh
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd> | Paste as symbolic link      |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> | Create backup (via Rsync)   |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> | Compare items               |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd> | Open item location          |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd> | Compute all checksums       |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> | Find empty directories      |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd> | Open item location          |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd> | Git: Clone URLs             |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> | Git: Reset and pull         |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> | URL: Download file          |
