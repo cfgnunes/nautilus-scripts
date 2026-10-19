@@ -10,9 +10,13 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "magick"
-    _display_wait_box ""
+    _check_dependencies ""
     input_files=$(_get_files "par_type=file; par_select_mime=image/")
+
+    local dependencies=""
+    dependencies=$(_get_dependencies "$input_files")
+    _check_dependencies "$dependencies"
+    _display_wait_box ""
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
@@ -131,6 +135,25 @@ _main_task() {
 
     # Remove the temporary directory.
     rm -rf -- "$temp_dir"
+}
+
+_get_dependencies() {
+    local input_files=$1
+    local dependencies="magick"
+
+    # Inkscape is required only for SVG files.
+    local input_file=""
+    for input_file in $input_files; do
+        case "${input_file,,}" in
+        *.svg | *.svgz)
+            dependencies+=$'\n'
+            dependencies+="inkscape"
+            break
+            ;;
+        esac
+    done
+
+    printf "%s" "$dependencies"
 }
 
 _main "$@"
