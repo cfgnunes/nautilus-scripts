@@ -42,10 +42,9 @@ _main_task() {
     local extension=""
     case $audio_format in
     "aac") extension="m4a" ;;
-    "aiff") extension="aiff" ;;
     "alac") extension="m4a" ;;
     "eac3") extension="ac3" ;;
-    "pcm") extension="wav" ;;
+    "pcm"* | "aiff"*) extension="wav" ;;
     "vorbis") extension="ogg" ;;
     "wmav2") extension="wma" ;;
     *) extension=$audio_format ;;
