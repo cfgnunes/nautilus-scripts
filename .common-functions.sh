@@ -185,10 +185,11 @@ _exit_script() {
     child_pids=$(pstree -p "$script_pid" |
         grep --only-matching --perl-regexp "\(+\K[^)]+")
 
-    # NOTE: Use 'xargs' and kill to send the SIGTERM signal
+    # NOTE: Use 'xargs' and 'kill' to send the SIGTERM signal
     # to all child processes, including the current script.
     # See: https://www.baeldung.com/linux/safely-exit-scripts
     xargs kill <<<"$child_pids" 2>/dev/null
+    exit 1
 }
 
 # Function: _check_output
