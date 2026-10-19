@@ -1650,7 +1650,7 @@ _move_file() {
             # Skip if both files are identical to avoids unnecessary overwrite.
             if cmp --silent -- "$file_src" "$file_dst"; then
                 rm -rf -- "$file_src" 2>/dev/null
-                return 1
+                return 0
             fi
 
             # Apply the same permissions from the destination to the new file.
