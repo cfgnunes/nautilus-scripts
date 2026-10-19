@@ -1501,12 +1501,12 @@ _get_filename_next_suffix() {
         # Create a temporary lock directory under '$TEMP_DIR_FILENAME_LOCKS'.
         # The directory name is a hash of the full path.
         local lock_key=""
-        lock_key=$(readlink -f "$filename_result" | md5sum 2>/dev/null)
+        lock_key=$(md5sum <<<"$filename_result")
         lock_key=${lock_key%% *}
         local filename_lock="$TEMP_DIR_FILENAME_LOCKS/$lock_key"
 
         # The 'mkdir' succeeds only if the directory does NOT already exist.
-        # This makes the operation atomic:  only one process can succeed here.
+        # This operation is atomic: only one process can succeed here.
         if mkdir "$filename_lock" 2>/dev/null &&
             [[ ! -e "$filename_result" ]]; then
 
@@ -1515,7 +1515,7 @@ _get_filename_next_suffix() {
             return 0
         fi
 
-        # If mkdir failed, another process of the task claimed this name,
+        # If 'mkdir' failed, another process of the task claimed this name,
         # try the next suffix.
         filename_result="$filename_base ($count)$filename_extension"
         ((count++))
