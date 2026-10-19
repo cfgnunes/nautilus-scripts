@@ -177,6 +177,7 @@ _run_command() {
         # NOTE: LibreOffice does not support '--' in the command line.
         # NOTE: LibreOffice does not support defining the output file manually.
         std_output=$(libreoffice --headless --convert-to "$output_format" "-env:UserInstallation=file://$temp_dir" --outdir "$temp_dir_local" "$input_file" 2>&1)
+        local exit_code=$?
 
         # Remove the temporary directory.
         rm -rf -- "$temp_dir"
@@ -187,7 +188,7 @@ _run_command() {
         # Remove the temporary directory (local directory).
         rm -rf -- "$temp_dir_local"
 
-        _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+        _check_output "$exit_code" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "pandoc_latex")
         std_output=$(pandoc -V "geometry:a4paper,margin=1.5cm" -V "fontfamily:charter,inconsolata" --standalone -o "$output_file" -- "$input_file" 2>&1)
