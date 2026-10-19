@@ -9,9 +9,7 @@
 #   https://hpc.guix.info/browse
 
 # FIXME: Some package definitions were removed to prevent compatibility issues.
-# 'pkgx: exiftool.org' - Fails on Fedora. See: https://github.com/pkgxdev/pantry/issues/14758
 # 'pkgx: gnu.org/inetutils' - Provides a 'ping' implementation that differs from those shipped by distributions.
-# 'pkgx: perl.org' - Fails on Fedora. See: https://github.com/pkgxdev/pantry/issues/14758
 # 'pkgx: poppler.freedesktop.org' - Exports environment variables that alter Zenity's font settings.
 
 # Description:
@@ -214,7 +212,7 @@ declare -A PKG_MAP=(
         zypper: exiftool
         guix:   perl-image-exiftool
         xbps:   exiftool
-        pkgx:
+        pkgx:   exiftool.org
     "
 
     ["ffmpeg"]="
@@ -613,7 +611,7 @@ declare -A PKG_MAP=(
         zypper: perl-base
         guix:   perl
         xbps:   perl
-        pkgx:
+        pkgx:   perl.org
     "
 
     ["photorec"]="
