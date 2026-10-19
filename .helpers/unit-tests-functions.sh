@@ -63,7 +63,6 @@ _main() {
     __run_get_file_encoding
     __run_get_file_mime
     __run_get_filename_extension
-    __run_get_filename_full_path
     __run_get_filename_next_suffix
     __run_get_filenames_filemanager
     __run_get_files
@@ -724,31 +723,6 @@ __run_get_dirname() {
     expected_output="/"
     output=$(_get_dirname "$input")
     __test_equal "$input" "$expected_output" "$output"
-}
-
-__run_get_filename_full_path() {
-    local input=""
-    local expected_output=""
-    local output=""
-
-    input="$_TEMP_FILE1"
-    expected_output="$_TEMP_FILE1"
-    output=$(_get_filename_full_path "$input")
-    __test_equal "$input" "$expected_output" "$output"
-
-    input="/tmp/test.txt"
-    expected_output="/tmp/test.txt"
-    output=$(_get_filename_full_path "$input")
-    __test_equal "$input" "$expected_output" "$output"
-
-    __create_temp_files
-    pushd "$_TEMP_DIR_TEST" &>/dev/null || return 1
-    input="file1"
-    expected_output="$_TEMP_DIR_TEST/file1"
-    output=$(_get_filename_full_path "$input")
-    __test_equal "$input" "$expected_output" "$output"
-    popd &>/dev/null || return 1
-    __clean_temp_files
 }
 
 __run_get_filename_next_suffix() {

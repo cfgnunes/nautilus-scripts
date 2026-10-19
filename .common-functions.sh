@@ -412,7 +412,6 @@ _run_function_parallel() {
         _get_file_encoding \
         _get_file_mime \
         _get_filename_extension \
-        _get_filename_full_path \
         _get_filename_next_suffix \
         _get_max_procs \
         _get_output_filename \
@@ -1437,26 +1436,6 @@ _strip_filename_extension() {
     local len_extension=${#extension}
     filename=${filename::-len_extension}
     printf "%s" "$filename"
-}
-
-# Function: _get_filename_full_path
-#
-# Description:
-#   This function returns the full absolute path of a given filename.
-#
-# Parameters:
-#   $1 (input_filename): The input filename or relative path.
-_get_filename_full_path() {
-    local input_filename=$1
-    local full_path=$input_filename
-    local dir=""
-
-    if [[ $input_filename != "/"* ]]; then
-        dir=$(_get_dirname "$input_filename")
-        full_path=$dir/$(basename -- "$input_filename")
-    fi
-
-    printf "%s" "$full_path"
 }
 
 # Function: _get_filename_next_suffix
