@@ -94,10 +94,10 @@ _main_task() {
         local candidate=""
 
         case "$sigfile" in
-            *.sign) candidate="${sigfile%.sign}" ;;
-            *.sig) candidate="${sigfile%.sig}" ;;
-            *.asc) candidate="${sigfile%.asc}" ;;
-            *) return 1 ;;
+        *.sign) candidate="${sigfile%.sign}" ;;
+        *.sig) candidate="${sigfile%.sig}" ;;
+        *.asc) candidate="${sigfile%.asc}" ;;
+        *) return 1 ;;
         esac
 
         [[ -f "$candidate" && -r "$candidate" ]] || return 1
