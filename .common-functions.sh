@@ -2267,6 +2267,7 @@ _display_input_text_box() {
 _display_password_box() {
     local message=$1
     local password=""
+    local cancelled=0
 
     local title=""
     title="$(_i18n 'Password')"
@@ -2285,14 +2286,18 @@ _display_password_box() {
         password=$(zenity --title="$title" \
             --width="$GUI_INFO_WIDTH" --text="$message" \
             --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
-            --entry --hide-text 2>/dev/null) || return 1
+            --entry --hide-text 2>/dev/null) || cancelled=1
     elif _command_exists "yad"; then
         password=$(yad --title="$title" --center \
             --width="$GUI_INFO_WIDTH" --text="$message" \
             --button="${btn_cancel}:1" --button="${btn_ok}:0" \
-            --entry --hide-text 2>/dev/null) || return 1
+            --entry --hide-text 2>/dev/null) || cancelled=1
     fi
     _display_unlock
+
+    if ((cancelled != 0)); then
+        return 1
+    fi
 
     printf "%s" "$password"
 }
@@ -2338,6 +2343,7 @@ _display_password_box_define() {
 _display_question_box() {
     local message=$1
     local response=""
+    local cancelled=0
 
     local btn_yes=""
     btn_yes="$(_i18n 'Yes')"
@@ -2351,23 +2357,27 @@ _display_question_box() {
             read -r response </dev/tty
             echo >&2
         fi
-        [[ ${response,,} == *"n"* ]] && return 1
+        [[ ${response,,} == *"n"* ]] && cancelled=1
     elif _command_exists "zenity"; then
         zenity --title "$(_get_script_name)" \
             --width="$GUI_INFO_WIDTH" --text="$message" \
             --cancel-label="${btn_no}" --ok-label="${btn_yes}" \
-            --question &>/dev/null || return 1
+            --question &>/dev/null || cancelled=1
     elif _command_exists "yad"; then
         yad --title "$(_get_script_name)" --center \
             --width="$GUI_INFO_WIDTH" --text="$message" \
             --button="${btn_no}:1" --button="${btn_yes}:0" \
-            --image="dialog-question" &>/dev/null || return 1
+            --image="dialog-question" &>/dev/null || cancelled=1
     elif _command_exists "xmessage"; then
         xmessage -title "$(_get_script_name)" \
             -buttons "${btn_no}:1,${btn_yes}:0" \
-            "$message" &>/dev/null || return 1
+            "$message" &>/dev/null || cancelled=1
     fi
     _display_unlock
+
+    if ((cancelled != 0)); then
+        return 1
+    fi
 
     return 0
 }
