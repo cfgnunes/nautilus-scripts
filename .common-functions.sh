@@ -1501,7 +1501,7 @@ _get_filename_next_suffix() {
         # Create a temporary lock directory under '$TEMP_DIR_FILENAME_LOCKS'.
         # The directory name is a hash of the full path.
         local lock_key=""
-        lock_key=$(readlink -f "$filename_result" | sha256sum 2>/dev/null)
+        lock_key=$(readlink -f "$filename_result" | md5sum 2>/dev/null)
         lock_key=${lock_key%% *}
         local filename_lock="$TEMP_DIR_FILENAME_LOCKS/$lock_key"
 
