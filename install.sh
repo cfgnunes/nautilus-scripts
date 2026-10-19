@@ -1025,9 +1025,9 @@ _install_accels_gnome2() {
     rm -f -- "$accels_file"
 
     {
-        # Disable the shortcut for 'OpenAlternate' (<control><shift>o).
+        # Disable the shortcut <Control><Shift>O (OpenAlternate).
         printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenAlternate" "")'
-        # Disable the shortcut for 'OpenInNewTab' (<control><shift>o).
+        # Disable the shortcut <Control><Shift>O (OpenInNewTab).
         printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenInNewTab" "")'
 
         local filename=""
@@ -1064,9 +1064,9 @@ _install_accels_thunar() {
         printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-2-2" "")'
         printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-3-3" "<Primary><Shift>f")'
         printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActions/uca-action-4-4" "")'
-        # Disable "<Primary><Shift>o".
+        # Disable the shortcut <Control><Shift>O (open-in-new-window).
         printf "%s\n" '(gtk_accel_path "<Actions>/ThunarActionManager/open-in-new-window" "")'
-        # Disable "<Primary>e".
+        # Disable the shortcut <Control>E (view-side-pane-tree).
         printf "%s\n" '(gtk_accel_path "<Actions>/ThunarWindow/view-side-pane-tree" "")'
 
         local filename=""
