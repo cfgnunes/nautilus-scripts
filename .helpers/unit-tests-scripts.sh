@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
+# Test almost all scripts.
+
 # Source the file '.common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
-
-# Test all scripts.
 
 # FAIL: (2021) Debian 11    - [SCRIPT] Image/Image: Convert/Image: Convert to JXL
 # FAIL: (2022) Ubuntu 22.04 - [SCRIPT] Image/Image: Convert/Image: Convert to JXL
