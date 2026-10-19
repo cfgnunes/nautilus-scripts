@@ -25,6 +25,9 @@ _open_app() {
     # Check if the first file is a binary file.
     local file_1=""
     file_1=$(_get_element "$input_files" "1")
+    # Disable pathname expansion so names like '*' or '?' are not expanded
+    # when '$input_files' is unquoted (IFS splits only on '$FIELD_SEPARATOR').
+    set -f
     if [[ ! -d "$file_1" ]]; then
         if [[ "$(_get_file_encoding "$file_1")" == "binary" ]] && [[ -s "$file_1" ]]; then
             if _is_qt_desktop; then
@@ -67,6 +70,7 @@ _open_app() {
         $available_app -- $input_files &
         ;;
     esac
+    set +f
 }
 
 _main "$@"
