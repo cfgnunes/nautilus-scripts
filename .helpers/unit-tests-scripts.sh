@@ -203,7 +203,7 @@ __generate_fixture_audio() {
 
     ffmpeg -hide_banner -y \
         -f lavfi -i "sine=frequency=440:duration=5" \
-        "$dest" &>/dev/null
+        -- "$dest" &>/dev/null
 }
 
 __generate_fixture_video() {
@@ -212,7 +212,7 @@ __generate_fixture_video() {
     ffmpeg -hide_banner -y \
         -f lavfi -i color=c=red:s=200x100:d=3:r=25 \
         -f lavfi -i "sine=frequency=440:duration=3" \
-        -shortest "$dest" &>/dev/null
+        -shortest -- "$dest" &>/dev/null
 }
 
 __generate_fixture_image() {
@@ -220,7 +220,7 @@ __generate_fixture_image() {
 
     ffmpeg -hide_banner -y \
         -f lavfi -i color=c=red:s=200x100 -frames:v 1 \
-        -update 1 "$dest" &>/dev/null
+        -update 1 -- "$dest" &>/dev/null
 }
 
 __generate_fixture_targz() {
@@ -245,7 +245,7 @@ __generate_fixture_audio_tag() {
     side=$(mktemp --directory --tmpdir="$TEMP_DIR_TASK" "fixture.XXXX")
     ffmpeg -hide_banner -y \
         -f lavfi -i "sine=frequency=440:duration=5" \
-        "$side/artist - title.mp3" &>/dev/null
+        -- "$side/artist - title.mp3" &>/dev/null
     bash "$ROOT_DIR/Audio and Video/Audio: MP3 files/MP3: (artist - title) Name to ID3" \
         "$side/artist - title.mp3" >/dev/null
     cp -- "$side/artist - title.mp3" "$dest"
@@ -672,8 +672,8 @@ _main() {
     fi
     ffmpeg -hide_banner -y \
         -f lavfi -i color=c=white:s=900x240 \
-        -vf "drawtext=fontfile='${font_file}':text='HELLO':fontcolor=black:fontsize=140:x=(w-text_w)/2:y=(h-text_h)/2" \
-        -frames:v 1 -update 1 "$temp_dir/Test image OCR.png" &>/dev/null
+        -filter:v "drawtext=fontfile='${font_file}':text='HELLO':fontcolor=black:fontsize=140:x=(w-text_w)/2:y=(h-text_h)/2" \
+        -frames:v 1 -update 1 -- "$temp_dir/Test image OCR.png" &>/dev/null
     __test_script \
         "Image/Image: Text recognition (OCR)/Image: Perform OCR (English)" \
         "empty" "Test image OCR (OCR eng).txt" \
