@@ -2035,7 +2035,14 @@ _display_select_box_action() {
     # Open the selected items.
     if ((items_count > 0)) && [[ -n "$selected_items" ]]; then
         case "$par_action" in
-        "open_file") xdg-open "$selected_items" &>/dev/null & ;;
+        "open_file")
+            set -f
+            local item=""
+            for item in $selected_items; do
+                xdg-open "$item" &>/dev/null &
+            done
+            set +f
+            ;;
         "open_location")
             _open_items_locations "$selected_items" "$par_resolve_links"
             ;;
