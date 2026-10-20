@@ -899,7 +899,7 @@ declare -A PKG_MAP=(
         zypper: tesseract tesseract-ocr-traineddata-afr
         guix:   tesseract-ocr
         xbps:   tesseract-ocr tesseract-ocr-afr
-        pkgx:
+        pkgx:   tesseract-ocr.github.io tesseract-ocr.github.io/tessdata
     "
 
     ["tesseract-ocr-deu"]="
@@ -911,7 +911,7 @@ declare -A PKG_MAP=(
         zypper: tesseract tesseract-ocr-traineddata-deu
         guix:   tesseract-ocr
         xbps:   tesseract-ocr tesseract-ocr-deu
-        pkgx:
+        pkgx:   tesseract-ocr.github.io tesseract-ocr.github.io/tessdata
     "
 
     ["tesseract-ocr-eng"]="
@@ -923,7 +923,7 @@ declare -A PKG_MAP=(
         zypper: tesseract tesseract-ocr-traineddata-eng
         guix:   tesseract-ocr
         xbps:   tesseract-ocr tesseract-ocr-eng
-        pkgx:
+        pkgx:   tesseract-ocr.github.io tesseract-ocr.github.io/tessdata
     "
 
     ["tesseract-ocr-fra"]="
@@ -935,7 +935,7 @@ declare -A PKG_MAP=(
         zypper: tesseract tesseract-ocr-traineddata-fra
         guix:   tesseract-ocr
         xbps:   tesseract-ocr tesseract-ocr-fra
-        pkgx:
+        pkgx:   tesseract-ocr.github.io tesseract-ocr.github.io/tessdata
     "
 
     ["tesseract-ocr-ita"]="
@@ -947,7 +947,7 @@ declare -A PKG_MAP=(
         zypper: tesseract tesseract-ocr-traineddata-ita
         guix:   tesseract-ocr
         xbps:   tesseract-ocr tesseract-ocr-ita
-        pkgx:
+        pkgx:   tesseract-ocr.github.io tesseract-ocr.github.io/tessdata
     "
 
     ["tesseract-ocr-por"]="
@@ -959,7 +959,7 @@ declare -A PKG_MAP=(
         zypper: tesseract tesseract-ocr-traineddata-por
         guix:   tesseract-ocr
         xbps:   tesseract-ocr tesseract-ocr-por
-        pkgx:
+        pkgx:   tesseract-ocr.github.io tesseract-ocr.github.io/tessdata
     "
 
     ["tesseract-ocr-rus"]="
@@ -971,7 +971,7 @@ declare -A PKG_MAP=(
         zypper: tesseract tesseract-ocr-traineddata-rus
         guix:   tesseract-ocr
         xbps:   tesseract-ocr tesseract-ocr-rus
-        pkgx:
+        pkgx:   tesseract-ocr.github.io tesseract-ocr.github.io/tessdata
     "
 
     ["tesseract-ocr-spa"]="
@@ -983,7 +983,7 @@ declare -A PKG_MAP=(
         zypper: tesseract tesseract-ocr-traineddata-spa
         guix:   tesseract-ocr
         xbps:   tesseract-ocr tesseract-ocr-spa
-        pkgx:
+        pkgx:   tesseract-ocr.github.io tesseract-ocr.github.io/tessdata
     "
 
     ["texlive"]="
