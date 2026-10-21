@@ -113,7 +113,6 @@ INSTALL_GROUP="" # Group of the installation directory.
 
 # Default main menu options.
 OPT_INSTALL_BASIC_DEPS="true"
-OPT_REMOVE_SCRIPTS="true"
 OPT_INSTALL_ACCELS="true"
 OPT_CLOSE_FILE_MANAGER="true"
 OPT_INSTALL_APP_SHORTCUTS="false"
@@ -182,7 +181,6 @@ _main() {
     # Available options presented in the interactive menu.
     menu_labels=(
         "$(_i18n 'Check for basic dependencies')"
-        "$(_i18n 'Remove previously installed scripts')"
         "$(_i18n 'Install keyboard accelerators')"
         "$(_i18n 'Close the file manager to reload configuration')"
         "$(_i18n 'Install pkgx for dependencies')"
@@ -193,7 +191,6 @@ _main() {
     # Default states for the menu options.
     menu_defaults=(
         "$OPT_INSTALL_BASIC_DEPS"
-        "$OPT_REMOVE_SCRIPTS"
         "$OPT_INSTALL_ACCELS"
         "$OPT_CLOSE_FILE_MANAGER"
         "$OPT_INSTALL_PKGX"
@@ -218,15 +215,13 @@ _main() {
 
     # Map menu selections into a comma-separated string of options.
     OPT_INSTALL_BASIC_DEPS=${menu_selected[0]}
-    OPT_REMOVE_SCRIPTS=${menu_selected[1]}
-    OPT_INSTALL_ACCELS=${menu_selected[2]}
-    OPT_CLOSE_FILE_MANAGER=${menu_selected[3]}
-    OPT_INSTALL_PKGX=${menu_selected[4]}
-    OPT_INSTALL_APP_SHORTCUTS=${menu_selected[5]}
-    OPT_CHOOSE_CATEGORIES=${menu_selected[6]}
+    OPT_INSTALL_ACCELS=${menu_selected[1]}
+    OPT_CLOSE_FILE_MANAGER=${menu_selected[2]}
+    OPT_INSTALL_PKGX=${menu_selected[3]}
+    OPT_INSTALL_APP_SHORTCUTS=${menu_selected[4]}
+    OPT_CHOOSE_CATEGORIES=${menu_selected[5]}
 
     _log_variable "OPT_INSTALL_BASIC_DEPS"
-    _log_variable "OPT_REMOVE_SCRIPTS"
     _log_variable "OPT_INSTALL_ACCELS"
     _log_variable "OPT_CLOSE_FILE_MANAGER"
     _log_variable "OPT_INSTALL_PKGX"
@@ -550,36 +545,6 @@ _item_create_backup() {
     fi
 }
 
-# Function: _delete_items
-#
-# Description:
-#   This function deletes or trashes items, using the best available method.
-_delete_items() {
-    local items=$1
-
-    # Disable pathname expansion so names like '*' or '?' are not expanded
-    # when '$items' is unquoted.
-    set -f
-
-    # Attempt to remove empty directories directly (rmdir only removes empty
-    # dirs, silently fails otherwise). This avoids sending empty folders to the
-    # trash and deletes them outright.
-    # shellcheck disable=SC2086
-    rmdir -- $items &>/dev/null
-
-    # shellcheck disable=SC2086
-    if _command_exists "gio"; then
-        gio trash -- $items 2>/dev/null
-    elif _command_exists "kioclient"; then
-        kioclient move -- $items trash:/ 2>/dev/null
-    elif _command_exists "gvfs-trash"; then
-        gvfs-trash -- $items 2>/dev/null
-    else
-        rm -rf -- $items 2>/dev/null
-    fi
-    set +f
-}
-
 # -----------------------------------------------------------------------------
 # SECTION: System information and parameters
 # -----------------------------------------------------------------------------
@@ -620,8 +585,6 @@ _get_parameters_command_line() {
         case "$1" in
         -c | --check-dependencies) OPT_INSTALL_BASIC_DEPS="true" ;;
         -C | --no-check-dependencies) OPT_INSTALL_BASIC_DEPS="false" ;;
-        -d | --remove-scripts) OPT_REMOVE_SCRIPTS="true" ;;
-        -D | --no-remove-scripts) OPT_REMOVE_SCRIPTS="false" ;;
         -f | --close-filemanager) OPT_CLOSE_FILE_MANAGER="true" ;;
         -F | --no-close-filemanager) OPT_CLOSE_FILE_MANAGER="false" ;;
         -k | --install-shortcuts) OPT_INSTALL_ACCELS="true" ;;
@@ -637,8 +600,6 @@ _get_parameters_command_line() {
             echo
             echo "  -c, --check-dependencies        Check for basic dependencies."
             echo "  -C, --no-check-dependencies     Do not check for basic dependencies."
-            echo "  -d, --remove-scripts            Remove previously installed scripts."
-            echo "  -D, --no-remove-scripts         Do not remove previously installed scripts."
             echo "  -f, --close-filemanager         Close file manager after install."
             echo "  -F, --no-close-filemanager      Do not close file manager after install."
             echo "  -k, --install-shortcuts         Install keyboard accelerators."
@@ -861,7 +822,7 @@ _install_packages() {
 #   This function installs scripts into the target directory.
 #
 # Steps:
-#   1. Optionally remove any previously installed scripts.
+#   1. Replace the previous copy stored in the install directory.
 #   2. Copy common and category-specific script files.
 #   3. Set proper ownership and permissions.
 _install_scripts() {
@@ -902,17 +863,10 @@ _install_scripts() {
 _create_links() {
     local destination_dir=$1
 
-    # Remove previous scripts if requested. Never trash the source tree when
-    # installing from the file-manager scripts directory itself.
-    if [[ "$OPT_REMOVE_SCRIPTS" == "true" ]] &&
-        [[ "$destination_dir" != "$SCRIPT_DIR" ]]; then
-        _delete_items "$destination_dir"
-    else
-        # Remove broken links.
-        find "$destination_dir" -type l -delete 2>/dev/null
-        # Remove empty dirs.
-        find "$destination_dir" -type d -empty -delete 2>/dev/null
-    fi
+    # Remove symlinks and empty directories left by a previous install.
+    # Regular files stored in the file-manager scripts directory stay in place.
+    find "$destination_dir" -type l -delete 2>/dev/null
+    find "$destination_dir" -type d -empty -delete 2>/dev/null
 
     mkdir --parents -- "$destination_dir"
     ln -sf -- "$INSTALL_DIR/.po" "$destination_dir/.po"
