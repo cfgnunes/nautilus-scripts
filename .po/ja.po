@@ -1865,10 +1865,6 @@ msgid "Check for basic dependencies"
 msgstr "基本的な依存関係を確認"
 
 #: install.sh
-msgid "Remove previously installed scripts"
-msgstr "以前にインストールしたスクリプトを削除"
-
-#: install.sh
 msgid "Install keyboard accelerators"
 msgstr "キーボードアクセラレータをインストール"
 

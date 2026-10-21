@@ -1865,10 +1865,6 @@ msgid "Check for basic dependencies"
 msgstr "बेसिक निर्भरताएँ जाँचें"
 
 #: install.sh
-msgid "Remove previously installed scripts"
-msgstr "पहले इंस्टॉल किए गए स्क्रिप्ट हटाएँ"
-
-#: install.sh
 msgid "Install keyboard accelerators"
 msgstr "कीबोर्ड एक्सेलेरेटर इंस्टॉल करें"
 

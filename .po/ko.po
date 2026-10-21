@@ -1865,10 +1865,6 @@ msgid "Check for basic dependencies"
 msgstr "기본 종속성 확인"
 
 #: install.sh
-msgid "Remove previously installed scripts"
-msgstr "이전에 설치된 스크립트 제거"
-
-#: install.sh
 msgid "Install keyboard accelerators"
 msgstr "키보드 가속기 설치"
 

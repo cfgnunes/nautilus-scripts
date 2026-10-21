@@ -1865,10 +1865,6 @@ msgid "Check for basic dependencies"
 msgstr "Əsas asılılıqları yoxla"
 
 #: install.sh
-msgid "Remove previously installed scripts"
-msgstr "Əvvəllər quraşdırılmış skriptləri sil"
-
-#: install.sh
 msgid "Install keyboard accelerators"
 msgstr "Klaviatura qısayollarını quraşdır"
 

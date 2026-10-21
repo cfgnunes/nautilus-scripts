@@ -1865,10 +1865,6 @@ msgid "Check for basic dependencies"
 msgstr "Temel bağımlılıkları kontrol et"
 
 #: install.sh
-msgid "Remove previously installed scripts"
-msgstr "Önceden yüklenmiş betikleri kaldır"
-
-#: install.sh
 msgid "Install keyboard accelerators"
 msgstr "Klavye hızlandırıcılarını yükle"
 

@@ -1865,10 +1865,6 @@ msgid "Check for basic dependencies"
 msgstr "Kontrollera grundläggande beroenden"
 
 #: install.sh
-msgid "Remove previously installed scripts"
-msgstr "Ta bort tidigare installerade skript"
-
-#: install.sh
 msgid "Install keyboard accelerators"
 msgstr "Installera tangentbordsgenvägar"
 

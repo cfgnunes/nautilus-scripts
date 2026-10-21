@@ -1865,10 +1865,6 @@ msgid "Check for basic dependencies"
 msgstr "Alapvető függőségek ellenőrzése"
 
 #: install.sh
-msgid "Remove previously installed scripts"
-msgstr "Korábban telepített szkriptek eltávolítása"
-
-#: install.sh
 msgid "Install keyboard accelerators"
 msgstr "Gyorsbillentyűk telepítése"
 

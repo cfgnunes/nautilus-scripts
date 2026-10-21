@@ -1865,10 +1865,6 @@ msgid "Check for basic dependencies"
 msgstr "Verificar dependências básicas"
 
 #: install.sh
-msgid "Remove previously installed scripts"
-msgstr "Remover scripts instalados previamente"
-
-#: install.sh
 msgid "Install keyboard accelerators"
 msgstr "Instalar teclas de atalho"
 

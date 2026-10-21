@@ -1865,10 +1865,6 @@ msgid "Check for basic dependencies"
 msgstr "ძირითადი დამოკიდებულებების შემოწმება"
 
 #: install.sh
-msgid "Remove previously installed scripts"
-msgstr "ადრე დაყენებული სკრიპტების წაშლა"
-
-#: install.sh
 msgid "Install keyboard accelerators"
 msgstr "კლავიატურის მალსახმობების დაყენება"
 

@@ -1865,10 +1865,6 @@ msgid "Check for basic dependencies"
 msgstr "Zkontrolovat základní závislosti"
 
 #: install.sh
-msgid "Remove previously installed scripts"
-msgstr "Odebrat dříve nainstalované skripty"
-
-#: install.sh
 msgid "Install keyboard accelerators"
 msgstr "Nainstalovat klávesové zkratky"
 

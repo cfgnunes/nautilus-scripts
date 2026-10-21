@@ -1865,10 +1865,6 @@ msgid "Check for basic dependencies"
 msgstr "Kiểm tra các phụ thuộc cơ bản"
 
 #: install.sh
-msgid "Remove previously installed scripts"
-msgstr "Xóa các script đã cài trước đó"
-
-#: install.sh
 msgid "Install keyboard accelerators"
 msgstr "Cài đặt phím tắt bàn phím"
 

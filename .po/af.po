@@ -1865,10 +1865,6 @@ msgid "Check for basic dependencies"
 msgstr "Kontroleer basiese afhanklikhede"
 
 #: install.sh
-msgid "Remove previously installed scripts"
-msgstr "Verwyder voorheen geïnstalleerde skripte"
-
-#: install.sh
 msgid "Install keyboard accelerators"
 msgstr "Installeer sleutelbordversnellers"
 

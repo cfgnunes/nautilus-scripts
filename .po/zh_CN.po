@@ -1865,10 +1865,6 @@ msgid "Check for basic dependencies"
 msgstr "检查基本依赖项"
 
 #: install.sh
-msgid "Remove previously installed scripts"
-msgstr "移除之前安装的脚本"
-
-#: install.sh
 msgid "Install keyboard accelerators"
 msgstr "安装键盘加速器"
 
