@@ -493,7 +493,7 @@ declare -A PKG_MAP=(
     "
 
     ["mp3rgain"]="
-        termux:
+        termux: mp3rgain
         apt:
         dnf:
         pacman:
