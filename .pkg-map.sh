@@ -140,7 +140,7 @@ declare -A PKG_MAP=(
         zypper: clamav
         guix:   clamav
         xbps:   clamav
-        pkgx:
+        pkgx:   clamav.net
     "
 
     ["cpio"]="
