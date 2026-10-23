@@ -10,7 +10,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "pdfcpu"
+    _check_dependencies "gs"
     _display_wait_box ""
     input_files=$(_get_files "par_type=file; par_select_extension=pdf")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
@@ -25,23 +25,12 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
-    local exit_code=0
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(no annotations)'")
 
     # Run the main process.
-    # NOTE: Older versions of 'pdfcpu'do not support '--' in the command line.
-    std_output=$(pdfcpu annotations remove "$input_file" "$output_file" 2>&1)
-    exit_code=$?
-
-    # A PDF without annotations is not an error. Older 'pdfcpu' versions
-    # also leave the output file behind in that case.
-    if grep -q -i -F "no annotation removed" <<<"$std_output"; then
-        rm -f -- "$output_file"
-        return 0
-    fi
-
-    _check_output "$exit_code" "$std_output" "$input_file" "$output_file" || return 1
+    std_output=$(gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dShowAnnots=false -sOutputFile="$output_file" -- "$input_file" 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
 _main "$@"
