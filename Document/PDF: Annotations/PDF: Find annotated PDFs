@@ -9,7 +9,7 @@ _main() {
     local input_files=""
 
     # Execute initial checks.
-    _check_dependencies "pdfcpu"
+    _check_dependencies "qpdf"
     _display_wait_box ""
     input_files=$(_get_files "par_type=file; par_recursive=true; par_select_extension=pdf")
 
@@ -25,12 +25,10 @@ _main() {
 
 _main_task() {
     local input_file=$1
-    local std_output=""
 
     # Run the main process.
-    std_output=$(pdfcpu annotations list --json "$input_file" 2>/dev/null) || return 0
-    # Any annotation type other than Link or Widget counts.
-    if grep -P -q '"type":\s*"(?!(Link|Widget)")[^"]+"' <<<"$std_output"; then
+    if qpdf --json "$input_file" 2>/dev/null |
+        grep -q -m1 '"/Subtype": "\(/Caret\|/Circle\|/FileAttachment\|/FreeText\|/Highlight\|/Ink\|/Line\|/Movie\|/Polygon\|/PolyLine\|/Popup\|/Printermark\|/Screen\|/Sound\|/Square\|/Squiggly\|/Stamp\|/StrikeOut\|/Text\|/Underline\|/Watermark\)"'; then
         _storage_text_write_ln "$(_text_remove_pwd "$input_file")"
     fi
 }
