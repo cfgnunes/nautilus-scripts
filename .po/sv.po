@@ -247,6 +247,9 @@ msgstr "Välj en bild att använda som vattenstämpel"
 msgid "Enter the target size."
 msgstr "Ange målstorleken."
 
+msgid "Enter the pages to extract."
+msgstr "Ange sidorna som ska extraheras."
+
 msgid "Invalid input!"
 msgstr "Ogiltig inmatning!"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF: extrahera anteckningar"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: extrahera bilder"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF: extrahera sidor (anpassad)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

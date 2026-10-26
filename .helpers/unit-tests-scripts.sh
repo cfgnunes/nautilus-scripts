@@ -740,6 +740,7 @@ _main() {
     # SECTION: Document: PDF
     # -------------------------------------------------------------------------
 
+    # IGNORED: Document/PDF: Combine, Split/PDF: Extract pages (custom)
     # IGNORED: Document/PDF: Security/PDF: Remove password
     # IGNORED: Document/PDF: Security/PDF: Set password
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (English)

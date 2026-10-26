@@ -247,6 +247,9 @@ msgstr "Kies een afbeelding om als watermerk te gebruiken"
 msgid "Enter the target size."
 msgstr "Voer de grootte in."
 
+msgid "Enter the pages to extract."
+msgstr "Voer de pagina's in."
+
 msgid "Invalid input!"
 msgstr "Ongeldige invoer!"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF: aantekeningen extraheren"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: afbeeldingen extraheren"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF: pagina's extraheren (aangepast)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

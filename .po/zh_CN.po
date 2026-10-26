@@ -247,6 +247,9 @@ msgstr "选择一张图像作为水印"
 msgid "Enter the target size."
 msgstr "请输入尺寸。"
 
+msgid "Enter the pages to extract."
+msgstr "请输入要提取的页面。"
+
 msgid "Invalid input!"
 msgstr "输入无效！"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF：提取注释"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF：提取图像"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF：提取页面（自定义）"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

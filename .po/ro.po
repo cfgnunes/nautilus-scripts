@@ -247,6 +247,9 @@ msgstr "Selectați o imagine de folosit ca filigran"
 msgid "Enter the target size."
 msgstr "Introduceți dimensiunea țintă."
 
+msgid "Enter the pages to extract."
+msgstr "Introduceți paginile de extras."
+
 msgid "Invalid input!"
 msgstr "Intrare nevalidă!"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF: extragere adnotări"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: extragere imagini"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF: extragere pagini (personalizat)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

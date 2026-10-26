@@ -247,6 +247,9 @@ msgstr "Su nişanı kimi istifadə ediləcək şəkli seçin"
 msgid "Enter the target size."
 msgstr "Hədəf ölçünü daxil edin."
 
+msgid "Enter the pages to extract."
+msgstr "Çıxarılacaq səhifələri daxil edin."
+
 msgid "Invalid input!"
 msgstr "Yanlış daxiletmə!"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF: Annotasiyaları çıxar"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: Şəkilləri çıxar"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF: Səhifələri çıxar (fərdi)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

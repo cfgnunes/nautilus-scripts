@@ -247,6 +247,9 @@ msgstr "Kies 'n beeld om as watermerk te gebruik"
 msgid "Enter the target size."
 msgstr "Voer die teikengrootte in."
 
+msgid "Enter the pages to extract."
+msgstr "Voer die bladsye in om te onttrek."
+
 msgid "Invalid input!"
 msgstr "Ongeldige toevoer!"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF: Onttrek aantekeninge"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: Onttrek beelde"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF: Onttrek bladsye (pasgemaak)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

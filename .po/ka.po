@@ -247,6 +247,9 @@ msgstr "აირჩიეთ ჭვირნიშნად გამოსა�
 msgid "Enter the target size."
 msgstr "შეიყვანეთ სამიზნე ზომა."
 
+msgid "Enter the pages to extract."
+msgstr "შეიყვანეთ ამოსაღები გვერდები."
+
 msgid "Invalid input!"
 msgstr "არასწორი შეყვანა!"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF: ანოტაციების ამოღება"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: გამოსახულებების ამოღება"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF: გვერდების ამოღება (მორგებული)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

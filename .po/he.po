@@ -247,6 +247,9 @@ msgstr "נא לבחור תמונה שתשמש כסימן המים"
 msgid "Enter the target size."
 msgstr "נא למלא את הגודל."
 
+msgid "Enter the pages to extract."
+msgstr "נא למלא את העמודים לחילוץ."
+
 msgid "Invalid input!"
 msgstr "הקלט אינו תקני!"
 
@@ -1427,6 +1430,10 @@ msgstr "קובץ PDF: חילוץ הערות"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "קובץ PDF: חילוץ תמונות"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "קובץ PDF: חילוץ עמודים (מותאם אישית)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

@@ -247,6 +247,9 @@ msgstr "Выберите изображение для использовани�
 msgid "Enter the target size."
 msgstr "Введите размер."
 
+msgid "Enter the pages to extract."
+msgstr "Введите страницы для извлечения."
+
 msgid "Invalid input!"
 msgstr "Неверный ввод!"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF: извлечь аннотации"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: извлечь изображения"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF: извлечь страницы (произвольно)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

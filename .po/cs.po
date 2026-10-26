@@ -247,6 +247,9 @@ msgstr "Vyberte obrázek, který se použije jako vodoznak"
 msgid "Enter the target size."
 msgstr "Zadejte cílovou velikost."
 
+msgid "Enter the pages to extract."
+msgstr "Zadejte stránky k extrahování."
+
 msgid "Invalid input!"
 msgstr "Neplatný vstup!"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF: extrahovat anotace"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: extrahovat obrázky"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF: extrahovat stránky (vlastní)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

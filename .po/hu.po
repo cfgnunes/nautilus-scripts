@@ -247,6 +247,9 @@ msgstr "Válasszon egy képet vízjelnek"
 msgid "Enter the target size."
 msgstr "Adja meg a célméretet."
 
+msgid "Enter the pages to extract."
+msgstr "Adja meg a kibontandó oldalakat."
+
 msgid "Invalid input!"
 msgstr "Érvénytelen bemenet!"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF: jegyzetek kibontása"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: képek kibontása"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF: oldalak kibontása (egyéni)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

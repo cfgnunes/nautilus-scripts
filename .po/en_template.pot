@@ -246,6 +246,9 @@ msgstr ""
 msgid "Enter the target size."
 msgstr ""
 
+msgid "Enter the pages to extract."
+msgstr ""
+
 msgid "Invalid input!"
 msgstr ""
 
@@ -1425,6 +1428,10 @@ msgstr ""
 
 #: Menu
 msgid "PDF: Extract images"
+msgstr ""
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
 msgstr ""
 
 #: Menu

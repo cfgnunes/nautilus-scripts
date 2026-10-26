@@ -247,6 +247,9 @@ msgstr "Wybierz obraz do użycia jako znak wodny"
 msgid "Enter the target size."
 msgstr "Wprowadź rozmiar."
 
+msgid "Enter the pages to extract."
+msgstr "Wprowadź strony do wyodrębnienia."
+
 msgid "Invalid input!"
 msgstr "Nieprawidłowe dane wejściowe!"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF: Wyodrębnij adnotacje"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: Wyodrębnij obrazy"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF: Wyodrębnij strony (niestandardowy)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

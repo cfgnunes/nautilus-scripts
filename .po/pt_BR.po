@@ -247,6 +247,9 @@ msgstr "Selecione uma imagem para usar como marca d'água"
 msgid "Enter the target size."
 msgstr "Digite o tamanho."
 
+msgid "Enter the pages to extract."
+msgstr "Digite as páginas a extrair."
+
 msgid "Invalid input!"
 msgstr "Entrada inválida!"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF: Extrair anotações"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: Extrair imagens"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF: Extrair páginas (personalizado)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

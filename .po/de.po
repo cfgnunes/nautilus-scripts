@@ -247,6 +247,9 @@ msgstr "Wählen Sie ein Bild als Wasserzeichen aus"
 msgid "Enter the target size."
 msgstr "Geben Sie die Größe ein."
 
+msgid "Enter the pages to extract."
+msgstr "Geben Sie die Seiten ein."
+
 msgid "Invalid input!"
 msgstr "Ungültige Eingabe!"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF: Anmerkungen extrahieren"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: Bilder extrahieren"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF: Seiten extrahieren (benutzerdefiniert)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

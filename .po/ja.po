@@ -247,6 +247,9 @@ msgstr "透かしとして使用する画像を選択"
 msgid "Enter the target size."
 msgstr "サイズを入力してください。"
 
+msgid "Enter the pages to extract."
+msgstr "抽出するページを入力してください。"
+
 msgid "Invalid input!"
 msgstr "無効な入力です！"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF：注釈を抽出"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF：画像を抽出"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF：ページを抽出 (カスタム)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

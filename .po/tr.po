@@ -247,6 +247,9 @@ msgstr "Filigran olarak kullanılacak bir görüntü seçin"
 msgid "Enter the target size."
 msgstr "Boyutu girin."
 
+msgid "Enter the pages to extract."
+msgstr "Çıkarılacak sayfaları girin."
+
 msgid "Invalid input!"
 msgstr "Geçersiz girdi!"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF: Açıklamaları çıkar"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: Görüntüleri çıkar"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF: Sayfaları çıkar (özel)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

@@ -247,6 +247,9 @@ msgstr "Chọn một ảnh để dùng làm watermark"
 msgid "Enter the target size."
 msgstr "Nhập kích thước."
 
+msgid "Enter the pages to extract."
+msgstr "Nhập các trang cần trích xuất."
+
 msgid "Invalid input!"
 msgstr "Đầu vào không hợp lệ!"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF: Trích xuất chú thích"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: Trích xuất hình ảnh"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF: Trích xuất trang (tùy chỉnh)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

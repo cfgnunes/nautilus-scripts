@@ -247,6 +247,9 @@ msgstr "Виберіть зображення для водяного знака
 msgid "Enter the target size."
 msgstr "Введіть цільовий розмір."
 
+msgid "Enter the pages to extract."
+msgstr "Введіть сторінки для видобуття."
+
 msgid "Invalid input!"
 msgstr "Неприпустимі дані!"
 
@@ -1427,6 +1430,10 @@ msgstr "PDF: видобути анотації"
 #: Menu
 msgid "PDF: Extract images"
 msgstr "PDF: видобути зображення"
+
+#: Menu
+msgid "PDF: Extract pages (custom)"
+msgstr "PDF: видобути сторінки (власний)"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"
