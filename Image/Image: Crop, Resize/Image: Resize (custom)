@@ -12,8 +12,8 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "magick"
+    _display_wait_box ""
     input_files=$(_get_files "par_type=file; par_select_mime=image/")
-    output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     msg="$(_i18n 'Enter the target size.')"
     msg+="\n\n"
@@ -28,7 +28,8 @@ _main() {
     TASK_DIMENSION="${BASH_REMATCH[1]}x${BASH_REMATCH[2]}"
     export TASK_DIMENSION
 
-    _display_wait_box ""
+    # Check output directory only after displaying dialog boxes to the user.
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
