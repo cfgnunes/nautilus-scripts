@@ -47,7 +47,6 @@ _main_task() {
         | (.contents // "" | clean) as $content
         | (.text // "" | clean) as $text
         | (.author // "" | clean) as $author
-        | select((.type // "") != "Square")
         | [
             $text,
             $content,
