@@ -19,6 +19,7 @@ _main() {
     msg+="\n\n"
     msg+="$(_i18n 'Example:') 800x600"
     TASK_DIMENSION=$(_display_input_text_box "$msg" "")
+
     # Parse two numbers with any separator and normalize to WxH.
     if [[ ! "$TASK_DIMENSION" =~ ^[[:space:]]*([0-9]+)[^0-9]+([0-9]+)[[:space:]]*$ ]]; then
         msg="$(_i18n 'Invalid input!')"
