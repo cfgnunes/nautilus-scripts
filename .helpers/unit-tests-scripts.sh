@@ -1063,7 +1063,7 @@ _main() {
     printf "\nFinished! "
     printf "Results: %s tests, %s failed.\n" "$_TOTAL_TESTS" "$_TOTAL_FAILED"
 
-    read -n1 -rp "Press any key to finish..." </dev/tty
+    #read -n1 -rp "Press any key to finish..." </dev/tty
 }
 
 _main "$@"
