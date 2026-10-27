@@ -107,7 +107,6 @@ HOME=${HOME:-$(eval echo ~)}
 FILE_MANAGER=""  # Current file manager being processed.
 I18N_FILE=""     # Current translation file being used.
 INSTALL_DIR=""   # Target installation directory for scripts.
-INSTALL_HOME=""  # User's home directory where scripts will be installed.
 INSTALL_OWNER="" # Owner of the installation directory.
 INSTALL_GROUP="" # Group of the installation directory.
 
@@ -248,14 +247,13 @@ _main() {
     [[ "$OPT_INSTALL_BASIC_DEPS" == "true" ]] && _check_dependencies
 
     # Step 2: Install the scripts.
-    INSTALL_HOME=$HOME
-    INSTALL_OWNER=$(stat -c "%U" "$INSTALL_HOME")
-    INSTALL_GROUP=$(stat -c "%G" "$INSTALL_HOME")
+    INSTALL_OWNER=$(stat -c "%U" "$HOME")
+    INSTALL_GROUP=$(stat -c "%G" "$HOME")
 
     _log_variable "INSTALL_OWNER"
     _log_variable "INSTALL_GROUP"
 
-    INSTALL_DIR="$INSTALL_HOME/$INSTALL_PATH"
+    INSTALL_DIR="$HOME/$INSTALL_PATH"
 
     _echo ""
     _echo_info "$(_i18n 'Installing:')"
@@ -830,7 +828,7 @@ _install_scripts() {
     local -n _cat_dirs=$2
 
     rm -rf -- "$INSTALL_DIR" 2>/dev/null
-    rm -rf -- "${INSTALL_HOME:?}/$INSTALL_APPS_SHORTCUTS_PATH" 2>/dev/null
+    rm -rf -- "${HOME:?}/$INSTALL_APPS_SHORTCUTS_PATH" 2>/dev/null
 
     _echo_info "> $(_i18n 'Copying files...')"
     mkdir --parents -- "$INSTALL_DIR"
@@ -919,10 +917,10 @@ _install_accels() {
     _echo_info "> ($FILE_MANAGER) $(_i18n 'Installing keyboard accelerators...')"
 
     case "$FILE_MANAGER" in
-    "nautilus") _install_accels_nautilus "$INSTALL_HOME/.config/nautilus/scripts-accels" ;;
-    "caja") _install_accels_gnome2 "$INSTALL_HOME/.config/caja/accels" "$INSTALL_HOME/.config/caja/scripts" ;;
-    "nemo") _install_accels_gnome2 "$INSTALL_HOME/.gnome2/accels/nemo" "$INSTALL_HOME/.local/share/nemo/scripts" ;;
-    "thunar") _install_accels_thunar "$INSTALL_HOME/.config/Thunar/accels.scm" ;;
+    "nautilus") _install_accels_nautilus "$HOME/.config/nautilus/scripts-accels" ;;
+    "caja") _install_accels_gnome2 "$HOME/.config/caja/accels" "$HOME/.config/caja/scripts" ;;
+    "nemo") _install_accels_gnome2 "$HOME/.gnome2/accels/nemo" "$HOME/.local/share/nemo/scripts" ;;
+    "thunar") _install_accels_thunar "$HOME/.config/Thunar/accels.scm" ;;
     esac
 }
 
@@ -1058,7 +1056,7 @@ _install_application_shortcuts() {
     local name=""
     local script_relative=""
     local submenu=""
-    local app_menus_path="$INSTALL_HOME/$INSTALL_APPS_SHORTCUTS_PATH"
+    local app_menus_path="$HOME/$INSTALL_APPS_SHORTCUTS_PATH"
 
     _echo_info "> $(_i18n 'Creating shortcuts in the application menu...')"
 
@@ -1135,7 +1133,7 @@ _create_gnome_application_folder() {
     # Build a list of all .desktop files in the scripts directory to be added
     # under this GNOME application folder.
     local list_scripts=""
-    local app_menus_path="$INSTALL_HOME/$INSTALL_APPS_SHORTCUTS_PATH"
+    local app_menus_path="$HOME/$INSTALL_APPS_SHORTCUTS_PATH"
     list_scripts=$(find "$app_menus_path" \
         -maxdepth 1 -type f -name "*.desktop" \
         -printf "'$INSTALL_NAME_DIR-%f', " |
@@ -1161,9 +1159,9 @@ _install_actions() {
     _echo_info "> ($FILE_MANAGER) $(_i18n 'Installing actions in the context menu...')"
 
     case "$FILE_MANAGER" in
-    "nautilus") _create_links "$INSTALL_HOME/.local/share/nautilus/scripts" ;;
-    "caja") _create_links "$INSTALL_HOME/.config/caja/scripts" ;;
-    "nemo") _create_links "$INSTALL_HOME/.local/share/nemo/scripts" ;;
+    "nautilus") _create_links "$HOME/.local/share/nautilus/scripts" ;;
+    "caja") _create_links "$HOME/.config/caja/scripts" ;;
+    "nemo") _create_links "$HOME/.local/share/nemo/scripts" ;;
     "dolphin") _install_actions_kio_servicemenus ;;
     "pcmanfm"*) _install_actions_pcmanfm ;;
     "thunar") _install_actions_thunar ;;
@@ -1173,7 +1171,7 @@ _install_actions() {
 
 _install_actions_kio_servicemenus() {
     local menu_file=""
-    local menus_path="$INSTALL_HOME/.local/share/kio/servicemenus"
+    local menus_path="$HOME/.local/share/kio/servicemenus"
     find "$menus_path" -name "$INSTALL_NAME_DIR-*.desktop" \
         -type f -delete 2>/dev/null
     mkdir --parents -- "$menus_path"
@@ -1217,7 +1215,7 @@ _install_actions_kio_servicemenus() {
 
 _install_actions_pcmanfm() {
     local menu_file=""
-    local menus_path="$INSTALL_HOME/.local/share/file-manager/actions"
+    local menus_path="$HOME/.local/share/file-manager/actions"
     find "$menus_path" -name "$INSTALL_NAME_DIR-*.desktop" \
         -type f -delete 2>/dev/null
     mkdir --parents -- "$menus_path"
@@ -1306,7 +1304,7 @@ _install_actions_pcmanfm() {
 
 _install_actions_thunar() {
     local menu_file=""
-    local menus_path="$INSTALL_HOME/.config/Thunar"
+    local menus_path="$HOME/.config/Thunar"
     mkdir --parents -- "$menus_path"
     menu_file="$menus_path/uca.xml"
 
