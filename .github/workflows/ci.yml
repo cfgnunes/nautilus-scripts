@@ -18,6 +18,17 @@ jobs:
     - name: Install shellcheck
       run: sudo apt-get update && sudo apt-get install --yes shellcheck
 
+    - name: Run shellcheck (core scripts)
+      run: |
+        shellcheck -e SC1091 \
+          .common-functions.sh \
+          .helpers/multiselect-menu.sh \
+          .helpers/unit-tests-functions.sh \
+          .helpers/unit-tests-scripts.sh \
+          .pkg-map.sh \
+          install.sh \
+          uninstall.sh
+
     - name: Run shellcheck
       run: |
         find . ! -path "*/.git*" -type f -executable -print0 |
