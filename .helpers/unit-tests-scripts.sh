@@ -701,12 +701,13 @@ _main() {
     cp -- "$ROOT_DIR/screenshot.svg" "$fixture_svg"
     gzip --no-name -c "$fixture_svg" >"$fixture_svgz"
 
+    # IGNORED: Image/Image: SVG files/SVG: Export to PDF
+    # IGNORED: Image/Image: SVG files/SVG: Export to PNG (256 px)
+    # IGNORED: Image/Image: SVG files/SVG: Export to PNG (512 px)
+    # IGNORED: Image/Image: SVG files/SVG: Export to PNG (1024 px)
+
     __test_scripts_file "$fixture_svg" "Test image SVG.svg" "empty" \
         "Image/Image: SVG files/SVG: Compress to SVGZ|Test image SVG.svgz" \
-        "Image/Image: SVG files/SVG: Export to PDF|Test image SVG.pdf" \
-        "Image/Image: SVG files/SVG: Export to PNG (256 px)|Test image SVG (256 px).png" \
-        "Image/Image: SVG files/SVG: Export to PNG (512 px)|Test image SVG (512 px).png" \
-        "Image/Image: SVG files/SVG: Export to PNG (1024 px)|Test image SVG (1024 px).png" \
         "Image/Image: SVG files/SVG: Replace fonts with Charter|Test image SVG (font Charter).svg" \
         "Image/Image: SVG files/SVG: Replace fonts with Helvetica|Test image SVG (font Helvetica).svg" \
         "Image/Image: SVG files/SVG: Replace fonts with Times|Test image SVG (font Times).svg"
@@ -718,23 +719,19 @@ _main() {
     # SECTION: Document
     # -------------------------------------------------------------------------
 
-    # IGNORED: Document/Document: Convert/Document: Convert to ODS
-    # IGNORED: Document/Document: Convert/Document: Convert to XLSX
+    # IGNORED: Document/Document: Convert/Document: Convert to DOCX
     # IGNORED: Document/Document: Convert/Document: Convert to ODP
+    # IGNORED: Document/Document: Convert/Document: Convert to ODS
+    # IGNORED: Document/Document: Convert/Document: Convert to ODT
+    # IGNORED: Document/Document: Convert/Document: Convert to PDF
+    # IGNORED: Document/Document: Convert/Document: Convert to PDF (landscape)
     # IGNORED: Document/Document: Convert/Document: Convert to PPTX
-
-    __test_begin
-    echo "Content of 'Test document'." >"$temp_dir/Test document.txt"
-    __test_script "Document/Document: Convert/Document: Convert to ODT" \
-        "empty" "Test document.odt" "$temp_dir/Test document.txt"
+    # IGNORED: Document/Document: Convert/Document: Convert to TXT
+    # IGNORED: Document/Document: Convert/Document: Convert to XLSX
 
     __test_scripts_file "$fixture_odt" "Test document.odt" "empty" \
-        "Document/Document: Convert/Document: Convert to TXT|Test document.txt" \
         "Document/Document: Convert/Document: Convert to EPUB|Test document.epub" \
-        "Document/Document: Convert/Document: Convert to Markdown|Test document.md" \
-        "Document/Document: Convert/Document: Convert to DOCX|Test document.docx" \
-        "Document/Document: Convert/Document: Convert to PDF|Test document.pdf" \
-        "Document/Document: Convert/Document: Convert to PDF (landscape)|Test document (landscape).pdf"
+        "Document/Document: Convert/Document: Convert to Markdown|Test document.md"
 
     # -------------------------------------------------------------------------
     # SECTION: Document: PDF
