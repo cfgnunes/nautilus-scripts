@@ -82,7 +82,6 @@ _main() {
         -type f -iname "#*#" -o \
         -type f -iname "~lock.*" -o \
         -type f -iname "condaenv.*.requirements.txt" -o \
-        -type f -iname "desktop.ini" -o \
         -type f -iname "ehthumbs.db" -o \
         -type f -iname "ehthumbs_vista.db" -o \
         -type f -iname "hs_err_pid*" -o \
