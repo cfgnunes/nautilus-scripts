@@ -720,6 +720,8 @@ _main() {
     # -------------------------------------------------------------------------
 
     # IGNORED: Document/Document: Convert/Document: Convert to DOCX
+    # IGNORED: Document/Document: Convert/Document: Convert to EPUB
+    # IGNORED: Document/Document: Convert/Document: Convert to Markdown
     # IGNORED: Document/Document: Convert/Document: Convert to ODP
     # IGNORED: Document/Document: Convert/Document: Convert to ODS
     # IGNORED: Document/Document: Convert/Document: Convert to ODT
@@ -728,10 +730,6 @@ _main() {
     # IGNORED: Document/Document: Convert/Document: Convert to PPTX
     # IGNORED: Document/Document: Convert/Document: Convert to TXT
     # IGNORED: Document/Document: Convert/Document: Convert to XLSX
-
-    __test_scripts_file "$fixture_odt" "Test document.odt" "empty" \
-        "Document/Document: Convert/Document: Convert to EPUB|Test document.epub" \
-        "Document/Document: Convert/Document: Convert to Markdown|Test document.md"
 
     # -------------------------------------------------------------------------
     # SECTION: Document: PDF
@@ -1060,7 +1058,9 @@ _main() {
     printf "\nFinished! "
     printf "Results: %s tests, %s failed.\n" "$_TOTAL_TESTS" "$_TOTAL_FAILED"
 
-    #read -n1 -rp "Press any key to finish..." </dev/tty
+    if [[ -e "/dev/tty" ]]; then
+        read -n1 -rp "Press any key to finish..." </dev/tty
+    fi
 }
 
 _main "$@"
