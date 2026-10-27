@@ -1061,6 +1061,10 @@ _main() {
     if [[ -e "/dev/tty" ]]; then
         read -n1 -rp "Press any key to finish..." </dev/tty
     fi
+
+    if ((_TOTAL_FAILED > 0)); then
+        exit 1
+    fi
 }
 
 _main "$@"

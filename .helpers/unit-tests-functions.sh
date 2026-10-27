@@ -105,6 +105,10 @@ _main() {
 
     printf "\nFinished! "
     printf "Results: %s tests, %s failed.\n" "$_TOTAL_TESTS" "$_TOTAL_FAILED"
+
+    if ((_TOTAL_FAILED > 0)); then
+        exit 1
+    fi
 }
 
 __create_temp_files() {
