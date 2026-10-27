@@ -45,10 +45,6 @@ _main_task() {
     local width=""
     local height=""
 
-    if [[ -z "$TASK_DIMENSION" ]]; then
-        return 1
-    fi
-
     width="${TASK_DIMENSION%x*}"
     height="${TASK_DIMENSION#*x}"
 

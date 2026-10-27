@@ -41,12 +41,8 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    if [[ -z "$TASK_PAGES" ]]; then
-        return 1
-    fi
-
     output_file=$(_get_output_filename "$input_file" "$output_dir" \
-        "par_extension_opt=preserve; par_suffix='($TASK_PAGES)'")
+        "par_extension_opt=preserve; par_suffix='(pages $TASK_PAGES)'")
 
     # Run the main process.
     std_output=$(qpdf "$input_file" --pages . "$TASK_PAGES" -- "$output_file" 2>&1)
