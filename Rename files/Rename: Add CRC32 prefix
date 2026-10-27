@@ -11,9 +11,7 @@ _main() {
 
     # Execute initial checks.
     # NOTE: Older versions of 'cksum' do not support the -a option.
-    if cksum -a crc32b /dev/null &>/dev/null; then
-        _check_dependencies ""
-    else
+    if ! cksum -a crc32b /dev/null &>/dev/null; then
         _check_dependencies "rhash"
     fi
     _display_wait_box ""

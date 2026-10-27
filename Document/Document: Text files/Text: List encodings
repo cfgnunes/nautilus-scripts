@@ -10,7 +10,6 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies ""
     _display_wait_box ""
     input_files=$(_get_files "par_type=file; par_recursive=true; par_skip_extension='pdf|svg'")
 
