@@ -1514,7 +1514,7 @@ _install_pkgx() {
         return 1
     fi
 
-    _echo_info "> $(_i18n 'Installing pkgx to:') ~/.local/opt/pkgx"
+    _echo_info "> $(_i18n 'Installing pkgx to:') $pkgx_dir"
 
     mkdir --parents -- "$pkgx_dir"
     mv -- "$pkgx_cmd_tmp" "$pkgx_cmd"
