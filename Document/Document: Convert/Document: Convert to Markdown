@@ -26,7 +26,8 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=md")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=replace; par_extension=md")
 
     # Run the main process.
     std_output=$(pandoc -t gfm --wrap=none -s -o "$output_file" -- "$input_file" 2>&1)

@@ -84,7 +84,8 @@ _run_command() {
     local output_dir=$3
     local output_format="odt"
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=$output_format")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=replace; par_extension=$output_format")
 
     # Run the main process.
     case $command in
@@ -105,13 +106,21 @@ _run_command() {
 
         # NOTE: LibreOffice does not support '--' in the command line.
         # NOTE: LibreOffice does not support defining the output file manually.
-        std_output=$(libreoffice --headless --convert-to "$output_format" "-env:UserInstallation=file://$temp_dir" --outdir "$temp_dir_local" "$input_file" 2>&1)
+        std_output=$(libreoffice \
+            --headless \
+            --convert-to "$output_format" \
+            "-env:UserInstallation=file://$temp_dir" \
+            --outdir "$temp_dir_local" "$input_file" 2>&1)
         local exit_code=$?
 
         # Remove the temporary directory.
         rm -rf -- "$temp_dir"
 
-        temp_output_file=$(find "$temp_dir_local" -type f -name "*.$output_format" -print -quit 2>/dev/null)
+        temp_output_file=$(find "$temp_dir_local" \
+            -type f \
+            -name "*.$output_format" \
+            -print \
+            -quit 2>/dev/null)
         _move_file "skip" "$temp_output_file" "$output_file"
 
         # Remove the temporary directory (local directory).

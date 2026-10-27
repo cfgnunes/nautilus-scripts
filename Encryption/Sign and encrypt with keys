@@ -48,7 +48,8 @@ _main_task() {
         fi
 
         # Generate the output filename for directories.
-        output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=append; par_extension=tar.gpg")
+        output_file=$(_get_output_filename "$input_file" "$output_dir" \
+            "par_extension_opt=append; par_extension=tar.gpg")
 
         # Create a temporary local directory for archiving.
         local basename=""
@@ -72,7 +73,8 @@ _main_task() {
         rm -rf -- "$temp_dir_local"
     else
         # Generate the output filename for regular files.
-        output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=append; par_extension=gpg")
+        output_file=$(_get_output_filename "$input_file" "$output_dir" \
+            "par_extension_opt=append; par_extension=gpg")
 
         # Encrypt the input file directly using GPG.
         _run_gpg "$input_file" "$output_file" "$id_sign" "$ids_encrypt"

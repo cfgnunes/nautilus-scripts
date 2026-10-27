@@ -38,7 +38,8 @@ _main_task() {
         fi
     }
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=7z")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=replace; par_extension=7z")
 
     # Run the main process.
     if [[ -d "$input_file" ]]; then
