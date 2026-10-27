@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install shellcheck
+      run: sudo apt-get update && sudo apt-get install --yes shellcheck
+
+    - name: Run shellcheck
+      run: |
+        find . ! -path "*/.git*" -type f -executable -print0 |
+          xargs -0 --no-run-if-empty \
+            --max-procs="$(nproc --all 2>/dev/null)" \
+            --replace="{}" \
+            shellcheck -e SC1091 "{}"
+
+    - name: Run function tests
+      run: bash .helpers/unit-tests-functions.sh
+
+    - name: Run scripts tests
+      run: bash .helpers/unit-tests-scripts.sh
