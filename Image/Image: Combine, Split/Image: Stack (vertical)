@@ -25,11 +25,17 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    output_file=$(_get_output_filename "Stacked images (vertical).png" "$output_dir" "par_extension_opt=preserve")
+    output_file=$(_get_output_filename \
+        "Stacked images (vertical).png" "$output_dir" \
+        "par_extension_opt=preserve")
 
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(_cmd_magick convert $input_files -append +repage "$output_file" 2>&1)
+    std_output=$(_cmd_magick convert \
+        $input_files \
+        -append \
+        +repage \
+        "$output_file" 2>&1)
     _check_output "$?" "$std_output" "" "$output_file" || return 1
 }
 

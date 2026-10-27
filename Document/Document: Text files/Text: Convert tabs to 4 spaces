@@ -26,7 +26,8 @@ _main_task() {
     local std_output=""
     local tabs=4
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($tabs spaces)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=preserve; par_suffix='($tabs spaces)'")
 
     # Run the main process.
     expand --tabs="$tabs" -- "$input_file" >"$output_file" 2>/dev/null

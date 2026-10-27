@@ -30,7 +30,8 @@ _main_task() {
 
     _directory_push "$output_dir" || return 1
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=preserve")
 
     # Run the main process.
     std_output=$(ln -s -- "$input_file" "$output_file" 2>&1)

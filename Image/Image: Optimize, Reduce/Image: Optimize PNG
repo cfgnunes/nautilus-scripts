@@ -26,7 +26,8 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(optimized)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=preserve; par_suffix='(optimized)'")
 
     # Run the main process.
     std_output=$(optipng -out "$output_file" -- "$input_file" 2>&1)

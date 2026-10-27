@@ -47,10 +47,18 @@ _main_task() {
         return 1
     fi
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='($TASK_DIMENSION)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=preserve; par_suffix='($TASK_DIMENSION)'")
 
     # Run the main process.
-    std_output=$(_cmd_magick convert "$input_file" -resize "${TASK_DIMENSION}^" -gravity center -crop "${TASK_DIMENSION}+0+0" -strip +repage "$output_file" 2>&1)
+    std_output=$(_cmd_magick convert \
+        "$input_file" \
+        -resize "${TASK_DIMENSION}^" \
+        -gravity center \
+        -crop "${TASK_DIMENSION}+0+0" \
+        -strip \
+        +repage \
+        "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

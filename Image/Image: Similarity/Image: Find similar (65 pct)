@@ -145,7 +145,8 @@ _generate_fingerprint() {
 
     # Generate a fingerprint image using ImageMagick transformations.
     # Inspiration: https://github.com/jhnc/findimagedupes
-    _cmd_magick convert "$input_file" \
+    _cmd_magick convert \
+        "$input_file" \
         -resize 160x160\! \
         -modulate 100,0,100 \
         -blur 0x2 \
@@ -210,7 +211,11 @@ _compare_images() {
 
     # Compute RMSE between two images.
     local rmse=""
-    rmse=$(_cmd_magick compare -metric RMSE "$img1" "$img2" null: 2>&1)
+    rmse=$(_cmd_magick compare \
+        -metric RMSE \
+        "$img1" \
+        "$img2" \
+        null: 2>&1)
 
     # Extract the numeric RMSE value.
     local value=""

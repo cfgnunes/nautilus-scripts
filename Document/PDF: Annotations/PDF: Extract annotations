@@ -27,7 +27,8 @@ _main_task() {
     local std_output=""
     local exit_code=0
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=md")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=replace; par_extension=md")
 
     # Run the main process.
     std_output=$(pdfannots -o "$output_file" "$input_file" 2>&1)

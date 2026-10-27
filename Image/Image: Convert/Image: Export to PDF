@@ -77,16 +77,20 @@ _run_command() {
     local output_dir=$3
     local output_format="pdf"
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=$output_format")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=replace; par_extension=$output_format")
 
     # Run the main process.
     case $command in
     "magick")
-        std_output=$(_cmd_magick convert "$input_file" "$output_file" 2>&1)
+        std_output=$(_cmd_magick convert \
+            "$input_file" \
+            "$output_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "inkscape")
-        std_output=$(inkscape --export-area-drawing --export-filename="$output_file" -- "$input_file" 2>&1)
+        std_output=$(inkscape --export-area-drawing \
+            --export-filename="$output_file" -- "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     esac

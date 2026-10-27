@@ -27,10 +27,12 @@ _main_task() {
     local std_output=""
     local lang="rus+eng"
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=txt; par_suffix='(OCR $lang)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=replace; par_extension=txt; par_suffix='(OCR $lang)'")
 
     # Run the main process.
-    std_output=$(tesseract "$input_file" "$(_strip_filename_extension "$output_file")" -l "$lang" 2>&1)
+    std_output=$(tesseract "$input_file" \
+        "$(_strip_filename_extension "$output_file")" -l "$lang" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

@@ -25,7 +25,9 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(mediainfo --Inform="General;Title:%Title%\nPerformer:%Performer%" -- "$input_file" 2>&1)
+    std_output=$(mediainfo \
+        --Inform="General;Title:%Title%\nPerformer:%Performer%" -- \
+        "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     local tag_artist=""
@@ -40,7 +42,8 @@ _main_task() {
     # Rename the file.
     local dir_file=""
     dir_file=$(_get_dirname "$input_file")
-    _move_file "rename" "$input_file" "$dir_file/$tag_artist - $tag_title.mp3" || return 1
+    _move_file "rename" "$input_file" \
+        "$dir_file/$tag_artist - $tag_title.mp3" || return 1
 }
 
 _main "$@"

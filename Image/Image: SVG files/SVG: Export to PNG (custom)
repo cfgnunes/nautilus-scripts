@@ -47,10 +47,13 @@ _main_task() {
         return 1
     fi
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=replace; par_extension=png; par_suffix='($TASK_DIMENSION px)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=replace; par_extension=png; par_suffix='($TASK_DIMENSION px)'")
 
     # Run the main process.
-    std_output=$(inkscape --export-area-drawing --export-height="$TASK_DIMENSION" --export-filename="$output_file" -- "$input_file" 2>&1)
+    std_output=$(inkscape --export-area-drawing \
+        --export-height="$TASK_DIMENSION" --export-filename="$output_file" -- \
+        "$input_file" 2>&1)
 
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }

@@ -25,7 +25,8 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(no trailing)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=preserve; par_suffix='(no trailing)'")
 
     # Run the main process.
     sed "s|[ \t]*\(\r*\)$|\1|" -- "$input_file" >"$output_file" 2>/dev/null

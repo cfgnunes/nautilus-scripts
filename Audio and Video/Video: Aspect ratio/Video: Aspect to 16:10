@@ -29,10 +29,15 @@ _main_task() {
     local aspect_name=""
     aspect_name=$(tr "/" ":" <<<"$aspect")
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(aspect $aspect_name)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=preserve; par_suffix='(aspect $aspect_name)'")
 
     # Run the main process.
-    std_output=$(ffmpeg -hide_banner -y -i "$input_file" -c copy -aspect "$aspect" -- "$output_file" 2>&1)
+    std_output=$(ffmpeg -hide_banner -y \
+        -i "$input_file" \
+        -c copy \
+        -aspect "$aspect" \
+        -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

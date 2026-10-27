@@ -27,10 +27,14 @@ _main_task() {
     local std_output=""
     local transpose="vflip"
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(flipped-v)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=preserve; par_suffix='(flipped-v)'")
 
     # Run the main process.
-    std_output=$(ffmpeg -hide_banner -y -i "$input_file" -filter:v "$transpose" -- "$output_file" 2>&1)
+    std_output=$(ffmpeg -hide_banner -y \
+        -i "$input_file" \
+        -filter:v "$transpose" \
+        -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

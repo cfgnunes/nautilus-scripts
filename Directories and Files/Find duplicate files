@@ -23,7 +23,8 @@ _main() {
     # Run the main process.
     # shellcheck disable=SC2086
     # NOTE: The 'rdfind' does not support '--' in the command line.
-    LC_ALL=C rdfind -dryrun true -removeidentinode false -outputname "$temp_file" $input_files &>/dev/null
+    LC_ALL=C rdfind -dryrun true -removeidentinode false -outputname \
+        "$temp_file" $input_files &>/dev/null
 
     # Parse the output.
     std_output=$(awk 'BEGIN { id = 0 }

@@ -30,10 +30,16 @@ _main_task() {
     file_1=$(_get_element "$input_files" "1")
     file_2=$(_get_element "$input_files" "2")
 
-    output_file=$(_get_output_filename "Mixed audio.wav" "$output_dir" "par_extension_opt=preserve")
+    output_file=$(_get_output_filename \
+        "Mixed audio.wav" "$output_dir" \
+        "par_extension_opt=preserve")
 
     # Run the main process.
-    std_output=$(ffmpeg -hide_banner -y -i "$file_1" -i "$file_2" -filter_complex "amix=inputs=2:duration=longest" -- "$output_file" 2>&1)
+    std_output=$(ffmpeg -hide_banner -y \
+        -i "$file_1" \
+        -i "$file_2" \
+        -filter_complex "amix=inputs=2:duration=longest" \
+        -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "" "$output_file" || return 1
 }
 

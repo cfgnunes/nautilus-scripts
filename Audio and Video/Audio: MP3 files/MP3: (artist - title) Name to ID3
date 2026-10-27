@@ -50,7 +50,8 @@ _main_task() {
 
     # Run the main process.
     if [[ -n "$audio_artist" ]]; then
-        std_output=$(id3v2 --artist "$audio_artist" --song "$audio_title" "$temp_file" 2>&1)
+        std_output=$(id3v2 --artist "$audio_artist" --song "$audio_title" \
+            "$temp_file" 2>&1)
     else
         std_output=$(id3v2 --song "$audio_title" "$temp_file" 2>&1)
     fi

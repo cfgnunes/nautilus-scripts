@@ -27,10 +27,14 @@ _main_task() {
     local std_output=""
     local factor="0.75"
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" "par_extension_opt=preserve; par_suffix='(75 pct)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=preserve; par_suffix='(75 pct)'")
 
     # Run the main process.
-    std_output=$(ffmpeg -hide_banner -y -i "$input_file" -filter:v "scale=trunc(iw*$factor/2)*2:trunc(ih*$factor/2)*2" -- "$output_file" 2>&1)
+    std_output=$(ffmpeg -hide_banner -y \
+        -i "$input_file" \
+        -filter:v "scale=trunc(iw*$factor/2)*2:trunc(ih*$factor/2)*2" \
+        -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 
