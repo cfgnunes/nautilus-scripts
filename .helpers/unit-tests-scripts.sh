@@ -1058,7 +1058,7 @@ _main() {
     printf "\nFinished! "
     printf "Results: %s tests, %s failed.\n" "$_TOTAL_TESTS" "$_TOTAL_FAILED"
 
-    if [[ -e "/dev/tty" ]]; then
+    if _is_gui_session; then
         read -n1 -rp "Press any key to finish..." </dev/tty
     fi
 
