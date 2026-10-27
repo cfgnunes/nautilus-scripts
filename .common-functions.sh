@@ -1607,6 +1607,23 @@ _move_file() {
         return 0
     fi
 
+    # Case-only rename on case-insensitive filesystems (e.g. FAT32).
+    if [[ "${file_src,,}" == "${file_dst,,}" ]] &&
+        [[ "$(stat -c "%d:%i" -- "$file_src" 2>/dev/null)" == \
+            "$(stat -c "%d:%i" -- "$file_dst" 2>/dev/null)" ]]; then
+        local temp_file=""
+        temp_file=$(mktemp --tmpdir="$(dirname -- "$file_src")" \
+            ".tmp.XXXXXX") || return 1
+        rm -rf -- "$temp_file"
+        if mv -n -- "$file_src" "$temp_file" 2>/dev/null &&
+            mv -n -- "$temp_file" "$file_dst" 2>/dev/null; then
+            return 0
+        fi
+        # Restore original name if the second move failed.
+        [[ -e "$temp_file" ]] && mv -n -- "$temp_file" "$file_src" 2>/dev/null
+        return 1
+    fi
+
     # Handle conflict behavior when destination already exists.
     case "$par_when_conflict" in
     "rename")
