@@ -31,9 +31,11 @@ _main_task() {
         "par_extension_opt=replace; par_extension=png; par_suffix='($dimension px)'")
 
     # Run the main process.
-    std_output=$(inkscape --export-area-drawing \
-        --export-height=$dimension --export-filename="$output_file" -- \
-        "$input_file" 2>&1)
+    std_output=$(inkscape \
+        --export-area-drawing \
+        --export-height=$dimension \
+        --export-filename="$output_file" \
+        -- "$input_file" 2>&1)
 
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
