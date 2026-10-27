@@ -425,6 +425,21 @@ __run_move_file() {
     __test_equal "rename to a new name." "$expected_output" "$output"
     __test_path_exists "Source removed after rename." "false" "$_TEMP_FILE1"
     __clean_temp_files
+
+    # Hardlinks with different case on a case-sensitive FS must not be
+    # treated as a case-only rename (would remove one of the names).
+    __create_temp_files
+    local hardlink_src="$_TEMP_DIR_TEST/casefile.txt"
+    local hardlink_dst="$_TEMP_DIR_TEST/CASEFILE.TXT"
+    printf "hardlink-content" >"$hardlink_src"
+    ln -- "$hardlink_src" "$hardlink_dst"
+    _move_file "skip" "$hardlink_src" "$hardlink_dst"
+    __test_path_exists "Hardlink source kept on skip." "true" "$hardlink_src"
+    __test_path_exists "Hardlink destination kept on skip." "true" "$hardlink_dst"
+    expected_output="hardlink-content"
+    output=$(<"$hardlink_src")
+    __test_equal "Hardlink content intact after skip." "$expected_output" "$output"
+    __clean_temp_files
 }
 
 __run_storage_text() {

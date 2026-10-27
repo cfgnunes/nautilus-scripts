@@ -1608,20 +1608,30 @@ _move_file() {
     fi
 
     # Case-only rename on case-insensitive filesystems (e.g. FAT32).
-    if [[ "${file_src,,}" == "${file_dst,,}" ]] &&
-        [[ "$(stat -c "%d:%i" -- "$file_src" 2>/dev/null)" == \
-            "$(stat -c "%d:%i" -- "$file_dst" 2>/dev/null)" ]]; then
-        local temp_file=""
-        temp_file=$(mktemp --tmpdir="$(dirname -- "$file_src")" \
-            ".tmp.XXXXXX") || return 1
-        rm -rf -- "$temp_file"
-        if mv -n -- "$file_src" "$temp_file" 2>/dev/null &&
-            mv -n -- "$temp_file" "$file_dst" 2>/dev/null; then
-            return 0
+    # Skip when the exact destination name exists as its own directory
+    # entry (hardlink on a case-sensitive FS).
+    if [[ "${file_src,,}" == "${file_dst,,}" ]]; then
+        local file_src_id=""
+        local file_dst_id=""
+        file_src_id=$(stat -c "%d:%i" -- "$file_src" 2>/dev/null)
+        file_dst_id=$(stat -c "%d:%i" -- "$file_dst" 2>/dev/null)
+        if [[ "$file_src_id" == "$file_dst_id" ]] &&
+            [[ -z "$(find "$(dirname -- "$file_dst")" -maxdepth 1 \
+                -name "$(basename -- "$file_dst")" \
+                -print -quit 2>/dev/null)" ]]; then
+            local temp_file=""
+            temp_file=$(mktemp --tmpdir="$(dirname -- "$file_src")" \
+                ".tmp.XXXXXX") || return 1
+            rm -rf -- "$temp_file"
+            if mv -n -- "$file_src" "$temp_file" 2>/dev/null &&
+                mv -n -- "$temp_file" "$file_dst" 2>/dev/null; then
+                return 0
+            fi
+            # Restore original name if the second move failed.
+            [[ -e "$temp_file" ]] &&
+                mv -n -- "$temp_file" "$file_src" 2>/dev/null
+            return 1
         fi
-        # Restore original name if the second move failed.
-        [[ -e "$temp_file" ]] && mv -n -- "$temp_file" "$file_src" 2>/dev/null
-        return 1
     fi
 
     # Handle conflict behavior when destination already exists.
