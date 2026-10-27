@@ -16,11 +16,14 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Install shellcheck
-      run: sudo apt-get update && sudo apt-get install --yes shellcheck
+      run: sudo apt-get update && sudo apt-get install --yes wget
+
+    - name: Run installer
+      run: bash -c "$(wget -qO- https://cfgnunes.github.io/nautilus-scripts/install.sh)" _ -n
 
     - name: Run shellcheck (core scripts)
       run: |
-        shellcheck -e SC1091 \
+        $HOME/.local/opt/pkgx/pkgx shellcheck -e SC1091 \
           .common-functions.sh \
           .helpers/multiselect-menu.sh \
           .helpers/unit-tests-functions.sh \
@@ -35,7 +38,7 @@ jobs:
           xargs -0 --no-run-if-empty \
             --max-procs="$(nproc --all 2>/dev/null)" \
             --replace="{}" \
-            shellcheck -e SC1091 "{}"
+            $HOME/.local/opt/pkgx/pkgx shellcheck -e SC1091 "{}"
 
     - name: Run function tests
       run: bash .helpers/unit-tests-functions.sh
