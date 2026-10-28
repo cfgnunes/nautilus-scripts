@@ -997,6 +997,27 @@ _main() {
         "Test Rename.txt" "$temp_dir/test rename.txt"
 
     __test_begin
+    echo "Content of 'Test'." >"$temp_dir/o'connor best.mp3"
+    __test_script "Rename files/Rename: To title case" "empty" \
+        "O'Connor Best.mp3" "$temp_dir/o'connor best.mp3"
+
+    __test_begin
+    echo "Content of 'Test'." >"$temp_dir/d'angelo live.mp3"
+    __test_script "Rename files/Rename: To title case" "empty" \
+        "D'Angelo Live.mp3" "$temp_dir/d'angelo live.mp3"
+
+    __test_begin
+    echo "Content of 'Test'." >"$temp_dir/part xi.mkv"
+    __test_script "Rename files/Rename: To title case" "empty" \
+        "Part XI.mkv" "$temp_dir/part xi.mkv"
+
+    __test_begin
+    echo "Content of 'Test'." >"$temp_dir/viagem ao centro da terra.pdf"
+    __test_script "Rename files/Rename: To title case" "empty" \
+        "Viagem ao Centro da Terra.pdf" \
+        "$temp_dir/viagem ao centro da terra.pdf"
+
+    __test_begin
     echo "Content of 'Test'." >"$temp_dir/Test rename.txt"
     __test_script "Rename files/Rename: To uppercase" "empty" \
         "TEST RENAME.TXT" "$temp_dir/Test rename.txt"

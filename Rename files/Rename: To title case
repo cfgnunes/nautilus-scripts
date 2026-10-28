@@ -44,7 +44,7 @@ _main_task() {
     # Words to lowercase.
     local words=""
     words="a|an|and|as|at|but|by|for|from|if|in|nor|of|on|or|per|so|the|to|via|with|yet"
-    words+="|a|as|e|o|os|um|uns|uma|umas|com|da|das|de|desde|do|dos|em|na|nas|no|nos|ou|pra|para|pela|pelas|pelo|pelos|por|se|sob|sobre"
+    words+="|a|ao|aos|as|e|o|os|um|uns|uma|umas|com|da|das|de|desde|do|dos|em|na|nas|no|nos|ou|pra|para|pela|pelas|pelo|pelos|por|se|sob|sobre"
     words+="|von"
     output_file=$(sed -E "s/ ($words)\b/ \L\1/gI" <<<"$output_file")
 
@@ -53,9 +53,10 @@ _main_task() {
 
     # Fix words with ' character.
     output_file=$(sed "s|\('\w\)|\L\1|gI" <<<"$output_file")
-    output_file=$(sed "s| \(d'\w\)| \U\1|gI" <<<"$output_file")
-    output_file=$(sed "s| \(o'\w\)| \U\1|gI" <<<"$output_file")
-    output_file=$(sed "s| o' | O' |gI" <<<"$output_file")
+    output_file=$(sed -E "s/(^| )(d'\w)/\1\U\2/gI" <<<"$output_file")
+    output_file=$(sed -E "s/(^| )(o'\w)/\1\U\2/gI" <<<"$output_file")
+    output_file=$(sed -E "s/(^| )(l'\w)/\1\U\2/gI" <<<"$output_file")
+    output_file=$(sed -E "s/(^| )o' /\1O' /gI" <<<"$output_file")
     output_file=$(sed "s|'em |'Em |gI" <<<"$output_file")
     output_file=$(sed "s| '\(\w\)| '\U\1|gI" <<<"$output_file")
 
@@ -81,7 +82,7 @@ _main_task() {
     output_file=$(sed "s|\band the |and The |gI" <<<"$output_file")
 
     # Fix the some specific cases: some roman numbers.
-    output_file=$(sed -E "s/ (IX|IV|V?I{0,3})\b/ \U\1/gI" <<<"$output_file")
+    output_file=$(sed -E "s/ (X{0,3}(IX|IV|V?I{1,3}|V)|X{1,3})\b/ \U\1/gI" <<<"$output_file")
 
     # Fix the some specific cases: classical songs.
     output_file=$(sed "s| in a minor| in A Minor|gI" <<<"$output_file")
