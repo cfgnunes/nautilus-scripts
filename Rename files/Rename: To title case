@@ -84,6 +84,8 @@ _main_task() {
     output_file=$(sed -E "s|\ba-ha\b|a-ha|gI" <<<"$output_file")
     output_file=$(sed -E "s/\ba"$'\u2010'"ha\b/a"$'\u2010'"ha/gI" <<<"$output_file")
     output_file=$(sed -E "s|\bthe the\b|The The|gI" <<<"$output_file")
+    output_file=$(sed -E "s|\bceelo\b|CeeLo|gI" <<<"$output_file")
+    output_file=$(sed -E "s|\bonerepublic\b|OneRepublic|gI" <<<"$output_file")
 
     # Fix some words.
     output_file=$(sed -E "s|\btik tok\b|TiK ToK|gI" <<<"$output_file")
@@ -99,8 +101,15 @@ _main_task() {
     output_file=$(sed "s|, a |, A |gI" <<<"$output_file")
     output_file=$(sed "s|, an |, An |gI" <<<"$output_file")
     output_file=$(sed "s|, the |, The |gI" <<<"$output_file")
+    # Also when the article is at the end or before ')' / '.'.
+    output_file=$(sed -E "s/, (a|an|the)([.)])/, \u\1\2/gI" <<<"$output_file")
     output_file=$(sed "s|\& the |\& The |gI" <<<"$output_file")
     output_file=$(sed "s|\band the |and The |gI" <<<"$output_file")
+
+    # Fix English 'no'/'do' incorrectly lowercased as Portuguese particles.
+    output_file=$(sed -E "s/\bno more\b/No More/gI" <<<"$output_file")
+    output_file=$(sed -E "s/\b(with|for|have|get|got) no\b/\1 No/gI" <<<"$output_file")
+    output_file=$(sed -E "s/\b(can|bad) do\b/\1 Do/gI" <<<"$output_file")
 
     # Fix the some specific cases: some roman numbers.
     output_file=$(sed -E "s/ (X{0,3}(IX|IV|V?I{1,3}|V)|X{1,3})\b/ \U\1/gI" <<<"$output_file")
@@ -123,6 +132,11 @@ _main_task() {
 
     # Strip the extension.
     output_file=$(_strip_filename_extension "$output_file")
+
+    # Capitalize the last word (standard title case).
+    output_file=$(sed -E "s/\b(\w)(\w*)$/\u\1\2/" <<<"$output_file")
+    # Article after comma at end of the basename (e.g. 'One, the').
+    output_file=$(sed -E "s/, (a|an|the)$/, \u\1/gI" <<<"$output_file")
 
     # Run the main process.
     _move_file "skip" "$input_file" "$dir/$output_file${filename_extension,,}" || return 1
