@@ -27,7 +27,7 @@ _main_task() {
     local filename_base=""
     local filename_extension=""
     local words=()
-    local suffix_regex='^(.*)[[:space:]]+(\([^)]*\)|\[[^]]*\])$'
+    local regex="^(.*)[[:space:]]+(\([^)]*\)|\[[^]]*\])$"
 
     dir=$(dirname -- "$input_file")
     filename=$(basename -- "$input_file")
@@ -42,8 +42,8 @@ _main_task() {
     fi
 
     # Remove a trailing "(...)" or "[...]" block as a single suffix, otherwise
-    # the last space-separated word. Skip if that would leave fewer than 2 words.
-    if [[ "$filename_base" =~ $suffix_regex ]]; then
+    # the last space-separated word.
+    if [[ "$filename_base" =~ $regex ]]; then
         filename_base="${BASH_REMATCH[1]}"
         read -r -a words <<<"$filename_base"
         if ((${#words[@]} < 1)); then
