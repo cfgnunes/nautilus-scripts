@@ -53,9 +53,17 @@ _main_task() {
 
     # Fix words with ' character.
     output_file=$(sed "s|\('\w\)|\L\1|gI" <<<"$output_file")
-    output_file=$(sed -E "s/(^| )(d'\w)/\1\U\2/gI" <<<"$output_file")
+    # Surname-style O' always capitalized, d'/l' capitalized only at start
+    # (Italian/French particles stay lowercase mid-title: d'Amore, l'Amour).
     output_file=$(sed -E "s/(^| )(o'\w)/\1\U\2/gI" <<<"$output_file")
-    output_file=$(sed -E "s/(^| )(l'\w)/\1\U\2/gI" <<<"$output_file")
+    # Mid-title Italian/French particles: d'Amore, l'Amour (lowercase prefix).
+    output_file=$(sed -E "s/ (d')(\w)/ \L\1\U\2/gI" <<<"$output_file")
+    output_file=$(sed -E "s/ (l')(\w)/ \L\1\U\2/gI" <<<"$output_file")
+    # Capitalize d'/l' at start of the name or after "- "/".".
+    output_file=$(sed -E "s/^(d'\w)/\U\1/gI" <<<"$output_file")
+    output_file=$(sed -E "s/^(l'\w)/\U\1/gI" <<<"$output_file")
+    output_file=$(sed -E "s/([-\.] )(d'\w)/\1\U\2/gI" <<<"$output_file")
+    output_file=$(sed -E "s/([-\.] )(l'\w)/\1\U\2/gI" <<<"$output_file")
     output_file=$(sed -E "s/(^| )o' /\1O' /gI" <<<"$output_file")
     output_file=$(sed "s|'em |'Em |gI" <<<"$output_file")
     output_file=$(sed "s| '\(\w\)| '\U\1|gI" <<<"$output_file")
@@ -63,12 +71,25 @@ _main_task() {
     # Fix common uppercase word abbreviations.
     words="[0-9]\w|ac|api|sql|aka|asap|ceo|cfo|cto|dc|diy|dna|faq|isbn|ko|mtv|rpg|rpm|tv|usa|vip"
     words+="|bios|cmos|fifa|gba|nba|nes|nfl|nhl|rom|snes|uml"
+    # Fix band names (in uppercase).
+    words+="|ppf|abba|inxs|klb|kc|abc|vcr|twrp|toto|mgmt|sza|chic"
     output_file=$(sed -E "s/\b($words)\b/\U\1/gI" <<<"$output_file")
 
     # Fix the some specific cases.
     output_file=$(sed "s|-in-|-in-|gI" <<<"$output_file")
     output_file=$(sed "s|\bphd\b|PhD|gI" <<<"$output_file")
     output_file=$(sed "s|\bno\. |No. |gI" <<<"$output_file")
+
+    # Fix some band names.
+    output_file=$(sed -E "s|\ba-ha\b|a-ha|gI" <<<"$output_file")
+    output_file=$(sed -E "s/\ba"$'\u2010'"ha\b/a"$'\u2010'"ha/gI" <<<"$output_file")
+    output_file=$(sed -E "s|\bthe the\b|The The|gI" <<<"$output_file")
+
+    # Fix some words.
+    output_file=$(sed -E "s|\btik tok\b|TiK ToK|gI" <<<"$output_file")
+
+    # Fix Scottish/Irish Mc* surnames (McCartney, McKenzie, ...).
+    output_file=$(sed -E "s/\bMc([a-z])/Mc\u\1/g" <<<"$output_file")
 
     # Fix the some specific cases: 'featuring' word.
     output_file=$(sed "s|\bfeat\. |feat. |gI" <<<"$output_file")
@@ -97,8 +118,8 @@ _main_task() {
     output_file=$(sed -E "s/\b($words)\b/\U\1/gI" <<<"$output_file")
     output_file=$(sed "s|\bwoo\b|WoO|gI" <<<"$output_file")
 
-    # Fix abbreviations with one letter character.
-    output_file=$(sed "s| \(\w\.\)| \U\1|gI" <<<"$output_file")
+    # Fix abbreviations with one letter character (ASCII only; avoid é./è.).
+    output_file=$(sed "s| \([A-Za-z]\.\)| \U\1|gI" <<<"$output_file")
 
     # Strip the extension.
     output_file=$(_strip_filename_extension "$output_file")
