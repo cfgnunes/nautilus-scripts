@@ -46,8 +46,12 @@ _main_task() {
 
     # Words to lowercase.
     local words=""
+    # English articles/prepositions.
     words="a|an|and|as|at|but|by|for|from|if|in|nor|of|on|or|per|so|the|to|via|with|yet"
+    # Portuguese articles/prepositions.
     words+="|a|ao|aos|as|e|o|os|um|uns|uma|umas|com|da|das|de|desde|do|dos|em|na|nas|no|nos|ou|pra|para|pela|pelas|pelo|pelos|por|se|sob|sobre"
+    # Spanish articles/prepositions.
+    words+="|el|la|los|las|del|al"
     words+="|von"
     output_file=$(sed -E "s/ ($words)\b/ \L\1/gI" <<<"$output_file")
 
@@ -75,7 +79,7 @@ _main_task() {
     words="[0-9]\w|ac|api|sql|aka|asap|ceo|cfo|cto|dc|diy|dna|faq|isbn|ko|mtv|rpg|rpm|tv|usa|vip"
     words+="|bios|cmos|fifa|gba|nba|nes|nfl|nhl|rom|snes|uml"
     # Fix band names (in uppercase).
-    words+="|ppf|abba|inxs|klb|kc|abc|vcr|twrp|toto|mgmt|sza|chic"
+    words+="|ppf|abba|inxs|klb|kc|abc|vcr|twrp|toto|mgmt|sza|chic|iza"
     output_file=$(sed -E "s/\b($words)\b/\U\1/gI" <<<"$output_file")
 
     # Fix the some specific cases.
@@ -83,11 +87,23 @@ _main_task() {
     output_file=$(sed "s|\bphd\b|PhD|gI" <<<"$output_file")
     output_file=$(sed "s|\bno\. |No. |gI" <<<"$output_file")
 
+    # 'US' only in release tags (avoid English pronoun 'us').
+    output_file=$(sed -E "s|\bus( [0-9])|US\1|gI" <<<"$output_file")
+    output_file=$(sed -E "s|\bus mix\b|US Mix|gI" <<<"$output_file")
+    output_file=$(sed -E "s|\bus version\b|US Version|gI" <<<"$output_file")
+    output_file=$(sed -E "s|\bus remaster\b|US Remaster|gI" <<<"$output_file")
+    output_file=$(sed -E "s|\bus edition\b|US Edition|gI" <<<"$output_file")
+
     # Fix some band names.
     output_file=$(sed -E "s|\ba-ha\b|a-ha|gI" <<<"$output_file")
-    output_file=$(sed -E "s|\bthe the\b|The The|gI" <<<"$output_file")
     output_file=$(sed -E "s|\bceelo\b|CeeLo|gI" <<<"$output_file")
+    output_file=$(sed -E "s|\bmagic!|MAGIC!|gI" <<<"$output_file")
     output_file=$(sed -E "s|\bonerepublic\b|OneRepublic|gI" <<<"$output_file")
+    output_file=$(sed -E "s|\bsixpence none the richer\b|Sixpence None The Richer|gI" <<<"$output_file")
+    output_file=$(sed -E "s|\bthe la's\b|The La's|gI" <<<"$output_file")
+    output_file=$(sed -E "s|\bthe the\b|The The|gI" <<<"$output_file")
+    # Band ERA only as leading artist token (avoid PT verb 'era').
+    output_file=$(sed -E "s|^era -|ERA -|gI" <<<"$output_file")
 
     # Fix some words.
     output_file=$(sed -E "s|\btik tok\b|TiK ToK|gI" <<<"$output_file")
@@ -135,7 +151,8 @@ _main_task() {
     # Strip the extension.
     output_file=$(_strip_filename_extension "$output_file")
 
-    # Capitalize the last word (standard title case).
+    # Capitalize the last word (standard title case), including before ' ('.
+    output_file=$(sed -E "s|\b(\w)(\w*) \(|\u\1\2 (|" <<<"$output_file")
     output_file=$(sed -E "s/\b(\w)(\w*)$/\u\1\2/" <<<"$output_file")
     # Article after comma at end of the basename (e.g. 'One, the').
     output_file=$(sed -E "s/, (a|an|the)$/, \u\1/gI" <<<"$output_file")
