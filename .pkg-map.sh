@@ -11,6 +11,7 @@
 # FIXME: Some package definitions were removed to prevent compatibility issues.
 # 'pkgx: gnu.org/inetutils' - Provides a 'ping' implementation that differs from those shipped by distributions.
 # 'pkgx: poppler.freedesktop.org' - Exports environment variables that alter Zenity's font settings.
+# 'pkgx: github.com/myers/id3v2' - See: https://github.com/pkgxdev/pantry/issues/14923
 
 # Description:
 #   This array defines the mapping between a dependency key and its
@@ -332,7 +333,7 @@ declare -A PKG_MAP=(
         zypper: id3v2
         guix:
         xbps:   id3v2
-        pkgx:   github.com/myers/id3v2
+        pkgx:
     "
 
     ["inkscape"]="
