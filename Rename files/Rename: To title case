@@ -38,6 +38,9 @@ _main_task() {
     output_file=$(sed "s|"$'\u2018'"|'|g" <<<"$output_file") # Left single quotation.
     output_file=$(sed "s|"$'\u2019'"|'|g" <<<"$output_file") # Right single quotation.
 
+    # Transform similar - characters.
+    output_file=$(sed "s|"$'\u2010'"|-|g" <<<"$output_file")
+
     # Transform to title case.
     output_file=$(sed "s|\(\w\)\(\w*\)|\U\1\L\2|g" <<<"$output_file")
 
@@ -82,7 +85,6 @@ _main_task() {
 
     # Fix some band names.
     output_file=$(sed -E "s|\ba-ha\b|a-ha|gI" <<<"$output_file")
-    output_file=$(sed -E "s/\ba"$'\u2010'"ha\b/a"$'\u2010'"ha/gI" <<<"$output_file")
     output_file=$(sed -E "s|\bthe the\b|The The|gI" <<<"$output_file")
     output_file=$(sed -E "s|\bceelo\b|CeeLo|gI" <<<"$output_file")
     output_file=$(sed -E "s|\bonerepublic\b|OneRepublic|gI" <<<"$output_file")
