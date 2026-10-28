@@ -129,6 +129,12 @@ _main_task() {
     output_file=$(sed -E "s/\b(with|for|have|get|got) no\b/\1 No/gI" <<<"$output_file")
     output_file=$(sed -E "s/\b(can|bad) do\b/\1 Do/gI" <<<"$output_file")
 
+    # Portuguese verb 'for' (ir) after common subordinators, not English prep 'For'.
+    output_file=$(sed -E "s/\b(se|quando|como|onde|quem) For\b/\1 for/g" <<<"$output_file")
+
+    # Portuguese expression.
+    output_file=$(sed -E "s|\bao vivo\b|Ao Vivo|gI" <<<"$output_file")
+
     # Fix the some specific cases: some roman numbers.
     output_file=$(sed -E "s/ (X{0,3}(IX|IV|V?I{1,3}|V)|X{1,3})\b/ \U\1/gI" <<<"$output_file")
 
