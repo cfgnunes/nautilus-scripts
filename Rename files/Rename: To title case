@@ -47,12 +47,12 @@ _main_task() {
     # Words to lowercase.
     local words=""
     # English articles/prepositions.
-    words="a|an|and|as|at|but|by|for|from|if|in|nor|of|on|or|per|so|the|to|via|with|yet"
+    words="a|an|and|as|at|but|by|for|from|if|in|nor|of|on|or|per|the|to|via|with|yet"
     # Portuguese articles/prepositions.
     words+="|a|ao|aos|as|e|o|os|um|uns|uma|umas|com|da|das|de|desde|do|dos|em|na|nas|no|nos|ou|pra|para|pela|pelas|pelo|pelos|por|se|sob|sobre"
     # Spanish articles/prepositions.
     words+="|el|la|los|las|del|al"
-    words+="|von"
+    words+="|von|è"
     output_file=$(sed -E "s/ ($words)\b/ \L\1/gI" <<<"$output_file")
 
     # Uppercase the beginning of sentences.
@@ -122,15 +122,12 @@ _main_task() {
     # Also when the article is at the end or before ')' / '.'.
     output_file=$(sed -E "s/, (a|an|the)([.)])/, \u\1\2/gI" <<<"$output_file")
     output_file=$(sed "s|\& the |\& The |gI" <<<"$output_file")
-    output_file=$(sed "s|\band the |and The |gI" <<<"$output_file")
+    #output_file=$(sed "s|\band the |and The |gI" <<<"$output_file")
 
     # Fix English 'no'/'do' incorrectly lowercased as Portuguese particles.
     output_file=$(sed -E "s/\bno more\b/No More/gI" <<<"$output_file")
     output_file=$(sed -E "s/\b(with|for|have|get|got) no\b/\1 No/gI" <<<"$output_file")
     output_file=$(sed -E "s/\b(can|bad) do\b/\1 Do/gI" <<<"$output_file")
-
-    # Portuguese verb 'for' (ir) after common subordinators, not English prep 'For'.
-    output_file=$(sed -E "s/\b(se|quando|como|onde|quem) For\b/\1 for/g" <<<"$output_file")
 
     # Portuguese expression.
     output_file=$(sed -E "s|\bao vivo\b|Ao Vivo|gI" <<<"$output_file")
@@ -162,6 +159,9 @@ _main_task() {
     output_file=$(sed -E "s/\b(\w)(\w*)$/\u\1\2/" <<<"$output_file")
     # Article after comma at end of the basename (e.g. 'One, the').
     output_file=$(sed -E "s/, (a|an|the)$/, \u\1/gI" <<<"$output_file")
+
+    # Portuguese verb 'for' after common subordinators, not English prep 'For'.
+    output_file=$(sed -E "s/\b(se|quando|como|onde|quem) For\b/\1 for/g" <<<"$output_file")
 
     # Run the main process.
     _move_file "skip" "$input_file" "$dir/$output_file${filename_extension,,}" || return 1
