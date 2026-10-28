@@ -52,7 +52,7 @@ _main_task() {
     words+="|a|ao|aos|as|e|o|os|um|uns|uma|umas|com|da|das|de|desde|do|dos|em|na|nas|no|nos|ou|pra|para|pela|pelas|pelo|pelos|por|se|sob|sobre"
     # Spanish articles/prepositions.
     words+="|el|la|los|las|del|al"
-    words+="|von|è"
+    words+="|von|è|é"
     output_file=$(sed -E "s/ ($words)\b/ \L\1/gI" <<<"$output_file")
 
     # Uppercase the beginning of sentences.
