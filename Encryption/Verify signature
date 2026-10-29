@@ -22,22 +22,14 @@ _main() {
     std_output=$(sort --version-sort --reverse <<<"$std_output")
 
     # Translate some strings from the '$std_output'.
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|__MSG_Valid__|$(_i18n 'Valid signature')|g" <<<"$std_output")
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|__MSG_Invalid__|$(_i18n 'Invalid signature')|g" <<<"$std_output")
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|__MSG_NoKey__|$(_i18n 'Missing key')|g" <<<"$std_output")
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|__MSG_NoData__|$(_i18n 'Missing data file')|g" <<<"$std_output")
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|__MSG_RevKey__|$(_i18n 'Revoked key')|g" <<<"$std_output")
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|__MSG_ExpKey__|$(_i18n 'Expired key')|g" <<<"$std_output")
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|__MSG_ExpSig__|$(_i18n 'Expired signature')|g" <<<"$std_output")
-    # shellcheck disable=SC2001
-    std_output=$(sed "s|__MSG_UnknownAlg__|$(_i18n 'Unknown algorithm')|g" <<<"$std_output")
+    std_output=${std_output//__MSG_Valid__/$(_i18n 'Valid signature')}
+    std_output=${std_output//__MSG_Invalid__/$(_i18n 'Invalid signature')}
+    std_output=${std_output//__MSG_NoKey__/$(_i18n 'Missing key')}
+    std_output=${std_output//__MSG_NoData__/$(_i18n 'Missing data file')}
+    std_output=${std_output//__MSG_RevKey__/$(_i18n 'Revoked key')}
+    std_output=${std_output//__MSG_ExpKey__/$(_i18n 'Expired key')}
+    std_output=${std_output//__MSG_ExpSig__/$(_i18n 'Expired signature')}
+    std_output=${std_output//__MSG_UnknownAlg__/$(_i18n 'Unknown algorithm')}
 
     _display_list_box "$std_output" "par_item_name=$(_i18n 'files'); par_columns='--column:$(_i18n 'Status'),--column:$(_i18n 'Name'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Key ID'),--column:$(_i18n 'Date'),--column:$(_i18n 'Time'),--column:$(_i18n 'File')'; par_action=open_location; par_check_type=checkbox"
 }
