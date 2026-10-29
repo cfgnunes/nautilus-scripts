@@ -775,10 +775,8 @@ _install_packages() {
 
         # Prefix packages with their channel namespace.
         nix_packages="$nix_channel.$packages"
-        # shellcheck disable=SC2001
-        nix_packages=$(sed "s| $||g" <<<"$nix_packages")
-        # shellcheck disable=SC2001
-        nix_packages=$(sed "s| | $nix_channel.|g" <<<"$nix_packages")
+        nix_packages=${nix_packages% }
+        nix_packages=${nix_packages// / $nix_channel.}
 
         cmd_inst+="nix-env -iA $nix_packages"
         # Nix does not require root for installing user packages.
@@ -990,8 +988,7 @@ _install_accels_gnome2() {
             keyboard_shortcut=${keyboard_shortcut//Control/Primary}
 
             if [[ -n "$keyboard_shortcut" ]]; then
-                # shellcheck disable=SC2001
-                filename=$(sed "s|/|\\\\\\\\s|g" <<<"$filename")
+                filename=${filename//\//\\\\s}
                 filename=$(_encode_path_gtk "$filename")
 
                 printf "%s\n" '(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s'"$filename"'" "'"$keyboard_shortcut"'")'
@@ -1035,7 +1032,8 @@ _install_accels_thunar() {
                 local submenu=""
                 local unique_id=""
                 name=$(basename -- "$filename")
-                submenu=$(dirname -- "$filename" | sed "s|.*scripts/|$msg_scripts/|g")
+                submenu=$(dirname -- "$filename")
+                submenu="$msg_scripts/${submenu##*scripts/}"
                 unique_id=$(md5sum <<<"$submenu$name" 2>/dev/null |
                     sed "s|[^0-9]*||g" | cut -c 1-8)
 
@@ -1069,12 +1067,10 @@ _install_application_shortcuts() {
     # Create a '.desktop' file for each script.
     local filename=""
     while IFS= read -r -d $'\0' filename; do
-        # shellcheck disable=SC2001
-        script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
+        script_relative=${filename##*scripts/}
         name=${script_relative##*/}
         submenu=${script_relative%/*}
-        # shellcheck disable=SC2001
-        submenu=$(sed "s|/| - |g" <<<"$submenu")
+        submenu=${submenu//\// - }
 
         menu_file=$(_generate_desktop_filename "$name")
         menu_file="$app_menus_path/$menu_file"
@@ -1118,8 +1114,7 @@ _create_gnome_application_folder() {
         if [[ "$current_folders" == "[]" || "$current_folders" == "@as []" ]]; then
             new_list="['$folder_name']"
         else
-            # shellcheck disable=SC2001
-            new_list=$(sed "s/]/, '$folder_name']/" <<<"$current_folders")
+            new_list="${current_folders%]} , '$folder_name']"
         fi
         gsettings set \
             org.gnome.desktop.app-folders folder-children "$new_list" &>/dev/null
@@ -1184,8 +1179,7 @@ _install_actions_kio_servicemenus() {
     local submenu=""
     local filename=""
     while IFS= read -r -d $'\0' filename; do
-        # shellcheck disable=SC2001
-        script_relative=$(sed "s|.*scripts/||g" <<<"$filename")
+        script_relative=${filename##*scripts/}
         name=${script_relative##*/}
         submenu=${script_relative%%/*}
 
@@ -1351,8 +1345,8 @@ _install_actions_thunar() {
 
         while IFS= read -r -d $'\0' filename; do
             name=$(basename -- "$filename")
-            submenu=$(dirname -- "$filename" |
-                sed "s|.*scripts/|$msg_scripts/|g")
+            submenu=$(dirname -- "$filename")
+            submenu="$msg_scripts/${submenu##*scripts/}"
 
             printf "%s\n" "<action>"
             printf "\t%s\n" "<icon></icon>"

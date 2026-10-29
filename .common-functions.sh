@@ -323,7 +323,7 @@ _logs_consolidate() {
 # Parameters:
 #   $1 (input_str): The string to escape.
 _escape_single_quotes() {
-    sed -z "s|'|'\\\''|g" <<<"$1"
+    printf "%s" "${1//\'/\'\\\'\'}"
 }
 
 # Function: _run_task_parallel
@@ -595,8 +595,7 @@ _check_dependencies() {
         fi
 
         # Append resolved packages as "<pkg_manager>:<package> ..." pairs.
-        pkg_names_sel=$(sed "s|^|$pkg_manager_sel:|g" <<<"$pkg_names_sel")
-        pkg_names_sel=$(sed "s| | $pkg_manager_sel:|g" <<<"$pkg_names_sel")
+        pkg_names_sel="$pkg_manager_sel:${pkg_names_sel// / $pkg_manager_sel:}"
         pairs+=" $pkg_names_sel"
 
         # Append resolved post install commands as "cmd1;cmd2;cmd3;..." list.
@@ -980,7 +979,7 @@ _deps_is_package_installed() {
     # Keep only the package name after '~' for verification, used when install
     # and check package names differ (e.g., on NixOS).
     if [[ "$package" == *"~"* ]]; then
-        package=$(sed "s|[A-Za-z0-9./-]*~||g" <<<"$package")
+        package=${package#*~}
     fi
 
     case "$pkg_manager" in
@@ -992,7 +991,7 @@ _deps_is_package_installed() {
     "pkgx")
         local pkgx_packages_dir="$HOME/.pkgx"
         local pkgx_package_path=""
-        pkgx_package_path=$(sed "s|@[A-Za-z0-9./-]*||g" <<<"$package")
+        pkgx_package_path=${package%@*}
         if [[ -d "$pkgx_packages_dir/$pkgx_package_path" ]]; then
             # Load the environment variables for the installed package.
             set -a
@@ -1346,8 +1345,8 @@ _find_filtered_files() {
     local filtered_files=""
     local find_command=""
 
-    input_files=$(sed "s|'|'\"'\"'|g" <<<"$input_files")
-    input_files=$(sed "s|$FIELD_SEPARATOR|' '|g" <<<"$input_files")
+    input_files=${input_files//\'/\'\"\'\"\'}
+    input_files=${input_files//$FIELD_SEPARATOR/\' \'}
 
     # Build a 'find' command.
     find_command="find '$input_files'"
@@ -2127,7 +2126,7 @@ _display_select_box() {
     list=$(sed ":again; s/$fs$fs/$fs $fs/g; t again" <<<"$list")
 
     # Avoid leading '-' in the variable to use in command line.
-    list=$(sed "s|$FIELD_SEPARATOR-|$FIELD_SEPARATOR|g" <<<"$list")
+    list=${list//$FIELD_SEPARATOR-/$FIELD_SEPARATOR}
 
     # Get the system limit for arguments.
     local arg_max=""
@@ -2210,7 +2209,7 @@ _display_list_box_xmessage() {
     local btn_ok=""
     btn_ok="$(_i18n 'OK')"
 
-    par_columns=$(sed "s|--column:||g" <<<"$par_columns")
+    par_columns=${par_columns//--column:/}
     par_columns=$(tr "," "\t" <<<"$par_columns")
     list=$(tr "$FIELD_SEPARATOR" "\t" <<<"$list")
     list="$par_columns"$'\n'$'\n'"$list"
@@ -2811,7 +2810,9 @@ _get_script_name() {
     script_name=$(basename -- "$0")
 
     # Remove 'dd ' (two digits + space) at the beginning.
-    script_name=$(sed "s|^[0-9]\{2\} ||" <<<"$script_name")
+    if [[ $script_name =~ ^[0-9]{2}\ (.*) ]]; then
+        script_name=${BASH_REMATCH[1]}
+    fi
     _i18n "$script_name"
 }
 
@@ -4048,10 +4049,9 @@ _text_remove_pwd() {
     working_dir=$(_get_working_directory)
 
     if [[ -n "$working_dir" && "$working_dir" != "/" ]]; then
-        sed "s|$working_dir/||g" <<<"$input_text"
-    else
-        printf "%s" "$input_text"
+        input_text=${input_text//"${working_dir}/"/}
     fi
+    printf "%s" "$input_text"
 }
 
 # Function: _text_sort
@@ -4302,8 +4302,10 @@ _recent_scripts_add() {
     for link in "${links[@]}"; do
         if ((count <= ACCESSED_RECENTLY_LINKS_TO_KEEP)); then
             # Rename the link with a numeric prefix for ordering.
-            link_name=$(basename "$link" |
-                sed --regexp-extended 's|^.?[0-9]{2} ||')
+            link_name=$(basename "$link")
+            if [[ $link_name =~ ^.?[0-9]{2}\ (.*) ]]; then
+                link_name=${BASH_REMATCH[1]}
+            fi
             mv -f -- "$link" "$dir/$(printf '%02d' "$count") $link_name" \
                 2>/dev/null
             ((count++))

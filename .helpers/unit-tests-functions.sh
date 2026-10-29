@@ -592,35 +592,36 @@ __run_str_sort() {
     local input=""
     local expected_output=""
     local output=""
+    local separator=$'\r'
 
     input=""
     expected_output=""
-    output=$(_str_sort "$input" "\r" "false")
+    output=$(_str_sort "$input" "$separator" "false")
     __test_equal "$input" "$expected_output" "$output"
 
     input="Line1"$'\r'"Line2"
     expected_output="Line1"$'\r'"Line2"
-    output=$(_str_sort "$input" "\r" "false")
+    output=$(_str_sort "$input" "$separator" "false")
     __test_equal "$input" "$expected_output" "$output"
 
     input="Line2"$'\r'"Line1"
     expected_output="Line1"$'\r'"Line2"
-    output=$(_str_sort "$input" "\r" "false")
+    output=$(_str_sort "$input" "$separator" "false")
     __test_equal "$input" "$expected_output" "$output"
 
     input="10"$'\r'"2"
     expected_output="2"$'\r'"10"
-    output=$(_str_sort "$input" "\r" "false")
+    output=$(_str_sort "$input" "$separator" "false")
     __test_equal "$input" "$expected_output" "$output"
 
     input="10"$'\r'"2"$'\r'"2"
     expected_output="2"$'\r'"10"
-    output=$(_str_sort "$input" "\r" "true")
+    output=$(_str_sort "$input" "$separator" "true")
     __test_equal "$input" "$expected_output" "$output"
 
     input="10"$'\r'"2"$'\r'"2"
     expected_output="2"$'\r'"2"$'\r'"10"
-    output=$(_str_sort "$input" "\r" "false")
+    output=$(_str_sort "$input" "$separator" "false")
     __test_equal "Keep duplicates." "$expected_output" "$output"
 }
 
