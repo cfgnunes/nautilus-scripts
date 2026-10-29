@@ -76,16 +76,48 @@ _main_task() {
     output_file=$(sed "s| '\(\w\)| '\U\1|gI" <<<"$output_file")
 
     # Fix common uppercase word abbreviations.
-    words="[0-9]\w|ac|api|sql|aka|asap|ceo|cfo|cto|dc|diy|dna|faq|isbn|ko|mtv|rpg|rpm|tv|usa|vip"
+    words="[0-9]\w|[0-9]\w\w|ac|api|sql|aka|asap|ceo|cfo|cto|dc|diy|dna|faq|isbn|ko|mtv|rpg|rpm|tv|usa|vip"
     words+="|bios|cmos|fifa|gba|nba|nes|nfl|nhl|rom|snes|uml"
+    words+="|acme|aiii|aso|espn|fc|fx|gp|gs|gt|gx|hal|mlbpa|mvp|nasa|ncaa|nhlpa|np|ntsc|pal|pga|qix|roc|rs|sd|sfc|sm|sos|swat|swiv|tko|tnn|wcw|wgp|wwf|wwii"
     # Fix band names (in uppercase).
-    words+="|ppf|abba|inxs|klb|kc|abc|vcr|twrp|toto|mgmt|sza|chic|iza"
+    words+="|abba|abc|chic|inxs|iza|kc|klb|mgmt|ppf|sza|toto|twrp|vcr"
     output_file=$(sed -E "s/\b($words)\b/\U\1/gI" <<<"$output_file")
 
+    # Japanese suffixes.
+    output_file=$(sed "s|-chan\b|-chan|gI" <<<"$output_file")
+    output_file=$(sed "s|-ji\b|-ji|gI" <<<"$output_file")
+    output_file=$(sed "s|-jigen\b|-jigen|gI" <<<"$output_file")
+    output_file=$(sed "s|-jima\b|-jima|gI" <<<"$output_file")
+    output_file=$(sed "s|-jou\b|-jou|gI" <<<"$output_file")
+    output_file=$(sed "s|-kun\b|-kun|gI" <<<"$output_file")
+    output_file=$(sed "s|-nichi\b|-nichi|gI" <<<"$output_file")
+    output_file=$(sed "s|-nin\b|-nin|gI" <<<"$output_file")
+    output_file=$(sed "s|-san\b|-san|gI" <<<"$output_file")
+    output_file=$(sed "s|-tou\b|-tou|gI" <<<"$output_file")
+    output_file=$(sed "s|-ui\b|-ui|gI" <<<"$output_file")
+
     # Fix the some specific cases.
+    output_file=$(sed "s| vs | vs |gI" <<<"$output_file")
+    output_file=$(sed "s| vs\. | vs. |gI" <<<"$output_file")
     output_file=$(sed "s|-in-|-in-|gI" <<<"$output_file")
-    output_file=$(sed "s|\bphd\b|PhD|gI" <<<"$output_file")
+    output_file=$(sed "s|-on-|-on-|gI" <<<"$output_file")
+    output_file=$(sed "s|\bmig\b|MiG|gI" <<<"$output_file")
     output_file=$(sed "s|\bno\. |No. |gI" <<<"$output_file")
+    output_file=$(sed "s|\bphd\b|PhD|gI" <<<"$output_file")
+
+    # Fix the some specific words.
+    output_file=$(sed "s|\bactraiser\b|ActRaiser|gI" <<<"$output_file")
+    output_file=$(sed "s|\bducktales\b|DuckTales|gI" <<<"$output_file")
+    output_file=$(sed "s|\bfamicombox\b|FamicomBox|gI" <<<"$output_file")
+    output_file=$(sed "s|\bimagefight\b|ImageFight|gI" <<<"$output_file")
+    output_file=$(sed "s|\bmechwarrior\b|MechWarrior|gI" <<<"$output_file")
+    output_file=$(sed "s|\broadblasters\b|RoadBlasters|gI" <<<"$output_file")
+    output_file=$(sed "s|\brobocop\b|RoboCop|gI" <<<"$output_file")
+    output_file=$(sed "s|\bsimcity\b|SimCity|gI" <<<"$output_file")
+    output_file=$(sed "s|\bstartropics\b|StarTropics|gI" <<<"$output_file")
+    output_file=$(sed "s|\btwinbee\b|TwinBee|gI" <<<"$output_file")
+    output_file=$(sed "s|\bwbattlecity\b|BattleCity|gI" <<<"$output_file")
+    output_file=$(sed "s|\bwrestlemania\b|WrestleMania|gI" <<<"$output_file")
 
     # 'US' only in release tags (avoid English pronoun 'us').
     output_file=$(sed -E "s|\bus( [0-9])|US\1|gI" <<<"$output_file")
