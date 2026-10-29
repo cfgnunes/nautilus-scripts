@@ -514,15 +514,15 @@ _check_dependencies() {
     [[ -z "$dep_keys" ]] && return
 
     # Step 1: Normalize and remove duplicates from the dependency list.
-    dep_keys=$(tr "\n" " " <<<"$dep_keys")
-    dep_keys=$(tr "," " " <<<"$dep_keys")
+    dep_keys=${dep_keys//$'\n'/ }
+    dep_keys=${dep_keys//,/ }
     dep_keys=$(_str_sort "$dep_keys" " " "true")
 
     # List of pairs in the format "<pkg_manager>:<package>".
     local pairs=""
 
     # Step 2: Resolve the package names for each dependency key.
-    dep_keys=$(tr " " "$FIELD_SEPARATOR" <<<"$dep_keys")
+    dep_keys=${dep_keys// /$FIELD_SEPARATOR}
     local dep_key=""
     for dep_key in $dep_keys; do
         local all_installed="false"
@@ -567,7 +567,7 @@ _check_dependencies() {
             all_installed="true"
             local package_name=""
             local pkg_names_check=""
-            pkg_names_check=$(tr " " "$FIELD_SEPARATOR" <<<"$pkg_names")
+            pkg_names_check=${pkg_names// /$FIELD_SEPARATOR}
             for package_name in $pkg_names_check; do
                 if ! _deps_is_package_installed \
                     "$pkg_manager" "$package_name"; then
@@ -611,7 +611,7 @@ _check_dependencies() {
     local packages_install=""
 
     # Iterate over each "<pkg_manager>:<package>" pair.
-    pairs=$(tr " " "$FIELD_SEPARATOR" <<<"$pairs")
+    pairs=${pairs// /$FIELD_SEPARATOR}
     local pair=""
     for pair in $pairs; do
         local pkg_manager="${pair%%:*}"
@@ -672,7 +672,7 @@ _deps_get_dependency_value() {
     fi
 
     # Replace newlines with '$FIELD_SEPARATOR' for iteration.
-    pairs=$(tr "\n" "$FIELD_SEPARATOR" <<<"$pairs")
+    pairs=${pairs//$'\n'/$FIELD_SEPARATOR}
 
     # Iterate over each <package_manager>:<key_value> pair.
     local pair=""
@@ -726,7 +726,7 @@ _deps_install_missing_packages() {
 
     # Format the package names for display.
     local pkg_names=""
-    pkg_names=$(tr " " "\n" <<<"$packages_install")
+    pkg_names=${packages_install// /$'\n'}
     pkg_names=$(sed "s|~[^\n]*||g" <<<"$pkg_names")
     pkg_names=$(sed "s|^\([a-z-]*\):\(.*\)|- \2 (\1)|g" <<<"$pkg_names")
 
@@ -765,7 +765,7 @@ _deps_install_packages() {
     local -A pkg_map=()
 
     # Replace spaces with '$FIELD_SEPARATOR' for iteration.
-    pairs=$(tr " " "$FIELD_SEPARATOR" <<<"$pairs")
+    pairs=${pairs// /$FIELD_SEPARATOR}
 
     # Build a map of <pkg_manager> -> "pkg1 pkg2 ...".
     local pair=""
@@ -805,7 +805,7 @@ _deps_install_packages() {
         "pkgx")
             local pkgs=""
             local pkg=""
-            pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
+            pkgs=${packages// /$FIELD_SEPARATOR}
 
             # HACK: Workaround for pkgx. Force update the cache.
             rm -rf -- "$HOME/.cache/pkgx"
@@ -832,7 +832,7 @@ _deps_install_packages() {
             fi
             local pkgs=""
             local pkg=""
-            pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
+            pkgs=${packages// /$FIELD_SEPARATOR}
             for pkg in $pkgs; do
                 nix-env -iA "$nix_channel.$pkg" &>/dev/null
             done
@@ -860,7 +860,7 @@ _deps_install_packages() {
 
             local pkgs=""
             local pkg=""
-            pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
+            pkgs=${packages// /$FIELD_SEPARATOR}
             for pkg in $pkgs; do
                 local download_url=""
                 download_url=$(_deps_get_dependency_value \
@@ -902,7 +902,7 @@ _deps_installation_check() {
     local msg=""
 
     # Replace spaces with '$FIELD_SEPARATOR' for iteration.
-    pairs=$(tr " " "$FIELD_SEPARATOR" <<<"$pairs")
+    pairs=${pairs// /$FIELD_SEPARATOR}
 
     # Iterate over each "<pkg_manager>:<package>" pair.
     local pair=""
@@ -1989,7 +1989,7 @@ _display_list_box_terminal() {
         list="$(_i18n '(Empty)')"
         printf "%s\n" "$list" >&2
     else
-        list=$(tr "$FIELD_SEPARATOR" " " <<<"$list")
+        list=${list//$FIELD_SEPARATOR/ }
         printf "%s\n" "$list"
     fi
 }
@@ -2082,7 +2082,7 @@ _display_select_box() {
     esac
 
     if [[ -n "$par_columns" ]]; then
-        par_columns=$(tr ":" "=" <<<"$par_columns")
+        par_columns=${par_columns//:/=}
         columns_count=$(grep --only-matching "column=" <<<"$par_columns" |
             wc -l)
     fi
@@ -2118,8 +2118,8 @@ _display_select_box() {
         esac
     fi
 
-    par_columns=$(tr "," "$FIELD_SEPARATOR" <<<"$par_columns")
-    list=$(tr "\n" "$FIELD_SEPARATOR" <<<"$list")
+    par_columns=${par_columns//,/$FIELD_SEPARATOR}
+    list=${list//$'\n'/$FIELD_SEPARATOR}
 
     # Avoid empty fields.
     local fs=$FIELD_SEPARATOR
@@ -2142,7 +2142,7 @@ _display_select_box() {
 
     _display_lock
     if ((msg_size > arg_max - safe_margin)); then
-        list=$(tr "$FIELD_SEPARATOR" "\n" <<<"$list")
+        list=${list//$FIELD_SEPARATOR/$'\n'}
 
         # HACK: Workaround for Zenity.
         # Use stdin instead of passing arguments directly via '--list'. This
@@ -2195,7 +2195,7 @@ _display_select_box() {
     # Its output appends an extra field separator at the end.
     # See: https://github.com/v1cont/yad/issues/307
     if ! _command_exists "zenity"; then
-        selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
+        selected_items=${selected_items//$'\n'/$FIELD_SEPARATOR}
         selected_items=$(_str_collapse_char \
             "$selected_items" "$FIELD_SEPARATOR")
     fi
@@ -2210,8 +2210,8 @@ _display_list_box_xmessage() {
     btn_ok="$(_i18n 'OK')"
 
     par_columns=${par_columns//--column:/}
-    par_columns=$(tr "," "\t" <<<"$par_columns")
-    list=$(tr "$FIELD_SEPARATOR" "\t" <<<"$list")
+    par_columns=${par_columns//,/$'\t'}
+    list=${list//$FIELD_SEPARATOR/$'\t'}
     list="$par_columns"$'\n'$'\n'"$list"
 
     _display_lock
@@ -2944,7 +2944,7 @@ _xdg_get_default_app() {
     xdg_dirs+="/applications"
 
     # Locate the '.desktop' file.
-    xdg_dirs=$(tr ":" "$FIELD_SEPARATOR" <<<"$xdg_dirs")
+    xdg_dirs=${xdg_dirs//:/$FIELD_SEPARATOR}
     local xdg_dir=""
     for xdg_dir in $xdg_dirs; do
         desktop_path="$xdg_dir/$desktop_file"
@@ -3680,9 +3680,9 @@ _open_items_locations() {
     if [[ -n "$working_dir" ]]; then
         # Convert the list of items to a newline-separated list and
         # restore the absolute paths.
-        items=$(tr "$FIELD_SEPARATOR" "\n" <<<"$items")
+        items=${items//$FIELD_SEPARATOR/$'\n'}
         items=$(sed "s|^\(\./\)\?\([^/].*\)|$working_dir/\2|" <<<"$items")
-        items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$items")
+        items=${items//$'\n'/$FIELD_SEPARATOR}
     fi
 
     # Disable pathname expansion so names like '*' or '?' are not expanded
@@ -3913,7 +3913,7 @@ _convert_delimited_string_to_text() {
     local new_line="'\$'\\\n''"
 
     input_items=$(sed -z "s|\n|$new_line|g; s|$new_line$||g" <<<"$input_items")
-    input_items=$(tr "$FIELD_SEPARATOR" "\n" <<<"$input_items")
+    input_items=${input_items//$FIELD_SEPARATOR/$'\n'}
 
     printf "%s" "$input_items"
 }
@@ -3934,7 +3934,7 @@ _convert_text_to_delimited_string() {
     local input_items=$1
     local new_line="'\$'\\\n''"
 
-    input_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$input_items")
+    input_items=${input_items//$'\n'/$FIELD_SEPARATOR}
     input_items=$(sed -z "s|$new_line|\n|g" <<<"$input_items")
 
     _str_collapse_char "$input_items" "$FIELD_SEPARATOR"
