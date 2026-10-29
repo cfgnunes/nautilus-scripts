@@ -169,8 +169,9 @@ _main_task() {
             key_id=$(awk -F 'keyid ' '/keyid/ {print $2}' <<<"$std_output")
         fi
         if [[ -z "$timestamp" ]]; then
-            timestamp=$(awk -F 'created ' '/, created/ {print $2}' <<<"$std_output" |
-                tr -d ',' | awk '{print $1}')
+            timestamp=$(awk -F 'created ' '/, created/ {print $2}' <<<"$std_output")
+            timestamp=${timestamp//,/}
+            timestamp=${timestamp%% *}
         fi
     fi
 

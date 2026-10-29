@@ -27,7 +27,7 @@ _main_task() {
     local std_output=""
     local aspect="4/3"
     local aspect_name=""
-    aspect_name=$(tr "/" ":" <<<"$aspect")
+    aspect_name=${aspect//\//:}
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" \
         "par_extension_opt=preserve; par_suffix='(aspect $aspect_name)'")

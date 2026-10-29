@@ -46,7 +46,7 @@ _main_task() {
 
     std_output=$(grep --ignore-case "^Mean.*norm" <<<"$std_output")
     std_output=$(cut -d ":" -f 2 <<<"$std_output")
-    std_output=$(tr -d " " <<<"$std_output")
+    std_output=${std_output// /}
 
     status="$str_high"
     if [[ -z "$std_output" ]]; then
@@ -62,7 +62,7 @@ _main_task() {
 
         std_output=$(grep --ignore-case "^Mean.*norm" <<<"$std_output")
         std_output=$(cut -d ":" -f 2 <<<"$std_output")
-        std_output=$(tr -d " " <<<"$std_output")
+        std_output=${std_output// /}
 
         if [[ -z "$std_output" ]]; then
             status="$str_low"

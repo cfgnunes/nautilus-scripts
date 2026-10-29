@@ -150,7 +150,7 @@ _get_id_sign() {
         fi
     fi
 
-    keys=$(tr ":" "$FIELD_SEPARATOR" <<<"$keys")
+    keys=${keys//:/$FIELD_SEPARATOR}
     id_sign=$(_display_select_box "$keys" \
         "--column:$(_i18n 'Name'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Created'),--column:$(_i18n 'Expires'),--column:$(_i18n 'Key ID')" \
         "radiolist" "first" \
@@ -220,7 +220,7 @@ _get_ids_encrypt() {
         fi
     fi
 
-    keys=$(tr ":" "$FIELD_SEPARATOR" <<<"$keys")
+    keys=${keys//:/$FIELD_SEPARATOR}
     ids_encrypt=$(_display_select_box "$keys" \
         "--column:$(_i18n 'Name'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Created'),--column:$(_i18n 'Expires'),--column:$(_i18n 'Key ID')" \
         "checkbox" "first_if_one" \
