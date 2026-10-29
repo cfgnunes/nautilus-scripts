@@ -958,8 +958,8 @@ _encode_path_gtk() {
         c="${string:i:1}"
         # shellcheck disable=SC1001
         case "$c" in
-        [a-zA-Z0-9\:\'\(\)\.\_\~\-\\]) printf '%s' "$c" ;;
-        *) printf '%s' "$c" | hexdump -v -e '/1 "-%02X" ' | sed "s|-|\%|g" ;;
+        [a-zA-Z0-9\:\'\(\)\.\_\~\-\\]) printf "%s" "$c" ;;
+        *) printf "%s" "$c" | hexdump -v -e '/1 "-%02X" ' | sed "s|-|\%|g" ;;
         esac
     done
 }

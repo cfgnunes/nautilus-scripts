@@ -1105,7 +1105,7 @@ _precompiled_resolve_url() {
     local rest=""
 
     if [[ "$spec" != github:* ]]; then
-        printf '%s' "$spec"
+        printf "%s" "$spec"
         return 0
     fi
 
@@ -1136,7 +1136,7 @@ _precompiled_resolve_url() {
         return 1
     fi
 
-    printf '%s' "$resolved_url"
+    printf "%s" "$resolved_url"
 }
 
 # Function: _tarball_install_url

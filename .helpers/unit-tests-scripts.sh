@@ -132,7 +132,7 @@ __run_script() {
 
     local output=""
 
-    printf '%s\n' "$script" >"$temp_dir/script_name.txt"
+    printf "%s\n" "$script" >"$temp_dir/script_name.txt"
     echo
     echo -e "\033[90m[SCRIPT] $script\033[0m"
     # The sentinel keeps trailing newlines, which command substitution removes.
@@ -141,7 +141,7 @@ __run_script() {
         printf x
     )
     output=${output%x}
-    printf '%s' "$output" >"$temp_dir/std_output.txt"
+    printf "%s" "$output" >"$temp_dir/std_output.txt"
     std_output="$temp_dir/std_output.txt"
 }
 

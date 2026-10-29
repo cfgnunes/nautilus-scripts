@@ -40,7 +40,7 @@ _main_task() {
         dir_name=$(basename -- "$repo_url")
         dir_name=${dir_name%.git}
 
-        printf '%s\n' "$dir_name"
+        printf "%s\n" "$dir_name"
     }
 
     local repo_dir_name=""
