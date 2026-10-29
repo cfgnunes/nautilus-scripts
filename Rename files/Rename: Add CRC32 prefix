@@ -34,11 +34,6 @@ _main_task() {
     dir=$(dirname -- "$input_file")
     filename=$(basename -- "$input_file")
 
-    # Skip files that already have an 8-hex CRC32 prefix.
-    if [[ "$filename" =~ ^\([0-9a-fA-F]{8}\) ]]; then
-        return 0
-    fi
-
     # Run the main process.
     if cksum -a crc32b /dev/null &>/dev/null; then
         std_output=$(cksum -a crc32b -- "$input_file" 2>&1)
@@ -52,6 +47,17 @@ _main_task() {
         exit_code=$?
     fi
     _check_output "$exit_code" "$std_output" "$input_file" "" || return 1
+
+    # If an 8-hex CRC32 prefix already exists:
+    # keep it when correct, otherwise replace.
+    if [[ "$filename" =~ ^\(([0-9a-fA-F]{8})\)[[:space:]]+(.*)$ ]]; then
+        local old_crc="${BASH_REMATCH[1]}"
+        local base_name="${BASH_REMATCH[2]}"
+        if [[ "${old_crc,,}" == "${std_output,,}" ]]; then
+            return 0
+        fi
+        filename="$base_name"
+    fi
     output_file="($std_output) $filename"
 
     _move_file "skip" "$input_file" "$dir/$output_file" || return 1
