@@ -13,6 +13,9 @@
 
 set -u
 
+# Use the home directory from the passwd database if '$HOME' is undefined.
+HOME=${HOME:-$(eval echo ~)}
+
 # -----------------------------------------------------------------------------
 # SECTION: Constants
 # -----------------------------------------------------------------------------
@@ -41,6 +44,9 @@ TEMP_CONTROL_DISPLAY_LOCKED="$TEMP_DIR/control_display_locked"
 TEMP_CONTROL_WAIT_BOX_DELAY="$TEMP_DIR/control_wait_box_delay"
 TEMP_CONTROL_WAIT_BOX_FIFO="$TEMP_DIR/control_wait_box_fifo"
 TEMP_DATA_TEXT_BOX="$TEMP_DIR/data_text_box"
+
+# User directories.
+USER_OPT_DIR="$HOME/.local/opt"
 
 # Message tags for displaying messages on terminal.
 MSG_ERROR="[\033[0;31mFAILED\033[0m]"
@@ -81,10 +87,8 @@ readonly \
     TEMP_DIR_ITEMS_TO_REMOVE \
     TEMP_DIR_LOGS \
     TEMP_DIR_STORAGE_TEXT \
-    TEMP_DIR_TASK
-
-# Use the home directory from the passwd database if '$HOME' is undefined.
-HOME=${HOME:-$(eval echo ~)}
+    TEMP_DIR_TASK \
+    USER_OPT_DIR
 
 # -----------------------------------------------------------------------------
 # SECTION: Global variables
@@ -854,7 +858,6 @@ _deps_install_packages() {
             cmd_inst+="zypper --non-interactive install $packages"
             ;;
         "precompiled")
-            local install_dir="$HOME/.local/opt"
             local architecture=""
             architecture=$(uname -m 2>/dev/null)
 
@@ -867,7 +870,7 @@ _deps_install_packages() {
                     "$pkg" "$architecture" "PRECOMPILED_URL")
                 download_url=$(_precompiled_resolve_url "$download_url")
                 _tarball_install_url \
-                    "$install_dir" "$pkg" "$download_url"
+                    "$USER_OPT_DIR" "$pkg" "$download_url"
             done
             ;;
         esac
@@ -1044,9 +1047,8 @@ _deps_is_package_installed() {
         fi
         ;;
     "precompiled")
-        local app_packages_dir="$HOME/.local/opt"
-        if [[ -d "$app_packages_dir/$package" ]]; then
-            _add_path_env "$app_packages_dir/$package"
+        if [[ -d "$USER_OPT_DIR/$package" ]]; then
+            _add_path_env "$USER_OPT_DIR/$package"
             return 0
         fi
         ;;
@@ -4128,7 +4130,7 @@ _cmd_magick() {
 #   An executable bit is not enough: the dynamic linker can reject pkgx when
 #   the system glibc is older than the one it was built against.
 _pkgx_initialize() {
-    local pkgx_dir="$HOME/.local/opt/pkgx"
+    local pkgx_dir="$USER_OPT_DIR/pkgx"
     local pkgx_cmd="$pkgx_dir/pkgx"
 
     if [[ -x "$pkgx_cmd" ]] && ! _command_exists "pkgx" &&
