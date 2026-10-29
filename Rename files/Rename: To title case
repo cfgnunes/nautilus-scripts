@@ -76,9 +76,9 @@ _main_task() {
     output_file=$(sed "s| '\(\w\)| '\U\1|gI" <<<"$output_file")
 
     # Fix common uppercase word abbreviations.
-    words="[0-9]\w|[0-9]\w\w|ac|api|sql|aka|asap|ceo|cfo|cto|dc|diy|dna|faq|isbn|ko|mtv|rpg|rpm|tv|usa|vip"
+    words="[0-9]\w|ac|api|sql|aka|asap|ceo|cfo|cto|dc|diy|dna|faq|isbn|ko|mtv|rpg|rpm|tv|usa|vip"
     words+="|bios|cmos|fifa|gba|nba|nes|nfl|nhl|rom|snes|uml"
-    words+="|acme|aiii|aso|espn|fc|fx|gp|gs|gt|gx|hal|mlbpa|mvp|nasa|ncaa|nhlpa|np|ntsc|pal|pga|qix|roc|rs|sd|sfc|sm|sos|swat|swiv|tko|tnn|wcw|wgp|wwf|wwii"
+    words+="|4wd|acme|aiii|aso|espn|fc|fx|gp|gs|gt|gx|hal|mlbpa|mvp|nasa|ncaa|nhlpa|np|ntsc|pal|pga|qix|roc|rs|sd|sfc|sm|sos|swat|swiv|tko|tnn|wcw|wgp|wwf|wwii"
     # Fix band names (in uppercase).
     words+="|abba|abc|chic|inxs|iza|kc|klb|mgmt|ppf|sza|toto|twrp|vcr"
     output_file=$(sed -E "s/\b($words)\b/\U\1/gI" <<<"$output_file")
