@@ -3456,7 +3456,7 @@ _validate_files_count() {
     # Define a label for the extension.
     local extension_label=""
     if [[ -n "$par_select_extension" ]]; then
-        extension_label="'.${par_select_extension//|/\' or \'.}'"
+        extension_label="${par_select_extension//|/, }"
     fi
 
     # Check if there is at least one valid file.
