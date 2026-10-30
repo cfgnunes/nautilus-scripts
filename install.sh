@@ -767,20 +767,15 @@ _install_packages() {
         cmd_inst="guix package -i $packages"
         ;;
     "nix-env")
-        local nix_packages=""
         local nix_channel="nixpkgs"
         if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
             nix_channel="nixos"
         fi
-
-        # Prefix packages with their channel namespace.
-        nix_packages="$nix_channel.$packages"
-        nix_packages=${nix_packages% }
-        nix_packages=${nix_packages// / $nix_channel.}
-
-        cmd_inst+="nix-env -iA $nix_packages"
-        # Nix does not require root for installing user packages.
-        cmd_admin=""
+        local pkg=""
+        _echo_info "> $(_i18n 'Installing the packages. Please wait...')"
+        for pkg in $packages; do
+            nix-env -iA "$nix_channel.$pkg"
+        done
         ;;
     "pacman")
         cmd_inst+="pacman -Syy;"
