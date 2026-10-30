@@ -10,7 +10,7 @@ A set of file manager actions that enhance your workflow. Useful right-click opt
 
 ### Option 1: Online installation (recommended)
 
-You can use either **curl** or **wget**. Choose **one** of the following commands and run it in your terminal:
+You can use either **wget** or **curl**. Choose **one** of the following commands and run it in your terminal:
 
 #### Using `wget`
 
