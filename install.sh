@@ -853,9 +853,10 @@ _install_scripts() {
 _create_links() {
     local destination_dir=$1
 
-    # Remove symlinks and empty directories left by a previous install.
-    # Regular files stored in the file-manager scripts directory stay in place.
-    find "$destination_dir" -type l -delete 2>/dev/null
+    # Remove symlinks left by a previous install.
+    find "$destination_dir" -type l -lname "$INSTALL_DIR/*" -delete 2>/dev/null
+
+    # Remove empty directories left by a previous install.
     find "$destination_dir" -type d -empty -delete 2>/dev/null
 
     mkdir --parents -- "$destination_dir"
