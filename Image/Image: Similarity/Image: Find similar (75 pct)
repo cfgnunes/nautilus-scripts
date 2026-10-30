@@ -219,7 +219,7 @@ _compare_images() {
 
     # Extract the numeric RMSE value.
     local value=""
-    value=$(grep -Eo '\([0-9\.]+\)' <<<"$rmse" | tr -d '()')
+    value=$(grep -Eo '\([0-9\.]+\)' <<<"$rmse" | tr -d "()")
 
     # If not found, fallback to raw number.
     if [[ -z "$value" ]]; then

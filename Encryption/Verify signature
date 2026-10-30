@@ -178,7 +178,7 @@ _main_task() {
         fi
         if [[ -z "$timestamp" ]]; then
             timestamp=$(awk -F 'created ' '/, created/ {print $2}' <<<"$std_output" |
-                tr -d ',' | awk '{print $1}')
+                tr -d "," | awk '{print $1}')
         fi
     fi
 
