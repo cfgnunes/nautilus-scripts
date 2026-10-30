@@ -12,16 +12,16 @@ A set of file manager actions that enhance your workflow. Useful right-click opt
 
 You can use either **curl** or **wget**. Choose **one** of the following commands and run it in your terminal:
 
-####  Using `curl`
-
-```bash
-bash -c "$(curl -fsSL https://cfgnunes.github.io/nautilus-scripts/install.sh)"
-```
-
-####  Using `wget`
+#### Using `wget`
 
 ```bash
 bash -c "$(wget -qO- https://cfgnunes.github.io/nautilus-scripts/install.sh)"
+```
+
+#### Using `curl`
+
+```bash
+bash -c "$(curl -fsSL https://cfgnunes.github.io/nautilus-scripts/install.sh)"
 ```
 
 ### Option 2: Local installation
