@@ -13,23 +13,9 @@ INSTALL_DIR="$HOME/$INSTALL_PATH"
 # SECTION: Helper functions
 # -----------------------------------------------------------------------------
 
-_remove_empty_parent_dirs() {
-    local path=$1
-    local parent_dir=""
-
-    # Remove the directory and parent directories recursively (if empty).
-    rmdir -- "$path" &>/dev/null
-    parent_dir=$(dirname -- "$path")
-    while [[ "$parent_dir" != "$HOME" ]] && [[ "$parent_dir" != "/" ]]; do
-        rmdir -- "$parent_dir" &>/dev/null || break
-        parent_dir=$(dirname -- "$parent_dir")
-    done
-}
-
 _uninstall_directory() {
     local dir=$1
     rm -rf -- "$dir"
-    _remove_empty_parent_dirs "$dir"
 }
 
 _uninstall_file() {
@@ -38,7 +24,6 @@ _uninstall_file() {
 
     # Restore the backup (if exists).
     cp -- "$file.bak" "$file" 2>/dev/null
-    _remove_empty_parent_dirs "$file"
 }
 
 # -----------------------------------------------------------------------------
@@ -111,7 +96,6 @@ _uninstall_file "$HOME/.config/Thunar/accels.scm"
 # Dolphin: File manager actions (context menu).
 dir="$HOME/.local/share/kio/servicemenus"
 find "$dir" -name "$INSTALL_NAME_DIR-*.desktop" -type f -delete 2>/dev/null
-_remove_empty_parent_dirs "$dir"
 
 # -----------------------------------------------------------------------------
 # SECTION: File manager: PCManFM-Qt
@@ -120,7 +104,6 @@ _remove_empty_parent_dirs "$dir"
 # PCManFM-Qt: File manager actions (context menu).
 dir="$HOME/.local/share/file-manager/actions"
 find "$dir" -name "$INSTALL_NAME_DIR-*.desktop" -type f -delete 2>/dev/null
-_remove_empty_parent_dirs "$dir"
 
 # -----------------------------------------------------------------------------
 # SECTION: Package manager: pkgx
