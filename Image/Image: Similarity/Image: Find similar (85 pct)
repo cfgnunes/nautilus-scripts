@@ -94,7 +94,7 @@ _main_task() {
             continue
         fi
 
-        std_output=${std_output//$'\n'/ }
+        std_output=$(tr "\n" " " <<<"$std_output")
 
         # Determine the image viewer.
         local image_viewer=""
@@ -219,8 +219,7 @@ _compare_images() {
 
     # Extract the numeric RMSE value.
     local value=""
-    value=$(grep -Eo '\([0-9\.]+\)' <<<"$rmse")
-    value=${value//[()]/}
+    value=$(grep -Eo '\([0-9\.]+\)' <<<"$rmse" | tr -d '()')
 
     # If not found, fallback to raw number.
     if [[ -z "$value" ]]; then
