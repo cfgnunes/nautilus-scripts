@@ -772,7 +772,6 @@ _install_packages() {
             nix_channel="nixos"
         fi
         local pkg=""
-        _echo_info "> $(_i18n 'Installing the packages. Please wait...')"
         for pkg in $packages; do
             nix-env -iA "$nix_channel.$pkg"
         done
