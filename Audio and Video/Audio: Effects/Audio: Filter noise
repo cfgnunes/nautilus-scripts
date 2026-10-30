@@ -5,9 +5,10 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
-INSTALL_NAME_DIR="scripts"
-INSTALL_PATH="$HOME/.local/share/$INSTALL_NAME_DIR"
-MODEL_FILE="$INSTALL_PATH/sh.rnnn"
+INSTALL_NAME_DIR="nautilus-scripts"
+INSTALL_PATH=".local/opt/$INSTALL_NAME_DIR"
+INSTALL_DIR="$HOME/$INSTALL_PATH"
+MODEL_FILE="$INSTALL_DIR/sh.rnnn"
 MODEL_URL="https://raw.githubusercontent.com/GregorR/rnnoise-models/master/somnolent-hogwash-2018-09-01/sh.rnnn"
 
 _main() {
@@ -36,7 +37,7 @@ _download_model() {
         return
     fi
 
-    mkdir -p "$INSTALL_PATH"
+    mkdir -p "$INSTALL_DIR"
 
     _download_file "$MODEL_URL" "$MODEL_FILE"
 

@@ -18,12 +18,12 @@ APP_NAME="Enhanced File Manager Actions for Linux"
 APP_VERSION="31.6.3"
 
 # Used in:
-#  - Directory where scripts are installed located at:
+#  - Directory where scripts are installed:
 #    "$HOME/.local/share/$INSTALL_NAME_DIR".
-#  - Directory where shortcuts (application menu) are stored located at:
+#  - Directory where shortcuts (application menu) are stored:
 #    "$HOME/.local/share/applications/$INSTALL_NAME_DIR".
-INSTALL_NAME_DIR="scripts"
-INSTALL_PATH=".local/share/$INSTALL_NAME_DIR"
+INSTALL_NAME_DIR="nautilus-scripts"
+INSTALL_PATH=".local/opt/$INSTALL_NAME_DIR"
 INSTALL_APPS_SHORTCUTS_PATH=".local/share/applications/$INSTALL_NAME_DIR"
 
 # Constants for logging.

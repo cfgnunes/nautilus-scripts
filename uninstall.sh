@@ -2,11 +2,11 @@
 
 set -u
 
-INSTALL_NAME_DIR="scripts"
-
 # Use the home directory from the passwd database if '$HOME' is undefined.
 HOME=${HOME:-$(eval echo ~)}
-INSTALL_PATH=".local/share/$INSTALL_NAME_DIR"
+
+INSTALL_NAME_DIR="nautilus-scripts"
+INSTALL_PATH=".local/opt/$INSTALL_NAME_DIR"
 INSTALL_DIR="$HOME/$INSTALL_PATH"
 
 # -----------------------------------------------------------------------------
