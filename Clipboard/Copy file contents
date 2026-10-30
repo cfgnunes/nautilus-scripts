@@ -20,11 +20,12 @@ _main() {
         _set_clipboard_file "$input_files"
     else
         # If multiple text files are selected, concatenate their contents
-        # and copy the combined text to the clipboard.
-        local content_files=""
+        # into a temp file and copy that.
+        local temp_file=""
+        temp_file=$(_make_temp_file)
         # shellcheck disable=SC2086
-        content_files=$(cat -- $input_files 2>/dev/null)
-        _set_clipboard_data "$content_files"
+        cat -- $input_files >"$temp_file" 2>/dev/null
+        _set_clipboard_file "$temp_file"
     fi
 
     _display_result_box ""
