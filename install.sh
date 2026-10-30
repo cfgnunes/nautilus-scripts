@@ -487,15 +487,15 @@ _check_exist_filemanager() {
 # SECTION: File and directory management
 # -----------------------------------------------------------------------------
 
-_list_scripts() {
-    find -L "$INSTALL_DIR" -mindepth 2 -type f \
+_list_installed_links() {
+    local dir=$1
+    find "$dir" -mindepth 2 -type l -lname "$INSTALL_DIR/*" \
         "${IGNORE_FIND_PATHS[@]}" \
         -print0 2>/dev/null | sort --zero-terminated
 }
 
-_list_scripts_installed() {
-    local dir=$1
-    find -L "$dir" -mindepth 2 -type f \
+_list_scripts() {
+    find -L "$INSTALL_DIR" -mindepth 2 -type f \
         "${IGNORE_FIND_PATHS[@]}" \
         -print0 2>/dev/null | sort --zero-terminated
 }
@@ -990,7 +990,7 @@ _install_accels_gnome2() {
 
                 printf "%s\n" '(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s'"$filename"'" "'"$keyboard_shortcut"'")'
             fi
-        done < <(_list_scripts_installed "$scripts_installed_dir")
+        done < <(_list_installed_links "$scripts_installed_dir")
 
     } | _tee_file "$accels_file"
     _chown_file "$accels_file"
