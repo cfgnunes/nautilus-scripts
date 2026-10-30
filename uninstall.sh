@@ -6,8 +6,7 @@ set -u
 HOME=${HOME:-$(eval echo ~)}
 
 INSTALL_NAME_DIR="nautilus-scripts"
-INSTALL_PATH=".local/opt/$INSTALL_NAME_DIR"
-INSTALL_DIR="$HOME/$INSTALL_PATH"
+INSTALL_DIR="$HOME/.local/opt/$INSTALL_NAME_DIR"
 
 # -----------------------------------------------------------------------------
 # SECTION: Helper functions

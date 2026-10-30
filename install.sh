@@ -23,7 +23,7 @@ APP_VERSION="31.6.3"
 #  - Directory where shortcuts (application menu) are stored:
 #    "$HOME/.local/share/applications/$INSTALL_NAME_DIR".
 INSTALL_NAME_DIR="nautilus-scripts"
-INSTALL_PATH=".local/opt/$INSTALL_NAME_DIR"
+INSTALL_DIR="$HOME/.local/opt/$INSTALL_NAME_DIR"
 INSTALL_APPS_SHORTCUTS_PATH=".local/share/applications/$INSTALL_NAME_DIR"
 
 # Constants for logging.
@@ -88,10 +88,10 @@ readonly \
     I18N_DIR \
     IGNORE_FIND_PATHS \
     INSTALL_APPS_SHORTCUTS_PATH \
+    INSTALL_DIR \
     INSTALL_LOG_NAME \
     INSTALL_LOG_TMP \
     INSTALL_NAME_DIR \
-    INSTALL_PATH \
     SCRIPT_DIR
 
 # Use current username if '$USER' is undefined.
@@ -252,8 +252,6 @@ _main() {
 
     _log_variable "INSTALL_OWNER"
     _log_variable "INSTALL_GROUP"
-
-    INSTALL_DIR="$HOME/$INSTALL_PATH"
 
     _echo ""
     _echo_info "$(_i18n 'Installing:')"

@@ -6,8 +6,7 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 INSTALL_NAME_DIR="nautilus-scripts"
-INSTALL_PATH=".local/opt/$INSTALL_NAME_DIR"
-INSTALL_DIR="$HOME/$INSTALL_PATH"
+INSTALL_DIR="$HOME/.local/opt/$INSTALL_NAME_DIR"
 MODEL_FILE="$INSTALL_DIR/sh.rnnn"
 MODEL_URL="https://raw.githubusercontent.com/GregorR/rnnoise-models/master/somnolent-hogwash-2018-09-01/sh.rnnn"
 
