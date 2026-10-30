@@ -109,10 +109,7 @@ find "$dir" -name "$INSTALL_NAME_DIR-*.desktop" -type f -delete 2>/dev/null
 # SECTION: Package manager: pkgx
 # -----------------------------------------------------------------------------
 
-_uninstall_directory "$HOME/.cache/pkgx"
 _uninstall_directory "$HOME/.local/opt/pkgx"
-_uninstall_directory "$HOME/.local/share/pkgx"
-_uninstall_directory "$HOME/.pkgx"
 
 # -----------------------------------------------------------------------------
 # SECTION: GNOME Shell: application folder
