@@ -531,6 +531,10 @@ _tee_file() {
     tee -- "$1" >/dev/null
 }
 
+_tee_file_append() {
+    tee --append -- "$1" >/dev/null
+}
+
 # Function: _item_create_backup
 #
 # Description:
@@ -539,7 +543,7 @@ _item_create_backup() {
     local item=$1
 
     if [[ -e "$item" ]] && [[ ! -e "$item.bak" ]]; then
-        mv -- "$item" "$item.bak" 2>/dev/null
+        cp -a -- "$item" "$item.bak" 2>/dev/null
     fi
 }
 
@@ -1298,40 +1302,24 @@ _install_actions_thunar() {
     mkdir --parents -- "$menus_path"
     menu_file="$menus_path/uca.xml"
 
-    # Create a backup of older custom actions.
-    _item_create_backup "$menu_file"
-    rm -f -- "$menu_file"
+    if [[ -f "$menu_file" ]]; then
+        # Create a backup of older custom actions.
+        _item_create_backup "$menu_file"
+    else
+        # Create the file "~/.config/Thunar/uca.xml" (if not exists).
+        {
+            printf "%s\n" "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+            printf "%s\n" "<actions>"
+            printf "%s\n" "</actions>"
+        } | _tee_file "$menu_file"
+        _chown_file "$menu_file"
+    fi
 
     # -------------------------------------------------------------------------
-    # Create the file "~/.config/Thunar/uca.xml".
+    # Update the file "~/.config/Thunar/uca.xml".
     # -------------------------------------------------------------------------
+    sed -i "/<\/actions>/d" -- "$menu_file"
     {
-        printf "%s\n" "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-        printf "%s\n" "<actions>"
-        printf "%s\n" "<action>"
-        printf "\t%s\n" "<icon>utilities-terminal</icon>"
-        printf "\t%s\n" "<name>Open Terminal Here</name>"
-        printf "\t%s\n" "<submenu></submenu>"
-        printf "\t%s\n" "<unique-id>1-1</unique-id>"
-        printf "\t%s\n" "<command>exo-open --working-directory %f --launch TerminalEmulator</command>"
-        printf "\t%s\n" "<description>Open terminal in containing directory</description>"
-        printf "\t%s\n" "<range></range>"
-        printf "\t%s\n" "<patterns>*</patterns>"
-        printf "\t%s\n" "<startup-notify/>"
-        printf "\t%s\n" "<directories/>"
-        printf "%s\n" "</action>"
-        printf "%s\n" "<action>"
-        printf "\t%s\n" "<icon>edit-find</icon>"
-        printf "\t%s\n" "<name>Find in this folder</name>"
-        printf "\t%s\n" "<submenu></submenu>"
-        printf "\t%s\n" "<unique-id>3-3</unique-id>"
-        printf "\t%s\n" "<command>catfish --path=%f</command>"
-        printf "\t%s\n" "<description>Search for files within this folder</description>"
-        printf "\t%s\n" "<range></range>"
-        printf "\t%s\n" "<patterns>*</patterns>"
-        printf "\t%s\n" "<directories/>"
-        printf "%s\n" "</action>"
-
         local filename=""
         local name=""
         local submenu=""
@@ -1369,7 +1357,7 @@ _install_actions_thunar() {
 
         printf "%s\n" "</actions>"
 
-    } | _tee_file "$menu_file"
+    } | _tee_file_append "$menu_file"
     _chown_file "$menu_file"
 }
 
