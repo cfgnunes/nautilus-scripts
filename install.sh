@@ -1114,7 +1114,8 @@ _create_gnome_application_folder() {
         if [[ "$current_folders" == "[]" || "$current_folders" == "@as []" ]]; then
             new_list="['$folder_name']"
         else
-            new_list="${current_folders%]} , '$folder_name']"
+            # shellcheck disable=SC2001
+            new_list=$(sed "s/]/, '$folder_name']/" <<<"$current_folders")
         fi
         gsettings set \
             org.gnome.desktop.app-folders folder-children "$new_list" &>/dev/null
