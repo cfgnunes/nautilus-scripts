@@ -19,7 +19,7 @@ _main() {
     msg+="\n\n"
     msg+="$(_i18n 'Example:') 6-10,2"
     TASK_PAGES=$(_display_input_text_box "$msg" "")
-    TASK_PAGES="${TASK_PAGES//[[:space:]]/}"
+    TASK_PAGES="${TASK_PAGES// /}"
     if [[ -z "$TASK_PAGES" ]]; then
         msg="$(_i18n 'Invalid input!')"
         _display_error_box "$msg"
