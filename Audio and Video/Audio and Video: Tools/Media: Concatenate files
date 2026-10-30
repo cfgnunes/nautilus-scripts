@@ -42,7 +42,8 @@ _main_task() {
     input_files=${input_files//\'/$escaped_quote}
 
     input_files="file '$input_files'"
-    input_files=${input_files//$FIELD_SEPARATOR/\'${FIELD_SEPARATOR}file \'}
+    # shellcheck disable=SC2001
+    input_files=$(sed "s|$FIELD_SEPARATOR|'${FIELD_SEPARATOR}file '|g" <<<"$input_files")
     _convert_delimited_string_to_text "$input_files" >"$temp_file"
 
     output_file=$(_get_output_filename \
