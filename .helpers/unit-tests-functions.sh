@@ -2009,7 +2009,7 @@ __run_validate_files_count() {
         _validate_files_count "" "file" "txt|pdf" "" "" "" ""
     output=$(<"$message_file")
     __test_equal "Extension filter message." \
-        "$(_i18n "You must select files with the extension:") '.txt' or '.pdf'!" \
+        "$(_i18n "You must select files with the extension:") txt, pdf!" \
         "$output"
 
     __test_exit_code "Below the minimum exits." 2 \
