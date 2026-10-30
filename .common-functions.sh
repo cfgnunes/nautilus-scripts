@@ -327,7 +327,7 @@ _logs_consolidate() {
 # Parameters:
 #   $1 (input_str): The string to escape.
 _escape_single_quotes() {
-    printf "%s" "${1//\'/\'\\\'\'}"
+    sed -z "s|'|'\\\''|g" <<<"$1"
 }
 
 # Function: _run_task_parallel
@@ -518,15 +518,15 @@ _check_dependencies() {
     [[ -z "$dep_keys" ]] && return
 
     # Step 1: Normalize and remove duplicates from the dependency list.
-    dep_keys=${dep_keys//$'\n'/ }
-    dep_keys=${dep_keys//,/ }
+    dep_keys=$(tr "\n" " " <<<"$dep_keys")
+    dep_keys=$(tr "," " " <<<"$dep_keys")
     dep_keys=$(_str_sort "$dep_keys" " " "true")
 
     # List of pairs in the format "<pkg_manager>:<package>".
     local pairs=""
 
     # Step 2: Resolve the package names for each dependency key.
-    dep_keys=${dep_keys// /$FIELD_SEPARATOR}
+    dep_keys=$(tr " " "$FIELD_SEPARATOR" <<<"$dep_keys")
     local dep_key=""
     for dep_key in $dep_keys; do
         local all_installed="false"
@@ -571,7 +571,7 @@ _check_dependencies() {
             all_installed="true"
             local package_name=""
             local pkg_names_check=""
-            pkg_names_check=${pkg_names// /$FIELD_SEPARATOR}
+            pkg_names_check=$(tr " " "$FIELD_SEPARATOR" <<<"$pkg_names")
             for package_name in $pkg_names_check; do
                 if ! _deps_is_package_installed \
                     "$pkg_manager" "$package_name"; then
@@ -599,7 +599,8 @@ _check_dependencies() {
         fi
 
         # Append resolved packages as "<pkg_manager>:<package> ..." pairs.
-        pkg_names_sel="$pkg_manager_sel:${pkg_names_sel// / $pkg_manager_sel:}"
+        pkg_names_sel=$(sed "s|^|$pkg_manager_sel:|g" <<<"$pkg_names_sel")
+        pkg_names_sel=$(sed "s| | $pkg_manager_sel:|g" <<<"$pkg_names_sel")
         pairs+=" $pkg_names_sel"
 
         # Append resolved post install commands as "cmd1;cmd2;cmd3;..." list.
@@ -615,7 +616,7 @@ _check_dependencies() {
     local packages_install=""
 
     # Iterate over each "<pkg_manager>:<package>" pair.
-    pairs=${pairs// /$FIELD_SEPARATOR}
+    pairs=$(tr " " "$FIELD_SEPARATOR" <<<"$pairs")
     local pair=""
     for pair in $pairs; do
         local pkg_manager="${pair%%:*}"
@@ -676,7 +677,7 @@ _deps_get_dependency_value() {
     fi
 
     # Replace newlines with '$FIELD_SEPARATOR' for iteration.
-    pairs=${pairs//$'\n'/$FIELD_SEPARATOR}
+    pairs=$(tr "\n" "$FIELD_SEPARATOR" <<<"$pairs")
 
     # Iterate over each <package_manager>:<key_value> pair.
     local pair=""
@@ -730,7 +731,7 @@ _deps_install_missing_packages() {
 
     # Format the package names for display.
     local pkg_names=""
-    pkg_names=${packages_install// /$'\n'}
+    pkg_names=$(tr " " "\n" <<<"$packages_install")
     pkg_names=$(sed "s|~[^\n]*||g" <<<"$pkg_names")
     pkg_names=$(sed "s|^\([a-z-]*\):\(.*\)|- \2 (\1)|g" <<<"$pkg_names")
 
@@ -769,7 +770,7 @@ _deps_install_packages() {
     local -A pkg_map=()
 
     # Replace spaces with '$FIELD_SEPARATOR' for iteration.
-    pairs=${pairs// /$FIELD_SEPARATOR}
+    pairs=$(tr " " "$FIELD_SEPARATOR" <<<"$pairs")
 
     # Build a map of <pkg_manager> -> "pkg1 pkg2 ...".
     local pair=""
@@ -809,7 +810,7 @@ _deps_install_packages() {
         "pkgx")
             local pkgs=""
             local pkg=""
-            pkgs=${packages// /$FIELD_SEPARATOR}
+            pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
 
             # HACK: Workaround for pkgx. Force update the cache.
             rm -rf -- "$HOME/.cache/pkgx"
@@ -836,7 +837,7 @@ _deps_install_packages() {
             fi
             local pkgs=""
             local pkg=""
-            pkgs=${packages// /$FIELD_SEPARATOR}
+            pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
             for pkg in $pkgs; do
                 nix-env -iA "$nix_channel.$pkg" &>/dev/null
             done
@@ -863,7 +864,7 @@ _deps_install_packages() {
 
             local pkgs=""
             local pkg=""
-            pkgs=${packages// /$FIELD_SEPARATOR}
+            pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
             for pkg in $pkgs; do
                 local download_url=""
                 download_url=$(_deps_get_dependency_value \
@@ -905,7 +906,7 @@ _deps_installation_check() {
     local msg=""
 
     # Replace spaces with '$FIELD_SEPARATOR' for iteration.
-    pairs=${pairs// /$FIELD_SEPARATOR}
+    pairs=$(tr " " "$FIELD_SEPARATOR" <<<"$pairs")
 
     # Iterate over each "<pkg_manager>:<package>" pair.
     local pair=""
@@ -1347,8 +1348,8 @@ _find_filtered_files() {
     local filtered_files=""
     local find_command=""
 
-    input_files=${input_files//\'/\'\"\'\"\'}
-    input_files=${input_files//$FIELD_SEPARATOR/\' \'}
+    input_files=$(sed "s|'|'\"'\"'|g" <<<"$input_files")
+    input_files=$(sed "s|$FIELD_SEPARATOR|' '|g" <<<"$input_files")
 
     # Build a 'find' command.
     find_command="find '$input_files'"
@@ -1991,7 +1992,7 @@ _display_list_box_terminal() {
         list="$(_i18n '(Empty)')"
         printf "%s\n" "$list" >&2
     else
-        list=${list//$FIELD_SEPARATOR/ }
+        list=$(tr "$FIELD_SEPARATOR" " " <<<"$list")
         printf "%s\n" "$list"
     fi
 }
@@ -2084,7 +2085,7 @@ _display_select_box() {
     esac
 
     if [[ -n "$par_columns" ]]; then
-        par_columns=${par_columns//:/=}
+        par_columns=$(tr ":" "=" <<<"$par_columns")
         columns_count=$(grep --only-matching "column=" <<<"$par_columns" |
             wc -l)
     fi
@@ -2120,15 +2121,15 @@ _display_select_box() {
         esac
     fi
 
-    par_columns=${par_columns//,/$FIELD_SEPARATOR}
-    list=${list//$'\n'/$FIELD_SEPARATOR}
+    par_columns=$(tr "," "$FIELD_SEPARATOR" <<<"$par_columns")
+    list=$(tr "\n" "$FIELD_SEPARATOR" <<<"$list")
 
     # Avoid empty fields.
     local fs=$FIELD_SEPARATOR
     list=$(sed ":again; s/$fs$fs/$fs $fs/g; t again" <<<"$list")
 
     # Avoid leading '-' in the variable to use in command line.
-    list=${list//$FIELD_SEPARATOR-/$FIELD_SEPARATOR}
+    list=$(sed "s|$FIELD_SEPARATOR-|$FIELD_SEPARATOR|g" <<<"$list")
 
     # Get the system limit for arguments.
     local arg_max=""
@@ -2144,7 +2145,7 @@ _display_select_box() {
 
     _display_lock
     if ((msg_size > arg_max - safe_margin)); then
-        list=${list//$FIELD_SEPARATOR/$'\n'}
+        list=$(tr "$FIELD_SEPARATOR" "\n" <<<"$list")
 
         # HACK: Workaround for Zenity.
         # Use stdin instead of passing arguments directly via '--list'. This
@@ -2197,7 +2198,7 @@ _display_select_box() {
     # Its output appends an extra field separator at the end.
     # See: https://github.com/v1cont/yad/issues/307
     if ! _command_exists "zenity"; then
-        selected_items=${selected_items//$'\n'/$FIELD_SEPARATOR}
+        selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
         selected_items=$(_str_collapse_char \
             "$selected_items" "$FIELD_SEPARATOR")
     fi
@@ -2211,9 +2212,9 @@ _display_list_box_xmessage() {
     local btn_ok=""
     btn_ok="$(_i18n 'OK')"
 
-    par_columns=${par_columns//--column:/}
-    par_columns=${par_columns//,/$'\t'}
-    list=${list//$FIELD_SEPARATOR/$'\t'}
+    par_columns=$(sed "s|--column:||g" <<<"$par_columns")
+    par_columns=$(tr "," "\t" <<<"$par_columns")
+    list=$(tr "$FIELD_SEPARATOR" "\t" <<<"$list")
     list="$par_columns"$'\n'$'\n'"$list"
 
     _display_lock
@@ -2812,9 +2813,7 @@ _get_script_name() {
     script_name=$(basename -- "$0")
 
     # Remove 'dd ' (two digits + space) at the beginning.
-    if [[ $script_name =~ ^[0-9]{2}\ (.*) ]]; then
-        script_name=${BASH_REMATCH[1]}
-    fi
+    script_name=$(sed "s|^[0-9]\{2\} ||" <<<"$script_name")
     _i18n "$script_name"
 }
 
@@ -2946,7 +2945,7 @@ _xdg_get_default_app() {
     xdg_dirs+="/applications"
 
     # Locate the '.desktop' file.
-    xdg_dirs=${xdg_dirs//:/$FIELD_SEPARATOR}
+    xdg_dirs=$(tr ":" "$FIELD_SEPARATOR" <<<"$xdg_dirs")
     local xdg_dir=""
     for xdg_dir in $xdg_dirs; do
         desktop_path="$xdg_dir/$desktop_file"
@@ -3682,9 +3681,9 @@ _open_items_locations() {
     if [[ -n "$working_dir" ]]; then
         # Convert the list of items to a newline-separated list and
         # restore the absolute paths.
-        items=${items//$FIELD_SEPARATOR/$'\n'}
+        items=$(tr "$FIELD_SEPARATOR" "\n" <<<"$items")
         items=$(sed "s|^\(\./\)\?\([^/].*\)|$working_dir/\2|" <<<"$items")
-        items=${items//$'\n'/$FIELD_SEPARATOR}
+        items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$items")
     fi
 
     # Disable pathname expansion so names like '*' or '?' are not expanded
@@ -3915,7 +3914,7 @@ _convert_delimited_string_to_text() {
     local new_line="'\$'\\\n''"
 
     input_items=$(sed -z "s|\n|$new_line|g; s|$new_line$||g" <<<"$input_items")
-    input_items=${input_items//$FIELD_SEPARATOR/$'\n'}
+    input_items=$(tr "$FIELD_SEPARATOR" "\n" <<<"$input_items")
 
     printf "%s" "$input_items"
 }
@@ -3936,7 +3935,7 @@ _convert_text_to_delimited_string() {
     local input_items=$1
     local new_line="'\$'\\\n''"
 
-    input_items=${input_items//$'\n'/$FIELD_SEPARATOR}
+    input_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$input_items")
     input_items=$(sed -z "s|$new_line|\n|g" <<<"$input_items")
 
     _str_collapse_char "$input_items" "$FIELD_SEPARATOR"
@@ -4051,9 +4050,10 @@ _text_remove_pwd() {
     working_dir=$(_get_working_directory)
 
     if [[ -n "$working_dir" && "$working_dir" != "/" ]]; then
-        input_text=${input_text//"${working_dir}/"/}
+        sed "s|$working_dir/||g" <<<"$input_text"
+    else
+        printf "%s" "$input_text"
     fi
-    printf "%s" "$input_text"
 }
 
 # Function: _text_sort
@@ -4304,10 +4304,8 @@ _recent_scripts_add() {
     for link in "${links[@]}"; do
         if ((count <= ACCESSED_RECENTLY_LINKS_TO_KEEP)); then
             # Rename the link with a numeric prefix for ordering.
-            link_name=$(basename "$link")
-            if [[ $link_name =~ ^.?[0-9]{2}\ (.*) ]]; then
-                link_name=${BASH_REMATCH[1]}
-            fi
+            link_name=$(basename "$link" |
+                sed --regexp-extended 's|^.?[0-9]{2} ||')
             mv -f -- "$link" "$dir/$(printf '%02d' "$count") $link_name" \
                 2>/dev/null
             ((count++))
