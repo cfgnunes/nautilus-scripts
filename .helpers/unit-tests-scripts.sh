@@ -560,6 +560,7 @@ _main() {
     # SECTION: Image
     # -------------------------------------------------------------------------
 
+    # IGNORED: Image/Image: Convert/Image: Convert PDF to PNG (custom)
     # IGNORED: Image/Image: Similarity/Image: Find similar (65 pct)
     # IGNORED: Image/Image: Similarity/Image: Find similar (75 pct)
     # IGNORED: Image/Image: Similarity/Image: Find similar (85 pct)
@@ -746,6 +747,7 @@ _main() {
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Portuguese)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Russian)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Spanish)
+    # IGNORED: Document/PDF: Tools/PDF: Convert to PNG (custom)
     # IGNORED: Document/PDF: Watermark/PDF: Add watermark (over)
     # IGNORED: Document/PDF: Watermark/PDF: Add watermark (under)
 
@@ -817,6 +819,7 @@ _main() {
     __test_scripts_file "$fixture_pdf" "Test document PDF.pdf" "empty" \
         "Document/PDF: Tools/PDF: Convert to grayscale|Test document PDF (grayscale).pdf" \
         "Document/PDF: Tools/PDF: Convert to PDFA-2b|Test document PDF (PDFA-2b).pdf" \
+        "Document/PDF: Tools/PDF: Convert to PNG|Output/Test document PDF-1.png" \
         "Document/PDF: Tools/PDF: Extract images|Output/Test document PDF-000.jpg" \
         "Document/PDF: Tools/PDF: Remove metadata|Test document PDF (no metadata).pdf"
 
