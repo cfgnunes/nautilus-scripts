@@ -1421,15 +1421,15 @@ msgstr "PDF：转换为PDFA-2b"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"
-msgstr ""
+msgstr "PDF：导出为PNG（150 dpi）"
 
 #: Menu
 msgid "PDF: Export to PNG (300 dpi)"
-msgstr ""
+msgstr "PDF：导出为PNG（300 dpi）"
 
 #: Menu
 msgid "PDF: Export to PNG (600 dpi)"
-msgstr ""
+msgstr "PDF：导出为PNG（600 dpi）"
 
 #: Menu
 msgid "PDF: Remove password"

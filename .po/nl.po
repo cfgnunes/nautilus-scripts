@@ -1421,15 +1421,15 @@ msgstr "PDF: converteren naar PDFA-2b"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"
-msgstr ""
+msgstr "PDF: exporteren naar png (150 dpi)"
 
 #: Menu
 msgid "PDF: Export to PNG (300 dpi)"
-msgstr ""
+msgstr "PDF: exporteren naar png (300 dpi)"
 
 #: Menu
 msgid "PDF: Export to PNG (600 dpi)"
-msgstr ""
+msgstr "PDF: exporteren naar png (600 dpi)"
 
 #: Menu
 msgid "PDF: Remove password"

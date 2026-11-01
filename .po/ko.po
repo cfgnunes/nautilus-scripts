@@ -1421,15 +1421,15 @@ msgstr "PDF: PDFA-2b로 변환"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"
-msgstr ""
+msgstr "PDF: PNG로 내보내기 (150 dpi)"
 
 #: Menu
 msgid "PDF: Export to PNG (300 dpi)"
-msgstr ""
+msgstr "PDF: PNG로 내보내기 (300 dpi)"
 
 #: Menu
 msgid "PDF: Export to PNG (600 dpi)"
-msgstr ""
+msgstr "PDF: PNG로 내보내기 (600 dpi)"
 
 #: Menu
 msgid "PDF: Remove password"
