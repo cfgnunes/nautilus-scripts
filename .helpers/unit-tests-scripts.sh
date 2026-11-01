@@ -775,6 +775,9 @@ _main() {
         "$temp_dir/Test document PDF 2.pdf"
 
     __test_scripts_file "$fixture_pdf" "Test document PDF.pdf" "empty" \
+        "Document/PDF: Combine, Split/PDF: Split (2 columns)|Test document PDF (2 columns).pdf" \
+        "Document/PDF: Combine, Split/PDF: Split (2 lines)|Test document PDF (2 lines).pdf" \
+        "Document/PDF: Combine, Split/PDF: Split (4 parts)|Test document PDF (4 parts).pdf" \
         "Document/PDF: Combine, Split/PDF: Split into single-page PDFs|Output/Test document PDF.0001.pdf"
 
     __test_begin "$fixture_pdf::Test document PDF.pdf"
