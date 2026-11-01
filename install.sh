@@ -106,7 +106,6 @@ HOME=${HOME:-$(eval echo ~)}
 
 FILE_MANAGER=""  # Current file manager being processed.
 I18N_FILE=""     # Current translation file being used.
-INSTALL_DIR=""   # Target installation directory for scripts.
 INSTALL_OWNER="" # Owner of the installation directory.
 INSTALL_GROUP="" # Group of the installation directory.
 
