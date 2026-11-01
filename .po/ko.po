@@ -250,24 +250,6 @@ msgstr "크기를 입력하세요."
 msgid "Enter the pages to extract."
 msgstr "추출할 페이지를 입력하세요."
 
-msgid "Choose the options for the conversion."
-msgstr ""
-
-msgid "Resolution (DPI)"
-msgstr ""
-
-msgid "Pages"
-msgstr ""
-
-msgid "All pages"
-msgstr ""
-
-msgid "Page range"
-msgstr ""
-
-msgid "Page range, e.g. 6-10,2 (if selected above)"
-msgstr ""
-
 msgid "Invalid input!"
 msgstr "유효하지 않은 입력입니다!"
 
@@ -1435,10 +1417,6 @@ msgstr "PDF: PDFA-2b로 변환"
 
 #: Menu
 msgid "PDF: Export to PNG (300 dpi)"
-msgstr ""
-
-#: Menu
-msgid "PDF: Convert to PNG (custom)"
 msgstr ""
 
 #: Menu

@@ -250,24 +250,6 @@ msgstr "Wprowadź rozmiar."
 msgid "Enter the pages to extract."
 msgstr "Wprowadź strony do wyodrębnienia."
 
-msgid "Choose the options for the conversion."
-msgstr ""
-
-msgid "Resolution (DPI)"
-msgstr ""
-
-msgid "Pages"
-msgstr ""
-
-msgid "All pages"
-msgstr ""
-
-msgid "Page range"
-msgstr ""
-
-msgid "Page range, e.g. 6-10,2 (if selected above)"
-msgstr ""
-
 msgid "Invalid input!"
 msgstr "Nieprawidłowe dane wejściowe!"
 
@@ -1435,10 +1417,6 @@ msgstr "PDF: Konwertuj na PDFA-2b"
 
 #: Menu
 msgid "PDF: Export to PNG (300 dpi)"
-msgstr ""
-
-#: Menu
-msgid "PDF: Convert to PNG (custom)"
 msgstr ""
 
 #: Menu

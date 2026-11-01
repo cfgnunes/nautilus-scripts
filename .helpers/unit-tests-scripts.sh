@@ -746,7 +746,6 @@ _main() {
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Portuguese)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Russian)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Spanish)
-    # IGNORED: Document/PDF: Tools/PDF: Convert to PNG (custom)
     # IGNORED: Document/PDF: Watermark/PDF: Add watermark (over)
     # IGNORED: Document/PDF: Watermark/PDF: Add watermark (under)
 

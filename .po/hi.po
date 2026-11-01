@@ -250,24 +250,6 @@ msgstr "आकार दर्ज करें।"
 msgid "Enter the pages to extract."
 msgstr "निकालने के लिए पृष्ठ दर्ज करें।"
 
-msgid "Choose the options for the conversion."
-msgstr ""
-
-msgid "Resolution (DPI)"
-msgstr ""
-
-msgid "Pages"
-msgstr ""
-
-msgid "All pages"
-msgstr ""
-
-msgid "Page range"
-msgstr ""
-
-msgid "Page range, e.g. 6-10,2 (if selected above)"
-msgstr ""
-
 msgid "Invalid input!"
 msgstr "अमान्य इनपुट!"
 
@@ -1435,10 +1417,6 @@ msgstr "PDF: PDFA-2b में कन्वर्ट करें"
 
 #: Menu
 msgid "PDF: Export to PNG (300 dpi)"
-msgstr ""
-
-#: Menu
-msgid "PDF: Convert to PNG (custom)"
 msgstr ""
 
 #: Menu
