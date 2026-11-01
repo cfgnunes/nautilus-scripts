@@ -1304,16 +1304,16 @@ msgid "Image: Rotate (270 deg)"
 msgstr "छवि: घुमाएँ (270 डिग्री)"
 
 #: Menu
-msgid "Image: Split into 2 (horizontal)"
-msgstr "छवि: 2 में विभाजित करें (क्षैतिज)"
+msgid "Image: Split (2 columns)"
+msgstr "छवि: विभाजित करें (2 कॉलम)"
 
 #: Menu
-msgid "Image: Split into 2 (vertical)"
-msgstr "छवि: 2 में विभाजित करें (ऊर्ध्वाधर)"
+msgid "Image: Split (2 lines)"
+msgstr "छवि: विभाजित करें (2 पंक्तियाँ)"
 
 #: Menu
-msgid "Image: Split into 4"
-msgstr "छवि: 4 में विभाजित करें"
+msgid "Image: Split (4 parts)"
+msgstr "छवि: विभाजित करें (4 भाग)"
 
 #: Menu
 msgid "Image: Stack (horizontal)"

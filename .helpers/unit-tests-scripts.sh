@@ -599,9 +599,9 @@ _main() {
         "$temp_dir/Test image.png" "$temp_dir/Test image 2.png"
 
     __test_scripts_file "$fixture_png" "Test image.png" "empty" \
-        "Image/Image: Combine, Split/Image: Split into 2 (horizontal)|Output/Test image-0.png" \
-        "Image/Image: Combine, Split/Image: Split into 2 (vertical)|Output/Test image-0.png" \
-        "Image/Image: Combine, Split/Image: Split into 4|Output/Test image-0.png"
+        "Image/Image: Combine, Split/Image: Split (2 lines)|Output/Test image-0.png" \
+        "Image/Image: Combine, Split/Image: Split (2 columns)|Output/Test image-0.png" \
+        "Image/Image: Combine, Split/Image: Split (4 parts)|Output/Test image-0.png"
 
     __test_begin \
         "$fixture_png::Test image.png" \

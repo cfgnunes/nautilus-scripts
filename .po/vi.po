@@ -1304,16 +1304,16 @@ msgid "Image: Rotate (270 deg)"
 msgstr "Hình ảnh: Xoay (270 độ)"
 
 #: Menu
-msgid "Image: Split into 2 (horizontal)"
-msgstr "Hình ảnh: Chia thành 2 (ngang)"
+msgid "Image: Split (2 columns)"
+msgstr "Hình ảnh: Tách (2 cột)"
 
 #: Menu
-msgid "Image: Split into 2 (vertical)"
-msgstr "Hình ảnh: Chia thành 2 (dọc)"
+msgid "Image: Split (2 lines)"
+msgstr "Hình ảnh: Tách (2 dòng)"
 
 #: Menu
-msgid "Image: Split into 4"
-msgstr "Hình ảnh: Chia thành 4"
+msgid "Image: Split (4 parts)"
+msgstr "Hình ảnh: Tách (4 phần)"
 
 #: Menu
 msgid "Image: Stack (horizontal)"

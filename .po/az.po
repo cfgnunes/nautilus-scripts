@@ -1304,15 +1304,15 @@ msgid "Image: Rotate (270 deg)"
 msgstr "Şəkil: Fırlat (270 dərəcə)"
 
 #: Menu
-msgid "Image: Split into 2 (horizontal)"
-msgstr "Şəkil: Üfüqi istiqamətdə 2 hissəyə böl"
+msgid "Image: Split (2 columns)"
+msgstr "Şəkil: 2 sütuna böl"
 
 #: Menu
-msgid "Image: Split into 2 (vertical)"
-msgstr "Şəkil: Şaquli istiqamətdə 2 hissəyə böl"
+msgid "Image: Split (2 lines)"
+msgstr "Şəkil: 2 sətirə böl"
 
 #: Menu
-msgid "Image: Split into 4"
+msgid "Image: Split (4 parts)"
 msgstr "Şəkil: 4 hissəyə böl"
 
 #: Menu

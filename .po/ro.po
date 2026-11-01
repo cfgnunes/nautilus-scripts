@@ -1304,16 +1304,16 @@ msgid "Image: Rotate (270 deg)"
 msgstr "Imagine: rotire (270°)"
 
 #: Menu
-msgid "Image: Split into 2 (horizontal)"
-msgstr "Imagine: împărțire în 2 (orizontal)"
+msgid "Image: Split (2 columns)"
+msgstr "Imagine: împărțire (2 coloane)"
 
 #: Menu
-msgid "Image: Split into 2 (vertical)"
-msgstr "Imagine: împărțire în 2 (vertical)"
+msgid "Image: Split (2 lines)"
+msgstr "Imagine: împărțire (2 linii)"
 
 #: Menu
-msgid "Image: Split into 4"
-msgstr "Imagine: împărțire în 4"
+msgid "Image: Split (4 parts)"
+msgstr "Imagine: împărțire (4 părți)"
 
 #: Menu
 msgid "Image: Stack (horizontal)"

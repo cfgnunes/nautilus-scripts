@@ -1304,16 +1304,16 @@ msgid "Image: Rotate (270 deg)"
 msgstr "Зображення: повернути (270°)"
 
 #: Menu
-msgid "Image: Split into 2 (horizontal)"
-msgstr "Зображення: розділити на 2 (горизонтально)"
+msgid "Image: Split (2 columns)"
+msgstr "Зображення: розділити (2 стовпці)"
 
 #: Menu
-msgid "Image: Split into 2 (vertical)"
-msgstr "Зображення: розділити на 2 (вертикально)"
+msgid "Image: Split (2 lines)"
+msgstr "Зображення: розділити (2 рядки)"
 
 #: Menu
-msgid "Image: Split into 4"
-msgstr "Зображення: розділити на 4"
+msgid "Image: Split (4 parts)"
+msgstr "Зображення: розділити (4 частини)"
 
 #: Menu
 msgid "Image: Stack (horizontal)"

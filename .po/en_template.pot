@@ -1303,15 +1303,15 @@ msgid "Image: Rotate (270 deg)"
 msgstr ""
 
 #: Menu
-msgid "Image: Split into 2 (horizontal)"
+msgid "Image: Split (2 columns)"
 msgstr ""
 
 #: Menu
-msgid "Image: Split into 2 (vertical)"
+msgid "Image: Split (2 lines)"
 msgstr ""
 
 #: Menu
-msgid "Image: Split into 4"
+msgid "Image: Split (4 parts)"
 msgstr ""
 
 #: Menu
