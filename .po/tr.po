@@ -1142,10 +1142,6 @@ msgid "Image: Combine into PDF"
 msgstr "Görüntü: PDF olarak birleştir"
 
 #: Menu
-msgid "Image: Convert PDF to PNG (custom)"
-msgstr ""
-
-#: Menu
 msgid "Image: Convert to AVIF"
 msgstr "Görüntü: AVIF'e dönüştür"
 

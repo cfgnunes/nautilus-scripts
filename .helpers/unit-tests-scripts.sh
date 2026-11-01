@@ -560,7 +560,6 @@ _main() {
     # SECTION: Image
     # -------------------------------------------------------------------------
 
-    # IGNORED: Image/Image: Convert/Image: Convert PDF to PNG (custom)
     # IGNORED: Image/Image: Similarity/Image: Find similar (65 pct)
     # IGNORED: Image/Image: Similarity/Image: Find similar (75 pct)
     # IGNORED: Image/Image: Similarity/Image: Find similar (85 pct)

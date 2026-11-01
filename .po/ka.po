@@ -1142,10 +1142,6 @@ msgid "Image: Combine into PDF"
 msgstr "გამოსახულება: PDF-ში გაერთიანება"
 
 #: Menu
-msgid "Image: Convert PDF to PNG (custom)"
-msgstr ""
-
-#: Menu
 msgid "Image: Convert to AVIF"
 msgstr "გამოსახულება: AVIF-ში გადაყვანა"
 
