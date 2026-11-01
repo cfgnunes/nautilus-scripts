@@ -250,6 +250,24 @@ msgstr "Digite o tamanho."
 msgid "Enter the pages to extract."
 msgstr "Digite as páginas a extrair."
 
+msgid "Choose the options for the conversion."
+msgstr ""
+
+msgid "Resolution (DPI)"
+msgstr ""
+
+msgid "Pages"
+msgstr ""
+
+msgid "All pages"
+msgstr ""
+
+msgid "Page range"
+msgstr ""
+
+msgid "Page range, e.g. 6-10,2 (if selected above)"
+msgstr ""
+
 msgid "Invalid input!"
 msgstr "Entrada inválida!"
 
@@ -1124,6 +1142,10 @@ msgid "Image: Combine into PDF"
 msgstr "Imagem: Combinar em um PDF"
 
 #: Menu
+msgid "Image: Convert PDF to PNG (custom)"
+msgstr ""
+
+#: Menu
 msgid "Image: Convert to AVIF"
 msgstr "Imagem: Converter para AVIF"
 
@@ -1414,6 +1436,14 @@ msgstr "PDF: Converter para escala de cinza"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: Converter para PDFA-2b"
+
+#: Menu
+msgid "PDF: Convert to PNG"
+msgstr ""
+
+#: Menu
+msgid "PDF: Convert to PNG (custom)"
+msgstr ""
 
 #: Menu
 msgid "PDF: Remove password"

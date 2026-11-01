@@ -250,6 +250,24 @@ msgstr "Voer de grootte in."
 msgid "Enter the pages to extract."
 msgstr "Voer de pagina's in."
 
+msgid "Choose the options for the conversion."
+msgstr ""
+
+msgid "Resolution (DPI)"
+msgstr ""
+
+msgid "Pages"
+msgstr ""
+
+msgid "All pages"
+msgstr ""
+
+msgid "Page range"
+msgstr ""
+
+msgid "Page range, e.g. 6-10,2 (if selected above)"
+msgstr ""
+
 msgid "Invalid input!"
 msgstr "Ongeldige invoer!"
 
@@ -1124,6 +1142,10 @@ msgid "Image: Combine into PDF"
 msgstr "Afbeelding: combineren naar pdf-bestand"
 
 #: Menu
+msgid "Image: Convert PDF to PNG (custom)"
+msgstr ""
+
+#: Menu
 msgid "Image: Convert to AVIF"
 msgstr "Afbeelding: converteren naar avif"
 
@@ -1414,6 +1436,14 @@ msgstr "PDF: Converteren naar grijstinten"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: converteren naar PDFA-2b"
+
+#: Menu
+msgid "PDF: Convert to PNG"
+msgstr ""
+
+#: Menu
+msgid "PDF: Convert to PNG (custom)"
+msgstr ""
 
 #: Menu
 msgid "PDF: Remove password"

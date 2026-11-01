@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+# Source the file '.common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/.common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+    local msg=""
+    local form=""
+    local label_all=""
+    local label_range=""
+    local mode=""
+
+    # Execute initial checks.
+    _check_dependencies "pdfinfo"
+    _display_wait_box ""
+    input_files=$(_get_files "par_type=file; par_select_extension=pdf")
+
+    label_all="$(_i18n 'All pages')"
+    label_range="$(_i18n 'Page range')"
+
+    msg="$(_i18n 'Choose the options for the conversion.')"
+    form=$(_display_form_box "$msg" \
+        "combo:$(_i18n 'Resolution (DPI)'):300|200|600" \
+        "combo:$(_i18n 'Pages'):$label_all|$label_range" \
+        "entry:$(_i18n 'Page range, e.g. 6-10,2 (if selected above)'):")
+    IFS="$FIELD_SEPARATOR" read -r TASK_DPI mode TASK_PAGES <<<"$form"
+
+    TASK_PAGES="${TASK_PAGES//[[:space:]]/}"
+    if [[ "$mode" != "$label_range" ]]; then
+        TASK_PAGES=""
+    elif [[ ! "$TASK_PAGES" =~ ^[0-9]+(-[0-9]+)?(,[0-9]+(-[0-9]+)?)*$ ]]; then
+        msg="$(_i18n 'Invalid input!')"
+        _display_error_box "$msg"
+        _exit_script
+    fi
+    export TASK_PAGES TASK_DPI
+
+    # Check output directory only after displaying dialog boxes to the user.
+    output_dir=$(_get_output_dir "par_use_same_dir=false")
+
+    # Execute the function '_main_task' for each file in parallel.
+    _run_task_parallel "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
+
+_main_task() {
+    local input_file=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+    local exit_code=0
+    local range=""
+    local first=""
+    local last=""
+    local range_output=""
+
+    output_file=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=strip")
+
+    # Run the main process.
+    if [[ -z "$TASK_PAGES" ]]; then
+        std_output=$(pdftoppm -png -r "$TASK_DPI" \
+            "$input_file" "$output_file" 2>&1)
+        exit_code=$?
+    else
+        # 'pdftoppm' accepts a single page range, so process each one.
+        while IFS= read -r range; do
+            first=${range%-*}
+            last=${range#*-}
+            if ! range_output=$(pdftoppm -png -r "$TASK_DPI" \
+                -f "$first" -l "$last" "$input_file" "$output_file" 2>&1); then
+                exit_code=1
+            fi
+            std_output+=$range_output
+        done < <(tr ',' '\n' <<<"$TASK_PAGES")
+    fi
+    _check_output "$exit_code" "$std_output" "$input_file" "" || return 1
+}
+
+_main "$@"
