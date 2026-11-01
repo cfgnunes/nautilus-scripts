@@ -631,6 +631,10 @@ msgid "PDF: Combine, Split"
 msgstr ""
 
 #: Menu
+msgid "PDF: Convert"
+msgstr ""
+
+#: Menu
 msgid "PDF: Security"
 msgstr ""
 
