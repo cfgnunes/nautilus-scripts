@@ -1568,6 +1568,18 @@ msgid "PDF: Show signatures"
 msgstr "PDF：显示签名"
 
 #: Menu
+msgid "PDF: Split (2 columns)"
+msgstr "PDF：拆分（2列）"
+
+#: Menu
+msgid "PDF: Split (2 lines)"
+msgstr "PDF：拆分（2行）"
+
+#: Menu
+msgid "PDF: Split (4 parts)"
+msgstr "PDF：拆分（4部分）"
+
+#: Menu
 msgid "PDF: Split into single-page PDFs"
 msgstr "PDF：拆分为单页 PDF"
 

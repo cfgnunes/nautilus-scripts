@@ -1568,6 +1568,18 @@ msgid "PDF: Show signatures"
 msgstr "PDF: Hiển thị chữ ký"
 
 #: Menu
+msgid "PDF: Split (2 columns)"
+msgstr "PDF: Tách (2 cột)"
+
+#: Menu
+msgid "PDF: Split (2 lines)"
+msgstr "PDF: Tách (2 dòng)"
+
+#: Menu
+msgid "PDF: Split (4 parts)"
+msgstr "PDF: Tách (4 phần)"
+
+#: Menu
 msgid "PDF: Split into single-page PDFs"
 msgstr "PDF: Tách thành PDF một trang"
 

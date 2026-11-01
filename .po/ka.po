@@ -1568,6 +1568,18 @@ msgid "PDF: Show signatures"
 msgstr "PDF: ხელმოწერების ჩვენება"
 
 #: Menu
+msgid "PDF: Split (2 columns)"
+msgstr "PDF: დაყოფა (2 სვეტი)"
+
+#: Menu
+msgid "PDF: Split (2 lines)"
+msgstr "PDF: დაყოფა (2 ხაზი)"
+
+#: Menu
+msgid "PDF: Split (4 parts)"
+msgstr "PDF: დაყოფა (4 ნაწილი)"
+
+#: Menu
 msgid "PDF: Split into single-page PDFs"
 msgstr "PDF: დაყოფა ერთგვერდიან PDF-ებად"
 

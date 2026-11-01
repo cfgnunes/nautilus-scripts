@@ -1568,6 +1568,18 @@ msgid "PDF: Show signatures"
 msgstr "PDF: Wys handtekeninge"
 
 #: Menu
+msgid "PDF: Split (2 columns)"
+msgstr "PDF: Verdeel (2 kolomme)"
+
+#: Menu
+msgid "PDF: Split (2 lines)"
+msgstr "PDF: Verdeel (2 lyne)"
+
+#: Menu
+msgid "PDF: Split (4 parts)"
+msgstr "PDF: Verdeel (4 dele)"
+
+#: Menu
 msgid "PDF: Split into single-page PDFs"
 msgstr "PDF: Verdeel in enkelbladsy-PDF's"
 

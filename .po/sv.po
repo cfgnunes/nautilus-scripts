@@ -1568,6 +1568,18 @@ msgid "PDF: Show signatures"
 msgstr "PDF: visa signaturer"
 
 #: Menu
+msgid "PDF: Split (2 columns)"
+msgstr "PDF: dela (2 kolumner)"
+
+#: Menu
+msgid "PDF: Split (2 lines)"
+msgstr "PDF: dela (2 rader)"
+
+#: Menu
+msgid "PDF: Split (4 parts)"
+msgstr "PDF: dela (4 delar)"
+
+#: Menu
 msgid "PDF: Split into single-page PDFs"
 msgstr "PDF: dela upp i ensidiga PDF-filer"
 

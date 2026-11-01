@@ -1568,6 +1568,18 @@ msgid "PDF: Show signatures"
 msgstr "קובץ PDF: הצגת חתימות"
 
 #: Menu
+msgid "PDF: Split (2 columns)"
+msgstr "PDF: פיצול (2 עמודות)"
+
+#: Menu
+msgid "PDF: Split (2 lines)"
+msgstr "PDF: פיצול (2 שורות)"
+
+#: Menu
+msgid "PDF: Split (4 parts)"
+msgstr "PDF: פיצול (4 חלקים)"
+
+#: Menu
 msgid "PDF: Split into single-page PDFs"
 msgstr "קובץ PDF: פיצול לקובצי PDF בעלי עמוד אחד"
 

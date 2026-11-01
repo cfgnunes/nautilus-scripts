@@ -1568,6 +1568,18 @@ msgid "PDF: Show signatures"
 msgstr "PDF: İmzaları göster"
 
 #: Menu
+msgid "PDF: Split (2 columns)"
+msgstr "PDF: Ayır (2 sütun)"
+
+#: Menu
+msgid "PDF: Split (2 lines)"
+msgstr "PDF: Ayır (2 satır)"
+
+#: Menu
+msgid "PDF: Split (4 parts)"
+msgstr "PDF: Ayır (4 parça)"
+
+#: Menu
 msgid "PDF: Split into single-page PDFs"
 msgstr "PDF: Tek sayfalık PDF'lere ayır"
 

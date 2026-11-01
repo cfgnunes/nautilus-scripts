@@ -1568,6 +1568,18 @@ msgid "PDF: Show signatures"
 msgstr "PDF：署名を表示"
 
 #: Menu
+msgid "PDF: Split (2 columns)"
+msgstr "PDF：分割 (2列)"
+
+#: Menu
+msgid "PDF: Split (2 lines)"
+msgstr "PDF：分割 (2行)"
+
+#: Menu
+msgid "PDF: Split (4 parts)"
+msgstr "PDF：分割 (4部分)"
+
+#: Menu
 msgid "PDF: Split into single-page PDFs"
 msgstr "PDF：単一ページごとのPDFに分割"
 

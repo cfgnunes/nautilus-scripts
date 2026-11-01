@@ -1568,6 +1568,18 @@ msgid "PDF: Show signatures"
 msgstr "PDF: показати підписи"
 
 #: Menu
+msgid "PDF: Split (2 columns)"
+msgstr "PDF: розділити (2 стовпці)"
+
+#: Menu
+msgid "PDF: Split (2 lines)"
+msgstr "PDF: розділити (2 рядки)"
+
+#: Menu
+msgid "PDF: Split (4 parts)"
+msgstr "PDF: розділити (4 частини)"
+
+#: Menu
 msgid "PDF: Split into single-page PDFs"
 msgstr "PDF: розділити на односторінкові PDF"
 

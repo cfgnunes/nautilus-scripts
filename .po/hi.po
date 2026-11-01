@@ -1568,6 +1568,18 @@ msgid "PDF: Show signatures"
 msgstr "PDF: हस्ताक्षर दिखाएँ"
 
 #: Menu
+msgid "PDF: Split (2 columns)"
+msgstr "PDF: विभाजित करें (2 कॉलम)"
+
+#: Menu
+msgid "PDF: Split (2 lines)"
+msgstr "PDF: विभाजित करें (2 पंक्तियाँ)"
+
+#: Menu
+msgid "PDF: Split (4 parts)"
+msgstr "PDF: विभाजित करें (4 भाग)"
+
+#: Menu
 msgid "PDF: Split into single-page PDFs"
 msgstr "PDF: एकल-पृष्ठ PDF में विभाजित करें"
 

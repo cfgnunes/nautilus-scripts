@@ -1568,6 +1568,18 @@ msgid "PDF: Show signatures"
 msgstr "PDF: aláírások megjelenítése"
 
 #: Menu
+msgid "PDF: Split (2 columns)"
+msgstr "PDF: felosztás (2 oszlop)"
+
+#: Menu
+msgid "PDF: Split (2 lines)"
+msgstr "PDF: felosztás (2 sor)"
+
+#: Menu
+msgid "PDF: Split (4 parts)"
+msgstr "PDF: felosztás (4 rész)"
+
+#: Menu
 msgid "PDF: Split into single-page PDFs"
 msgstr "PDF: felosztás egyoldalas PDF-ekre"
 
