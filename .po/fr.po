@@ -1434,7 +1434,7 @@ msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: Convertir en PDFA-2b"
 
 #: Menu
-msgid "PDF: Convert to PNG (300 dpi)"
+msgid "PDF: Export to PNG (300 dpi)"
 msgstr ""
 
 #: Menu

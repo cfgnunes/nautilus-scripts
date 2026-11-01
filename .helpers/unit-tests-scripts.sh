@@ -818,7 +818,7 @@ _main() {
     __test_scripts_file "$fixture_pdf" "Test document PDF.pdf" "empty" \
         "Document/PDF: Tools/PDF: Convert to grayscale|Test document PDF (grayscale).pdf" \
         "Document/PDF: Tools/PDF: Convert to PDFA-2b|Test document PDF (PDFA-2b).pdf" \
-        "Document/PDF: Tools/PDF: Convert to PNG (300 dpi)|Output/Test document PDF-1.png" \
+        "Document/PDF: Tools/PDF: Export to PNG (300 dpi)|Output/Test document PDF-1.png" \
         "Document/PDF: Tools/PDF: Extract images|Output/Test document PDF-000.jpg" \
         "Document/PDF: Tools/PDF: Remove metadata|Test document PDF (no metadata).pdf"
 
