@@ -250,6 +250,9 @@ msgstr "Введіть цільовий розмір."
 msgid "Enter the pages to extract."
 msgstr "Введіть сторінки для видобуття."
 
+msgid "Enter the margin to crop (cm)."
+msgstr "Введіть поле для обрізання (см)."
+
 msgid "Invalid input!"
 msgstr "Неприпустимі дані!"
 
@@ -634,6 +637,10 @@ msgstr "PDF: об’єднати, розділити"
 #: Menu
 msgid "PDF: Convert"
 msgstr "PDF: перетворення"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "PDF: обрізання"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF: перетворити на відтінки сірого"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: перетворити на PDFA-2b"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "PDF: обрізати поля (власний)"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

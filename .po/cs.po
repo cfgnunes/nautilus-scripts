@@ -250,6 +250,9 @@ msgstr "Zadejte cílovou velikost."
 msgid "Enter the pages to extract."
 msgstr "Zadejte stránky k extrahování."
 
+msgid "Enter the margin to crop (cm)."
+msgstr "Zadejte okraj k oříznutí (cm)."
+
 msgid "Invalid input!"
 msgstr "Neplatný vstup!"
 
@@ -634,6 +637,10 @@ msgstr "PDF: sloučit, rozdělit"
 #: Menu
 msgid "PDF: Convert"
 msgstr "PDF: převod"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "PDF: oříznutí"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF: převést na stupně šedi"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: převést na PDFA-2b"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "PDF: oříznout okraje (vlastní)"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

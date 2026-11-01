@@ -250,6 +250,9 @@ msgstr "נא למלא את הגודל."
 msgid "Enter the pages to extract."
 msgstr "נא למלא את העמודים לחילוץ."
 
+msgid "Enter the margin to crop (cm)."
+msgstr "נא למלא את השוליים לחיתוך (ס״מ)."
+
 msgid "Invalid input!"
 msgstr "הקלט אינו תקני!"
 
@@ -634,6 +637,10 @@ msgstr "קובץ PDF: שילוב, פיצול"
 #: Menu
 msgid "PDF: Convert"
 msgstr "קובץ PDF: המרה"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "קובץ PDF: חיתוך"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF: המר לגווני אפור"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "קובץ PDF: המרה לקובץ PDFA-2b"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "קובץ PDF: חיתוך שוליים (מותאם אישית)"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

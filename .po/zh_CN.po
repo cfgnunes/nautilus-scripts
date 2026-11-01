@@ -250,6 +250,9 @@ msgstr "请输入尺寸。"
 msgid "Enter the pages to extract."
 msgstr "请输入要提取的页面。"
 
+msgid "Enter the margin to crop (cm)."
+msgstr "请输入要裁剪的边距（厘米）。"
+
 msgid "Invalid input!"
 msgstr "输入无效！"
 
@@ -634,6 +637,10 @@ msgstr "PDF：合并、分割"
 #: Menu
 msgid "PDF: Convert"
 msgstr "PDF：转换"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "PDF：裁剪"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF：转换为灰度"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF：转换为PDFA-2b"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "PDF：裁剪边距（自定义）"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

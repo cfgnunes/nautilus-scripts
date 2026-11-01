@@ -250,6 +250,9 @@ msgstr "크기를 입력하세요."
 msgid "Enter the pages to extract."
 msgstr "추출할 페이지를 입력하세요."
 
+msgid "Enter the margin to crop (cm)."
+msgstr "잘라낼 여백을 입력하세요 (cm)."
+
 msgid "Invalid input!"
 msgstr "유효하지 않은 입력입니다!"
 
@@ -634,6 +637,10 @@ msgstr "PDF: 결합, 분할"
 #: Menu
 msgid "PDF: Convert"
 msgstr "PDF: 변환"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "PDF: 자르기"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF: 회색조로 변환"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: PDFA-2b로 변환"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "PDF: 여백 자르기 (사용자 지정)"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

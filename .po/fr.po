@@ -250,6 +250,9 @@ msgstr "Entrez la taille."
 msgid "Enter the pages to extract."
 msgstr "Entrez les pages à extraire."
 
+msgid "Enter the margin to crop (cm)."
+msgstr "Entrez la marge à rogner (cm)."
+
 msgid "Invalid input!"
 msgstr "Entrée invalide !"
 
@@ -634,6 +637,10 @@ msgstr "PDF: Combiner, Diviser"
 #: Menu
 msgid "PDF: Convert"
 msgstr "PDF: Convertir"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "PDF: Rogner"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF : Convertir en niveaux de gris"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: Convertir en PDFA-2b"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "PDF: Rogner les marges (personnalisé)"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

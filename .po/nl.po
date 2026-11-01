@@ -250,6 +250,9 @@ msgstr "Voer de grootte in."
 msgid "Enter the pages to extract."
 msgstr "Voer de pagina's in."
 
+msgid "Enter the margin to crop (cm)."
+msgstr "Voer de marge in om bij te snijden (cm)."
+
 msgid "Invalid input!"
 msgstr "Ongeldige invoer!"
 
@@ -634,6 +637,10 @@ msgstr "PDF: combineren, splitsen"
 #: Menu
 msgid "PDF: Convert"
 msgstr "PDF: converteren"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "PDF: bijsnijden"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF: Converteren naar grijstinten"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: converteren naar PDFA-2b"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "PDF: marges bijsnijden (aangepast)"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

@@ -250,6 +250,9 @@ msgstr "Introduceți dimensiunea țintă."
 msgid "Enter the pages to extract."
 msgstr "Introduceți paginile de extras."
 
+msgid "Enter the margin to crop (cm)."
+msgstr "Introduceți marginea de decupat (cm)."
+
 msgid "Invalid input!"
 msgstr "Intrare nevalidă!"
 
@@ -634,6 +637,10 @@ msgstr "PDF: combinare, împărțire"
 #: Menu
 msgid "PDF: Convert"
 msgstr "PDF: conversie"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "PDF: decupare"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF: conversie în tonuri de gri"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: conversie în PDFA-2b"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "PDF: decupare margini (personalizat)"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

@@ -250,6 +250,9 @@ msgstr "Wprowadź rozmiar."
 msgid "Enter the pages to extract."
 msgstr "Wprowadź strony do wyodrębnienia."
 
+msgid "Enter the margin to crop (cm)."
+msgstr "Wprowadź margines do przycięcia (cm)."
+
 msgid "Invalid input!"
 msgstr "Nieprawidłowe dane wejściowe!"
 
@@ -634,6 +637,10 @@ msgstr "PDF: Łącz, Dziel"
 #: Menu
 msgid "PDF: Convert"
 msgstr "PDF: Konwertuj"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "PDF: Przytnij"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF: Konwertuj do skali szarości"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: Konwertuj na PDFA-2b"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "PDF: Przytnij marginesy (niestandardowy)"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

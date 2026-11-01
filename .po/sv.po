@@ -250,6 +250,9 @@ msgstr "Ange målstorleken."
 msgid "Enter the pages to extract."
 msgstr "Ange sidorna som ska extraheras."
 
+msgid "Enter the margin to crop (cm)."
+msgstr "Ange marginalen som ska beskäras (cm)."
+
 msgid "Invalid input!"
 msgstr "Ogiltig inmatning!"
 
@@ -634,6 +637,10 @@ msgstr "PDF: kombinera, dela"
 #: Menu
 msgid "PDF: Convert"
 msgstr "PDF: konvertera"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "PDF: beskära"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF: konvertera till gråskala"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: konvertera till PDFA-2b"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "PDF: beskära marginaler (anpassad)"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

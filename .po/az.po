@@ -250,6 +250,9 @@ msgstr "Hədəf ölçünü daxil edin."
 msgid "Enter the pages to extract."
 msgstr "Çıxarılacaq səhifələri daxil edin."
 
+msgid "Enter the margin to crop (cm)."
+msgstr "Kəsiləcək kənarı daxil edin (cm)."
+
 msgid "Invalid input!"
 msgstr "Yanlış daxiletmə!"
 
@@ -634,6 +637,10 @@ msgstr "PDF: Birləşdir, böl"
 #: Menu
 msgid "PDF: Convert"
 msgstr "PDF: Çevir"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "PDF: Kəs"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF: Boz rəng çalarlarına çevir"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: PDFA-2b formatına çevir"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "PDF: Kənarları kəs (fərdi)"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

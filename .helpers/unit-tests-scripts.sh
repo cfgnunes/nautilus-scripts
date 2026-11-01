@@ -738,14 +738,15 @@ _main() {
     # IGNORED: Document/PDF: Combine, Split/PDF: Extract pages (custom)
     # IGNORED: Document/PDF: Security/PDF: Remove password
     # IGNORED: Document/PDF: Security/PDF: Set password
-    # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (English)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Afrikaans)
+    # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (English)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (French)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (German)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Italian)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Portuguese)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Russian)
     # IGNORED: Document/PDF: Text recognition (OCR)/PDF: Perform OCR (Spanish)
+    # IGNORED: Document/PDF: Tools/PDF: Crop margins (custom)
     # IGNORED: Document/PDF: Watermark/PDF: Add watermark (over)
     # IGNORED: Document/PDF: Watermark/PDF: Add watermark (under)
 

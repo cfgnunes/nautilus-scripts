@@ -250,6 +250,9 @@ msgstr "サイズを入力してください。"
 msgid "Enter the pages to extract."
 msgstr "抽出するページを入力してください。"
 
+msgid "Enter the margin to crop (cm)."
+msgstr "切り取る余白を入力してください（cm）。"
+
 msgid "Invalid input!"
 msgstr "無効な入力です！"
 
@@ -634,6 +637,10 @@ msgstr "PDF：結合・分割"
 #: Menu
 msgid "PDF: Convert"
 msgstr "PDF：変換"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "PDF：トリミング"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF: グレースケールに変換"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF：PDF/A-2bに変換"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "PDF：余白を切り取り (カスタム)"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

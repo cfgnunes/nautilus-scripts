@@ -250,6 +250,9 @@ msgstr "Adja meg a célméretet."
 msgid "Enter the pages to extract."
 msgstr "Adja meg a kibontandó oldalakat."
 
+msgid "Enter the margin to crop (cm)."
+msgstr "Adja meg a levágandó margót (cm)."
+
 msgid "Invalid input!"
 msgstr "Érvénytelen bemenet!"
 
@@ -634,6 +637,10 @@ msgstr "PDF: egyesítés, felosztás"
 #: Menu
 msgid "PDF: Convert"
 msgstr "PDF: konvertálás"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "PDF: levágás"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF: konvertálás szürkeárnyalatosra"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: konvertálás PDFA-2b formátumra"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "PDF: margók levágása (egyéni)"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

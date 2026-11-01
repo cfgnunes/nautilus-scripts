@@ -250,6 +250,9 @@ msgstr "आकार दर्ज करें।"
 msgid "Enter the pages to extract."
 msgstr "निकालने के लिए पृष्ठ दर्ज करें।"
 
+msgid "Enter the margin to crop (cm)."
+msgstr "काटने के लिए मार्जिन दर्ज करें (सेमी)।"
+
 msgid "Invalid input!"
 msgstr "अमान्य इनपुट!"
 
@@ -634,6 +637,10 @@ msgstr "PDF: संयोजित करें, विभाजित करे
 #: Menu
 msgid "PDF: Convert"
 msgstr "PDF: कन्वर्ट करें"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "PDF: काटें"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF: ग्रेस्केल में बदलें"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: PDFA-2b में कन्वर्ट करें"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "PDF: मार्जिन काटें (अनुकूलित)"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

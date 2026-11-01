@@ -250,6 +250,9 @@ msgstr "Boyutu girin."
 msgid "Enter the pages to extract."
 msgstr "Çıkarılacak sayfaları girin."
 
+msgid "Enter the margin to crop (cm)."
+msgstr "Kırpılacak kenar boşluğunu girin (cm)."
+
 msgid "Invalid input!"
 msgstr "Geçersiz girdi!"
 
@@ -634,6 +637,10 @@ msgstr "PDF: Birleştir, Ayır"
 #: Menu
 msgid "PDF: Convert"
 msgstr "PDF: Dönüştür"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "PDF: Kırp"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF: Gri tonlamaya dönüştür"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: PDFA-2b'ye dönüştür"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "PDF: Kenar boşluklarını kırp (özel)"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

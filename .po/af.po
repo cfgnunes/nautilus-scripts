@@ -250,6 +250,9 @@ msgstr "Voer die teikengrootte in."
 msgid "Enter the pages to extract."
 msgstr "Voer die bladsye in om te onttrek."
 
+msgid "Enter the margin to crop (cm)."
+msgstr "Voer die kantlyn in om te knip (cm)."
+
 msgid "Invalid input!"
 msgstr "Ongeldige toevoer!"
 
@@ -634,6 +637,10 @@ msgstr "PDF: Kombineer, verdeel"
 #: Menu
 msgid "PDF: Convert"
 msgstr "PDF: Omskep"
+
+#: Menu
+msgid "PDF: Crop"
+msgstr "PDF: Knip"
 
 #: Menu
 msgid "PDF: Security"
@@ -1418,6 +1425,10 @@ msgstr "PDF: Omskep na grysskaal"
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: Omskep na PDFA-2b"
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
+msgstr "PDF: Knip kantlyne (pasgemaak)"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"

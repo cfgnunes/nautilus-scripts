@@ -249,6 +249,9 @@ msgstr ""
 msgid "Enter the pages to extract."
 msgstr ""
 
+msgid "Enter the margin to crop (cm)."
+msgstr ""
+
 msgid "Invalid input!"
 msgstr ""
 
@@ -632,6 +635,10 @@ msgstr ""
 
 #: Menu
 msgid "PDF: Convert"
+msgstr ""
+
+#: Menu
+msgid "PDF: Crop"
 msgstr ""
 
 #: Menu
@@ -1416,6 +1423,10 @@ msgstr ""
 
 #: Menu
 msgid "PDF: Convert to PDFA-2b"
+msgstr ""
+
+#: Menu
+msgid "PDF: Crop margins (custom)"
 msgstr ""
 
 #: Menu
