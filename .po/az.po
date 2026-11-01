@@ -1420,7 +1420,15 @@ msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: PDFA-2b formatına çevir"
 
 #: Menu
+msgid "PDF: Export to PNG (150 dpi)"
+msgstr ""
+
+#: Menu
 msgid "PDF: Export to PNG (300 dpi)"
+msgstr ""
+
+#: Menu
+msgid "PDF: Export to PNG (600 dpi)"
 msgstr ""
 
 #: Menu
