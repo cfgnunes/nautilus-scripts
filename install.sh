@@ -1168,6 +1168,9 @@ _install_actions_kio_servicemenus() {
     # -------------------------------------------------------------------------
     local action_name=""
     local name=""
+    local mime_type=""
+    local max_items=""
+    local min_items=""
     local script_relative=""
     local submenu=""
     local filename=""
@@ -1176,6 +1179,14 @@ _install_actions_kio_servicemenus() {
         name=${script_relative##*/}
         submenu=${script_relative%%/*}
 
+        mime_type=$(_get_par_value "$filename" "install_mime_type")
+        if [[ -z "$mime_type" ]]; then
+            mime_type="all/all;"
+        fi
+
+        max_items=$(_get_par_value "$filename" "par_max_items" | grep -oE "^[0-9]+" 2>/dev/null)
+        min_items=$(_get_par_value "$filename" "par_min_items" | grep -oE "^[0-9]+" 2>/dev/null)
+
         action_name=$(_sanitize_string <<<"$name")
         menu_file="${action_name}.desktop"
         menu_file="$menus_path/$INSTALL_NAME_DIR-$menu_file"
@@ -1183,8 +1194,14 @@ _install_actions_kio_servicemenus() {
             printf "%s\n" "[Desktop Entry]"
             printf "%s\n" "Type=Service"
             printf "%s\n" "X-KDE-ServiceTypes=KonqPopupMenu/Plugin"
+            if [[ -n "$min_items" ]]; then
+                printf "%s\n" "X-KDE-MinNumberOfUrls=$min_items"
+            fi
+            if [[ -n "$max_items" ]]; then
+                printf "%s\n" "X-KDE-MaxNumberOfUrls=$max_items"
+            fi
             printf "%s\n" "Actions=$action_name;"
-            printf "%s\n" "MimeType=all/all;"
+            printf "%s\n" "MimeType=$mime_type"
             printf "%s\n" "Encoding=UTF-8"
             printf "%s\n" "X-KDE-Submenu=$submenu"
             _i18n_print_desktop_name "X-KDE-Submenu" "$submenu"
