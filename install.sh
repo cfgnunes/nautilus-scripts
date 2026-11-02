@@ -645,12 +645,6 @@ _sanitize_string() {
     tr -cd ";[:alnum:] -" | tr " " "-" | tr -s "-" | tr "[:upper:]" "[:lower:]"
 }
 
-_generate_desktop_filename() {
-    local name=$1
-    name=$(_sanitize_string <<<"$name")
-    printf "%s" "$name.desktop"
-}
-
 # -----------------------------------------------------------------------------
 # SECTION: Dependencies
 # -----------------------------------------------------------------------------
@@ -1068,7 +1062,8 @@ _install_application_shortcuts() {
         submenu=${script_relative%/*}
         submenu=${submenu//\// - }
 
-        menu_file=$(_generate_desktop_filename "$name")
+        menu_file=$(_sanitize_string <<<"$name")
+        menu_file="${menu_file}.desktop"
         menu_file="$app_menus_path/$menu_file"
         {
             printf "%s\n" "[Desktop Entry]"
@@ -1171,6 +1166,7 @@ _install_actions_kio_servicemenus() {
     # -------------------------------------------------------------------------
     # Create a '.desktop' file for each script.
     # -------------------------------------------------------------------------
+    local action_name=""
     local name=""
     local script_relative=""
     local submenu=""
@@ -1180,19 +1176,20 @@ _install_actions_kio_servicemenus() {
         name=${script_relative##*/}
         submenu=${script_relative%%/*}
 
-        menu_file=$(_generate_desktop_filename "$name")
+        action_name=$(_sanitize_string <<<"$name")
+        menu_file="${action_name}.desktop"
         menu_file="$menus_path/$INSTALL_NAME_DIR-$menu_file"
         {
             printf "%s\n" "[Desktop Entry]"
             printf "%s\n" "Type=Service"
             printf "%s\n" "X-KDE-ServiceTypes=KonqPopupMenu/Plugin"
-            printf "%s\n" "Actions=scriptAction;"
+            printf "%s\n" "Actions=$action_name;"
             printf "%s\n" "MimeType=all/all;"
             printf "%s\n" "Encoding=UTF-8"
             printf "%s\n" "X-KDE-Submenu=$submenu"
             _i18n_print_desktop_name "X-KDE-Submenu" "$submenu"
             printf "\n"
-            printf "%s\n" "[Desktop Action scriptAction]"
+            printf "%s\n" "[Desktop Action $action_name]"
             printf "%s\n" "Name=$name"
             _i18n_print_desktop_name "Name" "$name"
             printf "%s\n" "Exec=bash \"$filename\" %F"
@@ -1250,7 +1247,8 @@ _install_actions_pcmanfm() {
             continue
         fi
 
-        menu_file=$(_generate_desktop_filename "$name")
+        menu_file=$(_sanitize_string <<<"$name")
+        menu_file="${menu_file}.desktop"
         menu_file="$menus_path/$INSTALL_NAME_DIR-$menu_file"
         {
             printf "%s\n" "[Desktop Entry]"
@@ -1274,7 +1272,8 @@ _install_actions_pcmanfm() {
     while IFS= read -r -d $'\0' filename; do
         name=${filename##*/}
 
-        menu_file=$(_generate_desktop_filename "$name")
+        menu_file=$(_sanitize_string <<<"$name")
+        menu_file="${menu_file}.desktop"
         menu_file="$menus_path/$INSTALL_NAME_DIR-$menu_file"
         {
             printf "%s\n" "[Desktop Entry]"
