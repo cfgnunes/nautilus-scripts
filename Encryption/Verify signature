@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# install_mime_type=application/octet-stream;application/pgp;application/pgp-encrypted;application/pgp-signature;application/pkcs7-mime;application/pkcs7-signature;text/PGP;text/plain;
 
 # Source the file '.common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
@@ -11,7 +12,7 @@ _main() {
     # Execute initial checks.
     _check_dependencies "gpg"
     _display_wait_box ""
-    input_files=$(_get_files "par_type=file; par_select_mime='application/octet-stream|application/pgp|application/pgp-encrypted|application/pgp-signature|text/PGP|text/plain'")
+    input_files=$(_get_files "par_type=file; par_select_mime='application/octet-stream|application/pgp|application/pgp-encrypted|application/pgp-signature|application/pkcs7-mime|application/pkcs7-signature|text/PGP|text/plain'")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" ""

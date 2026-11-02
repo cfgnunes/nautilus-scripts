@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# install_mime_type=application/octet-stream;application/pgp-keys;text/plain;
 
 # Source the file '.common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
