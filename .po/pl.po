@@ -1379,12 +1379,12 @@ msgid "MP3: (artist - title) ID3 to Name"
 msgstr "MP3: (artysta - tytuł) ID3 do nazwy"
 
 #: Menu
-msgid "MP3: Maximize volume (recursive)"
-msgstr "MP3: Maksymalizuj głośność (rekurencyjnie)"
+msgid "MP3: Maximize volume"
+msgstr "MP3: Maksymalizuj głośność"
 
 #: Menu
-msgid "MP3: Normalize volume (recursive)"
-msgstr "MP3: Normalizuj głośność (rekurencyjnie)"
+msgid "MP3: Normalize volume"
+msgstr "MP3: Normalizuj głośność"
 
 #: Menu
 msgid "MP3: Show encoding details"
@@ -1715,8 +1715,8 @@ msgid "Text: Convert tabs to 4 spaces"
 msgstr "Tekst: Konwertuj tabulatory na 4 spacje"
 
 #: Menu
-msgid "Text: Normalize (UTF-8, recursive)"
-msgstr "Tekst: Normalizuj (UTF-8, rekurencyjnie)"
+msgid "Text: Normalize (UTF-8)"
+msgstr "Tekst: Normalizuj (UTF-8)"
 
 #: Menu
 msgid "Text: Encode to UTF-8"

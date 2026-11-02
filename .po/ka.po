@@ -1379,12 +1379,12 @@ msgid "MP3: (artist - title) ID3 to Name"
 msgstr "MP3: (შემსრულებელი - სათაური) ID3 სახელში"
 
 #: Menu
-msgid "MP3: Maximize volume (recursive)"
-msgstr "MP3: ხმის ბოლომდე აწევა (რეკურსიული)"
+msgid "MP3: Maximize volume"
+msgstr "MP3: ხმის ბოლომდე აწევა"
 
 #: Menu
-msgid "MP3: Normalize volume (recursive)"
-msgstr "MP3: ხმის ნორმალიზაცია (რეკურსიული)"
+msgid "MP3: Normalize volume"
+msgstr "MP3: ხმის ნორმალიზაცია"
 
 #: Menu
 msgid "MP3: Show encoding details"
@@ -1715,8 +1715,8 @@ msgid "Text: Convert tabs to 4 spaces"
 msgstr "ტექსტი: ტაბულაციის გადაყვანა 4 ჰარეში"
 
 #: Menu
-msgid "Text: Normalize (UTF-8, recursive)"
-msgstr "ტექსტი: ნორმალიზაცია (UTF-8, რეკურსიული)"
+msgid "Text: Normalize (UTF-8)"
+msgstr "ტექსტი: ნორმალიზაცია (UTF-8)"
 
 #: Menu
 msgid "Text: Encode to UTF-8"

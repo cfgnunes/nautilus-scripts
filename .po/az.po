@@ -1379,12 +1379,12 @@ msgid "MP3: (artist - title) ID3 to Name"
 msgstr "MP3: ID3 teqlərini fayl adına köçür (ifaçı - başlıq)"
 
 #: Menu
-msgid "MP3: Maximize volume (recursive)"
-msgstr "MP3: Səs səviyyəsini maksimuma çatdır (alt qovluqlarla)"
+msgid "MP3: Maximize volume"
+msgstr "MP3: Səs səviyyəsini maksimuma çatdır"
 
 #: Menu
-msgid "MP3: Normalize volume (recursive)"
-msgstr "MP3: Səs səviyyəsini normallaşdır (alt qovluqlarla)"
+msgid "MP3: Normalize volume"
+msgstr "MP3: Səs səviyyəsini normallaşdır"
 
 #: Menu
 msgid "MP3: Show encoding details"
@@ -1715,8 +1715,8 @@ msgid "Text: Convert tabs to 4 spaces"
 msgstr "Mətn: Tabulyasiyaları 4 boşluğa çevir"
 
 #: Menu
-msgid "Text: Normalize (UTF-8, recursive)"
-msgstr "Mətn: Normallaşdır (UTF-8, alt qovluqlarla)"
+msgid "Text: Normalize (UTF-8)"
+msgstr "Mətn: Normallaşdır (UTF-8)"
 
 #: Menu
 msgid "Text: Encode to UTF-8"

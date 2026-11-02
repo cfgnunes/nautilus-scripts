@@ -1379,12 +1379,12 @@ msgid "MP3: (artist - title) ID3 to Name"
 msgstr "MP3: (아티스트 - 제목) ID3를 이름으로"
 
 #: Menu
-msgid "MP3: Maximize volume (recursive)"
-msgstr "MP3: 볼륨 최대화 (재귀적)"
+msgid "MP3: Maximize volume"
+msgstr "MP3: 볼륨 최대화"
 
 #: Menu
-msgid "MP3: Normalize volume (recursive)"
-msgstr "MP3: 볼륨 정규화 (재귀적)"
+msgid "MP3: Normalize volume"
+msgstr "MP3: 볼륨 정규화"
 
 #: Menu
 msgid "MP3: Show encoding details"
@@ -1715,8 +1715,8 @@ msgid "Text: Convert tabs to 4 spaces"
 msgstr "텍스트: 탭을 4개 공백으로 변환"
 
 #: Menu
-msgid "Text: Normalize (UTF-8, recursive)"
-msgstr "텍스트: 정규화 (UTF-8, 재귀적)"
+msgid "Text: Normalize (UTF-8)"
+msgstr "텍스트: 정규화 (UTF-8)"
 
 #: Menu
 msgid "Text: Encode to UTF-8"

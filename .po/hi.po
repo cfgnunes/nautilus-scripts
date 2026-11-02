@@ -1379,12 +1379,12 @@ msgid "MP3: (artist - title) ID3 to Name"
 msgstr "MP3: (कलाकार - शीर्षक) ID3 से नाम"
 
 #: Menu
-msgid "MP3: Maximize volume (recursive)"
-msgstr "MP3: वॉल्यूम अधिकतम करें (पुनरावर्ती)"
+msgid "MP3: Maximize volume"
+msgstr "MP3: वॉल्यूम अधिकतम करें"
 
 #: Menu
-msgid "MP3: Normalize volume (recursive)"
-msgstr "MP3: वॉल्यूम सामान्य करें (पुनरावर्ती)"
+msgid "MP3: Normalize volume"
+msgstr "MP3: वॉल्यूम सामान्य करें"
 
 #: Menu
 msgid "MP3: Show encoding details"
@@ -1715,8 +1715,8 @@ msgid "Text: Convert tabs to 4 spaces"
 msgstr "पाठ: टैब को 4 रिक्त स्थान में बदलें"
 
 #: Menu
-msgid "Text: Normalize (UTF-8, recursive)"
-msgstr "पाठ: सामान्यीकृत करें (UTF-8, पुनरावर्ती)"
+msgid "Text: Normalize (UTF-8)"
+msgstr "पाठ: सामान्यीकृत करें (UTF-8)"
 
 #: Menu
 msgid "Text: Encode to UTF-8"

@@ -1379,12 +1379,12 @@ msgid "MP3: (artist - title) ID3 to Name"
 msgstr "קובץ MP3: (אומן - כותרת) המרת ID3 לשֵׁם"
 
 #: Menu
-msgid "MP3: Maximize volume (recursive)"
-msgstr "שמע: הגברה לעוצמת השמע המרבית (רקורסיבית)"
+msgid "MP3: Maximize volume"
+msgstr "שמע: הגברה לעוצמת השמע המרבית"
 
 #: Menu
-msgid "MP3: Normalize volume (recursive)"
-msgstr "שמע: נרמול עוצמת השמע (רקורסיבי)"
+msgid "MP3: Normalize volume"
+msgstr "שמע: נרמול עוצמת השמע"
 
 #: Menu
 msgid "MP3: Show encoding details"
@@ -1715,8 +1715,8 @@ msgid "Text: Convert tabs to 4 spaces"
 msgstr "טקסט: המרת טאבים ל־4 רווחים"
 
 #: Menu
-msgid "Text: Normalize (UTF-8, recursive)"
-msgstr "טקסט: נרמול (UTF-8, רקורסיבי)"
+msgid "Text: Normalize (UTF-8)"
+msgstr "טקסט: נרמול (UTF-8)"
 
 #: Menu
 msgid "Text: Encode to UTF-8"

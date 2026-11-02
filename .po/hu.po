@@ -1379,12 +1379,12 @@ msgid "MP3: (artist - title) ID3 to Name"
 msgstr "MP3: (előadó - cím) ID3 névvé"
 
 #: Menu
-msgid "MP3: Maximize volume (recursive)"
-msgstr "MP3: hangerő maximalizálása (rekurzív)"
+msgid "MP3: Maximize volume"
+msgstr "MP3: hangerő maximalizálása"
 
 #: Menu
-msgid "MP3: Normalize volume (recursive)"
-msgstr "MP3: hangerő normalizálása (rekurzív)"
+msgid "MP3: Normalize volume"
+msgstr "MP3: hangerő normalizálása"
 
 #: Menu
 msgid "MP3: Show encoding details"
@@ -1715,8 +1715,8 @@ msgid "Text: Convert tabs to 4 spaces"
 msgstr "Szöveg: tabulátorok 4 szóközre"
 
 #: Menu
-msgid "Text: Normalize (UTF-8, recursive)"
-msgstr "Szöveg: normalizálás (UTF-8, rekurzív)"
+msgid "Text: Normalize (UTF-8)"
+msgstr "Szöveg: normalizálás (UTF-8)"
 
 #: Menu
 msgid "Text: Encode to UTF-8"

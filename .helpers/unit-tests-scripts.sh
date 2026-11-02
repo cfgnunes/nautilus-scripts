@@ -343,8 +343,8 @@ _main() {
     # SECTION: Audio
     # -------------------------------------------------------------------------
 
-    # IGNORED: Audio and Video/Audio: MP3 files/MP3: Maximize volume (recursive)
-    # IGNORED: Audio and Video/Audio: MP3 files/MP3: Normalize volume (recursive)
+    # IGNORED: Audio and Video/Audio: MP3 files/MP3: Maximize volume
+    # IGNORED: Audio and Video/Audio: MP3 files/MP3: Normalize volume
 
     __test_scripts_stdout "$fixture_mp3" "Test audio.mp3" \
         "Audio and Video/Audio and Video: Tools/Media: Show information" \
@@ -853,7 +853,7 @@ _main() {
     __test_begin
     echo "Content of 'Test text'.(á)" |
         piconv -f UTF-8 -t ISO-8859-1 >"$temp_dir/Test text.txt"
-    __test_script "Document/Document: Text files/Text: Normalize (UTF-8, recursive)" "empty" \
+    __test_script "Document/Document: Text files/Text: Normalize (UTF-8)" "empty" \
         "Test text.txt.bak" "$temp_dir/Test text.txt"
 
     __test_begin "$fixture_txt::Test text.txt"

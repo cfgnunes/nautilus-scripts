@@ -1379,12 +1379,12 @@ msgid "MP3: (artist - title) ID3 to Name"
 msgstr "MP3：(アーティスト - タイトル) ID3を名前へ"
 
 #: Menu
-msgid "MP3: Maximize volume (recursive)"
-msgstr "MP3：音量の最大化 (再帰的)"
+msgid "MP3: Maximize volume"
+msgstr "MP3：音量の最大化"
 
 #: Menu
-msgid "MP3: Normalize volume (recursive)"
-msgstr "MP3：音量の正規化 (再帰的)"
+msgid "MP3: Normalize volume"
+msgstr "MP3：音量の正規化"
 
 #: Menu
 msgid "MP3: Show encoding details"
@@ -1715,8 +1715,8 @@ msgid "Text: Convert tabs to 4 spaces"
 msgstr "テキスト：タブを4つのスペースに変換"
 
 #: Menu
-msgid "Text: Normalize (UTF-8, recursive)"
-msgstr "テキスト：正規化 (UTF-8, 再帰的)"
+msgid "Text: Normalize (UTF-8)"
+msgstr "テキスト：正規化 (UTF-8)"
 
 #: Menu
 msgid "Text: Encode to UTF-8"

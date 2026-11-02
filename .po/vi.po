@@ -1379,12 +1379,12 @@ msgid "MP3: (artist - title) ID3 to Name"
 msgstr "MP3: (nghệ sĩ - tiêu đề) ID3 -> Tên"
 
 #: Menu
-msgid "MP3: Maximize volume (recursive)"
-msgstr "MP3: Tăng âm lượng tối đa (đệ quy)"
+msgid "MP3: Maximize volume"
+msgstr "MP3: Tăng âm lượng tối đa"
 
 #: Menu
-msgid "MP3: Normalize volume (recursive)"
-msgstr "MP3: Chuẩn hóa âm lượng (đệ quy)"
+msgid "MP3: Normalize volume"
+msgstr "MP3: Chuẩn hóa âm lượng"
 
 #: Menu
 msgid "MP3: Show encoding details"
@@ -1715,8 +1715,8 @@ msgid "Text: Convert tabs to 4 spaces"
 msgstr "Văn bản: Chuyển tab thành 4 khoảng trắng"
 
 #: Menu
-msgid "Text: Normalize (UTF-8, recursive)"
-msgstr "Văn bản: Chuẩn hóa (UTF-8, đệ quy)"
+msgid "Text: Normalize (UTF-8)"
+msgstr "Văn bản: Chuẩn hóa (UTF-8)"
 
 #: Menu
 msgid "Text: Encode to UTF-8"

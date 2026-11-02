@@ -1379,12 +1379,12 @@ msgid "MP3: (artist - title) ID3 to Name"
 msgstr "MP3：（艺术家 - 标题） ID3转文件名"
 
 #: Menu
-msgid "MP3: Maximize volume (recursive)"
-msgstr "MP3：最大化音量（递归）"
+msgid "MP3: Maximize volume"
+msgstr "MP3：最大化音量"
 
 #: Menu
-msgid "MP3: Normalize volume (recursive)"
-msgstr "MP3：音量标准化（递归）"
+msgid "MP3: Normalize volume"
+msgstr "MP3：音量标准化"
 
 #: Menu
 msgid "MP3: Show encoding details"
@@ -1715,8 +1715,8 @@ msgid "Text: Convert tabs to 4 spaces"
 msgstr "文本：将制表符转换成4个空格"
 
 #: Menu
-msgid "Text: Normalize (UTF-8, recursive)"
-msgstr "文本：规范化（UTF-8，递归）"
+msgid "Text: Normalize (UTF-8)"
+msgstr "文本：规范化（UTF-8）"
 
 #: Menu
 msgid "Text: Encode to UTF-8"
