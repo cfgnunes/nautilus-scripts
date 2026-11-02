@@ -1290,20 +1290,21 @@ _install_actions_pcmanfm() {
     # -------------------------------------------------------------------------
     # Create a '.desktop' file for each script.
     # -------------------------------------------------------------------------
+    local action_name=""
     while IFS= read -r -d $'\0' filename; do
         name=${filename##*/}
 
-        menu_file=$(_sanitize_string <<<"$name")
-        menu_file="${menu_file}.desktop"
+        action_name=$(_sanitize_string <<<"$name")
+        menu_file="${action_name}.desktop"
         menu_file="$menus_path/$INSTALL_NAME_DIR-$menu_file"
         {
             printf "%s\n" "[Desktop Entry]"
             printf "%s\n" "Type=Action"
             printf "%s\n" "Name=$name"
             _i18n_print_desktop_name "Name" "$name"
-            printf "%s\n" "Profiles=scriptAction"
+            printf "%s\n" "Profiles=$action_name"
             printf "\n"
-            printf "%s\n" "[X-Action-Profile scriptAction]"
+            printf "%s\n" "[X-Action-Profile $action_name]"
             printf "%s\n" "Exec=bash \"$filename\" %F"
 
         } | _tee_file "$menu_file"
