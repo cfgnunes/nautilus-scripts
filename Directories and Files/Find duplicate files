@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# install_icon_kde=edit-duplicate
+# install_icon_kde=edit-find
 # install_keyboard_shortcut=<Control><Alt>U
 
 # Source the file '.common-functions.sh'.
