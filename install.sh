@@ -1229,6 +1229,10 @@ _install_actions_pcmanfm() {
         -type f -delete 2>/dev/null
     mkdir --parents -- "$menus_path"
 
+    # FIXME: pcmanfm is missing names of nested action menus.
+    # See: https://github.com/lxde/pcmanfm/issues/40
+    # See: https://github.com/lxde/libfm/issues/129
+
     # -------------------------------------------------------------------------
     # Create the 'scripts.desktop' for the categories (main menu).
     # -------------------------------------------------------------------------
