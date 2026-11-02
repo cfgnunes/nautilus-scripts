@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # install_mime_type=inode/directory;
+# install_icon_kde=vcs-pull
 # install_keyboard_shortcut=<Control><Shift>R
 
 # Source the file '.common-functions.sh'.

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # install_mime_type=inode/directory;
+# install_icon_kde=edit-find
 # install_keyboard_shortcut=<Control><Alt>E
 
 # Source the file '.common-functions.sh'.

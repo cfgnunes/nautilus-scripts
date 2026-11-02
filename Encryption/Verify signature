@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # install_mime_type=application/octet-stream;application/pgp;application/pgp-encrypted;application/pgp-signature;application/pkcs7-mime;application/pkcs7-signature;text/PGP;text/plain;
+# install_icon_kde=document-edit-verify
 
 # Source the file '.common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)

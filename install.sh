@@ -1167,6 +1167,7 @@ _install_actions_kio_servicemenus() {
     # Create a '.desktop' file for each script.
     # -------------------------------------------------------------------------
     local action_name=""
+    local icon=""
     local name=""
     local mime_type=""
     local max_items=""
@@ -1184,6 +1185,7 @@ _install_actions_kio_servicemenus() {
             mime_type="all/all;"
         fi
 
+        icon=$(_get_par_value "$filename" "install_icon_kde")
         max_items=$(_get_par_value "$filename" "par_max_items" | grep -oE "^[0-9]+" 2>/dev/null)
         min_items=$(_get_par_value "$filename" "par_min_items" | grep -oE "^[0-9]+" 2>/dev/null)
 
@@ -1202,6 +1204,7 @@ _install_actions_kio_servicemenus() {
             fi
             printf "%s\n" "Actions=$action_name;"
             printf "%s\n" "MimeType=$mime_type"
+            printf "%s\n" "Icon=$icon"
             printf "%s\n" "Encoding=UTF-8"
             printf "%s\n" "X-KDE-Submenu=$submenu"
             _i18n_print_desktop_name "X-KDE-Submenu" "$submenu"
@@ -1209,6 +1212,7 @@ _install_actions_kio_servicemenus() {
             printf "%s\n" "[Desktop Action $action_name]"
             printf "%s\n" "Name=$name"
             _i18n_print_desktop_name "Name" "$name"
+            printf "%s\n" "Icon=$icon"
             printf "%s\n" "Exec=bash \"$filename\" %F"
 
         } | _tee_file "$menu_file"
