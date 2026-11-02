@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# install_mime_type=audio/*;video/*;
+# install_mime_type=audio/*;video/*;inode/directory;
 
 # Source the file '.common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
