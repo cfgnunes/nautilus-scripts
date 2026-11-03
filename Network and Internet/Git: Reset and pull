@@ -146,6 +146,10 @@ _main_task() {
     std_output=$(LC_ALL=C git gc --prune=all 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
+    # Remove any leftover rebase directories if they exist.
+    rmdir "$(git rev-parse --git-path rebase-apply)" &>/dev/null
+    rmdir "$(git rev-parse --git-path rebase-merge)" &>/dev/null
+
     # Return to the previous directory.
     _directory_pop || return 1
 }
