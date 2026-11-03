@@ -810,11 +810,17 @@ _deps_install_packages() {
         "pkgx")
             local pkgs=""
             local pkg=""
+            local pkgx_packages_dir="$HOME/.pkgx"
             pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
 
             # HACK: Workaround for pkgx. Force update the cache.
             rm -rf -- "$HOME/.cache/pkgx"
             rm -rf -- "$HOME/.local/share/pkgx"
+
+            # Create the packages directory if it does not exist.
+            if [[ ! -d "$pkgx_packages_dir" ]]; then
+                mkdir -- "$pkgx_packages_dir"
+            fi
 
             for pkg in $pkgs; do
                 pkgx --silent +"$pkg" &>/dev/null
