@@ -1519,6 +1519,9 @@ _install_pkgx() {
     mkdir --parents -- "$pkgx_dir"
     mv -- "$pkgx_cmd_tmp" "$pkgx_cmd"
 
+    # Create the directory for pkgx packages.
+    mkdir -- "$HOME/.pkgx"
+
     _echo_info "> $(_i18n 'Done!')"
 }
 
