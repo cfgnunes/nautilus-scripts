@@ -28,10 +28,12 @@ _main_task() {
     local file_1=""
     file_1=$(_get_element "$input_files" "1")
 
-    local base_name=""
-    base_name=$(basename -- "$file_1" | sed "s|\.[0-9]*$||" | sed "s|\.part$||")
+    local basename=""
+    basename=$(basename -- "$file_1") # Remove the path.
+    basename=${basename%.[0-9]*}      # Remove '.000', '.001'.
+    basename=${basename%.part}        # Remove '.part'.
 
-    output_file=$(_get_output_filename "$base_name" "$output_dir" \
+    output_file=$(_get_output_filename "$basename" "$output_dir" \
         "par_extension_opt=preserve")
 
     # Run the main process.
