@@ -12,8 +12,8 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    if ! _command_exists "zip" && ! _command_exists "bsdtar"; then
-        _check_dependencies "7za"
+    if ! _command_exists "zip" && ! _command_exists "7za"; then
+        _check_dependencies "bsdtar"
     fi
     _display_wait_box ""
     input_files=$(_get_files "par_type=all")
@@ -57,11 +57,11 @@ _main_task() {
         _directory_push "$input_file" || return 1
 
         # Check for available compression tools and compress the directory.
-        if compgen -c 7z &>/dev/null; then
-            std_output=$(__cmd_7z a -snl \
-                "$output_file" -- . 2>&1)
-        elif _command_exists "bsdtar"; then
+        if _command_exists "bsdtar"; then
             std_output=$(bsdtar --strip-components 1 -a -cf \
+                "$output_file" -- . 2>&1)
+        elif compgen -c 7z &>/dev/null; then
+            std_output=$(__cmd_7z a -snl \
                 "$output_file" -- . 2>&1)
         elif _command_exists "zip"; then
             std_output=$(zip --symlinks --quiet --recurse-paths \
@@ -76,11 +76,11 @@ _main_task() {
         input_file_basename=$(basename -- "$input_file")
 
         # Check for available compression tools and compress the file.
-        if compgen -c 7z &>/dev/null; then
-            std_output=$(__cmd_7z a -snl \
-                "$output_file" -- "$input_file_basename" 2>&1)
-        elif _command_exists "bsdtar"; then
+        if _command_exists "bsdtar"; then
             std_output=$(bsdtar -a -cf \
+                "$output_file" -- "$input_file_basename" 2>&1)
+        elif compgen -c 7z &>/dev/null; then
+            std_output=$(__cmd_7z a -snl \
                 "$output_file" -- "$input_file_basename" 2>&1)
         elif _command_exists "zip"; then
             std_output=$(zip --symlinks --quiet --recurse-paths \
