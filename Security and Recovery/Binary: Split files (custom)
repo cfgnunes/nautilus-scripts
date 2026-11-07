@@ -17,16 +17,17 @@ _main() {
 
     msg="$(_i18n 'Enter the chunk size.')"
     msg+="\n\n"
-    msg+="$(_i18n 'Example:') 100M"
+    msg+="$(_i18n 'Example:') 5M"
     TASK_CHUNK_SIZE=$(_display_input_text_box "$msg" "")
+    TASK_CHUNK_SIZE=${TASK_CHUNK_SIZE^^}
 
-    # Parse a size accepted by GNU split.
-    if [[ ! "$TASK_CHUNK_SIZE" =~ ^[[:space:]]*([0-9]+(B|K|M|G|T|P|E|Z|Y|KB|MB|GB|TB|PB|EB|ZB|YB)?)[[:space:]]*$ ]]; then
+    # Parse a size accepted by GNU split. Unitless values are megabytes.
+    if [[ ! "$TASK_CHUNK_SIZE" =~ ^[[:space:]]*([0-9]+)(B|K|M|G|T|P|E|Z|Y|KB|MB|GB|TB|PB|EB|ZB|YB)?[[:space:]]*$ ]]; then
         msg="$(_i18n 'Invalid input!')"
         _display_error_box "$msg"
         _exit_script
     fi
-    TASK_CHUNK_SIZE="${BASH_REMATCH[1]}"
+    TASK_CHUNK_SIZE="${BASH_REMATCH[1]}${BASH_REMATCH[2]:-M}"
     export TASK_CHUNK_SIZE
 
     # Check output directory only after displaying dialog boxes to the user.
@@ -46,7 +47,7 @@ _main_task() {
     prefix="$output_dir/$(basename -- "$input_file").part."
 
     # Run the main process.
-    std_output=$(split -b "$TASK_CHUNK_SIZE" -a 3 -- "$input_file" "$prefix" 2>&1)
+    std_output=$(split -b "$TASK_CHUNK_SIZE" -d -a 3 -- "$input_file" "$prefix" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
