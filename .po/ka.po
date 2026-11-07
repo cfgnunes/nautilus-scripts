@@ -1415,8 +1415,8 @@ msgid "PDF: Add watermark (under)"
 msgstr "PDF: ჭვირნიშნის დამატება (ქვემოდან)"
 
 #: Menu
-msgid "PDF: Combine multiple PDFs"
-msgstr "PDF: რამდენიმე PDF-ის გაერთიანება"
+msgid "PDF: Concatenate PDFs"
+msgstr "PDF: PDF-ების შეერთება"
 
 #: Menu
 msgid "PDF: Convert to grayscale"
@@ -1707,8 +1707,8 @@ msgid "Terminal (synced panes)"
 msgstr "ტერმინალი (სინქრონიზებული პანელები)"
 
 #: Menu
-msgid "Text: Concatenate multiple files"
-msgstr "ტექსტი: ერთზე მეტი ფაილის შეერთება"
+msgid "Text: Concatenate files"
+msgstr "ტექსტი: ფაილების შეერთება"
 
 #: Menu
 msgid "Text: Convert tabs to 4 spaces"

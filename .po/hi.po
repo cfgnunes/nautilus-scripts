@@ -1415,8 +1415,8 @@ msgid "PDF: Add watermark (under)"
 msgstr "PDF: वॉटरमार्क जोड़ें (नीचे)"
 
 #: Menu
-msgid "PDF: Combine multiple PDFs"
-msgstr "PDF: एकाधिक PDF संयोजित करें"
+msgid "PDF: Concatenate PDFs"
+msgstr "PDF: PDF संयोजित करें"
 
 #: Menu
 msgid "PDF: Convert to grayscale"
@@ -1707,8 +1707,8 @@ msgid "Terminal (synced panes)"
 msgstr "टर्मिनल (सिंक किए गए पैन)"
 
 #: Menu
-msgid "Text: Concatenate multiple files"
-msgstr "पाठ: एकाधिक फ़ाइलें संयोजित करें"
+msgid "Text: Concatenate files"
+msgstr "पाठ: फ़ाइलें संयोजित करें"
 
 #: Menu
 msgid "Text: Convert tabs to 4 spaces"

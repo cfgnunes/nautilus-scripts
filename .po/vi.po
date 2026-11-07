@@ -1415,8 +1415,8 @@ msgid "PDF: Add watermark (under)"
 msgstr "PDF: Thêm watermark (phía dưới)"
 
 #: Menu
-msgid "PDF: Combine multiple PDFs"
-msgstr "PDF: Kết hợp nhiều PDF"
+msgid "PDF: Concatenate PDFs"
+msgstr "PDF: Nối PDF"
 
 #: Menu
 msgid "PDF: Convert to grayscale"
@@ -1707,8 +1707,8 @@ msgid "Terminal (synced panes)"
 msgstr "Terminal (các khung được đồng bộ)"
 
 #: Menu
-msgid "Text: Concatenate multiple files"
-msgstr "Văn bản: Nối nhiều tệp"
+msgid "Text: Concatenate files"
+msgstr "Văn bản: Nối tệp"
 
 #: Menu
 msgid "Text: Convert tabs to 4 spaces"

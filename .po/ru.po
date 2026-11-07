@@ -1415,8 +1415,8 @@ msgid "PDF: Add watermark (under)"
 msgstr "PDF: добавить водяной знак (под)"
 
 #: Menu
-msgid "PDF: Combine multiple PDFs"
-msgstr "PDF: объединить несколько PDF"
+msgid "PDF: Concatenate PDFs"
+msgstr "PDF: объединить PDF"
 
 #: Menu
 msgid "PDF: Convert to grayscale"
@@ -1707,8 +1707,8 @@ msgid "Terminal (synced panes)"
 msgstr "Терминал (синхронизированные панели)"
 
 #: Menu
-msgid "Text: Concatenate multiple files"
-msgstr "Текст: объединить несколько файлов"
+msgid "Text: Concatenate files"
+msgstr "Текст: объединить файлы"
 
 #: Menu
 msgid "Text: Convert tabs to 4 spaces"

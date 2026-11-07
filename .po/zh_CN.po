@@ -1415,8 +1415,8 @@ msgid "PDF: Add watermark (under)"
 msgstr "PDF：添加水印（底层）"
 
 #: Menu
-msgid "PDF: Combine multiple PDFs"
-msgstr "PDF：合并多个 PDF"
+msgid "PDF: Concatenate PDFs"
+msgstr "PDF：合并 PDF"
 
 #: Menu
 msgid "PDF: Convert to grayscale"
@@ -1707,8 +1707,8 @@ msgid "Terminal (synced panes)"
 msgstr "终端（同步窗格）"
 
 #: Menu
-msgid "Text: Concatenate multiple files"
-msgstr "文本：合并多个文件"
+msgid "Text: Concatenate files"
+msgstr "文本：合并文件"
 
 #: Menu
 msgid "Text: Convert tabs to 4 spaces"

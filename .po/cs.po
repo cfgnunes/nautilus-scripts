@@ -1415,8 +1415,8 @@ msgid "PDF: Add watermark (under)"
 msgstr "PDF: přidat vodoznak (pod)"
 
 #: Menu
-msgid "PDF: Combine multiple PDFs"
-msgstr "PDF: sloučit více PDF"
+msgid "PDF: Concatenate PDFs"
+msgstr "PDF: sloučit PDF"
 
 #: Menu
 msgid "PDF: Convert to grayscale"
@@ -1707,8 +1707,8 @@ msgid "Terminal (synced panes)"
 msgstr "Terminál (synchronizované panely)"
 
 #: Menu
-msgid "Text: Concatenate multiple files"
-msgstr "Text: spojit více souborů"
+msgid "Text: Concatenate files"
+msgstr "Text: spojit soubory"
 
 #: Menu
 msgid "Text: Convert tabs to 4 spaces"

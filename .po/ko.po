@@ -1415,8 +1415,8 @@ msgid "PDF: Add watermark (under)"
 msgstr "PDF: 워터마크 추가 (아래에)"
 
 #: Menu
-msgid "PDF: Combine multiple PDFs"
-msgstr "PDF: 여러 PDF 결합"
+msgid "PDF: Concatenate PDFs"
+msgstr "PDF: PDF 결합"
 
 #: Menu
 msgid "PDF: Convert to grayscale"
@@ -1707,8 +1707,8 @@ msgid "Terminal (synced panes)"
 msgstr "터미널 (동기화된 창 분할)"
 
 #: Menu
-msgid "Text: Concatenate multiple files"
-msgstr "텍스트: 여러 파일 연결"
+msgid "Text: Concatenate files"
+msgstr "텍스트: 파일 연결"
 
 #: Menu
 msgid "Text: Convert tabs to 4 spaces"

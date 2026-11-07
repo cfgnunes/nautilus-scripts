@@ -1414,7 +1414,7 @@ msgid "PDF: Add watermark (under)"
 msgstr ""
 
 #: Menu
-msgid "PDF: Combine multiple PDFs"
+msgid "PDF: Concatenate PDFs"
 msgstr ""
 
 #: Menu
@@ -1706,7 +1706,7 @@ msgid "Terminal (synced panes)"
 msgstr ""
 
 #: Menu
-msgid "Text: Concatenate multiple files"
+msgid "Text: Concatenate files"
 msgstr ""
 
 #: Menu

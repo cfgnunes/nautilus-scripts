@@ -1415,8 +1415,8 @@ msgid "PDF: Add watermark (under)"
 msgstr "PDF: vízjel hozzáadása (alul)"
 
 #: Menu
-msgid "PDF: Combine multiple PDFs"
-msgstr "PDF: több PDF egyesítése"
+msgid "PDF: Concatenate PDFs"
+msgstr "PDF: PDF-ek összefűzése"
 
 #: Menu
 msgid "PDF: Convert to grayscale"
@@ -1707,8 +1707,8 @@ msgid "Terminal (synced panes)"
 msgstr "Terminál (szinkronizált panelek)"
 
 #: Menu
-msgid "Text: Concatenate multiple files"
-msgstr "Szöveg: több fájl összefűzése"
+msgid "Text: Concatenate files"
+msgstr "Szöveg: fájlok összefűzése"
 
 #: Menu
 msgid "Text: Convert tabs to 4 spaces"

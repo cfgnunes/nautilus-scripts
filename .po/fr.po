@@ -1415,8 +1415,8 @@ msgid "PDF: Add watermark (under)"
 msgstr "PDF: Ajouter un filigrane (par-dessous)"
 
 #: Menu
-msgid "PDF: Combine multiple PDFs"
-msgstr "PDF: Combiner plusieurs PDF"
+msgid "PDF: Concatenate PDFs"
+msgstr "PDF: Concaténer les PDF"
 
 #: Menu
 msgid "PDF: Convert to grayscale"
@@ -1707,8 +1707,8 @@ msgid "Terminal (synced panes)"
 msgstr "Terminal (volets synchronisés)"
 
 #: Menu
-msgid "Text: Concatenate multiple files"
-msgstr "Texte: Concaténer plusieurs fichiers"
+msgid "Text: Concatenate files"
+msgstr "Texte: Concaténer les fichiers"
 
 #: Menu
 msgid "Text: Convert tabs to 4 spaces"

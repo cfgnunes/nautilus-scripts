@@ -1415,8 +1415,8 @@ msgid "PDF: Add watermark (under)"
 msgstr "PDF：透かしを追加（下）"
 
 #: Menu
-msgid "PDF: Combine multiple PDFs"
-msgstr "PDF：複数のPDFを結合"
+msgid "PDF: Concatenate PDFs"
+msgstr "PDF：PDFを結合"
 
 #: Menu
 msgid "PDF: Convert to grayscale"
@@ -1707,8 +1707,8 @@ msgid "Terminal (synced panes)"
 msgstr "ターミナル（同期されたペイン）"
 
 #: Menu
-msgid "Text: Concatenate multiple files"
-msgstr "テキスト：複数のファイルを連結"
+msgid "Text: Concatenate files"
+msgstr "テキスト：ファイルを連結"
 
 #: Menu
 msgid "Text: Convert tabs to 4 spaces"

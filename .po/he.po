@@ -1415,8 +1415,8 @@ msgid "PDF: Add watermark (under)"
 msgstr "קובץ PDF: הוספת סימן מים (מתחת)"
 
 #: Menu
-msgid "PDF: Combine multiple PDFs"
-msgstr "קובץ PDF: שילוב קובצי PDF מרובים"
+msgid "PDF: Concatenate PDFs"
+msgstr "קובץ PDF: שרשור קובצי PDF"
 
 #: Menu
 msgid "PDF: Convert to grayscale"
@@ -1707,8 +1707,8 @@ msgid "Terminal (synced panes)"
 msgstr "מסוף (חלוניות מסונכרנות)"
 
 #: Menu
-msgid "Text: Concatenate multiple files"
-msgstr "טקסט: שרשור קבצים מרובים"
+msgid "Text: Concatenate files"
+msgstr "טקסט: שרשור קבצים"
 
 #: Menu
 msgid "Text: Convert tabs to 4 spaces"
