@@ -108,7 +108,7 @@ _get_command() {
     local _cmds_xar=("bsdtar")
     local _cmds_xz=("xz" "7za")
     local _cmds_z=("gzip")
-    local _cmds_zip=("bsdtar" "7za" "unzip")
+    local _cmds_zip=("bsdtar" "7za")
     local _cmds_zpaq=("zpaq")
     local _cmds_zstd=("zstd")
     local _cmds_unknown_file=("bsdtar,7za")
@@ -391,19 +391,6 @@ _run_command() {
         fi
         ;;
     "unsquashfs") std_output=$(unsquashfs "$input_file" 2>&1) ;;
-    "unzip")
-        std_output=$(LC_ALL=C unzip -P "$TASK_PASSWORD" -- "$input_file" 2>&1)
-        exit_code=$?
-
-        if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect password" <<<"$std_output"; then
-            local password=""
-            __temp_dir_pop && __temp_dir_remove
-            password=$(__get_password) || return 1
-            __temp_dir_push || return 1
-            std_output=$(LC_ALL=C unzip -P "$password" -- "$input_file" 2>&1)
-            exit_code=$?
-        fi
-        ;;
     "xorriso") std_output=$(xorriso -osirrox on -indev "$input_file" -- -extract / . -rollback_end 2>&1) ;;
     "xz") xz -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
     "zpaq") std_output=$(zpaq x "$input_file" 2>&1) ;;

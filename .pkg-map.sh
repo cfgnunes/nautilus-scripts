@@ -722,18 +722,6 @@ declare -A PKG_MAP=(
         pkgx:   github.com/plougher/squashfs-tools
     "
 
-    ["unzip"]="
-        termux: unzip
-        apt:    unzip
-        dnf:    unzip
-        pacman: unzip
-        nix:    unzip
-        zypper: unzip
-        guix:   unzip
-        xbps:   unzip
-        pkgx:   info-zip.org/unzip
-    "
-
     ["wl-paste"]="
         termux:
         apt:    wl-clipboard
