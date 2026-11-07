@@ -249,6 +249,21 @@ _get_command() {
     printf "%s" "$command"
 }
 
+_all_commands_exists() {
+    local commands=$1
+
+    local commands_array=()
+    IFS=" " read -r -a commands_array <<<"$commands"
+
+    local command=""
+    for command in "${commands_array[@]}"; do
+        if ! _command_exists "$command"; then
+            return 1
+        fi
+    done
+    return 0
+}
+
 _run_command() {
     local input_file=$1
     local command=$2
@@ -269,7 +284,6 @@ _run_command() {
         _directory_push "$temp_dir_output" || return 1
     }
     __temp_dir_pop() {
-        # Exit the temporary directory.
         _directory_pop || return 1
     }
     __temp_dir_remove() {
@@ -439,8 +453,7 @@ _run_command() {
     local root_items=""
     root_items=$(find . -mindepth 1 -maxdepth 1 2>/dev/null)
 
-    # Count the number of items (using word count to count lines,
-    # similar to the original wc -l).
+    # Count the number of items.
     local count_root_items=""
     count_root_items=$(wc -l <<<"$root_items")
 
@@ -475,21 +488,6 @@ _run_command() {
     fi
 
     __temp_dir_remove
-}
-
-_all_commands_exists() {
-    local commands=$1
-
-    local commands_array=()
-    IFS=" " read -r -a commands_array <<<"$commands"
-
-    local command=""
-    for command in "${commands_array[@]}"; do
-        if ! _command_exists "$command"; then
-            return 1
-        fi
-    done
-    return 0
 }
 
 _main "$@"
