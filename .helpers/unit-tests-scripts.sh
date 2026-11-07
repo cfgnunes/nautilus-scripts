@@ -770,7 +770,7 @@ _main() {
     __test_begin \
         "$fixture_pdf::Test document PDF.pdf" \
         "$fixture_pdf::Test document PDF 2.pdf"
-    __test_script "Document/PDF: Combine, Split/PDF: Combine multiple PDFs" \
+    __test_script "Document/PDF: Combine, Split/PDF: Concatenate PDFs" \
         "empty" "Combined documents.pdf" \
         "$temp_dir/Test document PDF.pdf" \
         "$temp_dir/Test document PDF 2.pdf"
@@ -846,7 +846,7 @@ _main() {
         "$fixture_txt::Test text.txt" \
         "$fixture_txt::Test text 2.txt"
     echo "Content of 'Test text 2'." >"$temp_dir/Test text 2.txt"
-    __test_script "Document/Document: Text files/Text: Concatenate multiple files" "empty" \
+    __test_script "Document/Document: Text files/Text: Concatenate files" "empty" \
         "Concatenated files.txt" \
         "$temp_dir/Test text.txt" "$temp_dir/Test text 2.txt"
 
