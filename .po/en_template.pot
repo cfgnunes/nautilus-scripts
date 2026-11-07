@@ -246,6 +246,9 @@ msgstr ""
 msgid "Enter the target size."
 msgstr ""
 
+msgid "Enter the chunk size."
+msgstr ""
+
 msgid "Enter the pages to extract."
 msgstr ""
 
@@ -779,6 +782,10 @@ msgstr ""
 
 #: Menu
 msgid "Create backup (via Rsync)"
+msgstr ""
+
+#: Menu
+msgid "Binary: Concatenate files"
 msgstr ""
 
 #: Menu
@@ -1639,6 +1646,10 @@ msgstr ""
 
 #: Menu
 msgid "Reset permissions (recursive)"
+msgstr ""
+
+#: Menu
+msgid "Binary: Split files (custom)"
 msgstr ""
 
 #: Menu

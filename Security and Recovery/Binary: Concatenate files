@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# install_icon_kde=merge
+
+# Source the file '.common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/.common-functions.sh"
+
+_main() {
+    local input_files=""
+    local output_dir=""
+
+    # Execute initial checks.
+    _display_wait_box ""
+    input_files=$(_get_files "par_type=file; par_min_items=2; par_sort_list=true")
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
+
+    _main_task "$input_files" "$output_dir"
+    _display_result_box "$output_dir"
+}
+
+_main_task() {
+    local input_files=$1
+    local output_dir=$2
+    local output_file=""
+    local std_output=""
+
+    local file_1=""
+    file_1=$(_get_element "$input_files" "1")
+
+    local base_name=""
+    base_name=$(basename -- "$file_1" | sed "s|\.[0-9]*$||" | sed "s|\.part$||")
+
+    output_file=$(_get_output_filename "$base_name" "$output_dir" \
+        "par_extension_opt=preserve")
+
+    # Run the main process.
+    # shellcheck disable=SC2086
+    cat -- $input_files >"$output_file" 2>/dev/null
+    _check_output "$?" "$std_output" "" "$output_file" || return 1
+}
+
+_main "$@"
