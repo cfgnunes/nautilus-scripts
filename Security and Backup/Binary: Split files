@@ -15,7 +15,7 @@ _main() {
     _display_wait_box ""
     input_files=$(_get_files "par_type=file")
 
-    msg="$(_i18n 'Enter the chunk size.')"
+    msg="$(_i18n 'Enter the size of the output files.')"
     msg+="\n\n"
     msg+="$(_i18n 'Example:') 5M"
     TASK_CHUNK_SIZE=$(_display_input_text_box "$msg" "")

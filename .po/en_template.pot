@@ -246,7 +246,7 @@ msgstr ""
 msgid "Enter the target size."
 msgstr ""
 
-msgid "Enter the chunk size."
+msgid "Enter the size of the output files."
 msgstr ""
 
 msgid "Enter the pages to extract."
