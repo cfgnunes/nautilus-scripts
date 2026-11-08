@@ -644,9 +644,6 @@ _main() {
         "Image/Image: Flip, Rotate/Image: Rotate (180 deg)|Test image (180 deg).png" \
         "Image/Image: Flip, Rotate/Image: Rotate (270 deg)|Test image (270 deg).png" \
         "Image/Image: Flip, Rotate/Image: Rotate (90 deg)|Test image (90 deg).png" \
-        "Image/Image: Icons/Image: Create PNG icon (128 px)|Test image (icon 128 px).png" \
-        "Image/Image: Icons/Image: Create PNG icon (256 px)|Test image (icon 256 px).png" \
-        "Image/Image: Icons/Image: Create PNG icon (512 px)|Test image (icon 512 px).png" \
         "Image/Image: Optimize, Reduce/Image: Optimize PNG|Test image (optimized).png" \
         "Image/Image: Optimize, Reduce/Image: Reduce (JPG, 1000kB max)|Test image (reduced).jpg" \
         "Image/Image: Optimize, Reduce/Image: Reduce (JPG, 500kB max)|Test image (reduced).jpg" \

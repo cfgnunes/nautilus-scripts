@@ -1167,18 +1167,6 @@ msgid "Image: Convert to WebP"
 msgstr "Şəkil: WebP formatına çevir"
 
 #: Menu
-msgid "Image: Create PNG icon (128 px)"
-msgstr "Şəkil: PNG nişanı yarat (128 px)"
-
-#: Menu
-msgid "Image: Create PNG icon (256 px)"
-msgstr "Şəkil: PNG nişanı yarat (256 px)"
-
-#: Menu
-msgid "Image: Create PNG icon (512 px)"
-msgstr "Şəkil: PNG nişanı yarat (512 px)"
-
-#: Menu
 msgid "Image: Create PNG icon (custom)"
 msgstr "Şəkil: PNG nişanı yarat (fərdi ölçü)"
 

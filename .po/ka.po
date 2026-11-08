@@ -1167,18 +1167,6 @@ msgid "Image: Convert to WebP"
 msgstr "გამოსახულება: WebP-ში გადაყვანა"
 
 #: Menu
-msgid "Image: Create PNG icon (128 px)"
-msgstr "გამოსახულება: PNG ხატულის შექმნა (128 პიქს)"
-
-#: Menu
-msgid "Image: Create PNG icon (256 px)"
-msgstr "გამოსახულება: PNG ხატულის შექმნა (256 პიქს)"
-
-#: Menu
-msgid "Image: Create PNG icon (512 px)"
-msgstr "გამოსახულება: PNG ხატულის შექმნა (512 პიქს)"
-
-#: Menu
 msgid "Image: Create PNG icon (custom)"
 msgstr "გამოსახულება: PNG ხატულის შექმნა (მორგებული)"
 

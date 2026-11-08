@@ -1167,18 +1167,6 @@ msgid "Image: Convert to WebP"
 msgstr "छवि: WebP में कन्वर्ट करें"
 
 #: Menu
-msgid "Image: Create PNG icon (128 px)"
-msgstr "छवि: PNG आइकन बनाएँ (128 px)"
-
-#: Menu
-msgid "Image: Create PNG icon (256 px)"
-msgstr "छवि: PNG आइकन बनाएँ (256 px)"
-
-#: Menu
-msgid "Image: Create PNG icon (512 px)"
-msgstr "छवि: PNG आइकन बनाएँ (512 px)"
-
-#: Menu
 msgid "Image: Create PNG icon (custom)"
 msgstr "छवि: PNG आइकन बनाएँ (अनुकूलित)"
 

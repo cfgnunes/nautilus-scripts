@@ -1167,18 +1167,6 @@ msgid "Image: Convert to WebP"
 msgstr "Kép: konvertálás ide WebP"
 
 #: Menu
-msgid "Image: Create PNG icon (128 px)"
-msgstr "Kép: PNG-ikon létrehozása (128 px)"
-
-#: Menu
-msgid "Image: Create PNG icon (256 px)"
-msgstr "Kép: PNG-ikon létrehozása (256 px)"
-
-#: Menu
-msgid "Image: Create PNG icon (512 px)"
-msgstr "Kép: PNG-ikon létrehozása (512 px)"
-
-#: Menu
 msgid "Image: Create PNG icon (custom)"
 msgstr "Kép: PNG-ikon létrehozása (egyéni)"
 
