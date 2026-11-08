@@ -247,6 +247,9 @@ msgstr "Sélectionnez une image à utiliser comme filigrane"
 msgid "Enter the target size."
 msgstr "Entrez la taille."
 
+msgid "Enter the size of the output files."
+msgstr "Entrez la taille des fichiers de sortie."
+
 msgid "Enter the pages to extract."
 msgstr "Entrez les pages à extraire."
 
@@ -777,6 +780,10 @@ msgstr "Audio: Supprimer les silences (extrémités)"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "Créer une sauvegarde (via Rsync)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "Binaire: Concaténer les fichiers"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "Renommer: En majuscules (récursif)"
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "Réinitialiser les permissions (récursif)"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "Binaire: Diviser les fichiers"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

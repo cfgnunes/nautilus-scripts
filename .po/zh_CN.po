@@ -247,6 +247,9 @@ msgstr "选择一张图像作为水印"
 msgid "Enter the target size."
 msgstr "请输入尺寸。"
 
+msgid "Enter the size of the output files."
+msgstr "请输入输出文件的大小。"
+
 msgid "Enter the pages to extract."
 msgstr "请输入要提取的页面。"
 
@@ -777,6 +780,10 @@ msgstr "音频：移除静音（片段）"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "创建备份（通过 Rsync）"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "二进制：合并文件"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "重命名：转为大写（递归）"
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "重置权限（递归）"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "二进制：分割文件"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

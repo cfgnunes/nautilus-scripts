@@ -247,6 +247,9 @@ msgstr "Válasszon egy képet vízjelnek"
 msgid "Enter the target size."
 msgstr "Adja meg a célméretet."
 
+msgid "Enter the size of the output files."
+msgstr "Adja meg a kimeneti fájlok méretét."
+
 msgid "Enter the pages to extract."
 msgstr "Adja meg a kibontandó oldalakat."
 
@@ -777,6 +780,10 @@ msgstr "Hang: csend eltávolítása (végeken)"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "Biztonsági mentés (Rsync)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "Bináris: fájlok összefűzése"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "Átnevezés: nagybetűsre (rekurzív)"
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "Jogosultságok visszaállítása (rekurzív)"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "Bináris: fájlok felosztása"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

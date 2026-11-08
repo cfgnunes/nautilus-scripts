@@ -247,6 +247,9 @@ msgstr "נא לבחור תמונה שתשמש כסימן המים"
 msgid "Enter the target size."
 msgstr "נא למלא את הגודל."
 
+msgid "Enter the size of the output files."
+msgstr "נא למלא את גודל קובצי הפלט."
+
 msgid "Enter the pages to extract."
 msgstr "נא למלא את העמודים לחילוץ."
 
@@ -777,6 +780,10 @@ msgstr "שמע: הסרת חלקים שקטים (בקצוות)"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "יצירת גיבוי (באמצעות Rsync)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "בינארי: שרשור קבצים"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "שינוי שם: המרה לאותיות רישיות (רקורסיבי�
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "איפוס הרשאות (רקורסיבי)"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "בינארי: פיצול קבצים"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

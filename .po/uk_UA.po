@@ -247,6 +247,9 @@ msgstr "Виберіть зображення для водяного знака
 msgid "Enter the target size."
 msgstr "Введіть цільовий розмір."
 
+msgid "Enter the size of the output files."
+msgstr "Введіть розмір вихідних файлів."
+
 msgid "Enter the pages to extract."
 msgstr "Введіть сторінки для видобуття."
 
@@ -777,6 +780,10 @@ msgstr "Аудіо: прибрати тишу (краї)"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "Створити резервну копію (через Rsync)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "Двійковий: об’єднати файли"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "Перейменувати: на верхній регістр (реку
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "Скинути дозволи (рекурсивно)"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "Двійковий: розділити файли"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

@@ -247,6 +247,9 @@ msgstr "Wybierz obraz do użycia jako znak wodny"
 msgid "Enter the target size."
 msgstr "Wprowadź rozmiar."
 
+msgid "Enter the size of the output files."
+msgstr "Wprowadź rozmiar plików wyjściowych."
+
 msgid "Enter the pages to extract."
 msgstr "Wprowadź strony do wyodrębnienia."
 
@@ -777,6 +780,10 @@ msgstr "Audio: Usuń ciszę (skraje)"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "Utwórz kopię zapasową (przez Rsync)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "Binarny: Połącz pliki"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "Zmień nazwę: Na wielkie litery (rekurencyjnie)"
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "Zresetuj uprawnienia (rekurencyjnie)"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "Binarny: Podziel pliki"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

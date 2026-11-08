@@ -247,6 +247,9 @@ msgstr "Filigran olarak kullanılacak bir görüntü seçin"
 msgid "Enter the target size."
 msgstr "Boyutu girin."
 
+msgid "Enter the size of the output files."
+msgstr "Çıktı dosyalarının boyutunu girin."
+
 msgid "Enter the pages to extract."
 msgstr "Çıkarılacak sayfaları girin."
 
@@ -777,6 +780,10 @@ msgstr "Ses: Sessizliği kaldır (uçlar)"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "Yedek oluştur (Rsync ile)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "İkili: Dosyaları birleştir"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "Yeniden adlandır: Büyük harfe çevir (özyinelemeli)"
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "İzinleri sıfırla (özyinelemeli)"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "İkili: Dosyaları ayır"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

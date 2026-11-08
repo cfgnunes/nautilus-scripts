@@ -247,6 +247,9 @@ msgstr "Выберите изображение для использовани�
 msgid "Enter the target size."
 msgstr "Введите размер."
 
+msgid "Enter the size of the output files."
+msgstr "Введите размер выходных файлов."
+
 msgid "Enter the pages to extract."
 msgstr "Введите страницы для извлечения."
 
@@ -777,6 +780,10 @@ msgstr "Аудио: удалить тишину (края)"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "Создать резервную копию (через Rsync)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "Двоичный: объединить файлы"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "Переименовать: в верхний регистр (рекур
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "Сбросить разрешения (рекурсивно)"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "Двоичный: разделить файлы"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

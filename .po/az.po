@@ -247,6 +247,9 @@ msgstr "Su nişanı kimi istifadə ediləcək şəkli seçin"
 msgid "Enter the target size."
 msgstr "Hədəf ölçünü daxil edin."
 
+msgid "Enter the size of the output files."
+msgstr "Çıxış fayllarının ölçüsünü daxil edin."
+
 msgid "Enter the pages to extract."
 msgstr "Çıxarılacaq səhifələri daxil edin."
 
@@ -777,6 +780,10 @@ msgstr "Audio: Başda və sonda səssizliyi sil"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "Ehtiyat nüsxə yarat (Rsync ilə)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "Binar: Faylları birləşdir"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "Adını dəyiş: Böyük hərflərə çevir (alt qovluqlarla)"
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "İcazələri sıfırla (alt qovluqlarla)"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "Binar: Faylları böl"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

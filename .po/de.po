@@ -247,6 +247,9 @@ msgstr "Wählen Sie ein Bild als Wasserzeichen aus"
 msgid "Enter the target size."
 msgstr "Geben Sie die Größe ein."
 
+msgid "Enter the size of the output files."
+msgstr "Geben Sie die Größe der Ausgabedateien ein."
+
 msgid "Enter the pages to extract."
 msgstr "Geben Sie die Seiten ein."
 
@@ -777,6 +780,10 @@ msgstr "Audio: Stille entfernen (Anfang und Ende)"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "Backup erstellen (via Rsync)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "Binär: Dateien verketten"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "Umbenennen: In Großbuchstaben (rekursiv)"
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "Berechtigungen zurücksetzen (rekursiv)"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "Binär: Dateien aufteilen"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

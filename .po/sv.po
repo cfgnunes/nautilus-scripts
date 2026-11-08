@@ -247,6 +247,9 @@ msgstr "Välj en bild att använda som vattenstämpel"
 msgid "Enter the target size."
 msgstr "Ange målstorleken."
 
+msgid "Enter the size of the output files."
+msgstr "Ange storleken på utdatafilerna."
+
 msgid "Enter the pages to extract."
 msgstr "Ange sidorna som ska extraheras."
 
@@ -777,6 +780,10 @@ msgstr "Ljud: ta bort tystnad (ändar)"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "Skapa säkerhetskopia (via Rsync)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "Binär: sammanfoga filer"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "Byt namn: till versaler (rekursivt)"
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "Återställ behörigheter (rekursivt)"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "Binär: dela filer"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

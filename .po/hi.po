@@ -247,6 +247,9 @@ msgstr "वॉटरमार्क के रूप में उपयोग �
 msgid "Enter the target size."
 msgstr "आकार दर्ज करें।"
 
+msgid "Enter the size of the output files."
+msgstr "आउटपुट फ़ाइलों का आकार दर्ज करें।"
+
 msgid "Enter the pages to extract."
 msgstr "निकालने के लिए पृष्ठ दर्ज करें।"
 
@@ -777,6 +780,10 @@ msgstr "ऑडियो: मौन हटाएँ (सिरे)"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "बैकअप बनाएँ (Rsync के माध्यम से)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "बाइनरी: फ़ाइलें संयोजित करें"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "नाम बदलें: अपरकेस में (पुनरा
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "अनुमतियाँ रीसेट करें (पुनरावर्ती)"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "बाइनरी: फ़ाइलें विभाजित करें"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

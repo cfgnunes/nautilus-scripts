@@ -247,6 +247,9 @@ msgstr "Selectați o imagine de folosit ca filigran"
 msgid "Enter the target size."
 msgstr "Introduceți dimensiunea țintă."
 
+msgid "Enter the size of the output files."
+msgstr "Introduceți dimensiunea fișierelor de ieșire."
+
 msgid "Enter the pages to extract."
 msgstr "Introduceți paginile de extras."
 
@@ -777,6 +780,10 @@ msgstr "Audio: eliminare liniște (extremități)"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "Creare copie de rezervă (prin Rsync)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "Binar: concatenare fișiere"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "Redenumire: în majuscule (recursiv)"
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "Resetare permisiuni (recursiv)"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "Binar: împărțire fișiere"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

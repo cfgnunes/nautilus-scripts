@@ -247,6 +247,9 @@ msgstr "Kies 'n beeld om as watermerk te gebruik"
 msgid "Enter the target size."
 msgstr "Voer die teikengrootte in."
 
+msgid "Enter the size of the output files."
+msgstr "Voer die grootte van die uitvoerlêers in."
+
 msgid "Enter the pages to extract."
 msgstr "Voer die bladsye in om te onttrek."
 
@@ -777,6 +780,10 @@ msgstr "Oudio: Verwyder stilte (eindpunte)"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "Skep rugsteun (deur Rsync)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "Binêr: Voeg lêers saam"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "Hernoem: Na hoofletters (rekursief)"
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "Stel toestemmings terug (rekursief)"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "Binêr: Verdeel lêers"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

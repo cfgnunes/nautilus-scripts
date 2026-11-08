@@ -247,6 +247,9 @@ msgstr "Vyberte obrázek, který se použije jako vodoznak"
 msgid "Enter the target size."
 msgstr "Zadejte cílovou velikost."
 
+msgid "Enter the size of the output files."
+msgstr "Zadejte velikost výstupních souborů."
+
 msgid "Enter the pages to extract."
 msgstr "Zadejte stránky k extrahování."
 
@@ -777,6 +780,10 @@ msgstr "Zvuk: odstranit ticho (okraje)"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "Vytvořit zálohu (přes Rsync)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "Binární: zřetězit soubory"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "Přejmenovat: na velká písmena (rekurzivně)"
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "Obnovit oprávnění (rekurzivně)"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "Binární: rozdělit soubory"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

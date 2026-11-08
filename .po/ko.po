@@ -247,6 +247,9 @@ msgstr "워터마크로 사용할 이미지를 선택하세요"
 msgid "Enter the target size."
 msgstr "크기를 입력하세요."
 
+msgid "Enter the size of the output files."
+msgstr "출력 파일의 크기를 입력하세요."
+
 msgid "Enter the pages to extract."
 msgstr "추출할 페이지를 입력하세요."
 
@@ -777,6 +780,10 @@ msgstr "오디오: 무음 제거 (앞뒤)"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "백업 생성 (Rsync 사용)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "바이너리: 파일 결합"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "이름 변경: 대문자로 (재귀적)"
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "권한 재설정 (재귀적)"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "바이너리: 파일 분할"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"

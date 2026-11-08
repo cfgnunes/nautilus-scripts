@@ -247,6 +247,9 @@ msgstr "აირჩიეთ ჭვირნიშნად გამოსა�
 msgid "Enter the target size."
 msgstr "შეიყვანეთ სამიზნე ზომა."
 
+msgid "Enter the size of the output files."
+msgstr "შეიყვანეთ გამომავალი ფაილების ზომა."
+
 msgid "Enter the pages to extract."
 msgstr "შეიყვანეთ ამოსაღები გვერდები."
 
@@ -777,6 +780,10 @@ msgstr "აუდიო: სიჩუმის წაშლა (კიდეე�
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "მარქაფის შექმნა (Rsync-ით)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "ბინარული: ფაილების გაერთიანება"
 
 #: Menu
 msgid "Code editor"
@@ -1627,6 +1634,10 @@ msgid "Reset permissions (recursive)"
 msgstr "წვდომების ჩამოყრა (რეკურსიული)"
 
 #: Menu
+msgid "Binary: Split files"
+msgstr "ბინარული: ფაილების გაყოფა"
+
+#: Menu
 msgid "Scan for malware (via ClamAV)"
 msgstr "მავნე პროგრამების ძებნა (ClamAV-ით)"
 
@@ -1989,5 +2000,5 @@ msgstr "pkgx თქვენს სისტემაზე ვერ გაე�
 msgid "Could not download the file!"
 msgstr "ფაილის გადმოწერა ვერ მოხერხდა!"
 
-msgid "EOF"
-msgstr "EOF"
+#~ msgid "EOF"
+#~ msgstr "EOF"

@@ -247,6 +247,9 @@ msgstr "透かしとして使用する画像を選択"
 msgid "Enter the target size."
 msgstr "サイズを入力してください。"
 
+msgid "Enter the size of the output files."
+msgstr "出力ファイルのサイズを入力してください。"
+
 msgid "Enter the pages to extract."
 msgstr "抽出するページを入力してください。"
 
@@ -777,6 +780,10 @@ msgstr "音声：無音部分を削除（両端）"
 #: Menu
 msgid "Create backup (via Rsync)"
 msgstr "バックアップを作成 (Rsyncを使用)"
+
+#: Menu
+msgid "Binary: Concatenate files"
+msgstr "バイナリ：ファイルを結合"
 
 #: Menu
 msgid "Code editor"
@@ -1625,6 +1632,10 @@ msgstr "名前変更：大文字に変換（再帰的）"
 #: Menu
 msgid "Reset permissions (recursive)"
 msgstr "権限をリセット（再帰的）"
+
+#: Menu
+msgid "Binary: Split files"
+msgstr "バイナリ：ファイルを分割"
 
 #: Menu
 msgid "Scan for malware (via ClamAV)"
