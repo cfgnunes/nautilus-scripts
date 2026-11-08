@@ -1671,8 +1671,8 @@ msgid "SVG: Export to PDF"
 msgstr "SVG: exporteren naar pdf"
 
 #: Menu
-msgid "SVG: Export to PNG (custom)"
-msgstr "SVG: exporteren naar png (aangepast)"
+msgid "SVG: Export to PNG"
+msgstr "SVG: exporteren naar png"
 
 #: Menu
 msgid "SVG: Replace fonts with Charter"

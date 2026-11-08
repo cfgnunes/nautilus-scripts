@@ -1671,8 +1671,8 @@ msgid "SVG: Export to PDF"
 msgstr "SVG: PDF-ში გატანა"
 
 #: Menu
-msgid "SVG: Export to PNG (custom)"
-msgstr "SVG: PNG-ში გატანა (მორგებული)"
+msgid "SVG: Export to PNG"
+msgstr "SVG: PNG-ში გატანა"
 
 #: Menu
 msgid "SVG: Replace fonts with Charter"

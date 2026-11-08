@@ -1681,7 +1681,7 @@ msgid "SVG: Export to PDF"
 msgstr ""
 
 #: Menu
-msgid "SVG: Export to PNG (custom)"
+msgid "SVG: Export to PNG"
 msgstr ""
 
 #: Menu
