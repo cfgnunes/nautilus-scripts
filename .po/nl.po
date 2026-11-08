@@ -539,8 +539,8 @@ msgid "Rename files"
 msgstr "Bestandsnamen wĳzigen"
 
 #: Menu
-msgid "Security and Recovery"
-msgstr "Beveiliging en herstel"
+msgid "Security and Backup"
+msgstr "Beveiliging en back-up"
 
 #: Menu
 msgid "Audio and Video: Tools"

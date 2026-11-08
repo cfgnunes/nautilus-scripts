@@ -539,8 +539,8 @@ msgid "Rename files"
 msgstr "Faylların adını dəyiş"
 
 #: Menu
-msgid "Security and Recovery"
-msgstr "Təhlükəsizlik və bərpa"
+msgid "Security and Backup"
+msgstr "Təhlükəsizlik və ehtiyat nüsxə"
 
 #: Menu
 msgid "Audio and Video: Tools"

@@ -539,8 +539,8 @@ msgid "Rename files"
 msgstr "फ़ाइलों का नाम बदलें"
 
 #: Menu
-msgid "Security and Recovery"
-msgstr "सुरक्षा और पुनर्प्राप्ति"
+msgid "Security and Backup"
+msgstr "सुरक्षा और बैकअप"
 
 #: Menu
 msgid "Audio and Video: Tools"

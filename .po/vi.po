@@ -539,8 +539,8 @@ msgid "Rename files"
 msgstr "Đổi tên tệp"
 
 #: Menu
-msgid "Security and Recovery"
-msgstr "Bảo mật và Phục hồi"
+msgid "Security and Backup"
+msgstr "Bảo mật và Sao lưu"
 
 #: Menu
 msgid "Audio and Video: Tools"

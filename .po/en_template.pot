@@ -541,7 +541,7 @@ msgid "Rename files"
 msgstr ""
 
 #: Menu
-msgid "Security and Recovery"
+msgid "Security and Backup"
 msgstr ""
 
 #: Menu

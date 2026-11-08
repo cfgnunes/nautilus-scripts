@@ -539,8 +539,8 @@ msgid "Rename files"
 msgstr "Renombrar archivos"
 
 #: Menu
-msgid "Security and Recovery"
-msgstr "Seguridad y Recuperación"
+msgid "Security and Backup"
+msgstr "Seguridad y Copia de seguridad"
 
 #: Menu
 msgid "Audio and Video: Tools"

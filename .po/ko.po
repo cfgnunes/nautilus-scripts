@@ -539,8 +539,8 @@ msgid "Rename files"
 msgstr "파일 이름 바꾸기"
 
 #: Menu
-msgid "Security and Recovery"
-msgstr "보안 및 복구"
+msgid "Security and Backup"
+msgstr "보안 및 백업"
 
 #: Menu
 msgid "Audio and Video: Tools"

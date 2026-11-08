@@ -539,8 +539,8 @@ msgid "Rename files"
 msgstr "ფაილების სახელის გადარქმევა"
 
 #: Menu
-msgid "Security and Recovery"
-msgstr "უსაფრთხოება და აღდგენა"
+msgid "Security and Backup"
+msgstr "უსაფრთხოება და სარეზერვო ასლი"
 
 #: Menu
 msgid "Audio and Video: Tools"

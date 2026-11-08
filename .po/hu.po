@@ -539,8 +539,8 @@ msgid "Rename files"
 msgstr "Fájlok átnevezése"
 
 #: Menu
-msgid "Security and Recovery"
-msgstr "Biztonság és helyreállítás"
+msgid "Security and Backup"
+msgstr "Biztonság és biztonsági mentés"
 
 #: Menu
 msgid "Audio and Video: Tools"
