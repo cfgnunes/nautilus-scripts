@@ -595,10 +595,6 @@ msgid "Image: Flip, Rotate"
 msgstr "Beeld: Keer om, roteer"
 
 #: Menu
-msgid "Image: Icons"
-msgstr "Beeld: Ikone"
-
-#: Menu
 msgid "Image: Metadata, Exif"
 msgstr "Beeld: Metagegewens, Exif"
 
@@ -1167,16 +1163,16 @@ msgid "Image: Convert to WebP"
 msgstr "Beeld: Omskep na WebP"
 
 #: Menu
-msgid "Image: Create PNG icon (custom)"
-msgstr "Beeld: Skep PNG-ikoon (pasgemaak)"
-
-#: Menu
 msgid "Image: Desaturate"
 msgstr "Beeld: Ontversadig"
 
 #: Menu
 msgid "Image: Export to PDF"
 msgstr "Beeld: Voer uit na PDF"
+
+#: Menu
+msgid "Image: Export to PNG icon"
+msgstr "Beeld: Voer uit na PNG-ikoon"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"

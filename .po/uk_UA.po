@@ -595,10 +595,6 @@ msgid "Image: Flip, Rotate"
 msgstr "Зображення: віддзеркалити, повернути"
 
 #: Menu
-msgid "Image: Icons"
-msgstr "Зображення: піктограми"
-
-#: Menu
 msgid "Image: Metadata, Exif"
 msgstr "Зображення: метадані, Exif"
 
@@ -1167,16 +1163,16 @@ msgid "Image: Convert to WebP"
 msgstr "Зображення: перетворити на WebP"
 
 #: Menu
-msgid "Image: Create PNG icon (custom)"
-msgstr "Зображення: створити піктограму PNG (власний)"
-
-#: Menu
 msgid "Image: Desaturate"
 msgstr "Зображення: знебарвити"
 
 #: Menu
 msgid "Image: Export to PDF"
 msgstr "Зображення: експортувати в PDF"
+
+#: Menu
+msgid "Image: Export to PNG icon"
+msgstr "Зображення: експортувати в піктограму PNG"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"

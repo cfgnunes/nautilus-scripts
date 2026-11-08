@@ -595,10 +595,6 @@ msgid "Image: Flip, Rotate"
 msgstr "Şəkil: Əks etdir, fırlat"
 
 #: Menu
-msgid "Image: Icons"
-msgstr "Şəkil: Nişanlar"
-
-#: Menu
 msgid "Image: Metadata, Exif"
 msgstr "Şəkil: Metaməlumat, Exif"
 
@@ -1167,16 +1163,16 @@ msgid "Image: Convert to WebP"
 msgstr "Şəkil: WebP formatına çevir"
 
 #: Menu
-msgid "Image: Create PNG icon (custom)"
-msgstr "Şəkil: PNG nişanı yarat (fərdi ölçü)"
-
-#: Menu
 msgid "Image: Desaturate"
 msgstr "Şəkil: Rəng doymasını azalt"
 
 #: Menu
 msgid "Image: Export to PDF"
 msgstr "Şəkil: PDF formatında çıxar"
+
+#: Menu
+msgid "Image: Export to PNG icon"
+msgstr "Şəkil: PNG nişanı formatında çıxar"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"

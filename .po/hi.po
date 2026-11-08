@@ -595,10 +595,6 @@ msgid "Image: Flip, Rotate"
 msgstr "छवि: पलटें, घुमाएँ"
 
 #: Menu
-msgid "Image: Icons"
-msgstr "छवि: आइकन"
-
-#: Menu
 msgid "Image: Metadata, Exif"
 msgstr "छवि: मेटाडेटा, एक्सिफ़"
 
@@ -1167,16 +1163,16 @@ msgid "Image: Convert to WebP"
 msgstr "छवि: WebP में कन्वर्ट करें"
 
 #: Menu
-msgid "Image: Create PNG icon (custom)"
-msgstr "छवि: PNG आइकन बनाएँ (अनुकूलित)"
-
-#: Menu
 msgid "Image: Desaturate"
 msgstr "छवि: डिसेचुरेट करें"
 
 #: Menu
 msgid "Image: Export to PDF"
 msgstr "छवि: PDF में निर्यात करें"
+
+#: Menu
+msgid "Image: Export to PNG icon"
+msgstr "छवि: PNG आइकन में निर्यात करें"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"

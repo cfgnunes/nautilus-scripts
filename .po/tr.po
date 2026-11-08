@@ -595,10 +595,6 @@ msgid "Image: Flip, Rotate"
 msgstr "Görüntü: Çevir, Döndür"
 
 #: Menu
-msgid "Image: Icons"
-msgstr "Görüntü: Simgeler"
-
-#: Menu
 msgid "Image: Metadata, Exif"
 msgstr "Görüntü: Meta veri, Exif"
 
@@ -1167,16 +1163,16 @@ msgid "Image: Convert to WebP"
 msgstr "Görüntü: WebP'ye dönüştür"
 
 #: Menu
-msgid "Image: Create PNG icon (custom)"
-msgstr "Görüntü: PNG simgesi oluştur (özel)"
-
-#: Menu
 msgid "Image: Desaturate"
 msgstr "Görüntü: Doygunluğu azalt"
 
 #: Menu
 msgid "Image: Export to PDF"
 msgstr "Görüntü: PDF'e dışa aktar"
+
+#: Menu
+msgid "Image: Export to PNG icon"
+msgstr "Görüntü: PNG simgesine dışa aktar"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"

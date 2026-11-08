@@ -595,10 +595,6 @@ msgid "Image: Flip, Rotate"
 msgstr "תמונה: היפוך, סיבוב"
 
 #: Menu
-msgid "Image: Icons"
-msgstr "תמונה: סמלים"
-
-#: Menu
 msgid "Image: Metadata, Exif"
 msgstr "תמונה: נתוני על, Exif"
 
@@ -1167,16 +1163,16 @@ msgid "Image: Convert to WebP"
 msgstr "תמונה: המרה לקובץ WebP"
 
 #: Menu
-msgid "Image: Create PNG icon (custom)"
-msgstr "תמונה: יצירת סמל בקובץ PNG (מותאם אישית)"
-
-#: Menu
 msgid "Image: Desaturate"
 msgstr "תמונה: הפחתת רווייה"
 
 #: Menu
 msgid "Image: Export to PDF"
 msgstr "תמונה: ייצוא כקובץ PDF"
+
+#: Menu
+msgid "Image: Export to PNG icon"
+msgstr "תמונה: ייצוא כסמל בקובץ PNG"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"

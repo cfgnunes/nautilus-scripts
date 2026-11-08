@@ -595,10 +595,6 @@ msgid "Image: Flip, Rotate"
 msgstr "Hình ảnh: Lật, Xoay"
 
 #: Menu
-msgid "Image: Icons"
-msgstr "Hình ảnh: Biểu tượng"
-
-#: Menu
 msgid "Image: Metadata, Exif"
 msgstr "Hình ảnh: Metadata, Exif"
 
@@ -1167,16 +1163,16 @@ msgid "Image: Convert to WebP"
 msgstr "Hình ảnh: Chuyển thành WebP"
 
 #: Menu
-msgid "Image: Create PNG icon (custom)"
-msgstr "Hình ảnh: Tạo biểu tượng PNG (tùy chỉnh)"
-
-#: Menu
 msgid "Image: Desaturate"
 msgstr "Hình ảnh: Khử bão hòa"
 
 #: Menu
 msgid "Image: Export to PDF"
 msgstr "Hình ảnh: Xuất sang PDF"
+
+#: Menu
+msgid "Image: Export to PNG icon"
+msgstr "Hình ảnh: Xuất sang biểu tượng PNG"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"

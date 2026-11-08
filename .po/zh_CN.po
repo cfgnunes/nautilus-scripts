@@ -595,10 +595,6 @@ msgid "Image: Flip, Rotate"
 msgstr "图像：翻转、旋转"
 
 #: Menu
-msgid "Image: Icons"
-msgstr "图像：图标"
-
-#: Menu
 msgid "Image: Metadata, Exif"
 msgstr "图像：元数据、Exif"
 
@@ -1167,16 +1163,16 @@ msgid "Image: Convert to WebP"
 msgstr "图像：转换为WebP"
 
 #: Menu
-msgid "Image: Create PNG icon (custom)"
-msgstr "图像：创建PNG图标（自定义）"
-
-#: Menu
 msgid "Image: Desaturate"
 msgstr "图像：去饱和度"
 
 #: Menu
 msgid "Image: Export to PDF"
 msgstr "图像：导出为PDF"
+
+#: Menu
+msgid "Image: Export to PNG icon"
+msgstr "图像：导出为PNG图标"
 
 #: Menu
 msgid "Image: Find similar (65 pct)"
