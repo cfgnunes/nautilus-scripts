@@ -634,7 +634,7 @@ declare -A PKG_MAP=(
         zypper: iputils
         guix:   iputils
         xbps:   iputils
-        pkgx:   gnu.org/inetutils
+        pkgx:   github.com/iputils/iputils
     "
 
     ["qpdf"]="
