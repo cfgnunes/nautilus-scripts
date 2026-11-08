@@ -1671,18 +1671,6 @@ msgid "SVG: Export to PDF"
 msgstr "SVG: Voer uit na PDF"
 
 #: Menu
-msgid "SVG: Export to PNG (256 px)"
-msgstr "SVG: Voer uit na PNG (256 px)"
-
-#: Menu
-msgid "SVG: Export to PNG (512 px)"
-msgstr "SVG: Voer uit na PNG (512 px)"
-
-#: Menu
-msgid "SVG: Export to PNG (1024 px)"
-msgstr "SVG: Voer uit na PNG (1024 px)"
-
-#: Menu
 msgid "SVG: Export to PNG (custom)"
 msgstr "SVG: Voer uit na PNG (pasgemaak)"
 

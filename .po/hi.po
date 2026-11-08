@@ -1671,18 +1671,6 @@ msgid "SVG: Export to PDF"
 msgstr "SVG: PDF में निर्यात करें"
 
 #: Menu
-msgid "SVG: Export to PNG (256 px)"
-msgstr "SVG: PNG में निर्यात करें (256 px)"
-
-#: Menu
-msgid "SVG: Export to PNG (512 px)"
-msgstr "SVG: PNG में निर्यात करें (512 px)"
-
-#: Menu
-msgid "SVG: Export to PNG (1024 px)"
-msgstr "SVG: PNG में निर्यात करें (1024 px)"
-
-#: Menu
 msgid "SVG: Export to PNG (custom)"
 msgstr "SVG: PNG में निर्यात करें (अनुकूलित)"
 

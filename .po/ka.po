@@ -1671,18 +1671,6 @@ msgid "SVG: Export to PDF"
 msgstr "SVG: PDF-ში გატანა"
 
 #: Menu
-msgid "SVG: Export to PNG (256 px)"
-msgstr "SVG: PNG-ში გატანა (256 პიქს)"
-
-#: Menu
-msgid "SVG: Export to PNG (512 px)"
-msgstr "SVG: PNG-ში გატანა (512 პიქს)"
-
-#: Menu
-msgid "SVG: Export to PNG (1024 px)"
-msgstr "SVG: PNG-ში გატანა (1024 პიქს)"
-
-#: Menu
 msgid "SVG: Export to PNG (custom)"
 msgstr "SVG: PNG-ში გატანა (მორგებული)"
 

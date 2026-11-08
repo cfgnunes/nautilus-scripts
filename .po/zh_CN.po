@@ -1671,18 +1671,6 @@ msgid "SVG: Export to PDF"
 msgstr "SVG：导出为PDF"
 
 #: Menu
-msgid "SVG: Export to PNG (256 px)"
-msgstr "SVG：导出为PNG（256像素）"
-
-#: Menu
-msgid "SVG: Export to PNG (512 px)"
-msgstr "SVG：导出为PNG（512像素）"
-
-#: Menu
-msgid "SVG: Export to PNG (1024 px)"
-msgstr "SVG：导出为PNG（1024像素）"
-
-#: Menu
 msgid "SVG: Export to PNG (custom)"
 msgstr "SVG：导出为PNG（自定义）"
 

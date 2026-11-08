@@ -702,9 +702,6 @@ _main() {
     gzip --no-name -c "$fixture_svg" >"$fixture_svgz"
 
     # IGNORED: Image/Image: SVG files/SVG: Export to PDF
-    # IGNORED: Image/Image: SVG files/SVG: Export to PNG (256 px)
-    # IGNORED: Image/Image: SVG files/SVG: Export to PNG (512 px)
-    # IGNORED: Image/Image: SVG files/SVG: Export to PNG (1024 px)
 
     __test_scripts_file "$fixture_svg" "Test image SVG.svg" "empty" \
         "Image/Image: SVG files/SVG: Compress to SVGZ|Test image SVG.svgz" \

@@ -1671,18 +1671,6 @@ msgid "SVG: Export to PDF"
 msgstr "קובץ SVG: ייצוא כקובץ PDF"
 
 #: Menu
-msgid "SVG: Export to PNG (256 px)"
-msgstr "קובץ SVG: ייצוא כקובץ PNG ‏(256 נק׳)"
-
-#: Menu
-msgid "SVG: Export to PNG (512 px)"
-msgstr "קובץ SVG: ייצוא כקובץ PNG ‏(512 נק׳)"
-
-#: Menu
-msgid "SVG: Export to PNG (1024 px)"
-msgstr "קובץ SVG: ייצוא כקובץ PNG ‏(1024 נק׳)"
-
-#: Menu
 msgid "SVG: Export to PNG (custom)"
 msgstr "קובץ SVG: ייצוא כקובץ PNG (מותאם אישית)"
 

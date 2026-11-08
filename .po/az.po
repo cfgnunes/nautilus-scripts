@@ -1671,18 +1671,6 @@ msgid "SVG: Export to PDF"
 msgstr "SVG: PDF formatında çıxar"
 
 #: Menu
-msgid "SVG: Export to PNG (256 px)"
-msgstr "SVG: PNG formatında çıxar (256 px)"
-
-#: Menu
-msgid "SVG: Export to PNG (512 px)"
-msgstr "SVG: PNG formatında çıxar (512 px)"
-
-#: Menu
-msgid "SVG: Export to PNG (1024 px)"
-msgstr "SVG: PNG formatında çıxar (1024 px)"
-
-#: Menu
 msgid "SVG: Export to PNG (custom)"
 msgstr "SVG: PNG formatında çıxar (fərdi ölçü)"
 
