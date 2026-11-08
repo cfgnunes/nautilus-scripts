@@ -9,7 +9,6 @@
 #   https://hpc.guix.info/browse
 
 # FIXME: Some package definitions were removed to prevent compatibility issues.
-# 'pkgx: gnu.org/inetutils' - Provides a 'ping' implementation that differs from those shipped by distributions.
 # 'pkgx: poppler.freedesktop.org' - Exports environment variables that alter Zenity's font settings.
 
 # Description:
@@ -635,7 +634,7 @@ declare -A PKG_MAP=(
         zypper: iputils
         guix:   iputils
         xbps:   iputils
-        pkgx:
+        pkgx:   gnu.org/inetutils
     "
 
     ["qpdf"]="

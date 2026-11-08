@@ -43,8 +43,10 @@ _main_task() {
     local ports=""
 
     # Run ping and extract only the result from the last ICMP packet.
+    # 'ping' from 'iputils' or 'inetutils'.
     ping=$(LC_ALL=C ping -n -c 3 -W "$timeout_value" -- "$input_file" 2>/dev/null |
-        grep --only-matching --perl-regexp "icmp_seq=3.*time=\K.*")
+        grep --only-matching --perl-regexp "min/.* = [^/]+/\K[^/]+/[^ ]+ \S+" |
+        sed "s|/[^ ]*||")
 
     # Perform an Nmap scan to detect open ports.
     ports=$(LC_ALL=C nmap -n -Pn -T4 --max-retries 1 --host-timeout "$timeout_value"s "$ip" 2>/dev/null |
@@ -118,7 +120,18 @@ _extract_ips() {
 
 _get_local_range() {
     local ip=""
-    ip=$(hostname -I 2>/dev/null | awk '{print $1}')
+
+    if _command_exists "ifconfig"; then
+        # 'ifconfig' from 'inetutils'.
+        ip=$(LC_ALL=C ifconfig 2>/dev/null |
+            sed "s|addr:||g" |
+            grep --only-matching --perl-regexp "inet \K[0-9.]+" |
+            grep -v "^127\." |
+            head -n 1)
+    else
+        # 'hostname' from 'iputils'.
+        ip=$(LC_ALL=C hostname -I 2>/dev/null | awk '{print $1}')
+    fi
 
     if [[ -z "$ip" ]]; then
         ip="192.168.0.1"
