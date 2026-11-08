@@ -1433,7 +1433,7 @@ msgid "PDF: Convert to PDFA-2b"
 msgstr ""
 
 #: Menu
-msgid "PDF: Crop margins (custom)"
+msgid "PDF: Crop margins"
 msgstr ""
 
 #: Menu
@@ -1465,7 +1465,7 @@ msgid "PDF: Extract images"
 msgstr ""
 
 #: Menu
-msgid "PDF: Extract pages (custom)"
+msgid "PDF: Extract pages"
 msgstr ""
 
 #: Menu
@@ -1649,7 +1649,7 @@ msgid "Reset permissions (recursive)"
 msgstr ""
 
 #: Menu
-msgid "Binary: Split files (custom)"
+msgid "Binary: Split files"
 msgstr ""
 
 #: Menu

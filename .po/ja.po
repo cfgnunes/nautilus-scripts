@@ -1427,8 +1427,8 @@ msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF：PDF/A-2bに変換"
 
 #: Menu
-msgid "PDF: Crop margins (custom)"
-msgstr "PDF：余白を切り取り (カスタム)"
+msgid "PDF: Crop margins"
+msgstr "PDF：余白を切り取り"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"
@@ -1459,8 +1459,8 @@ msgid "PDF: Extract images"
 msgstr "PDF：画像を抽出"
 
 #: Menu
-msgid "PDF: Extract pages (custom)"
-msgstr "PDF：ページを抽出 (カスタム)"
+msgid "PDF: Extract pages"
+msgstr "PDF：ページを抽出"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

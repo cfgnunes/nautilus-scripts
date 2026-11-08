@@ -1427,8 +1427,8 @@ msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: PDFA-2b로 변환"
 
 #: Menu
-msgid "PDF: Crop margins (custom)"
-msgstr "PDF: 여백 자르기 (사용자 지정)"
+msgid "PDF: Crop margins"
+msgstr "PDF: 여백 자르기"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"
@@ -1459,8 +1459,8 @@ msgid "PDF: Extract images"
 msgstr "PDF: 이미지 추출"
 
 #: Menu
-msgid "PDF: Extract pages (custom)"
-msgstr "PDF: 페이지 추출 (사용자 지정)"
+msgid "PDF: Extract pages"
+msgstr "PDF: 페이지 추출"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

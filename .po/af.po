@@ -1427,8 +1427,8 @@ msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: Omskep na PDFA-2b"
 
 #: Menu
-msgid "PDF: Crop margins (custom)"
-msgstr "PDF: Knip kantlyne (pasgemaak)"
+msgid "PDF: Crop margins"
+msgstr "PDF: Knip kantlyne"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"
@@ -1459,8 +1459,8 @@ msgid "PDF: Extract images"
 msgstr "PDF: Onttrek beelde"
 
 #: Menu
-msgid "PDF: Extract pages (custom)"
-msgstr "PDF: Onttrek bladsye (pasgemaak)"
+msgid "PDF: Extract pages"
+msgstr "PDF: Onttrek bladsye"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

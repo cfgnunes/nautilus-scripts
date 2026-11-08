@@ -1427,8 +1427,8 @@ msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: Convertir a PDFA-2b"
 
 #: Menu
-msgid "PDF: Crop margins (custom)"
-msgstr "PDF: Recortar márgenes (personalizado)"
+msgid "PDF: Crop margins"
+msgstr "PDF: Recortar márgenes"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"
@@ -1459,8 +1459,8 @@ msgid "PDF: Extract images"
 msgstr "PDF: Extraer imágenes"
 
 #: Menu
-msgid "PDF: Extract pages (custom)"
-msgstr "PDF: Extraer páginas (personalizado)"
+msgid "PDF: Extract pages"
+msgstr "PDF: Extraer páginas"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

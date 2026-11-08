@@ -1427,8 +1427,8 @@ msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: PDFA-2b-ში გადაყვანა"
 
 #: Menu
-msgid "PDF: Crop margins (custom)"
-msgstr "PDF: მინდვრების ამოჭრა (მორგებული)"
+msgid "PDF: Crop margins"
+msgstr "PDF: მინდვრების ამოჭრა"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"
@@ -1459,8 +1459,8 @@ msgid "PDF: Extract images"
 msgstr "PDF: გამოსახულებების ამოღება"
 
 #: Menu
-msgid "PDF: Extract pages (custom)"
-msgstr "PDF: გვერდების ამოღება (მორგებული)"
+msgid "PDF: Extract pages"
+msgstr "PDF: გვერდების ამოღება"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"

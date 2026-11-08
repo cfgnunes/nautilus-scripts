@@ -1427,8 +1427,8 @@ msgid "PDF: Convert to PDFA-2b"
 msgstr "PDF: PDFA-2b में कन्वर्ट करें"
 
 #: Menu
-msgid "PDF: Crop margins (custom)"
-msgstr "PDF: मार्जिन काटें (अनुकूलित)"
+msgid "PDF: Crop margins"
+msgstr "PDF: मार्जिन काटें"
 
 #: Menu
 msgid "PDF: Export to PNG (150 dpi)"
@@ -1459,8 +1459,8 @@ msgid "PDF: Extract images"
 msgstr "PDF: छवियाँ निकालें"
 
 #: Menu
-msgid "PDF: Extract pages (custom)"
-msgstr "PDF: पृष्ठ निकालें (अनुकूलित)"
+msgid "PDF: Extract pages"
+msgstr "PDF: पृष्ठ निकालें"
 
 #: Menu
 msgid "PDF: Find annotated PDFs"
