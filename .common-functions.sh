@@ -1107,42 +1107,56 @@ _download_file() {
 #      "github:username/repository:regex".
 _precompiled_resolve_url() {
     local spec=$1
-    local api_url=""
     local regex=""
-    local repo=""
-    local resolved_url=""
+    local url=""
     local rest=""
 
-    if [[ "$spec" != github:* ]]; then
-        printf "%s" "$spec"
-        return 0
-    fi
+    case "$spec" in
+    github:*)
+        rest="${spec#github:}"
+        url="${rest%%:*}"
+        regex="${rest#*:}"
 
-    rest="${spec#github:}"
-    repo="${rest%%:*}"
-    regex="${rest#*:}"
-
-    if [[ -z "$repo" ]] || [[ -z "$regex" ]] || [[ "$repo" == "$regex" ]]; then
-        return 1
-    fi
-
-    api_url="https://api.github.com/repos/${repo}/releases/latest"
-
-    if _command_exists "curl"; then
-        resolved_url=$(curl --fail --silent --location -- \
-            "$api_url" 2>/dev/null | grep --only-matching -m1 "$regex")
-    elif _command_exists "wget"; then
-        resolved_url=$(wget --quiet --output-document=- -- \
-            "$api_url" 2>/dev/null | grep --only-matching -m1 "$regex")
-    elif _command_exists "axel"; then
-        resolved_url=$(axel --quiet --output=/dev/stdout -- \
-            "$api_url" 2>/dev/null | grep --only-matching -m1 "$regex")
-    else
-        return 1
-    fi
+        local api_url=""
+        api_url="https://api.github.com/repos/${url}/releases/latest"
+        resolved_url=$(_url_grep "$api_url" "$regex")
+        ;;
+    *) resolved_url="$spec" ;;
+    esac
 
     if [[ -z "$resolved_url" ]]; then
         return 1
+    fi
+
+    printf "%s" "$resolved_url"
+}
+
+# Function: _url_grep
+#
+# Description:
+#   This function greps a URL for a pattern and returns the first match.
+#
+# Parameters:
+#   $1 (url): The URL to grep.
+#   $2 (regex): The regular expression to match.
+_url_grep() {
+    local url=$1
+    local regex=$2
+    local resolved_url=""
+
+    if [[ -z "$url" ]] || [[ -z "$regex" ]]; then
+        return
+    fi
+
+    if _command_exists "curl"; then
+        resolved_url=$(curl --fail --silent --location -- \
+            "$url" 2>/dev/null | grep --only-matching -m1 "$regex")
+    elif _command_exists "wget"; then
+        resolved_url=$(wget --quiet --output-document=- -- \
+            "$url" 2>/dev/null | grep --only-matching -m1 "$regex")
+    elif _command_exists "axel"; then
+        resolved_url=$(axel --quiet --output=/dev/stdout -- \
+            "$url" 2>/dev/null | grep --only-matching -m1 "$regex")
     fi
 
     printf "%s" "$resolved_url"
