@@ -1031,17 +1031,17 @@ declare -A POST_INSTALL=(
 #   This array defines download URLs for precompiled binaries. Each entry maps
 #   a dependency key to architecture-specific URLs, selected from the machine
 #   architecture. A value may be a full URL, or a GitHub in the format:
-#   "github:username/repository:regex".
+#   "github;username/repository;regex".
 #   The regular expression selects the tarball URL from the latest release.
 declare -A PRECOMPILED_URL=(
     ["mp3rgain"]="
-        x86_64:  github:M-Igashi/mp3rgain:https.*inux.*x86.64.tar.\w*
-        aarch64: github:M-Igashi/mp3rgain:https.*inux.*arm64.tar.\w*
+        x86_64:  github;M-Igashi/mp3rgain;https.*inux.*x86.64.tar.\w*
+        aarch64: github;M-Igashi/mp3rgain;https.*inux.*arm64.tar.\w*
     "
 
     ["pdfcpu"]="
-        x86_64:  github:pdfcpu/pdfcpu:https.*inux.*x86.64.tar.\w*
-        aarch64: github:pdfcpu/pdfcpu:https.*inux.*arm64.tar.\w*
-        armv71:  github:pdfcpu/pdfcpu:https.*inux.*armv7.tar.\w*
+        x86_64:  github;pdfcpu/pdfcpu;https.*inux.*x86.64.tar.\w*
+        aarch64: github;pdfcpu/pdfcpu;https.*inux.*arm64.tar.\w*
+        armv71:  github;pdfcpu/pdfcpu;https.*inux.*armv7.tar.\w*
     "
 )

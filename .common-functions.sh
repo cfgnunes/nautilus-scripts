@@ -1097,25 +1097,23 @@ _download_file() {
 #
 # Description:
 #   This function resolves a precompiled download specification to a concrete
-#   tarball URL. A full URL is returned unchanged. A GitHub latest-release
-#   specification in the format "github:username/repository:regex" is resolved
-#   by querying the latest release and selecting the first asset URL that
-#   matches the regular expression.
+#   tarball URL.
 #
 # Parameters:
 #   $1 (spec): A full tarball URL, or a specification in the format
-#      "github:username/repository:regex".
+#      "github;username/repository;regex".
 _precompiled_resolve_url() {
     local spec=$1
     local regex=""
     local url=""
     local rest=""
+    local resolved_url=""
 
     case "$spec" in
-    github:*)
-        rest="${spec#github:}"
-        url="${rest%%:*}"
-        regex="${rest#*:}"
+    "github;"*)
+        rest="${spec#github;}"
+        url="${rest%%;*}"
+        regex="${rest#*;}"
 
         local api_url=""
         api_url="https://api.github.com/repos/${url}/releases/latest"
