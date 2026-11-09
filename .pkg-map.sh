@@ -697,14 +697,14 @@ declare -A PKG_MAP=(
     "
 
     ["unrar"]="
-        termux: unrar
-        apt:    unrar
-        dnf:    unrar
-        pacman: unrar
-        nix:    unrar
-        zypper: unrar
+        termux:
+        apt:
+        dnf:
+        pacman:
+        nix:
+        zypper:
         guix:
-        xbps:   unrar
+        xbps:
         pkgx:   rarlab.com
     "
 
