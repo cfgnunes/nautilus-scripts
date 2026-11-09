@@ -31,7 +31,6 @@ declare -A PKG_MAP=(
         guix:   7zip
         xbps:   7zip
         pkgx:   github.com/ip7z/7zip
-        precompiled: 7zip
     "
 
     ["ar"]="
@@ -1035,11 +1034,6 @@ declare -A POST_INSTALL=(
 #   "github:username/repository:regex".
 #   The regular expression selects the tarball URL from the latest release.
 declare -A PRECOMPILED_URL=(
-    ["7za"]="
-        x86_64:  github:ip7z/7zip:https.*inux.*x64.tar.\w*
-        aarch64: github:ip7z/7zip:https.*inux.*arm64.tar.\w*
-    "
-
     ["mp3rgain"]="
         x86_64:  github:M-Igashi/mp3rgain:https.*inux.*x86.64.tar.\w*
         aarch64: github:M-Igashi/mp3rgain:https.*inux.*arm64.tar.\w*
