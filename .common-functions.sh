@@ -55,7 +55,6 @@ MSG_INFO="[\033[0;32m INFO \033[0m]"
 # Defines the priority order of package managers.
 PKG_MANAGER_PRIORITY=(
     "pkgx"
-    "precompiled"
     "flatpak"
     "nix-env"
     "apt-get"
@@ -65,6 +64,7 @@ PKG_MANAGER_PRIORITY=(
     "zypper"
     "guix"
     "xbps-install"
+    "precompiled"
 )
 
 readonly \
