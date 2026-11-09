@@ -12,7 +12,9 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies "mp3rgain"
+    if ! _command_exists "mp3gain"; then
+        _check_dependencies "mp3rgain"
+    fi
     _display_wait_box ""
     input_files=$(_get_files "par_type=file; par_select_extension=mp3; par_skip_extension=bak")
 
@@ -28,13 +30,21 @@ _main_task() {
     local std_output=""
     local temp_file=""
 
+    __cmd_mp3gain() {
+        if _command_exists "mp3gain"; then
+            mp3gain "$@"
+        else
+            mp3rgain "$@"
+        fi
+    }
+
     # Work on a temporary file.
     temp_file=$(_make_temp_file)
     std_output=$(cp --archive -- "$input_file" "$temp_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$temp_file" || return 1
 
     # Run the main process.
-    std_output=$(mp3rgain -q -r -s s -c "$temp_file" 2>&1)
+    std_output=$(__cmd_mp3gain -q -r -s s -c "$temp_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$temp_file" || return 1
 
     # Move the temporary file to the output.

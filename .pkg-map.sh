@@ -491,12 +491,12 @@ declare -A PKG_MAP=(
     "
 
     ["mp3rgain"]="
-        termux: mp3rgain
-        apt:
-        dnf:
+        termux: mp3gain
+        apt:    mp3gain
+        dnf:    mp3gain
         pacman:
-        nix:
-        zypper:
+        nix:    mp3gain
+        zypper: mp3gain
         guix:
         xbps:
         pkgx:   github.com/M-Igashi/mp3rgain
