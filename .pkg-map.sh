@@ -697,7 +697,7 @@ declare -A PKG_MAP=(
     "
 
     ["unrar"]="
-        termux:
+        termux: unrar
         apt:
         dnf:
         pacman:
