@@ -112,10 +112,9 @@ _main_task() {
     # -------------------------------------------------------------------------
     # Step 6: Pull from origin using a merge (not a rebase).
     # On conflicts, '--strategy-option theirs' keeps the remote version.
-    # Pull errors are ignored so the remaining cleanup can still run.
     # -------------------------------------------------------------------------
     std_output=$(LC_ALL=C git pull origin "$branch" --rebase=false --strategy-option theirs 2>&1)
-    _check_output "0" "$std_output" "$input_file" ""
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # -------------------------------------------------------------------------
     # Step 7: Delete local branches that are not on the remote.
