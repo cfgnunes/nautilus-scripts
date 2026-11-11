@@ -1,4 +1,4 @@
-# Enhanced File Manager Actions for Linux
+# Enhanced File Manager Actions
 
 Extra options in the right-click menu of your file manager. Convert audio and video, handle documents and images, rename, compress, or encrypt files, and do other everyday tasks on GNOME, KDE, Xfce, and more.
 
