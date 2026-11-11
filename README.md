@@ -1,6 +1,6 @@
 # Enhanced File Manager Actions for Linux
 
-A set of file manager actions that enhance your workflow. Useful right-click options to simplify common tasks across GNOME, KDE, Xfce, and more.
+Extra options in the right-click menu of your file manager. Convert audio and video, handle documents and images, rename, compress, or encrypt files, and do other everyday tasks on GNOME, KDE, Xfce, and more.
 
 [![Supported](https://img.shields.io/badge/Supported-GNOME%20%7C%20KDE%20%7C%20MATE%20%7C%20Xfce%20%7C%20Cinnamon%20%7C%20LXQt-339933?labelColor=333333)](#compatibility)
 
@@ -32,7 +32,7 @@ After cloning this repository, run the following command:
 bash install.sh
 ```
 
-## Advantages
+## Features
 
 - **Parallel task execution**: Processes multiple files simultaneously. Very fast!
 - **Multi-language support**: Automatically detects the system language and displays messages in the appropriate language.
