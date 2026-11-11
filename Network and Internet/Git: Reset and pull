@@ -43,6 +43,9 @@ _main_task() {
     # -------------------------------------------------------------------------
     git merge --abort &>/dev/null
     git rebase --abort &>/dev/null
+    # Remove any leftover rebase directories if they exist.
+    rmdir "$(git rev-parse --git-path rebase-apply)" &>/dev/null
+    rmdir "$(git rev-parse --git-path rebase-merge)" &>/dev/null
 
     # -------------------------------------------------------------------------
     # Step 2: Clean working directory.
@@ -64,7 +67,7 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # -------------------------------------------------------------------------
-    # Step 4: Determine and checkout the correct branch.
+    # Step 4: Determine and switch to the correct branch.
     # Use the current branch, or the remote default if HEAD is detached.
     # If origin no longer has that branch, switch to the default and delete
     # the orphan local branch (except desenv, develop, main, master).
@@ -90,7 +93,7 @@ _main_task() {
     fi
 
     # Switch to the detected branch.
-    std_output=$(LC_ALL=C git switch "$branch" 2>&1 || git checkout "$branch" 2>&1)
+    std_output=$(LC_ALL=C git switch "$branch" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Delete the orphan local branch after leaving it (cannot delete HEAD).
@@ -145,10 +148,6 @@ _main_task() {
     # Run garbage collection to prune unnecessary files and optimize storage.
     std_output=$(LC_ALL=C git gc --prune=all 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
-
-    # Remove any leftover rebase directories if they exist.
-    rmdir "$(git rev-parse --git-path rebase-apply)" &>/dev/null
-    rmdir "$(git rev-parse --git-path rebase-merge)" &>/dev/null
 
     # Return to the previous directory.
     _directory_pop || return 1
