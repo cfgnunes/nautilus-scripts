@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # =============================================================================
-# Project: Enhanced File Manager Actions for Linux
+# Project: Enhanced File Manager Actions
 # Author: Cristiano Fraga G. Nunes
 # Repository: https://github.com/cfgnunes/nautilus-scripts
 # License: MIT License
@@ -14,7 +14,7 @@ set -u
 # SECTION: Constants
 # -----------------------------------------------------------------------------
 
-APP_NAME="Enhanced File Manager Actions for Linux"
+APP_NAME="Enhanced File Manager Actions"
 APP_VERSION="31.10.1"
 
 # Used in:

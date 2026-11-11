@@ -2,7 +2,7 @@
 # shellcheck disable=SC2001
 
 # =============================================================================
-# Project: Enhanced File Manager Actions for Linux
+# Project: Enhanced File Manager Actions
 # Author: Cristiano Fraga G. Nunes
 # Repository: https://github.com/cfgnunes/nautilus-scripts
 # License: MIT License
