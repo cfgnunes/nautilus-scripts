@@ -52,7 +52,7 @@ _main_task() {
     # Remove untracked and ignored files/directories,
     # then discard local changes.
     # -------------------------------------------------------------------------
-    std_output=$(LC_ALL=C git clean -xdf 2>&1)
+    std_output=$(LC_ALL=C git clean -xffd 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Discard all local changes (reset to last committed state).
