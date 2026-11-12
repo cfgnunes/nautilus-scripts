@@ -31,7 +31,7 @@ _main_task() {
 
     # Check if the selected directory is a Git repository.
     local top_level=""
-    top_level=$(LC_ALL=C git -C "$input_file" rev-parse --show-toplevel 2>&1)
+    top_level=$(LC_ALL=C git -C "$input_file" rev-parse --show-toplevel 2>/dev/null)
     _check_output "$?" "$top_level" "$input_file" "" || return 1
 
     # Move into the repository directory.
