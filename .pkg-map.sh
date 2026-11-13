@@ -638,6 +638,18 @@ declare -A PKG_MAP=(
         pkgx:   rdfind.pauldreik.se
     "
 
+    ["rdsquashfs"]="
+        termux: squashfs-tools-ng
+        apt:    squashfs-tools-ng
+        dnf:    squashfs-tools-ng
+        pacman:
+        nix:    squashfs-tools-ng
+        zypper:
+        guix:
+        xbps:   squashfs-tools-ng
+        pkgx:   github.com/AgentD/squashfs-tools-ng
+    "
+
     ["rhash"]="
         termux: rhash
         apt:    rhash
