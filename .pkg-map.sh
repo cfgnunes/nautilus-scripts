@@ -36,7 +36,7 @@ declare -A PKG_MAP=(
     "
 
     ["ar"]="
-        termux: binutils
+        termux:
         apt:    binutils
         dnf:    binutils
         pacman: binutils
