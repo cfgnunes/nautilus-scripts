@@ -4,9 +4,11 @@
 # This file centralizes dependency definitions for the scripts.
 #
 # Sources:
-#   https://pkgs.org
-#   https://search.nixos.org/packages
-#   https://hpc.guix.info/browse
+#   For all: https://pkgs.org
+#   For nix: https://search.nixos.org/packages
+#   For pkgx: https://github.com/pkgxdev/pantry
+#   For guix: https://hpc.guix.info/browse
+#   For termux: https://github.com/termux/termux-packages
 
 # FIXME: Some package definitions were removed to prevent compatibility issues.
 # 'pkgx: poppler.freedesktop.org' - Exports environment variables that alter Zenity's font settings.
