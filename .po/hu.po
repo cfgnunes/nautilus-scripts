@@ -934,14 +934,6 @@ msgid "Extract here"
 msgstr "Kibontás ide"
 
 #: Menu
-msgid "File carving (via Foremost)"
-msgstr "Fájlhelyreállítás (Foremost)"
-
-#: Menu
-msgid "File carving (via PhotoRec)"
-msgstr "Fájlhelyreállítás (PhotoRec)"
-
-#: Menu
 msgid "Find broken links"
 msgstr "Hibás hivatkozások keresése"
 

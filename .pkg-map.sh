@@ -239,18 +239,6 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
-    ["foremost"]="
-        termux:
-        apt:    foremost
-        dnf:    foremost
-        pacman: foremost
-        nix:    foremost
-        zypper:
-        guix:
-        xbps:   foremost
-        pkgx:   github.com/korczis/foremost
-    "
-
     ["ghex"]="
         termux: ghex
         apt:    ghex
@@ -612,18 +600,6 @@ declare -A PKG_MAP=(
         guix:   perl
         xbps:   perl
         pkgx:   perl.org
-    "
-
-    ["photorec"]="
-        termux: testdisk
-        apt:    testdisk
-        dnf:    testdisk
-        pacman: testdisk
-        nix:    testdisk
-        zypper: photorec
-        guix:   testdisk
-        xbps:   testdisk
-        pkgx:   cgsecurity.org/testdisk
     "
 
     ["ping"]="

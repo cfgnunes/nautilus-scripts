@@ -934,14 +934,6 @@ msgid "Extract here"
 msgstr "Видобути сюди"
 
 #: Menu
-msgid "File carving (via Foremost)"
-msgstr "Відновлення файлів (через Foremost)"
-
-#: Menu
-msgid "File carving (via PhotoRec)"
-msgstr "Відновлення файлів (через PhotoRec)"
-
-#: Menu
 msgid "Find broken links"
 msgstr "Знайти пошкоджені посилання"
 

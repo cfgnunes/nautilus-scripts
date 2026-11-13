@@ -934,14 +934,6 @@ msgid "Extract here"
 msgstr "Giải nén ở đây"
 
 #: Menu
-msgid "File carving (via Foremost)"
-msgstr "Khôi phục tệp (qua Foremost)"
-
-#: Menu
-msgid "File carving (via PhotoRec)"
-msgstr "Khôi phục tệp (qua PhotoRec)"
-
-#: Menu
 msgid "Find broken links"
 msgstr "Tìm liên kết hỏng"
 

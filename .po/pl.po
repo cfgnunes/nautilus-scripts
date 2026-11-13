@@ -934,14 +934,6 @@ msgid "Extract here"
 msgstr "Wypakuj tutaj"
 
 #: Menu
-msgid "File carving (via Foremost)"
-msgstr "Odzyskiwanie plików (przez Foremost)"
-
-#: Menu
-msgid "File carving (via PhotoRec)"
-msgstr "Odzyskiwanie plików (przez PhotoRec)"
-
-#: Menu
 msgid "Find broken links"
 msgstr "Znajdź uszkodzone łącza"
 

@@ -934,14 +934,6 @@ msgid "Extract here"
 msgstr "여기에 압축 풀기"
 
 #: Menu
-msgid "File carving (via Foremost)"
-msgstr "파일 복구 (Foremost 사용)"
-
-#: Menu
-msgid "File carving (via PhotoRec)"
-msgstr "파일 복구 (PhotoRec 사용)"
-
-#: Menu
 msgid "Find broken links"
 msgstr "손상된 링크 찾기"
 

@@ -934,14 +934,6 @@ msgid "Extract here"
 msgstr "Hier uitpakken"
 
 #: Menu
-msgid "File carving (via Foremost)"
-msgstr "Bestandsherstel (met Foremost)"
-
-#: Menu
-msgid "File carving (via PhotoRec)"
-msgstr "Bestandsherstel (met Photorec)"
-
-#: Menu
 msgid "Find broken links"
 msgstr "Zoeken naar onjuiste koppelingen"
 

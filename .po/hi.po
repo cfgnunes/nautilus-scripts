@@ -934,14 +934,6 @@ msgid "Extract here"
 msgstr "यहाँ निकालें"
 
 #: Menu
-msgid "File carving (via Foremost)"
-msgstr "फ़ाइल कार्विंग (Foremost के माध्यम से)"
-
-#: Menu
-msgid "File carving (via PhotoRec)"
-msgstr "फ़ाइल कार्विंग (PhotoRec के माध्यम से)"
-
-#: Menu
 msgid "Find broken links"
 msgstr "टूटी हुई लिंक खोजें"
 

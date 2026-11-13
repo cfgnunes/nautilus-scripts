@@ -934,14 +934,6 @@ msgid "Extract here"
 msgstr "ここに展開"
 
 #: Menu
-msgid "File carving (via Foremost)"
-msgstr "ファイル復元 (Foremostを使用)"
-
-#: Menu
-msgid "File carving (via PhotoRec)"
-msgstr "ファイル復元 (PhotoRecを使用)"
-
-#: Menu
 msgid "Find broken links"
 msgstr "壊れたリンクを検索"
 

@@ -934,14 +934,6 @@ msgid "Extract here"
 msgstr "Rozbalit sem"
 
 #: Menu
-msgid "File carving (via Foremost)"
-msgstr "Obnova souborů (přes Foremost)"
-
-#: Menu
-msgid "File carving (via PhotoRec)"
-msgstr "Obnova souborů (přes PhotoRec)"
-
-#: Menu
 msgid "Find broken links"
 msgstr "Najít nefunkční odkazy"
 

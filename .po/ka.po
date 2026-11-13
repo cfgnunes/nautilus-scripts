@@ -934,14 +934,6 @@ msgid "Extract here"
 msgstr "აქ გაშლა"
 
 #: Menu
-msgid "File carving (via Foremost)"
-msgstr "ფაილის ამოკვეთა (Foremost-ით)"
-
-#: Menu
-msgid "File carving (via PhotoRec)"
-msgstr "ფაილის ამოკვეთა (PhotoRec-ით)"
-
-#: Menu
 msgid "Find broken links"
 msgstr "გაფუჭებული ბმულების პოვნა"
 

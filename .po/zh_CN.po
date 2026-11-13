@@ -934,14 +934,6 @@ msgid "Extract here"
 msgstr "解压到此处"
 
 #: Menu
-msgid "File carving (via Foremost)"
-msgstr "文件雕刻（通过 Foremost）"
-
-#: Menu
-msgid "File carving (via PhotoRec)"
-msgstr "文件雕刻（通过 PhotoRec）"
-
-#: Menu
 msgid "Find broken links"
 msgstr "查找损坏的链接"
 
