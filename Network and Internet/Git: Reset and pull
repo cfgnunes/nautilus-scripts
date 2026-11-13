@@ -44,8 +44,8 @@ _main_task() {
     git merge --abort &>/dev/null
     git rebase --abort &>/dev/null
     # Remove any leftover rebase directories if they exist.
-    rmdir "$(git rev-parse --git-path rebase-apply)" &>/dev/null
-    rmdir "$(git rev-parse --git-path rebase-merge)" &>/dev/null
+    rmdir "$(LC_ALL=C git rev-parse --git-path rebase-apply)" &>/dev/null
+    rmdir "$(LC_ALL=C git rev-parse --git-path rebase-merge)" &>/dev/null
 
     # -------------------------------------------------------------------------
     # Step 2: Clean working directory.
@@ -112,9 +112,18 @@ _main_task() {
     # -------------------------------------------------------------------------
     # Step 6: Pull from origin using a merge (not a rebase).
     # On conflicts, '--strategy-option theirs' keeps the remote version.
+    # Skip if already synchronized with remote to optimize execution.
     # -------------------------------------------------------------------------
-    std_output=$(LC_ALL=C git pull origin "$branch" --rebase=false --strategy-option theirs 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
+    local local_commit=""
+    local remote_commit=""
+
+    local_commit=$(LC_ALL=C git rev-parse HEAD)
+    remote_commit=$(LC_ALL=C git rev-parse "origin/$branch")
+
+    if [[ "$local_commit" != "$remote_commit" ]]; then
+        std_output=$(LC_ALL=C git pull origin "$branch" --rebase=false --strategy-option theirs 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "" || return 1
+    fi
 
     # -------------------------------------------------------------------------
     # Step 7: Delete local branches that are not on the remote.
