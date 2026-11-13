@@ -1,5 +1,4 @@
-# This file defines standard code formatting rules
-# to ensure consistency across editors and contributors.
+# This file defines standard code formatting rules.
 
 root = true
 
