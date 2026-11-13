@@ -96,7 +96,7 @@ declare -A PKG_MAP=(
     "
 
     ["bzip3"]="
-        termux: bzip3
+        termux:
         apt:    bzip3
         dnf:    bzip3
         pacman: bzip3
