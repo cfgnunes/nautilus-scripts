@@ -18,24 +18,8 @@ jobs:
     - name: Run installer
       run: bash <(wget -qO- https://cfgnunes.github.io/nautilus-scripts/install.sh) -n
 
-    - name: Run shellcheck (core scripts)
-      run: |
-        $HOME/.local/opt/pkgx/pkgx shellcheck -e SC1091 \
-          .common-functions.sh \
-          .helpers/multiselect-menu.sh \
-          .helpers/unit-tests-functions.sh \
-          .helpers/unit-tests-scripts.sh \
-          .pkg-map.sh \
-          install.sh \
-          uninstall.sh
-
     - name: Run shellcheck
-      run: |
-        find . ! -path "*/.git*" -type f -executable -print0 |
-          xargs -0 --no-run-if-empty \
-            --max-procs="$(nproc --all 2>/dev/null)" \
-            --replace="{}" \
-            $HOME/.local/opt/pkgx/pkgx shellcheck -e SC1091 "{}"
+      run: bash .helpers/tests-shellcheck.sh
 
     - name: Run function tests
       run: bash .helpers/unit-tests-functions.sh
