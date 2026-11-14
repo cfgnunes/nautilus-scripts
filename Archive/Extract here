@@ -22,6 +22,7 @@ _main() {
     # Execute the function '_get_dependencies' for each file in parallel.
     export -f \
         _all_commands_exists \
+        _concat_file \
         _get_command \
         _get_dependencies \
         _run_command
@@ -46,6 +47,35 @@ _main_task() {
     local command=""
     command=$(_get_command "$input_file" "available")
     _run_command "$input_file" "$command" "$output_dir"
+}
+
+_concat_file() {
+    local input_file=$1
+    local temp_dir_concat=$2
+    local output_dir=$3
+    local base_file=${input_file%.*}
+    local joined_name=""
+    local joined_file=""
+    local temp_dir=""
+    local parts=()
+    local part=""
+
+    for part in "$base_file".[0-9]*; do
+        if [[ -f "$part" ]]; then
+            parts+=("$part")
+        fi
+    done
+
+    # Remove the '.part' suffix to get the name of the joined file.
+    joined_name=$(basename -- "$base_file")
+    if [[ "${joined_name,,}" =~ \.part$ ]]; then
+        joined_name=${joined_name%.*}
+    fi
+
+    joined_file="$temp_dir_concat/$joined_name"
+
+    cat -- "${parts[@]}" >"$joined_file" || return 1
+    printf "%s" "$joined_file"
 }
 
 _get_dependencies() {
@@ -113,8 +143,18 @@ _get_command() {
     local _cmds_zstd=("zstd")
     local _cmds_unknown_file=("bsdtar,7za")
 
+    # For split archives ('.000' or '.001'), use the name of the joined file.
+    local type_name=$input_file
+
+    if [[ "${input_file,,}" =~ \.[0-9]+$ ]]; then
+        type_name=${input_file%.*}
+        if [[ "${type_name,,}" =~ \.part$ ]]; then
+            type_name=${type_name%.*}
+        fi
+    fi
+
     # Determine the preferred commands based on the filename extension.
-    case "${input_file,,}" in
+    case "${type_name,,}" in
     *.tar.bz | *.tbz) pref_commands=("${_cmds_tar_bz[@]}") ;;
     *.tar.bz2 | *.tbz2 | *.tb2) pref_commands=("${_cmds_tar_bz[@]}") ;;
     *.tar.gz | *.tgz) pref_commands=("${_cmds_tar_gz[@]}") ;;
@@ -271,6 +311,8 @@ _run_command() {
     local exit_code=0
     local filename=""
     local std_output=""
+    local temp_dir_output=""
+    local temp_dir_concat=""
 
     if [[ -z "$output_dir" ]]; then
         output_dir=$(dirname -- "$input_file")
@@ -298,6 +340,7 @@ _run_command() {
     }
     __temp_dir_remove() {
         rm -rf -- "$temp_dir_output" 2>/dev/null
+        rm -rf -- "$temp_dir_concat" 2>/dev/null
     }
     __get_password() {
         _display_password_box "$(_i18n 'Enter the password for the archive:') '$(basename -- "$input_file")'"
@@ -315,6 +358,13 @@ _run_command() {
     # Ensure the input file has an absolute path before proceeding.
     if [[ $input_file != "/"* ]]; then
         input_file=$(readlink -f "$input_file")
+    fi
+
+    # For split archives ('.000' or '.001'), join the parts into a temporary
+    # file and extract the joined file.
+    if [[ "${input_file,,}" =~ \.[0-9]+$ ]]; then
+        temp_dir_concat=$(_make_temp_dir_local "$output_dir" "$filename")
+        input_file=$(_concat_file "$input_file" "$temp_dir_concat" "$output_dir") || return 1
     fi
 
     # Use a local temporary directory to work.
