@@ -32,7 +32,7 @@ After cloning this repository, run the following command:
 bash install.sh
 ```
 
-## Features
+## Highlights
 
 - **Parallel task execution**: Processes multiple files simultaneously. Very fast!
 - **Multi-language support**: Automatically detects the system language and displays messages in the appropriate language.
