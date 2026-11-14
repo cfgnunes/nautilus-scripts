@@ -15,13 +15,13 @@ You can use either **wget** or **curl**. Choose **one** of the following command
 #### Using `wget`
 
 ```bash
-bash -c "$(wget -qO- https://cfgnunes.github.io/nautilus-scripts/install.sh)"
+bash <(wget -qO- https://cfgnunes.github.io/nautilus-scripts/install.sh)
 ```
 
 #### Using `curl`
 
 ```bash
-bash -c "$(curl -fsSL https://cfgnunes.github.io/nautilus-scripts/install.sh)"
+bash <(curl -fsSL https://cfgnunes.github.io/nautilus-scripts/install.sh)
 ```
 
 ### Option 2: Local installation
