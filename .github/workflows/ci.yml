@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Run installer
-      run: bash -c "$(wget -qO- https://cfgnunes.github.io/nautilus-scripts/install.sh)" _ -n
+      run: bash <(wget -qO- https://cfgnunes.github.io/nautilus-scripts/install.sh) -n
 
     - name: Run shellcheck (core scripts)
       run: |
