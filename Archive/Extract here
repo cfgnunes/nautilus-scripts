@@ -56,7 +56,6 @@ _concat_file() {
     local base_file=${input_file%.*}
     local joined_name=""
     local joined_file=""
-    local temp_dir=""
     local parts=()
     local part=""
 
