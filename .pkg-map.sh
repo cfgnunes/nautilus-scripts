@@ -568,7 +568,7 @@ declare -A PKG_MAP=(
     ["pdfcpu"]="
         termux: pdfcpu
         apt:
-        dnf:    golang-github-pdfcpu
+        dnf:
         pacman: pdfcpu
         nix:    pdfcpu
         zypper:
