@@ -15,14 +15,14 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Run installer
+    - name: Run 'install.sh'
       run: bash <(wget -qO- https://cfgnunes.github.io/nautilus-scripts/install.sh) -n
 
-    - name: Run shellcheck
+    - name: Run 'tests-shellcheck.sh'
       run: bash .helpers/tests-shellcheck.sh
 
-    - name: Run function tests
-      run: bash .helpers/unit-tests-functions.sh
+    - name: Run 'tests-functions.sh'
+      run: bash .helpers/tests-functions.sh
 
-    - name: Run scripts tests
-      run: bash .helpers/unit-tests-scripts.sh
+    - name: Run 'tests-scripts.sh'
+      run: bash .helpers/tests-scripts.sh
