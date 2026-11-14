@@ -276,10 +276,18 @@ _run_command() {
         output_dir=$(dirname -- "$input_file")
     fi
 
-    filename=$(basename -- "$input_file")             # Remove the path.
-    filename=${filename%.[0-9]*}                      # Remove '.000', '.001'.
-    filename=${filename%.part}                        # Remove '.part'.
-    filename=$(_strip_filename_extension "$filename") # Remove the extension.
+    # Remove the path.
+    filename=$(basename -- "$input_file")
+    # Remove '.000', '.001'.
+    if [[ "$filename" =~ \.[0-9]+$ ]]; then
+        filename=${filename%.*}
+    fi
+    # Remove '.part'.
+    if [[ "$filename" =~ \.part$ ]]; then
+        filename=${filename%.part}
+    fi
+    # Remove the extension.
+    filename=$(_strip_filename_extension "$filename")
 
     __temp_dir_push() {
         temp_dir_output=$(_make_temp_dir_local "$output_dir" "$filename")
@@ -354,8 +362,6 @@ _run_command() {
             local basename=""
             local temp_dir_local=""
             basename=$(basename -- "$input_file")             # Remove the path.
-            basename=${basename%.[0-9]*}                      # Remove '.000', '.001'.
-            basename=${basename%.part}                        # Remove '.part'.
             basename=$(_strip_filename_extension "$basename") # Remove the extension.
             temp_dir_local=$(_make_temp_dir_local "$output_dir" ".$basename")
             mv -- "$filename" "$temp_dir_local/$filename"
