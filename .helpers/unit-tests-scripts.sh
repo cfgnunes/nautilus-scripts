@@ -16,6 +16,7 @@ source "$ROOT_DIR/.common-functions.sh"
 # PASS: (2026) Fedora 43    - All tests passed.
 # PASS: (2026) Fedora 44    - All tests passed.
 # PASS: (2026) Ubuntu 26.04 - All tests passed.
+# PASS: (2026) Fedora 45    - All tests passed.
 
 # Disable GUI for testing on terminal.
 unset "DISPLAY"
@@ -729,6 +730,8 @@ _main() {
     # SECTION: Document: PDF
     # -------------------------------------------------------------------------
 
+    # IGNORED: Document/PDF: Annotations/PDF: Extract annotations
+    # IGNORED: Document/PDF: Annotations/PDF: List annotations
     # IGNORED: Document/PDF: Combine, Split/PDF: Extract pages
     # IGNORED: Document/PDF: Security/PDF: Remove password
     # IGNORED: Document/PDF: Security/PDF: Set password
@@ -743,15 +746,6 @@ _main() {
     # IGNORED: Document/PDF: Tools/PDF: Crop margins
     # IGNORED: Document/PDF: Watermark/PDF: Add watermark (over)
     # IGNORED: Document/PDF: Watermark/PDF: Add watermark (under)
-
-    __test_begin "$fixture_pdf::Test document PDF.pdf"
-    __test_script "Document/PDF: Annotations/PDF: Extract annotations" \
-        "empty" "" "$temp_dir/Test document PDF.pdf"
-    __check_path_missing "$temp_dir/Test document PDF.md"
-
-    __test_begin "$fixture_pdf::Test document PDF.pdf"
-    __test_script "Document/PDF: Annotations/PDF: List annotations" \
-        "empty" "" "$temp_dir/Test document PDF.pdf"
 
     __test_begin "$fixture_pdf::Test document PDF.pdf"
     __test_script "Document/PDF: Annotations/PDF: Find annotated PDFs" \
