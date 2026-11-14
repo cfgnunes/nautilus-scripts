@@ -22,7 +22,7 @@ _main() {
     TASK_CHUNK_SIZE=${TASK_CHUNK_SIZE^^}
 
     # Parse a size accepted by GNU split. Unitless values are megabytes.
-    if [[ ! "$TASK_CHUNK_SIZE" =~ ^[[:space:]]*([0-9]+)(B|K|M|G|T|P|E|Z|Y|KB|MB|GB|TB|PB|EB|ZB|YB)?[[:space:]]*$ ]]; then
+    if [[ ! "$TASK_CHUNK_SIZE" =~ ^[[:space:]]*([0-9]+)[[:space:]]*(B|K|M|G|T|P|E|Z|Y|KB|MB|GB|TB|PB|EB|ZB|YB)?[[:space:]]*$ ]]; then
         msg="$(_i18n 'Invalid input!')"
         _display_error_box "$msg"
         _exit_script
