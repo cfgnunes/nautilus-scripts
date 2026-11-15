@@ -425,7 +425,7 @@ _run_command() {
     "lrzip") std_output=$(lrzip -d -o "$temp_dir_output/$filename" -- "$input_file" 2>&1) ;;
     "lz4") lz4 -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
     "lzip") lzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
-    "lzop") std_output=$(lzop -d -- "$input_file" 2>&1) ;;
+    "lzop") lzop -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
     "rdsquashfs") std_output=$(rdsquashfs -u . -- "$input_file" 2>&1) ;;
     "tar,bzip2") std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1) ;;
     "tar,gzip") std_output=$(tar --extract --gzip --file="$input_file" 2>&1) ;;
