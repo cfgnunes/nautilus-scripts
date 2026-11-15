@@ -23,8 +23,11 @@ _main() {
 #   This function compares files based on their MIME types and available
 #   commands. It supports two or three files depending on the command and file
 #   type.
+#
+# Parameters:
+#   $1 (input_files): Input files separated by '$FIELD_SEPARATOR'.
 _compare() {
-    local input_files=$1      # Input files separated by '$FIELD_SEPARATOR'.
+    local input_files=$1
     local num_files_compare=2 # Default number of files to compare.
     local msg=""
 
@@ -98,10 +101,15 @@ _compare() {
 #   This function compares binary files in hexadecimal format and handles
 #   modifications. It converts files to hex view, compares them, and allows
 #   editing or saving changes.
+#
+# Parameters:
+#   $1 (command): Command to use for comparison (e.g., 'meld').
+#   $2 (file_1): First binary file to compare.
+#   $3 (file_2): Second binary file to compare.
 _compare_hexa() {
-    local command=$1 # Command to use for comparison (e.g., 'meld').
-    local file_1=$2  # First binary file to compare.
-    local file_2=$3  # Second binary file to compare.
+    local command=$1
+    local file_1=$2
+    local file_2=$3
 
     # Remove the ',xxd' suffix from the command name.
     command=${command//,xxd/}
@@ -158,6 +166,11 @@ _compare_hexa() {
 #   This function checks if two or three defined items (files or directories)
 #   are identical. If all selected items are identical, displays a message and
 #   exits the script.
+#
+# Parameters:
+#   $1 (file_1): First item to compare.
+#   $2 (file_2): Second item to compare.
+#   $3 (file_3): Optional. Third item to compare.
 _compare_identical() {
     local file_1=$1
     local file_2=$2
@@ -198,6 +211,13 @@ _compare_identical() {
 #   This function compares two images using ImageMagick. If the images are
 #   identical, it displays a message and exits the script. Otherwise, it
 #   generates a visual diff and opens it with an image viewer.
+#
+# Parameters:
+#   $1 (file_1): First image to compare.
+#   $2 (file_2): Second image to compare.
+#
+# Returns:
+#   1 (false): If the dimensions of either image cannot be retrieved.
 _compare_images() {
     local file_1=$1
     local file_2=$2
@@ -263,9 +283,17 @@ _compare_images() {
 #   This function determines the appropriate command for comparing files or
 #   directories. The selection is based on the file type, the number of files
 #   to compare, and system availability of commands.
+#
+# Parameters:
+#   $1 (input_file): The file to analyze for MIME type or encoding.
+#   $2 (num_files_compare): The number of files to compare (2 or 3).
+#
+# Returns:
+#   Prints the selected command name (e.g., 'diffpdf', 'magick', 'meld',
+#   'kdiff3', or 'meld,xxd') to standard output.
 _get_command() {
-    local input_file=$1        # The file to analyze for MIME type or encoding.
-    local num_files_compare=$2 # The number of files to compare (2 or 3).
+    local input_file=$1
+    local num_files_compare=$2
     local command=""
 
     # Determine the MIME type of the input file.
@@ -307,6 +335,13 @@ _get_command() {
 #   This function determines the ideal number of columns for a hexadecimal
 #   display. The column width is chosen to evenly divide the size difference
 #   between files, ensuring a more organized and visually coherent hex dump.
+#
+# Parameters:
+#   $1 (size_difference): The size difference in bytes between the two files.
+#
+# Returns:
+#   Prints the column width (from 5 to 23) that evenly divides the size
+#   difference, or 24 if no such width is found, to standard output.
 _get_hex_ideal_cols() {
     local size_difference=$1
     local cols=24 # Default column width for the hex display.
@@ -330,11 +365,17 @@ _get_hex_ideal_cols() {
 # Description:
 #   This function calculates the absolute difference between two numbers. The
 #   result is always a positive value, regardless of the order of the inputs.
+#
+# Parameters:
+#   $1 (num_1): The first number.
+#   $2 (num_2): The second number.
+#
+# Returns:
+#   Prints the absolute difference between the two numbers to standard output.
 _get_difference() {
     local num_1=$1
     local num_2=$2
 
-    # Calculate the absolute difference by comparing the two numbers.
     if ((num_1 > num_2)); then
         printf "%s" "$((num_1 - num_2))"
     else
@@ -346,6 +387,13 @@ _get_difference() {
 #
 # Description:
 #   This function returns the size of a file in bytes.
+#
+# Parameters:
+#   $1 (file): The path of the file.
+#
+# Returns:
+#   Prints the file size in bytes to standard output. Prints nothing if the
+#   file cannot be read.
 _get_file_size() {
     stat --format="%s" "$1" 2>/dev/null
 }
