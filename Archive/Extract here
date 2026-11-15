@@ -308,6 +308,7 @@ _run_command() {
     local command=$2
     local output_dir=$3
     local exit_code=0
+    local basename=""
     local filename=""
     local std_output=""
     local temp_dir_output=""
@@ -318,8 +319,10 @@ _run_command() {
     fi
 
     # Remove the path.
-    filename=$(basename -- "$input_file")
+    basename=$(basename -- "$input_file")
+
     # Remove '.000', '.001'.
+    filename="$basename"
     if [[ "$filename" =~ \.[0-9]+$ ]]; then
         filename=${filename%.*}
     fi
@@ -342,7 +345,7 @@ _run_command() {
         rm -rf -- "$temp_dir_concat" 2>/dev/null
     }
     __get_password() {
-        _display_password_box "$(_i18n 'Enter the password for the archive:') '$(basename -- "$input_file")'"
+        _display_password_box "$(_i18n 'Enter the password for the archive:') '$basename'"
     }
     __cmd_7z() {
         if _command_exists "7z"; then
@@ -408,16 +411,13 @@ _run_command() {
         file_mime=$(_get_file_mime "$filename")
         if [[ "$file_mime" == "application/x-tar" ]]; then
             # Create a temporary local directory for extraction.
-            local basename=""
-            local temp_dir_local=""
-            basename=$(basename -- "$input_file")             # Remove the path.
-            basename=$(_strip_filename_extension "$basename") # Remove the extension.
-            temp_dir_local=$(_make_temp_dir_local "$output_dir" ".$basename")
-            mv -- "$filename" "$temp_dir_local/$filename"
-            std_output=$(tar --extract --file="$temp_dir_local/$filename" 2>&1)
+            local temp_dir_output_tar=""
+            temp_dir_output_tar=$(_make_temp_dir_local "$output_dir" "$filename")
+            mv -- "$filename" "$temp_dir_output_tar/$filename"
+            std_output=$(tar --extract --file="$temp_dir_output_tar/$filename" 2>&1)
             exit_code=$?
             # Remove the temporary directory (local directory).
-            rm -rf -- "$temp_dir_local"
+            rm -rf -- "$temp_dir_output_tar"
         fi
         ;;
     "gzip") gzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
