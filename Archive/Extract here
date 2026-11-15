@@ -419,12 +419,32 @@ _run_command() {
             rm -rf -- "$temp_dir_extract_tar"
         fi
         ;;
-    "gzip") gzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
+    "gzip")
+        # Get the original filename stored in the gzip archive, if available.
+        local saved_filename=""
+        saved_filename=$(gzip -l -N "$input_file" 2>/dev/null |
+            tail -n 1 | cut -d "%" -f 2- | sed "s|^ ||")
+        if [[ -n "$saved_filename" ]] && [[ "$saved_filename" != "$input_file" ]]; then
+            filename=$(basename "$saved_filename")
+        fi
+        # Extract the gzip archive to the determined filename.
+        gzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null
+        ;;
     "lha") std_output=$(lha -e "$input_file" 2>&1) ;;
     "lrzip") std_output=$(lrzip -d -o "$temp_dir_extract/$filename" -- "$input_file" 2>&1) ;;
     "lz4") lz4 -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
     "lzip") lzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
-    "lzop") lzop -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
+    "lzop")
+        # Get the original filename stored in the gzip archive, if available.
+        local saved_filename=""
+        saved_filename=$(lzop -l -N "$input_file" 2>/dev/null |
+            tail -n 1 | cut -d "%" -f 2- | sed "s|^ ||")
+        if [[ -n "$saved_filename" ]] && [[ "$saved_filename" != "$input_file" ]]; then
+            filename=$(basename "$saved_filename")
+        fi
+        # Extract the gzip archive to the determined filename.
+        lzop -d -c -- "$input_file" >"$filename" 2>/dev/null
+        ;;
     "rdsquashfs") std_output=$(rdsquashfs -u . -- "$input_file" 2>&1) ;;
     "tar,bzip2") std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1) ;;
     "tar,gzip") std_output=$(tar --extract --gzip --file="$input_file" 2>&1) ;;
