@@ -51,11 +51,10 @@ _main_task() {
 
 _concat_file() {
     local input_file=$1
-    local temp_dir_concat=$2
-    local output_dir=$3
+    local output_dir=$2
     local base_file=${input_file%.*}
-    local joined_name=""
-    local joined_file=""
+    local output_file=""
+    local output_file_path=""
     local parts=()
     local part=""
 
@@ -66,15 +65,15 @@ _concat_file() {
     done
 
     # Remove the '.part' suffix to get the name of the joined file.
-    joined_name=$(basename -- "$base_file")
-    if [[ "${joined_name,,}" =~ \.part$ ]]; then
-        joined_name=${joined_name%.*}
+    output_file=$(basename -- "$base_file")
+    if [[ "${output_file,,}" =~ \.part$ ]]; then
+        output_file=${output_file%.*}
     fi
 
-    joined_file="$temp_dir_concat/$joined_name"
+    output_file_path="$output_dir/$output_file"
 
-    cat -- "${parts[@]}" >"$joined_file" || return 1
-    printf "%s" "$joined_file"
+    cat -- "${parts[@]}" >"$output_file_path" || return 1
+    printf "%s" "$output_file_path"
 }
 
 _get_dependencies() {
@@ -311,8 +310,8 @@ _run_command() {
     local basename=""
     local filename=""
     local std_output=""
-    local temp_dir_output=""
-    local temp_dir_concat=""
+    local temp_dir_extract=""
+    local temp_dir_extract_cat=""
 
     if [[ -z "$output_dir" ]]; then
         output_dir=$(dirname -- "$input_file")
@@ -334,15 +333,15 @@ _run_command() {
     filename=$(_strip_filename_extension "$filename")
 
     __temp_dir_push() {
-        temp_dir_output=$(_make_temp_dir_local "$output_dir" "$filename")
-        _directory_push "$temp_dir_output" || return 1
+        temp_dir_extract=$(_make_temp_dir_local "$output_dir" "$filename")
+        _directory_push "$temp_dir_extract" || return 1
     }
     __temp_dir_pop() {
         _directory_pop || return 1
     }
     __temp_dir_remove() {
-        rm -rf -- "$temp_dir_output" 2>/dev/null
-        rm -rf -- "$temp_dir_concat" 2>/dev/null
+        rm -rf -- "$temp_dir_extract" 2>/dev/null
+        rm -rf -- "$temp_dir_extract_cat" 2>/dev/null
     }
     __get_password() {
         _display_password_box "$(_i18n 'Enter the password for the archive:') '$basename'"
@@ -365,8 +364,8 @@ _run_command() {
     # For split archives ('.000' or '.001'), join the parts into a temporary
     # file and extract the joined file.
     if [[ "${input_file,,}" =~ \.[0-9]+$ ]]; then
-        temp_dir_concat=$(_make_temp_dir_local "$output_dir" "$filename")
-        input_file=$(_concat_file "$input_file" "$temp_dir_concat" "$output_dir") || return 1
+        temp_dir_extract_cat=$(_make_temp_dir_local "$output_dir" "$filename")
+        input_file=$(_concat_file "$input_file" "$temp_dir_extract_cat") || return 1
     fi
 
     # Use a local temporary directory to work.
@@ -411,18 +410,18 @@ _run_command() {
         file_mime=$(_get_file_mime "$filename")
         if [[ "$file_mime" == "application/x-tar" ]]; then
             # Create a temporary local directory for extraction.
-            local temp_dir_output_tar=""
-            temp_dir_output_tar=$(_make_temp_dir_local "$output_dir" "$filename")
-            mv -- "$filename" "$temp_dir_output_tar/$filename"
-            std_output=$(tar --extract --file="$temp_dir_output_tar/$filename" 2>&1)
+            local temp_dir_extract_tar=""
+            temp_dir_extract_tar=$(_make_temp_dir_local "$output_dir" "$filename")
+            mv -- "$filename" "$temp_dir_extract_tar/$filename"
+            std_output=$(tar --extract --file="$temp_dir_extract_tar/$filename" 2>&1)
             exit_code=$?
             # Remove the temporary directory (local directory).
-            rm -rf -- "$temp_dir_output_tar"
+            rm -rf -- "$temp_dir_extract_tar"
         fi
         ;;
     "gzip") gzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
     "lha") std_output=$(lha -e "$input_file" 2>&1) ;;
-    "lrzip") std_output=$(lrzip -d -o "$temp_dir_output/$filename" -- "$input_file" 2>&1) ;;
+    "lrzip") std_output=$(lrzip -d -o "$temp_dir_extract/$filename" -- "$input_file" 2>&1) ;;
     "lz4") lz4 -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
     "lzip") lzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
     "lzop") lzop -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
@@ -496,7 +495,7 @@ _run_command() {
     fi
 
     # Get the list of root items (files or directories)
-    # in the 'temp_dir_output' directory.
+    # in the 'temp_dir_extract' directory.
     local root_items=""
     root_items=$(find . -mindepth 1 -maxdepth 1 2>/dev/null)
 
@@ -504,13 +503,13 @@ _run_command() {
     local count_root_items=""
     count_root_items=$(wc -l <<<"$root_items")
 
-    # Check if the 'temp_dir_output' has just one item.
+    # Check if the 'temp_dir_extract' has just one item.
     local single_root_item=""
     if ((count_root_items == 1)); then
         single_root_item="${root_items#./}"
     fi
 
-    # Check if the 'temp_dir_output' is empty.
+    # Check if the 'temp_dir_extract' is empty.
     if ((count_root_items == 0)); then
         __temp_dir_pop && __temp_dir_remove
         return 1
@@ -523,15 +522,15 @@ _run_command() {
         [[ "$(_strip_filename_extension "$single_root_item")" == "$filename" ]]; then
         # For archives with "one item with the same name of the archive".
         # For example: 'README.txt.tar.gz' or 'README.tar.gz'.
-        _move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$single_root_item"
+        _move_file "rename" "$temp_dir_extract/$single_root_item" "$output_dir/$single_root_item"
     elif [[ "$single_root_item" == "squashfs-root" ]] &&
         [[ "$command" == "unsquashfs" ]]; then
         # For the 'squashfs' archive format.
-        _move_file "rename" "$temp_dir_output/$single_root_item" "$output_dir/$filename"
+        _move_file "rename" "$temp_dir_extract/$single_root_item" "$output_dir/$filename"
     else
         # For archives with "one item with a different name of the archive"
         # or "multiple items".
-        _move_file "rename" "$temp_dir_output" "$output_dir/$filename"
+        _move_file "rename" "$temp_dir_extract" "$output_dir/$filename"
     fi
 
     __temp_dir_remove
