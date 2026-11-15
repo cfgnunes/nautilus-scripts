@@ -25,7 +25,8 @@ _main() {
         _concat_file \
         _get_command \
         _get_dependencies \
-        _run_command
+        _run_command \
+        _strip_filename_multipart
     _run_function_parallel "_get_dependencies '{}'" "$input_files" "$FIELD_SEPARATOR"
 
     local dependencies=""
@@ -49,6 +50,20 @@ _main_task() {
     _run_command "$input_file" "$command" "$output_dir"
 }
 
+_strip_filename_multipart() {
+    local filename=$1
+
+    # Remove '.000', '.001'.
+    if [[ "$filename" =~ \.[0-9]+$ ]]; then
+        filename=${filename%.*}
+        # Remove '.part'.
+        if [[ "${filename,,}" =~ \.part$ ]]; then
+            filename=${filename%.*}
+        fi
+    fi
+    printf "%s" "$filename"
+}
+
 _concat_file() {
     local input_file=$1
     local output_dir=$2
@@ -64,11 +79,8 @@ _concat_file() {
         fi
     done
 
-    # Remove the '.part' suffix to get the name of the joined file.
     output_file=$(basename -- "$base_file")
-    if [[ "${output_file,,}" =~ \.part$ ]]; then
-        output_file=${output_file%.*}
-    fi
+    output_file=$(_strip_filename_multipart "$output_file")
 
     output_file_path="$output_dir/$output_file"
 
@@ -142,14 +154,8 @@ _get_command() {
     local _cmds_unknown_file=("bsdtar,7za")
 
     # For split archives ('.000' or '.001'), use the name of the joined file.
-    local type_name=$input_file
-
-    if [[ "${input_file,,}" =~ \.[0-9]+$ ]]; then
-        type_name=${input_file%.*}
-        if [[ "${type_name,,}" =~ \.part$ ]]; then
-            type_name=${type_name%.*}
-        fi
-    fi
+    local type_name=""
+    type_name=$(_strip_filename_multipart "$input_file")
 
     # Determine the preferred commands based on the filename extension.
     case "${type_name,,}" in
@@ -320,16 +326,8 @@ _run_command() {
     # Remove the path.
     basename=$(basename -- "$input_file")
 
-    # Remove '.000', '.001'.
     filename="$basename"
-    if [[ "$filename" =~ \.[0-9]+$ ]]; then
-        filename=${filename%.*}
-    fi
-    # Remove '.part'.
-    if [[ "$filename" =~ \.part$ ]]; then
-        filename=${filename%.part}
-    fi
-    # Remove the extension.
+    filename=$(_strip_filename_multipart "$filename")
     filename=$(_strip_filename_extension "$filename")
 
     __temp_dir_push() {
