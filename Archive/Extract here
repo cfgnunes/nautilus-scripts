@@ -50,6 +50,17 @@ _main_task() {
     _run_command "$input_file" "$command" "$output_dir"
 }
 
+# Function: _strip_filename_multipart
+#
+# Description:
+#   This function removes the split archive suffixes ('.000', '.001', and
+#   '.part') from a filename.
+#
+# Parameters:
+#   $1 (filename): The filename to be processed.
+#
+# Returns:
+#   The filename without the split archive suffixes (printed to stdout).
 _strip_filename_multipart() {
     local filename=$1
 
@@ -64,6 +75,18 @@ _strip_filename_multipart() {
     printf "%s" "$filename"
 }
 
+# Function: _concat_file
+#
+# Description:
+#   This function joins the parts of a split archive (for example, 'file.001'
+#   and 'file.002') into a single file in the output directory.
+#
+# Parameters:
+#   $1 (input_file): Any part of the split archive.
+#   $2 (output_dir): The directory where the joined file will be created.
+#
+# Returns:
+#   The path of the joined file (printed to stdout).
 _concat_file() {
     local input_file=$1
     local output_dir=$2
@@ -84,10 +107,19 @@ _concat_file() {
 
     output_file_path="$output_dir/$output_file"
 
-    cat -- "${parts[@]}" >"$output_file_path" || return 1
+    cat -- "${parts[@]}" >"$output_file_path"
     printf "%s" "$output_file_path"
 }
 
+# Function: _get_dependencies
+#
+# Description:
+#   This function checks if the extraction command for a file is available. If
+#   it is not, the default command is written to the text storage so it can be
+#   reported to the user.
+#
+# Parameters:
+#   $1 (input_file): The archive file to be checked.
 _get_dependencies() {
     local input_file=$1
     local dependencies=""
@@ -105,6 +137,19 @@ _get_dependencies() {
     _storage_text_write_ln "$command"
 }
 
+# Function: _get_command
+#
+# Description:
+#   This function determines the command used to extract an archive, based on
+#   its filename extension or, if the extension is unknown, its MIME type.
+#
+# Parameters:
+#   $1 (input_file): The archive file.
+#   $2 (command_status): 'default' to get the first preferred command, or
+#      'available' to get the first preferred command installed on the system.
+#
+# Returns:
+#   The name of the command (printed to stdout).
 _get_command() {
     local input_file=$1
     local command_status=$2
@@ -293,6 +338,17 @@ _get_command() {
     printf "%s" "$command"
 }
 
+# Function: _all_commands_exists
+#
+# Description:
+#   This function checks if all commands of a list exist on the system.
+#
+# Parameters:
+#   $1 (commands): A space-separated list of command names.
+#
+# Returns:
+#   0 (true): If all commands exist.
+#   1 (false): If any command does not exist.
 _all_commands_exists() {
     local commands=$1
 
@@ -308,6 +364,22 @@ _all_commands_exists() {
     return 0
 }
 
+# Function: _run_command
+#
+# Description:
+#   This function extracts an archive using the given command. If the archive
+#   is password protected, it asks the user for the password and tries again.
+#   The extracted items are moved to the output directory.
+#
+# Parameters:
+#   $1 (input_file): The archive file to be extracted.
+#   $2 (command): The command used to extract the archive.
+#   $3 (output_dir): The directory where the extracted items will be placed.
+#      If empty, the directory of the input file is used.
+#
+# Returns:
+#   0 (true): If the archive was extracted successfully.
+#   1 (false): If the extraction failed or no items were extracted.
 _run_command() {
     local input_file=$1
     local command=$2
