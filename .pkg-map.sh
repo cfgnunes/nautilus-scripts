@@ -10,9 +10,6 @@
 #   For guix: https://hpc.guix.info/browse
 #   For termux: https://github.com/termux/termux-packages
 
-# FIXME: Some package definitions were removed to prevent compatibility issues.
-# 'pkgx: poppler.freedesktop.org' - Exports environment variables that alter Zenity's font settings.
-
 # Description:
 #   This array defines the mapping between a dependency key and its
 #   corresponding package names across different package managers.
@@ -586,7 +583,7 @@ declare -A PKG_MAP=(
         zypper: poppler-tools
         guix:   poppler
         xbps:   poppler
-        pkgx:
+        pkgx:   poppler.freedesktop.org
     "
 
     ["perl"]="
