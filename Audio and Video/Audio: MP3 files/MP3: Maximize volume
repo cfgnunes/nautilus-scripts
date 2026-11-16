@@ -12,8 +12,8 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    if ! _command_exists "mp3gain"; then
-        _check_dependencies "mp3rgain"
+    if ! _command_exists "mp3rgain"; then
+        _check_dependencies "mp3gain"
     fi
     _display_wait_box ""
     input_files=$(_get_files "par_type=file; par_select_extension=mp3; par_skip_extension=bak")

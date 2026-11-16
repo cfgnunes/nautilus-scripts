@@ -480,17 +480,16 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
-    ["mp3rgain"]="
+    ["mp3gain"]="
         termux: mp3gain
         apt:    mp3gain
         dnf:    mp3gain
-        pacman:
+        pacman: mp3gain
         nix:    mp3gain
         zypper: mp3gain
         guix:
         xbps:
-        pkgx:   github.com/M-Igashi/mp3rgain
-        precompiled: mp3rgain
+        pkgx:   mp3gain.sourceforge.net
     "
 
     ["nmap"]="
@@ -1024,11 +1023,6 @@ declare -A POST_INSTALL=(
 #   "github;username/repository;regex".
 #   The regular expression selects the tarball URL from the latest release.
 declare -A PRECOMPILED_URL=(
-    ["mp3rgain"]="
-        x86_64:  github;M-Igashi/mp3rgain;https.*inux.*x86.64.tar.\w*
-        aarch64: github;M-Igashi/mp3rgain;https.*inux.*arm64.tar.\w*
-    "
-
     ["pdfcpu"]="
         x86_64:  github;pdfcpu/pdfcpu;https.*inux.*x86.64.tar.\w*
         aarch64: github;pdfcpu/pdfcpu;https.*inux.*arm64.tar.\w*
