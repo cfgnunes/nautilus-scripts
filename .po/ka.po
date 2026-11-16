@@ -1894,10 +1894,6 @@ msgid "Close the file manager to reload configuration"
 msgstr "კონფიგურაციის თავიდან ჩასატვირთად დახურეთ ფაილების მმართველი"
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr "მალსახმობების დამატება აპლიკაციის მენიუში"
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr "pkgx-ის დაყენება დამოკიდებულებებისთვის"
 
@@ -1916,10 +1912,6 @@ msgstr "დაყენება არაინტერაქტიულ რ�
 #: install.sh
 msgid "Installing:"
 msgstr "დაყენება:"
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
-msgstr "აპლიკაციის მენიუს მალსახმობების დაყენება:"
 
 #: install.sh
 msgid "Installation completed successfully!"
@@ -1944,14 +1936,6 @@ msgstr "კლავიატურის მალსახმობები�
 #: install.sh
 msgid "Scripts"
 msgstr "სკრიპტები"
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr "მიმდინარეობს მალსახმობების შექმნა აპლიკაციის მენიუში..."
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
-msgstr "GNOME Shell-ის აპლიკაციის საქაღალდის შექმნა..."
 
 #: install.sh
 msgid "Installing actions in the context menu..."

@@ -20,11 +20,8 @@ APP_VERSION="31.11"
 # Used in:
 #  - Directory where scripts are installed:
 #    "$HOME/.local/share/$INSTALL_NAME_DIR".
-#  - Directory where shortcuts (application menu) are stored:
-#    "$HOME/.local/share/applications/$INSTALL_NAME_DIR".
 INSTALL_NAME_DIR="nautilus-scripts"
 INSTALL_DIR="$HOME/.local/opt/$INSTALL_NAME_DIR"
-INSTALL_APPS_SHORTCUTS_PATH=".local/share/applications/$INSTALL_NAME_DIR"
 
 # Constants for logging.
 if [[ -z "${TEMP_DIR:-}" ]]; then
@@ -44,22 +41,6 @@ COMPATIBLE_FILE_MANAGERS=(
     "pcmanfm-qt"
     "pcmanfm"
     "krusader"
-)
-
-# Ignored application menu shortcuts during install.
-IGNORE_APPS_SHORTCUTS=(
-    ! -iname "Open item location"
-    ! -iname "Code editor"
-    ! -iname "Disk usage analyzer"
-    ! -iname "Terminal"
-    ! -iname "Terminal (synced panes)"
-    ! -iname "Extract here"
-    ! -iname "Create hard link here"
-    ! -iname "Create hard link to..."
-    ! -iname "Create symbolic link here"
-    ! -iname "Create symbolic link to..."
-    ! -iname "Paste as hard link"
-    ! -iname "Paste as symbolic link"
 )
 
 # Directories to be ignored during install.
@@ -87,7 +68,6 @@ readonly \
     COMPATIBLE_FILE_MANAGERS \
     I18N_DIR \
     IGNORE_FIND_PATHS \
-    INSTALL_APPS_SHORTCUTS_PATH \
     INSTALL_DIR \
     INSTALL_LOG_NAME \
     INSTALL_LOG_TMP \
@@ -113,7 +93,6 @@ INSTALL_GROUP="" # Group of the installation directory.
 OPT_INSTALL_BASIC_DEPS="true"
 OPT_INSTALL_ACCELS="true"
 OPT_CLOSE_FILE_MANAGER="true"
-OPT_INSTALL_APP_SHORTCUTS="false"
 if uname -m 2>/dev/null | grep -qE "x86_64|aarch64"; then
     OPT_INSTALL_PKGX="true"
 else
@@ -182,7 +161,6 @@ _main() {
         "$(_i18n 'Install keyboard accelerators')"
         "$(_i18n 'Close the file manager to reload configuration')"
         "$(_i18n 'Install pkgx for dependencies')"
-        "$(_i18n 'Add shortcuts in the application menu')"
         "$(_i18n 'Choose script categories to install')"
     )
 
@@ -192,7 +170,6 @@ _main() {
         "$OPT_INSTALL_ACCELS"
         "$OPT_CLOSE_FILE_MANAGER"
         "$OPT_INSTALL_PKGX"
-        "$OPT_INSTALL_APP_SHORTCUTS"
         "$OPT_CHOOSE_CATEGORIES"
     )
 
@@ -216,14 +193,12 @@ _main() {
     OPT_INSTALL_ACCELS=${menu_selected[1]}
     OPT_CLOSE_FILE_MANAGER=${menu_selected[2]}
     OPT_INSTALL_PKGX=${menu_selected[3]}
-    OPT_INSTALL_APP_SHORTCUTS=${menu_selected[4]}
-    OPT_CHOOSE_CATEGORIES=${menu_selected[5]}
+    OPT_CHOOSE_CATEGORIES=${menu_selected[4]}
 
     _log_variable "OPT_INSTALL_BASIC_DEPS"
     _log_variable "OPT_INSTALL_ACCELS"
     _log_variable "OPT_CLOSE_FILE_MANAGER"
     _log_variable "OPT_INSTALL_PKGX"
-    _log_variable "OPT_INSTALL_APP_SHORTCUTS"
     _log_variable "OPT_CHOOSE_CATEGORIES"
     _log_variable "OPT_INTERACTIVE_INSTALL"
     _log_variable "OPT_QUIET_INSTALL"
@@ -279,16 +254,7 @@ _main() {
         _echo_info "> $(_i18n 'Done!')"
     done
 
-    # Step 4: Install the shortcuts (application menu).
-    if [[ "$OPT_INSTALL_APP_SHORTCUTS" == "true" ]]; then
-        _echo ""
-        _echo_info "$(_i18n 'Installing application menu shortcuts:')"
-        _install_application_shortcuts
-        _create_gnome_application_folder
-        _echo_info "> $(_i18n 'Done!')"
-    fi
-
-    # Step 5: Install pkgx (optional).
+    # Step 4: Install pkgx (optional).
     if [[ "$OPT_INSTALL_PKGX" == "true" ]]; then
         _install_pkgx
     fi
@@ -296,7 +262,7 @@ _main() {
     _echo ""
     _echo_info "$(_i18n 'Installation completed successfully!')"
 
-    # Step 6: Move the temporary log file to the installation directory and
+    # Step 5: Move the temporary log file to the installation directory and
     # remove the temporary directory.
     mv -- "$INSTALL_LOG_TMP" "$INSTALL_DIR/$INSTALL_LOG_NAME" 2>/dev/null
 }
@@ -499,12 +465,6 @@ _list_scripts() {
         -print0 2>/dev/null | sort --zero-terminated
 }
 
-_list_scripts_application() {
-    find -L "$INSTALL_DIR" -mindepth 2 -type f \
-        "${IGNORE_FIND_PATHS[@]}" "${IGNORE_APPS_SHORTCUTS[@]}" \
-        -print0 2>/dev/null | sort --zero-terminated
-}
-
 _list_scripts_categories() {
     find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
         "${IGNORE_FIND_PATHS[@]}" -print0 2>/dev/null |
@@ -592,8 +552,6 @@ _get_parameters_command_line() {
         -p | --install-pkgx) OPT_INSTALL_PKGX="true" ;;
         -P | --no-install-pkgx) OPT_INSTALL_PKGX="false" ;;
         -q | --quiet) OPT_QUIET_INSTALL="true" ;;
-        -s | --install-app-shortcuts) OPT_INSTALL_APP_SHORTCUTS="true" ;;
-        -S | --no-install-app-shortcuts) OPT_INSTALL_APP_SHORTCUTS="false" ;;
         -h | --help)
             echo "Usage: $0 [options]"
             echo
@@ -607,8 +565,6 @@ _get_parameters_command_line() {
             echo "  -q, --quiet                     Suppress all output (silent mode)."
             echo "  -p, --install-pkgx              Install pkgx for dependencies."
             echo "  -P, --no-install-pkgx           Do not install pkgx."
-            echo "  -s, --install-app-shortcuts     Add shortcuts in the application menu."
-            echo "  -S, --no-install-app-shortcuts  Do not add shortcuts in the application menu."
             echo "  -h, --help                      Show this help message and exit."
             echo
             exit 0
@@ -815,7 +771,6 @@ _install_scripts() {
     local -n _cat_dirs=$2
 
     rm -rf -- "$INSTALL_DIR" 2>/dev/null
-    rm -rf -- "${HOME:?}/$INSTALL_APPS_SHORTCUTS_PATH" 2>/dev/null
 
     _echo_info "> $(_i18n 'Copying files...')"
     mkdir --parents -- "$INSTALL_DIR"
@@ -1033,103 +988,6 @@ _install_accels_thunar() {
 
     } | _tee_file "$accels_file"
     _chown_file "$accels_file"
-}
-
-# -----------------------------------------------------------------------------
-# SECTION: Application shortcuts
-# -----------------------------------------------------------------------------
-
-_install_application_shortcuts() {
-    local menu_file=""
-    local name=""
-    local script_relative=""
-    local submenu=""
-    local app_menus_path="$HOME/$INSTALL_APPS_SHORTCUTS_PATH"
-
-    _echo_info "> $(_i18n 'Creating shortcuts in the application menu...')"
-
-    # Remove previously installed '.desktop' files.
-    rm -rf -- "$app_menus_path" 2>/dev/null
-
-    # Create the directory for menu entries.
-    mkdir --parents -- "$app_menus_path"
-
-    # Create a '.desktop' file for each script.
-    local filename=""
-    while IFS= read -r -d $'\0' filename; do
-        script_relative=${filename##*scripts/}
-        name=${script_relative##*/}
-        submenu=${script_relative%/*}
-        submenu=${submenu//\// - }
-
-        menu_file=$(_sanitize_string <<<"$name")
-        menu_file="${menu_file}.desktop"
-        menu_file="$app_menus_path/$menu_file"
-        {
-            printf "%s\n" "[Desktop Entry]"
-            printf "%s\n" "Categories=Scripts;"
-            printf "%s\n" "Exec=\"$filename\" %F"
-            printf "%s\n" "Name=$name"
-            _i18n_print_desktop_name "Name" "$name"
-            printf "%s\n" "Icon=application-x-executable"
-            printf "%s\n" "Terminal=false"
-            printf "%s\n" "Type=Application"
-
-        } | _tee_file "$menu_file"
-        _chown_file "$menu_file"
-        _chmod_x_file "$menu_file"
-
-    done < <(_list_scripts_application)
-}
-
-_create_gnome_application_folder() {
-    local folder_name="Scripts"
-    local translated_folder_name=""
-    translated_folder_name=$(_i18n "$folder_name")
-
-    # Check if 'gsettings' is available and the GNOME schemas are present. If
-    # not, skip folder creation.
-    if ! _command_exists "gsettings" || ! gsettings list-schemas |
-        grep -qxF "org.gnome.desktop.app-folders"; then
-        return
-    fi
-
-    _echo_info "> $(_i18n 'Creating GNOME Shell application folder...')"
-
-    # Retrieve the current list of GNOME app folders.
-    # If the folder does not exist, append it to the list.
-    local current_folders=""
-    current_folders=$(gsettings get org.gnome.desktop.app-folders folder-children)
-    if [[ "$current_folders" != *"'$folder_name'"* ]]; then
-        local new_list=""
-        if [[ "$current_folders" == "[]" || "$current_folders" == "@as []" ]]; then
-            new_list="['$folder_name']"
-        else
-            # shellcheck disable=SC2001
-            new_list=$(sed "s/]/, '$folder_name']/" <<<"$current_folders")
-        fi
-        gsettings set \
-            org.gnome.desktop.app-folders folder-children "$new_list" &>/dev/null
-    fi
-
-    # Set the display name for the new GNOME application folder.
-    gsettings set \
-        org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
-        name "$translated_folder_name" &>/dev/null
-
-    # Build a list of all .desktop files in the scripts directory to be added
-    # under this GNOME application folder.
-    local list_scripts=""
-    local app_menus_path="$HOME/$INSTALL_APPS_SHORTCUTS_PATH"
-    list_scripts=$(find "$app_menus_path" \
-        -maxdepth 1 -type f -name "*.desktop" \
-        -printf "'$INSTALL_NAME_DIR-%f', " |
-        sed 's/, $//; s/^/[/' | sed 's/$/]/')
-
-    # Assign all found .desktop files to the folder in GNOME settings.
-    gsettings set \
-        org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ \
-        apps "$list_scripts" &>/dev/null
 }
 
 # -----------------------------------------------------------------------------

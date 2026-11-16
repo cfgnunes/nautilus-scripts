@@ -1894,10 +1894,6 @@ msgid "Close the file manager to reload configuration"
 msgstr "关闭文件管理器以重新加载配置"
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr "添加快捷方式到应用程序菜单"
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr "为依赖安装 pkgx"
 
@@ -1916,10 +1912,6 @@ msgstr "正在以非交互模式安装..."
 #: install.sh
 msgid "Installing:"
 msgstr "正在安装："
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
-msgstr "正在安装应用程序菜单快捷方式："
 
 #: install.sh
 msgid "Installation completed successfully!"
@@ -1944,14 +1936,6 @@ msgstr "正在安装键盘加速器..."
 #: install.sh
 msgid "Scripts"
 msgstr "脚本"
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr "正在创建应用程序菜单的快捷方式..."
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
-msgstr "正在创建 GNOME Shell 应用程序文件夹..."
 
 #: install.sh
 msgid "Installing actions in the context menu..."

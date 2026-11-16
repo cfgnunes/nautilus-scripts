@@ -1894,10 +1894,6 @@ msgid "Close the file manager to reload configuration"
 msgstr "Закройте файловый менеджер для перезагрузки конфигураций"
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr "Добавить ярлыки в меню приложений"
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr "Установить pkgx для зависимостей"
 
@@ -1916,10 +1912,6 @@ msgstr "Установка в неинтерактивном режиме..."
 #: install.sh
 msgid "Installing:"
 msgstr "Установка:"
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
-msgstr "Установка ярлыков меню приложений:"
 
 #: install.sh
 msgid "Installation completed successfully!"
@@ -1944,14 +1936,6 @@ msgstr "Установка сочетаний клавиш..."
 #: install.sh
 msgid "Scripts"
 msgstr "Скрипты"
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr "Создание ярлыков в меню приложений..."
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
-msgstr "Создание папки приложений GNOME Shell..."
 
 #: install.sh
 msgid "Installing actions in the context menu..."

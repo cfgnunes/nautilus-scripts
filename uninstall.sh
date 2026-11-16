@@ -42,9 +42,6 @@ thunar -q &>/dev/null
 # Installed directory.
 _uninstall_directory "$INSTALL_DIR"
 
-# Desktop shortcuts (application menu).
-_uninstall_directory "$HOME/.local/share/applications/$INSTALL_NAME_DIR"
-
 # -----------------------------------------------------------------------------
 # SECTION: File manager: Nautilus
 # -----------------------------------------------------------------------------
@@ -109,38 +106,5 @@ find "$dir" -name "$INSTALL_NAME_DIR-*.desktop" -type f -delete 2>/dev/null
 # -----------------------------------------------------------------------------
 
 _uninstall_directory "$HOME/.local/opt/pkgx"
-
-# -----------------------------------------------------------------------------
-# SECTION: GNOME Shell: application folder
-# -----------------------------------------------------------------------------
-
-_remove_gnome_application_folder() {
-    local folder_name="Scripts"
-
-    # Check gsettings and schema availability.
-    if ! command -v gsettings &>/dev/null || ! gsettings list-schemas |
-        grep -qxF "org.gnome.desktop.app-folders"; then
-        return
-    fi
-
-    # Reset all keys for the specific folder
-    gsettings reset-recursively \
-        org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/$folder_name/ &>/dev/null
-
-    # Remove the folder from GNOME app-folders list.
-    local current_folders=""
-    current_folders=$(gsettings get org.gnome.desktop.app-folders folder-children)
-
-    # Remove the folder name if it exists.
-    if [[ "$current_folders" == *"'$folder_name'"* ]]; then
-        local new_list=""
-        new_list=$(sed -E \
-            "s/'$folder_name'[[:space:]]*,[[:space:]]*//; s/,[[:space:]]*'$folder_name'//; s/'$folder_name'//" \
-            <<<"$current_folders")
-        new_list=$(sed -E "s/\[[[:space:]]*\]/[]/; s/\[''\]/[]/" <<<"$new_list")
-        gsettings set org.gnome.desktop.app-folders folder-children "$new_list" &>/dev/null
-    fi
-}
-_remove_gnome_application_folder
 
 echo "Uninstall complete!"

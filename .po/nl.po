@@ -1894,10 +1894,6 @@ msgid "Close the file manager to reload configuration"
 msgstr "Sluit de bestandsbeheerder om de instellingen te herladen"
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr "Snelkoppelingen toevoegen aan toepassingsmenu"
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr "pkgx installeren voor afhankelijkheden"
 
@@ -1916,10 +1912,6 @@ msgstr "Bezig met installeren in niet-interactieve modus…"
 #: install.sh
 msgid "Installing:"
 msgstr "Bezig met installeren:"
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
-msgstr "Bezig met toevoegen van snelkoppelingen:"
 
 #: install.sh
 msgid "Installation completed successfully!"
@@ -1944,14 +1936,6 @@ msgstr "Bezig met vastleggen van sneltoetsen…"
 #: install.sh
 msgid "Scripts"
 msgstr "Scripts"
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr "Bezig met toevoegen van snelkoppelingen…"
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
-msgstr "Bezig met maken van GNOME Shell-toepassingsmap…"
 
 #: install.sh
 msgid "Installing actions in the context menu..."

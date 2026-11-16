@@ -1894,10 +1894,6 @@ msgid "Close the file manager to reload configuration"
 msgstr "구성을 다시 로드하기 위해 파일 관리자 닫기"
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr "응용 프로그램 메뉴에 바로 가기 추가"
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr "의존성을 위해 pkgx 설치"
 
@@ -1916,10 +1912,6 @@ msgstr "비대화형 모드로 설치 중..."
 #: install.sh
 msgid "Installing:"
 msgstr "설치 중:"
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
-msgstr "응용 프로그램 메뉴 바로 가기 설치 중:"
 
 #: install.sh
 msgid "Installation completed successfully!"
@@ -1944,14 +1936,6 @@ msgstr "키보드 가속기 설치 중..."
 #: install.sh
 msgid "Scripts"
 msgstr "스크립트"
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr "응용 프로그램 메뉴에 바로 가기 생성 중..."
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
-msgstr "GNOME Shell 응용 프로그램 폴더 생성 중..."
 
 #: install.sh
 msgid "Installing actions in the context menu..."

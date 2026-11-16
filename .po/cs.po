@@ -1894,10 +1894,6 @@ msgid "Close the file manager to reload configuration"
 msgstr "Zavřít správce souborů pro opětovné načtení konfigurace"
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr "Přidat zástupce do nabídky aplikací"
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr "Nainstalovat pkgx pro závislosti"
 
@@ -1916,10 +1912,6 @@ msgstr "Instalace v neinteraktivním režimu..."
 #: install.sh
 msgid "Installing:"
 msgstr "Instalace:"
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
-msgstr "Instalace zástupců v nabídce aplikací:"
 
 #: install.sh
 msgid "Installation completed successfully!"
@@ -1944,14 +1936,6 @@ msgstr "Instalace klávesových zkratek..."
 #: install.sh
 msgid "Scripts"
 msgstr "Skripty"
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr "Vytváření zástupců v nabídce aplikací..."
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
-msgstr "Vytváření složky aplikací v GNOME Shell..."
 
 #: install.sh
 msgid "Installing actions in the context menu..."

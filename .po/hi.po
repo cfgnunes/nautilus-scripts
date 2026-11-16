@@ -1894,10 +1894,6 @@ msgid "Close the file manager to reload configuration"
 msgstr "कॉन्फ़िगरेशन पुनः लोड करने के लिए फ़ाइल प्रबंधक बंद करें"
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr "एप्लिकेशन मेनू में शॉर्टकट जोड़ें"
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr "निर्भरताओं के लिए pkgx इंस्टॉल करें"
 
@@ -1916,10 +1912,6 @@ msgstr "गैर-संवादात्मक मोड में इंस�
 #: install.sh
 msgid "Installing:"
 msgstr "इंस्टॉल कर रहा है:"
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
-msgstr "एप्लिकेशन मेनू शॉर्टकट इंस्टॉल कर रहा है:"
 
 #: install.sh
 msgid "Installation completed successfully!"
@@ -1944,14 +1936,6 @@ msgstr "कीबोर्ड एक्सेलेरेटर इंस्ट�
 #: install.sh
 msgid "Scripts"
 msgstr "स्क्रिप्ट"
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr "एप्लिकेशन मेनू के लिए शॉर्टकट बना रहा है..."
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
-msgstr "GNOME Shell एप्लिकेशन फ़ोल्डर बना रहा है..."
 
 #: install.sh
 msgid "Installing actions in the context menu..."

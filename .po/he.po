@@ -1894,10 +1894,6 @@ msgid "Close the file manager to reload configuration"
 msgstr "יש לסגור את מנהל הקבצים בשביל לטעון מחדש את הגדרות התצורה"
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr "הוספת קיצורים לתפריט היישומים"
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr "התקנת pkgx עבור תלויות"
 
@@ -1916,10 +1912,6 @@ msgstr "מתבצעת התקנה במצב לא מודרך..."
 #: install.sh
 msgid "Installing:"
 msgstr "התקנה:"
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
-msgstr "התקנת קיצורי היישומים לתפריט:"
 
 #: install.sh
 msgid "Installation completed successfully!"
@@ -1944,14 +1936,6 @@ msgstr "קיצורי המקשים מותקנים..."
 #: install.sh
 msgid "Scripts"
 msgstr "סקריפטים להרצה"
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr "הקיצורים נוצרים בתפריט היישומים..."
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
-msgstr "נוצרת תיקיית יישום מעטפת GNOME..."
 
 #: install.sh
 msgid "Installing actions in the context menu..."

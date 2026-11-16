@@ -1893,10 +1893,6 @@ msgid "Close the file manager to reload configuration"
 msgstr ""
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr ""
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr ""
 
@@ -1914,10 +1910,6 @@ msgstr ""
 
 #: install.sh
 msgid "Installing:"
-msgstr ""
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
 msgstr ""
 
 #: install.sh
@@ -1942,14 +1934,6 @@ msgstr ""
 
 #: install.sh
 msgid "Scripts"
-msgstr ""
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr ""
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
 msgstr ""
 
 #: install.sh

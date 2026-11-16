@@ -83,15 +83,15 @@ bash install.sh
 
 ## Compatibility
 
-| File manager           | Environment | Menu integration | Application shortcuts | Keyboard accelerators | Menu "Accessed recently" |
-| ---------------------- | ----------- | ---------------- | --------------------- | --------------------- | ------------------------ |
-| GNOME Files (Nautilus) | GNOME       | 🟢                | 🟢                     | 🟢                     | 🟢                        |
-| Nemo                   | Cinnamon    | 🟢                | 🟢                     | 🟢                     | 🟢                        |
-| Caja                   | MATE        | 🟢                | 🟢                     | 🟢                     | 🟢                        |
-| Thunar                 | Xfce        | 🟢                | 🟢                     | 🟢                     | 🔴                        |
-| Dolphin                | KDE Plasma  | 🟢                | 🟢                     | 🔴                     | 🔴                        |
-| PCManFM-Qt             | LXQt        | 🟢                | 🟢                     | 🔴                     | 🔴                        |
-| PCManFM                | LXDE        | 🟢                | 🟢                     | 🔴                     | 🔴                        |
+| File manager           | Environment | Menu integration | Keyboard accelerators | Menu "Accessed recently" |
+| ---------------------- | ----------- | ---------------- | --------------------- | ------------------------ |
+| GNOME Files (Nautilus) | GNOME       | 🟢                | 🟢                     | 🟢                        |
+| Nemo                   | Cinnamon    | 🟢                | 🟢                     | 🟢                        |
+| Caja                   | MATE        | 🟢                | 🟢                     | 🟢                        |
+| Thunar                 | Xfce        | 🟢                | 🟢                     | 🔴                        |
+| Dolphin                | KDE Plasma  | 🟢                | 🔴                     | 🔴                        |
+| PCManFM-Qt             | LXQt        | 🟢                | 🔴                     | 🔴                        |
+| PCManFM                | LXDE        | 🟢                | 🔴                     | 🔴                        |
 
 ## Batch mode for large file selections
 

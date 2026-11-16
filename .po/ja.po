@@ -1894,10 +1894,6 @@ msgid "Close the file manager to reload configuration"
 msgstr "設定を再読み込みするためにファイルマネージャーを閉じる"
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr "アプリケーションメニューにショートカットを追加"
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr "依存関係のためにpkgxをインストール"
 
@@ -1916,10 +1912,6 @@ msgstr "非対話モードでインストール中..."
 #: install.sh
 msgid "Installing:"
 msgstr "インストール中:"
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
-msgstr "アプリケーションメニューショートカットをインストール中:"
 
 #: install.sh
 msgid "Installation completed successfully!"
@@ -1944,14 +1936,6 @@ msgstr "キーボードアクセラレータをインストール中..."
 #: install.sh
 msgid "Scripts"
 msgstr "スクリプト"
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr "アプリケーションメニューへのショートカットを作成中..."
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
-msgstr "GNOME Shellアプリケーションフォルダを作成中..."
 
 #: install.sh
 msgid "Installing actions in the context menu..."

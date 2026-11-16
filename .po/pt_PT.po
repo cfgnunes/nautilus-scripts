@@ -1894,10 +1894,6 @@ msgid "Close the file manager to reload configuration"
 msgstr "Fechar o gestor de ficheiros para recarregar configurações"
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr "Adicionar atalhos no menu de aplicações"
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr "Instalar pkgx para dependências"
 
@@ -1916,10 +1912,6 @@ msgstr "A instalar em modo não interativo..."
 #: install.sh
 msgid "Installing:"
 msgstr "A instalar:"
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
-msgstr "A instalar atalhos no menu de aplicações:"
 
 #: install.sh
 msgid "Installation completed successfully!"
@@ -1944,14 +1936,6 @@ msgstr "A instalar teclas de atalho..."
 #: install.sh
 msgid "Scripts"
 msgstr "Scripts"
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr "A criar atalhos no menu de aplicações..."
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
-msgstr "A criar pasta de aplicações do GNOME Shell..."
 
 #: install.sh
 msgid "Installing actions in the context menu..."

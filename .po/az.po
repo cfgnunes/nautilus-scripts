@@ -1894,10 +1894,6 @@ msgid "Close the file manager to reload configuration"
 msgstr "Tənzimləmələri yenidən yükləmək üçün fayl menecerini bağla"
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr "Tətbiq menyusuna qısayollar əlavə et"
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr "Asılılıqlar üçün pkgx quraşdır"
 
@@ -1916,10 +1912,6 @@ msgstr "İnteraktiv olmayan rejimdə quraşdırılır..."
 #: install.sh
 msgid "Installing:"
 msgstr "Quraşdırılır:"
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
-msgstr "Tətbiq menyusu qısayolları quraşdırılır:"
 
 #: install.sh
 msgid "Installation completed successfully!"
@@ -1944,14 +1936,6 @@ msgstr "Klaviatura qısayolları quraşdırılır..."
 #: install.sh
 msgid "Scripts"
 msgstr "Skriptlər"
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr "Tətbiq menyusunda qısayollar yaradılır..."
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
-msgstr "GNOME Shell tətbiq qovluğu yaradılır..."
 
 #: install.sh
 msgid "Installing actions in the context menu..."

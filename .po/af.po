@@ -1894,10 +1894,6 @@ msgid "Close the file manager to reload configuration"
 msgstr "Sluit die lêerbestuurder om die opstelling te herlaai"
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr "Voeg kortpaaie in die toepassingskieslys by"
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr "Installeer pkgx vir afhanklikhede"
 
@@ -1916,10 +1912,6 @@ msgstr "Installeer in nie-interaktiewe modus..."
 #: install.sh
 msgid "Installing:"
 msgstr "Installeer:"
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
-msgstr "Installeer kortpaaie vir die toepassingskieslys:"
 
 #: install.sh
 msgid "Installation completed successfully!"
@@ -1944,14 +1936,6 @@ msgstr "Installeer sleutelbordversnellers..."
 #: install.sh
 msgid "Scripts"
 msgstr "Skripte"
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr "Skep kortpaaie in die toepassingskieslys..."
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
-msgstr "Skep GNOME Shell-toepassingsvouer..."
 
 #: install.sh
 msgid "Installing actions in the context menu..."

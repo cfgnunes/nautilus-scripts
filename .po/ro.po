@@ -1894,10 +1894,6 @@ msgid "Close the file manager to reload configuration"
 msgstr "Închidere gestionar de fișiere pentru reîncărcarea configurației"
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr "Adăugare comenzi rapide în meniul de aplicații"
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr "Instalare pkgx pentru dependențe"
 
@@ -1916,10 +1912,6 @@ msgstr "Se instalează în modul neinteractiv..."
 #: install.sh
 msgid "Installing:"
 msgstr "Se instalează:"
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
-msgstr "Se instalează comenzile rapide din meniul de aplicații:"
 
 #: install.sh
 msgid "Installation completed successfully!"
@@ -1944,14 +1936,6 @@ msgstr "Se instalează acceleratorii de tastatură..."
 #: install.sh
 msgid "Scripts"
 msgstr "Scripturi"
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr "Se creează comenzile rapide în meniul de aplicații..."
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
-msgstr "Se creează folderul de aplicații GNOME Shell..."
 
 #: install.sh
 msgid "Installing actions in the context menu..."

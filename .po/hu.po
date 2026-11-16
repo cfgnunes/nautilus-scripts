@@ -1894,10 +1894,6 @@ msgid "Close the file manager to reload configuration"
 msgstr "A fájlkezelő bezárása a beállítások újratöltéséhez"
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr "Parancsikonok hozzáadása az alkalmazásmenühöz"
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr "pkgx telepítése a függőségekhez"
 
@@ -1916,10 +1912,6 @@ msgstr "Telepítés nem interaktív módban..."
 #: install.sh
 msgid "Installing:"
 msgstr "Telepítés:"
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
-msgstr "Alkalmazásmenü-parancsikonok telepítése:"
 
 #: install.sh
 msgid "Installation completed successfully!"
@@ -1944,14 +1936,6 @@ msgstr "Gyorsbillentyűk telepítése..."
 #: install.sh
 msgid "Scripts"
 msgstr "Szkriptek"
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr "Parancsikonok létrehozása az alkalmazásmenüben..."
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
-msgstr "GNOME Shell alkalmazásmappa létrehozása..."
 
 #: install.sh
 msgid "Installing actions in the context menu..."

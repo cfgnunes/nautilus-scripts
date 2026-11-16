@@ -1894,10 +1894,6 @@ msgid "Close the file manager to reload configuration"
 msgstr "Stäng filhanteraren för att läsa om konfigurationen"
 
 #: install.sh
-msgid "Add shortcuts in the application menu"
-msgstr "Lägg till genvägar i programmenyn"
-
-#: install.sh
 msgid "Install pkgx for dependencies"
 msgstr "Installera pkgx för beroenden"
 
@@ -1916,10 +1912,6 @@ msgstr "Installerar i icke-interaktivt läge..."
 #: install.sh
 msgid "Installing:"
 msgstr "Installerar:"
-
-#: install.sh
-msgid "Installing application menu shortcuts:"
-msgstr "Installerar genvägar i programmenyn:"
 
 #: install.sh
 msgid "Installation completed successfully!"
@@ -1944,14 +1936,6 @@ msgstr "Installerar tangentbordsgenvägar..."
 #: install.sh
 msgid "Scripts"
 msgstr "Skript"
-
-#: install.sh
-msgid "Creating shortcuts in the application menu..."
-msgstr "Skapar genvägar i programmenyn..."
-
-#: install.sh
-msgid "Creating GNOME Shell application folder..."
-msgstr "Skapar programmapp i GNOME Shell..."
 
 #: install.sh
 msgid "Installing actions in the context menu..."
