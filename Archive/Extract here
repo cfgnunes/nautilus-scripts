@@ -153,50 +153,50 @@ _get_dependencies() {
 _get_command() {
     local input_file=$1
     local command_status=$2
-    local pref_commands=()
     local command=""
+    local pref_cmds=()
 
     # Define the preferred commands for each type of archive.
-    local _cmds_7za=("7za" "bsdtar")
-    local _cmds_ar=("ar" "bsdtar")
-    local _cmds_arj=("7za")
-    local _cmds_bz=("bzip2" "7za")
-    local _cmds_bz3=("bzip3")
-    local _cmds_cab=("cabextract" "bsdtar")
-    local _cmds_cpio=("cpio" "bsdtar")
-    local _cmds_dar=("dar")
-    local _cmds_deb=("ar")
-    local _cmds_gpg=("gpg")
-    local _cmds_gz=("gzip" "7za")
-    local _cmds_iso=("xorriso" "bsdtar")
-    local _cmds_lrz=("lrzip")
-    local _cmds_lz=("lzip")
-    local _cmds_lz4=("lz4")
-    local _cmds_lzh=("lha")
-    local _cmds_lzma=("xz")
-    local _cmds_lzo=("lzop")
-    local _cmds_msi=("7za")
-    local _cmds_rar=("unrar" "bsdtar")
-    local _cmds_rpm=("bsdtar")
-    local _cmds_sqsh=("unsquashfs" "rdsquashfs")
-    local _cmds_tar_bz=("tar,bzip2" "7za")
-    local _cmds_tar_gz=("tar,gzip" "7za")
-    local _cmds_tar_lrz=("tar,lrzip")
-    local _cmds_tar_lz=("tar,lzip")
-    local _cmds_tar_lz4=("tar,lz4")
-    local _cmds_tar_lzma=("tar,lzma" "7za")
-    local _cmds_tar_lzo=("tar,lzop")
-    local _cmds_tar_xz=("tar,xz" "7za")
-    local _cmds_tar_z=("tar,gzip" "7za")
-    local _cmds_tar_zst=("tar,zstd")
-    local _cmds_tar=("tar" "bsdtar" "7za")
-    local _cmds_xar=("bsdtar")
-    local _cmds_xz=("xz" "7za")
-    local _cmds_z=("gzip")
-    local _cmds_zip=("7za" "bsdtar")
-    local _cmds_zpaq=("zpaq")
-    local _cmds_zstd=("zstd")
-    local _cmds_unknown_file=("bsdtar,7za")
+    local cmds_7za=("7za" "bsdtar")
+    local cmds_ar=("ar" "bsdtar")
+    local cmds_arj=("7za")
+    local cmds_bz=("bzip2" "7za")
+    local cmds_bz3=("bzip3")
+    local cmds_cab=("cabextract" "bsdtar")
+    local cmds_cpio=("cpio" "bsdtar")
+    local cmds_dar=("dar")
+    local cmds_deb=("ar")
+    local cmds_gpg=("gpg")
+    local cmds_gz=("gzip" "7za")
+    local cmds_iso=("xorriso" "bsdtar")
+    local cmds_lrz=("lrzip")
+    local cmds_lz=("lzip")
+    local cmds_lz4=("lz4")
+    local cmds_lzh=("lha")
+    local cmds_lzma=("xz")
+    local cmds_lzo=("lzop")
+    local cmds_msi=("7za")
+    local cmds_rar=("unrar" "bsdtar")
+    local cmds_rpm=("bsdtar")
+    local cmds_sqsh=("unsquashfs" "rdsquashfs")
+    local cmds_tar_bz=("tar,bzip2" "7za")
+    local cmds_tar_gz=("tar,gzip" "7za")
+    local cmds_tar_lrz=("tar,lrzip")
+    local cmds_tar_lz=("tar,lzip")
+    local cmds_tar_lz4=("tar,lz4")
+    local cmds_tar_lzma=("tar,lzma" "7za")
+    local cmds_tar_lzo=("tar,lzop")
+    local cmds_tar_xz=("tar,xz" "7za")
+    local cmds_tar_z=("tar,gzip" "7za")
+    local cmds_tar_zst=("tar,zstd")
+    local cmds_tar=("tar" "bsdtar" "7za")
+    local cmds_xar=("bsdtar")
+    local cmds_xz=("xz" "7za")
+    local cmds_z=("gzip")
+    local cmds_zip=("7za" "bsdtar")
+    local cmds_zpaq=("zpaq")
+    local cmds_zstd=("zstd")
+    local cmds_unknown_file=("bsdtar,7za")
 
     # For split archives ('.000' or '.001'), use the name of the joined file.
     local type_name=""
@@ -204,46 +204,46 @@ _get_command() {
 
     # Determine the preferred commands based on the filename extension.
     case "${type_name,,}" in
-    *.tar.bz | *.tbz) pref_commands=("${_cmds_tar_bz[@]}") ;;
-    *.tar.bz2 | *.tbz2 | *.tb2) pref_commands=("${_cmds_tar_bz[@]}") ;;
-    *.tar.gz | *.tgz) pref_commands=("${_cmds_tar_gz[@]}") ;;
-    *.tar.lrz | *.tlrz) pref_commands=("${_cmds_tar_lrz[@]}") ;;
-    *.tar.lz) pref_commands=("${_cmds_tar_lz[@]}") ;;
-    *.tar.lz4) pref_commands=("${_cmds_tar_lz4[@]}") ;;
-    *.tar.lzma | *.tlz) pref_commands=("${_cmds_tar_lzma[@]}") ;;
-    *.tar.lzo | *.tzo) pref_commands=("${_cmds_tar_lzo[@]}") ;;
-    *.tar.xz | *.txz) pref_commands=("${_cmds_tar_xz[@]}") ;;
-    *.tar.z | *.taz) pref_commands=("${_cmds_tar_z[@]}") ;;
-    *.tar.zst | *.tzst) pref_commands=("${_cmds_tar_zst[@]}") ;;
-    *.7z) pref_commands=("${_cmds_7za[@]}") ;;
-    *.ar) pref_commands=("${_cmds_ar[@]}") ;;
-    *.arj) pref_commands=("${_cmds_arj[@]}") ;;
-    *.bz | *.bz2) pref_commands=("${_cmds_bz[@]}") ;;
-    *.bz3) pref_commands=("${_cmds_bz3[@]}") ;;
-    *.cab) pref_commands=("${_cmds_cab[@]}") ;;
-    *.cpio) pref_commands=("${_cmds_cpio[@]}") ;;
-    *.dar) pref_commands=("${_cmds_dar[@]}") ;;
-    *.deb | *.udeb) pref_commands=("${_cmds_deb[@]}") ;;
-    *.gpg | *.asc | *.pgp) pref_commands=("${_cmds_gpg[@]}") ;;
-    *.gz) pref_commands=("${_cmds_gz[@]}") ;;
-    *.iso) pref_commands=("${_cmds_iso[@]}") ;;
-    *.lrz) pref_commands=("${_cmds_lrz[@]}") ;;
-    *.lz) pref_commands=("${_cmds_lz[@]}") ;;
-    *.lz4) pref_commands=("${_cmds_lz4[@]}") ;;
-    *.lzh | *.lzs | *.lha) pref_commands=("${_cmds_lzh[@]}") ;;
-    *.lzma) pref_commands=("${_cmds_lzma[@]}") ;;
-    *.lzo) pref_commands=("${_cmds_lzo[@]}") ;;
-    *.msi) pref_commands=("${_cmds_msi[@]}") ;;
-    *.rar) pref_commands=("${_cmds_rar[@]}") ;;
-    *.rpm) pref_commands=("${_cmds_rpm[@]}") ;;
-    *.sqsh | *.squashfs | *.sfs) pref_commands=("${_cmds_sqsh[@]}") ;;
-    *.tar | *.gtar | *.gem) pref_commands=("${_cmds_tar[@]}") ;;
-    *.xar) pref_commands=("${_cmds_xar[@]}") ;;
-    *.xz) pref_commands=("${_cmds_xz[@]}") ;;
-    *.z) pref_commands=("${_cmds_z[@]}") ;;
-    *.zip | *.apk | *.jar | *.ear) pref_commands=("${_cmds_zip[@]}") ;;
-    *.zpaq) pref_commands=("${_cmds_zpaq[@]}") ;;
-    *.zst) pref_commands=("${_cmds_zstd[@]}") ;;
+    *.tar.bz | *.tbz) pref_cmds=("${cmds_tar_bz[@]}") ;;
+    *.tar.bz2 | *.tbz2 | *.tb2) pref_cmds=("${cmds_tar_bz[@]}") ;;
+    *.tar.gz | *.tgz) pref_cmds=("${cmds_tar_gz[@]}") ;;
+    *.tar.lrz | *.tlrz) pref_cmds=("${cmds_tar_lrz[@]}") ;;
+    *.tar.lz) pref_cmds=("${cmds_tar_lz[@]}") ;;
+    *.tar.lz4) pref_cmds=("${cmds_tar_lz4[@]}") ;;
+    *.tar.lzma | *.tlz) pref_cmds=("${cmds_tar_lzma[@]}") ;;
+    *.tar.lzo | *.tzo) pref_cmds=("${cmds_tar_lzo[@]}") ;;
+    *.tar.xz | *.txz) pref_cmds=("${cmds_tar_xz[@]}") ;;
+    *.tar.z | *.taz) pref_cmds=("${cmds_tar_z[@]}") ;;
+    *.tar.zst | *.tzst) pref_cmds=("${cmds_tar_zst[@]}") ;;
+    *.7z) pref_cmds=("${cmds_7za[@]}") ;;
+    *.ar) pref_cmds=("${cmds_ar[@]}") ;;
+    *.arj) pref_cmds=("${cmds_arj[@]}") ;;
+    *.bz | *.bz2) pref_cmds=("${cmds_bz[@]}") ;;
+    *.bz3) pref_cmds=("${cmds_bz3[@]}") ;;
+    *.cab) pref_cmds=("${cmds_cab[@]}") ;;
+    *.cpio) pref_cmds=("${cmds_cpio[@]}") ;;
+    *.dar) pref_cmds=("${cmds_dar[@]}") ;;
+    *.deb | *.udeb) pref_cmds=("${cmds_deb[@]}") ;;
+    *.gpg | *.asc | *.pgp) pref_cmds=("${cmds_gpg[@]}") ;;
+    *.gz) pref_cmds=("${cmds_gz[@]}") ;;
+    *.iso) pref_cmds=("${cmds_iso[@]}") ;;
+    *.lrz) pref_cmds=("${cmds_lrz[@]}") ;;
+    *.lz) pref_cmds=("${cmds_lz[@]}") ;;
+    *.lz4) pref_cmds=("${cmds_lz4[@]}") ;;
+    *.lzh | *.lzs | *.lha) pref_cmds=("${cmds_lzh[@]}") ;;
+    *.lzma) pref_cmds=("${cmds_lzma[@]}") ;;
+    *.lzo) pref_cmds=("${cmds_lzo[@]}") ;;
+    *.msi) pref_cmds=("${cmds_msi[@]}") ;;
+    *.rar) pref_cmds=("${cmds_rar[@]}") ;;
+    *.rpm) pref_cmds=("${cmds_rpm[@]}") ;;
+    *.sqsh | *.squashfs | *.sfs) pref_cmds=("${cmds_sqsh[@]}") ;;
+    *.tar | *.gtar | *.gem) pref_cmds=("${cmds_tar[@]}") ;;
+    *.xar) pref_cmds=("${cmds_xar[@]}") ;;
+    *.xz) pref_cmds=("${cmds_xz[@]}") ;;
+    *.z) pref_cmds=("${cmds_z[@]}") ;;
+    *.zip | *.apk | *.jar | *.ear) pref_cmds=("${cmds_zip[@]}") ;;
+    *.zpaq) pref_cmds=("${cmds_zpaq[@]}") ;;
+    *.zst) pref_cmds=("${cmds_zstd[@]}") ;;
     *)
         # For unknown extension, determine the preferred commands based on the
         # MIME type.
@@ -252,45 +252,45 @@ _get_command() {
 
         # NOTE: See the file: /usr/share/mime/packages/freedesktop.org.xml
         case "${file_mime,,}" in
-        "application/pgp-encrypted") pref_commands=("${_cmds_gpg[@]}") ;;
-        "application/vnd.debian.binary-package") pref_commands=("${_cmds_deb[@]}") ;;
-        "application/vnd.ms-cab-compressed") pref_commands=("${_cmds_cab[@]}") ;;
-        "application/vnd.squashfs") pref_commands=("${_cmds_sqsh[@]}") ;;
-        "application/x-7z-compressed") pref_commands=("${_cmds_7za[@]}") ;;
-        "application/x-archive") pref_commands=("${_cmds_ar[@]}") ;;
-        "application/x-arj") pref_commands=("${_cmds_arj[@]}") ;;
-        "application/x-bzip-compressed-tar") pref_commands=("${_cmds_tar_bz[@]}") ;;
-        "application/x-bzip") pref_commands=("${_cmds_bz[@]}") ;;
-        "application/x-bzip2" | "application/bzip2") pref_commands=("${_cmds_bz[@]}") ;;
-        "application/x-bzip3") pref_commands=("${_cmds_bz3[@]}") ;;
-        "application/x-compress") pref_commands=("${_cmds_z[@]}") ;;
-        "application/x-compressed-tar") pref_commands=("${_cmds_tar_gz[@]}") ;;
-        "application/x-cpio") pref_commands=("${_cmds_cpio[@]}") ;;
-        "application/x-dar") pref_commands=("${_cmds_dar[@]}") ;;
-        "application/x-gzip" | "application/gzip") pref_commands=("${_cmds_gz[@]}") ;;
-        "application/x-iso9660-image") pref_commands=("${_cmds_iso[@]}") ;;
-        "application/x-lha" | "application/x-lzh-compressed") pref_commands=("${_cmds_lzh[@]}") ;;
-        "application/x-lrzip-compressed-tar") pref_commands=("${_cmds_tar_lrz[@]}") ;;
-        "application/x-lrzip") pref_commands=("${_cmds_lrz[@]}") ;;
-        "application/x-lz4-compressed-tar") pref_commands=("${_cmds_tar_lz4[@]}") ;;
-        "application/x-lz4") pref_commands=("${_cmds_lz4[@]}") ;;
-        "application/x-lzip-compressed-tar") pref_commands=("${_cmds_tar_lz[@]}") ;;
-        "application/x-lzip") pref_commands=("${_cmds_lz[@]}") ;;
-        "application/x-lzma-compressed-tar") pref_commands=("${_cmds_tar_lzma[@]}") ;;
-        "application/x-lzma") pref_commands=("${_cmds_lzma[@]}") ;;
-        "application/x-lzop") pref_commands=("${_cmds_lzo[@]}") ;;
-        "application/x-msi") pref_commands=("${_cmds_msi[@]}") ;;
-        "application/x-rar" | "application/x-rar-compressed" | "application/vnd.rar") pref_commands=("${_cmds_rar[@]}") ;;
-        "application/x-rpm") pref_commands=("${_cmds_rpm[@]}") ;;
-        "application/x-tar") pref_commands=("${_cmds_tar[@]}") ;;
-        "application/x-tarz") pref_commands=("${_cmds_tar_z[@]}") ;;
-        "application/x-tzo") pref_commands=("${_cmds_tar_lzo[@]}") ;;
-        "application/x-xar") pref_commands=("${_cmds_xar[@]}") ;;
-        "application/x-xz-compressed-tar") pref_commands=("${_cmds_tar_xz[@]}") ;;
-        "application/x-xz") pref_commands=("${_cmds_xz[@]}") ;;
-        "application/x-zip" | "application/x-zip-compressed" | "application/zip" | "application/vnd.android.package-archive" | "application/java-archive") pref_commands=("${_cmds_zip[@]}") ;;
-        "application/x-zstd-compressed-tar") pref_commands=("${_cmds_tar_zst[@]}") ;;
-        "application/zstd") pref_commands=("${_cmds_zstd[@]}") ;;
+        "application/pgp-encrypted") pref_cmds=("${cmds_gpg[@]}") ;;
+        "application/vnd.debian.binary-package") pref_cmds=("${cmds_deb[@]}") ;;
+        "application/vnd.ms-cab-compressed") pref_cmds=("${cmds_cab[@]}") ;;
+        "application/vnd.squashfs") pref_cmds=("${cmds_sqsh[@]}") ;;
+        "application/x-7z-compressed") pref_cmds=("${cmds_7za[@]}") ;;
+        "application/x-archive") pref_cmds=("${cmds_ar[@]}") ;;
+        "application/x-arj") pref_cmds=("${cmds_arj[@]}") ;;
+        "application/x-bzip-compressed-tar") pref_cmds=("${cmds_tar_bz[@]}") ;;
+        "application/x-bzip") pref_cmds=("${cmds_bz[@]}") ;;
+        "application/x-bzip2" | "application/bzip2") pref_cmds=("${cmds_bz[@]}") ;;
+        "application/x-bzip3") pref_cmds=("${cmds_bz3[@]}") ;;
+        "application/x-compress") pref_cmds=("${cmds_z[@]}") ;;
+        "application/x-compressed-tar") pref_cmds=("${cmds_tar_gz[@]}") ;;
+        "application/x-cpio") pref_cmds=("${cmds_cpio[@]}") ;;
+        "application/x-dar") pref_cmds=("${cmds_dar[@]}") ;;
+        "application/x-gzip" | "application/gzip") pref_cmds=("${cmds_gz[@]}") ;;
+        "application/x-iso9660-image") pref_cmds=("${cmds_iso[@]}") ;;
+        "application/x-lha" | "application/x-lzh-compressed") pref_cmds=("${cmds_lzh[@]}") ;;
+        "application/x-lrzip-compressed-tar") pref_cmds=("${cmds_tar_lrz[@]}") ;;
+        "application/x-lrzip") pref_cmds=("${cmds_lrz[@]}") ;;
+        "application/x-lz4-compressed-tar") pref_cmds=("${cmds_tar_lz4[@]}") ;;
+        "application/x-lz4") pref_cmds=("${cmds_lz4[@]}") ;;
+        "application/x-lzip-compressed-tar") pref_cmds=("${cmds_tar_lz[@]}") ;;
+        "application/x-lzip") pref_cmds=("${cmds_lz[@]}") ;;
+        "application/x-lzma-compressed-tar") pref_cmds=("${cmds_tar_lzma[@]}") ;;
+        "application/x-lzma") pref_cmds=("${cmds_lzma[@]}") ;;
+        "application/x-lzop") pref_cmds=("${cmds_lzo[@]}") ;;
+        "application/x-msi") pref_cmds=("${cmds_msi[@]}") ;;
+        "application/x-rar" | "application/x-rar-compressed" | "application/vnd.rar") pref_cmds=("${cmds_rar[@]}") ;;
+        "application/x-rpm") pref_cmds=("${cmds_rpm[@]}") ;;
+        "application/x-tar") pref_cmds=("${cmds_tar[@]}") ;;
+        "application/x-tarz") pref_cmds=("${cmds_tar_z[@]}") ;;
+        "application/x-tzo") pref_cmds=("${cmds_tar_lzo[@]}") ;;
+        "application/x-xar") pref_cmds=("${cmds_xar[@]}") ;;
+        "application/x-xz-compressed-tar") pref_cmds=("${cmds_tar_xz[@]}") ;;
+        "application/x-xz") pref_cmds=("${cmds_xz[@]}") ;;
+        "application/x-zip" | "application/x-zip-compressed" | "application/zip" | "application/vnd.android.package-archive" | "application/java-archive") pref_cmds=("${cmds_zip[@]}") ;;
+        "application/x-zstd-compressed-tar") pref_cmds=("${cmds_tar_zst[@]}") ;;
+        "application/zstd") pref_cmds=("${cmds_zstd[@]}") ;;
         "application/octet-stream")
             # For generic binary files, try further identification.
             local file_information=""
@@ -298,16 +298,16 @@ _get_command() {
                 -- "$input_file" 2>/dev/null)
 
             case "${file_information,,}" in
-            "gpg "* | "pgp "*) pref_commands=("${_cmds_gpg[@]}") ;;
+            "gpg "* | "pgp "*) pref_cmds=("${cmds_gpg[@]}") ;;
             *)
                 # Default extractor chain for unknown binary files.
-                pref_commands=("${_cmds_unknown_file[@]}")
+                pref_cmds=("${cmds_unknown_file[@]}")
                 ;;
             esac
             ;;
         *)
             # Default extractor chain for unknown files.
-            pref_commands=("${_cmds_unknown_file[@]}")
+            pref_cmds=("${cmds_unknown_file[@]}")
             ;;
         esac
         ;;
@@ -316,11 +316,11 @@ _get_command() {
     # Determine the command to use based on the command status.
     if [[ "$command_status" == "default" ]]; then
         # Use the first preferred command as the default.
-        command=${pref_commands[0]}
+        command=${pref_cmds[0]}
     elif [[ "$command_status" == "available" ]]; then
         # Find the first available command on the system.
         local pref_command=""
-        for pref_command in "${pref_commands[@]}"; do
+        for pref_command in "${pref_cmds[@]}"; do
             if [[ "$pref_command" == *","* ]]; then
                 # Check if all commands in a composite command exist.
                 if _all_commands_exists "${pref_command//,/ }"; then
