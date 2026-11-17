@@ -717,14 +717,10 @@ _main() {
     # IGNORED: Document/Document: Convert/Document: Convert to DOCX
     # IGNORED: Document/Document: Convert/Document: Convert to EPUB
     # IGNORED: Document/Document: Convert/Document: Convert to Markdown
-    # IGNORED: Document/Document: Convert/Document: Convert to ODP
-    # IGNORED: Document/Document: Convert/Document: Convert to ODS
     # IGNORED: Document/Document: Convert/Document: Convert to ODT
     # IGNORED: Document/Document: Convert/Document: Convert to PDF
     # IGNORED: Document/Document: Convert/Document: Convert to PDF (landscape)
-    # IGNORED: Document/Document: Convert/Document: Convert to PPTX
     # IGNORED: Document/Document: Convert/Document: Convert to TXT
-    # IGNORED: Document/Document: Convert/Document: Convert to XLSX
 
     # -------------------------------------------------------------------------
     # SECTION: Document: PDF

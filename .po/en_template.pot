@@ -897,14 +897,6 @@ msgid "Document: Convert to Markdown"
 msgstr ""
 
 #: Menu
-msgid "Document: Convert to ODP"
-msgstr ""
-
-#: Menu
-msgid "Document: Convert to ODS"
-msgstr ""
-
-#: Menu
 msgid "Document: Convert to ODT"
 msgstr ""
 
@@ -917,15 +909,7 @@ msgid "Document: Convert to PDF (landscape)"
 msgstr ""
 
 #: Menu
-msgid "Document: Convert to PPTX"
-msgstr ""
-
-#: Menu
 msgid "Document: Convert to TXT"
-msgstr ""
-
-#: Menu
-msgid "Document: Convert to XLSX"
 msgstr ""
 
 #: Menu

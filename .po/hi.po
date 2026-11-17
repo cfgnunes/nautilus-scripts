@@ -898,14 +898,6 @@ msgid "Document: Convert to Markdown"
 msgstr "दस्तावेज़: Markdown में कन्वर्ट करें"
 
 #: Menu
-msgid "Document: Convert to ODP"
-msgstr "दस्तावेज़: ODP में कन्वर्ट करें"
-
-#: Menu
-msgid "Document: Convert to ODS"
-msgstr "दस्तावेज़: ODS में कन्वर्ट करें"
-
-#: Menu
 msgid "Document: Convert to ODT"
 msgstr "दस्तावेज़: ODT में कन्वर्ट करें"
 
@@ -918,16 +910,8 @@ msgid "Document: Convert to PDF (landscape)"
 msgstr "दस्तावेज़: PDF में कन्वर्ट करें (लैंडस्केप)"
 
 #: Menu
-msgid "Document: Convert to PPTX"
-msgstr "दस्तावेज़: PPTX में कन्वर्ट करें"
-
-#: Menu
 msgid "Document: Convert to TXT"
 msgstr "दस्तावेज़: TXT में कन्वर्ट करें"
-
-#: Menu
-msgid "Document: Convert to XLSX"
-msgstr "दस्तावेज़: XLSX में कन्वर्ट करें"
 
 #: Menu
 msgid "Extract here"

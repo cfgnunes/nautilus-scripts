@@ -898,14 +898,6 @@ msgid "Document: Convert to Markdown"
 msgstr "Dokumentum: konvertálás ide Markdown"
 
 #: Menu
-msgid "Document: Convert to ODP"
-msgstr "Dokumentum: konvertálás ide ODP"
-
-#: Menu
-msgid "Document: Convert to ODS"
-msgstr "Dokumentum: konvertálás ide ODS"
-
-#: Menu
 msgid "Document: Convert to ODT"
 msgstr "Dokumentum: konvertálás ide ODT"
 
@@ -918,16 +910,8 @@ msgid "Document: Convert to PDF (landscape)"
 msgstr "Dokumentum: konvertálás ide PDF (fekvő)"
 
 #: Menu
-msgid "Document: Convert to PPTX"
-msgstr "Dokumentum: konvertálás ide PPTX"
-
-#: Menu
 msgid "Document: Convert to TXT"
 msgstr "Dokumentum: konvertálás ide TXT"
-
-#: Menu
-msgid "Document: Convert to XLSX"
-msgstr "Dokumentum: konvertálás ide XLSX"
 
 #: Menu
 msgid "Extract here"

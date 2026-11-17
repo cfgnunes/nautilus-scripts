@@ -898,14 +898,6 @@ msgid "Document: Convert to Markdown"
 msgstr "문서: 마크다운으로 변환"
 
 #: Menu
-msgid "Document: Convert to ODP"
-msgstr "문서: ODP로 변환"
-
-#: Menu
-msgid "Document: Convert to ODS"
-msgstr "문서: ODS로 변환"
-
-#: Menu
 msgid "Document: Convert to ODT"
 msgstr "문서: ODT로 변환"
 
@@ -918,16 +910,8 @@ msgid "Document: Convert to PDF (landscape)"
 msgstr "문서: PDF로 변환 (가로)"
 
 #: Menu
-msgid "Document: Convert to PPTX"
-msgstr "문서: PPTX로 변환"
-
-#: Menu
 msgid "Document: Convert to TXT"
 msgstr "문서: TXT로 변환"
-
-#: Menu
-msgid "Document: Convert to XLSX"
-msgstr "문서: XLSX로 변환"
 
 #: Menu
 msgid "Extract here"

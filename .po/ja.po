@@ -898,14 +898,6 @@ msgid "Document: Convert to Markdown"
 msgstr "ドキュメント：Markdownに変換"
 
 #: Menu
-msgid "Document: Convert to ODP"
-msgstr "ドキュメント：ODPに変換"
-
-#: Menu
-msgid "Document: Convert to ODS"
-msgstr "ドキュメント：ODSに変換"
-
-#: Menu
 msgid "Document: Convert to ODT"
 msgstr "ドキュメント：ODTに変換"
 
@@ -918,16 +910,8 @@ msgid "Document: Convert to PDF (landscape)"
 msgstr "ドキュメント：PDFに変換 (横向き)"
 
 #: Menu
-msgid "Document: Convert to PPTX"
-msgstr "ドキュメント：PPTXに変換"
-
-#: Menu
 msgid "Document: Convert to TXT"
 msgstr "ドキュメント：TXTに変換"
-
-#: Menu
-msgid "Document: Convert to XLSX"
-msgstr "ドキュメント：XLSXに変換"
 
 #: Menu
 msgid "Extract here"

@@ -898,14 +898,6 @@ msgid "Document: Convert to Markdown"
 msgstr "დოკუმენტი: გადაყვანა ფორმატში Markdown"
 
 #: Menu
-msgid "Document: Convert to ODP"
-msgstr "დოკუმენტი: გადაყვანა ფორმატში ODP"
-
-#: Menu
-msgid "Document: Convert to ODS"
-msgstr "დოკუმენტი: გადაყვანა ფორმატში ODS"
-
-#: Menu
 msgid "Document: Convert to ODT"
 msgstr "დოკუმენტი: გადაყვანა ფორმატში ODT"
 
@@ -918,16 +910,8 @@ msgid "Document: Convert to PDF (landscape)"
 msgstr "დოკუმენტი: გადაყვანა ფორმატში PDF (ალბომური)"
 
 #: Menu
-msgid "Document: Convert to PPTX"
-msgstr "დოკუმენტი: გადაყვანა ფორმატში PPTX"
-
-#: Menu
 msgid "Document: Convert to TXT"
 msgstr "დოკუმენტი: გადაყვანა ფორმატში TXT"
-
-#: Menu
-msgid "Document: Convert to XLSX"
-msgstr "დოკუმენტი: გადაყვანა ფორმატში XLSX"
 
 #: Menu
 msgid "Extract here"
