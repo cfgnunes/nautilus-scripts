@@ -12,7 +12,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    input_files=$(_get_files "par_type=file; par_select_extension='csv|doc|docx|epub|fb2|fodf|fodg|fodp|fods|fodt|gfm|htm|html|json|markdown|md|odf|odg|odp|ods|odt|opml|org|pdf|ppt|pptx|rst|rtf|tex|xls|xlsx'")
+    input_files=$(_get_files "par_type=file")
 
     local dependencies=""
     dependencies=$(_get_dependencies "$input_files")
