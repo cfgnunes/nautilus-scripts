@@ -790,17 +790,6 @@ declare -A PKG_MAP=(
         pkgx:   facebook.com/zstd
     "
 
-    ["latexmk"]="
-        termux: texlive-bin
-        apt:    latexmk
-        dnf:    latexmk
-        pacman: texlive-binextra
-        nix:    texlivePackages.latexmk~latexmk
-        zypper: texlive-latexmk
-        guix:   texlive-bin
-        xbps:   texlive-latexmk
-        pkgx:
-    "
 
     ["localc"]="
         termux:
@@ -848,6 +837,19 @@ declare -A PKG_MAP=(
         guix:
         xbps:   python3-ocrmypdf
         pkgx:   github.com/ocrmypdf/OCRmyPDF ghostscript.com
+    "
+
+    ["rayomd"]="
+        termux:
+        apt:
+        dnf:
+        pacman:
+        nix:
+        zypper:
+        guix:
+        xbps:
+        pkgx:   github.com/Butterski/rayomd
+        precompiled: rayomd
     "
 
     ["sox"]="
@@ -958,37 +960,6 @@ declare -A PKG_MAP=(
         pkgx:   tesseract-ocr.github.io tesseract-ocr.github.io/tessdata
     "
 
-    ["texlive"]="
-        termux: texlive-bin
-        apt:    texlive \
-                texlive-fonts-extra \
-                texlive-latex-extra \
-                texlive-publishers \
-                texlive-science \
-                texlive-xetex
-        dnf:    texlive-base \
-                texlive-collection-fontsextra \
-                texlive-collection-latexextra \
-                texlive-collection-publishers \
-                texlive-collection-mathscience \
-                texlive-collection-xetex
-        pacman: texlive-basic \
-                texlive-fontsextra \
-                texlive-latexextra \
-                texlive-publishers \
-                texlive-mathscience \
-                texlive-xetex
-        nix:    texliveFull~texlive
-        zypper: texlive-collection-basic \
-                texlive-collection-fontsextra \
-                texlive-collection-latexextra \
-                texlive-collection-publishers \
-                texlive-collection-mathscience \
-                texlive-collection-xetex
-        guix:   texlive
-        xbps:   texlive-bin
-        pkgx:
-    "
 
     ["tmux"]="
         termux: tmux
@@ -1021,8 +992,12 @@ declare -A POST_INSTALL=(
 #   The regular expression selects the tarball URL from the latest release.
 declare -A PRECOMPILED_URL=(
     ["pdfcpu"]="
-        x86_64:  github;pdfcpu/pdfcpu;https.*inux.*x86.64.tar.\w*
-        aarch64: github;pdfcpu/pdfcpu;https.*inux.*arm64.tar.\w*
-        armv71:  github;pdfcpu/pdfcpu;https.*inux.*armv7.tar.\w*
+        x86_64:  github;pdfcpu/pdfcpu;https.*pdfcpu.*inux.*x86.64.tar.\w*
+        aarch64: github;pdfcpu/pdfcpu;https.*pdfcpu.*inux.*arm64.tar.\w*
+        armv71:  github;pdfcpu/pdfcpu;https.*pdfcpu.*inux.*armv7.tar.\w*
+    "
+
+    ["rayomd"]="
+        x86_64:  github;Butterski/rayomd;https.*rayomd.*inux.*x64-static.tar.\w*
     "
 )
