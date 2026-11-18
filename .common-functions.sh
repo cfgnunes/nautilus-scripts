@@ -4570,7 +4570,6 @@ _i18n_initialize
 
 _sandbox_initialize
 
-# Initialize pkgx tool if available.
 _pkgx_initialize
 
 # If running from a supported file manager and the scripts directory is
