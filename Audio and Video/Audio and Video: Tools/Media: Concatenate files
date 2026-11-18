@@ -53,7 +53,7 @@ _main_task() {
         "par_extension_opt=preserve")
 
     # Run the main process.
-    std_output=$(ffmpeg -hide_banner -y \
+    std_output=$(_run_in_sandbox "$output_dir" "false" ffmpeg -hide_banner -y \
         -f "concat" \
         -safe 0 \
         -i "$temp_file" \

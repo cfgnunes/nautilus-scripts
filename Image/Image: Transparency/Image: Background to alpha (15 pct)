@@ -30,7 +30,7 @@ _main_task() {
 
     # Run the main process.
     local first_pixel_color=""
-    first_pixel_color=$(_cmd_magick convert \
+    first_pixel_color=$(_cmd_magick_in_sandbox "$output_dir" convert \
         "$input_file""[1x1+0+0]" \
         -format "%[pixel:p{0,0}]" \
         "info:" 2>&1)
@@ -39,7 +39,7 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" \
         "par_extension_opt=replace; par_extension=png; par_suffix='(alpha 15 pct)'")
 
-    std_output=$(_cmd_magick convert \
+    std_output=$(_cmd_magick_in_sandbox "$output_dir" convert \
         "$input_file" \
         -alpha off \
         -bordercolor "$first_pixel_color" \

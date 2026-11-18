@@ -40,7 +40,7 @@ _main_task() {
         "par_extension_opt=preserve; par_suffix='(UTF-8)'")
 
     # Run the main process.
-    piconv -f "$input_encoding" "$input_file" -t "$encoding" >"$output_file"
+    _run_in_sandbox "$output_dir" "false" piconv -f "$input_encoding" "$input_file" -t "$encoding" >"$output_file"
     _check_output "$?" "" "$input_file" "$output_file" || return 1
 }
 

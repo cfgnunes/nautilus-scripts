@@ -33,7 +33,7 @@ _main_task() {
 
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(_cmd_magick convert \
+    std_output=$(_cmd_magick_in_sandbox "$output_dir" convert \
         $input_files \
         +append \
         +repage \

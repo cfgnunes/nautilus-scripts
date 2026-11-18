@@ -134,8 +134,8 @@ _compare_hexa() {
     local file_2_hex=""
     file_1_hex="$TEMP_DIR_TASK/1_$(basename -- "$file_1")"
     file_2_hex="$TEMP_DIR_TASK/2_$(basename -- "$file_2")"
-    xxd -c "$cols" "$file_1" "$file_1_hex"
-    xxd -c "$cols" "$file_2" "$file_2_hex"
+    _run_in_sandbox "" "false" xxd -c "$cols" "$file_1" "$file_1_hex"
+    _run_in_sandbox "" "false" xxd -c "$cols" "$file_2" "$file_2_hex"
 
     # Remove the address column from the hex dumps for cleaner comparison.
     sed -i "s|^[^:]*: ||g" "$file_1_hex"
@@ -151,8 +151,8 @@ _compare_hexa() {
     # Save the files after possible modifications.
     local file_1_modified="$file_1_hex.bin"
     local file_2_modified="$file_2_hex.bin"
-    xxd -revert -p "$file_1_hex" "$file_1_modified"
-    xxd -revert -p "$file_2_hex" "$file_2_modified"
+    _run_in_sandbox "" "false" xxd -revert -p "$file_1_hex" "$file_1_modified"
+    _run_in_sandbox "" "false" xxd -revert -p "$file_2_hex" "$file_2_modified"
 
     # Move the modified files to their original locations, replacing the
     # originals.
@@ -223,7 +223,8 @@ _compare_images() {
     local file_2=$2
 
     # Check if the two images have identical pixel values.
-    if _cmd_magick compare -metric AE -- "$file_1" "$file_2" null: &>/dev/null; then
+    if _cmd_magick_in_sandbox "" \
+        compare -metric AE -- "$file_1" "$file_2" null: &>/dev/null; then
         local msg=""
         msg="$(_i18n 'The selected images have the same pixel values.')"
         _display_info_box "$msg"
@@ -233,9 +234,11 @@ _compare_images() {
     # Retrieve the dimensions of each image (width x height format).
     local dimensions_1=""
     local dimensions_2=""
-    dimensions_1=$(_cmd_magick identify -format "%wx%h" "$file_1" 2>&1)
+    dimensions_1=$(_cmd_magick_in_sandbox "" \
+        identify -format "%wx%h" "$file_1" 2>&1)
     _check_output "$?" "$dimensions_1" "$file_1" "" || return 1
-    dimensions_2=$(_cmd_magick identify -format "%wx%h" "$file_2" 2>&1)
+    dimensions_2=$(_cmd_magick_in_sandbox "" \
+        identify -format "%wx%h" "$file_2" 2>&1)
     _check_output "$?" "$dimensions_2" "$file_2" "" || return 1
 
     # Create a temporary file for the visual diff output.
@@ -245,7 +248,7 @@ _compare_images() {
     # Compare the images based on their dimensions.
     if [[ "$dimensions_1" == "$dimensions_2" ]]; then
         # If dimensions are the same, use a grayscale diff for better clarity.
-        _cmd_magick convert \
+        _cmd_magick_in_sandbox "" convert \
             '(' "$file_1" -flatten -grayscale Rec709Luminance ')' \
             '(' "$file_2" -flatten -grayscale Rec709Luminance ')' \
             '(' -clone 0-1 -compose darken -composite ')' \
@@ -253,7 +256,8 @@ _compare_images() {
     else
         # If dimensions differ, generate a visual diff highlighting
         # differences.
-        _cmd_magick compare -- "$file_1" "$file_2" -compose src "$temp_file"
+        _cmd_magick_in_sandbox "" \
+            compare -- "$file_1" "$file_2" -compose src "$temp_file"
     fi
 
     # Determine the default image viewer to display the visual diff.

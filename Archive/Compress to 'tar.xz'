@@ -50,7 +50,7 @@ _main_task() {
 
         std_output=$(find . -mindepth 1 -maxdepth 1 -printf "%f\0" 2>/dev/null |
             sort --zero-terminated --version-sort |
-            xargs --no-run-if-empty --null tar -cJf "$output_file" --)
+            xargs --no-run-if-empty --null bash -c '_run_in_sandbox "$@"' _ "$output_dir" "false" tar -cJf "$output_file" --)
     else
         # If the input is a file, change to its parent directory.
         _directory_push "$(_get_dirname "$input_file")" || return 1
@@ -59,7 +59,7 @@ _main_task() {
         local input_file_basename=""
         input_file_basename=$(basename -- "$input_file")
 
-        std_output=$(tar -cJf "$output_file" -- "$input_file_basename" 2>&1)
+        std_output=$(_run_in_sandbox "$output_dir" "false" tar -cJf "$output_file" -- "$input_file_basename" 2>&1)
     fi
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
     _directory_pop || return 1

@@ -31,7 +31,7 @@ _main_task() {
     local timeout_value=5
 
     # Run the main process.
-    std_output=$(axel \
+    std_output=$(_run_in_sandbox "$output_dir" "true" axel \
         --insecure \
         --num-connections=10 \
         --timeout="$timeout_value" \

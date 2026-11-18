@@ -47,7 +47,7 @@ _main_task() {
         "par_extension_opt=preserve; par_suffix='(pages $TASK_PAGES)'")
 
     # Run the main process.
-    std_output=$(qpdf "$input_file" --pages . "$TASK_PAGES" -- "$output_file" 2>&1)
+    std_output=$(_run_in_sandbox "$output_dir" "false" qpdf "$input_file" --pages . "$TASK_PAGES" -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
 

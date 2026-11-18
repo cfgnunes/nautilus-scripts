@@ -2,19 +2,20 @@
 
 # Test shell scripts with ShellCheck.
 
+# Source the file '.common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/.common-functions.sh"
 
-# Check for pkgx command or local installation.
-if [[ -x "$HOME/.local/opt/pkgx/pkgx" ]]; then
-    PKGX="$HOME/.local/opt/pkgx/pkgx"
-elif command -v pkgx &>/dev/null; then
-    PKGX=$(command -v pkgx)
-else
-    echo "ERROR: pkgx not found!" >&2
-    exit 1
-fi
+set -a
+eval "$(_pkgx_in_sandbox --silent +"shellcheck.net")" &>/dev/null
+set +a
 
-# Find all shell scripts and run ShellCheck on them.
-find "$ROOT_DIR" ! -path "*/.git*" -type f \( -iname "*.sh" -o -executable \) \
-    -exec "$PKGX" shellcheck -e SC1091 "{}" +
+# Find all shell scripts.
+mapfile -d "" -t FILES < <(
+    find "$ROOT_DIR" ! -path "*/.git/*" \
+        -type f \( -iname "*.sh" -o -executable \) -print0
+)
+
+# Run ShellCheck on them.
+_run_in_sandbox "" "true" shellcheck -e SC1091 "${FILES[@]}"

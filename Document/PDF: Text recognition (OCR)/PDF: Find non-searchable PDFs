@@ -30,7 +30,7 @@ _main_task() {
 
     # Run the main process.
     # Save the result only for 'without fonts' PDFs.
-    if ! LC_ALL=C pdffonts -- "$input_file" | sed -n 3p | grep --quiet "."; then
+    if ! _run_in_sandbox "" "false" pdffonts -- "$input_file" | sed -n 3p | grep --quiet "."; then
         _storage_text_write_ln "$(_text_remove_pwd "$input_file")"
     fi
 }

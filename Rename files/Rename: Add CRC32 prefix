@@ -37,15 +37,15 @@ _main_task() {
     filename=$(basename -- "$input_file")
 
     # Run the main process.
-    if cksum -a crc32b /dev/null &>/dev/null; then
-        std_output=$(cksum -a crc32b -- "$input_file" 2>&1)
+    if _run_in_sandbox "$output_dir" "false" cksum -a crc32b /dev/null &>/dev/null; then
+        std_output=$(_run_in_sandbox "$output_dir" "false" cksum -a crc32b -- "$input_file" 2>&1)
         exit_code=$?
         if ((exit_code == 0)); then
             std_output=${std_output%%[$'\t ']*}
             printf -v std_output '%08x' "$std_output"
         fi
     else
-        std_output=$(rhash --printf="%{crc32}" -- "$input_file" 2>&1)
+        std_output=$(_run_in_sandbox "$output_dir" "false" rhash --printf="%{crc32}" -- "$input_file" 2>&1)
         exit_code=$?
     fi
     _check_output "$exit_code" "$std_output" "$input_file" "" || return 1

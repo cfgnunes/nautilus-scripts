@@ -35,6 +35,7 @@ bash install.sh
 ## Highlights
 
 - **Parallel task execution**: Processes multiple files simultaneously. Very fast!
+- **Sandboxed execution**: Runs commands in a secure sandbox using [Bubblewrap](https://github.com/containers/bubblewrap).
 - **Multi-language support**: Automatically detects the system language and displays messages in the appropriate language.
 - **Progress dialog**: Displays a progress dialog and allows interruption of tasks at any time.
 - **Dependency management**: Prompts users to install any missing dependencies.

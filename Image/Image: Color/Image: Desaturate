@@ -32,7 +32,7 @@ _main_task() {
         "par_extension_opt=preserve; par_suffix='(desaturated)'")
 
     # Run the main process.
-    std_output=$(_cmd_magick convert \
+    std_output=$(_cmd_magick_in_sandbox "$output_dir" convert \
         "$input_file" \
         -grayscale rec709luma \
         "$output_file" 2>&1)

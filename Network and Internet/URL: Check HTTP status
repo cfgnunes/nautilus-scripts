@@ -35,7 +35,7 @@ _main_task() {
     local status=""
 
     # Run the main process.
-    std_output=$(LC_ALL=C curl \
+    std_output=$(_run_in_sandbox "$output_dir" "true" curl \
         -A "Mozilla/5.0 (X11; Linux x86_64; rv:153.0) Gecko/20100101 Firefox/153.0" \
         --max-time "$timeout_max" --connect-timeout "$timeout_value" \
         -o /dev/null -s -k -w "%{http_code}" "$input_file" 2>/dev/null)

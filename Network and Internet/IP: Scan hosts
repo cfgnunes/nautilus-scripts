@@ -44,17 +44,17 @@ _main_task() {
 
     # Run ping and extract only the result from the last ICMP packet.
     # 'ping' from 'iputils' or 'inetutils'.
-    ping=$(LC_ALL=C ping -n -c 3 -W "$timeout_value" -- "$input_file" 2>/dev/null |
+    ping=$(_run_in_sandbox "$output_dir" "true" ping -n -c 3 -W "$timeout_value" -- "$input_file" 2>/dev/null |
         grep --only-matching --perl-regexp "min/.* = [^/]+/\K[^/]+/[^ ]+ \S+" |
         sed "s|/[^ ]*||")
 
     # Perform an Nmap scan to detect open ports.
-    ports=$(LC_ALL=C nmap -n -Pn -T4 --max-retries 1 --host-timeout "$timeout_value"s "$ip" 2>/dev/null |
+    ports=$(_run_in_sandbox "$output_dir" "true" nmap -n -Pn -T4 --max-retries 1 --host-timeout "$timeout_value"s "$ip" 2>/dev/null |
         awk '/open/ {split($1, a, "/"); print a[1]}' | paste -s -d ",")
 
     if [[ -z "$ping" && -z "$ports" ]]; then
         # Use Nmap host discovery (no port scan) to see if the host replies.
-        if LC_ALL=C nmap -sn --max-retries 1 --host-timeout "$timeout_value"s "$ip" 2>/dev/null |
+        if _run_in_sandbox "$output_dir" "true" nmap -sn --max-retries 1 --host-timeout "$timeout_value"s "$ip" 2>/dev/null |
             grep -qiF "Host is up"; then
             status="up"
         fi
@@ -195,7 +195,7 @@ _resolve_host() {
     fi
 
     # If not found locally, try online resolution.
-    hostname=$(dig -x "$ip" +short | head -n 1)
+    hostname=$(_run_in_sandbox "" "true" dig -x "$ip" +short | head -n 1)
 
     # shellcheck disable=SC2001
     hostname=$(sed "s|\.$||" <<<"$hostname")

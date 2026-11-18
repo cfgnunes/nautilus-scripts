@@ -137,7 +137,7 @@ declare -A PKG_MAP=(
         zypper: clamav
         guix:   clamav
         xbps:   clamav
-        pkgx:   clamav.net
+        pkgx:
     "
 
     ["cpio"]="
@@ -257,7 +257,7 @@ declare -A PKG_MAP=(
         zypper: git
         guix:   git
         xbps:   git
-        pkgx:   git-scm.org
+        pkgx:
     "
 
     ["gpg"]="
@@ -269,7 +269,7 @@ declare -A PKG_MAP=(
         zypper: gpg2
         guix:   gnupg
         xbps:   gnupg
-        pkgx:   gnupg.org
+        pkgx:
     "
 
     ["gs"]="

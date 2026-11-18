@@ -32,7 +32,7 @@ _main_task() {
         "par_extension_opt=preserve; par_suffix='(PDFA-2b)'")
 
     # Run the main process.
-    std_output=$(gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
+    std_output=$(_run_in_sandbox "$output_dir" "false" gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
         -dPDFA=2 \
         -dPDFACompatibilityPolicy=1 \
         -sColorConversionStrategy=UseDeviceIndependentColor \

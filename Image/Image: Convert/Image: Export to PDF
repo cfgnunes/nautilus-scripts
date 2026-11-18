@@ -85,7 +85,7 @@ _run_command() {
     # Run the main process.
     case $command in
     "magick")
-        std_output=$(_cmd_magick convert \
+        std_output=$(_cmd_magick_in_sandbox "$output_dir" convert \
             "$input_file" \
             "$output_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1

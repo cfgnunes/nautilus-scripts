@@ -14,6 +14,7 @@ _main() {
 
     # Execute initial checks.
     input_files=$(_get_files "par_type=file")
+    output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Default password for testing encrypted archives.
     TASK_PASSWORD="null"
@@ -418,11 +419,12 @@ _run_command() {
     }
     __cmd_7z() {
         if _command_exists "7z"; then
-            LC_ALL=C 7z "$@"
+            _run_in_sandbox "$output_dir" "false" 7z "$@"
         elif _command_exists "7za"; then
-            LC_ALL=C 7za "$@"
+            _run_in_sandbox "$output_dir" "false" 7za "$@"
         else
-            LC_ALL=C "$(compgen -c 7z | head -n 1)" "$@"
+            _run_in_sandbox "$output_dir" "false" \
+                "$(compgen -c 7z | head -n 1)" "$@"
         fi
     }
 
@@ -455,9 +457,9 @@ _run_command() {
             exit_code=$?
         fi
         ;;
-    "ar") std_output=$(ar x -- "$input_file" 2>&1) ;;
+    "ar") std_output=$(_run_in_sandbox "$output_dir" "false" ar x -- "$input_file" 2>&1) ;;
     "bsdtar")
-        std_output=$(LC_ALL=C bsdtar --passphrase "$TASK_PASSWORD" -xf "$input_file" 2>&1)
+        std_output=$(_run_in_sandbox "$output_dir" "false" bsdtar --passphrase "$TASK_PASSWORD" -xf "$input_file" 2>&1)
         exit_code=$?
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect passphrase" <<<"$std_output"; then
@@ -465,15 +467,15 @@ _run_command() {
             __temp_dir_pop && __temp_dir_remove
             password=$(__get_password) || return 1
             __temp_dir_push || return 1
-            std_output=$(LC_ALL=C bsdtar --passphrase "$password" -xf "$input_file" 2>&1)
+            std_output=$(_run_in_sandbox "$output_dir" "false" bsdtar --passphrase "$password" -xf "$input_file" 2>&1)
             exit_code=$?
         fi
         ;;
-    "bzip2") bzip2 -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
-    "bzip3") bzip3 -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
-    "cabextract") std_output=$(cabextract "$input_file" 2>&1) ;;
-    "cpio") std_output=$(cpio -idv <"$input_file" 2>&1) ;;
-    "dar") std_output=$(dar -x "$input_file" 2>&1) ;;
+    "bzip2") _run_in_sandbox "$output_dir" "false" bzip2 -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
+    "bzip3") _run_in_sandbox "$output_dir" "false" bzip3 -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
+    "cabextract") std_output=$(_run_in_sandbox "$output_dir" "false" cabextract "$input_file" 2>&1) ;;
+    "cpio") std_output=$(_run_in_sandbox "$output_dir" "false" cpio -idv <"$input_file" 2>&1) ;;
+    "dar") std_output=$(_run_in_sandbox "$output_dir" "false" dar -x "$input_file" 2>&1) ;;
     "gpg")
         std_output=$(gpg --batch --yes --decrypt --output "$filename" -- "$input_file" 2>&1)
         local file_mime=""
@@ -483,7 +485,7 @@ _run_command() {
             local temp_dir_extract_tar=""
             temp_dir_extract_tar=$(_make_temp_dir_local "$output_dir" "$filename")
             mv -- "$filename" "$temp_dir_extract_tar/$filename"
-            std_output=$(tar --extract --file="$temp_dir_extract_tar/$filename" 2>&1)
+            std_output=$(_run_in_sandbox "$output_dir" "false" tar --extract --file="$temp_dir_extract_tar/$filename" 2>&1)
             exit_code=$?
             # Remove the temporary directory (local directory).
             rm -rf -- "$temp_dir_extract_tar"
@@ -492,42 +494,42 @@ _run_command() {
     "gzip")
         # Get the original filename stored in the gzip archive, if available.
         local saved_filename=""
-        saved_filename=$(gzip -l -N "$input_file" 2>/dev/null |
+        saved_filename=$(_run_in_sandbox "$output_dir" "false" gzip -l -N "$input_file" 2>/dev/null |
             tail -n 1 | cut -d "%" -f 2- | sed "s|^ ||")
         if [[ -n "$saved_filename" ]] && [[ "$saved_filename" != "$input_file" ]]; then
             filename=$(basename "$saved_filename")
         fi
         # Extract the gzip archive to the determined filename.
-        gzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null
+        _run_in_sandbox "$output_dir" "false" gzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null
         ;;
-    "lha") std_output=$(lha -e "$input_file" 2>&1) ;;
-    "lrzip") std_output=$(lrzip -d -o "$temp_dir_extract/$filename" -- "$input_file" 2>&1) ;;
-    "lz4") lz4 -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
-    "lzip") lzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
+    "lha") std_output=$(_run_in_sandbox "$output_dir" "false" lha -e "$input_file" 2>&1) ;;
+    "lrzip") std_output=$(_run_in_sandbox "$output_dir" "false" lrzip -d -o "$temp_dir_extract/$filename" -- "$input_file" 2>&1) ;;
+    "lz4") _run_in_sandbox "$output_dir" "false" lz4 -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
+    "lzip") _run_in_sandbox "$output_dir" "false" lzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
     "lzop")
         # Get the original filename stored in the gzip archive, if available.
         local saved_filename=""
-        saved_filename=$(lzop -l -N "$input_file" 2>/dev/null |
+        saved_filename=$(_run_in_sandbox "$output_dir" "false" lzop -l -N "$input_file" 2>/dev/null |
             tail -n 1 | cut -d "%" -f 2- | sed "s|^ ||")
         if [[ -n "$saved_filename" ]] && [[ "$saved_filename" != "$input_file" ]]; then
             filename=$(basename "$saved_filename")
         fi
         # Extract the gzip archive to the determined filename.
-        lzop -d -c -- "$input_file" >"$filename" 2>/dev/null
+        _run_in_sandbox "$output_dir" "false" lzop -d -c -- "$input_file" >"$filename" 2>/dev/null
         ;;
-    "rdsquashfs") std_output=$(rdsquashfs -u . -- "$input_file" 2>&1) ;;
-    "tar,bzip2") std_output=$(tar --extract --bzip2 --file="$input_file" 2>&1) ;;
-    "tar,gzip") std_output=$(tar --extract --gzip --file="$input_file" 2>&1) ;;
-    "tar,lrzip") std_output=$(lrztar -d "$input_file" 2>&1) ;;
-    "tar,lzip") std_output=$(tar --extract --lzip --file="$input_file" 2>&1) ;;
-    "tar,lz4") std_output=$(lz4 -d -c -- "$input_file" | tar xf -) ;;
-    "tar,lzma") std_output=$(tar --extract --lzma --file="$input_file" 2>&1) ;;
-    "tar,lzop") std_output=$(tar --extract --lzop --file="$input_file" 2>&1) ;;
-    "tar,xz") std_output=$(tar --extract --xz --file="$input_file" 2>&1) ;;
-    "tar,zstd") std_output=$(zstd -f -d -c -- "$input_file" | tar xf -) ;;
-    "tar") std_output=$(tar --extract --file="$input_file" 2>&1) ;;
+    "rdsquashfs") std_output=$(_run_in_sandbox "$output_dir" "false" rdsquashfs -u . -- "$input_file" 2>&1) ;;
+    "tar,bzip2") std_output=$(_run_in_sandbox "$output_dir" "false" tar --extract --bzip2 --file="$input_file" 2>&1) ;;
+    "tar,gzip") std_output=$(_run_in_sandbox "$output_dir" "false" tar --extract --gzip --file="$input_file" 2>&1) ;;
+    "tar,lrzip") std_output=$(_run_in_sandbox "$output_dir" "false" lrztar -d "$input_file" 2>&1) ;;
+    "tar,lzip") std_output=$(_run_in_sandbox "$output_dir" "false" tar --extract --lzip --file="$input_file" 2>&1) ;;
+    "tar,lz4") std_output=$(_run_in_sandbox "$output_dir" "false" lz4 -d -c -- "$input_file" | _run_in_sandbox "$output_dir" "false" tar xf -) ;;
+    "tar,lzma") std_output=$(_run_in_sandbox "$output_dir" "false" tar --extract --lzma --file="$input_file" 2>&1) ;;
+    "tar,lzop") std_output=$(_run_in_sandbox "$output_dir" "false" tar --extract --lzop --file="$input_file" 2>&1) ;;
+    "tar,xz") std_output=$(_run_in_sandbox "$output_dir" "false" tar --extract --xz --file="$input_file" 2>&1) ;;
+    "tar,zstd") std_output=$(_run_in_sandbox "$output_dir" "false" zstd -f -d -c -- "$input_file" | _run_in_sandbox "$output_dir" "false" tar xf -) ;;
+    "tar") std_output=$(_run_in_sandbox "$output_dir" "false" tar --extract --file="$input_file" 2>&1) ;;
     "unrar")
-        std_output=$(LC_ALL=C unrar x -p"$TASK_PASSWORD" -- "$input_file" 2>&1)
+        std_output=$(_run_in_sandbox "$output_dir" "false" unrar x -p"$TASK_PASSWORD" -- "$input_file" 2>&1)
         exit_code=$?
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "password" <<<"$std_output"; then
@@ -535,21 +537,21 @@ _run_command() {
             __temp_dir_pop && __temp_dir_remove
             password=$(__get_password) || return 1
             __temp_dir_push || return 1
-            std_output=$(LC_ALL=C unrar x -p"$password" -- "$input_file" 2>&1)
+            std_output=$(_run_in_sandbox "$output_dir" "false" unrar x -p"$password" -- "$input_file" 2>&1)
             exit_code=$?
         fi
         ;;
-    "unsquashfs") std_output=$(unsquashfs "$input_file" 2>&1) ;;
-    "xorriso") std_output=$(xorriso -osirrox on -indev "$input_file" -- -extract / . -rollback_end 2>&1) ;;
-    "xz") xz -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
-    "zpaq") std_output=$(zpaq x "$input_file" 2>&1) ;;
-    "zstd") zstd -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
+    "unsquashfs") std_output=$(_run_in_sandbox "$output_dir" "false" unsquashfs "$input_file" 2>&1) ;;
+    "xorriso") std_output=$(_run_in_sandbox "$output_dir" "false" xorriso -osirrox on -indev "$input_file" -- -extract / . -rollback_end 2>&1) ;;
+    "xz") _run_in_sandbox "$output_dir" "false" xz -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
+    "zpaq") std_output=$(_run_in_sandbox "$output_dir" "false" zpaq x "$input_file" 2>&1) ;;
+    "zstd") _run_in_sandbox "$output_dir" "false" zstd -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
     "bsdtar,7za")
         exit_code=1
         # Default extractor chain for unrecognized files.
         # Try to extract with 'bsdtar'.
         if ((exit_code != 0)); then
-            std_output=$(bsdtar -xf "$input_file" 2>&1)
+            std_output=$(_run_in_sandbox "$output_dir" "false" bsdtar -xf "$input_file" 2>&1)
             exit_code=$?
         fi
 

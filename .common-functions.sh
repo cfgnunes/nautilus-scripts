@@ -109,6 +109,9 @@ declare -A I18N_DATA=()
 # without the associative array, and must not index it.
 I18N_READY=1
 
+# Flag indicating whether the sandbox (Bubblewrap) is available for use.
+SANDBOX_AVAILABLE="false"
+
 # -----------------------------------------------------------------------------
 # SECTION: Build the structure of the '$TEMP_DIR'
 # -----------------------------------------------------------------------------
@@ -389,7 +392,9 @@ _run_function_parallel() {
         GUI_INFO_WIDTH \
         IGNORE_FIND_PATH \
         INPUT_FILES \
+        SANDBOX_AVAILABLE \
         TEMP_CONTROL_DISPLAY_LOCKED \
+        TEMP_DIR \
         TEMP_DATA_TEXT_BOX \
         TEMP_DIR_FILENAME_LOCKS \
         TEMP_DIR_ITEMS_TO_REMOVE \
@@ -401,7 +406,7 @@ _run_function_parallel() {
     # the parallel subprocesses executed by 'bash -c'.
     export -f \
         _check_output \
-        _cmd_magick \
+        _cmd_magick_in_sandbox \
         _command_exists \
         _convert_delimited_string_to_text \
         _convert_text_to_delimited_string \
@@ -428,6 +433,7 @@ _run_function_parallel() {
         _is_gui_session \
         _log_error \
         _move_file \
+        _run_in_sandbox \
         _storage_text_write \
         _storage_text_write_ln \
         _str_collapse_char \
@@ -448,6 +454,168 @@ _run_function_parallel() {
         --max-procs="$max_procs" \
         --replace="{}" \
         bash -c "$expression"
+}
+
+# Function: _sandbox_initialize
+#
+# Description:
+#   This function checks once whether Bubblewrap can create a sandbox and
+#   stores the result in the exported variable 'SANDBOX_AVAILABLE' ("true" or
+#   "false"). If the sandbox is not usable, a warning is printed to stderr and
+#   commands run without isolation.
+_sandbox_initialize() {
+    if _command_exists "bwrap" &&
+        bwrap --ro-bind / / --unshare-all true &>/dev/null; then
+        SANDBOX_AVAILABLE="true"
+    else
+        SANDBOX_AVAILABLE="false"
+        echo "Warning: 'bwrap' is missing or cannot create a sandbox!" >&2
+    fi
+}
+
+# Function: _run_in_sandbox
+#
+# Description:
+#   This function runs a command inside the Bubblewrap sandbox.
+#
+# Parameters:
+#   $1 (output_dir): Directory with write permission (can be empty).
+#   $2 (use_network): "true" to keep access to the network, otherwise "false".
+#   $@ : The command and its arguments.
+_run_in_sandbox() {
+    local output_dir=$1
+    local use_network=$2
+    shift 2
+
+    if [[ "${SANDBOX_AVAILABLE:-}" != "true" ]]; then
+        LC_ALL=C "$@"
+        return
+    fi
+
+    # Base: read-only filesystem and isolated namespaces.
+    local sandbox_args=(
+        bwrap
+        --ro-bind / /
+        --dev /dev
+        --proc /proc
+        --unshare-all
+        --die-with-parent
+        --new-session
+        --cap-drop ALL
+        --hostname sandbox
+    )
+
+    # Environment: pass only the variables that the binaries need.
+    sandbox_args+=(
+        --clearenv
+        --setenv HOME "$HOME"
+        --setenv PATH "${PATH:-}"
+        --setenv TMPDIR "$TEMP_DIR"
+        --setenv LC_ALL C
+    )
+    local var=""
+    for var in \
+        GS_LIB \
+        LD_LIBRARY_PATH \
+        MAGICK_HOME \
+        PERL5LIB \
+        SSL_CERT_DIR \
+        SSL_CERT_FILE \
+        TERM \
+        TERMINFO_DIRS \
+        TESSDATA_PREFIX \
+        XDG_DATA_DIRS; do
+        [[ -n "${!var+x}" ]] && sandbox_args+=(--setenv "$var" "${!var}")
+    done
+
+    # Hidden directories: sensitive data of the user and host sockets.
+    local hidden_dirs=(
+        /run/dbus
+        "$HOME/.aws"
+        "$HOME/.azure"
+        "$HOME/.cert"
+        "$HOME/.config"
+        "$HOME/.docker"
+        "$HOME/.gnupg"
+        "$HOME/.kube"
+        "$HOME/.local/share/gnome-keyring"
+        "$HOME/.local/share/keyrings"
+        "$HOME/.local/share/kwalletd"
+        "$HOME/.mozilla"
+        "$HOME/.password-store"
+        "$HOME/.pki"
+        "$HOME/.ssh"
+        "$HOME/.thunderbird"
+        "$HOME/.var"
+    )
+
+    # Hidden sensitive files.
+    local hidden_files=(
+        "$HOME/.authinfo.gpg"
+        "$HOME/.authinfo"
+        "$HOME/.bash_aliases"
+        "$HOME/.bash_history"
+        "$HOME/.bash_login"
+        "$HOME/.bash_logout"
+        "$HOME/.bash_profile"
+        "$HOME/.bashrc"
+        "$HOME/.curlrc"
+        "$HOME/.git-credential-cache"
+        "$HOME/.git-credentials"
+        "$HOME/.gitconfig"
+        "$HOME/.lesshst"
+        "$HOME/.my.cnf"
+        "$HOME/.netrc"
+        "$HOME/.npmrc"
+        "$HOME/.pg_service.conf"
+        "$HOME/.pgpass"
+        "$HOME/.profile"
+        "$HOME/.python_history"
+        "$HOME/.rediscli_history"
+        "$HOME/.wgetrc"
+        "$HOME/.Xauthority"
+        "$HOME/.zlogin"
+        "$HOME/.zlogout"
+        "$HOME/.zprofile"
+        "$HOME/.zshenv"
+        "$HOME/.zshrc"
+    )
+
+    local path=""
+    for path in "${hidden_dirs[@]}"; do
+        [[ -d "$path" ]] && sandbox_args+=(--tmpfs "$path")
+    done
+    for path in "${hidden_files[@]}"; do
+        [[ -f "$path" ]] && sandbox_args+=(--ro-bind /dev/null "$path")
+    done
+
+    # Writable paths.
+    # NOTE: These binds must come after the hidden directories, because
+    # '$TEMP_DIR' can be inside '/tmp'.
+    sandbox_args+=(--bind "$TEMP_DIR" "$TEMP_DIR")
+    if [[ -n "$output_dir" ]] && [[ -d "$output_dir" ]]; then
+        # NOTE: 'bwrap' requires absolute paths for '--bind'.
+        if [[ $output_dir != "/"* ]]; then
+            output_dir=$(readlink -f "$output_dir")
+        fi
+        sandbox_args+=(--bind "$output_dir" "$output_dir")
+    fi
+
+    # Network and capabilities.
+    if [[ "$use_network" == "true" ]]; then
+        sandbox_args+=(--share-net)
+        local cmd=${1##*/}
+        # NOTE: 'ping' needs 'CAP_NET_RAW'.
+        if [[ "$cmd" == "ping" ]]; then
+            sandbox_args+=(--cap-add CAP_NET_RAW)
+        fi
+        # NOTE: 'pdfannots' and 'ocrmypdf' need access to the local package.
+        if [[ "$cmd" == "pdfannots" ]] || [[ "$cmd" == "ocrmypdf" ]]; then
+            sandbox_args+=(--bind-try "$HOME/.pkgx" "$HOME/.pkgx")
+        fi
+    fi
+
+    "${sandbox_args[@]}" "$@"
 }
 
 # -----------------------------------------------------------------------------
@@ -545,7 +713,8 @@ _check_dependencies() {
             fi
 
             # Skip pkgx if the binary cannot be executed without errors.
-            if [[ "$pkg_manager" == "pkgx" ]] && ! pkgx -v &>/dev/null; then
+            if [[ "$pkg_manager" == "pkgx" ]] &&
+                ! _pkgx_in_sandbox -v &>/dev/null; then
                 continue
             fi
 
@@ -823,7 +992,7 @@ _deps_install_packages() {
             fi
 
             for pkg in $pkgs; do
-                pkgx --silent +"$pkg" &>/dev/null
+                _pkgx_in_sandbox --silent +"$pkg" &>/dev/null
             done
             ;;
         "dnf")
@@ -1005,7 +1174,7 @@ _deps_is_package_installed() {
         if [[ -d "$pkgx_packages_dir/$pkgx_package_path" ]]; then
             # Load the environment variables for the installed package.
             set -a
-            eval "$(pkgx --silent +"$package")" &>/dev/null
+            eval "$(_pkgx_in_sandbox --silent +"$package")" &>/dev/null
             set +a
             return 0
         fi
@@ -1079,14 +1248,20 @@ _download_file() {
         return 1
     fi
 
+    local output_dir=""
+    output_dir=$(dirname -- "$output_file")
+
     if _command_exists "curl"; then
-        curl --fail --silent --location --output "$output_file" \
+        _run_in_sandbox "$output_dir" "true" \
+            curl --fail --silent --location --output "$output_file" \
             -- "$url" &>/dev/null || return 1
     elif _command_exists "wget"; then
-        wget --quiet --output-document="$output_file" \
+        _run_in_sandbox "$output_dir" "true" \
+            wget --quiet --output-document="$output_file" \
             -- "$url" &>/dev/null || return 1
     elif _command_exists "axel"; then
-        axel --quiet --output="$output_file" \
+        _run_in_sandbox "$output_dir" "true" \
+            axel --quiet --output="$output_file" \
             -- "$url" &>/dev/null || return 1
     else
         return 1
@@ -1147,13 +1322,16 @@ _url_grep() {
     fi
 
     if _command_exists "curl"; then
-        resolved_url=$(curl --fail --silent --location -- \
+        resolved_url=$(_run_in_sandbox "" "true" \
+            curl --fail --silent --location -- \
             "$url" 2>/dev/null | grep --only-matching -m1 "$regex")
     elif _command_exists "wget"; then
-        resolved_url=$(wget --quiet --output-document=- -- \
+        resolved_url=$(_run_in_sandbox "" "true" \
+            wget --quiet --output-document=- -- \
             "$url" 2>/dev/null | grep --only-matching -m1 "$regex")
     elif _command_exists "axel"; then
-        resolved_url=$(axel --quiet --output=/dev/stdout -- \
+        resolved_url=$(_run_in_sandbox "" "true" \
+            axel --quiet --output=/dev/stdout -- \
             "$url" 2>/dev/null | grep --only-matching -m1 "$regex")
     fi
 
@@ -1208,7 +1386,8 @@ _tarball_extract() {
     local first_entry=""
 
     # Detect whether the archive contains a top-level directory.
-    first_entry=$(tar --list --file="$file" | head -n 1)
+    first_entry=$(_run_in_sandbox "" "false" \
+        tar --list --file="$file" | head -n 1)
 
     if [[ "$first_entry" == */* ]]; then
         strip_components=1
@@ -1217,11 +1396,14 @@ _tarball_extract() {
     mkdir --parents -- "$output_dir"
     {
         case $file in
-        *.tar.gz | *.tgz) tar --extract --gzip --file="$file" \
+        *.tar.gz | *.tgz) _run_in_sandbox "$output_dir" "false" \
+            tar --extract --gzip --file="$file" \
             --strip-components="$strip_components" --directory="$output_dir" ;;
-        *.tar.xz | *.txz) tar --extract --xz --file="$file" \
+        *.tar.xz | *.txz) _run_in_sandbox "$output_dir" "false" \
+            tar --extract --xz --file="$file" \
             --strip-components="$strip_components" --directory="$output_dir" ;;
-        *.tar.zst | *.tzst) tar --extract --zstd --file="$file" \
+        *.tar.zst | *.tzst) _run_in_sandbox "$output_dir" "false" \
+            tar --extract --zstd --file="$file" \
             --strip-components="$strip_components" --directory="$output_dir" ;;
         esac
     } &>/dev/null
@@ -4114,29 +4296,30 @@ _text_uri_decode() {
 # SECTION: External application wrappers
 # -----------------------------------------------------------------------------
 
-# Function: _cmd_magick
+# Function: _cmd_magick_in_sandbox
 #
 # Description:
-#   Executes an ImageMagick command. In ImageMagick 7+, commands are executed
-#   through the 'magick' executable. In ImageMagick 6, commands are executed
-#   directly.
+#   This function runs an ImageMagick command inside the Bubblewrap sandbox,
+#   handling both ImageMagick 6 and 7.
 #
 # Parameters:
-#   $1 : ImageMagick command (e.g. 'convert', 'identify').
+#   $1 (output_dir): Directory with write permission (can be empty).
+#   $2 (command): The ImageMagick command (e.g., convert, compare, identify).
 #   $@ : Arguments to be passed to the command.
-_cmd_magick() {
-    local command="$1"
-    shift
+_cmd_magick_in_sandbox() {
+    local output_dir=$1
+    local command=$2
+    shift 2
 
     if _command_exists "magick"; then
         if [[ "$command" == "convert" ]]; then
-            LC_ALL=C magick "$@"
+            _run_in_sandbox "$output_dir" "false" magick "$@"
         else
-            LC_ALL=C magick "$command" "$@"
+            _run_in_sandbox "$output_dir" "false" magick "$command" "$@"
         fi
     else
         # ImageMagick 6: commands are executed directly.
-        LC_ALL=C "$command" "$@"
+        _run_in_sandbox "$output_dir" "false" "$command" "$@"
     fi
 }
 
@@ -4149,12 +4332,61 @@ _cmd_magick() {
 #   the system glibc is older than the one it was built against.
 _pkgx_initialize() {
     local pkgx_dir="$USER_OPT_DIR/pkgx"
-    local pkgx_cmd="$pkgx_dir/pkgx"
+    local path_backup=$PATH
 
-    if [[ -x "$pkgx_cmd" ]] && ! _command_exists "pkgx" &&
-        "$pkgx_cmd" -v &>/dev/null; then
-        _add_path_env "$pkgx_dir"
+    [[ -x "$pkgx_dir/pkgx" ]] && ! _command_exists "pkgx" || return 0
+
+    # Add to PATH temporarily so the sandbox can run it. Undo on failure.
+    _add_path_env "$pkgx_dir"
+    _pkgx_in_sandbox -v &>/dev/null || PATH=$path_backup
+}
+
+# Function: _pkgx_in_sandbox
+#
+# Description:
+#   This function runs the 'pkgx' command inside a sandbox using Bubblewrap.
+#
+# Parameters:
+#   $@ : Arguments to be passed to the 'pkgx' command.
+_pkgx_in_sandbox() {
+    if [[ "${SANDBOX_AVAILABLE:-}" != "true" ]]; then
+        LC_ALL=C pkgx "$@"
+        return
     fi
+
+    mkdir --parents -- "$HOME/.cache/pkgx"
+    mkdir --parents -- "$HOME/.local/share/pkgx"
+    mkdir --parents -- "$HOME/.pkgx"
+    bwrap \
+        --ro-bind-try /bin /bin \
+        --ro-bind-try /lib /lib \
+        --ro-bind-try /lib64 /lib64 \
+        --ro-bind-try /sbin /sbin \
+        --ro-bind-try /usr /usr \
+        --ro-bind-try /etc/ca-certificates /etc/ca-certificates \
+        --ro-bind-try /etc/hosts /etc/hosts \
+        --ro-bind-try /etc/nsswitch.conf /etc/nsswitch.conf \
+        --ro-bind-try /etc/pki /etc/pki \
+        --ro-bind-try /etc/resolv.conf /etc/resolv.conf \
+        --ro-bind-try /etc/ssl /etc/ssl \
+        --ro-bind-try "$HOME/.local/opt/pkgx" "$HOME/.local/opt/pkgx" \
+        --dev /dev \
+        --proc /proc \
+        --tmpfs /tmp \
+        --unshare-all \
+        --share-net \
+        --die-with-parent \
+        --new-session \
+        --cap-drop ALL \
+        --hostname sandbox \
+        --clearenv \
+        --setenv HOME "$HOME" \
+        --setenv PATH "${PATH:-}" \
+        --setenv LC_ALL C \
+        --bind-try "$HOME/.cache/pkgx" "$HOME/.cache/pkgx" \
+        --bind-try "$HOME/.local/share/pkgx" "$HOME/.local/share/pkgx" \
+        --bind-try "$HOME/.pkgx" "$HOME/.pkgx" \
+        pkgx "$@"
 }
 
 # -----------------------------------------------------------------------------
@@ -4335,6 +4567,8 @@ _recent_scripts_add() {
 }
 
 _i18n_initialize
+
+_sandbox_initialize
 
 # Initialize pkgx tool if available.
 _pkgx_initialize

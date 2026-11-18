@@ -122,7 +122,7 @@ _run_command() {
     # Run the main process.
     case $command in
     "magick")
-        std_output=$(_cmd_magick convert "$input_file" "$output_file" 2>&1)
+        std_output=$(_cmd_magick_in_sandbox "$output_dir" convert "$input_file" "$output_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "inkscape")
@@ -172,11 +172,11 @@ _run_command() {
         _check_output "$exit_code" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "rayomd")
-        std_output=$(rayomd --export "$input_file" "$output_file" --page-size=a4-landscape --page-numbers 2>&1)
+        std_output=$(_run_in_sandbox "$output_dir" "false" rayomd --export "$input_file" "$output_file" --page-size=a4-landscape --page-numbers 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "pandoc")
-        std_output=$(pandoc -V "geometry:a4paper,landscape,margin=1.5cm" --standalone -o \
+        std_output=$(_run_in_sandbox "$output_dir" "false" pandoc -V "geometry:a4paper,landscape,margin=1.5cm" --standalone -o \
             "$output_file" -- "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;

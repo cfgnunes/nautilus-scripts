@@ -32,7 +32,7 @@ _main_task() {
         "par_extension_opt=strip")
 
     # Run the main process.
-    std_output=$(pdfimages -all "$input_file" -- "$output_file" 2>&1)
+    std_output=$(_run_in_sandbox "$output_dir" "false" pdfimages -all "$input_file" -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 

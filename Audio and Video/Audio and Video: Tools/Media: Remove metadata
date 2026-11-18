@@ -42,7 +42,7 @@ _main_task() {
         #   - Removes all metadata (-map_metadata -1)
         #   - Keeps all audio streams (-map 0:a).
         #   - Copies audio data without re-encoding (-c:a copy).
-        std_output=$(ffmpeg -hide_banner -y \
+        std_output=$(_run_in_sandbox "$output_dir" "false" ffmpeg -hide_banner -y \
             -i "$input_file" \
             -map_metadata -1 \
             -map 0:a \
@@ -52,7 +52,7 @@ _main_task() {
         # For video files:
         #   - Removes all metadata (-map_metadata -1).
         #   - Copies both video and audio streams without re-encoding.
-        std_output=$(ffmpeg -hide_banner -y \
+        std_output=$(_run_in_sandbox "$output_dir" "false" ffmpeg -hide_banner -y \
             -i "$input_file" \
             -map_metadata -1 \
             -c:v copy \

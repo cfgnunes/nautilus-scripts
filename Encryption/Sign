@@ -61,7 +61,7 @@ _main_task() {
         _directory_push "$input_file" || return 1
         std_output=$(find . -mindepth 1 -maxdepth 1 -printf "%f\0" 2>/dev/null |
             sort --zero-terminated --version-sort |
-            xargs --no-run-if-empty --null tar -cf "$temp_archive" --)
+            xargs --no-run-if-empty --null bash -c '_run_in_sandbox "$@"' _ "$output_dir" "false" tar -cf "$temp_archive" --)
         _directory_pop || return 1
 
         # Encrypt the archived file using GPG.

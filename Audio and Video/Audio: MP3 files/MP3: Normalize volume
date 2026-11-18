@@ -32,9 +32,9 @@ _main_task() {
 
     __cmd_mp3gain() {
         if _command_exists "mp3gain"; then
-            mp3gain "$@"
+            _run_in_sandbox "" "false" mp3gain "$@"
         else
-            mp3rgain "$@"
+            _run_in_sandbox "" "false" mp3rgain "$@"
         fi
     }
 

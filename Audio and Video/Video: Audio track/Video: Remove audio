@@ -32,7 +32,7 @@ _main_task() {
         "par_extension_opt=preserve; par_suffix='(no audio)'")
 
     # Run the main process.
-    std_output=$(ffmpeg -hide_banner -y \
+    std_output=$(_run_in_sandbox "$output_dir" "false" ffmpeg -hide_banner -y \
         -i "$input_file" \
         -c:v copy \
         -an \

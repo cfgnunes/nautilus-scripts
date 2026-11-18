@@ -616,6 +616,8 @@ _check_dependencies() {
     _command_exists "basename" || packages+="coreutils "
     _command_exists "pstree" || packages+="psmisc "
     _command_exists "xdg-open" || packages+="xdg-utils "
+    # Bubblewrap is used for running commands inside a sandbox.
+    _command_exists "bwrap" || packages+="bubblewrap "
 
     # HACK: Workaround for Termux (Android).
     # Check if the 'file' command is available and functional. Some minimal

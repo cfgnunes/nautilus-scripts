@@ -84,6 +84,7 @@ _main() {
     __run_move_file
     __run_move_file_errors
     __run_run_function_parallel
+    __run_run_in_sandbox
     __run_run_task_parallel
     __run_session_environment
     __run_storage_text
@@ -2026,6 +2027,43 @@ __run_validate_files_count() {
     output=$(<"$message_file")
     __test_equal "Maximum message." \
         "$(_i18n "You must select up to") 1 $(_i18n "files")!" "$output"
+}
+
+__run_run_in_sandbox() {
+    local output=""
+    local out_dir="$_TEMP_DIR/sandbox_out"
+    mkdir --parents -- "$out_dir"
+    output=$(_run_in_sandbox "" "false" echo "ok")
+    __test_equal "Sandbox runs a simple command." "ok" "$output"
+    _run_in_sandbox "$out_dir" "false" touch "$out_dir/a" 2>/dev/null
+    __test_equal "Sandbox allows writing in the output directory." \
+        "true" "$([[ -e "$out_dir/a" ]] && echo true || echo false)"
+    _run_in_sandbox "" "false" touch "$HOME/sandbox_test" 2>/dev/null
+    __test_equal "Sandbox blocks writing in the home directory." \
+        "false" "$([[ -e "$HOME/sandbox_test" ]] && echo true || echo false)"
+    rm -f -- "$HOME/sandbox_test"
+
+    local home_dir=""
+    home_dir=$(mktemp --directory --tmpdir="$HOME" ".sandbox_test.XXXXXX")
+    touch -- "$home_dir/secret" "$home_dir/input"
+    _run_in_sandbox "" "false" touch "$home_dir/input_new" 2>/dev/null
+    __test_equal "Sandbox exposes the input directory as read-only." \
+        "false" "$([[ -e "$home_dir/input_new" ]] && echo true || echo false)"
+    _run_in_sandbox "$home_dir" "false" touch "$home_dir/output_new"
+    __test_equal "Sandbox allows writing in the output directory under home." \
+        "true" "$([[ -e "$home_dir/output_new" ]] && echo true || echo false)"
+    rm -rf -- "$home_dir"
+
+    # Without network, only the loopback interface exists (2 header lines).
+    output=$(_run_in_sandbox "" "false" bash -c "wc -l </proc/net/dev")
+    __test_equal "Sandbox blocks the network." "3" "$output"
+
+    # Fallback when the sandbox is not available.
+    SANDBOX_AVAILABLE="false" _run_in_sandbox "" "false" \
+        touch "$HOME/sandbox_test" 2>/dev/null
+    __test_equal "Command runs without sandbox when it is not available." \
+        "true" "$([[ -e "$HOME/sandbox_test" ]] && echo true || echo false)"
+    rm -f -- "$HOME/sandbox_test"
 }
 
 __run_run_task_parallel() {
