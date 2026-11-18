@@ -998,6 +998,6 @@ declare -A PRECOMPILED_URL=(
     "
 
     ["rayomd"]="
-        x86_64:  github;Butterski/rayomd;https.*rayomd.*inux.*x64-static.tar.\w*
+        x86_64:  github;Butterski/rayomd;https.*rayomd.*inux.*x64.tar.\w*
     "
 )
