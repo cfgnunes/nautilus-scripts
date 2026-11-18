@@ -1369,7 +1369,8 @@ _install_pkgx() {
     chmod +x -- "$pkgx_cmd_tmp"
 
     # Check if pkgx can run.
-    if ! "$pkgx_cmd_tmp" -v &>/dev/null; then
+    if ! bwrap --ro-bind / / --unshare-all "$pkgx_cmd_tmp" -v 2>&1 |
+        grep -q "pkgx [0-9]"; then
         _echo_error "> $(_i18n 'pkgx cannot run on your system!')"
         return 1
     fi
