@@ -12,7 +12,7 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    if ! _command_exists "zip" && ! _command_exists "7za"; then
+    if ! compgen -c 7z &>/dev/null && ! _command_exists "zip"; then
         _check_dependencies "bsdtar"
     fi
     _display_wait_box ""
