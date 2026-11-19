@@ -14,14 +14,11 @@ set -u
 # SECTION: Constants
 # -----------------------------------------------------------------------------
 
-APP_NAME="Enhanced File Manager Actions"
+APP_FULL_NAME="Enhanced File Manager Actions"
+APP_NAME="nautilus-scripts"
 APP_VERSION="32"
-
-# Used in:
-#  - Directory where scripts are installed:
-#    "$HOME/.local/share/$INSTALL_NAME_DIR".
-INSTALL_NAME_DIR="nautilus-scripts"
-INSTALL_DIR="$HOME/.local/opt/$INSTALL_NAME_DIR"
+USER_OPT_DIR="$HOME/.local/opt"
+INSTALL_DIR="$USER_OPT_DIR/$APP_NAME"
 
 # Constants for logging.
 if [[ -z "${TEMP_DIR:-}" ]]; then
@@ -63,6 +60,7 @@ I18N_DIR="$SCRIPT_DIR/.po"
 
 # Mark constants as read-only to prevent accidental modification.
 readonly \
+    APP_FULL_NAME \
     APP_NAME \
     APP_VERSION \
     COMPATIBLE_FILE_MANAGERS \
@@ -71,8 +69,8 @@ readonly \
     INSTALL_DIR \
     INSTALL_LOG_NAME \
     INSTALL_LOG_TMP \
-    INSTALL_NAME_DIR \
-    SCRIPT_DIR
+    SCRIPT_DIR \
+    USER_OPT_DIR
 
 # Use current username if '$USER' is undefined.
 USER=${USER:-$(id -un)}
@@ -173,7 +171,7 @@ _main() {
         "$OPT_CHOOSE_CATEGORIES"
     )
 
-    _echo "$APP_NAME v$APP_VERSION"
+    _echo "$APP_FULL_NAME v$APP_VERSION"
     _echo ""
 
     _log_variable "APP_VERSION"
@@ -1029,7 +1027,7 @@ _install_actions() {
 _install_actions_kio_servicemenus() {
     local menu_file=""
     local menus_path="$HOME/.local/share/kio/servicemenus"
-    find "$menus_path" -name "$INSTALL_NAME_DIR-*.desktop" \
+    find "$menus_path" -name "$APP_NAME-*.desktop" \
         -type f -delete 2>/dev/null
     mkdir --parents -- "$menus_path"
 
@@ -1061,7 +1059,7 @@ _install_actions_kio_servicemenus() {
 
         action_name=$(_sanitize_string <<<"$name")
         menu_file="${action_name}.desktop"
-        menu_file="$menus_path/$INSTALL_NAME_DIR-$menu_file"
+        menu_file="$menus_path/$APP_NAME-$menu_file"
         {
             printf "%s\n" "[Desktop Entry]"
             printf "%s\n" "Type=Service"
@@ -1095,7 +1093,7 @@ _install_actions_kio_servicemenus() {
 _install_actions_pcmanfm() {
     local menu_file=""
     local menus_path="$HOME/.local/share/file-manager/actions"
-    find "$menus_path" -name "$INSTALL_NAME_DIR-*.desktop" \
+    find "$menus_path" -name "$APP_NAME-*.desktop" \
         -type f -delete 2>/dev/null
     mkdir --parents -- "$menus_path"
 
@@ -1108,7 +1106,7 @@ _install_actions_pcmanfm() {
     # -------------------------------------------------------------------------
     local msg_scripts=""
     msg_scripts=$(_i18n 'Scripts')
-    menu_file="$menus_path/$INSTALL_NAME_DIR-main.desktop"
+    menu_file="$menus_path/$APP_NAME-main.desktop"
     {
         printf "%s\n" "[Desktop Entry]"
         printf "%s\n" "Type=Menu"
@@ -1118,7 +1116,7 @@ _install_actions_pcmanfm() {
         printf "%s" "ItemsList="
         find -L "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -type d \
             "${IGNORE_FIND_PATHS[@]}" \
-            -printf "$INSTALL_NAME_DIR-%f\0" 2>/dev/null |
+            -printf "$APP_NAME-%f\0" 2>/dev/null |
             sort --zero-terminated | tr "\0" ";" | _sanitize_string
         printf "\n"
 
@@ -1136,7 +1134,7 @@ _install_actions_pcmanfm() {
         name=${filename##*/}
         dir_items=$(find -L "$filename" -mindepth 1 -maxdepth 1 \
             "${IGNORE_FIND_PATHS[@]}" \
-            -printf "$INSTALL_NAME_DIR-%f\0" 2>/dev/null |
+            -printf "$APP_NAME-%f\0" 2>/dev/null |
             sort --zero-terminated | tr "\0" ";" | _sanitize_string)
         if [[ -z "$dir_items" ]]; then
             continue
@@ -1144,7 +1142,7 @@ _install_actions_pcmanfm() {
 
         menu_file=$(_sanitize_string <<<"$name")
         menu_file="${menu_file}.desktop"
-        menu_file="$menus_path/$INSTALL_NAME_DIR-$menu_file"
+        menu_file="$menus_path/$APP_NAME-$menu_file"
         {
             printf "%s\n" "[Desktop Entry]"
             printf "%s\n" "Type=Menu"
@@ -1170,7 +1168,7 @@ _install_actions_pcmanfm() {
 
         action_name=$(_sanitize_string <<<"$name")
         menu_file="${action_name}.desktop"
-        menu_file="$menus_path/$INSTALL_NAME_DIR-$menu_file"
+        menu_file="$menus_path/$APP_NAME-$menu_file"
         {
             printf "%s\n" "[Desktop Entry]"
             printf "%s\n" "Type=Action"
@@ -1326,7 +1324,7 @@ _close_filemanager() {
 #   This function installs pkgx if the user requested it and it is not
 #   already installed.
 _install_pkgx() {
-    local pkgx_dir="$HOME/.local/opt/pkgx"
+    local pkgx_dir="$USER_OPT_DIR/pkgx"
     local pkgx_cmd="$pkgx_dir/pkgx"
     local pkgx_cmd_tmp="$TEMP_DIR/pkgx"
     local pkgx_url="https://api.github.com/repos/pkgxdev/pkgx/releases/latest"

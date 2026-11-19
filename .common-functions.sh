@@ -45,7 +45,7 @@ TEMP_CONTROL_WAIT_BOX_DELAY="$TEMP_DIR/control_wait_box_delay"
 TEMP_CONTROL_WAIT_BOX_FIFO="$TEMP_DIR/control_wait_box_fifo"
 TEMP_DATA_TEXT_BOX="$TEMP_DIR/data_text_box"
 
-# User directories.
+# Directories for user-installed third-party software.
 USER_OPT_DIR="$HOME/.local/opt"
 
 # Message tags for displaying messages on terminal.
@@ -462,8 +462,7 @@ _run_function_parallel() {
 # Description:
 #   This function checks once whether Bubblewrap can create a sandbox and
 #   stores the result in the exported variable 'SANDBOX_AVAILABLE' ("true" or
-#   "false"). If the sandbox is not usable, a warning is printed to stderr and
-#   commands run without isolation.
+#   "false").
 _sandbox_initialize() {
     if _command_exists "bwrap" &&
         bwrap --ro-bind / / --unshare-all true &>/dev/null; then
@@ -708,9 +707,12 @@ _check_dependencies() {
         local post_install_sel=""
 
         for pkg_manager in "${PKG_MANAGER_PRIORITY[@]}"; do
-            if ! _command_exists "$pkg_manager" &&
-                [[ "$pkg_manager" != "precompiled" ]]; then
-                continue
+            # Skip this package manager if it is not installed.
+            if [[ "$pkg_manager" != "precompiled" ]] &&
+                [[ "$pkg_manager" != "pkgx" ]]; then
+                if ! _command_exists "$pkg_manager"; then
+                    continue
+                fi
             fi
 
             # Skip pkgx if the binary cannot be executed without errors.
@@ -758,7 +760,8 @@ _check_dependencies() {
 
         # No mapped package is installed. A command already on 'PATH' still
         # counts as satisfied, for example after a manual install.
-        _command_exists "$dep_key" && continue
+        _command_exists "$dep_key" && [[ -x "$(command -v "$dep_key")" ]] &&
+            continue
 
         # Abort if no package definition was found.
         if [[ "$definitions_found" == "false" ]]; then
@@ -4324,24 +4327,6 @@ _cmd_magick_in_sandbox() {
     fi
 }
 
-# Function: _pkgx_initialize
-#
-# Description:
-#   This function initializes the pkgx if it is installed in the user's local
-#   directory. The binary is added to PATH only when it actually runs.
-#   An executable bit is not enough: the dynamic linker can reject pkgx when
-#   the system glibc is older than the one it was built against.
-_pkgx_initialize() {
-    local pkgx_dir="$USER_OPT_DIR/pkgx"
-    local path_backup=$PATH
-
-    [[ -x "$pkgx_dir/pkgx" ]] && ! _command_exists "pkgx" || return 0
-
-    # Add to PATH temporarily so the sandbox can run it. Undo on failure.
-    _add_path_env "$pkgx_dir"
-    _pkgx_in_sandbox -v &>/dev/null || PATH=$path_backup
-}
-
 # Function: _pkgx_in_sandbox
 #
 # Description:
@@ -4350,8 +4335,11 @@ _pkgx_initialize() {
 # Parameters:
 #   $@ : Arguments to be passed to the 'pkgx' command.
 _pkgx_in_sandbox() {
+    local pkgx_dir="$USER_OPT_DIR/pkgx"
+    local pkgx_cmd="$pkgx_dir/pkgx"
+
     if [[ "${SANDBOX_AVAILABLE:-}" != "true" ]]; then
-        LC_ALL=C pkgx "$@"
+        LC_ALL=C "$pkgx_cmd" "$@"
         return
     fi
 
@@ -4387,7 +4375,7 @@ _pkgx_in_sandbox() {
         --bind-try "$HOME/.cache/pkgx" "$HOME/.cache/pkgx" \
         --bind-try "$HOME/.local/share/pkgx" "$HOME/.local/share/pkgx" \
         --bind-try "$HOME/.pkgx" "$HOME/.pkgx" \
-        pkgx "$@"
+        "$pkgx_cmd" "$@"
 }
 
 # -----------------------------------------------------------------------------
@@ -4570,8 +4558,6 @@ _recent_scripts_add() {
 _i18n_initialize
 
 _sandbox_initialize
-
-_pkgx_initialize
 
 # If running from a supported file manager and the scripts directory is
 # writable, update the list of recently accessed scripts.

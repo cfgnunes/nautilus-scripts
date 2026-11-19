@@ -5,8 +5,9 @@ set -u
 # Use the home directory from the passwd database if '$HOME' is undefined.
 HOME=${HOME:-$(eval echo ~)}
 
-INSTALL_NAME_DIR="nautilus-scripts"
-INSTALL_DIR="$HOME/.local/opt/$INSTALL_NAME_DIR"
+APP_NAME="nautilus-scripts"
+USER_OPT_DIR="$HOME/.local/opt"
+INSTALL_DIR="$USER_OPT_DIR/$APP_NAME"
 
 # -----------------------------------------------------------------------------
 # SECTION: Helper functions
@@ -91,7 +92,7 @@ _uninstall_file "$HOME/.config/Thunar/accels.scm"
 
 # Dolphin: File manager actions (context menu).
 dir="$HOME/.local/share/kio/servicemenus"
-find "$dir" -name "$INSTALL_NAME_DIR-*.desktop" -type f -delete 2>/dev/null
+find "$dir" -name "$APP_NAME-*.desktop" -type f -delete 2>/dev/null
 
 # -----------------------------------------------------------------------------
 # SECTION: File manager: PCManFM-Qt
@@ -99,7 +100,7 @@ find "$dir" -name "$INSTALL_NAME_DIR-*.desktop" -type f -delete 2>/dev/null
 
 # PCManFM-Qt: File manager actions (context menu).
 dir="$HOME/.local/share/file-manager/actions"
-find "$dir" -name "$INSTALL_NAME_DIR-*.desktop" -type f -delete 2>/dev/null
+find "$dir" -name "$APP_NAME-*.desktop" -type f -delete 2>/dev/null
 
 # -----------------------------------------------------------------------------
 # SECTION: Package manager: pkgx
