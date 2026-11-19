@@ -51,6 +51,7 @@ USER_OPT_DIR="$HOME/.local/opt"
 # Message tags for displaying messages on terminal.
 MSG_ERROR="[\033[0;31mFAILED\033[0m]"
 MSG_INFO="[\033[0;32m INFO \033[0m]"
+MSG_WARNING="[\033[0;33m WARN \033[0m]"
 
 # Defines the priority order of package managers.
 PKG_MANAGER_PRIORITY=(
@@ -469,7 +470,7 @@ _sandbox_initialize() {
         SANDBOX_AVAILABLE="true"
     else
         SANDBOX_AVAILABLE="false"
-        echo "Warning: 'bwrap' is missing or cannot create a sandbox!" >&2
+        echo -e "$MSG_WARNING 'bwrap' not found! Running without sandbox." >&2
     fi
 }
 
