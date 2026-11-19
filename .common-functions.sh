@@ -1051,6 +1051,10 @@ _deps_install_packages() {
                 download_url=$(_precompiled_resolve_url "$download_url")
                 _tarball_install_url \
                     "$USER_OPT_DIR" "$pkg" "$download_url"
+                # Ensure the extracted binary is executable.
+                if [[ -f "$USER_OPT_DIR/$pkg/$pkg" ]]; then
+                    chmod +x "$USER_OPT_DIR/$pkg/$pkg"
+                fi
             done
             ;;
         esac
@@ -1227,7 +1231,10 @@ _deps_is_package_installed() {
         fi
         ;;
     "precompiled")
-        if [[ -d "$USER_OPT_DIR/$package" ]]; then
+        # Check if the precompiled binary exists and is executable. The
+        # directory is expected to be "$USER_OPT_DIR/$package" and the binary
+        # "$USER_OPT_DIR/$package/$package".
+        if [[ -x "$USER_OPT_DIR/$package/$package" ]]; then
             _add_path_env "$USER_OPT_DIR/$package"
             return 0
         fi
