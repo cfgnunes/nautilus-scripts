@@ -33,8 +33,9 @@ _main_task() {
         "par_extension_opt=preserve; par_suffix='(OCR $lang)'")
 
     # Run the main process.
-    # NOTE: Python wrapper that downloads data, so it needs network access.
-    std_output=$(_run_in_sandbox "$output_dir" "true" ocrmypdf --l "$lang" --skip-text --jobs \
+    # NOTE: In pkgx, the command runs in a Python wrapper that requires network access.
+    std_output=$(_run_in_sandbox "$output_dir" "$PKGX_AVAILABLE" \
+        ocrmypdf --l "$lang" --skip-text --jobs \
         "$(_get_max_procs)" -- "$input_file" "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }

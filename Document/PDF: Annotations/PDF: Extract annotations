@@ -33,8 +33,9 @@ _main_task() {
         "par_extension_opt=replace; par_extension=md")
 
     # Run the main process.
-    # NOTE: Python wrapper that downloads data, so it needs network access.
-    std_output=$(_run_in_sandbox "$output_dir" "true" pdfannots -o "$output_file" "$input_file" 2>&1)
+    # NOTE: In pkgx, the command runs in a Python wrapper that requires network access.
+    std_output=$(_run_in_sandbox "$output_dir" "$PKGX_AVAILABLE" \
+        pdfannots -o "$output_file" "$input_file" 2>&1)
     exit_code=$?
 
     # A PDF without annotations produces an empty file. Remove it.

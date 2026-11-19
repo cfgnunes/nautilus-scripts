@@ -113,6 +113,9 @@ I18N_READY=1
 # Flag indicating whether the sandbox (Bubblewrap) is available for use.
 SANDBOX_AVAILABLE="false"
 
+# Flag indicating whether the package manager 'pkgx' is available for use.
+PKGX_AVAILABLE="false"
+
 # -----------------------------------------------------------------------------
 # SECTION: Build the structure of the '$TEMP_DIR'
 # -----------------------------------------------------------------------------
@@ -393,6 +396,7 @@ _run_function_parallel() {
         GUI_INFO_WIDTH \
         IGNORE_FIND_PATH \
         INPUT_FILES \
+        PKGX_AVAILABLE \
         SANDBOX_AVAILABLE \
         TEMP_CONTROL_DISPLAY_LOCKED \
         TEMP_DIR \
@@ -589,9 +593,8 @@ _run_in_sandbox() {
         [[ -f "$path" ]] && sandbox_args+=(--ro-bind /dev/null "$path")
     done
 
-    # Writable paths.
-    # NOTE: These binds must come after the hidden directories, because
-    # '$TEMP_DIR' can be inside '/tmp'.
+    # Writable paths. These binds must come after the hidden directories,
+    # because '$TEMP_DIR' can be inside '/tmp'.
     sandbox_args+=(--bind "$TEMP_DIR" "$TEMP_DIR")
     if [[ -n "$output_dir" ]] && [[ -d "$output_dir" ]]; then
         # NOTE: 'bwrap' requires absolute paths for '--bind'.
@@ -609,9 +612,12 @@ _run_in_sandbox() {
         if [[ "$cmd" == "ping" ]]; then
             sandbox_args+=(--cap-add CAP_NET_RAW)
         fi
-        # NOTE: 'pdfannots' and 'ocrmypdf' need access to the local package.
-        if [[ "$cmd" == "pdfannots" ]] || [[ "$cmd" == "ocrmypdf" ]]; then
-            sandbox_args+=(--bind-try "$HOME/.pkgx" "$HOME/.pkgx")
+        # NOTE: 'pdfannots' and 'ocrmypdf', when used via 'pkgx',
+        # need access to the local package cache.
+        if [[ "$PKGX_AVAILABLE" == "true" ]]; then
+            if [[ "$cmd" == "pdfannots" ]] || [[ "$cmd" == "ocrmypdf" ]]; then
+                sandbox_args+=(--bind-try "$HOME/.pkgx" "$HOME/.pkgx")
+            fi
         fi
     fi
 
@@ -716,9 +722,12 @@ _check_dependencies() {
             fi
 
             # Skip pkgx if the binary cannot be executed without errors.
-            if [[ "$pkg_manager" == "pkgx" ]] &&
-                ! _pkgx_in_sandbox -v &>/dev/null; then
-                continue
+            if [[ "$pkg_manager" == "pkgx" ]]; then
+                if ! _pkgx_in_sandbox -v &>/dev/null; then
+                    continue
+                else
+                    PKGX_AVAILABLE="true"
+                fi
             fi
 
             # Retrieve the package names from '.pkg-map.sh'.

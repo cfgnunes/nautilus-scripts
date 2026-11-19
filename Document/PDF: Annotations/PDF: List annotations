@@ -35,9 +35,10 @@ _main_task() {
     # Each line is "text, content, author, type, color, page, file".
 
     # Run the main process.
-    # NOTE: Python wrapper that downloads data, so it needs network access.
+    # NOTE: In pkgx, the command runs in a Python wrapper that requires network access.
     # shellcheck disable=SC2016
-    std_output=$(_run_in_sandbox "" "true" pdfannots --format json "$input_file" 2>/dev/null |
+    std_output=$(_run_in_sandbox "" "$PKGX_AVAILABLE" \
+        pdfannots --format json "$input_file" 2>/dev/null |
         _run_in_sandbox "" "false" jq -r \
             --arg sep "$FIELD_SEPARATOR" \
             --arg file_label "$file_label" '
