@@ -84,7 +84,7 @@ _main() {
     __run_move_file
     __run_move_file_errors
     __run_run_function_parallel
-    __run_run_in_sandbox
+    _command_exists "bwrap" && __run_run_in_sandbox
     __run_run_task_parallel
     __run_session_environment
     __run_storage_text
