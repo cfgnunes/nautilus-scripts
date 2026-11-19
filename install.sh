@@ -616,8 +616,18 @@ _check_dependencies() {
     _command_exists "basename" || packages+="coreutils "
     _command_exists "pstree" || packages+="psmisc "
     _command_exists "xdg-open" || packages+="xdg-utils "
-    # Bubblewrap is used for running commands inside a sandbox.
-    _command_exists "bwrap" || packages+="bubblewrap "
+
+    local is_termux="false"
+    if [[ "$HOME" == *"com.termux"* ]] &&
+        [[ "$(uname -o)" == "Android" ]]; then
+        is_termux="true"
+    fi
+
+    # Skip Bubblewrap installation on Termux.
+    if [[ "$is_termux" == "false" ]]; then
+        # Bubblewrap is used for running commands inside a sandbox.
+        _command_exists "bwrap" || packages+="bubblewrap "
+    fi
 
     # HACK: Workaround for Termux (Android).
     # Check if the 'file' command is available and functional. Some minimal
