@@ -629,7 +629,7 @@ _check_dependencies() {
 
     # HACK: Workaround for Termux (Android).
     # Check if the 'file' command is available and functional. Some minimal
-    # Linux distributions (such as Termux) may have a non-functional 'file'
+    # GNU/Linux distributions (such as Termux) may have a non-functional 'file'
     # command, which can cause issues when running the scripts.
     if ! _command_exists "file" ||
         ! file --brief --mime-type /dev/null >/dev/null 2>&1; then

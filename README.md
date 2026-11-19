@@ -39,7 +39,6 @@ bash install.sh
 - **Multi-language support**: Automatically detects the system language and displays messages in the appropriate language.
 - **Progress dialog**: Displays a progress dialog and allows interruption of tasks at any time.
 - **Dependency management**: Prompts users to install any missing dependencies.
-- **Status notifications**: Notifies users of dependency errors and types.
 - **Keyboard accelerators**: Provides keyboard shortcuts for some scripts.
 - **Easy access to recent scripts**: Includes a menu, _Accessed recently_, to quickly access recently used scripts.
 - **Category-based installation:** The installer allows you to choose which script categories you want to install, so there's no need to install everything.
