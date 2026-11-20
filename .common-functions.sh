@@ -3419,15 +3419,11 @@ _get_files() {
     # 'par_type!=file' or 'par_recursive=true'. This is particularly useful for
     # scripts like 'Open with Terminal', where no file is selected but the
     # intention is to open the working directory.
-    if (($(_get_items_count "$input_files") == 0)); then
-        if _is_file_manager_session; then
-            if [[ "$par_type" != "file" ]] ||
-                [[ "$par_recursive" == "true" ]]; then
-                # Return the current working directory if no files have been
-                # selected.
-                input_files=$(_get_working_directory)
-            fi
-        fi
+    if (($(_get_items_count "$input_files") == 0)) &&
+        _is_file_manager_session &&
+        [[ "$par_type" != "file" || "$par_recursive" == "true" ]]; then
+        # Return the current working directory if no files have been selected.
+        input_files=$(_get_working_directory)
     fi
 
     # If still no files available, prompt user with selection dialog.
@@ -3449,7 +3445,7 @@ _get_files() {
     local find_parameters=""
     if (($(_get_items_count "$input_files") == 1)) &&
         [[ -d "$input_files" ]] && [[ "$par_recursive" == "false" ]] &&
-        printf "%s" "$(basename -- "$input_files")" |
+        basename -- "$input_files" |
         grep --quiet --ignore-case --word-regexp "batch"; then
 
         # HACK: Batch mode. This workaround allows the scripts to handle cases
@@ -3485,12 +3481,10 @@ _get_files() {
     # 'par_type=directory'. This is particularly useful for scripts like 'Open
     # with Terminal' where a file is selected, but the intention is to open the
     # working directory.
-    if (($(_get_items_count "$input_files") == 0)); then
-        if [[ "$par_type" == "directory" ]] && [[ -n "$par_max_items" ]]; then
-            # Return the current working directory if no files have been
-            # selected.
-            input_files=$(_get_working_directory)
-        fi
+    if (($(_get_items_count "$input_files") == 0)) &&
+        [[ "$par_type" == "directory" ]] && [[ -n "$par_max_items" ]]; then
+        # Return the current working directory if no files have been selected.
+        input_files=$(_get_working_directory)
     fi
 
     # Validates the mime or encoding of the file.
