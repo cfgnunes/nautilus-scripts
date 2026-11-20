@@ -1403,6 +1403,14 @@ _tarball_extract() {
     local par_remove=${3:-"false"}
     local strip_components=0
     local first_entry=""
+    local tar_compression=""
+
+    case $file in
+    *.tar.gz | *.tgz) tar_compression="--gzip" ;;
+    *.tar.xz | *.txz) tar_compression="--xz" ;;
+    *.tar.zst | *.tzst) tar_compression="--zstd" ;;
+    *) return 1 ;;
+    esac
 
     # Detect whether the archive contains a top-level directory.
     first_entry=$(_run_in_sandbox "" "false" \
@@ -1414,17 +1422,9 @@ _tarball_extract() {
 
     mkdir --parents -- "$output_dir"
     {
-        case $file in
-        *.tar.gz | *.tgz) _run_in_sandbox "$output_dir" "false" \
-            tar --extract --gzip --file="$file" \
-            --strip-components="$strip_components" --directory="$output_dir" ;;
-        *.tar.xz | *.txz) _run_in_sandbox "$output_dir" "false" \
-            tar --extract --xz --file="$file" \
-            --strip-components="$strip_components" --directory="$output_dir" ;;
-        *.tar.zst | *.tzst) _run_in_sandbox "$output_dir" "false" \
-            tar --extract --zstd --file="$file" \
-            --strip-components="$strip_components" --directory="$output_dir" ;;
-        esac
+        _run_in_sandbox "$output_dir" "false" \
+            tar --extract "$tar_compression" --file="$file" \
+            --strip-components="$strip_components" --directory="$output_dir"
     } &>/dev/null
 
     # Remove the output directory when the extraction produced nothing.
