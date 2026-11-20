@@ -492,7 +492,7 @@ _run_in_sandbox() {
     shift 2
 
     if [[ "${SANDBOX_AVAILABLE:-}" != "true" ]]; then
-        LC_ALL=C "$@"
+        LC_ALL=C HOME="$TEMP_DIR" TMPDIR="$TEMP_DIR" USER="sandbox" "$@"
         return
     fi
 
@@ -506,22 +506,23 @@ _run_in_sandbox() {
         --die-with-parent
         --new-session
         --cap-drop ALL
-        --hostname sandbox
+        --hostname "sandbox"
     )
 
     # Environment: pass only the variables that the binaries need.
     sandbox_args+=(
         --clearenv
-        --setenv HOME "$HOME"
-        --setenv PATH "${PATH:-}"
+        --setenv LC_ALL "C"
+        --setenv HOME "$TEMP_DIR"
         --setenv TMPDIR "$TEMP_DIR"
-        --setenv LC_ALL C
+        --setenv USER "sandbox"
     )
     local var=""
     for var in \
         GS_LIB \
         LD_LIBRARY_PATH \
         MAGICK_HOME \
+        PATH \
         PERL5LIB \
         SSL_CERT_DIR \
         SSL_CERT_FILE \
