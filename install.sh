@@ -1343,8 +1343,8 @@ _install_pkgx() {
     local arch=""
     arch=$(uname -m)
     case "$arch" in
-    "x86_64") tarball_regex="https.*/pkgx.*linux.*86.64.*musl.*tar.gz" ;;
-    "aarch64") tarball_regex="https.*/pkgx.*linux.*aarch64.*musl.*tar.gz" ;;
+    "x86_64") tarball_regex="https.*/pkgx.*linux.*86.64.*musl.*\.tar\.gz" ;;
+    "aarch64") tarball_regex="https.*/pkgx.*linux.*aarch64.*musl.*\.tar\.gz" ;;
     *)
         _echo_error "> Unsupported architecture: $arch"
         return 1

@@ -992,12 +992,12 @@ declare -A POST_INSTALL=(
 #   The regular expression selects the tarball URL from the latest release.
 declare -A PRECOMPILED_URL=(
     ["pdfcpu"]="
-        x86_64:  github;pdfcpu/pdfcpu;https.*pdfcpu.*inux.*x86.64.tar.\w*
-        aarch64: github;pdfcpu/pdfcpu;https.*pdfcpu.*inux.*arm64.tar.\w*
-        armv71:  github;pdfcpu/pdfcpu;https.*pdfcpu.*inux.*armv7.tar.\w*
+        x86_64:  github;pdfcpu/pdfcpu;https.*/pdfcpu.*linux.*x86.64.*\.tar\.\w*
+        aarch64: github;pdfcpu/pdfcpu;https.*/pdfcpu.*linux.*arm64.*\.tar\.\w*
+        armv71:  github;pdfcpu/pdfcpu;https.*/pdfcpu.*linux.*armv7.*\.tar\.\w*
     "
 
     ["rayomd"]="
-        x86_64:  github;Butterski/rayomd;https.*rayomd.*inux.*x64-static.tar.\w*
+        x86_64:  github;Butterski/rayomd;https.*/rayomd.*linux.*x64.*static.*.tar.\w*
     "
 )
