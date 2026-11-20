@@ -692,6 +692,7 @@ declare -A PKG_MAP=(
         guix:
         xbps:
         pkgx:   rarlab.com
+        precompiled: unrar
     "
 
     ["unsquashfs"]="
@@ -988,16 +989,20 @@ declare -A POST_INSTALL=(
 #   This array defines download URLs for precompiled binaries. Each entry maps
 #   a dependency key to architecture-specific URLs, selected from the machine
 #   architecture. A value may be a full URL, or a GitHub in the format:
-#   "github;username/repository;regex".
+#   "github|username/repository|regex".
 #   The regular expression selects the tarball URL from the latest release.
 declare -A PRECOMPILED_URL=(
     ["pdfcpu"]="
-        x86_64:  github;pdfcpu/pdfcpu;https.*/pdfcpu.*linux.*x86.64.*\.tar\.\w*
-        aarch64: github;pdfcpu/pdfcpu;https.*/pdfcpu.*linux.*arm64.*\.tar\.\w*
-        armv71:  github;pdfcpu/pdfcpu;https.*/pdfcpu.*linux.*armv7.*\.tar\.\w*
+        x86_64:  github|pdfcpu/pdfcpu|https.*/pdfcpu.*linux.*x86.64.*\.tar\.\w*
+        aarch64: github|pdfcpu/pdfcpu|https.*/pdfcpu.*linux.*arm64.*\.tar\.\w*
+        armv71:  github|pdfcpu/pdfcpu|https.*/pdfcpu.*linux.*armv7.*\.tar\.\w*
     "
 
     ["rayomd"]="
-        x86_64:  github;Butterski/rayomd;https.*/rayomd.*linux.*x64.*static.*.tar.\w*
+        x86_64:  github|Butterski/rayomd|https.*/rayomd.*linux.*x64.*static.*.tar.\w*
+    "
+
+    ["unrar"]="
+        x86_64:  url_regex|https://www.rarlab.com/download.htm|/rar/rarlinux.*x64.*\.tar\.\w*
     "
 )

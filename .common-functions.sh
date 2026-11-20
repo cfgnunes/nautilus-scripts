@@ -1299,8 +1299,9 @@ _download_file() {
 #   tarball URL.
 #
 # Parameters:
-#   $1 (spec): A full tarball URL, or a specification in the format
-#      "github;username/repository;regex".
+#   $1 (spec): A full tarball URL, or a specification in the formats:
+#      "github|username/repository|regex"
+#      "url_regex|url|regex"
 _precompiled_resolve_url() {
     local spec=$1
     local regex=""
@@ -1309,14 +1310,26 @@ _precompiled_resolve_url() {
     local resolved_url=""
 
     case "$spec" in
-    "github;"*)
-        rest="${spec#github;}"
-        url="${rest%%;*}"
-        regex="${rest#*;}"
+    "github|"*)
+        rest="${spec#github|}"
+        url="${rest%%|*}"
+        regex="${rest#*|}"
 
         local api_url=""
         api_url="https://api.github.com/repos/${url}/releases/latest"
         resolved_url=$(_url_grep "$api_url" "$regex")
+        ;;
+    "url_regex|"*)
+        rest="${spec#url_regex|}"
+        url="${rest%%|*}"
+        regex="${rest#*|}"
+        resolved_url=$(_url_grep "$url" "$regex")
+        if [[ "$resolved_url" == /* ]]; then
+            local url_scheme="${url%%://*}"
+            local url_host="${url#*://}"
+            url_host="${url_host%%/*}"
+            resolved_url="$url_scheme://$url_host$resolved_url"
+        fi
         ;;
     *) resolved_url="$spec" ;;
     esac
