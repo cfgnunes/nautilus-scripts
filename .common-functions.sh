@@ -3809,46 +3809,33 @@ _get_output_filename() {
     output_file="$output_dir/"
     [[ -n "$par_prefix" ]] && output_file+="$par_prefix "
 
-    if [[ -d "$input_file" ]]; then
-        # Handle case where input_file is a directory.
-        case "$par_extension_opt" in
-        "append" | "replace")
-            output_file+=$filename
-            output_file+=".$par_extension"
-            ;;
-        "preserve" | "strip")
-            output_file+=$filename
-            ;;
-        esac
-    else
-        # Handle case where input_file is a regular file.
-        case "$par_extension_opt" in
-        "append")
-            # Append the new extension to the existing one.
-            output_file+=$(_strip_filename_extension "$filename")
-            [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
-            output_file+=$(_get_filename_extension "$filename")
-            output_file+=".$par_extension"
-            ;;
-        "preserve")
-            # Preserve the original extension.
-            output_file+=$(_strip_filename_extension "$filename")
-            [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
-            output_file+=$(_get_filename_extension "$filename")
-            ;;
-        "replace")
-            # Replace the existing extension with the new one.
-            output_file+=$(_strip_filename_extension "$filename")
-            [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
-            output_file+=".$par_extension"
-            ;;
-        "strip")
-            # Remove the extension.
-            output_file+=$(_strip_filename_extension "$filename")
-            [[ -n "$par_suffix" ]] && output_file+=" $par_suffix"
-            ;;
-        esac
+    # Directories have no extension to strip and ignore the suffix.
+    local base=$filename
+    local extension=""
+    if [[ ! -d "$input_file" ]]; then
+        base=$(_strip_filename_extension "$filename")
+        [[ -n "$par_suffix" ]] && base+=" $par_suffix"
+        extension=$(_get_filename_extension "$filename")
     fi
+    output_file+=$base
+
+    case "$par_extension_opt" in
+    "append")
+        # Append the new extension to the existing one.
+        output_file+="$extension.$par_extension"
+        ;;
+    "preserve")
+        # Preserve the original extension.
+        output_file+=$extension
+        ;;
+    "replace")
+        # Replace the existing extension with the new one.
+        output_file+=".$par_extension"
+        ;;
+    "strip")
+        # Remove the extension.
+        ;;
+    esac
 
     # If the file already exists, add a suffix.
     output_file=$(_get_filename_next_suffix "$output_file")
