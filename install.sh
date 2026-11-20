@@ -1343,8 +1343,8 @@ _install_pkgx() {
     local arch=""
     arch=$(uname -m)
     case "$arch" in
-    "x86_64") tarball_regex="https://.*linux.*86-64.*tar.gz" ;;
-    "aarch64") tarball_regex="https://.*linux.*aarch64.*tar.gz" ;;
+    "x86_64") tarball_regex="https.*/pkgx.*linux.*86.64.*musl.*tar.gz" ;;
+    "aarch64") tarball_regex="https.*/pkgx.*linux.*aarch64.*musl.*tar.gz" ;;
     *)
         _echo_error "> Unsupported architecture: $arch"
         return 1
@@ -1357,13 +1357,13 @@ _install_pkgx() {
     if _command_exists "curl"; then
         {
             curl -fsL "$pkgx_url" 2>/dev/null |
-                grep --only-matching -m1 "$tarball_regex" |
+                grep --ignore-case --only-matching -m1 "$tarball_regex" |
                 xargs curl -fsL | tar xz -C "$TEMP_DIR"
         } 2>/dev/null
     else
         {
             wget -qO- "$pkgx_url" 2>/dev/null |
-                grep --only-matching -m1 "$tarball_regex" |
+                grep --ignore-case --only-matching -m1 "$tarball_regex" |
                 xargs wget -qO- | tar xz -C "$TEMP_DIR"
         } 2>/dev/null
     fi
