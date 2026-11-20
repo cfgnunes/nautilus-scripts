@@ -366,7 +366,9 @@ _i18n_translate_path() {
     # shellcheck disable=SC2206
     local -a components=($path)
     local -a translated_components=()
+    local translated_path=""
 
+    local component=""
     for component in "${components[@]}"; do
         translated_components+=("$(_i18n "$component")")
     done

@@ -34,6 +34,7 @@ _main_task() {
     local output_dir=$2
     local id_sign=$3
     local output_file=""
+    local std_output=""
 
     # Determine if the input is a directory or a file.
     if [[ -d "$input_file" ]]; then

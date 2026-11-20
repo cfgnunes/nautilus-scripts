@@ -2008,6 +2008,7 @@ _display_file_selection_box() {
     local selected_items=""
     local multiple_flag=""
     local directory_flag=""
+    local msg=""
 
     # Default values for input parameters.
     local par_multiple="false"
@@ -2287,6 +2288,9 @@ _display_select_box() {
     local par_check_type=$3
     local par_check_select=$4
     local header_label=$5
+    local columns_count=0
+    local items_count=0
+    local selected_items=""
 
     if [[ -z "$par_columns" ]]; then
         par_columns="--column="
