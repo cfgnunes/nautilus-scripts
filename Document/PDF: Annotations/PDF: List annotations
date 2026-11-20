@@ -30,16 +30,26 @@ _main_task() {
     local file_label=""
     file_label=$(_text_remove_pwd "$input_file")
 
+    __cmd_pdfannots() {
+        if _command_exists "pdfannots"; then
+            # HACK: Workaround for pkgx.
+            # The command runs in a Python wrapper that requires network access.
+            _run_in_sandbox "" "$PKGX_AVAILABLE" pdfannots "$@"
+        elif [[ -f "$HOME/.local/opt/pdfannots/pdfannots.py" ]]; then
+            _run_in_sandbox "" "false" \
+                python3 "$HOME/.local/opt/pdfannots/pdfannots.py" "$@"
+        else
+            return 1
+        fi
+    }
+
     # Skip Square annotations.
     # Keep the first 50 characters of Content, Text, and Author, and append "..." when longer.
     # Each line is "text, content, author, type, color, page, file".
 
     # Run the main process.
-    # HACK: Workaround for pkgx.
-    # The command runs in a Python wrapper that requires network access.
     # shellcheck disable=SC2016
-    std_output=$(_run_in_sandbox "" "$PKGX_AVAILABLE" \
-        pdfannots --format json "$input_file" 2>/dev/null |
+    std_output=$(__cmd_pdfannots --format json "$input_file" 2>/dev/null |
         _run_in_sandbox "" "false" jq -r \
             --arg sep "$FIELD_SEPARATOR" \
             --arg file_label "$file_label" '

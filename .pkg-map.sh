@@ -551,9 +551,9 @@ declare -A PKG_MAP=(
 
     ["pdfannots"]="
         termux:
-        apt:
-        dnf:
-        pacman:
+        apt:    python3 python3-pdfminer github:github.com/0xabu/pdfannots
+        dnf:    python3 python3-pdfminer github:github.com/0xabu/pdfannots
+        pacman: python python-pdfminer github:github.com/0xabu/pdfannots
         nix:
         zypper:
         guix:

@@ -785,9 +785,22 @@ _check_dependencies() {
         fi
 
         # Append resolved packages as "<pkg_manager>:<package> ..." pairs.
-        pkg_names_sel=$(sed "s|^|$pkg_manager_sel:|g" <<<"$pkg_names_sel")
-        pkg_names_sel=$(sed "s| | $pkg_manager_sel:|g" <<<"$pkg_names_sel")
-        pairs+=" $pkg_names_sel"
+        local pkg_to_process=""
+        local pkg_github=""
+        pkg_to_process=$(tr " " "$FIELD_SEPARATOR" <<<"$pkg_names_sel")
+        for pkg_github in $pkg_to_process; do
+            if [[ "$pkg_github" == "github:"* ]]; then
+                pkg_names_sel="${pkg_names_sel//$pkg_github/}"
+                pairs+=" $pkg_github"
+            fi
+        done
+
+        pkg_names_sel=$(_str_collapse_char "$pkg_names_sel" " ")
+        if [[ -n "$pkg_names_sel" ]]; then
+            pkg_names_sel=$(sed "s|^|$pkg_manager_sel:|g" <<<"$pkg_names_sel")
+            pkg_names_sel=$(sed "s| | $pkg_manager_sel:|g" <<<"$pkg_names_sel")
+            pairs+=" $pkg_names_sel"
+        fi
 
         # Append resolved post install commands as "cmd1;cmd2;cmd3;..." list.
         if [[ -n "$post_install_sel" ]]; then
@@ -1050,6 +1063,14 @@ _deps_install_packages() {
             cmd_inst+="zypper refresh;"
             cmd_inst+="zypper --non-interactive install $packages"
             ;;
+        "github")
+            local pkgs=""
+            local pkg=""
+            pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
+            for pkg in $pkgs; do
+                _github_download_source "$USER_OPT_DIR" "$pkg"
+            done
+            ;;
         "precompiled")
             local architecture=""
             architecture=$(uname -m 2>/dev/null)
@@ -1167,6 +1188,7 @@ _deps_check_rpm_ostree_requires_reboot() {
 #      - "rpm-ostree"   : For Fedora Atomic systems.
 #      - "xbps-install" : For Void Linux systems.
 #      - "zypper"       : For openSUSE systems.
+#      - "github"       : For GitHub source packages.
 #   $2 (package): The name of the package to check.
 #
 # Returns:
@@ -1183,6 +1205,13 @@ _deps_is_package_installed() {
     fi
 
     case "$pkg_manager" in
+    "github")
+        local repo_name=""
+        repo_name="${package##*/}"
+        if [[ -d "$USER_OPT_DIR/$repo_name" ]]; then
+            return 0
+        fi
+        ;;
     "apt-get")
         if dpkg -s "$package" &>/dev/null; then
             return 0
@@ -1383,54 +1412,118 @@ _tarball_install_url() {
     mkdir --parents -- "$base_dir"
     _directory_push "$base_dir" || return 1
     _download_file "$tarball_url" "$tarball_file"
-    _tarball_extract "$tarball_file" "$output_dir" "true"
+    _archive_extract "$tarball_file" "$output_dir" "true"
     _directory_pop || return 1
 }
 
-# Function: _tarball_extract
+# Function: _github_download_source
 #
 # Description:
-#   This function extracts a tarball into a directory.
+#   This function downloads a GitHub repository as a ZIP file and extracts it
+#   into an installation directory. The repository name is derived from the
+#   GitHub URL and used as the target directory name.
 #
 # Parameters:
-#   $1 (file): The path to the tarball to extract.
+#   $1 (base_dir): The directory where the repository is extracted (usually
+#      $USER_OPT_DIR).
+#   $2 (github_url): The GitHub repository URL in format "github.com/owner/repo".
+_github_download_source() {
+    local base_dir=$1
+    local github_url=$2
+    local repo_name=""
+    local archive_url=""
+    local archive_file=""
+    local archive_dir=""
+
+    if [[ -z "$base_dir" ]] ||
+        [[ ! "$github_url" =~ ^github\.com/[^/]+/[^/]+$ ]]; then
+        return 1
+    fi
+
+    repo_name="${github_url##*/}"
+    archive_url="https://${github_url}/archive/refs/heads/main.zip"
+    archive_file="$base_dir/${repo_name}-main.zip"
+    archive_dir="$base_dir/${repo_name}-main"
+
+    mkdir --parents -- "$base_dir" || return 1
+    rm -rf -- "$archive_dir" || return 1
+
+    if ! _download_file "$archive_url" "$archive_file" ||
+        ! _archive_extract "$archive_file" "$base_dir" "true" ||
+        [[ ! -d "$archive_dir" ]]; then
+        rm -f -- "$archive_file"
+        rm -rf -- "$archive_dir"
+        return 1
+    fi
+
+    rm -rf -- "${base_dir:?}/$repo_name" &&
+        mv -- "$archive_dir" "$base_dir/$repo_name"
+}
+
+# Function: _archive_extract
+#
+# Description:
+#   This function extracts a supported archive into a directory.
+#
+# Parameters:
+#   $1 (file): The path to the archive to extract.
 #   $2 (output_dir): The directory where the archive contents are extracted.
 #   $3 (par_remove): Optional, default: "false". When "true", removes the
-#      tarball after extraction.
-_tarball_extract() {
+#      archive after extraction.
+_archive_extract() {
     local file=$1
     local output_dir=$2
     local par_remove=${3:-"false"}
     local strip_components=0
     local first_entry=""
+    local tar_compression=""
+    local extract_status=1
 
-    # Detect whether the archive contains a top-level directory.
-    first_entry=$(_run_in_sandbox "" "false" \
-        tar --list --file="$file" | head -n 1)
+    case $file in
+    *.zip) ;;
+    *.tar.gz | *.tgz)
+        tar_compression="--gzip"
+        ;;
+    *.tar.xz | *.txz)
+        tar_compression="--xz"
+        ;;
+    *.tar.zst | *.tzst)
+        tar_compression="--zstd"
+        ;;
+    *) return 1 ;;
+    esac
 
-    if [[ "$first_entry" == */* ]]; then
-        strip_components=1
+    if [[ "$file" != *.zip ]]; then
+        first_entry=$(_run_in_sandbox "" "false" \
+            tar --list --file="$file" | head -n 1)
+
+        if [[ "$first_entry" == */* ]]; then
+            strip_components=1
+        fi
     fi
 
-    mkdir --parents -- "$output_dir"
-    {
-        case $file in
-        *.tar.gz | *.tgz) _run_in_sandbox "$output_dir" "false" \
-            tar --extract --gzip --file="$file" \
-            --strip-components="$strip_components" --directory="$output_dir" ;;
-        *.tar.xz | *.txz) _run_in_sandbox "$output_dir" "false" \
-            tar --extract --xz --file="$file" \
-            --strip-components="$strip_components" --directory="$output_dir" ;;
-        *.tar.zst | *.tzst) _run_in_sandbox "$output_dir" "false" \
-            tar --extract --zstd --file="$file" \
-            --strip-components="$strip_components" --directory="$output_dir" ;;
-        esac
-    } &>/dev/null
+    mkdir --parents -- "$output_dir" || return 1
+    if [[ "$file" == *.zip ]]; then
+        if _run_in_sandbox "$output_dir" "false" \
+            unzip -q "$file" -d "$output_dir" &>/dev/null; then
+            extract_status=0
+        fi
+    elif _run_in_sandbox "$output_dir" "false" tar --extract \
+        "$tar_compression" --file="$file" \
+        --strip-components="$strip_components" \
+        --directory="$output_dir" &>/dev/null; then
+        extract_status=0
+    fi
 
-    # Remove the output directory when the extraction produced nothing.
-    rmdir -- "$output_dir" &>/dev/null
+    if [[ "$par_remove" == "true" ]]; then
+        rm -f -- "$file" || return 1
+    fi
 
-    [[ "$par_remove" == "true" ]] && rm -f -- "$file"
+    if ((extract_status != 0)); then
+        rmdir -- "$output_dir" &>/dev/null
+    fi
+
+    return "$extract_status"
 }
 
 # -----------------------------------------------------------------------------

@@ -29,14 +29,24 @@ _main_task() {
     local std_output=""
     local exit_code=0
 
+    __cmd_pdfannots() {
+        if _command_exists "pdfannots"; then
+            # HACK: Workaround for pkgx.
+            # The command runs in a Python wrapper that requires network access.
+            _run_in_sandbox "$output_dir" "$PKGX_AVAILABLE" pdfannots "$@"
+        elif [[ -f "$HOME/.local/opt/pdfannots/pdfannots.py" ]]; then
+            _run_in_sandbox "$output_dir" "false" \
+                python3 "$HOME/.local/opt/pdfannots/pdfannots.py" "$@"
+        else
+            return 1
+        fi
+    }
+
     output_file=$(_get_output_filename "$input_file" "$output_dir" \
         "par_extension_opt=replace; par_extension=md")
 
     # Run the main process.
-    # HACK: Workaround for pkgx.
-    # The command runs in a Python wrapper that requires network access.
-    std_output=$(_run_in_sandbox "$output_dir" "$PKGX_AVAILABLE" \
-        pdfannots -o "$output_file" "$input_file" 2>&1)
+    std_output=$(__cmd_pdfannots -o "$output_file" "$input_file" 2>&1)
     exit_code=$?
 
     # A PDF without annotations produces an empty file. Remove it.
