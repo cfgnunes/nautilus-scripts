@@ -2872,47 +2872,33 @@ _display_gdbus_notify() {
     local urgency=${4:-1}
     local open_item=${5:-}
     local transient=${6:-"false"}
-    local app_name=$title
-    local method="Notify"
-    local interface="org.freedesktop.Notifications"
-    local object_path="/org/freedesktop/Notifications"
+    local action_id="__CMD_OpenDir__$$"
+    local actions="[]"
+    local dest="org.freedesktop.Notifications"
+    local obj_path="/org/freedesktop/Notifications"
+
+    # Qt desktops show the notification without the action button.
+    if [[ -n "$open_item" ]] && ! _is_qt_desktop; then
+        actions="['$action_id', '$(_i18n 'Open')']"
+    fi
 
     # Use 'gdbus' to send the notification.
-    if [[ -z "$open_item" ]] || _is_qt_desktop; then
-        # Display a simple notification without action.
-        gdbus call --session --dest "$interface" \
-            --object-path "$object_path" \
-            --method "$interface.$method" \
-            "$app_name" 0 "$icon" "$title" "$body" \
-            "[]" \
-            "{'transient': <$transient>, 'urgency': <$urgency>}" \
-            5000 &>/dev/null
-    else
-        local action_id=""
-        action_id="__CMD_OpenDir__${$}"
-        local msg=""
-        msg="$(_i18n 'Open')"
+    gdbus call --session \
+        --dest "$dest" --object-path "$obj_path" --method "$dest.Notify" \
+        "$title" 0 "$icon" "$title" "$body" "$actions" \
+        "{'transient': <$transient>, 'urgency': <$urgency>}" 5000 &>/dev/null
 
-        # Display the notification with an action button.
-        gdbus call --session --dest "$interface" \
-            --object-path "$object_path" \
-            --method "$interface.$method" \
-            "$app_name" 0 "$icon" "$title" "$body" \
-            "['$action_id', '$msg']" \
-            "{'transient': <$transient>, 'urgency': <$urgency>}" \
-            5000 &>/dev/null
+    [[ "$actions" == "[]" ]] && return
 
-        # Monitor for the action invoked by the user.
-        local line=""
-        timeout 10s \
-            dbus-monitor "interface='$interface',member='ActionInvoked'" |
-            while read -r line; do
-                if [[ "$line" == *"$action_id"* ]]; then
-                    xdg-open "$open_item" &>/dev/null &
-                    _exit_script
-                fi
-            done
-    fi
+    # Monitor for the action invoked by the user.
+    local line=""
+    timeout 10s dbus-monitor "interface='$dest',member='ActionInvoked'" |
+        while read -r line; do
+            if [[ "$line" == *"$action_id"* ]]; then
+                xdg-open "$open_item" &>/dev/null &
+                _exit_script
+            fi
+        done
 }
 
 # -----------------------------------------------------------------------------
