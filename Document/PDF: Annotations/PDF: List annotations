@@ -35,7 +35,8 @@ _main_task() {
     # Each line is "text, content, author, type, color, page, file".
 
     # Run the main process.
-    # NOTE: In pkgx, the command runs in a Python wrapper that requires network access.
+    # HACK: Workaround for pkgx.
+    # The command runs in a Python wrapper that requires network access.
     # shellcheck disable=SC2016
     std_output=$(_run_in_sandbox "" "$PKGX_AVAILABLE" \
         pdfannots --format json "$input_file" 2>/dev/null |
