@@ -857,7 +857,8 @@ _deps_get_dependency_value() {
     # Remove leading, trailing and duplicate spaces.
     pairs=$(_str_collapse_char "$pairs" " ")
 
-    # If the key does not exist or has no associated values, return failure.
+    # If the key does not exist or has no associated values, return success
+    # with empty output.
     if [[ -z "$pairs" ]]; then
         return 0
     fi
@@ -1876,7 +1877,7 @@ _move_file() {
                 return 1
             fi
 
-            # Skip if both files are identical to avoids unnecessary overwrite.
+            # Skip if both files are identical to avoid unnecessary overwrite.
             if cmp --silent -- "$file_src" "$file_dst"; then
                 rm -rf -- "$file_src" 2>/dev/null
                 return 0
@@ -2145,7 +2146,7 @@ _display_info_box() {
 #
 # Parameters:
 #   $1 (list): A string containing the items to display in the list.
-#   $1 (parameters): A string containing key-value pairs that configure
+#   $2 (parameters): A string containing key-value pairs that configure
 #      the function's behavior. Example: 'par_item_name=files'.
 #
 # Options in '$parameters':
@@ -2737,7 +2738,7 @@ _display_wait_box() {
 #   $1 (message): The message to display inside the wait box (e.g.,
 #      "Running the task. Please wait...").
 #   $2 (open_delay): Optional. The delay (in seconds) before the wait box
-#      is shown. Defaults to 2 seconds if not provided.
+#      is shown. Defaults to 1.5 seconds if not provided.
 _display_wait_box_message() {
     local message=$1
     local open_delay=${2:-"1.5"}
@@ -2749,10 +2750,10 @@ _display_wait_box_message() {
         # For non-GUI sessions, simply print the message to the console.
         echo -e "$MSG_INFO $message" >&2
 
-    # Check if the Zenity is available.
+    # Check if Zenity or YAD is available.
     elif _command_exists "zenity" || _command_exists "yad"; then
         # Control flag to inform that a 'wait box' will open
-        # (if the task takes over 2 seconds).
+        # (if the task takes over 1.5 seconds).
         touch -- "$TEMP_CONTROL_WAIT_BOX_DELAY"
 
         # Create the FIFO for communication with Zenity 'wait box'.
