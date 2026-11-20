@@ -1263,6 +1263,7 @@ _deps_is_package_installed() {
 _download_file() {
     local url=$1
     local output_file=$2
+    local -a cmd_array=()
 
     if [[ -z "$url" ]] || [[ -z "$output_file" ]]; then
         return 1
@@ -1272,20 +1273,17 @@ _download_file() {
     output_dir=$(dirname -- "$output_file")
 
     if _command_exists "curl"; then
-        _run_in_sandbox "$output_dir" "true" \
-            curl --fail --silent --location --output "$output_file" \
-            -- "$url" &>/dev/null || return 1
+        cmd_array=(curl --fail --silent --location --output "$output_file")
     elif _command_exists "wget"; then
-        _run_in_sandbox "$output_dir" "true" \
-            wget --quiet --output-document="$output_file" \
-            -- "$url" &>/dev/null || return 1
+        cmd_array=(wget --quiet --output-document="$output_file")
     elif _command_exists "axel"; then
-        _run_in_sandbox "$output_dir" "true" \
-            axel --quiet --output="$output_file" \
-            -- "$url" &>/dev/null || return 1
+        cmd_array=(axel --quiet --output="$output_file")
     else
         return 1
     fi
+
+    _run_in_sandbox "$output_dir" "true" "${cmd_array[@]}" -- "$url" \
+        &>/dev/null || return 1
 }
 
 # Function: _precompiled_resolve_url
@@ -1335,23 +1333,23 @@ _precompiled_resolve_url() {
 _url_grep() {
     local url=$1
     local regex=$2
-    local -a command=()
+    local -a cmd_array=()
 
     if [[ -z "$url" ]] || [[ -z "$regex" ]]; then
         return 1
     fi
 
     if _command_exists "curl"; then
-        command=(curl --fail --silent --location)
+        cmd_array=(curl --fail --silent --location)
     elif _command_exists "wget"; then
-        command=(wget --quiet --output-document=-)
+        cmd_array=(wget --quiet --output-document=-)
     elif _command_exists "axel"; then
-        command=(axel --quiet --output=/dev/stdout)
+        cmd_array=(axel --quiet --output=/dev/stdout)
     else
         return 1
     fi
 
-    _run_in_sandbox "" "true" "${command[@]}" -- "$url" 2>/dev/null |
+    _run_in_sandbox "" "true" "${cmd_array[@]}" -- "$url" 2>/dev/null |
         grep --ignore-case --only-matching -m1 "$regex"
 }
 
