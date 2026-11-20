@@ -91,7 +91,7 @@ _run_gpg() {
 
     IFS=$FIELD_SEPARATOR
 
-    local recipients=()
+    local -a recipients=()
     local id=""
     for id in $ids_encrypt; do
         recipients+=("--recipient=$id")

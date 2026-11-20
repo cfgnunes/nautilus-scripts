@@ -72,7 +72,7 @@ _multiselect_menu() {
     trap "__on_ctrl_c" SIGINT
 
     # Process the 'defaults' parameter.
-    local selected=()
+    local -a selected=()
     local index_defaults=0
     for index_defaults in "${!_options[@]}"; do
         if [[ ${_defaults[index_defaults]+_} ]]; then

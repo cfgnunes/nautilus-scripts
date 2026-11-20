@@ -27,7 +27,7 @@ _main_task() {
     local filename=""
     local filename_base=""
     local filename_extension=""
-    local words=()
+    local -a words=()
     local regex="^(.*)[[:space:]]+(\([^)]*\)|\[[^]]*\])$"
 
     dir=$(dirname -- "$input_file")

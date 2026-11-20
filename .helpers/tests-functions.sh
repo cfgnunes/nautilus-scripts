@@ -1741,9 +1741,9 @@ __run_get_available_app() {
     local output=""
     # Passed by name to '_get_available_app'.
     # shellcheck disable=SC2034
-    local apps=("missing_cmd_xyz" "bash")
+    local -a apps=("missing_cmd_xyz" "bash")
     # shellcheck disable=SC2034
-    local missing=("missing_cmd_a" "missing_cmd_b")
+    local -a missing=("missing_cmd_a" "missing_cmd_b")
 
     output=$(_get_available_app "apps")
     __test_equal "Return the first available command." "bash" "$output"

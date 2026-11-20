@@ -34,13 +34,13 @@ _reset_permissions() {
     local find_args=""
 
     # List of sensitive directories to apply strict permissions (700).
-    local sensitive_dirs=(
+    local -a sensitive_dirs=(
         ".gnupg"
         ".ssh"
     )
 
     # List of sensitive files to apply strict permissions (600).
-    local sensitive_files=(
+    local -a sensitive_files=(
         ".bash_history"
         ".curlrc"
         ".git-credentials"

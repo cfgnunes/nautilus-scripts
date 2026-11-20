@@ -101,7 +101,7 @@ _main_task() {
         # Determine the image viewer.
         local image_viewer=""
         # shellcheck disable=SC2034
-        local apps=(
+        local -a apps=(
             "eog"
         )
         image_viewer=$(_get_available_app "apps")

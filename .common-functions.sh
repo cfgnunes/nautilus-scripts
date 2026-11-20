@@ -497,7 +497,7 @@ _run_in_sandbox() {
     fi
 
     # Base: read-only filesystem and isolated namespaces.
-    local sandbox_args=(
+    local -a sandbox_args=(
         bwrap
         --ro-bind / /
         --dev /dev
@@ -533,7 +533,7 @@ _run_in_sandbox() {
     done
 
     # Hidden directories: sensitive data of the user and host sockets.
-    local hidden_dirs=(
+    local -a hidden_dirs=(
         /run/dbus
         "$HOME/.aws"
         "$HOME/.azure"
@@ -554,7 +554,7 @@ _run_in_sandbox() {
     )
 
     # Hidden sensitive files.
-    local hidden_files=(
+    local -a hidden_files=(
         "$HOME/.authinfo.gpg"
         "$HOME/.authinfo"
         "$HOME/.bash_aliases"
@@ -2964,7 +2964,7 @@ _get_available_file_manager() {
     local default_app=""
     default_app=$(_xdg_get_default_app "inode/directory" "true")
 
-    local apps=(
+    local -a apps=(
         "nautilus"
         "dolphin"
         "nemo"
@@ -3062,7 +3062,7 @@ _is_gui_session() {
 #   0 (true): If the desktop is Qt-based.
 #   1 (false): Otherwise.
 _is_qt_desktop() {
-    local qt_desktops=("kde" "lxqt" "tde" "trinity" "razor" "lumina")
+    local -a qt_desktops=("kde" "lxqt" "tde" "trinity" "razor" "lumina")
     local current_desktop=""
 
     if [[ -z "${XDG_CURRENT_DESKTOP:-}" ]]; then
@@ -4520,7 +4520,7 @@ _recent_scripts_add() {
     _directory_pop || return 1
 
     # Part 2: Organize links.
-    local links=()
+    local -a links=()
     local link=""
     while IFS= read -r -d $'\0' link; do
         # Check if the link is broken.

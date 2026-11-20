@@ -94,7 +94,7 @@ _concat_file() {
     local base_file=${input_file%.*}
     local output_file=""
     local output_file_path=""
-    local parts=()
+    local -a parts=()
     local part=""
 
     for part in "$base_file".[0-9]*; do
@@ -155,49 +155,49 @@ _get_command() {
     local input_file=$1
     local command_status=$2
     local command=""
-    local pref_cmds=()
+    local -a pref_cmds=()
 
     # Define the preferred commands for each type of archive.
-    local cmds_7za=("7za" "bsdtar")
-    local cmds_ar=("ar" "bsdtar")
-    local cmds_arj=("7za")
-    local cmds_bz=("bzip2" "7za")
-    local cmds_bz3=("bzip3")
-    local cmds_cab=("cabextract" "bsdtar")
-    local cmds_cpio=("cpio" "bsdtar")
-    local cmds_dar=("dar")
-    local cmds_deb=("ar")
-    local cmds_gpg=("gpg")
-    local cmds_gz=("gzip" "7za")
-    local cmds_iso=("xorriso" "bsdtar")
-    local cmds_lrz=("lrzip")
-    local cmds_lz=("lzip")
-    local cmds_lz4=("lz4")
-    local cmds_lzh=("lha")
-    local cmds_lzma=("xz")
-    local cmds_lzo=("lzop")
-    local cmds_msi=("7za")
-    local cmds_rar=("unrar" "bsdtar")
-    local cmds_rpm=("bsdtar")
-    local cmds_sqsh=("unsquashfs" "rdsquashfs")
-    local cmds_tar_bz=("tar,bzip2" "7za")
-    local cmds_tar_gz=("tar,gzip" "7za")
-    local cmds_tar_lrz=("tar,lrzip")
-    local cmds_tar_lz=("tar,lzip")
-    local cmds_tar_lz4=("tar,lz4")
-    local cmds_tar_lzma=("tar,lzma" "7za")
-    local cmds_tar_lzo=("tar,lzop")
-    local cmds_tar_xz=("tar,xz" "7za")
-    local cmds_tar_z=("tar,gzip" "7za")
-    local cmds_tar_zst=("tar,zstd")
-    local cmds_tar=("tar" "bsdtar" "7za")
-    local cmds_xar=("bsdtar")
-    local cmds_xz=("xz" "7za")
-    local cmds_z=("gzip")
-    local cmds_zip=("7za" "bsdtar")
-    local cmds_zpaq=("zpaq")
-    local cmds_zstd=("zstd")
-    local cmds_unknown_file=("bsdtar,7za")
+    local -a cmds_7za=("7za" "bsdtar")
+    local -a cmds_ar=("ar" "bsdtar")
+    local -a cmds_arj=("7za")
+    local -a cmds_bz=("bzip2" "7za")
+    local -a cmds_bz3=("bzip3")
+    local -a cmds_cab=("cabextract" "bsdtar")
+    local -a cmds_cpio=("cpio" "bsdtar")
+    local -a cmds_dar=("dar")
+    local -a cmds_deb=("ar")
+    local -a cmds_gpg=("gpg")
+    local -a cmds_gz=("gzip" "7za")
+    local -a cmds_iso=("xorriso" "bsdtar")
+    local -a cmds_lrz=("lrzip")
+    local -a cmds_lz=("lzip")
+    local -a cmds_lz4=("lz4")
+    local -a cmds_lzh=("lha")
+    local -a cmds_lzma=("xz")
+    local -a cmds_lzo=("lzop")
+    local -a cmds_msi=("7za")
+    local -a cmds_rar=("unrar" "bsdtar")
+    local -a cmds_rpm=("bsdtar")
+    local -a cmds_sqsh=("unsquashfs" "rdsquashfs")
+    local -a cmds_tar_bz=("tar,bzip2" "7za")
+    local -a cmds_tar_gz=("tar,gzip" "7za")
+    local -a cmds_tar_lrz=("tar,lrzip")
+    local -a cmds_tar_lz=("tar,lzip")
+    local -a cmds_tar_lz4=("tar,lz4")
+    local -a cmds_tar_lzma=("tar,lzma" "7za")
+    local -a cmds_tar_lzo=("tar,lzop")
+    local -a cmds_tar_xz=("tar,xz" "7za")
+    local -a cmds_tar_z=("tar,gzip" "7za")
+    local -a cmds_tar_zst=("tar,zstd")
+    local -a cmds_tar=("tar" "bsdtar" "7za")
+    local -a cmds_xar=("bsdtar")
+    local -a cmds_xz=("xz" "7za")
+    local -a cmds_z=("gzip")
+    local -a cmds_zip=("7za" "bsdtar")
+    local -a cmds_zpaq=("zpaq")
+    local -a cmds_zstd=("zstd")
+    local -a cmds_unknown_file=("bsdtar,7za")
 
     # For split archives ('.000' or '.001'), use the name of the joined file.
     local type_name=""
@@ -353,7 +353,7 @@ _get_command() {
 _all_commands_exists() {
     local commands=$1
 
-    local commands_array=()
+    local -a commands_array=()
     IFS=" " read -r -a commands_array <<<"$commands"
 
     local command=""

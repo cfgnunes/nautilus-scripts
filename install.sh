@@ -118,13 +118,13 @@ trap _on_exit EXIT
 
 # shellcheck disable=SC2034
 _main() {
-    local cat_defaults=()
-    local cat_dirs=()
-    local cat_dirs_translated=()
-    local cat_selected=()
-    local menu_defaults=()
-    local menu_labels=()
-    local menu_selected=()
+    local -a cat_defaults=()
+    local -a cat_dirs=()
+    local -a cat_dirs_translated=()
+    local -a cat_selected=()
+    local -a menu_defaults=()
+    local -a menu_labels=()
+    local -a menu_selected=()
 
     _log "[INF] Installation started."
 
@@ -364,8 +364,8 @@ _i18n_translate_path() {
     local IFS='/'
 
     # shellcheck disable=SC2206
-    local components=($path)
-    local translated_components=()
+    local -a components=($path)
+    local -a translated_components=()
 
     for component in "${components[@]}"; do
         translated_components+=("$(_i18n "$component")")
@@ -513,7 +513,7 @@ _command_exists() {
 }
 
 _get_parameters_command_line() {
-    local expanded_args=()
+    local -a expanded_args=()
 
     # Expand combined short options (e.g. -ia -> -i -a).
     while [[ $# -gt 0 ]]; do

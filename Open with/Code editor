@@ -44,7 +44,7 @@ _open_app() {
     # Run the main process.
     local available_app=""
     # shellcheck disable=SC2034
-    local apps=(
+    local -a apps=(
         "code"
         "cursor"
         "windsurf"

@@ -68,7 +68,7 @@ _open_terminal() {
     local session_name=$1
     local available_app=""
     # shellcheck disable=SC2034
-    local apps=(
+    local -a apps=(
         "ptyxis"
         "gnome-terminal"
         "kgx"
