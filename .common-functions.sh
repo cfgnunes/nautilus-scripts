@@ -1335,27 +1335,24 @@ _precompiled_resolve_url() {
 _url_grep() {
     local url=$1
     local regex=$2
-    local resolved_url=""
+    local -a command=()
 
     if [[ -z "$url" ]] || [[ -z "$regex" ]]; then
-        return
+        return 1
     fi
 
     if _command_exists "curl"; then
-        resolved_url=$(_run_in_sandbox "" "true" \
-            curl --fail --silent --location -- \
-            "$url" 2>/dev/null | grep --only-matching -m1 "$regex")
+        command=(curl --fail --silent --location)
     elif _command_exists "wget"; then
-        resolved_url=$(_run_in_sandbox "" "true" \
-            wget --quiet --output-document=- -- \
-            "$url" 2>/dev/null | grep --only-matching -m1 "$regex")
+        command=(wget --quiet --output-document=-)
     elif _command_exists "axel"; then
-        resolved_url=$(_run_in_sandbox "" "true" \
-            axel --quiet --output=/dev/stdout -- \
-            "$url" 2>/dev/null | grep --only-matching -m1 "$regex")
+        command=(axel --quiet --output=/dev/stdout)
+    else
+        return 1
     fi
 
-    printf "%s" "$resolved_url"
+    _run_in_sandbox "" "true" "${command[@]}" -- "$url" 2>/dev/null |
+        grep --ignore-case --only-matching -m1 "$regex"
 }
 
 # Function: _tarball_install_url
