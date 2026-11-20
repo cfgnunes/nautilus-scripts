@@ -532,8 +532,8 @@ _run_in_sandbox() {
         [[ -n "${!var+x}" ]] && sandbox_args+=(--setenv "$var" "${!var}")
     done
 
-    # Hidden directories: sensitive data of the user and host sockets.
-    local -a hidden_dirs=(
+    # List of sensitive directories to hide inside the sandbox.
+    local -a sensitive_dirs=(
         /run/dbus
         "$HOME/.aws"
         "$HOME/.azure"
@@ -553,8 +553,8 @@ _run_in_sandbox() {
         "$HOME/.var"
     )
 
-    # Hidden sensitive files.
-    local -a hidden_files=(
+    # List of sensitive files to hide inside the sandbox.
+    local -a sensitive_files=(
         "$HOME/.authinfo.gpg"
         "$HOME/.authinfo"
         "$HOME/.bash_aliases"
@@ -586,10 +586,10 @@ _run_in_sandbox() {
     )
 
     local path=""
-    for path in "${hidden_dirs[@]}"; do
+    for path in "${sensitive_dirs[@]}"; do
         [[ -d "$path" ]] && sandbox_args+=(--tmpfs "$path")
     done
-    for path in "${hidden_files[@]}"; do
+    for path in "${sensitive_files[@]}"; do
         [[ -f "$path" ]] && sandbox_args+=(--ro-bind /dev/null "$path")
     done
 
