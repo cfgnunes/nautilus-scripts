@@ -97,7 +97,6 @@ _main() {
     __run_text_remove_pwd
     __run_text_sort
     __run_text_uri_decode
-    __run_translate_to_gvfs_path
     __run_validate_file_mime
     __run_validate_file_mime_parallel
     __run_validate_files_count
@@ -1040,45 +1039,6 @@ __run_str_human_readable_path() {
     __clean_temp_files
 }
 
-__run_translate_to_gvfs_path() {
-    local input=""
-    local expected_output=""
-    local output=""
-    local uid=""
-
-    uid=$(id -u)
-
-    input="sftp://host.example/path/to/file"
-    expected_output="/run/user/${uid}/gvfs/sftp:host=host.example/path/to/file"
-    output=$(_translate_to_gvfs_path "$input")
-    __test_equal "SFTP URI." "$expected_output" "$output"
-
-    input="smb://server/share/folder/file"
-    expected_output="/run/user/${uid}/gvfs/smb-share:server=server,share=share/folder/file"
-    output=$(_translate_to_gvfs_path "$input")
-    __test_equal "SMB URI." "$expected_output" "$output"
-
-    input="smb://server/share"
-    expected_output="/run/user/${uid}/gvfs/smb-share:server=server,share=share"
-    output=$(_translate_to_gvfs_path "$input")
-    __test_equal "SMB URI without path." "$expected_output" "$output"
-
-    input="sftp://host.example/tmp/50%25.pdf"
-    expected_output="/run/user/${uid}/gvfs/sftp:host=host.example/tmp/50%.pdf"
-    output=$(_translate_to_gvfs_path "$input")
-    __test_equal "SFTP URI with percent in filename." "$expected_output" "$output"
-
-    input="ftp://host.example/pub/file"
-    expected_output="/run/user/${uid}/gvfs/ftp:host=host.example/pub/file"
-    output=$(_translate_to_gvfs_path "$input")
-    __test_equal "FTP URI." "$expected_output" "$output"
-
-    input="sftp://host.example"
-    expected_output="/run/user/${uid}/gvfs/sftp:host=host.example"
-    output=$(_translate_to_gvfs_path "$input")
-    __test_equal "Host without a path." "$expected_output" "$output"
-}
-
 __run_command_exists() {
     __test_exit_code "Existing command 'bash'." 0 _command_exists "bash"
     __test_exit_code "Existing command 'test'." 0 _command_exists "test"
@@ -1499,11 +1459,6 @@ __run_get_working_directory() {
     output=$(_get_working_directory)
     __test_equal "Search URI returns empty." "" "$output"
 
-    NAUTILUS_SCRIPT_CURRENT_URI="sftp://host.example/remote/dir"
-    expected_output="/run/user/$(id -u)/gvfs/sftp:host=host.example/remote/dir"
-    output=$(_get_working_directory)
-    __test_equal "Translate a remote current URI." "$expected_output" "$output"
-
     unset "NAUTILUS_SCRIPT_CURRENT_URI"
     # Read indirectly by '_get_working_directory'.
     # shellcheck disable=SC2034
@@ -1794,9 +1749,7 @@ __run_get_filenames_filemanager() {
     local expected_output=""
     local saved_input_files=$INPUT_FILES
     local saved_script_env="$_TEMP_DIR/filenames_env.sh"
-    local uid=""
 
-    uid=$(id -u)
     __save_script_env "$saved_script_env"
     _unset_global_variables_file_manager
 
@@ -1816,18 +1769,6 @@ __run_get_filenames_filemanager() {
     expected_output=$'/tmp/my file.txt\r/tmp/b.txt'
     output=$(_get_filenames_filemanager)
     __test_equal "Decode file:// selections." "$expected_output" "$output"
-
-    NAUTILUS_SCRIPT_SELECTED_URIS=$'sftp://host.example/one\nsftp://host.example/two'
-    expected_output="/run/user/${uid}/gvfs/sftp:host=host.example/one"
-    expected_output+="${FIELD_SEPARATOR}"
-    expected_output+="/run/user/${uid}/gvfs/sftp:host=host.example/two"
-    output=$(_get_filenames_filemanager)
-    __test_equal "Translate remote selections." "$expected_output" "$output"
-
-    NAUTILUS_SCRIPT_SELECTED_URIS="smb://server/share/folder/file"
-    expected_output="/run/user/${uid}/gvfs/smb-share:server=server,share=share/folder/file"
-    output=$(_get_filenames_filemanager)
-    __test_equal "Translate an SMB selection." "$expected_output" "$output"
 
     INPUT_FILES=$saved_input_files
     __restore_script_env "$saved_script_env"

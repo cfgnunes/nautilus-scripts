@@ -429,6 +429,7 @@ _run_function_parallel() {
         _get_filename_next_suffix \
         _get_max_procs \
         _get_output_filename \
+        _gio_translate_path \
         _make_temp_dir \
         _make_temp_dir_local \
         _make_temp_file \
@@ -445,8 +446,7 @@ _run_function_parallel() {
         _strip_filename_extension \
         _text_remove_empty_lines \
         _text_remove_pwd \
-        _text_uri_decode \
-        _translate_to_gvfs_path
+        _text_uri_decode
 
     # Escape single quotes in items to handle them correctly in 'xargs'
     # with 'bash -c'.
@@ -1954,17 +1954,15 @@ _get_working_directory() {
         ;;
     *"://"*)
         # Case: Files opened remotely ('sftp://', 'smb://').
-        working_dir=$(_translate_to_gvfs_path "$working_dir")
+        working_dir=$(_gio_translate_path "$working_dir")
         ;;
     *)
         # Case: File managers that don't set current directory variables.
-        #
         # Strategy: Get the directory from first selected item.
         local item_1=""
         item_1=$(_get_element "$INPUT_FILES" "1")
 
         if [[ -n "$item_1" ]]; then
-            # Get the directory name of the first input file.
             working_dir=$(_get_dirname "$item_1")
         fi
         ;;
@@ -3273,53 +3271,6 @@ _set_clipboard_file() {
 # SECTION: Input files
 # -----------------------------------------------------------------------------
 
-# Function: _translate_to_gvfs_path
-#
-# Description:
-#   This function converts a remote URI into the corresponding GVfs-mounted
-#   path under '/run/user/<uid>/gvfs/'.
-_translate_to_gvfs_path() {
-    local uri=$1
-    local uid=""
-    local gvfs_base=""
-    local scheme=""
-    local host=""
-    local host_path=""
-    local path=""
-    local gvfs_path=""
-    local share=""
-    local rest=""
-
-    # Base GVfs mount path.
-    uid=$(id -u)
-    gvfs_base="/run/user/${uid}/gvfs"
-
-    # Extract scheme (e.g. sftp, smb)
-    scheme="${uri%%://*}"
-    host_path="${uri#*://}"
-
-    # Extract host and path
-    host="${host_path%%/*}"
-    path="${host_path#*/}"
-
-    # Special handling for SMB (different GVfs mount naming).
-    if [[ "$scheme" == "smb" ]]; then
-        # SMB URIs have "server/share/path"
-        share="${path%%/*}" # First component = share name.
-        rest="${path#*/}"   # Remaining path (may be empty).
-
-        gvfs_path="${gvfs_base}/smb-share:server=${host},share=${share}"
-        [[ "$rest" != "$path" ]] && [[ -n "$rest" ]] && gvfs_path+="/${rest}"
-    else
-        # Default pattern for other protocols (e.g., 'sftp', 'ftp', etc.).
-        gvfs_path="${gvfs_base}/${scheme}:host=${host}"
-        [[ -n "$path" && "$path" != "$host_path" ]] && gvfs_path+="/${path}"
-    fi
-    gvfs_path=${gvfs_path//%/\\x}
-
-    printf '%b' "$gvfs_path"
-}
-
 # Function: _get_filenames_filemanager
 #
 # Description:
@@ -3342,46 +3293,27 @@ _get_filenames_filemanager() {
 
     if [[ "$input_files" == "file://"* ]]; then
         input_files=$(_convert_text_to_delimited_string "$input_files")
-
-        # Decode percent-encoded URIs to readable local paths.
         input_files=$(_text_uri_decode "$input_files")
-
-    elif [[ "$input_files" == "recent://"* ]] ||
-        [[ "$input_files" == "trash://"* ]]; then
-        # If the input comes from virtual locations ('recent://', 'trash://').
-        input_files=$(_convert_text_to_delimited_string "$input_files")
-
-        # For each virtual URI, resolve its actual file path via 'gio'.
-        local file=""
-        local decoded_input_files=""
-        for file in $input_files; do
-            decoded_input_files+=$(gio info "$file" |
-                grep "standard::target-uri" | cut -f 4- -d " ")
-            decoded_input_files+=$FIELD_SEPARATOR
-        done
-        input_files=$decoded_input_files
-
-        # Decode percent-encoded URIs to readable local paths.
-        input_files=$(_text_uri_decode "$input_files")
-        input_files=$(_str_collapse_char "$input_files" "$FIELD_SEPARATOR")
     elif [[ "$input_files" == *"://"* ]]; then
-        # If the input comes from other GVfs location ('sftp://', 'smb://').
         input_files=$(_convert_text_to_delimited_string "$input_files")
 
-        # For each virtual URI, resolve its actual file path.
-        local file=""
+        # For each virtual URI, resolve its actual file path via 'gio', such as
+        # '*search://', 'recent://', 'trash://', 'sftp://', 'smb://', etc.
         local decoded_input_files=""
+        local gio_path=""
+        local file=""
         for file in $input_files; do
-            decoded_input_files+=$(_translate_to_gvfs_path "$file")
-            decoded_input_files+=$FIELD_SEPARATOR
+            gio_path=$(_gio_translate_path "$file")
+            if [[ -n "$gio_path" ]]; then
+                decoded_input_files+="$gio_path"
+                decoded_input_files+=$FIELD_SEPARATOR
+            fi
         done
         input_files=$decoded_input_files
-
-        input_files=$(_str_collapse_char "$input_files" "$FIELD_SEPARATOR")
     else
-        input_files=$INPUT_FILES # Standard input.
-        input_files=$(_str_collapse_char "$input_files" "$FIELD_SEPARATOR")
+        input_files=$INPUT_FILES
     fi
+    input_files=$(_str_collapse_char "$input_files" "$FIELD_SEPARATOR")
 
     printf "%s" "$input_files"
 }
@@ -3531,6 +3463,42 @@ _get_files() {
 
     # Return the final processed file list.
     printf "%s" "$input_files"
+}
+
+# Function: _gio_translate_path
+#
+# Description:
+#   This function resolves an URI to a local path using GIO.
+#
+# Parameters:
+#   $1 (path): The URI or path to be resolved to a local path.
+_gio_translate_path() {
+    local path=$1
+    local gio_info=""
+    local local_path=""
+    local target_uri=""
+
+    gio_info=$(gio info -- "$path" 2>/dev/null)
+
+    # The input comes from a GVfs location ('sftp://', 'smb://').
+    local_path=$(grep --only-matching --perl-regexp \
+        "local path: \K.*" <<<"$gio_info")
+    if [[ -n "$local_path" ]]; then
+        printf "%s" "$local_path"
+        return 0
+    fi
+
+    # The input comes from a virtual location ('recent://', 'trash://').
+    target_uri=$(grep --only-matching --perl-regexp \
+        "standard::target-uri: \K.*" <<<"$gio_info")
+    [[ -z "$target_uri" ]] && return 1
+
+    local_path=$(_text_uri_decode "$target_uri")
+    if [[ -n "$local_path" ]]; then
+        printf "%s" "$local_path"
+        return 0
+    fi
+    return 1
 }
 
 # Function: _validate_file_mime
@@ -4290,9 +4258,7 @@ _text_sort() {
 #   - Output: "/home/user name/file name.txt"
 _text_uri_decode() {
     local uri_encoded=$1
-
-    uri_encoded=${uri_encoded//%/\\x}
-    uri_encoded=${uri_encoded//file:\/\//}
+    uri_encoded=$(sed "s|\w\+://||g; s|%|\\\\x|g" <<<"$uri_encoded")
 
     printf '%b' "$uri_encoded"
 }
