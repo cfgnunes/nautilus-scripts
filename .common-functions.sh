@@ -492,7 +492,7 @@ _run_in_sandbox() {
     shift 2
 
     if [[ "${SANDBOX_AVAILABLE:-}" != "true" ]]; then
-        LC_ALL=C HOME="$TEMP_DIR" TMPDIR="$TEMP_DIR" USER="sandbox" "$@"
+        LC_ALL=C.UTF-8 HOME="$TEMP_DIR" TMPDIR="$TEMP_DIR" USER="sandbox" "$@"
         return
     fi
 
@@ -512,7 +512,7 @@ _run_in_sandbox() {
     # Environment: pass only the variables that the binaries need.
     sandbox_args+=(
         --clearenv
-        --setenv LC_ALL "C"
+        --setenv LC_ALL "C.UTF-8"
         --setenv HOME "$TEMP_DIR"
         --setenv TMPDIR "$TEMP_DIR"
         --setenv USER "sandbox"
@@ -3954,7 +3954,7 @@ _get_file_encoding() {
     local filename=$1
     local std_output=""
 
-    std_output=$(LC_ALL=C file --dereference --brief --mime-encoding \
+    std_output=$(LC_ALL=C.UTF-8 file --dereference --brief --mime-encoding \
         -- "$filename" 2>/dev/null)
 
     if [[ "$std_output" == "cannot"* ]]; then
@@ -3975,7 +3975,7 @@ _get_file_mime() {
     local filename=$1
     local std_output=""
 
-    std_output=$(LC_ALL=C file --dereference --brief --mime-type \
+    std_output=$(LC_ALL=C.UTF-8 file --dereference --brief --mime-type \
         -- "$filename" 2>/dev/null)
 
     if [[ "$std_output" == "cannot"* ]]; then
@@ -4306,7 +4306,7 @@ _pkgx_in_sandbox() {
     local pkgx_cmd="$pkgx_dir/pkgx"
 
     if [[ "${SANDBOX_AVAILABLE:-}" != "true" ]]; then
-        LC_ALL=C "$pkgx_cmd" "$@"
+        LC_ALL=C.UTF-8 "$pkgx_cmd" "$@"
         return
     fi
 
@@ -4338,7 +4338,7 @@ _pkgx_in_sandbox() {
         --clearenv \
         --setenv HOME "$HOME" \
         --setenv PATH "${PATH:-}" \
-        --setenv LC_ALL C \
+        --setenv LC_ALL "C.UTF-8" \
         --bind-try "$HOME/.cache/pkgx" "$HOME/.cache/pkgx" \
         --bind-try "$HOME/.local/share/pkgx" "$HOME/.local/share/pkgx" \
         --bind-try "$HOME/.pkgx" "$HOME/.pkgx" \

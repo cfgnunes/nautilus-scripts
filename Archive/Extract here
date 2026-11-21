@@ -295,7 +295,7 @@ _get_command() {
         "application/octet-stream")
             # For generic binary files, try further identification.
             local file_information=""
-            file_information=$(LC_ALL=C file --dereference --brief \
+            file_information=$(LC_ALL=C.UTF-8 file --dereference --brief \
                 -- "$input_file" 2>/dev/null)
 
             case "${file_information,,}" in

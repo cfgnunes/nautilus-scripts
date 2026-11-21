@@ -58,7 +58,7 @@ _main_task() {
     local data_file=""
 
     _is_encrypted() {
-        LC_ALL=C gpg --batch --yes --list-packets "$1" 2>/dev/null |
+        LC_ALL=C.UTF-8 gpg --batch --yes --list-packets "$1" 2>/dev/null |
             grep -qF "encrypted"
     }
 
@@ -83,7 +83,7 @@ _main_task() {
             fi
         fi
 
-        packets=$(LC_ALL=C gpg --batch --yes --list-packets -- "$file" 2>/dev/null) || return 1
+        packets=$(LC_ALL=C.UTF-8 gpg --batch --yes --list-packets -- "$file" 2>/dev/null) || return 1
         grep -qF ":signature packet:" <<<"$packets" || return 1
         if grep -qE "^:(literal data|compressed|onepass_sig|encrypted)" <<<"$packets"; then
             return 1
@@ -108,17 +108,17 @@ _main_task() {
 
     # Run the main process.
     if _is_encrypted "$input_file"; then
-        std_output=$(LC_ALL=C gpg --batch --yes --status-fd=1 --decrypt \
+        std_output=$(LC_ALL=C.UTF-8 gpg --batch --yes --status-fd=1 --decrypt \
             --output /dev/null -- "$input_file" 2>&1)
     else
         if _is_detached_signature "$input_file"; then
             data_file=$(_detached_data_file "$input_file")
         fi
         if [[ -n "$data_file" ]]; then
-            std_output=$(LC_ALL=C gpg --batch --yes --status-fd=1 --verify -- \
+            std_output=$(LC_ALL=C.UTF-8 gpg --batch --yes --status-fd=1 --verify -- \
                 "$input_file" "$data_file" 2>&1)
         else
-            std_output=$(LC_ALL=C gpg --batch --yes --status-fd=1 --verify -- \
+            std_output=$(LC_ALL=C.UTF-8 gpg --batch --yes --status-fd=1 --verify -- \
                 "$input_file" 2>&1)
         fi
     fi
@@ -173,7 +173,7 @@ _main_task() {
 
     # Try to read packets to get missing information.
     if [[ -z "$key_id" || -z "$timestamp" ]]; then
-        std_output=$(LC_ALL=C gpg --list-packets -- "$input_file" 2>&1)
+        std_output=$(LC_ALL=C.UTF-8 gpg --list-packets -- "$input_file" 2>&1)
 
         if [[ -z "$key_id" ]]; then
             key_id=$(awk -F 'keyid ' '/keyid/ {print $2}' <<<"$std_output")

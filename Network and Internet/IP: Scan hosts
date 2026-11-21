@@ -123,14 +123,14 @@ _get_local_range() {
 
     if _command_exists "ifconfig"; then
         # 'ifconfig' from 'inetutils'.
-        ip=$(LC_ALL=C ifconfig 2>/dev/null |
+        ip=$(LC_ALL=C.UTF-8 ifconfig 2>/dev/null |
             sed "s|addr:||g" |
             grep --only-matching --perl-regexp "inet \K[0-9.]+" |
             grep -v "^127\." |
             head -n 1)
     else
         # 'hostname' from 'iputils'.
-        ip=$(LC_ALL=C hostname -I 2>/dev/null | awk '{print $1}')
+        ip=$(LC_ALL=C.UTF-8 hostname -I 2>/dev/null | awk '{print $1}')
     fi
 
     if [[ -z "$ip" ]]; then
