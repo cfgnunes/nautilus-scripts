@@ -69,12 +69,12 @@ _open_terminal() {
     local available_app=""
     # shellcheck disable=SC2034
     local -a apps=(
-        "ptyxis"
-        "gnome-terminal"
-        "kgx"
-        "konsole"
-        "xfce4-terminal"
-        "mate-terminal"
+        "ptyxis"         # GNOME default.
+        "gnome-terminal" # GNOME default (old).
+        "kgx"            # GNOME default (new).
+        "konsole"        # KDE default.
+        "mate-terminal"  # MATE default.
+        "xfce4-terminal" # XFCE default.
         "xterm"
         "kitty"
         "alacritty"

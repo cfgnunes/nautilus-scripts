@@ -2986,13 +2986,13 @@ _get_available_file_manager() {
     default_app=$(_xdg_get_default_app "inode/directory" "true")
 
     local -a apps=(
-        "nautilus"
-        "dolphin"
-        "nemo"
-        "caja"
-        "thunar"
-        "pcmanfm-qt"
-        "pcmanfm"
+        "nautilus"   # GNOME default.
+        "dolphin"    # KDE default.
+        "nemo"       # Cinnamon default.
+        "caja"       # MATE default.
+        "thunar"     # XFCE default.
+        "pcmanfm-qt" # LXQt default.
+        "pcmanfm"    # LXDE default.
     )
 
     # Step 1: Validate if the detected default application matches one of the

@@ -264,8 +264,11 @@ _compare_images() {
     local image_viewer=""
     # shellcheck disable=SC2034
     local -a apps=(
-        "loupe"
-        "eog"
+        "loupe"     # GNOME default.
+        "eog"       # GNOME default (old).
+        "gwenview"  # KDE default.
+        "xviewer"   # Cinnamon/MATE default.
+        "ristretto" # XFCE default.
     )
     image_viewer=$(_get_available_app "apps")
     if [[ -z "$image_viewer" ]]; then

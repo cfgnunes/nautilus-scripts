@@ -53,11 +53,11 @@ _open_app() {
         "subl"
         "codium"
         "geany"
-        "gnome-text-editor"
-        "gedit"
-        "kate"
-        "mousepad"
-        "xed"
+        "gnome-text-editor" # GNOME default.
+        "gedit"             # GNOME default (old).
+        "kate"              # KDE default.
+        "xed"               # Cinnamon/MATE default.
+        "mousepad"          # XFCE default.
     )
     available_app=$(_get_available_app "apps")
 
