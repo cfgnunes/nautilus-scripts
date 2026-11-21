@@ -53,13 +53,13 @@ _main_task() {
     # Run the main process.
     # Attempt 1: Try cloning using SSH as-is.
     local exit_code=0
-    std_output=$(git -c "$param" clone -q -- "$input_file" "$dir_name" 2>&1)
+    std_output=$(LC_ALL=C.UTF-8 git -c "$param" clone -q -- "$input_file" "$dir_name" 2>&1)
     exit_code=$?
 
     # Attempt 2: If the first attempt failed,
     # try SSH with '@ssh.' inserted in the host
     if ((exit_code != 0)) && [[ "$input_file" != *"@ssh."* ]]; then
-        std_output=$(git -c "$param" clone -q -- "${input_file/@/@ssh.}" "$dir_name" 2>&1)
+        std_output=$(LC_ALL=C.UTF-8 git -c "$param" clone -q -- "${input_file/@/@ssh.}" "$dir_name" 2>&1)
         exit_code=$?
     fi
 
@@ -68,7 +68,7 @@ _main_task() {
         # Convert SSH to HTTPS form.
         input_file=${input_file/@ssh./@}
         input_file=$(sed -E 's#git@([^:]+):([^/]+)/([^ ]+)#https://\1/\2/\3#g' <<<"$input_file")
-        std_output=$(git -c "$param" clone -q -- "$input_file" "$dir_name" 2>&1)
+        std_output=$(LC_ALL=C.UTF-8 git -c "$param" clone -q -- "$input_file" "$dir_name" 2>&1)
         exit_code=$?
     fi
 

@@ -76,13 +76,13 @@ _open_repository_website() {
 
         # Check if the selected directory is a Git repository.
         local top_level=""
-        top_level=$(git -C "$input_file" rev-parse --show-toplevel 2>&1)
+        top_level=$(LC_ALL=C.UTF-8 git -C "$input_file" rev-parse --show-toplevel 2>&1)
         _check_output "$?" "$top_level" "$input_file" "" || continue
 
         # Retrieve the URL of the remote 'origin' repository for the Git
         # repository.
         local git_url=""
-        git_url=$(git -C "$input_file" remote get-url origin 2>/dev/null)
+        git_url=$(LC_ALL=C.UTF-8 git -C "$input_file" remote get-url origin 2>/dev/null)
         _check_output "$?" "Could not get the url from the Git repository." \
             "$input_file" "" || continue
 
