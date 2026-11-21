@@ -34,8 +34,8 @@ _main_task() {
 
     local tag_artist=""
     local tag_title=""
-    tag_artist=$(grep -m1 "^Performer:" <<<"$std_output" | cut -d ":" -f 2-)
-    tag_title=$(grep -m1 "^Title:" <<<"$std_output" | cut -d ":" -f 2-)
+    tag_artist=$(grep -o -P -m1 "^Performer:\K.*" <<<"$std_output")
+    tag_title=$(grep -o -P -m1 "^Title:\K.*" <<<"$std_output")
 
     # EXT4 filenames cannot contain '/'.
     tag_artist=${tag_artist//\//, }

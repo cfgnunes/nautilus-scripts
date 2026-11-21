@@ -41,10 +41,10 @@ _main_task() {
     local bit_rate=""
     local sampling_rate=""
     local channels=""
-    mode=$(grep -m1 "^BitRate_Mode:" <<<"$std_output" | cut -d ":" -f 2-)
-    bit_rate=$(grep -m1 "^BitRate:" <<<"$std_output" | cut -d ":" -f 2-)
-    sampling_rate=$(grep -m1 "^SamplingRate:" <<<"$std_output" | cut -d ":" -f 2-)
-    channels=$(grep -m1 "^Channel" <<<"$std_output" | cut -d ":" -f 2-)
+    mode=$(grep -o -P -m1 "^BitRate_Mode:\K.*" <<<"$std_output")
+    bit_rate=$(grep -o -P -m1 "^BitRate:\K.*" <<<"$std_output")
+    sampling_rate=$(grep -o -P -m1 "^SamplingRate:\K.*" <<<"$std_output")
+    channels=$(grep -o -P -m1 "^Channel[^:]+:\K.*" <<<"$std_output")
 
     _storage_text_write_ln "$mode$FIELD_SEPARATOR$bit_rate$FIELD_SEPARATOR$sampling_rate$FIELD_SEPARATOR$channels$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
 }

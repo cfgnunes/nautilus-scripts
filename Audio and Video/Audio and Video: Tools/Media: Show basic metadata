@@ -41,10 +41,10 @@ _main_task() {
     local tag_album=""
     local tag_artist=""
     local tag_title=""
-    tag_duration=$(grep -m1 "^Duration:" <<<"$std_output" | cut -d ":" -f 2- | sed "s|\.[0-9][0-9]*$||")
-    tag_album=$(grep -m1 "^Album:" <<<"$std_output" | cut -d ":" -f 2-)
-    tag_artist=$(grep -m1 "^Performer:" <<<"$std_output" | cut -d ":" -f 2-)
-    tag_title=$(grep -m1 "^Title:" <<<"$std_output" | cut -d ":" -f 2-)
+    tag_duration=$(grep -o -P -m1 "^Duration:\K.*" <<<"$std_output" | sed "s|\.[0-9][0-9]*$||")
+    tag_album=$(grep -o -P -m1 "^Album:\K.*" <<<"$std_output")
+    tag_artist=$(grep -o -P -m1 "^Performer:\K.*" <<<"$std_output")
+    tag_title=$(grep -o -P -m1 "^Title:\K.*" <<<"$std_output")
 
     _storage_text_write_ln "$tag_duration$FIELD_SEPARATOR$tag_album$FIELD_SEPARATOR$tag_artist$FIELD_SEPARATOR$tag_title$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
 }
