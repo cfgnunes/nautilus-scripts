@@ -50,13 +50,17 @@ _main_task() {
     # -------------------------------------------------------------------------
     # Step 2: Clean working directory.
     # Remove untracked and ignored files/directories,
-    # then discard local changes.
+    # discard local changes, and clear all stashes.
     # -------------------------------------------------------------------------
     std_output=$(LC_ALL=C.UTF-8 git clean -xffd 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Discard all local changes (reset to last committed state).
     std_output=$(LC_ALL=C.UTF-8 git reset --hard 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
+
+    # Clear all stashes.
+    std_output=$(LC_ALL=C.UTF-8 git stash clear 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # -------------------------------------------------------------------------
@@ -145,17 +149,6 @@ _main_task() {
             _check_output "$?" "$std_output" "$input_file" "" || return 1
         fi
     done
-
-    # -------------------------------------------------------------------------
-    # Step 8: Expire all reflog entries and run garbage collection.
-    # -------------------------------------------------------------------------
-    # Expire all reflog entries immediately (--expire=now).
-    std_output=$(LC_ALL=C.UTF-8 git reflog expire --expire=now --all 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
-
-    # Run garbage collection to prune unnecessary files and optimize storage.
-    std_output=$(LC_ALL=C.UTF-8 git gc --prune=all 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Return to the previous directory.
     _directory_pop || return 1
