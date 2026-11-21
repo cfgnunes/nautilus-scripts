@@ -91,6 +91,9 @@ msgstr "确定"
 msgid "Cancel"
 msgstr "取消"
 
+msgid "Save results..."
+msgstr "保存结果..."
+
 msgid "(Empty)"
 msgstr "（空）"
 

@@ -91,6 +91,9 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Mégse"
 
+msgid "Save results..."
+msgstr "Eredmények mentése..."
+
 msgid "(Empty)"
 msgstr "(Üres)"
 

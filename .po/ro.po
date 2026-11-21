@@ -91,6 +91,9 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Anulare"
 
+msgid "Save results..."
+msgstr "Salvează rezultatele..."
+
 msgid "(Empty)"
 msgstr "(Gol)"
 

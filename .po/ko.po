@@ -91,6 +91,9 @@ msgstr "확인"
 msgid "Cancel"
 msgstr "취소"
 
+msgid "Save results..."
+msgstr "결과 저장..."
+
 msgid "(Empty)"
 msgstr "(비어 있음)"
 

@@ -91,6 +91,9 @@ msgstr "Tamam"
 msgid "Cancel"
 msgstr "İptal"
 
+msgid "Save results..."
+msgstr "Sonuçları kaydet..."
+
 msgid "(Empty)"
 msgstr "(Boş)"
 

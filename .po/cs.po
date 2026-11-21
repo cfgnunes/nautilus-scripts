@@ -91,6 +91,9 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Zrušit"
 
+msgid "Save results..."
+msgstr "Uložit výsledky..."
+
 msgid "(Empty)"
 msgstr "(Prázdné)"
 

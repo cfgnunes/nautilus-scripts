@@ -91,6 +91,9 @@ msgstr "Гаразд"
 msgid "Cancel"
 msgstr "Скасувати"
 
+msgid "Save results..."
+msgstr "Зберегти результати..."
+
 msgid "(Empty)"
 msgstr "(Порожньо)"
 

@@ -91,6 +91,9 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "キャンセル"
 
+msgid "Save results..."
+msgstr "結果を保存..."
+
 msgid "(Empty)"
 msgstr "(空)"
 

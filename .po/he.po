@@ -91,6 +91,9 @@ msgstr "אישור"
 msgid "Cancel"
 msgstr "ביטול"
 
+msgid "Save results..."
+msgstr "שמור תוצאות..."
+
 msgid "(Empty)"
 msgstr "(ריק)"
 

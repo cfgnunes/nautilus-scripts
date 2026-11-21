@@ -91,6 +91,9 @@ msgstr "ठीक है"
 msgid "Cancel"
 msgstr "रद्द करें"
 
+msgid "Save results..."
+msgstr "परिणाम सहेजें..."
+
 msgid "(Empty)"
 msgstr "(खाली)"
 

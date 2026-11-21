@@ -91,6 +91,9 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Hủy"
 
+msgid "Save results..."
+msgstr "Lưu kết quả..."
+
 msgid "(Empty)"
 msgstr "(Trống)"
 

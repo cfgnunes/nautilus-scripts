@@ -91,6 +91,9 @@ msgstr "კარგი"
 msgid "Cancel"
 msgstr "გაუქმება"
 
+msgid "Save results..."
+msgstr "შედეგების შენახვა..."
+
 msgid "(Empty)"
 msgstr "(ცარიელი)"
 

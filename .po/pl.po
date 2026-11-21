@@ -91,6 +91,9 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Anuluj"
 
+msgid "Save results..."
+msgstr "Zapisz wyniki..."
+
 msgid "(Empty)"
 msgstr "(Pusty)"
 

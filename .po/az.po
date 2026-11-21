@@ -91,6 +91,9 @@ msgstr "Oldu"
 msgid "Cancel"
 msgstr "Ləğv et"
 
+msgid "Save results..."
+msgstr "Nəticələri saxla..."
+
 msgid "(Empty)"
 msgstr "(Boş)"
 
