@@ -90,6 +90,9 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+msgid "Save results..."
+msgstr ""
+
 msgid "(Empty)"
 msgstr ""
 

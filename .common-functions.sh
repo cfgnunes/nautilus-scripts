@@ -2009,6 +2009,8 @@ _is_directory_empty() {
 #
 # Options in '$parameters':
 #   - "par_multiple": Enable multiple selection ('true' or 'false').
+#   - "par_save": Select a destination for saving ('true' or 'false').
+#   - "par_filename": Suggested filename when saving.
 #   - "par_select_type": Specifies the type of items to select.
 #      Supported values:
 #      - "file" (default): Filters files.
@@ -2018,13 +2020,18 @@ _display_file_selection_box() {
     local title=${1:-""}
     local file_filter=${2:-""}
     local parameters=${3:-""}
-    local selected_items=""
-    local multiple_flag=""
     local directory_flag=""
+    local filename_flag=""
+    local multiple_flag=""
+    local save_flag=""
+    local selected_items=""
+    local selection_status=0
     local msg=""
 
     # Default values for input parameters.
+    local par_filename=""
     local par_multiple="false"
+    local par_save="false"
     local par_select_type="file"
 
     # Evaluate the values from the '$parameters' variable.
@@ -2041,31 +2048,46 @@ _display_file_selection_box() {
     [[ -z "$title" ]] && title=$(_get_script_name)
     [[ "$par_multiple" == "true" ]] && multiple_flag="--multiple"
     [[ "$par_select_type" != "file" ]] && directory_flag="--directory"
+    [[ "$par_save" == "true" ]] && save_flag="--save"
+    [[ -n "$par_filename" ]] && filename_flag="--filename=$par_filename"
 
     _display_lock
     if _command_exists "zenity"; then
         # FIXME: Zenity cannot select files and directories in the same dialog.
         # See: https://gitlab.gnome.org/GNOME/zenity/-/issues/116
         selected_items=$(zenity --title "$title" \
-            --file-selection $multiple_flag $directory_flag \
+            --file-selection $multiple_flag $directory_flag $save_flag \
+            ${filename_flag:+"$filename_flag"} \
+            ${save_flag:+--confirm-overwrite} \
             ${file_filter:+--file-filter="$file_filter"} \
-            --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
+            --separator="$FIELD_SEPARATOR" 2>/dev/null) || selection_status=$?
     elif _command_exists "yad"; then
         selected_items=$(yad --title "$title" \
             --button="${btn_cancel}:1" --button="${btn_ok}:0" \
-            --file $multiple_flag $directory_flag \
+            --file $multiple_flag $directory_flag $save_flag \
+            ${filename_flag:+"$filename_flag"} \
+            ${save_flag:+--confirm-overwrite} \
             ${file_filter:+--file-filter="$file_filter"} \
-            --separator="$FIELD_SEPARATOR" 2>/dev/null) || _exit_script
+            --separator="$FIELD_SEPARATOR" 2>/dev/null) || selection_status=$?
     fi
     _display_unlock
 
-    selected_items=$(_str_collapse_char "$selected_items" "$FIELD_SEPARATOR")
-    if [[ -z "$selected_items" ]]; then
-        msg="$(_i18n 'No items were selected!')"
-        _display_error_box "$msg"
-        _exit_script
+    if [[ "$par_save" == "true" ]]; then
+        if ((selection_status != 0)); then
+            return 1
+        fi
+        [[ -n "$selected_items" ]] || return 1
+    else
+        selected_items=$(_str_collapse_char "$selected_items" "$FIELD_SEPARATOR")
+        if [[ -z "$selected_items" ]]; then
+            msg="$(_i18n 'No items were selected!')"
+            _display_error_box "$msg"
+            _exit_script
+        fi
     fi
+
     printf "%s" "$selected_items"
+    return 0
 }
 
 # Function: _display_error_box
@@ -2639,7 +2661,7 @@ _display_question_box() {
 #
 # Description:
 #   This function displays a message to the user in a text box, either in the
-#   terminal or using a GUI dialog.
+#   terminal or using a GUI dialog. Zenity and Yad allow exporting the results.
 #
 # Parameters:
 #   $1 (message): The message to display.
@@ -2656,8 +2678,11 @@ _display_text_box() {
 
     local btn_ok=""
     btn_ok="$(_i18n 'OK')"
+    local btn_export=""
+    btn_export="$(_i18n 'Save results...')"
     local btn_cancel=""
     btn_cancel="$(_i18n 'Cancel')"
+    local export_requested="false"
 
     _display_lock
     if ! _is_gui_session; then
@@ -2666,15 +2691,17 @@ _display_text_box() {
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
         zenity --title "$(_get_script_name)" \
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-            --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
+            --cancel-label="${btn_cancel}" --ok-label="${btn_export}" \
             --text-info --no-wrap \
             --filename="$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
+        export_requested="true"
     elif _command_exists "yad"; then
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
         yad --title "$(_get_script_name)" --center \
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-            --button="${btn_cancel}:1" --button="${btn_ok}:0" --text-info \
+            --button="${btn_cancel}:1" --button="${btn_export}:0" --text-info \
             --filename="$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
+        export_requested="true"
     elif _command_exists "xmessage"; then
         printf "%s" "$message" >"$TEMP_DATA_TEXT_BOX"
         xmessage -title "$(_get_script_name)" \
@@ -2682,6 +2709,26 @@ _display_text_box() {
             -file "$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
     fi
     _display_unlock
+
+    [[ "$export_requested" == "true" ]] || return 0
+
+    # Display the file selection box for exporting results.
+    local save_status=0
+    local save_path=""
+    save_path=$(_display_file_selection_box "$btn_export" "" \
+        'par_save=true; par_filename="Results.txt"') || save_status=$?
+
+    # If the user selected a save path, copy the text box content to it.
+    if ((save_status == 0)) && [[ -n "$save_path" ]]; then
+        cp -a -- "$TEMP_DATA_TEXT_BOX" "$save_path"
+        local output_dir=""
+        local msg=""
+        local dir_label=""
+        output_dir=$(dirname "$save_path")
+        dir_label=$(_str_human_readable_path "$output_dir")
+        msg="$(_i18n 'Finished! The output files are in:')"
+        _display_info_box "$msg $dir_label" "$output_dir"
+    fi
 }
 
 # Function: _display_result_box
