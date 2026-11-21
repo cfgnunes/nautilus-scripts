@@ -4147,29 +4147,6 @@ _str_collapse_char() {
     sed "$sed_p1; $sed_p2; $sed_p3" <<<"$input_str"
 }
 
-# Function: _str_sort
-#
-# Description:
-#   This function sorts elements from a string based on a given separator.
-#
-# Parameters:
-#   $1 (input_str): The input string containing elements to be sorted.
-#   $2 (separator): The character used to separate elements in the string.
-#   $3 (unique): Optional. Flag ("true" or "false") to remove duplicates.
-_str_sort() {
-    local input_str=$1
-    local separator=$2
-    local unique=$3
-
-    local unique_opt=""
-    [[ "$unique" == "true" ]] && unique_opt="--unique"
-
-    input_str=$(printf "%s" "$input_str" | tr "$separator" "\0" |
-        sort --zero-terminated --version-sort $unique_opt |
-        tr "\0" "$separator")
-    _str_collapse_char "$input_str" "$separator"
-}
-
 # Function: _str_human_readable_path
 #
 # Description:
@@ -4194,6 +4171,29 @@ _str_human_readable_path() {
     output_path=${output_path#./}
 
     printf "%s" "$output_path"
+}
+
+# Function: _str_sort
+#
+# Description:
+#   This function sorts elements from a string based on a given separator.
+#
+# Parameters:
+#   $1 (input_str): The input string containing elements to be sorted.
+#   $2 (separator): The character used to separate elements in the string.
+#   $3 (unique): Optional. Flag ("true" or "false") to remove duplicates.
+_str_sort() {
+    local input_str=$1
+    local separator=$2
+    local unique=$3
+
+    local unique_opt=""
+    [[ "$unique" == "true" ]] && unique_opt="--unique"
+
+    input_str=$(printf "%s" "$input_str" | tr "$separator" "\0" |
+        sort --zero-terminated --version-sort $unique_opt |
+        tr "\0" "$separator")
+    _str_collapse_char "$input_str" "$separator"
 }
 
 # Function: _text_remove_empty_lines
