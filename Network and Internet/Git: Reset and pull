@@ -113,24 +113,16 @@ _main_task() {
     std_output=$(LC_ALL=C.UTF-8 git reset --hard "origin/$branch" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
-    # -------------------------------------------------------------------------
-    # Step 6: Pull from origin using a merge (not a rebase).
-    # On conflicts, '--strategy-option theirs' keeps the remote version.
-    # Skip if already synchronized with remote to optimize execution.
-    # -------------------------------------------------------------------------
-    local local_commit=""
-    local remote_commit=""
+    # Update submodules to the commits recorded by the remote branch.
+    std_output=$(LC_ALL=C.UTF-8 git submodule update --init --recursive --force 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
 
-    local_commit=$(LC_ALL=C.UTF-8 git rev-parse HEAD)
-    remote_commit=$(LC_ALL=C.UTF-8 git rev-parse "origin/$branch")
-
-    if [[ "$local_commit" != "$remote_commit" ]]; then
-        std_output=$(LC_ALL=C.UTF-8 git pull origin "$branch" --rebase=false --strategy-option theirs 2>&1)
-        _check_output "$?" "$std_output" "$input_file" "" || return 1
-    fi
+    # Discard local changes and remove untracked and ignored files in submodules.
+    std_output=$(LC_ALL=C.UTF-8 git submodule foreach --recursive 'git reset --hard && git clean -xffd' 2>&1)
+    _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # -------------------------------------------------------------------------
-    # Step 7: Delete local branches that are not on the remote.
+    # Step 6: Delete local branches that are not on the remote.
     # Names in skip_branches (desenv, develop, main, master) are never deleted.
     # -------------------------------------------------------------------------
     local local_branches=""
