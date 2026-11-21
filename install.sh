@@ -180,7 +180,7 @@ _main() {
         _echo "$(_i18n 'Select the options (<SPACE> to check, <ENTER> to confirm):')"
 
         # Display the interactive menu and capture user selections.
-        _multiselect_menu menu_selected menu_labels menu_defaults
+        _multiselect_menu menu_selected menu_labels menu_defaults || return 1
     else
         _echo_info "$(_i18n 'Installing in non-interactive mode...')"
         menu_selected=("${menu_defaults[@]}")
@@ -212,7 +212,7 @@ _main() {
     if [[ "$OPT_CHOOSE_CATEGORIES" == "true" ]]; then
         _echo ""
         _echo "$(_i18n 'Select the options (<SPACE> to check, <ENTER> to confirm):')"
-        _multiselect_menu cat_selected cat_dirs_translated cat_defaults
+        _multiselect_menu cat_selected cat_dirs_translated cat_defaults || return 1
     fi
 
     # Step 1: Check for basic dependencies.

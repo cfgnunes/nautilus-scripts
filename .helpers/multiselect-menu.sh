@@ -1,177 +1,178 @@
 #!/usr/bin/env bash
 
-# Code based on: https://unix.stackexchange.com/a/673436
-# Version: 2026-09-10
+# Code based on:
+#   https://github.com/cfgnunes/nautilus-scripts
+#   https://unix.stackexchange.com/a/673436
+# Version: 2026-11-21
 
 # Keyboard commands:
-#  <enter>: Confirms the current selection of options.
-#  <space>: Toggles the selection status of the currently highlighted option.
-#  <a>: Toggles all available options.
-#  <q> or <ctrl>+<c>: Terminates the process.
-#  <up> or <left>: Moves the highlight cursor one option up.
-#  <down> or <right>: Moves the highlight cursor one option down.
+#                       <enter>: Confirms the current selection.
+#                       <space>: Toggles the selected option.
+#             <a> or <ctrl>+<a>: Toggles all options.
+#                  <q> or <esc>: Exits the menu.
+#                    <ctrl>+<c>: Exits the menu (interrupt signal).
+# <up>, <left> or <shift>+<tab>: Moves the cursor up one option.
+#      <down>, <right> or <tab>: Moves the cursor down one option.
+#                        <home>: Moves the cursor to the first option.
+#                         <end>: Moves the cursor to the last option.
 
 _multiselect_menu() {
-    local return_value=$1
+    local -n _result=$1
     local -n _options=$2
     local -n _defaults=$3
+    local count=${#_options[@]}
 
-    # Turn off echoing of characters typed on the terminal.
-    stty -echo
+    # Ensure that the terminal is interactive.
+    [[ -t 0 ]] || return 1
 
-    # Helpers for console print format and control.
-    __cursor_blink_on() {
-        printf "\033[?25h"
+    # Helper functions.
+    __abort() {
+        __cursor_to "$last_row"
+        __finish
+        exit "$1"
     }
-    __cursor_blink_off() {
-        printf "\033[?25l"
+    __finish() {
+        __restore_terminal
+        trap - EXIT TERM HUP INT
+        eval "$old_traps"
+    }
+    __restore_terminal() {
+        printf "\033[?25h" # Show the cursor.
+        stty "$old_stty" 2>/dev/null
     }
     __cursor_to() {
-        local row=$1
-        local col=${2:-1}
-
-        printf "\033[%s;%sH" "$row" "$col"
+        printf "\033[%s;%sH" "$1" "${2:-1}"
     }
     __get_cursor_row() {
         local row=""
-        local col=""
 
-        IFS=";" read -rs -d "R" -p $'\E[6n' row col
+        IFS=";" read -rs -d "R" -p $'\E[6n' row _ || return 1
         printf "%s" "${row#*[}"
     }
-    __get_keyboard_command() {
+    __get_key_cmd() {
         local key=""
 
-        IFS="" read -rs -n 1 key &>/dev/null
+        IFS="" read -rs -n 1 key &>/dev/null || return 1
         case "$key" in
-        "") printf "enter" ;;
-        " ") printf "toggle_active" ;;
-        "a" | "A") printf "toggle_all" ;;
-        "q" | "Q") printf "quit" ;;
-        $'\033')
-            IFS="" read -rs -n 2 key &>/dev/null
+        "") printf "confirm" ;;                     # <enter>
+        " ") printf "toggle_opt" ;;                 # <space>
+        $'\t') printf "down" ;;                     # <tab>
+        "a" | "A" | $'\x01') printf "toggle_all" ;; # <a> or <ctrl>+<a>
+        "q" | "Q") printf "quit" ;;                 # <q>
+        $'\033')                                    # <esc>
+            key=""
+            IFS="" read -rs -n 2 -t 0.05 key &>/dev/null
             case "$key" in
-            "[A" | "[D") printf "up" ;;
-            "[B" | "[C") printf "down" ;;
+            "") printf "quit" ;;               # <esc>
+            "[A" | "[D" | "[Z") printf "up" ;; # <up>, <left> or <shift>+<tab>
+            "[B" | "[C") printf "down" ;;      # <down> or <right>
+            "[H") printf "home" ;;             # <home>
+            "[F") printf "end" ;;              # <end>
             esac
             ;;
         esac
     }
-    # shellcheck disable=SC2317
-    __on_ctrl_c() {
-        __cursor_to "$last_row"
-        __cursor_blink_on
-        stty echo
-        exit 1
+    __print_options() {
+        local i_option=$1
+        local prefix=""
+
+        local i
+        for i in "${!_options[@]}"; do
+            prefix="[ ]"
+            [[ ${option[i]} == "true" ]] && prefix=$'[\033[0;32m*\033[0m]'
+
+            __cursor_to "$((start_row + i))"
+            if ((i == i_option)); then
+                printf "%s \033[7m%s\033[27m" "$prefix" "${_options[i]}"
+            else
+                printf "%s %s" "$prefix" "${_options[i]}"
+            fi
+        done
+    }
+    __set_all_option() {
+        local i=""
+        for i in "${!option[@]}"; do
+            option[i]=$1
+        done
     }
 
-    local start_row=""
-    local last_row=""
+    # Save the original terminal state to restore later.
+    local old_stty=""
+    local old_traps=""
+    old_stty=$(stty -g)
+    old_traps=$(trap -p EXIT TERM HUP INT)
 
-    # Ensure the cursor is back on upon a ctrl+c during read -s.
-    trap "__on_ctrl_c" SIGINT
+    # Turn off echoing of characters typed on the terminal.
+    stty -echo
+
+    local last_row=""
+    local start_row=""
+
+    # Ensure the terminal is restored on ctrl+c, kill, hangup or any exit.
+    trap "__abort 130" INT
+    trap "__abort 143" TERM
+    trap "__abort 129" HUP
+    trap "__restore_terminal" EXIT
 
     # Process the 'defaults' parameter.
-    local -a selected=()
-    local index_defaults=0
-    for index_defaults in "${!_options[@]}"; do
-        if [[ ${_defaults[index_defaults]+_} ]]; then
-            if [[ ${_defaults[index_defaults]} == "false" ]]; then
-                selected+=("false")
-            else
-                selected+=("true")
-            fi
-        else
-            selected+=("true")
-        fi
+    local -a option=()
+    local i=""
+    for i in "${!_options[@]}"; do
+        option+=("${_defaults[i]:-false}")
         printf "\n"
     done
 
     # Determine the current screen position for overwriting the options.
-    last_row=$(__get_cursor_row)
-    start_row=$((last_row - ${#_options[@]}))
+    printf '\033[6n'
+    if ! last_row=$(__get_cursor_row); then
+        __finish
+        return 1
+    fi
+    start_row=$((last_row - count))
 
-    # Print options by overwriting the last lines.
-    __print_options() {
-        local index_active=$1
-
-        local index_option=0
-        for index_option in "${!_options[@]}"; do
-            # Set the prefix "[ ]" or "[*]".
-            local prefix="[ ]"
-            if [[ ${selected[index_option]} == "true" ]]; then
-                prefix="[\033[0;32m*\033[0m]"
-            fi
-
-            # Print the prefix with the option in the menu.
-            __cursor_to "$((start_row + index_option))"
-            local option="${_options[index_option]}"
-            if ((index_option == index_active)); then
-                # Print the active option.
-                printf "$prefix \033[7m%s\033[27m" "$option"
-            else
-                # Print the inactive option.
-                printf "$prefix %s" "$option"
-            fi
-        done
-    }
-
-    # The menu's main loop.
-    __cursor_blink_off
-    local active=0
+    # Main loop of the menu.
+    i=0
+    local key_cmd=""
+    printf "\033[?25l" # Hide the cursor.
     while true; do
-        __print_options "$active"
+        __print_options "$i"
 
-        # User key control.
-        case $(__get_keyboard_command) in
-        "enter")
+        if ! key_cmd=$(__get_key_cmd); then
+            __cursor_to "$last_row"
+            __finish
+            return 1
+        fi
+
+        case $key_cmd in
+        "confirm")
             __print_options -1
             break
             ;;
-        "toggle_active")
-            if [[ ${selected[active]} == "true" ]]; then
-                selected[active]="false"
+        "toggle_opt")
+            if [[ ${option[i]} == "true" ]]; then
+                option[i]="false"
             else
-                selected[active]="true"
+                option[i]="true"
             fi
             ;;
         "toggle_all")
-            local index_selected=0
-            if [[ ${selected[active]} == "true" ]]; then
-                for index_selected in "${!selected[@]}"; do
-                    selected[index_selected]="false"
-                done
+            if [[ ${option[i]} == "true" ]]; then
+                __set_all_option "false"
             else
-                for index_selected in "${!selected[@]}"; do
-                    selected[index_selected]="true"
-                done
+                __set_all_option "true"
             fi
             ;;
-        "quit")
-            __on_ctrl_c
-            ;;
-        "up")
-            active=$((active - 1))
-            if [[ $active -lt 0 ]]; then
-                active=$((${#_options[@]} - 1))
-            fi
-            ;;
-        "down")
-            active=$((active + 1))
-            if [[ $active -ge ${#_options[@]} ]]; then
-                active=0
-            fi
-            ;;
+        "quit") __abort 1 ;;
+        "up") i=$(((i - 1 + count) % count)) ;;
+        "down") i=$(((i + 1) % count)) ;;
+        "home") i=0 ;;
+        "end") i=$((count - 1)) ;;
         esac
     done
 
     # Set the cursor position back to normal.
     __cursor_to "$last_row"
-    __cursor_blink_on
-    stty echo
+    __finish
 
-    eval "$return_value"='("${selected[@]}")'
-
-    # Unset the trap function.
-    trap "" SIGINT
+    _result=("${option[@]}")
 }
