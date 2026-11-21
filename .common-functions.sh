@@ -2667,6 +2667,7 @@ _display_question_box() {
 #   $1 (message): The message to display.
 _display_text_box() {
     local message=$1
+    local font="Monospace"
 
     _close_wait_box
     _logs_consolidate ""
@@ -2692,7 +2693,7 @@ _display_text_box() {
         zenity --title "$(_get_script_name)" \
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --cancel-label="${btn_cancel}" --ok-label="${btn_export}" \
-            --text-info --no-wrap \
+            --text-info --no-wrap --font="$font" \
             --filename="$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
         export_requested="true"
     elif _command_exists "yad"; then
@@ -2700,6 +2701,7 @@ _display_text_box() {
         yad --title "$(_get_script_name)" --center \
             --no-markup --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
             --button="${btn_cancel}:1" --button="${btn_export}:0" --text-info \
+            --fontname="$font" \
             --filename="$TEMP_DATA_TEXT_BOX" &>/dev/null || _exit_script
         export_requested="true"
     elif _command_exists "xmessage"; then
