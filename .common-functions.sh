@@ -3145,7 +3145,7 @@ _xdg_get_default_app() {
     local default_app=""
     local msg=""
 
-    # Get '.desktop' file from xdg-mime.
+    # Get '.desktop' file from 'xdg-mime'.
     desktop_file=$(xdg-mime query default "$mime" 2>/dev/null)
     if [[ -z "$desktop_file" ]]; then
         if [[ "$quiet" == "true" ]]; then
