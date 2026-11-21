@@ -3172,9 +3172,7 @@ _xdg_get_default_app() {
     for xdg_dir in $xdg_dirs; do
         desktop_path="$xdg_dir/$desktop_file"
         if [[ -f "$desktop_path" ]]; then
-            # Extract Exec line, normalize to get only the binary.
-            default_app=$(grep -m1 "^Exec=" "$desktop_path" |
-                sed "s|Exec=||" | cut -d " " -f 1)
+            default_app=$(grep -o -P -m1 "^Exec=\K[^ ]+" "$desktop_path")
 
             if _command_exists "$default_app"; then
                 break
