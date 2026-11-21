@@ -3478,6 +3478,12 @@ _gio_translate_path() {
 
     gio_info=$(gio info -- "$path" 2>/dev/null)
 
+    # If GIO fails to retrieve information, return the original path.
+    if [[ -z "$gio_info" ]]; then
+        printf "%s" "$path"
+        return 1
+    fi
+
     # The input comes from a GVfs location ('sftp://', 'smb://').
     local_path=$(grep --only-matching --perl-regexp \
         "local path: \K.*" <<<"$gio_info")
@@ -3496,6 +3502,9 @@ _gio_translate_path() {
         printf "%s" "$local_path"
         return 0
     fi
+
+    # If all else fails, return the original path.
+    printf "%s" "$path"
     return 1
 }
 
