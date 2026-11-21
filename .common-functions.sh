@@ -3013,8 +3013,8 @@ _get_available_file_manager() {
         return 0
     fi
 
-    # Step 3: If 'xdg-mime' returned something but it's not in the predefined
-    # list, return it anyway as a last attempt.
+    # Step 3: If XDG MIME database returned something but it's not in the
+    # predefined list, return it anyway as a last attempt.
     if [[ -n "$default_app" ]]; then
         printf "%s" "$default_app"
         return 0
@@ -3127,7 +3127,7 @@ _unset_global_variables_file_manager() {
 #
 # Description:
 #   This function retrieves the default application associated with a specific
-#   MIME type using the 'xdg-mime' command.
+#   MIME type using XDG MIME database.
 #
 # Parameters:
 #   $1 (mime): MIME type (e.g., 'application/pdf', 'image/png').
@@ -3145,7 +3145,7 @@ _xdg_get_default_app() {
     local default_app=""
     local msg=""
 
-    # Get '.desktop' file from 'xdg-mime'.
+    # Get '.desktop' file from XDG MIME database.
     desktop_file=$(xdg-mime query default "$mime" 2>/dev/null)
     if [[ -z "$desktop_file" ]]; then
         if [[ "$quiet" == "true" ]]; then
