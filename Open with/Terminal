@@ -49,17 +49,22 @@ _open_app() {
     # when '$input_files' is unquoted (IFS splits only on '$FIELD_SEPARATOR').
     set -f
     for input_file in $input_files; do
-        # Detect if it's a remote 'sftp' path.
+        # Detect remote SFTP paths from GVfs, KIO FUSE, or a URI.
         if [[ "$input_file" == *"sftp:"* ]]; then
             local remote_host=""
             local remote_path=""
             if [[ "$input_file" =~ ^/run/user/[0-9]+/gvfs/sftp:host=([^/]+)(/.*)?$ ]]; then
-                # Case 1: GVFS mount format,
+                # Case 1: GVfs mount format,
                 # such as: /run/user/.../gvfs/sftp:host=host/path.
                 remote_host="${BASH_REMATCH[1]}"
                 remote_path="${BASH_REMATCH[2]}"
+            elif [[ "$input_file" =~ ^/run/user/[0-9]+/kio-fuse-[^/]+/sftp/([^/]+)(/.*)?$ ]]; then
+                # Case 2: KIO FUSE mount format,
+                # such as: /run/user/.../kio-fuse-.../sftp/user@host/path.
+                remote_host="${BASH_REMATCH[1]}"
+                remote_path="${BASH_REMATCH[2]}"
             elif [[ "$input_file" =~ ^sftp://([^/]+)/?(.*)$ ]]; then
-                # Case 2: URI format,
+                # Case 3: URI format,
                 # such as: sftp://host/path.
                 remote_host="${BASH_REMATCH[1]}"
                 remote_path="/${BASH_REMATCH[2]}"
