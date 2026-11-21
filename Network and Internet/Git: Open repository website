@@ -93,7 +93,7 @@ _open_repository_website() {
 
         # If a valid web URL was generated, open it in the default web browser.
         if [[ -n "$web_url" ]]; then
-            xdg-open "$web_url"
+            xdg-open "$web_url" &>/dev/null &
         else
             local msg=""
             msg="$(_i18n 'No remote URL found.')"
