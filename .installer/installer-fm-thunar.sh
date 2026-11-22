@@ -79,6 +79,12 @@ _install_actions_thunar() {
         } | _tee_file "$menu_file"
     fi
 
+    # Restore a previously created backup of custom actions, if available,
+    # before updating the file with new custom actions.
+    if [[ -f "$menu_file.bak" ]]; then
+        cp --force -- "$menu_file.bak" "$menu_file"
+    fi
+
     # -------------------------------------------------------------------------
     # Update the file "~/.config/Thunar/uca.xml".
     # -------------------------------------------------------------------------
