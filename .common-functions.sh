@@ -2777,9 +2777,9 @@ _display_result_box() {
 #
 # Parameters:
 #   $1 (open_delay): Optional. The delay (in seconds) before the wait box
-#      is shown. Defaults to 2 seconds if not provided.
+#      is shown. Defaults to 1.5 seconds if not provided.
 _display_wait_box() {
-    local open_delay=${1:-"2"}
+    local open_delay=${1:-"1.5"}
     local msg=""
     msg="$(_i18n 'Running the task. Please wait...')"
 
