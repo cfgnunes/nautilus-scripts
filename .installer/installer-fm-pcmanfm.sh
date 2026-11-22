@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+# =============================================================================
+# Project: Enhanced File Manager Actions
+# Description: Installer functions for PCManFM and PCManFM-Qt.
+# Sourced by 'install.sh'. Do not run directly.
+# =============================================================================
+
+_close_filemanager_pcmanfm() {
+    # NOTE: 'pcmanfm-qt' does not reload automatically after quitting.
+    # We need to capture its current launch command to restart it.
+    local session_cmd=""
+
+    # Reload the file manager in background to restore desktop session.
+    if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
+        # Only restart if running under LXDE or LXQT.
+        if [[ "${XDG_CURRENT_DESKTOP,,}" == *"lxde"* ||
+            "${XDG_CURRENT_DESKTOP,,}" == *"lxqt"* ]]; then
+            session_cmd=$(pgrep -a "$FILE_MANAGER" |
+                head -n 1 | cut -d " " -f 2-)
+            # Kill all existing 'pcmanfm-qt' processes.
+            killall "$FILE_MANAGER" &>/dev/null
+            if [[ -n "$session_cmd" ]]; then
+                # shellcheck disable=SC2086
+                nohup $session_cmd &>/dev/null &
+            else
+                # Fallback: start 'pcmanfm-qt' with default settings.
+                nohup "$FILE_MANAGER" --desktop &>/dev/null &
+            fi
+        fi
+    fi
+}
+
+_install_actions_pcmanfm() {
+    local menu_file=""
+    local menus_path="$HOME/.local/share/file-manager/actions"
+    find "$menus_path" -name "$APP_NAME-*.desktop" \
+        -type f -delete 2>/dev/null
+    mkdir --parents -- "$menus_path"
+
+    # FIXME: PCManFM is missing names of nested action menus.
+    # See: https://github.com/lxde/pcmanfm/issues/40
+    # See: https://github.com/lxde/libfm/issues/129
+
+    # -------------------------------------------------------------------------
+    # Create the 'scripts.desktop' for the categories (main menu).
+    # -------------------------------------------------------------------------
+    local msg_scripts=""
+    msg_scripts=$(_i18n 'Scripts')
+    menu_file="$menus_path/$APP_NAME-main.desktop"
+    {
+        printf "%s\n" "[Desktop Entry]"
+        printf "%s\n" "Type=Menu"
+        printf "%s\n" "Name=$msg_scripts"
+        _i18n_print_desktop_name "Name" "$msg_scripts"
+        printf "%s\n" "Icon=inode-directory"
+        printf "%s" "ItemsList="
+        find -L "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -type d \
+            "${IGNORE_FIND_PATHS[@]}" \
+            -printf "$APP_NAME-%f\0" 2>/dev/null |
+            sort --zero-terminated | tr "\0" ";" | _sanitize_string
+        printf "\n"
+
+    } | _tee_file "$menu_file"
+    _chown_file "$menu_file"
+    _chmod_x_file "$menu_file"
+
+    # -------------------------------------------------------------------------
+    # Create a '.desktop' file for each sub-category (sub-menus).
+    # -------------------------------------------------------------------------
+    local dir_items=""
+    local name=""
+    local filename=""
+    while IFS= read -r -d $'\0' filename; do
+        name=${filename##*/}
+        dir_items=$(find -L "$filename" -mindepth 1 -maxdepth 1 \
+            "${IGNORE_FIND_PATHS[@]}" \
+            -printf "$APP_NAME-%f\0" 2>/dev/null |
+            sort --zero-terminated | tr "\0" ";" | _sanitize_string)
+        if [[ -z "$dir_items" ]]; then
+            continue
+        fi
+
+        menu_file=$(_sanitize_string <<<"$name")
+        menu_file="${menu_file}.desktop"
+        menu_file="$menus_path/$APP_NAME-$menu_file"
+        {
+            printf "%s\n" "[Desktop Entry]"
+            printf "%s\n" "Type=Menu"
+            printf "%s\n" "Name=$name"
+            _i18n_print_desktop_name "Name" "$name"
+            printf "%s\n" "Icon=inode-directory"
+            printf "%s\n" "ItemsList=$dir_items"
+
+        } | _tee_file "$menu_file"
+        _chown_file "$menu_file"
+        _chmod_x_file "$menu_file"
+
+    done < <(find -L "$INSTALL_DIR" -mindepth 1 -type d \
+        "${IGNORE_FIND_PATHS[@]}" \
+        -print0 2>/dev/null | sort --zero-terminated)
+
+    # -------------------------------------------------------------------------
+    # Create a '.desktop' file for each script.
+    # -------------------------------------------------------------------------
+    local action_name=""
+    while IFS= read -r -d $'\0' filename; do
+        name=${filename##*/}
+
+        action_name=$(_sanitize_string <<<"$name")
+        menu_file="${action_name}.desktop"
+        menu_file="$menus_path/$APP_NAME-$menu_file"
+        {
+            printf "%s\n" "[Desktop Entry]"
+            printf "%s\n" "Type=Action"
+            printf "%s\n" "Name=$name"
+            _i18n_print_desktop_name "Name" "$name"
+            printf "%s\n" "Profiles=$action_name"
+            printf "\n"
+            printf "%s\n" "[X-Action-Profile $action_name]"
+            printf "%s\n" "Exec=bash \"$filename\" %F"
+
+        } | _tee_file "$menu_file"
+        _chown_file "$menu_file"
+        _chmod_x_file "$menu_file"
+
+    done < <(_list_scripts)
+}
