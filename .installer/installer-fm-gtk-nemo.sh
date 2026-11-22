@@ -3,6 +3,10 @@
 # =============================================================================
 # Description: Installer functions for Nemo.
 # Sourced by 'install.sh'. Do not run directly.
+#
+# Files and directories created:
+#   ~/.local/share/nemo/scripts/
+#   ~/.gnome2/accels/nemo
 # =============================================================================
 
 _close_file_manager_nemo() {

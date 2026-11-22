@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# =============================================================================
+# Description: Uninstall the Enhanced File Manager Actions.
+# =============================================================================
+
 set -u
 
 # Use the home directory from the passwd database if '$HOME' is undefined.

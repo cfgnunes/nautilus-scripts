@@ -3,6 +3,10 @@
 # =============================================================================
 # Description: Installer functions for Thunar.
 # Sourced by 'install.sh'. Do not run directly.
+#
+# Files and directories created:
+#   ~/.config/Thunar/uca.xml
+#   ~/.config/Thunar/accels.scm
 # =============================================================================
 
 _close_file_manager_thunar() {

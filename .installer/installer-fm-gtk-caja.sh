@@ -3,6 +3,10 @@
 # =============================================================================
 # Description: Installer functions for Caja.
 # Sourced by 'install.sh'. Do not run directly.
+#
+# Files and directories created:
+#   ~/.config/caja/scripts/
+#   ~/.config/caja/accels
 # =============================================================================
 
 _close_file_manager_caja() {

@@ -3,6 +3,11 @@
 # =============================================================================
 # Description: Installer functions for PCManFM and PCManFM-Qt.
 # Sourced by 'install.sh'. Do not run directly.
+#
+# Files and directories created:
+#   ~/.local/share/file-manager/actions/nautilus-scripts-main.desktop
+#   ~/.local/share/file-manager/actions/nautilus-scripts-<category>.desktop
+#   ~/.local/share/file-manager/actions/nautilus-scripts-<script>.desktop
 # =============================================================================
 
 _close_file_manager_pcmanfm() {

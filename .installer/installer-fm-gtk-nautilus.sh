@@ -3,6 +3,10 @@
 # =============================================================================
 # Description: Installer functions for Nautilus.
 # Sourced by 'install.sh'. Do not run directly.
+#
+# Files and directories created:
+#   ~/.local/share/nautilus/scripts/
+#   ~/.config/nautilus/scripts-accels
 # =============================================================================
 
 _close_file_manager_nautilus() {

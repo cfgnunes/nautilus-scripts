@@ -3,6 +3,10 @@
 # =============================================================================
 # Description: Installer functions for KDE (Dolphin and Krusader).
 # Sourced by 'install.sh'. Do not run directly.
+#
+# Files and directories created:
+#   ~/.local/share/kio/servicemenus/
+#   ~/.local/share/kio/servicemenus/nautilus-scripts-*.desktop
 # =============================================================================
 
 _install_actions_dolphin() {

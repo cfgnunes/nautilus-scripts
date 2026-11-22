@@ -26,7 +26,7 @@
 #   143 on SIGTERM.
 #
 # Example of usage:
-#   source "installer-menu.sh"
+#   source "multiselect-menu.sh"
 #   labels=("Option A" "Option B")
 #   defaults=("true" "false")
 #   _multiselect_menu selected labels defaults || return 1
