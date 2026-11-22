@@ -10,17 +10,17 @@
 # =============================================================================
 
 _close_file_manager_nautilus() {
-    # This file manager supports the '-q' option to quit gracefully.
     nautilus -q &>/dev/null
 }
 
 _install_accels_nautilus() {
     local accels_file="$HOME/.config/nautilus/scripts-accels"
+
     mkdir --parents -- "$(dirname -- "$accels_file")"
 
-    # Create a backup of older custom actions.
-    _item_create_backup "$accels_file"
-    rm -f -- "$accels_file"
+    # Write to a temporary file first, then replace the destination.
+    local accels_tmp=""
+    accels_tmp=$(mktemp --tmpdir="$TEMP_DIR")
 
     {
         local filename=""
@@ -36,8 +36,9 @@ _install_accels_nautilus() {
             fi
         done < <(_list_scripts)
 
-    } | _tee_file "$accels_file"
-    _chown_file "$accels_file"
+    } | _tee_file "$accels_tmp"
+
+    _replace_file "$accels_tmp" "$accels_file"
 }
 
 _install_actions_nautilus() {

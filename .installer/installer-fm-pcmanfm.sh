@@ -40,6 +40,7 @@ _close_file_manager_pcmanfm() {
 _install_actions_pcmanfm() {
     local menu_file=""
     local menus_path="$HOME/.local/share/file-manager/actions"
+
     find "$menus_path" -name "$APP_NAME-*.desktop" \
         -type f -delete 2>/dev/null
     mkdir --parents -- "$menus_path"
@@ -68,8 +69,7 @@ _install_actions_pcmanfm() {
         printf "\n"
 
     } | _tee_file "$menu_file"
-    _chown_file "$menu_file"
-    _chmod_x_file "$menu_file"
+    chmod +x -- "$menu_file"
 
     # -------------------------------------------------------------------------
     # Create a '.desktop' file for each sub-category (sub-menus).
@@ -99,8 +99,7 @@ _install_actions_pcmanfm() {
             printf "%s\n" "ItemsList=$dir_items"
 
         } | _tee_file "$menu_file"
-        _chown_file "$menu_file"
-        _chmod_x_file "$menu_file"
+        chmod +x -- "$menu_file"
 
     done < <(find -L "$INSTALL_DIR" -mindepth 1 -type d \
         "${IGNORE_FIND_PATHS[@]}" \
@@ -127,8 +126,7 @@ _install_actions_pcmanfm() {
             printf "%s\n" "Exec=bash \"$filename\" %F"
 
         } | _tee_file "$menu_file"
-        _chown_file "$menu_file"
-        _chmod_x_file "$menu_file"
+        chmod +x -- "$menu_file"
 
     done < <(_list_scripts)
 }

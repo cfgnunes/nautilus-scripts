@@ -44,6 +44,12 @@ COMPATIBLE_FILE_MANAGERS=(
 
 # Directories to be ignored during install.
 IGNORE_FIND_PATHS=(
+    ! -path "*/.editorconfig"
+    ! -path "*/install.sh"
+    ! -path "*/LICENSE.txt"
+    ! -path "*/README.md"
+    ! -path "*/screenshot.svg"
+    ! -path "*/uninstall.sh"
     ! -path "*/.git*"
     ! -path "*/.installer*"
     ! -path "*/.po*"
@@ -477,14 +483,6 @@ _log_variable() {
 # SECTION: Utilities
 # -----------------------------------------------------------------------------
 
-_chown_file() {
-    chown "$INSTALL_OWNER:$INSTALL_GROUP" -- "$1"
-}
-
-_chmod_x_file() {
-    chmod +x -- "$1"
-}
-
 _tee_file() {
     tee -- "$1" >/dev/null
 }
@@ -503,6 +501,23 @@ _item_create_backup() {
     if [[ -e "$item" ]] && [[ ! -e "$item.bak" ]]; then
         cp -a -- "$item" "$item.bak" 2>/dev/null
     fi
+}
+
+# Function: _replace_file
+#
+# Description:
+#   Replaces the destination file with a file that was already created. If the
+#   destination exists, a backup is created first.
+#
+# Parameters:
+#   $1 (src_file): Source file to replace the destination with.
+#   $2 (dst_file): Destination file to be replaced.
+_replace_file() {
+    local src_file=$1
+    local dst_file=$2
+
+    _item_create_backup "$dst_file"
+    mv -f -- "$src_file" "$dst_file"
 }
 
 _command_exists() {
@@ -544,24 +559,17 @@ _install_scripts() {
 
     _echo_info "> $(_i18n 'Copying files...')"
     mkdir --parents -- "$INSTALL_DIR"
+    cp -rf -- "$SCRIPT_DIR/." "$INSTALL_DIR"
 
-    # Always copy important files and directories.
-    cp -- "$SCRIPT_DIR/.common-functions.sh" "$INSTALL_DIR"
-    cp -- "$SCRIPT_DIR/.pkg-map.sh" "$INSTALL_DIR"
-    cp -r -- "$SCRIPT_DIR/.po" "$INSTALL_DIR"
-
-    # Copy scripts by category. If the user selected specific categories, only
-    # those are installed. Otherwise, all categories are copied by default.
-    local i=0
-    for i in "${!_cat_dirs[@]}"; do
-        if [[ ${_cat_selected[$i]+_} ]]; then
-            if [[ ${_cat_selected[i]} == "true" ]]; then
-                cp -r -- "$SCRIPT_DIR/${_cat_dirs[i]}" "$INSTALL_DIR"
+    # Remove unselected categories from the install directory.
+    if [[ ${#_cat_selected[@]} -gt 0 ]]; then
+        local i=0
+        for i in "${!_cat_dirs[@]}"; do
+            if [[ ${_cat_selected[i]} == "false" ]]; then
+                rm -rf -- "$INSTALL_DIR/${_cat_dirs[i]:?}"
             fi
-        else
-            cp -r -- "$SCRIPT_DIR/${_cat_dirs[i]}" "$INSTALL_DIR"
-        fi
-    done
+        done
+    fi
 
     # Adjust ownership and permissions. Ensures all files belong to
     # the correct user/group and are executable.
@@ -577,7 +585,7 @@ _list_scripts() {
 }
 
 _list_scripts_categories() {
-    find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
+    find -L "$SCRIPT_DIR" -maxdepth 1 -type d \
         "${IGNORE_FIND_PATHS[@]}" -print0 2>/dev/null |
         sed -z "s|^.*/||" | sort --zero-terminated
 }

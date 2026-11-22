@@ -10,7 +10,6 @@
 # =============================================================================
 
 _close_file_manager_nemo() {
-    # This file manager supports the '-q' option to quit gracefully.
     nemo -q &>/dev/null
 }
 

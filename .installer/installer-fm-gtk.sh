@@ -8,12 +8,6 @@
 _create_links() {
     local destination_dir=$1
 
-    # Remove symlinks left by a previous install.
-    find "$destination_dir" -type l -lname "$INSTALL_DIR/*" -delete 2>/dev/null
-
-    # Remove empty directories left by a previous install.
-    find "$destination_dir" -type d -empty -delete 2>/dev/null
-
     mkdir --parents -- "$destination_dir"
     ln -sf -- "$INSTALL_DIR/.po" "$destination_dir/.po"
 
@@ -27,9 +21,6 @@ _create_links() {
         relative_path="${file_path#"$INSTALL_DIR"/}"
         dir=$(dirname -- "$relative_path")
         name=$(basename -- "$file_path")
-
-        # Skip the .po directory (already linked).
-        [[ "$relative_path" == ".po" ]] && continue
 
         # Create translated directory path.
         local translated_dir=""
@@ -50,7 +41,13 @@ _create_links() {
             ln -sf -- "$file_path" "$destination_path/$(_i18n "$name")"
         fi
     done < <(find -L "$INSTALL_DIR" \
-        -mindepth 1 "${IGNORE_FIND_PATHS[@]}" -print0 2>/dev/null)
+        "${IGNORE_FIND_PATHS[@]}" -print0 2>/dev/null)
+
+    # Remove broken symlinks left by a previous install.
+    find "$destination_dir" -type l -xtype l -lname "$INSTALL_DIR/*" -delete 2>/dev/null
+
+    # Remove empty directories left by a previous install.
+    find "$destination_dir" -type d -empty -delete 2>/dev/null
 }
 
 _encode_path_gtk() {
@@ -75,9 +72,9 @@ _install_accels_gnome2() {
 
     mkdir --parents -- "$(dirname -- "$accels_file")"
 
-    # Create a backup of older custom actions.
-    _item_create_backup "$accels_file"
-    rm -f -- "$accels_file"
+    # Write to a temporary file first, then replace the destination.
+    local accels_tmp=""
+    accels_tmp=$(mktemp --tmpdir="$TEMP_DIR")
 
     {
         # Disable the shortcut <Control><Shift>O (OpenAlternate).
@@ -100,8 +97,9 @@ _install_accels_gnome2() {
             fi
         done < <(_list_installed_links "$scripts_installed_dir")
 
-    } | _tee_file "$accels_file"
-    _chown_file "$accels_file"
+    } | _tee_file "$accels_tmp"
+
+    _replace_file "$accels_tmp" "$accels_file"
 }
 
 _list_installed_links() {

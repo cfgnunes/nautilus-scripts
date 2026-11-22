@@ -10,17 +10,17 @@
 # =============================================================================
 
 _close_file_manager_thunar() {
-    # This file manager supports the '-q' option to quit gracefully.
     thunar -q &>/dev/null
 }
 
 _install_accels_thunar() {
     local accels_file="$HOME/.config/Thunar/accels.scm"
+
     mkdir --parents -- "$(dirname -- "$accels_file")"
 
-    # Create a backup of older custom actions.
-    _item_create_backup "$accels_file"
-    rm -f -- "$accels_file"
+    # Write to a temporary file first, then replace the destination.
+    local accels_tmp=""
+    accels_tmp=$(mktemp --tmpdir="$TEMP_DIR")
 
     {
         # Default Thunar shortcuts.
@@ -56,8 +56,9 @@ _install_accels_thunar() {
             fi
         done < <(_list_scripts)
 
-    } | _tee_file "$accels_file"
-    _chown_file "$accels_file"
+    } | _tee_file "$accels_tmp"
+
+    _replace_file "$accels_tmp" "$accels_file"
 }
 
 _install_actions_thunar() {
@@ -76,7 +77,6 @@ _install_actions_thunar() {
             printf "%s\n" "<actions>"
             printf "%s\n" "</actions>"
         } | _tee_file "$menu_file"
-        _chown_file "$menu_file"
     fi
 
     # -------------------------------------------------------------------------
@@ -122,5 +122,4 @@ _install_actions_thunar() {
         printf "%s\n" "</actions>"
 
     } | _tee_file_append "$menu_file"
-    _chown_file "$menu_file"
 }

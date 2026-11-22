@@ -20,6 +20,7 @@ _install_actions_krusader() {
 _install_actions_kio_servicemenus() {
     local menu_file=""
     local menus_path="$HOME/.local/share/kio/servicemenus"
+
     find "$menus_path" -name "$APP_NAME-*.desktop" \
         -type f -delete 2>/dev/null
     mkdir --parents -- "$menus_path"
@@ -77,8 +78,7 @@ _install_actions_kio_servicemenus() {
             printf "%s\n" "Exec=bash \"$filename\" %F"
 
         } | _tee_file "$menu_file"
-        _chown_file "$menu_file"
-        _chmod_x_file "$menu_file"
+        chmod +x -- "$menu_file"
 
     done < <(_list_scripts)
 }
