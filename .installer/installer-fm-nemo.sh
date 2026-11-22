@@ -7,7 +7,7 @@
 
 _close_file_manager_nemo() {
     # This file manager supports the '-q' option to quit gracefully.
-    $FILE_MANAGER -q &>/dev/null
+    nemo -q &>/dev/null
 }
 
 _install_accels_nemo() {

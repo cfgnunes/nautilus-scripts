@@ -11,9 +11,8 @@ _close_file_manager_caja() {
         # Only restart if running under MATE.
         if [[ "${XDG_CURRENT_DESKTOP,,}" == *"mate"* ]]; then
             # Close Caja.
-            "$FILE_MANAGER" -q &>/dev/null
-            nohup "$FILE_MANAGER" --force-desktop \
-                --no-default-window &>/dev/null &
+            caja -q &>/dev/null
+            nohup caja --force-desktop --no-default-window &>/dev/null &
         fi
     fi
 }

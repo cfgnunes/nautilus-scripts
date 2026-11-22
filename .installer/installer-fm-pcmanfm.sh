@@ -6,7 +6,9 @@
 # =============================================================================
 
 _close_file_manager_pcmanfm() {
-    # NOTE: 'pcmanfm-qt' does not reload automatically after quitting.
+    local file_manager=$1
+
+    # NOTE: PCManFM does not reload automatically after quitting.
     # We need to capture its current launch command to restart it.
     local session_cmd=""
 
@@ -15,16 +17,16 @@ _close_file_manager_pcmanfm() {
         # Only restart if running under LXDE or LXQT.
         if [[ "${XDG_CURRENT_DESKTOP,,}" == *"lxde"* ||
             "${XDG_CURRENT_DESKTOP,,}" == *"lxqt"* ]]; then
-            session_cmd=$(pgrep -a "$FILE_MANAGER" |
+            session_cmd=$(pgrep -a "$file_manager" |
                 head -n 1 | cut -d " " -f 2-)
-            # Kill all existing 'pcmanfm-qt' processes.
-            killall "$FILE_MANAGER" &>/dev/null
+            # Kill all existing PCManFM processes.
+            killall "$file_manager" &>/dev/null
             if [[ -n "$session_cmd" ]]; then
                 # shellcheck disable=SC2086
                 nohup $session_cmd &>/dev/null &
             else
-                # Fallback: start 'pcmanfm-qt' with default settings.
-                nohup "$FILE_MANAGER" --desktop &>/dev/null &
+                # Fallback: start PCManFM with default settings.
+                nohup "$file_manager" --desktop &>/dev/null &
             fi
         fi
     fi

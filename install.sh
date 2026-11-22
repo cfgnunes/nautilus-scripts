@@ -81,7 +81,6 @@ HOME=${HOME:-$(eval echo ~)}
 # SECTION: Global variables
 # -----------------------------------------------------------------------------
 
-FILE_MANAGER=""  # Current file manager being processed.
 INSTALL_OWNER="" # Owner of the installation directory.
 INSTALL_GROUP="" # Group of the installation directory.
 
@@ -310,19 +309,18 @@ _main() {
     # each detected file manager.
     local file_manager=""
     for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
-        FILE_MANAGER=$file_manager
-        if ! _command_exists "$FILE_MANAGER"; then
+        if ! _command_exists "$file_manager"; then
             continue
         fi
 
         # Step 3.1: Install the actions.
-        _install_actions
+        _install_actions "$file_manager"
 
         # Step 3.2: Install the keyboard accelerators.
-        [[ "$OPT_INSTALL_ACCELS" == "true" ]] && _install_accels
+        [[ "$OPT_INSTALL_ACCELS" == "true" ]] && _install_accels "$file_manager"
 
         # Step 3.3: Reload file manager to apply changes.
-        [[ "$OPT_CLOSE_FILE_MANAGER" == "true" ]] && _close_file_manager
+        [[ "$OPT_CLOSE_FILE_MANAGER" == "true" ]] && _close_file_manager "$file_manager"
         _echo_info "> $(_i18n 'Done!')"
     done
 
@@ -607,9 +605,11 @@ _check_exist_file_manager() {
 # Description:
 # Install keyboard accelerators for specific file managers.
 _install_accels() {
-    _echo_info "> ($FILE_MANAGER) $(_i18n 'Installing keyboard accelerators...')"
+    local file_manager=$1
 
-    case "$FILE_MANAGER" in
+    _echo_info "> ($file_manager) $(_i18n 'Installing keyboard accelerators...')"
+
+    case "$file_manager" in
     "nautilus") _install_accels_nautilus ;;
     "caja") _install_accels_caja ;;
     "nemo") _install_accels_nemo ;;
@@ -624,14 +624,16 @@ _install_accels() {
 #   Delegates to the appropriate function depending on the detected file
 #   manager.
 _install_actions() {
-    _echo_info "> ($FILE_MANAGER) $(_i18n 'Installing actions in the context menu...')"
+    local file_manager=$1
 
-    case "$FILE_MANAGER" in
+    _echo_info "> ($file_manager) $(_i18n 'Installing actions in the context menu...')"
+
+    case "$file_manager" in
     "nautilus") _install_actions_nautilus ;;
     "caja") _install_actions_caja ;;
     "nemo") _install_actions_nemo ;;
     "dolphin") _install_actions_dolphin ;;
-    "pcmanfm"*) _install_actions_pcmanfm ;;
+    "pcmanfm" | "pcmanfm-qt") _install_actions_pcmanfm ;;
     "thunar") _install_actions_thunar ;;
     "krusader") _install_actions_krusader ;;
     esac
@@ -644,20 +646,22 @@ _install_actions() {
 #   configurations. For most file managers, the `-q` option is used to quit
 #   gracefully.
 _close_file_manager() {
-    if [[ -z "$FILE_MANAGER" ||
-        "$FILE_MANAGER" == "dolphin" ||
-        "$FILE_MANAGER" == "krusader" ]]; then
+    local file_manager=$1
+
+    if [[ -z "$file_manager" ||
+        "$file_manager" == "dolphin" ||
+        "$file_manager" == "krusader" ]]; then
         return
     fi
 
-    _echo_info "> ($FILE_MANAGER) $(_i18n 'Closing the file manager...')"
+    _echo_info "> ($file_manager) $(_i18n 'Closing the file manager...')"
 
-    case "$FILE_MANAGER" in
+    case "$file_manager" in
     "nautilus") _close_file_manager_nautilus ;;
     "caja") _close_file_manager_caja ;;
     "nemo") _close_file_manager_nemo ;;
     "thunar") _close_file_manager_thunar ;;
-    "pcmanfm"*) _close_file_manager_pcmanfm ;;
+    "pcmanfm" | "pcmanfm-qt") _close_file_manager_pcmanfm "$file_manager" ;;
     esac
 }
 
