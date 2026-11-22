@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# install_mime_type=inode/directory;
 # install_icon_kde=globe
 
 # Source the file '.common-functions.sh'.
@@ -13,7 +12,9 @@ _main() {
     # Execute initial checks.
     _check_dependencies "git"
     _display_wait_box ""
-    input_files=$(_get_files "par_type=directory; par_max_items=20")
+    # NOTE: Using 'par_type=all' because the script can run
+    # even when the file manager selects a file or directory.
+    input_files=$(_get_files "par_type=all; par_max_items=20")
 
     # Run the main process.
     _open_repository_website "$input_files"
@@ -73,6 +74,11 @@ _open_repository_website() {
     # Iterate over each input file (directory).
     local input_file=""
     for input_file in $input_files; do
+
+        # If the input is not a directory, get its parent directory.
+        if [[ ! -d "$input_file" ]]; then
+            input_file=$(dirname -- "$input_file")
+        fi
 
         # Check if the selected directory is a Git repository.
         local top_level=""

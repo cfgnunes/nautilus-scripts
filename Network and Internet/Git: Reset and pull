@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# install_mime_type=inode/directory;
 # install_icon_kde=vcs-pull
 # install_keyboard_shortcut=<Control><Shift>R
 
@@ -15,7 +14,9 @@ _main() {
     # Execute initial checks.
     _check_dependencies "git"
     _display_wait_box ""
-    input_files=$(_get_files "par_type=directory; par_max_items=20")
+    # NOTE: Using 'par_type=all' because the script can run
+    # even when the file manager selects a file or directory.
+    input_files=$(_get_files "par_type=all; par_max_items=20")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
@@ -28,6 +29,11 @@ _main_task() {
     local output_dir=$2
     local std_output=""
     local branch=""
+
+    # If the input is not a directory, get its parent directory.
+    if [[ ! -d "$input_file" ]]; then
+        input_file=$(dirname -- "$input_file")
+    fi
 
     # Check if the selected directory is a Git repository.
     local top_level=""
