@@ -2810,9 +2810,11 @@ _display_wait_box_message() {
 
     # Check if Zenity or YAD is available.
     elif _command_exists "zenity" || _command_exists "yad"; then
-        # Control flag to inform that a 'wait box' will open
-        # (if the task takes over 1.5 seconds).
-        touch -- "$TEMP_CONTROL_WAIT_BOX_DELAY"
+        # Control flag for the delayed wait box (opened after 1.5 seconds). The
+        # unique 'id_wait' lets the process detect cancellation or replacement
+        # by a newer request.
+        local id_wait="${RANDOM:-}${RANDOM:-}${EPOCHREALTIME:-}"
+        printf '%s' "$id_wait" >"$TEMP_CONTROL_WAIT_BOX_DELAY"
 
         # Create the FIFO for communication with Zenity 'wait box'.
         if [[ ! -p "$TEMP_CONTROL_WAIT_BOX_FIFO" ]]; then
@@ -2849,8 +2851,11 @@ _display_wait_box_message() {
             # Check if the task has already finished.
             [[ ! -d "$TEMP_DIR" ]] && return 0
 
-            # Check if the 'wait box' should open.
-            [[ ! -f "$TEMP_CONTROL_WAIT_BOX_DELAY" ]] && return 0
+            # Check if the 'wait box' should open. The request must still be
+            # active and not replaced by a newer one.
+            [[ -f "$TEMP_CONTROL_WAIT_BOX_DELAY" ]] &&
+                [[ "$(<"$TEMP_CONTROL_WAIT_BOX_DELAY")" == "$id_wait" ]] ||
+                return 0
 
             _display_lock
             if _command_exists "zenity"; then
