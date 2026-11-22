@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # =============================================================================
 # Description: Installer function for pkgx.
 # Sourced by 'install.sh'. Do not run directly.

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Function: _multiselect_menu
-#
+# =============================================================================
 # Description: This function displays an interactive menu in the terminal.
 # Repository: https://github.com/cfgnunes/nautilus-scripts
 # Based on: https://unix.stackexchange.com/a/673436
@@ -33,6 +32,8 @@
 #   _multiselect_menu selected labels defaults || return 1
 #   echo "Option A: ${selected[0]}"
 #   echo "Option B: ${selected[1]}"
+# =============================================================================
+
 _multiselect_menu() {
     local -n _result=$1
     local -n _options=$2

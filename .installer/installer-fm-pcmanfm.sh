@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # =============================================================================
 # Description: Installer functions for PCManFM and PCManFM-Qt.
 # Sourced by 'install.sh'. Do not run directly.

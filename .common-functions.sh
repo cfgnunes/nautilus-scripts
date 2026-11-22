@@ -9,7 +9,7 @@
 # Version: 32
 # =============================================================================
 
-# This file contains functions and constants sourced by scripts.
+# Description: This file contains functions and constants sourced by scripts.
 
 set -u
 
