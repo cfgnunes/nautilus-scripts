@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # install_icon_kde=globe
+# install_keyboard_shortcut=<Control><Alt>W
 
 # Source the file '.common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)

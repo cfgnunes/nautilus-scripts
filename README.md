@@ -47,39 +47,39 @@ bash install.sh
 
 ## Keyboard accelerators
 
-| Key                                               | Action                      |
-| ------------------------------------------------- | --------------------------- |
-| <kbd>F4</kbd>                                     | Terminal                    |
-| <kbd>Shift</kbd> + <kbd>F4</kbd>                  | Terminal (synced panes)     |
-| <kbd>F7</kbd>                                     | Code editor                 |
-| <kbd>F12</kbd>                                    | Disk usage analyzer         |
-| <kbd>Ctrl</kbd> + <kbd>E</kbd>                    | Extract here                |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>G</kbd>   | Compress to 'tar.gz'        |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>S</kbd>   | Compress to 'tar.zst'       |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>X</kbd>   | Compress to 'tar.xz'        |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Z</kbd>   | Compress to 'zip'           |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>I</kbd>   | Show file information       |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>M</kbd>   | Show file metadata          |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>0</kbd>   | Find empty files            |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>E</kbd>   | Find empty directories      |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>J</kbd>   | Find junk files             |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>U</kbd>   | Find duplicate files        |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>H</kbd>   | List hidden files           |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>P</kbd>   | List permissions and owners |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>B</kbd>   | List largest files          |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd>   | List recent files           |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>W</kbd>   | Text: List issues           |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>C</kbd>   | Copy file names             |
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>V</kbd>   | Paste as hard link          |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd> | Paste as symbolic link      |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> | Create backup (via Rsync)   |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> | Compare items               |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd> | Compute all checksums       |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd> | Open item location          |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd> | Git: Clone URLs             |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> | Git: Reset and pull         |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> | URL: Download file          |
-| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>V</kbd>  | Paste clipboard contents    |
+| Key                                               | Action                       |
+| ------------------------------------------------- | ---------------------------- |
+| <kbd>F4</kbd>                                     | Terminal                     |
+| <kbd>Shift</kbd> + <kbd>F4</kbd>                  | Terminal (synced panes)      |
+| <kbd>F7</kbd>                                     | Code editor                  |
+| <kbd>F12</kbd>                                    | Disk usage analyzer          |
+| <kbd>Ctrl</kbd> + <kbd>E</kbd>                    | Extract here                 |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>G</kbd>   | Compress to 'tar.gz'         |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>S</kbd>   | Compress to 'tar.zst'        |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>X</kbd>   | Compress to 'tar.xz'         |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Z</kbd>   | Compress to 'zip'            |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>I</kbd>   | Show file information        |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>M</kbd>   | Show file metadata           |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>0</kbd>   | Find empty files             |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>E</kbd>   | Find empty directories       |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>J</kbd>   | Find junk files              |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>U</kbd>   | Find duplicate files         |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>H</kbd>   | List hidden files            |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>P</kbd>   | List permissions and owners  |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>B</kbd>   | List largest files           |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd>   | List recent files            |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>W</kbd>   | Git: Open repository website |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>C</kbd>   | Copy file names              |
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>V</kbd>   | Paste as hard link           |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd> | Paste as symbolic link       |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> | Create backup (via Rsync)    |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> | Compare items                |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd> | Compute all checksums        |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd> | Open item location           |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd> | Git: Clone URLs              |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> | Git: Reset and pull          |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> | URL: Download file           |
+| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>V</kbd>  | Paste clipboard contents     |
 
 ## Compatibility
 
