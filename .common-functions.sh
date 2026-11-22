@@ -2663,6 +2663,7 @@ _display_question_box() {
 #   $1 (message): The message to display.
 _display_text_box() {
     local message=$1
+    local save_filename=${2:-"Results.txt"}
     local font="Monospace"
 
     _close_wait_box
@@ -2714,7 +2715,7 @@ _display_text_box() {
     local save_status=0
     local save_path=""
     save_path=$(_display_file_selection_box "$btn_export" "" \
-        'par_save=true; par_filename="Results.txt"') || save_status=$?
+        "par_save=true; par_filename=\"$save_filename\"") || save_status=$?
 
     # If the user selected a save path, copy the text box content to it.
     if ((save_status == 0)) && [[ -n "$save_path" ]]; then

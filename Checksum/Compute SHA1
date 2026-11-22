@@ -23,7 +23,7 @@ _main() {
     # shellcheck disable=SC2001
     std_output=$(sed "s|\(.*\)$FIELD_SEPARATOR\(.*\)|\2  \1|g" <<<"$std_output")
 
-    _display_text_box "$std_output"
+    _display_text_box "$std_output" "sha1sum.txt"
 }
 
 _main_task() {
