@@ -102,7 +102,7 @@ else
     OPT_INSTALL_PKGX="false"
 fi
 OPT_CHOOSE_CATEGORIES="false"
-# Default core options.
+# Default installer options.
 OPT_INTERACTIVE_INSTALL="true"
 OPT_QUIET_INSTALL="false"
 
@@ -327,7 +327,7 @@ _main() {
         # Step 3.2: Install the keyboard accelerators.
         [[ "$OPT_INSTALL_ACCELS" == "true" ]] && _install_accels "$file_manager"
 
-        # Step 3.3: Reload file manager to apply changes.
+        # Step 3.3: Close file manager to reload its configuration.
         [[ "$OPT_CLOSE_FILE_MANAGER" == "true" ]] && _close_file_manager "$file_manager"
         _echo_info "> $(_i18n 'Done!')"
     done
@@ -653,8 +653,7 @@ _install_actions() {
 #
 # Description:
 #   This function closes the current file manager so that it reloads its
-#   configurations. For most file managers, the `-q` option is used to quit
-#   gracefully.
+#   configuration.
 _close_file_manager() {
     local file_manager=$1
 
