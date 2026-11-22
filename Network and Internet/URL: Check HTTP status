@@ -74,19 +74,21 @@ _main_task() {
 #
 # Example matches:
 #  - http://192.168.0.1:8080/api
-#  - https://example.com/path
+#  - https://google.com/favicon.ico
+#  - www.google.com
 _extract_urls() {
     local data=$1
     local re_ip="https?://(?:[0-9]{1,3}\.){3}[0-9]{1,3}"
     local re_port_path="(?::[0-9]+)?(?:/[^[:space:]'\"\)\]\>]*)?"
     local re_domain="https?://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+    local re_plain="(?:www\.)[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
 
     if [[ -z "$data" ]]; then
         return
     fi
 
     data=$(grep --only-matching --perl-regexp \
-        "($re_ip$re_port_path|$re_domain$re_port_path)" <<<"$data")
+        "($re_ip$re_port_path|$re_domain$re_port_path|$re_plain)" <<<"$data")
     data=$(sort --unique <<<"$data")
 
     printf "%s" "$data"
