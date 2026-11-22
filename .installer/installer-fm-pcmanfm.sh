@@ -41,9 +41,11 @@ _install_actions_pcmanfm() {
     local menu_file=""
     local menus_path="$HOME/.local/share/file-manager/actions"
 
-    find "$menus_path" -name "$APP_NAME-*.desktop" \
-        -type f -delete 2>/dev/null
-    mkdir --parents -- "$menus_path"
+    # Create a temporary directory for the new menu files. Write to a temporary
+    # directory first, then move the files to the final location.
+    local temp_dir=""
+    # shellcheck disable=SC2153
+    temp_dir=$(mktemp --directory --tmpdir="$TEMP_DIR") || return 1
 
     # FIXME: PCManFM is missing names of nested action menus.
     # See: https://github.com/lxde/pcmanfm/issues/40
@@ -54,7 +56,7 @@ _install_actions_pcmanfm() {
     # -------------------------------------------------------------------------
     local msg_scripts=""
     msg_scripts=$(_i18n 'Scripts')
-    menu_file="$menus_path/$APP_NAME-main.desktop"
+    menu_file="$temp_dir/$APP_NAME-main.desktop"
     {
         printf "%s\n" "[Desktop Entry]"
         printf "%s\n" "Type=Menu"
@@ -89,7 +91,7 @@ _install_actions_pcmanfm() {
 
         menu_file=$(_sanitize_string <<<"$name")
         menu_file="${menu_file}.desktop"
-        menu_file="$menus_path/$APP_NAME-$menu_file"
+        menu_file="$temp_dir/$APP_NAME-$menu_file"
         {
             printf "%s\n" "[Desktop Entry]"
             printf "%s\n" "Type=Menu"
@@ -114,7 +116,7 @@ _install_actions_pcmanfm() {
 
         action_name=$(_sanitize_string <<<"$name")
         menu_file="${action_name}.desktop"
-        menu_file="$menus_path/$APP_NAME-$menu_file"
+        menu_file="$temp_dir/$APP_NAME-$menu_file"
         {
             printf "%s\n" "[Desktop Entry]"
             printf "%s\n" "Type=Action"
@@ -129,4 +131,11 @@ _install_actions_pcmanfm() {
         chmod +x -- "$menu_file"
 
     done < <(_list_scripts)
+
+    # -------------------------------------------------------------------------
+    # Replace the old files only after all new files were created.
+    # -------------------------------------------------------------------------
+    rm -f -- "$menus_path/$APP_NAME-"*.desktop
+    mkdir --parents -- "$menus_path"
+    cp --force -- "$temp_dir/$APP_NAME-"*.desktop "$menus_path/"
 }

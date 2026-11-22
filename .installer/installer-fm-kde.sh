@@ -21,9 +21,11 @@ _install_actions_kio_servicemenus() {
     local menu_file=""
     local menus_path="$HOME/.local/share/kio/servicemenus"
 
-    find "$menus_path" -name "$APP_NAME-*.desktop" \
-        -type f -delete 2>/dev/null
-    mkdir --parents -- "$menus_path"
+    # Create a temporary directory for the new menu files. Write to a temporary
+    # directory first, then move the files to the final location.
+    local temp_dir=""
+    # shellcheck disable=SC2153
+    temp_dir=$(mktemp --directory --tmpdir="$TEMP_DIR") || return 1
 
     # -------------------------------------------------------------------------
     # Create a '.desktop' file for each script.
@@ -53,7 +55,7 @@ _install_actions_kio_servicemenus() {
 
         action_name=$(_sanitize_string <<<"$name")
         menu_file="${action_name}.desktop"
-        menu_file="$menus_path/$APP_NAME-$menu_file"
+        menu_file="$temp_dir/$APP_NAME-$menu_file"
         {
             printf "%s\n" "[Desktop Entry]"
             printf "%s\n" "Type=Service"
@@ -81,4 +83,11 @@ _install_actions_kio_servicemenus() {
         chmod +x -- "$menu_file"
 
     done < <(_list_scripts)
+
+    # -------------------------------------------------------------------------
+    # Replace the old files only after all new files were created.
+    # -------------------------------------------------------------------------
+    rm -f -- "$menus_path/$APP_NAME-"*.desktop
+    mkdir --parents -- "$menus_path"
+    cp --force -- "$temp_dir/$APP_NAME-"*.desktop "$menus_path/"
 }
