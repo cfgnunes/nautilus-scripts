@@ -259,6 +259,7 @@ _main() {
 
     _echo ""
     _echo_info "$(_i18n 'Installation completed successfully!')"
+    _log "[INF] Installation completed successfully!"
 
     # Step 5: Move the temporary log file to the installation directory and
     # remove the temporary directory.
