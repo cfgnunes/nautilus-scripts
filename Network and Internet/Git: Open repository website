@@ -86,6 +86,13 @@ _open_repository_website() {
         top_level=$(LC_ALL=C.UTF-8 git -C "$input_file" rev-parse --show-toplevel 2>&1)
         _check_output "$?" "$top_level" "$input_file" "" || continue
 
+        # Temporary lock to prevent operations on the same repository.
+        local lock_key=""
+        lock_key=$(md5sum <<<"$top_level")
+        lock_key=${lock_key%% *}
+        local filename_lock="$TEMP_DIR_FILENAME_LOCKS/$lock_key"
+        mkdir "$filename_lock" 2>/dev/null || return 1
+
         # Retrieve the URL of the remote 'origin' repository for the Git
         # repository.
         local git_url=""
