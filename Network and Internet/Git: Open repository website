@@ -79,6 +79,8 @@ _open_repository_website() {
         # If the input is not a directory, get its parent directory.
         if [[ ! -d "$input_file" ]]; then
             input_file=$(dirname -- "$input_file")
+        elif [[ "$input_file" == *".git" ]]; then
+            input_file=${input_file%".git"}
         fi
 
         # Check if the selected directory is a Git repository.
