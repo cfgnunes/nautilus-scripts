@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+# install_icon_kde=edit-download
+# install_keyboard_shortcut=<Shift>F12
+
+# Source the file '.common-functions.sh'.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
+source "$ROOT_DIR/.common-functions.sh"
+
+APP_NAME="nautilus-scripts"
+INSTALL_DIR="$USER_OPT_DIR/$APP_NAME"
+INSTALL_LOG_NAME="install.log"
+LOG_FILE="$INSTALL_DIR/$INSTALL_LOG_NAME"
+
+_get_log_version() {
+    grep -o -P 'APP_VERSION=.\K[^"]+' "$LOG_FILE" 2>/dev/null
+}
+
+_get_latest_version_github() {
+    local url="https://api.github.com/repos/cfgnunes/nautilus-scripts/tags?per_page=1"
+    local output=""
+    local timeout_max=5
+
+    if _command_exists "curl"; then
+        output=$(curl -fsL --max-time "$timeout_max" "$url" 2>/dev/null)
+    elif _command_exists "wget"; then
+        output=$(wget -qO- --timeout="$timeout_max" "$url" 2>/dev/null)
+    fi
+    grep -o -m1 -P '"name":\s*"\K[^"]+' <<<"$output"
+}
+
+_main() {
+    local msg=""
+
+    # Display a wait box while checking for updates.
+    msg="$(_i18n 'Checking for updates. Please wait...')"
+    _display_wait_box_message "$msg" "1"
+    local installed_version=""
+    local latest_version=""
+    installed_version=$(_get_log_version)
+    latest_version=$(_get_latest_version_github)
+    _close_wait_box
+
+    # Skip the update if the installed version is already the latest one.
+    if [[ -n "$installed_version" ]] && [[ -n "$latest_version" ]] &&
+        [[ "$installed_version" = "$latest_version" ]]; then
+        msg="$(_i18n 'The scripts are already up to date.')"
+        _display_info_box "$msg"
+        _exit_script
+    fi
+
+    # Prompt the user to confirm updating the scripts.
+    msg="$(_i18n 'The scripts will be updated.')"
+    if [ -n "$installed_version" ]; then
+        msg+="\n"
+        msg+="$(_i18n 'Current version:') $installed_version"
+    fi
+    if [ -n "$latest_version" ]; then
+        msg+="\n"
+        msg+="$(_i18n 'Latest version:') $latest_version"
+    fi
+    msg+="\n\n"
+    msg+="$(_i18n 'Would you like to continue?')"
+    if ! _display_question_box "$msg"; then
+        _exit_script
+    fi
+
+    # Display a wait box while updating the scripts.
+    msg="$(_i18n 'Updating the scripts. Please wait...')"
+    _display_wait_box_message "$msg" "0"
+    # Download and run the installation script.
+    if _command_exists "curl"; then
+        bash <(curl -fsL https://cfgnunes.github.io/nautilus-scripts/install.sh) \
+            --no-check-dependencies --no-close-file-manager --non-interactive --no-install-pkgx
+    elif _command_exists "wget"; then
+        bash <(wget -qO- https://cfgnunes.github.io/nautilus-scripts/install.sh) \
+            --no-check-dependencies --no-close-file-manager --non-interactive --no-install-pkgx
+    fi
+    _close_wait_box
+
+    # Check if the installation was successful.
+    if grep --ignore-case --quiet --fixed-strings -m1 \
+        "Installation completed successfully" "$LOG_FILE"; then
+        _display_info_box "$(_i18n 'The scripts were successfully updated!')"
+    else
+        _display_error_box "$(_i18n 'Failed to update the scripts.')"
+    fi
+}
+
+_main "$@"

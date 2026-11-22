@@ -80,6 +80,7 @@ bash install.sh
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> | Git: Reset and pull          |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> | URL: Download file           |
 | <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>V</kbd>  | Paste clipboard contents     |
+| <kbd>Shift</kbd> + <kbd>F12</kbd>                 | Update scripts               |
 
 ## Compatibility
 
