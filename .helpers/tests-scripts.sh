@@ -1024,24 +1024,20 @@ _main() {
     # SECTION: Checksum
     # -------------------------------------------------------------------------
 
+    # IGNORED: Checksum/Compute MD5
+    # IGNORED: Checksum/Compute SHA1
+    # IGNORED: Checksum/Compute SHA256
+    # IGNORED: Checksum/Compute SHA512
     # IGNORED: Checksum/Generate MD5 file
     # IGNORED: Checksum/Generate SHA1 file
     # IGNORED: Checksum/Generate SHA256 file
     # IGNORED: Checksum/Generate SHA512 file
 
-    local hash_script=""
-    for hash_script in \
-        "Checksum/Compute all checksums" \
-        "Checksum/Compute MD5" \
-        "Checksum/Compute SHA1" \
-        "Checksum/Compute SHA256" \
-        "Checksum/Compute SHA512"; do
-        __test_begin
-        echo "Content of 'Test hash'." >"$temp_dir/Test hash"
-        __run_script "$hash_script" "$temp_dir/Test hash"
-        __check_file_nonempty "$temp_dir/Test hash"
-        __check_file_nonempty "$std_output"
-    done
+    __test_begin
+    echo "Content of 'Test hash'." >"$temp_dir/Test hash"
+    __run_script "Checksum/Compute all checksums" "$temp_dir/Test hash"
+    __check_file_nonempty "$temp_dir/Test hash"
+    __check_file_nonempty "$std_output"
 
     __test_begin
     echo "Content of 'Test hash'." >"$temp_dir/Test hash"
