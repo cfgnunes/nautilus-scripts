@@ -36,7 +36,7 @@ _main() {
         std_output=$(_text_sort "$std_output")
     fi
 
-    _display_text_box "$std_output"
+    _display_text_box "$std_output" "Diff.txt"
 }
 
 _main "$@"

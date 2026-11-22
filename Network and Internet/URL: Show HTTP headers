@@ -32,7 +32,7 @@ _main() {
     # shellcheck disable=SC2001
     std_output=$(sed "s|__MSG_URL__|$(_i18n 'URL')|g" <<<"$std_output")
 
-    _display_text_box "$std_output"
+    _display_text_box "$std_output" "HTTP headers.txt"
 }
 
 _main_task() {
