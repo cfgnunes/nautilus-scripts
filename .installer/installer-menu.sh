@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-# Code based on:
-#   https://github.com/cfgnunes/nautilus-scripts
-#   https://unix.stackexchange.com/a/673436
-# Version: 2026-11-21
-
+# Function: _multiselect_menu
+#
+# Description: This function displays an interactive menu in the terminal.
+# Repository: https://github.com/cfgnunes/nautilus-scripts
+# Based on: https://unix.stackexchange.com/a/673436
+# Version: 2026-11-22
+#
 # Keyboard commands:
 #                       <enter>: Confirms the current selection.
 #                       <space>: Toggles the selected option.
@@ -15,7 +17,22 @@
 #      <down>, <right> or <tab>: Moves the cursor down one option.
 #                        <home>: Moves the cursor to the first option.
 #                         <end>: Moves the cursor to the last option.
-
+#
+# Returns:
+#   0   if the selection was confirmed.
+#   1   if the user quits with <q> or <esc>.
+#   2   if the terminal is not interactive or input cannot be read.
+#   129 on SIGHUP.
+#   130 on <ctrl>+<c> (SIGINT).
+#   143 on SIGTERM.
+#
+# Example of usage:
+#   source "installer-menu.sh"
+#   labels=("Option A" "Option B")
+#   defaults=("true" "false")
+#   _multiselect_menu selected labels defaults || return 1
+#   echo "Option A: ${selected[0]}"
+#   echo "Option B: ${selected[1]}"
 _multiselect_menu() {
     local -n _result=$1
     local -n _options=$2
@@ -23,7 +40,7 @@ _multiselect_menu() {
     local count=${#_options[@]}
 
     # Ensure that the terminal is interactive.
-    [[ -t 0 ]] || return 1
+    [[ -t 0 ]] || return 2
 
     # Helper functions.
     __abort() {
