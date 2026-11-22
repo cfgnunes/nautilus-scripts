@@ -367,26 +367,8 @@ msgstr "Vəziyyət"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "Mübadilə buferində və ya seçilmiş fayllarda etibarlı URL yoxdur!"
 
-msgid "IPs"
-msgstr "IP ünvanları"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "Pinq"
-
-msgid "Ports"
-msgstr "Portlar"
-
-msgid "Hostname"
-msgstr "Host adı"
-
 msgid "Example:"
 msgstr "Nümunə:"
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "IP ünvanlarını və ya ünvan aralıqlarını daxil edin."
 
 msgid "Enter the URLs."
 msgstr "URL-ləri daxil edin."
@@ -426,12 +408,6 @@ msgstr "Aşağı"
 
 msgid "Medium"
 msgstr "Orta"
-
-msgid "Online"
-msgstr "Onlayn"
-
-msgid "Offline"
-msgstr "Oflayn"
 
 msgid "Valid signature"
 msgstr "Etibarlı imza"
@@ -1299,10 +1275,6 @@ msgstr "Şəkil: Üfüqi istiqamətdə üst-üstə yığ"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "Şəkil: Şaquli istiqamətdə üst-üstə yığ"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: Hostları skan et"
 
 #: Menu
 msgid "List hard links"

@@ -367,26 +367,8 @@ msgstr "Állapot"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "Nincs érvényes URL a vágólapon vagy a kijelölt fájlokban!"
 
-msgid "IPs"
-msgstr "IP-címek"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "Ping"
-
-msgid "Ports"
-msgstr "Portok"
-
-msgid "Hostname"
-msgstr "Gazdanév"
-
 msgid "Example:"
 msgstr "Példa:"
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "Adjon meg IP-címeket vagy IP-tartományokat."
 
 msgid "Enter the URLs."
 msgstr "Adja meg az URL-eket."
@@ -426,12 +408,6 @@ msgstr "Alacsony"
 
 msgid "Medium"
 msgstr "Közepes"
-
-msgid "Online"
-msgstr "Online"
-
-msgid "Offline"
-msgstr "Offline"
 
 msgid "Valid signature"
 msgstr "Érvényes aláírás"
@@ -1299,10 +1275,6 @@ msgstr "Kép: egymás mellé (vízszintes)"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "Kép: egymás alá (függőleges)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: gazdák vizsgálata"
 
 #: Menu
 msgid "List hard links"

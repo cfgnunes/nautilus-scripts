@@ -367,26 +367,8 @@ msgstr "Stare"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "Nu există URL-uri valide în clipboard sau în fișierele selectate!"
 
-msgid "IPs"
-msgstr "Adrese IP"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "Ping"
-
-msgid "Ports"
-msgstr "Porturi"
-
-msgid "Hostname"
-msgstr "Nume gazdă"
-
 msgid "Example:"
 msgstr "Exemplu:"
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "Introduceți adrese IP sau intervale IP."
 
 msgid "Enter the URLs."
 msgstr "Introduceți URL-urile."
@@ -426,12 +408,6 @@ msgstr "Scăzută"
 
 msgid "Medium"
 msgstr "Medie"
-
-msgid "Online"
-msgstr "Online"
-
-msgid "Offline"
-msgstr "Offline"
 
 msgid "Valid signature"
 msgstr "Semnătură validă"
@@ -1299,10 +1275,6 @@ msgstr "Imagine: stivuire (orizontal)"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "Imagine: stivuire (vertical)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: scanare gazde"
 
 #: Menu
 msgid "List hard links"

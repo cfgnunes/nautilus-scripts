@@ -367,26 +367,8 @@ msgstr "Trạng thái"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "Không có URL hợp lệ trong bộ nhớ tạm hoặc trong các tệp đã chọn!"
 
-msgid "IPs"
-msgstr "Địa chỉ IP"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "Ping"
-
-msgid "Ports"
-msgstr "Cổng"
-
-msgid "Hostname"
-msgstr "Tên máy"
-
 msgid "Example:"
 msgstr "Ví dụ:"
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "Nhập địa chỉ IP hoặc dải IP."
 
 msgid "Enter the URLs."
 msgstr "Nhập các URL."
@@ -426,12 +408,6 @@ msgstr "Thấp"
 
 msgid "Medium"
 msgstr "Trung bình"
-
-msgid "Online"
-msgstr "Trực tuyến"
-
-msgid "Offline"
-msgstr "Ngoại tuyến"
 
 msgid "Valid signature"
 msgstr "Chữ ký hợp lệ"
@@ -1299,10 +1275,6 @@ msgstr "Hình ảnh: Ghép hàng (ngang)"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "Hình ảnh: Ghép cột (dọc)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: Quét"
 
 #: Menu
 msgid "List hard links"

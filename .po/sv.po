@@ -367,26 +367,8 @@ msgstr "Status"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "Det finns inga giltiga URL:er i urklipp eller i de markerade filerna!"
 
-msgid "IPs"
-msgstr "IP-adresser"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "Ping"
-
-msgid "Ports"
-msgstr "Portar"
-
-msgid "Hostname"
-msgstr "Värdnamn"
-
 msgid "Example:"
 msgstr "Exempel:"
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "Ange IP-adresser eller IP-intervall."
 
 msgid "Enter the URLs."
 msgstr "Ange URL:erna."
@@ -426,12 +408,6 @@ msgstr "Låg"
 
 msgid "Medium"
 msgstr "Medel"
-
-msgid "Online"
-msgstr "Online"
-
-msgid "Offline"
-msgstr "Offline"
 
 msgid "Valid signature"
 msgstr "Giltig signatur"
@@ -1299,10 +1275,6 @@ msgstr "Bild: stapla (horisontellt)"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "Bild: stapla (vertikalt)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: skanna värdar"
 
 #: Menu
 msgid "List hard links"

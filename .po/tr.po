@@ -367,26 +367,8 @@ msgstr "Durum"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "Panoda veya seçili dosyalarda geçerli bir URL yok!"
 
-msgid "IPs"
-msgstr "IP'ler"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "Ping"
-
-msgid "Ports"
-msgstr "Portlar"
-
-msgid "Hostname"
-msgstr "Ana bilgisayar adı"
-
 msgid "Example:"
 msgstr "Örnek:"
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "IP adresleri veya IP aralıkları girin."
 
 msgid "Enter the URLs."
 msgstr "URL'leri girin."
@@ -426,12 +408,6 @@ msgstr "Düşük"
 
 msgid "Medium"
 msgstr "Orta"
-
-msgid "Online"
-msgstr "Çevrimiçi"
-
-msgid "Offline"
-msgstr "Çevrimdışı"
 
 msgid "Valid signature"
 msgstr "Geçerli imza"
@@ -1299,10 +1275,6 @@ msgstr "Görüntü: Yığ (yatay)"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "Görüntü: Yığ (dikey)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: Tarayıcı"
 
 #: Menu
 msgid "List hard links"

@@ -367,26 +367,8 @@ msgstr "Status"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "Não há URLs válidas na área de transferência ou nos arquivos selecionados!"
 
-msgid "IPs"
-msgstr "IPs"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "Ping"
-
-msgid "Ports"
-msgstr "Portas"
-
-msgid "Hostname"
-msgstr "Hostname"
-
 msgid "Example:"
 msgstr "Exemplo:"
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "Digite os endereços IP ou faixas de IP."
 
 msgid "Enter the URLs."
 msgstr "Digite as URLs."
@@ -426,12 +408,6 @@ msgstr "Baixa"
 
 msgid "Medium"
 msgstr "Média"
-
-msgid "Online"
-msgstr "Online"
-
-msgid "Offline"
-msgstr "Offline"
 
 msgid "Valid signature"
 msgstr "Assinatura válida"
@@ -1299,10 +1275,6 @@ msgstr "Imagem: Empilhar (horizontal)"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "Imagem: Empilhar (vertical)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: Verificar hosts"
 
 #: Menu
 msgid "List hard links"

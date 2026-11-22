@@ -898,11 +898,6 @@ _main() {
         "nautilus-scripts/README.md" "$temp_dir/nautilus-scripts"
 
     __test_begin
-    echo "127.0.0.1" >"$temp_dir/Test internet.txt"
-    __test_script "Network and Internet/IP: Scan hosts" "text" "" \
-        "$temp_dir/Test internet.txt"
-
-    __test_begin
     echo "https://github.com/cfgnunes/nautilus-scripts.git" \
         >"$temp_dir/Test internet.txt"
     __test_script "Network and Internet/URL: Check HTTP status" "text" "" \

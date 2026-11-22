@@ -367,26 +367,8 @@ msgstr "स्थिति"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "क्लिपबोर्ड या चुनी गई फ़ाइलों में कोई वैध URL नहीं हैं!"
 
-msgid "IPs"
-msgstr "IP पते"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "पिंग"
-
-msgid "Ports"
-msgstr "पोर्ट"
-
-msgid "Hostname"
-msgstr "होस्टनाम"
-
 msgid "Example:"
 msgstr "उदाहरण:"
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "IP पते या IP रेंज दर्ज करें।"
 
 msgid "Enter the URLs."
 msgstr "URL दर्ज करें।"
@@ -426,12 +408,6 @@ msgstr "कम"
 
 msgid "Medium"
 msgstr "मध्यम"
-
-msgid "Online"
-msgstr "ऑनलाइन"
-
-msgid "Offline"
-msgstr "ऑफ़लाइन"
 
 msgid "Valid signature"
 msgstr "वैध हस्ताक्षर"
@@ -1299,10 +1275,6 @@ msgstr "छवि: स्टैक करें (क्षैतिज)"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "छवि: स्टैक करें (ऊर्ध्वाधर)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: स्कैनर"
 
 #: Menu
 msgid "List hard links"

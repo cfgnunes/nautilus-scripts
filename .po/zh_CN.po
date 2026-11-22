@@ -367,26 +367,8 @@ msgstr "状态"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "剪贴板或所选文件中没有有效的 URL！"
 
-msgid "IPs"
-msgstr "IP地址"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "Ping"
-
-msgid "Ports"
-msgstr "端口"
-
-msgid "Hostname"
-msgstr "主机名"
-
 msgid "Example:"
 msgstr "示例："
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "输入 IP 地址或 IP 范围。"
 
 msgid "Enter the URLs."
 msgstr "请输入这些 URL。"
@@ -426,12 +408,6 @@ msgstr "低"
 
 msgid "Medium"
 msgstr "中"
-
-msgid "Online"
-msgstr "在线"
-
-msgid "Offline"
-msgstr "离线"
 
 msgid "Valid signature"
 msgstr "有效签名"
@@ -1299,10 +1275,6 @@ msgstr "图像：堆叠（水平）"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "图像：堆叠（垂直）"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP：扫描器"
 
 #: Menu
 msgid "List hard links"

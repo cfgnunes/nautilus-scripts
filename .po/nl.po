@@ -367,26 +367,8 @@ msgstr "Status"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "Er staan geen geldige url's op het klembord of in de gekozen bestanden!"
 
-msgid "IPs"
-msgstr "IP-adressen"
-
-msgid "IP"
-msgstr "IP-adres"
-
-msgid "Ping"
-msgstr "Ping"
-
-msgid "Ports"
-msgstr "Poorten"
-
-msgid "Hostname"
-msgstr "Hostnaam"
-
 msgid "Example:"
 msgstr "Voorbeeld:"
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "Voer IP-adressen of -bereiken in."
 
 msgid "Enter the URLs."
 msgstr "Voer de url's in."
@@ -426,12 +408,6 @@ msgstr "Laag"
 
 msgid "Medium"
 msgstr "Gemiddeld"
-
-msgid "Online"
-msgstr "Online"
-
-msgid "Offline"
-msgstr "Offline"
 
 msgid "Valid signature"
 msgstr "Geldige handtekening"
@@ -1299,10 +1275,6 @@ msgstr "Afbeelding: stapelen (horizontaal)"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "Afbeelding: stapelen (verticaal)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: Scan hosts"
 
 #: Menu
 msgid "List hard links"

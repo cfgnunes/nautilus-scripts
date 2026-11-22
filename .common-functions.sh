@@ -613,10 +613,6 @@ _run_in_sandbox() {
     if [[ "$use_network" == "true" ]]; then
         sandbox_args+=(--share-net)
         local cmd=${1##*/}
-        # NOTE: 'ping' needs 'CAP_NET_RAW'.
-        if [[ "$cmd" == "ping" ]]; then
-            sandbox_args+=(--cap-add CAP_NET_RAW)
-        fi
         # NOTE: 'pdfannots' and 'ocrmypdf', when used via 'pkgx',
         # need access to the local package cache.
         if [[ "$PKGX_AVAILABLE" == "true" ]]; then

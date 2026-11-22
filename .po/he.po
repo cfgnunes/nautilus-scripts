@@ -367,26 +367,8 @@ msgstr "מצב"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "אין כתובות תקינות בלוח הגזירים או בין הקבצים שנבחרו!"
 
-msgid "IPs"
-msgstr "כתובות IP"
-
-msgid "IP"
-msgstr "כתובת IP"
-
-msgid "Ping"
-msgstr "שליחת פינג"
-
-msgid "Ports"
-msgstr "פתחות"
-
-msgid "Hostname"
-msgstr "שם מארח"
-
 msgid "Example:"
 msgstr "דוגמה："
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "נא להקליד כתובות IP או טווחי כתובות IP."
 
 msgid "Enter the URLs."
 msgstr "נא למלא את הכתובות."
@@ -426,12 +408,6 @@ msgstr "נמוך"
 
 msgid "Medium"
 msgstr "בינוני"
-
-msgid "Online"
-msgstr "במצב מקוון"
-
-msgid "Offline"
-msgstr "במצב לא מקוון"
 
 msgid "Valid signature"
 msgstr "חתימה תקנית"
@@ -1299,10 +1275,6 @@ msgstr "תמונה: ערימה (אופקית)"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "תמונה: ערימה (אנכית)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "כתובות IP: סורק"
 
 #: Menu
 msgid "List hard links"

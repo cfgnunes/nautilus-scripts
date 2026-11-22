@@ -367,26 +367,8 @@ msgstr "Status"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "Es gibt keine gültigen URLs in der Zwischenablage oder in den ausgewählten Dateien!"
 
-msgid "IPs"
-msgstr "IPs"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "Ping"
-
-msgid "Ports"
-msgstr "Ports"
-
-msgid "Hostname"
-msgstr "Hostname"
-
 msgid "Example:"
 msgstr "Beispiel:"
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "Geben Sie IP-Adressen oder IP-Bereiche ein."
 
 msgid "Enter the URLs."
 msgstr "Geben Sie die URLs ein."
@@ -426,12 +408,6 @@ msgstr "Niedrig"
 
 msgid "Medium"
 msgstr "Mittel"
-
-msgid "Online"
-msgstr "Online"
-
-msgid "Offline"
-msgstr "Offline"
 
 msgid "Valid signature"
 msgstr "Gültige Signatur"
@@ -1299,10 +1275,6 @@ msgstr "Bild: Stapeln (horizontal)"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "Bild: Stapeln (vertikal)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: Scan hosts"
 
 #: Menu
 msgid "List hard links"

@@ -367,26 +367,8 @@ msgstr "Stav"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "Ve schránce ani ve vybraných souborech nejsou žádné platné adresy URL!"
 
-msgid "IPs"
-msgstr "Adresy IP"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "Ping"
-
-msgid "Ports"
-msgstr "Porty"
-
-msgid "Hostname"
-msgstr "Název hostitele"
-
 msgid "Example:"
 msgstr "Příklad:"
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "Zadejte adresy IP nebo rozsahy IP."
 
 msgid "Enter the URLs."
 msgstr "Zadejte adresy URL."
@@ -426,12 +408,6 @@ msgstr "Nízká"
 
 msgid "Medium"
 msgstr "Střední"
-
-msgid "Online"
-msgstr "Online"
-
-msgid "Offline"
-msgstr "Offline"
 
 msgid "Valid signature"
 msgstr "Platný podpis"
@@ -1299,10 +1275,6 @@ msgstr "Obrázek: složit (vodorovně)"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "Obrázek: složit (svisle)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: skenovat hostitele"
 
 #: Menu
 msgid "List hard links"

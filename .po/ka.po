@@ -367,26 +367,8 @@ msgstr "სტატუსი"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "მონიშნულ ფაილებში, ან ბუფერში სწორი URL-ები აღმოჩენილი არაა!"
 
-msgid "IPs"
-msgstr "IP-ები"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "პინგი"
-
-msgid "Ports"
-msgstr "პორტები"
-
-msgid "Hostname"
-msgstr "ჰოსტის სახელი"
-
 msgid "Example:"
 msgstr "მაგალითი:"
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "შეიყვანეთ IP მისამართები, ან IP დიაპაზონები."
 
 msgid "Enter the URLs."
 msgstr "შეიყვანეთ URL-ები."
@@ -426,12 +408,6 @@ msgstr "დაბალი"
 
 msgid "Medium"
 msgstr "საშუალო"
-
-msgid "Online"
-msgstr "ხაზზე"
-
-msgid "Offline"
-msgstr "ხაზგარეშე"
 
 msgid "Valid signature"
 msgstr "სწორი ხელმოწერა"
@@ -1299,10 +1275,6 @@ msgstr "გამოსახულება: შეკრება (ჰორ�
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "გამოსახულება: შეკრება (ვერტიკალურად)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: ჰოსტების სკანირება"
 
 #: Menu
 msgid "List hard links"

@@ -1298,13 +1298,13 @@ __run_deps_get_dependency_value() {
     local expected_output=""
     local output=""
 
-    output=$(_deps_get_dependency_value "dig" "dnf" "PKG_MAP")
-    expected_output="bind-utils"
-    __test_equal "Resolve dnf package for 'dig'." "$expected_output" "$output"
+    output=$(_deps_get_dependency_value "exiftool" "dnf" "PKG_MAP")
+    expected_output="perl-Image-ExifTool"
+    __test_equal "Resolve dnf package for 'exiftool'." "$expected_output" "$output"
 
-    output=$(_deps_get_dependency_value "dig" "pkgx" "PKG_MAP")
-    expected_output="isc.org/bind9"
-    __test_equal "Resolve pkgx package for 'dig'." "$expected_output" "$output"
+    output=$(_deps_get_dependency_value "exiftool" "pkgx" "PKG_MAP")
+    expected_output="exiftool.org"
+    __test_equal "Resolve pkgx package for 'exiftool'." "$expected_output" "$output"
 
     output=$(_deps_get_dependency_value "nonexistent_key_xyz" "dnf" "PKG_MAP")
     expected_output=""
@@ -1313,12 +1313,12 @@ __run_deps_get_dependency_value() {
     __test_exit_code "Unknown key returns 0." 0 \
         _deps_get_dependency_value "nonexistent_key_xyz" "dnf" "PKG_MAP"
 
-    output=$(_deps_get_dependency_value "dig" "nix-env" "PKG_MAP")
-    expected_output="dnsutils"
+    output=$(_deps_get_dependency_value "exiftool" "nix-env" "PKG_MAP")
+    expected_output="exiftool"
     __test_equal "Map nix to nix-env." "$expected_output" "$output"
 
-    output=$(_deps_get_dependency_value "dig" "xbps-install" "PKG_MAP")
-    expected_output="bind"
+    output=$(_deps_get_dependency_value "exiftool" "xbps-install" "PKG_MAP")
+    expected_output="exiftool"
     __test_equal "Map xbps to xbps-install." "$expected_output" "$output"
 
     output=$(_deps_get_dependency_value "clamscan" "dnf" "POST_INSTALL")

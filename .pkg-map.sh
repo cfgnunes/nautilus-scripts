@@ -188,18 +188,6 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
-    ["dig"]="
-        termux: dnsutils
-        apt:    bind9-dnsutils
-        dnf:    bind-utils
-        pacman: bind
-        nix:    dnsutils
-        zypper: bind-utils
-        guix:   bind
-        xbps:   bind
-        pkgx:   isc.org/bind9
-    "
-
     ["exiftool"]="
         termux: exiftool
         apt:    libimage-exiftool-perl
@@ -489,18 +477,6 @@ declare -A PKG_MAP=(
         pkgx:   mp3gain.sourceforge.net
     "
 
-    ["nmap"]="
-        termux: nmap
-        apt:    nmap
-        dnf:    nmap
-        pacman: nmap
-        nix:    nmap
-        zypper: nmap
-        guix:   nmap
-        xbps:   nmap
-        pkgx:   nmap.org
-    "
-
     ["okteta"]="
         termux:
         apt:    okteta
@@ -596,18 +572,6 @@ declare -A PKG_MAP=(
         guix:   perl
         xbps:   perl
         pkgx:   perl.org
-    "
-
-    ["ping"]="
-        termux: inetutils
-        apt:    iputils-ping
-        dnf:    iputils
-        pacman: iputils
-        nix:    iputils
-        zypper: iputils
-        guix:   iputils
-        xbps:   iputils
-        pkgx:   github.com/iputils/iputils
     "
 
     ["qpdf"]="

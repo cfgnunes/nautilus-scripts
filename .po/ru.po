@@ -367,26 +367,8 @@ msgstr "Статус"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "В буфере обмена или в выбранных файлах нет допустимых URL!"
 
-msgid "IPs"
-msgstr "IP-адреса"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "Пинг"
-
-msgid "Ports"
-msgstr "Порты"
-
-msgid "Hostname"
-msgstr "Имя хоста"
-
 msgid "Example:"
 msgstr "Пример:"
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "Введите IP-адреса или диапазоны IP."
 
 msgid "Enter the URLs."
 msgstr "Введите URL."
@@ -426,12 +408,6 @@ msgstr "Низкий"
 
 msgid "Medium"
 msgstr "Средний"
-
-msgid "Online"
-msgstr "Онлайн"
-
-msgid "Offline"
-msgstr "Офлайн"
 
 msgid "Valid signature"
 msgstr "Допустимая подпись"
@@ -1299,10 +1275,6 @@ msgstr "Изображение: сложить (горизонтально)"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "Изображение: сложить (вертикально)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: сканирование"
 
 #: Menu
 msgid "List hard links"

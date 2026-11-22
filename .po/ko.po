@@ -367,26 +367,8 @@ msgstr "상태"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "클립보드나 선택한 파일에 유효한 URL이 없습니다!"
 
-msgid "IPs"
-msgstr "IP 주소"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "핑"
-
-msgid "Ports"
-msgstr "포트"
-
-msgid "Hostname"
-msgstr "호스트명"
-
 msgid "Example:"
 msgstr "예시："
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "IP 주소 또는 IP 범위를 입력하세요."
 
 msgid "Enter the URLs."
 msgstr "URL을 입력하세요."
@@ -426,12 +408,6 @@ msgstr "낮음"
 
 msgid "Medium"
 msgstr "중간"
-
-msgid "Online"
-msgstr "온라인"
-
-msgid "Offline"
-msgstr "오프라인"
 
 msgid "Valid signature"
 msgstr "유효한 서명"
@@ -1299,10 +1275,6 @@ msgstr "이미지: 쌓기 (가로)"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "이미지: 쌓기 (세로)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: 스캐너"
 
 #: Menu
 msgid "List hard links"

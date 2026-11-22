@@ -367,26 +367,8 @@ msgstr "Status"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "Daar is geen geldige URL's op die knipbord of in die gekose lêers nie!"
 
-msgid "IPs"
-msgstr "IP's"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "Ping"
-
-msgid "Ports"
-msgstr "Poorte"
-
-msgid "Hostname"
-msgstr "Gasheernaam"
-
 msgid "Example:"
 msgstr "Voorbeeld:"
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "Voer IP-adresse of IP-reekse in."
 
 msgid "Enter the URLs."
 msgstr "Voer die URL's in."
@@ -426,12 +408,6 @@ msgstr "Laag"
 
 msgid "Medium"
 msgstr "Gemiddeld"
-
-msgid "Online"
-msgstr "Aanlyn"
-
-msgid "Offline"
-msgstr "Vanlyn"
 
 msgid "Valid signature"
 msgstr "Geldige handtekening"
@@ -1299,10 +1275,6 @@ msgstr "Beeld: Stapel (horisontaal)"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "Beeld: Stapel (vertikaal)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: Skandeer gashere"
 
 #: Menu
 msgid "List hard links"

@@ -366,25 +366,7 @@ msgstr ""
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr ""
 
-msgid "IPs"
-msgstr ""
-
-msgid "IP"
-msgstr ""
-
-msgid "Ping"
-msgstr ""
-
-msgid "Ports"
-msgstr ""
-
-msgid "Hostname"
-msgstr ""
-
 msgid "Example:"
-msgstr ""
-
-msgid "Enter IP addresses or IP ranges."
 msgstr ""
 
 msgid "Enter the URLs."
@@ -424,12 +406,6 @@ msgid "Low"
 msgstr ""
 
 msgid "Medium"
-msgstr ""
-
-msgid "Online"
-msgstr ""
-
-msgid "Offline"
 msgstr ""
 
 msgid "Valid signature"
@@ -1297,10 +1273,6 @@ msgstr ""
 
 #: Menu
 msgid "Image: Stack (vertical)"
-msgstr ""
-
-#: Menu
-msgid "IP: Scan hosts"
 msgstr ""
 
 #: Menu

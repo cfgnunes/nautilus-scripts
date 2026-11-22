@@ -367,26 +367,8 @@ msgstr "Statut"
 msgid "There are no valid URLs in the clipboard or in the selected files!"
 msgstr "Il n'y a pas d'URL valides dans le presse-papiers ou dans les fichiers sélectionnés !"
 
-msgid "IPs"
-msgstr "IP"
-
-msgid "IP"
-msgstr "IP"
-
-msgid "Ping"
-msgstr "Ping"
-
-msgid "Ports"
-msgstr "Ports"
-
-msgid "Hostname"
-msgstr "Nom d'hôte"
-
 msgid "Example:"
 msgstr "Exemple:"
-
-msgid "Enter IP addresses or IP ranges."
-msgstr "Entrez les adresses IP ou les plages d'IP."
 
 msgid "Enter the URLs."
 msgstr "Entrez les URL."
@@ -426,12 +408,6 @@ msgstr "Faible"
 
 msgid "Medium"
 msgstr "Moyen"
-
-msgid "Online"
-msgstr "En ligne"
-
-msgid "Offline"
-msgstr "Hors ligne"
 
 msgid "Valid signature"
 msgstr "Signature valide"
@@ -1299,10 +1275,6 @@ msgstr "Image: Empiler (horizontal)"
 #: Menu
 msgid "Image: Stack (vertical)"
 msgstr "Image: Empiler (vertical)"
-
-#: Menu
-msgid "IP: Scan hosts"
-msgstr "IP: Scan hosts"
 
 #: Menu
 msgid "List hard links"
