@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-
-# Test almost all scripts.
+# =============================================================================
+# Description: Test almost all scripts.
+# =============================================================================
 
 # Source the file '.common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)

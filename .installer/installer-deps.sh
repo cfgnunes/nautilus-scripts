@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Project: Enhanced File Manager Actions
 # Description: Dependency check and package installation functions.
 # Sourced by 'install.sh'. Do not run directly.
 # =============================================================================

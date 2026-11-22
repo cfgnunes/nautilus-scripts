@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Project: Enhanced File Manager Actions
 # Description: Installer functions for Nemo.
 # Sourced by 'install.sh'. Do not run directly.
 # =============================================================================

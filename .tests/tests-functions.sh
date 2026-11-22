@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-
-# Test the functions defined in the file '.common-functions.sh'.
+# =============================================================================
+# Description: Test the functions defined in the file '.common-functions.sh'.
+# =============================================================================
 
 # Source the file '.common-functions.sh'.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)

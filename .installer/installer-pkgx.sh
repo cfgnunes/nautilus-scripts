@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Project: Enhanced File Manager Actions
 # Description: Installer function for pkgx.
 # Sourced by 'install.sh'. Do not run directly.
 # =============================================================================
