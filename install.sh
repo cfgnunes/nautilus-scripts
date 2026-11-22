@@ -146,8 +146,8 @@ _get_parameters_command_line() {
         case "$1" in
         -c | --check-dependencies) OPT_INSTALL_BASIC_DEPS="true" ;;
         -C | --no-check-dependencies) OPT_INSTALL_BASIC_DEPS="false" ;;
-        -f | --close-filemanager) OPT_CLOSE_FILE_MANAGER="true" ;;
-        -F | --no-close-filemanager) OPT_CLOSE_FILE_MANAGER="false" ;;
+        -f | --close-file-manager) OPT_CLOSE_FILE_MANAGER="true" ;;
+        -F | --no-close-file-manager) OPT_CLOSE_FILE_MANAGER="false" ;;
         -k | --install-shortcuts) OPT_INSTALL_ACCELS="true" ;;
         -K | --no-install-shortcuts) OPT_INSTALL_ACCELS="false" ;;
         -n | --non-interactive) OPT_INTERACTIVE_INSTALL="false" ;;
@@ -159,8 +159,8 @@ _get_parameters_command_line() {
             echo
             echo "  -c, --check-dependencies        Check for basic dependencies."
             echo "  -C, --no-check-dependencies     Do not check for basic dependencies."
-            echo "  -f, --close-filemanager         Close file manager after install."
-            echo "  -F, --no-close-filemanager      Do not close file manager after install."
+            echo "  -f, --close-file-manager        Close file manager after install."
+            echo "  -F, --no-close-file-manager     Do not close file manager after install."
             echo "  -k, --install-shortcuts         Install keyboard accelerators."
             echo "  -K, --no-install-shortcuts      Do not install keyboard accelerators."
             echo "  -n, --non-interactive           Run without prompts."
@@ -322,7 +322,7 @@ _main() {
         [[ "$OPT_INSTALL_ACCELS" == "true" ]] && _install_accels
 
         # Step 3.3: Reload file manager to apply changes.
-        [[ "$OPT_CLOSE_FILE_MANAGER" == "true" ]] && _close_filemanager
+        [[ "$OPT_CLOSE_FILE_MANAGER" == "true" ]] && _close_file_manager
         _echo_info "> $(_i18n 'Done!')"
     done
 
@@ -586,13 +586,13 @@ _list_scripts_categories() {
 # SECTION: File managers
 # -----------------------------------------------------------------------------
 
-# Function: _check_exist_filemanager
+# Function: _check_exist_file_manager
 #
 # Description:
 #   This function checks if at least one compatible file manager exists in the
 #   system by iterating through a predefined list of supported file managers
 #   defined in '$COMPATIBLE_FILE_MANAGERS'.
-_check_exist_filemanager() {
+_check_exist_file_manager() {
     local file_manager=""
     for file_manager in "${COMPATIBLE_FILE_MANAGERS[@]}"; do
         if _command_exists "$file_manager"; then
@@ -637,13 +637,13 @@ _install_actions() {
     esac
 }
 
-# Function: _close_filemanager
+# Function: _close_file_manager
 #
 # Description:
 #   This function closes the current file manager so that it reloads its
 #   configurations. For most file managers, the `-q` option is used to quit
 #   gracefully.
-_close_filemanager() {
+_close_file_manager() {
     if [[ -z "$FILE_MANAGER" ||
         "$FILE_MANAGER" == "dolphin" ||
         "$FILE_MANAGER" == "krusader" ]]; then
@@ -653,11 +653,11 @@ _close_filemanager() {
     _echo_info "> ($FILE_MANAGER) $(_i18n 'Closing the file manager...')"
 
     case "$FILE_MANAGER" in
-    "nautilus") _close_filemanager_nautilus ;;
-    "caja") _close_filemanager_caja ;;
-    "nemo") _close_filemanager_nemo ;;
-    "thunar") _close_filemanager_thunar ;;
-    "pcmanfm"*) _close_filemanager_pcmanfm ;;
+    "nautilus") _close_file_manager_nautilus ;;
+    "caja") _close_file_manager_caja ;;
+    "nemo") _close_file_manager_nemo ;;
+    "thunar") _close_file_manager_thunar ;;
+    "pcmanfm"*) _close_file_manager_pcmanfm ;;
     esac
 }
 

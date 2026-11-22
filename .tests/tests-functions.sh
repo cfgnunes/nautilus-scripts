@@ -64,7 +64,7 @@ _main() {
     __run_get_file_mime
     __run_get_filename_extension
     __run_get_filename_next_suffix
-    __run_get_filenames_filemanager
+    __run_get_filenames_file_manager
     __run_get_files
     __run_get_items_count
     __run_get_max_procs
@@ -1744,7 +1744,7 @@ __run_session_environment() {
     __restore_script_env "$saved_script_env"
 }
 
-__run_get_filenames_filemanager() {
+__run_get_filenames_file_manager() {
     local output=""
     local expected_output=""
     local saved_input_files=$INPUT_FILES
@@ -1755,19 +1755,19 @@ __run_get_filenames_filemanager() {
 
     INPUT_FILES="a${FIELD_SEPARATOR}${FIELD_SEPARATOR}b"
     expected_output="a${FIELD_SEPARATOR}b"
-    output=$(_get_filenames_filemanager)
+    output=$(_get_filenames_file_manager)
     __test_equal "Fallback collapses standard input." "$expected_output" "$output"
 
     NAUTILUS_SCRIPT_SELECTED_URIS=""
     INPUT_FILES="plain"
     expected_output="plain"
-    output=$(_get_filenames_filemanager)
+    output=$(_get_filenames_file_manager)
     __test_equal "Empty selection falls back to standard input." \
         "$expected_output" "$output"
 
     NAUTILUS_SCRIPT_SELECTED_URIS=$'file:///tmp/my%20file.txt\nfile:///tmp/b.txt'
     expected_output=$'/tmp/my file.txt\r/tmp/b.txt'
-    output=$(_get_filenames_filemanager)
+    output=$(_get_filenames_file_manager)
     __test_equal "Decode file:// selections." "$expected_output" "$output"
 
     INPUT_FILES=$saved_input_files

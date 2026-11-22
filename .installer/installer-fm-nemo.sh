@@ -5,7 +5,7 @@
 # Sourced by 'install.sh'. Do not run directly.
 # =============================================================================
 
-_close_filemanager_nemo() {
+_close_file_manager_nemo() {
     # This file manager supports the '-q' option to quit gracefully.
     $FILE_MANAGER -q &>/dev/null
 }

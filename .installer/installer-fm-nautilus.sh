@@ -5,7 +5,7 @@
 # Sourced by 'install.sh'. Do not run directly.
 # =============================================================================
 
-_close_filemanager_nautilus() {
+_close_file_manager_nautilus() {
     # This file manager supports the '-q' option to quit gracefully.
     $FILE_MANAGER -q &>/dev/null
 }

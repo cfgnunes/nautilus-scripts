@@ -3315,13 +3315,13 @@ _set_clipboard_file() {
 # SECTION: Input files
 # -----------------------------------------------------------------------------
 
-# Function: _get_filenames_filemanager
+# Function: _get_filenames_file_manager
 #
 # Description:
 #   This function retrieves a list of selected filenames or URIs from a file
 #   manager and processes the input accordingly. If no selection is detected,
 #   it falls back to using a standard input file list.
-_get_filenames_filemanager() {
+_get_filenames_file_manager() {
     local input_files=""
 
     # Try to use the information provided by the file manager.
@@ -3394,7 +3394,7 @@ _get_filenames_filemanager() {
 _get_files() {
     local parameters=$1
     local input_files=""
-    input_files=$(_get_filenames_filemanager)
+    input_files=$(_get_filenames_file_manager)
 
     # Default values for input parameters.
     local par_max_items=""

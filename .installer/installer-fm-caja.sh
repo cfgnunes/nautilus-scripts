@@ -5,7 +5,7 @@
 # Sourced by 'install.sh'. Do not run directly.
 # =============================================================================
 
-_close_filemanager_caja() {
+_close_file_manager_caja() {
     # Reload the file manager in background to restore desktop session.
     if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
         # Only restart if running under MATE.

@@ -5,7 +5,7 @@
 # Sourced by 'install.sh'. Do not run directly.
 # =============================================================================
 
-_close_filemanager_pcmanfm() {
+_close_file_manager_pcmanfm() {
     # NOTE: 'pcmanfm-qt' does not reload automatically after quitting.
     # We need to capture its current launch command to restart it.
     local session_cmd=""
