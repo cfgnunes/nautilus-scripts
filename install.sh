@@ -5,7 +5,7 @@
 # Author: Cristiano Fraga G. Nunes
 # Repository: https://github.com/cfgnunes/nautilus-scripts
 # License: MIT License
-# Version: 33
+# Version: 33.1
 # =============================================================================
 
 # Description: Installs the Enhanced File Manager Actions.
@@ -18,7 +18,7 @@ set -u
 
 APP_FULL_NAME="Enhanced File Manager Actions"
 APP_NAME="nautilus-scripts"
-APP_VERSION="33"
+APP_VERSION="33.1"
 USER_OPT_DIR="$HOME/.local/opt"
 INSTALL_DIR="$USER_OPT_DIR/$APP_NAME"
 
