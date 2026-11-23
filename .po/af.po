@@ -953,6 +953,10 @@ msgid "Git: Reset and pull"
 msgstr "Git: Stel terug en trek"
 
 #: Menu
+msgid "Update scripts"
+msgstr "Dateer skripte op"
+
+#: Menu
 msgid "Decrypt"
 msgstr "Dekripteer"
 
@@ -1934,6 +1938,30 @@ msgstr "pkgx kan nie op jou stelsel loop nie!"
 
 msgid "Could not download the file!"
 msgstr "Kon nie die lêer aflaai nie!"
+
+msgid "Checking for updates. Please wait..."
+msgstr "Kontroleer vir opdaterings. Wag asseblief..."
+
+msgid "The scripts are already up to date."
+msgstr "Die skripte is reeds op datum."
+
+msgid "The scripts will be updated."
+msgstr "Die skripte sal opgedateer word."
+
+msgid "Current version:"
+msgstr "Huidige weergawe:"
+
+msgid "Latest version:"
+msgstr "Nuutste weergawe:"
+
+msgid "Updating the scripts. Please wait..."
+msgstr "Dateer die skripte op. Wag asseblief..."
+
+msgid "The scripts were successfully updated!"
+msgstr "Die skripte is suksesvol opgedateer!"
+
+msgid "Failed to update the scripts."
+msgstr "Kon nie die skripte opdateer nie."
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

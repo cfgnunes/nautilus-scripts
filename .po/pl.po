@@ -953,6 +953,10 @@ msgid "Git: Reset and pull"
 msgstr "Git: Resetuj i pobierz"
 
 #: Menu
+msgid "Update scripts"
+msgstr "Aktualizuj skrypty"
+
+#: Menu
 msgid "Decrypt"
 msgstr "Odszyfruj"
 
@@ -1934,6 +1938,30 @@ msgstr "pkgx nie może działać w twoim systemie!"
 
 msgid "Could not download the file!"
 msgstr "Nie udało się pobrać pliku!"
+
+msgid "Checking for updates. Please wait..."
+msgstr "Sprawdzanie aktualizacji. Proszę czekać..."
+
+msgid "The scripts are already up to date."
+msgstr "Skrypty są już aktualne."
+
+msgid "The scripts will be updated."
+msgstr "Skrypty zostaną zaktualizowane."
+
+msgid "Current version:"
+msgstr "Bieżąca wersja:"
+
+msgid "Latest version:"
+msgstr "Najnowsza wersja:"
+
+msgid "Updating the scripts. Please wait..."
+msgstr "Aktualizowanie skryptów. Proszę czekać..."
+
+msgid "The scripts were successfully updated!"
+msgstr "Skrypty zostały pomyślnie zaktualizowane!"
+
+msgid "Failed to update the scripts."
+msgstr "Nie udało się zaktualizować skryptów."
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

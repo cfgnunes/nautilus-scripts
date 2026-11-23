@@ -953,6 +953,10 @@ msgid "Git: Reset and pull"
 msgstr "Git: रीसेट करें और पुल करें"
 
 #: Menu
+msgid "Update scripts"
+msgstr "स्क्रिप्ट अपडेट करें"
+
+#: Menu
 msgid "Decrypt"
 msgstr "डिक्रिप्ट करें"
 
@@ -1934,6 +1938,30 @@ msgstr "pkgx आपके सिस्टम पर नहीं चल सक�
 
 msgid "Could not download the file!"
 msgstr "फ़ाइल डाउनलोड नहीं की जा सकी!"
+
+msgid "Checking for updates. Please wait..."
+msgstr "अपडेट की जाँच कर रहा है। कृपया प्रतीक्षा करें..."
+
+msgid "The scripts are already up to date."
+msgstr "स्क्रिप्ट पहले से अप-टू-डेट हैं।"
+
+msgid "The scripts will be updated."
+msgstr "स्क्रिप्ट अपडेट की जाएँगी।"
+
+msgid "Current version:"
+msgstr "वर्तमान संस्करण:"
+
+msgid "Latest version:"
+msgstr "नवीनतम संस्करण:"
+
+msgid "Updating the scripts. Please wait..."
+msgstr "स्क्रिप्ट अपडेट कर रहा है। कृपया प्रतीक्षा करें..."
+
+msgid "The scripts were successfully updated!"
+msgstr "स्क्रिप्ट सफलतापूर्वक अपडेट हो गईं!"
+
+msgid "Failed to update the scripts."
+msgstr "स्क्रिप्ट अपडेट करने में विफल।"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

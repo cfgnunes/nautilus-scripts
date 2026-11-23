@@ -953,6 +953,10 @@ msgid "Git: Reset and pull"
 msgstr "Git: resetare și extragere"
 
 #: Menu
+msgid "Update scripts"
+msgstr "Actualizează scripturile"
+
+#: Menu
 msgid "Decrypt"
 msgstr "Decriptare"
 
@@ -1934,6 +1938,30 @@ msgstr "pkgx nu poate rula pe sistem!"
 
 msgid "Could not download the file!"
 msgstr "Nu s-a putut descărca fișierul!"
+
+msgid "Checking for updates. Please wait..."
+msgstr "Se verifică actualizările. Vă rugăm să așteptați..."
+
+msgid "The scripts are already up to date."
+msgstr "Scripturile sunt deja actualizate."
+
+msgid "The scripts will be updated."
+msgstr "Scripturile vor fi actualizate."
+
+msgid "Current version:"
+msgstr "Versiunea curentă:"
+
+msgid "Latest version:"
+msgstr "Cea mai recentă versiune:"
+
+msgid "Updating the scripts. Please wait..."
+msgstr "Se actualizează scripturile. Vă rugăm să așteptați..."
+
+msgid "The scripts were successfully updated!"
+msgstr "Scripturile au fost actualizate cu succes!"
+
+msgid "Failed to update the scripts."
+msgstr "Actualizarea scripturilor a eșuat."
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

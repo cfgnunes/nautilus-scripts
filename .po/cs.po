@@ -953,6 +953,10 @@ msgid "Git: Reset and pull"
 msgstr "Git: obnovit a stáhnout"
 
 #: Menu
+msgid "Update scripts"
+msgstr "Aktualizovat skripty"
+
+#: Menu
 msgid "Decrypt"
 msgstr "Dešifrovat"
 
@@ -1934,6 +1938,30 @@ msgstr "pkgx nelze ve vašem systému spustit!"
 
 msgid "Could not download the file!"
 msgstr "Soubor se nepodařilo stáhnout!"
+
+msgid "Checking for updates. Please wait..."
+msgstr "Kontrola aktualizací. Čekejte prosím..."
+
+msgid "The scripts are already up to date."
+msgstr "Skripty jsou již aktuální."
+
+msgid "The scripts will be updated."
+msgstr "Skripty budou aktualizovány."
+
+msgid "Current version:"
+msgstr "Aktuální verze:"
+
+msgid "Latest version:"
+msgstr "Nejnovější verze:"
+
+msgid "Updating the scripts. Please wait..."
+msgstr "Aktualizace skriptů. Čekejte prosím..."
+
+msgid "The scripts were successfully updated!"
+msgstr "Skripty byly úspěšně aktualizovány!"
+
+msgid "Failed to update the scripts."
+msgstr "Aktualizace skriptů se nezdařila."
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

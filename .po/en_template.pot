@@ -952,6 +952,10 @@ msgid "Git: Reset and pull"
 msgstr ""
 
 #: Menu
+msgid "Update scripts"
+msgstr ""
+
+#: Menu
 msgid "Decrypt"
 msgstr ""
 
@@ -1932,6 +1936,30 @@ msgid "pkgx cannot run on your system!"
 msgstr ""
 
 msgid "Could not download the file!"
+msgstr ""
+
+msgid "Checking for updates. Please wait..."
+msgstr ""
+
+msgid "The scripts are already up to date."
+msgstr ""
+
+msgid "The scripts will be updated."
+msgstr ""
+
+msgid "Current version:"
+msgstr ""
+
+msgid "Latest version:"
+msgstr ""
+
+msgid "Updating the scripts. Please wait..."
+msgstr ""
+
+msgid "The scripts were successfully updated!"
+msgstr ""
+
+msgid "Failed to update the scripts."
 msgstr ""
 
 #~ msgid "EOF"

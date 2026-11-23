@@ -953,6 +953,10 @@ msgid "Git: Reset and pull"
 msgstr "Git: Reset và pull"
 
 #: Menu
+msgid "Update scripts"
+msgstr "Cập nhật script"
+
+#: Menu
 msgid "Decrypt"
 msgstr "Giải mã"
 
@@ -1934,6 +1938,30 @@ msgstr "pkgx không thể chạy trên hệ thống của bạn!"
 
 msgid "Could not download the file!"
 msgstr "Không thể tải xuống tệp!"
+
+msgid "Checking for updates. Please wait..."
+msgstr "Đang kiểm tra bản cập nhật. Vui lòng đợi..."
+
+msgid "The scripts are already up to date."
+msgstr "Các script đã được cập nhật."
+
+msgid "The scripts will be updated."
+msgstr "Các script sẽ được cập nhật."
+
+msgid "Current version:"
+msgstr "Phiên bản hiện tại:"
+
+msgid "Latest version:"
+msgstr "Phiên bản mới nhất:"
+
+msgid "Updating the scripts. Please wait..."
+msgstr "Đang cập nhật các script. Vui lòng đợi..."
+
+msgid "The scripts were successfully updated!"
+msgstr "Các script đã được cập nhật thành công!"
+
+msgid "Failed to update the scripts."
+msgstr "Cập nhật các script thất bại."
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

@@ -953,6 +953,10 @@ msgid "Git: Reset and pull"
 msgstr "Git: visszaállítás és letöltés"
 
 #: Menu
+msgid "Update scripts"
+msgstr "Szkriptek frissítése"
+
+#: Menu
 msgid "Decrypt"
 msgstr "Visszafejtés"
 
@@ -1934,6 +1938,30 @@ msgstr "A pkgx nem futtatható a rendszeren!"
 
 msgid "Could not download the file!"
 msgstr "A fájlt nem sikerült letölteni!"
+
+msgid "Checking for updates. Please wait..."
+msgstr "Frissítések keresése. Kérjük, várjon..."
+
+msgid "The scripts are already up to date."
+msgstr "A szkriptek már naprakészek."
+
+msgid "The scripts will be updated."
+msgstr "A szkriptek frissítve lesznek."
+
+msgid "Current version:"
+msgstr "Jelenlegi verzió:"
+
+msgid "Latest version:"
+msgstr "Legújabb verzió:"
+
+msgid "Updating the scripts. Please wait..."
+msgstr "A szkriptek frissítése. Kérjük, várjon..."
+
+msgid "The scripts were successfully updated!"
+msgstr "A szkriptek frissítése sikeresen megtörtént!"
+
+msgid "Failed to update the scripts."
+msgstr "A szkriptek frissítése sikertelen."
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

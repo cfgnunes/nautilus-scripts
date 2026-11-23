@@ -953,6 +953,10 @@ msgid "Git: Reset and pull"
 msgstr "Git：重置并拉取"
 
 #: Menu
+msgid "Update scripts"
+msgstr "更新脚本"
+
+#: Menu
 msgid "Decrypt"
 msgstr "解密"
 
@@ -1934,6 +1938,30 @@ msgstr "pkgx 无法在您的系统上运行！"
 
 msgid "Could not download the file!"
 msgstr "无法下载文件！"
+
+msgid "Checking for updates. Please wait..."
+msgstr "正在检查更新，请稍候..."
+
+msgid "The scripts are already up to date."
+msgstr "脚本已是最新版本。"
+
+msgid "The scripts will be updated."
+msgstr "脚本将被更新。"
+
+msgid "Current version:"
+msgstr "当前版本："
+
+msgid "Latest version:"
+msgstr "最新版本："
+
+msgid "Updating the scripts. Please wait..."
+msgstr "正在更新脚本，请稍候..."
+
+msgid "The scripts were successfully updated!"
+msgstr "脚本已成功更新！"
+
+msgid "Failed to update the scripts."
+msgstr "更新脚本失败。"
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

@@ -953,6 +953,10 @@ msgid "Git: Reset and pull"
 msgstr "Git: Sıfırla ve çek"
 
 #: Menu
+msgid "Update scripts"
+msgstr "Betikleri güncelle"
+
+#: Menu
 msgid "Decrypt"
 msgstr "Şifresini çöz"
 
@@ -1934,6 +1938,30 @@ msgstr "pkgx sisteminizde çalıştırılamıyor!"
 
 msgid "Could not download the file!"
 msgstr "Dosya indirilemedi!"
+
+msgid "Checking for updates. Please wait..."
+msgstr "Güncellemeler denetleniyor. Lütfen bekleyin..."
+
+msgid "The scripts are already up to date."
+msgstr "Betikler zaten güncel."
+
+msgid "The scripts will be updated."
+msgstr "Betikler güncellenecek."
+
+msgid "Current version:"
+msgstr "Geçerli sürüm:"
+
+msgid "Latest version:"
+msgstr "En son sürüm:"
+
+msgid "Updating the scripts. Please wait..."
+msgstr "Betikler güncelleniyor. Lütfen bekleyin..."
+
+msgid "The scripts were successfully updated!"
+msgstr "Betikler başarıyla güncellendi!"
+
+msgid "Failed to update the scripts."
+msgstr "Betikler güncellenemedi."
 
 #~ msgid "EOF"
 #~ msgstr "EOF"

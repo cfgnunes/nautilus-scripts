@@ -953,6 +953,10 @@ msgid "Git: Reset and pull"
 msgstr "Git: ჩამოყრა და პული"
 
 #: Menu
+msgid "Update scripts"
+msgstr "სკრიპტების განახლება"
+
+#: Menu
 msgid "Decrypt"
 msgstr "გაშიფვრა"
 
@@ -1934,6 +1938,30 @@ msgstr "pkgx თქვენს სისტემაზე ვერ გაე�
 
 msgid "Could not download the file!"
 msgstr "ფაილის გადმოწერა ვერ მოხერხდა!"
+
+msgid "Checking for updates. Please wait..."
+msgstr "მიმდინარეობს განახლებების შემოწმება. გთხოვთ, დაელოდოთ..."
+
+msgid "The scripts are already up to date."
+msgstr "სკრიპტები უკვე განახლებულია."
+
+msgid "The scripts will be updated."
+msgstr "სკრიპტები განახლდება."
+
+msgid "Current version:"
+msgstr "მიმდინარე ვერსია:"
+
+msgid "Latest version:"
+msgstr "უახლესი ვერსია:"
+
+msgid "Updating the scripts. Please wait..."
+msgstr "მიმდინარეობს სკრიპტების განახლება. გთხოვთ, დაელოდოთ..."
+
+msgid "The scripts were successfully updated!"
+msgstr "სკრიპტები წარმატებით განახლდა!"
+
+msgid "Failed to update the scripts."
+msgstr "სკრიპტების განახლება ვერ მოხერხდა."
 
 #~ msgid "EOF"
 #~ msgstr "EOF"
