@@ -20,10 +20,10 @@ _close_file_manager_pcmanfm() {
     # Reload the file manager in background to restore desktop session.
     if [[ -n "${XDG_CURRENT_DESKTOP:-}" ]]; then
         # Only restart if running under LXDE or LXQT.
-        if [[ "${XDG_CURRENT_DESKTOP,,}" == *"lxde"* ||
-            "${XDG_CURRENT_DESKTOP,,}" == *"lxqt"* ]]; then
+        if [[ "${XDG_CURRENT_DESKTOP,,}" == *"lxde"* ]] ||
+            [[ "${XDG_CURRENT_DESKTOP,,}" == *"lxqt"* ]]; then
             session_cmd=$(pgrep -a "$file_manager" |
-                head -n 1 | cut -d " " -f 2-)
+                grep -o -P -m1 "[0-9]+\s*\K.*")
             # Kill all existing PCManFM processes.
             killall "$file_manager" &>/dev/null
             if [[ -n "$session_cmd" ]]; then
