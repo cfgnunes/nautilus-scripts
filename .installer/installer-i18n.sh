@@ -19,8 +19,8 @@ _i18n_get_translation() {
     local po_file=$1
     local msgid=$2
     local msgstr=""
-    msgstr=$(grep -A1 "msgid \"$msgid\"" "$po_file" 2>/dev/null |
-        grep "msgstr" | cut -d '"' -f 2)
+    msgstr=$(grep -A1 "msgid *\"$msgid\"" "$po_file" 2>/dev/null |
+        grep -o -P -m1 "msgstr\s+\"\K[^\"]+" 2>/dev/null)
 
     if [[ -n "$msgstr" ]]; then
         printf "%s" "$msgstr"
