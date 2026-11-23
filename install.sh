@@ -96,11 +96,7 @@ INSTALL_GROUP="" # Group of the installation directory.
 OPT_INSTALL_BASIC_DEPS="true"
 OPT_INSTALL_ACCELS="true"
 OPT_CLOSE_FILE_MANAGER="true"
-if uname -m 2>/dev/null | grep -qE "x86_64|aarch64"; then
-    OPT_INSTALL_PKGX="true"
-else
-    OPT_INSTALL_PKGX="false"
-fi
+OPT_INSTALL_PKGX="false"
 OPT_CHOOSE_CATEGORIES="false"
 # Default installer options.
 OPT_INTERACTIVE_INSTALL="true"
