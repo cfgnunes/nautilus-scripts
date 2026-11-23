@@ -12,7 +12,14 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    _check_dependencies_clipboard "axel"
+    if _command_exists "aria2c" ||
+        _command_exists "curl" ||
+        _command_exists "wget" ||
+        _command_exists "wget2"; then
+        _check_dependencies_clipboard ""
+    else
+        _check_dependencies_clipboard "axel"
+    fi
     _display_wait_box ""
     # NOTE: Using 'par_type=all' because the script can run
     # even when the file manager selects a file or directory.
@@ -29,15 +36,58 @@ _main_task() {
     local output_dir=$2
     local std_output=""
     local timeout_value=5
+    local num_connections=10
 
     # Run the main process.
-    std_output=$(_run_in_sandbox "$output_dir" "true" axel \
-        --insecure \
-        --no-clobber \
-        --num-connections=10 \
-        --timeout="$timeout_value" \
-        --output="$output_dir" \
-        -- "$input_file" 2>&1)
+    if _command_exists "axel"; then
+        std_output=$(_run_in_sandbox "$output_dir" "true" \
+            axel \
+            --insecure \
+            --no-clobber \
+            --num-connections="$num_connections" \
+            --timeout="$timeout_value" \
+            --output="$output_dir" \
+            -- "$input_file" 2>&1)
+    elif _command_exists "aria2c"; then
+        std_output=$(_run_in_sandbox "$output_dir" "true" \
+            aria2c \
+            --check-certificate=false \
+            --allow-overwrite=false \
+            --auto-file-renaming=false \
+            --max-connection-per-server="$num_connections" \
+            --split="$num_connections" \
+            --timeout="$timeout_value" \
+            --dir="$output_dir" \
+            -- "$input_file" 2>&1)
+    elif _command_exists "curl"; then
+        std_output=$(_run_in_sandbox "$output_dir" "true" \
+            curl \
+            --insecure \
+            --location \
+            --fail \
+            --show-error \
+            --remote-name \
+            --connect-timeout "$timeout_value" \
+            -- "$input_file" 2>&1)
+    elif _command_exists "wget2"; then
+        std_output=$(_run_in_sandbox "$output_dir" "true" \
+            wget2 \
+            --no-check-certificate \
+            --no-clobber \
+            --chunk-size=1M \
+            --max-threads="$num_connections" \
+            --timeout="$timeout_value" \
+            --directory-prefix="$output_dir" \
+            -- "$input_file" 2>&1)
+    elif _command_exists "wget"; then
+        std_output=$(_run_in_sandbox "$output_dir" "true" \
+            wget \
+            --no-check-certificate \
+            --no-clobber \
+            --timeout="$timeout_value" \
+            --directory-prefix="$output_dir" \
+            -- "$input_file" 2>&1)
+    fi
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
