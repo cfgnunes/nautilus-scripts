@@ -12,8 +12,10 @@ INSTALL_DIR="$USER_OPT_DIR/$APP_NAME"
 INSTALL_LOG_NAME="install.log"
 LOG_FILE="$INSTALL_DIR/$INSTALL_LOG_NAME"
 
-_get_log_version() {
-    grep -o -P 'APP_VERSION=.\K[^"]+' "$LOG_FILE" 2>/dev/null
+_get_file_variable() {
+    local file=$1
+    local var=$2
+    grep -o -P "${var}\s*=\s*[\"]\K[^\"]+" "$file" 2>/dev/null
 }
 
 _get_latest_version_github() {
@@ -37,7 +39,7 @@ _main() {
     _display_wait_box_message "$msg" "1"
     local installed_version=""
     local latest_version=""
-    installed_version=$(_get_log_version)
+    installed_version=$(_get_file_variable "$LOG_FILE" "APP_VERSION")
     latest_version=$(_get_latest_version_github)
     _close_wait_box
 
@@ -68,13 +70,34 @@ _main() {
     # Display a wait box while updating the scripts.
     msg="$(_i18n 'Updating the scripts. Please wait...')"
     _display_wait_box_message "$msg" "0"
+
+    # Prepare the arguments for the installation script.
+    local -a install_args=(
+        --no-check-dependencies
+        --no-close-file-manager
+        --non-interactive
+        --no-install-pkgx
+    )
+
+    # Reuse the sub-category of the previous installation, if any.
+    local subcategory=""
+    subcategory=$(_get_file_variable "$LOG_FILE" "INSTALL_SUBCATEGORY")
+    if [[ -n "$subcategory" ]]; then
+        install_args+=(--sub-category "$subcategory")
+    fi
+
+    # Backup the existing log file, if any.
+    if [[ -f "$LOG_FILE" ]]; then
+        mv -- "$LOG_FILE" "$LOG_FILE.bak"
+    fi
+
     # Download and run the installation script.
     if _command_exists "curl"; then
         bash <(curl -fsL https://cfgnunes.github.io/nautilus-scripts/install.sh) \
-            --no-check-dependencies --no-close-file-manager --non-interactive --no-install-pkgx
+            "${install_args[@]}"
     elif _command_exists "wget"; then
         bash <(wget -qO- https://cfgnunes.github.io/nautilus-scripts/install.sh) \
-            --no-check-dependencies --no-close-file-manager --non-interactive --no-install-pkgx
+            "${install_args[@]}"
     fi
     _close_wait_box
 
@@ -84,6 +107,11 @@ _main() {
         _display_info_box "$(_i18n 'The scripts were successfully updated!')"
     else
         _display_error_box "$(_i18n 'Failed to update the scripts.')"
+    fi
+
+    # Restore the backup log file if the installation failed.
+    if [[ ! -f "$LOG_FILE" ]] && [[ -f "$LOG_FILE.bak" ]]; then
+        mv -- "$LOG_FILE.bak" "$LOG_FILE"
     fi
 }
 
