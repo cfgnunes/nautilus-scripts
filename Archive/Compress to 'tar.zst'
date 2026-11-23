@@ -27,37 +27,34 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+    local -a items=()
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" \
         "par_extension_opt=replace; par_extension=tar.zst")
 
-    # Run the main process.
     if [[ -d "$input_file" ]]; then
-        # Check if the directory is empty.
         if _is_directory_empty "$input_file"; then
-            local msg=""
-            msg="The directory is empty."
-            _log_error "$msg" "$input_file" "" "$output_file"
+            _log_error "The directory is empty." "$input_file" "" "$output_file"
             return 1
         fi
-
-        # Change to the directory to perform compression.
+        # Archive the directory contents without the parent directory.
         _directory_push "$input_file" || return 1
 
-        std_output=$(find . -mindepth 1 -maxdepth 1 -printf "%f\0" 2>/dev/null |
-            sort --zero-terminated --version-sort |
-            xargs --no-run-if-empty --null bash -c '_run_in_sandbox "$@"' _ "$output_dir" "false" tar --zstd -cf "$output_file" --)
+        # Include hidden files in the archive.
+        shopt -s dotglob
+        items=(*)
+        shopt -u dotglob
     else
-        # If the input is a file, change to its parent directory.
+        # Archive the file without the parent directory.
         _directory_push "$(_get_dirname "$input_file")" || return 1
-
-        # Extract the base name of the input file for compression.
-        local input_file_basename=""
-        input_file_basename=$(basename -- "$input_file")
-
-        std_output=$(_run_in_sandbox "$output_dir" "false" tar --zstd -cf "$output_file" -- "$input_file_basename" 2>&1)
+        items=("$(basename -- "$input_file")")
     fi
+
+    # Run the main process.
+    std_output=$(_run_in_sandbox "$output_dir" "false" \
+        tar --zstd -cf "$output_file" -- "${items[@]}" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+
     _directory_pop || return 1
 }
 
