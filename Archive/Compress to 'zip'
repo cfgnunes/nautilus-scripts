@@ -12,8 +12,8 @@ _main() {
     local output_dir=""
 
     # Execute initial checks.
-    if ! compgen -c 7z &>/dev/null && ! _command_exists "zip"; then
-        _check_dependencies "bsdtar"
+    if ! _command_exists "bsdtar" && ! _command_exists "zip"; then
+        _check_dependencies "7za"
     fi
     _display_wait_box ""
     input_files=$(_get_files "par_type=all")
@@ -58,15 +58,17 @@ _main_task() {
         _directory_push "$input_file" || return 1
 
         # Check for available compression tools and compress the directory.
-        if _command_exists "bsdtar"; then
-            std_output=$(_run_in_sandbox "$output_dir" "false" bsdtar --strip-components 1 -a -cf \
-                "$output_file" -- . 2>&1)
-        elif compgen -c 7z &>/dev/null; then
+        if compgen -c 7z &>/dev/null; then
             std_output=$(__cmd_7z a -snl \
                 "$output_file" -- . 2>&1)
         elif _command_exists "zip"; then
-            std_output=$(_run_in_sandbox "$output_dir" "false" zip --symlinks --quiet --recurse-paths \
+            std_output=$(_run_in_sandbox "$output_dir" "false" \
+                zip --symlinks --quiet --recurse-paths \
                 "$output_file" -- . 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(_run_in_sandbox "$output_dir" "false" \
+                bsdtar --strip-components 1 -a -c \
+                -f "$output_file" -- . 2>&1)
         fi
     else
         # If the input is a file, change to its parent directory.
@@ -77,15 +79,17 @@ _main_task() {
         input_file_basename=$(basename -- "$input_file")
 
         # Check for available compression tools and compress the file.
-        if _command_exists "bsdtar"; then
-            std_output=$(_run_in_sandbox "$output_dir" "false" bsdtar -a -cf \
-                "$output_file" -- "$input_file_basename" 2>&1)
-        elif compgen -c 7z &>/dev/null; then
+        if compgen -c 7z &>/dev/null; then
             std_output=$(__cmd_7z a -snl \
                 "$output_file" -- "$input_file_basename" 2>&1)
         elif _command_exists "zip"; then
-            std_output=$(_run_in_sandbox "$output_dir" "false" zip --symlinks --quiet --recurse-paths \
+            std_output=$(_run_in_sandbox "$output_dir" "false" \
+                zip --symlinks --quiet --recurse-paths \
                 "$output_file" -- "$input_file_basename" 2>&1)
+        elif _command_exists "bsdtar"; then
+            std_output=$(_run_in_sandbox "$output_dir" "false" \
+                bsdtar -a -c \
+                -f "$output_file" -- "$input_file_basename" 2>&1)
         fi
     fi
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
