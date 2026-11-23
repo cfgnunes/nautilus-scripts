@@ -6,7 +6,7 @@
 # =============================================================================
 
 _create_links() {
-    local destination_dir=$1
+    local destination_dir=$1${INSTALL_SUBCATEGORY:+/$INSTALL_SUBCATEGORY}
 
     mkdir --parents -- "$destination_dir"
     ln -sf -- "$INSTALL_DIR/.po" "$destination_dir/.po"
@@ -48,6 +48,13 @@ _create_links() {
 
     # Remove empty directories left by a previous install.
     find "$destination_dir" -type d -empty -delete 2>/dev/null
+
+    # Move shared files to the parent directory if a sub-category is used.
+    if [[ -n "$INSTALL_SUBCATEGORY" ]]; then
+        mv -- "$destination_dir/.po" "$destination_dir/.."
+        mv -- "$destination_dir/.common-functions.sh" "$destination_dir/.."
+        mv -- "$destination_dir/.pkg-map.sh" "$destination_dir/.."
+    fi
 }
 
 _encode_path_gtk() {
@@ -68,7 +75,7 @@ _encode_path_gtk() {
 
 _install_accels_gnome2() {
     local accels_file=$1
-    local scripts_installed_dir=$2
+    local scripts_installed_dir=$2${INSTALL_SUBCATEGORY:+/$INSTALL_SUBCATEGORY}
 
     mkdir --parents -- "$(dirname -- "$accels_file")"
 

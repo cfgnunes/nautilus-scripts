@@ -102,6 +102,9 @@ OPT_CHOOSE_CATEGORIES="false"
 OPT_INTERACTIVE_INSTALL="true"
 OPT_QUIET_INSTALL="false"
 
+# Optional sub-category for the installed scripts (e.g. "cfgnunes").
+INSTALL_SUBCATEGORY=""
+
 # -----------------------------------------------------------------------------
 # SECTION: Imports
 # -----------------------------------------------------------------------------
@@ -153,6 +156,17 @@ _get_parameters_command_line() {
         -F | --no-close-file-manager) OPT_CLOSE_FILE_MANAGER="false" ;;
         -k | --install-shortcuts) OPT_INSTALL_ACCELS="true" ;;
         -K | --no-install-shortcuts) OPT_INSTALL_ACCELS="false" ;;
+        -d | --sub-category)
+            INSTALL_SUBCATEGORY=${2:-}
+            shift
+            if [[ -z "$INSTALL_SUBCATEGORY" ]] ||
+                [[ "/$INSTALL_SUBCATEGORY/" == *"/../"* ]]; then
+                echo "Invalid sub-category name." >&2
+                exit 1
+            fi
+            INSTALL_SUBCATEGORY=${INSTALL_SUBCATEGORY#/}
+            INSTALL_SUBCATEGORY=${INSTALL_SUBCATEGORY%/}
+            ;;
         -n | --non-interactive) OPT_INTERACTIVE_INSTALL="false" ;;
         -p | --install-pkgx) OPT_INSTALL_PKGX="true" ;;
         -P | --no-install-pkgx) OPT_INSTALL_PKGX="false" ;;
@@ -162,6 +176,7 @@ _get_parameters_command_line() {
             echo
             echo "  -c, --check-dependencies        Check for basic dependencies."
             echo "  -C, --no-check-dependencies     Do not check for basic dependencies."
+            echo "  -d, --sub-category NAME         Install the scripts in a subcategory."
             echo "  -f, --close-file-manager        Close file manager after install."
             echo "  -F, --no-close-file-manager     Do not close file manager after install."
             echo "  -k, --install-shortcuts         Install keyboard accelerators."
@@ -277,6 +292,7 @@ _main() {
     _log_variable "OPT_CHOOSE_CATEGORIES"
     _log_variable "OPT_INTERACTIVE_INSTALL"
     _log_variable "OPT_QUIET_INSTALL"
+    _log_variable "INSTALL_SUBCATEGORY"
 
     # Collect all available script categories (directories).
     local dir=""
