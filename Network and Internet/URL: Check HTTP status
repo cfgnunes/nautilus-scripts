@@ -36,10 +36,16 @@ _main_task() {
     local status=""
 
     # Run the main process.
-    std_output=$(_run_in_sandbox "$output_dir" "true" curl \
-        -A "Mozilla/5.0 (X11; Linux x86_64; rv:153.0) Gecko/20100101 Firefox/153.0" \
-        --max-time "$timeout_max" --connect-timeout "$timeout_value" \
-        -o /dev/null -s -k -w "%{http_code}" "$input_file" 2>/dev/null)
+    std_output=$(_run_in_sandbox "$output_dir" "true" \
+        curl \
+        --user-agent "Mozilla/5.0 (X11; Linux x86_64; rv:153.0) Gecko/20100101 Firefox/153.0" \
+        --insecure \
+        --connect-timeout "$timeout_value" \
+        --max-time "$timeout_max" \
+        --silent \
+        --output /dev/null \
+        --write-out "%{http_code}" \
+        -- "$input_file" 2>/dev/null)
 
     if [[ -z "$std_output" ]]; then
         return
