@@ -45,7 +45,8 @@ _main_task() {
     local str_low="🔴 __MSG_Low__"
 
     # Run the main process.
-    std_output=$(_run_in_sandbox "$output_dir" "false" sox "$input_file" \
+    std_output=$(_run_in_sandbox "$output_dir" "false" \
+        sox "$input_file" \
         -n remix 1 sinc "19k-20k" stat 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
@@ -61,7 +62,8 @@ _main_task() {
     fi
 
     if [[ "$status" == "$str_medium" ]]; then
-        std_output=$(_run_in_sandbox "$output_dir" "false" sox "$input_file" \
+        std_output=$(_run_in_sandbox "$output_dir" "false" \
+            sox "$input_file" \
             -n remix 1 sinc "17k-18k" stat 2>&1)
         _check_output "$?" "$std_output" "$input_file" "" || return 1
 

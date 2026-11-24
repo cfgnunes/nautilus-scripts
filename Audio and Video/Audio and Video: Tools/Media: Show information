@@ -36,7 +36,8 @@ _main_task() {
     local status="🔴"
 
     # Run the main process.
-    std_output=$(_run_in_sandbox "$output_dir" "false" mediainfo -- "$input_file" 2>/dev/null)
+    std_output=$(_run_in_sandbox "$output_dir" "false" \
+        mediainfo -- "$input_file" 2>/dev/null)
 
     # Remove any extra spaces before colons ":".
     # shellcheck disable=SC2001

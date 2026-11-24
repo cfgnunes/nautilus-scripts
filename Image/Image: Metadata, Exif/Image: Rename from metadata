@@ -37,7 +37,8 @@ _main_task() {
 
     # Extract the creation date from metadata (first match only).
     local date=""
-    date=$(_run_in_sandbox "" "false" exiftool -s -s -s -duplicates -CreateDate -DateTimeOriginal \
+    date=$(_run_in_sandbox "" "false" \
+        exiftool -s -s -s -duplicates -CreateDate -DateTimeOriginal \
         "$input_file" 2>/dev/null | sed -n "1p" | sed "s|:|-|g; s| |_|g")
 
     # Abort if no creation date is available.

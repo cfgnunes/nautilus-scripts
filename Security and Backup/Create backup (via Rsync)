@@ -52,11 +52,13 @@ _main_task() {
     # Perform incremental backup with rsync.
     if [[ -n "$old_version_dir" && -d "$old_version_dir" ]]; then
         # If a previous backup exists, use it as incremental reference.
-        std_output=$(_run_in_sandbox "$output_dir" "false" rsync --archive --quiet --hard-links --delete \
+        std_output=$(_run_in_sandbox "$output_dir" "false" \
+            rsync --archive --quiet --hard-links --delete \
             --link-dest="$old_version_dir" \
             -- "$input_file" "$version_dir" 2>&1)
     else
-        std_output=$(_run_in_sandbox "$output_dir" "false" rsync --archive --quiet --hard-links --delete \
+        std_output=$(_run_in_sandbox "$output_dir" "false" \
+            rsync --archive --quiet --hard-links --delete \
             -- "$input_file" "$version_dir" 2>&1)
     fi
 

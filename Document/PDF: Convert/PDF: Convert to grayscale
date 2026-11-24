@@ -32,7 +32,8 @@ _main_task() {
         "par_extension_opt=preserve; par_suffix='(grayscale)'")
 
     # Run the main process.
-    std_output=$(_run_in_sandbox "$output_dir" "false" gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
+    std_output=$(_run_in_sandbox "$output_dir" "false" \
+        gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
         -dProcessColorModel=/DeviceGray \
         -dColorConversionStrategy=/Gray \
         -dOverrideICC \

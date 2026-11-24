@@ -33,7 +33,8 @@ _main_task() {
 
     # Run the main process.
     # shellcheck disable=SC2086
-    std_output=$(_run_in_sandbox "$output_dir" "false" pdfunite -- $input_files "$output_file" 2>&1)
+    std_output=$(_run_in_sandbox "$output_dir" "false" \
+        pdfunite -- $input_files "$output_file" 2>&1)
     _check_output "$?" "$std_output" "" "$output_file" || return 1
 }
 

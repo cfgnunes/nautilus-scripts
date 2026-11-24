@@ -40,7 +40,8 @@ _main_task() {
     # shellcheck disable=SC2016
     std_output=$(_run_in_sandbox "" "$PKGX_AVAILABLE" \
         pdfannots --format json "$input_file" 2>/dev/null |
-        _run_in_sandbox "" "false" jq -r \
+        _run_in_sandbox "" "false" \
+            jq -r \
             --arg sep "$FIELD_SEPARATOR" \
             --arg file_label "$file_label" '
         def clean:

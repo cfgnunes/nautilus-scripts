@@ -36,7 +36,8 @@ _main_task() {
     local status="🟢"
 
     # Run the main process.
-    std_output=$(_run_in_sandbox "$output_dir" "false" rhash \
+    std_output=$(_run_in_sandbox "$output_dir" "false" \
+        rhash \
         --printf="CRC32:    %{crc32}\nMD5:      %{md5}\nSHA-1:    %h\nSHA-256:  %{sha-256}\nSHA-512:  %{sha-512}\nSHA3-256: %{sha3-256}\nSHA3-512: %{sha3-512}\nBLAKE2s:  %{blake2s}\nBLAKE2b:  %{blake2b}" \
         -- "$input_file" 2>/dev/null)
 

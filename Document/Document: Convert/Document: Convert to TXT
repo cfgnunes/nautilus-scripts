@@ -141,11 +141,13 @@ _run_command() {
         _check_output "$exit_code" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "pandoc")
-        std_output=$(_run_in_sandbox "$output_dir" "false" pandoc --standalone -o "$output_file" -- "$input_file" 2>&1)
+        std_output=$(_run_in_sandbox "$output_dir" "false" \
+            pandoc --standalone -o "$output_file" -- "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "pdftotext")
-        std_output=$(_run_in_sandbox "$output_dir" "false" pdftotext "$input_file" -- "$output_file" 2>&1)
+        std_output=$(_run_in_sandbox "$output_dir" "false" \
+            pdftotext "$input_file" -- "$output_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     esac

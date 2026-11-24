@@ -32,7 +32,8 @@ _main_task() {
         "par_extension_opt=replace; par_extension=webm")
 
     # Run the main process.
-    std_output=$(_run_in_sandbox "$output_dir" "false" ffmpeg -hide_banner -y \
+    std_output=$(_run_in_sandbox "$output_dir" "false" \
+        ffmpeg -hide_banner -y \
         -i "$input_file" \
         -c copy \
         -- "$output_file" 2>&1)

@@ -35,18 +35,21 @@ _main_task() {
 
     # Run the main process.
     # Split the PDF file.
-    std_output=$(_run_in_sandbox "$output_dir" "false" pdfcpu cut 'vert:.5' "$input_file" "$temp_dir" "out" 2>&1)
+    std_output=$(_run_in_sandbox "$output_dir" "false" \
+        pdfcpu cut 'vert:.5' "$input_file" "$temp_dir" "out" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Remove the first page from each PDF file in the temporary directory.
     for file in "$temp_dir"/*.pdf; do
-        std_output=$(_run_in_sandbox "$output_dir" "false" pdfcpu pages remove -p 1 "$file" 2>&1)
+        std_output=$(_run_in_sandbox "$output_dir" "false" \
+            pdfcpu pages remove -p 1 "$file" 2>&1)
         _check_output "$?" "$std_output" "$file" "" || return 1
     done
 
     # Merge the PDF files in the temporary directory into a single output file.
     # shellcheck disable=SC2046
-    std_output=$(_run_in_sandbox "$output_dir" "false" pdfcpu merge "$output_file" \
+    std_output=$(_run_in_sandbox "$output_dir" "false" \
+        pdfcpu merge "$output_file" \
         $(find "$temp_dir" -type f 2>/dev/null | sort --version-sort) 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 

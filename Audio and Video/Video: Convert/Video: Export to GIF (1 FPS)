@@ -33,7 +33,8 @@ _main_task() {
         "par_extension_opt=replace; par_extension=gif; par_suffix='($frame_rate FPS)'")
 
     # Run the main process.
-    std_output=$(_run_in_sandbox "$output_dir" "false" ffmpeg -hide_banner -y \
+    std_output=$(_run_in_sandbox "$output_dir" "false" \
+        ffmpeg -hide_banner -y \
         -i "$input_file" \
         -filter:v "fps=$frame_rate,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" \
         -loop 0 \

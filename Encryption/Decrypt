@@ -45,7 +45,8 @@ _main_task() {
         temp_dir_local=$(_make_temp_dir_local "$output_dir" ".$basename")
 
         _directory_push "$temp_dir_local" || return 1
-        std_output=$(_run_in_sandbox "$output_dir" "false" tar --extract --file="$output_file" 2>&1)
+        std_output=$(_run_in_sandbox "$output_dir" "false" \
+            tar --extract --file="$output_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "" || return 1
         _directory_pop || return 1
         rm -f -- "$output_file"
