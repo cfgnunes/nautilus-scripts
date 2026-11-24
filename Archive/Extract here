@@ -609,7 +609,9 @@ _run_command() {
             exit_code=$?
         fi
         ;;
-    "ar") std_output=$(__sandbox ar x -- "$input_file" 2>&1) ;;
+    "ar")
+        std_output=$(__sandbox ar x -- "$input_file" 2>&1)
+        ;;
     "bsdtar")
         std_output=$(__sandbox bsdtar --passphrase "$TASK_PASSWORD" -xf "$input_file" 2>&1)
         exit_code=$?
@@ -627,9 +629,15 @@ _run_command() {
         fi
         __sandbox "$command" -d -c -- "$input_file" >"$filename" 2>/dev/null
         ;;
-    "cabextract") std_output=$(__sandbox cabextract "$input_file" 2>&1) ;;
-    "cpio") std_output=$(__sandbox cpio -idv <"$input_file" 2>&1) ;;
-    "dar") std_output=$(__sandbox dar -x "$input_file" 2>&1) ;;
+    "cabextract")
+        std_output=$(__sandbox cabextract "$input_file" 2>&1)
+        ;;
+    "cpio")
+        std_output=$(__sandbox cpio -idv <"$input_file" 2>&1)
+        ;;
+    "dar")
+        std_output=$(__sandbox dar -x "$input_file" 2>&1)
+        ;;
     "gpg")
         std_output=$(gpg --batch --yes --decrypt --output "$filename" -- "$input_file" 2>&1)
         local file_mime=""
@@ -645,15 +653,27 @@ _run_command() {
             rm -rf -- "$temp_dir_extract_tar"
         fi
         ;;
-    "lha") std_output=$(__sandbox lha -e "$input_file" 2>&1) ;;
-    "lrzip") std_output=$(__sandbox lrzip -d -o "$temp_dir_extract/$filename" -- "$input_file" 2>&1) ;;
-    "rdsquashfs") std_output=$(__sandbox rdsquashfs -u . -- "$input_file" 2>&1) ;;
+    "lha")
+        std_output=$(__sandbox lha -e "$input_file" 2>&1)
+        ;;
+    "lrzip")
+        std_output=$(__sandbox lrzip -d -o "$temp_dir_extract/$filename" -- "$input_file" 2>&1)
+        ;;
+    "rdsquashfs")
+        std_output=$(__sandbox rdsquashfs -u . -- "$input_file" 2>&1)
+        ;;
     "rzip")
         __sandbox rzip -d -k -o "$filename" -- "$input_file" >/dev/null 2>&1
         ;;
-    "tar,7za") std_output=$(__cmd_7z x -so -- "$input_file" 2>/dev/null | __sandbox tar xf - 2>&1) ;;
-    "tar,brotli") std_output=$(__sandbox brotli -d -c -- "$input_file" | __sandbox tar xf - 2>&1) ;;
-    "tar,bzip3") std_output=$(__sandbox bzip3 -d -c -- "$input_file" | __sandbox tar xf - 2>&1) ;;
+    "tar,7za")
+        std_output=$(__cmd_7z x -so -- "$input_file" 2>/dev/null | __sandbox tar xf - 2>&1)
+        ;;
+    "tar,brotli")
+        std_output=$(__sandbox brotli -d -c -- "$input_file" | __sandbox tar xf - 2>&1)
+        ;;
+    "tar,bzip3")
+        std_output=$(__sandbox bzip3 -d -c -- "$input_file" | __sandbox tar xf - 2>&1)
+        ;;
     "tar,rzip")
         std_output=$(__sandbox rzip -d -k -o "$temp_dir_extract/.tmp.tar" -- "$input_file" 2>&1 &&
             __sandbox tar --extract --file="$temp_dir_extract/.tmp.tar" 2>&1)
@@ -664,10 +684,18 @@ _run_command() {
         # The compressor name is also the long option of 'tar'.
         std_output=$(__sandbox tar --extract "--${command#tar,}" --file="$input_file" 2>&1)
         ;;
-    "tar,lrzip") std_output=$(__sandbox lrztar -d "$input_file" 2>&1) ;;
-    "tar,lz4") std_output=$(__sandbox lz4 -d -c -- "$input_file" | __sandbox tar xf -) ;;
-    "tar,zstd") std_output=$(__sandbox zstd -f -d -c -- "$input_file" | __sandbox tar xf -) ;;
-    "tar") std_output=$(__sandbox tar --extract --file="$input_file" 2>&1) ;;
+    "tar,lrzip")
+        std_output=$(__sandbox lrztar -d "$input_file" 2>&1)
+        ;;
+    "tar,lz4")
+        std_output=$(__sandbox lz4 -d -c -- "$input_file" | __sandbox tar xf - 2>&1)
+        ;;
+    "tar,zstd")
+        std_output=$(__sandbox zstd -f -d -c -- "$input_file" | __sandbox tar xf - 2>&1)
+        ;;
+    "tar")
+        std_output=$(__sandbox tar --extract --file="$input_file" 2>&1)
+        ;;
     "unrar")
         std_output=$(__sandbox unrar x -p"$TASK_PASSWORD" -- "$input_file" 2>&1)
         exit_code=$?
@@ -678,9 +706,15 @@ _run_command() {
             exit_code=$?
         fi
         ;;
-    "unsquashfs") std_output=$(__sandbox unsquashfs "$input_file" 2>&1) ;;
-    "xorriso") std_output=$(__sandbox xorriso -osirrox on -indev "$input_file" -- -extract / . -rollback_end 2>&1) ;;
-    "zpaq") std_output=$(__sandbox zpaq x "$input_file" 2>&1) ;;
+    "unsquashfs")
+        std_output=$(__sandbox unsquashfs "$input_file" 2>&1)
+        ;;
+    "xorriso")
+        std_output=$(__sandbox xorriso -osirrox on -indev "$input_file" -- -extract / . -rollback_end 2>&1)
+        ;;
+    "zpaq")
+        std_output=$(__sandbox zpaq x "$input_file" 2>&1)
+        ;;
     "bsdtar,7za")
         # Default extractor chain for unrecognized files.
         # Try to extract with 'bsdtar'.
