@@ -193,7 +193,19 @@
       </g>
     </g>
     <g
-       id="g74">
+       id="g74"
+       opacity="0">
+      <animate attributeName="opacity"
+         values="0;0;1;1;0;0"
+         keyTimes="0;0.08;0.11;0.84;0.87;1"
+         dur="6s"
+         repeatCount="indefinite" />
+      <animateTransform attributeName="transform"
+         type="translate"
+         values="0 3;0 3;0 0;0 0;0 3;0 3"
+         keyTimes="0;0.08;0.11;0.84;0.87;1"
+         dur="6s"
+         repeatCount="indefinite" />
       <rect
          x="73.247513"
          y="3.329443"
@@ -205,13 +217,21 @@
          id="rect26" />
       <rect
          x="74.903763"
-         y="38.735294"
+         y="13.37045"
          width="70.43"
          height="8.1196003"
          ry="2"
          rx="2"
          class="sel"
-         id="rect27" />
+         id="rect27">
+        <!-- Highlight 4 menus in order in 'Scripts' category. -->
+        <animate attributeName="y"
+            values="13.37045;21.82529;30.28013;38.735294;38.735294"
+            keyTimes="0;0.16;0.19;0.22;1"
+            calcMode="discrete"
+            dur="6s"
+            repeatCount="indefinite" />
+      </rect>
       <path
          d="M 74.603761,133.58172 H 145.64076"
          class="sep"
@@ -474,7 +494,19 @@
          id="text74">Open Scripts Folder</text>
     </g>
     <g
-       id="g89">
+       id="g89"
+       opacity="0">
+      <animate attributeName="opacity"
+         values="0;0;1;1;0;0"
+         keyTimes="0;0.25;0.28;0.77;0.80;1"
+         dur="6s"
+         repeatCount="indefinite" />
+      <animateTransform attributeName="transform"
+         type="translate"
+         values="0 3;0 3;0 0;0 0;0 3;0 3"
+         keyTimes="0;0.25;0.28;0.77;0.80;1"
+         dur="6s"
+         repeatCount="indefinite" />
       <rect
          x="146.32034"
          y="30.315443"
@@ -486,13 +518,21 @@
          id="rect74" />
       <rect
          x="147.99376"
-         y="99.418198"
+         y="40.361"
          width="70.43"
          height="8.1196003"
          ry="2"
          rx="2"
          class="sel"
-         id="rect75" />
+         id="rect75">
+        <!-- Highlight 6 menus in order in 'Checksum' category. -->
+        <animate attributeName="y"
+            values="40.361;40.361;48.835;57.310;65.785;74.260;82.735;82.735"
+            keyTimes="0;0.29;0.33;0.37;0.41;0.45;0.49;1"
+            calcMode="discrete"
+            dur="6s"
+            repeatCount="indefinite" />
+      </rect>
       <g
          transform="rotate(180,74.135881,21.026221)"
          class="arr"
