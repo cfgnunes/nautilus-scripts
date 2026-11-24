@@ -50,7 +50,8 @@ _main_task() {
     # English articles/prepositions.
     words="a|an|and|as|at|but|by|for|from|if|in|nor|of|on|or|per|the|to|via|with|yet"
     # Portuguese articles/prepositions.
-    words+="|a|ao|aos|as|e|o|os|um|uns|uma|umas|com|da|das|de|desde|do|dos|em|na|nas|no|nos|ou|pra|para|pela|pelas|pelo|pelos|por|se|sob|sobre"
+    words+="|a|ao|aos|as|e|o|os|um|uns|uma|umas|com|da|das|de|desde|do|dos|em"
+    words+="|na|nas|no|nos|ou|pra|para|pela|pelas|pelo|pelos|por|se|sob|sobre"
     # Spanish articles/prepositions.
     words+="|el|la|los|las|del|al"
     words+="|von|è|é"
@@ -77,9 +78,11 @@ _main_task() {
     output_file=$(sed "s| '\(\w\)| '\U\1|gI" <<<"$output_file")
 
     # Fix common uppercase word abbreviations.
-    words="[0-9]\w|ac|api|sql|aka|asap|ceo|cfo|cto|dc|diy|dna|faq|isbn|ko|mtv|rpg|rpm|tv|usa|vip"
-    words+="|bios|cmos|fifa|gba|nba|nes|nfl|nhl|rom|snes|uml"
-    words+="|4wd|acme|aiii|aso|espn|fc|fx|gp|gs|gt|gx|hal|mlbpa|mvp|nasa|ncaa|nhlpa|np|ntsc|pal|pga|qix|roc|rs|sd|sfc|sm|sos|swat|swiv|tko|tnn|wcw|wgp|wwf|wwii"
+    words="[0-9]\w|ac|api|sql|aka|asap|ceo|cfo|cto|dc|diy|dna|faq|isbn|ko|mtv"
+    words+="|rpg|rpm|tv|usa|vip|bios|cmos|fifa|gba|nba|nes|nfl|nhl|rom|snes"
+    words+="|uml|4wd|acme|aiii|aso|espn|fc|fx|gp|gs|gt|gx|hal|mlbpa|mvp|nasa"
+    words+="|ncaa|nhlpa|np|ntsc|pal|pga|qix|roc|rs|sd|sfc|sm|sos|swat|swiv|tko"
+    words+="|tnn|wcw|wgp|wwf|wwii"
     # Fix band names (in uppercase).
     words+="|abba|abc|chic|inxs|iza|kc|klb|mgmt|ppf|sza|toto|twrp|vcr"
     output_file=$(sed -E "s/\b($words)\b/\U\1/gI" <<<"$output_file")

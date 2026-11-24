@@ -30,7 +30,11 @@ _main_task() {
     local frame_rate=1
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" \
-        "par_extension_opt=replace; par_extension=gif; par_suffix='($frame_rate FPS)'")
+        "
+            par_extension_opt=replace
+            par_extension=gif
+            par_suffix='($frame_rate FPS)'
+        ")
 
     # Run the main process.
     std_output=$(_run_in_sandbox "$output_dir" "false" \

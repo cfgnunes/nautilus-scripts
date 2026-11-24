@@ -13,7 +13,17 @@ _main() {
     # Execute initial checks.
     _check_dependencies "gpg"
     _display_wait_box ""
-    input_files=$(_get_files "par_type=file; par_select_mime='application/octet-stream|application/pgp|application/pgp-encrypted|application/pgp-signature|application/pkcs7-mime|application/pkcs7-signature|text/PGP|text/plain'")
+    input_files=$(_get_files "
+        par_type=file
+        par_select_mime='application/octet-stream|'
+        par_select_mime+='application/pgp|'
+        par_select_mime+='application/pgp-encrypted|'
+        par_select_mime+='application/pgp-signature|'
+        par_select_mime+='application/pkcs7-mime|'
+        par_select_mime+='application/pkcs7-signature|'
+        par_select_mime+='text/PGP|'
+        par_select_mime+='text/plain'
+    ")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" ""
@@ -41,7 +51,15 @@ _main() {
     # shellcheck disable=SC2001
     std_output=$(sed "s|__MSG_UnknownAlg__|$(_i18n 'Unknown algorithm')|g" <<<"$std_output")
 
-    _display_list_box "$std_output" "par_item_name=$(_i18n 'files'); par_columns='--column:$(_i18n 'Status'),--column:$(_i18n 'Name'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Key ID'),--column:$(_i18n 'Date'),--column:$(_i18n 'Time'),--column:$(_i18n 'File')'; par_action=open_location; par_check_type=checkbox"
+    _display_list_box "$std_output" "
+        par_item_name=$(_i18n 'files')
+        par_columns='--column:$(_i18n 'Status'),--column:$(_i18n 'Name'),'
+        par_columns+='--column:$(_i18n 'E-mail'),--column:$(_i18n 'Key ID'),'
+        par_columns+='--column:$(_i18n 'Date'),--column:$(_i18n 'Time'),'
+        par_columns+='--column:$(_i18n 'File')'
+        par_action=open_location
+        par_check_type=checkbox
+    "
 }
 
 _main_task() {

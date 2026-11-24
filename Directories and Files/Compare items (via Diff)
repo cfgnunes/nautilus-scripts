@@ -12,7 +12,12 @@ _main() {
 
     # Execute initial checks.
     _display_wait_box ""
-    input_files=$(_get_files "par_type=all; par_min_items=2; par_max_items=2; par_sort_list=true")
+    input_files=$(_get_files "
+        par_type=all
+        par_min_items=2
+        par_max_items=2
+        par_sort_list=true
+    ")
 
     # Extract the two file or directory paths from the input.
     local file_1=""

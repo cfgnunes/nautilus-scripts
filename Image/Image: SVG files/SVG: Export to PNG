@@ -15,7 +15,10 @@ _main() {
     # Execute initial checks.
     _check_dependencies "inkscape"
     _display_wait_box ""
-    input_files=$(_get_files "par_type=file; par_select_mime='image/svg+xml|application/gzip'")
+    input_files=$(_get_files "
+        par_type=file
+        par_select_mime='image/svg+xml|application/gzip'
+    ")
 
     msg="$(_i18n 'Enter the target size.')"
     msg+="\n\n"
@@ -45,8 +48,11 @@ _main_task() {
     local output_file=""
     local std_output=""
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" \
-        "par_extension_opt=replace; par_extension=png; par_suffix='($TASK_DIMENSION px)'")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "
+        par_extension_opt=replace
+        par_extension=png
+        par_suffix='($TASK_DIMENSION px)'
+    ")
 
     # Run the main process.
     std_output=$(inkscape \

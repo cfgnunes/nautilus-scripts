@@ -116,8 +116,10 @@ _run_command() {
     local output_dir=$3
     local output_format="pdf"
 
-    output_file=$(_get_output_filename "$input_file" "$output_dir" \
-        "par_extension_opt=replace; par_extension=$output_format")
+    output_file=$(_get_output_filename "$input_file" "$output_dir" "
+        par_extension_opt=replace
+        par_extension=$output_format
+    ")
 
     # Run the main process.
     case $command in
@@ -173,13 +175,14 @@ _run_command() {
         ;;
     "rayomd")
         std_output=$(_run_in_sandbox "$output_dir" "false" \
-            rayomd --export "$input_file" "$output_file" --page-size=a4 --page-numbers 2>&1)
+            rayomd --export "$input_file" "$output_file" \
+            --page-size=a4 --page-numbers 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "pandoc")
         std_output=$(_run_in_sandbox "$output_dir" "false" \
-            pandoc -V "geometry:a4paper,margin=1.5cm" --standalone -o "$output_file" \
-            -- "$input_file" 2>&1)
+            pandoc -V "geometry:a4paper,margin=1.5cm" \
+            --standalone -o "$output_file" -- "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     esac

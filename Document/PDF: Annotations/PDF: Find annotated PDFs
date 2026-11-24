@@ -13,7 +13,11 @@ _main() {
     # Execute initial checks.
     _check_dependencies "qpdf"
     _display_wait_box ""
-    input_files=$(_get_files "par_type=file; par_recursive=true; par_select_extension=pdf")
+    input_files=$(_get_files "
+        par_type=file
+        par_recursive=true
+        par_select_extension=pdf
+    ")
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" ""
@@ -22,15 +26,23 @@ _main() {
     std_output=$(_storage_text_read_all)
     std_output=$(_text_sort "$std_output")
 
-    _display_list_box "$std_output" "par_item_name=$(_i18n 'files'); par_columns='--column:$(_i18n 'File')'; par_action=open_location; par_check_type=checkbox"
+    _display_list_box "$std_output" "
+        par_item_name=$(_i18n 'files')
+        par_columns='--column:$(_i18n 'File')'
+        par_action=open_location
+        par_check_type=checkbox
+    "
 }
 
 _main_task() {
     local input_file=$1
+    local pattern='"/Subtype": "\(/Text\|/FreeText\|/Highlight\|/Underline'
+    pattern+='\|/Squiggly\|/StrikeOut\|/Ink\|/Caret\|/Line\|/Square'
+    pattern+='\|/Circle\|/Polygon\|/PolyLine\)"'
 
     # Run the main process.
     if _run_in_sandbox "" "false" qpdf --json "$input_file" 2>/dev/null |
-        grep -q -m1 '"/Subtype": "\(/Text\|/FreeText\|/Highlight\|/Underline\|/Squiggly\|/StrikeOut\|/Ink\|/Caret\|/Line\|/Square\|/Circle\|/Polygon\|/PolyLine\)"'; then
+        grep -q -m1 "$pattern"; then
         _storage_text_write_ln "$(_text_remove_pwd "$input_file")"
     fi
 }

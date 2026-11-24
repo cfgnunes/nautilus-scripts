@@ -13,7 +13,11 @@ _main() {
     # Execute initial checks.
     _check_dependencies "magick"
     _display_wait_box "0"
-    input_files=$(_get_files "par_type=file; par_recursive=true; par_select_extension='jpg|jpeg|png|gif|bmp|tiff|tif|webp|avif|heic'")
+    input_files=$(_get_files "
+        par_type=file
+        par_recursive=true
+        par_select_extension='jpg|jpeg|png|gif|bmp|tiff|tif|webp|avif|heic'
+    ")
 
     _main_task "$input_files"
     _display_result_box ""

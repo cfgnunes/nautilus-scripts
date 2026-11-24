@@ -35,11 +35,20 @@ _main_task() {
     local std_output=""
     local status="🟢"
 
+    local format=""
+    format+="CRC32:    %{crc32}\n"
+    format+="MD5:      %{md5}\n"
+    format+="SHA-1:    %h\n"
+    format+="SHA-256:  %{sha-256}\n"
+    format+="SHA-512:  %{sha-512}\n"
+    format+="SHA3-256: %{sha3-256}\n"
+    format+="SHA3-512: %{sha3-512}\n"
+    format+="BLAKE2s:  %{blake2s}\n"
+    format+="BLAKE2b:  %{blake2b}"
+
     # Run the main process.
     std_output=$(_run_in_sandbox "$output_dir" "false" \
-        rhash \
-        --printf="CRC32:    %{crc32}\nMD5:      %{md5}\nSHA-1:    %h\nSHA-256:  %{sha-256}\nSHA-512:  %{sha-512}\nSHA3-256: %{sha3-256}\nSHA3-512: %{sha3-512}\nBLAKE2s:  %{blake2s}\nBLAKE2b:  %{blake2b}" \
-        -- "$input_file" 2>/dev/null)
+        rhash --printf="$format" -- "$input_file" 2>/dev/null)
 
     if [[ -z "$std_output" ]]; then
         status="🔴"

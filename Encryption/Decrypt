@@ -13,7 +13,16 @@ _main() {
 
     # Execute initial checks.
     _check_dependencies "tar gpg"
-    input_files=$(_get_files "par_type=file; par_select_mime='application/octet-stream|application/pgp|application/pgp-encrypted|application/pgp-signature|application/pkcs7-mime|application/pkcs7-signature|text/plain'")
+    input_files=$(_get_files "
+        par_type=file
+        par_select_mime='application/octet-stream|'
+        par_select_mime+='application/pgp|'
+        par_select_mime+='application/pgp-encrypted|'
+        par_select_mime+='application/pgp-signature|'
+        par_select_mime+='application/pkcs7-mime|'
+        par_select_mime+='application/pkcs7-signature|'
+        par_select_mime+='text/plain'
+    ")
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
