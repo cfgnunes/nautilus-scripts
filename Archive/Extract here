@@ -567,8 +567,12 @@ _run_command() {
         _directory_pop || return 1
     }
     __temp_dir_remove() {
-        rm -rf -- "$temp_dir_extract" 2>/dev/null
-        rm -rf -- "$temp_dir_extract_cat" 2>/dev/null
+        local dir=""
+        for dir in "$temp_dir_extract" "$temp_dir_extract_cat"; do
+            if [[ -d "$dir" ]]; then
+                rm -rf -- "$dir" 2>/dev/null
+            fi
+        done
     }
 
     # -------------------------------------------------------------------------
