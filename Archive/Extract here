@@ -535,14 +535,21 @@ _run_command() {
     __sandbox() {
         _run_in_sandbox "$output_dir" "false" "$@"
     }
+    # Run '<producer> | tar xf -' and fail if either side fails. The stderr of
+    # both commands is merged into the output.
+    __pipe_to_tar() {
+        (
+            set -o pipefail
+            "$@" | __sandbox tar xf -
+        ) 2>&1
+    }
     __cmd_7z() {
         if _command_exists "7z"; then
-            _run_in_sandbox "$output_dir" "false" 7z "$@"
+            __sandbox 7z "$@"
         elif _command_exists "7za"; then
-            _run_in_sandbox "$output_dir" "false" 7za "$@"
+            __sandbox 7za "$@"
         else
-            _run_in_sandbox "$output_dir" "false" \
-                "$(compgen -c 7z | head -n 1)" "$@"
+            __sandbox "$(compgen -c 7z | head -n 1)" "$@"
         fi
     }
     __get_password() {
@@ -611,6 +618,7 @@ _run_command() {
         ;;
     "ar")
         std_output=$(__sandbox ar x -- "$input_file" 2>&1)
+        exit_code=$?
         ;;
     "bsdtar")
         std_output=$(__sandbox bsdtar --passphrase "$TASK_PASSWORD" -xf "$input_file" 2>&1)
@@ -628,21 +636,26 @@ _run_command() {
             __get_saved_filename "$command"
         fi
         __sandbox "$command" -d -c -- "$input_file" >"$filename" 2>/dev/null
+        exit_code=$?
         ;;
     "cabextract")
         std_output=$(__sandbox cabextract "$input_file" 2>&1)
+        exit_code=$?
         ;;
     "cpio")
         std_output=$(__sandbox cpio -idv <"$input_file" 2>&1)
+        exit_code=$?
         ;;
     "dar")
         std_output=$(__sandbox dar -x "$input_file" 2>&1)
+        exit_code=$?
         ;;
     "gpg")
         std_output=$(gpg --batch --yes --decrypt --output "$filename" -- "$input_file" 2>&1)
+        exit_code=$?
         local file_mime=""
         file_mime=$(_get_file_mime "$filename")
-        if [[ "$file_mime" == "application/x-tar" ]]; then
+        if ((exit_code == 0)) && [[ "$file_mime" == "application/x-tar" ]]; then
             # Create a temporary local directory for extraction.
             local temp_dir_extract_tar=""
             temp_dir_extract_tar=$(_make_temp_dir_local "$output_dir" "$filename")
@@ -655,24 +668,31 @@ _run_command() {
         ;;
     "lha")
         std_output=$(__sandbox lha -e "$input_file" 2>&1)
+        exit_code=$?
         ;;
     "lrzip")
         std_output=$(__sandbox lrzip -d -o "$temp_dir_extract/$filename" -- "$input_file" 2>&1)
+        exit_code=$?
         ;;
     "rdsquashfs")
         std_output=$(__sandbox rdsquashfs -u . -- "$input_file" 2>&1)
+        exit_code=$?
         ;;
     "rzip")
         __sandbox rzip -d -k -o "$filename" -- "$input_file" >/dev/null 2>&1
+        exit_code=$?
         ;;
     "tar,7za")
-        std_output=$(__cmd_7z x -so -- "$input_file" 2>/dev/null | __sandbox tar xf - 2>&1)
+        std_output=$(__pipe_to_tar __cmd_7z x -so -- "$input_file")
+        exit_code=$?
         ;;
     "tar,brotli")
-        std_output=$(__sandbox brotli -d -c -- "$input_file" | __sandbox tar xf - 2>&1)
+        std_output=$(__pipe_to_tar __sandbox brotli -d -c -- "$input_file")
+        exit_code=$?
         ;;
     "tar,bzip3")
-        std_output=$(__sandbox bzip3 -d -c -- "$input_file" | __sandbox tar xf - 2>&1)
+        std_output=$(__pipe_to_tar __sandbox bzip3 -d -c -- "$input_file")
+        exit_code=$?
         ;;
     "tar,rzip")
         std_output=$(__sandbox rzip -d -k -o "$temp_dir_extract/.tmp.tar" -- "$input_file" 2>&1 &&
@@ -683,18 +703,23 @@ _run_command() {
     "tar,bzip2" | "tar,gzip" | "tar,lzip" | "tar,lzma" | "tar,lzop" | "tar,xz")
         # The compressor name is also the long option of 'tar'.
         std_output=$(__sandbox tar --extract "--${command#tar,}" --file="$input_file" 2>&1)
+        exit_code=$?
         ;;
     "tar,lrzip")
         std_output=$(__sandbox lrztar -d "$input_file" 2>&1)
+        exit_code=$?
         ;;
     "tar,lz4")
-        std_output=$(__sandbox lz4 -d -c -- "$input_file" | __sandbox tar xf - 2>&1)
+        std_output=$(__pipe_to_tar __sandbox lz4 -d -c -- "$input_file")
+        exit_code=$?
         ;;
     "tar,zstd")
-        std_output=$(__sandbox zstd -f -d -c -- "$input_file" | __sandbox tar xf - 2>&1)
+        std_output=$(__pipe_to_tar __sandbox zstd -f -d -c -- "$input_file")
+        exit_code=$?
         ;;
     "tar")
         std_output=$(__sandbox tar --extract --file="$input_file" 2>&1)
+        exit_code=$?
         ;;
     "unrar")
         std_output=$(__sandbox unrar x -p"$TASK_PASSWORD" -- "$input_file" 2>&1)
@@ -708,12 +733,15 @@ _run_command() {
         ;;
     "unsquashfs")
         std_output=$(__sandbox unsquashfs "$input_file" 2>&1)
+        exit_code=$?
         ;;
     "xorriso")
         std_output=$(__sandbox xorriso -osirrox on -indev "$input_file" -- -extract / . -rollback_end 2>&1)
+        exit_code=$?
         ;;
     "zpaq")
         std_output=$(__sandbox zpaq x "$input_file" 2>&1)
+        exit_code=$?
         ;;
     "bsdtar,7za")
         # Default extractor chain for unrecognized files.
@@ -737,8 +765,7 @@ _run_command() {
     # -------------------------------------------------------------------------
 
     # Check for result errors.
-    local exit_code_last=$?
-    if ((exit_code != 0)) || ((exit_code_last != 0)); then
+    if ((exit_code != 0)); then
         _check_output "1" "$std_output" "$input_file" ""
 
         # If all extracted files have zero bytes, then abort.
