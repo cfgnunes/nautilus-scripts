@@ -591,11 +591,15 @@ _run_in_sandbox() {
     )
 
     local path=""
+    # bwrap can't mount on symlinks
+    # `readlink -f` is essential for bwrap to work
     for path in "${sensitive_dirs[@]}"; do
-        [[ -d "$path" ]] && sandbox_args+=(--tmpfs "$path")
+        [[ -d "$path" ]] || continue
+        sandbox_args+=(--tmpfs "$(readlink -f -- "$path")")
     done
     for path in "${sensitive_files[@]}"; do
-        [[ -f "$path" ]] && sandbox_args+=(--ro-bind /dev/null "$path")
+        [[ -f "$path" ]] || continue
+        sandbox_args+=(--ro-bind /dev/null "$(readlink -f -- "$path")")
     done
 
     # Writable paths. These binds must come after the hidden directories,
