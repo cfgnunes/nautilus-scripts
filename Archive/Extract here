@@ -297,6 +297,8 @@ _get_command() {
         ["tar.br"]="tar_br"
         ["tar.rz"]="tar_rz"
         ["tar.7z"]="tar_7z"
+        ["zipx"]="zip"
+        ["tbz3"]="tar_bz3"
     )
 
     # Archive type for each MIME type (lowercase).
@@ -376,6 +378,9 @@ _get_command() {
         ["application/x-rzip-compressed-tar"]="tar_rz"
         ["application/x-7z-compressed-tar"]="tar_7z"
         ["application/x-lhz"]="lzh"
+        ["application/x-bzip1"]="bz"
+        ["application/x-modrinth-modpack+zip"]="zip"
+        ["application/x-raw-disk-image-xz-compressed"]="xz"
     )
 
     # -------------------------------------------------------------------------
