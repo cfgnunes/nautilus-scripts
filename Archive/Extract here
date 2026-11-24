@@ -245,6 +245,7 @@ _get_command() {
         ["sfs"]="sqsh"
         ["sqsh"]="sqsh"
         ["squashfs"]="sqsh"
+        ["svgz"]="gz"
         ["tar"]="tar"
         ["tar.bz"]="tar_bz"
         ["tar.bz2"]="tar_bz"
@@ -268,6 +269,7 @@ _get_command() {
         ["tzo"]="tar_lzo"
         ["tzst"]="tar_zst"
         ["udeb"]="deb"
+        ["vgz"]="gz"
         ["xar"]="xar"
         ["xz"]="xz"
         ["z"]="z"
@@ -328,6 +330,7 @@ _get_command() {
         ["application/x-zstd-compressed-tar"]="tar_zst"
         ["application/zip"]="zip"
         ["application/zstd"]="zstd"
+        ["image/svg+xml-compressed"]="gz"
     )
 
     # -------------------------------------------------------------------------
