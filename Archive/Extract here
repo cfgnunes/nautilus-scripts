@@ -123,7 +123,6 @@ _concat_file() {
 #   $1 (input_file): The archive file to be checked.
 _get_dependencies() {
     local input_file=$1
-    local dependencies=""
 
     local command=""
     command=$(_get_command "$input_file" "available")
@@ -388,6 +387,7 @@ _run_command() {
     local exit_code=0
     local basename=""
     local filename=""
+    local password=""
     local std_output=""
     local temp_dir_extract=""
     local temp_dir_extract_cat=""
@@ -396,13 +396,36 @@ _run_command() {
         output_dir=$(dirname -- "$input_file")
     fi
 
-    # Remove the path.
     basename=$(basename -- "$input_file")
-
     filename="$basename"
     filename=$(_strip_filename_multipart "$filename")
     filename=$(_strip_filename_extension "$filename")
 
+    __cmd_7z() {
+        if _command_exists "7z"; then
+            _run_in_sandbox "$output_dir" "false" 7z "$@"
+        elif _command_exists "7za"; then
+            _run_in_sandbox "$output_dir" "false" 7za "$@"
+        else
+            _run_in_sandbox "$output_dir" "false" \
+                "$(compgen -c 7z | head -n 1)" "$@"
+        fi
+    }
+    __get_password() {
+        __temp_dir_pop && __temp_dir_remove
+        password=$(_display_password_box "$(_i18n 'Enter the password for the archive:') '$basename'") || return 1
+        __temp_dir_push || return 1
+    }
+    __get_saved_filename() {
+        local saved_filename=""
+        saved_filename=$(_run_in_sandbox "$output_dir" "false" \
+            "$1" -l -N "$input_file" 2>/dev/null |
+            tail -n 1 | cut -d "%" -f 2- | sed "s|^ ||")
+        if [[ -n "$saved_filename" ]] &&
+            [[ "$saved_filename" != "$input_file" ]]; then
+            filename=$(basename "$saved_filename")
+        fi
+    }
     __temp_dir_push() {
         temp_dir_extract=$(_make_temp_dir_local "$output_dir" "$filename")
         _directory_push "$temp_dir_extract" || return 1
@@ -413,19 +436,6 @@ _run_command() {
     __temp_dir_remove() {
         rm -rf -- "$temp_dir_extract" 2>/dev/null
         rm -rf -- "$temp_dir_extract_cat" 2>/dev/null
-    }
-    __get_password() {
-        _display_password_box "$(_i18n 'Enter the password for the archive:') '$basename'"
-    }
-    __cmd_7z() {
-        if _command_exists "7z"; then
-            _run_in_sandbox "$output_dir" "false" 7z "$@"
-        elif _command_exists "7za"; then
-            _run_in_sandbox "$output_dir" "false" 7za "$@"
-        else
-            _run_in_sandbox "$output_dir" "false" \
-                "$(compgen -c 7z | head -n 1)" "$@"
-        fi
     }
 
     # Ensure the input file has an absolute path before proceeding.
@@ -449,10 +459,7 @@ _run_command() {
         exit_code=$?
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "wrong password" <<<"$std_output"; then
-            local password=""
-            __temp_dir_pop && __temp_dir_remove
-            password=$(__get_password) || return 1
-            __temp_dir_push || return 1
+            __get_password || return 1
             std_output=$(__cmd_7z x -aoa -p"$password" -- "$input_file" 2>&1)
             exit_code=$?
         fi
@@ -463,10 +470,7 @@ _run_command() {
         exit_code=$?
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "incorrect passphrase" <<<"$std_output"; then
-            local password=""
-            __temp_dir_pop && __temp_dir_remove
-            password=$(__get_password) || return 1
-            __temp_dir_push || return 1
+            __get_password || return 1
             std_output=$(_run_in_sandbox "$output_dir" "false" bsdtar --passphrase "$password" -xf "$input_file" 2>&1)
             exit_code=$?
         fi
@@ -492,14 +496,8 @@ _run_command() {
         fi
         ;;
     "gzip")
-        # Get the original filename stored in the gzip archive, if available.
-        local saved_filename=""
-        saved_filename=$(_run_in_sandbox "$output_dir" "false" gzip -l -N "$input_file" 2>/dev/null |
-            tail -n 1 | cut -d "%" -f 2- | sed "s|^ ||")
-        if [[ -n "$saved_filename" ]] && [[ "$saved_filename" != "$input_file" ]]; then
-            filename=$(basename "$saved_filename")
-        fi
-        # Extract the gzip archive to the determined filename.
+        # Get the original filename stored in the archive, if available.
+        __get_saved_filename "gzip"
         _run_in_sandbox "$output_dir" "false" gzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null
         ;;
     "lha") std_output=$(_run_in_sandbox "$output_dir" "false" lha -e "$input_file" 2>&1) ;;
@@ -507,14 +505,8 @@ _run_command() {
     "lz4") _run_in_sandbox "$output_dir" "false" lz4 -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
     "lzip") _run_in_sandbox "$output_dir" "false" lzip -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
     "lzop")
-        # Get the original filename stored in the gzip archive, if available.
-        local saved_filename=""
-        saved_filename=$(_run_in_sandbox "$output_dir" "false" lzop -l -N "$input_file" 2>/dev/null |
-            tail -n 1 | cut -d "%" -f 2- | sed "s|^ ||")
-        if [[ -n "$saved_filename" ]] && [[ "$saved_filename" != "$input_file" ]]; then
-            filename=$(basename "$saved_filename")
-        fi
-        # Extract the gzip archive to the determined filename.
+        # Get the original filename stored in the archive, if available.
+        __get_saved_filename "lzop"
         _run_in_sandbox "$output_dir" "false" lzop -d -c -- "$input_file" >"$filename" 2>/dev/null
         ;;
     "rdsquashfs") std_output=$(_run_in_sandbox "$output_dir" "false" rdsquashfs -u . -- "$input_file" 2>&1) ;;
@@ -533,10 +525,7 @@ _run_command() {
         exit_code=$?
 
         if ((exit_code != 0)) && grep --quiet --ignore-case "password" <<<"$std_output"; then
-            local password=""
-            __temp_dir_pop && __temp_dir_remove
-            password=$(__get_password) || return 1
-            __temp_dir_push || return 1
+            __get_password || return 1
             std_output=$(_run_in_sandbox "$output_dir" "false" unrar x -p"$password" -- "$input_file" 2>&1)
             exit_code=$?
         fi
@@ -547,14 +536,10 @@ _run_command() {
     "zpaq") std_output=$(_run_in_sandbox "$output_dir" "false" zpaq x "$input_file" 2>&1) ;;
     "zstd") _run_in_sandbox "$output_dir" "false" zstd -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
     "bsdtar,7za")
-        exit_code=1
         # Default extractor chain for unrecognized files.
         # Try to extract with 'bsdtar'.
-        if ((exit_code != 0)); then
-            std_output=$(_run_in_sandbox "$output_dir" "false" bsdtar -xf "$input_file" 2>&1)
-            exit_code=$?
-        fi
-
+        std_output=$(_run_in_sandbox "$output_dir" "false" bsdtar -xf "$input_file" 2>&1)
+        exit_code=$?
         # Try to extract with '7za'.
         if ((exit_code != 0)); then
             std_output=$(__cmd_7z x -aoa -- "$input_file" 2>&1)
