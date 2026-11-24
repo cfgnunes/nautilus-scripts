@@ -156,6 +156,10 @@ _get_command() {
     local command=""
     local -a pref_cmds=()
 
+    # -------------------------------------------------------------------------
+    # SECTION: Define the preferred commands
+    # -------------------------------------------------------------------------
+
     # Define the preferred commands for each type of archive.
     local -a cmds_7za=("7za" "bsdtar")
     local -a cmds_ar=("ar" "bsdtar")
@@ -197,6 +201,10 @@ _get_command() {
     local -a cmds_zpaq=("zpaq")
     local -a cmds_zstd=("zstd")
     local -a cmds_unknown_file=("bsdtar,7za")
+
+    # -------------------------------------------------------------------------
+    # SECTION: Detect the archive type
+    # -------------------------------------------------------------------------
 
     # For split archives ('.000' or '.001'), use the name of the joined file.
     local type_name=""
@@ -313,6 +321,10 @@ _get_command() {
         ;;
     esac
 
+    # -------------------------------------------------------------------------
+    # SECTION: Select the command
+    # -------------------------------------------------------------------------
+
     # Determine the command to use based on the command status.
     if [[ "$command_status" == "default" ]]; then
         # Use the first preferred command as the default.
@@ -392,6 +404,10 @@ _run_command() {
     local temp_dir_extract=""
     local temp_dir_extract_cat=""
 
+    # -------------------------------------------------------------------------
+    # SECTION: Prepare the paths
+    # -------------------------------------------------------------------------
+
     if [[ -z "$output_dir" ]]; then
         output_dir=$(dirname -- "$input_file")
     fi
@@ -400,6 +416,10 @@ _run_command() {
     filename="$basename"
     filename=$(_strip_filename_multipart "$filename")
     filename=$(_strip_filename_extension "$filename")
+
+    # -------------------------------------------------------------------------
+    # SECTION: Helper functions
+    # -------------------------------------------------------------------------
 
     __sandbox() {
         _run_in_sandbox "$output_dir" "false" "$@"
@@ -440,6 +460,10 @@ _run_command() {
         rm -rf -- "$temp_dir_extract_cat" 2>/dev/null
     }
 
+    # -------------------------------------------------------------------------
+    # SECTION: Prepare the input file
+    # -------------------------------------------------------------------------
+
     # Ensure the input file has an absolute path before proceeding.
     if [[ $input_file != "/"* ]]; then
         input_file=$(readlink -f "$input_file")
@@ -451,6 +475,10 @@ _run_command() {
         temp_dir_extract_cat=$(_make_temp_dir_local "$output_dir" "$filename")
         input_file=$(_concat_file "$input_file" "$temp_dir_extract_cat") || return 1
     fi
+
+    # -------------------------------------------------------------------------
+    # SECTION: Extract the archive
+    # -------------------------------------------------------------------------
 
     # Use a local temporary directory to work.
     __temp_dir_push || return 1
@@ -554,6 +582,10 @@ _run_command() {
         ;;
     esac
 
+    # -------------------------------------------------------------------------
+    # SECTION: Check the extraction
+    # -------------------------------------------------------------------------
+
     # Check for result errors.
     local exit_code_last=$?
     if ((exit_code != 0)) || ((exit_code_last != 0)); then
@@ -567,6 +599,10 @@ _run_command() {
             return 1
         fi
     fi
+
+    # -------------------------------------------------------------------------
+    # SECTION: Inspect the extracted items
+    # -------------------------------------------------------------------------
 
     # Fix permissions of extracted files in 'iso' archive format.
     if [[ "${input_file,,}" == *".iso" ]]; then
@@ -595,6 +631,10 @@ _run_command() {
     fi
 
     __temp_dir_pop || return 1
+
+    # -------------------------------------------------------------------------
+    # SECTION: Move the extracted items
+    # -------------------------------------------------------------------------
 
     # Move the items to the correct directory.
     if [[ "$single_root_item" == "$filename" ]] ||
