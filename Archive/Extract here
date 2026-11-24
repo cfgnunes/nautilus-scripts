@@ -611,17 +611,18 @@ _run_command() {
 
     # Get the list of root items (files or directories)
     # in the 'temp_dir_extract' directory.
-    local root_items=""
-    root_items=$(find . -mindepth 1 -maxdepth 1 2>/dev/null)
+    local -a root_items=()
+    shopt -s nullglob dotglob
+    root_items=(*)
+    shopt -u nullglob dotglob
 
     # Count the number of items.
-    local count_root_items=""
-    count_root_items=$(wc -l <<<"$root_items")
+    local count_root_items=${#root_items[@]}
 
     # Check if the 'temp_dir_extract' has just one item.
     local single_root_item=""
     if ((count_root_items == 1)); then
-        single_root_item="${root_items#./}"
+        single_root_item="${root_items[0]}"
     fi
 
     # Check if the 'temp_dir_extract' is empty.
