@@ -2020,7 +2020,7 @@ _display_file_selection_box() {
     local filename_flag=""
     local multiple_flag=""
     local save_flag=""
-    local selected_items=""
+    local sel_items=""
     local selection_status=0
     local msg=""
 
@@ -2051,14 +2051,14 @@ _display_file_selection_box() {
     if _command_exists "zenity"; then
         # FIXME: Zenity cannot select files and directories in the same dialog.
         # See: https://gitlab.gnome.org/GNOME/zenity/-/issues/116
-        selected_items=$(zenity --title "$title" \
+        sel_items=$(zenity --title "$title" \
             --file-selection $multiple_flag $directory_flag $save_flag \
             ${filename_flag:+"$filename_flag"} \
             ${save_flag:+--confirm-overwrite} \
             ${file_filter:+--file-filter="$file_filter"} \
             --separator="$FIELD_SEPARATOR" 2>/dev/null) || selection_status=$?
     elif _command_exists "yad"; then
-        selected_items=$(yad --title "$title" \
+        sel_items=$(yad --title "$title" \
             --button="${btn_cancel}:1" --button="${btn_ok}:0" \
             --file $multiple_flag $directory_flag $save_flag \
             ${filename_flag:+"$filename_flag"} \
@@ -2072,17 +2072,17 @@ _display_file_selection_box() {
         if ((selection_status != 0)); then
             return 1
         fi
-        [[ -n "$selected_items" ]] || return 1
+        [[ -n "$sel_items" ]] || return 1
     else
-        selected_items=$(_str_collapse_char "$selected_items" "$FIELD_SEPARATOR")
-        if [[ -z "$selected_items" ]]; then
+        sel_items=$(_str_collapse_char "$sel_items" "$FIELD_SEPARATOR")
+        if [[ -z "$sel_items" ]]; then
             msg="$(_i18n 'No items were selected!')"
             _display_error_box "$msg"
             _exit_script
         fi
     fi
 
-    printf "%s" "$selected_items"
+    printf "%s" "$sel_items"
     return 0
 }
 
