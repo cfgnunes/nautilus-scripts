@@ -22,7 +22,7 @@ _main() {
 
     # Execute the function '_get_dependencies' for each file in parallel.
     export -f \
-        _all_commands_exists \
+        _all_commands_exist \
         _concat_file \
         _get_command \
         _get_dependencies \
@@ -446,7 +446,7 @@ _get_command() {
         for pref_command in "${pref_cmds[@]}"; do
             if [[ "$pref_command" == *","* ]]; then
                 # Check if all commands in a composite command exist.
-                if _all_commands_exists "${pref_command//,/ }"; then
+                if _all_commands_exist "${pref_command//,/ }"; then
                     command=$pref_command
                     break
                 fi
@@ -461,7 +461,7 @@ _get_command() {
     printf "%s" "$command"
 }
 
-# Function: _all_commands_exists
+# Function: _all_commands_exist
 #
 # Description:
 #   This function checks if all commands of a list exist on the system.
@@ -472,7 +472,7 @@ _get_command() {
 # Returns:
 #   0 (true): If all commands exist.
 #   1 (false): If any command does not exist.
-_all_commands_exists() {
+_all_commands_exist() {
     local commands=$1
 
     local -a cmd_array=()
