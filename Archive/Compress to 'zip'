@@ -79,9 +79,8 @@ _main_task() {
     _directory_pop || return 1
 
     # HACK: Workaround for GNOME Files (Nautilus).
-    # The file manager sometimes fails to recognize newly created zip files
-    # immediately. The user needs to refresh the view to see them.
-    # I don't know why, but touching the file seems to help.
+    # The file manager sometimes fails to recognize newly created zip
+    # files immediately. The user needs to refresh the view to see them.
     touch --no-create -- "$output_file"
 }
 
