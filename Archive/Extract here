@@ -171,6 +171,7 @@ _get_command() {
         ["arj"]="7za"
         ["bz"]="bzip2 7za"
         ["bz3"]="bzip3"
+        ["br"]="brotli"
         ["cab"]="cabextract bsdtar"
         ["cpio"]="cpio bsdtar"
         ["dar"]="dar"
@@ -187,15 +188,20 @@ _get_command() {
         ["msi"]="7za"
         ["rar"]="unrar bsdtar"
         ["rpm"]="bsdtar"
+        ["rz"]="rzip"
         ["sqsh"]="unsquashfs rdsquashfs"
         ["tar"]="tar bsdtar 7za"
+        ["tar_7z"]="tar,7za"
+        ["tar_br"]="tar,brotli"
         ["tar_bz"]="tar,bzip2 7za"
+        ["tar_bz3"]="tar,bzip3"
         ["tar_gz"]="tar,gzip 7za"
         ["tar_lrz"]="tar,lrzip"
         ["tar_lz"]="tar,lzip"
         ["tar_lz4"]="tar,lz4"
         ["tar_lzma"]="tar,lzma 7za"
         ["tar_lzo"]="tar,lzop"
+        ["tar_rz"]="tar,rzip"
         ["tar_xz"]="tar,xz 7za"
         ["tar_z"]="tar,gzip 7za"
         ["tar_zst"]="tar,zstd"
@@ -276,6 +282,21 @@ _get_command() {
         ["zip"]="zip"
         ["zpaq"]="zpaq"
         ["zst"]="zstd"
+        ["war"]="zip"
+        ["epub"]="zip"
+        ["cbz"]="zip"
+        ["crx"]="zip"
+        ["cbr"]="rar"
+        ["snap"]="sqsh"
+        ["exe"]="7za"
+        ["dmg"]="7za"
+        ["wim"]="7za"
+        ["br"]="br"
+        ["rz"]="rz"
+        ["tar.bz3"]="tar_bz3"
+        ["tar.br"]="tar_br"
+        ["tar.rz"]="tar_rz"
+        ["tar.7z"]="tar_7z"
     )
 
     # Archive type for each MIME type (lowercase).
@@ -331,6 +352,30 @@ _get_command() {
         ["application/zip"]="zip"
         ["application/zstd"]="zstd"
         ["image/svg+xml-compressed"]="gz"
+        ["application/x-gtar"]="tar"
+        ["application/x-source-rpm"]="rpm"
+        ["application/x-deb"]="deb"
+        ["application/x-debian-package"]="deb"
+        ["application/x-cabinet"]="cab"
+        ["application/x-cd-image"]="iso"
+        ["application/x-java-archive"]="zip"
+        ["application/x-ear"]="zip"
+        ["application/x-war"]="zip"
+        ["application/epub+zip"]="zip"
+        ["application/x-cbz"]="zip"
+        ["application/x-chrome-extension"]="zip"
+        ["application/x-cbr"]="rar"
+        ["application/vnd.snap"]="sqsh"
+        ["application/x-ms-wim"]="7za"
+        ["application/x-apple-diskimage"]="7za"
+        ["application/x-bzip1-compressed-tar"]="tar_bz"
+        ["application/x-bzip3-compressed-tar"]="tar_bz3"
+        ["application/x-brotli"]="br"
+        ["application/x-brotli-compressed-tar"]="tar_br"
+        ["application/x-rzip"]="rz"
+        ["application/x-rzip-compressed-tar"]="tar_rz"
+        ["application/x-7z-compressed-tar"]="tar_7z"
+        ["application/x-lhz"]="lzh"
     )
 
     # -------------------------------------------------------------------------
@@ -568,6 +613,7 @@ _run_command() {
         ;;
     "bzip2") __sandbox bzip2 -d -c -k -- "$input_file" >"$filename" 2>/dev/null ;;
     "bzip3") __sandbox bzip3 -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
+    "brotli") __sandbox brotli -d -c -- "$input_file" >"$filename" 2>/dev/null ;;
     "cabextract") std_output=$(__sandbox cabextract "$input_file" 2>&1) ;;
     "cpio") std_output=$(__sandbox cpio -idv <"$input_file" 2>&1) ;;
     "dar") std_output=$(__sandbox dar -x "$input_file" 2>&1) ;;
@@ -601,6 +647,18 @@ _run_command() {
         __sandbox lzop -d -c -- "$input_file" >"$filename" 2>/dev/null
         ;;
     "rdsquashfs") std_output=$(__sandbox rdsquashfs -u . -- "$input_file" 2>&1) ;;
+    "rzip")
+        __sandbox rzip -d -k -o "$filename" -- "$input_file" >/dev/null 2>&1
+        ;;
+    "tar,7za") std_output=$(__cmd_7z x -so -- "$input_file" 2>/dev/null | __sandbox tar xf - 2>&1) ;;
+    "tar,brotli") std_output=$(__sandbox brotli -d -c -- "$input_file" | __sandbox tar xf - 2>&1) ;;
+    "tar,bzip3") std_output=$(__sandbox bzip3 -d -c -- "$input_file" | __sandbox tar xf - 2>&1) ;;
+    "tar,rzip")
+        std_output=$(__sandbox rzip -d -k -o "$temp_dir_extract/.tmp.tar" -- "$input_file" 2>&1 &&
+            __sandbox tar --extract --file="$temp_dir_extract/.tmp.tar" 2>&1)
+        exit_code=$?
+        rm -f -- "$temp_dir_extract/.tmp.tar"
+        ;;
     "tar,bzip2") std_output=$(__sandbox tar --extract --bzip2 --file="$input_file" 2>&1) ;;
     "tar,gzip") std_output=$(__sandbox tar --extract --gzip --file="$input_file" 2>&1) ;;
     "tar,lrzip") std_output=$(__sandbox lrztar -d "$input_file" 2>&1) ;;
