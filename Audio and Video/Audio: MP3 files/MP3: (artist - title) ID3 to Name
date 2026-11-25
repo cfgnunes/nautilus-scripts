@@ -46,11 +46,22 @@ _main_task() {
     tag_artist=${tag_artist//\//, }
     tag_title=${tag_title//\//, }
 
+    # Use only the tags that are present. Skip files without any tag.
+    local new_name=""
+    if [[ -n "$tag_artist" ]] && [[ -n "$tag_title" ]]; then
+        new_name="$tag_artist - $tag_title"
+    else
+        new_name="$tag_artist$tag_title"
+    fi
+    if [[ -z "$new_name" ]]; then
+        _check_output "1" "No artist or title tag found." "$input_file" "" || return 1
+    fi
+
     # Rename the file.
     local dir_file=""
     dir_file=$(_get_dirname "$input_file")
     _move_file "rename" "$input_file" \
-        "$dir_file/$tag_artist - $tag_title.mp3" || return 1
+        "$dir_file/$new_name.mp3" || return 1
 }
 
 _main "$@"
