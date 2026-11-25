@@ -35,7 +35,7 @@ _main_task() {
     std_output=$(_run_in_sandbox "$output_dir" "false" \
         gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
         -dPDFSETTINGS=/ebook \
-        -sOutputFile="$output_file" \
+        -sOutputFile="${output_file//%/%%}" \
         -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }

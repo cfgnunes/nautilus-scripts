@@ -37,7 +37,7 @@ _main_task() {
         -dPDFA=2 \
         -dPDFACompatibilityPolicy=1 \
         -sColorConversionStrategy=UseDeviceIndependentColor \
-        -sOutputFile="$output_file" \
+        -sOutputFile="${output_file//%/%%}" \
         -- "$input_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
