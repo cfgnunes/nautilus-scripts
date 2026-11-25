@@ -30,7 +30,7 @@ _main_task() {
     local frame_rate=5
 
     output_file=$(_get_output_filename \
-        "${input_file}_frame_%05d.png" "$output_dir" \
+        "${input_file//%/%%}_frame_%05d.png" "$output_dir" \
         "par_extension_opt=preserve")
 
     # Run the main process.
