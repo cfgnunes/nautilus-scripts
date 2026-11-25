@@ -156,6 +156,7 @@ _generate_fingerprint() {
     # Inspiration: https://github.com/jhnc/findimagedupes
     _cmd_magick_in_sandbox "" convert \
         "$input_file" \
+        -delete 1--1 \
         -resize 160x160\! \
         -modulate 100,0,100 \
         -blur 0x2 \
@@ -189,7 +190,8 @@ _compare_fingerprints() {
 
     # Compare the similarity with threshold, to treat the images as
     # duplicates or near-duplicates.
-    if [[ "$(echo "$ssim >= $threshold" | bc -l)" == "1" ]]; then
+    if [[ "$(LC_ALL=C.UTF-8 awk -v s="$ssim" -v t="$threshold" \
+        'BEGIN{print (s >= t) ? 1 : 0}')" == "1" ]]; then
         # Store the original path of the similar image.
         _storage_text_write_ln "$(cat -- "$fp_compare.txt")"
 
@@ -233,6 +235,12 @@ _compare_images() {
     # If not found, fallback to raw number.
     if [[ -z "$value" ]]; then
         value=$(grep -Eo '[0-9]+\.[0-9]+' <<<"$rmse" | tail -n 1)
+    fi
+
+    # If the comparison failed, treat the images as different.
+    if [[ -z "$value" ]]; then
+        printf "0"
+        return
     fi
 
     # Convert RMSE (error) into similarity (1 - error).
