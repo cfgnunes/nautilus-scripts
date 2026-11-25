@@ -1499,6 +1499,19 @@ _delete_items() {
     local -a items_array=()
     read -r -a items_array <<<"$items"
 
+    # The list shows paths relative to the working directory. Restore the
+    # absolute paths so the action does not depend on the current directory.
+    local working_dir=""
+    working_dir=$(_get_working_directory)
+    if [[ -n "$working_dir" && "$working_dir" != "/" ]]; then
+        local i=0
+        for i in "${!items_array[@]}"; do
+            if [[ "${items_array[i]}" != /* ]]; then
+                items_array[i]="$working_dir/${items_array[i]}"
+            fi
+        done
+    fi
+
     if _command_exists "gio"; then
         gio trash -- "${items_array[@]}" 2>/dev/null
     elif _command_exists "kioclient"; then
@@ -2414,7 +2427,14 @@ _display_select_box() {
     list=$(sed ":again; s/$fs$fs/$fs $fs/g; t again" <<<"$list")
 
     # Avoid leading '-' in the variable to use in command line.
-    list=$(sed "s|$FIELD_SEPARATOR-|$FIELD_SEPARATOR|g" <<<"$list")
+    list=$(sed "s|^-|./-|; s|$FIELD_SEPARATOR-|$FIELD_SEPARATOR./-|g" \
+        <<<"$list")
+
+    # Split the arguments into arrays (no word splitting or globbing).
+    local -a columns_array=()
+    local -a list_array=()
+    read -r -a columns_array <<<"$par_columns"
+    read -r -a list_array <<<"$list"
 
     # Get the system limit for arguments.
     local arg_max=""
@@ -2437,44 +2457,42 @@ _display_select_box() {
         # avoids the "Argument list too long" error when '$list' is too large.
         # See: https://gitlab.gnome.org/GNOME/zenity/-/issues/117
         if _command_exists "zenity"; then
-            # shellcheck disable=SC2086
             selected_items=$(zenity --title "$(_get_script_name)" --list \
                 --multiple --no-markup --separator="$FIELD_SEPARATOR" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" --text "$header_label" \
                 --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
-                $par_columns <<<"$list" 2>/dev/null) || _exit_script
+                "${columns_array[@]}" <<<"$list" 2>/dev/null) || _exit_script
         else
             printf "%s" "$list" >"$TEMP_DIR/list.txt"
-            # shellcheck disable=SC2086
             selected_items=$(yad --title "$(_get_script_name)" --list \
                 --multiple --no-markup --separator="$FIELD_SEPARATOR" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" --text "$header_label" \
                 --button="${btn_cancel}:1" --button="${btn_ok}:0" \
                 --rest="$TEMP_DIR/list.txt" \
-                $par_columns 2>/dev/null) || _exit_script
+                "${columns_array[@]}" 2>/dev/null) || _exit_script
         fi
 
     else
         # Default strategy for '--list'. Pass '$list' directly as
         # arguments. This strategy is very fast.
         if _command_exists "zenity"; then
-            # shellcheck disable=SC2086
             selected_items=$(zenity --title "$(_get_script_name)" --list \
                 --multiple --no-markup --separator="$FIELD_SEPARATOR" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" --text "$header_label" \
                 --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
-                $par_columns $list 2>/dev/null) || _exit_script
+                "${columns_array[@]}" \
+                "${list_array[@]}" 2>/dev/null) || _exit_script
         else
-            # shellcheck disable=SC2086
             selected_items=$(yad --title "$(_get_script_name)" --list \
                 --multiple --no-markup --separator="$FIELD_SEPARATOR" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" --text "$header_label" \
                 --button="${btn_cancel}:1" --button="${btn_ok}:0" \
-                $par_columns $list 2>/dev/null) || _exit_script
+                "${columns_array[@]}" \
+                "${list_array[@]}" 2>/dev/null) || _exit_script
         fi
     fi
     _display_unlock
