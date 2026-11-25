@@ -103,8 +103,11 @@ _prepare_input() {
     local urls=""
     local msg=""
 
-    # shellcheck disable=SC2086
-    data=$(cat -- $input_files 2>/dev/null)
+    # Split the list into an array.
+    local -a items=()
+    read -r -a items <<<"$input_files"
+
+    data=$(cat -- "${items[@]}" 2>/dev/null)
     urls=$(_extract_urls "$data")
 
     if [[ -z "$urls" ]]; then

@@ -20,12 +20,15 @@ _main() {
     # Work on a temporary file.
     temp_file=$(_make_temp_file)
 
+    # Split the list into an array.
+    local -a items=()
+    read -r -a items <<<"$input_files"
+
     # Run the main process.
-    # shellcheck disable=SC2086
     # NOTE: The 'rdfind' does not support '--' in the command line.
     _run_in_sandbox "" "false" \
         rdfind -dryrun true -removeidentinode false -outputname \
-        "$temp_file" $input_files &>/dev/null
+        "$temp_file" "${items[@]}" &>/dev/null
 
     # Parse the output.
     std_output=$(awk 'BEGIN { id = 0 }

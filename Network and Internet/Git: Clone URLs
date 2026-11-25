@@ -102,8 +102,11 @@ _prepare_input() {
     local file_data=""
     local urls=""
 
-    # shellcheck disable=SC2086
-    file_data=$(cat -- $input_files 2>/dev/null)
+    # Split the list into an array.
+    local -a items=()
+    read -r -a items <<<"$input_files"
+
+    file_data=$(cat -- "${items[@]}" 2>/dev/null)
     urls=$(_extract_git_urls "$file_data")
 
     # If there are no valid URLs in the files,

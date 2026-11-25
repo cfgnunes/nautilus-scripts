@@ -36,9 +36,12 @@ _main_task() {
         "Concatenated files.txt" "$output_dir" \
         "par_extension_opt=preserve")
 
+    # Split the list into an array.
+    local -a items=()
+    read -r -a items <<<"$input_files"
+
     # Run the main process.
-    # shellcheck disable=SC2086
-    cat -- $input_files >"$output_file" 2>/dev/null
+    cat -- "${items[@]}" >"$output_file" 2>/dev/null
     _check_output "$?" "$std_output" "" "$output_file" || return 1
 }
 

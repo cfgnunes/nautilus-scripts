@@ -33,6 +33,10 @@ _reset_permissions() {
     local std_output=""
     local find_args=""
 
+    # Split the list into an array.
+    local -a items=()
+    read -r -a items <<<"$input_files"
+
     # List of sensitive directories to apply strict permissions (700).
     local -a sensitive_dirs=(
         ".aws"
@@ -103,8 +107,7 @@ _reset_permissions() {
     # -------------------------------------------------------------------------
     new_permission=700
     for dir_pattern in "${sensitive_dirs[@]}"; do
-        # shellcheck disable=SC2086
-        find $input_files \
+        find "${items[@]}" \
             ! -path "$IGNORE_FIND_PATH" \
             -type d -name "$dir_pattern" \
             -exec chmod "$new_permission" -- {} +
@@ -115,8 +118,7 @@ _reset_permissions() {
     # -------------------------------------------------------------------------
     new_permission=600
     for dir_pattern in "${sensitive_dirs[@]}"; do
-        # shellcheck disable=SC2086
-        find $input_files \
+        find "${items[@]}" \
             ! -path "$IGNORE_FIND_PATH" \
             -type f -path "*/$dir_pattern/*" \
             -exec chmod "$new_permission" -- {} +
@@ -127,8 +129,7 @@ _reset_permissions() {
     # -------------------------------------------------------------------------
     new_permission=700
     for dir_pattern in "${sensitive_dirs[@]}"; do
-        # shellcheck disable=SC2086
-        find $input_files \
+        find "${items[@]}" \
             ! -path "$IGNORE_FIND_PATH" \
             -type d -path "*/$dir_pattern/*" \
             -exec chmod "$new_permission" -- {} +
@@ -138,8 +139,7 @@ _reset_permissions() {
     # Step 4: Other directories (0777 & ~umask).
     # -------------------------------------------------------------------------
     new_permission=$(printf "%04o" "$((0777 & ~$(umask)))")
-    # shellcheck disable=SC2206
-    find_args=($input_files ! -path "$IGNORE_FIND_PATH")
+    find_args=("${items[@]}" ! -path "$IGNORE_FIND_PATH")
     for pattern in "${sensitive_dirs[@]}"; do
         find_args+=(! -path "*/$pattern/*" ! -name "$pattern")
     done
@@ -152,8 +152,7 @@ _reset_permissions() {
     # -------------------------------------------------------------------------
     new_permission=600
     for pattern in "${sensitive_files[@]}"; do
-        # shellcheck disable=SC2086
-        find $input_files \
+        find "${items[@]}" \
             ! -path "$IGNORE_FIND_PATH" \
             -type f -name "$pattern" \
             -exec chmod "$new_permission" -- {} +
@@ -163,8 +162,7 @@ _reset_permissions() {
     # Step 6: Other files (0666 & ~umask).
     # -------------------------------------------------------------------------
     new_permission=$(printf "%04o" "$((0666 & ~$(umask)))")
-    # shellcheck disable=SC2206
-    find_args=($input_files ! -path "$IGNORE_FIND_PATH")
+    find_args=("${items[@]}" ! -path "$IGNORE_FIND_PATH")
     for pattern in "${sensitive_dirs[@]}"; do
         find_args+=(! -path "*/$pattern/*")
     done

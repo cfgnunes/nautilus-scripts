@@ -36,10 +36,13 @@ _main_task() {
         "Stacked images (horizontal).png" "$output_dir" \
         "par_extension_opt=preserve")
 
+    # Split the list into an array.
+    local -a items=()
+    read -r -a items <<<"$input_files"
+
     # Run the main process.
-    # shellcheck disable=SC2086
     std_output=$(_cmd_magick_in_sandbox "$output_dir" convert \
-        $input_files \
+        "${items[@]}" \
         +append \
         +repage \
         "$output_file" 2>&1)

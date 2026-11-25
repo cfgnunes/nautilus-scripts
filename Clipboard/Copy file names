@@ -15,8 +15,11 @@ _main() {
     _display_wait_box ""
     input_files=$(_get_files "par_type=all")
 
-    # shellcheck disable=SC2086
-    input_files=$(basename --multiple -- $input_files)
+    # Split the list into an array.
+    local -a items=()
+    read -r -a items <<<"$input_files"
+
+    input_files=$(basename --multiple -- "${items[@]}")
 
     # Run the main process.
     _set_clipboard_data "$input_files"

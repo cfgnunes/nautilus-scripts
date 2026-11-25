@@ -16,9 +16,12 @@ _main() {
     _display_wait_box ""
     input_files=$(_get_files "par_type=directory; par_max_items=20")
 
+    # Split the list into an array.
+    local -a items=()
+    read -r -a items <<<"$input_files"
+
     # Run the main process.
-    # shellcheck disable=SC2086
-    std_output=$(find -L $input_files \
+    std_output=$(find -L "${items[@]}" \
         ! -path "$IGNORE_FIND_PATH" \
         -type d -empty \
         -printf "%p\n" 2>/dev/null)
