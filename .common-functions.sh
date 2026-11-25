@@ -4321,8 +4321,12 @@ _text_remove_pwd() {
     local working_dir=""
     working_dir=$(_get_working_directory)
 
-    if [[ -n "$working_dir" && "$working_dir" != "/" ]]; then
-        sed "s|$working_dir/||g" <<<"$input_text"
+    if [[ -n "$working_dir" ]] && [[ "$working_dir" != "/" ]]; then
+        # Escape special characters and the '/' delimiter so the
+        # directory is matched literally.
+        local pattern=""
+        pattern=$(sed 's/[][\/.*^$]/\\&/g' <<<"$working_dir/")
+        sed "s/$pattern//g" <<<"$input_text"
     else
         printf "%s" "$input_text"
     fi
