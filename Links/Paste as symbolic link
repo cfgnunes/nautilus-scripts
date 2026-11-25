@@ -24,6 +24,7 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
+    local output_file=""
 
     if [[ ! -e "$input_file" ]]; then
         return 1

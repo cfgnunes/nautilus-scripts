@@ -50,6 +50,7 @@ _build_tmux_session() {
     local -a items=()
     read -r -a items <<<"$input_files"
 
+    local input_file=""
     for input_file in "${items[@]}"; do
         if [[ $first_session = "true" ]]; then
             first_session="false"

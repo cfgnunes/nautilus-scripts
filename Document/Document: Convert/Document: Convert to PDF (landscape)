@@ -115,6 +115,8 @@ _run_command() {
     local command=$2
     local output_dir=$3
     local output_format="pdf"
+    local output_file=""
+    local std_output=""
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" "
         par_extension_opt=replace

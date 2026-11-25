@@ -53,6 +53,7 @@ _flatten_directory() {
     done < <(find . -mindepth 1 -type d -print0 2>/dev/null)
 
     # Loop through each file in the list and move it to the root directory.
+    local full_path_filename=""
     while read -r full_path_filename; do
         # Get the file's name (basename) for moving it to the root directory.
         filename="./$(basename -- "$full_path_filename")"

@@ -31,6 +31,8 @@ _reset_permissions() {
     local input_files=$1
     local new_permission=""
     local std_output=""
+    local dir_pattern=""
+    local pattern=""
     local find_args=""
 
     # Split the list into an array.

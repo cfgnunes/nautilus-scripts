@@ -31,6 +31,7 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" \
         "par_extension_opt=preserve; par_suffix='(4 parts)'")
 
+    local temp_dir=""
     temp_dir="$(_make_temp_dir)"
 
     # Run the main process.
@@ -40,6 +41,7 @@ _main_task() {
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # Remove the first page from each PDF file in the temporary directory.
+    local file=""
     for file in "$temp_dir"/*.pdf; do
         std_output=$(_run_in_sandbox "$output_dir" "false" \
             pdfcpu pages remove -p 1 "$file" 2>&1)
