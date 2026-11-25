@@ -3955,43 +3955,35 @@ _open_items_locations() {
     local file_manager=""
     file_manager=$(_get_available_file_manager)
 
-    # Restore absolute paths for items if relative paths are used.
     local working_dir=""
     working_dir=$(_get_working_directory)
-    if [[ -n "$working_dir" ]]; then
-        # Convert the list of items to a newline-separated list and
-        # restore the absolute paths.
-        items=$(tr "$FIELD_SEPARATOR" "\n" <<<"$items")
-        items=$(sed "s|^\(\./\)\?\([^/].*\)|$working_dir/\2|" <<<"$items")
-        items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$items")
-    fi
 
     # Split the list into an array.
     local -a items_array=()
     read -r -a items_array <<<"$items"
 
     # Prepare items to be opened by the file manager.
-    local items_open=""
+    local -a items_open_array=()
     local item=""
     for item in "${items_array[@]}"; do
-        # Skip the root directory ("/") since opening it is redundant.
-        if [[ "$item" == "/" ]]; then
-            continue
+        # Restore the absolute path if a relative path is used.
+        if [[ -n "$working_dir" ]] && [[ -n "$item" && "$item" != /* ]]; then
+            item="$working_dir/${item#./}"
         fi
 
         # Resolve symbolic links to their target locations if requested.
         if [[ "$par_resolve_links" == "true" ]] && [[ -L "$item" ]]; then
-            item=$(readlink -f "$item")
+            item=$(readlink -f -- "$item")
         fi
-        items_open+="$item$FIELD_SEPARATOR"
+
+        # Skip empty items and the root directory ("/"),
+        # since opening it is redundant.
+        if [[ -z "$item" ]] || [[ "$item" == "/" ]]; then
+            continue
+        fi
+
+        items_open_array+=("$item")
     done
-
-    # Remove leading, trailing, and duplicate field separator.
-    items_open=$(_str_collapse_char "$items_open" "$FIELD_SEPARATOR")
-
-    # Split the list into an array.
-    local -a items_open_array=()
-    read -r -a items_open_array <<<"$items_open"
 
     # Open the items using the detected file manager.
     case "$file_manager" in
