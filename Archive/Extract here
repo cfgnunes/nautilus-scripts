@@ -555,8 +555,13 @@ _run_command() {
         fi
     }
     __get_password() {
-        __temp_dir_pop && __temp_dir_remove
-        password=$(_display_password_box "$(_i18n 'Enter the password for the archive:') '$basename'") || return 1
+        # Remove only the extraction directory. The directory with the joined
+        # file ('temp_dir_extract_cat') is still needed for the next attempt.
+        __temp_dir_pop && __temp_dir_extract_remove
+        password=$(_display_password_box "$(_i18n 'Enter the password for the archive:') '$basename'") || {
+            __temp_dir_remove
+            return 1
+        }
         __temp_dir_push || return 1
     }
     __get_saved_filename() {
@@ -574,6 +579,11 @@ _run_command() {
     }
     __temp_dir_pop() {
         _directory_pop || return 1
+    }
+    __temp_dir_extract_remove() {
+        if [[ -d "$temp_dir_extract" ]]; then
+            rm -rf -- "$temp_dir_extract" 2>/dev/null
+        fi
     }
     __temp_dir_remove() {
         local dir=""
