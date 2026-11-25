@@ -67,6 +67,8 @@ _main_task() {
             --fail \
             --show-error \
             --remote-name \
+            --output-dir "$output_dir" \
+            --no-clobber \
             --connect-timeout "$timeout_value" \
             -- "$input_file" 2>&1)
     elif _command_exists "wget2"; then
