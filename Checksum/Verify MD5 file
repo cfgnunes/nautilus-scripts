@@ -54,12 +54,16 @@ _verify_checksum() {
     saved_checksum=$(printf "%s" "$line" | cut -d " " -f1)
     saved_file=$(printf "%s" "$line" | cut -d " " -f3-)
 
-    # Escape '%' characters for the 'printf' command.
-    saved_file=${saved_file//%/%%}
+    # Checksums that start with '\' indicate an escaped filename (has '\n' or
+    # '\\'). Decode only in this case, otherwise keep the name as is.
+    saved_file_decoded=$saved_file
+    if [[ "$saved_checksum" == \\* ]]; then
+        # Escape '%' characters for the 'printf' command.
+        saved_file_decoded=${saved_file//%/%%}
 
-    # Some checksums start with '\', for filenames with '\n' or '\'.
-    # shellcheck disable=SC2059
-    saved_file_decoded=$(printf "$saved_file")
+        # shellcheck disable=SC2059
+        saved_file_decoded=$(printf -- "$saved_file_decoded")
+    fi
 
     # If the file does not exist, report and skip the check.
     if [[ ! -e "$saved_file_decoded" ]]; then
