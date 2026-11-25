@@ -47,7 +47,10 @@ _flatten_directory() {
     find . -mindepth 2 -not -type d 2>/dev/null >>"$temp_file"
 
     # For each directory, add a command to the 'undo script' to recreate the directory structure.
-    find . -type d 2>/dev/null | grep "/" | xargs -I{} printf "%s\n" "mkdir -p -- \"{}\"" >>"$undo_script"
+    local dir_path=""
+    while IFS= read -r -d "" dir_path; do
+        printf "mkdir -p -- %q\n" "$dir_path" >>"$undo_script"
+    done < <(find . -mindepth 1 -type d -print0 2>/dev/null)
 
     # Loop through each file in the list and move it to the root directory.
     while read -r full_path_filename; do
@@ -61,7 +64,7 @@ _flatten_directory() {
         # If the file was moved successfully and the name was changed, add to the 'undo script'.
         if ((exit_code == 0)); then
             # Print 'mv' command in Undo script.
-            printf "%s\n" "mv -n -- \"$filename\" \"$full_path_filename\"" >>"$undo_script"
+            printf "mv -n -- %q %q\n" "$filename" "$full_path_filename" >>"$undo_script"
         fi
     done <"$temp_file"
 
