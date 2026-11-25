@@ -19,6 +19,9 @@ set -u
 APP_FULL_NAME="Enhanced File Manager Actions"
 APP_NAME="nautilus-scripts"
 APP_VERSION="33.2"
+
+# Use the home directory from the passwd database if '$HOME' is undefined.
+HOME=${HOME:-$(eval echo ~)}
 USER_OPT_DIR="$HOME/.local/opt"
 INSTALL_DIR="$USER_OPT_DIR/$APP_NAME"
 
@@ -82,8 +85,6 @@ readonly \
 # Use current username if '$USER' is undefined.
 USER=${USER:-$(id -un)}
 
-# Use the home directory from the passwd database if '$HOME' is undefined.
-HOME=${HOME:-$(eval echo ~)}
 
 # -----------------------------------------------------------------------------
 # SECTION: Global variables
