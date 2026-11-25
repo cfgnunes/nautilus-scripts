@@ -22,7 +22,7 @@ _main() {
 
     # Run the main process.
     std_output=$(find -L "${items[@]}" \
-        ! -path "$IGNORE_FIND_PATH" \
+        ! -regex "$IGNORE_FIND" \
         -type d -empty \
         -printf "%p\n" 2>/dev/null)
 

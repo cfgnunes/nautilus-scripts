@@ -22,7 +22,7 @@ _main() {
 
     # Run the main process.
     std_output=$(find -L "${items[@]}" \
-        ! -path "$IGNORE_FIND_PATH" \
+        ! -regex "$IGNORE_FIND" \
         -type f -printf "%TY-%Tm-%Td$FIELD_SEPARATOR%TH:%TM$FIELD_SEPARATOR%p\n" 2>/dev/null |
         sort -k1,1r -k2,2r |
         head -n "$max_item_list")

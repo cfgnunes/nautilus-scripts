@@ -47,7 +47,7 @@ _main_task() {
         # Run the main process.
         _move_file "skip" "$file" "$dir/$new_filename"
     done < <(find "$input_file" \
-        ! -path "$IGNORE_FIND_PATH" \
+        ! -regex "$IGNORE_FIND" \
         -type f -print0 2>/dev/null)
 
     # Rename directories.
@@ -66,8 +66,7 @@ _main_task() {
         # Run the main process.
         _move_file "skip" "$dir" "$parent_dir/$new_dirname"
     done < <(find "$input_file" \
-        ! -path "$IGNORE_FIND_PATH" \
-        ! -path "*.git" \
+        ! -regex "$IGNORE_FIND" \
         -type d -print0 2>/dev/null | sort --reverse --zero-terminated)
 }
 

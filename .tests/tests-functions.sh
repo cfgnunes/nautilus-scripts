@@ -240,7 +240,7 @@ __run_source_common_functions() {
     __test_equal "Check FIELD_SEPARATOR." "$FIELD_SEPARATOR" $'\r'
     __test_equal "Check PREFIX_OUTPUT_DIR." "Output" "$PREFIX_OUTPUT_DIR"
     __test_equal "Check PREFIX_ERROR_LOG_FILE." "Errors" "$PREFIX_ERROR_LOG_FILE"
-    __test_equal "Check IGNORE_FIND_PATH." "*.git/*" "$IGNORE_FIND_PATH"
+    __test_equal "Check IGNORE_FIND." '.*/\.git\(/.*\)?' "$IGNORE_FIND"
     __test_equal "Check GUI_BOX_HEIGHT." "550" "$GUI_BOX_HEIGHT"
     __test_equal "Check GUI_BOX_WIDTH." "900" "$GUI_BOX_WIDTH"
     __test_equal "Check ACCESSED_RECENTLY_LINKS_TO_KEEP." "15" \

@@ -20,7 +20,7 @@ _main() {
 
     # Run the main process.
     std_output=$(find "${items[@]}" \
-        ! -path "$IGNORE_FIND_PATH" \
+        ! -regex "$IGNORE_FIND" \
         -type f -links +1 -printf "%i$FIELD_SEPARATOR%p\n" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
     std_output=$(_text_sort "$std_output")

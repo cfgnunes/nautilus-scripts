@@ -26,7 +26,7 @@ GUI_BOX_HEIGHT=550             # Height of the GUI dialog boxes.
 GUI_BOX_WIDTH=900              # Width of the GUI dialog boxes.
 GUI_INFO_WIDTH=400             # Width of the GUI small dialog boxes.
 I18N_DIR="$ROOT_DIR/.po"       # Directory containing PO files for translation.
-IGNORE_FIND_PATH="*.git/*"     # Path to ignore in the 'find' command.
+IGNORE_FIND=".*/\.git\(/.*\)?" # Regex of paths to ignore in 'find'.
 PREFIX_ERROR_LOG_FILE="Errors" # Basename of 'Error' log file.
 PREFIX_OUTPUT_DIR="Output"     # Basename of 'Output' directory.
 
@@ -75,7 +75,7 @@ readonly \
     GUI_BOX_WIDTH \
     GUI_INFO_WIDTH \
     I18N_DIR \
-    IGNORE_FIND_PATH \
+    IGNORE_FIND \
     PKG_MANAGER_PRIORITY \
     PREFIX_ERROR_LOG_FILE \
     PREFIX_OUTPUT_DIR \
@@ -394,7 +394,7 @@ _run_function_parallel() {
         GUI_BOX_HEIGHT \
         GUI_BOX_WIDTH \
         GUI_INFO_WIDTH \
-        IGNORE_FIND_PATH \
+        IGNORE_FIND \
         INPUT_FILES \
         PKGX_AVAILABLE \
         SANDBOX_AVAILABLE \
@@ -1624,7 +1624,7 @@ _find_filtered_files() {
     # Build a 'find' command.
     find_command="find '$input_files'"
 
-    find_command+=" ! -path \"$IGNORE_FIND_PATH\""
+    find_command+=" ! -regex \"$IGNORE_FIND\""
 
     if [[ -n "$par_find_parameters" ]]; then
         find_command+=" $par_find_parameters"

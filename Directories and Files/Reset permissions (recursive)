@@ -110,7 +110,7 @@ _reset_permissions() {
     new_permission=700
     for dir_pattern in "${sensitive_dirs[@]}"; do
         find "${items[@]}" \
-            ! -path "$IGNORE_FIND_PATH" \
+            ! -regex "$IGNORE_FIND" \
             -type d -name "$dir_pattern" \
             -exec chmod "$new_permission" -- {} +
     done
@@ -121,7 +121,7 @@ _reset_permissions() {
     new_permission=600
     for dir_pattern in "${sensitive_dirs[@]}"; do
         find "${items[@]}" \
-            ! -path "$IGNORE_FIND_PATH" \
+            ! -regex "$IGNORE_FIND" \
             -type f -path "*/$dir_pattern/*" \
             -exec chmod "$new_permission" -- {} +
     done
@@ -132,7 +132,7 @@ _reset_permissions() {
     new_permission=700
     for dir_pattern in "${sensitive_dirs[@]}"; do
         find "${items[@]}" \
-            ! -path "$IGNORE_FIND_PATH" \
+            ! -regex "$IGNORE_FIND" \
             -type d -path "*/$dir_pattern/*" \
             -exec chmod "$new_permission" -- {} +
     done
@@ -141,7 +141,7 @@ _reset_permissions() {
     # Step 4: Other directories (0777 & ~umask).
     # -------------------------------------------------------------------------
     new_permission=$(printf "%04o" "$((0777 & ~$(umask)))")
-    find_args=("${items[@]}" ! -path "$IGNORE_FIND_PATH")
+    find_args=("${items[@]}" ! -regex "$IGNORE_FIND")
     for pattern in "${sensitive_dirs[@]}"; do
         find_args+=(! -path "*/$pattern/*" ! -name "$pattern")
     done
@@ -155,7 +155,7 @@ _reset_permissions() {
     new_permission=600
     for pattern in "${sensitive_files[@]}"; do
         find "${items[@]}" \
-            ! -path "$IGNORE_FIND_PATH" \
+            ! -regex "$IGNORE_FIND" \
             -type f -name "$pattern" \
             -exec chmod "$new_permission" -- {} +
     done
@@ -164,7 +164,7 @@ _reset_permissions() {
     # Step 6: Other files (0666 & ~umask).
     # -------------------------------------------------------------------------
     new_permission=$(printf "%04o" "$((0666 & ~$(umask)))")
-    find_args=("${items[@]}" ! -path "$IGNORE_FIND_PATH")
+    find_args=("${items[@]}" ! -regex "$IGNORE_FIND")
     for pattern in "${sensitive_dirs[@]}"; do
         find_args+=(! -path "*/$pattern/*")
     done
