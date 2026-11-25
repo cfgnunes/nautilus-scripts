@@ -42,7 +42,6 @@ _main_task() {
     local file_label=""
     file_label=$(_text_remove_pwd "$input_file")
 
-    # Skip Square annotations.
     # Keep the first 50 characters of Content, Text, and Author, and append "..." when longer.
     # Each line is "text, content, author, type, color, page, file".
 
