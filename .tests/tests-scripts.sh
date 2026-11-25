@@ -274,7 +274,7 @@ __generate_fixture_archive_dir() {
 _main() {
     local temp_dir=""
     local std_output=""
-    local fixtures_dir="$ROOT_DIR/test"
+    local fixtures_dir="$ROOT_DIR/.tests-data"
     local fixture_jpg="$fixtures_dir/Test image.jpg"
     local fixture_mp3="$fixtures_dir/Test audio.mp3"
     local fixture_mp3_tag="$fixtures_dir/Test audio id3.mp3"
