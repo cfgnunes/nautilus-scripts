@@ -47,12 +47,13 @@ _main_task() {
     # Define the filename extension according to the audio format.
     local extension=""
     case $audio_format in
-    "aac") extension="m4a" ;;
-    "alac") extension="m4a" ;;
-    "eac3") extension="ac3" ;;
-    "pcm"* | "aiff"*) extension="wav" ;;
+    "aac" | "alac") extension="m4a" ;;
+    "pcm_"*"_be"*) extension="aiff" ;;
+    "pcm_"*"_le"* | "pcm_u8"* | "pcm_s8"*) extension="wav" ;;
+    "pcm_alaw" | "pcm_mulaw" | "adpcm_"*) extension="wav" ;;
+    "speex") extension="spx" ;;
     "vorbis") extension="ogg" ;;
-    "wmav2") extension="wma" ;;
+    "wmav"*) extension="wma" ;;
     *) extension=$audio_format ;;
     esac
 
