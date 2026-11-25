@@ -158,16 +158,13 @@ _cleanup_on_exit() {
     local items_to_remove=""
     items_to_remove=$(cat -- "$TEMP_DIR_ITEMS_TO_REMOVE/"* 2>/dev/null)
 
-    # Escape single quotes in filenames to handle them correctly in 'xargs'
-    # with 'bash -c'.
-    items_to_remove=$(_escape_single_quotes "$items_to_remove")
-
+    # shellcheck disable=SC2016
     printf "%s" "$items_to_remove" | xargs \
         --no-run-if-empty \
         --delimiter="$FIELD_SEPARATOR" \
         --max-procs="$(_get_max_procs)" \
-        --replace="{}" \
-        bash -c "{ chmod -R u+rw -- '{}' && rm -rf -- '{}'; } 2>/dev/null"
+        --max-args=1 \
+        bash -c '{ chmod -R u+rw -- "$1" && rm -rf -- "$1"; } 2>/dev/null' _
 
     # Remove the main temporary dir.
     { chmod -R u+w -- "$TEMP_DIR" && rm -rf -- "$TEMP_DIR"; } 2>/dev/null
@@ -325,18 +322,6 @@ _logs_consolidate() {
     _exit_script
 }
 
-# Function: _escape_single_quotes
-#
-# Description:
-#   This function escapes single quotes in a string so it can be safely
-#   embedded in a single-quoted argument passed to 'xargs' with 'bash -c'.
-#
-# Parameters:
-#   $1 (input_str): The string to escape.
-_escape_single_quotes() {
-    sed -z "s|'|'\\\''|g" <<<"$1"
-}
-
 # Function: _run_task_parallel
 #
 # Description:
@@ -352,36 +337,33 @@ _run_task_parallel() {
     local output_dir=$2
     local max_procs=${3:-""}
 
-    # Escape single quotes in the output directory to handle them correctly in
-    # 'xargs' with 'bash -c'.
-    output_dir=$(_escape_single_quotes "$output_dir")
-
     # Execute the function '_main_task' for each file in parallel.
     export -f _main_task
-    _run_function_parallel \
-        "_main_task '{}' '$output_dir'" "$input_files" "$FIELD_SEPARATOR" \
-        "$max_procs"
+    _run_function_parallel "$input_files" "$FIELD_SEPARATOR" "$max_procs" \
+        "_main_task" "$output_dir"
 }
 
 # Function: _run_function_parallel
 #
 # Description:
-#   This function executes a given Bash expression or command in parallel for
-#   a list of input items. It uses 'xargs' to distribute execution across
-#   multiple processes.
+#   This function executes a function in parallel for a list of input items.
+#   It uses 'xargs' to distribute execution across multiple processes.
 #
 # Parameters:
-#   $1 (expression): The Bash expression or command to execute for each item.
-#      The '{}' placeholder inside the expression will be replaced by the
-#      current item being processed.
-#   $2 (items): A list of items to process, separated by the char delimiter.
-#   $3 (delimiter): The character used to separate items in the input list.
-#   $4 (max_procs): Optional. Maximum number of parallel processes to use.
+#   $1 (items): A list of items to process, separated by the char delimiter.
+#   $2 (delimiter): The character used to separate items in the input list.
+#   $3 (max_procs): Maximum number of parallel processes to use. If empty, it
+#      is determined automatically.
+#   $4 (func): The name of the function to execute for each item. It is
+#      called as: func "item" "args"...
+#   $5... (args): Optional. Extra arguments passed to the function after the
+#      item.
 _run_function_parallel() {
-    local expression=$1
-    local items=$2
-    local delimiter=$3
-    local max_procs=${4:-""}
+    local items=$1
+    local delimiter=$2
+    local max_procs=${3:-""}
+    local func=$4
+    shift 4
 
     if [[ -z "$max_procs" ]]; then
         max_procs=$(_get_max_procs)
@@ -449,17 +431,17 @@ _run_function_parallel() {
         _text_remove_pwd \
         _text_uri_decode
 
-    # Escape single quotes in items to handle them correctly in 'xargs'
-    # with 'bash -c'.
-    items=$(_escape_single_quotes "$items")
+    # Appends the item after the function name and the extra arguments.
+    # shellcheck disable=SC2016
+    local runner='"$1" "${!#}" "${@:2:$#-2}"'
 
-    # Execute the given expression in parallel for each item.
+    # Execute the function in parallel for each item.
     printf "%s" "$items" | xargs \
         --no-run-if-empty \
         --delimiter="$delimiter" \
         --max-procs="$max_procs" \
-        --replace="{}" \
-        bash -c "$expression"
+        --max-args=1 \
+        bash -c "$runner" _ "$func" "$@"
 }
 
 # Function: _sandbox_initialize
@@ -3684,9 +3666,8 @@ _validate_file_mime_parallel() {
 
     # Execute the function '_validate_file_mime' for each file in parallel.
     export -f _validate_file_mime
-    _run_function_parallel \
-        "_validate_file_mime '{}' '$par_select_mime' '$par_skip_encoding'" \
-        "$input_files" "$FIELD_SEPARATOR"
+    _run_function_parallel "$input_files" "$FIELD_SEPARATOR" "" \
+        "_validate_file_mime" "$par_select_mime" "$par_skip_encoding"
 
     # Compile valid files in a single list.
     input_files=$(_storage_text_read_all)

@@ -57,7 +57,6 @@ _main() {
     __run_convert_text_to_delimited_string
     __run_deps_get_dependency_value
     __run_directory_push_pop
-    __run_escape_single_quotes
     __run_find_filtered_files
     __run_get_available_app
     __run_get_dirname
@@ -1596,8 +1595,9 @@ __run_run_function_parallel() {
 
     _storage_text_clean
     export -f __parallel_test_task _storage_text_write
-    _run_function_parallel "__parallel_test_task '{}'" \
-        "alpha${FIELD_SEPARATOR}beta" "$FIELD_SEPARATOR" "2"
+    _run_function_parallel \
+        "alpha${FIELD_SEPARATOR}beta" "$FIELD_SEPARATOR" "2" \
+        "__parallel_test_task"
     output=$(_storage_text_read_all)
     _storage_text_clean
 
@@ -1607,7 +1607,7 @@ __run_run_function_parallel() {
         "$(grep --quiet "beta" <<<"$output" && echo true || echo false)"
 
     _storage_text_clean
-    _run_function_parallel "__parallel_test_task '{}'" "" "$FIELD_SEPARATOR" "1"
+    _run_function_parallel "" "$FIELD_SEPARATOR" "1" "__parallel_test_task"
     output=$(_storage_text_read_all)
     _storage_text_clean
     __test_equal "Empty item list runs nothing." "" "$output"
@@ -1720,25 +1720,6 @@ __is_qt_desktop_with() {
 
 _main_task() {
     _storage_text_write_ln "$1|$2"
-}
-
-__run_escape_single_quotes() {
-    local output=""
-
-    output=$(_escape_single_quotes "")
-    __test_equal "Empty string." "" "$output"
-
-    output=$(_escape_single_quotes "abc")
-    __test_equal "No quotes." "abc" "$output"
-
-    output=$(_escape_single_quotes "it's")
-    __test_equal "One quote." "it'\\''s" "$output"
-
-    output=$(_escape_single_quotes "'")
-    __test_equal "Quote only." "'\\''" "$output"
-
-    output=$(_escape_single_quotes "a'b'c")
-    __test_equal "Several quotes." "a'\\''b'\\''c" "$output"
 }
 
 __run_add_path_env() {

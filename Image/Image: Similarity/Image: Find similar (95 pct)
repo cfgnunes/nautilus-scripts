@@ -51,8 +51,8 @@ _main_task() {
         _compare_fingerprints \
         _compare_images \
         _generate_fingerprint
-    _run_function_parallel \
-        "_generate_fingerprint '{}'" "$input_files" "$FIELD_SEPARATOR"
+    _run_function_parallel "$input_files" "$FIELD_SEPARATOR" "" \
+        "_generate_fingerprint"
 
     # -------------------------------------------------------------------------
     # Step 2: Compare the fingerprints.
@@ -76,9 +76,8 @@ _main_task() {
         _storage_text_write_ln "$(cat -- "$fp_reference.txt")"
 
         # Compare '$fp_reference' with all others fingerprints.
-        _run_function_parallel \
-            "_compare_fingerprints '$fp_reference' '{}' '$threshold'" \
-            "$(__find_fps)" "$FIELD_SEPARATOR"
+        _run_function_parallel "$(__find_fps)" "$FIELD_SEPARATOR" "" \
+            "_compare_fingerprints" "$fp_reference" "$threshold"
 
         # After comparing '$fp_reference' with all others,
         # remove its temporary fingerprint file.
@@ -176,12 +175,12 @@ _generate_fingerprint() {
 #   metric ranges from 0.0 (completely different) to 1.0 (identical).
 #
 # Parameters:
-#   $1 (fp_reference): The reference fingerprint file.
-#   $2 (fp_compare): The fingerprint file to compare against the reference.
+#   $1 (fp_compare): The fingerprint file to compare against the reference.
+#   $2 (fp_reference): The reference fingerprint file.
 #   $3 (threshold): Threshold for comparison.
 _compare_fingerprints() {
-    local fp_reference=$1
-    local fp_compare=$2
+    local fp_compare=$1
+    local fp_reference=$2
     local threshold=$3
 
     # Compute the similarity (1 - RMSE) between the two fingerprints.

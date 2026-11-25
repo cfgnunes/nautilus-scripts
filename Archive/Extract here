@@ -28,7 +28,8 @@ _main() {
         _get_dependencies \
         _run_command \
         _strip_filename_multipart
-    _run_function_parallel "_get_dependencies '{}'" "$input_files" "$FIELD_SEPARATOR"
+    _run_function_parallel "$input_files" "$FIELD_SEPARATOR" "" \
+        "_get_dependencies"
 
     local dependencies=""
     dependencies=$(_storage_text_read_all)
