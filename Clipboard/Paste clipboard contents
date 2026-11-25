@@ -33,31 +33,35 @@ _save_file_from_clipboard() {
         clipboard_types=$(xclip -selection clipboard -t TARGETS -o 2>/dev/null)
     fi
 
-    # Define a mapping between MIME types and file extensions.
-    declare -A mime_map=(
-        ["text/plain;charset=utf-8"]="txt"
-        ["text/plain"]="txt"
-        ["image/png"]="png"
-        ["image/jpeg"]="jpg"
-        ["image/webp"]="webp"
-        ["image/bmp"]="bmp"
-        ["text/html"]="html"
-        ["application/pdf"]="pdf"
-        ["application/json"]="json"
-        ["text/markdown"]="md"
-        ["text/uri-list"]="uri"
-        ["text/x-shellscript"]="sh"
-        ["UTF8_STRING"]="txt"
-        ["STRING"]="txt"
-        ["TEXT"]="txt"
+    # Supported MIME types in priority order, as "mime=extension".
+    local -a mime_array=(
+        "text/plain;charset=utf-8=txt"
+        "text/plain=txt"
+        "image/png=png"
+        "image/jpeg=jpg"
+        "image/webp=webp"
+        "image/bmp=bmp"
+        "text/html=html"
+        "application/pdf=pdf"
+        "application/json=json"
+        "text/markdown=md"
+        "text/uri-list=uri"
+        "text/x-shellscript=sh"
+        "UTF8_STRING=txt"
+        "STRING=txt"
+        "TEXT=txt"
     )
 
-    # Find the first supported MIME type in clipboard data.
+    # Find the first supported MIME type in clipboard data (exact line match).
     local supported_type=""
-    local mime=""
-    for mime in "${!mime_map[@]}"; do
-        supported_type=$(grep -F -m1 "$mime" 2>/dev/null <<<"$clipboard_types")
-        [[ -n "$supported_type" ]] && break
+    local ext=""
+    local entry=""
+    for entry in "${mime_array[@]}"; do
+        supported_type=$(grep -Fx -m1 -- "${entry%=*}" <<<"$clipboard_types")
+        if [[ -n "$supported_type" ]]; then
+            ext=${entry##*=}
+            break
+        fi
     done
 
     if [[ -z "$supported_type" ]]; then
@@ -66,9 +70,6 @@ _save_file_from_clipboard() {
         _display_error_box "$msg"
         _exit_script
     fi
-
-    local ext=""
-    ext="${mime_map[$mime]}"
 
     # Define file extension and output filename.
     local basename="Clipboard"
