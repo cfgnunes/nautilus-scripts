@@ -31,11 +31,18 @@ _main_task() {
     output_file=$(_get_output_filename "$input_file" "$output_dir" \
         "par_extension_opt=preserve; par_suffix='(normalized)'")
 
+    # The 'loudnorm' filter resamples to 192 kHz, so keep the input rate.
+    local -a rate_opt=()
+    local sample_rate=""
+    sample_rate=$(ffprobe -v error -select_streams a:0 \
+        -show_entries stream=sample_rate -of csv=p=0 -- "$input_file" 2>/dev/null)
+    [[ "$sample_rate" =~ ^[0-9]+$ ]] && rate_opt=(-ar "$sample_rate")
+
     # Run the main process.
     std_output=$(_run_in_sandbox "$output_dir" "false" \
         ffmpeg -hide_banner -y \
         -i "$input_file" \
-        -filter:a "loudnorm" \
+        -filter:a "loudnorm" "${rate_opt[@]}" \
         -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 }
