@@ -5,7 +5,6 @@
 # Sourced by 'install.sh'. Do not run directly.
 # =============================================================================
 
-# shellcheck disable=SC2086
 _check_dependencies() {
     _echo ""
     _echo_info "$(_i18n 'Checking for basic dependencies:')"

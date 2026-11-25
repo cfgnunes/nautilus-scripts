@@ -1475,30 +1475,28 @@ _delete_items() {
         return
     fi
 
-    # Disable pathname expansion so names like '*' or '?' are not expanded
-    # when '$items' is unquoted (IFS splits only on '$FIELD_SEPARATOR').
-    set -f
+    # Split the list into an array.
+    local -a items_array=()
+    read -r -a items_array <<<"$items"
 
-    # shellcheck disable=SC2086
     if _command_exists "gio"; then
-        gio trash -- $items 2>/dev/null
+        gio trash -- "${items_array[@]}" 2>/dev/null
     elif _command_exists "kioclient"; then
-        kioclient move -- $items trash:/ 2>/dev/null
+        kioclient move -- "${items_array[@]}" trash:/ 2>/dev/null
     elif _command_exists "gvfs-trash"; then
-        gvfs-trash -- $items 2>/dev/null
+        gvfs-trash -- "${items_array[@]}" 2>/dev/null
     else
-        rm -rf -- $items 2>/dev/null
+        rm -rf -- "${items_array[@]}" 2>/dev/null
     fi
 
     # Verify if all items were deleted.
     local failed_items=""
     local item=""
-    for item in $items; do
+    for item in "${items_array[@]}"; do
         if [[ -e "$item" ]]; then
             failed_items+="$item"$'\n'
         fi
     done
-    set +f
 
     if [[ -n "$failed_items" ]]; then
         msg="$(_i18n 'Some items could not be deleted.')"
@@ -2301,12 +2299,14 @@ _display_select_box_action() {
     if ((items_count > 0)) && [[ -n "$selected_items" ]]; then
         case "$par_action" in
         "open_file")
-            set -f
+            # Split the list into an array.
+            local -a items_array=()
+            read -r -a items_array <<<"$selected_items"
+
             local item=""
-            for item in $selected_items; do
+            for item in "${items_array[@]}"; do
                 xdg-open "$item" &>/dev/null &
             done
-            set +f
             ;;
         "open_location")
             _open_items_locations "$selected_items" "$par_resolve_links"
@@ -3921,14 +3921,14 @@ _open_items_locations() {
         items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$items")
     fi
 
-    # Disable pathname expansion so names like '*' or '?' are not expanded
-    # when '$items' is unquoted (IFS splits only on '$FIELD_SEPARATOR').
-    set -f
+    # Split the list into an array.
+    local -a items_array=()
+    read -r -a items_array <<<"$items"
 
     # Prepare items to be opened by the file manager.
     local items_open=""
     local item=""
-    for item in $items; do
+    for item in "${items_array[@]}"; do
         # Skip the root directory ("/") since opening it is redundant.
         if [[ "$item" == "/" ]]; then
             continue
@@ -3944,33 +3944,34 @@ _open_items_locations() {
     # Remove leading, trailing, and duplicate field separator.
     items_open=$(_str_collapse_char "$items_open" "$FIELD_SEPARATOR")
 
+    # Split the list into an array.
+    local -a items_open_array=()
+    read -r -a items_open_array <<<"$items_open"
+
     # Open the items using the detected file manager.
     case "$file_manager" in
     "nautilus" | "caja" | "dolphin")
         # Open the directory of each item and select it.
-        # shellcheck disable=SC2086
-        $file_manager --select $items_open &>/dev/null &
+        "$file_manager" --select "${items_open_array[@]}" &>/dev/null &
         ;;
     "nemo" | "thunar")
         # Open the directory of each item (selection not supported).
-        # shellcheck disable=SC2086
-        $file_manager $items_open &>/dev/null &
+        "$file_manager" "${items_open_array[@]}" &>/dev/null &
         ;;
     *)
         # For other file managers (e.g., 'pcmanfm-qt'), open the directory of
         # each item.
         local dir=""
-        for item in $items_open; do
+        for item in "${items_open_array[@]}"; do
             # Open the directory of the item.
             dir=$(_get_dirname "$item")
             if [[ -z "$dir" ]]; then
                 continue
             fi
-            $file_manager "$dir" &>/dev/null &
+            "$file_manager" "$dir" &>/dev/null &
         done
         ;;
     esac
-    set +f
 }
 
 # Function: _open_urls

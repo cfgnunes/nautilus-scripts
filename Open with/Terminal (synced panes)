@@ -46,10 +46,11 @@ _build_tmux_session() {
     # Enable keyboard shortcuts for synchronized panes (CTRL+B and '=').
     tmux bind = setw synchronize-panes
 
-    # Disable pathname expansion so names like '*' or '?' are not expanded
-    # when '$input_files' is unquoted (IFS splits only on '$FIELD_SEPARATOR').
-    set -f
-    for input_file in $input_files; do
+    # Split the list into an array.
+    local -a items=()
+    read -r -a items <<<"$input_files"
+
+    for input_file in "${items[@]}"; do
         if [[ $first_session = "true" ]]; then
             first_session="false"
         else
@@ -58,7 +59,6 @@ _build_tmux_session() {
             tmux select-layout -t "$session_name" tiled >/dev/null
         fi
     done
-    set +f
 
     # Select the first pane.
     tmux select-pane -t "$session_name:0.0"

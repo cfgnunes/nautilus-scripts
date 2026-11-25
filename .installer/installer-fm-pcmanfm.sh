@@ -27,8 +27,11 @@ _close_file_manager_pcmanfm() {
             # Kill all existing PCManFM processes.
             killall "$file_manager" &>/dev/null
             if [[ -n "$session_cmd" ]]; then
-                # shellcheck disable=SC2086
-                nohup $session_cmd &>/dev/null &
+                # Split the list into an array.
+                local -a session_args=()
+                IFS=" " read -r -a session_args <<<"$session_cmd"
+
+                nohup "${session_args[@]}" &>/dev/null &
             else
                 # Fallback: start PCManFM with default settings.
                 nohup "$file_manager" --desktop &>/dev/null &

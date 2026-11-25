@@ -27,11 +27,12 @@ _main() {
 _open_app() {
     local input_files=$1
 
+    # Split the list into an array.
+    local -a items=()
+    read -r -a items <<<"$input_files"
+
     local input_file=""
-    # Disable pathname expansion so names like '*' or '?' are not expanded
-    # when '$input_files' is unquoted (IFS splits only on '$FIELD_SEPARATOR').
-    set -f
-    for input_file in $input_files; do
+    for input_file in "${items[@]}"; do
         # Run the main process.
         if _command_exists "baobab"; then
             baobab -- "$input_file" &
@@ -39,7 +40,6 @@ _open_app() {
             filelight -- "$input_file" &
         fi
     done
-    set +f
 }
 
 _main "$@"
