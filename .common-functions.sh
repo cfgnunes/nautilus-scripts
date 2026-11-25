@@ -439,6 +439,7 @@ _run_function_parallel() {
         _is_gui_session \
         _log_error \
         _move_file \
+        _parse_parameters \
         _run_in_sandbox \
         _storage_text_write \
         _storage_text_write_ln \
@@ -627,6 +628,43 @@ _run_in_sandbox() {
     fi
 
     "${sandbox_args[@]}" "$@"
+}
+
+# Function: _parse_parameters
+#
+# Description:
+#   Assigns variables from a string of 'name=value' pairs, without 'eval'.
+#   Use 'name+=value' to append. Pairs are separated by newlines or ';'.
+#
+# Parameters:
+#   $1 (parameters): The string with the assignments.
+_parse_parameters() {
+    local line=""
+    local name=""
+    local operator=""
+    local value=""
+    local re_assign='^\s*(\w+)(\+?)=(.*[^[:space:];])?[[:space:];]*$'
+
+    # The 'sed' puts each assignment on its own line ('a=1; b=2').
+    while IFS= read -r line; do
+        [[ "$line" =~ $re_assign ]] || continue
+        name=${BASH_REMATCH[1]}
+        operator=${BASH_REMATCH[2]}
+        value=${BASH_REMATCH[3]}
+
+        # Remove one pair of matching outer quotes.
+        if [[ "$value" =~ ^(\'.*\'|\".*\")$ ]]; then
+            value=${value:1:-1}
+        fi
+
+        # Append the new value to the existing variable if the operator is '+'.
+        if [[ -n "$operator" ]]; then
+            value="${!name:-}$value"
+        fi
+
+        # Assign the value to the variable using 'printf -v' to avoid 'eval'.
+        printf -v "$name" '%s' "$value"
+    done < <(sed -E 's/;\s*(\w+\+?=)/\n\1/g' <<<"${1:-}")
 }
 
 # -----------------------------------------------------------------------------
@@ -2032,8 +2070,8 @@ _display_file_selection_box() {
     local par_save="false"
     local par_select_type="file"
 
-    # Evaluate the values from the '$parameters' variable.
-    eval "$parameters"
+    # Read the values from the '$parameters' variable.
+    _parse_parameters "$parameters"
 
     local btn_ok=""
     btn_ok="$(_i18n 'OK')"
@@ -2221,8 +2259,8 @@ _display_list_box() {
     local par_check_select="none"
     par_item_name=$(_i18n 'items')
 
-    # Evaluate the values from the '$parameters' variable.
-    eval "$parameters"
+    # Read the values from the '$parameters' variable.
+    _parse_parameters "$parameters"
 
     _close_wait_box
     _logs_consolidate ""
@@ -3416,8 +3454,8 @@ _get_files() {
     local par_sort_list="false"
     local par_type="file"
 
-    # Evaluate the values from the '$parameters' variable.
-    eval "$parameters"
+    # Read the values from the '$parameters' variable.
+    _parse_parameters "$parameters"
 
     # NOTE: Handle the case where no file was selected in the file manager, but
     # 'par_type!=file' or 'par_recursive=true'. This is particularly useful for
@@ -3763,8 +3801,8 @@ _get_output_dir() {
     # Default values for input parameters.
     local par_use_same_dir=""
 
-    # Evaluate the values from the '$parameters' variable.
-    eval "$parameters"
+    # Read the values from the '$parameters' variable.
+    _parse_parameters "$parameters"
 
     # Attempt to use the current working directory as the base output location.
     output_dir=$(_get_working_directory)
@@ -3843,8 +3881,8 @@ _get_output_filename() {
     local par_prefix=""
     local par_suffix=""
 
-    # Evaluate the values from the '$parameters' variable.
-    eval "$parameters"
+    # Read the values from the '$parameters' variable.
+    _parse_parameters "$parameters"
 
     filename=$(basename -- "$input_file")
 
