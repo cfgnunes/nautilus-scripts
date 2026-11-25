@@ -1755,7 +1755,8 @@ _get_filename_next_suffix() {
         # The 'mkdir' succeeds only if the directory does NOT already exist.
         # This operation is atomic: only one process can succeed here.
         if mkdir "$filename_lock" 2>/dev/null &&
-            [[ ! -e "$filename_result" ]]; then
+            [[ ! -e "$filename_result" ]] &&
+            [[ ! -L "$filename_result" ]]; then
 
             # Return the chosen filename and exit.
             printf "%s" "$filename_result"
