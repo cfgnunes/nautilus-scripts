@@ -18,6 +18,9 @@ _main() {
     output_dir=$(_display_file_selection_box \
         "$(_i18n 'Select the output directory')" \
         "" "par_select_type=directory")
+    if [[ -z "$output_dir" ]] || [[ ! -w "$output_dir" ]]; then
+        _exit_script
+    fi
 
     # Execute the function '_main_task' for each file in parallel.
     _run_task_parallel "$input_files" "$output_dir"
