@@ -4359,8 +4359,16 @@ _text_sort() {
 #   - Output: "/home/user name/file name.txt"
 _text_uri_decode() {
     local uri_encoded=$1
-    uri_encoded=$(sed "s|\w\+://||g; s|%|\\\\x|g" <<<"$uri_encoded")
+    # 1. Remove the URI scheme (e.g., "file://").
+    # 2. Double the backslashes so that printf '%b' does not interpret them.
+    # 3. Replace each "%HH" (two hex digits) with "\xHH".
+    uri_encoded=$(sed \
+        -e 's|\w\+://||g' \
+        -e 's|\\|\\\\|g' \
+        -e 's|%\([0-9A-Fa-f]\{2\}\)|\\x\1|g' \
+        <<<"$uri_encoded")
 
+    # The printf '%b' converts the "\xHH" sequences into the original bytes.
     printf '%b' "$uri_encoded"
 }
 
