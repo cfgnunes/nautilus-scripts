@@ -85,6 +85,7 @@ _main() {
     __run_make_temp_file
     __run_move_file
     __run_move_file_errors
+    __run_parse_parameters
     __run_run_function_parallel
     _command_exists "bwrap" && __run_run_in_sandbox
     __run_run_task_parallel
@@ -962,6 +963,36 @@ __run_text_uri_decode() {
     output=$(_text_uri_decode "$input")
     __test_equal "$input" "$expected_output" "$output"
 
+    input="file:///home/u/100% real.txt"
+    expected_output="/home/u/100% real.txt"
+    output=$(_text_uri_decode "$input")
+    __test_equal "$input" "$expected_output" "$output"
+
+    input="file:///tmp/100%zz.txt"
+    expected_output="/tmp/100%zz.txt"
+    output=$(_text_uri_decode "$input")
+    __test_equal "$input" "$expected_output" "$output"
+
+    input='file:///tmp/a\nb\tc.txt'
+    expected_output='/tmp/a\nb\tc.txt'
+    output=$(_text_uri_decode "$input")
+    __test_equal "Literal backslash-n and backslash-t." "$expected_output" "$output"
+
+    input='file:///tmp/a\\b.txt'
+    expected_output='/tmp/a\\b.txt'
+    output=$(_text_uri_decode "$input")
+    __test_equal "Literal double backslash." "$expected_output" "$output"
+
+    input="file:///tmp/a%5Cnb.txt"
+    expected_output='/tmp/a\nb.txt'
+    output=$(_text_uri_decode "$input")
+    __test_equal "Encoded backslash followed by n." "$expected_output" "$output"
+
+    input="file:///tmp/%C3%A9%e3%81%82.txt"
+    expected_output="/tmp/éあ.txt"
+    output=$(_text_uri_decode "$input")
+    __test_equal "UTF-8 and lowercase hex." "$expected_output" "$output"
+
     input=""
     expected_output=""
     output=$(_text_uri_decode "$input")
@@ -1528,6 +1559,36 @@ __run_validate_file_mime_parallel() {
     __test_equal "Parallel MIME validation rejects non-images." "" "$output"
 
     __clean_temp_files
+}
+
+__run_parse_parameters() {
+    local par_a="default"
+    local par_b=""
+    local par_c=""
+    local par_d=""
+    local par_e=""
+    local other=""
+    _parse_parameters "par_b=plain
+        par_c='single quoted'; par_d=\"double quoted\""
+    __test_equal "Unquoted value." "plain" "$par_b"
+    __test_equal "Single-quoted value." "single quoted" "$par_c"
+    __test_equal "Double-quoted value, same line." "double quoted" "$par_d"
+    __test_equal "Unset key keeps default." "default" "$par_a"
+    par_b=""
+    _parse_parameters "par_b='--column:Taux d'échantillonnage,'
+        par_b+='--column:Canaux'"
+    __test_equal "Apostrophe inside quoted value, with append." \
+        "--column:Taux d'échantillonnage,--column:Canaux" "$par_b"
+    _parse_parameters "par_c='\$HOME \$(touch $_TEMP_DIR/pwned) \`id\` \"x\" \\n'"
+    __test_equal "Shell metacharacters stay literal." \
+        "\$HOME \$(touch $_TEMP_DIR/pwned) \`id\` \"x\" \\n" "$par_c"
+    __test_equal "No command was executed." "false" \
+        "$([[ -e "$_TEMP_DIR/pwned" ]] && echo true || echo false)"
+    _parse_parameters "par_d=l'élément"
+    __test_equal "Unquoted value with apostrophe." "l'élément" "$par_d"
+    _parse_parameters "other=1; par_e='a;b'"
+    __test_equal "Value with ';' is kept." "a;b" "$par_e"
+    __test_equal "Name without 'par_' prefix is accepted." "1" "$other"
 }
 
 __run_run_function_parallel() {
