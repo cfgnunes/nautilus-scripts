@@ -73,7 +73,7 @@ _main_task() {
         [[ -f "$fp_reference" ]] || continue
 
         # Store the original path of the similar image.
-        _storage_text_write_ln "\"$(cat -- "$fp_reference.txt")\""
+        _storage_text_write_ln "$(cat -- "$fp_reference.txt")"
 
         # Compare '$fp_reference' with all others fingerprints.
         _run_function_parallel \
@@ -100,7 +100,8 @@ _main_task() {
             continue
         fi
 
-        std_output=$(tr "\n" " " <<<"$std_output")
+        local -a similar_files=()
+        IFS=$'\n' read -r -d "" -a similar_files <<<"$std_output" || true
 
         # Determine the image viewer.
         local image_viewer=""
@@ -121,11 +122,9 @@ _main_task() {
         if [[ "$image_viewer" == *"eog" ]]; then
             # If the viewer is Eye of GNOME (eog),
             # ensure a new instance is opened.
-            # shellcheck disable=SC2086
-            eval $image_viewer --new-instance -- $std_output
+            "$image_viewer" --new-instance -- "${similar_files[@]}"
         else
-            # shellcheck disable=SC2086
-            eval $image_viewer -- $std_output
+            "$image_viewer" -- "${similar_files[@]}"
         fi
     done
 }
@@ -192,7 +191,7 @@ _compare_fingerprints() {
     # duplicates or near-duplicates.
     if [[ "$(echo "$ssim >= $threshold" | bc -l)" == "1" ]]; then
         # Store the original path of the similar image.
-        _storage_text_write_ln "\"$(cat -- "$fp_compare.txt")\""
+        _storage_text_write_ln "$(cat -- "$fp_compare.txt")"
 
         # If the fingerprints belong to different files, remove the
         # duplicate fingerprint.
