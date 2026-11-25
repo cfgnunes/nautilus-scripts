@@ -67,6 +67,7 @@ _main_task() {
         _move_file "skip" "$dir" "$parent_dir/$new_dirname"
     done < <(find "$input_file" \
         ! -path "$IGNORE_FIND_PATH" \
+        ! -path "*.git" \
         -type d -print0 2>/dev/null | sort --reverse --zero-terminated)
 }
 
