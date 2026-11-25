@@ -299,6 +299,7 @@ _main() {
     while IFS= read -r -d $'\0' dir; do
         cat_dirs+=("$dir")
         cat_dirs_translated+=("$(_i18n "$dir")")
+        cat_defaults+=("true")
     done < <(_list_scripts_categories)
 
     # If requested, let the user select which categories to install.
@@ -597,7 +598,7 @@ _list_scripts() {
 }
 
 _list_scripts_categories() {
-    find -L "$SCRIPT_DIR" -maxdepth 1 -type d \
+    find -L "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d \
         "${IGNORE_FIND_PATHS[@]}" -print0 2>/dev/null |
         sed -z "s|^.*/||" | sort --zero-terminated
 }
