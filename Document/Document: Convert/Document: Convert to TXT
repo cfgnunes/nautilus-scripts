@@ -108,7 +108,7 @@ _run_command() {
         local temp_output_file=""
         basename=$(basename -- "$input_file")             # Remove the path.
         basename=$(_strip_filename_extension "$basename") # Remove the extension.
-        temp_dir_local=$(_make_temp_dir_local "$output_dir" ".$basename")
+        temp_dir_local=$(_make_temp_dir_local "$output_dir" ".$basename") || return 1
 
         # HACK: Workaround for LibreOffice.
         # LibreOffice does not run if another instance is already open.

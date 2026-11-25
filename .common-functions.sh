@@ -1771,7 +1771,7 @@ _make_temp_dir_local() {
     local item_remove=""
 
     temp_dir=$(mktemp --directory \
-        --tmpdir="$output_dir" "$basename.XXXXXXXX.tmp")
+        --tmpdir="$output_dir" "$basename.XXXXXXXX.tmp") || return 1
 
     # Remember to remove this directory after exit.
     item_remove=$(mktemp --tmpdir="$TEMP_DIR_ITEMS_TO_REMOVE" 2>/dev/null) ||

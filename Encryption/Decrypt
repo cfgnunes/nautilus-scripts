@@ -51,7 +51,7 @@ _main_task() {
         local temp_dir_local=""
         basename=$(basename -- "$input_file")             # Remove the path.
         basename=$(_strip_filename_extension "$basename") # Remove the extension.
-        temp_dir_local=$(_make_temp_dir_local "$output_dir" ".$basename")
+        temp_dir_local=$(_make_temp_dir_local "$output_dir" ".$basename") || return 1
 
         _directory_push "$temp_dir_local" || return 1
         std_output=$(_run_in_sandbox "$output_dir" "false" \

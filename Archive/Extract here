@@ -567,7 +567,7 @@ _run_command() {
         fi
     }
     __temp_dir_push() {
-        temp_dir_extract=$(_make_temp_dir_local "$output_dir" "$filename")
+        temp_dir_extract=$(_make_temp_dir_local "$output_dir" "$filename") || return 1
         _directory_push "$temp_dir_extract" || return 1
     }
     __temp_dir_pop() {
@@ -594,7 +594,7 @@ _run_command() {
     # For split archives ('.000' or '.001'), join the parts into a temporary
     # file and extract the joined file.
     if [[ "${input_file,,}" =~ \.[0-9]+$ ]]; then
-        temp_dir_extract_cat=$(_make_temp_dir_local "$output_dir" "$filename")
+        temp_dir_extract_cat=$(_make_temp_dir_local "$output_dir" "$filename") || return 1
         input_file=$(_concat_file "$input_file" "$temp_dir_extract_cat") || return 1
     fi
 
@@ -658,7 +658,7 @@ _run_command() {
         if ((exit_code == 0)) && [[ "$file_mime" == "application/x-tar" ]]; then
             # Create a temporary local directory for extraction.
             local temp_dir_extract_tar=""
-            temp_dir_extract_tar=$(_make_temp_dir_local "$output_dir" "$filename")
+            temp_dir_extract_tar=$(_make_temp_dir_local "$output_dir" "$filename") || return 1
             mv -- "$filename" "$temp_dir_extract_tar/$filename"
             std_output=$(__sandbox tar --extract --file="$temp_dir_extract_tar/$filename" 2>&1)
             exit_code=$?
