@@ -58,7 +58,6 @@ _main_task() {
         ffmpeg -hide_banner -y \
         -i "$input_file" \
         -filter:v "scale=${width}:${height}:force_original_aspect_ratio=increase,crop=${width}:${height}" \
-        -c:v mpeg4 \
         -c:a copy \
         -- "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
