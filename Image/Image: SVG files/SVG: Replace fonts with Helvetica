@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# install_mime_type=image/svg+xml;image/svg+xml-compressed;
+# install_mime_type=image/svg+xml;
 # install_icon_kde=gtk-select-font
 
 # Source the file '.common-functions.sh'.
@@ -28,19 +28,44 @@ _main_task() {
     local std_output=""
     local new_font="Helvetica"
 
+    # Regex for one CSS list item: a quoted string (with ', " or &quot;) or
+    # plain text without commas.
+    local item="[[:space:]]*('[^']*'|\"[^\"]*\"|&quot;[^&]*&quot;|[^;\"',}&]*)[[:space:]]*"
+    # Regex for a CSS value: items separated by commas
+    # (e.g. Arial, 'Times New Roman', serif).
+    local css_value="$item(,$item)*"
+    # Regex for the separator between a CSS property name and its value.
+    local colon="[[:space:]]*:"
+    # Regex for the character before a CSS property name, so that
+    # 'font-family' does not match inside e.g. '-x-font-family'.
+    local start="(^|[^-[:alnum:]_])"
+    # Regex for an XML attribute value, with double or single quotes.
+    local attr_value="[[:space:]]*=[[:space:]]*(\"[^\"]*\"|'[^']*')"
+
+    # Remove a property, both as a CSS declaration and as an XML attribute.
     __key_remove() {
         local file=$1
         local key=$2
 
-        sed -i "s|$key:[^;\"]*;*||g; s|;\"|\"|g" "$file"
+        sed -i -E "
+            s/$start$key$colon$css_value;/\1/g
+            s/;[[:space:]]*$key$colon$css_value//g
+            s/$start$key$colon$css_value/\1/g
+            s/[[:space:]]$key$attr_value//g
+        " "$file"
     }
 
+    # Set the value of a property, both as a CSS declaration and as an XML
+    # attribute.
     __key_set_value() {
         local file=$1
         local key=$2
         local value=$3
 
-        sed -i "s|$key:[^;\"]*\([;\"]\)|$key:$value\1|g" "$file"
+        sed -i -E "
+            s/$start$key$colon$css_value/\1$key:$value/g
+            s/$start$key$attr_value/\1$key=\"$value\"/g
+        " "$file"
     }
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" \
@@ -49,10 +74,13 @@ _main_task() {
     std_output=$(cp --archive -- "$input_file" "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
-    # Run the main process.
-    __key_remove "$output_file" "font-stretch"
-    __key_set_value "$output_file" "font-family" "$new_font"
-    __key_set_value "$output_file" "-inkscape-font-specification" "$new_font"
+    # Run the main process. The Inkscape font specification is removed
+    # (instead of replaced) because it also stores weight/style.
+    std_output=$({
+        __key_remove "$output_file" "font-stretch" &&
+            __key_remove "$output_file" "-inkscape-font-specification" &&
+            __key_set_value "$output_file" "font-family" "$new_font"
+    } 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
