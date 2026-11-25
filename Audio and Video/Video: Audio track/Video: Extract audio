@@ -48,8 +48,8 @@ _main_task() {
     local extension=""
     case $audio_format in
     "aac" | "alac") extension="m4a" ;;
-    "pcm_"*"_be"*) extension="aiff" ;;
-    "pcm_"*"_le"* | "pcm_u8"* | "pcm_s8"*) extension="wav" ;;
+    "pcm_"*"be"*) extension="aiff" ;;
+    "pcm_"*"le"* | "pcm_u8"* | "pcm_s8"*) extension="wav" ;;
     "pcm_alaw" | "pcm_mulaw" | "adpcm_"*) extension="wav" ;;
     "speex") extension="spx" ;;
     "vorbis") extension="ogg" ;;
