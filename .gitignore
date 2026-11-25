@@ -10,6 +10,9 @@ Output*/
 # Translation files.
 *.mo
 
+# Some miscellaneous files.
+*.rnnn
+
 # Some scripts directories.
 Accessed recently/
 .tests-data/
