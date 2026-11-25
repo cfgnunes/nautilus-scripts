@@ -28,46 +28,43 @@ _open_app() {
     _open_terminal "$session_name"
 }
 
+# Create a tmux session with one synchronized pane per directory.
 _build_tmux_session() {
     local session_name=$1
     local input_files=$2
-
-    local first_session="true"
-    local dir_1=""
-    dir_1=$(_get_element "$input_files" "1")
-
-    cd -- "$dir_1" || exit 1
-    # Create a new tmux session in detached mode.
-    tmux new-session -d -s "$session_name"
-    # Enable synchronized panes for the session.
-    tmux setw -t "$session_name" synchronize-panes on
-    # Enable mouse support.
-    tmux set-option -g mouse on
-    # Enable keyboard shortcuts for synchronized panes (CTRL+B and '=').
-    tmux bind = setw synchronize-panes
 
     # Split the list into an array.
     local -a items=()
     read -r -a items <<<"$input_files"
 
+    # Create a new tmux session in detached mode, in the first directory.
+    tmux new-session -d -s "$session_name" -c "${items[0]}"
+
+    # Enable synchronized panes for the session.
+    tmux setw -t "$session_name" synchronize-panes on
+
+    # Enable mouse support.
+    tmux set-option -g mouse on
+
+    # Enable keyboard shortcuts for synchronized panes (CTRL+B and '=').
+    tmux bind = setw synchronize-panes
+
+    # Add one pane for each remaining directory.
     local input_file=""
-    for input_file in "${items[@]}"; do
-        if [[ $first_session = "true" ]]; then
-            first_session="false"
-        else
-            cd -- "$input_file" || continue
-            tmux split-window -t "$session_name"
-            tmux select-layout -t "$session_name" tiled >/dev/null
-        fi
+    for input_file in "${items[@]:1}"; do
+        tmux split-window -t "$session_name" -c "$input_file"
+        tmux select-layout -t "$session_name" tiled >/dev/null
     done
 
     # Select the first pane.
     tmux select-pane -t "$session_name:0.0"
 }
 
+# Open a terminal attached to the tmux session.
 _open_terminal() {
     local session_name=$1
-    local available_app=""
+    local app=""
+
     # shellcheck disable=SC2034
     local -a apps=(
         "ptyxis"         # GNOME default.
@@ -87,22 +84,23 @@ _open_terminal() {
         "termit"
         "foot"
     )
-    available_app=$(_get_available_app "apps")
+    app=$(_get_available_app "apps") || _exit_script
 
-    local -a tmux_run=(tmux attach-session -t "$session_name")
-    case "$available_app" in
+    local -a cmd_run=(tmux attach-session -t "$session_name")
+
+    case "$app" in
     gnome-terminal | mate-terminal)
-        $available_app -- "${tmux_run[@]}" &
+        "$app" -- "${cmd_run[@]}" &
         ;;
     ptyxis)
-        $available_app --new-window -- "${tmux_run[@]}" &
+        "$app" --new-window -- "${cmd_run[@]}" &
         ;;
     konsole | xfce4-terminal)
-        $available_app --hold -e "${tmux_run[@]}" &
+        "$app" --hold -e "${cmd_run[@]}" &
         ;;
     *)
         # Generic fallback.
-        $available_app -e "${tmux_run[@]}" &
+        "$app" -e "${cmd_run[@]}" &
         ;;
     esac
 }
