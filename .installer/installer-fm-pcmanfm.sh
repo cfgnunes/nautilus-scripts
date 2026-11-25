@@ -22,7 +22,7 @@ _close_file_manager_pcmanfm() {
         # Only restart if running under LXDE or LXQT.
         if [[ "${XDG_CURRENT_DESKTOP,,}" == *"lxde"* ||
             "${XDG_CURRENT_DESKTOP,,}" == *"lxqt"* ]]; then
-            session_cmd=$(pgrep -a "$file_manager" |
+            session_cmd=$(pgrep -a -x "$file_manager" |
                 grep -o -P -m1 "[0-9]+\s*\K.*")
             # Kill all existing PCManFM processes.
             killall "$file_manager" &>/dev/null
