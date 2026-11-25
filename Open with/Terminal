@@ -73,9 +73,7 @@ _open_app() {
             # Build the remote command.
             local remote_cmd=""
             printf -v remote_cmd 'cd -- %q; exec bash' "${remote_path:-/}"
-            # shellcheck disable=SC2016
-            local -a ssh_run=(bash -c 'exec ssh -t -- "$1" "$2"' _
-                "$remote_host" "$remote_cmd")
+            local -a ssh_run=(ssh -t -- "$remote_host" "$remote_cmd")
 
             case "$available_app" in
             gnome-terminal | mate-terminal)
