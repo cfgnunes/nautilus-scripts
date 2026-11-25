@@ -144,7 +144,7 @@ _run_command() {
         ;;
     "pandoc")
         std_output=$(_run_in_sandbox "$output_dir" "false" \
-            pandoc --standalone -o "$output_file" -- "$input_file" 2>&1)
+            pandoc --standalone -t plain --wrap=none -o "$output_file" -- "$input_file" 2>&1)
         _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
         ;;
     "pdftotext")
