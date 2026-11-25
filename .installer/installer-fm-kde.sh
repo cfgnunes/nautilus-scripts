@@ -87,7 +87,17 @@ _install_actions_kio_servicemenus() {
     # -------------------------------------------------------------------------
     # Replace the old files only after all new files were created.
     # -------------------------------------------------------------------------
-    rm -f -- "$menus_path/$APP_NAME-"*.desktop
-    mkdir --parents -- "$menus_path"
-    cp --force -- "$temp_dir/$APP_NAME-"*.desktop "$menus_path/"
+    mkdir --parents -- "$menus_path" || return 1
+
+    # Set the old files date to 1970, to mark them as "old".
+    find "$menus_path" -maxdepth 1 -type f -name "$APP_NAME-*.desktop" \
+        -exec touch -d '@0' -- {} +
+
+    # Copy the new files (they get the current date). If this fails, or if
+    # there are no new files, stop here and keep the old ones.
+    cp --force -- "$temp_dir/$APP_NAME-"*.desktop "$menus_path/" || return 1
+
+    # Delete only the files that still have the old date (the stale ones).
+    find "$menus_path" -maxdepth 1 -type f -name "$APP_NAME-*.desktop" \
+        ! -newermt '@1' -delete
 }
