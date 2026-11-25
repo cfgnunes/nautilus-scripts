@@ -70,24 +70,26 @@ _open_app() {
                 remote_path="/${BASH_REMATCH[2]}"
             fi
 
-            # Build SSH command, with optional remote path.
-            local ssh_cmd="ssh -t $remote_host \"cd $remote_path/; exec bash\""
+            # Build the remote command.
+            local remote_cmd=""
+            printf -v remote_cmd 'cd -- %q; exec bash' "${remote_path:-/}"
+            # shellcheck disable=SC2016
+            local -a ssh_run=(bash -c 'exec ssh -t -- "$1" "$2"' _
+                "$remote_host" "$remote_cmd")
+
             case "$available_app" in
             gnome-terminal | mate-terminal)
-                $available_app -- bash -c "$ssh_cmd" &
+                $available_app -- "${ssh_run[@]}" &
                 ;;
             ptyxis)
-                $available_app --new-window -- bash -c "$ssh_cmd" &
+                $available_app --new-window -- "${ssh_run[@]}" &
                 ;;
             konsole | xfce4-terminal)
-                $available_app --hold -e "$ssh_cmd" &
-                ;;
-            kitty | foot | alacritty)
-                $available_app -e bash -c "$ssh_cmd" &
+                $available_app --hold -e "${ssh_run[@]}" &
                 ;;
             *)
                 # Generic fallback.
-                $available_app -e "$ssh_cmd" &
+                $available_app -e "${ssh_run[@]}" &
                 ;;
             esac
         else
