@@ -1920,6 +1920,7 @@ _move_file() {
     "safe_overwrite")
         # Safely overwrite the destination while preserving attributes and
         # backups.
+        local file_dst_bak=""
         if [[ -e "$file_dst" ]]; then
             # Skip empty source files (0 bytes), considered invalid or
             # incomplete.
@@ -1937,12 +1938,18 @@ _move_file() {
             chmod --reference="$file_dst" -- "$file_src" 2>/dev/null
 
             # Create a backup of the existing destination file.
-            local file_dst_bak="$file_dst.bak"
+            file_dst_bak="$file_dst.bak"
             file_dst_bak=$(_get_filename_next_suffix "$file_dst_bak")
-            mv -n -- "$file_dst" "$file_dst_bak" 2>/dev/null
+            mv -n -- "$file_dst" "$file_dst_bak" 2>/dev/null || return 1
         fi
         # Move the source file to the destination.
-        mv -n -- "$file_src" "$file_dst" 2>/dev/null
+        if ! mv -n -- "$file_src" "$file_dst" 2>/dev/null; then
+            # Restore the original file if the new file could not be moved.
+            if [[ -n "$file_dst_bak" && ! -e "$file_dst" ]]; then
+                mv -n -- "$file_dst_bak" "$file_dst" 2>/dev/null
+            fi
+            return 1
+        fi
         ;;
     esac
 
