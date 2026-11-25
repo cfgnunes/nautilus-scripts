@@ -141,18 +141,26 @@ _main_task() {
         fi
     fi
 
-    if grep -qF "[GNUPG:] GOODSIG" <<<"$std_output"; then
-        status="🟢 __MSG_Valid__"
-    elif grep -qF "[GNUPG:] BADSIG" <<<"$std_output"; then
+    # Bad/revoked/expired results take precedence over a good signature, so
+    # that a file with several signatures is never shown as fully valid.
+    local sig_token=""
+    if grep -qF "[GNUPG:] BADSIG" <<<"$std_output"; then
+        sig_token="BADSIG"
         status="🔴 __MSG_Invalid__"
     elif grep -qF "[GNUPG:] REVKEYSIG" <<<"$std_output"; then
+        sig_token="REVKEYSIG"
         status="🟠 __MSG_RevKey__"
     elif grep -qF "[GNUPG:] EXPKEYSIG" <<<"$std_output"; then
+        sig_token="EXPKEYSIG"
         status="🟠 __MSG_ExpKey__"
     elif grep -qF "[GNUPG:] EXPSIG" <<<"$std_output"; then
+        sig_token="EXPSIG"
         status="🟠 __MSG_ExpSig__"
     elif grep -qF "[GNUPG:] SIGEXPIRED" <<<"$std_output"; then
         status="🟠 __MSG_ExpSig__"
+    elif grep -qF "[GNUPG:] GOODSIG" <<<"$std_output"; then
+        sig_token="GOODSIG"
+        status="🟢 __MSG_Valid__"
     elif grep -qF "[GNUPG:] NO_PUBKEY" <<<"$std_output"; then
         status="⚪ __MSG_NoKey__"
     elif grep -qF "can't hash datafile" <<<"$std_output"; then
@@ -163,7 +171,8 @@ _main_task() {
         return 1
     fi
 
-    line=$(grep --perl-regexp "\[GNUPG:\] (BAD|GOOD|REVKEY)SIG" <<<"$std_output" 2>/dev/null)
+    line=$(grep -E "^\[GNUPG:\] (BADSIG|GOODSIG|REVKEYSIG|EXPKEYSIG|EXPSIG) " <<<"$std_output" 2>/dev/null |
+        grep -F "[GNUPG:] ${sig_token:-GOODSIG} " | head -n 1)
     if [[ -n "$line" ]]; then
         key_id=$(cut -d " " -f3 <<<"$line")
         local user=""
