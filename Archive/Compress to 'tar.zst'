@@ -27,6 +27,7 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+    local -a items=()
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" \
         "par_extension_opt=replace; par_extension=tar.zst")
@@ -39,7 +40,6 @@ _main_task() {
         # Archive the directory contents without the parent directory.
         _directory_push "$input_file" || return 1
 
-        local -a items=()
         # Include hidden files in the archive.
         shopt -s dotglob
         items=(*)

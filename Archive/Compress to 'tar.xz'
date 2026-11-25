@@ -27,6 +27,7 @@ _main_task() {
     local output_dir=$2
     local output_file=""
     local std_output=""
+    local -a items=()
 
     # Use the maximum compression.
     export XZ_OPT="-9"
@@ -42,7 +43,6 @@ _main_task() {
         # Archive the directory contents without the parent directory.
         _directory_push "$input_file" || return 1
 
-        local -a items=()
         # Include hidden files in the archive.
         shopt -s dotglob
         items=(*)
