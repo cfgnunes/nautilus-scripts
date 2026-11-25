@@ -28,7 +28,7 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
-    local param="core.sshCommand=ssh -o StrictHostKeyChecking=no -o ConnectTimeout=3"
+    local param="core.sshCommand=ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=3"
 
     __git_repo_dir_name() {
         local repo_url=$1
@@ -85,10 +85,8 @@ _extract_git_urls() {
     # Convert HTTPS to SSH form.
     data=$(sed -E 's#https://([^/]+)/([^/]+)/([^ ]+)#git@\1:\2/\3#g' <<<"$data")
 
-    # Append ".git" only if missing.
-    if [[ "$data" != *.git ]]; then
-        data="${data}.git"
-    fi
+    # Append ".git" to each URL line where it is missing.
+    data=$(sed -E '/^(git@|(https?|ssh|git):\/\/)/{s#/+$##; /\.git$/!s#$#.git#}' <<<"$data")
 
     # Keep only valid Git URLs.
     data=$(grep --only-matching --perl-regexp "((git|ssh|http(s)?)|(git@[\w\.]+))(.*)(\.git)" <<<"$data")
