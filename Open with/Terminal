@@ -21,7 +21,8 @@ _main() {
 
 _open_app() {
     local input_files=$1
-    local available_app=""
+    local app=""
+
     # shellcheck disable=SC2034
     local -a apps=(
         "ptyxis"         # GNOME default.
@@ -41,7 +42,7 @@ _open_app() {
         "termit"
         "foot"
     )
-    available_app=$(_get_available_app "apps")
+    app=$(_get_available_app "apps") || _exit_script
 
     # Split the list into an array.
     local -a items=()
@@ -52,56 +53,125 @@ _open_app() {
     for input_file in "${items[@]}"; do
         # Detect remote SFTP paths from GVfs, KIO FUSE, or a URI.
         if [[ "$input_file" == *"sftp:"* ]]; then
-            local remote_host=""
-            local remote_path=""
-            if [[ "$input_file" =~ ^/run/user/[0-9]+/gvfs/sftp:host=([^/]+)(/.*)?$ ]]; then
-                # Case 1: GVfs mount format,
-                # such as: /run/user/.../gvfs/sftp:host=host/path.
-                remote_host="${BASH_REMATCH[1]}"
-                remote_path="${BASH_REMATCH[2]}"
-            elif [[ "$input_file" =~ ^/run/user/[0-9]+/kio-fuse-[^/]+/sftp/([^/]+)(/.*)?$ ]]; then
-                # Case 2: KIO FUSE mount format,
-                # such as: /run/user/.../kio-fuse-.../sftp/user@host/path.
-                remote_host="${BASH_REMATCH[1]}"
-                remote_path="${BASH_REMATCH[2]}"
-            elif [[ "$input_file" =~ ^sftp://([^/]+)/?(.*)$ ]]; then
-                # Case 3: URI format,
-                # such as: sftp://host/path.
-                remote_host="${BASH_REMATCH[1]}"
-                remote_path="/${BASH_REMATCH[2]}"
-            fi
-
-            # Build the remote command.
-            local remote_cmd=""
-            printf -v remote_cmd 'cd -- %q; exec bash' "${remote_path:-/}"
-            local -a ssh_run=(ssh -t -- "$remote_host" "$remote_cmd")
-
-            case "$available_app" in
-            gnome-terminal | mate-terminal)
-                $available_app -- "${ssh_run[@]}" &
-                ;;
-            ptyxis)
-                $available_app --new-window -- "${ssh_run[@]}" &
-                ;;
-            konsole | xfce4-terminal)
-                $available_app --hold -e "${ssh_run[@]}" &
-                ;;
-            *)
-                # Generic fallback.
-                $available_app -e "${ssh_run[@]}" &
-                ;;
-            esac
+            _open_remote_directory "$app" "$input_file"
         else
-            # Local directory case.
-            if [[ "$available_app" == "ptyxis" ]]; then
-                $available_app --new-window --working-directory "$input_file" &
-            else
-                cd -- "$input_file" || continue
-                unset "OLDPWD"
-                $available_app &
-            fi
+            _open_local_directory "$app" "$input_file"
         fi
     done
+}
+
+# Open a terminal in a local directory.
+_open_local_directory() {
+    local app=$1
+    local directory=$2
+
+    if [[ "$app" == "ptyxis" ]]; then
+        "$app" --new-window --working-directory "$directory" &
+    else
+        cd -- "$directory" || exit 1
+        unset "OLDPWD"
+        "$app" &
+    fi
+}
+
+# Open a terminal with an SSH session in a remote directory.
+_open_remote_directory() {
+    local app=$1
+    local input_file=$2
+    local remote_host=""
+    local remote_port=""
+    local remote_path=""
+    local -a parsed=()
+
+    # Output lines: host, port, and path.
+    mapfile -t parsed < <(_parse_sftp_path "$input_file")
+    remote_host=${parsed[0]:-}
+    remote_port=${parsed[1]:-}
+    remote_path=${parsed[2]:-}
+
+    # Skip entries that did not match any SFTP format.
+    if [[ -z "$remote_host" ]]; then
+        return 1
+    fi
+
+    # Build the remote command.
+    local remote_cmd=""
+    printf -v remote_cmd 'cd -- %q; exec bash' "${remote_path:-/}"
+    local -a cmd_run=(ssh -t)
+    if [[ -n "$remote_port" ]]; then
+        cmd_run+=(-p "$remote_port")
+    fi
+    cmd_run+=(-- "$remote_host" "$remote_cmd")
+
+    case "$app" in
+    gnome-terminal | mate-terminal)
+        "$app" -- "${cmd_run[@]}" &
+        ;;
+    ptyxis)
+        "$app" --new-window -- "${cmd_run[@]}" &
+        ;;
+    konsole | xfce4-terminal)
+        "$app" --hold -e "${cmd_run[@]}" &
+        ;;
+    *)
+        # Generic fallback.
+        "$app" -e "${cmd_run[@]}" &
+        ;;
+    esac
+}
+
+# Parse an SFTP path from GVfs, KIO FUSE, or a URI.
+# Print three lines: host (with optional "user@"), port, and remote path.
+_parse_sftp_path() {
+    local input_file=$1
+    local host=""
+    local port=""
+    local path=""
+
+    if [[ "$input_file" =~ ^/run/user/[0-9]+/gvfs/sftp:host=([^/]+)(/.*)?$ ]]; then
+        # Case 1: GVfs mount format,
+        # such as: /run/user/.../gvfs/sftp:host=host,user=name,port=22/path.
+        host="${BASH_REMATCH[1]}"
+        path="${BASH_REMATCH[2]}"
+        if [[ "$host" =~ ,port=([0-9]+) ]]; then
+            port="${BASH_REMATCH[1]}"
+        fi
+        if [[ "$host" =~ ,user=([^,]+) ]]; then
+            host="${BASH_REMATCH[1]}@${host%%,*}"
+        else
+            host="${host%%,*}"
+        fi
+    elif [[ "$input_file" =~ ^/run/user/[0-9]+/kio-fuse-[^/]+/sftp/([^/]+)(/.*)?$ ]]; then
+        # Case 2: KIO FUSE mount format,
+        # such as: /run/user/.../kio-fuse-.../sftp/user@host:port/path.
+        host="${BASH_REMATCH[1]}"
+        path="${BASH_REMATCH[2]}"
+        _split_host_port host port
+    elif [[ "$input_file" =~ ^sftp://([^/]+)/?(.*)$ ]]; then
+        # Case 3: URI format,
+        # such as: sftp://user@host:port/path.
+        host="${BASH_REMATCH[1]}"
+        path="/${BASH_REMATCH[2]}"
+        _split_host_port host port
+    else
+        return 1
+    fi
+
+    printf "%s\n" "$host" "$port" "$path"
+}
+
+# Split a trailing ":port" from the host variable (passed by name).
+_split_host_port() {
+    local -n _host=$1
+    local -n _port=$2
+
+    if [[ "$_host" =~ ^(.+):([0-9]+)$ ]]; then
+        _host="${BASH_REMATCH[1]}"
+        _port="${BASH_REMATCH[2]}"
+        # Remove the brackets of IPv6 literals, such as: [::1].
+        _host="${_host#\[}"
+        _host="${_host%\]}"
+    fi
 }
 
 _main "$@"
