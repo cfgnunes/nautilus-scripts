@@ -65,10 +65,10 @@ _main_task() {
 _strip_filename_multipart() {
     local filename=$1
 
-    # Remove '.000', '.001'.
+    # Remove the number ('.000', '.001') suffixes.
     if [[ "$filename" =~ \.[0-9]+$ ]]; then
         filename=${filename%.*}
-        # Remove '.part'.
+        # Remove the '.part' suffix if it exists.
         if [[ "${filename,,}" =~ \.part$ ]]; then
             filename=${filename%.*}
         fi
@@ -92,26 +92,28 @@ _concat_file() {
     local input_file=$1
     local output_dir=$2
     local base_file=${input_file%.*}
+    local extension=${input_file##*.}
     local output_file=""
     local output_file_path=""
-    local -a parts=()
     local part=""
+    local -a parts=()
 
-    for part in "$base_file".[0-9]*; do
-        if [[ -f "$part" ]]; then
-            parts+=("$part")
-        fi
+    # Turn the extension into a glob with the same number of digits.
+    # Example: '001' -> '[0-9][0-9][0-9]'.
+    local digits_glob=${extension//[0-9]/[0-9]}
+
+    for part in "$base_file".$digits_glob; do
+        [[ -f "$part" ]] && parts+=("$part")
     done
+    [[ ${#parts[@]} -gt 0 ]] || return 1
 
-    output_file=$(basename -- "$base_file")
+    output_file=$(basename -- "$input_file")
     output_file=$(_strip_filename_multipart "$output_file")
-
     output_file_path="$output_dir/$output_file"
 
-    cat -- "${parts[@]}" >"$output_file_path"
+    cat -- "${parts[@]}" >"$output_file_path" || return 1
     printf "%s" "$output_file_path"
 }
-
 # Function: _get_dependencies
 #
 # Description:
@@ -593,7 +595,7 @@ _run_command() {
 
     # For split archives ('.000' or '.001'), join the parts into a temporary
     # file and extract the joined file.
-    if [[ "${input_file,,}" =~ \.[0-9]+$ ]]; then
+    if [[ "$input_file" =~ \.[0-9]+$ ]]; then
         temp_dir_extract_cat=$(_make_temp_dir_local "$output_dir" "$filename") || return 1
         input_file=$(_concat_file "$input_file" "$temp_dir_extract_cat") || return 1
     fi

@@ -32,17 +32,28 @@ _main_task() {
     local file_1=""
     file_1=$(_get_element "$input_files" "1")
 
-    local basename=""
-    basename=$(basename -- "$file_1") # Remove the path.
-    basename=${basename%.[0-9]*}      # Remove '.000', '.001'.
-    basename=${basename%.part}        # Remove '.part'.
+    # Remove the path.
+    local filename=""
+    filename=$(basename -- "$file_1")
 
-    output_file=$(_get_output_filename "$basename" "$output_dir" \
+    # Remove the number ('.000', '.001') suffixes.
+    if [[ "$filename" =~ \.[0-9]+$ ]]; then
+        filename=${filename%.*}
+        # Remove the '.part' suffix if it exists.
+        if [[ "${filename,,}" =~ \.part$ ]]; then
+            filename=${filename%.*}
+        fi
+    fi
+
+    output_file=$(_get_output_filename "$filename" "$output_dir" \
         "par_extension_opt=preserve")
 
+    # Split the list into an array.
+    local -a items=()
+    read -r -a items <<<"$input_files"
+
     # Run the main process.
-    # shellcheck disable=SC2086
-    cat -- $input_files >"$output_file" 2>/dev/null
+    cat -- "${items[@]}" >"$output_file" 2>/dev/null
     _check_output "$?" "$std_output" "" "$output_file" || return 1
 }
 
