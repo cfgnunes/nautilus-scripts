@@ -34,7 +34,7 @@ _main() {
 
 _download_model() {
     local msg=""
-    if [[ -f "$MODEL_FILE" ]]; then
+    if [[ -s "$MODEL_FILE" ]]; then
         return
     fi
 
@@ -42,7 +42,7 @@ _download_model() {
 
     _download_file "$MODEL_URL" "$MODEL_FILE"
 
-    if [[ ! -f "$MODEL_FILE" ]]; then
+    if [[ ! -s "$MODEL_FILE" ]]; then
         msg="$(_i18n 'Could not download the file!')"
         _display_error_box "$msg"
         _exit_script
