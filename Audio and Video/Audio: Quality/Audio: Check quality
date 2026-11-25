@@ -43,23 +43,32 @@ _main_task() {
     local input_file=$1
     local output_dir=$2
     local std_output=""
-    local status=""
 
     local str_high="🟢 __MSG_High__"
     local str_medium="🟠 __MSG_Medium__"
     local str_low="🔴 __MSG_Low__"
+    local status=$str_low
+
+    # NOTE: The 'sinc' filter fails when the band is not below the Nyquist
+    # frequency, and rates up to 40 kHz cannot contain the 19k-20k band.
+    local sample_rate=""
+    sample_rate=$(_run_in_sandbox "$output_dir" "false" \
+        soxi -r "$input_file" 2>/dev/null)
+    if [[ "$sample_rate" =~ ^[0-9]+$ ]] && ((sample_rate <= 40000)); then
+        _storage_text_write_ln "$status$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
+        return 0
+    fi
 
     # Run the main process.
     std_output=$(_run_in_sandbox "$output_dir" "false" \
-        sox "$input_file" \
-        -n remix 1 sinc "19k-20k" stat 2>&1)
+        sox "$input_file" -n remix 1 sinc "19k-20k" stat 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     std_output=$(grep --ignore-case "^Mean.*norm" <<<"$std_output")
     std_output=$(cut -d ":" -f 2 <<<"$std_output")
     std_output=$(tr -d " " <<<"$std_output")
 
-    status="$str_high"
+    status=$str_high
     if [[ -z "$std_output" ]]; then
         status="$str_low"
     elif [[ "$std_output" == "0.00000"* ]]; then
@@ -68,8 +77,7 @@ _main_task() {
 
     if [[ "$status" == "$str_medium" ]]; then
         std_output=$(_run_in_sandbox "$output_dir" "false" \
-            sox "$input_file" \
-            -n remix 1 sinc "17k-18k" stat 2>&1)
+            sox "$input_file" -n remix 1 sinc "17k-18k" stat 2>&1)
         _check_output "$?" "$std_output" "$input_file" "" || return 1
 
         std_output=$(grep --ignore-case "^Mean.*norm" <<<"$std_output")
