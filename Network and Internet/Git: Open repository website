@@ -72,9 +72,12 @@ _convert_git_to_web_url() {
 _open_repository_website() {
     local input_files=$1
 
+    local -a items=()
+    read -r -a items <<<"$input_files"
+
     # Iterate over each input file (directory).
     local input_file=""
-    for input_file in $input_files; do
+    for input_file in "${items[@]}"; do
 
         # If the input is not a directory, get its parent directory.
         if [[ ! -d "$input_file" ]]; then
@@ -93,7 +96,9 @@ _open_repository_website() {
         lock_key=$(md5sum <<<"$top_level")
         lock_key=${lock_key%% *}
         local filename_lock="$TEMP_DIR_FILENAME_LOCKS/$lock_key"
-        mkdir "$filename_lock" 2>/dev/null || return 1
+
+        # Skip this item if the repository was already processed.
+        mkdir "$filename_lock" 2>/dev/null || continue
 
         # Retrieve the URL of the remote 'origin' repository for the Git
         # repository.
