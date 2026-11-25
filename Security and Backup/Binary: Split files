@@ -44,7 +44,9 @@ _main_task() {
     local prefix=""
     local std_output=""
 
-    prefix="$output_dir/$(basename -- "$input_file").part."
+    prefix=$(_get_output_filename "$input_file" "$output_dir" \
+        "par_extension_opt=preserve")
+    prefix+=".part."
 
     # Run the main process.
     std_output=$(split -b "$TASK_CHUNK_SIZE" -d -a 3 -- "$input_file" "$prefix" 2>&1)
