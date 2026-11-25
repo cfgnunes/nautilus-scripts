@@ -68,6 +68,18 @@ declare -A PKG_MAP=(
         pkgx:
     "
 
+    ["brotli"]="
+        termux: brotli
+        apt:    brotli
+        dnf:    brotli
+        pacman: brotli
+        nix:    brotli
+        zypper: brotli
+        guix:   brotli
+        xbps:   brotli
+        pkgx:   github.com/google/brotli
+    "
+
     ["bsdtar"]="
         termux: libarchive
         apt:    libarchive-tools
@@ -632,6 +644,18 @@ declare -A PKG_MAP=(
         guix:   rsync
         xbps:   rsync
         pkgx:   rsync.samba.org
+    "
+
+    ["rzip"]="
+        termux:
+        apt:    rzip
+        dnf:    rzip
+        pacman:
+        nix:    rzip
+        zypper: rzip
+        guix:
+        xbps:
+        pkgx:
     "
 
     ["tar"]="
