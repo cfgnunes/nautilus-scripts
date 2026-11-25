@@ -202,7 +202,7 @@ _compare_identical() {
         diff_1_3=$(diff --brief --recursive -- "$file_1" "$file_3" 2>&1)
 
         # Check if all three items are identical.
-        if [[ -z "$diff_1_2" ]] && [[ -z "$diff_1_3" ]]; then
+        if [[ -z "$diff_1_2" && -z "$diff_1_3" ]]; then
             msg="$(_i18n 'The selected items are identical.')"
             _display_info_box "$msg"
             _exit_script

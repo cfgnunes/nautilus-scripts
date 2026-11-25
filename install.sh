@@ -160,8 +160,8 @@ _get_parameters_command_line() {
         -d | --sub-category)
             INSTALL_SUBCATEGORY=${2:-}
             shift
-            if [[ -z "$INSTALL_SUBCATEGORY" ]] ||
-                [[ "/$INSTALL_SUBCATEGORY/" == *"/../"* ]]; then
+            if [[ -z "$INSTALL_SUBCATEGORY" ||
+                "/$INSTALL_SUBCATEGORY/" == *"/../"* ]]; then
                 echo "Invalid sub-category name." >&2
                 exit 1
             fi
@@ -512,7 +512,7 @@ _tee_file_append() {
 _item_create_backup() {
     local item=$1
 
-    if [[ -e "$item" ]] && [[ ! -e "$item.bak" ]]; then
+    if [[ -e "$item" && ! -e "$item.bak" ]]; then
         cp -a -- "$item" "$item.bak" 2>/dev/null
     fi
 }

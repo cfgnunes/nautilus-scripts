@@ -48,7 +48,7 @@ _main_task() {
 
     # Use only the tags that are present. Skip files without any tag.
     local new_name=""
-    if [[ -n "$tag_artist" ]] && [[ -n "$tag_title" ]]; then
+    if [[ -n "$tag_artist" && -n "$tag_title" ]]; then
         new_name="$tag_artist - $tag_title"
     else
         new_name="$tag_artist$tag_title"

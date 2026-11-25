@@ -44,8 +44,8 @@ _main() {
     _close_wait_box
 
     # Skip the update if the installed version is already the latest one.
-    if [[ -n "$installed_version" ]] && [[ -n "$latest_version" ]] &&
-        [[ "$installed_version" = "$latest_version" ]]; then
+    if [[ -n "$installed_version" && -n "$latest_version" &&
+        "$installed_version" = "$latest_version" ]]; then
         msg="$(_i18n 'The scripts are already up to date.')"
         _display_info_box "$msg"
         _exit_script
@@ -110,7 +110,7 @@ _main() {
     fi
 
     # Restore the backup log file if the installation failed.
-    if [[ ! -f "$LOG_FILE" ]] && [[ -f "$LOG_FILE.bak" ]]; then
+    if [[ ! -f "$LOG_FILE" && -f "$LOG_FILE.bak" ]]; then
         mv -- "$LOG_FILE.bak" "$LOG_FILE"
     fi
 }

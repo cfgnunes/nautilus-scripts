@@ -18,7 +18,7 @@ _main() {
     output_dir=$(_display_file_selection_box \
         "$(_i18n 'Select the output directory')" \
         "" "par_select_type=directory")
-    if [[ -z "$output_dir" ]] || [[ ! -w "$output_dir" ]]; then
+    if [[ -z "$output_dir" || ! -w "$output_dir" ]]; then
         _exit_script
     fi
 

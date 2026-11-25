@@ -17,8 +17,7 @@ _check_dependencies() {
     _command_exists "xdg-open" || packages+="xdg-utils "
 
     local is_termux="false"
-    if [[ "$HOME" == *"com.termux"* ]] &&
-        [[ "$(uname -o)" == "Android" ]]; then
+    if [[ "$HOME" == *"com.termux"* && "$(uname -o)" == "Android" ]]; then
         is_termux="true"
     fi
 

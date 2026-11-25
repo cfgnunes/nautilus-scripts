@@ -30,7 +30,8 @@ _open_app() {
     read -r -a items <<<"$input_files"
 
     if [[ ! -d "$file_1" ]]; then
-        if [[ "$(_get_file_encoding "$file_1")" == "binary" ]] && [[ -s "$file_1" ]]; then
+        if [[ "$(_get_file_encoding "$file_1")" == "binary" &&
+            -s "$file_1" ]]; then
             if _is_qt_desktop; then
                 _check_dependencies "okteta"
                 okteta -- "${items[@]}" &

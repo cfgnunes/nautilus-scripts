@@ -36,7 +36,7 @@ _main_task() {
     # NOTE: Sometimes 'file' command returns 'us-ascii' for 'utf-8' files.
     local input_encoding=""
     input_encoding=$(_get_file_encoding "$input_file")
-    if [[ -z "$input_encoding" ]] || [[ "$input_encoding" == "binary" ]]; then
+    if [[ -z "$input_encoding" || "$input_encoding" == "binary" ]]; then
         return
     fi
     [[ "$input_encoding" == "us-ascii" ]] && input_encoding="utf-8"

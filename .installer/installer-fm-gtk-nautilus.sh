@@ -59,8 +59,8 @@ _install_accels_nautilus() {
                 local old_name="${line#* }"
 
                 # Skip lines that conflict with a new shortcut.
-                if [[ -n "${new_by_name["$old_name"]:-}" ]] ||
-                    [[ -n "${new_by_shortcut["$old_shortcut"]:-}" ]]; then
+                if [[ -n "${new_by_name["$old_name"]:-}" ||
+                    -n "${new_by_shortcut["$old_shortcut"]:-}" ]]; then
                     continue
                 fi
                 printf "%s\n" "$line"

@@ -402,7 +402,7 @@ _get_command() {
     local extension=$type_name
     while [[ "$extension" == *.* ]]; do
         extension=${extension#*.}
-        if [[ -n "$extension" ]] && [[ -n "${type_by_ext[$extension]+set}" ]]; then
+        if [[ -n "$extension" && -n "${type_by_ext[$extension]+set}" ]]; then
             archive_type=${type_by_ext[$extension]}
             break
         fi
@@ -414,7 +414,7 @@ _get_command() {
         file_mime=$(_get_file_mime "$input_file")
         file_mime=${file_mime,,}
 
-        if [[ -n "$file_mime" ]] && [[ -n "${type_by_mime[$file_mime]+set}" ]]; then
+        if [[ -n "$file_mime" && -n "${type_by_mime[$file_mime]+set}" ]]; then
             archive_type=${type_by_mime[$file_mime]}
         elif [[ "$file_mime" == "application/octet-stream" ]]; then
             # For generic binary files, try further identification.
@@ -569,8 +569,8 @@ _run_command() {
         local saved_filename=""
         saved_filename=$(__sandbox "$1" -l -N "$input_file" 2>/dev/null |
             tail -n 1 | cut -d "%" -f 2- | sed "s|^ ||")
-        if [[ -n "$saved_filename" ]] &&
-            [[ "$saved_filename" != "$input_file" ]]; then
+        if [[ -n "$saved_filename" &&
+            "$saved_filename" != "$input_file" ]]; then
             filename=$(basename "$saved_filename")
         fi
     }
@@ -828,13 +828,13 @@ _run_command() {
     # -------------------------------------------------------------------------
 
     # Move the items to the correct directory.
-    if [[ "$single_root_item" == "$filename" ]] ||
-        [[ "$(_strip_filename_extension "$single_root_item")" == "$filename" ]]; then
+    if [[ "$single_root_item" == "$filename" ||
+        "$(_strip_filename_extension "$single_root_item")" == "$filename" ]]; then
         # For archives with "one item with the same name of the archive".
         # For example: 'README.txt.tar.gz' or 'README.tar.gz'.
         _move_file "rename" "$temp_dir_extract/$single_root_item" "$output_dir/$single_root_item"
-    elif [[ "$single_root_item" == "squashfs-root" ]] &&
-        [[ "$command" == "unsquashfs" ]]; then
+    elif [[ "$single_root_item" == "squashfs-root" &&
+        "$command" == "unsquashfs" ]]; then
         # For the 'squashfs' archive format.
         _move_file "rename" "$temp_dir_extract/$single_root_item" "$output_dir/$filename"
     else

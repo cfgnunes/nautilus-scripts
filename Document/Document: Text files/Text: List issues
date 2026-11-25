@@ -44,14 +44,14 @@ _main_task() {
     hex_dump=$(hexdump -v -e '/1 "%02X-" ' -- "$input_file")
 
     # Checker: 'non UTF-8 encoding'.
-    if [[ "${file_encoding,,}" != *"us-ascii"* ]] &&
-        [[ "${file_encoding,,}" != *"utf-8"* ]]; then
+    if [[ "${file_encoding,,}" != *"us-ascii"* &&
+        "${file_encoding,,}" != *"utf-8"* ]]; then
         issues+="[non UTF-8 encoding]"
     fi
 
     # Checker: 'UTF-8 with BOM'.
-    if [[ "${file_encoding,,}" == *"utf-8"* ]] &&
-        [[ "$hex_dump" == "EF-BB-BF-"* ]]; then
+    if [[ "${file_encoding,,}" == *"utf-8"* &&
+        "$hex_dump" == "EF-BB-BF-"* ]]; then
         issues+="[UTF-8 with BOM]"
     fi
 
@@ -61,29 +61,24 @@ _main_task() {
     fi
 
     # Checker: 'trailing whitespace'.
-    if [[ "$hex_dump" == *"20-0A-"* ]] ||
-        [[ "$hex_dump" == *"20-0D-"* ]] ||
-        [[ "$hex_dump" == *"09-0A-"* ]] ||
-        [[ "$hex_dump" == *"09-0D-"* ]]; then
+    if [[ "$hex_dump" == *"20-0A-"* || "$hex_dump" == *"20-0D-"* ||
+        "$hex_dump" == *"09-0A-"* || "$hex_dump" == *"09-0D-"* ]]; then
         issues+="[trailing whitespace]"
     fi
 
     # Checker: 'mix tabs and spaces' (same line).
-    if [[ "$hex_dump" == *"20-09-"* ]] ||
-        [[ "$hex_dump" == *"09-20-"* ]]; then
+    if [[ "$hex_dump" == *"20-09-"* || "$hex_dump" == *"09-20-"* ]]; then
         issues+="[mix tabs and spaces]"
     fi
 
     # Checker: 'mix tabs and spaces' (different lines).
     if [[ "$issues" != *"mix tabs and spaces"* ]]; then
-        if [[ "$hex_dump" == *"0D-20-"* ]] &&
-            [[ "$hex_dump" == *"0D-09-"* ]]; then
+        if [[ "$hex_dump" == *"0D-20-"* && "$hex_dump" == *"0D-09-"* ]]; then
             issues+="[mix tabs and spaces]"
         fi
     fi
     if [[ "$issues" != *"mix tabs and spaces"* ]]; then
-        if [[ "$hex_dump" == *"0A-20-"* ]] &&
-            [[ "$hex_dump" == *"0A-09-"* ]]; then
+        if [[ "$hex_dump" == *"0A-20-"* && "$hex_dump" == *"0A-09-"* ]]; then
             issues+="[mix tabs and spaces]"
         fi
     fi
@@ -91,12 +86,11 @@ _main_task() {
     local eof=${hex_dump: -9}
 
     # Checker: 'missing line at the end'.
-    if [[ "$eof" != *"0A-" ]] && [[ "$eof" != *"0D-" ]]; then
+    if [[ "$eof" != *"0A-" && "$eof" != *"0D-" ]]; then
         issues+="[missing line at the end]"
     else
-        if [[ "$eof" == *"0D-0D-" ]] ||
-            [[ "$eof" == *"0A-0A-" ]] ||
-            [[ "$eof" == "0A-0D-0A-" ]]; then
+        if [[ "$eof" == *"0D-0D-" || "$eof" == *"0A-0A-" ||
+            "$eof" == "0A-0D-0A-" ]]; then
             # Checker: 'has many line breaks at the end'.
             issues+="[extra lines at the end]"
         fi

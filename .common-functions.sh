@@ -231,7 +231,7 @@ _check_output() {
     fi
 
     # Check if the output file exists.
-    if [[ -n "$output_file" ]] && [[ ! -e "$output_file" ]]; then
+    if [[ -n "$output_file" && ! -e "$output_file" ]]; then
         msg="$(_i18n 'The output file does not exist.')"
         _log_error "$msg" "$input_file" "$std_output" "$output_file"
         return 1
@@ -588,7 +588,7 @@ _run_in_sandbox() {
     # Writable paths. These binds must come after the hidden directories,
     # because '$TEMP_DIR' can be inside '/tmp'.
     sandbox_args+=(--bind "$TEMP_DIR" "$TEMP_DIR")
-    if [[ -n "$output_dir" ]] && [[ -d "$output_dir" ]]; then
+    if [[ -n "$output_dir" && -d "$output_dir" ]]; then
         # NOTE: 'bwrap' requires absolute paths for '--bind'.
         if [[ $output_dir != "/"* ]]; then
             output_dir=$(readlink -f "$output_dir")
@@ -603,7 +603,7 @@ _run_in_sandbox() {
         # NOTE: 'pdfannots' and 'ocrmypdf', when used via 'pkgx',
         # need access to the local package cache.
         if [[ "$PKGX_AVAILABLE" == "true" ]]; then
-            if [[ "$cmd" == "pdfannots" ]] || [[ "$cmd" == "ocrmypdf" ]]; then
+            if [[ "$cmd" == "pdfannots" || "$cmd" == "ocrmypdf" ]]; then
                 sandbox_args+=(--bind-try "$HOME/.pkgx" "$HOME/.pkgx")
             fi
         fi
@@ -739,8 +739,8 @@ _check_dependencies() {
 
         for pkg_manager in "${PKG_MANAGER_PRIORITY[@]}"; do
             # Skip this package manager if it is not installed.
-            if [[ "$pkg_manager" != "precompiled" ]] &&
-                [[ "$pkg_manager" != "pkgx" ]]; then
+            if [[ "$pkg_manager" != "precompiled" &&
+                "$pkg_manager" != "pkgx" ]]; then
                 if ! _command_exists "$pkg_manager"; then
                     continue
                 fi
@@ -909,16 +909,16 @@ _deps_get_dependency_value() {
         # ecosystem and may share paths with 'proot-distro'. Check if it's a
         # real Termux session by checking that the '$subkey' is "termux",
         # '$HOME' contains "com.termux", and the system is "Android".
-        if [[ "$subkey" == "termux" ]] &&
-            [[ "$pkg_manager" == "apt-get" ]] &&
-            [[ "$HOME" == *"com.termux"* ]] &&
-            [[ "$(uname -o)" == "Android" ]]; then
+        if [[ "$subkey" == "termux" &&
+            "$pkg_manager" == "apt-get" &&
+            "$HOME" == *"com.termux"* &&
+            "$(uname -o)" == "Android" ]]; then
             printf "%s" "$value"
             return 0
         fi
 
         # If the package manager matches, print and exit successfully.
-        if [[ "$subkey" == "$pkg_manager" ]] || [[ "$subkey" == "*" ]]; then
+        if [[ "$subkey" == "$pkg_manager" || "$subkey" == "*" ]]; then
             printf "%s" "$value"
             return 0
         fi
@@ -1291,7 +1291,7 @@ _download_file() {
     local output_file=$2
     local -a cmd_array=()
 
-    if [[ -z "$url" ]] || [[ -z "$output_file" ]]; then
+    if [[ -z "$url" || -z "$output_file" ]]; then
         return 1
     fi
 
@@ -1374,7 +1374,7 @@ _url_grep() {
     local regex=$2
     local -a cmd_array=()
 
-    if [[ -z "$url" ]] || [[ -z "$regex" ]]; then
+    if [[ -z "$url" || -z "$regex" ]]; then
         return 1
     fi
 
@@ -1408,8 +1408,7 @@ _tarball_install_url() {
     local tarball_url=$3
     local tarball_file=""
 
-    if [[ -z "$base_dir" ]] || [[ -z "$output_dir" ]] ||
-        [[ -z "$tarball_url" ]]; then
+    if [[ -z "$base_dir" || -z "$output_dir" || -z "$tarball_url" ]]; then
         return 1
     fi
 
@@ -1631,7 +1630,7 @@ _find_filtered_files() {
     "directory") find_command+=" \( -type l -o -type d \)" ;;
     esac
 
-    if [[ -n "$par_select_extension" ]] || [[ -n "$par_skip_extension" ]]; then
+    if [[ -n "$par_select_extension" || -n "$par_skip_extension" ]]; then
         find_command+=" -regextype posix-extended "
         if [[ -n "$par_select_extension" ]]; then
             find_command+=" -iregex \".*\.($par_select_extension)$\""
@@ -1755,8 +1754,7 @@ _get_filename_next_suffix() {
         # The 'mkdir' succeeds only if the directory does NOT already exist.
         # This operation is atomic: only one process can succeed here.
         if mkdir "$filename_lock" 2>/dev/null &&
-            [[ ! -e "$filename_result" ]] &&
-            [[ ! -L "$filename_result" ]]; then
+            [[ ! -e "$filename_result" && ! -L "$filename_result" ]]; then
 
             # Return the chosen filename and exit.
             printf "%s" "$filename_result"
@@ -1851,7 +1849,7 @@ _move_file() {
     local file_dst=$3
 
     # Ensure both source and destination are provided.
-    if [[ -z "$file_src" ]] || [[ -z "$file_dst" ]]; then
+    if [[ -z "$file_src" || -z "$file_dst" ]]; then
         return 1
     fi
 
@@ -1861,12 +1859,12 @@ _move_file() {
     fi
 
     # Add the './' prefix in the path.
-    if [[ ! "$file_src" == "/"* ]] &&
-        [[ ! "$file_src" == "./"* ]] && [[ ! "$file_src" == "." ]]; then
+    if [[ ! "$file_src" == "/"* && ! "$file_src" == "./"* &&
+        ! "$file_src" == "." ]]; then
         file_src="./$file_src"
     fi
-    if [[ ! "$file_dst" == "/"* ]] &&
-        [[ ! "$file_dst" == "./"* ]] && [[ ! "$file_dst" == "." ]]; then
+    if [[ ! "$file_dst" == "/"* && ! "$file_dst" == "./"* &&
+        ! "$file_dst" == "." ]]; then
         file_dst="./$file_dst"
     fi
 
@@ -1883,8 +1881,8 @@ _move_file() {
         local file_dst_id=""
         file_src_id=$(stat -c "%d:%i" -- "$file_src" 2>/dev/null)
         file_dst_id=$(stat -c "%d:%i" -- "$file_dst" 2>/dev/null)
-        if [[ "$file_src_id" == "$file_dst_id" ]] &&
-            [[ -z "$(find "$(dirname -- "$file_dst")" -maxdepth 1 \
+        if [[ "$file_src_id" == "$file_dst_id" &&
+            -z "$(find "$(dirname -- "$file_dst")" -maxdepth 1 \
                 -name "$(basename -- "$file_dst")" \
                 -print -quit 2>/dev/null)" ]]; then
             local temp_file=""
@@ -1949,8 +1947,7 @@ _move_file() {
         ;;
     esac
 
-    if [[ "$par_when_conflict" != "safe_overwrite" ]] &&
-        [[ -e "$file_src" ]]; then
+    if [[ "$par_when_conflict" != "safe_overwrite" && -e "$file_src" ]]; then
         local msg=""
         if [[ -e "$file_dst" ]]; then
             msg="$(_i18n 'The destination file already exists.')"
@@ -2903,8 +2900,8 @@ _display_wait_box_message() {
 
             # Check if the 'wait box' should open. The request must still be
             # active and not replaced by a newer one.
-            [[ -f "$TEMP_CONTROL_WAIT_BOX_DELAY" ]] &&
-                [[ "$(<"$TEMP_CONTROL_WAIT_BOX_DELAY")" == "$id_wait" ]] ||
+            [[ -f "$TEMP_CONTROL_WAIT_BOX_DELAY" &&
+                "$(<"$TEMP_CONTROL_WAIT_BOX_DELAY")" == "$id_wait" ]] ||
                 return 0
 
             _display_lock
@@ -3037,7 +3034,7 @@ _display_gdbus_notify() {
 _add_path_env() {
     local path=$1
 
-    if [[ -d "$path" ]] && [[ ":$PATH:" != *":$path:"* ]]; then
+    if [[ -d "$path" && ":$PATH:" != *":$path:"* ]]; then
         export PATH="$path:$PATH"
         return 0
     fi
@@ -3168,7 +3165,7 @@ _is_file_manager_session() {
 #   0 (true): If is a GUI session.
 #   1 (false): If is not a GUI session.
 _is_gui_session() {
-    if [[ -n "${DISPLAY:-}" ]] || [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
+    if [[ -n "${DISPLAY:-}" || -n "${WAYLAND_DISPLAY:-}" ]]; then
         return 0
     fi
     return 1
@@ -3494,7 +3491,7 @@ _get_files() {
 
     local find_parameters=""
     if (($(_get_items_count "$input_files") == 1)) &&
-        [[ -d "$input_files" ]] && [[ "$par_recursive" == "false" ]] &&
+        [[ -d "$input_files" && "$par_recursive" == "false" ]] &&
         basename -- "$input_files" |
         grep --quiet --ignore-case --word-regexp "batch"; then
 
@@ -3532,13 +3529,13 @@ _get_files() {
     # with Terminal' where a file is selected, but the intention is to open the
     # working directory.
     if (($(_get_items_count "$input_files") == 0)) &&
-        [[ "$par_type" == "directory" ]] && [[ -n "$par_max_items" ]]; then
+        [[ "$par_type" == "directory" && -n "$par_max_items" ]]; then
         # Return the current working directory if no files have been selected.
         input_files=$(_get_working_directory)
     fi
 
     # Validates the mime or encoding of the file.
-    if [[ -n "$par_select_mime" ]] || [[ -n "$par_skip_encoding" ]]; then
+    if [[ -n "$par_select_mime" || -n "$par_skip_encoding" ]]; then
         input_files=$(_validate_file_mime_parallel \
             "$input_files" \
             "$par_select_mime" \
@@ -3758,7 +3755,7 @@ _validate_files_count() {
             msg="$(_i18n 'You must select files with the extension:')"
             _display_error_box "$msg $extension_label!"
         else
-            if [[ -n "$par_select_mime" ]] || [[ -z "$par_type" ]]; then
+            if [[ -n "$par_select_mime" || -z "$par_type" ]]; then
                 msg="$(_i18n 'Invalid input file!')"
                 _display_error_box "$msg"
             else
@@ -3830,8 +3827,8 @@ _get_output_dir() {
         _exit_script
     fi
 
-    if [[ "$par_use_same_dir" == "true" ]] &&
-        [[ ! -f "$TEMP_CONTROL_BATCH_ENABLED" ]]; then
+    if [[ "$par_use_same_dir" == "true" &&
+        ! -f "$TEMP_CONTROL_BATCH_ENABLED" ]]; then
         printf "%s" "$output_dir"
         return
     fi
@@ -3967,18 +3964,18 @@ _open_items_locations() {
     local item=""
     for item in "${items_array[@]}"; do
         # Restore the absolute path if a relative path is used.
-        if [[ -n "$working_dir" ]] && [[ -n "$item" && "$item" != /* ]]; then
+        if [[ -n "$working_dir" && -n "$item" && "$item" != /* ]]; then
             item="$working_dir/${item#./}"
         fi
 
         # Resolve symbolic links to their target locations if requested.
-        if [[ "$par_resolve_links" == "true" ]] && [[ -L "$item" ]]; then
+        if [[ "$par_resolve_links" == "true" && -L "$item" ]]; then
             item=$(readlink -f -- "$item")
         fi
 
         # Skip empty items and the root directory ("/"),
         # since opening it is redundant.
-        if [[ -z "$item" ]] || [[ "$item" == "/" ]]; then
+        if [[ -z "$item" || "$item" == "/" ]]; then
             continue
         fi
 
@@ -4141,7 +4138,7 @@ _storage_text_write() {
     local input_text=$1
     local temp_file=""
 
-    if [[ -z "$input_text" ]] || [[ "$input_text" == $'\n' ]]; then
+    if [[ -z "$input_text" || "$input_text" == $'\n' ]]; then
         return
     fi
 
@@ -4322,7 +4319,7 @@ _text_remove_pwd() {
     local working_dir=""
     working_dir=$(_get_working_directory)
 
-    if [[ -n "$working_dir" ]] && [[ "$working_dir" != "/" ]]; then
+    if [[ -n "$working_dir" && "$working_dir" != "/" ]]; then
         # Escape special characters and the '/' delimiter so the
         # directory is matched literally.
         local pattern=""
@@ -4520,7 +4517,7 @@ _i18n_load_file() {
             ;;
         "")
             # End of entry: store in array.
-            if [[ -n "$key" ]] && [[ -n "$val" ]]; then
+            if [[ -n "$key" && -n "$val" ]]; then
                 I18N_DATA["$key"]="$val"
                 key=""
                 val=""
@@ -4544,8 +4541,8 @@ _i18n() {
 
     # Index '$I18N_DATA' only when this process declared the array.
     # Without 'declare -A', Bash evaluates the subscript as arithmetic.
-    if [[ -n "${I18N_READY:-}" ]] && [[ -n "$msgid" ]] &&
-        [[ -n "${I18N_DATA[$msgid]:-}" ]]; then
+    if [[ -n "${I18N_READY:-}" && -n "$msgid" &&
+        -n "${I18N_DATA[$msgid]:-}" ]]; then
         printf "%s" "${I18N_DATA[$msgid]}"
     else
         printf "%s" "$msgid"
