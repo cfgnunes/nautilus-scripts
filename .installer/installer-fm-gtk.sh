@@ -9,7 +9,7 @@ _create_links() {
     local destination_dir=$1${INSTALL_SUBCATEGORY:+/$INSTALL_SUBCATEGORY}
 
     mkdir --parents -- "$destination_dir"
-    ln -sf -- "$INSTALL_DIR/.po" "$destination_dir/.po"
+    ln -sfn -- "$INSTALL_DIR/.po" "$destination_dir/.po"
 
     local dir=""
     local name=""
