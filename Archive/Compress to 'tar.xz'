@@ -29,9 +29,6 @@ _main_task() {
     local std_output=""
     local -a items=()
 
-    # Use the maximum compression.
-    export XZ_OPT="-9"
-
     output_file=$(_get_output_filename "$input_file" "$output_dir" \
         "par_extension_opt=replace; par_extension=tar.xz")
 
@@ -55,7 +52,7 @@ _main_task() {
 
     # Run the main process.
     std_output=$(_run_in_sandbox "$output_dir" "false" \
-        tar -cJf "$output_file" -- "${items[@]}" 2>&1)
+        env XZ_OPT=-9 tar -cJf "$output_file" -- "${items[@]}" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     _directory_pop || return 1
