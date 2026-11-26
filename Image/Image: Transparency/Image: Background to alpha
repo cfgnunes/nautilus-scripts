@@ -31,7 +31,7 @@ _main_task() {
     # Run the main process.
     local first_pixel_color=""
     first_pixel_color=$(_cmd_magick_in_sandbox "$output_dir" convert \
-        "$input_file""[1x1+0+0]" \
+        "$input_file""[0]" \
         -format "%[pixel:p{0,0}]" \
         "info:" 2>&1)
     _check_output "$?" "$first_pixel_color" "$input_file" "" || return 1
