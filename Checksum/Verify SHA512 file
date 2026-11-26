@@ -20,7 +20,7 @@ _main() {
 
     # Read the lines of the checksum file, ignoring CRLF, empty lines and comments.
     local lines=""
-    lines=$(tr -d '\r' <"$input_files" | grep -v -e '^[[:space:]]*$' -e '^[[:space:]]*#' || true)
+    lines=$(sed -e 's/\r$//' -e '/^[[:space:]]*\(#\|$\)/d' -- "$input_files")
 
     # Resolve relative paths against the directory of the checksum file.
     cd -- "$(dirname -- "$input_files")" || return 1
