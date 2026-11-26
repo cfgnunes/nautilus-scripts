@@ -97,15 +97,21 @@ _extract_git_urls() {
 
 _prepare_input() {
     local input_files=$1
-    local file_data=""
+    local data=""
     local urls=""
 
     # Split the list into an array.
     local -a items=()
     read -r -a items <<<"$input_files"
 
-    file_data=$(cat -- "${items[@]}" 2>/dev/null)
-    urls=$(_extract_git_urls "$file_data")
+    data=$(grep \
+        --binary-files=without-match \
+        --directories=skip \
+        --devices=skip \
+        --no-messages \
+        --no-filename \
+        "" -- "${items[@]}")
+    urls=$(_extract_git_urls "$data")
 
     # If there are no valid URLs in the files,
     # get the URLs from the clipboard.
