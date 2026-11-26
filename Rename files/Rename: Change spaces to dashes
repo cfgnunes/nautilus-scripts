@@ -25,12 +25,33 @@ _main_task() {
     local output_file=""
     local dir=""
     local filename=""
+    local filename_base=""
+    local filename_extension=""
 
     dir=$(dirname -- "$input_file")
     filename=$(basename -- "$input_file")
 
-    # Gaps by dashes.
-    output_file=$(tr -s -- "_ \t" "-" <<<"$filename")
+    # Directories do not have an extension.
+    if [[ -d "$input_file" ]]; then
+        filename_base=$filename
+        filename_extension=""
+    else
+        filename_base=$(_strip_filename_extension "$filename")
+        filename_extension=$(_get_filename_extension "$filename")
+    fi
+
+    # Gaps by dashes (only in the base name, never in the extension).
+    output_file=$(tr -s -- "_ \t" "-" <<<"$filename_base")
+
+    # Trim the separator from both ends of the base name.
+    output_file=${output_file#"${output_file%%[!-]*}"}
+    output_file=${output_file%"${output_file##*[!-]}"}
+
+    # Keep the original base name if nothing is left.
+    if [[ -z "$output_file" ]]; then
+        output_file=$filename_base
+    fi
+    output_file+=$filename_extension
 
     # Run the main process.
     _move_file "skip" "$input_file" "$dir/$output_file" || return 1
