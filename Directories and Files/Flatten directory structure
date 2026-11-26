@@ -41,10 +41,13 @@ _flatten_directory() {
     # Create an 'undo script' to reverse the flattening operation.
     undo_script=$(_make_undo_script "$directory")
 
-    _directory_push "$directory" || return 1
+    if ! _directory_push "$directory"; then
+        rm -f -- "$temp_file"
+        return 1
+    fi
 
     # Generate a list of all files (not directories) in the current directory and its subdirectories.
-    find . -mindepth 2 -not -type d 2>/dev/null >>"$temp_file"
+    find . -mindepth 2 -not -type d -print0 2>/dev/null >>"$temp_file"
 
     # For each directory, add a command to the 'undo script' to recreate the directory structure.
     local dir_path=""
@@ -54,7 +57,7 @@ _flatten_directory() {
 
     # Loop through each file in the list and move it to the root directory.
     local full_path_filename=""
-    while read -r full_path_filename; do
+    while IFS= read -r -d "" full_path_filename; do
         # Get the file's name (basename) for moving it to the root directory.
         filename="./$(basename -- "$full_path_filename")"
 
@@ -72,10 +75,13 @@ _flatten_directory() {
     # Remove any empty directories that remain after moving the files.
     find . -type d -empty -delete 2>/dev/null
 
-    _directory_pop || return 1
+    local pop_status=0
+    _directory_pop || pop_status=1
 
     # Remove the temporary files.
     rm -f -- "$temp_file"
+
+    return "$pop_status"
 }
 
 _make_undo_script() {
@@ -89,18 +95,17 @@ _make_undo_script() {
     # Create the undo script with a header and usage instructions.
     {
         printf "%s\n" "#!/usr/bin/env bash"
-        printf "\n"
-        printf "%s\n" "# This script is automatically generated to reverse the directory flattening"
-        printf "%s\n" "# process. It restores the original directory structure and moves files back to"
-        printf "%s\n" "# their respective subdirectories."
+        printf "%s\n" "# ============================================================================="
+        printf "%s\n" "# Description: This script is automatically generated to reverse the directory"
+        printf "%s\n" "# flattening process. It restores the original directory structure and moves"
+        printf "%s\n" "# files back to their respective subdirectories."
         printf "%s\n" "#"
-        printf "%s\n" "# Usage: Run this script in the root of the directory where the flattening was"
-        printf "%s\n" "# performed."
-        printf "%s\n" "#"
-        printf "%s\n" "# Example: bash $undo_script_name"
+        printf "%s\n" "# Usage:"
+        printf "%s\n" "#   bash $undo_script_name"
         printf "%s\n" "#"
         printf "%s\n" "# Note: This script assumes no additional changes were made to the directory"
         printf "%s\n" "# structure after the flattening operation."
+        printf "%s\n" "# ============================================================================="
         printf "\n"
     } >"$output_file"
 
