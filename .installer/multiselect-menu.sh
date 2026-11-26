@@ -103,12 +103,6 @@ _multiselect_menu() {
             fi
         done
     }
-    __set_all_option() {
-        local i=""
-        for i in "${!option[@]}"; do
-            option[i]=$1
-        done
-    }
 
     # Save the original terminal state to restore later.
     local old_stty=""
@@ -171,9 +165,9 @@ _multiselect_menu() {
             ;;
         "toggle_all")
             if [[ ${option[i]} == "true" ]]; then
-                __set_all_option "false"
+                option=("${option[@]/*/false}")
             else
-                __set_all_option "true"
+                option=("${option[@]/*/true}")
             fi
             ;;
         "quit") __abort 1 ;;
