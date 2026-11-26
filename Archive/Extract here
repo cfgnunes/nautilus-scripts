@@ -571,7 +571,7 @@ _run_command() {
             tail -n 1 | cut -d "%" -f 2- | sed "s|^ ||")
         if [[ -n "$saved_filename" &&
             "$saved_filename" != "$input_file" ]]; then
-            filename=$(basename "$saved_filename")
+            filename=$(basename -- "$saved_filename")
         fi
     }
     __temp_dir_push() {
@@ -648,7 +648,7 @@ _run_command() {
         if [[ "$command" == "gzip" || "$command" == "lzop" ]]; then
             __get_saved_filename "$command"
         fi
-        __sandbox "$command" -d -c -- "$input_file" >"$filename" 2>/dev/null
+        std_output=$(__sandbox "$command" -d -c -- "$input_file" 2>&1 >"$filename")
         exit_code=$?
         ;;
     "cabextract")
@@ -770,6 +770,11 @@ _run_command() {
         if ((exit_code != 0)); then
             std_output="Could not recognize the archive format."
         fi
+        ;;
+    *)
+        _log_error "No extraction command available for this archive type." "$input_file" "" ""
+        __temp_dir_pop && __temp_dir_remove
+        return 1
         ;;
     esac
 
