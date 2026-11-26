@@ -105,25 +105,26 @@ _reset_permissions() {
     )
 
     # -------------------------------------------------------------------------
-    # Step 1: Sensitive directories first (700).
+    # Step 1: Directories (0777 & ~umask).
+    # -------------------------------------------------------------------------
+    new_permission=$(printf "%04o" "$((0777 & ~$(umask)))")
+    find_args=("${items[@]}" ! -regex "$IGNORE_FIND")
+    for pattern in "${sensitive_dirs[@]}"; do
+        find_args+=(! -path "*/$pattern/*" ! -name "$pattern")
+    done
+    find_args+=(-type d -exec chmod "$new_permission" -- {} \;)
+    std_output=$(find "${find_args[@]}" 2>&1)
+    _check_output "$?" "$std_output" "" ""
+
+    # -------------------------------------------------------------------------
+    # Step 2: Sensitive directories (700).
     # -------------------------------------------------------------------------
     new_permission=700
     for dir_pattern in "${sensitive_dirs[@]}"; do
         find "${items[@]}" \
             ! -regex "$IGNORE_FIND" \
             -type d -name "$dir_pattern" \
-            -exec chmod "$new_permission" -- {} +
-    done
-
-    # -------------------------------------------------------------------------
-    # Step 2: Files inside sensitive directories (600).
-    # -------------------------------------------------------------------------
-    new_permission=600
-    for dir_pattern in "${sensitive_dirs[@]}"; do
-        find "${items[@]}" \
-            ! -regex "$IGNORE_FIND" \
-            -type f -path "*/$dir_pattern/*" \
-            -exec chmod "$new_permission" -- {} +
+            -exec chmod "$new_permission" -- {} \;
     done
 
     # -------------------------------------------------------------------------
@@ -134,20 +135,19 @@ _reset_permissions() {
         find "${items[@]}" \
             ! -regex "$IGNORE_FIND" \
             -type d -path "*/$dir_pattern/*" \
-            -exec chmod "$new_permission" -- {} +
+            -exec chmod "$new_permission" -- {} \;
     done
 
     # -------------------------------------------------------------------------
-    # Step 4: Other directories (0777 & ~umask).
+    # Step 4: Files inside sensitive directories (600).
     # -------------------------------------------------------------------------
-    new_permission=$(printf "%04o" "$((0777 & ~$(umask)))")
-    find_args=("${items[@]}" ! -regex "$IGNORE_FIND")
-    for pattern in "${sensitive_dirs[@]}"; do
-        find_args+=(! -path "*/$pattern/*" ! -name "$pattern")
+    new_permission=600
+    for dir_pattern in "${sensitive_dirs[@]}"; do
+        find "${items[@]}" \
+            ! -regex "$IGNORE_FIND" \
+            -type f -path "*/$dir_pattern/*" \
+            -exec chmod "$new_permission" -- {} +
     done
-    find_args+=(-type d -exec chmod "$new_permission" -- {} +)
-    std_output=$(find "${find_args[@]}" 2>&1)
-    _check_output "$?" "$std_output" "" ""
 
     # -------------------------------------------------------------------------
     # Step 5: Sensitive files (600).
