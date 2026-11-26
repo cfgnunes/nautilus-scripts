@@ -30,17 +30,23 @@ _main_task() {
     local filename_extension=""
     dir=$(dirname -- "$input_file")
     filename=$(basename -- "$input_file")
-    filename_extension=$(_get_filename_extension "$input_file")
     output_file=$filename
+
+    # Directories do not have an extension.
+    if [[ -d "$input_file" ]]; then
+        filename_extension=""
+    else
+        filename_extension=$(_get_filename_extension "$input_file")
+    fi
 
     # Transform similar ' characters.
     output_file=$(sed "s|"$'\u0060'"|'|g" <<<"$output_file") # Grave accent.
-    output_file=$(sed "s|"$'\u00b4'"|'|g" <<<"$output_file") # Acute accent.
-    output_file=$(sed "s|"$'\u2018'"|'|g" <<<"$output_file") # Left single quotation.
-    output_file=$(sed "s|"$'\u2019'"|'|g" <<<"$output_file") # Right single quotation.
+    output_file=$(sed "s|"$'\xc2\xb4'"|'|g" <<<"$output_file") # Acute accent.
+    output_file=$(sed "s|"$'\xe2\x80\x98'"|'|g" <<<"$output_file") # Left single quotation.
+    output_file=$(sed "s|"$'\xe2\x80\x99'"|'|g" <<<"$output_file") # Right single quotation.
 
     # Transform similar - characters.
-    output_file=$(sed "s|"$'\u2010'"|-|g" <<<"$output_file")
+    output_file=$(sed "s|"$'\xe2\x80\x90'"|-|g" <<<"$output_file")
 
     # Transform to title case.
     output_file=$(sed "s|\(\w\)\(\w*\)|\U\1\L\2|g" <<<"$output_file")
@@ -188,7 +194,9 @@ _main_task() {
     output_file=$(sed "s| \([A-Za-z]\.\)| \U\1|gI" <<<"$output_file")
 
     # Strip the extension.
-    output_file=$(_strip_filename_extension "$output_file")
+    if [[ -n "$filename_extension" ]]; then
+        output_file=$(_strip_filename_extension "$output_file")
+    fi
 
     # Capitalize the last word (standard title case), including before ' ('.
     output_file=$(sed -E "s|\b(\w)(\w*) \(|\u\1\2 (|" <<<"$output_file")
