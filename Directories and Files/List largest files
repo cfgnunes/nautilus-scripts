@@ -23,10 +23,11 @@ _main() {
     # Run the main process.
     std_output=$(find "${items[@]}" \
         ! -regex "$IGNORE_FIND" \
-        -type f -printf "%s$FIELD_SEPARATOR%p\n" 2>/dev/null |
-        sort -n -r |
-        head -n "$max_item_list" |
-        numfmt --to=iec --suffix=B --delimiter="$FIELD_SEPARATOR" --field=1)
+        -type f -printf "%s$FIELD_SEPARATOR%p\0" 2>/dev/null |
+        sort -z -n -r |
+        head -z -n "$max_item_list" |
+        numfmt -z --to=iec --suffix=B --delimiter="$FIELD_SEPARATOR" --field=1 |
+        tr '\n\0' ' \n')
 
     std_output=$(_text_remove_pwd "$std_output")
 
