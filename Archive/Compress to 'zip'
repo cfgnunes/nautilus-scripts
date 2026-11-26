@@ -73,6 +73,9 @@ _main_task() {
     elif _command_exists "bsdtar"; then
         std_output=$(_run_in_sandbox "$output_dir" "false" \
             bsdtar "${bsdtar_opts[@]}" -a -c -f "$output_file" -- "$item" 2>&1)
+    else
+        _log_error "No compatible command found." "$input_file" "" "$output_file"
+        return 1
     fi
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
