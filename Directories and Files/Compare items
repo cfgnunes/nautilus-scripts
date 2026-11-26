@@ -139,8 +139,10 @@ _compare_hexa() {
     local file_2_hex=""
     file_1_hex="$TEMP_DIR_TASK/1_$(basename -- "$file_1")"
     file_2_hex="$TEMP_DIR_TASK/2_$(basename -- "$file_2")"
-    _run_in_sandbox "" "false" xxd -c "$cols" "$file_1" "$file_1_hex"
-    _run_in_sandbox "" "false" xxd -c "$cols" "$file_2" "$file_2_hex"
+    if ! _run_in_sandbox "" "false" xxd -c "$cols" "$file_1" "$file_1_hex" ||
+        ! _run_in_sandbox "" "false" xxd -c "$cols" "$file_2" "$file_2_hex"; then
+        return 1
+    fi
 
     # Remove the address column from the hex dumps for cleaner comparison.
     sed -i "s|^[^:]*: ||g" "$file_1_hex"
@@ -156,8 +158,10 @@ _compare_hexa() {
     # Save the files after possible modifications.
     local file_1_modified="$file_1_hex.bin"
     local file_2_modified="$file_2_hex.bin"
-    _run_in_sandbox "" "false" xxd -revert -p "$file_1_hex" "$file_1_modified"
-    _run_in_sandbox "" "false" xxd -revert -p "$file_2_hex" "$file_2_modified"
+    if ! _run_in_sandbox "" "false" xxd -revert -p "$file_1_hex" "$file_1_modified" ||
+        ! _run_in_sandbox "" "false" xxd -revert -p "$file_2_hex" "$file_2_modified"; then
+        return 1
+    fi
 
     # Move the modified files to their original locations, replacing the
     # originals.
@@ -187,7 +191,7 @@ _compare_identical() {
     local diff_1_3=""
 
     # Compare the first and second items. Use 'diff' to check for differences.
-    diff_1_2=$(diff --brief --recursive -- "$file_1" "$file_2" 2>&1)
+    diff_1_2=$(diff --brief --recursive --no-dereference -- "$file_1" "$file_2" 2>&1)
 
     # If a third item is not provided, check if 'file_1' and 'file_2' are
     # identical.
@@ -199,7 +203,7 @@ _compare_identical() {
         fi
     else
         # If a third item is provided, compare it with the first item.
-        diff_1_3=$(diff --brief --recursive -- "$file_1" "$file_3" 2>&1)
+        diff_1_3=$(diff --brief --recursive --no-dereference -- "$file_1" "$file_3" 2>&1)
 
         # Check if all three items are identical.
         if [[ -z "$diff_1_2" && -z "$diff_1_3" ]]; then
@@ -257,13 +261,19 @@ _compare_images() {
             '(' "$file_1" -flatten -grayscale Rec709Luminance ')' \
             '(' "$file_2" -flatten -grayscale Rec709Luminance ')' \
             '(' -clone 0-1 -compose darken -composite ')' \
-            -channel RGB -combine "$temp_file"
+            -channel RGB -combine "$temp_file" || return 1
     else
         # If dimensions differ, generate a visual diff highlighting
         # differences.
         _cmd_magick_in_sandbox "" \
             compare -- "$file_1" "$file_2" -compose src "$temp_file"
+        # 'compare' returns 1 when the images differ (expected) and 2 on error.
+        (($? <= 1)) || return 1
     fi
+
+    # Ensure the visual diff was actually generated (exists and is not empty)
+    # before opening the image viewer.
+    [[ -s "$temp_file" ]] || return 1
 
     # Determine the default image viewer to display the visual diff.
     local image_viewer=""
