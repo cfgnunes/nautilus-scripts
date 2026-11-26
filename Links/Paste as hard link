@@ -46,8 +46,8 @@ _get_uris() {
     local uris=""
 
     uris=$(_get_clipboard_data)
-    uris=$(grep --only-matching --perl-regexp "^(file://|('\")?/)(.*)" <<<"$uris")
-    uris=$(sed "s|^['\"]||g; s|['\"]$||g" <<<"$uris")
+    uris=$(grep --only-matching --perl-regexp "^(file://|['\"]?/)(.*)" <<<"$uris")
+    uris=$(sed -E "s|^'(/.*)'\$|\1|; s|^\"(/.*)\"\$|\1|" <<<"$uris")
     uris=$(sort --unique <<<"$uris")
 
     if [[ -z "$uris" ]]; then

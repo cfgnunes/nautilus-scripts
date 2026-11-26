@@ -38,14 +38,16 @@ _main_task() {
     # Run the main process.
     std_output=$(ln -s -- "$input_file" "$output_file" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+
+    _directory_pop || return 1
 }
 
 _get_uris() {
     local uris=""
 
     uris=$(_get_clipboard_data)
-    uris=$(grep --only-matching --perl-regexp "^(file://|('\")?/)(.*)" <<<"$uris")
-    uris=$(sed "s|^['\"]||g; s|['\"]$||g" <<<"$uris")
+    uris=$(grep --only-matching --perl-regexp "^(file://|['\"]?/)(.*)" <<<"$uris")
+    uris=$(sed -E "s|^'(/.*)'\$|\1|; s|^\"(/.*)\"\$|\1|" <<<"$uris")
     uris=$(sort --unique <<<"$uris")
 
     if [[ -z "$uris" ]]; then
