@@ -64,7 +64,7 @@ _main_task() {
     std_output=$(_text_remove_pwd "$std_output")
 
     # shellcheck disable=SC2001
-    std_output=$(sed "s|\([^ ]*\)\s*\(.*\)|\2$FIELD_SEPARATOR\1|g" <<<"$std_output")
+    std_output=$(sed "s|^\([^ ]*\) [ *]\(.*\)$|\2$FIELD_SEPARATOR\1|" <<<"$std_output")
 
     _storage_text_write_ln "$std_output"
 }
