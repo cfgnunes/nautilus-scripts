@@ -24,7 +24,7 @@ _open_app() {
     local input_files=$1
     local session_name="s$$"
 
-    _build_tmux_session "$session_name" "$input_files"
+    _build_tmux_session "$session_name" "$input_files" || _exit_script
     _open_terminal "$session_name"
 }
 
@@ -38,26 +38,23 @@ _build_tmux_session() {
     read -r -a items <<<"$input_files"
 
     # Create a new tmux session in detached mode, in the first directory.
-    tmux new-session -d -s "$session_name" -c "${items[0]}"
+    local first_pane=""
+    first_pane=$(tmux new-session -d -P -F "#{pane_id}" \
+        -s "$session_name" -c "${items[0]}") || return 1
 
-    # Enable synchronized panes for the session.
-    tmux setw -t "$session_name" synchronize-panes on
-
-    # Enable mouse support.
-    tmux set-option -g mouse on
-
-    # Enable keyboard shortcuts for synchronized panes (CTRL+B and '=').
-    tmux bind = setw synchronize-panes
+    # Enable synchronized panes and mouse support only for this session.
+    tmux set-option -t "$session_name" mouse on || return 1
+    tmux set-window-option -t "$session_name" synchronize-panes on || return 1
 
     # Add one pane for each remaining directory.
     local input_file=""
     for input_file in "${items[@]:1}"; do
-        tmux split-window -t "$session_name" -c "$input_file"
-        tmux select-layout -t "$session_name" tiled >/dev/null
+        tmux split-window -t "$session_name" -c "$input_file" || return 1
+        tmux select-layout -t "$session_name" tiled >/dev/null || return 1
     done
 
     # Select the first pane.
-    tmux select-pane -t "$session_name:0.0"
+    tmux select-pane -t "$first_pane" || return 1
 }
 
 # Open a terminal attached to the tmux session.
