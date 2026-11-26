@@ -42,18 +42,20 @@ _convert_git_to_web_url() {
 
     git_url=${git_url//@ssh\./@}
 
-    if [[ "$git_url" =~ ^https:// ]]; then
-        # HTTPS URL, replace `.git` if present
-        web_url="${git_url%.git}"
-    elif [[ "$git_url" =~ ^git@ ]]; then
-        # SSH URL (e.g., git@github.com:user/repo.git)
-        web_url=$(sed -E "s|^git@([^:]+):|https:\/\/\1\/|;s|\.git$||" <<<"$git_url")
-    elif [[ "$git_url" =~ ^git:// ]]; then
-        # Git protocol URL (e.g., git://github.com/user/repo.git)
-        web_url=$(sed -E "s|^git:\/\/|https:\/\/|;s|\.git$||" <<<"$git_url")
-    elif [[ "$git_url" =~ ^ssh:// ]]; then
-        # SSH URL (e.g., ssh://git@github.com/user/repo.git)
-        web_url=$(sed -E "s|^ssh:\/\/git@([^/]+)\/|https:\/\/\1\/|;s|\.git$||" <<<"$git_url")
+    # Remove trailing slashes and the '.git' suffix.
+    git_url=${git_url%/}
+    git_url=${git_url%.git}
+
+    if [[ "$git_url" =~ ^https?:// ]]; then
+        # HTTP(S) URL: remove credentials (user:token@) to avoid leaking them.
+        web_url=$(sed -E 's|^(https?://)[^/@]*@|\1|' <<<"$git_url")
+    elif [[ "$git_url" =~ ^(ssh|git):// ]]; then
+        # ssh:// or git:// URL with any user and optional SSH port
+        # (the SSH port is not the web port, so it is dropped).
+        web_url=$(sed -E 's|^(ssh\|git)://([^/@]*@)?([^/:]+)(:[0-9]*)?/|https://\3/|' <<<"$git_url")
+    elif [[ "$git_url" =~ ^[^/@]+@[^/:]+: ]]; then
+        # SCP-like SSH URL (e.g., git@github.com:user/repo.git)
+        web_url=$(sed -E 's|^[^/@]+@([^:/]+):/?|https://\1/|' <<<"$git_url")
     else
         return 1
     fi
@@ -82,7 +84,8 @@ _open_repository_website() {
         # If the input is not a directory, get its parent directory.
         if [[ ! -d "$input_file" ]]; then
             input_file=$(dirname -- "$input_file")
-        elif [[ "$input_file" == *".git" ]]; then
+        elif [[ "$input_file" == *".git" && -d "${input_file%".git"}" ]] &&
+            ! git -C "$input_file" rev-parse --git-dir &>/dev/null; then
             input_file=${input_file%".git"}
         fi
 
