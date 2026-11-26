@@ -1049,12 +1049,9 @@ _deps_install_packages() {
             if grep --quiet "ID=nixos" /etc/os-release 2>/dev/null; then
                 nix_channel="nixos"
             fi
-            local pkgs=""
-            local pkg=""
-            pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
-            for pkg in $pkgs; do
-                nix-env -iA "$nix_channel.$pkg" &>/dev/null
-            done
+            local -a nix_pkgs=()
+            IFS=" " read -r -a nix_pkgs <<<"$packages"
+            nix-env -iA "${nix_pkgs[@]/#/$nix_channel.}" &>/dev/null
             ;;
         "pacman")
             cmd_inst+="pacman -Syy;"
@@ -3215,10 +3212,9 @@ _get_max_procs() {
 #   This function unset global variables that may have been set by different
 #   file managers (Nautilus, Nemo, Caja) during script execution.
 _unset_global_variables_file_manager() {
-    local var=""
-    while IFS= read -r var; do
-        unset "$var"
-    done < <(compgen -v | grep "_SCRIPT_")
+    local -a vars=()
+    IFS=$'\n' read -r -d "" -a vars < <(compgen -v | grep "_SCRIPT_") || true
+    unset "${vars[@]}"
 }
 
 # Function: _xdg_get_default_app
