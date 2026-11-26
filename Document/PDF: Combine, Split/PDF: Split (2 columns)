@@ -49,11 +49,11 @@ _main_task() {
     done
 
     # Merge the PDF files in the temporary directory into a single output file.
-    # shellcheck disable=SC2046
+    local -a parts=()
+    IFS=$'\n' read -r -d "" -a parts < <(find "$temp_dir" -type f 2>/dev/null |
+        LC_ALL=C.UTF-8 sort --version-sort) || true
     std_output=$(_run_in_sandbox "$output_dir" "false" \
-        pdfcpu merge "$output_file" \
-        $(find "$temp_dir" -type f 2>/dev/null |
-            LC_ALL=C.UTF-8 sort --version-sort) 2>&1)
+        pdfcpu merge "$output_file" "${parts[@]}" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     # Remove the temporary directory.
