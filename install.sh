@@ -253,7 +253,7 @@ _main() {
         _bootstrap_repository "$@"
         exit $?
     fi
-    _log_system_info
+    _log_system_variables
     _i18n_initialize
 
     # Available options presented in the interactive menu.
@@ -476,23 +476,11 @@ _log() {
     printf "%s\n" "$(_print_date) $message" >>"$INSTALL_LOG_TMP"
 }
 
-_log_system_info() {
-    local sys_kernel=""
-    local sys_os=""
-    if _command_exists "lsb_release"; then
-        # shellcheck disable=SC2034
-        sys_os=$(lsb_release -ds 2>/dev/null)
-    fi
-    if _command_exists "uname"; then
-        # shellcheck disable=SC2034
-        sys_kernel=$(uname -srmo 2>/dev/null)
-    fi
+_log_system_variables() {
     _log_variable "USER"
     _log_variable "HOME"
     _log_variable "SHELL"
     _log_variable "LANG"
-    _log_variable "sys_kernel"
-    _log_variable "sys_os"
     _log_variable "XDG_CURRENT_DESKTOP"
     _log_variable "XDG_SESSION_TYPE"
 }
@@ -515,10 +503,6 @@ _tee_file_append() {
     tee --append -- "$1" >/dev/null
 }
 
-# Function: _item_create_backup
-#
-# Description:
-#   This function creates a backup of a file (append .bak) if it exists.
 _item_create_backup() {
     local item=$1
 
@@ -527,15 +511,6 @@ _item_create_backup() {
     fi
 }
 
-# Function: _replace_file
-#
-# Description:
-#   Replaces the destination file with a file that was already created. If the
-#   destination exists, a backup is created first.
-#
-# Parameters:
-#   $1 (src_file): Source file to replace the destination with.
-#   $2 (dst_file): Destination file to be replaced.
 _replace_file() {
     local src_file=$1
     local dst_file=$2
@@ -566,15 +541,6 @@ _sanitize_string() {
 # SECTION: Scripts
 # -----------------------------------------------------------------------------
 
-# Function: _install_scripts
-#
-# Description:
-#   This function installs scripts into the target directory.
-#
-# Steps:
-#   1. Replace the previous copy stored in the install directory.
-#   2. Copy common and category-specific script files.
-#   3. Set proper ownership and permissions.
 _install_scripts() {
     local -n _cat_selected=$1
     local -n _cat_dirs=$2
@@ -634,10 +600,6 @@ _check_exist_file_manager() {
     return 1
 }
 
-# Function: _install_accels
-#
-# Description:
-# Install keyboard accelerators for specific file managers.
 _install_accels() {
     local file_manager=$1
 
@@ -673,11 +635,6 @@ _install_actions() {
     esac
 }
 
-# Function: _close_file_manager
-#
-# Description:
-#   This function closes the current file manager so that it reloads its
-#   configuration.
 _close_file_manager() {
     local file_manager=$1
 
