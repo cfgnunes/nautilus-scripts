@@ -31,14 +31,9 @@ _main() {
         "$temp_file" "${items[@]}" &>/dev/null
 
     # Parse the output.
-    std_output=$(awk 'BEGIN { id = 0 }
-        # Skip any line that contains a .git directory before processing.
-        /\.git\// { next }
+    std_output=$(awk '# A first-occurrence line starts a new group.
+        /^DUPTYPE_FIRST_OCCURRENCE/ { n = 0 }
 
-        # Increment ID only for first-occurrence.
-        /^DUPTYPE_FIRST_OCCURRENCE/ { id++ }
-
-        # Process all DUPTYPE_ lines.
         /^DUPTYPE_/ {
             # Extract the file path starting from field 8.
             file = substr($0, index($0, $8))
@@ -47,7 +42,22 @@ _main() {
             while (file ~ /\/\//)
                 gsub(/\/\//, "/", file)
 
-            # Output the ID and the file path.
+            # Skip files inside a .git directory.
+            if (file ~ /\.git\//)
+                next
+
+            # Hold the first file until a second one shows up.
+            if (++n == 1) {
+                first = file
+                next
+            }
+
+            # The group has 2+ files: assign the ID and print the held file.
+            if (n == 2) {
+                id++
+                print id "\r" first
+            }
+
             print id "\r" file
         }' <"$temp_file")
     rm -f -- "$temp_file"
