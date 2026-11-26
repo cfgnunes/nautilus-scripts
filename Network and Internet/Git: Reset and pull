@@ -82,7 +82,7 @@ _main_task() {
     # Step 3: Fetch from all remotes, including tags.
     # Prune stale remote-tracking branches and tags.
     # -------------------------------------------------------------------------
-    std_output=$(LC_ALL=C.UTF-8 git fetch --all --tags --prune --prune-tags --force 2>&1)
+    std_output=$(LC_ALL=C.UTF-8 GIT_TERMINAL_PROMPT=0 git fetch --all --tags --prune --prune-tags --force 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 
     # -------------------------------------------------------------------------
@@ -97,7 +97,7 @@ _main_task() {
 
     default_branch=$(LC_ALL=C.UTF-8 git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's|^origin/||')
     if [[ -z "$default_branch" ]]; then
-        default_branch=$(LC_ALL=C.UTF-8 git remote show origin | grep "HEAD branch" | sed "s|.*: ||")
+        default_branch=$(LC_ALL=C.UTF-8 GIT_TERMINAL_PROMPT=0 git remote show origin 2>/dev/null | grep "HEAD branch" | sed "s|.*: ||")
     fi
 
     branch=$(LC_ALL=C.UTF-8 git symbolic-ref --short HEAD 2>/dev/null || echo "")
@@ -147,7 +147,7 @@ _main_task() {
 
     remote_branches=$(LC_ALL=C.UTF-8 git branch -r --format="%(refname:short)" | sed 's|^origin/||')
     local_branches=$(LC_ALL=C.UTF-8 git branch --format="%(refname:short)")
-    merged_branches=$(grep -vE "($skip_branches)" <<<"$local_branches")
+    merged_branches=$(grep -vxE "($skip_branches)" <<<"$local_branches")
 
     # Force-delete unprotected local branches missing from origin.
     for merged_branch in $merged_branches; do
