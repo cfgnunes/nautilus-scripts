@@ -35,7 +35,8 @@ _main_task() {
     # NOTE: The 'qpdf' (< 10.6.2) do not support '--' in the command line.
     std_output=$(_run_in_sandbox "$output_dir" "false" \
         qpdf --stream-data=compress --linearize "$input_file" "$output_file" 2>&1)
-    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+    # NOTE: 'qpdf' exits with 3 when it only emitted warnings (output is written).
+    _check_output "$(($? == 3 ? 0 : $?))" "$std_output" "$input_file" "$output_file" || return 1
 }
 
 _main "$@"
