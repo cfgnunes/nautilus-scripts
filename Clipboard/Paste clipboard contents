@@ -77,12 +77,18 @@ _save_file_from_clipboard() {
     output_file=$(_get_output_filename "$basename.$ext" "$output_dir" "par_extension_opt=preserve")
 
     # Extract clipboard content and save to output file.
+    local status=0
     if [[ "$(_get_session_type)" == "wayland" ]]; then
-        wl-paste --no-newline --type "$supported_type" >"$output_file" 2>/dev/null
+        wl-paste --no-newline --type "$supported_type" >"$output_file" 2>/dev/null || status=$?
     else
-        xclip -selection clipboard -t "$supported_type" -o >"$output_file" 2>/dev/null
+        xclip -selection clipboard -t "$supported_type" -o >"$output_file" 2>/dev/null || status=$?
     fi
-    _check_output "$?" "" "" "$output_file" || return 1
+
+    # Remove the empty file left behind on failure, so the name is not kept.
+    if ((status != 0)); then
+        rm -f -- "$output_file"
+    fi
+    _check_output "$status" "" "" "$output_file" || return 1
 
     # If it's a text file, try to detect the programming language.
     if [[ "$ext" == "txt" ]]; then
@@ -98,8 +104,8 @@ _save_file_from_clipboard() {
 # Function: _detect_text_language
 #
 # Description:
-#   This function infers the programming language of a text file based on its
-#   shebang line.
+#   This function infers the file type of a text file based on its first
+#   non-empty line. Returns "txt" if not recognized.
 #
 # Parameters:
 #   $1 (file): Path to the text file to analyze.
@@ -107,16 +113,25 @@ _detect_text_language() {
     local file=$1
     local ext="txt"
 
+    # Get the first non-empty line, without leading spaces.
     local first_line=""
-    first_line=$(head -n 1 "$file")
+    first_line=$(grep -m1 -v "^[[:space:]]*$" "$file" | sed "s/^[[:space:]]*//")
 
-    # Detect language by shebang.
-    case "$first_line" in
-    "#!"*bash*) ext="sh" ;;
+    # Detect type by the first line.
+    case "${first_line,,}" in
+    "#!"*bash* | "#!"*zsh* | "#!"*dash* | "#!"*ksh* | "#!"*fish*) ext="sh" ;;
+    "#!"*/sh | "#!"*/sh\ * | "#!"*env\ sh*) ext="sh" ;;
     "#!"*python*) ext="py" ;;
     "#!"*perl*) ext="pl" ;;
     "#!"*ruby*) ext="rb" ;;
-    "#!"*php*) ext="php" ;;
+    "#!"*php* | "<?php"*) ext="php" ;;
+    "#!"*node*) ext="js" ;;
+    "#!"*lua*) ext="lua" ;;
+    "#!"*rscript*) ext="R" ;;
+    "#!"*awk*) ext="awk" ;;
+    "<svg"*) ext="svg" ;;
+    "<?xml"*) ext="xml" ;;
+    "<!doctype html"* | "<html"*) ext="html" ;;
     esac
 
     printf "%s" "$ext"
