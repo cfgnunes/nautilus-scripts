@@ -96,11 +96,9 @@ _run_gpg() {
 
     IFS=$FIELD_SEPARATOR
 
-    local -a recipients=()
-    local id=""
-    for id in $ids_encrypt; do
-        recipients+=("--recipient=$id")
-    done
+    local -a ids=()
+    read -r -a ids <<<"$ids_encrypt"
+    local -a recipients=("${ids[@]/#/--recipient=}")
 
     std_output=$(gpg --batch --yes \
         --sign \
