@@ -33,7 +33,7 @@ _main_task() {
     local dir=""
     local filename=""
     local std_output=""
-    local exit_code=0
+    local exit_code=1
 
     dir=$(dirname -- "$input_file")
     filename=$(basename -- "$input_file")
@@ -56,6 +56,12 @@ _main_task() {
         std_output=$(_run_in_sandbox "$output_dir" "false" \
             crc32 "$input_file" 2>&1)
         exit_code=$?
+    fi
+
+    # Accept only 8-hex CRC32. Warnings captured by '2>&1' or
+    # an empty output are treated as failures.
+    if ((exit_code == 0)) && [[ ! "$std_output" =~ ^[0-9a-fA-F]{8}$ ]]; then
+        exit_code=1
     fi
     _check_output "$exit_code" "$std_output" "$input_file" "" || return 1
 
