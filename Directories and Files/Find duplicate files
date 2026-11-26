@@ -39,8 +39,7 @@ _main() {
             file = substr($0, index($0, $8))
 
             # Replace double slashes with a single slash.
-            while (file ~ /\/\//)
-                gsub(/\/\//, "/", file)
+            gsub(/\/+/, "/", file)
 
             # Skip files inside a .git directory.
             if (file ~ /\.git\//)
