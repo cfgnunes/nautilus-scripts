@@ -52,7 +52,8 @@ _main_task() {
     # shellcheck disable=SC2046
     std_output=$(_run_in_sandbox "$output_dir" "false" \
         pdfcpu merge "$output_file" \
-        $(find "$temp_dir" -type f 2>/dev/null | sort --version-sort) 2>&1)
+        $(find "$temp_dir" -type f 2>/dev/null |
+            LC_ALL=C.UTF-8 sort --version-sort) 2>&1)
     _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
 
     # Remove the temporary directory.

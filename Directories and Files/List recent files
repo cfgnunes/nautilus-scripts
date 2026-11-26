@@ -24,7 +24,7 @@ _main() {
     std_output=$(find -L "${items[@]}" \
         ! -regex "$IGNORE_FIND" \
         -type f -printf "%TY-%Tm-%Td$FIELD_SEPARATOR%TH:%TM$FIELD_SEPARATOR%p\n" 2>/dev/null |
-        sort -k1,1r -k2,2r |
+        LC_ALL=C.UTF-8 sort -k1,1r -k2,2r |
         head -n "$max_item_list")
 
     std_output=$(_text_remove_pwd "$std_output")

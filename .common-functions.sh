@@ -4124,7 +4124,7 @@ _storage_text_clean() {
 #   storage files, from largest to smallest.
 _storage_text_read_all() {
     find "$TEMP_DIR_STORAGE_TEXT" -type f -printf "%s %p\n" 2>/dev/null |
-        sort -n -r | cut -d " " -f 2 - | xargs -r cat --
+        LC_ALL=C.UTF-8 sort -n -r | cut -d " " -f 2 - | xargs -r cat --
 }
 
 # Function: _storage_text_write
@@ -4288,7 +4288,7 @@ _str_sort() {
     [[ "$unique" == "true" ]] && unique_opt="--unique"
 
     input_str=$(printf "%s" "$input_str" | tr "$separator" "\0" |
-        sort --zero-terminated --version-sort $unique_opt |
+        LC_ALL=C.UTF-8 sort --zero-terminated --version-sort $unique_opt |
         tr "\0" "$separator")
     _str_collapse_char "$input_str" "$separator"
 }
@@ -4342,7 +4342,7 @@ _text_remove_pwd() {
 _text_sort() {
     local input_text=$1
 
-    sort --version-sort <<<"$input_text"
+    LC_ALL=C.UTF-8 sort --version-sort <<<"$input_text"
 }
 
 # Function: _text_uri_decode
@@ -4610,7 +4610,7 @@ _recent_scripts_add() {
             links+=("$link")
         fi
     done < <(find "$dir" -maxdepth 1 -type l \
-        -print0 2>/dev/null | sort --zero-terminated --numeric-sort)
+        -print0 2>/dev/null | LC_ALL=C.UTF-8 sort --zero-terminated --numeric-sort)
 
     # Process the links, keeping only the '$ACCESSED_RECENTLY_LINKS_TO_KEEP'
     # most recent.

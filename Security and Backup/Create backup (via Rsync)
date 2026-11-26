@@ -48,7 +48,7 @@ _main_task() {
     local old_version_dir=""
     old_version_dir=$(find "$output_dir" -maxdepth 1 -type d \
         -name "${base_name}_*.backup" 2>/dev/null |
-        sort --version-sort | tail -n 1)
+        LC_ALL=C.UTF-8 sort --version-sort | tail -n 1)
 
     mkdir -p -- "$version_dir"
 

@@ -67,7 +67,7 @@ _main_task() {
         _move_file "skip" "$dir" "$parent_dir/$new_dirname"
     done < <(find "$input_file" \
         ! -regex "$IGNORE_FIND" \
-        -type d -print0 2>/dev/null | sort --reverse --zero-terminated)
+        -type d -print0 2>/dev/null | LC_ALL=C.UTF-8 sort --reverse --zero-terminated)
 }
 
 _main "$@"
