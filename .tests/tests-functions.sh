@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-
 # =============================================================================
-# Description: Test the functions defined in the file '.common-functions.sh'.
+# Description: Test the functions defined in '.common-functions.sh'.
 # =============================================================================
 
 # Source the file '.common-functions.sh'.

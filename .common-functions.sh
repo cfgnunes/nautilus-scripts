@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2001
-
 # =============================================================================
+# Description: Provide functions and constants sourced by the scripts.
+#
 # Project: Enhanced File Manager Actions
 # Author: Cristiano Fraga G. Nunes
 # Repository: https://github.com/cfgnunes/nautilus-scripts
@@ -9,7 +9,7 @@
 # Version: 33.2
 # =============================================================================
 
-# Description: This file contains functions and constants sourced by scripts.
+# shellcheck disable=SC2001
 
 set -u
 

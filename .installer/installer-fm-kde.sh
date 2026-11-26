@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-
 # =============================================================================
-# Description: Installer functions for KDE (Dolphin and Krusader).
+# Description: Provide installer functions for KDE (Dolphin and Krusader).
 # Sourced by 'install.sh'. Do not run directly.
 #
 # Files and directories created:

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-
 # =============================================================================
-# Description: Dependency check and package installation functions.
+# Description: Provide dependency check and package installation functions.
 # Sourced by 'install.sh'. Do not run directly.
 # =============================================================================
 

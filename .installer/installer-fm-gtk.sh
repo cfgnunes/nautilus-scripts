@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-
 # =============================================================================
-# Description: Shared installer functions for GTK-based file managers (Nautilus, Nemo and Caja).
+# Description: Provide shared installer functions for GTK-based file managers.
 # Sourced by 'install.sh'. Do not run directly.
 # =============================================================================
 

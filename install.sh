@@ -1,14 +1,24 @@
 #!/usr/bin/env bash
-
 # =============================================================================
-# Project: Enhanced File Manager Actions
-# Author: Cristiano Fraga G. Nunes
-# Repository: https://github.com/cfgnunes/nautilus-scripts
-# License: MIT License
-# Version: 33.2
+# Description: Install the Enhanced File Manager Actions.
+#
+# Usage:
+#   bash install.sh [options]
+#
+# Options:
+#   -c, --check-dependencies        Check for basic dependencies.
+#   -C, --no-check-dependencies     Do not check for basic dependencies.
+#   -d, --sub-category NAME         Install the scripts in a subcategory.
+#   -f, --close-file-manager        Close file manager after install.
+#   -F, --no-close-file-manager     Do not close file manager after install.
+#   -k, --install-shortcuts         Install keyboard accelerators.
+#   -K, --no-install-shortcuts      Do not install keyboard accelerators.
+#   -n, --non-interactive           Run without prompts.
+#   -q, --quiet                     Suppress all output (silent mode).
+#   -p, --install-pkgx              Install pkgx for dependencies.
+#   -P, --no-install-pkgx           Do not install pkgx.
+#   -h, --help                      Show this help message and exit.
 # =============================================================================
-
-# Description: Installs the Enhanced File Manager Actions.
 
 set -u
 

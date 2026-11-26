@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-
 # =============================================================================
-# Description: Test shell scripts with ShellCheck.
+# Description: Validate the shell scripts with ShellCheck.
 # =============================================================================
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)

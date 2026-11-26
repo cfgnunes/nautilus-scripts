@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-
 # =============================================================================
-# Description: Installer functions for Thunar.
+# Description: Provide installer functions for Thunar.
 # Sourced by 'install.sh'. Do not run directly.
 #
 # Files and directories created:

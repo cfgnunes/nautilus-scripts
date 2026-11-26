@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
-
 # =============================================================================
 # Description: Uninstall the Enhanced File Manager Actions.
+#
+# Usage:
+#   bash uninstall.sh
 # =============================================================================
 
 set -u

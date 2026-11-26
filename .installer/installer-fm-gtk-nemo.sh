@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-
 # =============================================================================
-# Description: Installer functions for Nemo.
+# Description: Provide installer functions for Nemo.
 # Sourced by 'install.sh'. Do not run directly.
 #
 # Files and directories created:

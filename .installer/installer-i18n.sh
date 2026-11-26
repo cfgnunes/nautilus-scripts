@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-
 # =============================================================================
-# Description: Internationalization (i18n) functions of the installer.
+# Description: Provide internationalization (i18n) functions for the installer.
 # Sourced by 'install.sh'. Do not run directly.
 # =============================================================================
 

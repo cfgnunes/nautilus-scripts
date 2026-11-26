@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-
 # =============================================================================
-# Description: Installer functions for Caja.
+# Description: Provide installer functions for Caja.
 # Sourced by 'install.sh'. Do not run directly.
 #
 # Files and directories created:

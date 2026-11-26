@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
-
 # =============================================================================
-# Description: This function displays an interactive menu in the terminal.
-# Repository: https://github.com/cfgnunes/nautilus-scripts
-# Based on: https://unix.stackexchange.com/a/673436
-# Version: 2026-11-22
+# Description: Display an interactive menu in the terminal.
 #
 # Keyboard commands:
 #                       <enter>: Confirms the current selection.

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2034
-
-# This file centralizes dependency definitions for the scripts.
+# =============================================================================
+# Description: Provide dependency definitions for the scripts.
+# Sourced by '.common-functions.sh'. Do not run directly.
 #
 # Sources:
 #   For all: https://pkgs.org
@@ -9,16 +9,13 @@
 #   For pkgx: https://github.com/pkgxdev/pantry
 #   For guix: https://hpc.guix.info/browse
 #   For termux: https://github.com/termux/termux-packages
+# =============================================================================
 
-# Description:
-#   This array defines the mapping between a dependency key and its
-#   corresponding package names across different package managers.
-#
-# Note: If the package name contains the '~' character, it means that the part
+# shellcheck disable=SC2034
+
+# NOTE: If the package name contains the '~' character, it means that the part
 # before '~' represents the package name used for installation, while the part
 # after '~' represents the package name used for installation verification.
-# This is useful in systems like NixOS, where the installed package name may
-# differ from the one provided during installation.
 declare -A PKG_MAP=(
     ["7za"]="
         termux: 7zip
