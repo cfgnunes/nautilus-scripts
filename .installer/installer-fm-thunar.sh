@@ -104,15 +104,15 @@ _install_actions_thunar() {
 
             printf "%s\n" "<action>"
             printf "\t%s\n" "<icon></icon>"
-            printf "\t%s\n" "<name>$(_i18n "$name")</name>"
-            printf "\t%s\n" "<submenu>$(_i18n_translate_path "$submenu")</submenu>"
+            printf "\t%s\n" "<name>$(_xml_escape "$(_i18n "$name")")</name>"
+            printf "\t%s\n" "<submenu>$(_xml_escape "$(_i18n_translate_path "$submenu")")</submenu>"
 
             # Generate a unique id.
             unique_id=$(md5sum <<<"$submenu$name" 2>/dev/null |
                 sed "s|[^0-9]*||g" | cut -c 1-8)
             printf "\t%s\n" "<unique-id>$unique_id</unique-id>"
 
-            printf "\t%s\n" "<command>bash &quot;$filename&quot; %F</command>"
+            printf "\t%s\n" "<command>$(_xml_escape "bash \"$filename\" %F")</command>"
             printf "\t%s\n" "<description></description>"
             printf "\t%s\n" "<range></range>"
             printf "\t%s\n" "<patterns>*</patterns>"
@@ -128,4 +128,15 @@ _install_actions_thunar() {
         printf "%s\n" "</actions>"
 
     } | _tee_file_append "$menu_file"
+}
+
+# Escape the XML special characters in a string.
+_xml_escape() {
+    local text=$1
+
+    text=${text//&/"&amp;"}
+    text=${text//</"&lt;"}
+    text=${text//>/"&gt;"}
+    text=${text//\"/"&quot;"}
+    printf "%s" "$text"
 }
