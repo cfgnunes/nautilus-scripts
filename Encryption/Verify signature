@@ -77,7 +77,7 @@ _main_task() {
 
     _is_encrypted() {
         LC_ALL=C.UTF-8 gpg --batch --yes --list-packets "$1" 2>/dev/null |
-            grep -qF "encrypted"
+            grep -qE "^:(encrypted data|aead encrypted|pubkey enc|symkey enc) packet:"
     }
 
     # A detached signature is either an ASCII "PGP SIGNATURE" block or a binary
@@ -168,6 +168,7 @@ _main_task() {
     elif grep -q "unknown \w* algorithm" <<<"$std_output"; then
         status="⚪ __MSG_UnknownAlg__"
     else
+        _log_error "$(_i18n 'The command failed.')" "$input_file" "$std_output" ""
         return 1
     fi
 
