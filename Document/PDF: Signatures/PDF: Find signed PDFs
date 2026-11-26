@@ -48,10 +48,11 @@ _main_task() {
     std_output=$(_run_in_sandbox "" "false" \
         pdfsig -- "$input_file" 2>/dev/null)
 
-    if [[ "$std_output" == *"Signature is Valid"* ]]; then
-        _storage_text_write_ln "🟢 __MSG_Valid__$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
-    elif [[ "$std_output" == *"Signature is Invalid"* ]]; then
+    # Any invalid signature makes the whole file invalid.
+    if [[ "$std_output" == *"Signature is Invalid"* ]]; then
         _storage_text_write_ln "🔴 __MSG_Invalid__$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
+    elif [[ "$std_output" == *"Signature is Valid"* ]]; then
+        _storage_text_write_ln "🟢 __MSG_Valid__$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
     fi
 }
 

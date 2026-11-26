@@ -45,7 +45,9 @@ _main_task() {
         # Remove irrelevant information.
         std_output=$(grep --ignore-case -v "^Digital Signature Info of: " <<<"$std_output")
 
-        if grep --quiet --ignore-case "Signature is Valid" <<<"$std_output"; then
+        # Green only if there is a valid signature and none is invalid.
+        if grep --quiet --ignore-case "Signature is Valid" <<<"$std_output" &&
+            ! grep --quiet --ignore-case "Signature is Invalid" <<<"$std_output"; then
             status="🟢"
         fi
 
