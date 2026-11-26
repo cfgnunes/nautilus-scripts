@@ -86,9 +86,11 @@ _main() {
         install_args+=(--sub-category "$subcategory")
     fi
 
-    # Backup the existing log file, if any.
+    # Backup the existing log file.
+    local log_backup=""
+    log_backup=$(_make_temp_file)
     if [[ -f "$LOG_FILE" ]]; then
-        mv -- "$LOG_FILE" "$LOG_FILE.bak"
+        cp -a -- "$LOG_FILE" "$log_backup"
     fi
 
     # Download and run the installation script.
@@ -110,8 +112,9 @@ _main() {
     fi
 
     # Restore the backup log file if the installation failed.
-    if [[ ! -f "$LOG_FILE" && -f "$LOG_FILE.bak" ]]; then
-        mv -- "$LOG_FILE.bak" "$LOG_FILE"
+    if [[ ! -f "$LOG_FILE" && -s "$log_backup" ]]; then
+        mkdir -p -- "$INSTALL_DIR"
+        cp -a -- "$log_backup" "$LOG_FILE"
     fi
 }
 
