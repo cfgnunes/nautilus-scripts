@@ -141,21 +141,21 @@ _main_task() {
     # Names in skip_branches (desenv, develop, main, master) are never deleted.
     # -------------------------------------------------------------------------
     local local_branches=""
-    local remote_branches=""
-    local merged_branches=""
-    local merged_branch=""
-
-    remote_branches=$(LC_ALL=C.UTF-8 git branch -r --format="%(refname:short)" | sed 's|^origin/||')
     local_branches=$(LC_ALL=C.UTF-8 git branch --format="%(refname:short)")
-    merged_branches=$(grep -vxE "($skip_branches)" <<<"$local_branches")
 
-    # Force-delete unprotected local branches missing from origin.
-    for merged_branch in $merged_branches; do
-        if ! grep -qxF "$merged_branch" <<<"$remote_branches"; then
-            std_output=$(LC_ALL=C.UTF-8 git branch --delete --force "$merged_branch" 2>&1)
-            _check_output "$?" "$std_output" "$input_file" "" || return 1
-        fi
-    done
+    local remote_branches=""
+    remote_branches=$(LC_ALL=C.UTF-8 git branch -r --format="%(refname:short)" | sed 's|^origin/||')
+
+    local -a branches_delete=()
+    IFS=$'\n' read -r -d "" -a branches_delete < <(
+        grep -vxE "($skip_branches)" <<<"$local_branches" |
+            grep -vxFf <(printf '%s\n' "$remote_branches")) || true
+
+    # Force-delete them in a single command.
+    if ((${#branches_delete[@]} > 0)); then
+        std_output=$(LC_ALL=C.UTF-8 git branch --delete --force -- "${branches_delete[@]}" 2>&1)
+        _check_output "$?" "$std_output" "$input_file" "" || return 1
+    fi
 
     # Return to the previous directory.
     _directory_pop || return 1
