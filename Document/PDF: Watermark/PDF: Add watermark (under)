@@ -19,6 +19,7 @@ _main() {
     TASK_WATERMARK=$(_display_file_selection_box \
         "$(_i18n 'Select a PDF to use as the watermark')" \
         "$(_i18n 'PDF files') | *.pdf" "")
+    [[ -f "$TASK_WATERMARK" ]] || _exit_script
     export TASK_WATERMARK
 
     # Check output directory only after displaying dialog boxes to the user.
