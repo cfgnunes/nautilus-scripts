@@ -52,7 +52,9 @@ _open_app() {
     local input_file=""
     for input_file in "${items[@]}"; do
         # Detect remote SFTP paths from GVfs, KIO FUSE, or a URI.
-        if [[ "$input_file" == *"sftp:"* ]]; then
+        if [[ "$input_file" == /run/user/*/gvfs/sftp:* ||
+            "$input_file" == /run/user/*/kio-fuse-*/sftp/* ||
+            "$input_file" == sftp://* ]]; then
             _open_remote_directory "$app" "$input_file"
         else
             _open_local_directory "$app" "$input_file"
