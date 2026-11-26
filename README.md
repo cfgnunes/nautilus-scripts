@@ -94,6 +94,8 @@ bash install.sh
 | PCManFM-Qt             | LXQt        | 🟢                | 🔴                     | 🔴                        |
 | PCManFM                | LXDE        | 🟢                | 🔴                     | 🔴                        |
 
+All scripts are written in Bash and require version 4.3 or higher.
+
 ## Batch mode for large file selections
 
 For very large selections (e.g., 10,000 input files), use **batch mode**: place all the input files in a folder whose name contains the word `batch`, then run the action on that folder. The scripts will process the files individually, avoiding the "argument list too long" error.
