@@ -27,7 +27,6 @@ _main_task() {
     local filename=""
     local filename_base=""
     local filename_extension=""
-    local -a words=()
     local regex="^(.*)[[:space:]]+(\([^)]*\)|\[[^]]*\])$"
 
     dir=$(dirname -- "$input_file")
@@ -46,18 +45,23 @@ _main_task() {
     # the last space-separated word.
     if [[ "$filename_base" =~ $regex ]]; then
         filename_base="${BASH_REMATCH[1]}"
-        read -r -a words <<<"$filename_base"
-        if ((${#words[@]} < 1)); then
+        filename_base=${filename_base#"${filename_base%%[![:space:]]*}"}
+        filename_base=${filename_base%"${filename_base##*[![:space:]]}"}
+        if [[ -z "$filename_base" ]]; then
             return 0
         fi
-        output_file="${words[*]}$filename_extension"
+        output_file="$filename_base$filename_extension"
     else
-        read -r -a words <<<"$filename_base"
-        if ((${#words[@]} <= 1)); then
+        filename_base=${filename_base#"${filename_base%%[![:space:]]*}"}
+        filename_base=${filename_base%"${filename_base##*[![:space:]]}"}
+        # Single word: nothing to remove.
+        if [[ "$filename_base" != *[[:space:]]* ]]; then
             return 0
         fi
-        unset "words[-1]"
-        output_file="${words[*]}$filename_extension"
+        # Remove the last word and the whitespace before it.
+        filename_base=${filename_base%"${filename_base##*[[:space:]]}"}
+        filename_base=${filename_base%"${filename_base##*[![:space:]]}"}
+        output_file="$filename_base$filename_extension"
     fi
 
     # Run the main process.
