@@ -48,6 +48,7 @@ _main_task() {
     repo_dir_name=$(__git_repo_dir_name "$input_file")
 
     # Determine the directory name for cloning.
+    local dir_name=""
     dir_name=$(_get_output_filename "$output_dir/$repo_dir_name" "$output_dir" "par_extension_opt=preserve")
 
     # Run the main process.
@@ -58,7 +59,9 @@ _main_task() {
 
     # Attempt 2: If the first attempt failed,
     # try SSH with '@ssh.' inserted in the host
-    if ((exit_code != 0)) && [[ "$input_file" != *"@ssh."* ]]; then
+    # (only for URLs with a user and without HTTP(S) credentials).
+    if ((exit_code != 0)) && [[ "$input_file" == *"@"* ]] &&
+        [[ "$input_file" != *"@ssh."* && ! "$input_file" =~ ^https?:// ]]; then
         std_output=$(LC_ALL=C.UTF-8 git -c "$param" clone -q -- "${input_file/@/@ssh.}" "$dir_name" 2>&1)
         exit_code=$?
     fi
@@ -66,10 +69,14 @@ _main_task() {
     # If SSH attempts failed, try converting SSH URL to HTTPS and clone.
     if ((exit_code != 0)); then
         # Convert SSH to HTTPS form.
-        input_file=${input_file/@ssh./@}
-        input_file=$(sed -E 's#git@([^:]+):([^/]+)/([^ ]+)#https://\1/\2/\3#g' <<<"$input_file")
-        std_output=$(LC_ALL=C.UTF-8 git -c "$param" clone -q -- "$input_file" "$dir_name" 2>&1)
-        exit_code=$?
+        local https_url=${input_file/@ssh./@}
+        https_url=$(sed -E 's#git@([^:]+):([^/]+)/([^ ]+)#https://\1/\2/\3#g' <<<"$https_url")
+        # Skip if the URL did not change (the same clone would be repeated).
+        if [[ "$https_url" != "$input_file" ]]; then
+            input_file=$https_url
+            std_output=$(LC_ALL=C.UTF-8 git -c "$param" clone -q -- "$input_file" "$dir_name" 2>&1)
+            exit_code=$?
+        fi
     fi
 
     _check_output "$exit_code" "$std_output" "$input_file" "" || return 1
@@ -82,14 +89,14 @@ _extract_git_urls() {
         return
     fi
 
-    # Convert HTTPS to SSH form.
-    data=$(sed -E 's#https://([^/]+)/([^/]+)/([^ ]+)#git@\1:\2/\3#g' <<<"$data")
+    # Convert HTTPS to SSH form (URLs with credentials or a port are kept as is).
+    data=$(sed -E 's#https://([^/@:]+)/([^/]+)/([^ ]+)#git@\1:\2/\3#g' <<<"$data")
 
     # Append ".git" to each URL line where it is missing.
     data=$(sed -E '/^(git@|(https?|ssh|git):\/\/)/{s#/+$##; /\.git$/!s#$#.git#}' <<<"$data")
 
     # Keep only valid Git URLs.
-    data=$(grep --only-matching --perl-regexp "((git|ssh|http(s)?)|(git@[\w\.]+))(.*)(\.git)" <<<"$data")
+    data=$(grep --only-matching --perl-regexp "(?<![^\s,;\"'<>(])(git@|ssh://|git://|https?://)[^\s,;\"'<>]*?\.git(?=[\s,;\"'<>)]|\$)" <<<"$data")
     data=$(sort --unique <<<"$data")
 
     printf "%s" "$data"
