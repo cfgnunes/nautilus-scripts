@@ -18,9 +18,16 @@ _main() {
         par_select_mime=text/plain
     ")
 
-    # Execute the function '_verify_checksum' for each file in parallel.
+    # Read the lines of the checksum file, ignoring CRLF, empty lines and comments.
+    local lines=""
+    lines=$(tr -d '\r' <"$input_files" | grep -v -e '^[[:space:]]*$' -e '^[[:space:]]*#' || true)
+
+    # Resolve relative paths against the directory of the checksum file.
+    cd -- "$(dirname -- "$input_files")" || return 1
+
+    # Execute the function '_verify_checksum' for each line in parallel.
     export -f _verify_checksum
-    _run_function_parallel "$(<"$input_files")" "\n" "" "_verify_checksum"
+    _run_function_parallel "$lines" "\n" "" "_verify_checksum"
 
     local std_output=""
     std_output=$(_storage_text_read_all)
@@ -46,45 +53,45 @@ _verify_checksum() {
     local line=$1
     local saved_checksum=""
     local saved_file=""
-    local current_output=""
-    local current_checksum=""
-    local status=""
     local saved_file_decoded=""
+    local current_checksum=""
 
-    saved_checksum=$(printf "%s" "$line" | cut -d " " -f1)
-    saved_file=$(printf "%s" "$line" | cut -d " " -f3-)
-
-    # Checksums that start with '\' indicate an escaped filename (has '\n' or
-    # '\\'). Decode only in this case, otherwise keep the name as is.
+    # Line format: 'hash file' (text mode) or 'hash *file' (binary mode).
+    local regex='^([^ ]+) [ *](.*)$'
+    if [[ "$line" =~ $regex ]]; then
+        saved_checksum=${BASH_REMATCH[1]}
+        saved_file=${BASH_REMATCH[2]}
+    else
+        saved_file=$line
+    fi
     saved_file_decoded=$saved_file
-    if [[ "$saved_checksum" == \\* ]]; then
-        # Escape '%' characters for the 'printf' command.
-        saved_file_decoded=${saved_file//%/%%}
 
+    # A checksum starting with '\' indicates an escaped filename (with '\n' or
+    # '\\'). Decode only in this case.
+    if [[ "$saved_checksum" == \\* ]]; then
+        saved_checksum=${saved_checksum#\\}
+        # Use a separate variable with '%' escaped for 'printf'.
+        local format=${saved_file//%/%%}
         # shellcheck disable=SC2059
-        saved_file_decoded=$(printf -- "$saved_file_decoded")
+        saved_file_decoded=$(printf -- "$format")
     fi
 
-    # If the file does not exist, report and skip the check.
-    if [[ ! -e "$saved_file_decoded" ]]; then
-        status="🔴 __MSG_NotFound__"
-        _storage_text_write_ln "$status$FIELD_SEPARATOR$saved_file"
+    # If the checksum is invalid or the file does not exist, report and skip.
+    if [[ -z "$saved_checksum" || ! -e "$saved_file_decoded" ]]; then
+        _storage_text_write_ln "🔴 __MSG_NotFound__$FIELD_SEPARATOR$saved_file"
         return 1
     fi
 
     # Run the main process.
-    current_output=$(sha256sum -- "$saved_file_decoded" 2>/dev/null)
-    current_checksum=$(printf "%s" "$current_output" | cut -d " " -f1)
+    current_checksum=$(sha256sum -- "$saved_file_decoded" 2>/dev/null | cut -d " " -f1)
 
     # Compare the checksum.
-    if [[ "$saved_checksum" != "$current_checksum" ]]; then
-        status="🔴 __MSG_Mismatch__"
-        _storage_text_write_ln "$status$FIELD_SEPARATOR$saved_file"
+    if [[ "${saved_checksum,,}" != "${current_checksum,,}" ]]; then
+        _storage_text_write_ln "🔴 __MSG_Mismatch__$FIELD_SEPARATOR$saved_file"
         return 1
     fi
 
-    status="🟢 __MSG_OK__"
-    _storage_text_write_ln "$status$FIELD_SEPARATOR$saved_file"
+    _storage_text_write_ln "🟢 __MSG_OK__$FIELD_SEPARATOR$saved_file"
 }
 
 _main "$@"
