@@ -35,9 +35,11 @@ _main_task() {
         "par_extension_opt=replace; par_extension=svg")
 
     # Run the main process.
-    _run_in_sandbox "$output_dir" "false" \
-        gzip -d "$input_file" -c >"$output_file" 2>/dev/null
-    _check_output "$?" "$std_output" "$input_file" "$output_file" || return 1
+    std_output=$(_run_in_sandbox "$output_dir" "false" \
+        gzip -d -c -- "$input_file" 2>&1 >"$output_file")
+    local exit_code=$?
+
+    _check_output "$exit_code" "$std_output" "$input_file" "$output_file" || return 1
 }
 
 _main "$@"
