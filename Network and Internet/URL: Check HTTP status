@@ -111,10 +111,8 @@ _extract_urls() {
     fi
 
     data=$(grep --only-matching --perl-regexp \
-        "($re_ip$re_port_path|$re_domain$re_port_path|$re_plain)" <<<"$data")
-    # Remove trailing punctuation (e.g. "google.com/a," in a list).
-    data=$(sed 's|[,.;:!?]*$||' <<<"$data")
-    data=$(sort --unique <<<"$data")
+        "($re_ip$re_port_path|$re_domain$re_port_path|$re_plain)" <<<"$data" |
+        sed "s|[,.;:!?]*$||" | sort --unique)
 
     printf "%s" "$data"
 }
