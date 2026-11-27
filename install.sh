@@ -329,8 +329,8 @@ _main() {
     [[ "$OPT_INSTALL_BASIC_DEPS" == "true" ]] && _check_dependencies
 
     # Step 2: Install the scripts.
-    INSTALL_OWNER=$(stat -c "%u" "$HOME")
-    INSTALL_GROUP=$(stat -c "%g" "$HOME")
+    INSTALL_OWNER=$(stat -c "%U" "$HOME")
+    INSTALL_GROUP=$(stat -c "%G" "$HOME")
 
     _log_variable "INSTALL_OWNER"
     _log_variable "INSTALL_GROUP"
