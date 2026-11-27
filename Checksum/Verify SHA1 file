@@ -83,7 +83,7 @@ _verify_checksum() {
     fi
 
     # Run the main process.
-    current_checksum=$(sha1sum -- "$saved_file_decoded" 2>/dev/null | cut -d " " -f1)
+    current_checksum=$(sha1sum -- "$saved_file_decoded" 2>/dev/null | cut -d " " -f1 | sed 's/^\\//')
 
     # Compare the checksum.
     if [[ "${saved_checksum,,}" != "${current_checksum,,}" ]]; then
