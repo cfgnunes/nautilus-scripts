@@ -29,11 +29,14 @@ _main_task() {
     local std_output=""
 
     output_file=$(_get_output_filename "$input_file" "$output_dir" \
-        "par_extension_opt=replace; par_extension=%04d.pdf")
+        "par_extension_opt=strip")
+
+    # NOTE: 'pdfseparate' cannot escape '%' in the output, so replace it.
+    local output_name=${output_file//%/_}.%04d.pdf
 
     # Run the main process.
     std_output=$(_run_in_sandbox "$output_dir" "false" \
-        pdfseparate "$input_file" -- "$output_file" 2>&1)
+        pdfseparate "$input_file" -- "$output_name" 2>&1)
     _check_output "$?" "$std_output" "$input_file" "" || return 1
 }
 
