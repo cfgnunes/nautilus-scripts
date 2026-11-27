@@ -26,9 +26,10 @@ GUI_BOX_HEIGHT=550             # Height of the GUI dialog boxes.
 GUI_BOX_WIDTH=900              # Width of the GUI dialog boxes.
 GUI_INFO_WIDTH=400             # Width of the GUI small dialog boxes.
 I18N_DIR="$ROOT_DIR/.po"       # Directory containing PO files for translation.
-IGNORE_FIND=".*/\.git\(/.*\)?" # Regex of paths to ignore in 'find'.
 PREFIX_ERROR_LOG_FILE="Errors" # Basename of 'Error' log file.
 PREFIX_OUTPUT_DIR="Output"     # Basename of 'Output' directory.
+
+IGNORE_FIND="\(.*/\)?\.git\(/.*\)?" # Regex of paths to ignore in 'find'.
 
 # Temporary directories.
 TEMP_DIR=$(mktemp --directory)
