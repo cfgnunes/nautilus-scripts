@@ -30,8 +30,8 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    #std_output=$(_text_sort "$std_output")
-    std_output=$(LC_ALL=C.UTF-8 sort --version-sort --reverse <<<"$std_output")
+    std_output=$(printf "%s" "$std_output" | tr "$FIELD_SEPARATOR" "\0" |
+        LC_ALL=C.UTF-8 sort -z --version-sort --reverse | tr "\0" "$FIELD_SEPARATOR")
 
     # Translate some strings from the '$std_output'.
     # shellcheck disable=SC2001
@@ -217,7 +217,7 @@ _main_task() {
         time=$(date -d "@$timestamp" "+%H:%M:%S %z")
     fi
 
-    _storage_text_write_ln "${status}${FIELD_SEPARATOR}${name}${FIELD_SEPARATOR}${email}${FIELD_SEPARATOR}${key_id}${FIELD_SEPARATOR}${date}${FIELD_SEPARATOR}${time}${FIELD_SEPARATOR}$(_text_remove_pwd "$input_file")"
+    _storage_text_write "${status}${COL_SEP}${name}${COL_SEP}${email}${COL_SEP}${key_id}${COL_SEP}${date}${COL_SEP}${time}${COL_SEP}$(_text_remove_pwd "$input_file")"
 }
 
 _main "$@"

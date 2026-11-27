@@ -23,9 +23,10 @@ _main() {
     # Run the main process.
     std_output=$(find -L "${items[@]}" \
         ! -regex "$IGNORE_FIND" \
-        -type f -printf "%TY-%Tm-%Td$FIELD_SEPARATOR%TH:%TM$FIELD_SEPARATOR%p\n" 2>/dev/null |
-        LC_ALL=C.UTF-8 sort -k1,1r -k2,2r |
-        head -n "$max_item_list")
+        -type f -printf "%TY-%Tm-%Td$COL_SEP%TH:%TM$COL_SEP%p\0" 2>/dev/null |
+        LC_ALL=C.UTF-8 sort -z -k1,1r -k2,2r |
+        head -z -n "$max_item_list" |
+        tr "\0" "$FIELD_SEPARATOR")
 
     std_output=$(_text_remove_pwd "$std_output")
 

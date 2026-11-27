@@ -25,7 +25,8 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    std_output=$(sort --numeric-sort --reverse <<<"$std_output")
+    std_output=$(printf "%s" "$std_output" | tr "$FIELD_SEPARATOR" "\0" |
+        sort -z --numeric-sort --reverse | tr "\0" "$FIELD_SEPARATOR")
 
     _display_list_box "$std_output" "
         par_item_name=$(_i18n 'files')
@@ -41,12 +42,12 @@ _main_task() {
     local std_output=""
 
     # Run the main process.
-    std_output=$(wc --words -- "$input_file" 2>/dev/null)
-    # shellcheck disable=SC2001
-    std_output=$(sed "s| *\([0-9]*\) *\(.*\)|\1$FIELD_SEPARATOR\2|" <<<"$std_output")
-    std_output=$(_text_remove_pwd "$std_output")
+    # NOTE: Read the file from stdin, because 'wc' quotes some file names.
+    std_output=$(wc --words <"$input_file" 2>/dev/null)
+    std_output=${std_output// /}
+    [[ -n "$std_output" ]] || return
 
-    _storage_text_write_ln "$std_output"
+    _storage_text_write "$std_output$COL_SEP$(_text_remove_pwd "$input_file")"
 }
 
 _main "$@"

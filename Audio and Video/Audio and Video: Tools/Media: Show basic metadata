@@ -25,7 +25,7 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    std_output=$(_text_sort "$std_output")
+    std_output=$(_str_sort "$std_output" "$FIELD_SEPARATOR" "false")
 
     _display_list_box "$std_output" "
         par_item_name=$(_i18n 'files')
@@ -58,7 +58,7 @@ _main_task() {
     tag_artist=$(grep -o -P -m1 "^Performer:\K.*" <<<"$std_output")
     tag_title=$(grep -o -P -m1 "^Title:\K.*" <<<"$std_output")
 
-    _storage_text_write_ln "$tag_duration$FIELD_SEPARATOR$tag_album$FIELD_SEPARATOR$tag_artist$FIELD_SEPARATOR$tag_title$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
+    _storage_text_write "$tag_duration$COL_SEP$tag_album$COL_SEP$tag_artist$COL_SEP$tag_title$COL_SEP$(_text_remove_pwd "$input_file")"
 }
 
 _main "$@"

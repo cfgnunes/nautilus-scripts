@@ -52,8 +52,9 @@ _main_task() {
     std_output=$(_run_in_sandbox "" "$PKGX_AVAILABLE" \
         pdfannots --format json "$input_file" 2>/dev/null |
         _run_in_sandbox "" "false" \
-            jq -r \
-            --arg sep "$FIELD_SEPARATOR" \
+            jq -j \
+            --arg sep "$COL_SEP" \
+            --arg row_sep "$FIELD_SEPARATOR" \
             --arg file_label "$file_label" '
         def clean:
             tostring
@@ -61,7 +62,7 @@ _main_task() {
             | sub("^ "; "")
             | sub(" $"; "")
             | if length > 50 then .[0:50] + "..." else . end;
-        .[]
+        [ .[]
         | (.contents // "" | clean) as $content
         | (.text // "" | clean) as $text
         | (.author // "" | clean) as $author
@@ -74,10 +75,11 @@ _main_task() {
             (.page // "" | tostring),
             $file_label
           ]
-        | join($sep)
+        | join($sep) ]
+        | join($row_sep)
     ' 2>/dev/null)
 
-    _storage_text_write_ln "$std_output"
+    _storage_text_write "$std_output"
 }
 
 _main "$@"

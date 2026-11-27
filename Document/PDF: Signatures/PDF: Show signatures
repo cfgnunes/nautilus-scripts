@@ -24,6 +24,7 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
+    std_output=$(tr "$FIELD_SEPARATOR" "\n" <<<"$std_output")
 
     # Translate some strings from the '$std_output'.
     # shellcheck disable=SC2001
@@ -54,7 +55,7 @@ _main_task() {
         # Prepend the filename.
         std_output="$status __MSG_File__: \"$(_text_remove_pwd "$input_file")\""$'\n'"$std_output"
 
-        _storage_text_write_ln "$std_output"$'\n'
+        _storage_text_write "$std_output$FIELD_SEPARATOR"
     fi
 }
 

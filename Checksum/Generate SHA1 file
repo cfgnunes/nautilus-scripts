@@ -21,10 +21,10 @@ _main() {
         file_1=$(_get_element "$input_files" "1")
         file_1=$(basename -- "$file_1")
         options+=$file_1
-        options+=".sha1"$'\n'
+        options+=".sha1$FIELD_SEPARATOR"
     fi
-    options+="sha1sum.txt"$'\n'
-    options+="checksums.sha1"$'\n'
+    options+="sha1sum.txt$FIELD_SEPARATOR"
+    options+="checksums.sha1$FIELD_SEPARATOR"
     options+="SHA1SUMS"
 
     output_file=$(_display_select_box "$options" \
@@ -42,9 +42,10 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    std_output=$(_text_sort "$std_output")
+    std_output=$(_str_sort "$std_output" "$FIELD_SEPARATOR" "false")
+    std_output=$(tr "$FIELD_SEPARATOR" "\n" <<<"$std_output")
     # shellcheck disable=SC2001
-    std_output=$(sed "s|\(.*\)$FIELD_SEPARATOR\(.*\)|\2  \1|g" <<<"$std_output")
+    std_output=$(sed "s|\(.*\)$COL_SEP\(.*\)|\2  \1|g" <<<"$std_output")
     printf "%s\n" "$std_output" >"$output_file"
 
     _display_result_box "$output_dir"
@@ -64,9 +65,9 @@ _main_task() {
     std_output=$(_text_remove_pwd "$std_output")
 
     # shellcheck disable=SC2001
-    std_output=$(sed "s|^\([^ ]*\) [ *]\(.*\)$|\2$FIELD_SEPARATOR\1|" <<<"$std_output")
+    std_output=$(sed "s|^\([^ ]*\) [ *]\(.*\)$|\2$COL_SEP\1|" <<<"$std_output")
 
-    _storage_text_write_ln "$std_output"
+    _storage_text_write "$std_output"
 }
 
 _main "$@"

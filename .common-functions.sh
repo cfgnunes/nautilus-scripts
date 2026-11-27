@@ -22,6 +22,7 @@ HOME=${HOME:-$(eval echo ~)}
 
 ACCESSED_RECENTLY_LINKS_TO_KEEP=15
 FIELD_SEPARATOR=$'\r'          # The main field separator.
+COL_SEP=$'\x1f'                # Separator of the columns in list boxes.
 GUI_BOX_HEIGHT=550             # Height of the GUI dialog boxes.
 GUI_BOX_WIDTH=900              # Width of the GUI dialog boxes.
 GUI_INFO_WIDTH=400             # Width of the GUI small dialog boxes.
@@ -71,6 +72,7 @@ PKG_MANAGER_PRIORITY=(
 
 readonly \
     ACCESSED_RECENTLY_LINKS_TO_KEEP \
+    COL_SEP \
     FIELD_SEPARATOR \
     GUI_BOX_HEIGHT \
     GUI_BOX_WIDTH \
@@ -373,6 +375,7 @@ _run_function_parallel() {
     # Export necessary environment variables so they are available
     # within each subshell created by 'xargs'.
     export \
+        COL_SEP \
         FIELD_SEPARATOR \
         GUI_BOX_HEIGHT \
         GUI_BOX_WIDTH \
@@ -425,7 +428,6 @@ _run_function_parallel() {
         _parse_parameters \
         _run_in_sandbox \
         _storage_text_write \
-        _storage_text_write_ln \
         _str_collapse_char \
         _strip_filename_extension \
         _text_remove_empty_lines \
@@ -2216,7 +2218,7 @@ _display_info_box() {
 #   available environment.
 #
 # Parameters:
-#   $1 (list): A string containing the items to display in the list.
+#   $1 (list): A string containing the rows to display in the list.
 #   $2 (parameters): A string containing key-value pairs that configure
 #      the function's behavior. Example: 'par_item_name=files'.
 #
@@ -2284,7 +2286,7 @@ _display_list_box_terminal() {
         list="$(_i18n '(Empty)')"
         printf "%s\n" "$list" >&2
     else
-        list=$(tr "$FIELD_SEPARATOR" " " <<<"$list")
+        list=$(tr "$FIELD_SEPARATOR$COL_SEP" "\n " <<<"$list")
         printf "%s\n" "$list"
     fi
 }
@@ -2302,9 +2304,14 @@ _display_select_box_action() {
     local selected_items=""
     local header_label=""
 
-    if [[ -n "$list" ]]; then
-        items_count=$(tr -cd "\n" <<<"$list" | wc -c)
-    fi
+    # Count the rows (skip empty rows).
+    local -a rows=()
+    read -r -d "" -a rows < <(printf "%s" "$list")
+
+    local row=""
+    for row in "${rows[@]}"; do
+        [[ -n "$row" ]] && ((items_count++))
+    done
 
     local total_msg=""
     total_msg="$(_i18n 'Total:')"
@@ -2387,53 +2394,57 @@ _display_select_box() {
             wc -l)
     fi
 
-    if [[ -z "$list" ]]; then
+    local -a all_rows=()
+    read -r -d "" -a all_rows < <(printf "%s" "$list")
+
+    # Split the list into rows (skip empty rows).
+    local -a rows=()
+    local row=""
+    for row in "${all_rows[@]}"; do
+        [[ -n "$row" ]] && rows+=("$row")
+    done
+    items_count=${#rows[@]}
+
+    # Build the cells of the list: the selection state (if any) followed by
+    # the row (its columns are separated by '$COL_SEP').
+    local rs=$FIELD_SEPARATOR
+    local cells=""
+    local state=""
+    local i=0
+    for i in "${!rows[@]}"; do
+        if [[ "$par_check_type" != "none" ]]; then
+            state="FALSE"
+            case "${par_check_select,,}" in
+            "all") state="TRUE" ;;
+            "first") ((i == 0)) && state="TRUE" ;;
+            "first_if_one") ((items_count == 1)) && state="TRUE" ;;
+            esac
+            cells+="$state$rs"
+        fi
+        cells+="${rows[i]}$rs"
+    done
+
+    if ((items_count == 0)); then
         # HACK: Workaround for Zenity.
         # Some Zenity versions crash with an empty list.
-        list=" "
-    else
-        items_count=$(tr -cd "\n" <<<"$list" | wc -c)
-    fi
-
-    # Set the selection.
-    if ((items_count > 0)) && [[ "$par_check_type" != "none" ]]; then
-        case "${par_check_select,,}" in
-        "all")
-            list=$(sed "s|^\(.*\)$|TRUE$FIELD_SEPARATOR\1|" <<<"$list")
-            ;;
-        "first")
-            list=$(sed "1s|^\(.*\)$|TRUE$FIELD_SEPARATOR\1|" <<<"$list")
-            list=$(sed "1!s|^\(.*\)$|FALSE$FIELD_SEPARATOR\1|" <<<"$list")
-            ;;
-        "first_if_one")
-            if ((items_count == 1)); then
-                list=$(sed "1s|^\(.*\)$|TRUE$FIELD_SEPARATOR\1|" <<<"$list")
-            else
-                list=$(sed "s|^\(.*\)$|FALSE$FIELD_SEPARATOR\1|" <<<"$list")
-            fi
-            ;;
-        *)
-            list=$(sed "s|^\(.*\)$|FALSE$FIELD_SEPARATOR\1|" <<<"$list")
-            ;;
-        esac
+        cells=" $rs"
     fi
 
     par_columns=$(tr "," "$FIELD_SEPARATOR" <<<"$par_columns")
-    list=$(tr "\n" "$FIELD_SEPARATOR" <<<"$list")
 
-    # Avoid empty fields.
-    local fs=$FIELD_SEPARATOR
-    list=$(sed ":again; s/$fs$fs/$fs $fs/g; t again" <<<"$list")
+    # Separate the columns with '$FIELD_SEPARATOR' and avoid empty fields.
+    cells=$(printf "%s" "$cells" | sed -z "s/$COL_SEP/$rs/g;
+        s/^$rs/ $rs/; :again; s/$rs$rs/$rs $rs/g; t again")
 
     # Avoid leading '-' in the variable to use in command line.
-    list=$(sed "s|^-|./-|; s|$FIELD_SEPARATOR-|$FIELD_SEPARATOR./-|g" \
-        <<<"$list")
+    cells=$(printf "%s" "$cells" | sed -z "s|^-|./-|; s|$rs-|$rs./-|g")
 
     # Split the arguments into arrays (no word splitting or globbing).
     local -a columns_array=()
     local -a list_array=()
     read -r -a columns_array <<<"$par_columns"
-    read -r -a list_array <<<"$list"
+    read -r -d "" -a list_array < <(printf "%s" "$cells")
+    list=$cells
 
     # Get the system limit for arguments.
     local arg_max=""
@@ -2516,7 +2527,7 @@ _display_list_box_xmessage() {
 
     par_columns=$(sed "s|--column:||g" <<<"$par_columns")
     par_columns=$(tr "," "\t" <<<"$par_columns")
-    list=$(tr "$FIELD_SEPARATOR" "\t" <<<"$list")
+    list=$(tr "$FIELD_SEPARATOR$COL_SEP" "\n\t" <<<"$list")
     list="$par_columns"$'\n'$'\n'"$list"
 
     _display_lock
@@ -3647,7 +3658,7 @@ _validate_file_mime() {
     fi
 
     # Create a temp file containing the name of the valid file.
-    _storage_text_write "$input_file$FIELD_SEPARATOR"
+    _storage_text_write "$input_file"
 }
 
 # Function: _validate_file_mime_parallel
@@ -4130,7 +4141,8 @@ _storage_text_read_all() {
 # Function: _storage_text_write
 #
 # Description:
-#   This function writes a given input text to temporary text storage files.
+#   This function writes a given input text, followed by '$FIELD_SEPARATOR',
+#   to a temporary text storage file.
 #
 # Parameters:
 #   $1 (input_text): The text to be stored in a temporary file.
@@ -4145,22 +4157,7 @@ _storage_text_write() {
     # Save the text to be compiled into a single file.
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_STORAGE_TEXT" 2>/dev/null) ||
         return 1
-    printf "%s" "$input_text" >"$temp_file"
-}
-
-# Function: _storage_text_write_ln
-#
-# Description:
-#   This function writes a given input text, followed by a newline character,
-#   to a temporary text storage file.
-_storage_text_write_ln() {
-    local input_text=$1
-
-    if [[ -z "$input_text" ]]; then
-        return
-    fi
-
-    _storage_text_write "$input_text"$'\n'
+    printf "%s" "$input_text$FIELD_SEPARATOR" >"$temp_file"
 }
 
 # -----------------------------------------------------------------------------
@@ -4328,21 +4325,6 @@ _text_remove_pwd() {
     else
         printf "%s" "$input_text"
     fi
-}
-
-# Function: _text_sort
-#
-# Description:
-#   This function sorts the lines of a given text input in a version-aware
-#   manner.
-#
-# Parameters:
-#   $1 (input_text): The input text to be sorted, where each line is
-#      treated as a separate string.
-_text_sort() {
-    local input_text=$1
-
-    LC_ALL=C.UTF-8 sort --version-sort <<<"$input_text"
 }
 
 # Function: _text_uri_decode

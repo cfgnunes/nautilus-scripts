@@ -22,6 +22,7 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
+    std_output=$(tr "$FIELD_SEPARATOR" "\n" <<<"$std_output")
 
     # Replace 3+ consecutive newlines with 2 newlines.
     std_output=$(sed -z "s|\n\{3,\}|\n\n|g" <<<"$std_output")
@@ -62,9 +63,12 @@ _main_task() {
         status="🔴"
     fi
 
+    # Remove the CR of the HTTP headers (CRLF), because '\r' is the
+    # '$FIELD_SEPARATOR'.
+    std_output=${std_output//$'\r'/}
     std_output=$(_text_remove_empty_lines "$std_output")
 
-    _storage_text_write_ln "$status __MSG_URL__: $input_file"$'\n'"$std_output"$'\n'
+    _storage_text_write "$status __MSG_URL__: $input_file"$'\n'"$std_output$FIELD_SEPARATOR"
 }
 
 # Function: _extract_urls

@@ -31,34 +31,56 @@ _main() {
         "$temp_file" "${items[@]}" &>/dev/null
 
     # Parse the output.
-    std_output=$(awk '# A first-occurrence line starts a new group.
-        /^DUPTYPE_FIRST_OCCURRENCE/ { n = 0 }
-
-        /^DUPTYPE_/ {
-            # Extract the file path starting from field 8.
-            file = substr($0, index($0, $8))
-
+    # NOTE: A file name with newlines spans many lines in the output.
+    std_output=$(awk \
+        -v col_sep="$COL_SEP" \
+        -v row_sep="$FIELD_SEPARATOR" '
+        function add_file(file) {
             # Replace double slashes with a single slash.
             gsub(/\/+/, "/", file)
 
             # Skip files inside a .git directory.
             if (file ~ /\.git\//)
-                next
+                return
 
             # Hold the first file until a second one shows up.
             if (++n == 1) {
                 first = file
-                next
+                return
             }
 
             # The group has 2+ files: assign the ID and print the held file.
             if (n == 2) {
                 id++
-                print id "\r" first
+                printf "%s%s%s%s", id, col_sep, first, row_sep
             }
 
-            print id "\r" file
-        }' <"$temp_file")
+            printf "%s%s%s%s", id, col_sep, file, row_sep
+        }
+
+        function flush() {
+            if (pending)
+                add_file(file)
+            pending = 0
+        }
+
+        /^DUPTYPE_/ {
+            flush()
+
+            # A first-occurrence line starts a new group.
+            if ($0 ~ /^DUPTYPE_FIRST_OCCURRENCE/)
+                n = 0
+
+            # Extract the file path starting from field 8.
+            file = substr($0, index($0, $8))
+            pending = 1
+            next
+        }
+
+        # A line without the prefix continues a file name with newlines.
+        pending && !/^# end of file/ { file = file "\n" $0 }
+
+        END { flush() }' <"$temp_file")
     rm -f -- "$temp_file"
 
     std_output=$(_text_remove_pwd "$std_output")

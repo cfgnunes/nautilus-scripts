@@ -24,7 +24,7 @@ _main() {
     std_output=$(find -L "${items[@]}" \
         ! -regex "$IGNORE_FIND" \
         -type d -empty \
-        -printf "%p\n" 2>/dev/null)
+        -printf "%p$FIELD_SEPARATOR" 2>/dev/null)
 
     std_output=$(_text_remove_pwd "$std_output")
 

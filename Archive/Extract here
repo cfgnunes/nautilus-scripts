@@ -33,6 +33,7 @@ _main() {
 
     local dependencies=""
     dependencies=$(_storage_text_read_all)
+    dependencies=$(tr "$FIELD_SEPARATOR" "\n" <<<"$dependencies")
 
     _check_dependencies "$dependencies"
     _display_wait_box ""
@@ -137,7 +138,7 @@ _get_dependencies() {
 
     command=$(_get_command "$input_file" "default")
 
-    _storage_text_write_ln "$command"
+    _storage_text_write "$command"
 }
 
 # Function: _get_command

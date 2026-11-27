@@ -24,7 +24,7 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    std_output=$(_text_sort "$std_output")
+    std_output=$(_str_sort "$std_output" "$FIELD_SEPARATOR" "false")
 
     # Translate some strings from the '$std_output'.
     # shellcheck disable=SC2001
@@ -50,9 +50,9 @@ _main_task() {
 
     # Any invalid signature makes the whole file invalid.
     if [[ "$std_output" == *"Signature is Invalid"* ]]; then
-        _storage_text_write_ln "🔴 __MSG_Invalid__$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
+        _storage_text_write "🔴 __MSG_Invalid__$COL_SEP$(_text_remove_pwd "$input_file")"
     elif [[ "$std_output" == *"Signature is Valid"* ]]; then
-        _storage_text_write_ln "🟢 __MSG_Valid__$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
+        _storage_text_write "🟢 __MSG_Valid__$COL_SEP$(_text_remove_pwd "$input_file")"
     fi
 }
 

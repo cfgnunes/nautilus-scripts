@@ -26,7 +26,7 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    std_output=$(_text_sort "$std_output")
+    std_output=$(_str_sort "$std_output" "$FIELD_SEPARATOR" "false")
 
     _display_list_box "$std_output" "
         par_item_name=$(_i18n 'files')
@@ -59,7 +59,7 @@ _main_task() {
     sampling_rate=$(grep -o -P -m1 "^SamplingRate:\K.*" <<<"$std_output")
     channels=$(grep -o -P -m1 "^Channel[^:]+:\K.*" <<<"$std_output")
 
-    _storage_text_write_ln "$mode$FIELD_SEPARATOR$bit_rate$FIELD_SEPARATOR$sampling_rate$FIELD_SEPARATOR$channels$FIELD_SEPARATOR$(_text_remove_pwd "$input_file")"
+    _storage_text_write "$mode$COL_SEP$bit_rate$COL_SEP$sampling_rate$COL_SEP$channels$COL_SEP$(_text_remove_pwd "$input_file")"
 }
 
 _main "$@"

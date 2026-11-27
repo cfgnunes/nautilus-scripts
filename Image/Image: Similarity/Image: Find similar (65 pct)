@@ -73,7 +73,7 @@ _main_task() {
         [[ -f "$fp_reference" ]] || continue
 
         # Store the original path of the similar image.
-        _storage_text_write_ln "$(cat -- "$fp_reference.txt")"
+        _storage_text_write "$(cat -- "$fp_reference.txt")"
 
         # Compare '$fp_reference' with all others fingerprints.
         _run_function_parallel "$(__find_fps)" "$FIELD_SEPARATOR" "" \
@@ -90,17 +90,15 @@ _main_task() {
         local std_output=""
         std_output=$(_storage_text_read_all)
         _storage_text_clean
-        std_output=$(sort --unique <<<"$std_output")
+        std_output=$(_str_sort "$std_output" "$FIELD_SEPARATOR" "true")
 
         # Skip if less than two similar items.
-        local items_count=""
-        items_count=$(tr -cd "\n" <<<"$std_output" | wc -c)
-        if ((items_count < 2)); then
+        if (($(_get_items_count "$std_output") < 2)); then
             continue
         fi
 
         local -a similar_files=()
-        IFS=$'\n' read -r -d '' -a similar_files <<<"$std_output" || true
+        read -r -d "" -a similar_files < <(printf "%s" "$std_output")
 
         # Determine the image viewer.
         local image_viewer=""
@@ -192,7 +190,7 @@ _compare_fingerprints() {
     if [[ "$(LC_ALL=C.UTF-8 awk -v s="$ssim" -v t="$threshold" \
         'BEGIN{print (s >= t) ? 1 : 0}')" == "1" ]]; then
         # Store the original path of the similar image.
-        _storage_text_write_ln "$(cat -- "$fp_compare.txt")"
+        _storage_text_write "$(cat -- "$fp_compare.txt")"
 
         # If the fingerprints belong to different files, remove the
         # duplicate fingerprint.

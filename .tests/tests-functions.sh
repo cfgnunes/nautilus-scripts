@@ -96,7 +96,6 @@ _main() {
     __run_strip_filename_extension
     __run_text_remove_empty_lines
     __run_text_remove_pwd
-    __run_text_sort
     __run_text_uri_decode
     __run_validate_file_mime
     __run_validate_file_mime_parallel
@@ -427,29 +426,22 @@ __run_storage_text() {
     # Test all functions related to the storage text feature:
     # '_storage_text_clean'
     # '_storage_text_read_all'
-    # '_storage_text_write_ln'
     # '_storage_text_write'
 
     local expected_output=""
     local output=""
 
-    _storage_text_write_ln "Line"
-    _storage_text_write_ln "Line"
-    _storage_text_write_ln "Line"
+    _storage_text_write "Line"
+    _storage_text_write "Line"
+    _storage_text_write "Line"
 
-    expected_output="Line"$'\n'"Line"$'\n'"Line"
+    expected_output="Line${FIELD_SEPARATOR}Line${FIELD_SEPARATOR}Line"
+    expected_output+=$FIELD_SEPARATOR
     output=$(_storage_text_read_all)
     _storage_text_clean
 
     __test_equal "Write/read the compiled result." "$expected_output" "$output"
 
-    _storage_text_write "Line"
-    _storage_text_write "Line"
-    _storage_text_write "Line"
-
-    expected_output="LineLineLine"
-    output=$(_storage_text_read_all)
-    __test_equal "Write/read the compiled result." "$expected_output" "$output"
 }
 
 __run_strip_filename_extension() {
@@ -635,42 +627,6 @@ __run_str_collapse_char() {
     expected_output="abc"
     output=$(_str_collapse_char "$input" "x")
     __test_equal "$input" "$expected_output" "$output"
-}
-
-__run_text_sort() {
-    local input=""
-    local expected_output=""
-    local output=""
-
-    input=""
-    expected_output=""
-    output=$(_text_sort "$input")
-    __test_equal "$input" "$expected_output" "$output"
-
-    input="Line1"$'\n'"Line2"
-    expected_output="Line1"$'\n'"Line2"
-    output=$(_text_sort "$input")
-    __test_equal "$input" "$expected_output" "$output"
-
-    input="Line2"$'\n'"Line1"
-    expected_output="Line1"$'\n'"Line2"
-    output=$(_text_sort "$input")
-    __test_equal "$input" "$expected_output" "$output"
-
-    input="10"$'\n'"2"
-    expected_output="2"$'\n'"10"
-    output=$(_text_sort "$input")
-    __test_equal "$input" "$expected_output" "$output"
-
-    input="1.10"$'\n'"1.2"
-    expected_output="1.2"$'\n'"1.10"
-    output=$(_text_sort "$input")
-    __test_equal "Version sort." "$expected_output" "$output"
-
-    input="b"$'\n'"a"$'\n'"a"
-    expected_output="a"$'\n'"a"$'\n'"b"
-    output=$(_text_sort "$input")
-    __test_equal "Keep duplicate lines." "$expected_output" "$output"
 }
 
 __run_get_items_count() {
@@ -1507,9 +1463,6 @@ __run_storage_text_edge_cases() {
     file_count=$(find "$TEMP_DIR_STORAGE_TEXT" -type f 2>/dev/null | wc -l)
     __test_equal "Empty write creates no files." "0" "$file_count"
 
-    _storage_text_write_ln ""
-    file_count=$(find "$TEMP_DIR_STORAGE_TEXT" -type f 2>/dev/null | wc -l)
-    __test_equal "Empty write_ln creates no files." "0" "$file_count"
 
     _storage_text_write "alpha"
     _storage_text_clean
@@ -1521,7 +1474,8 @@ __run_storage_text_edge_cases() {
     _storage_text_write "ccc"
     output=$(_storage_text_read_all)
     _storage_text_clean
-    __test_equal "Larger chunks are read first." "ccca" "$output"
+    __test_equal "Larger chunks are read first." \
+        "ccc${FIELD_SEPARATOR}a${FIELD_SEPARATOR}" "$output"
 }
 
 __parallel_test_task() {
@@ -1713,7 +1667,7 @@ __is_qt_desktop_with() {
 }
 
 _main_task() {
-    _storage_text_write_ln "$1|$2"
+    _storage_text_write "$1|$2"
 }
 
 __run_add_path_env() {

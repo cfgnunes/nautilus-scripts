@@ -25,7 +25,7 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    std_output=$(_text_sort "$std_output")
+    std_output=$(_str_sort "$std_output" "$FIELD_SEPARATOR" "false")
 
     # Translate some strings from the '$std_output'.
     # shellcheck disable=SC2001
@@ -60,7 +60,7 @@ _main_task() {
         std_output="__MSG_NoLB__"
     fi
 
-    _storage_text_write_ln "${std_output}${FIELD_SEPARATOR}${input_file}"
+    _storage_text_write "${std_output}${COL_SEP}${input_file}"
 }
 
 _main "$@"

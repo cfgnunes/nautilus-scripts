@@ -38,7 +38,7 @@ _main() {
         std_output="$(_i18n '(No differences)')"
     else
         std_output=$(_text_remove_pwd "$std_output")
-        std_output=$(_text_sort "$std_output")
+        std_output=$(LC_ALL=C.UTF-8 sort --version-sort <<<"$std_output")
     fi
 
     _display_text_box "$std_output" "Diff.txt"

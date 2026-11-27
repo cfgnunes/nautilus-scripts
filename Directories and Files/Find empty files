@@ -22,7 +22,7 @@ _main() {
     # Run the main process.
     std_output=$(find -L "${items[@]}" \
         ! -regex "$IGNORE_FIND" \
-        -type f -empty -printf "%p\n" 2>/dev/null)
+        -type f -empty -printf "%p$FIELD_SEPARATOR" 2>/dev/null)
 
     std_output=$(_text_remove_pwd "$std_output")
 
