@@ -37,7 +37,7 @@ _reset_permissions() {
 
     # Split the list into an array.
     local -a items=()
-    read -r -a items <<<"$input_files"
+    read -r -d "" -a items < <(printf "%s" "$input_files")
 
     # List of sensitive directories to apply strict permissions (700).
     local -a sensitive_dirs=(

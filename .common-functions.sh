@@ -1493,7 +1493,7 @@ _delete_items() {
 
     # Split the list into an array.
     local -a items_array=()
-    read -r -a items_array <<<"$items"
+    read -r -d "" -a items_array < <(printf "%s" "$items")
 
     # The list shows paths relative to the working directory. Restore the
     # absolute paths so the action does not depend on the current directory.
@@ -2339,7 +2339,7 @@ _display_select_box_action() {
         "open_file")
             # Split the list into an array.
             local -a items_array=()
-            read -r -a items_array <<<"$selected_items"
+            read -r -d "" -a items_array < <(printf "%s" "$selected_items")
 
             local item=""
             for item in "${items_array[@]}"; do
@@ -3956,7 +3956,7 @@ _open_items_locations() {
 
     # Split the list into an array.
     local -a items_array=()
-    read -r -a items_array <<<"$items"
+    read -r -d "" -a items_array < <(printf "%s" "$items")
 
     # Prepare items to be opened by the file manager.
     local -a items_open_array=()

@@ -35,7 +35,7 @@ _build_tmux_session() {
 
     # Split the list into an array.
     local -a items=()
-    read -r -a items <<<"$input_files"
+    read -r -d "" -a items < <(printf "%s" "$input_files")
 
     # Create a new tmux session in detached mode, in the first directory.
     local first_pane=""

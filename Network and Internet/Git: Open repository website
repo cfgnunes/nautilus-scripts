@@ -75,7 +75,7 @@ _open_repository_website() {
     local input_files=$1
 
     local -a items=()
-    read -r -a items <<<"$input_files"
+    read -r -d "" -a items < <(printf "%s" "$input_files")
 
     # Iterate over each input file (directory).
     local input_file=""

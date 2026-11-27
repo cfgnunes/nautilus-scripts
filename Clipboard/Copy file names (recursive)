@@ -16,7 +16,7 @@ _main() {
 
     # Split the list into an array.
     local -a items=()
-    read -r -a items <<<"$input_files"
+    read -r -d "" -a items < <(printf "%s" "$input_files")
 
     input_files=$(basename --multiple -- "${items[@]}")
 

@@ -109,7 +109,7 @@ _prepare_input() {
 
     # Split the list into an array.
     local -a items=()
-    read -r -a items <<<"$input_files"
+    read -r -d "" -a items < <(printf "%s" "$input_files")
 
     data=$(grep \
         --binary-files=without-match \

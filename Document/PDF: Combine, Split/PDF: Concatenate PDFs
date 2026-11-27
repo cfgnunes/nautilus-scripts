@@ -38,7 +38,7 @@ _main_task() {
 
     # Split the list into an array.
     local -a items=()
-    read -r -a items <<<"$input_files"
+    read -r -d "" -a items < <(printf "%s" "$input_files")
 
     # Run the main process.
     std_output=$(_run_in_sandbox "$output_dir" "false" \

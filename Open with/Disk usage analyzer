@@ -29,7 +29,7 @@ _open_app() {
 
     # Split the list into an array.
     local -a items=()
-    read -r -a items <<<"$input_files"
+    read -r -d "" -a items < <(printf "%s" "$input_files")
 
     local input_file=""
     for input_file in "${items[@]}"; do
