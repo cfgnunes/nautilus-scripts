@@ -24,17 +24,17 @@
 # Example of usage:
 #   source "multiselect-menu.sh"
 #   labels=("Option A" "Option B")
-#   defaults=("true" "false")
-#   _multiselect_menu selected labels defaults || return 1
-#   echo "Option A: ${selected[0]}"
-#   echo "Option B: ${selected[1]}"
+#   initial_values=("true" "false")
+#   _multiselect_menu labels initial_values checked_values || return 1
+#   echo "Option A: ${checked_values[0]}"
+#   echo "Option B: ${checked_values[1]}"
 # =============================================================================
 
 _multiselect_menu() {
-    local -n _result=$1
-    local -n _options=$2
-    local -n _defaults=$3
-    local count=${#_options[@]}
+    local -n _labels=$1
+    local -n _initial_values=$2
+    local -n _checked_values=$3
+    local labels_count=${#_labels[@]}
 
     # Ensure that the terminal is interactive.
     [[ -t 0 ]] || return 2
@@ -86,20 +86,20 @@ _multiselect_menu() {
             ;;
         esac
     }
-    __print_options() {
-        local i_option=$1
+    __print_menu() {
+        local i_cursor=$1
         local prefix=""
 
         local i
-        for i in "${!_options[@]}"; do
+        for i in "${!_labels[@]}"; do
             prefix="[ ]"
-            [[ ${option[i]} == "true" ]] && prefix=$'[\033[0;32m*\033[0m]'
+            [[ ${values[i]} == "true" ]] && prefix=$'[\033[0;32m*\033[0m]'
 
             __cursor_to "$((start_row + i))"
-            if ((i == i_option)); then
-                printf "%s \033[7m%s\033[27m" "$prefix" "${_options[i]}"
+            if ((i == i_cursor)); then
+                printf "%s \033[7m%s\033[27m" "$prefix" "${_labels[i]}"
             else
-                printf "%s %s" "$prefix" "${_options[i]}"
+                printf "%s %s" "$prefix" "${_labels[i]}"
             fi
         done
     }
@@ -122,11 +122,11 @@ _multiselect_menu() {
     trap "__abort 129" HUP
     trap "__restore_terminal" EXIT
 
-    # Process the 'defaults' parameter.
-    local -a option=()
+    # Process the 'initial_values' parameter.
+    local -a values=()
     local i=""
-    for i in "${!_options[@]}"; do
-        option+=("${_defaults[i]:-false}")
+    for i in "${!_labels[@]}"; do
+        values+=("${_initial_values[i]:-false}")
         printf "\n"
     done
 
@@ -136,14 +136,14 @@ _multiselect_menu() {
         __finish
         return 1
     fi
-    start_row=$((last_row - count))
+    start_row=$((last_row - labels_count))
 
     # Main loop of the menu.
     i=0
     local key_cmd=""
     printf "\033[?25l" # Hide the cursor.
     while true; do
-        __print_options "$i"
+        __print_menu "$i"
 
         if ! key_cmd=$(__get_key_cmd); then
             __cursor_to "$last_row"
@@ -153,28 +153,28 @@ _multiselect_menu() {
 
         case $key_cmd in
         "confirm")
-            __print_options -1
+            __print_menu -1
             break
             ;;
         "toggle_opt")
-            if [[ ${option[i]} == "true" ]]; then
-                option[i]="false"
+            if [[ ${values[i]} == "true" ]]; then
+                values[i]="false"
             else
-                option[i]="true"
+                values[i]="true"
             fi
             ;;
         "toggle_all")
-            if [[ ${option[i]} == "true" ]]; then
-                option=("${option[@]/*/false}")
+            if [[ ${values[i]} == "true" ]]; then
+                values=("${values[@]/*/false}")
             else
-                option=("${option[@]/*/true}")
+                values=("${values[@]/*/true}")
             fi
             ;;
         "quit") __abort 1 ;;
-        "up") i=$(((i - 1 + count) % count)) ;;
-        "down") i=$(((i + 1) % count)) ;;
+        "up") i=$(((i - 1 + labels_count) % labels_count)) ;;
+        "down") i=$(((i + 1) % labels_count)) ;;
         "home") i=0 ;;
-        "end") i=$((count - 1)) ;;
+        "end") i=$((labels_count - 1)) ;;
         esac
     done
 
@@ -182,5 +182,5 @@ _multiselect_menu() {
     __cursor_to "$last_row"
     __finish
 
-    _result=("${option[@]}")
+    _checked_values=("${values[@]}")
 }

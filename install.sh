@@ -95,7 +95,6 @@ readonly \
 # Use current username if '$USER' is undefined.
 USER=${USER:-$(id -un)}
 
-
 # -----------------------------------------------------------------------------
 # SECTION: Global variables
 # -----------------------------------------------------------------------------
@@ -221,13 +220,15 @@ trap _on_exit EXIT
 
 # shellcheck disable=SC2034
 _main() {
-    local -a cat_defaults=()
+    # Variables for the main menu.
+    local -a menu_labels=()
+    local -a menu_initial_values=()
+    local -a menu_checked_values=()
+    # Variables for the categories menu.
     local -a cat_dirs=()
     local -a cat_dirs_translated=()
-    local -a cat_selected=()
-    local -a menu_defaults=()
-    local -a menu_labels=()
-    local -a menu_selected=()
+    local -a cat_initial_values=()
+    local -a cat_checked_values=()
 
     _log "[INF] Installation started."
 
@@ -266,7 +267,7 @@ _main() {
     )
 
     # Default states for the menu options.
-    menu_defaults=(
+    menu_initial_values=(
         "$OPT_INSTALL_BASIC_DEPS"
         "$OPT_INSTALL_ACCELS"
         "$OPT_CLOSE_FILE_MANAGER"
@@ -281,20 +282,21 @@ _main() {
 
     if [[ "$OPT_INTERACTIVE_INSTALL" == "true" ]]; then
         _echo "$(_i18n 'Select the options (<SPACE> to check, <ENTER> to confirm):')"
-
-        # Display the interactive menu and capture user selections.
-        _multiselect_menu menu_selected menu_labels menu_defaults || return 1
+        _multiselect_menu \
+            menu_labels \
+            menu_initial_values \
+            menu_checked_values || return 1
     else
         _echo_info "$(_i18n 'Installing in non-interactive mode...')"
-        menu_selected=("${menu_defaults[@]}")
+        menu_checked_values=("${menu_initial_values[@]}")
     fi
 
     # Map menu selections into a comma-separated string of options.
-    OPT_INSTALL_BASIC_DEPS=${menu_selected[0]}
-    OPT_INSTALL_ACCELS=${menu_selected[1]}
-    OPT_CLOSE_FILE_MANAGER=${menu_selected[2]}
-    OPT_INSTALL_PKGX=${menu_selected[3]}
-    OPT_CHOOSE_CATEGORIES=${menu_selected[4]}
+    OPT_INSTALL_BASIC_DEPS=${menu_checked_values[0]}
+    OPT_INSTALL_ACCELS=${menu_checked_values[1]}
+    OPT_CLOSE_FILE_MANAGER=${menu_checked_values[2]}
+    OPT_INSTALL_PKGX=${menu_checked_values[3]}
+    OPT_CHOOSE_CATEGORIES=${menu_checked_values[4]}
 
     _log_variable "OPT_INSTALL_BASIC_DEPS"
     _log_variable "OPT_INSTALL_ACCELS"
@@ -310,14 +312,17 @@ _main() {
     while IFS= read -r -d '' dir; do
         cat_dirs+=("$dir")
         cat_dirs_translated+=("$(_i18n "$dir")")
-        cat_defaults+=("true")
+        cat_initial_values+=("true")
     done < <(_list_scripts_categories)
 
     # If requested, let the user select which categories to install.
     if [[ "$OPT_CHOOSE_CATEGORIES" == "true" ]]; then
         _echo ""
         _echo "$(_i18n 'Select the options (<SPACE> to check, <ENTER> to confirm):')"
-        _multiselect_menu cat_selected cat_dirs_translated cat_defaults || return 1
+        _multiselect_menu \
+            cat_dirs_translated \
+            cat_initial_values \
+            cat_checked_values || return 1
     fi
 
     # Step 1: Check for basic dependencies.
@@ -334,7 +339,7 @@ _main() {
     _echo_info "$(_i18n 'Installing:')"
     _echo_info "> $(_i18n 'User'): $INSTALL_OWNER"
     _echo_info "> $(_i18n 'Directory'): $INSTALL_DIR"
-    _install_scripts cat_selected cat_dirs
+    _install_scripts cat_checked_values cat_dirs
 
     # Step 3: Install file manager configurations.
     # Install the actions and the keyboard accelerators for
@@ -542,7 +547,7 @@ _sanitize_string() {
 # -----------------------------------------------------------------------------
 
 _install_scripts() {
-    local -n _cat_selected=$1
+    local -n _cat_checked_values=$1
     local -n _cat_dirs=$2
 
     rm -rf -- "$INSTALL_DIR" 2>/dev/null
@@ -552,10 +557,10 @@ _install_scripts() {
     cp -rf -- "$SCRIPT_DIR/." "$INSTALL_DIR"
 
     # Remove unselected categories from the install directory.
-    if [[ ${#_cat_selected[@]} -gt 0 ]]; then
+    if [[ ${#_cat_checked_values[@]} -gt 0 ]]; then
         local i=0
         for i in "${!_cat_dirs[@]}"; do
-            if [[ ${_cat_selected[i]} == "false" ]]; then
+            if [[ ${_cat_checked_values[i]} == "false" ]]; then
                 rm -rf -- "$INSTALL_DIR/${_cat_dirs[i]:?}"
             fi
         done
