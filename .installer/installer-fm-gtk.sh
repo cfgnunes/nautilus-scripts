@@ -16,7 +16,7 @@ _create_links() {
 
     # Process all files and directories recursively.
     local file_path=""
-    while IFS= read -r -d $'\0' file_path; do
+    while IFS= read -r -d '' file_path; do
         relative_path="${file_path#"$INSTALL_DIR"/}"
         dir=$(dirname -- "$relative_path")
         name=$(basename -- "$file_path")
@@ -89,7 +89,7 @@ _install_accels_gnome2() {
         printf "%s\n" '(gtk_accel_path "<Actions>/DirViewActions/OpenInNewTab" "")'
 
         local filename=""
-        while IFS= read -r -d $'\0' filename; do
+        while IFS= read -r -d '' filename; do
             local keyboard_shortcut=""
             keyboard_shortcut=$(_get_par_value \
                 "$filename" "install_keyboard_shortcut")

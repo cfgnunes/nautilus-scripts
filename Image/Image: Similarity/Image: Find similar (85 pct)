@@ -100,7 +100,7 @@ _main_task() {
         fi
 
         local -a similar_files=()
-        IFS=$'\n' read -r -d "" -a similar_files <<<"$std_output" || true
+        IFS=$'\n' read -r -d '' -a similar_files <<<"$std_output" || true
 
         # Determine the image viewer.
         local image_viewer=""

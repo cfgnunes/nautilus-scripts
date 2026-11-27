@@ -3213,7 +3213,7 @@ _get_max_procs() {
 #   file managers (Nautilus, Nemo, Caja) during script execution.
 _unset_global_variables_file_manager() {
     local -a vars=()
-    IFS=$'\n' read -r -d "" -a vars < <(compgen -v | grep "_SCRIPT_") || true
+    IFS=$'\n' read -r -d '' -a vars < <(compgen -v | grep "_SCRIPT_") || true
     unset "${vars[@]}"
 }
 
@@ -4597,7 +4597,7 @@ _recent_scripts_add() {
     # Part 2: Organize links.
     local -a links=()
     local link=""
-    while IFS= read -r -d $'\0' link; do
+    while IFS= read -r -d '' link; do
         # Check if the link is broken.
         if [[ ! -e "$link" ]]; then
             # Remove broken links.

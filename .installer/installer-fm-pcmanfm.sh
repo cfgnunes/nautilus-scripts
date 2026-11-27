@@ -81,7 +81,7 @@ _install_actions_pcmanfm() {
     local dir_items=""
     local name=""
     local filename=""
-    while IFS= read -r -d $'\0' filename; do
+    while IFS= read -r -d '' filename; do
         name=${filename##*/}
         dir_items=$(find -L "$filename" -mindepth 1 -maxdepth 1 \
             "${IGNORE_FIND_PATHS[@]}" \
@@ -113,7 +113,7 @@ _install_actions_pcmanfm() {
     # Create a '.desktop' file for each script.
     # -------------------------------------------------------------------------
     local action_name=""
-    while IFS= read -r -d $'\0' filename; do
+    while IFS= read -r -d '' filename; do
         name=${filename##*/}
 
         action_name=$(_sanitize_string <<<"$name")

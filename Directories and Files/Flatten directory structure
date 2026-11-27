@@ -51,13 +51,13 @@ _flatten_directory() {
 
     # For each directory, add a command to the 'undo script' to recreate the directory structure.
     local dir_path=""
-    while IFS= read -r -d "" dir_path; do
+    while IFS= read -r -d '' dir_path; do
         printf "mkdir -p -- %q\n" "$dir_path" >>"$undo_script"
     done < <(find . -mindepth 1 -type d -print0 2>/dev/null)
 
     # Loop through each file in the list and move it to the root directory.
     local full_path_filename=""
-    while IFS= read -r -d "" full_path_filename; do
+    while IFS= read -r -d '' full_path_filename; do
         # Get the file's name (basename) for moving it to the root directory.
         filename="./$(basename -- "$full_path_filename")"
 

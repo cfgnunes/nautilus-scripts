@@ -307,7 +307,7 @@ _main() {
 
     # Collect all available script categories (directories).
     local dir=""
-    while IFS= read -r -d $'\0' dir; do
+    while IFS= read -r -d '' dir; do
         cat_dirs+=("$dir")
         cat_dirs_translated+=("$(_i18n "$dir")")
         cat_defaults+=("true")

@@ -147,7 +147,7 @@ _main_task() {
     remote_branches=$(LC_ALL=C.UTF-8 git branch -r --format="%(refname:short)" | sed 's|^origin/||')
 
     local -a branches_delete=()
-    IFS=$'\n' read -r -d "" -a branches_delete < <(
+    IFS=$'\n' read -r -d '' -a branches_delete < <(
         grep -vxE "($skip_branches)" <<<"$local_branches" |
             grep -vxFf <(printf '%s\n' "$remote_branches")) || true
 

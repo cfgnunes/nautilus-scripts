@@ -50,7 +50,7 @@ _main_task() {
 
     # Merge the PDF files in the temporary directory into a single output file.
     local -a parts=()
-    IFS=$'\n' read -r -d "" -a parts < <(find "$temp_dir" -type f 2>/dev/null |
+    IFS=$'\n' read -r -d '' -a parts < <(find "$temp_dir" -type f 2>/dev/null |
         LC_ALL=C.UTF-8 sort --version-sort) || true
     std_output=$(_run_in_sandbox "$output_dir" "false" \
         pdfcpu merge "$output_file" "${parts[@]}" 2>&1)

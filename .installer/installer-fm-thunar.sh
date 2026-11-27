@@ -33,7 +33,7 @@ _install_accels_thunar() {
         printf "%s\n" '(gtk_accel_path "<Actions>/ThunarWindow/view-side-pane-tree" "")'
 
         local filename=""
-        while IFS= read -r -d $'\0' filename; do
+        while IFS= read -r -d '' filename; do
             local keyboard_shortcut=""
             keyboard_shortcut=$(_get_par_value \
                 "$filename" "install_keyboard_shortcut")
@@ -96,7 +96,7 @@ _install_actions_thunar() {
         local msg_scripts=""
         msg_scripts=$(_i18n 'Scripts')
 
-        while IFS= read -r -d $'\0' filename; do
+        while IFS= read -r -d '' filename; do
             name=$(basename -- "$filename")
             submenu=$(dirname -- "$filename")
             submenu="$msg_scripts/${submenu##*scripts/}"

@@ -33,7 +33,7 @@ _main_task() {
 
     # Rename files.
     local file=""
-    while IFS= read -r -d $'\0' file; do
+    while IFS= read -r -d '' file; do
         local dir=""
         local filename=""
         local new_filename=""
@@ -52,7 +52,7 @@ _main_task() {
 
     # Rename directories.
     local dir=""
-    while IFS= read -r -d $'\0' dir; do
+    while IFS= read -r -d '' dir; do
         local parent_dir=""
         local dirname=""
         local new_dirname=""

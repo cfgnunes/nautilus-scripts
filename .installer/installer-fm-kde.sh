@@ -38,7 +38,7 @@ _install_actions_kio_servicemenus() {
     local script_relative=""
     local submenu=""
     local filename=""
-    while IFS= read -r -d $'\0' filename; do
+    while IFS= read -r -d '' filename; do
         script_relative=${filename##*scripts/}
         name=${script_relative##*/}
         submenu=${script_relative%%/*}

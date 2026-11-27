@@ -22,7 +22,7 @@ _install_accels_nautilus() {
     local -A new_by_shortcut=()
     local -a new_lines=()
     local filename=""
-    while IFS= read -r -d $'\0' filename; do
+    while IFS= read -r -d '' filename; do
         # Read the shortcut declared in the script header.
         local keyboard_shortcut=""
         keyboard_shortcut=$(_get_par_value \

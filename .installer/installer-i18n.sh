@@ -57,7 +57,7 @@ _i18n_print_desktop_name() {
     local name=$2
 
     local po_file=""
-    while IFS= read -r -d $'\0' po_file; do
+    while IFS= read -r -d '' po_file; do
         local msg=""
         msg=$(_i18n_get_translation "$I18N_DIR/$po_file" "$name")
         printf "%s\n" "${prefix}[${po_file%.po}]=${msg}"
