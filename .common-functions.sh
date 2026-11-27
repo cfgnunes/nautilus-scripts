@@ -2377,94 +2377,77 @@ _display_select_box() {
         par_columns="--column="
     fi
 
-    case "$par_check_type" in
-    "checkbox")
-        par_columns="--column=$ITEM_SEP$par_columns"
-        par_columns="--checklist$ITEM_SEP$par_columns"
-        ;;
-    "radiolist")
-        par_columns="--column=$ITEM_SEP$par_columns"
-        par_columns="--radiolist$ITEM_SEP$par_columns"
-        ;;
+    # Remove empty rows and count the remaining ones.
+    list=$(_str_collapse_char "$list" "$ITEM_SEP")
+    items_count=$(_get_items_count "$list")
+
+    # Add the selection column (if any) and define the selection state of the
+    # first and the other rows.
+    local check_flag=""
+    case "${par_check_type,,}" in
+    "checkbox") check_flag="--checklist" ;;
+    "radiolist") check_flag="--radiolist" ;;
     esac
-
-    if [[ -n "$par_columns" ]]; then
-        par_columns=$(tr ":" "=" <<<"$par_columns")
-        columns_count=$(grep --only-matching "column=" <<<"$par_columns" |
-            wc -l)
+    local first=""
+    local other=""
+    if [[ -n "$check_flag" ]]; then
+        par_columns="$check_flag$COL_SEP--column=$COL_SEP$par_columns"
+        first="FALSE$COL_SEP"
+        other="FALSE$COL_SEP"
+        case "${par_check_select,,}" in
+        "all")
+            first="TRUE$COL_SEP"
+            other="TRUE$COL_SEP"
+            ;;
+        "first")
+            first="TRUE$COL_SEP"
+            ;;
+        "first_if_one")
+            ((items_count == 1)) && first="TRUE$COL_SEP"
+            ;;
+        esac
     fi
+    par_columns=$(tr ":" "=" <<<"$par_columns")
+    columns_count=$(grep --only-matching "column=" <<<"$par_columns" | wc -l)
 
-    local -a all_rows=()
-    read -r -d "" -a all_rows < <(printf "%s" "$list")
-
-    # Split the list into rows (skip empty rows).
-    local -a rows=()
-    local row=""
-    for row in "${all_rows[@]}"; do
-        [[ -n "$row" ]] && rows+=("$row")
-    done
-    items_count=${#rows[@]}
-
-    # Build the cells of the list: the selection state (if any) followed by
-    # the row (its columns are separated by '$COL_SEP').
-    local rs=$ITEM_SEP
-    local cells=""
-    local state=""
-    local i=0
-    for i in "${!rows[@]}"; do
-        if [[ "$par_check_type" != "none" ]]; then
-            state="FALSE"
-            case "${par_check_select,,}" in
-            "all") state="TRUE" ;;
-            "first") ((i == 0)) && state="TRUE" ;;
-            "first_if_one") ((items_count == 1)) && state="TRUE" ;;
-            esac
-            cells+="$state$rs"
-        fi
-        cells+="${rows[i]}$rs"
-    done
-
-    if ((items_count == 0)); then
-        # HACK: Workaround for Zenity.
-        # Some Zenity versions crash with an empty list.
-        cells=" $rs"
-    fi
-
-    par_columns=$(tr "," "$ITEM_SEP" <<<"$par_columns")
-
-    # Separate the columns with '$ITEM_SEP' and avoid empty fields.
-    cells=$(printf "%s" "$cells" | sed -z "s/$COL_SEP/$rs/g;
-        s/^$rs/ $rs/; :again; s/$rs$rs/$rs $rs/g; t again")
-
-    # Avoid leading '-' in the variable to use in command line.
-    cells=$(printf "%s" "$cells" | sed -z "s|^-|./-|; s|$rs-|$rs./-|g")
-
-    # Split the arguments into arrays (no word splitting or globbing).
-    local -a columns_array=()
     local -a list_array=()
-    read -r -a columns_array <<<"$par_columns"
-    read -r -d "" -a list_array < <(printf "%s" "$cells")
-    list=$cells
+    IFS=$COL_SEP read -r -d "" -a list_array < <(
+        printf "%s" "$list" | sed -z "s/^/$first/; s/$ITEM_SEP/$COL_SEP$other/g
+            :again; s/\(^\|$COL_SEP\)\($COL_SEP\|$\)/\1 \2/g; t again
+            s/\(^\|$COL_SEP\)-/\1.\/-/g"
+    )
+
+    # HACK: Workaround for Zenity.
+    # Some Zenity versions crash with an empty list.
+    ((items_count == 0)) && list_array=(" ")
+
+    local -a columns_array=()
+    IFS=$COL_SEP read -r -a columns_array <<<"$(tr "," "$COL_SEP" <<<"$par_columns")"
 
     # Get the system limit for arguments.
     local arg_max=""
     local msg_size=""
     local safe_margin=65536 # Reserve space for extra args.
     arg_max=$(getconf "ARG_MAX")
-    msg_size=$(printf "%s" "$list" | wc -c)
+    msg_size=$(printf "%s\n" "${list_array[@]}" | wc -c)
 
     local btn_ok=""
     btn_ok="$(_i18n 'OK')"
     local btn_cancel=""
     btn_cancel="$(_i18n 'Cancel')"
 
+    # Placeholder for '\n' in the cells. For handling filenames with newlines.
+    local nl_mark=$'\x1e'
+
     _display_lock
     if ((msg_size > arg_max - safe_margin)); then
-        list=$(tr "$ITEM_SEP" "\n" <<<"$list")
+        local cells=""
+        cells=$(printf "%s$COL_SEP" "${list_array[@]}" |
+            tr "\n$COL_SEP" "$nl_mark\n")
 
         # HACK: Workaround for Zenity.
         # Use stdin instead of passing arguments directly via '--list'. This
-        # avoids the "Argument list too long" error when '$list' is too large.
+        # avoids the "Argument list too long" error when '$cells' is too large.
         # See: https://gitlab.gnome.org/GNOME/zenity/-/issues/117
         if _command_exists "zenity"; then
             selected_items=$(zenity --title "$(_get_script_name)" --list \
@@ -2472,9 +2455,9 @@ _display_select_box() {
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" --text "$header_label" \
                 --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
-                "${columns_array[@]}" <<<"$list" 2>/dev/null) || _exit_script
+                "${columns_array[@]}" <<<"$cells" 2>/dev/null) || _exit_script
         else
-            printf "%s" "$list" >"$TEMP_DIR/list.txt"
+            printf "%s" "$cells" >"$TEMP_DIR/list.txt"
             selected_items=$(yad --title "$(_get_script_name)" --list \
                 --multiple --no-markup --separator="$ITEM_SEP" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
@@ -2485,7 +2468,7 @@ _display_select_box() {
         fi
 
     else
-        # Default strategy for '--list'. Pass '$list' directly as
+        # Default strategy for '--list'. Pass '$cells' directly as
         # arguments. This strategy is very fast.
         if _command_exists "zenity"; then
             selected_items=$(zenity --title "$(_get_script_name)" --list \
@@ -2511,10 +2494,11 @@ _display_select_box() {
     # Its output appends an extra field separator at the end.
     # See: https://github.com/v1cont/yad/issues/307
     if ! _command_exists "zenity"; then
-        selected_items=$(tr "\n" "$ITEM_SEP" <<<"$selected_items")
-        selected_items=$(_str_collapse_char \
-            "$selected_items" "$ITEM_SEP")
+        selected_items=$(printf "%s" "$selected_items" |
+            sed -z "s/$ITEM_SEP\n/$ITEM_SEP/g")
+        selected_items=$(_str_collapse_char "$selected_items" "$ITEM_SEP")
     fi
+    selected_items=$(printf "%s" "$selected_items" | tr "$nl_mark" "\n")
     printf "%s" "$selected_items"
 }
 
@@ -4238,7 +4222,7 @@ _str_collapse_char() {
     local sed_p2="s|^$char||g"
     local sed_p3="s|$char$||g"
 
-    sed "$sed_p1; $sed_p2; $sed_p3" <<<"$input_str"
+    printf "%s" "$input_str" | sed -z "$sed_p1; $sed_p2; $sed_p3"
 }
 
 # Function: _str_human_readable_path
