@@ -35,7 +35,6 @@ _main_task() {
     # Run the main process.
     std_output=$(_cmd_magick_in_sandbox "$output_dir" convert \
         "$input_file" \
-        -transparent none \
         -rotate "$rotate" \
         +repage \
         "$output_file" 2>&1)
