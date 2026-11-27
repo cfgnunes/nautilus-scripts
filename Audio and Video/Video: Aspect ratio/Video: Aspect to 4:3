@@ -38,6 +38,7 @@ _main_task() {
     std_output=$(_run_in_sandbox "$output_dir" "false" \
         ffmpeg -hide_banner -y \
         -i "$input_file" \
+        -map 0 \
         -c copy \
         -aspect "$aspect" \
         -- "$output_file" 2>&1)
