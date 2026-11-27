@@ -45,6 +45,8 @@ _main_task() {
         -delay 100 \
         -loop 0 \
         "${items[@]}" \
+        -set dispose background \
+        +repage \
         "$output_file" 2>&1)
     _check_output "$?" "$std_output" "" "$output_file" || return 1
 }
