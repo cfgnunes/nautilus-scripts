@@ -42,12 +42,15 @@ _main_task() {
         #   - Removes all metadata (-map_metadata -1)
         #   - Keeps all audio streams (-map 0:a).
         #   - Copies audio data without re-encoding (-c:a copy).
+        #   - Omits the muxer 'encoder' tag (bitexact flags).
         std_output=$(_run_in_sandbox "$output_dir" "false" \
             ffmpeg -hide_banner -y \
             -i "$input_file" \
             -map_metadata -1 \
             -map 0:a \
             -c:a copy \
+            -fflags +bitexact \
+            -flags:a +bitexact \
             -- "$output_file" 2>&1)
     else
         # For video files:
