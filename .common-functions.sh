@@ -4259,7 +4259,7 @@ _str_human_readable_path() {
 # Parameters:
 #   $1 (input_str): The input string containing elements to be sorted.
 #   $2 (separator): The character used to separate elements in the string.
-#   $3 (unique): Optional. Flag ("true" or "false") to remove duplicates.
+#   $3 (unique): Flag ("true" or "false") to remove duplicates.
 _str_sort() {
     local input_str=$1
     local separator=$2
