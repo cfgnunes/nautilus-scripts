@@ -39,8 +39,8 @@ _main_task() {
 
     # Run the main process.
     # Save the result only for 'not linearized (not optimized)' PDFs.
-    if _run_in_sandbox "" "false" pdfinfo -- "$input_file" |
-        grep --quiet --ignore-case "Optimized:.*no" 2>/dev/null; then
+    if _run_in_sandbox "" "false" pdfinfo -- "$input_file" 2>/dev/null |
+        grep --quiet --ignore-case "^Optimized: *no"; then
         _storage_text_write "$(_text_remove_pwd "$input_file")"
     fi
 }
