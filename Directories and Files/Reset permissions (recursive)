@@ -33,7 +33,7 @@ _reset_permissions() {
     local std_output=""
     local dir_pattern=""
     local pattern=""
-    local find_args=""
+    local -a find_args=()
 
     # Split the list into an array.
     local -a items=()
