@@ -1607,41 +1607,44 @@ _find_filtered_files() {
     local par_skip_extension=$4
     local par_find_parameters=$5
     local filtered_files=""
-    local find_command=""
+    local -a find_args=()
+    local -a find_extra_args=()
 
-    input_files=$(sed "s|'|'\"'\"'|g" <<<"$input_files")
-    input_files=$(sed "s|$FIELD_SEPARATOR|' '|g" <<<"$input_files")
+    # Split the list into an array.
+    local -a items=()
+    read -r -d "" -a items < <(printf "%s" "$input_files")
 
-    # Build a 'find' command.
-    find_command="find '$input_files'"
+    if ((${#items[@]} == 0)); then
+        return 0
+    fi
 
-    find_command+=" ! -regex \"$IGNORE_FIND\""
+    # Build the 'find' arguments.
+    find_args+=("${items[@]}")
+    find_args+=(! -regex "$IGNORE_FIND")
 
     if [[ -n "$par_find_parameters" ]]; then
-        find_command+=" $par_find_parameters"
+        IFS=" " read -r -a find_extra_args <<<"$par_find_parameters"
+        find_args+=("${find_extra_args[@]}")
     fi
 
     # Expand the directories with the 'find' command.
     case "$par_type" in
-    "file") find_command+=" \( -type l -o -type f \)" ;;
-    "directory") find_command+=" \( -type l -o -type d \)" ;;
+    "file") find_args+=(\( -type l -o -type f \)) ;;
+    "directory") find_args+=(\( -type l -o -type d \)) ;;
     esac
 
     if [[ -n "$par_select_extension" || -n "$par_skip_extension" ]]; then
-        find_command+=" -regextype posix-extended "
+        find_args+=(-regextype posix-extended)
         if [[ -n "$par_select_extension" ]]; then
-            find_command+=" -iregex \".*\.($par_select_extension)$\""
+            find_args+=(-iregex ".*\.($par_select_extension)$")
         fi
-
         if [[ -n "$par_skip_extension" ]]; then
-            find_command+=" ! -iregex \".*\.($par_skip_extension)$\""
+            find_args+=(! -iregex ".*\.($par_skip_extension)$")
         fi
     fi
 
-    find_command+=" -print0"
-
-    # shellcheck disable=SC2086
-    filtered_files=$(eval $find_command 2>/dev/null |
+    find_args+=(-print0)
+    filtered_files=$(find "${find_args[@]}" 2>/dev/null |
         tr "\0" "$FIELD_SEPARATOR")
 
     _str_collapse_char "$filtered_files" "$FIELD_SEPARATOR"
