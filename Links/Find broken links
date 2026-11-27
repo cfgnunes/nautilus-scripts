@@ -21,7 +21,7 @@ _main() {
     # Run the main process.
     std_output=$(find "${items[@]}" \
         ! -regex "$IGNORE_FIND" \
-        -xtype l -printf "%p$FIELD_SEPARATOR" 2>/dev/null)
+        -xtype l -printf "%p$ITEM_SEP" 2>/dev/null)
     std_output=$(_text_remove_pwd "$std_output")
 
     _display_list_box "$std_output" "

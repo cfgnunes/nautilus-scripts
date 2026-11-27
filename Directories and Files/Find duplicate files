@@ -34,7 +34,7 @@ _main() {
     # NOTE: A file name with newlines spans many lines in the output.
     std_output=$(awk \
         -v col_sep="$COL_SEP" \
-        -v row_sep="$FIELD_SEPARATOR" '
+        -v row_sep="$ITEM_SEP" '
         function add_file(file) {
             # Replace double slashes with a single slash.
             gsub(/\/+/, "/", file)

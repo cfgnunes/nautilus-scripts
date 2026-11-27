@@ -30,7 +30,7 @@ _main() {
 #   type.
 #
 # Parameters:
-#   $1 (input_files): Input files separated by '$FIELD_SEPARATOR'.
+#   $1 (input_files): Input files separated by '$ITEM_SEP'.
 _compare() {
     local input_files=$1
     local num_files_compare=2 # Default number of files to compare.

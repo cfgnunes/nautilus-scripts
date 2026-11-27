@@ -26,7 +26,7 @@ _main() {
         -type f -printf "%TY-%Tm-%Td$COL_SEP%TH:%TM$COL_SEP%p\0" 2>/dev/null |
         LC_ALL=C.UTF-8 sort -z -k1,1r -k2,2r |
         head -z -n "$max_item_list" |
-        tr "\0" "$FIELD_SEPARATOR")
+        tr "\0" "$ITEM_SEP")
 
     std_output=$(_text_remove_pwd "$std_output")
 

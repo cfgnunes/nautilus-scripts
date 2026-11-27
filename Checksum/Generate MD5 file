@@ -21,10 +21,10 @@ _main() {
         file_1=$(_get_element "$input_files" "1")
         file_1=$(basename -- "$file_1")
         options+=$file_1
-        options+=".md5$FIELD_SEPARATOR"
+        options+=".md5$ITEM_SEP"
     fi
-    options+="md5sum.txt$FIELD_SEPARATOR"
-    options+="checksums.md5$FIELD_SEPARATOR"
+    options+="md5sum.txt$ITEM_SEP"
+    options+="checksums.md5$ITEM_SEP"
     options+="MD5SUMS"
 
     output_file=$(_display_select_box "$options" \
@@ -42,8 +42,8 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    std_output=$(_str_sort "$std_output" "$FIELD_SEPARATOR" "false")
-    std_output=$(tr "$FIELD_SEPARATOR" "\n" <<<"$std_output")
+    std_output=$(_str_sort "$std_output" "$ITEM_SEP" "false")
+    std_output=$(tr "$ITEM_SEP" "\n" <<<"$std_output")
     # shellcheck disable=SC2001
     std_output=$(sed "s|\(.*\)$COL_SEP\(.*\)|\2  \1|g" <<<"$std_output")
     printf "%s\n" "$std_output" >"$output_file"

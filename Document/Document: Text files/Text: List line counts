@@ -25,8 +25,8 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    std_output=$(printf "%s" "$std_output" | tr "$FIELD_SEPARATOR" "\0" |
-        sort -z --numeric-sort --reverse | tr "\0" "$FIELD_SEPARATOR")
+    std_output=$(printf "%s" "$std_output" | tr "$ITEM_SEP" "\0" |
+        sort -z --numeric-sort --reverse | tr "\0" "$ITEM_SEP")
 
     _display_list_box "$std_output" "
         par_item_name=$(_i18n 'files')

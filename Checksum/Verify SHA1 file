@@ -31,7 +31,7 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    std_output=$(_str_sort "$std_output" "$FIELD_SEPARATOR" "false")
+    std_output=$(_str_sort "$std_output" "$ITEM_SEP" "false")
 
     # Translate some strings from the '$std_output'.
     # shellcheck disable=SC2001

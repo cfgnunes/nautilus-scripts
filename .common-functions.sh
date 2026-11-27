@@ -21,7 +21,7 @@ HOME=${HOME:-$(eval echo ~)}
 # -----------------------------------------------------------------------------
 
 ACCESSED_RECENTLY_LINKS_TO_KEEP=15
-FIELD_SEPARATOR=$'\r'          # The main field separator.
+ITEM_SEP=$'\r'                 # The main item separator.
 COL_SEP=$'\x1f'                # Separator of the columns in list boxes.
 GUI_BOX_HEIGHT=550             # Height of the GUI dialog boxes.
 GUI_BOX_WIDTH=900              # Width of the GUI dialog boxes.
@@ -73,7 +73,7 @@ PKG_MANAGER_PRIORITY=(
 readonly \
     ACCESSED_RECENTLY_LINKS_TO_KEEP \
     COL_SEP \
-    FIELD_SEPARATOR \
+    ITEM_SEP \
     GUI_BOX_HEIGHT \
     GUI_BOX_WIDTH \
     GUI_INFO_WIDTH \
@@ -98,8 +98,8 @@ readonly \
 # SECTION: Global variables
 # -----------------------------------------------------------------------------
 
-# Internal Field Separator based on the value defined in $FIELD_SEPARATOR.
-IFS=$FIELD_SEPARATOR
+# Internal Field Separator based on the value defined in $ITEM_SEP.
+IFS=$ITEM_SEP
 
 # List of all input files passed as positional parameters.
 INPUT_FILES=$*
@@ -164,7 +164,7 @@ _cleanup_on_exit() {
     # shellcheck disable=SC2016
     printf "%s" "$items_to_remove" | xargs \
         --no-run-if-empty \
-        --delimiter="$FIELD_SEPARATOR" \
+        --delimiter="$ITEM_SEP" \
         --max-procs="$(_get_max_procs)" \
         --max-args=1 \
         bash -c '{ chmod -R u+rw -- "$1" && rm -rf -- "$1"; } 2>/dev/null' _
@@ -342,7 +342,7 @@ _run_task_parallel() {
 
     # Execute the function '_main_task' for each file in parallel.
     export -f _main_task
-    _run_function_parallel "$input_files" "$FIELD_SEPARATOR" "$max_procs" \
+    _run_function_parallel "$input_files" "$ITEM_SEP" "$max_procs" \
         "_main_task" "$output_dir"
 }
 
@@ -376,7 +376,7 @@ _run_function_parallel() {
     # within each subshell created by 'xargs'.
     export \
         COL_SEP \
-        FIELD_SEPARATOR \
+        ITEM_SEP \
         GUI_BOX_HEIGHT \
         GUI_BOX_WIDTH \
         GUI_INFO_WIDTH \
@@ -728,7 +728,7 @@ _check_dependencies() {
     local pairs=""
 
     # Step 2: Resolve the package names for each dependency key.
-    dep_keys=$(tr " " "$FIELD_SEPARATOR" <<<"$dep_keys")
+    dep_keys=$(tr " " "$ITEM_SEP" <<<"$dep_keys")
     local dep_key=""
     for dep_key in $dep_keys; do
         local all_installed="false"
@@ -780,7 +780,7 @@ _check_dependencies() {
             all_installed="true"
             local package_name=""
             local pkg_names_check=""
-            pkg_names_check=$(tr " " "$FIELD_SEPARATOR" <<<"$pkg_names")
+            pkg_names_check=$(tr " " "$ITEM_SEP" <<<"$pkg_names")
             for package_name in $pkg_names_check; do
                 if ! _deps_is_package_installed \
                     "$pkg_manager" "$package_name"; then
@@ -826,7 +826,7 @@ _check_dependencies() {
     local packages_install=""
 
     # Iterate over each "<pkg_manager>:<package>" pair.
-    pairs=$(tr " " "$FIELD_SEPARATOR" <<<"$pairs")
+    pairs=$(tr " " "$ITEM_SEP" <<<"$pairs")
     local pair=""
     for pair in $pairs; do
         local pkg_manager="${pair%%:*}"
@@ -887,8 +887,8 @@ _deps_get_dependency_value() {
         return 0
     fi
 
-    # Replace newlines with '$FIELD_SEPARATOR' for iteration.
-    pairs=$(tr "\n" "$FIELD_SEPARATOR" <<<"$pairs")
+    # Replace newlines with '$ITEM_SEP' for iteration.
+    pairs=$(tr "\n" "$ITEM_SEP" <<<"$pairs")
 
     # Iterate over each <package_manager>:<key_value> pair.
     local pair=""
@@ -980,8 +980,8 @@ _deps_install_packages() {
     local cmd_inst=""
     local -A pkg_map=()
 
-    # Replace spaces with '$FIELD_SEPARATOR' for iteration.
-    pairs=$(tr " " "$FIELD_SEPARATOR" <<<"$pairs")
+    # Replace spaces with '$ITEM_SEP' for iteration.
+    pairs=$(tr " " "$ITEM_SEP" <<<"$pairs")
 
     # Build a map of <pkg_manager> -> "pkg1 pkg2 ...".
     local pair=""
@@ -1022,7 +1022,7 @@ _deps_install_packages() {
             local pkgs=""
             local pkg=""
             local pkgx_packages_dir="$HOME/.pkgx"
-            pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
+            pkgs=$(tr " " "$ITEM_SEP" <<<"$packages")
 
             # HACK: Workaround for pkgx. Force update the cache.
             rm -rf -- "$HOME/.cache/pkgx"
@@ -1078,7 +1078,7 @@ _deps_install_packages() {
 
             local pkgs=""
             local pkg=""
-            pkgs=$(tr " " "$FIELD_SEPARATOR" <<<"$packages")
+            pkgs=$(tr " " "$ITEM_SEP" <<<"$packages")
             for pkg in $pkgs; do
                 local download_url=""
                 download_url=$(_deps_get_dependency_value \
@@ -1123,8 +1123,8 @@ _deps_installation_check() {
     local pairs=$1
     local msg=""
 
-    # Replace spaces with '$FIELD_SEPARATOR' for iteration.
-    pairs=$(tr " " "$FIELD_SEPARATOR" <<<"$pairs")
+    # Replace spaces with '$ITEM_SEP' for iteration.
+    pairs=$(tr " " "$ITEM_SEP" <<<"$pairs")
 
     # Iterate over each "<pkg_manager>:<package>" pair.
     local pair=""
@@ -1648,9 +1648,9 @@ _find_filtered_files() {
 
     find_args+=(-print0)
     filtered_files=$(find "${find_args[@]}" 2>/dev/null |
-        tr "\0" "$FIELD_SEPARATOR")
+        tr "\0" "$ITEM_SEP")
 
-    _str_collapse_char "$filtered_files" "$FIELD_SEPARATOR"
+    _str_collapse_char "$filtered_files" "$ITEM_SEP"
 }
 
 # Function: _get_dirname
@@ -1809,7 +1809,7 @@ _make_temp_dir_local() {
     # Remember to remove this directory after exit.
     item_remove=$(mktemp --tmpdir="$TEMP_DIR_ITEMS_TO_REMOVE" 2>/dev/null) ||
         return 1
-    printf "%s$FIELD_SEPARATOR" "$temp_dir" >"$item_remove"
+    printf "%s$ITEM_SEP" "$temp_dir" >"$item_remove"
 
     printf "%s" "$temp_dir"
 }
@@ -2099,7 +2099,7 @@ _display_file_selection_box() {
             ${filename_flag:+"$filename_flag"} \
             ${save_flag:+--confirm-overwrite} \
             ${file_filter:+--file-filter="$file_filter"} \
-            --separator="$FIELD_SEPARATOR" 2>/dev/null) || selection_status=$?
+            --separator="$ITEM_SEP" 2>/dev/null) || selection_status=$?
     elif _command_exists "yad"; then
         sel_items=$(yad --title "$title" \
             --button="${btn_cancel}:1" --button="${btn_ok}:0" \
@@ -2107,7 +2107,7 @@ _display_file_selection_box() {
             ${filename_flag:+"$filename_flag"} \
             ${save_flag:+--confirm-overwrite} \
             ${file_filter:+--file-filter="$file_filter"} \
-            --separator="$FIELD_SEPARATOR" 2>/dev/null) || selection_status=$?
+            --separator="$ITEM_SEP" 2>/dev/null) || selection_status=$?
     fi
     _display_unlock
 
@@ -2117,7 +2117,7 @@ _display_file_selection_box() {
         fi
         [[ -n "$sel_items" ]] || return 1
     else
-        sel_items=$(_str_collapse_char "$sel_items" "$FIELD_SEPARATOR")
+        sel_items=$(_str_collapse_char "$sel_items" "$ITEM_SEP")
         if [[ -z "$sel_items" ]]; then
             msg="$(_i18n 'No items were selected!')"
             _display_error_box "$msg"
@@ -2286,7 +2286,7 @@ _display_list_box_terminal() {
         list="$(_i18n '(Empty)')"
         printf "%s\n" "$list" >&2
     else
-        list=$(tr "$FIELD_SEPARATOR$COL_SEP" "\n " <<<"$list")
+        list=$(tr "$ITEM_SEP$COL_SEP" "\n " <<<"$list")
         printf "%s\n" "$list"
     fi
 }
@@ -2379,12 +2379,12 @@ _display_select_box() {
 
     case "$par_check_type" in
     "checkbox")
-        par_columns="--column=$FIELD_SEPARATOR$par_columns"
-        par_columns="--checklist$FIELD_SEPARATOR$par_columns"
+        par_columns="--column=$ITEM_SEP$par_columns"
+        par_columns="--checklist$ITEM_SEP$par_columns"
         ;;
     "radiolist")
-        par_columns="--column=$FIELD_SEPARATOR$par_columns"
-        par_columns="--radiolist$FIELD_SEPARATOR$par_columns"
+        par_columns="--column=$ITEM_SEP$par_columns"
+        par_columns="--radiolist$ITEM_SEP$par_columns"
         ;;
     esac
 
@@ -2407,7 +2407,7 @@ _display_select_box() {
 
     # Build the cells of the list: the selection state (if any) followed by
     # the row (its columns are separated by '$COL_SEP').
-    local rs=$FIELD_SEPARATOR
+    local rs=$ITEM_SEP
     local cells=""
     local state=""
     local i=0
@@ -2430,9 +2430,9 @@ _display_select_box() {
         cells=" $rs"
     fi
 
-    par_columns=$(tr "," "$FIELD_SEPARATOR" <<<"$par_columns")
+    par_columns=$(tr "," "$ITEM_SEP" <<<"$par_columns")
 
-    # Separate the columns with '$FIELD_SEPARATOR' and avoid empty fields.
+    # Separate the columns with '$ITEM_SEP' and avoid empty fields.
     cells=$(printf "%s" "$cells" | sed -z "s/$COL_SEP/$rs/g;
         s/^$rs/ $rs/; :again; s/$rs$rs/$rs $rs/g; t again")
 
@@ -2460,7 +2460,7 @@ _display_select_box() {
 
     _display_lock
     if ((msg_size > arg_max - safe_margin)); then
-        list=$(tr "$FIELD_SEPARATOR" "\n" <<<"$list")
+        list=$(tr "$ITEM_SEP" "\n" <<<"$list")
 
         # HACK: Workaround for Zenity.
         # Use stdin instead of passing arguments directly via '--list'. This
@@ -2468,7 +2468,7 @@ _display_select_box() {
         # See: https://gitlab.gnome.org/GNOME/zenity/-/issues/117
         if _command_exists "zenity"; then
             selected_items=$(zenity --title "$(_get_script_name)" --list \
-                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
+                --multiple --no-markup --separator="$ITEM_SEP" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" --text "$header_label" \
                 --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
@@ -2476,7 +2476,7 @@ _display_select_box() {
         else
             printf "%s" "$list" >"$TEMP_DIR/list.txt"
             selected_items=$(yad --title "$(_get_script_name)" --list \
-                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
+                --multiple --no-markup --separator="$ITEM_SEP" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" --text "$header_label" \
                 --button="${btn_cancel}:1" --button="${btn_ok}:0" \
@@ -2489,7 +2489,7 @@ _display_select_box() {
         # arguments. This strategy is very fast.
         if _command_exists "zenity"; then
             selected_items=$(zenity --title "$(_get_script_name)" --list \
-                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
+                --multiple --no-markup --separator="$ITEM_SEP" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" --text "$header_label" \
                 --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
@@ -2497,7 +2497,7 @@ _display_select_box() {
                 "${list_array[@]}" 2>/dev/null) || _exit_script
         else
             selected_items=$(yad --title "$(_get_script_name)" --list \
-                --multiple --no-markup --separator="$FIELD_SEPARATOR" \
+                --multiple --no-markup --separator="$ITEM_SEP" \
                 --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
                 --print-column "$columns_count" --text "$header_label" \
                 --button="${btn_cancel}:1" --button="${btn_ok}:0" \
@@ -2511,9 +2511,9 @@ _display_select_box() {
     # Its output appends an extra field separator at the end.
     # See: https://github.com/v1cont/yad/issues/307
     if ! _command_exists "zenity"; then
-        selected_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$selected_items")
+        selected_items=$(tr "\n" "$ITEM_SEP" <<<"$selected_items")
         selected_items=$(_str_collapse_char \
-            "$selected_items" "$FIELD_SEPARATOR")
+            "$selected_items" "$ITEM_SEP")
     fi
     printf "%s" "$selected_items"
 }
@@ -2527,7 +2527,7 @@ _display_list_box_xmessage() {
 
     par_columns=$(sed "s|--column:||g" <<<"$par_columns")
     par_columns=$(tr "," "\t" <<<"$par_columns")
-    list=$(tr "$FIELD_SEPARATOR$COL_SEP" "\n\t" <<<"$list")
+    list=$(tr "$ITEM_SEP$COL_SEP" "\n\t" <<<"$list")
     list="$par_columns"$'\n'$'\n'"$list"
 
     _display_lock
@@ -3276,7 +3276,7 @@ _xdg_get_default_app() {
     xdg_dirs+="/applications"
 
     # Locate the '.desktop' file.
-    xdg_dirs=$(tr ":" "$FIELD_SEPARATOR" <<<"$xdg_dirs")
+    xdg_dirs=$(tr ":" "$ITEM_SEP" <<<"$xdg_dirs")
     local xdg_dir=""
     for xdg_dir in $xdg_dirs; do
         desktop_path="$xdg_dir/$desktop_file"
@@ -3413,14 +3413,14 @@ _get_filenames_file_manager() {
             gio_path=$(_gio_translate_path "$file")
             if [[ -n "$gio_path" ]]; then
                 decoded_input_files+="$gio_path"
-                decoded_input_files+=$FIELD_SEPARATOR
+                decoded_input_files+=$ITEM_SEP
             fi
         done
         input_files=$decoded_input_files
     else
         input_files=$INPUT_FILES
     fi
-    input_files=$(_str_collapse_char "$input_files" "$FIELD_SEPARATOR")
+    input_files=$(_str_collapse_char "$input_files" "$ITEM_SEP")
 
     printf "%s" "$input_files"
 }
@@ -3565,7 +3565,7 @@ _get_files() {
 
     # Sort file list if requested.
     if [[ "$par_sort_list" == "true" ]]; then
-        input_files=$(_str_sort "$input_files" "$FIELD_SEPARATOR" "false")
+        input_files=$(_str_sort "$input_files" "$ITEM_SEP" "false")
     fi
 
     # Return the final processed file list.
@@ -3693,14 +3693,14 @@ _validate_file_mime_parallel() {
 
     # Execute the function '_validate_file_mime' for each file in parallel.
     export -f _validate_file_mime
-    _run_function_parallel "$input_files" "$FIELD_SEPARATOR" "" \
+    _run_function_parallel "$input_files" "$ITEM_SEP" "" \
         "_validate_file_mime" "$par_select_mime" "$par_skip_encoding"
 
     # Compile valid files in a single list.
     input_files=$(_storage_text_read_all)
     _storage_text_clean
 
-    _str_collapse_char "$input_files" "$FIELD_SEPARATOR"
+    _str_collapse_char "$input_files" "$ITEM_SEP"
 }
 
 # Function: _validate_files_count
@@ -4099,17 +4099,17 @@ _get_file_mime() {
 #   This function counts the number of items in a string, where items are
 #   separated by a specific field separator. It assumes that the input string
 #   contains a list of items separated by the value of the variable
-#   '$FIELD_SEPARATOR'.
+#   '$ITEM_SEP'.
 #
 # Parameters:
 # - $1 (input_files): A string containing a list of items separated by
-#   the defined '$FIELD_SEPARATOR'.
+#   the defined '$ITEM_SEP'.
 _get_items_count() {
     local input_files=$1
     local items_count=0
 
     if [[ -n "$input_files" ]]; then
-        items_count=$(tr -cd "$FIELD_SEPARATOR" <<<"$input_files" | wc -c)
+        items_count=$(tr -cd "$ITEM_SEP" <<<"$input_files" | wc -c)
         ((items_count++))
     fi
 
@@ -4141,7 +4141,7 @@ _storage_text_read_all() {
 # Function: _storage_text_write
 #
 # Description:
-#   This function writes a given input text, followed by '$FIELD_SEPARATOR',
+#   This function writes a given input text, followed by '$ITEM_SEP',
 #   to a temporary text storage file.
 #
 # Parameters:
@@ -4157,7 +4157,7 @@ _storage_text_write() {
     # Save the text to be compiled into a single file.
     temp_file=$(mktemp --tmpdir="$TEMP_DIR_STORAGE_TEXT" 2>/dev/null) ||
         return 1
-    printf "%s" "$input_text$FIELD_SEPARATOR" >"$temp_file"
+    printf "%s" "$input_text$ITEM_SEP" >"$temp_file"
 }
 
 # -----------------------------------------------------------------------------
@@ -4172,7 +4172,7 @@ _storage_text_write() {
 #
 # Parameters:
 #   $1 (input_items): A string containing items separated by the
-#      '$FIELD_SEPARATOR' variable.
+#      '$ITEM_SEP' variable.
 #
 # Returns:
 #   - A string containing the items separated by newlines.
@@ -4181,7 +4181,7 @@ _convert_delimited_string_to_text() {
     local new_line="'\$'\\\n''"
 
     input_items=$(sed -z "s|\n|$new_line|g; s|$new_line$||g" <<<"$input_items")
-    input_items=$(tr "$FIELD_SEPARATOR" "\n" <<<"$input_items")
+    input_items=$(tr "$ITEM_SEP" "\n" <<<"$input_items")
 
     printf "%s" "$input_items"
 }
@@ -4196,29 +4196,29 @@ _convert_delimited_string_to_text() {
 #   $1 (input_items): A string containing items separated by newlines.
 #
 # Returns:
-#   - A string containing the items separated by the '$FIELD_SEPARATOR'
+#   - A string containing the items separated by the '$ITEM_SEP'
 #   variable.
 _convert_text_to_delimited_string() {
     local input_items=$1
     local new_line="'\$'\\\n''"
 
-    input_items=$(tr "\n" "$FIELD_SEPARATOR" <<<"$input_items")
+    input_items=$(tr "\n" "$ITEM_SEP" <<<"$input_items")
     input_items=$(sed -z "s|$new_line|\n|g" <<<"$input_items")
 
-    _str_collapse_char "$input_items" "$FIELD_SEPARATOR"
+    _str_collapse_char "$input_items" "$ITEM_SEP"
 }
 
 # Function: _get_element
 #
 # Description:
 #   This function extracts the Nth field from a delimited string using the
-#   global '$FIELD_SEPARATOR' as the delimiter.
+#   global '$ITEM_SEP' as the delimiter.
 #
 # Parameters:
 #   $1 (list): The input string containing delimited fields.
 #   $2 (n): The field index (1-based) to extract from the input string.
 _get_element() {
-    cut -d "$FIELD_SEPARATOR" -f "$2" <<<"$1"
+    cut -d "$ITEM_SEP" -f "$2" <<<"$1"
 }
 
 # Function: _str_collapse_char

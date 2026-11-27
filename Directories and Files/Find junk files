@@ -94,7 +94,7 @@ _main() {
         -type f -iname "ssh-copy-id.*" -o \
         -type f -iname "Thumbs.db" -o \
         -type f -iname "yarn-*.log*" \
-        \) -printf "%p$FIELD_SEPARATOR" 2>/dev/null)
+        \) -printf "%p$ITEM_SEP" 2>/dev/null)
 
     std_output=$(_text_remove_pwd "$std_output")
 

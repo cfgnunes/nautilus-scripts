@@ -42,13 +42,13 @@ _main_task() {
     basename=$(_strip_filename_extension "$basename")
     basename=$(tr -s " " <<<"$basename")
     # shellcheck disable=SC2001
-    basename=$(sed "s| - |$FIELD_SEPARATOR|" <<<"$basename")
+    basename=$(sed "s| - |$ITEM_SEP|" <<<"$basename")
 
     local audio_artist=""
     local audio_title=""
-    if [[ "$basename" == *"$FIELD_SEPARATOR"* ]]; then
-        audio_artist=$(cut -d "$FIELD_SEPARATOR" -f 1 <<<"$basename")
-        audio_title=$(cut -d "$FIELD_SEPARATOR" -f 2- <<<"$basename")
+    if [[ "$basename" == *"$ITEM_SEP"* ]]; then
+        audio_artist=$(cut -d "$ITEM_SEP" -f 1 <<<"$basename")
+        audio_title=$(cut -d "$ITEM_SEP" -f 2- <<<"$basename")
     else
         audio_artist=""
         audio_title="$basename"

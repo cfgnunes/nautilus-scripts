@@ -28,12 +28,12 @@ _main() {
         _get_dependencies \
         _run_command \
         _strip_filename_multipart
-    _run_function_parallel "$input_files" "$FIELD_SEPARATOR" "" \
+    _run_function_parallel "$input_files" "$ITEM_SEP" "" \
         "_get_dependencies"
 
     local dependencies=""
     dependencies=$(_storage_text_read_all)
-    dependencies=$(tr "$FIELD_SEPARATOR" "\n" <<<"$dependencies")
+    dependencies=$(tr "$ITEM_SEP" "\n" <<<"$dependencies")
 
     _check_dependencies "$dependencies"
     _display_wait_box ""

@@ -54,7 +54,7 @@ _main_task() {
         _run_in_sandbox "" "false" \
             jq -j \
             --arg sep "$COL_SEP" \
-            --arg row_sep "$FIELD_SEPARATOR" \
+            --arg row_sep "$ITEM_SEP" \
             --arg file_label "$file_label" '
         def clean:
             tostring

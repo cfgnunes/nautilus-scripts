@@ -51,7 +51,7 @@ _main_task() {
         _compare_fingerprints \
         _compare_images \
         _generate_fingerprint
-    _run_function_parallel "$input_files" "$FIELD_SEPARATOR" "" \
+    _run_function_parallel "$input_files" "$ITEM_SEP" "" \
         "_generate_fingerprint"
 
     # -------------------------------------------------------------------------
@@ -64,7 +64,7 @@ _main_task() {
     __find_fps() {
         find "$TEMP_DIR_TASK" -type f -name "$fp_file" \
             -printf "%s %p\0" 2>/dev/null | sort --zero-terminated -r -n |
-            sed -z "s|^[0-9]* ||g" | tr "\0" "$FIELD_SEPARATOR"
+            sed -z "s|^[0-9]* ||g" | tr "\0" "$ITEM_SEP"
     }
 
     # Iterate over all fingerprint images in the temporary directory.
@@ -76,7 +76,7 @@ _main_task() {
         _storage_text_write "$(cat -- "$fp_reference.txt")"
 
         # Compare '$fp_reference' with all others fingerprints.
-        _run_function_parallel "$(__find_fps)" "$FIELD_SEPARATOR" "" \
+        _run_function_parallel "$(__find_fps)" "$ITEM_SEP" "" \
             "_compare_fingerprints" "$fp_reference" "$threshold"
 
         # After comparing '$fp_reference' with all others,
@@ -90,7 +90,7 @@ _main_task() {
         local std_output=""
         std_output=$(_storage_text_read_all)
         _storage_text_clean
-        std_output=$(_str_sort "$std_output" "$FIELD_SEPARATOR" "true")
+        std_output=$(_str_sort "$std_output" "$ITEM_SEP" "true")
 
         # Skip if less than two similar items.
         if (($(_get_items_count "$std_output") < 2)); then

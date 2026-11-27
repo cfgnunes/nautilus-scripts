@@ -30,8 +30,8 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    std_output=$(printf "%s" "$std_output" | tr "$FIELD_SEPARATOR" "\0" |
-        LC_ALL=C.UTF-8 sort -z --version-sort --reverse | tr "\0" "$FIELD_SEPARATOR")
+    std_output=$(printf "%s" "$std_output" | tr "$ITEM_SEP" "\0" |
+        LC_ALL=C.UTF-8 sort -z --version-sort --reverse | tr "\0" "$ITEM_SEP")
 
     # Translate some strings from the '$std_output'.
     # shellcheck disable=SC2001
@@ -178,9 +178,9 @@ _main_task() {
         key_id=$(cut -d " " -f3 <<<"$line")
         local user=""
         user=$(cut -d " " -f4- <<<"$line")
-        user=$(sed "s| <|$FIELD_SEPARATOR|g; s|>$||g" <<<"$user")
-        name=$(cut -d "$FIELD_SEPARATOR" -f1 <<<"$user")
-        email=$(cut -d "$FIELD_SEPARATOR" -f2 <<<"$user")
+        user=$(sed "s| <|$ITEM_SEP|g; s|>$||g" <<<"$user")
+        name=$(cut -d "$ITEM_SEP" -f1 <<<"$user")
+        email=$(cut -d "$ITEM_SEP" -f2 <<<"$user")
     fi
 
     line=$(grep -F "[GNUPG:] VALIDSIG" <<<"$std_output" 2>/dev/null)

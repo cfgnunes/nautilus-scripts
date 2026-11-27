@@ -19,8 +19,8 @@ _main() {
 
     local std_output=""
     std_output=$(_storage_text_read_all)
-    std_output=$(_str_sort "$std_output" "$FIELD_SEPARATOR" "false")
-    std_output=$(tr "$FIELD_SEPARATOR" "\n" <<<"$std_output")
+    std_output=$(_str_sort "$std_output" "$ITEM_SEP" "false")
+    std_output=$(tr "$ITEM_SEP" "\n" <<<"$std_output")
     # shellcheck disable=SC2001
     std_output=$(sed "s|\(.*\)$COL_SEP\(.*\)|\2  \1|g" <<<"$std_output")
 

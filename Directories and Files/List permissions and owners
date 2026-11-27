@@ -22,10 +22,10 @@ _main() {
     # Run the main process.
     std_output=$(find "${items[@]}" \
         ! -regex "$IGNORE_FIND" \
-        -printf "%m$COL_SEP%u$COL_SEP%g$COL_SEP%y$COL_SEP%p$FIELD_SEPARATOR" 2>/dev/null)
+        -printf "%m$COL_SEP%u$COL_SEP%g$COL_SEP%y$COL_SEP%p$ITEM_SEP" 2>/dev/null)
 
     std_output=$(_text_remove_pwd "$std_output")
-    std_output=$(_str_sort "$std_output" "$FIELD_SEPARATOR" "false")
+    std_output=$(_str_sort "$std_output" "$ITEM_SEP" "false")
 
     _display_list_box "$std_output" "
         par_item_name=$(_i18n 'items')

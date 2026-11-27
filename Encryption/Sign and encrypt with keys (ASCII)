@@ -25,7 +25,7 @@ _main() {
 
     # Execute the function '_main_task' for each file in parallel.
     export -f _main_task _run_gpg
-    _run_function_parallel "$input_files" "$FIELD_SEPARATOR" "" \
+    _run_function_parallel "$input_files" "$ITEM_SEP" "" \
         "_main_task" "$output_dir" "$id_sign" "$ids_encrypt"
     _display_result_box "$output_dir"
 }
@@ -94,7 +94,7 @@ _run_gpg() {
     local ids_encrypt=$4
     local std_output=""
 
-    IFS=$FIELD_SEPARATOR
+    IFS=$ITEM_SEP
 
     local -a ids=()
     read -r -a ids <<<"$ids_encrypt"
@@ -154,7 +154,7 @@ _get_id_sign() {
         fi
     fi
 
-    keys=$(tr ":\n" "$COL_SEP$FIELD_SEPARATOR" <<<"$keys")
+    keys=$(tr ":\n" "$COL_SEP$ITEM_SEP" <<<"$keys")
     id_sign=$(_display_select_box "$keys" \
         "--column:$(_i18n 'Name'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Created'),--column:$(_i18n 'Expires'),--column:$(_i18n 'Key ID')" \
         "radiolist" "first" \
@@ -224,7 +224,7 @@ _get_ids_encrypt() {
         fi
     fi
 
-    keys=$(tr ":\n" "$COL_SEP$FIELD_SEPARATOR" <<<"$keys")
+    keys=$(tr ":\n" "$COL_SEP$ITEM_SEP" <<<"$keys")
     ids_encrypt=$(_display_select_box "$keys" \
         "--column:$(_i18n 'Name'),--column:$(_i18n 'E-mail'),--column:$(_i18n 'Created'),--column:$(_i18n 'Expires'),--column:$(_i18n 'Key ID')" \
         "checkbox" "first_if_one" \

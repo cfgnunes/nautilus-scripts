@@ -234,7 +234,7 @@ __invoke_guarded() {
 }
 
 __run_source_common_functions() {
-    __test_equal "Check FIELD_SEPARATOR." "$FIELD_SEPARATOR" $'\r'
+    __test_equal "Check ITEM_SEP." "$ITEM_SEP" $'\r'
     __test_equal "Check PREFIX_OUTPUT_DIR." "Output" "$PREFIX_OUTPUT_DIR"
     __test_equal "Check PREFIX_ERROR_LOG_FILE." "Errors" "$PREFIX_ERROR_LOG_FILE"
     # shellcheck disable=SC2153
@@ -435,8 +435,8 @@ __run_storage_text() {
     _storage_text_write "Line"
     _storage_text_write "Line"
 
-    expected_output="Line${FIELD_SEPARATOR}Line${FIELD_SEPARATOR}Line"
-    expected_output+=$FIELD_SEPARATOR
+    expected_output="Line${ITEM_SEP}Line${ITEM_SEP}Line"
+    expected_output+=$ITEM_SEP
     output=$(_storage_text_read_all)
     _storage_text_clean
 
@@ -639,12 +639,12 @@ __run_get_items_count() {
     output=$(_get_items_count "$input")
     __test_equal "$input" "$expected_output" "$output"
 
-    input="${FIELD_SEPARATOR}${FIELD_SEPARATOR}"
+    input="${ITEM_SEP}${ITEM_SEP}"
     expected_output=3
     output=$(_get_items_count "$input")
     __test_equal "$input" "$expected_output" "$output"
 
-    input="10${FIELD_SEPARATOR}2"
+    input="10${ITEM_SEP}2"
     expected_output=2
     output=$(_get_items_count "$input")
     __test_equal "$input" "$expected_output" "$output"
@@ -654,7 +654,7 @@ __run_get_items_count() {
     output=$(_get_items_count "$input")
     __test_equal "$input" "$expected_output" "$output"
 
-    input="a${FIELD_SEPARATOR}"
+    input="a${ITEM_SEP}"
     expected_output=2
     output=$(_get_items_count "$input")
     __test_equal "Trailing separator counts as an item." "$expected_output" "$output"
@@ -798,7 +798,7 @@ __run_convert_delimited_string_to_text() {
     output=$(_convert_delimited_string_to_text "$input")
     __test_equal "$input" "$expected_output" "$output"
 
-    input="a${FIELD_SEPARATOR}b${FIELD_SEPARATOR}c"
+    input="a${ITEM_SEP}b${ITEM_SEP}c"
     expected_output="a"$'\n'"b"$'\n'"c"
     output=$(_convert_delimited_string_to_text "$input")
     __test_equal "$input" "$expected_output" "$output"
@@ -808,7 +808,7 @@ __run_convert_delimited_string_to_text() {
     output=$(_convert_delimited_string_to_text "$input")
     __test_equal "$input" "$expected_output" "$output"
 
-    input="a"$'\n'"b${FIELD_SEPARATOR}c"
+    input="a"$'\n'"b${ITEM_SEP}c"
     expected_output="a'\$'\\n''b"$'\n'"c"
     output=$(_convert_delimited_string_to_text "$input")
     __test_equal "Newline inside an item is escaped." "$expected_output" "$output"
@@ -825,7 +825,7 @@ __run_convert_text_to_delimited_string() {
     __test_equal "$input" "$expected_output" "$output"
 
     input="a"$'\n'"b"$'\n'"c"
-    expected_output="a${FIELD_SEPARATOR}b${FIELD_SEPARATOR}c"
+    expected_output="a${ITEM_SEP}b${ITEM_SEP}c"
     output=$(_convert_text_to_delimited_string "$input")
     __test_equal "$input" "$expected_output" "$output"
 
@@ -834,13 +834,13 @@ __run_convert_text_to_delimited_string() {
     output=$(_convert_text_to_delimited_string "$input")
     __test_equal "$input" "$expected_output" "$output"
 
-    input="a${FIELD_SEPARATOR}${FIELD_SEPARATOR}b"
-    expected_output="a${FIELD_SEPARATOR}b"
+    input="a${ITEM_SEP}${ITEM_SEP}b"
+    expected_output="a${ITEM_SEP}b"
     output=$(_convert_text_to_delimited_string "$input")
     __test_equal "Collapse duplicate separators." "$expected_output" "$output"
 
     input="a"$'\n'$'\n'"b"$'\n'
-    expected_output="a${FIELD_SEPARATOR}b"
+    expected_output="a${ITEM_SEP}b"
     output=$(_convert_text_to_delimited_string "$input")
     __test_equal "Collapse blank lines and a trailing newline." \
         "$expected_output" "$output"
@@ -851,7 +851,7 @@ __run_get_element() {
     local expected_output=""
     local output=""
 
-    input="a${FIELD_SEPARATOR}b${FIELD_SEPARATOR}c"
+    input="a${ITEM_SEP}b${ITEM_SEP}c"
     expected_output="a"
     output=$(_get_element "$input" "1")
     __test_equal "First element." "$expected_output" "$output"
@@ -873,7 +873,7 @@ __run_get_element() {
     __test_equal "Single element." "$expected_output" "$output"
 
     expected_output=""
-    output=$(_get_element "a${FIELD_SEPARATOR}${FIELD_SEPARATOR}c" "2")
+    output=$(_get_element "a${ITEM_SEP}${ITEM_SEP}c" "2")
     __test_equal "Empty field." "$expected_output" "$output"
 }
 
@@ -1475,7 +1475,7 @@ __run_storage_text_edge_cases() {
     output=$(_storage_text_read_all)
     _storage_text_clean
     __test_equal "Larger chunks are read first." \
-        "ccc${FIELD_SEPARATOR}a${FIELD_SEPARATOR}" "$output"
+        "ccc${ITEM_SEP}a${ITEM_SEP}" "$output"
 }
 
 __parallel_test_task() {
@@ -1489,7 +1489,7 @@ __run_validate_file_mime_parallel() {
     __create_temp_files
 
     output=$(_validate_file_mime_parallel \
-        "$_TEMP_FILE1${FIELD_SEPARATOR}$_TEMP_FILE2" "text/" "")
+        "$_TEMP_FILE1${ITEM_SEP}$_TEMP_FILE2" "text/" "")
     _storage_text_clean
 
     __test_equal "Parallel MIME validation keeps text files." "2" \
@@ -1501,7 +1501,7 @@ __run_validate_file_mime_parallel() {
 
     _storage_text_clean
     output=$(_validate_file_mime_parallel \
-        "$_TEMP_FILE1${FIELD_SEPARATOR}$_TEMP_FILE2" "image/" "")
+        "$_TEMP_FILE1${ITEM_SEP}$_TEMP_FILE2" "image/" "")
     _storage_text_clean
     __test_equal "Parallel MIME validation rejects non-images." "" "$output"
 
@@ -1544,7 +1544,7 @@ __run_run_function_parallel() {
     _storage_text_clean
     export -f __parallel_test_task _storage_text_write
     _run_function_parallel \
-        "alpha${FIELD_SEPARATOR}beta" "$FIELD_SEPARATOR" "2" \
+        "alpha${ITEM_SEP}beta" "$ITEM_SEP" "2" \
         "__parallel_test_task"
     output=$(_storage_text_read_all)
     _storage_text_clean
@@ -1555,7 +1555,7 @@ __run_run_function_parallel() {
         "$(grep --quiet "beta" <<<"$output" && echo true || echo false)"
 
     _storage_text_clean
-    _run_function_parallel "" "$FIELD_SEPARATOR" "1" "__parallel_test_task"
+    _run_function_parallel "" "$ITEM_SEP" "1" "__parallel_test_task"
     output=$(_storage_text_read_all)
     _storage_text_clean
     __test_equal "Empty item list runs nothing." "" "$output"
@@ -1745,8 +1745,8 @@ __run_get_filenames_file_manager() {
     __save_script_env "$saved_script_env"
     _unset_global_variables_file_manager
 
-    INPUT_FILES="a${FIELD_SEPARATOR}${FIELD_SEPARATOR}b"
-    expected_output="a${FIELD_SEPARATOR}b"
+    INPUT_FILES="a${ITEM_SEP}${ITEM_SEP}b"
+    expected_output="a${ITEM_SEP}b"
     output=$(_get_filenames_file_manager)
     __test_equal "Fallback collapses standard input." "$expected_output" "$output"
 
@@ -1783,12 +1783,12 @@ __run_get_files() {
     mkdir -p "$_TEMP_DIR_TEST/nested"
     printf "nested" >"$_TEMP_DIR_TEST/nested/nested.txt"
 
-    INPUT_FILES="$_TEMP_DIR_TEST/file10.txt${FIELD_SEPARATOR}$_TEMP_DIR_TEST/file2.txt"
-    expected_output="$_TEMP_DIR_TEST/file2.txt${FIELD_SEPARATOR}$_TEMP_DIR_TEST/file10.txt"
+    INPUT_FILES="$_TEMP_DIR_TEST/file10.txt${ITEM_SEP}$_TEMP_DIR_TEST/file2.txt"
+    expected_output="$_TEMP_DIR_TEST/file2.txt${ITEM_SEP}$_TEMP_DIR_TEST/file10.txt"
     output=$(_get_files 'par_type="file"; par_sort_list="true"')
     __test_equal "Sort the selected files." "$expected_output" "$output"
 
-    INPUT_FILES="$_TEMP_DIR_TEST/file2.txt${FIELD_SEPARATOR}$_TEMP_DIR_TEST/file.pdf"
+    INPUT_FILES="$_TEMP_DIR_TEST/file2.txt${ITEM_SEP}$_TEMP_DIR_TEST/file.pdf"
     expected_output="$_TEMP_DIR_TEST/file2.txt"
     output=$(_get_files 'par_type="file"; par_select_extension="txt"')
     __test_equal "Keep only the selected extension." "$expected_output" "$output"
@@ -1825,7 +1825,7 @@ __run_get_files() {
         "$expected_output" "$output"
     _unset_global_variables_file_manager
 
-    INPUT_FILES="$_TEMP_FILE1${FIELD_SEPARATOR}$_TEMP_FILE2"
+    INPUT_FILES="$_TEMP_FILE1${ITEM_SEP}$_TEMP_FILE2"
     : >"$message_file"
     __test_exit_code "Rejected MIME type stops the script." 2 \
         __invoke_guarded "$message_file" \
@@ -1877,7 +1877,7 @@ __run_get_output_dir() {
 
 __run_validate_files_count() {
     local message_file="$_TEMP_DIR/validate_count_message"
-    local items="a${FIELD_SEPARATOR}b"
+    local items="a${ITEM_SEP}b"
     local output=""
 
     __test_exit_code "Count within the default limits." 0 \
@@ -1938,7 +1938,7 @@ __run_validate_files_count() {
     __test_equal "Minimum message." \
         "$(_i18n "You must select at least") 3 $(_i18n "files")!" "$output"
 
-    items="a${FIELD_SEPARATOR}b${FIELD_SEPARATOR}c"
+    items="a${ITEM_SEP}b${ITEM_SEP}c"
     __test_exit_code "Above the maximum exits." 2 \
         __invoke_guarded "$message_file" \
         _validate_files_count "$items" "file" "" "" "" "1" ""
@@ -1995,7 +1995,7 @@ __run_run_task_parallel() {
 
     _storage_text_clean
     _run_task_parallel \
-        "alpha${FIELD_SEPARATOR}beta" \
+        "alpha${ITEM_SEP}beta" \
         "$_TEMP_DIR/o'ut" \
         "2"
     output=$(_storage_text_read_all)
