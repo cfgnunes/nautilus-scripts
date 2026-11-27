@@ -46,6 +46,10 @@ _build_tmux_session() {
     tmux set-option -t "$session_name" mouse on || return 1
     tmux set-window-option -t "$session_name" synchronize-panes on || return 1
 
+    # Enable the keyboard shortcut to toggle the synchronized panes
+    # (CTRL+B and '=').
+    tmux bind-key = set-window-option synchronize-panes || return 1
+
     # Add one pane for each remaining directory.
     local input_file=""
     for input_file in "${items[@]:1}"; do

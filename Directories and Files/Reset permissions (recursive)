@@ -112,7 +112,7 @@ _reset_permissions() {
     for pattern in "${sensitive_dirs[@]}"; do
         find_args+=(! -path "*/$pattern/*" ! -name "$pattern")
     done
-    find_args+=(-type d -exec chmod "$new_permission" -- {} \;)
+    find_args+=(-type d -exec chmod "$new_permission" -- {} +)
     std_output=$(find "${find_args[@]}" 2>&1)
     _check_output "$?" "$std_output" "" ""
 
@@ -124,7 +124,7 @@ _reset_permissions() {
         find "${items[@]}" \
             ! -regex "$IGNORE_FIND" \
             -type d -name "$dir_pattern" \
-            -exec chmod "$new_permission" -- {} \;
+            -exec chmod "$new_permission" -- {} +
     done
 
     # -------------------------------------------------------------------------
@@ -135,7 +135,7 @@ _reset_permissions() {
         find "${items[@]}" \
             ! -regex "$IGNORE_FIND" \
             -type d -path "*/$dir_pattern/*" \
-            -exec chmod "$new_permission" -- {} \;
+            -exec chmod "$new_permission" -- {} +
     done
 
     # -------------------------------------------------------------------------
