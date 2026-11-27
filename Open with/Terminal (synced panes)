@@ -96,8 +96,14 @@ _open_terminal() {
     ptyxis)
         "$app" --new-window -- "${cmd_run[@]}" &
         ;;
-    konsole | xfce4-terminal)
+    konsole)
         "$app" --hold -e "${cmd_run[@]}" &
+        ;;
+    xfce4-terminal)
+        "$app" --hold -x "${cmd_run[@]}" &
+        ;;
+    terminator)
+        "$app" -x "${cmd_run[@]}" &
         ;;
     *)
         # Generic fallback.
