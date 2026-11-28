@@ -1,0 +1,3 @@
+# SC1091: Not following sourced files.
+# SC2034: Variables filled through namerefs (local -n) look unused.
+disable=SC1091,SC2034

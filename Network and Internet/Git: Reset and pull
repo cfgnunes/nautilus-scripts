@@ -8,7 +8,7 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
     local output_dir=""
 
     # Execute initial checks.
@@ -16,10 +16,10 @@ _main() {
     _display_wait_box ""
     # NOTE: Using 'par_type=all' because the script can run
     # even when the file manager selects a file or directory.
-    input_files=$(_get_files "par_type=all; par_max_items=20")
+    _get_files "par_type=all; par_max_items=20" "input_files"
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" "$output_dir"
+    _run_task_parallel "input_files" "$output_dir"
 
     _display_result_box ""
 }
@@ -149,7 +149,8 @@ _main_task() {
     local -a branches_delete=()
     IFS=$'\n' read -r -d '' -a branches_delete < <(
         grep -vxE "($skip_branches)" <<<"$local_branches" |
-            grep -vxFf <(printf '%s\n' "$remote_branches")) || true
+            grep -vxFf <(printf '%s\n' "$remote_branches")
+    ) || true
 
     # Force-delete them in a single command.
     if ((${#branches_delete[@]} > 0)); then

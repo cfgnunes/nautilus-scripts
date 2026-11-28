@@ -8,13 +8,13 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
 
     # Execute initial checks.
-    input_files=$(_get_files "par_type=all; par_max_items=20")
+    _get_files "par_type=all; par_max_items=20" "input_files"
 
     # Run the main process.
-    _open_items_locations "$input_files" "true"
+    _open_items_locations "input_files" "true"
 }
 
 _main "$@"

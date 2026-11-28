@@ -8,14 +8,14 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
     local output_dir=""
 
     # Execute initial checks.
-    input_files=$(_get_files "par_type=file")
+    _get_files "par_type=file" "input_files"
 
     local dependencies=""
-    dependencies=$(_get_dependencies "$input_files")
+    dependencies=$(_get_dependencies "${input_files[@]}")
     _check_dependencies "$dependencies"
     _display_wait_box ""
     output_dir=$(_get_output_dir "par_use_same_dir=true")
@@ -23,7 +23,7 @@ _main() {
     export -f _get_command _run_command
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" "$output_dir"
+    _run_task_parallel "input_files" "$output_dir"
     _display_result_box "$output_dir"
 }
 
@@ -39,12 +39,12 @@ _main_task() {
 }
 
 _get_dependencies() {
-    local input_files=$1
+    local -a input_files=("$@")
     local dependencies=""
 
     # Check dependencies for each file.
     local input_file=""
-    for input_file in $input_files; do
+    for input_file in "${input_files[@]}"; do
         local command=""
         command=$(_get_command "$input_file")
 

@@ -8,36 +8,32 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
 
     # Execute initial checks.
-    input_files=$(_get_files "par_type=all; par_max_items=20")
+    _get_files "par_type=all; par_max_items=20" "input_files"
     _unset_global_variables_file_manager
 
     # Run the main process.
-    _open_app "$input_files"
+    _open_app "${input_files[@]}"
 }
 
 _open_app() {
-    local input_files=$1
+    local -a input_files=("$@")
 
     # Check if the first file is a binary file.
     local file_1=""
-    file_1=$(_get_element "$input_files" "1")
-
-    # Split the list into an array.
-    local -a items=()
-    read -r -d "" -a items < <(printf "%s" "$input_files")
+    file_1=${input_files[0]}
 
     if [[ ! -d "$file_1" ]]; then
         if [[ "$(_get_file_encoding "$file_1")" == "binary" &&
-            -s "$file_1" ]]; then
+        -s "$file_1" ]]; then
             if _is_qt_desktop; then
                 _check_dependencies "okteta"
-                okteta -- "${items[@]}" &
+                okteta -- "${input_files[@]}" &
             else
                 _check_dependencies "ghex"
-                ghex -- "${items[@]}" &
+                ghex -- "${input_files[@]}" &
             fi
             exit 0
         fi
@@ -45,7 +41,6 @@ _open_app() {
 
     # Run the main process.
     local available_app=""
-    # shellcheck disable=SC2034
     local -a apps=(
         "code"
         "cursor"
@@ -67,7 +62,7 @@ _open_app() {
         available_app=$(_xdg_get_default_app "text/plain")
     fi
 
-    "$available_app" -- "${items[@]}" &
+    "$available_app" -- "${input_files[@]}" &
 }
 
 _main "$@"

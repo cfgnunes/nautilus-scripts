@@ -8,11 +8,11 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
 
     # Execute initial checks.
     _display_wait_box ""
-    input_files=$(_get_files "par_type=directory; par_max_items=1")
+    _get_files "par_type=directory; par_max_items=1" "input_files"
 
     local msg=""
     msg+="$(_i18n 'This action will move all files from subdirectories to the root of the selected directory.')"
@@ -23,7 +23,7 @@ _main() {
     fi
 
     # Run the main process.
-    _flatten_directory "$input_files"
+    _flatten_directory "${input_files[0]}"
 
     _display_result_box ""
 }

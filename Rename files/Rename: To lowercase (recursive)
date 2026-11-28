@@ -7,12 +7,12 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
     local output_dir=""
 
     # Execute initial checks.
     _display_wait_box ""
-    input_files=$(_get_files "par_type=all")
+    _get_files "par_type=all" "input_files"
 
     local msg=""
     msg+="$(_i18n 'This action will rename the selected files and directories recursively.')"
@@ -23,7 +23,7 @@ _main() {
     fi
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" "$output_dir"
+    _run_task_parallel "input_files" "$output_dir"
     _display_result_box ""
 }
 

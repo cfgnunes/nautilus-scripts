@@ -8,15 +8,15 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
     local output_dir=""
 
     # Execute initial checks.
     _display_wait_box ""
-    input_files=$(_get_files "par_type=all")
+    _get_files "par_type=all" "input_files"
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" "$output_dir"
+    _run_task_parallel "input_files" "$output_dir"
     _display_result_box ""
 }
 
@@ -40,8 +40,8 @@ _main_task() {
     fi
 
     # Transform similar ' characters.
-    output_file=$(sed "s|"$'\u0060'"|'|g" <<<"$output_file") # Grave accent.
-    output_file=$(sed "s|"$'\xc2\xb4'"|'|g" <<<"$output_file") # Acute accent.
+    output_file=$(sed "s|"$'\u0060'"|'|g" <<<"$output_file")       # Grave accent.
+    output_file=$(sed "s|"$'\xc2\xb4'"|'|g" <<<"$output_file")     # Acute accent.
     output_file=$(sed "s|"$'\xe2\x80\x98'"|'|g" <<<"$output_file") # Left single quotation.
     output_file=$(sed "s|"$'\xe2\x80\x99'"|'|g" <<<"$output_file") # Right single quotation.
 

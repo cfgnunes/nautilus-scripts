@@ -290,7 +290,8 @@ _main() {
 
     _check_dependencies "ffmpeg git gzip exiftool rhash"
 
-    _open_items_locations "$TEMP_DIR_TASK/task" "true"
+    local -a task_locations=("$TEMP_DIR_TASK/task")
+    _open_items_locations "task_locations" "true"
 
     # Generate the fixtures.
     mkdir -p -- "$fixtures_dir"

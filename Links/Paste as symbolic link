@@ -8,6 +8,7 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
+    local -a uri_items=()
     local output_dir=""
 
     # Execute initial checks.
@@ -16,7 +17,8 @@ _main() {
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$(_get_uris)" "$output_dir"
+    readarray -d "$ITEM_SEP" -t uri_items < <(_get_uris)
+    _run_task_parallel "uri_items" "$output_dir"
     _display_result_box "$output_dir"
 }
 

@@ -8,18 +8,18 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
 
     # Execute initial checks.
     _check_dependencies "magick"
     _display_wait_box "0"
-    input_files=$(_get_files "
+    _get_files "
         par_type=file
         par_recursive=true
         par_select_extension='jpg|jpeg|png|gif|bmp|tiff|tif|webp|avif|heic'
-    ")
+    " "input_files"
 
-    _main_task "$input_files"
+    _main_task "${input_files[@]}"
     _display_result_box ""
 }
 
@@ -30,7 +30,7 @@ _main() {
 #   removes duplicates, and displays the matching images.
 #
 # Parameters:
-#   $1 (input_files): A delimited string containing the image files.
+#   $@ (input_files): The image files to process, one per argument.
 #
 # Steps:
 #   1. Generate fingerprints for all input images in parallel.
@@ -38,7 +38,7 @@ _main() {
 #   3. Group and remove duplicate images based on the similarity threshold.
 #   4. Display visually similar images using an available image viewer.
 _main_task() {
-    local input_files=$1
+    local -a input_files=("$@")
     local threshold="0.75"
     local fp_file="fp.png"
 
@@ -51,7 +51,7 @@ _main_task() {
         _compare_fingerprints \
         _compare_images \
         _generate_fingerprint
-    _run_function_parallel "$input_files" "$ITEM_SEP" "" \
+    _run_function_parallel "input_files" "" \
         "_generate_fingerprint"
 
     # -------------------------------------------------------------------------
@@ -62,21 +62,28 @@ _main_task() {
     # order. Larger images tend to contain more visual details, making them
     # more reliable as reference images for comparison.
     __find_fps() {
-        find "$TEMP_DIR_TASK" -type f -name "$fp_file" \
-            -printf "%s %p\0" 2>/dev/null | sort --zero-terminated -r -n |
-            sed -z "s|^[0-9]* ||g" | tr "\0" "$ITEM_SEP"
+        local -n _fps_array=$1
+        readarray -d "" -t _fps_array < <(
+            find "$TEMP_DIR_TASK" -type f -name "$fp_file" \
+                -printf "%s %p\0" 2>/dev/null |
+                sort --zero-terminated -r -n | sed -z "s|^[0-9]* ||g"
+        )
     }
 
     # Iterate over all fingerprint images in the temporary directory.
+    local -a fps_all=()
+    local -a fps_remaining=()
     local fp_reference=""
-    for fp_reference in $(__find_fps); do
+    __find_fps "fps_all"
+    for fp_reference in "${fps_all[@]}"; do
         [[ -f "$fp_reference" ]] || continue
 
         # Store the original path of the similar image.
         _storage_text_write "$(cat -- "$fp_reference.txt")"
 
         # Compare '$fp_reference' with all others fingerprints.
-        _run_function_parallel "$(__find_fps)" "$ITEM_SEP" "" \
+        __find_fps "fps_remaining"
+        _run_function_parallel "fps_remaining" "" \
             "_compare_fingerprints" "$fp_reference" "$threshold"
 
         # After comparing '$fp_reference' with all others,
@@ -91,18 +98,15 @@ _main_task() {
         std_output=$(_storage_text_read_all)
         _storage_text_clean
         std_output=$(_str_sort "$std_output" "$ITEM_SEP" "true")
-
+        local -a similar_files=()
+        readarray -d "$ITEM_SEP" -t similar_files < <(printf "%s" "$std_output")
         # Skip if less than two similar items.
-        if (($(_get_items_count "$std_output") < 2)); then
+        if ((${#similar_files[@]} < 2)); then
             continue
         fi
 
-        local -a similar_files=()
-        read -r -d "" -a similar_files < <(printf "%s" "$std_output")
-
         # Determine the image viewer.
         local image_viewer=""
-        # shellcheck disable=SC2034
         local -a apps=(
             "loupe"     # GNOME default.
             "eog"       # GNOME default (old).

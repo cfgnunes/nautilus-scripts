@@ -11,7 +11,6 @@
 #   For termux: https://github.com/termux/termux-packages
 # =============================================================================
 
-# shellcheck disable=SC2034
 
 # NOTE: If the package name contains the '~' character, it means that the part
 # before '~' represents the package name used for installation, while the part

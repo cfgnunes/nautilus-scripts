@@ -332,17 +332,18 @@ _logs_consolidate() {
 #   output directory.
 #
 # Parameters:
-#   $1 (input_files): A field-separated list of file paths to process.
+#   $1 (array_name): The name of an array variable containing the file paths
+#      to process.
 #   $2 (output_dir): The directory where the output files will be stored.
 #   $3 (max_procs): Optional. Maximum number of parallel processes to use.
 _run_task_parallel() {
-    local input_files=$1
+    local array_name=$1
     local output_dir=$2
     local max_procs=${3:-""}
 
     # Execute the function '_main_task' for each file in parallel.
     export -f _main_task
-    _run_function_parallel "$input_files" "$ITEM_SEP" "$max_procs" \
+    _run_function_parallel "$array_name" "$max_procs" \
         "_main_task" "$output_dir"
 }
 
@@ -353,20 +354,20 @@ _run_task_parallel() {
 #   It uses 'xargs' to distribute execution across multiple processes.
 #
 # Parameters:
-#   $1 (items): A list of items to process, separated by the char delimiter.
-#   $2 (delimiter): The character used to separate items in the input list.
-#   $3 (max_procs): Maximum number of parallel processes to use. If empty, it
+#   $1 (array_name): The name of an array variable containing the items to
+#      process, one per element.
+#   $2 (max_procs): Maximum number of parallel processes to use. If empty, it
 #      is determined automatically.
-#   $4 (func): The name of the function to execute for each item. It is
+#   $3 (func): The name of the function to execute for each item. It is
 #      called as: func "item" "args"...
-#   $5... (args): Optional. Extra arguments passed to the function after the
+#   $4... (args): Optional. Extra arguments passed to the function after the
 #      item.
 _run_function_parallel() {
-    local items=$1
-    local delimiter=$2
-    local max_procs=${3:-""}
-    local func=$4
-    shift 4
+    local -n ref_parallel_items=$1
+    local max_procs=${2:-""}
+    local func=$3
+    shift 3
+    ((${#ref_parallel_items[@]} == 0)) && return 0
 
     if [[ -z "$max_procs" ]]; then
         max_procs=$(_get_max_procs)
@@ -408,7 +409,6 @@ _run_function_parallel() {
         _display_password_box \
         _exit_script \
         _get_dirname \
-        _get_element \
         _get_file_encoding \
         _get_file_mime \
         _get_filename_extension \
@@ -439,9 +439,8 @@ _run_function_parallel() {
     local runner='"$1" "${!#}" "${@:2:$#-2}"'
 
     # Execute the function in parallel for each item.
-    printf "%s" "$items" | xargs \
-        --no-run-if-empty \
-        --delimiter="$delimiter" \
+    printf "%s\0" "${ref_parallel_items[@]}" | xargs \
+        --null \
         --max-procs="$max_procs" \
         --max-args=1 \
         bash -c "$runner" _ "$func" "$@"
@@ -856,7 +855,7 @@ _check_dependencies() {
 # Parameters:
 #   $1 (key): The key whose value is being queried.
 #   $2 (pkg_manager): The package manager to match.
-#   $3 (_input_array): The name of the array that contains
+#   $3 (array_name): The name of the array that contains
 #      the mappings (<subkey>:<value> pairs).
 #
 # Returns:
@@ -865,7 +864,7 @@ _check_dependencies() {
 _deps_get_dependency_value() {
     local key=$1
     local pkg_manager=$2
-    local -n _input_array=$3
+    local -n ref_dependency_map=$3
     local pairs=""
 
     # Source the configuration file that defines the mapping between commands,
@@ -876,7 +875,7 @@ _deps_get_dependency_value() {
     fi
 
     # Retrieve the raw value from the array.
-    pairs=${_input_array[$key]:-}
+    pairs=${ref_dependency_map[$key]:-}
 
     # Remove leading, trailing and duplicate spaces.
     pairs=$(_str_collapse_char "$pairs" " ")
@@ -1476,11 +1475,13 @@ _tarball_extract() {
 # Description:
 #   This function deletes files or directories, either by moving them to the
 #   trash (if supported) or by permanently deleting them.
+#
+# Parameters:
+#   $1 (array_name): The name of an array variable containing the paths of the
+#      items to delete. Paths can be relative or absolute.
 _delete_items() {
-    local items=$1
-
-    local items_count=""
-    items_count=$(_get_items_count "$items")
+    local -n ref_delete_items=$1
+    local items_count=${#ref_delete_items[@]}
 
     local msg=""
     msg+="$(_i18n 'This action will delete the selected items.')"
@@ -1494,10 +1495,8 @@ _delete_items() {
         return
     fi
 
-    # Split the list into an array.
-    local -a items_array=()
-    read -r -d "" -a items_array < <(printf "%s" "$items")
-
+    # Work on a copy, so the caller's array is not changed.
+    local -a items_array=("${ref_delete_items[@]}")
     # The list shows paths relative to the working directory. Restore the
     # absolute paths so the action does not depend on the current directory.
     local working_dir=""
@@ -1584,9 +1583,9 @@ _directory_push() {
 #   This function filters a list of files or directories.
 #
 # Parameters:
-#   $1 (input_files): A field-separated string containing file or
+#   $1 (array_name): The name of an array variable containing the file or
 #      directory paths to filter. These paths are passed to the 'find'
-#      command.
+#      command. The array is replaced in place by the filtered paths.
 #   $2 (par_type): A string specifying the type of file to search for.
 #      Supported values:
 #      - "file": To search for files and symbolic links.
@@ -1600,29 +1599,24 @@ _directory_push() {
 #      passed directly to the 'find' command.
 #
 # Example:
-#   - Input: "dir1 dir2", "file", "", "txt|pdf", "true"
-#   - Output: A list of files with extensions ".txt" or ".pdf" from the
-#     directories "dir1" and "dir2", searched recursively.
+#   - Input: array with "dir1" and "dir2", "file", "", "txt|pdf", ""
+#   - Output: The array is replaced by the files with extensions other than
+#     ".txt" or ".pdf" found in the directories "dir1" and "dir2".
 _find_filtered_files() {
-    local input_files=$1
+    local -n ref_filtered_files=$1
     local par_type=$2
     local par_select_extension=$3
     local par_skip_extension=$4
     local par_find_parameters=$5
-    local filtered_files=""
     local -a find_args=()
     local -a find_extra_args=()
 
-    # Split the list into an array.
-    local -a items=()
-    read -r -d "" -a items < <(printf "%s" "$input_files")
-
-    if ((${#items[@]} == 0)); then
+    if ((${#ref_filtered_files[@]} == 0)); then
         return 0
     fi
 
     # Build the 'find' arguments.
-    find_args+=("${items[@]}")
+    find_args+=("${ref_filtered_files[@]}")
     find_args+=(! -regex "$IGNORE_FIND")
 
     if [[ -n "$par_find_parameters" ]]; then
@@ -1645,12 +1639,9 @@ _find_filtered_files() {
             find_args+=(! -iregex ".*\.($par_skip_extension)$")
         fi
     fi
-
     find_args+=(-print0)
-    filtered_files=$(find "${find_args[@]}" 2>/dev/null |
-        tr "\0" "$ITEM_SEP")
 
-    _str_collapse_char "$filtered_files" "$ITEM_SEP"
+    readarray -d "" -t ref_filtered_files < <(find "${find_args[@]}" 2>/dev/null)
 }
 
 # Function: _get_dirname
@@ -1998,8 +1989,7 @@ _get_working_directory() {
     *)
         # Case: File managers that don't set current directory variables.
         # Strategy: Get the directory from first selected item.
-        local item_1=""
-        item_1=$(_get_element "$INPUT_FILES" "1")
+        local item_1=${INPUT_FILES%%"$ITEM_SEP"*}
 
         if [[ -n "$item_1" ]]; then
             working_dir=$(_get_dirname "$item_1")
@@ -2305,13 +2295,12 @@ _display_select_box_action() {
     local header_label=""
 
     # Count the rows (skip empty rows).
-    local -a rows=()
-    read -r -d "" -a rows < <(printf "%s" "$list")
-
-    local row=""
-    for row in "${rows[@]}"; do
-        [[ -n "$row" ]] && ((items_count++))
-    done
+    local collapsed_list=""
+    collapsed_list=$(_str_collapse_char "$list" "$ITEM_SEP")
+    if [[ -n "$collapsed_list" ]]; then
+        items_count=$(printf "%s" "$collapsed_list" | tr -cd "$ITEM_SEP" | wc -c)
+        ((items_count++))
+    fi
 
     local total_msg=""
     total_msg="$(_i18n 'Total:')"
@@ -2343,22 +2332,21 @@ _display_select_box_action() {
 
     # Open the selected items.
     if ((items_count > 0)) && [[ -n "$selected_items" ]]; then
+        local -a selected_array=()
+        readarray -d "$ITEM_SEP" -t selected_array \
+            < <(printf "%s" "$selected_items")
         case "$par_action" in
         "open_file")
-            # Split the list into an array.
-            local -a items_array=()
-            read -r -d "" -a items_array < <(printf "%s" "$selected_items")
-
             local item=""
-            for item in "${items_array[@]}"; do
+            for item in "${selected_array[@]}"; do
                 xdg-open "$item" &>/dev/null &
             done
             ;;
         "open_location")
-            _open_items_locations "$selected_items" "$par_resolve_links"
+            _open_items_locations "selected_array" "$par_resolve_links"
             ;;
-        "open_url") _open_urls "$selected_items" ;;
-        "delete_item") _delete_items "$selected_items" ;;
+        "open_url") _open_urls "selected_array" ;;
+        "delete_item") _delete_items "selected_array" ;;
         esac
     fi
 }
@@ -2376,10 +2364,6 @@ _display_select_box() {
     if [[ -z "$par_columns" ]]; then
         par_columns="--column="
     fi
-
-    # Remove empty rows and count the remaining ones.
-    list=$(_str_collapse_char "$list" "$ITEM_SEP")
-    items_count=$(_get_items_count "$list")
 
     # Add the selection column (if any) and define the selection state of the
     # first and the other rows.
@@ -2403,33 +2387,34 @@ _display_select_box() {
             first="TRUE$COL_SEP"
             ;;
         "first_if_one")
+            # Remove empty rows and count the remaining ones.
+            list=$(_str_collapse_char "$list" "$ITEM_SEP")
+            if [[ -n "$list" ]]; then
+                items_count=$(printf "%s" "$list" | tr -cd "$ITEM_SEP" | wc -c)
+                ((items_count++))
+            fi
             ((items_count == 1)) && first="TRUE$COL_SEP"
             ;;
         esac
     fi
-    par_columns=$(tr ":" "=" <<<"$par_columns")
+    par_columns=$(sed "s/:/=/g; s/,/$COL_SEP/g" <<<"$par_columns")
     columns_count=$(grep --only-matching "column=" <<<"$par_columns" | wc -l)
 
-    local -a list_array=()
-    IFS=$COL_SEP read -r -d "" -a list_array < <(
-        printf "%s" "$list" | sed -z "s/^/$first/; s/$ITEM_SEP/$COL_SEP$other/g
-            :again; s/\(^\|$COL_SEP\)\($COL_SEP\|$\)/\1 \2/g; t again
-            s/\(^\|$COL_SEP\)-/\1.\/-/g"
-    )
-
-    # HACK: Workaround for Zenity.
-    # Some Zenity versions crash with an empty list.
-    ((items_count == 0)) && list_array=(" ")
+    local cells=""
+    cells=$(printf "%s" "$list" |
+        sed -z "s/^/$first/; s/$ITEM_SEP/$COL_SEP$other/g
+        :again; s/\(^\|$COL_SEP\)\($COL_SEP\|$\)/\1 \2/g; t again
+        s/\(^\|$COL_SEP\)-/\1.\/-/g; s/$/$COL_SEP/")
 
     local -a columns_array=()
-    IFS=$COL_SEP read -r -a columns_array <<<"$(tr "," "$COL_SEP" <<<"$par_columns")"
+    IFS=$COL_SEP read -r -a columns_array <<<"$par_columns"
 
     # Get the system limit for arguments.
     local arg_max=""
     local msg_size=""
     local safe_margin=65536 # Reserve space for extra args.
     arg_max=$(getconf "ARG_MAX")
-    msg_size=$(printf "%s\n" "${list_array[@]}" | wc -c)
+    msg_size=$(printf "%s" "$cells" | wc -c)
 
     local btn_ok=""
     btn_ok="$(_i18n 'OK')"
@@ -2441,9 +2426,7 @@ _display_select_box() {
 
     _display_lock
     if ((msg_size > arg_max - safe_margin)); then
-        local cells=""
-        cells=$(printf "%s$COL_SEP" "${list_array[@]}" |
-            tr "\n$COL_SEP" "$nl_mark\n")
+        cells=$(printf "%s" "$cells" | tr "\n$COL_SEP" "$nl_mark\n")
 
         # HACK: Workaround for Zenity.
         # Use stdin instead of passing arguments directly via '--list'. This
@@ -2471,21 +2454,29 @@ _display_select_box() {
         # Default strategy for '--list'. Pass '$cells' directly as
         # arguments. This strategy is very fast.
         if _command_exists "zenity"; then
-            selected_items=$(zenity --title "$(_get_script_name)" --list \
-                --multiple --no-markup --separator="$ITEM_SEP" \
-                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-                --print-column "$columns_count" --text "$header_label" \
-                --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
-                "${columns_array[@]}" \
-                "${list_array[@]}" 2>/dev/null) || _exit_script
+            # shellcheck disable=SC2086
+            selected_items=$(
+                set -f
+                IFS=$COL_SEP
+                zenity --title "$(_get_script_name)" --list \
+                    --multiple --no-markup --separator="$ITEM_SEP" \
+                    --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+                    --print-column "$columns_count" --text "$header_label" \
+                    --cancel-label="${btn_cancel}" --ok-label="${btn_ok}" \
+                    "${columns_array[@]}" $cells 2>/dev/null
+            ) || _exit_script
         else
-            selected_items=$(yad --title "$(_get_script_name)" --list \
-                --multiple --no-markup --separator="$ITEM_SEP" \
-                --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
-                --print-column "$columns_count" --text "$header_label" \
-                --button="${btn_cancel}:1" --button="${btn_ok}:0" \
-                "${columns_array[@]}" \
-                "${list_array[@]}" 2>/dev/null) || _exit_script
+            # shellcheck disable=SC2086
+            selected_items=$(
+                set -f
+                IFS=$COL_SEP
+                yad --title "$(_get_script_name)" --list \
+                    --multiple --no-markup --separator="$ITEM_SEP" \
+                    --width="$GUI_BOX_WIDTH" --height="$GUI_BOX_HEIGHT" \
+                    --print-column "$columns_count" --text "$header_label" \
+                    --button="${btn_cancel}:1" --button="${btn_ok}:0" \
+                    "${columns_array[@]}" $cells 2>/dev/null
+            ) || _exit_script
         fi
     fi
     _display_unlock
@@ -3045,17 +3036,17 @@ _add_path_env() {
 #   to check for the existence of each command.
 #
 # Parameters:
-#   $1 (_apps): An array of application names to check, in order of
+#   $1 (array_name): An array of application names to check, in order of
 #      preference.
 #
 # Returns:
 #   0 (true): If an available application is found, prints its name.
 #   1 (false): If no applications from the list are found.
 _get_available_app() {
-    local -n _apps=$1
+    local -n ref_available_apps=$1
 
     local app=""
-    for app in "${_apps[@]}"; do
+    for app in "${ref_available_apps[@]}"; do
         if _command_exists "$app"; then
             printf "%s" "$app"
             return 0
@@ -3367,9 +3358,17 @@ _set_clipboard_file() {
 # Description:
 #   This function retrieves a list of selected filenames or URIs from a file
 #   manager and processes the input accordingly. If no selection is detected,
-#   it falls back to using a standard input file list.
+#   it falls back to the list in '$INPUT_FILES'.
+#
+# Parameters:
+#   $1 (array_name): The name of an array variable that receives the items,
+#      one per element.
 _get_filenames_file_manager() {
-    local input_files=""
+    local -n ref_fm_filenames=$1
+    local input_items=""
+    local -a raw_items=()
+    local item=""
+    ref_fm_filenames=()
 
     # Try to use the information provided by the file manager.
     # Common examples:
@@ -3379,48 +3378,48 @@ _get_filenames_file_manager() {
     local var=""
     var=$(compgen -v | grep -m1 "_SCRIPT_SELECTED_URIS$")
     if [[ -n "$var" ]]; then
-        eval "input_files=\$$var"
+        eval "input_items=\$$var"
     fi
 
-    if [[ "$input_files" == "file://"* ]]; then
-        input_files=$(_convert_text_to_delimited_string "$input_files")
-        input_files=$(_text_uri_decode "$input_files")
-    elif [[ "$input_files" == *"://"* ]]; then
-        input_files=$(_convert_text_to_delimited_string "$input_files")
-
+    local resolve_gio="false"
+    if [[ "$input_items" == "file://"* ]]; then
+        input_items=$(_convert_text_to_delimited_string "$input_items")
+        input_items=$(_text_uri_decode "$input_items")
+    elif [[ "$input_items" == *"://"* ]]; then
+        input_items=$(_convert_text_to_delimited_string "$input_items")
+        resolve_gio="true"
+    else
+        input_items=$INPUT_FILES
+    fi
+    readarray -d "$ITEM_SEP" -t raw_items < <(printf "%s" "$input_items")
+    for item in "${raw_items[@]}"; do
+        [[ -z "$item" ]] && continue
         # For each virtual URI, resolve its actual file path via 'gio', such as
         # '*search://', 'recent://', 'trash://', 'sftp://', 'smb://', etc.
-        local decoded_input_files=""
-        local gio_path=""
-        local file=""
-        for file in $input_files; do
-            gio_path=$(_gio_translate_path "$file")
-            if [[ -n "$gio_path" ]]; then
-                decoded_input_files+="$gio_path"
-                decoded_input_files+=$ITEM_SEP
-            fi
-        done
-        input_files=$decoded_input_files
-    else
-        input_files=$INPUT_FILES
-    fi
-    input_files=$(_str_collapse_char "$input_files" "$ITEM_SEP")
-
-    printf "%s" "$input_files"
+        if [[ "$resolve_gio" == "true" ]]; then
+            item=$(_gio_translate_path "$item")
+            [[ -z "$item" ]] && continue
+        fi
+        ref_fm_filenames+=("$item")
+    done
 }
 
 # Function: _get_files
 #
 # Description:
-#   This function retrieves a list of files or directories based on the
-#   provided parameters and performs various filtering, validation, and sorting
-#   operations. The input files can be filtered by type, extension, mime type,
+#   This function fills an array with the files or directories selected by the
+#   user, based on the provided parameters, and performs various filtering,
+#   validation, and sorting operations. The input files can be filtered by
+#   type, extension, mime type,
 #   etc. It also supports recursive directory expansion and validation of file
 #   conflicts.
 #
 # Parameters:
 #   $1 (parameters): A string containing key-value pairs that configure
 #      the function's behavior. Example: 'par_type=file; par_min_items=2'.
+#   $2 (array_name): The name of an array variable that receives the
+#      resulting items, one per element. Call the function directly (not inside
+#      '$(...)'), so the array is set in the caller's scope.
 #
 # Options in '$parameters':
 #   - "par_type": Specifies the type of items to filter.
@@ -3440,8 +3439,10 @@ _get_filenames_file_manager() {
 #   - "par_sort_list": If 'true', sorts the list of files.
 _get_files() {
     local parameters=$1
-    local input_files=""
-    input_files=$(_get_filenames_file_manager)
+    local -n ref_input_files=$2
+    local working_dir=""
+    local selected_items=""
+    _get_filenames_file_manager "ref_input_files"
 
     # Default values for input parameters.
     local par_max_items=""
@@ -3461,15 +3462,16 @@ _get_files() {
     # 'par_type!=file' or 'par_recursive=true'. This is particularly useful for
     # scripts like 'Open with Terminal', where no file is selected but the
     # intention is to open the working directory.
-    if (($(_get_items_count "$input_files") == 0)) &&
+    if ((${#ref_input_files[@]} == 0)) &&
         _is_file_manager_session &&
         [[ "$par_type" != "file" || "$par_recursive" == "true" ]]; then
         # Return the current working directory if no files have been selected.
-        input_files=$(_get_working_directory)
+        working_dir=$(_get_working_directory)
+        [[ -n "$working_dir" ]] && ref_input_files=("$working_dir")
     fi
 
     # If still no files available, prompt user with selection dialog.
-    if (($(_get_items_count "$input_files") == 0)); then
+    if ((${#ref_input_files[@]} == 0)); then
         local select_type=$par_type
         [[ "$par_recursive" == "true" ]] && select_type="all"
 
@@ -3480,14 +3482,16 @@ _get_files() {
         "all") msg_select_type="$(_i18n 'Select input items')" ;;
         esac
 
-        input_files=$(_display_file_selection_box "$msg_select_type" "" \
+        selected_items=$(_display_file_selection_box "$msg_select_type" "" \
             "par_multiple=true; par_select_type=$select_type")
+        readarray -d "$ITEM_SEP" -t ref_input_files \
+            < <(printf "%s" "$selected_items")
     fi
 
     local find_parameters=""
-    if (($(_get_items_count "$input_files") == 1)) &&
-        [[ -d "$input_files" && "$par_recursive" == "false" ]] &&
-        basename -- "$input_files" |
+    if ((${#ref_input_files[@]} == 1)) &&
+        [[ -d "${ref_input_files[0]}" && "$par_recursive" == "false" ]] &&
+        basename -- "${ref_input_files[0]}" |
         grep --quiet --ignore-case --word-regexp "batch"; then
 
         # HACK: Batch mode. This workaround allows the scripts to handle cases
@@ -3512,34 +3516,35 @@ _get_files() {
     fi
 
     # Pre-select the input files.
-    input_files=$(_find_filtered_files \
-        "$input_files" \
+    _find_filtered_files \
+        "ref_input_files" \
         "$par_type" \
         "$par_select_extension" \
         "$par_skip_extension" \
-        "$find_parameters")
+        "$find_parameters"
 
     # NOTE: Handle the case where a file was selected in the file manager, but
     # 'par_type=directory'. This is particularly useful for scripts like 'Open
     # with Terminal' where a file is selected, but the intention is to open the
     # working directory.
-    if (($(_get_items_count "$input_files") == 0)) &&
+    if ((${#ref_input_files[@]} == 0)) &&
         [[ "$par_type" == "directory" && -n "$par_max_items" ]]; then
         # Return the current working directory if no files have been selected.
-        input_files=$(_get_working_directory)
+        working_dir=$(_get_working_directory)
+        [[ -n "$working_dir" ]] && ref_input_files=("$working_dir")
     fi
 
     # Validates the mime or encoding of the file.
     if [[ -n "$par_select_mime" || -n "$par_skip_encoding" ]]; then
-        input_files=$(_validate_file_mime_parallel \
-            "$input_files" \
+        _validate_file_mime_parallel \
+            "ref_input_files" \
             "$par_select_mime" \
-            "$par_skip_encoding")
+            "$par_skip_encoding"
     fi
 
     # Validate that the final file count meets requirements.
     _validate_files_count \
-        "$input_files" \
+        "ref_input_files" \
         "$par_type" \
         "$par_select_extension" \
         "$par_select_mime" \
@@ -3548,12 +3553,13 @@ _get_files() {
         "$par_recursive"
 
     # Sort file list if requested.
-    if [[ "$par_sort_list" == "true" ]]; then
-        input_files=$(_str_sort "$input_files" "$ITEM_SEP" "false")
+    if [[ "$par_sort_list" == "true" ]] && ((${#ref_input_files[@]} > 0)); then
+        readarray -d "" -t ref_input_files < <(
+            printf "%s\0" "${ref_input_files[@]}" |
+                LC_ALL=C.UTF-8 sort --zero-terminated --version-sort
+        )
     fi
 
-    # Return the final processed file list.
-    printf "%s" "$input_files"
 }
 
 # Function: _gio_translate_path
@@ -3654,9 +3660,9 @@ _validate_file_mime() {
 #   each file.
 #
 # Parameters:
-#   $1 (input_files): A field-separated string containing the paths of the
-#      files to validate. These files will be checked for the MIME type
-#      pattern.
+#   $1 (array_name): The name of an array variable containing the paths of
+#      the files to validate. These files will be checked for the MIME type
+#      pattern. The array is replaced in place by the valid files.
 #   $2 (par_select_mime): Optional. The MIME type pattern (or regular
 #      expression) used to validate the files' MIME types. If this parameter is
 #      empty, no MIME type validation is performed, and all input files are
@@ -3666,25 +3672,24 @@ _validate_file_mime() {
 #      empty, no encoding validation is performed.
 #
 # Example:
-#   - Input: File paths "file1.txt file2.png", MIME pattern "text/plain".
+#   - Input: Array with "file1.txt" and "file2.png", MIME pattern "text/plain".
 #   - Output: If "file1.txt" has a MIME type of "text/plain", it will be
-#     included in the output, but "file2.png" will be excluded if its MIME
-#     type doesn't match.
+#     kept in the array, but "file2.png" will be removed if its MIME type
+#     doesn't match.
 _validate_file_mime_parallel() {
-    local input_files=$1
+    local -n ref_mime_files=$1
     local par_select_mime=$2
     local par_skip_encoding=$3
 
     # Execute the function '_validate_file_mime' for each file in parallel.
     export -f _validate_file_mime
-    _run_function_parallel "$input_files" "$ITEM_SEP" "" \
+    _run_function_parallel "$1" "" \
         "_validate_file_mime" "$par_select_mime" "$par_skip_encoding"
 
-    # Compile valid files in a single list.
-    input_files=$(_storage_text_read_all)
+    # Compile valid files in a single array. Each valid file is stored
+    # followed by '$ITEM_SEP'.
+    readarray -d "$ITEM_SEP" -t ref_mime_files < <(_storage_text_read_all)
     _storage_text_clean
-
-    _str_collapse_char "$input_files" "$ITEM_SEP"
 }
 
 # Function: _validate_files_count
@@ -3693,7 +3698,7 @@ _validate_file_mime_parallel() {
 #   This function validates the number of selected files or directories.
 #
 # Parameters:
-#   $1 (input_files): A space-separated string containing the paths of
+#   $1 (array_name): The name of an array variable containing the paths of
 #      files or directories to be validated.
 #   $2 (par_type): A string indicating the type of items to validate.
 #      Supported values:
@@ -3717,7 +3722,7 @@ _validate_file_mime_parallel() {
 #     contain at least 1 and no more than 5 ".txt" or ".pdf" files,
 #     recursively.
 _validate_files_count() {
-    local input_files=$1
+    local -n ref_count_files=$1
     local par_type=$2
     local par_select_extension=$3
     local par_select_mime=$4
@@ -3736,7 +3741,7 @@ _validate_files_count() {
 
     # Count the number of valid files.
     local valid_items_count=0
-    valid_items_count=$(_get_items_count "$input_files")
+    valid_items_count=${#ref_count_files[@]}
 
     # Define a label for the extension.
     local extension_label=""
@@ -3930,17 +3935,17 @@ _get_output_filename() {
 #   manager.
 #
 # Parameters:
-#   $1 (items): A field-separated list of file or directory paths whose
-#      locations will be opened. Paths can be relative or absolute.
+#   $1 (array_name): The name of an array variable containing the file or
+#      directory paths whose locations will be opened. Paths can be relative or
+#      absolute.
 #   $2 (resolve_links): A boolean-like string ('true' or 'false') indicating
 #      whether symbolic links in the provided paths should be resolved to their
 #      target locations before opening.
 _open_items_locations() {
-    local items=$1
+    local -n ref_location_items=$1
     local par_resolve_links=$2
-
     # Exit if no items are provided.
-    if [[ -z "$items" ]]; then
+    if ((${#ref_location_items[@]} == 0)); then
         return
     fi
 
@@ -3950,14 +3955,10 @@ _open_items_locations() {
     local working_dir=""
     working_dir=$(_get_working_directory)
 
-    # Split the list into an array.
-    local -a items_array=()
-    read -r -d "" -a items_array < <(printf "%s" "$items")
-
     # Prepare items to be opened by the file manager.
     local -a items_open_array=()
     local item=""
-    for item in "${items_array[@]}"; do
+    for item in "${ref_location_items[@]}"; do
         # Restore the absolute path if a relative path is used.
         if [[ -n "$working_dir" && -n "$item" && "$item" != /* ]]; then
             item="$working_dir/${item#./}"
@@ -4009,18 +4010,14 @@ _open_items_locations() {
 #   This function opens a list of URLs in the system's default web browser.
 #
 # Parameters:
-#   $1 (urls): A field-separated list of URLs to be opened. Each URL
-#      should be a valid web address (e.g., "http://example.com").
+#   $1 (array_name): The name of an array variable containing the URLs to be
+#      opened. Each URL should be a valid web address (e.g.,
+#      "http://example.com").
 _open_urls() {
-    local urls=$1
+    local -n ref_url_items=$1
     local url=""
 
-    # Exit if no URLs are provided.
-    if [[ -z "$urls" ]]; then
-        return
-    fi
-
-    for url in $urls; do
+    for url in "${ref_url_items[@]}"; do
         # Ensure the URL starts with "http://" or "https://".
         if [[ ! "$url" =~ ^https?:// ]]; then
             url="https://$url"
@@ -4075,29 +4072,6 @@ _get_file_mime() {
     fi
 
     printf "%s" "$std_output"
-}
-
-# Function: _get_items_count
-#
-# Description:
-#   This function counts the number of items in a string, where items are
-#   separated by a specific field separator. It assumes that the input string
-#   contains a list of items separated by the value of the variable
-#   '$ITEM_SEP'.
-#
-# Parameters:
-# - $1 (input_files): A string containing a list of items separated by
-#   the defined '$ITEM_SEP'.
-_get_items_count() {
-    local input_files=$1
-    local items_count=0
-
-    if [[ -n "$input_files" ]]; then
-        items_count=$(tr -cd "$ITEM_SEP" <<<"$input_files" | wc -c)
-        ((items_count++))
-    fi
-
-    printf "%s" "$items_count"
 }
 
 # -----------------------------------------------------------------------------
@@ -4190,19 +4164,6 @@ _convert_text_to_delimited_string() {
     input_items=$(sed -z "s|$new_line|\n|g" <<<"$input_items")
 
     _str_collapse_char "$input_items" "$ITEM_SEP"
-}
-
-# Function: _get_element
-#
-# Description:
-#   This function extracts the Nth field from a delimited string using the
-#   global '$ITEM_SEP' as the delimiter.
-#
-# Parameters:
-#   $1 (list): The input string containing delimited fields.
-#   $2 (n): The field index (1-based) to extract from the input string.
-_get_element() {
-    cut -d "$ITEM_SEP" -f "$2" <<<"$1"
 }
 
 # Function: _str_collapse_char

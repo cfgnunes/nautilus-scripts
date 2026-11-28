@@ -7,23 +7,21 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
     local std_output=""
 
     # Execute initial checks.
     _display_wait_box ""
-    input_files=$(_get_files "
+    _get_files "
         par_type=all
         par_min_items=2
         par_max_items=2
         par_sort_list=true
-    ")
+    " "input_files"
 
     # Extract the two file or directory paths from the input.
-    local file_1=""
-    local file_2=""
-    file_1=$(_get_element "$input_files" "1")
-    file_2=$(_get_element "$input_files" "2")
+    local file_1=${input_files[0]}
+    local file_2=${input_files[1]}
 
     # Append a trailing slash if the path is a directory to ensure proper comparison.
     [[ -d "$file_1" ]] && file_1+="/"

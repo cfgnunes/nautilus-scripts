@@ -8,15 +8,15 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
     local output_dir=""
     local msg=""
     # Execute initial checks.
     _display_wait_box ""
-    input_files=$(_get_files "par_type=file; par_select_mime=image/")
+    _get_files "par_type=file; par_select_mime=image/" "input_files"
 
     local dependencies=""
-    dependencies=$(_get_dependencies "$input_files")
+    dependencies=$(_get_dependencies "${input_files[@]}")
     _check_dependencies "$dependencies"
 
     msg="$(_i18n 'Enter the target size.')"
@@ -37,7 +37,7 @@ _main() {
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" "$output_dir"
+    _run_task_parallel "input_files" "$output_dir"
     _display_result_box "$output_dir"
 }
 
@@ -165,12 +165,12 @@ _main_task() {
 }
 
 _get_dependencies() {
-    local input_files=$1
+    local -a input_files=("$@")
     local dependencies="magick"
 
     # Inkscape is required only for SVG files.
     local input_file=""
-    for input_file in $input_files; do
+    for input_file in "${input_files[@]}"; do
         case "${input_file,,}" in
         *.svg | *.svgz)
             dependencies+=$'\n'

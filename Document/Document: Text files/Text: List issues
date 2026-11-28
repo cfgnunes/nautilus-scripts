@@ -8,19 +8,19 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
 
     # Execute initial checks.
     _display_wait_box ""
-    input_files=$(_get_files "
+    _get_files "
         par_type=file
         par_recursive=true
         par_skip_encoding='binary'
         par_skip_extension='pdf|svg'
-    ")
+    " "input_files"
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" ""
+    _run_task_parallel "input_files" ""
 
     local std_output=""
     std_output=$(_storage_text_read_all)

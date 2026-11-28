@@ -8,26 +8,28 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
 
     # Execute initial checks.
     _display_wait_box ""
-    input_files=$(_get_files "
+    _get_files "
         par_type=file
         par_max_items=1
         par_select_mime=text/plain
-    ")
+    " "input_files"
 
     # Read the lines of the checksum file, ignoring CRLF, empty lines and comments.
-    local lines=""
-    lines=$(sed -e 's/\r$//' -e '/^[[:space:]]*\(#\|$\)/d' -- "$input_files")
+    local -a lines=()
+    readarray -t lines < <(
+        sed -e 's/\r$//' -e '/^[[:space:]]*\(#\|$\)/d' -- "${input_files[0]}"
+    )
 
     # Resolve relative paths against the directory of the checksum file.
-    cd -- "$(dirname -- "$input_files")" || return 1
+    cd -- "$(dirname -- "${input_files[0]}")" || return 1
 
     # Execute the function '_verify_checksum' for each line in parallel.
     export -f _verify_checksum
-    _run_function_parallel "$lines" "\n" "" "_verify_checksum"
+    _run_function_parallel "lines" "" "_verify_checksum"
 
     local std_output=""
     std_output=$(_storage_text_read_all)

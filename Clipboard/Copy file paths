@@ -7,17 +7,15 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
 
     # Execute initial checks.
     _check_dependencies_clipboard ""
     _display_wait_box ""
-    input_files=$(_get_files "par_type=all")
-
-    input_files=$(_convert_delimited_string_to_text "$input_files")
+    _get_files "par_type=all" "input_files"
 
     # Run the main process.
-    _set_clipboard_data "$input_files"
+    _set_clipboard_data "$(printf "%s\n" "${input_files[@]}")"
 
     _display_result_box ""
 }

@@ -9,11 +9,11 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
     local output_dir=""
 
     # Execute initial checks.
-    input_files=$(_get_files "par_type=file")
+    _get_files "par_type=file" "input_files"
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Default password for testing encrypted archives.
@@ -28,7 +28,7 @@ _main() {
         _get_dependencies \
         _run_command \
         _strip_filename_multipart
-    _run_function_parallel "$input_files" "$ITEM_SEP" "" \
+    _run_function_parallel "input_files" "" \
         "_get_dependencies"
 
     local dependencies=""
@@ -39,7 +39,7 @@ _main() {
     _display_wait_box ""
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" "$output_dir"
+    _run_task_parallel "input_files" "$output_dir"
     _display_result_box ""
 }
 
@@ -116,6 +116,7 @@ _concat_file() {
     cat -- "${parts[@]}" >"$output_file_path" || return 1
     printf "%s" "$output_file_path"
 }
+
 # Function: _get_dependencies
 #
 # Description:

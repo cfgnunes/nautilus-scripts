@@ -9,7 +9,7 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
 
     # Execute initial checks.
     if _is_qt_desktop; then
@@ -17,22 +17,18 @@ _main() {
     else
         _check_dependencies "baobab"
     fi
-    input_files=$(_get_files "par_type=directory; par_max_items=20")
+    _get_files "par_type=directory; par_max_items=20" "input_files"
     _unset_global_variables_file_manager
 
     # Run the main process.
-    _open_app "$input_files"
+    _open_app "${input_files[@]}"
 }
 
 _open_app() {
-    local input_files=$1
-
-    # Split the list into an array.
-    local -a items=()
-    read -r -d "" -a items < <(printf "%s" "$input_files")
+    local -a input_files=("$@")
 
     local input_file=""
-    for input_file in "${items[@]}"; do
+    for input_file in "${input_files[@]}"; do
         # Run the main process.
         if _command_exists "baobab"; then
             baobab -- "$input_file" &

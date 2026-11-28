@@ -8,27 +8,27 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
     local output_dir=""
 
     # Execute initial checks.
     _check_dependencies "magick"
     _display_wait_box ""
-    input_files=$(_get_files "
+    _get_files "
         par_type=file
         par_select_mime=image/
         par_min_items=2
         par_sort_list=true
-    ")
+    " "input_files"
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
-    _main_task "$input_files" "$output_dir"
+    _main_task "$output_dir" "${input_files[@]}"
     _display_result_box "$output_dir"
 }
 
 _main_task() {
-    local input_files=$1
-    local output_dir=$2
+    local output_dir=$1
+    local -a input_files=("${@:2}")
     local output_file=""
     local std_output=""
 
@@ -36,13 +36,9 @@ _main_task() {
         "Stacked images (horizontal).png" "$output_dir" \
         "par_extension_opt=preserve")
 
-    # Split the list into an array.
-    local -a items=()
-    read -r -d "" -a items < <(printf "%s" "$input_files")
-
     # Run the main process.
     std_output=$(_cmd_magick_in_sandbox "$output_dir" convert \
-        "${items[@]}" \
+        "${input_files[@]}" \
         +append \
         +repage \
         "$output_file" 2>&1)

@@ -8,27 +8,23 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
     local std_output=""
     local temp_file=""
 
     # Execute initial checks.
     _check_dependencies "rdfind"
     _display_wait_box ""
-    input_files=$(_get_files "par_type=all")
+    _get_files "par_type=all" "input_files"
 
     # Work on a temporary file.
     temp_file=$(_make_temp_file)
-
-    # Split the list into an array.
-    local -a items=()
-    read -r -d "" -a items < <(printf "%s" "$input_files")
 
     # Run the main process.
     # NOTE: The 'rdfind' does not support '--' in the command line.
     _run_in_sandbox "" "false" \
         rdfind -dryrun true -removeidentinode false -outputname \
-        "$temp_file" "${items[@]}" &>/dev/null
+        "$temp_file" "${input_files[@]}" &>/dev/null
 
     # Parse the output.
     # NOTE: A file name with newlines spans many lines in the output.

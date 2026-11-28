@@ -8,20 +8,16 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
     local std_output=""
     local max_item_list=30
 
     # Execute initial checks.
     _display_wait_box ""
-    input_files=$(_get_files "par_type=all")
-
-    # Split the list into an array.
-    local -a items=()
-    read -r -d "" -a items < <(printf "%s" "$input_files")
+    _get_files "par_type=all" "input_files"
 
     # Run the main process.
-    std_output=$(find "${items[@]}" \
+    std_output=$(find "${input_files[@]}" \
         ! -regex "$IGNORE_FIND" \
         -type f -printf "%s$COL_SEP%p\0" 2>/dev/null |
         sort -z -n -r |

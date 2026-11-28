@@ -8,17 +8,17 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
 
     # Execute initial checks.
     _check_dependencies "git"
     _display_wait_box ""
     # NOTE: Using 'par_type=all' because the script can run
     # even when the file manager selects a file or directory.
-    input_files=$(_get_files "par_type=all; par_max_items=20")
+    _get_files "par_type=all; par_max_items=20" "input_files"
 
     # Run the main process.
-    _open_repository_website "$input_files"
+    _open_repository_website "${input_files[@]}"
 
     _display_result_box ""
 }
@@ -70,16 +70,13 @@ _convert_git_to_web_url() {
 #   for one or more directories.
 #
 # Parameters:
-#   $1 (input_file): A space-separated list of directories to process.
+#   $@ (input_files): The directories to process, one per argument.
 _open_repository_website() {
-    local input_files=$1
-
-    local -a items=()
-    read -r -d "" -a items < <(printf "%s" "$input_files")
+    local -a input_files=("$@")
 
     # Iterate over each input file (directory).
     local input_file=""
-    for input_file in "${items[@]}"; do
+    for input_file in "${input_files[@]}"; do
 
         # If the input is not a directory, get its parent directory.
         if [[ ! -d "$input_file" ]]; then

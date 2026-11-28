@@ -59,14 +59,12 @@ _main() {
     __run_find_filtered_files
     __run_get_available_app
     __run_get_dirname
-    __run_get_element
     __run_get_file_encoding
     __run_get_file_mime
     __run_get_filename_extension
     __run_get_filename_next_suffix
     __run_get_filenames_file_manager
     __run_get_files
-    __run_get_items_count
     __run_get_max_procs
     __run_get_output_dir
     __run_get_output_filename
@@ -629,37 +627,6 @@ __run_str_collapse_char() {
     __test_equal "$input" "$expected_output" "$output"
 }
 
-__run_get_items_count() {
-    local input=""
-    local expected_output=""
-    local output=""
-
-    input=""
-    expected_output=0
-    output=$(_get_items_count "$input")
-    __test_equal "$input" "$expected_output" "$output"
-
-    input="${ITEM_SEP}${ITEM_SEP}"
-    expected_output=3
-    output=$(_get_items_count "$input")
-    __test_equal "$input" "$expected_output" "$output"
-
-    input="10${ITEM_SEP}2"
-    expected_output=2
-    output=$(_get_items_count "$input")
-    __test_equal "$input" "$expected_output" "$output"
-
-    input="single"
-    expected_output=1
-    output=$(_get_items_count "$input")
-    __test_equal "$input" "$expected_output" "$output"
-
-    input="a${ITEM_SEP}"
-    expected_output=2
-    output=$(_get_items_count "$input")
-    __test_equal "Trailing separator counts as an item." "$expected_output" "$output"
-}
-
 __run_get_dirname() {
     local input=""
     local expected_output=""
@@ -846,36 +813,6 @@ __run_convert_text_to_delimited_string() {
         "$expected_output" "$output"
 }
 
-__run_get_element() {
-    local input=""
-    local expected_output=""
-    local output=""
-
-    input="a${ITEM_SEP}b${ITEM_SEP}c"
-    expected_output="a"
-    output=$(_get_element "$input" "1")
-    __test_equal "First element." "$expected_output" "$output"
-
-    expected_output="b"
-    output=$(_get_element "$input" "2")
-    __test_equal "Second element." "$expected_output" "$output"
-
-    expected_output="c"
-    output=$(_get_element "$input" "3")
-    __test_equal "Third element." "$expected_output" "$output"
-
-    expected_output=""
-    output=$(_get_element "$input" "4")
-    __test_equal "Missing element." "$expected_output" "$output"
-
-    expected_output="single"
-    output=$(_get_element "single" "1")
-    __test_equal "Single element." "$expected_output" "$output"
-
-    expected_output=""
-    output=$(_get_element "a${ITEM_SEP}${ITEM_SEP}c" "2")
-    __test_equal "Empty field." "$expected_output" "$output"
-}
 
 __run_text_uri_decode() {
     local input=""
@@ -1051,6 +988,12 @@ __run_check_output() {
     __clean_temp_files
 }
 
+__find_filtered_files_output() {
+    local -a found_items=("$1")
+    shift
+    _find_filtered_files "found_items" "$@"
+    printf "%s\n" "${found_items[@]}"
+}
 __run_find_filtered_files() {
     local input=""
     local expected_output=""
@@ -1067,19 +1010,19 @@ __run_find_filtered_files() {
     printf "nested" >"$_TEMP_DIR_TEST/subdir/nested.txt"
 
     input="$_TEMP_DIR_TEST"
-    output=$(_find_filtered_files "$input" "file" "txt" "" "")
+    output=$(__find_filtered_files_output "$input" "file" "txt" "" "")
     __test_equal "Filter by txt extension." "true" \
         "$(grep --quiet "$txt_file" <<<"$output" && echo true || echo false)"
     __test_equal "Exclude pdf when selecting txt." "false" \
         "$(grep --quiet "$pdf_file" <<<"$output" && echo true || echo false)"
 
-    output=$(_find_filtered_files "$input" "file" "" "pdf" "")
+    output=$(__find_filtered_files_output "$input" "file" "" "pdf" "")
     __test_equal "Skip pdf extension." "true" \
         "$(grep --quiet "$txt_file" <<<"$output" && echo true || echo false)"
     __test_equal "Skipped pdf file." "false" \
         "$(grep --quiet "$pdf_file" <<<"$output" && echo true || echo false)"
 
-    output=$(_find_filtered_files "$input" "directory" "" "" "")
+    output=$(__find_filtered_files_output "$input" "directory" "" "" "")
     __test_equal "Find directories." "true" \
         "$(grep --quiet "$_TEMP_DIR_TEST/subdir" <<<"$output" && echo true || echo false)"
 
@@ -1088,7 +1031,7 @@ __run_find_filtered_files() {
     mkdir -p "$_TEMP_DIR_TEST/.git"
     printf "git" >"$_TEMP_DIR_TEST/.git/config"
 
-    output=$(_find_filtered_files "$input" "file" "txt" "" "-maxdepth 1")
+    output=$(__find_filtered_files_output "$input" "file" "txt" "" "-maxdepth 1")
     __test_equal "Extension match is case-insensitive." "true" \
         "$(grep --quiet "$_TEMP_DIR_TEST/File.TXT" <<<"$output" && echo true || echo false)"
     __test_equal "Symlink is included for files." "true" \
@@ -1097,7 +1040,7 @@ __run_find_filtered_files() {
         "$(grep --quiet "$_TEMP_DIR_TEST/subdir/nested.txt" <<<"$output" &&
             echo true || echo false)"
 
-    output=$(_find_filtered_files "$input" "file" "" "" "")
+    output=$(__find_filtered_files_output "$input" "file" "" "" "")
     __test_equal "Paths inside .git are ignored." "false" \
         "$(grep --quiet "$_TEMP_DIR_TEST/.git/config" <<<"$output" &&
             echo true || echo false)"
@@ -1443,7 +1386,6 @@ __run_get_working_directory() {
 
     unset "NAUTILUS_SCRIPT_CURRENT_URI"
     # Read indirectly by '_get_working_directory'.
-    # shellcheck disable=SC2034
     NEMO_SCRIPT_CURRENT_URI="file:///tmp/nemo%20dir"
     expected_output="/tmp/nemo dir"
     output=$(_get_working_directory)
@@ -1483,31 +1425,31 @@ __parallel_test_task() {
 }
 
 __run_validate_file_mime_parallel() {
-    local output=""
-
+    local -a files=()
+    local file=""
+    local found_1="false"
+    local found_2="false"
     _storage_text_clean
     __create_temp_files
-
-    output=$(_validate_file_mime_parallel \
-        "$_TEMP_FILE1${ITEM_SEP}$_TEMP_FILE2" "text/" "")
+    files=("$_TEMP_FILE1" "$_TEMP_FILE2")
+    _validate_file_mime_parallel "files" "text/" ""
     _storage_text_clean
-
     __test_equal "Parallel MIME validation keeps text files." "2" \
-        "$(_get_items_count "$output")"
-    __test_equal "First file is valid." "true" \
-        "$(grep --quiet "$_TEMP_FILE1" <<<"$output" && echo true || echo false)"
-    __test_equal "Second file is valid." "true" \
-        "$(grep --quiet "$_TEMP_FILE2" <<<"$output" && echo true || echo false)"
-
+        "${#files[@]}"
+    for file in "${files[@]}"; do
+        [[ "$file" == "$_TEMP_FILE1" ]] && found_1="true"
+        [[ "$file" == "$_TEMP_FILE2" ]] && found_2="true"
+    done
+    __test_equal "First file is valid." "true" "$found_1"
+    __test_equal "Second file is valid." "true" "$found_2"
     _storage_text_clean
-    output=$(_validate_file_mime_parallel \
-        "$_TEMP_FILE1${ITEM_SEP}$_TEMP_FILE2" "image/" "")
+    files=("$_TEMP_FILE1" "$_TEMP_FILE2")
+    _validate_file_mime_parallel "files" "image/" ""
     _storage_text_clean
-    __test_equal "Parallel MIME validation rejects non-images." "" "$output"
-
+    __test_equal "Parallel MIME validation rejects non-images." "0" \
+        "${#files[@]}"
     __clean_temp_files
 }
-
 __run_parse_parameters() {
     local par_a="default"
     local par_b=""
@@ -1543,9 +1485,8 @@ __run_run_function_parallel() {
 
     _storage_text_clean
     export -f __parallel_test_task _storage_text_write
-    _run_function_parallel \
-        "alpha${ITEM_SEP}beta" "$ITEM_SEP" "2" \
-        "__parallel_test_task"
+    local -a items=("alpha" "beta")
+    _run_function_parallel "items" "2" "__parallel_test_task"
     output=$(_storage_text_read_all)
     _storage_text_clean
 
@@ -1555,7 +1496,8 @@ __run_run_function_parallel() {
         "$(grep --quiet "beta" <<<"$output" && echo true || echo false)"
 
     _storage_text_clean
-    _run_function_parallel "" "$ITEM_SEP" "1" "__parallel_test_task"
+    items=()
+    _run_function_parallel "items" "1" "__parallel_test_task"
     output=$(_storage_text_read_all)
     _storage_text_clean
     __test_equal "Empty item list runs nothing." "" "$output"
@@ -1687,9 +1629,7 @@ __run_add_path_env() {
 __run_get_available_app() {
     local output=""
     # Passed by name to '_get_available_app'.
-    # shellcheck disable=SC2034
     local -a apps=("missing_cmd_xyz" "bash")
-    # shellcheck disable=SC2034
     local -a missing=("missing_cmd_a" "missing_cmd_b")
 
     output=$(_get_available_app "apps")
@@ -1738,6 +1678,7 @@ __run_session_environment() {
 
 __run_get_filenames_file_manager() {
     local output=""
+    local -a found_items=()
     local expected_output=""
     local saved_input_files=$INPUT_FILES
     local saved_script_env="$_TEMP_DIR/filenames_env.sh"
@@ -1747,25 +1688,43 @@ __run_get_filenames_file_manager() {
 
     INPUT_FILES="a${ITEM_SEP}${ITEM_SEP}b"
     expected_output="a${ITEM_SEP}b"
-    output=$(_get_filenames_file_manager)
+    _get_filenames_file_manager "found_items"
+    output=$(
+        IFS=$ITEM_SEP
+        printf "%s" "${found_items[*]}"
+    )
     __test_equal "Fallback collapses standard input." "$expected_output" "$output"
 
     NAUTILUS_SCRIPT_SELECTED_URIS=""
     INPUT_FILES="plain"
     expected_output="plain"
-    output=$(_get_filenames_file_manager)
+    _get_filenames_file_manager "found_items"
+    output=$(
+        IFS=$ITEM_SEP
+        printf "%s" "${found_items[*]}"
+    )
     __test_equal "Empty selection falls back to standard input." \
         "$expected_output" "$output"
 
     NAUTILUS_SCRIPT_SELECTED_URIS=$'file:///tmp/my%20file.txt\nfile:///tmp/b.txt'
     expected_output=$'/tmp/my file.txt\r/tmp/b.txt'
-    output=$(_get_filenames_file_manager)
+    _get_filenames_file_manager "found_items"
+    output=$(
+        IFS=$ITEM_SEP
+        printf "%s" "${found_items[*]}"
+    )
     __test_equal "Decode file:// selections." "$expected_output" "$output"
 
     INPUT_FILES=$saved_input_files
     __restore_script_env "$saved_script_env"
 }
 
+__get_files_joined() {
+    local -a input_files=()
+    local IFS=$ITEM_SEP
+    _get_files "$1" "input_files"
+    printf "%s" "${input_files[*]}"
+}
 __run_get_files() {
     local output=""
     local expected_output=""
@@ -1785,16 +1744,16 @@ __run_get_files() {
 
     INPUT_FILES="$_TEMP_DIR_TEST/file10.txt${ITEM_SEP}$_TEMP_DIR_TEST/file2.txt"
     expected_output="$_TEMP_DIR_TEST/file2.txt${ITEM_SEP}$_TEMP_DIR_TEST/file10.txt"
-    output=$(_get_files 'par_type="file"; par_sort_list="true"')
+    output=$(__get_files_joined 'par_type="file"; par_sort_list="true"')
     __test_equal "Sort the selected files." "$expected_output" "$output"
 
     INPUT_FILES="$_TEMP_DIR_TEST/file2.txt${ITEM_SEP}$_TEMP_DIR_TEST/file.pdf"
     expected_output="$_TEMP_DIR_TEST/file2.txt"
-    output=$(_get_files 'par_type="file"; par_select_extension="txt"')
+    output=$(__get_files_joined 'par_type="file"; par_select_extension="txt"')
     __test_equal "Keep only the selected extension." "$expected_output" "$output"
 
     INPUT_FILES="$_TEMP_DIR_TEST"
-    output=$(_get_files \
+    output=$(__get_files_joined \
         'par_type="file"; par_recursive="true"; par_select_extension="txt"')
     __test_equal "Recursive search includes nested files." "true" \
         "$(grep --quiet "$_TEMP_DIR_TEST/nested/nested.txt" <<<"$output" &&
@@ -1805,31 +1764,22 @@ __run_get_files() {
 
     INPUT_FILES="$_TEMP_DIR_TEST"
     expected_output="$_TEMP_DIR_TEST"
-    output=$(_get_files 'par_type="directory"')
+    output=$(__get_files_joined 'par_type="directory"')
     __test_equal "Non-recursive directory selection." "$expected_output" "$output"
 
     INPUT_FILES="$_TEMP_FILE1"
     expected_output="$_TEMP_DIR_TEST"
-    output=$(_get_files 'par_type="directory"; par_max_items="1"')
+    output=$(__get_files_joined 'par_type="directory"; par_max_items="1"')
     __test_equal "File selection falls back to the working directory." \
         "$expected_output" "$output"
 
-    NAUTILUS_SCRIPT_SELECTED_URIS="file://"
-    # Read indirectly by '_get_working_directory'.
-    # shellcheck disable=SC2034
-    NAUTILUS_SCRIPT_CURRENT_URI="file://${_TEMP_DIR_TEST}"
-    INPUT_FILES=""
-    expected_output="$_TEMP_DIR_TEST"
-    output=$(_get_files 'par_type="directory"')
-    __test_equal "Empty file manager selection uses the working directory." \
-        "$expected_output" "$output"
     _unset_global_variables_file_manager
 
     INPUT_FILES="$_TEMP_FILE1${ITEM_SEP}$_TEMP_FILE2"
     : >"$message_file"
     __test_exit_code "Rejected MIME type stops the script." 2 \
         __invoke_guarded "$message_file" \
-        _get_files 'par_type="file"; par_select_mime="image/"'
+        __get_files_joined 'par_type="file"; par_select_mime="image/"'
     output=$(<"$message_file")
     expected_output="$(_i18n "Invalid input file!")"
     __test_equal "Rejected MIME type reports an invalid file." \
@@ -1877,55 +1827,57 @@ __run_get_output_dir() {
 
 __run_validate_files_count() {
     local message_file="$_TEMP_DIR/validate_count_message"
-    local items="a${ITEM_SEP}b"
+    local -a items=("a" "b")
+    # Read indirectly by '_validate_files_count'.
+    local -a empty_items=()
     local output=""
 
     __test_exit_code "Count within the default limits." 0 \
-        _validate_files_count "$items" "file" "" "" "" "" ""
+        _validate_files_count "items" "file" "" "" "" "" ""
     __test_exit_code "Count equal to the minimum." 0 \
-        _validate_files_count "$items" "file" "" "" "2" "" ""
+        _validate_files_count "items" "file" "" "" "2" "" ""
     __test_exit_code "Count equal to the maximum." 0 \
-        _validate_files_count "$items" "file" "" "" "" "2" ""
+        _validate_files_count "items" "file" "" "" "" "2" ""
 
     : >"$message_file"
     __test_exit_code "No files exits." 2 \
         __invoke_guarded "$message_file" \
-        _validate_files_count "" "file" "" "" "" "" ""
+        _validate_files_count "empty_items" "file" "" "" "" "" ""
     output=$(<"$message_file")
     __test_equal "No files message." \
         "$(_i18n "You must select") $(_i18n "files")!" "$output"
 
     __test_exit_code "No directories exits." 2 \
         __invoke_guarded "$message_file" \
-        _validate_files_count "" "directory" "" "" "" "" ""
+        _validate_files_count "empty_items" "directory" "" "" "" "" ""
     output=$(<"$message_file")
     __test_equal "No directories message." \
         "$(_i18n "You must select") $(_i18n "directories")!" "$output"
 
     __test_exit_code "No files or directories exits." 2 \
         __invoke_guarded "$message_file" \
-        _validate_files_count "" "all" "" "" "" "" ""
+        _validate_files_count "empty_items" "all" "" "" "" "" ""
     output=$(<"$message_file")
     __test_equal "No files or directories message." \
         "$(_i18n "You must select") $(_i18n "files or directories")!" "$output"
 
     __test_exit_code "Empty type exits." 2 \
         __invoke_guarded "$message_file" \
-        _validate_files_count "" "" "" "" "" "" ""
+        _validate_files_count "empty_items" "" "" "" "" "" ""
     output=$(<"$message_file")
     __test_equal "Empty type message." \
         "$(_i18n "Invalid input file!")" "$output"
 
     __test_exit_code "MIME filter with no matches exits." 2 \
         __invoke_guarded "$message_file" \
-        _validate_files_count "" "file" "" "text/" "" "" ""
+        _validate_files_count "empty_items" "file" "" "text/" "" "" ""
     output=$(<"$message_file")
     __test_equal "MIME filter message." \
         "$(_i18n "Invalid input file!")" "$output"
 
     __test_exit_code "Extension filter with no matches exits." 2 \
         __invoke_guarded "$message_file" \
-        _validate_files_count "" "file" "txt|pdf" "" "" "" ""
+        _validate_files_count "empty_items" "file" "txt|pdf" "" "" "" ""
     output=$(<"$message_file")
     __test_equal "Extension filter message." \
         "$(_i18n "You must select files with the extension:") txt, pdf!" \
@@ -1933,15 +1885,15 @@ __run_validate_files_count() {
 
     __test_exit_code "Below the minimum exits." 2 \
         __invoke_guarded "$message_file" \
-        _validate_files_count "$items" "file" "" "" "3" "" ""
+        _validate_files_count "items" "file" "" "" "3" "" ""
     output=$(<"$message_file")
     __test_equal "Minimum message." \
         "$(_i18n "You must select at least") 3 $(_i18n "files")!" "$output"
 
-    items="a${ITEM_SEP}b${ITEM_SEP}c"
+    items=("a" "b" "c")
     __test_exit_code "Above the maximum exits." 2 \
         __invoke_guarded "$message_file" \
-        _validate_files_count "$items" "file" "" "" "" "1" ""
+        _validate_files_count "items" "file" "" "" "" "1" ""
     output=$(<"$message_file")
     __test_equal "Maximum message." \
         "$(_i18n "You must select up to") 1 $(_i18n "files")!" "$output"
@@ -1989,15 +1941,14 @@ __run_run_task_parallel() {
 
     _storage_text_clean
     export -f _main_task
-    _run_task_parallel "" "$_TEMP_DIR/out" "1"
+    local -a items=()
+    _run_task_parallel "items" "$_TEMP_DIR/out" "1"
     output=$(_storage_text_read_all)
     __test_equal "Empty task list runs nothing." "" "$output"
 
     _storage_text_clean
-    _run_task_parallel \
-        "alpha${ITEM_SEP}beta" \
-        "$_TEMP_DIR/o'ut" \
-        "2"
+    items=("alpha" "beta")
+    _run_task_parallel "items" "$_TEMP_DIR/o'ut" "2"
     output=$(_storage_text_read_all)
     _storage_text_clean
     __test_equal "Parallel task receives the first item." "true" \

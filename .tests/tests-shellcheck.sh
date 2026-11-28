@@ -11,5 +11,5 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
     cd -- "$ROOT_DIR/.tests" || exit 1
     find "$ROOT_DIR" ! -path "*/.git*" \
         -type f \( -iname "*.sh" -o -executable \) \
-        -exec shellcheck -e SC1091 "{}" +
+        -exec shellcheck "{}" +
 )

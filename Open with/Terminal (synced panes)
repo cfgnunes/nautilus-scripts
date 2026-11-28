@@ -9,38 +9,34 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
 
     # Execute initial checks.
     _check_dependencies "tmux"
-    input_files=$(_get_files "par_type=directory; par_max_items=20")
+    _get_files "par_type=directory; par_max_items=20" "input_files"
     _unset_global_variables_file_manager
 
     # Run the main process.
-    _open_app "$input_files"
+    _open_app "${input_files[@]}"
 }
 
 _open_app() {
-    local input_files=$1
+    local -a input_files=("$@")
     local session_name="s$$"
 
-    _build_tmux_session "$session_name" "$input_files" || _exit_script
+    _build_tmux_session "$session_name" "${input_files[@]}" || _exit_script
     _open_terminal "$session_name"
 }
 
 # Create a tmux session with one synchronized pane per directory.
 _build_tmux_session() {
     local session_name=$1
-    local input_files=$2
-
-    # Split the list into an array.
-    local -a items=()
-    read -r -d "" -a items < <(printf "%s" "$input_files")
+    local -a input_files=("${@:2}")
 
     # Create a new tmux session in detached mode, in the first directory.
     local first_pane=""
     first_pane=$(tmux new-session -d -P -F "#{pane_id}" \
-        -s "$session_name" -c "${items[0]}") || return 1
+        -s "$session_name" -c "${input_files[0]}") || return 1
 
     # Enable synchronized panes and mouse support only for this session.
     tmux set-option -t "$session_name" mouse on || return 1
@@ -52,7 +48,7 @@ _build_tmux_session() {
 
     # Add one pane for each remaining directory.
     local input_file=""
-    for input_file in "${items[@]:1}"; do
+    for input_file in "${input_files[@]:1}"; do
         tmux split-window -t "$session_name" -c "$input_file" || return 1
         tmux select-layout -t "$session_name" tiled >/dev/null || return 1
     done
@@ -66,7 +62,6 @@ _open_terminal() {
     local session_name=$1
     local app=""
 
-    # shellcheck disable=SC2034
     local -a apps=(
         "ptyxis"         # GNOME default.
         "gnome-terminal" # GNOME default (old).

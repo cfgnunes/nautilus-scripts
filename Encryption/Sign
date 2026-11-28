@@ -7,13 +7,13 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
     local output_dir=""
 
     # Execute initial checks.
     _check_dependencies "tar gpg"
     _display_wait_box ""
-    input_files=$(_get_files "par_type=all")
+    _get_files "par_type=all" "input_files"
 
     local id_sign=""
     id_sign=$(_get_id_sign)
@@ -23,7 +23,7 @@ _main() {
 
     # Execute the function '_main_task' for each file in parallel.
     export -f _main_task _run_gpg
-    _run_function_parallel "$input_files" "$ITEM_SEP" "" \
+    _run_function_parallel "input_files" "" \
         "_main_task" "$output_dir" "$id_sign"
     _display_result_box "$output_dir"
 }

@@ -8,12 +8,12 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
     local output_dir=""
 
     # Execute initial checks.
     _check_dependencies "tar gpg"
-    input_files=$(_get_files "
+    _get_files "
         par_type=file
         par_select_mime='application/octet-stream|'
         par_select_mime+='application/pgp|'
@@ -22,11 +22,11 @@ _main() {
         par_select_mime+='application/pkcs7-mime|'
         par_select_mime+='application/pkcs7-signature|'
         par_select_mime+='text/plain'
-    ")
+    " "input_files"
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$input_files" "$output_dir"
+    _run_task_parallel "input_files" "$output_dir"
     _display_result_box "$output_dir"
 }
 

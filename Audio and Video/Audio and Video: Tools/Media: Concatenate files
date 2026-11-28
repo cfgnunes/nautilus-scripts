@@ -8,33 +8,31 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
     local output_dir=""
 
     # Execute initial checks.
     _check_dependencies "ffmpeg"
     _display_wait_box ""
-    input_files=$(_get_files "
+    _get_files "
         par_type=file
         par_select_mime='audio/|video/'
         par_min_items=2
         par_sort_list=true
-    ")
+    " "input_files"
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
-    _main_task "$input_files" "$output_dir"
+    _main_task "$output_dir" "${input_files[@]}"
     _display_result_box "$output_dir"
 }
 
 _main_task() {
-    local input_files=$1
-    local output_dir=$2
+    local output_dir=$1
+    local -a input_files=("${@:2}")
     local output_file=""
     local std_output=""
 
-    # Extract individual file paths from the input string.
-    local file_1=""
-    file_1=$(_get_element "$input_files" "1")
+    local file_1=${input_files[0]}
 
     # Get the extension of the first file to use it for the output file.
     local filename_extension=""
@@ -46,12 +44,7 @@ _main_task() {
 
     # ffmpeg concat demuxer: a quote inside the path is '\'' .
     local escaped_quote="'\\''"
-    input_files=${input_files//\'/$escaped_quote}
-
-    input_files="file '$input_files'"
-    # shellcheck disable=SC2001
-    input_files=$(sed "s|$ITEM_SEP|'${ITEM_SEP}file '|g" <<<"$input_files")
-    _convert_delimited_string_to_text "$input_files" >"$temp_file"
+    printf "file '%s'\n" "${input_files[@]//\'/$escaped_quote}" >"$temp_file"
 
     output_file=$(_get_output_filename \
         "Concatenated media$filename_extension" "$output_dir" \

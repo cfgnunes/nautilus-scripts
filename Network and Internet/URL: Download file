@@ -8,7 +8,8 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
+    local -a url_items=()
     local output_dir=""
 
     # Execute initial checks.
@@ -23,11 +24,12 @@ _main() {
     _display_wait_box ""
     # NOTE: Using 'par_type=all' because the script can run
     # even when the file manager selects a file or directory.
-    input_files=$(_get_files "par_type=all")
+    _get_files "par_type=all" "input_files"
     output_dir=$(_get_output_dir "par_use_same_dir=true")
 
     # Execute the function '_main_task' for each file in parallel.
-    _run_task_parallel "$(_prepare_input "$input_files")" "$output_dir"
+    readarray -d "$ITEM_SEP" -t url_items < <(_prepare_input "${input_files[@]}")
+    _run_task_parallel "url_items" "$output_dir"
     _display_result_box "$output_dir"
 }
 
@@ -149,14 +151,10 @@ _extract_urls() {
 }
 
 _prepare_input() {
-    local input_files=$1
+    local -a input_files=("$@")
     local data=""
     local urls=""
     local msg=""
-
-    # Split the list into an array.
-    local -a items=()
-    read -r -d "" -a items < <(printf "%s" "$input_files")
 
     data=$(grep \
         --binary-files=without-match \
@@ -164,7 +162,7 @@ _prepare_input() {
         --devices=skip \
         --no-messages \
         --no-filename \
-        "" -- "${items[@]}")
+        "" -- "${input_files[@]}")
     urls=$(_extract_urls "$data")
 
     # If there are no valid URLs in the files,

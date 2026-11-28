@@ -8,18 +8,18 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
 
     # Execute initial checks.
-    input_files=$(_get_files "
+    _get_files "
         par_type=all
         par_min_items=2
         par_max_items=3
         par_sort_list=true
-    ")
+    " "input_files"
 
     # Run the main process.
-    _compare "$input_files"
+    _compare "${input_files[@]}"
 }
 
 # Function: _compare
@@ -30,20 +30,15 @@ _main() {
 #   type.
 #
 # Parameters:
-#   $1 (input_files): Input files separated by '$ITEM_SEP'.
+#   $1 (file_1): First file in the input.
+#   $2 (file_2): Second file in the input.
+#   $3 (file_3): Optional. Third file in the input.
 _compare() {
-    local input_files=$1
+    local file_1=$1
+    local file_2=$2
+    local file_3=${3:-}
     local num_files_compare=2 # Default number of files to compare.
     local msg=""
-
-    local file_1="" # First file in the input.
-    local file_2="" # Second file in the input.
-    local file_3="" # Third file in the input, optional.
-
-    # Extract individual file paths from the input string.
-    file_1=$(_get_element "$input_files" "1")
-    file_2=$(_get_element "$input_files" "2")
-    file_3=$(_get_element "$input_files" "3")
 
     # Perform a preliminary comparison to check if the files are identical.
     _compare_identical "$file_1" "$file_2" "$file_3"
@@ -277,7 +272,6 @@ _compare_images() {
 
     # Determine the default image viewer to display the visual diff.
     local image_viewer=""
-    # shellcheck disable=SC2034
     local -a apps=(
         "loupe"     # GNOME default.
         "eog"       # GNOME default (old).

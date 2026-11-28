@@ -8,21 +8,18 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
+    local file_names=""
 
     # Execute initial checks.
     _check_dependencies_clipboard ""
     _display_wait_box ""
-    input_files=$(_get_files "par_type=all")
+    _get_files "par_type=all" "input_files"
 
-    # Split the list into an array.
-    local -a items=()
-    read -r -d "" -a items < <(printf "%s" "$input_files")
-
-    input_files=$(basename --multiple -- "${items[@]}")
+    file_names=$(basename --multiple -- "${input_files[@]}")
 
     # Run the main process.
-    _set_clipboard_data "$input_files"
+    _set_clipboard_data "$file_names"
 
     _display_result_box ""
 }

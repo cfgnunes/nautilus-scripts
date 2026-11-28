@@ -9,21 +9,20 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
 
     # Execute initial checks.
-    input_files=$(_get_files "par_type=directory; par_max_items=20")
+    _get_files "par_type=directory; par_max_items=20" "input_files"
     _unset_global_variables_file_manager
 
     # Run the main process.
-    _open_app "$input_files"
+    _open_app "${input_files[@]}"
 }
 
 _open_app() {
-    local input_files=$1
+    local -a input_files=("$@")
     local app=""
 
-    # shellcheck disable=SC2034
     local -a apps=(
         "ptyxis"         # GNOME default.
         "gnome-terminal" # GNOME default (old).
@@ -44,13 +43,9 @@ _open_app() {
     )
     app=$(_get_available_app "apps") || _exit_script
 
-    # Split the list into an array.
-    local -a items=()
-    read -r -d "" -a items < <(printf "%s" "$input_files")
-
     # Iterate over each input file (directory).
     local input_file=""
-    for input_file in "${items[@]}"; do
+    for input_file in "${input_files[@]}"; do
         # Detect remote SFTP paths from GVfs, KIO FUSE, or a URI.
         if [[ "$input_file" == /run/user/*/gvfs/sftp:* ||
             "$input_file" == /run/user/*/kio-fuse-*/sftp/* ||
@@ -85,7 +80,7 @@ _open_remote_directory() {
     local path=""
 
     # Skip entries that did not match any SFTP format.
-    _parse_sftp_path "$input_file" host port path || return 1
+    _parse_sftp_path "$input_file" "host" "port" "path" || return 1
 
     # Build the remote command.
     local remote_cmd=""
@@ -146,13 +141,13 @@ _parse_sftp_path() {
         # such as: /run/user/.../kio-fuse-.../sftp/user@host:port/path.
         _host="${BASH_REMATCH[1]}"
         _path="${BASH_REMATCH[2]}"
-        _split_host_port _host _port
+        _split_host_port "_host" "_port"
     elif [[ "$input_file" =~ ^sftp://([^/]+)/?(.*)$ ]]; then
         # Case 3: URI format,
         # such as: sftp://user@host:port/path.
         _host="${BASH_REMATCH[1]}"
         _path="/${BASH_REMATCH[2]}"
-        _split_host_port _host _port
+        _split_host_port "_host" "_port"
     else
         return 1
     fi

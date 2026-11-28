@@ -8,29 +8,25 @@ ROOT_DIR=$(grep --only-matching "^.*scripts[^/]*" <<<"$SCRIPT_DIR")
 source "$ROOT_DIR/.common-functions.sh"
 
 _main() {
-    local input_files=""
+    local -a input_files=()
 
     # Execute initial checks.
     _check_dependencies_clipboard ""
     _display_wait_box ""
-    input_files=$(_get_files "par_type=file")
+    _get_files "par_type=file" "input_files"
 
     # Run the main process.
-    if (($(_get_items_count "$input_files") == 1)); then
+    if ((${#input_files[@]} == 1)); then
         # If a single file is selected (text, image, or any supported type),
         # copy the file itself directly to the clipboard.
-        _set_clipboard_file "$input_files"
+        _set_clipboard_file "${input_files[0]}"
     else
         # If multiple text files are selected, concatenate their contents
         # into a temp file and copy that.
         local temp_file=""
         temp_file=$(_make_temp_file)
 
-        # Split the list into an array.
-        local -a items=()
-        read -r -d "" -a items < <(printf "%s" "$input_files")
-
-        cat -- "${items[@]}" >"$temp_file" 2>/dev/null
+        cat -- "${input_files[@]}" >"$temp_file" 2>/dev/null
         _set_clipboard_file "$temp_file"
     fi
 

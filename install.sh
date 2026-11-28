@@ -79,7 +79,6 @@ else
 fi
 
 # Mark constants as read-only to prevent accidental modification.
-# shellcheck disable=SC2034
 readonly \
     APP_FULL_NAME \
     APP_NAME \
@@ -218,7 +217,6 @@ _on_exit() {
 }
 trap _on_exit EXIT
 
-# shellcheck disable=SC2034
 _main() {
     # Variables for the main menu.
     local -a menu_labels=()
@@ -283,9 +281,9 @@ _main() {
     if [[ "$OPT_INTERACTIVE_INSTALL" == "true" ]]; then
         _echo "$(_i18n 'Select the options (<SPACE> to check, <ENTER> to confirm):')"
         _multiselect_menu \
-            menu_labels \
-            menu_initial_values \
-            menu_checked_values || return 1
+            "menu_labels" \
+            "menu_initial_values" \
+            "menu_checked_values" || return 1
     else
         _echo_info "$(_i18n 'Installing in non-interactive mode...')"
         menu_checked_values=("${menu_initial_values[@]}")
@@ -320,9 +318,9 @@ _main() {
         _echo ""
         _echo "$(_i18n 'Select the options (<SPACE> to check, <ENTER> to confirm):')"
         _multiselect_menu \
-            cat_dirs_translated \
-            cat_initial_values \
-            cat_checked_values || return 1
+            "cat_dirs_translated" \
+            "cat_initial_values" \
+            "cat_checked_values" || return 1
     fi
 
     # Step 1: Check for basic dependencies.
@@ -339,7 +337,7 @@ _main() {
     _echo_info "$(_i18n 'Installing:')"
     _echo_info "> $(_i18n 'User'): $INSTALL_OWNER"
     _echo_info "> $(_i18n 'Directory'): $INSTALL_DIR"
-    _install_scripts cat_checked_values cat_dirs
+    _install_scripts "cat_checked_values" "cat_dirs"
 
     # Step 3: Install file manager configurations.
     # Install the actions and the keyboard accelerators for
